@@ -1,0 +1,129 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ge.gov.mia</groupId>
+	<artifactId>lightmare</artifactId>
+	<version>0.0.15-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>lightmare</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+
+		<!-- ejb -->
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<version>3.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- end of ejb -->
+
+		<!-- hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.1.4.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.1.4.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>4.1.4.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- end of hibernate -->
+
+		<!-- drivers -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.3.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.microsoft</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>4.0.2206.100</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- end of drivers -->
+
+		<!-- startup -->
+		<dependency>
+			<groupId>net.sf.scannotation</groupId>
+			<artifactId>scannotation</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<!-- end of startup -->
+
+		<!-- jndi -->
+		<dependency>
+			<groupId>simple-jndi</groupId>
+			<artifactId>simple-jndi</artifactId>
+			<version>0.11.4.1</version>
+		</dependency>
+		<!-- end of jndi -->
+
+		<!-- loggers -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- end of loggers -->
+
+		<!-- test framework -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- end of test framework -->
+
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.9.1.0</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>MIA</id>
+			<name>Mia Maven Repository</name>
+			<url>http://nexus.dev.mia.ge/nexus/content/repositories/MIA/</url>
+		</repository>
+		<snapshotRepository>
+			<id>MIA</id>
+			<name>Mia Maven Repository for Snapshots</name>
+			<url>http://nexus.dev.mia.ge/nexus/content/repositories/MiaSnapshot/</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>

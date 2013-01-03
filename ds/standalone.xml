@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<server xmlns="urn:jboss:domain:1.2">
+	<profile>
+		<subsystem xmlns="urn:jboss:domain:datasources:1.0">
+			<datasources>
+				<datasource jndi-name="java:/personsDerby" pool-name="personsDerby"
+					enabled="true" use-java-context="true">
+					<connection-url>jdbc:derby:target/database/jpa-test-database;create=true</connection-url>
+					<driver>derby</driver>
+					<security>
+						<user-name>user</user-name>
+						<password>password</password>
+					</security>
+				</datasource>
+				<drivers>
+					<driver name="oracle" module="com.oracle.ojdbc">
+						<xa-datasource-class>oracle.jdbc.xa.client.OracleXADataSource
+						</xa-datasource-class>
+					</driver>
+					<driver name="mysql" module="mysql">
+						<driver-class>com.mysql.jdbc.Driver</driver-class>
+					</driver>
+				</drivers>
+			</datasources>
+		</subsystem>
+	</profile>
+</server>

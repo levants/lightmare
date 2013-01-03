@@ -1,0 +1,24 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+	<persistence-unit name="testUnit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>ge.gov.mia.lightmare.entities.Email</class>
+		<class>ge.gov.mia.lightmare.entities.Person</class>
+		<class>ge.gov.mia.lightmare.entities.PhoneNumber</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<!-- <property name="hibernate.default_schema" value="PERSONS" /> <property 
+				name="hibernate.show_sql" value="true" /> <property name="hibernate.sql_trace" 
+				value="true" /> <property name="hibernate.connection.url" value="jdbc:derby:target/database/jpa-test-database;create=true" 
+				/> <property name="hibernate.connection.username" value="user" /> <property 
+				name="hibernate.connection.password" value="password" /> <property name="hibernate.dialect" 
+				value="org.hibernate.dialect.DerbyDialect" /> <property name="hibernate.cache.provider_class" 
+				value="org.hibernate.cache.NoCacheProvider" /> <property name="hibernate.connection.driver_class" 
+				value="org.apache.derby.jdbc.EmbeddedDriver" /> <property name="hibernate.hbm2ddl.auto" 
+				value="create-drop" /> -->
+			<!-- hiberanate key generation properties -->
+			<!-- <property name="hibernate.jdbc.use_get_generated_keys" value="true" 
+				/> <property name="hibernate.max_fetch_depth" value="3" /> -->
+		</properties>
+	</persistence-unit>
+</persistence>
