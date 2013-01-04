@@ -18,6 +18,12 @@
 		</license>
 	</licenses>
 
+	<scm>
+		<url>https://github.com/levants/lightmare</url>
+		<developerConnection>scm:git:git://github.com/levants/lightmare.git</developerConnection>
+		<connection>scm:git:git@github.com:levants/lightmare.git</connection>
+	</scm>
+
 	<developers>
 		<developer>
 			<id>levants</id>
