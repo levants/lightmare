@@ -1,6 +1,5 @@
 package org.lightmare.utils.earfile;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -106,7 +105,6 @@ public class EarUtils extends IOUtils {
 				URL jarURL = tmpFile.toURI().toURL();
 				String jarPath = String.format("%s!/%s", jarURL.toString(),
 						ConfigLoader.XML_PATH);
-				System.out.println(jarPath);
 				url = new URL("jar", "", jarPath);
 			}
 
@@ -142,8 +140,14 @@ public class EarUtils extends IOUtils {
 		ZipFile earFile = getEarFile();
 		URL url;
 		ZipEntry jarEntry;
+		String earPath = realFile.toURI().toURL().toString();
+		String jarPath;
+		URL jarURL;
 		for (String jarName : jarNames) {
 			if (checkOnOrm(jarName)) {
+				jarPath = String.format("%s!/%s", earPath, jarName);
+				jarURL = new URL("jar", "", jarPath);
+				getEjbURLs().add(jarURL);
 				jarEntry = earFile.getEntry(jarName);
 				url = extractEjbJar(jarEntry);
 				getXmlURLs().put(jarName, url);

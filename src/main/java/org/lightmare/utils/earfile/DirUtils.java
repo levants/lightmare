@@ -1,6 +1,5 @@
 package org.lightmare.utils.earfile;
 
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -103,6 +102,7 @@ public class DirUtils extends IOUtils {
 			check = checkOnOrm(fillXmlPath);
 			if (check) {
 				currentURL = new File(fillXmlPath).toURI().toURL();
+				getEjbURLs().add(currentURL);
 				jarPath = String.format("%s!/%s", currentURL.toString(),
 						ConfigLoader.XML_PATH);
 				URL jarURL = new URL("jar", "", jarPath);

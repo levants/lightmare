@@ -1,9 +1,9 @@
 package org.lightmare.utils;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,9 +32,11 @@ public abstract class IOUtils {
 
 	protected List<URL> libURLs;
 
+	protected List<URL> ejbURLs;
+
 	protected String path;
 
-	private File realFile;
+	protected File realFile;
 
 	protected ZipFile earFile;
 
@@ -72,6 +74,14 @@ public abstract class IOUtils {
 		}
 
 		return libURLs;
+	}
+
+	public List<URL> getEjbURLs() {
+		if (ejbURLs == null) {
+			ejbURLs = new ArrayList<URL>();
+		}
+
+		return ejbURLs;
 	}
 
 	public ZipFile getEarFile() throws IOException {
@@ -124,12 +134,55 @@ public abstract class IOUtils {
 
 	public abstract boolean checkOnOrm(String jarName) throws IOException;
 
+	/**
+	 * Scans project directory for class or jar files and persistence.xml (uses
+	 * for development process)
+	 * 
+	 * @param files
+	 * @throws MalformedURLException
+	 */
+	public void scanDirectory(File... files) throws MalformedURLException {
+		File parentFile;
+		if (files.length >= 1) {
+			parentFile = files[0];
+		} else {
+			parentFile = realFile;
+		}
+		File[] subFiles = parentFile.listFiles();
+		String fileName;
+		URL fileURL;
+		for (File subFile : subFiles) {
+			fileName = subFile.getName();
+			if (subFile.isDirectory()) {
+				scanDirectory(subFile);
+			} else if (fileName.endsWith(".jar") || fileName.endsWith(".class")) {
+				fileURL = subFile.toURI().toURL();
+				getEjbURLs().add(fileURL);
+				getLibURLs().add(fileURL);
+			} else if (fileName.equals("persistence.xml")) {
+				fileURL = subFile.toURI().toURL();
+				getXmlURLs().put(path, fileURL);
+			}
+		}
+	}
+
 	public URL[] getLibs() {
 		URL[] urls;
 		if (libURLs == null) {
 			urls = null;
 		} else {
 			urls = libURLs.toArray(new URL[libURLs.size()]);
+		}
+
+		return urls;
+	}
+
+	public URL[] getEjbs() {
+		URL[] urls;
+		if (ejbURLs == null) {
+			urls = null;
+		} else {
+			urls = ejbURLs.toArray(new URL[ejbURLs.size()]);
 		}
 
 		return urls;
