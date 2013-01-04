@@ -18,6 +18,5 @@ and create and cache EntityManagerFactory for each @PersistenceContext annotated
   MetaCreator.Builder builder = new MetaCreator.Builder();
   MetaCreator metaCreator = builder.build()
   metaCreator.scanForBeans(files);
-```
-	
+```	
 where files are String[] or URL[] array of ear, jar or any ejb containd directory pathes or this files (File[]) 
