@@ -16,18 +16,18 @@ public class NamingUtils {
 	public void setInitialCotext() throws IOException {
 		if (!isContextFactory) {
 			System.getProperties().put(Context.INITIAL_CONTEXT_FACTORY,
-					"ge.gov.mia.lightmare.jndi.DSInitialContextFactory");
+					"org.lightmare.jndi.DSInitialContextFactory");
 			System.getProperties().put(Context.URL_PKG_PREFIXES,
-					"ge.gov.mia.lightmare.jndi");
+					"org.lightmare.jndi");
 			isContextFactory = true;
 		}
 		if (context == null) {
 			try {
 				Properties properties = new Properties();
 				properties.put(Context.INITIAL_CONTEXT_FACTORY,
-						"ge.gov.mia.lightmare.jndi.DSInitialContextFactory");
+						"org.lightmare.jndi.DSInitialContextFactory");
 				properties.put(Context.URL_PKG_PREFIXES,
-						"ge.gov.mia.lightmare.jndi");
+						"org.lightmare.jndi");
 				context = new InitialContext(properties);
 			} catch (NamingException ex) {
 				throw new IOException(ex);
