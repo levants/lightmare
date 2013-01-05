@@ -1,6 +1,5 @@
 package org.lightmare.entities;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +16,8 @@ import org.lightmare.annotations.UnitName;
 public class Email {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "ge.gov.mia.lightmare.entities.Email")
-	@TableGenerator(name = "ge.gov.mia.lightmare.entities.Email", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "EMAILS", valueColumnName = "KEY_VALUE", allocationSize = 20)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.entities.Email")
+	@TableGenerator(name = "org.lightmare.entities.Email", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "EMAILS", valueColumnName = "KEY_VALUE", allocationSize = 20)
 	@Column(name = "email_id")
 	private Integer emailId;
 

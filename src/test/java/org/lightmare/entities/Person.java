@@ -1,6 +1,5 @@
 package org.lightmare.entities;
 
-
 import java.util.Date;
 import java.util.Set;
 
@@ -24,8 +23,8 @@ import org.lightmare.annotations.UnitName;
 public class Person {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "ge.gov.mia.lightmare.entities.Person")
-	@GenericGenerator(name = "ge.gov.mia.lightmare.entities.Person", strategy = "ge.gov.mia.lightmare.jpa.TableGeneratorIml", parameters = {
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.entities.Person")
+	@GenericGenerator(name = "org.lightmare.entities.Person", strategy = "org.lightmare.jpa.TableGeneratorIml", parameters = {
 			@Parameter(name = "table_name", value = "ID_GENERATORS"),
 			@Parameter(name = "segment_column_name", value = "TABLE_NAME"),
 			@Parameter(name = "segment_value", value = "PERSONS"),

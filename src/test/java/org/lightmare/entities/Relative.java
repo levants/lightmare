@@ -17,8 +17,8 @@ public class Relative implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "ge.gov.mia.lightmare.entities.Relative")
-	@TableGenerator(name = "ge.gov.mia.lightmare.entities.Relative", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "RELATIVES", valueColumnName = "KEY_VALUE", allocationSize = 20)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.entities.Relative")
+	@TableGenerator(name = "org.lightmare.entities.Relative", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "RELATIVES", valueColumnName = "KEY_VALUE", allocationSize = 20)
 	@Column(name = "RELATIVE_ID")
 	private Integer relativeId;
 
