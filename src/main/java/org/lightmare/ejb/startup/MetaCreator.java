@@ -137,7 +137,7 @@ public class MetaCreator {
 		return classes;
 	}
 
-	private void configureConnection(String unitName) throws IOException {
+	protected void configureConnection(String unitName) throws IOException {
 
 		JPAManager.Builder builder = new JPAManager.Builder();
 

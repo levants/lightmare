@@ -187,4 +187,22 @@ public abstract class IOUtils {
 
 		return urls;
 	}
+
+	public URL[] getURLs() {
+
+		List<URL> fullURLs = new ArrayList<URL>();
+		URL[] urls;
+
+		if (ejbURLs != null) {
+			fullURLs.addAll(ejbURLs);
+		}
+		if (libURLs != null) {
+			fullURLs.addAll(libURLs);
+		}
+
+		urls = fullURLs.toArray(new URL[fullURLs.size()]);
+
+		return urls;
+
+	}
 }
