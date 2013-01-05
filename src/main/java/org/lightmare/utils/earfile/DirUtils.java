@@ -76,12 +76,9 @@ public class DirUtils extends IOUtils {
 	@Override
 	public boolean checkOnOrm(String jarName) throws IOException {
 
-		@SuppressWarnings("resource")
 		JarEntry xmlEntry = new JarFile(jarName)
 				.getJarEntry(ConfigLoader.XML_PATH);
-		boolean check = (xmlEntry != null);
-
-		return check;
+		return (xmlEntry != null);
 	}
 
 	@Override
