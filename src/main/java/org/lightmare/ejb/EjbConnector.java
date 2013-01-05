@@ -51,13 +51,10 @@ public class EjbConnector {
 			throws InstantiationException, IllegalAccessException {
 		MetaData metaData = getMetaData(beanName);
 
-		ClassLoader loader = metaData.getLoader();
-		LibraryLoader.loadCurrentLibraries(loader);
+		LibraryLoader.loadCurrentLibraries(metaData.getLoader());
 
 		Class<? extends T> beanClass = (Class<? extends T>) metaData
 				.getBeanClass();
-
-		LibraryLoader.loadCurrentLibraries(metaData.getLoader());
 
 		T beanInstance = beanClass.newInstance();
 
