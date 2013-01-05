@@ -20,7 +20,7 @@ public class LibLoaderTest {
 	@BeforeClass
 	public static void start() {
 		try {
-			String libPath = "./lib/loader-tester-0.0.1-SNAPSHOT.jar";
+			String libPath = "./lib/loader-tester.jar";
 			LibraryLoader.loadLibraries(libPath);
 
 		} catch (Exception ex) {
