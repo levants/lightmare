@@ -1,6 +1,5 @@
 package org.lightmare;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,7 +25,9 @@ import junit.framework.Assert;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.ConfigLoader;
+import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.earfile.EarUtils;
 
 public class EarFileReaderTest {
@@ -206,7 +207,7 @@ public class EarFileReaderTest {
 
 	@Test
 	public void appXmlParseTest() {
-		EarUtils ioUtils = new EarUtils(EAR_PATH);
+		IOUtils ioUtils = new EarUtils(EAR_PATH);
 		try {
 			InputStream stream = ioUtils.earReader();
 			Set<String> apps = ioUtils.appXmlParser(stream);
@@ -216,6 +217,59 @@ public class EarFileReaderTest {
 				System.out.println(app);
 			}
 		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	@Test
+	public void getEjbLibsTest() {
+		IOUtils ioUtils = new EarUtils(EAR_PATH);
+		try {
+			ioUtils.getEjbLibs();
+			URL[] urls = ioUtils.getLibs();
+			Assert.assertTrue("could not find ejb applications", urls != null
+					&& urls.length > 0);
+			for (URL url : urls) {
+				System.out.println(url);
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	@Test
+	public void extractEjbJarTest() {
+		IOUtils ioUtils = new EarUtils(EAR_PATH);
+		try {
+			InputStream stream = ioUtils.earReader();
+			Set<String> apps = ioUtils.appXmlParser(stream);
+			Assert.assertTrue("could not find ejb applications",
+					apps.size() > 0);
+			ioUtils.extractEjbJars(apps);
+			Assert.assertTrue("could not extract jar files",
+					TmpResources.tmpFiles.size() > 0);
+			Map<String, URL> xmls = ioUtils.getXmlURLs();
+			Scanner scanner;
+			for (Map.Entry<String, URL> entry : xmls.entrySet()) {
+
+				stream = entry.getValue().openStream();
+				scanner = new Scanner(stream);
+				System.out
+						.println("==========================\n==========================\n==========================");
+				System.out.format("\t\t\t\t\t%s\n", entry.getKey());
+				while (scanner.hasNextLine()) {
+					System.out.println(scanner.nextLine());
+					stream.close();
+				}
+				System.out
+						.println("==========================\n==========================\n==========================");
+
+			}
+			Thread.sleep(100);
+			TmpResources.removeTempFiles();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} catch (InterruptedException ex) {
 			ex.printStackTrace();
 		}
 	}

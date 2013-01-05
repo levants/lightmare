@@ -25,10 +25,6 @@ import org.lightmare.utils.IOUtils;
  */
 public class EarUtils extends IOUtils {
 
-	private ZipFile earFile;
-
-	private boolean isDirectory;
-
 	public EarUtils(String path) {
 		super(path);
 	}
@@ -58,10 +54,9 @@ public class EarUtils extends IOUtils {
 	@Override
 	public void getEjbLibs() throws IOException {
 
-		File realFile = new File(path);
 		URL earURL = realFile.toURI().toURL();
 
-		Enumeration<? extends ZipEntry> entries = earFile.entries();
+		Enumeration<? extends ZipEntry> entries = getEarFile().entries();
 		String earPath;
 		ZipEntry libEntry;
 		String libPath;
@@ -70,7 +65,6 @@ public class EarUtils extends IOUtils {
 			libPath = libEntry.toString();
 			if ((libPath.startsWith("lib/") && !libPath.endsWith("lib/"))
 					|| libPath.endsWith(".jar")) {
-				System.out.println(libPath);
 				earPath = String.format("%s!/%s", earURL.toString(), libPath);
 				URL url = new URL("jar", "", earPath);
 				getLibURLs().add(url);
@@ -130,6 +124,9 @@ public class EarUtils extends IOUtils {
 		boolean check = false;
 		while (xmlEntry != null && !check) {
 			check = xmlEntry.getName().equals(ConfigLoader.XML_PATH);
+			if (!check) {
+				xmlEntry = zipStream.getNextEntry();
+			}
 		}
 
 		return check;
@@ -143,8 +140,10 @@ public class EarUtils extends IOUtils {
 		String earPath = realFile.toURI().toURL().toString();
 		String jarPath;
 		URL jarURL;
+		boolean checkOnOrm;
 		for (String jarName : jarNames) {
-			if (checkOnOrm(jarName)) {
+			checkOnOrm = checkOnOrm(jarName);
+			if (checkOnOrm) {
 				jarPath = String.format("%s!/%s", earPath, jarName);
 				jarURL = new URL("jar", "", jarPath);
 				getEjbURLs().add(jarURL);
