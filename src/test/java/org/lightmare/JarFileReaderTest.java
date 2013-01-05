@@ -17,7 +17,7 @@ import org.lightmare.jpa.ConfigLoader;
 
 public class JarFileReaderTest {
 
-	public static final String JAR_PATH = "./lib/loader-tester-0.0.1-SNAPSHOT.jar";
+	public static final String JAR_PATH = "./lib/loader-tester.jar";
 	private JarFile jarFile;
 	private Scanner scanner;
 

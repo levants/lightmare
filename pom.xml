@@ -96,7 +96,6 @@
 			<version>4.1.4.Final</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<!-- end of hibernate -->
 
 		<!-- drivers -->

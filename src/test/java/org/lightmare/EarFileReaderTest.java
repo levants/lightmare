@@ -31,9 +31,9 @@ import org.lightmare.utils.earfile.EarUtils;
 
 public class EarFileReaderTest {
 
-	private static final String EAR_PATH = "./lib/loader-tester-0.0.1.ear";
+	private static final String EAR_PATH = "./lib/loader-tester.ear";
 
-	public static final String JAR_IN_EAR_PATH = "loader-tester-0.0.1-SNAPSHOT.jar";
+	public static final String JAR_IN_EAR_PATH = "loader-tester.jar";
 
 	private JarFile jarFile;
 
