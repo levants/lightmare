@@ -69,38 +69,6 @@ public class MetaCreator {
 		return annotationDB;
 	}
 
-	private void setPersistenceProperties(Map<String, String> properties) {
-		prop = properties;
-	}
-
-	private void setScanForEntities(boolean scanForEnt) {
-		scanForEntities = scanForEnt;
-	}
-
-	private void setUnitName(String unitName) {
-		annotatedUnitName = unitName;
-	}
-
-	private void setPersXmlPath(String path) {
-		persXmlPath = path;
-	}
-
-	private void setLibraryPath(String libPath) {
-		libraryPath = libPath;
-	}
-
-	private void setPersXmlFromJar(boolean persXmlFromJar) {
-		this.persXmlFromJar = persXmlFromJar;
-	}
-
-	private void setSwapDataSource(boolean swapDataSource) {
-		this.swapDataSource = swapDataSource;
-	}
-
-	private void setDataSourcePath(String dataSourcePath) {
-		this.dataSourcePath = dataSourcePath;
-	}
-
 	private boolean checkForUnitName(String className) throws IOException {
 		boolean isValid = false;
 		Class<?> entityClass;
@@ -328,42 +296,42 @@ public class MetaCreator {
 		}
 
 		public Builder setPersistenceProperties(Map<String, String> properties) {
-			creator.setPersistenceProperties(properties);
+			creator.prop = properties;
 			return this;
 		}
 
 		public Builder setScanForEntities(boolean scanForEnt) {
-			creator.setScanForEntities(scanForEnt);
+			creator.scanForEntities = scanForEnt;
 			return this;
 		}
 
 		public Builder setUnitName(String unitName) {
-			creator.setUnitName(unitName);
+			creator.annotatedUnitName = unitName;
 			return this;
 		}
 
 		public Builder setPersXmlPath(String path) {
-			creator.setPersXmlPath(path);
+			creator.persXmlPath = path;
 			return this;
 		}
 
 		public Builder setLibraryPath(String libPath) {
-			creator.setLibraryPath(libPath);
+			creator.libraryPath = libPath;
 			return this;
 		}
 
 		public Builder setXmlFromJar(boolean xmlFromJar) {
-			creator.setPersXmlFromJar(xmlFromJar);
+			creator.persXmlFromJar = xmlFromJar;
 			return this;
 		}
 
 		public Builder setSwapDataSource(boolean swapDataSource) {
-			creator.setSwapDataSource(swapDataSource);
+			creator.swapDataSource = swapDataSource;
 			return this;
 		}
 
 		public Builder setDataSourcePath(String dataSourcePath) {
-			creator.setDataSourcePath(dataSourcePath);
+			creator.dataSourcePath = dataSourcePath;
 			return this;
 		}
 
