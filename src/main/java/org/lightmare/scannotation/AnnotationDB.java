@@ -32,14 +32,13 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	// To store which class in which URL is found
 	protected Map<String, URL> classOwnerships = new HashMap<String, URL>();
 
 	private boolean ignoreScan(String intf) {
 		for (String ignored : ignoredPackages) {
 			if (intf.startsWith(ignored + ".")) {
 				return true;
-			} else {
-				// System.out.println("NOT IGNORING: " + intf);
 			}
 		}
 		return false;
@@ -120,7 +119,6 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 							filename = filename.substring(1);
 						if (!ignoreScan(filename.replace('/', '.')))
 							return true;
-						// System.out.println("IGNORED: " + filename);
 					}
 					return false;
 				}
