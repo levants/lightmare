@@ -103,7 +103,8 @@ public class DirUtils extends IOUtils {
 				jarPath = String.format("%s!/%s", currentURL.toString(),
 						ConfigLoader.XML_PATH);
 				URL jarURL = new URL("jar", "", jarPath);
-				getXmlURLs().put(jarName, jarURL);
+				getXmlFiles().put(jarName, jarURL);
+				getXmlURLs().put(currentURL, jarURL);
 			}
 		}
 

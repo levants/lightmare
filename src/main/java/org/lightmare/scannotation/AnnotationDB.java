@@ -33,7 +33,21 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	private static final long serialVersionUID = 1L;
 
 	// To store which class in which URL is found
-	protected Map<String, URL> classOwnerships = new HashMap<String, URL>();
+	protected Map<String, URL> classOwnershipURLs = new HashMap<String, URL>();
+
+	// To store which class in which File is found
+	protected Map<String, String> classOwnershipFiles = new HashMap<String, String>();
+
+	private String getFileName(URL url) {
+		String fileName = url.getFile();
+		int lastIndex = fileName.lastIndexOf("/");
+		if (lastIndex > -1) {
+			++lastIndex;
+			fileName = fileName.substring(lastIndex);
+		}
+
+		return fileName;
+	}
 
 	private boolean ignoreScan(String intf) {
 		for (String ignored : ignoredPackages) {
@@ -48,6 +62,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		if (annotations == null)
 			return;
 		Set<String> classAnnotations = classIndex.get(className);
+		String fileName;
 		for (Annotation ann : annotations) {
 			Set<String> classes = annotationIndex.get(ann.getTypeName());
 			if (classes == null) {
@@ -55,8 +70,12 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 				annotationIndex.put(ann.getTypeName(), classes);
 			}
 			classes.add(className);
-			if (!classOwnerships.containsKey(className)) {
-				classOwnerships.put(className, url);
+			if (!classOwnershipURLs.containsKey(className)) {
+				classOwnershipURLs.put(className, url);
+			}
+			if (!classOwnershipFiles.containsKey(className)) {
+				fileName = getFileName(url);
+				classOwnershipFiles.put(className, fileName);
 			}
 			classAnnotations.add(ann.getTypeName());
 		}
@@ -133,8 +152,12 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		}
 	}
 
-	public Map<String, URL> getClassOwnerships() {
-		return classOwnerships;
+	public Map<String, URL> getClassOwnershipURLs() {
+		return classOwnershipURLs;
+	}
+
+	public Map<String, String> getClassOwnershipFiles() {
+		return classOwnershipFiles;
 	}
 
 }

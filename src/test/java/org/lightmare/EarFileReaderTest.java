@@ -248,9 +248,9 @@ public class EarFileReaderTest {
 			ioUtils.extractEjbJars(apps);
 			Assert.assertTrue("could not extract jar files",
 					TmpResources.tmpFiles.size() > 0);
-			Map<String, URL> xmls = ioUtils.getXmlURLs();
+			Map<URL, URL> xmls = ioUtils.getXmlURLs();
 			Scanner scanner;
-			for (Map.Entry<String, URL> entry : xmls.entrySet()) {
+			for (Map.Entry<URL, URL> entry : xmls.entrySet()) {
 
 				stream = entry.getValue().openStream();
 				scanner = new Scanner(stream);
@@ -270,6 +270,19 @@ public class EarFileReaderTest {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	@Test
+	public void getAppropriateTypeTest() {
+		try {
+			IOUtils ioUtils = IOUtils.getAppropriateType(new File(EAR_PATH)
+					.toURI().toURL());
+			Assert.assertTrue("Could not get appropriate type",
+					ioUtils instanceof EarUtils);
+			System.out.println(ioUtils);
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}

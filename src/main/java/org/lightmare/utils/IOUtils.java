@@ -30,7 +30,9 @@ import org.w3c.dom.NodeList;
  */
 public abstract class IOUtils {
 
-	protected Map<String, URL> xmlURLs;
+	protected Map<URL, URL> xmlURLs;
+
+	protected Map<String, URL> xmlFiles;
 
 	protected List<URL> libURLs;
 
@@ -62,12 +64,20 @@ public abstract class IOUtils {
 		isDirectory = realFile.isDirectory();
 	}
 
-	public Map<String, URL> getXmlURLs() {
+	public Map<URL, URL> getXmlURLs() {
 		if (xmlURLs == null) {
-			xmlURLs = new HashMap<String, URL>();
+			xmlURLs = new HashMap<URL, URL>();
 		}
 
 		return xmlURLs;
+	}
+
+	public Map<String, URL> getXmlFiles() {
+		if (xmlFiles == null) {
+			xmlFiles = new HashMap<String, URL>();
+		}
+
+		return xmlFiles;
 	}
 
 	public List<URL> getLibURLs() {
@@ -127,6 +137,13 @@ public abstract class IOUtils {
 		}
 	}
 
+	public Set<String> appXmlParser() throws IOException {
+		InputStream stream = earReader();
+		Set<String> jarNames = appXmlParser(stream);
+
+		return jarNames;
+	}
+
 	public abstract InputStream earReader() throws IOException;
 
 	public void readEntries() throws IOException {
@@ -176,7 +193,7 @@ public abstract class IOUtils {
 				getLibURLs().add(fileURL);
 			} else if (fileName.equals("persistence.xml")) {
 				fileURL = subFile.toURI().toURL();
-				getXmlURLs().put(path, fileURL);
+				getXmlURLs().put(realFile.toURI().toURL(), fileURL);
 			}
 		}
 	}

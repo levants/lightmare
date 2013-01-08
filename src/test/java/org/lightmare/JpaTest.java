@@ -72,11 +72,19 @@ public class JpaTest {
 		File file = new File(JarFileReaderTest.JAR_PATH);
 		File[] files = { file };
 		metaCreator.scanForBeans(files);
-		Map<String, URL> classOwnerships = metaCreator.getAnnotationDB()
-				.getClassOwnerships();
+		Map<String, URL> classOwnershipURLs = metaCreator.getAnnotationDB()
+				.getClassOwnershipURLs();
+		Map<String, String> classOwnershipFiles = metaCreator.getAnnotationDB()
+				.getClassOwnershipFiles();
 		System.out
 				.println("============URLs of scanned classes ================");
-		for (Map.Entry<String, URL> entry : classOwnerships.entrySet()) {
+		for (Map.Entry<String, URL> entry : classOwnershipURLs.entrySet()) {
+			System.out.format("%s ------ %s\n", entry.getKey(),
+					entry.getValue());
+		}
+		System.out
+				.println("============Files of scanned classes ================");
+		for (Map.Entry<String, String> entry : classOwnershipFiles.entrySet()) {
 			System.out.format("%s ------ %s\n", entry.getKey(),
 					entry.getValue());
 		}

@@ -149,7 +149,8 @@ public class EarUtils extends IOUtils {
 				getEjbURLs().add(jarURL);
 				jarEntry = earFile.getEntry(jarName);
 				url = extractEjbJar(jarEntry);
-				getXmlURLs().put(jarName, url);
+				getXmlFiles().put(jarName, jarURL);
+				getXmlURLs().put(jarURL, url);
 			}
 		}
 	}
