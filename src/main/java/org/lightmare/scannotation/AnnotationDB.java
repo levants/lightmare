@@ -19,7 +19,7 @@ import org.scannotation.archiveiterator.IteratorFactory;
 import org.scannotation.archiveiterator.StreamIterator;
 
 /**
- * Extention of {@link org.scannotation.AnnotationDB} for saving Map<
+ * Extension of {@link org.scannotation.AnnotationDB} for saving Map<
  * {@link String}, {@link URL}> of class name and {@link URL} for its archive
  * 
  * @author levan
