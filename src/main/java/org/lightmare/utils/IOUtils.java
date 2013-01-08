@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.zip.ZipFile;
 
 import org.lightmare.jpa.datasource.FileParsers;
+import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.earfile.DirUtils;
 import org.lightmare.utils.earfile.EarUtils;
 import org.w3c.dom.Document;
@@ -33,6 +34,8 @@ public abstract class IOUtils {
 	protected Map<URL, URL> xmlURLs;
 
 	protected Map<String, URL> xmlFiles;
+
+	protected Map<String, String> classOwnershipFiles;
 
 	protected List<URL> libURLs;
 
@@ -115,6 +118,40 @@ public abstract class IOUtils {
 		}
 
 		return ioUtils;
+	}
+
+	/**
+	 * Finds persistence.xml {@link URL} by class name
+	 * 
+	 * @param classOwnershipFiles
+	 * @param className
+	 * @return {@link URL}
+	 */
+	public URL getAppropriatedURL(Map<String, String> classOwnershipFiles,
+			String className) {
+		String jarName = classOwnershipFiles.get(className);
+		URL xmlURL;
+		if (jarName == null || jarName.isEmpty()) {
+			xmlURL = null;
+		} else {
+			xmlURL = getXmlFiles().get(jarName);
+		}
+
+		return xmlURL;
+	}
+
+	/**
+	 * Finds persistence.xml {@link URL} by class name
+	 * 
+	 * @param annotationDB
+	 * @param className
+	 * @return {@link URL}
+	 */
+	public URL getAppropriatedURL(AnnotationDB annotationDB, String className) {
+		Map<String, String> classOwnershipFiles = annotationDB
+				.getClassOwnershipFiles();
+		URL xmlURL = getAppropriatedURL(classOwnershipFiles, className);
+		return xmlURL;
 	}
 
 	public Set<String> appXmlParser(InputStream xmlStream) throws IOException {
