@@ -30,7 +30,7 @@ import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
-import org.scannotation.AnnotationDB;
+import org.lightmare.scannotation.AnnotationDB;
 
 /**
  * Determines and saves in cache ejb beans {@link MetaData} on startup

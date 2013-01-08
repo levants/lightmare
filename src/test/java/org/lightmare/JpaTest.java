@@ -1,8 +1,8 @@
 package org.lightmare;
 
-
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,6 +72,16 @@ public class JpaTest {
 		File file = new File(JarFileReaderTest.JAR_PATH);
 		File[] files = { file };
 		metaCreator.scanForBeans(files);
+		Map<String, URL> classOwnerships = metaCreator.getAnnotationDB()
+				.getClassOwnerships();
+		System.out
+				.println("============URLs of scanned classes ================");
+		for (Map.Entry<String, URL> entry : classOwnerships.entrySet()) {
+			System.out.format("%s ------ %s\n", entry.getKey(),
+					entry.getValue());
+		}
+		System.out
+				.println("====================================================");
 		EntityManagerFactory emf = JPAManager.getConnection("testUnit");
 		EntityManager em = emf.createEntityManager();
 		DBCreator creator = new DBCreator(em);

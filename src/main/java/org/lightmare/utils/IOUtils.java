@@ -15,6 +15,8 @@ import java.util.Set;
 import java.util.zip.ZipFile;
 
 import org.lightmare.jpa.datasource.FileParsers;
+import org.lightmare.utils.earfile.DirUtils;
+import org.lightmare.utils.earfile.EarUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -90,6 +92,19 @@ public abstract class IOUtils {
 		}
 
 		return earFile;
+	}
+
+	public static IOUtils getAppropriateType(URL url) throws URISyntaxException {
+		IOUtils ioUtils = null;
+		String path = url.getPath();
+		File appFile = new File(url.toURI());
+		if (appFile.isDirectory() && path.endsWith(".ear")) {
+			ioUtils = new DirUtils(appFile);
+		} else if (path.endsWith(".ear")) {
+			ioUtils = new EarUtils(appFile);
+		}
+
+		return ioUtils;
 	}
 
 	public Set<String> appXmlParser(InputStream xmlStream) throws IOException {
@@ -203,6 +218,5 @@ public abstract class IOUtils {
 		urls = fullURLs.toArray(new URL[fullURLs.size()]);
 
 		return urls;
-
 	}
 }
