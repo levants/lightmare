@@ -33,7 +33,7 @@ public class AnnotationDBTest {
 			URL[] urls = urlSet.toArray(new URL[urlSet.size()]);
 			annotationDB.scanArchives(urls);
 			Map<String, String> classOwnershipFiles = annotationDB
-					.getClassOwnershipFiles();
+					.getClassOwnersFiles();
 			Assert.assertTrue("Could not find class ownership files",
 					classOwnershipFiles.size() > 0);
 			System.out

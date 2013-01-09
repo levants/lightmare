@@ -1,12 +1,9 @@
 package org.lightmare.ejb.startup;
 
-import static org.lightmare.ejb.meta.MetaContainer.addMetaData;
-import static org.lightmare.ejb.meta.MetaContainer.checkMetaData;
 import static org.lightmare.ejb.meta.MetaContainer.closeConnections;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,12 +18,11 @@ import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.Entity;
-import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 import org.lightmare.annotations.UnitName;
-import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.ejb.meta.MetaData;
+import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
@@ -141,54 +137,6 @@ public class MetaCreator {
 				.setConnection(unitName, name);
 	}
 
-	/**
-	 * Creates {@link MetaData} for bean class
-	 * 
-	 * @param beanClass
-	 * @throws ClassNotFoundException
-	 */
-	private MetaData createMeta(Class<?> beanClass) throws IOException {
-		Field[] fields = beanClass.getDeclaredFields();
-		PersistenceContext context;
-		String unitName;
-		MetaData metaData = new MetaData();
-		metaData.setBeanClass(beanClass);
-
-		for (Field field : fields) {
-			context = field.getAnnotation(PersistenceContext.class);
-			if (context != null) {
-				metaData.setConnectorField(field);
-				unitName = context.unitName();
-				String name = context.name();
-				configureConnection(unitName, name);
-				metaData.setUnitName(unitName);
-				break;
-			}
-		}
-
-		return metaData;
-	}
-
-	private void createBeanClass(String name) throws IOException {
-		if (checkMetaData(name)) {
-			throw new BeanInUseException(String.format(
-					"bean % is alredy in use", name));
-		} else {
-			try {
-				Class<?> beanClass = Class.forName(name);
-				MetaData metaData = createMeta(beanClass);
-				Stateless annotation = beanClass.getAnnotation(Stateless.class);
-				String beanName = annotation.name();
-				if (beanName == null || beanName.isEmpty()) {
-					beanName = beanClass.getSimpleName();
-				}
-				addMetaData(beanName, metaData);
-			} catch (ClassNotFoundException ex) {
-				throw new IOException(ex);
-			}
-		}
-	}
-
 	private void addURLToList(Enumeration<URL> urlEnum, List<URL> urlList) {
 		while (urlEnum.hasMoreElements()) {
 			urlList.add(urlEnum.nextElement());
@@ -216,20 +164,28 @@ public class MetaCreator {
 		annotationDB.scanArchives(archives);
 		Set<String> beanNames = annotationDB.getAnnotationIndex().get(
 				Stateless.class.getName());
+		Boolean future;
 		for (String name : beanNames) {
 			LOG.info(String.format("deploing bean %s", name));
 			try {
 				if (archives.length == 1) {
 					currentURL = archives[0];
 				}
-				createBeanClass(name);
-				LOG.info(String.format("bean %s deployed", name));
+				future = BeanLoader.loadBean(this, name, null);
+				if (future) {
+					LOG.info(String.format("bean %s deployed", name));
+				} else {
+					LOG.error(String.format("Could not deploy bean %s", name));
+				}
 			} catch (IOException ex) {
 				LOG.error(String.format("Could not deploy bean %s", name), ex);
 			} catch (Exception ex) {
 				LOG.error(String.format("Could not deploy bean %s", name), ex);
 			}
 		}
+
+		// gets read from all created temporary files
+		TmpResources.removeTempFiles();
 	}
 
 	/**

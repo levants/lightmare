@@ -123,13 +123,13 @@ public abstract class IOUtils {
 	/**
 	 * Finds persistence.xml {@link URL} by class name
 	 * 
-	 * @param classOwnershipFiles
+	 * @param classOwnersFiles
 	 * @param className
 	 * @return {@link URL}
 	 */
-	public URL getAppropriatedURL(Map<String, String> classOwnershipFiles,
+	public URL getAppropriatedURL(Map<String, String> classOwnersFiles,
 			String className) {
-		String jarName = classOwnershipFiles.get(className);
+		String jarName = classOwnersFiles.get(className);
 		URL xmlURL;
 		if (jarName == null || jarName.isEmpty()) {
 			xmlURL = null;
@@ -148,9 +148,9 @@ public abstract class IOUtils {
 	 * @return {@link URL}
 	 */
 	public URL getAppropriatedURL(AnnotationDB annotationDB, String className) {
-		Map<String, String> classOwnershipFiles = annotationDB
-				.getClassOwnershipFiles();
-		URL xmlURL = getAppropriatedURL(classOwnershipFiles, className);
+		Map<String, String> classOwnersFiles = annotationDB
+				.getClassOwnersFiles();
+		URL xmlURL = getAppropriatedURL(classOwnersFiles, className);
 		return xmlURL;
 	}
 

@@ -83,9 +83,9 @@ public class JpaTest {
 			metaCreator.scanForBeans();
 		}
 		Map<String, URL> classOwnershipURLs = metaCreator.getAnnotationDB()
-				.getClassOwnershipURLs();
+				.getClassOwnersURLs();
 		Map<String, String> classOwnershipFiles = metaCreator.getAnnotationDB()
-				.getClassOwnershipFiles();
+				.getClassOwnersFiles();
 		System.out
 				.println("============URLs of scanned classes ================");
 		for (Map.Entry<String, URL> entry : classOwnershipURLs.entrySet()) {

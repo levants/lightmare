@@ -33,10 +33,10 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	private static final long serialVersionUID = 1L;
 
 	// To store which class in which URL is found
-	protected Map<String, URL> classOwnershipURLs = new HashMap<String, URL>();
+	protected Map<String, URL> classOwnersURLs = new HashMap<String, URL>();
 
 	// To store which class in which File is found
-	protected Map<String, String> classOwnershipFiles = new HashMap<String, String>();
+	protected Map<String, String> classOwnersFiles = new HashMap<String, String>();
 
 	private String getFileName(URL url) {
 		String fileName = url.getFile();
@@ -70,12 +70,12 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 				annotationIndex.put(ann.getTypeName(), classes);
 			}
 			classes.add(className);
-			if (!classOwnershipURLs.containsKey(className)) {
-				classOwnershipURLs.put(className, url);
+			if (!classOwnersURLs.containsKey(className)) {
+				classOwnersURLs.put(className, url);
 			}
-			if (!classOwnershipFiles.containsKey(className)) {
+			if (!classOwnersFiles.containsKey(className)) {
 				fileName = getFileName(url);
-				classOwnershipFiles.put(className, fileName);
+				classOwnersFiles.put(className, fileName);
 			}
 			classAnnotations.add(ann.getTypeName());
 		}
@@ -152,12 +152,12 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		}
 	}
 
-	public Map<String, URL> getClassOwnershipURLs() {
-		return classOwnershipURLs;
+	public Map<String, URL> getClassOwnersURLs() {
+		return classOwnersURLs;
 	}
 
-	public Map<String, String> getClassOwnershipFiles() {
-		return classOwnershipFiles;
+	public Map<String, String> getClassOwnersFiles() {
+		return classOwnersFiles;
 	}
 
 }

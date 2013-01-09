@@ -33,7 +33,7 @@ public class BeanLoader implements Callable<Boolean> {
 
 				@Override
 				public Thread newThread(Runnable runnable) {
-					Thread thread = new Thread();
+					Thread thread = new Thread(runnable);
 					thread.setName(String.format("Ejb-Loader-Thread-%s",
 							thread.getId()));
 					return thread;
@@ -114,11 +114,17 @@ public class BeanLoader implements Callable<Boolean> {
 	}
 
 	public static boolean loadBean(MetaCreator creator, String beanName,
-			ClassLoader loader) throws InterruptedException, ExecutionException {
+			ClassLoader loader) throws IOException {
 		Future<Boolean> future = loaderPool.submit(new BeanLoader(creator,
 				beanName, loader));
 
-		return future.get();
+		try {
+			return future.get();
+		} catch (InterruptedException ex) {
+			throw new IOException(ex);
+		} catch (ExecutionException ex) {
+			throw new IOException(ex);
+		}
 
 	}
 }
