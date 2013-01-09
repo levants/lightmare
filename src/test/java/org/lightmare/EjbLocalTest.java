@@ -6,6 +6,7 @@ import junit.framework.Assert;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.bean.LightMareBeanRemote;
 import org.lightmare.bean.LightMareFalseBeanRemote;
@@ -14,6 +15,7 @@ import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.entities.Person;
 import org.lightmare.unitorder.RunOrder;
 
+@Ignore
 public class EjbLocalTest {
 	private static LightMareBeanRemote bean;
 
@@ -30,8 +32,8 @@ public class EjbLocalTest {
 
 		try {
 
-			DBCreator creator = JpaTest.getDBCreator(null, "testUnit",
-					"persistence/em");
+			DBCreator creator = JpaTest.getDBCreator(null,
+					"./ds/standalone.xml", "testUnit", "persistence/em");
 
 			personToAdd = creator.createPersonToAdd();
 			personToEdit = creator.createPersonToEdit();

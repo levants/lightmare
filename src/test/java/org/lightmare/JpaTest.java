@@ -26,19 +26,19 @@ public class JpaTest {
 
 	public static DBCreator getDBCreator() throws ClassNotFoundException,
 			IOException, ParseException {
-		DBCreator creator = getDBCreator(null, null, null);
+		DBCreator creator = getDBCreator(null, null, null, null);
 		return creator;
 	}
 
 	public static DBCreator getDBCreator(String unitName)
 			throws ClassNotFoundException, IOException, ParseException {
-		DBCreator creator = getDBCreator(null, unitName, null);
+		DBCreator creator = getDBCreator(null, null, unitName, null);
 		return creator;
 	}
 
-	public static DBCreator getDBCreator(String path, String unitName,
-			String jndi) throws ClassNotFoundException, IOException,
-			ParseException {
+	public static DBCreator getDBCreator(String path, String dataSourcePath,
+			String unitName, String jndi) throws ClassNotFoundException,
+			IOException, ParseException {
 		Map<String, String> properties = new HashMap<String, String>();
 
 		properties.put("hibernate.default_schema", "PERSONS");
@@ -66,8 +66,11 @@ public class JpaTest {
 		if (unitName != null) {
 			builder.setScanForEntities(true).setUnitName(unitName);
 		}
-		builder.setSwapDataSource(true)
-				.setDataSourcePath("./ds/standalone.xml");
+		builder.setSwapDataSource(true);
+		if (dataSourcePath != null) {
+			builder.setSwapDataSource(true).setDataSourcePath(dataSourcePath);
+		}
+
 		MetaCreator metaCreator;
 		if (path != null) {
 			builder.setXmlFromJar(true);

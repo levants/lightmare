@@ -48,10 +48,11 @@ public class EjbTest {
 			String path;
 			if (scanner != null && scanner.hasNextLine()) {
 				path = scanner.nextLine().trim();
-				creator = JpaTest.getDBCreator(path, "testUnit", null);
+				creator = JpaTest.getDBCreator(path, "./ds/standalone.xml",
+						"testUnit", null);
 			} else {
 				creator = JpaTest.getDBCreator(JarFileReaderTest.JAR_PATH,
-						"testUnit", null);
+						"./ds/standalone.xml", "testUnit", null);
 
 			}
 			personToAdd = creator.createPersonToAdd();
