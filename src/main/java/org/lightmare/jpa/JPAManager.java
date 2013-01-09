@@ -1,6 +1,5 @@
 package org.lightmare.jpa;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
@@ -10,10 +9,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
+import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.FileParsers;
 
@@ -174,10 +175,20 @@ public class JPAManager {
 		return emf;
 	}
 
-	public void setConnection(String unitName) throws IOException {
+	public void setConnection(String unitName, String name) throws IOException {
 		if (!connections.containsKey(unitName)) {
 			EntityManagerFactory emf = createEntityManagerFactory(unitName);
 			connections.put(unitName, emf);
+			if (name != null && !name.isEmpty()) {
+				NamingUtils namingUtils = new NamingUtils();
+				try {
+					namingUtils.getContext().bind(
+							String.format("java:comp/env/%s", name), emf);
+				} catch (NamingException ex) {
+					throw new IOException(String.format(
+							"could not bind connection %s", unitName), ex);
+				}
+			}
 		}
 	}
 

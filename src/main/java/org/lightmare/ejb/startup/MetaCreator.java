@@ -105,7 +105,8 @@ public class MetaCreator {
 		return classes;
 	}
 
-	protected void configureConnection(String unitName) throws IOException {
+	protected void configureConnection(String unitName, String name)
+			throws IOException {
 
 		JPAManager.Builder builder = new JPAManager.Builder();
 
@@ -137,7 +138,7 @@ public class MetaCreator {
 		builder.setPath(persXmlPath).setProperties(prop)
 				.setSwapDataSource(swapDataSource)
 				.setDataSourcePath(dataSourcePath).build()
-				.setConnection(unitName);
+				.setConnection(unitName, name);
 	}
 
 	/**
@@ -158,7 +159,8 @@ public class MetaCreator {
 			if (context != null) {
 				metaData.setConnectorField(field);
 				unitName = context.unitName();
-				configureConnection(unitName);
+				String name = context.name();
+				configureConnection(unitName, name);
 				metaData.setUnitName(unitName);
 				break;
 			}

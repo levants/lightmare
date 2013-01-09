@@ -1,29 +1,20 @@
 package org.lightmare;
 
-import java.io.InputStream;
 import java.util.List;
-import java.util.Scanner;
 
 import junit.framework.Assert;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.lightmare.bean.LightMareBeanRemote;
 import org.lightmare.bean.LightMareFalseBeanRemote;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.entities.Person;
 import org.lightmare.unitorder.RunOrder;
-import org.lightmare.unitorder.SortedRunner;
 
-/**
- * Unit test for lightmare App.
- */
-@RunWith(SortedRunner.class)
-public class EjbTest {
-
+public class EjbLocalTest {
 	private static LightMareBeanRemote bean;
 
 	private static Person personToAdd;
@@ -34,26 +25,14 @@ public class EjbTest {
 
 	private static Person personToIdGeneratorNew;
 
-	private static Scanner scanner;
-
 	@BeforeClass
 	public static void start() {
 
 		try {
-			InputStream stream = EjbTest.class.getResourceAsStream("path");
-			if (stream != null) {
-				scanner = new Scanner(stream);
-			}
-			DBCreator creator;
-			String path;
-			if (scanner != null && scanner.hasNextLine()) {
-				path = scanner.nextLine().trim();
-				creator = JpaTest.getDBCreator(path, "testUnit", null);
-			} else {
-				creator = JpaTest.getDBCreator(JarFileReaderTest.JAR_PATH,
-						"testUnit", null);
 
-			}
+			DBCreator creator = JpaTest.getDBCreator(null, "testUnit",
+					"persistence/em");
+
 			personToAdd = creator.createPersonToAdd();
 			personToEdit = creator.createPersonToEdit();
 			personToIdGenerator = creator.personForIdGenerator();
@@ -150,5 +129,4 @@ public class EjbTest {
 	public static void end() {
 		MetaCreator.closeAllConnections();
 	}
-
 }

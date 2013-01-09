@@ -7,6 +7,8 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -24,18 +26,19 @@ public class JpaTest {
 
 	public static DBCreator getDBCreator() throws ClassNotFoundException,
 			IOException, ParseException {
-		DBCreator creator = getDBCreator(null, null);
+		DBCreator creator = getDBCreator(null, null, null);
 		return creator;
 	}
 
 	public static DBCreator getDBCreator(String unitName)
 			throws ClassNotFoundException, IOException, ParseException {
-		DBCreator creator = getDBCreator(null, unitName);
+		DBCreator creator = getDBCreator(null, unitName, null);
 		return creator;
 	}
 
-	public static DBCreator getDBCreator(String path, String unitName)
-			throws ClassNotFoundException, IOException, ParseException {
+	public static DBCreator getDBCreator(String path, String unitName,
+			String jndi) throws ClassNotFoundException, IOException,
+			ParseException {
 		Map<String, String> properties = new HashMap<String, String>();
 
 		properties.put("hibernate.default_schema", "PERSONS");
@@ -63,15 +66,19 @@ public class JpaTest {
 		if (unitName != null) {
 			builder.setScanForEntities(true).setUnitName(unitName);
 		}
-		if (path != null) {
-			builder.setPersXmlPath(path);
-		}
-		builder.setSwapDataSource(true).setXmlFromJar(true)
+		builder.setSwapDataSource(true)
 				.setDataSourcePath("./ds/standalone.xml");
-		MetaCreator metaCreator = builder.build();
-		File file = new File(JarFileReaderTest.JAR_PATH);
-		File[] files = { file };
-		metaCreator.scanForBeans(files);
+		MetaCreator metaCreator;
+		if (path != null) {
+			builder.setXmlFromJar(true);
+			File file = new File(path);
+			File[] files = { file };
+			metaCreator = builder.build();
+			metaCreator.scanForBeans(files);
+		} else {
+			metaCreator = builder.build();
+			metaCreator.scanForBeans();
+		}
 		Map<String, URL> classOwnershipURLs = metaCreator.getAnnotationDB()
 				.getClassOwnershipURLs();
 		Map<String, String> classOwnershipFiles = metaCreator.getAnnotationDB()
@@ -90,7 +97,17 @@ public class JpaTest {
 		}
 		System.out
 				.println("====================================================");
-		EntityManagerFactory emf = JPAManager.getConnection("testUnit");
+		EntityManagerFactory emf = null;
+		if (jndi == null) {
+			emf = JPAManager.getConnection(unitName);
+		} else {
+			try {
+				emf = (EntityManagerFactory) new InitialContext().lookup(String
+						.format("java:comp/env/%s", jndi));
+			} catch (NamingException ex) {
+				ex.printStackTrace();
+			}
+		}
 		EntityManager em = emf.createEntityManager();
 		DBCreator creator = new DBCreator(em);
 		creator.createDB();

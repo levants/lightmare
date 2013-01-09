@@ -2,6 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
 	<persistence-unit name="testUnit" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:/personsDerby</jta-data-source>
 		<class>ge.gov.mia.lightmare.entities.Email</class>
 		<class>ge.gov.mia.lightmare.entities.Person</class>
 		<class>ge.gov.mia.lightmare.entities.PhoneNumber</class>

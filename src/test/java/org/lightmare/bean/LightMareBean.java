@@ -1,6 +1,5 @@
 package org.lightmare.bean;
 
-
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -14,7 +13,7 @@ import org.lightmare.entities.Person;
 @Stateless
 public class LightMareBean implements LightMareBeanRemote {
 
-	@PersistenceContext(unitName = "testUnit")
+	@PersistenceContext(unitName = "testUnit", name = "persistence/em")
 	private EntityManager em;
 
 	@Override
