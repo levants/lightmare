@@ -38,7 +38,7 @@ public class ExtUtils extends DirUtils {
 		tmpFile.delete();
 		tmpFile.mkdir();
 
-		TmpResources.tmpFiles.add(tmpFile);
+		TmpResources.addFile(tmpFile);
 		ZipFile zipFile = getEarFile();
 		Enumeration<? extends ZipEntry> zipFileEntries = zipFile.entries();
 
@@ -58,9 +58,9 @@ public class ExtUtils extends DirUtils {
 			File parrent = file.getParentFile();
 			if (!parrent.exists()) {
 				parrent.mkdirs();
-				TmpResources.tmpFiles.add(parrent);
+				TmpResources.addFile(parrent);
 			}
-			TmpResources.tmpFiles.add(file);
+			TmpResources.addFile(file);
 			if (!entry.isDirectory()) {
 
 				if (!file.exists()) {

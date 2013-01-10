@@ -13,8 +13,13 @@ import java.util.Set;
  */
 public class TmpResources {
 
-	public static final Set<File> tmpFiles = Collections
+	private static final Set<File> tmpFiles = Collections
 			.synchronizedSet(new HashSet<File>());
+
+	public static void addFile(File file) {
+		tmpFiles.add(file);
+		file.deleteOnExit();
+	}
 
 	public static void removeTempFiles() {
 
@@ -23,5 +28,9 @@ public class TmpResources {
 				tmpFile.delete();
 			}
 		}
+	}
+
+	public static int size() {
+		return tmpFiles.size();
 	}
 }

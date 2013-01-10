@@ -89,7 +89,7 @@ public class EarUtils extends IOUtils {
 				tmpFile = File.createTempFile(UUID.randomUUID().toString(),
 						".jar");
 				tmpFile.deleteOnExit();
-				TmpResources.tmpFiles.add(tmpFile);
+				TmpResources.addFile(tmpFile);
 				output = new FileOutputStream(tmpFile);
 				byte[] buffer = new byte[1024];
 				int len;

@@ -248,7 +248,7 @@ public class EarFileReaderTest {
 					apps.size() > 0);
 			ioUtils.extractEjbJars(apps);
 			Assert.assertTrue("could not extract jar files",
-					TmpResources.tmpFiles.size() > 0);
+					TmpResources.size() > 0);
 			Map<URL, URL> xmls = ioUtils.getXmlURLs();
 			Scanner scanner;
 			for (Map.Entry<URL, URL> entry : xmls.entrySet()) {
