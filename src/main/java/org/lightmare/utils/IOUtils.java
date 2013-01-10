@@ -232,7 +232,7 @@ public abstract class IOUtils {
 	 * @param files
 	 * @throws MalformedURLException
 	 */
-	public void scanDirectory(File... files) throws IOException {
+	public void scanDirectory(File... files) throws MalformedURLException {
 		File parentFile;
 		if (files.length >= 1) {
 			parentFile = files[0];
