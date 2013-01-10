@@ -88,7 +88,12 @@ public class BeanLoader implements Callable<Boolean> {
 					"bean % is alredy in use", beanName));
 		} else {
 			try {
-				Class<?> beanClass = Class.forName(beanName);
+				Class<?> beanClass;
+				if (loader == null) {
+					beanClass = Class.forName(beanName);
+				} else {
+					beanClass = Class.forName(beanName, true, loader);
+				}
 				MetaData metaData = createMeta(beanClass);
 				Stateless annotation = beanClass.getAnnotation(Stateless.class);
 				String beanName = annotation.name();
