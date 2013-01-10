@@ -55,8 +55,8 @@ public class ExtUtils extends DirUtils {
 		try {
 			extStream = getEarFile().getInputStream(entry);
 			File file = new File(tmpFile, entry.getName());
-			file = new File(tmpFile, file.getName());
 			File parrent = file.getParentFile();
+			file = new File(tmpFile, file.getName());
 			if (!parrent.exists()) {
 				parrent.mkdirs();
 			}

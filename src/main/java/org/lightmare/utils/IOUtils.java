@@ -17,7 +17,7 @@ import java.util.zip.ZipFile;
 import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.earfile.DirUtils;
-import org.lightmare.utils.earfile.EarUtils;
+import org.lightmare.utils.earfile.ExtUtils;
 import org.lightmare.utils.earfile.JarUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -134,7 +134,7 @@ public abstract class IOUtils {
 		if (appFile.isDirectory() && path.endsWith(".ear")) {
 			ioUtils = new DirUtils(appFile);
 		} else if (path.endsWith(".ear")) {
-			ioUtils = new EarUtils(appFile);
+			ioUtils = new ExtUtils(appFile);
 		} else if (path.endsWith(".jar")) {
 			ioUtils = new JarUtils(appFile);
 		}
