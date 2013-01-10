@@ -4,11 +4,11 @@ import static org.lightmare.ejb.meta.MetaContainer.closeConnections;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -23,10 +23,10 @@ import org.apache.log4j.Logger;
 import org.lightmare.annotations.UnitName;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.meta.TmpResources;
-import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.scannotation.AnnotationDB;
+import org.lightmare.utils.IOUtils;
 
 /**
  * Determines and saves in cache ejb beans {@link MetaData} on startup
@@ -50,11 +50,11 @@ public class MetaCreator {
 
 	private boolean persXmlFromJar;
 
-	private URL currentURL;
-
 	private boolean swapDataSource;
 
 	private String dataSourcePath;
+
+	private Map<String, IOUtils> aggregateds = new HashMap<String, IOUtils>();
 
 	private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
@@ -83,6 +83,22 @@ public class MetaCreator {
 		return Arrays.asList(classSet.toArray(new String[classSet.size()]));
 	}
 
+	private void filterEntitiesForJar(Set<String> classSet,
+			String fileNameForBean) {
+
+		Map<String, String> classOwnersFiles = annotationDB
+				.getClassOwnersFiles();
+
+		String fileNameForEntity;
+		for (String entityName : classSet) {
+			fileNameForEntity = classOwnersFiles.get(entityName);
+			if (fileNameForEntity != null && fileNameForBean != null
+					&& !fileNameForEntity.equals(fileNameForBean)) {
+				classSet.remove(entityName);
+			}
+		}
+	}
+
 	private List<String> filterEntities(Set<String> classSet)
 			throws IOException {
 		List<String> classes;
@@ -101,20 +117,17 @@ public class MetaCreator {
 		return classes;
 	}
 
-	protected void configureConnection(String unitName, String name)
-			throws IOException {
+	protected void configureConnection(String unitName, String beanName,
+			String jndiName) throws IOException {
 
 		JPAManager.Builder builder = new JPAManager.Builder();
+		Map<String, String> classOwnersFiles = annotationDB
+				.getClassOwnersFiles();
+		IOUtils ioUtils = aggregateds.get(beanName);
 
-		if (persXmlFromJar && currentURL != null) {
-			try {
-				String jarPath = String.format("%s!/%s", currentURL.toString(),
-						ConfigLoader.XML_PATH);
-				URL jarURL = new URL("jar", "", jarPath);
-				builder.setURL(jarURL);
-			} catch (MalformedURLException ex) {
-				throw new IOException(ex);
-			}
+		if (ioUtils != null) {
+			URL jarURL = ioUtils.getAppropriatedURL(classOwnersFiles, beanName);
+			builder.setURL(jarURL);
 		}
 		if (scanForEntities) {
 			Set<String> classSet;
@@ -128,13 +141,17 @@ public class MetaCreator {
 						.getName());
 				classSet.retainAll(unitNamedSet);
 			}
+			if (ioUtils != null) {
+				String fileNameForBean = classOwnersFiles.get(beanName);
+				filterEntitiesForJar(classSet, fileNameForBean);
+			}
 			List<String> classes = filterEntities(classSet);
 			builder.setClasses(classes);
 		}
 		builder.setPath(persXmlPath).setProperties(prop)
 				.setSwapDataSource(swapDataSource)
 				.setDataSourcePath(dataSourcePath).build()
-				.setConnection(unitName, name);
+				.setConnection(unitName, jndiName);
 	}
 
 	private void addURLToList(Enumeration<URL> urlEnum, List<URL> urlList) {
@@ -165,22 +182,35 @@ public class MetaCreator {
 		Set<String> beanNames = annotationDB.getAnnotationIndex().get(
 				Stateless.class.getName());
 		Boolean future;
-		for (String name : beanNames) {
-			LOG.info(String.format("deploing bean %s", name));
+		Map<String, URL> classOwnersURL = annotationDB.getClassOwnersURLs();
+		URL currentURL;
+		IOUtils ioUtils;
+		ClassLoader loader;
+		for (String beanName : beanNames) {
+			LOG.info(String.format("deploing bean %s", beanName));
 			try {
-				if (archives.length == 1) {
-					currentURL = archives[0];
+				currentURL = classOwnersURL.get(beanName);
+				ioUtils = IOUtils.getAppropriatedType(currentURL);
+				loader = null;
+				if (ioUtils != null) {
+					ioUtils.scan(persXmlFromJar);
+					URL[] libURLs = ioUtils.getURLs();
+					loader = LibraryLoader.getEnrichedLoader(libURLs);
+					aggregateds.put(beanName, ioUtils);
 				}
-				future = BeanLoader.loadBean(this, name, null);
+				future = BeanLoader.loadBean(this, beanName, loader);
 				if (future) {
-					LOG.info(String.format("bean %s deployed", name));
+					LOG.info(String.format("bean %s deployed", beanName));
 				} else {
-					LOG.error(String.format("Could not deploy bean %s", name));
+					LOG.error(String.format("Could not deploy bean %s",
+							beanName));
 				}
 			} catch (IOException ex) {
-				LOG.error(String.format("Could not deploy bean %s", name), ex);
+				LOG.error(String.format("Could not deploy bean %s", beanName),
+						ex);
 			} catch (Exception ex) {
-				LOG.error(String.format("Could not deploy bean %s", name), ex);
+				LOG.error(String.format("Could not deploy bean %s", beanName),
+						ex);
 			}
 		}
 
