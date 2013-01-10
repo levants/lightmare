@@ -110,7 +110,7 @@ public class DirUtils extends IOUtils {
 	}
 
 	@Override
-	public void scan(Object... args) throws IOException {
+	protected void scanArchive(Object... args) throws IOException {
 		if (args.length > 0) {
 			xmlFromJar = (Boolean) args[0];
 		}

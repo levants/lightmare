@@ -51,7 +51,7 @@ public class EjbTest {
 				creator = JpaTest.getDBCreator(path, "./ds/standalone.xml",
 						"testUnit", null);
 			} else {
-				creator = JpaTest.getDBCreator(JarFileReaderTest.JAR_PATH,
+				creator = JpaTest.getDBCreator(EarFileReaderTest.EAR_PATH,
 						"./ds/standalone.xml", "testUnit", null);
 
 			}

@@ -88,6 +88,7 @@ public class EarUtils extends IOUtils {
 			if (jarStream != null) {
 				tmpFile = File.createTempFile(UUID.randomUUID().toString(),
 						".jar");
+				tmpFile.deleteOnExit();
 				TmpResources.tmpFiles.add(tmpFile);
 				output = new FileOutputStream(tmpFile);
 				byte[] buffer = new byte[1024];
@@ -148,7 +149,7 @@ public class EarUtils extends IOUtils {
 			if (xmlFromJar && checkOnOrm) {
 				jarEntry = earFile.getEntry(jarName);
 				url = extractEjbJar(jarEntry);
-				getXmlFiles().put(jarName, jarURL);
+				getXmlFiles().put(jarName, url);
 				getXmlURLs().put(jarURL, url);
 			}
 		}
@@ -161,7 +162,7 @@ public class EarUtils extends IOUtils {
 	}
 
 	@Override
-	public void scan(Object... args) throws IOException {
+	protected void scanArchive(Object... args) throws IOException {
 		if (args.length > 0) {
 			xmlFromJar = (Boolean) args[0];
 		}

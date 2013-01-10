@@ -50,6 +50,8 @@ public abstract class IOUtils {
 
 	protected boolean xmlFromJar;
 
+	protected boolean executed;
+
 	public IOUtils(String path) {
 		this.path = path;
 		realFile = new File(path);
@@ -70,6 +72,10 @@ public abstract class IOUtils {
 			throw new IOException(ex);
 		}
 		isDirectory = realFile.isDirectory();
+	}
+
+	public boolean isExecuted() {
+		return executed;
 	}
 
 	public void setXmlFromJar(boolean xmlFromJar) {
@@ -251,7 +257,12 @@ public abstract class IOUtils {
 		}
 	}
 
-	public abstract void scan(Object... args) throws IOException;
+	protected abstract void scanArchive(Object... args) throws IOException;
+
+	public void scan(Object... args) throws IOException {
+		scanArchive(args);
+		executed = true;
+	}
 
 	public URL[] getLibs() {
 		URL[] urls;
