@@ -60,8 +60,11 @@ public class LibraryLoader {
 
 	public static ClassLoader getEnrichedLoader(URL[] urls)
 			throws MalformedURLException {
-		URLClassLoader urlLoader = URLClassLoader.newInstance(urls, Thread
-				.currentThread().getContextClassLoader());
+		URLClassLoader urlLoader = null;
+		if (urls.length > 0) {
+			urlLoader = URLClassLoader.newInstance(urls, Thread.currentThread()
+					.getContextClassLoader());
+		}
 		return urlLoader;
 	}
 

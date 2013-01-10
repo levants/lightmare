@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Set;
@@ -33,7 +32,7 @@ public class EarUtils extends IOUtils {
 		super(file);
 	}
 
-	public EarUtils(URL url) throws URISyntaxException {
+	public EarUtils(URL url) throws IOException {
 		super(url);
 	}
 
@@ -143,10 +142,10 @@ public class EarUtils extends IOUtils {
 		boolean checkOnOrm;
 		for (String jarName : jarNames) {
 			checkOnOrm = checkOnOrm(jarName);
-			if (checkOnOrm) {
-				jarPath = String.format("%s!/%s", earPath, jarName);
-				jarURL = new URL("jar", "", jarPath);
-				getEjbURLs().add(jarURL);
+			jarPath = String.format("%s!/%s", earPath, jarName);
+			jarURL = new URL("jar", "", jarPath);
+			getEjbURLs().add(jarURL);
+			if (xmlFromJar && checkOnOrm) {
 				jarEntry = earFile.getEntry(jarName);
 				url = extractEjbJar(jarEntry);
 				getXmlFiles().put(jarName, jarURL);
@@ -159,5 +158,16 @@ public class EarUtils extends IOUtils {
 		if (path.endsWith(".ear") && !isDirectory) {
 			getEjbLibs();
 		}
+	}
+
+	@Override
+	public void scan(Object... args) throws IOException {
+		if (args.length > 0) {
+			xmlFromJar = (Boolean) args[0];
+		}
+
+		getEjbLibs();
+		Set<String> appNames = appXmlParser();
+		extractEjbJars(appNames);
 	}
 }

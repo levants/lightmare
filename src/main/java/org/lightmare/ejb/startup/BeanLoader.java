@@ -70,8 +70,8 @@ public class BeanLoader implements Callable<Boolean> {
 			if (context != null) {
 				metaData.setConnectorField(field);
 				unitName = context.unitName();
-				String name = context.name();
-				creator.configureConnection(unitName, name);
+				String jndiName = context.name();
+				creator.configureConnection(unitName, beanName, jndiName);
 				metaData.setUnitName(unitName);
 				break;
 			}

@@ -5,7 +5,6 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Set;
 import java.util.jar.JarEntry;
@@ -24,7 +23,7 @@ public class DirUtils extends IOUtils {
 		super(file);
 	}
 
-	public DirUtils(URL url) throws URISyntaxException {
+	public DirUtils(URL url) throws IOException {
 		super(url);
 	}
 
@@ -93,13 +92,13 @@ public class DirUtils extends IOUtils {
 		String fillXmlPath;
 		String jarPath;
 		URL currentURL;
-		boolean check;
+		boolean checkOnOrm;
 		for (String jarName : jarNames) {
 			fillXmlPath = String.format("%s%s", xmlPath, jarName);
-			check = checkOnOrm(fillXmlPath);
-			if (check) {
-				currentURL = new File(fillXmlPath).toURI().toURL();
-				getEjbURLs().add(currentURL);
+			checkOnOrm = checkOnOrm(fillXmlPath);
+			currentURL = new File(fillXmlPath).toURI().toURL();
+			getEjbURLs().add(currentURL);
+			if (xmlFromJar && checkOnOrm) {
 				jarPath = String.format("%s!/%s", currentURL.toString(),
 						ConfigLoader.XML_PATH);
 				URL jarURL = new URL("jar", "", jarPath);
@@ -108,5 +107,16 @@ public class DirUtils extends IOUtils {
 			}
 		}
 
+	}
+
+	@Override
+	public void scan(Object... args) throws IOException {
+		if (args.length > 0) {
+			xmlFromJar = (Boolean) args[0];
+		}
+
+		getEjbLibs();
+		Set<String> appNames = appXmlParser();
+		extractEjbJars(appNames);
 	}
 }
