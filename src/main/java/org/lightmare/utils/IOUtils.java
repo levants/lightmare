@@ -18,6 +18,7 @@ import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.earfile.DirUtils;
 import org.lightmare.utils.earfile.EarUtils;
+import org.lightmare.utils.earfile.JarUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -35,8 +36,6 @@ public abstract class IOUtils {
 
 	protected Map<String, URL> xmlFiles;
 
-	protected Map<String, String> classOwnershipFiles;
-
 	protected List<URL> libURLs;
 
 	protected List<URL> ejbURLs;
@@ -48,6 +47,8 @@ public abstract class IOUtils {
 	protected ZipFile earFile;
 
 	protected boolean isDirectory;
+
+	protected boolean xmlFromJar;
 
 	public IOUtils(String path) {
 		this.path = path;
@@ -61,10 +62,18 @@ public abstract class IOUtils {
 		isDirectory = realFile.isDirectory();
 	}
 
-	public IOUtils(URL url) throws URISyntaxException {
+	public IOUtils(URL url) throws IOException {
 		this.path = url.toString();
-		realFile = new File(url.toURI());
+		try {
+			realFile = new File(url.toURI());
+		} catch (URISyntaxException ex) {
+			throw new IOException(ex);
+		}
 		isDirectory = realFile.isDirectory();
+	}
+
+	public void setXmlFromJar(boolean xmlFromJar) {
+		this.xmlFromJar = xmlFromJar;
 	}
 
 	public Map<URL, URL> getXmlURLs() {
@@ -107,14 +116,21 @@ public abstract class IOUtils {
 		return earFile;
 	}
 
-	public static IOUtils getAppropriateType(URL url) throws URISyntaxException {
+	public static IOUtils getAppropriatedType(URL url) throws IOException {
 		IOUtils ioUtils = null;
 		String path = url.getPath();
-		File appFile = new File(url.toURI());
+		File appFile;
+		try {
+			appFile = new File(url.toURI());
+		} catch (URISyntaxException ex) {
+			throw new IOException(ex);
+		}
 		if (appFile.isDirectory() && path.endsWith(".ear")) {
 			ioUtils = new DirUtils(appFile);
 		} else if (path.endsWith(".ear")) {
 			ioUtils = new EarUtils(appFile);
+		} else if (path.endsWith(".jar")) {
+			ioUtils = new JarUtils(appFile);
 		}
 
 		return ioUtils;
@@ -234,6 +250,8 @@ public abstract class IOUtils {
 			}
 		}
 	}
+
+	public abstract void scan(Object... args) throws IOException;
 
 	public URL[] getLibs() {
 		URL[] urls;
