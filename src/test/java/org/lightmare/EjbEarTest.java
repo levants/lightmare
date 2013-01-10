@@ -8,7 +8,6 @@ import junit.framework.Assert;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lightmare.bean.LightMareBeanRemote;
@@ -19,12 +18,8 @@ import org.lightmare.entities.Person;
 import org.lightmare.unitorder.RunOrder;
 import org.lightmare.unitorder.SortedRunner;
 
-/**
- * Unit test for lightmare App.
- */
-@Ignore
 @RunWith(SortedRunner.class)
-public class EjbTest {
+public class EjbEarTest {
 
 	private static LightMareBeanRemote bean;
 
@@ -53,7 +48,7 @@ public class EjbTest {
 				creator = JpaTest.getDBCreator(path, "./ds/standalone.xml",
 						"testUnit", null);
 			} else {
-				creator = JpaTest.getDBCreator(JarFileReaderTest.JAR_PATH,
+				creator = JpaTest.getDBCreator(EarFileReaderTest.EAR_PATH,
 						"./ds/standalone.xml", "testUnit", null);
 
 			}
@@ -153,5 +148,4 @@ public class EjbTest {
 	public static void end() {
 		MetaCreator.closeAllConnections();
 	}
-
 }
