@@ -240,6 +240,7 @@ public class EarFileReaderTest {
 	@Test
 	public void extractEjbJarTest() {
 		IOUtils ioUtils = new EarUtils(EAR_PATH);
+		ioUtils.setXmlFromJar(true);
 		try {
 			InputStream stream = ioUtils.earReader();
 			Set<String> apps = ioUtils.appXmlParser(stream);
@@ -277,7 +278,7 @@ public class EarFileReaderTest {
 	@Test
 	public void getAppropriateTypeTest() {
 		try {
-			IOUtils ioUtils = IOUtils.getAppropriateType(new File(EAR_PATH)
+			IOUtils ioUtils = IOUtils.getAppropriatedType(new File(EAR_PATH)
 					.toURI().toURL());
 			Assert.assertTrue("Could not get appropriate type",
 					ioUtils instanceof EarUtils);

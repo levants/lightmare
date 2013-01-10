@@ -21,8 +21,9 @@ public class AnnotationDBTest {
 	public void getOwnershipFilesTest() {
 
 		try {
-			IOUtils ioUtils = IOUtils.getAppropriateType(new File(EAR_PATH)
+			IOUtils ioUtils = IOUtils.getAppropriatedType(new File(EAR_PATH)
 					.toURI().toURL());
+			ioUtils.setXmlFromJar(true);
 			ioUtils.getEjbLibs();
 			Set<String> jarNames = ioUtils.appXmlParser();
 			ioUtils.extractEjbJars(jarNames);
