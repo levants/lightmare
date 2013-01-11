@@ -43,31 +43,38 @@ public class DirUtils extends IOUtils {
 		return stream;
 	}
 
+	private void fillLibs(File libDirectory) throws IOException {
+
+		File[] libJars = libDirectory.listFiles(new FileFilter() {
+
+			@Override
+			public boolean accept(File jarFile) {
+				return jarFile.getName().endsWith(".jar")
+						&& !jarFile.isDirectory();
+			}
+		});
+
+		if (libJars != null) {
+			for (File libFile : libJars) {
+				URL url = libFile.toURI().toURL();
+				getLibURLs().add(url);
+			}
+		}
+	}
+
 	@Override
 	public void getEjbLibs() throws IOException {
-
-		File realFile = new File(path);
 
 		File[] files = realFile.listFiles(new FileFilter() {
 
 			@Override
 			public boolean accept(File file) {
-				return file.getName().startsWith("lib/") && file.isDirectory();
+				return file.getName().endsWith("lib") && file.isDirectory();
 			}
 		});
-		File[] libJars;
-		for (File file : files) {
-			libJars = file.listFiles(new FileFilter() {
-
-				@Override
-				public boolean accept(File jarFile) {
-					return jarFile.getName().endsWith(".jar")
-							&& !jarFile.isDirectory();
-				}
-			});
-			for (File libFile : libJars) {
-				URL url = libFile.toURI().toURL();
-				getLibURLs().add(url);
+		if (files != null) {
+			for (File libDirectory : files) {
+				fillLibs(libDirectory);
 			}
 		}
 	}

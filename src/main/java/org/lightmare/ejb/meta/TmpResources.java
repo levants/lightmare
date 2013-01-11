@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.lightmare.utils.fs.FileUtils;
+
 /**
  * Caches all temporal {@link File} instances and deletes them after processing
  * 
@@ -25,7 +27,7 @@ public class TmpResources {
 
 		synchronized (tmpFiles) {
 			for (File tmpFile : tmpFiles) {
-				tmpFile.delete();
+				FileUtils.deleteFile(tmpFile);
 			}
 		}
 	}

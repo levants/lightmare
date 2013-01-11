@@ -24,9 +24,7 @@ public class AnnotationDBTest {
 			IOUtils ioUtils = IOUtils.getAppropriatedType(new File(EAR_PATH)
 					.toURI().toURL());
 			ioUtils.setXmlFromJar(true);
-			ioUtils.getEjbLibs();
-			Set<String> jarNames = ioUtils.appXmlParser();
-			ioUtils.extractEjbJars(jarNames);
+			ioUtils.scan(true);
 			Map<URL, URL> xmlURLs = ioUtils.getXmlURLs();
 			Assert.assertTrue("Could not find application ejb jar urls",
 					xmlURLs.size() > 0);
