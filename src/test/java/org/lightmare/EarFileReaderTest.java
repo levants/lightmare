@@ -29,6 +29,7 @@ import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.earfile.EarUtils;
+import org.lightmare.utils.earfile.ExtUtils;
 
 public class EarFileReaderTest {
 
@@ -281,7 +282,7 @@ public class EarFileReaderTest {
 			IOUtils ioUtils = IOUtils.getAppropriatedType(new File(EAR_PATH)
 					.toURI().toURL());
 			Assert.assertTrue("Could not get appropriate type",
-					ioUtils instanceof EarUtils);
+					ioUtils instanceof ExtUtils);
 			System.out.println(ioUtils);
 		} catch (Exception ex) {
 			ex.printStackTrace();
