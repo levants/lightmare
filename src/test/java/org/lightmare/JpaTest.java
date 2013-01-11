@@ -20,6 +20,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.jpa.JPAManager;
+import org.lightmare.logger.Configure;
 
 @Ignore
 public class JpaTest {
@@ -39,6 +40,7 @@ public class JpaTest {
 	public static DBCreator getDBCreator(String path, String dataSourcePath,
 			String unitName, String jndi) throws ClassNotFoundException,
 			IOException, ParseException {
+		Configure.configure();
 		Map<String, String> properties = new HashMap<String, String>();
 
 		properties.put("hibernate.default_schema", "PERSONS");
