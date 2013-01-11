@@ -74,6 +74,12 @@ public class LibraryLoader {
 		}
 	}
 
+	public static void loadCurrentLibraries(Thread thread, ClassLoader loader) {
+		if (loader != null) {
+			thread.setContextClassLoader(loader);
+		}
+	}
+
 	public static void loadEarLibraries() {
 
 	}
