@@ -176,77 +176,81 @@ public class MetaCreator {
 	 */
 	public void scanForBeans(URL[] archives) throws IOException {
 
-		// Loads libraries from specified path
-		if (libraryPath != null) {
-			LibraryLoader.loadLibraries(libraryPath);
-		}
-		List<URL> modifiedArchives = new ArrayList<URL>();
-		Map<URL, IOUtils> archivesURLs = new HashMap<URL, IOUtils>();
-		IOUtils ioUtils;
-		List<URL> ejbURLs;
-		for (URL archive : archives) {
-			ioUtils = IOUtils.getAppropriatedType(archive);
-			if (ioUtils != null) {
-				ioUtils.scan(persXmlFromJar);
-				ejbURLs = ioUtils.getEjbURLs();
-				modifiedArchives.addAll(ejbURLs);
-				if (ejbURLs.isEmpty()) {
-					archivesURLs.put(archive, ioUtils);
-				} else {
-					for (URL ejbURL : ejbURLs) {
-						archivesURLs.put(ejbURL, ioUtils);
-					}
-				}
+		try {
+			// Loads libraries from specified path
+			if (libraryPath != null) {
+				LibraryLoader.loadLibraries(libraryPath);
 			}
-		}
-		URL[] fullArchives = modifiedArchives.toArray(new URL[modifiedArchives
-				.size()]);
-		annotationDB = new AnnotationDB();
-		annotationDB.setScanFieldAnnotations(false);
-		annotationDB.setScanParameterAnnotations(false);
-		annotationDB.setScanMethodAnnotations(false);
-		annotationDB.scanArchives(fullArchives);
-		Set<String> beanNames = annotationDB.getAnnotationIndex().get(
-				Stateless.class.getName());
-		Boolean future;
-		Map<String, URL> classOwnersURL = annotationDB.getClassOwnersURLs();
-		URL currentURL;
-		ClassLoader loader;
-		for (String beanName : beanNames) {
-			LOG.info(String.format("deploing bean %s", beanName));
-			try {
-				currentURL = classOwnersURL.get(beanName);
-				ioUtils = archivesURLs.get(currentURL);
-				if (ioUtils == null) {
-					ioUtils = IOUtils.getAppropriatedType(currentURL);
-				}
-				loader = null;
+			List<URL> modifiedArchives = new ArrayList<URL>();
+			Map<URL, IOUtils> archivesURLs = new HashMap<URL, IOUtils>();
+			IOUtils ioUtils;
+			List<URL> ejbURLs;
+			for (URL archive : archives) {
+				ioUtils = IOUtils.getAppropriatedType(archive);
 				if (ioUtils != null) {
-					if (!ioUtils.isExecuted()) {
-						ioUtils.scan(persXmlFromJar);
+					ioUtils.scan(persXmlFromJar);
+					ejbURLs = ioUtils.getEjbURLs();
+					modifiedArchives.addAll(ejbURLs);
+					if (ejbURLs.isEmpty()) {
+						archivesURLs.put(archive, ioUtils);
+					} else {
+						for (URL ejbURL : ejbURLs) {
+							archivesURLs.put(ejbURL, ioUtils);
+						}
 					}
-					URL[] libURLs = ioUtils.getURLs();
-					loader = LibraryLoader.getEnrichedLoader(libURLs);
-					aggregateds.put(beanName, ioUtils);
 				}
-				future = BeanLoader.loadBean(this, beanName, loader);
-				if (future) {
-					LOG.info(String.format("bean %s deployed", beanName));
-				} else {
-					LOG.error(String.format("Could not deploy bean %s",
-							beanName));
-				}
-			} catch (IOException ex) {
-				LOG.error(String.format("Could not deploy bean %s", beanName),
-						ex);
-			} catch (Exception ex) {
-				LOG.error(String.format("Could not deploy bean %s", beanName),
-						ex);
 			}
+			URL[] fullArchives = modifiedArchives
+					.toArray(new URL[modifiedArchives.size()]);
+			annotationDB = new AnnotationDB();
+			annotationDB.setScanFieldAnnotations(false);
+			annotationDB.setScanParameterAnnotations(false);
+			annotationDB.setScanMethodAnnotations(false);
+			annotationDB.scanArchives(fullArchives);
+			Set<String> beanNames = annotationDB.getAnnotationIndex().get(
+					Stateless.class.getName());
+			Boolean future;
+			Map<String, URL> classOwnersURL = annotationDB.getClassOwnersURLs();
+			URL currentURL;
+			ClassLoader loader;
+			for (String beanName : beanNames) {
+				LOG.info(String.format("deploing bean %s", beanName));
+				try {
+					currentURL = classOwnersURL.get(beanName);
+					ioUtils = archivesURLs.get(currentURL);
+					if (ioUtils == null) {
+						ioUtils = IOUtils.getAppropriatedType(currentURL);
+					}
+					loader = null;
+					if (ioUtils != null) {
+						if (!ioUtils.isExecuted()) {
+							ioUtils.scan(persXmlFromJar);
+						}
+						URL[] libURLs = ioUtils.getURLs();
+						loader = LibraryLoader.getEnrichedLoader(libURLs);
+						aggregateds.put(beanName, ioUtils);
+					}
+					future = BeanLoader.loadBean(this, beanName, loader);
+					if (future) {
+						LOG.info(String.format("bean %s deployed", beanName));
+					} else {
+						LOG.error(String.format("Could not deploy bean %s",
+								beanName));
+					}
+				} catch (IOException ex) {
+					LOG.error(
+							String.format("Could not deploy bean %s", beanName),
+							ex);
+				} catch (Exception ex) {
+					LOG.error(
+							String.format("Could not deploy bean %s", beanName),
+							ex);
+				}
+			}
+		} finally {
+			// gets read from all created temporary files
+			TmpResources.removeTempFiles();
 		}
-
-		// gets read from all created temporary files
-		TmpResources.removeTempFiles();
 	}
 
 	/**
