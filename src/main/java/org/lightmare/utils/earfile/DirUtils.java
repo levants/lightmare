@@ -53,11 +53,15 @@ public class DirUtils extends IOUtils {
 						&& !jarFile.isDirectory();
 			}
 		});
-
+		String jarPath;
+		URL jarURL;
 		if (libJars != null) {
 			for (File libFile : libJars) {
 				URL url = libFile.toURI().toURL();
+				jarPath = String.format("%s!/", url.toString());
+				jarURL = new URL("jar", "", jarPath);
 				getLibURLs().add(url);
+				getLibURLs().add(jarURL);
 			}
 		}
 	}
