@@ -79,11 +79,15 @@ public class DirUtils extends IOUtils {
 		}
 	}
 
+	private JarFile extracted(String jarName) throws IOException {
+		return new JarFile(jarName);
+	}
+
 	@Override
 	public boolean checkOnOrm(String jarName) throws IOException {
 
-		JarEntry xmlEntry = new JarFile(jarName)
-				.getJarEntry(ConfigLoader.XML_PATH);
+		JarEntry xmlEntry = extracted(jarName).getJarEntry(
+				ConfigLoader.XML_PATH);
 		return (xmlEntry != null);
 	}
 

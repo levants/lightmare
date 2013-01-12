@@ -54,7 +54,7 @@ public class JarUtils extends IOUtils {
 
 	@Override
 	public boolean checkOnOrm(String jarName) throws IOException {
-		ZipFile zipFile = new ZipFile(realFile);
+		ZipFile zipFile = getEarFile();
 		ZipEntry xmlEntry = zipFile.getEntry(ConfigLoader.XML_PATH);
 
 		return xmlEntry != null;
