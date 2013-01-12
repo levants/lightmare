@@ -154,6 +154,9 @@ public class MetaCreator {
 		if (!prop.containsKey("javax.persistence.validation.mode")) {
 			prop.put("javax.persistence.validation.mode", "none");
 		}
+		if (!prop.containsKey("hibernate.jdbc.use_streams_for_binary")) {
+			prop.put("hibernate.jdbc.use_streams_for_binary", "false");
+		}
 		builder.setPath(persXmlPath).setProperties(prop)
 				.setSwapDataSource(swapDataSource)
 				.setDataSourcePath(dataSourcePath).build()
