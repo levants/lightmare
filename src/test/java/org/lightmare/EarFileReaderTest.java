@@ -41,6 +41,8 @@ public class EarFileReaderTest {
 
 	private Scanner scanner;
 
+	private ZipFile zipFile;
+
 	@Test
 	public void readEntryTest() {
 		try {
@@ -121,8 +123,8 @@ public class EarFileReaderTest {
 	@Test
 	public void urlTests() {
 		try {
-			File zipFile = new File(EAR_PATH);
-			URL earURL = zipFile.toURI().toURL();
+			File realFile = new File(EAR_PATH);
+			URL earURL = realFile.toURI().toURL();
 			String jarFileParh = String.format("%s!/%s", earURL.toString(),
 					JAR_IN_EAR_PATH);
 			URL jarInEarURL = new URL("jar", "", jarFileParh);
@@ -150,7 +152,7 @@ public class EarFileReaderTest {
 	public void readUrlTest() {
 		File file = null;
 		try {
-			ZipFile zipFile = new ZipFile(EAR_PATH);
+			zipFile = new ZipFile(EAR_PATH);
 			Enumeration<? extends ZipEntry> entries = zipFile.entries();
 			ZipEntry zipEntry = null;
 			InputStream jarStream = null;
