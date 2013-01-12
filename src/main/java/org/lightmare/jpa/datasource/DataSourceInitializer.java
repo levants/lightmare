@@ -17,6 +17,7 @@ import oracle.jdbc.pool.OracleDataSource;
 
 import org.apache.derby.jdbc.EmbeddedDataSource40;
 import org.apache.log4j.Logger;
+import org.h2.jdbcx.JdbcDataSource;
 import org.lightmare.jndi.NamingUtils;
 
 import com.mchange.v2.c3p0.DataSources;
@@ -82,6 +83,14 @@ public class DataSourceInitializer {
 		} else if (DriverConfig.isMsSQL(driver)) {
 
 			SQLServerDataSource dataSource = new SQLServerDataSource();
+			dataSource.setURL(url);
+			dataSource.setUser(user);
+			dataSource.setPassword(password);
+			return dataSource;
+
+		} else if (DriverConfig.isH2(driver)) {
+
+			JdbcDataSource dataSource = new JdbcDataSource();
 			dataSource.setURL(url);
 			dataSource.setUser(user);
 			dataSource.setPassword(password);

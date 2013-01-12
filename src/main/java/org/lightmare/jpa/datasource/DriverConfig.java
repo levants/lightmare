@@ -10,6 +10,8 @@ public class DriverConfig {
 
 	private static final String DB2_DRIVER = "com.ibm.db2.jcc.DB2Driver";
 
+	private static final String H2_DRIVER = "org.h2.Driver";
+
 	private static final String DERBY_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 
 	public static String getDriverName(String name) {
@@ -21,6 +23,8 @@ public class DriverConfig {
 			return DB2_DRIVER;
 		} else if ("mssql".equals(name)) {
 			return MSSQL_DRIVER;
+		} else if ("h2".equals(name)) {
+			return H2_DRIVER;
 		} else if ("derby".equals(name)) {
 			return DERBY_DRIVER;
 		} else {
@@ -42,6 +46,10 @@ public class DriverConfig {
 
 	public static boolean isMsSQL(String name) {
 		return MSSQL_DRIVER.equals(name);
+	}
+
+	public static boolean isH2(String name) {
+		return H2_DRIVER.equals(name);
 	}
 
 	public static boolean isDerby(String name) {
