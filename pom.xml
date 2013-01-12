@@ -146,6 +146,13 @@
 		</dependency>
 		<!-- end of loggers -->
 
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.9.1.0</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- test framework -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -154,13 +161,6 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- end of test framework -->
-
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>10.9.1.0</version>
-			<scope>test</scope>
-		</dependency>
 
 	</dependencies>
 
