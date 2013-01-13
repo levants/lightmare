@@ -53,12 +53,10 @@ public class JpaTest {
 		// properties.put("hibernate.connection.username", "user");
 		// properties.put("hibernate.connection.password", "password");
 
-		properties.put("hibernate.dialect",
-				"org.hibernate.dialect.DerbyDialect");
+		properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		properties.put("hibernate.cache.provider_class",
 				"org.hibernate.cache.NoCacheProvider");
-		properties.put("hibernate.connection.driver_class",
-				"org.apache.derby.jdbc.EmbeddedDriver");
+		properties.put("hibernate.connection.driver_class", "org.h2.Driver");
 		properties.put("hibernate.hbm2ddl.auto", "create-drop");
 		// <!-- hiberanate key generation properties -->
 		properties.put("hibernate.jdbc.use_get_generated_keys", "true");

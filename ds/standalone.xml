@@ -6,11 +6,11 @@
 			<datasources>
 				<datasource jndi-name="java:/personsDerby" pool-name="personsDerby"
 					enabled="true" use-java-context="true">
-					<connection-url>jdbc:derby:target/database/jpa-test-database;create=true</connection-url>
-					<driver>derby</driver>
+					<connection-url>jdbc:h2:file:./database/test-db;INIT=create schema IF NOT EXISTS persons</connection-url>
+					<driver>h2</driver>
 					<security>
-						<user-name>user</user-name>
-						<password>password</password>
+						<user-name>admin</user-name>
+						<password>admin</password>
 					</security>
 				</datasource>
 				<drivers>
