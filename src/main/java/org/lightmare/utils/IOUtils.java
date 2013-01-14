@@ -19,6 +19,8 @@ import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.earfile.DirUtils;
 import org.lightmare.utils.earfile.ExtUtils;
 import org.lightmare.utils.earfile.JarUtils;
+import org.lightmare.utils.fs.FileType;
+import org.lightmare.utils.fs.FileUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -122,22 +124,52 @@ public abstract class IOUtils {
 		return earFile;
 	}
 
-	public static IOUtils getAppropriatedType(URL url) throws IOException {
+	private static FileType getType(File appFile) {
+		FileType type;
+		String appPath = appFile.getPath();
+		if (appFile.isDirectory() && appPath.endsWith(".ear")) {
+			type = FileType.EDIR;
+		} else if (appPath.endsWith(".ear")) {
+			type = FileType.EAR;
+		} else if (appPath.endsWith(".jar")) {
+			type = FileType.JAR;
+		} else {
+			boolean isEarDir = FileUtils.checkOnEarDir(appFile);
+			if (isEarDir) {
+				type = FileType.EDIR;
+			} else {
+				type = FileType.DIR;
+			}
+		}
+
+		return type;
+	}
+
+	public static IOUtils getAppropriatedType(URL url, FileType type)
+			throws IOException {
 		IOUtils ioUtils = null;
-		String path = url.getPath();
 		File appFile;
 		try {
 			appFile = new File(url.toURI());
 		} catch (URISyntaxException ex) {
 			throw new IOException(ex);
 		}
-		if (appFile.isDirectory() && path.endsWith(".ear")) {
+		if (type == null) {
+			type = getType(appFile);
+		}
+		if (type.equals(FileType.EDIR)) {
 			ioUtils = new DirUtils(appFile);
-		} else if (path.endsWith(".ear")) {
+		} else if (type.equals(FileType.EAR)) {
 			ioUtils = new ExtUtils(appFile);
-		} else if (path.endsWith(".jar")) {
+		} else if (type.equals(FileType.JAR)) {
 			ioUtils = new JarUtils(appFile);
 		}
+
+		return ioUtils;
+	}
+
+	public static IOUtils getAppropriatedType(URL url) throws IOException {
+		IOUtils ioUtils = getAppropriatedType(url, null);
 
 		return ioUtils;
 	}
