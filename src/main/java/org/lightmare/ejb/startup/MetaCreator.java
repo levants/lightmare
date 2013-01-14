@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Future;
 
 import javax.ejb.Local;
 import javax.ejb.Remote;
@@ -284,17 +283,20 @@ public class MetaCreator {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public void scanForBeans(String... applicationPaths)
-			throws ClassNotFoundException, IOException {
+	public void scanForBeans(String... paths) throws ClassNotFoundException,
+			IOException {
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		String defaultPath = "";
-		if (applicationPaths.length == 0) {
-			applicationPaths = new String[1];
-			applicationPaths[0] = defaultPath;
+		String[] appPaths;
+		if (paths.length == 0) {
+			appPaths = new String[1];
+			appPaths[0] = defaultPath;
+		} else {
+			appPaths = paths;
 		}
 		List<URL> urlList = new ArrayList<URL>();
 		Enumeration<URL> urlEnum;
-		for (String resourcePath : applicationPaths) {
+		for (String resourcePath : appPaths) {
 			urlEnum = loader.getResources(resourcePath);
 			addURLToList(urlEnum, urlList);
 		}
