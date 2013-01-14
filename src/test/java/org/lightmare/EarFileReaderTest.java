@@ -33,6 +33,8 @@ import org.lightmare.utils.earfile.ExtUtils;
 
 public class EarFileReaderTest {
 
+	public static final String DIR_PATH = "./lib/loader-tester";
+
 	public static final String EAR_PATH = "./lib/loader-tester.ear";
 
 	public static final String JAR_IN_EAR_PATH = "loader-tester.jar";
