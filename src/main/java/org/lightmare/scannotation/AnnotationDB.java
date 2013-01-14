@@ -132,11 +132,11 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	public void scanArchives(URL... urls) throws IOException {
 		for (URL url : urls) {
 			Filter filter = new Filter() {
-				public boolean accepts(String filename) {
-					if (filename.endsWith(".class")) {
-						if (filename.startsWith("/"))
-							filename = filename.substring(1);
-						if (!ignoreScan(filename.replace('/', '.')))
+				public boolean accepts(String subFileName) {
+					if (subFileName.endsWith(".class")) {
+						if (subFileName.startsWith("/"))
+							subFileName = subFileName.substring(1);
+						if (!ignoreScan(subFileName.replace('/', '.')))
 							return true;
 					}
 					return false;

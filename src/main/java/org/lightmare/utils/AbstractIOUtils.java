@@ -32,7 +32,7 @@ import org.w3c.dom.NodeList;
  * @author levan
  * 
  */
-public abstract class IOUtils {
+public abstract class AbstractIOUtils {
 
 	protected Map<URL, URL> xmlURLs;
 
@@ -54,19 +54,19 @@ public abstract class IOUtils {
 
 	protected boolean executed;
 
-	public IOUtils(String path) {
+	public AbstractIOUtils(String path) {
 		this.path = path;
 		realFile = new File(path);
 		isDirectory = realFile.isDirectory();
 	}
 
-	public IOUtils(File file) {
+	public AbstractIOUtils(File file) {
 		this.path = file.getPath();
 		realFile = file;
 		isDirectory = realFile.isDirectory();
 	}
 
-	public IOUtils(URL url) throws IOException {
+	public AbstractIOUtils(URL url) throws IOException {
 		this.path = url.toString();
 		try {
 			realFile = new File(url.toURI());
@@ -125,51 +125,51 @@ public abstract class IOUtils {
 	}
 
 	private static FileType getType(File appFile) {
-		FileType type;
+		FileType fileType;
 		String appPath = appFile.getPath();
 		if (appFile.isDirectory() && appPath.endsWith(".ear")) {
-			type = FileType.EDIR;
+			fileType = FileType.EDIR;
 		} else if (appPath.endsWith(".ear")) {
-			type = FileType.EAR;
+			fileType = FileType.EAR;
 		} else if (appPath.endsWith(".jar")) {
-			type = FileType.JAR;
+			fileType = FileType.JAR;
 		} else {
 			boolean isEarDir = FileUtils.checkOnEarDir(appFile);
 			if (isEarDir) {
-				type = FileType.EDIR;
+				fileType = FileType.EDIR;
 			} else {
-				type = FileType.DIR;
+				fileType = FileType.DIR;
 			}
 		}
 
-		return type;
+		return fileType;
 	}
 
-	public static IOUtils getAppropriatedType(URL url, FileType type)
+	public static AbstractIOUtils getAppropriatedType(URL url, FileType fileType)
 			throws IOException {
-		IOUtils ioUtils = null;
+		AbstractIOUtils ioUtils = null;
 		File appFile;
 		try {
 			appFile = new File(url.toURI());
 		} catch (URISyntaxException ex) {
 			throw new IOException(ex);
 		}
-		if (type == null) {
-			type = getType(appFile);
+		if (fileType == null) {
+			fileType = getType(appFile);
 		}
-		if (type.equals(FileType.EDIR)) {
+		if (fileType.equals(FileType.EDIR)) {
 			ioUtils = new DirUtils(appFile);
-		} else if (type.equals(FileType.EAR)) {
+		} else if (fileType.equals(FileType.EAR)) {
 			ioUtils = new ExtUtils(appFile);
-		} else if (type.equals(FileType.JAR)) {
+		} else if (fileType.equals(FileType.JAR)) {
 			ioUtils = new JarUtils(appFile);
 		}
 
 		return ioUtils;
 	}
 
-	public static IOUtils getAppropriatedType(URL url) throws IOException {
-		IOUtils ioUtils = getAppropriatedType(url, null);
+	public static AbstractIOUtils getAppropriatedType(URL url) throws IOException {
+		AbstractIOUtils ioUtils = getAppropriatedType(url, null);
 
 		return ioUtils;
 	}

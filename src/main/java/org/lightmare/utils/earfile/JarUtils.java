@@ -10,9 +10,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.lightmare.jpa.ConfigLoader;
-import org.lightmare.utils.IOUtils;
+import org.lightmare.utils.AbstractIOUtils;
 
-public class JarUtils extends IOUtils {
+public class JarUtils extends AbstractIOUtils {
 
 	public JarUtils(String path) {
 		super(path);

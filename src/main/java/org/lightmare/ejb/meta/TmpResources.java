@@ -15,24 +15,24 @@ import org.lightmare.utils.fs.FileUtils;
  */
 public class TmpResources {
 
-	private static final Set<File> tmpFiles = Collections
+	private static final Set<File> TMP_Files = Collections
 			.synchronizedSet(new HashSet<File>());
 
 	public static void addFile(File file) {
-		tmpFiles.add(file);
+		TMP_Files.add(file);
 		file.deleteOnExit();
 	}
 
 	public static void removeTempFiles() {
 
-		synchronized (tmpFiles) {
-			for (File tmpFile : tmpFiles) {
+		synchronized (TMP_Files) {
+			for (File tmpFile : TMP_Files) {
 				FileUtils.deleteFile(tmpFile);
 			}
 		}
 	}
 
 	public static int size() {
-		return tmpFiles.size();
+		return TMP_Files.size();
 	}
 }

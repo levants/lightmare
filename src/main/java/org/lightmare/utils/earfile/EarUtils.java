@@ -14,7 +14,7 @@ import java.util.zip.ZipInputStream;
 
 import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.ConfigLoader;
-import org.lightmare.utils.IOUtils;
+import org.lightmare.utils.AbstractIOUtils;
 
 /**
  * Utility class for checking jar, ear and zip files read contents and etc.
@@ -22,7 +22,7 @@ import org.lightmare.utils.IOUtils;
  * @author levan
  * 
  */
-public class EarUtils extends IOUtils {
+public class EarUtils extends AbstractIOUtils {
 
 	public EarUtils(String path) {
 		super(path);

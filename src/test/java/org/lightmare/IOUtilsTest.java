@@ -11,7 +11,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.lightmare.scannotation.AnnotationDB;
-import org.lightmare.utils.IOUtils;
+import org.lightmare.utils.AbstractIOUtils;
 
 public class IOUtilsTest {
 
@@ -22,7 +22,7 @@ public class IOUtilsTest {
 	@Test
 	public void scanTest() {
 		try {
-			IOUtils ioUtils = IOUtils.getAppropriatedType(new File(EAR_PATH)
+			AbstractIOUtils ioUtils = AbstractIOUtils.getAppropriatedType(new File(EAR_PATH)
 					.toURI().toURL());
 			ioUtils.scan(true);
 

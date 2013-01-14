@@ -11,9 +11,9 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.lightmare.jpa.ConfigLoader;
-import org.lightmare.utils.IOUtils;
+import org.lightmare.utils.AbstractIOUtils;
 
-public class DirUtils extends IOUtils {
+public class DirUtils extends AbstractIOUtils {
 
 	public DirUtils(String path) {
 		super(path);

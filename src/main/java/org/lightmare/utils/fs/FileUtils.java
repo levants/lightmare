@@ -1,6 +1,11 @@
 package org.lightmare.utils.fs;
 
 import java.io.File;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
+import org.lightmare.utils.AbstractIOUtils;
 
 /**
  * Utility for removing {@link File}s recursively from file system
