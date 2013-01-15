@@ -2,6 +2,8 @@ package org.lightmare.remote.rpc.decoders;
 
 import java.lang.reflect.Method;
 
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
@@ -25,9 +27,20 @@ public class RpcEncoder extends SimpleChannelHandler {
 		byte[] beanMethodBt = Listener.serialize(beanMethod);
 		byte[] interfaceClassBt = Listener.serialize(interfaceClass);
 
-		byte[][] paramsBt = new byte[params.length][];
+		int paramArraySize = params.length;
 
-		int firstSize = beanNameBt.length + beanMethodBt.length
-				+ interfaceClassBt.length + params.length;
+		byte[][] paramsBt = new byte[paramArraySize][];
+
+		int paramsSize = 0;
+		for (int i = 0; i < paramArraySize; i++) {
+			paramsBt[i] = Listener.serialize(params[i]);
+			paramsSize += paramsBt[i].length;
+		}
+
+		paramsSize += Listener.INT_SIZE * paramArraySize
+				+ Listener.PROTOCOL_SIZE;
+
+		ChannelBuffer buffer = ChannelBuffers.buffer(paramsSize);
+
 	}
 }

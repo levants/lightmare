@@ -11,13 +11,12 @@ import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 
 public class RpcDecoder extends FrameDecoder {
 
-	private static final int PROTOCOL_SIZE = 16;
 
 	@Override
 	protected Object decode(ChannelHandlerContext context, Channel channel,
 			ChannelBuffer buffer) throws Exception {
 
-		if (buffer.readableBytes() < PROTOCOL_SIZE) {
+		if (buffer.readableBytes() < Listener.PROTOCOL_SIZE) {
 			buffer.resetReaderIndex();
 			return null;
 		}

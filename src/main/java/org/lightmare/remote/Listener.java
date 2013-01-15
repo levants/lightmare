@@ -19,6 +19,8 @@ import org.lightmare.remote.rpc.wrappers.RpcWrapper;
  */
 public class Listener {
 
+	public static final int PROTOCOL_SIZE = 16;
+
 	public static final int INT_SIZE = 4;
 
 	public static Object deserialize(byte[] data) throws IOException {
