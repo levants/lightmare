@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.lightmare.ejb.EjbConnector;
+import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 
 /**
  * Listener class for connection to bean remotely
@@ -17,6 +18,28 @@ import org.lightmare.ejb.EjbConnector;
  * 
  */
 public class Listener {
+
+	public static final int INT_SIZE = 4;
+
+	public static Object deserialize(byte[] data) throws IOException {
+
+		ByteArrayInputStream stream = new ByteArrayInputStream(data);
+		ObjectInputStream objectStream = new ObjectInputStream(stream);
+		try {
+
+			Object value = objectStream.readObject();
+
+			return value;
+
+		} catch (ClassNotFoundException ex) {
+
+			throw new IOException(ex);
+
+		} finally {
+			stream.close();
+			objectStream.close();
+		}
+	}
 
 	public void callRemote(Class<?> interfaceClass, String methodName,
 			Object... parameters) throws IOException {
@@ -41,34 +64,19 @@ public class Listener {
 
 	}
 
-	@SuppressWarnings("unused")
-	public Object translate(String beanName, Class<?> interfaceClass,
-			Method method, byte[]... parameters) throws IOException,
+	public static Object callBeanMethod(RpcWrapper wrapper) throws IOException,
 			ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
-		int length = parameters.length;
-		Object[] params = new Object[length];
-		Class<?>[] paramTypes = new Class<?>[length];
-		for (int i = 0; i < length; i++) {
 
-			byte[] parameter = parameters[i];
-			ByteArrayInputStream bytes = new ByteArrayInputStream(parameter);
-			ObjectInputStream input = new ObjectInputStream(bytes);
-
-			try {
-				Object param = input.readObject();
-				params[i] = param;
-				paramTypes[i] = param.getClass();
-			} finally {
-				bytes.close();
-				input.close();
-			}
-		}
+		String beanName = wrapper.getBeanName();
+		Method beanMethod = wrapper.getBeanMethod();
+		Class<?> interfaceClass = wrapper.getInterfaceClass();
+		Object[] params = wrapper.getParams();
 
 		Object bean = new EjbConnector()
 				.connectToBean(beanName, interfaceClass);
 		try {
-			return method.invoke(bean, params);
+			return beanMethod.invoke(bean, params);
 		} catch (IllegalArgumentException ex) {
 			throw new IOException(ex);
 		} catch (InvocationTargetException ex) {

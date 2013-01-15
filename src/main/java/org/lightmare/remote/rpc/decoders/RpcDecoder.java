@@ -1,41 +1,17 @@
-package org.lightmare.remote.handlers.decoders;
+package org.lightmare.remote.rpc.decoders;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.lang.reflect.Method;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
-import org.lightmare.remote.handlers.wrappers.RpcWrapper;
+import org.lightmare.remote.Listener;
+import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 
 public class RpcDecoder extends FrameDecoder {
 
-	private static final int PROTOCOL_SIZE = 12;
-
-	private static final int INT_SIZE = 4;
-
-	private Object deserialize(byte[] data) throws IOException {
-
-		ByteArrayInputStream stream = new ByteArrayInputStream(data);
-		ObjectInputStream objectStream = new ObjectInputStream(stream);
-		try {
-
-			Object value = objectStream.readObject();
-
-			return value;
-
-		} catch (ClassNotFoundException ex) {
-
-			throw new IOException(ex);
-
-		} finally {
-			stream.close();
-			objectStream.close();
-		}
-	}
+	private static final int PROTOCOL_SIZE = 16;
 
 	@Override
 	protected Object decode(ChannelHandlerContext context, Channel channel,
@@ -45,17 +21,22 @@ public class RpcDecoder extends FrameDecoder {
 			buffer.resetReaderIndex();
 			return null;
 		}
+
+		int beanNameSize = buffer.readInt();
 		int methodSize = buffer.readInt();
 		int classSize = buffer.readInt();
 		int paramArraySize = buffer.readInt();
 
-		int paramsSize = INT_SIZE * paramArraySize + paramArraySize
+		int paramsSize = Listener.INT_SIZE * paramArraySize + paramArraySize
 				+ methodSize + classSize + paramArraySize;
 
 		if (buffer.readableBytes() < paramsSize) {
 			buffer.resetReaderIndex();
 			return null;
 		}
+
+		byte[] beanNameBt = new byte[beanNameSize];
+		buffer.readBytes(beanNameBt);
 
 		byte[] methodBt = new byte[methodSize];
 		buffer.readBytes(methodBt);
@@ -71,14 +52,16 @@ public class RpcDecoder extends FrameDecoder {
 			parameterBytes = new byte[paramSize];
 			buffer.readBytes(parameterBytes);
 
-			params[i] = deserialize(parameterBytes);
+			params[i] = Listener.deserialize(parameterBytes);
 		}
 
 		RpcWrapper wrapper = new RpcWrapper();
 
-		Method beanMethod = (Method) deserialize(methodBt);
-		Class<?> interfaceClass = (Class<?>) deserialize(classBt);
+		String beanName = new String(beanNameBt);
+		Method beanMethod = (Method) Listener.deserialize(methodBt);
+		Class<?> interfaceClass = (Class<?>) Listener.deserialize(classBt);
 
+		wrapper.setBeanName(beanName);
 		wrapper.setBeanMethod(beanMethod);
 		wrapper.setInterfaceClass(interfaceClass);
 		wrapper.setParams(params);

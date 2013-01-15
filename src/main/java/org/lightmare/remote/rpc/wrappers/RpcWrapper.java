@@ -1,8 +1,10 @@
-package org.lightmare.remote.handlers.wrappers;
+package org.lightmare.remote.rpc.wrappers;
 
 import java.lang.reflect.Method;
 
 public class RpcWrapper {
+
+	private String beanName;
 
 	private Method beanMethod;
 
@@ -11,6 +13,14 @@ public class RpcWrapper {
 	private Object[] params;
 
 	public RpcWrapper() {
+	}
+
+	public String getBeanName() {
+		return beanName;
+	}
+
+	public void setBeanName(String beanName) {
+		this.beanName = beanName;
 	}
 
 	public Method getBeanMethod() {
