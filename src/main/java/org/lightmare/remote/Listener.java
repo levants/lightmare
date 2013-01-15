@@ -5,6 +5,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import org.lightmare.ejb.EjbConnector;
 
 /**
  * Listener class for connection to bean remotely
@@ -38,11 +42,13 @@ public class Listener {
 	}
 
 	@SuppressWarnings("unused")
-	public void translate(String beanName, byte[]... parameters)
-			throws IOException, ClassNotFoundException, InstantiationException,
+	public Object translate(String beanName, Class<?> interfaceClass,
+			Method method, byte[]... parameters) throws IOException,
+			ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
 		int length = parameters.length;
 		Object[] params = new Object[length];
+		Class<?>[] paramTypes = new Class<?>[length];
 		for (int i = 0; i < length; i++) {
 
 			byte[] parameter = parameters[i];
@@ -52,12 +58,21 @@ public class Listener {
 			try {
 				Object param = input.readObject();
 				params[i] = param;
+				paramTypes[i] = param.getClass();
 			} finally {
 				bytes.close();
 				input.close();
 			}
 		}
 
-		Class<?> interfaceClass = Class.forName(beanName);
+		Object bean = new EjbConnector()
+				.connectToBean(beanName, interfaceClass);
+		try {
+			return method.invoke(bean, params);
+		} catch (IllegalArgumentException ex) {
+			throw new IOException(ex);
+		} catch (InvocationTargetException ex) {
+			throw new IOException(ex);
+		}
 	}
 }
