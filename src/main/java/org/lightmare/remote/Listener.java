@@ -41,6 +41,24 @@ public class Listener {
 		}
 	}
 
+	public static byte[] derialize(Object value) throws IOException {
+
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		ObjectOutputStream objectStream = new ObjectOutputStream(stream);
+
+		try {
+
+			objectStream.writeObject(value);
+			byte[] data = stream.toByteArray();
+
+			return data;
+
+		} finally {
+			stream.close();
+			objectStream.close();
+		}
+	}
+
 	public void callRemote(Class<?> interfaceClass, String methodName,
 			Object... parameters) throws IOException {
 		int length = parameters.length;
