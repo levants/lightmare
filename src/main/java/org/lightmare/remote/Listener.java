@@ -41,7 +41,7 @@ public class Listener {
 		}
 	}
 
-	public static byte[] derialize(Object value) throws IOException {
+	public static byte[] serialize(Object value) throws IOException {
 
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		ObjectOutputStream objectStream = new ObjectOutputStream(stream);
