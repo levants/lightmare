@@ -42,6 +42,7 @@ public class RpcDecoder extends FrameDecoder {
 		buffer.readBytes(classBt);
 
 		byte[] paramBt = new byte[paramArraySize];
+		buffer.readBytes(paramBt);
 
 		RpcWrapper wrapper = new RpcWrapper();
 

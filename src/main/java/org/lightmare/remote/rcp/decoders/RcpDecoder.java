@@ -25,17 +25,13 @@ public class RcpDecoder extends FrameDecoder {
 			return null;
 		}
 
-		Object value = null;
-		if (dataSize > 0) {
-
-			byte[] data = new byte[dataSize];
-			value = Listener.deserialize(data);
-			if (!valid) {
-				throw (Exception) value;
-			}
+		byte[] data = new byte[dataSize];
+		Object value = Listener.deserialize(data);
+		if (valid) {
+			return value;
+		} else {
+			throw (Exception) value;
 		}
-
-		return value;
 	}
 
 }

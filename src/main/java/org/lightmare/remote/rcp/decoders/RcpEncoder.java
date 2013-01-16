@@ -22,12 +22,7 @@ public class RcpEncoder extends SimpleChannelHandler {
 		Object value = wrapper.getValue();
 
 		byte[] valueBt = Listener.serialize(value);
-		int valueSize;
-		if (valueBt == null) {
-			valueSize = 0;
-		} else {
-			valueSize = valueBt.length;
-		}
+		int valueSize = valueBt.length;
 
 		int protSize = Listener.INT_SIZE + Listener.BYTE_SIZE + valueSize;
 
@@ -35,9 +30,7 @@ public class RcpEncoder extends SimpleChannelHandler {
 
 		buffer.writeInt(valueSize);
 		buffer.writeByte(valid ? 1 : 0);
-		if (valueSize > 0) {
-			buffer.writeBytes(valueBt);
-		}
+		buffer.writeBytes(valueBt);
 
 		ChannelFuture future = ev.getFuture();
 		Channels.write(ctx, future, buffer);
