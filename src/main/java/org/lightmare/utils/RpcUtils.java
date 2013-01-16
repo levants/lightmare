@@ -27,6 +27,24 @@ public class RpcUtils {
 
 	public static final int BYTE_SIZE = 1;
 
+	public static byte[] serialize(Object value) throws IOException {
+
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		ObjectOutputStream objectStream = new ObjectOutputStream(stream);
+
+		try {
+
+			objectStream.writeObject(value);
+			byte[] data = stream.toByteArray();
+
+			return data;
+
+		} finally {
+			stream.close();
+			objectStream.close();
+		}
+	}
+
 	public static Object deserialize(byte[] data) throws IOException {
 
 		ByteArrayInputStream stream = new ByteArrayInputStream(data);
@@ -40,24 +58,6 @@ public class RpcUtils {
 		} catch (ClassNotFoundException ex) {
 
 			throw new IOException(ex);
-
-		} finally {
-			stream.close();
-			objectStream.close();
-		}
-	}
-
-	public static byte[] serialize(Object value) throws IOException {
-
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		ObjectOutputStream objectStream = new ObjectOutputStream(stream);
-
-		try {
-
-			objectStream.writeObject(value);
-			byte[] data = stream.toByteArray();
-
-			return data;
 
 		} finally {
 			stream.close();

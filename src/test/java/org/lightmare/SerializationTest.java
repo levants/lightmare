@@ -19,7 +19,7 @@ public class SerializationTest {
 			Object value = RpcUtils.deserialize(nullBt);
 			System.out.println(value);
 
-			Assert.assertNull("null serializetion is not valid");
+			Assert.assertNull("null serializetion is not valid", value);
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
