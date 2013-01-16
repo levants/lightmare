@@ -1,7 +1,5 @@
 package org.lightmare.remote.rpc.decoders;
 
-import java.lang.reflect.Method;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -22,6 +20,7 @@ public class RpcDecoder extends FrameDecoder {
 
 		int beanNameSize = buffer.readInt();
 		int methodSize = buffer.readInt();
+		int paramTypesSize = buffer.readInt();
 		int classSize = buffer.readInt();
 		int paramArraySize = buffer.readInt();
 
@@ -38,6 +37,9 @@ public class RpcDecoder extends FrameDecoder {
 		byte[] methodBt = new byte[methodSize];
 		buffer.readBytes(methodBt);
 
+		byte[] paramTypesBt = new byte[paramTypesSize];
+		buffer.readBytes(paramTypesBt);
+
 		byte[] classBt = new byte[classSize];
 		buffer.readBytes(classBt);
 
@@ -47,12 +49,14 @@ public class RpcDecoder extends FrameDecoder {
 		RpcWrapper wrapper = new RpcWrapper();
 
 		String beanName = new String(beanNameBt);
-		Method beanMethod = (Method) Listener.deserialize(methodBt);
+		String methodName = (String) Listener.deserialize(methodBt);
+		Class<?>[] paramTypes = (Class<?>[]) Listener.deserialize(paramTypesBt);
 		Class<?> interfaceClass = (Class<?>) Listener.deserialize(classBt);
 		Object[] params = (Object[]) Listener.deserialize(paramBt);
 
 		wrapper.setBeanName(beanName);
-		wrapper.setBeanMethod(beanMethod);
+		wrapper.setMethodName(methodName);
+		wrapper.setParamTypes(paramTypes);
 		wrapper.setInterfaceClass(interfaceClass);
 		wrapper.setParams(params);
 

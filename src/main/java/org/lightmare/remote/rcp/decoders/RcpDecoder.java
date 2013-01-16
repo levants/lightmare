@@ -5,11 +5,12 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.lightmare.remote.Listener;
+import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 
 public class RcpDecoder extends FrameDecoder {
 
 	@Override
-	protected Object decode(ChannelHandlerContext context, Channel channel,
+	protected RcpWrapper decode(ChannelHandlerContext context, Channel channel,
 			ChannelBuffer buffer) throws Exception {
 
 		if (buffer.readableBytes() < Listener.INT_SIZE + Listener.BYTE_SIZE) {
@@ -27,11 +28,11 @@ public class RcpDecoder extends FrameDecoder {
 
 		byte[] data = new byte[dataSize];
 		Object value = Listener.deserialize(data);
-		if (valid) {
-			return value;
-		} else {
-			throw (Exception) value;
-		}
+		RcpWrapper rcp = new RcpWrapper();
+		rcp.setValid(valid);
+		rcp.setValue(value);
+
+		return rcp;
 	}
 
 }

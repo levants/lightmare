@@ -12,17 +12,18 @@ import org.lightmare.ejb.EjbConnector;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 
 /**
- * Listener class for connection to bean remotely
+ * Listener class for serialization and de-serialization of objects and call
+ * bean {@link Method}s connection to bean remotely
  * 
  * @author Levan
  * 
  */
 public class Listener {
 
-	public static final int PROTOCOL_SIZE = 16;
+	public static final int PROTOCOL_SIZE = 20;
 
 	public static final int INT_SIZE = 4;
-	
+
 	public static final int BYTE_SIZE = 1;
 
 	public static Object deserialize(byte[] data) throws IOException {
@@ -63,45 +64,38 @@ public class Listener {
 		}
 	}
 
-	public void callRemote(Class<?> interfaceClass, String methodName,
-			Object... parameters) throws IOException {
-		int length = parameters.length;
-		byte[][] parameterBytes = new byte[length][];
-		Object parameter;
-		byte[] parameterByte;
-		for (int i = 0; i < length; i++) {
-
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			ObjectOutputStream objectOut = new ObjectOutputStream(out);
-
-			try {
-				parameter = parameters[i];
-				objectOut.writeObject(parameter);
-				parameterBytes[i] = out.toByteArray();
-			} finally {
-				out.close();
-				objectOut.close();
-			}
-		}
-
+	public static Object callRemoteMethod(Object proxy, Method method,
+			Object[] arguments) throws IOException {
+		return null;
 	}
 
-	public static Object callBeanMethod(RpcWrapper wrapper) throws IOException,
-			ClassNotFoundException, InstantiationException,
-			IllegalAccessException {
+	public static Object callBeanMethod(RpcWrapper wrapper) throws IOException {
 
 		String beanName = wrapper.getBeanName();
-		Method beanMethod = wrapper.getBeanMethod();
+		String methodName = wrapper.getMethodName();
+		Class<?>[] paramTypes = wrapper.getParamTypes();
 		Class<?> interfaceClass = wrapper.getInterfaceClass();
 		Object[] params = wrapper.getParams();
 
-		Object bean = new EjbConnector()
-				.connectToBean(beanName, interfaceClass);
 		try {
+
+			Object bean = new EjbConnector().connectToBean(beanName,
+					interfaceClass);
+			Method beanMethod = bean.getClass().getDeclaredMethod(methodName,
+					paramTypes);
 			return beanMethod.invoke(bean, params);
+
 		} catch (IllegalArgumentException ex) {
 			throw new IOException(ex);
 		} catch (InvocationTargetException ex) {
+			throw new IOException(ex);
+		} catch (NoSuchMethodException ex) {
+			throw new IOException(ex);
+		} catch (SecurityException ex) {
+			throw new IOException(ex);
+		} catch (InstantiationException ex) {
+			throw new IOException(ex);
+		} catch (IllegalAccessException ex) {
 			throw new IOException(ex);
 		}
 	}

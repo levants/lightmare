@@ -9,13 +9,14 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
+import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 
 public class RcpHandler extends SimpleChannelHandler {
 
-	private BlockingQueue<Object> answer;
+	private BlockingQueue<RcpWrapper> answer;
 
 	public RcpHandler() {
-		answer = new LinkedBlockingQueue<Object>();
+		answer = new LinkedBlockingQueue<RcpWrapper>();
 	}
 
 	@Override
@@ -24,7 +25,8 @@ public class RcpHandler extends SimpleChannelHandler {
 				.addListener(new ChannelFutureListener() {
 					public void operationComplete(ChannelFuture future)
 							throws Exception {
-						boolean offered = answer.offer(ev.getMessage());
+						boolean offered = answer.offer((RcpWrapper) ev
+								.getMessage());
 						assert offered;
 					}
 				});
@@ -36,11 +38,11 @@ public class RcpHandler extends SimpleChannelHandler {
 		ev.getChannel().close().awaitUninterruptibly();
 	}
 
-	public Object getWrapper() {
+	public RcpWrapper getWrapper() {
 		boolean interrupted = false;
 		for (;;) {
 			try {
-				Object responce = answer.take();
+				RcpWrapper responce = answer.take();
 				if (interrupted) {
 					Thread.currentThread().interrupt();
 				}

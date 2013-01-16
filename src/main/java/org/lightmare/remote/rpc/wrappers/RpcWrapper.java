@@ -1,12 +1,12 @@
 package org.lightmare.remote.rpc.wrappers;
 
-import java.lang.reflect.Method;
-
 public class RpcWrapper {
 
 	private String beanName;
 
-	private Method beanMethod;
+	private String methodName;
+
+	private Class<?>[] paramTypes;
 
 	private Class<?> interfaceClass;
 
@@ -23,12 +23,20 @@ public class RpcWrapper {
 		this.beanName = beanName;
 	}
 
-	public Method getBeanMethod() {
-		return beanMethod;
+	public String getMethodName() {
+		return methodName;
 	}
 
-	public void setBeanMethod(Method beanMethod) {
-		this.beanMethod = beanMethod;
+	public void setMethodName(String methodName) {
+		this.methodName = methodName;
+	}
+
+	public Class<?>[] getParamTypes() {
+		return paramTypes;
+	}
+
+	public void setParamTypes(Class<?>[] paramTypes) {
+		this.paramTypes = paramTypes;
 	}
 
 	public Class<?> getInterfaceClass() {
