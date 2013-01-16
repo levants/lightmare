@@ -7,8 +7,8 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
-import org.lightmare.remote.Listener;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
+import org.lightmare.utils.RpcUtils;
 
 public class RpcEncoder extends SimpleChannelHandler {
 
@@ -25,12 +25,12 @@ public class RpcEncoder extends SimpleChannelHandler {
 		Object[] params = wrapper.getParams();
 
 		byte[] beanNameBt = beanName.getBytes("UTF8");
-		byte[] beanMethodBt = Listener.serialize(methodName);
-		byte[] paramTypesBt = Listener.serialize(paramTypes);
-		byte[] interfaceClassBt = Listener.serialize(interfaceClass);
-		byte[] paramBt = Listener.serialize(params);
+		byte[] beanMethodBt = RpcUtils.serialize(methodName);
+		byte[] paramTypesBt = RpcUtils.serialize(paramTypes);
+		byte[] interfaceClassBt = RpcUtils.serialize(interfaceClass);
+		byte[] paramBt = RpcUtils.serialize(params);
 
-		int paramsSize = Listener.PROTOCOL_SIZE + beanNameBt.length
+		int paramsSize = RpcUtils.PROTOCOL_SIZE + beanNameBt.length
 				+ beanMethodBt.length + paramTypesBt.length
 				+ interfaceClassBt.length + paramBt.length;
 

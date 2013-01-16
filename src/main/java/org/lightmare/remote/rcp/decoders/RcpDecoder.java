@@ -4,8 +4,8 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
-import org.lightmare.remote.Listener;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
+import org.lightmare.utils.RpcUtils;
 
 public class RcpDecoder extends FrameDecoder {
 
@@ -13,7 +13,7 @@ public class RcpDecoder extends FrameDecoder {
 	protected RcpWrapper decode(ChannelHandlerContext context, Channel channel,
 			ChannelBuffer buffer) throws Exception {
 
-		if (buffer.readableBytes() < Listener.INT_SIZE + Listener.BYTE_SIZE) {
+		if (buffer.readableBytes() < RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE) {
 			buffer.resetReaderIndex();
 			return null;
 		}
@@ -27,7 +27,7 @@ public class RcpDecoder extends FrameDecoder {
 		}
 
 		byte[] data = new byte[dataSize];
-		Object value = Listener.deserialize(data);
+		Object value = RpcUtils.deserialize(data);
 		RcpWrapper rcp = new RcpWrapper();
 		rcp.setValid(valid);
 		rcp.setValue(value);

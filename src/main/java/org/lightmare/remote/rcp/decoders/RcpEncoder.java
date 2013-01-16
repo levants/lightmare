@@ -7,8 +7,8 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
-import org.lightmare.remote.Listener;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
+import org.lightmare.utils.RpcUtils;
 
 public class RcpEncoder extends SimpleChannelHandler {
 
@@ -21,10 +21,10 @@ public class RcpEncoder extends SimpleChannelHandler {
 
 		Object value = wrapper.getValue();
 
-		byte[] valueBt = Listener.serialize(value);
+		byte[] valueBt = RpcUtils.serialize(value);
 		int valueSize = valueBt.length;
 
-		int protSize = Listener.INT_SIZE + Listener.BYTE_SIZE + valueSize;
+		int protSize = RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE + valueSize;
 
 		ChannelBuffer buffer = ChannelBuffers.buffer(protSize);
 

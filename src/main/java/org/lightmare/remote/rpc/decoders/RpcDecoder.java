@@ -4,8 +4,8 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
-import org.lightmare.remote.Listener;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
+import org.lightmare.utils.RpcUtils;
 
 public class RpcDecoder extends FrameDecoder {
 
@@ -13,7 +13,7 @@ public class RpcDecoder extends FrameDecoder {
 	protected Object decode(ChannelHandlerContext context, Channel channel,
 			ChannelBuffer buffer) throws Exception {
 
-		if (buffer.readableBytes() < Listener.PROTOCOL_SIZE) {
+		if (buffer.readableBytes() < RpcUtils.PROTOCOL_SIZE) {
 			buffer.resetReaderIndex();
 			return null;
 		}
@@ -49,10 +49,10 @@ public class RpcDecoder extends FrameDecoder {
 		RpcWrapper wrapper = new RpcWrapper();
 
 		String beanName = new String(beanNameBt);
-		String methodName = (String) Listener.deserialize(methodBt);
-		Class<?>[] paramTypes = (Class<?>[]) Listener.deserialize(paramTypesBt);
-		Class<?> interfaceClass = (Class<?>) Listener.deserialize(classBt);
-		Object[] params = (Object[]) Listener.deserialize(paramBt);
+		String methodName = (String) RpcUtils.deserialize(methodBt);
+		Class<?>[] paramTypes = (Class<?>[]) RpcUtils.deserialize(paramTypesBt);
+		Class<?> interfaceClass = (Class<?>) RpcUtils.deserialize(classBt);
+		Object[] params = (Object[]) RpcUtils.deserialize(paramBt);
 
 		wrapper.setBeanName(beanName);
 		wrapper.setMethodName(methodName);

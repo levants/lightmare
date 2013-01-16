@@ -1,4 +1,4 @@
-package org.lightmare.remote;
+package org.lightmare.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.lightmare.ejb.EjbConnector;
+import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 
 /**
@@ -18,7 +19,7 @@ import org.lightmare.remote.rpc.wrappers.RpcWrapper;
  * @author Levan
  * 
  */
-public class Listener {
+public class RpcUtils {
 
 	public static final int PROTOCOL_SIZE = 20;
 
@@ -66,7 +67,17 @@ public class Listener {
 
 	public static Object callRemoteMethod(Object proxy, Method method,
 			Object[] arguments) throws IOException {
-		return null;
+
+		RpcWrapper wrapper = new RpcWrapper();
+		wrapper.setBeanName(proxy.getClass().getSimpleName());
+		wrapper.setMethodName(method.getName());
+		wrapper.setParamTypes(method.getParameterTypes());
+		wrapper.setInterfaceClass(proxy.getClass());
+		wrapper.setParams(arguments);
+
+		RPCall rpCall = new RPCall();
+
+		return rpCall.call(wrapper);
 	}
 
 	public static Object callBeanMethod(RpcWrapper wrapper) throws IOException {
