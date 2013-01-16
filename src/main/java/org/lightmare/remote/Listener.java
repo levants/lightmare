@@ -23,6 +23,8 @@ public class Listener {
 
 	public static final int INT_SIZE = 4;
 
+	public static final int BYTE_SIZE = 1;
+
 	public static Object deserialize(byte[] data) throws IOException {
 
 		ByteArrayInputStream stream = new ByteArrayInputStream(data);

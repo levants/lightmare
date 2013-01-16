@@ -8,6 +8,7 @@ import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 import org.lightmare.remote.Listener;
+import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 
 public class RcpEncoder extends SimpleChannelHandler {
 
@@ -15,17 +16,28 @@ public class RcpEncoder extends SimpleChannelHandler {
 	public void writeRequested(ChannelHandlerContext ctx, MessageEvent ev)
 			throws Exception {
 
-		Object value = ev.getMessage();
+		RcpWrapper wrapper = (RcpWrapper) ev.getMessage();
+		boolean valid = wrapper.isValid();
+
+		Object value = wrapper.getValue();
 
 		byte[] valueBt = Listener.serialize(value);
-		int valueSize = valueBt.length;
+		int valueSize;
+		if (valueBt == null) {
+			valueSize = 0;
+		} else {
+			valueSize = valueBt.length;
+		}
 
-		int protSize = Listener.INT_SIZE + valueSize;
+		int protSize = Listener.INT_SIZE + Listener.BYTE_SIZE + valueSize;
 
 		ChannelBuffer buffer = ChannelBuffers.buffer(protSize);
 
 		buffer.writeInt(valueSize);
-		buffer.writeBytes(valueBt);
+		buffer.writeByte(valid ? 1 : 0);
+		if (valueSize > 0) {
+			buffer.writeBytes(valueBt);
+		}
 
 		ChannelFuture future = ev.getFuture();
 		Channels.write(ctx, future, buffer);

@@ -12,11 +12,12 @@ public class RcpDecoder extends FrameDecoder {
 	protected Object decode(ChannelHandlerContext context, Channel channel,
 			ChannelBuffer buffer) throws Exception {
 
-		if (buffer.readableBytes() < Listener.INT_SIZE) {
+		if (buffer.readableBytes() < Listener.INT_SIZE + Listener.BYTE_SIZE) {
 			buffer.resetReaderIndex();
 			return null;
 		}
 
+		boolean valid = buffer.readByte() > 0;
 		int dataSize = buffer.readInt();
 
 		if (buffer.readableBytes() < dataSize) {
@@ -24,9 +25,15 @@ public class RcpDecoder extends FrameDecoder {
 			return null;
 		}
 
-		byte[] data = new byte[dataSize];
+		Object value = null;
+		if (dataSize > 0) {
 
-		Object value = Listener.deserialize(data);
+			byte[] data = new byte[dataSize];
+			value = Listener.deserialize(data);
+			if (!valid) {
+				throw (Exception) value;
+			}
+		}
 
 		return value;
 	}
