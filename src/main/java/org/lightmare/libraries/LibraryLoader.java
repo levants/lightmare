@@ -2,6 +2,9 @@ package org.lightmare.libraries;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -91,18 +94,40 @@ public class LibraryLoader {
 	 * @param libraryPath
 	 * @throws MalformedURLException
 	 */
-	public static void loadLibraries(String libraryPath)
-			throws MalformedURLException {
-		Thread currentThread = Thread.currentThread();
-		ClassLoader loader = currentThread.getContextClassLoader();
+	public static void loadLibraries(String libraryPath) throws IOException {
+		// Thread currentThread = Thread.currentThread();
+		// ClassLoader loader = currentThread.getContextClassLoader();
 		File file = new File(libraryPath);
-		if (file.exists()) {
-			Set<URL> urls = new HashSet<URL>();
-			getSubfiles(file, urls);
-			URL[] paths = urls.toArray(new URL[urls.size()]);
-			URLClassLoader urlLoader = URLClassLoader
-					.newInstance(paths, loader);
-			currentThread.setContextClassLoader(urlLoader);
+		try {
+			if (file.exists()) {
+				Set<URL> urls = new HashSet<URL>();
+				getSubfiles(file, urls);
+
+				URL[] paths = urls.toArray(new URL[urls.size()]);
+				URLClassLoader urlLoader = (URLClassLoader) ClassLoader
+						.getSystemClassLoader();
+
+				Method method = URLClassLoader.class.getDeclaredMethod(
+						"addURL", URL.class);
+				boolean accessible = method.isAccessible();
+				method.setAccessible(true);
+				for (URL url : paths) {
+					method.invoke(urlLoader, new Object[] { url });
+				}
+				method.setAccessible(accessible);
+			}
+		} catch (MalformedURLException ex) {
+			throw new IOException(ex);
+		} catch (NoSuchMethodException ex) {
+			throw new IOException(ex);
+		} catch (SecurityException ex) {
+			throw new IOException(ex);
+		} catch (IllegalAccessException ex) {
+			throw new IOException(ex);
+		} catch (IllegalArgumentException ex) {
+			throw new IOException(ex);
+		} catch (InvocationTargetException ex) {
+			throw new IOException(ex);
 		}
 	}
 }

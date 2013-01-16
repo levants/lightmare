@@ -43,11 +43,38 @@ public class LibLoaderTest {
 		}
 	}
 
+	public void loadMessageWithoutInitTest() {
+		try {
+			loaderTesterClass = Class.forName(CLASS_NAME_TO_LOAD);
+			loadMessage = loaderTesterClass.getDeclaredMethod("loaderMessage");
+			Object tester = loaderTesterClass.newInstance();
+			Assert.assertNotNull("Could not initialize LoaderTester", tester);
+			loadMessage.invoke(tester);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Assert.fail(ex.getMessage());
+		}
+	}
+
 	@Test
 	public void loadMessageDirectTest() {
 		try {
 			loaderTesterClass = Class.forName(CLASS_NAME_TO_LOAD, true, Thread
 					.currentThread().getContextClassLoader());
+			LoaderTester tester = (LoaderTester) loaderTesterClass
+					.newInstance();
+			Assert.assertNotNull("Could not initialize LoaderTester", tester);
+			tester.loaderMessage();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Assert.fail(ex.getMessage());
+		}
+	}
+
+	@Test
+	public void loadMessageDirectWithoutInitTest() {
+		try {
+			loaderTesterClass = Class.forName(CLASS_NAME_TO_LOAD);
 			LoaderTester tester = (LoaderTester) loaderTesterClass
 					.newInstance();
 			Assert.assertNotNull("Could not initialize LoaderTester", tester);
