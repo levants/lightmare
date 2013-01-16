@@ -11,7 +11,6 @@ import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 
 public class RpcDecoder extends FrameDecoder {
 
-
 	@Override
 	protected Object decode(ChannelHandlerContext context, Channel channel,
 			ChannelBuffer buffer) throws Exception {
@@ -26,8 +25,7 @@ public class RpcDecoder extends FrameDecoder {
 		int classSize = buffer.readInt();
 		int paramArraySize = buffer.readInt();
 
-		int paramsSize = Listener.INT_SIZE * paramArraySize + paramArraySize
-				+ methodSize + classSize + paramArraySize;
+		int paramsSize = beanNameSize + methodSize + classSize + paramArraySize;
 
 		if (buffer.readableBytes() < paramsSize) {
 			buffer.resetReaderIndex();
@@ -43,22 +41,14 @@ public class RpcDecoder extends FrameDecoder {
 		byte[] classBt = new byte[classSize];
 		buffer.readBytes(classBt);
 
-		int paramSize;
-		byte[] parameterBytes = new byte[paramArraySize];
-		Object[] params = new Object[paramArraySize];
-		for (int i = 0; i < paramArraySize; i++) {
-			paramSize = buffer.readInt();
-			parameterBytes = new byte[paramSize];
-			buffer.readBytes(parameterBytes);
-
-			params[i] = Listener.deserialize(parameterBytes);
-		}
+		byte[] paramBt = new byte[paramArraySize];
 
 		RpcWrapper wrapper = new RpcWrapper();
 
 		String beanName = new String(beanNameBt);
 		Method beanMethod = (Method) Listener.deserialize(methodBt);
 		Class<?> interfaceClass = (Class<?>) Listener.deserialize(classBt);
+		Object[] params = (Object[]) Listener.deserialize(paramBt);
 
 		wrapper.setBeanName(beanName);
 		wrapper.setBeanMethod(beanMethod);

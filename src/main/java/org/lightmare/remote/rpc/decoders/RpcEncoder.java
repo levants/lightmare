@@ -4,7 +4,9 @@ import java.lang.reflect.Method;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 import org.lightmare.remote.Listener;
@@ -26,21 +28,26 @@ public class RpcEncoder extends SimpleChannelHandler {
 		byte[] beanNameBt = beanName.getBytes("UTF8");
 		byte[] beanMethodBt = Listener.serialize(beanMethod);
 		byte[] interfaceClassBt = Listener.serialize(interfaceClass);
+		byte[] paramBt = Listener.serialize(params);
 
-		int paramArraySize = params.length;
-
-		byte[][] paramsBt = new byte[paramArraySize][];
-
-		int paramsSize = 0;
-		for (int i = 0; i < paramArraySize; i++) {
-			paramsBt[i] = Listener.serialize(params[i]);
-			paramsSize += paramsBt[i].length;
-		}
-
-		paramsSize += Listener.INT_SIZE * paramArraySize
-				+ Listener.PROTOCOL_SIZE;
+		int paramsSize = Listener.PROTOCOL_SIZE + beanNameBt.length
+				+ beanMethodBt.length + interfaceClassBt.length
+				+ paramBt.length;
 
 		ChannelBuffer buffer = ChannelBuffers.buffer(paramsSize);
+
+		buffer.writeInt(beanNameBt.length);
+		buffer.writeInt(beanMethodBt.length);
+		buffer.writeInt(interfaceClassBt.length);
+		buffer.writeInt(paramBt.length);
+
+		buffer.writeBytes(beanNameBt);
+		buffer.writeBytes(beanMethodBt);
+		buffer.writeBytes(interfaceClassBt);
+		buffer.writeBytes(paramBt);
+
+		ChannelFuture future = ev.getFuture();
+		Channels.write(ctx, future, buffer);
 
 	}
 }
