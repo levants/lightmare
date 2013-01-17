@@ -42,7 +42,7 @@ public class JPAManager {
 
 	private String dataSourcePath;
 
-	boolean scanArchives = true;
+	boolean scanArchives;
 
 	private JPAManager() {
 	}
@@ -216,6 +216,7 @@ public class JPAManager {
 
 		public Builder() {
 			manager = new JPAManager();
+			manager.scanArchives = true;
 		}
 
 		public Builder setClasses(List<String> classes) {

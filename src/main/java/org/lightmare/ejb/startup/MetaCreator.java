@@ -345,6 +345,7 @@ public class MetaCreator {
 
 		public Builder setPersXmlPath(String path) {
 			creator.persXmlPath = path;
+			creator.scanArchives = false;
 			return this;
 		}
 
