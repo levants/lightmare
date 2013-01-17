@@ -1,5 +1,11 @@
 package org.lightmare.remote.rpc.wrappers;
 
+/**
+ * RPC request wrapper class for serialization
+ * 
+ * @author levan
+ * 
+ */
 public class RpcWrapper {
 
 	private String beanName;

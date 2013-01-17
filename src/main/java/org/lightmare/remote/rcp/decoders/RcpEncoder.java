@@ -10,6 +10,14 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.utils.RpcUtils;
 
+/**
+ * Encoder (extends {@link SimpleChannelHandler}) class @see <a
+ * href="http://static.netty.io/3.6/guide/">io.netty</a> for serialize
+ * {@link RcpWrapper} <a href="io.netty"/>netty></a> RPC server response
+ * 
+ * @author levan
+ * 
+ */
 public class RcpEncoder extends SimpleChannelHandler {
 
 	@Override

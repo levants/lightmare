@@ -24,10 +24,9 @@ public class LibraryLoader {
 	 * 
 	 * @param file
 	 * @param urls
-	 * @throws MalformedURLException
+	 * @throws IOException
 	 */
-	public static void getSubfiles(File file, Set<URL> urls)
-			throws MalformedURLException {
+	public static void getSubfiles(File file, Set<URL> urls) throws IOException {
 		if (file.isDirectory()) {
 			File[] subFiles = file.listFiles(new FilenameFilter() {
 
@@ -44,16 +43,24 @@ public class LibraryLoader {
 				if (subFile.isDirectory()) {
 					getSubfiles(subFile, urls);
 				} else {
-					urls.add(subFile.toURI().toURL());
+					try {
+						urls.add(subFile.toURI().toURL());
+					} catch (MalformedURLException ex) {
+						throw new IOException(ex);
+					}
 				}
 			}
 		} else {
-			urls.add(file.toURI().toURL());
+			try {
+				urls.add(file.toURI().toURL());
+			} catch (MalformedURLException ex) {
+				throw new IOException(ex);
+			}
 		}
 	}
 
 	public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
-			throws MalformedURLException {
+			throws IOException {
 		getSubfiles(file, urls);
 		URL[] paths = urls.toArray(new URL[urls.size()]);
 		URLClassLoader urlLoader = URLClassLoader.newInstance(paths, Thread
@@ -61,8 +68,7 @@ public class LibraryLoader {
 		return urlLoader;
 	}
 
-	public static ClassLoader getEnrichedLoader(URL[] urls)
-			throws MalformedURLException {
+	public static ClassLoader getEnrichedLoader(URL[] urls) {
 		URLClassLoader urlLoader = null;
 		if (urls.length > 0) {
 			urlLoader = URLClassLoader.newInstance(urls, Thread.currentThread()
@@ -88,15 +94,14 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Loads jar or class files to the current thread from libraryPath
-	 * recursively
+	 * Loads jar or <code>.class</code> files to the current thread from
+	 * libraryPath recursively
 	 * 
 	 * @param libraryPath
-	 * @throws MalformedURLException
+	 * @throws IOException
 	 */
 	public static void loadLibraries(String libraryPath) throws IOException {
-		// Thread currentThread = Thread.currentThread();
-		// ClassLoader loader = currentThread.getContextClassLoader();
+
 		File file = new File(libraryPath);
 		try {
 			if (file.exists()) {

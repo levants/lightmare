@@ -25,6 +25,12 @@ import org.lightmare.remote.rcp.decoders.RcpEncoder;
 import org.lightmare.remote.rpc.decoders.RpcDecoder;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 
+/**
+ * Registers and starts RPC server @see <a href="netty.io"/>netty.io</a>
+ * 
+ * @author levan
+ * 
+ */
 public class RPCListener {
 
 	/**

@@ -11,6 +11,12 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 
+/**
+ * Handler @see {@link SimpleChannelHandler} for RPC response
+ * 
+ * @author levan
+ * 
+ */
 public class RcpHandler extends SimpleChannelHandler {
 
 	private BlockingQueue<RcpWrapper> answer;

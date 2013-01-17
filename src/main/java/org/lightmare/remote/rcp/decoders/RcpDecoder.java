@@ -7,6 +7,14 @@ import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.utils.RpcUtils;
 
+/**
+ * Decoder (extends {@link FrameDecoder}) class @see <a
+ * href="http://static.netty.io/3.6/guide/">io.netty</a> for response on <a
+ * href="io.netty"/>netty></a> RCP returns {@link RcpWrapper}
+ * 
+ * @author levan
+ * 
+ */
 public class RcpDecoder extends FrameDecoder {
 
 	@Override

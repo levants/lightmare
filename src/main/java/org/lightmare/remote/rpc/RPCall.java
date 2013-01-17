@@ -22,6 +22,12 @@ import org.lightmare.remote.rpc.decoders.RpcEncoder;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 
+/**
+ * Client class to produce remote procedure call
+ * 
+ * @author levan
+ * 
+ */
 public class RPCall {
 
 	private String host = "localhost";

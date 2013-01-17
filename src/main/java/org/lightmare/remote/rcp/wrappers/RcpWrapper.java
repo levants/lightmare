@@ -1,5 +1,11 @@
 package org.lightmare.remote.rcp.wrappers;
 
+/**
+ * RPC response wrapper class for serialization
+ * 
+ * @author levan
+ * 
+ */
 public class RcpWrapper {
 
 	private boolean valid;

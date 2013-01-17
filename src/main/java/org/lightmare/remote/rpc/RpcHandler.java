@@ -10,6 +10,12 @@ import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.RpcUtils;
 
+/**
+ * Handler @see {@link SimpleChannelHandler} for RPC request
+ * 
+ * @author levan
+ * 
+ */
 public class RpcHandler extends SimpleChannelHandler {
 
 	private static Logger LOG = Logger.getLogger(RpcHandler.class);
