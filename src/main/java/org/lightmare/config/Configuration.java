@@ -10,6 +10,12 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Easy way to retrieve configuration properties from configuration file
+ * 
+ * @author levan
+ * 
+ */
 public class Configuration {
 
 	private final Map<String, String> config = new HashMap<String, String>();
