@@ -424,7 +424,7 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 						// IOExceptions
 						Scanner scanner = null;
 						URL jarURL = null;
-						if (metadata.getName() == null) {
+						if (metadata.getName() == null && scanArchives) {
 							scanner = buildScanner(metadata.getProps(),
 									integration);
 							jarURL = JarVisitorFactory.getJarURLFromURLEntry(
@@ -445,7 +445,7 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 								metadata.setClasses(classes);
 								metadata.setExcludeUnlistedClasses(true);
 							}
-							if (scanner == null) {
+							if (scanner == null && scanArchives) {
 								scanner = buildScanner(metadata.getProps(),
 										integration);
 								jarURL = JarVisitorFactory
