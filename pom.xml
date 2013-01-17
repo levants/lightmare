@@ -184,6 +184,46 @@
 		</dependency>
 		<!-- end of netty -->
 
+		<!-- jar-rs with jersey -->
+		<dependency>
+			<groupId>com.sun.jersey.ri</groupId>
+			<artifactId>jax-rs-ri</artifactId>
+			<version>1.13</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-servlet</artifactId>
+			<version>1.16</version>
+		</dependency>
+		<!-- end of jar-rs with jersey -->
+
+		<!-- jackson json serialization -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.0.6</version>
+		</dependency>
+		<!-- end of jackson json serialization -->
+
+		<!-- jetty embeddable server -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>7.4.5.v20110725</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>7.4.5.v20110725</version>
+		</dependency>
+		<!-- end of jetty embeddable server -->
+
 		<!-- loggers -->
 		<dependency>
 			<groupId>log4j</groupId>
