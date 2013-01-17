@@ -42,6 +42,8 @@ public class JPAManager {
 
 	private String dataSourcePath;
 
+	boolean scanArchives = true;
+
 	private JPAManager() {
 	}
 
@@ -88,6 +90,8 @@ public class JPAManager {
 		}
 
 		cfg.setSwapDataSource(swapDataSource);
+		cfg.setScanArchives(scanArchives);
+
 		if (checkForDataSource()
 				&& !DataSourceInitializer.checkDSPath(dataSourcePath)) {
 			FileParsers parsers = new FileParsers();
@@ -241,6 +245,11 @@ public class JPAManager {
 
 		public Builder setDataSourcePath(String dataSourcePath) {
 			manager.dataSourcePath = dataSourcePath;
+			return this;
+		}
+
+		public Builder setScanArchives(boolean scanArchives) {
+			manager.scanArchives = scanArchives;
 			return this;
 		}
 

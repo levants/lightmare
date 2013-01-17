@@ -185,9 +185,12 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 	// longer be called after restoration
 	private transient ClassLoader overridenClassLoader;
 	private boolean isConfigurationProcessed = false;
+
+	// arguments from lightmare
 	private List<String> classes;
 	private Enumeration<URL> xmls;
 	private boolean swapDataSource;
+	private boolean scanArchives;
 
 	private String shortPath = "/META-INF/persistence.xml";
 
@@ -217,6 +220,10 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 
 	public void setSwapDataSource(boolean swapDataSource) {
 		this.swapDataSource = swapDataSource;
+	}
+
+	public void setScanArchives(boolean scanArchives) {
+		this.scanArchives = scanArchives;
 	}
 
 	/**
@@ -445,30 +452,33 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 										.getJarURLFromURLEntry(url, shortPath);
 							}
 							// scan main JAR
-							ScanningContext mainJarScanCtx = new ScanningContext()
-									.scanner(scanner)
-									.url(jarURL)
-									.explicitMappingFiles(
-											metadata.getMappingFiles())
-									.searchOrm(true);
-							setDetectedArtifactsOnScanningContext(
-									mainJarScanCtx, metadata.getProps(),
-									integration,
-									metadata.getExcludeUnlistedClasses());
-							addMetadataFromScan(mainJarScanCtx, metadata);
+							if (scanArchives) {
+								ScanningContext mainJarScanCtx = new ScanningContext()
+										.scanner(scanner)
+										.url(jarURL)
+										.explicitMappingFiles(
+												metadata.getMappingFiles())
+										.searchOrm(true);
+								setDetectedArtifactsOnScanningContext(
+										mainJarScanCtx, metadata.getProps(),
+										integration,
+										metadata.getExcludeUnlistedClasses());
+								addMetadataFromScan(mainJarScanCtx, metadata);
 
-							ScanningContext otherJarScanCtx = new ScanningContext()
-									.scanner(scanner)
-									.explicitMappingFiles(
-											metadata.getMappingFiles())
-									.searchOrm(true);
-							setDetectedArtifactsOnScanningContext(
-									otherJarScanCtx, metadata.getProps(),
-									integration, false);
-							for (String jarFile : metadata.getJarFiles()) {
-								otherJarScanCtx.url(JarVisitorFactory
-										.getURLFromPath(jarFile));
-								addMetadataFromScan(otherJarScanCtx, metadata);
+								ScanningContext otherJarScanCtx = new ScanningContext()
+										.scanner(scanner)
+										.explicitMappingFiles(
+												metadata.getMappingFiles())
+										.searchOrm(true);
+								setDetectedArtifactsOnScanningContext(
+										otherJarScanCtx, metadata.getProps(),
+										integration, false);
+								for (String jarFile : metadata.getJarFiles()) {
+									otherJarScanCtx.url(JarVisitorFactory
+											.getURLFromPath(jarFile));
+									addMetadataFromScan(otherJarScanCtx,
+											metadata);
+								}
 							}
 							return configure(metadata, integration);
 						}

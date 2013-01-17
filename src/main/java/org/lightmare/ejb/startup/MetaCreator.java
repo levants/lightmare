@@ -54,6 +54,8 @@ public class MetaCreator {
 
 	private String dataSourcePath;
 
+	private boolean scanArchives;
+
 	private Map<String, AbstractIOUtils> aggregateds = new HashMap<String, AbstractIOUtils>();
 
 	private static final Logger LOG = Logger.getLogger(MetaCreator.class);
@@ -150,6 +152,7 @@ public class MetaCreator {
 		}
 		builder.setPath(persXmlPath).setProperties(prop)
 				.setSwapDataSource(swapDataSource)
+				.setScanArchives(scanArchives)
 				.setDataSourcePath(dataSourcePath).build()
 				.setConnection(unitName, jndiName);
 	}
@@ -362,6 +365,11 @@ public class MetaCreator {
 
 		public Builder setDataSourcePath(String dataSourcePath) {
 			creator.dataSourcePath = dataSourcePath;
+			return this;
+		}
+
+		public Builder setScanArchives(boolean scanArchives) {
+			creator.scanArchives = scanArchives;
 			return this;
 		}
 
