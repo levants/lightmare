@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.lightmare.ejb.EjbConnector;
+import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 
@@ -49,6 +50,14 @@ public class RpcUtils {
 		}
 	}
 
+	/**
+	 * Serializes java type ({@link Object}) to byte array with java native
+	 * serialization api
+	 * 
+	 * @param value
+	 * @return byte[]
+	 * @throws IOException
+	 */
 	public static byte[] serialize(Object value) throws IOException {
 
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -67,6 +76,14 @@ public class RpcUtils {
 		}
 	}
 
+	/**
+	 * Serializes {@link Object} to josn {@link String} with <a
+	 * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
+	 * 
+	 * @param value
+	 * @return {@link String}
+	 * @throws IOException
+	 */
 	public static <T> String write(Object value) throws IOException {
 		String data;
 		try {
@@ -81,6 +98,14 @@ public class RpcUtils {
 		}
 	}
 
+	/**
+	 * Deserializes byte array in java type ({@link Object}) with java native
+	 * serialization api
+	 * 
+	 * @param data
+	 * @return {@link Object}
+	 * @throws IOException
+	 */
 	public static Object deserialize(byte[] data) throws IOException {
 
 		ByteArrayInputStream stream = new ByteArrayInputStream(data);
@@ -101,6 +126,15 @@ public class RpcUtils {
 		}
 	}
 
+	/**
+	 * Deserializes josn {@link String} to {@link Object} with <a
+	 * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
+	 * 
+	 * @param data
+	 * @param valueClass
+	 * @return T
+	 * @throws IOException
+	 */
 	public static <T> T read(String data, Class<T> valueClass)
 			throws IOException {
 		T value;
@@ -116,6 +150,15 @@ public class RpcUtils {
 		}
 	}
 
+	/**
+	 * Calls remote method for java RPC api
+	 * 
+	 * @param proxy
+	 * @param method
+	 * @param arguments
+	 * @return {@link Object}
+	 * @throws IOException
+	 */
 	public static Object callRemoteMethod(Object proxy, Method method,
 			Object[] arguments) throws IOException {
 
@@ -131,6 +174,14 @@ public class RpcUtils {
 		return rpCall.call(wrapper);
 	}
 
+	/**
+	 * Calls {@link javax.ejb.Stateless} bean method by {@link RcpWrapper} for
+	 * java RPC calls
+	 * 
+	 * @param wrapper
+	 * @return {@link Object}
+	 * @throws IOException
+	 */
 	public static Object callBeanMethod(RpcWrapper wrapper) throws IOException {
 
 		String beanName = wrapper.getBeanName();
