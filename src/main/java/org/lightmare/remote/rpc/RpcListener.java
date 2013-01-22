@@ -83,9 +83,8 @@ public class RpcListener {
 	/**
 	 * Starts server
 	 * 
-	 * @throws Exception
 	 */
-	public static void startServer() throws Exception {
+	public static void startServer() {
 		setNettyPools();
 		factory = new NioServerSocketChannelFactory(boss, workerPool);
 		ServerBootstrap bootstrap = new ServerBootstrap(factory);

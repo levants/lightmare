@@ -1,5 +1,7 @@
 package org.lightmare.remote.rcp.decoders;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -19,7 +21,7 @@ public class RcpDecoder extends FrameDecoder {
 
 	@Override
 	protected RcpWrapper decode(ChannelHandlerContext context, Channel channel,
-			ChannelBuffer buffer) throws Exception {
+			ChannelBuffer buffer) throws IOException {
 
 		if (buffer.readableBytes() < RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE) {
 			buffer.resetReaderIndex();

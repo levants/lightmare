@@ -1,5 +1,7 @@
 package org.lightmare.remote.rpc.decoders;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.ChannelFuture;
@@ -14,7 +16,7 @@ public class RpcEncoder extends SimpleChannelHandler {
 
 	@Override
 	public void writeRequested(ChannelHandlerContext ctx, MessageEvent ev)
-			throws Exception {
+			throws IOException {
 
 		RpcWrapper wrapper = (RpcWrapper) ev.getMessage();
 

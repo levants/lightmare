@@ -1,5 +1,6 @@
 package org.lightmare.remote.rpc;
 
+import java.io.IOException;
 import java.net.SocketAddress;
 
 import org.apache.log4j.Logger;
@@ -22,7 +23,7 @@ public class RpcHandler extends SimpleChannelHandler {
 
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent ev)
-			throws Exception {
+			throws IOException {
 		RpcWrapper wrapper = (RpcWrapper) ev.getMessage();
 		SocketAddress address = ev.getRemoteAddress();
 
@@ -38,6 +39,10 @@ public class RpcHandler extends SimpleChannelHandler {
 
 		rcp.setValue(value);
 		ev.getChannel().write(rcp, address);
-		super.messageReceived(ctx, ev);
+		try {
+			super.messageReceived(ctx, ev);
+		} catch (Exception ex) {
+			throw new IOException(ex);
+		}
 	}
 }

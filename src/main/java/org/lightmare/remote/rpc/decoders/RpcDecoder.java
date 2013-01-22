@@ -1,5 +1,7 @@
 package org.lightmare.remote.rpc.decoders;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -11,7 +13,7 @@ public class RpcDecoder extends FrameDecoder {
 
 	@Override
 	protected Object decode(ChannelHandlerContext context, Channel channel,
-			ChannelBuffer buffer) throws Exception {
+			ChannelBuffer buffer) throws IOException {
 
 		if (buffer.readableBytes() < RpcUtils.PROTOCOL_SIZE) {
 			buffer.resetReaderIndex();

@@ -1,5 +1,7 @@
 package org.lightmare.remote.rcp.decoders;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.ChannelFuture;
@@ -22,7 +24,7 @@ public class RcpEncoder extends SimpleChannelHandler {
 
 	@Override
 	public void writeRequested(ChannelHandlerContext ctx, MessageEvent ev)
-			throws Exception {
+			throws IOException {
 
 		RcpWrapper wrapper = (RcpWrapper) ev.getMessage();
 		boolean valid = wrapper.isValid();
