@@ -253,7 +253,9 @@ public class MetaCreator {
 			Set<String> beanNames = annotationDB.getAnnotationIndex().get(
 					Stateless.class.getName());
 			Map<String, URL> classOwnersURL = annotationDB.getClassOwnersURLs();
-			deployBeans(beanNames, classOwnersURL, archivesURLs);
+			if (beanNames != null) {
+				deployBeans(beanNames, classOwnersURL, archivesURLs);
+			}
 		} finally {
 			// gets read from all created temporary files
 			TmpResources.removeTempFiles();
@@ -267,8 +269,7 @@ public class MetaCreator {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public void scanForBeans(File[] jars) throws IOException,
-			ClassNotFoundException {
+	public void scanForBeans(File[] jars) throws IOException {
 		List<URL> urlList = new ArrayList<URL>();
 		URL url;
 		for (File file : jars) {
@@ -286,8 +287,7 @@ public class MetaCreator {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public void scanForBeans(String... paths) throws ClassNotFoundException,
-			IOException {
+	public void scanForBeans(String... paths) throws IOException {
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		String defaultPath = "";
 		String[] appPaths;

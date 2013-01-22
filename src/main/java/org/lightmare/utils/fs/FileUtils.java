@@ -10,6 +10,25 @@ import java.io.File;
  */
 public class FileUtils {
 
+	/**
+	 * Check whether passed path is extracted ear directory path
+	 * 
+	 * @param file
+	 * @return boolean
+	 */
+	public static boolean checkOnEarDir(String path) {
+		File file = new File(path);
+		boolean isEarDir = checkOnEarDir(file);
+
+		return isEarDir;
+	}
+
+	/**
+	 * Check whether passed file is extracted ear directory
+	 * 
+	 * @param file
+	 * @return boolean
+	 */
 	public static boolean checkOnEarDir(File file) {
 
 		boolean isEarDir = file.isDirectory();
