@@ -31,7 +31,7 @@ import org.lightmare.utils.concurrent.ThreadFactoryUtil;
  * @author levan
  * 
  */
-public class RPCListener {
+public class RpcListener {
 
 	/**
 	 * Boss pool for Netty network
@@ -60,7 +60,7 @@ public class RPCListener {
 	private static Channel channel;
 	private static ServerSocketChannelFactory factory;
 	private static final Runtime runtime = Runtime.getRuntime();
-	private static Logger logger = Logger.getLogger(RPCListener.class);
+	private static Logger logger = Logger.getLogger(RpcListener.class);
 
 	/**
 	 * Set boss and worker thread pools size from configuration
