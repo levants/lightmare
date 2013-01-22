@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -157,12 +156,6 @@ public class MetaCreator {
 				.setConnection(unitName, jndiName);
 	}
 
-	private void addURLToList(Enumeration<URL> urlEnum, List<URL> urlList) {
-		while (urlEnum.hasMoreElements()) {
-			urlList.add(urlEnum.nextElement());
-		}
-	}
-
 	private URL[] getFullArchives(URL[] archives,
 			Map<URL, AbstractIOUtils> archivesURLs) throws IOException {
 		List<URL> modifiedArchives = new ArrayList<URL>();
@@ -288,20 +281,13 @@ public class MetaCreator {
 	 * @throws IOException
 	 */
 	public void scanForBeans(String... paths) throws IOException {
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		String defaultPath = "";
-		String[] appPaths;
-		if (paths.length == 0) {
-			appPaths = new String[1];
-			appPaths[0] = defaultPath;
-		} else {
-			appPaths = paths;
-		}
 		List<URL> urlList = new ArrayList<URL>();
-		Enumeration<URL> urlEnum;
-		for (String resourcePath : appPaths) {
-			urlEnum = loader.getResources(resourcePath);
-			addURLToList(urlEnum, urlList);
+		URL archive;
+		File file;
+		for (String path : paths) {
+			file = new File(path);
+			archive = file.toURI().toURL();
+			urlList.add(archive);
 		}
 		URL[] archives = urlList.toArray(new URL[urlList.size()]);
 		scanForBeans(archives);
