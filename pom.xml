@@ -181,12 +181,14 @@
 			<groupId>io.netty</groupId>
 			<artifactId>netty</artifactId>
 			<version>3.6.2.Final</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty</artifactId>
 			<version>3.6.2.Final</version>
 			<classifier>sources</classifier>
+			<scope>provided</scope>
 		</dependency>
 		<!-- end of netty -->
 
@@ -196,11 +198,13 @@
 			<artifactId>jax-rs-ri</artifactId>
 			<version>1.13</version>
 			<type>pom</type>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-servlet</artifactId>
 			<version>1.16</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- end of jar-rs with jersey -->
 
@@ -209,11 +213,13 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 			<version>2.0.6</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.0.6</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- end of jackson json serialization -->
 
@@ -222,11 +228,13 @@
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>7.4.5.v20110725</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlet</artifactId>
 			<version>7.4.5.v20110725</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- end of jetty embeddable server -->
 
