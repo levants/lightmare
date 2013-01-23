@@ -1,6 +1,9 @@
 package org.lightmare.utils.fs;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * Utility for removing {@link File}s recursively from file system
@@ -9,6 +12,25 @@ import java.io.File;
  * 
  */
 public class FileUtils {
+
+	/**
+	 * Check whether passed {@link URL} is from extracted ear directory
+	 * 
+	 * @param url
+	 * @return boolean
+	 * @throws IOException
+	 */
+	public static boolean checkOnEarDir(URL url) throws IOException {
+		File file;
+		try {
+			file = new File(url.toURI());
+			boolean isEarDir = checkOnEarDir(file);
+
+			return isEarDir;
+		} catch (URISyntaxException ex) {
+			throw new IOException(ex);
+		}
+	}
 
 	/**
 	 * Check whether passed path is extracted ear directory path
