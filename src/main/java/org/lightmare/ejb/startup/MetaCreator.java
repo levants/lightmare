@@ -250,7 +250,7 @@ public class MetaCreator {
 				deployBeans(beanNames, classOwnersURL, archivesURLs);
 			}
 		} finally {
-			// gets read from all created temporary files
+			// gets rid from all created temporary files
 			TmpResources.removeTempFiles();
 		}
 	}
