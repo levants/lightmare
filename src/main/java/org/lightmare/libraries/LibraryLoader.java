@@ -93,15 +93,8 @@ public class LibraryLoader {
 
 	}
 
-	/**
-	 * Loads jar or <code>.class</code> files to the current thread from
-	 * libraryPath recursively
-	 * 
-	 * @param libraryPath
-	 * @throws IOException
-	 */
-	public static void loadLibraries(String libraryPath) throws IOException {
-
+	private static void loadLibraryFromPath(String libraryPath)
+			throws IOException {
 		File file = new File(libraryPath);
 		try {
 			if (file.exists()) {
@@ -133,6 +126,20 @@ public class LibraryLoader {
 			throw new IOException(ex);
 		} catch (InvocationTargetException ex) {
 			throw new IOException(ex);
+		}
+	}
+
+	/**
+	 * Loads jar or <code>.class</code> files to the current thread from
+	 * libraryPaths recursively
+	 * 
+	 * @param libraryPaths
+	 * @throws IOException
+	 */
+	public static void loadLibraries(String... libraryPaths) throws IOException {
+
+		for (String libraryPath : libraryPaths) {
+			loadLibraryFromPath(libraryPath);
 		}
 	}
 }

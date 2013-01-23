@@ -45,7 +45,7 @@ public class MetaCreator {
 
 	private String persXmlPath;
 
-	private String libraryPath;
+	private String[] libraryPaths;
 
 	private boolean persXmlFromJar;
 
@@ -233,8 +233,8 @@ public class MetaCreator {
 
 		try {
 			// Loads libraries from specified path
-			if (libraryPath != null) {
-				LibraryLoader.loadLibraries(libraryPath);
+			if (libraryPaths != null) {
+				LibraryLoader.loadLibraries(libraryPaths);
 			}
 			Map<URL, AbstractIOUtils> archivesURLs = new HashMap<URL, AbstractIOUtils>();
 			URL[] fullArchives = getFullArchives(archives, archivesURLs);
@@ -335,8 +335,8 @@ public class MetaCreator {
 			return this;
 		}
 
-		public Builder setLibraryPath(String libPath) {
-			creator.libraryPath = libPath;
+		public Builder setLibraryPath(String... libPaths) {
+			creator.libraryPaths = libPaths;
 			return this;
 		}
 
