@@ -4,7 +4,7 @@
 
 	<groupId>ge.gov.mia</groupId>
 	<artifactId>lightmare</artifactId>
-	<version>0.0.23-SNAPSHOT</version>
+	<version>0.0.24-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>lightmare</name>
@@ -281,14 +281,14 @@
 
 	<distributionManagement>
 		<repository>
-			<id>MIA</id>
-			<name>Mia Maven Repository</name>
-			<url>http://nexus.dev.mia.ge/nexus/content/repositories/MIA/</url>
+			<id>Central</id>
+			<name>Central Maven Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 		<snapshotRepository>
 			<id>MIA</id>
-			<name>Mia Maven Repository for Snapshots</name>
-			<url>http://nexus.dev.mia.ge/nexus/content/repositories/MiaSnapshot/</url>
+			<name>Central Maven Repository for Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
