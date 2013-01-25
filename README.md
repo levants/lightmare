@@ -70,7 +70,7 @@ Complete example how to use MetaCreator's Builder is there:
 
 ```java
   MetaCreator.Builder builder = new MetaCreator.Builder();
-  			builder.setPersistenceProperties(properties)
+  builder.setPersistenceProperties(properties)
         .setUnitName(name)
         .setScanForEntities(true)
         .setXmlFromJar(true)
@@ -79,5 +79,5 @@ Complete example how to use MetaCreator's Builder is there:
         .setScanArchives(true)
         .setLibraryPath(path);
   MetaCreator metaCreator = builder.build();
-	metaCreator.scanForBeans(files);
+  metaCreator.scanForBeans(files);
 ```
