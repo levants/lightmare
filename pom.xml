@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>lightmare</artifactId>
-	<version>0.0.24-SNAPSHOT</version>
+	<version>0.0.25-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>lightmare</name>
@@ -33,6 +33,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hibernate.version>4.1.9.Final</hibernate.version>
+		<netty.version>3.6.2.Final</netty.version>
+		<jackson.version>2.0.6</jackson.version>
+		<jetty.version>7.4.5.v20110725</jetty.version>
 	</properties>
 
 	<build>
@@ -104,20 +108,20 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>4.1.9.Final</version>
+			<version>${hibernate.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.1.9.Final</version>
+			<version>${hibernate.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
-			<version>4.1.9.Final</version>
+			<version>${hibernate.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -179,13 +183,13 @@
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty</artifactId>
-			<version>3.6.2.Final</version>
+			<version>${netty.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty</artifactId>
-			<version>3.6.2.Final</version>
+			<version>${netty.version}</version>
 			<classifier>sources</classifier>
 			<scope>provided</scope>
 		</dependency>
@@ -211,13 +215,13 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.0.6</version>
+			<version>${jackson.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.0.6</version>
+			<version>${jackson.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- end of jackson json serialization -->
@@ -226,13 +230,13 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
-			<version>7.4.5.v20110725</version>
+			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlet</artifactId>
-			<version>7.4.5.v20110725</version>
+			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- end of jetty embeddable server -->
