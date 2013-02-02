@@ -20,10 +20,12 @@ import javax.persistence.Entity;
 
 import org.apache.log4j.Logger;
 import org.lightmare.annotations.UnitName;
+import org.lightmare.config.Configuration;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.remote.rpc.RpcListener;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.AbstractIOUtils;
 
@@ -54,6 +56,17 @@ public class MetaCreator {
 	private String dataSourcePath;
 
 	private boolean scanArchives;
+
+	private boolean remote;
+
+	private boolean server;
+
+	private boolean client;
+
+	/**
+	 * {@link Configuration} container class for server
+	 */
+	public static final Configuration configuration = new Configuration();
 
 	private Map<String, AbstractIOUtils> aggregateds = new HashMap<String, AbstractIOUtils>();
 
@@ -232,6 +245,10 @@ public class MetaCreator {
 	public void scanForBeans(URL[] archives) throws IOException {
 
 		try {
+			// starts RPC server if configured as remote and server
+			if (remote && server) {
+				RpcListener.startServer();
+			}
 			// Loads libraries from specified path
 			if (libraryPaths != null) {
 				LibraryLoader.loadLibraries(libraryPaths);
@@ -357,6 +374,51 @@ public class MetaCreator {
 
 		public Builder setScanArchives(boolean scanArchives) {
 			creator.scanArchives = scanArchives;
+			return this;
+		}
+
+		public Builder setRemote(boolean remote) {
+			creator.remote = remote;
+			return this;
+		}
+
+		public Builder setServer(boolean server) {
+			creator.server = server;
+			return this;
+		}
+
+		public Builder setClient(boolean client) {
+			creator.client = client;
+			return this;
+		}
+
+		public Builder setProperty(String key, String property) {
+			configuration.putValue(key, property);
+			return this;
+		}
+
+		public Builder setIpAddress(String property) {
+			configuration.putValue(Configuration.IP_ADDRESS, property);
+			return this;
+		}
+
+		public Builder setPort(String property) {
+			configuration.putValue(Configuration.PORT, property);
+			return this;
+		}
+
+		public Builder setMasterThreads(String property) {
+			configuration.putValue(Configuration.BOSS_POOL, property);
+			return this;
+		}
+
+		public Builder setWorkerThreads(String property) {
+			configuration.putValue(Configuration.WORKER_POOL, property);
+			return this;
+		}
+
+		public Builder setTimeout(String property) {
+			configuration.putValue(Configuration.CONNECTION_TIMEOUT, property);
 			return this;
 		}
 

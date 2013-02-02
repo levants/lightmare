@@ -20,6 +20,16 @@ public class Configuration {
 
 	private final Map<String, String> config = new HashMap<String, String>();
 
+	public static final String IP_ADDRESS = "listening_ip";
+
+	public static final String PORT = "listening_port";
+
+	public static final String BOSS_POOL = "boss_pool_size";
+
+	public static final String WORKER_POOL = "worker_pool_size";
+
+	public static final String CONNECTION_TIMEOUT = "timeout";
+
 	private static Logger logger = Logger.getLogger(Configuration.class);
 
 	public String getStringValue(String key) {

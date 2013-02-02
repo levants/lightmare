@@ -20,7 +20,7 @@ import org.jboss.netty.channel.socket.nio.NioWorker;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.jboss.netty.channel.socket.nio.WorkerPool;
 import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
-import org.lightmare.config.Configuration;
+import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.remote.rcp.decoders.RcpEncoder;
 import org.lightmare.remote.rpc.decoders.RpcDecoder;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
@@ -48,11 +48,6 @@ public class RpcListener {
 	private static WorkerPool<NioWorker> workerPool;
 
 	/**
-	 * {@link Configuration} container class for server
-	 */
-	public static final Configuration configuration = new Configuration();
-
-	/**
 	 * {@link ChannelGroup} "info-channels" for only info requests
 	 */
 	public static ChannelGroup channelGroup = new DefaultChannelGroup(
@@ -69,11 +64,13 @@ public class RpcListener {
 		Integer bossCount;
 		Integer workerCount;
 		boss = new OrderedMemoryAwareThreadPoolExecutor(
-				(bossCount = configuration.getIntValue("boss_pool_size")) != null ? bossCount
-						: 1, 400000000, 2000000000, 60, TimeUnit.SECONDS,
+				(bossCount = MetaCreator.configuration
+						.getIntValue("boss_pool_size")) != null ? bossCount : 1,
+				400000000, 2000000000, 60, TimeUnit.SECONDS,
 				new ThreadFactoryUtil("netty-boss-thread", Thread.MAX_PRIORITY));
 		worker = new OrderedMemoryAwareThreadPoolExecutor(
-				(workerCount = configuration.getIntValue("worker_pool_size")) != null ? workerCount
+				(workerCount = MetaCreator.configuration
+						.getIntValue("worker_pool_size")) != null ? workerCount
 						: runtime.availableProcessors() * 3, 400000000,
 				2000000000, 60, TimeUnit.SECONDS, new ThreadFactoryUtil(
 						"netty-worker-thread", (Thread.MAX_PRIORITY - 1)));
@@ -102,8 +99,9 @@ public class RpcListener {
 		bootstrap.setOption("connectTimeoutMillis", 10000);
 		try {
 			channel = bootstrap.bind(new InetSocketAddress(Inet4Address
-					.getByName(configuration.getStringValue("listening_ip")),
-					configuration.getIntValue("listening_port")));
+					.getByName(MetaCreator.configuration
+							.getStringValue("listening_ip")),
+					MetaCreator.configuration.getIntValue("listening_port")));
 			channelGroup.add(channel);
 			logger.info(channel.getLocalAddress());
 		} catch (UnknownHostException ex) {
