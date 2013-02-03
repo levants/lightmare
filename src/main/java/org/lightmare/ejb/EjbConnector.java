@@ -3,16 +3,20 @@ package org.lightmare.ejb;
 import static org.lightmare.ejb.meta.MetaContainer.getMetaData;
 import static org.lightmare.jpa.JPAManager.getConnection;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManagerFactory;
 
 import org.lightmare.ejb.handlers.BeanHandler;
+import org.lightmare.ejb.handlers.BeanLocalHandler;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.remote.rpc.RPCall;
 
 /**
  * Connector class for get ejb beans by interface class
@@ -40,12 +44,8 @@ public class EjbConnector {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T> T getBeanInstance(MetaData metaData, boolean remote)
+	private <T> T getBeanInstance(MetaData metaData)
 			throws InstantiationException, IllegalAccessException {
-
-		if (!remote) {
-			LibraryLoader.loadCurrentLibraries(metaData.getLoader());
-		}
 
 		Class<? extends T> beanClass = (Class<? extends T>) metaData
 				.getBeanClass();
@@ -56,6 +56,29 @@ public class EjbConnector {
 	}
 
 	/**
+	 * Creates {@link InvocationHandler} implementation for server mode
+	 * 
+	 * @param metaData
+	 * @return {@link InvocationHandler}
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
+	private <T> InvocationHandler getHandler(MetaData metaData)
+			throws InstantiationException, IllegalAccessException {
+
+		LibraryLoader.loadCurrentLibraries(metaData.getLoader());
+
+		T beanInstance = getBeanInstance(metaData);
+
+		EntityManagerFactory emf = getEntityManagerFactory(metaData);
+		Field connectorField = metaData.getConnectorField();
+		InvocationHandler handler = new BeanHandler(connectorField,
+				beanInstance, emf);
+
+		return handler;
+	}
+
+	/**
 	 * Creates custom implementation of bean {@link Class}
 	 * 
 	 * @param interfaceClass
@@ -63,27 +86,27 @@ public class EjbConnector {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
+	@SuppressWarnings("unchecked")
 	public <T> T connectToBean(String beanName, Class<T> interfaceClass)
-			throws InstantiationException, IllegalAccessException {
-		MetaData metaData = getMetaData(beanName);
-		T beanInstance = null;
+			throws IOException {
+		InvocationHandler handler;
 		if (MetaCreator.configuration.isRemote()) {
+			handler = new BeanLocalHandler(new RPCall());
 		} else {
-			LibraryLoader.loadCurrentLibraries(metaData.getLoader());
-
-			Class<? extends T> beanClass = (Class<? extends T>) metaData
-					.getBeanClass();
-
-			beanInstance = beanClass.newInstance();
-
-			EntityManagerFactory emf = getEntityManagerFactory(metaData);
-			Field connectorField = metaData.getConnectorField();
-			BeanHandler handler = new BeanHandler(connectorField, beanInstance,
-					emf);
-			Class<?>[] interfaceArray = { interfaceClass };
-			beanInstance = (T) Proxy.newProxyInstance(Thread.currentThread()
-					.getContextClassLoader(), interfaceArray, handler);
+			MetaData metaData = getMetaData(beanName);
+			try {
+				handler = getHandler(metaData);
+			} catch (InstantiationException ex) {
+				throw new IOException(ex);
+			} catch (IllegalAccessException ex) {
+				throw new IOException(ex);
+			}
 		}
+
+		Class<?>[] interfaceArray = { interfaceClass };
+		T beanInstance = (T) Proxy.newProxyInstance(Thread.currentThread()
+				.getContextClassLoader(), interfaceArray, handler);
+
 		return beanInstance;
 	}
 }

@@ -51,13 +51,15 @@ public class Configuration {
 
 	public static final String CONNECTION_TIMEOUT_DEF = "1000";
 
+	public static final boolean SERVER_DEF = true;
+
 	/**
 	 * Properties which version of server is running remote it requires server
 	 * client RPC infrastructure or local (embeddable mode)
 	 */
 	private boolean remote;
 
-	private boolean server;
+	private boolean server = SERVER_DEF;
 
 	private boolean client;
 

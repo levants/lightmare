@@ -71,8 +71,10 @@ public class BeanLoader implements Callable<Boolean> {
 				metaData.setConnectorField(field);
 				unitName = context.unitName();
 				String jndiName = context.name();
-				creator.configureConnection(unitName, beanName, jndiName);
-				metaData.setUnitName(unitName);
+				if (MetaCreator.configuration.isServer()) {
+					creator.configureConnection(unitName, beanName, jndiName);
+					metaData.setUnitName(unitName);
+				}
 				break;
 			}
 		}

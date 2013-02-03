@@ -206,8 +206,6 @@ public class RpcUtils {
 			throw new IOException(ex);
 		} catch (SecurityException ex) {
 			throw new IOException(ex);
-		} catch (InstantiationException ex) {
-			throw new IOException(ex);
 		} catch (IllegalAccessException ex) {
 			throw new IOException(ex);
 		}

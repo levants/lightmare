@@ -378,11 +378,13 @@ public class MetaCreator {
 
 		public Builder setServer(boolean server) {
 			configuration.setServer(server);
+			configuration.setClient(!server);
 			return this;
 		}
 
 		public Builder setClient(boolean client) {
 			configuration.setClient(client);
+			configuration.setServer(!client);
 			return this;
 		}
 
