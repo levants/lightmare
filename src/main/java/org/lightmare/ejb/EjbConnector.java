@@ -20,7 +20,8 @@ import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;
 
 /**
- * Connector class for get ejb beans by interface class
+ * Connector class for get ejb beans or call remotely procedure in ejb bean
+ * (RPC) by interface class
  * 
  * @author Levan
  * 
