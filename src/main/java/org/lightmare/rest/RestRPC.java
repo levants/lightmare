@@ -3,6 +3,7 @@ package org.lightmare.rest;
 import java.io.IOException;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -17,6 +18,7 @@ public class RestRPC {
 
 	private static Logger LOG = Logger.getLogger(RestRPC.class);
 
+	@GET
 	public String call(@QueryParam("param") String param) {
 
 		String response = "not yet implemented";
@@ -28,5 +30,14 @@ public class RestRPC {
 		}
 
 		return response;
+	}
+
+	@GET
+	public String publish() {
+
+		RestPublisher publisher = new RestPublisher();
+		String beansDescriptor = publisher.publishAll();
+
+		return beansDescriptor;
 	}
 }

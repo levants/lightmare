@@ -2,6 +2,7 @@ package org.lightmare.ejb.meta;
 
 import static org.lightmare.jpa.JPAManager.closeEntityManagerFactories;
 
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -38,5 +39,9 @@ public class MetaContainer {
 
 	public static void closeConnections() {
 		closeEntityManagerFactories();
+	}
+
+	public static Iterator<MetaData> getBeanClasses() {
+		return ejbs.values().iterator();
 	}
 }
