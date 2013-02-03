@@ -20,6 +20,7 @@ import org.jboss.netty.channel.socket.nio.NioWorker;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.jboss.netty.channel.socket.nio.WorkerPool;
 import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
+import org.lightmare.config.Configuration;
 import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.remote.rcp.decoders.RcpEncoder;
 import org.lightmare.remote.rpc.decoders.RpcDecoder;
@@ -96,7 +97,8 @@ public class RpcListener {
 		bootstrap.setOption("tcpNoDelay", true);
 		bootstrap.setOption("child.keepAlive", true);
 		bootstrap.setOption("backlog", 500);
-		bootstrap.setOption("connectTimeoutMillis", 10000);
+		bootstrap.setOption("connectTimeoutMillis", MetaCreator.configuration
+				.getIntValue(Configuration.CONNECTION_TIMEOUT));
 		try {
 			channel = bootstrap.bind(new InetSocketAddress(Inet4Address
 					.getByName(MetaCreator.configuration

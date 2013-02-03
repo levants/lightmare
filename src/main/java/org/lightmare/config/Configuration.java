@@ -30,7 +30,44 @@ public class Configuration {
 
 	public static final String CONNECTION_TIMEOUT = "timeout";
 
+	private static final Runtime runtime = Runtime.getRuntime();
+
+	public static final String IP_ADDRESS_DEF = "0.0.0.0";
+
+	public static final String PORT_DEF = "1199";
+
+	public static final String BOSS_POOL_DEF = "1";
+
+	public static final int WORKER_POOL_DEF = 3;
+
+	public static final String CONNECTION_TIMEOUT_DEF = "1000";
+
 	private static Logger logger = Logger.getLogger(Configuration.class);
+
+	public void setDefaults() {
+		if (!config.containsKey(IP_ADDRESS)) {
+			config.put(IP_ADDRESS, IP_ADDRESS_DEF);
+		}
+
+		if (!config.containsKey(PORT)) {
+			config.put(PORT, PORT_DEF);
+		}
+
+		if (config.containsKey(BOSS_POOL)) {
+			config.put(BOSS_POOL, BOSS_POOL_DEF);
+		}
+
+		if (config.containsKey(WORKER_POOL)) {
+
+			int workers = runtime.availableProcessors() * WORKER_POOL_DEF;
+			String workerProperty = String.valueOf(workers);
+			config.put(WORKER_POOL, workerProperty);
+		}
+
+		if (config.containsKey(CONNECTION_TIMEOUT)) {
+			config.put(CONNECTION_TIMEOUT, CONNECTION_TIMEOUT_DEF);
+		}
+	}
 
 	public String getStringValue(String key) {
 		return config.get(key);
