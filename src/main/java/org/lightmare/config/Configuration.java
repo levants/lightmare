@@ -18,8 +18,13 @@ import org.apache.log4j.Logger;
  */
 public class Configuration {
 
+	// cache for all configuration passed programmatically or read from file
 	private final Map<String, String> config = new HashMap<String, String>();
 
+	/**
+	 * <a href="netty.io">Netty</a> server / client configuration properties for
+	 * RPC calls
+	 */
 	public static final String IP_ADDRESS = "listening_ip";
 
 	public static final String PORT = "listening_port";
@@ -30,8 +35,12 @@ public class Configuration {
 
 	public static final String CONNECTION_TIMEOUT = "timeout";
 
+	// runtime to get avaliable processors
 	private static final Runtime runtime = Runtime.getRuntime();
 
+	/**
+	 * Default properties
+	 */
 	public static final String IP_ADDRESS_DEF = "0.0.0.0";
 
 	public static final String PORT_DEF = "1199";
@@ -41,6 +50,16 @@ public class Configuration {
 	public static final int WORKER_POOL_DEF = 3;
 
 	public static final String CONNECTION_TIMEOUT_DEF = "1000";
+
+	/**
+	 * Properties which version of server is running remote it requires server
+	 * client RPC infrastructure or local (embeddable mode)
+	 */
+	private boolean remote;
+
+	private boolean server;
+
+	private boolean client;
 
 	private static Logger logger = Logger.getLogger(Configuration.class);
 
