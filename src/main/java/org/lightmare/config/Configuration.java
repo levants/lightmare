@@ -153,4 +153,28 @@ public class Configuration {
 			logger.error("Could not load configuration", ex);
 		}
 	}
+
+	public boolean isRemote() {
+		return remote;
+	}
+
+	public void setRemote(boolean remote) {
+		this.remote = remote;
+	}
+
+	public boolean isServer() {
+		return server;
+	}
+
+	public void setServer(boolean server) {
+		this.server = server;
+	}
+
+	public boolean isClient() {
+		return client;
+	}
+
+	public void setClient(boolean client) {
+		this.client = client;
+	}
 }

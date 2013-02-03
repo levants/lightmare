@@ -57,12 +57,6 @@ public class MetaCreator {
 
 	private boolean scanArchives;
 
-	private boolean remote;
-
-	private boolean server;
-
-	private boolean client;
-
 	/**
 	 * {@link Configuration} container class for server
 	 */
@@ -246,7 +240,7 @@ public class MetaCreator {
 
 		try {
 			// starts RPC server if configured as remote and server
-			if (remote && server) {
+			if (configuration.isRemote() && configuration.isServer()) {
 				RpcListener.startServer();
 			}
 			// Loads libraries from specified path
@@ -378,17 +372,17 @@ public class MetaCreator {
 		}
 
 		public Builder setRemote(boolean remote) {
-			creator.remote = remote;
+			configuration.setRemote(remote);
 			return this;
 		}
 
 		public Builder setServer(boolean server) {
-			creator.server = server;
+			configuration.setServer(server);
 			return this;
 		}
 
 		public Builder setClient(boolean client) {
-			creator.client = client;
+			configuration.setClient(client);
 			return this;
 		}
 

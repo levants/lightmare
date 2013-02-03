@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.meta.MetaData;
+import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.libraries.LibraryLoader;
 
 /**
@@ -38,6 +39,22 @@ public class EjbConnector {
 		return emf;
 	}
 
+	@SuppressWarnings("unchecked")
+	private <T> T getBeanInstance(MetaData metaData, boolean remote)
+			throws InstantiationException, IllegalAccessException {
+
+		if (!remote) {
+			LibraryLoader.loadCurrentLibraries(metaData.getLoader());
+		}
+
+		Class<? extends T> beanClass = (Class<? extends T>) metaData
+				.getBeanClass();
+
+		T beanInstance = beanClass.newInstance();
+
+		return beanInstance;
+	}
+
 	/**
 	 * Creates custom implementation of bean {@link Class}
 	 * 
@@ -46,24 +63,27 @@ public class EjbConnector {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
-	@SuppressWarnings("unchecked")
 	public <T> T connectToBean(String beanName, Class<T> interfaceClass)
 			throws InstantiationException, IllegalAccessException {
 		MetaData metaData = getMetaData(beanName);
+		T beanInstance = null;
+		if (MetaCreator.configuration.isRemote()) {
+		} else {
+			LibraryLoader.loadCurrentLibraries(metaData.getLoader());
 
-		LibraryLoader.loadCurrentLibraries(metaData.getLoader());
+			Class<? extends T> beanClass = (Class<? extends T>) metaData
+					.getBeanClass();
 
-		Class<? extends T> beanClass = (Class<? extends T>) metaData
-				.getBeanClass();
+			beanInstance = beanClass.newInstance();
 
-		T beanInstance = beanClass.newInstance();
-
-		EntityManagerFactory emf = getEntityManagerFactory(metaData);
-		Field connectorField = metaData.getConnectorField();
-		BeanHandler handler = new BeanHandler(connectorField, beanInstance, emf);
-		Class<?>[] interfaceArray = { interfaceClass };
-		beanInstance = (T) Proxy.newProxyInstance(Thread.currentThread()
-				.getContextClassLoader(), interfaceArray, handler);
+			EntityManagerFactory emf = getEntityManagerFactory(metaData);
+			Field connectorField = metaData.getConnectorField();
+			BeanHandler handler = new BeanHandler(connectorField, beanInstance,
+					emf);
+			Class<?>[] interfaceArray = { interfaceClass };
+			beanInstance = (T) Proxy.newProxyInstance(Thread.currentThread()
+					.getContextClassLoader(), interfaceArray, handler);
+		}
 		return beanInstance;
 	}
 }
