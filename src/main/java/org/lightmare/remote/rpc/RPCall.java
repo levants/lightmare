@@ -2,6 +2,7 @@ package org.lightmare.remote.rpc;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -15,6 +16,8 @@ import org.jboss.netty.channel.socket.nio.NioWorker;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.jboss.netty.channel.socket.nio.WorkerPool;
 import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
+import org.lightmare.config.Configuration;
+import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.remote.rcp.RcpHandler;
 import org.lightmare.remote.rcp.decoders.RcpDecoder;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
@@ -30,21 +33,55 @@ import org.lightmare.utils.concurrent.ThreadFactoryUtil;
  */
 public class RPCall {
 
-	private String host = "localhost";
-	private int port = 1195;
-	private long timeout = 1000;
+	private String host;
 
-	public RPCall() {
+	private int port;
+
+	private static long timeout;
+
+	private static int bossPoolSize;
+
+	private static int workerPoolSize;
+
+	private static ExecutorService boss;
+
+	private static ExecutorService worker;
+
+	private RPCall() {
+		configure();
+	}
+
+	public RPCall(String host, int port) {
+		this();
+		this.host = host;
+		this.port = port;
+	}
+
+	private static void configure() {
+		if (boss == null || worker == null) {
+
+			bossPoolSize = MetaCreator.configuration
+					.getIntValue(Configuration.BOSS_POOL);
+
+			workerPoolSize = MetaCreator.configuration
+					.getIntValue(Configuration.WORKER_POOL);
+
+			timeout = MetaCreator.configuration
+					.getLongValue(Configuration.CONNECTION_TIMEOUT);
+
+			boss = new OrderedMemoryAwareThreadPoolExecutor(bossPoolSize,
+					400000000, 2000000000, 60, TimeUnit.SECONDS,
+					new ThreadFactoryUtil("netty-boss-thread",
+							Thread.MAX_PRIORITY));
+			worker = new OrderedMemoryAwareThreadPoolExecutor(workerPoolSize,
+					400000000, 2000000000, 60, TimeUnit.SECONDS,
+					new ThreadFactoryUtil("netty-worker-thread",
+							(Thread.MAX_PRIORITY - 1)));
+		}
 	}
 
 	private ClientBootstrap getBootstrap(SimpleChannelHandler handler) {
-		final ExecutorService boss = new OrderedMemoryAwareThreadPoolExecutor(
-				3, 400000000, 2000000000, 60, TimeUnit.SECONDS,
-				new ThreadFactoryUtil("netty-boss-thread", Thread.MAX_PRIORITY));
-		final ExecutorService worker = new OrderedMemoryAwareThreadPoolExecutor(
-				5, 400000000, 2000000000, 60, TimeUnit.SECONDS,
-				new ThreadFactoryUtil("netty-worker-thread",
-						(Thread.MAX_PRIORITY - 1)));
+
 		WorkerPool<NioWorker> pool = new NioWorkerPool(worker, 1);
 		ClientSocketChannelFactory factory = new NioClientSocketChannelFactory(
 				boss, 1, pool);
@@ -63,7 +100,7 @@ public class RPCall {
 	public Object call(RpcWrapper wrapper) throws IOException {
 		RcpHandler handler = new RcpHandler();
 		ClientBootstrap bootstrap = getBootstrap(handler);
-		InetSocketAddress address = new InetSocketAddress(host, port);
+		SocketAddress address = new InetSocketAddress(host, port);
 		final ChannelFuture future = bootstrap.connect(address);
 		final Channel channel = future.awaitUninterruptibly().getChannel();
 

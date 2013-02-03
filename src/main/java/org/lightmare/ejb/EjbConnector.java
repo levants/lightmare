@@ -11,6 +11,7 @@ import java.lang.reflect.Proxy;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManagerFactory;
 
+import org.lightmare.config.Configuration;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.handlers.BeanLocalHandler;
 import org.lightmare.ejb.meta.MetaData;
@@ -87,12 +88,11 @@ public class EjbConnector {
 	 * @throws IllegalAccessException
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T connectToBean(String beanName, Class<T> interfaceClass)
-			throws IOException {
+	public <T> T connectToBean(String beanName, Class<T> interfaceClass,
+			Object... rpcArgs) throws IOException {
 		InvocationHandler handler;
-		if (MetaCreator.configuration.isRemote()) {
-			handler = new BeanLocalHandler(new RPCall());
-		} else {
+		Configuration configuration = MetaCreator.configuration;
+		if (configuration.isServer()) {
 			MetaData metaData = getMetaData(beanName);
 			try {
 				handler = getHandler(metaData);
@@ -101,6 +101,14 @@ public class EjbConnector {
 			} catch (IllegalAccessException ex) {
 				throw new IOException(ex);
 			}
+		} else {
+			if (rpcArgs.length != 2) {
+				throw new IOException(
+						"Could not resolve host and port arguments");
+			}
+			String host = (String) rpcArgs[0];
+			int port = (Integer) rpcArgs[1];
+			handler = new BeanLocalHandler(new RPCall(host, port));
 		}
 
 		Class<?>[] interfaceArray = { interfaceClass };

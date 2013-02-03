@@ -160,7 +160,7 @@ public class RpcUtils {
 	 * @throws IOException
 	 */
 	public static Object callRemoteMethod(Object proxy, Method method,
-			Object[] arguments) throws IOException {
+			Object[] arguments, RPCall rpCall) throws IOException {
 
 		RpcWrapper wrapper = new RpcWrapper();
 		wrapper.setBeanName(proxy.getClass().getSimpleName());
@@ -168,8 +168,6 @@ public class RpcUtils {
 		wrapper.setParamTypes(method.getParameterTypes());
 		wrapper.setInterfaceClass(proxy.getClass());
 		wrapper.setParams(arguments);
-
-		RPCall rpCall = new RPCall();
 
 		return rpCall.call(wrapper);
 	}
