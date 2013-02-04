@@ -63,7 +63,7 @@ public class Configuration {
 
 	private boolean client;
 
-	private static final String CONFIG_FILE = "config.properties";
+	private static final String CONFIG_FILE = "./config/config.properties";
 
 	private static Logger logger = Logger.getLogger(Configuration.class);
 
@@ -114,10 +114,14 @@ public class Configuration {
 
 	public void loadFromFile() {
 		try {
-			InputStream propertiesStream = Thread.currentThread()
-					.getContextClassLoader().getResourceAsStream(CONFIG_FILE);
-			loadFromStream(propertiesStream);
-			propertiesStream.close();
+			File configFile = new File(CONFIG_FILE);
+			if (configFile.exists()) {
+				InputStream propertiesStream = new FileInputStream(configFile);
+				loadFromStream(propertiesStream);
+				propertiesStream.close();
+			} else {
+				configFile.mkdirs();
+			}
 		} catch (IOException ex) {
 			logger.error("Could not open config file", ex);
 		}
