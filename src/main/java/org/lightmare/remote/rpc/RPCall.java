@@ -6,6 +6,7 @@ import java.net.SocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
@@ -46,6 +47,8 @@ public class RPCall {
 	private static ExecutorService boss;
 
 	private static ExecutorService worker;
+
+	private static Logger LOG = Logger.getLogger(RPCall.class);
 
 	private RPCall() {
 		configure();
@@ -102,6 +105,16 @@ public class RPCall {
 		ClientBootstrap bootstrap = getBootstrap(handler);
 		SocketAddress address = new InetSocketAddress(host, port);
 		final ChannelFuture future = bootstrap.connect(address);
+
+		try {
+			if (!future.await(timeout, TimeUnit.MILLISECONDS)) {
+				LOG.info("Trying to read data from server");
+				future.awaitUninterruptibly();
+			}
+		} catch (InterruptedException ex) {
+			throw new IOException(ex);
+		}
+
 		final Channel channel = future.awaitUninterruptibly().getChannel();
 
 		if (!future.isSuccess()) {
