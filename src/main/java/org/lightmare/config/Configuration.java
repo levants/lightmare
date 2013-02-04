@@ -63,6 +63,8 @@ public class Configuration {
 
 	private boolean client;
 
+	private static final String CONFIG_FILE = "config.properties";
+
 	private static Logger logger = Logger.getLogger(Configuration.class);
 
 	public void setDefaults() {
@@ -110,13 +112,25 @@ public class Configuration {
 		config.put(key, value);
 	}
 
+	public void loadFromFile() {
+		try {
+			InputStream propertiesStream = Thread.currentThread()
+					.getContextClassLoader().getResourceAsStream(CONFIG_FILE);
+			loadFromStream(propertiesStream);
+			propertiesStream.close();
+		} catch (IOException ex) {
+			logger.error("Could not open config file", ex);
+		}
+
+	}
+
 	public void loadFromFile(String configFilename) {
 		try {
 			FileInputStream propertiesStream = new FileInputStream(new File(
 					configFilename));
 			loadFromStream(propertiesStream);
 			propertiesStream.close();
-		} catch (Exception ex) {
+		} catch (IOException ex) {
 			logger.error("Could not open config file", ex);
 		}
 
@@ -151,7 +165,7 @@ public class Configuration {
 				config.put(propertyName, props.getProperty(propertyName));
 			}
 			propertiesStream.close();
-		} catch (Exception ex) {
+		} catch (IOException ex) {
 			logger.error("Could not load configuration", ex);
 		}
 	}
