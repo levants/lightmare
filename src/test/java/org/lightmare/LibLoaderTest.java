@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.loader.LoaderTester;
@@ -28,6 +29,7 @@ public class LibLoaderTest {
 		}
 	}
 
+	// @Ignore
 	@Test
 	public void loadMessageTest() {
 		try {
@@ -43,6 +45,7 @@ public class LibLoaderTest {
 		}
 	}
 
+	@Ignore
 	public void loadMessageWithoutInitTest() {
 		try {
 			loaderTesterClass = Class.forName(CLASS_NAME_TO_LOAD);
@@ -56,6 +59,7 @@ public class LibLoaderTest {
 		}
 	}
 
+	// @Ignore
 	@Test
 	public void loadMessageDirectTest() {
 		try {
@@ -71,6 +75,7 @@ public class LibLoaderTest {
 		}
 	}
 
+	// @Ignore
 	@Test
 	public void loadMessageDirectWithoutInitTest() {
 		try {

@@ -2,11 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<groupId>com.github.levants</groupId>
 	<artifactId>lightmare</artifactId>
-	<version>0.0.25-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>lightmare</name>
+	<version>0.0.25-SNAPSHOT</version>
+	<description>Embeddable and remote ejb container for Stateless session beans and JPA / Hibernate ORM support</description>
 	<url>https://github.com/levants/lightmare</url>
 
 	<licenses>
@@ -289,10 +291,9 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 		<snapshotRepository>
-			<id>maven-central</id>
+			<id>maven-snapshot</id>
 			<name>Central Maven Repository for Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-	<groupId>com.github.levants</groupId>
 </project>
