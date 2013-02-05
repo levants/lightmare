@@ -1,13 +1,25 @@
 lightmare
 =========
 
-Embeddable ejb container (works for stateless session beans)
+Embeddable ejb container (works for stateless session beans) with JPA / Hibernate support
 
 # Overview
 ==========
 
 Lightmare is lightweight library to run ejb project in any type application without any ejb containers
 
+# Get it!
+=========
+
+Get lightmare from maven central repository
+
+    <dependency>
+      <groupId>com.github.levants</groupId>
+      <artifactId>lightmare</artifactId>
+      <version>0.0.25-SNAPSHOT</version>
+    </dependency>
+    
+or download it from [Central Maven repository](https://oss.sonatype.org/content/repositories/snapshots/com/github/levants/lightmare/)
 
 # Use it!
 =========
