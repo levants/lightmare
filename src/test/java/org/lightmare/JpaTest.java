@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
