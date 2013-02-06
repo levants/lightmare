@@ -1,13 +1,12 @@
 package org.lightmare.ejb.meta;
 
 import java.io.File;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
+import java.util.Set;
 import java.util.concurrent.Future;
 
-import org.jboss.netty.util.internal.ConcurrentHashMap;
 import org.lightmare.ejb.startup.BeanLoader;
 
 /**
@@ -18,27 +17,23 @@ import org.lightmare.ejb.startup.BeanLoader;
  */
 public class TmpResources {
 
-	private ConcurrentMap<Future<Boolean>, List<File>> TMP_FILES = new ConcurrentHashMap<Future<Boolean>, List<File>>();
+	private Set<TmpData<Boolean>> TMP_FILES = Collections
+			.synchronizedSet(new HashSet<TmpData<Boolean>>());
 
 	public void addFile(Future<Boolean> future, List<File> files) {
 
-		TMP_FILES.putIfAbsent(future, files);
 		for (File file : files) {
 			file.deleteOnExit();
 		}
+		TmpData<Boolean> tmpData = new TmpData<Boolean>(future, files);
+		TMP_FILES.add(tmpData);
 	}
 
 	public void removeTempFiles() {
 
-		for (Map.Entry<Future<Boolean>, List<File>> tmpFiles : TMP_FILES
-				.entrySet()) {
-			BeanLoader.removeResources(tmpFiles);
+		for (TmpData<Boolean> tmpData : TMP_FILES) {
+			BeanLoader.removeResources(tmpData);
 		}
-	}
-
-	public Iterator<Future<Boolean>> getDeployeds() {
-
-		return TMP_FILES.keySet().iterator();
 	}
 
 	public int size() {

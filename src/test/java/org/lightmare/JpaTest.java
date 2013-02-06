@@ -88,12 +88,6 @@ public class JpaTest {
 			metaCreator = builder.build();
 			metaCreator.scanForBeans();
 		}
-		Iterator<Future<Boolean>> deployeds = metaCreator.getDeployeds();
-		Future<Boolean> deployed;
-		while (deployeds.hasNext()) {
-			deployed = deployeds.next();
-			System.out.println(deployed.get());
-		}
 		Map<String, URL> classOwnershipURLs = metaCreator.getAnnotationDB()
 				.getClassOwnersURLs();
 		Map<String, String> classOwnershipFiles = metaCreator.getAnnotationDB()

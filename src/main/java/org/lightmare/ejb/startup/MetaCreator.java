@@ -309,10 +309,6 @@ public class MetaCreator {
 		scanForBeans(archives);
 	}
 
-	public Iterator<Future<Boolean>> getDeployeds() {
-		return tmpResources.getDeployeds();
-	}
-
 	/**
 	 * Closes all existing connections
 	 */

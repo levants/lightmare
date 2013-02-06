@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -21,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.ejb.meta.MetaData;
+import org.lightmare.ejb.meta.TmpData;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.fs.FileUtils;
@@ -36,20 +36,19 @@ public class BeanLoader implements Callable<Boolean> {
 
 	private static final int LOADER_POOL_SIZE = 5;
 
-	private static class ResourceCleaner implements Runnable {
+	private static class ResourceCleaner<V> implements Runnable {
 
-		Map.Entry<Future<Boolean>, List<File>> tmpResource;
+		TmpData<V> tmpData;
 
-		public ResourceCleaner(
-				Map.Entry<Future<Boolean>, List<File>> tmpResource) {
-			this.tmpResource = tmpResource;
+		public ResourceCleaner(TmpData<V> tmpData) {
+			this.tmpData = tmpData;
 		}
 
 		@Override
 		public void run() {
 
-			Future<Boolean> future = tmpResource.getKey();
-			List<File> tmpFiles = tmpResource.getValue();
+			Future<V> future = tmpData.getFuture();
+			List<File> tmpFiles = tmpData.getTmpFiles();
 
 			try {
 
@@ -206,9 +205,8 @@ public class BeanLoader implements Callable<Boolean> {
 		return future;
 	}
 
-	public static void removeResources(
-			Map.Entry<Future<Boolean>, List<File>> tmpResource) {
-		ResourceCleaner cleaner = new ResourceCleaner(tmpResource);
+	public static <V> void removeResources(TmpData<V> tmpData) {
+		ResourceCleaner<V> cleaner = new ResourceCleaner<V>(tmpData);
 		loaderPool.submit(cleaner);
 	}
 }
