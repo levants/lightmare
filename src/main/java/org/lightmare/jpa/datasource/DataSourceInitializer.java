@@ -41,6 +41,23 @@ public class DataSourceInitializer {
 		context = this.namingUtils.getContext();
 	}
 
+	private static boolean checkForDataSource(String path) {
+		return path != null && !path.isEmpty();
+	}
+
+	/**
+	 * Initialized datasource
+	 * 
+	 * @throws IOException
+	 */
+	public static void initializeDataSource(String path) throws IOException {
+		if (checkForDataSource(path)
+				&& !DataSourceInitializer.checkDSPath(path)) {
+			FileParsers parsers = new FileParsers();
+			parsers.parseStandaloneXml(path);
+		}
+	}
+
 	private static Properties getDefaultPooling() {
 		Properties c3p0Properties = new Properties();
 		c3p0Properties.setProperty("hibernate.c3p0.min_size", "5");

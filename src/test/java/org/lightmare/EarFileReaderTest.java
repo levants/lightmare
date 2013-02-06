@@ -25,11 +25,11 @@ import junit.framework.Assert;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.earfile.EarUtils;
 import org.lightmare.utils.earfile.ExtUtils;
+import org.lightmare.utils.fs.FileUtils;
 
 public class EarFileReaderTest {
 
@@ -252,8 +252,9 @@ public class EarFileReaderTest {
 			Assert.assertTrue("could not find ejb applications",
 					apps.size() > 0);
 			ioUtils.extractEjbJars(apps);
+			List<File> tmpFiles = ioUtils.getTmpFiles();
 			Assert.assertTrue("could not extract jar files",
-					TmpResources.size() > 0);
+					tmpFiles.size() > 0);
 			Map<URL, URL> xmls = ioUtils.getXmlURLs();
 			Scanner scanner;
 			for (Map.Entry<URL, URL> entry : xmls.entrySet()) {
@@ -272,7 +273,7 @@ public class EarFileReaderTest {
 
 			}
 			Thread.sleep(100);
-			TmpResources.removeTempFiles();
+			FileUtils.deleteFiles(tmpFiles);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} catch (InterruptedException ex) {
@@ -283,8 +284,8 @@ public class EarFileReaderTest {
 	@Test
 	public void getAppropriateTypeTest() {
 		try {
-			AbstractIOUtils ioUtils = AbstractIOUtils.getAppropriatedType(new File(EAR_PATH)
-					.toURI().toURL());
+			AbstractIOUtils ioUtils = AbstractIOUtils
+					.getAppropriatedType(new File(EAR_PATH).toURI().toURL());
 			Assert.assertTrue("Could not get appropriate type",
 					ioUtils instanceof ExtUtils);
 			System.out.println(ioUtils);

@@ -48,6 +48,8 @@ public abstract class AbstractIOUtils {
 
 	protected ZipFile earFile;
 
+	protected List<File> tmpFiles;
+
 	protected boolean isDirectory;
 
 	protected boolean xmlFromJar;
@@ -168,7 +170,8 @@ public abstract class AbstractIOUtils {
 		return ioUtils;
 	}
 
-	public static AbstractIOUtils getAppropriatedType(URL url) throws IOException {
+	public static AbstractIOUtils getAppropriatedType(URL url)
+			throws IOException {
 		AbstractIOUtils ioUtils = getAppropriatedType(url, null);
 
 		return ioUtils;
@@ -333,5 +336,17 @@ public abstract class AbstractIOUtils {
 		urls = fullURLs.toArray(new URL[fullURLs.size()]);
 
 		return urls;
+	}
+
+	protected List<File> getForAddTmpFiles() {
+		if (tmpFiles == null) {
+			tmpFiles = new ArrayList<File>();
+		}
+
+		return tmpFiles;
+	}
+
+	public List<File> getTmpFiles() {
+		return tmpFiles;
 	}
 }

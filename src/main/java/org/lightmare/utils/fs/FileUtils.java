@@ -95,4 +95,18 @@ public class FileUtils {
 
 		return file.delete();
 	}
+
+	/**
+	 * Iterates over passed {@link File}s and removes each of them from file
+	 * system and if {@link File#isDirectory()} removes all it's content
+	 * recursively
+	 * 
+	 * @param files
+	 */
+	public static void deleteFiles(Iterable<File> files) {
+
+		for (File fileToDelete : files) {
+			deleteFile(fileToDelete);
+		}
+	}
 }

@@ -12,7 +12,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
 
@@ -81,15 +80,13 @@ public class EarUtils extends AbstractIOUtils {
 	 */
 	public URL extractEjbJar(ZipEntry entry) throws IOException {
 		URL url = null;
-		File tmpFile;
 		InputStream jarStream = getEarFile().getInputStream(entry);
 		FileOutputStream output = null;
 		try {
 			if (jarStream != null) {
-				tmpFile = File.createTempFile(UUID.randomUUID().toString(),
-						".jar");
+				File tmpFile = File.createTempFile(
+						UUID.randomUUID().toString(), ".jar");
 				tmpFile.deleteOnExit();
-				TmpResources.addFile(tmpFile);
 				output = new FileOutputStream(tmpFile);
 				byte[] buffer = new byte[1024];
 				int len;

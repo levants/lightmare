@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Future;
 
 import javax.ejb.Local;
 import javax.ejb.Remote;
@@ -24,6 +26,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.JPAManager;
+import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RpcListener;
 import org.lightmare.scannotation.AnnotationDB;
@@ -57,6 +60,8 @@ public class MetaCreator {
 
 	private boolean scanArchives;
 
+	private TmpResources tmpResources;
+
 	/**
 	 * {@link Configuration} container class for server
 	 */
@@ -67,6 +72,7 @@ public class MetaCreator {
 	private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
 	private MetaCreator() {
+		tmpResources = new TmpResources();
 	}
 
 	public AnnotationDB getAnnotationDB() {
@@ -158,8 +164,7 @@ public class MetaCreator {
 		}
 		builder.setPath(persXmlPath).setProperties(prop)
 				.setSwapDataSource(swapDataSource)
-				.setScanArchives(scanArchives)
-				.setDataSourcePath(dataSourcePath).build()
+				.setScanArchives(scanArchives).build()
 				.setConnection(unitName, jndiName);
 	}
 
@@ -203,11 +208,10 @@ public class MetaCreator {
 			loader = LibraryLoader.getEnrichedLoader(libURLs);
 			aggregateds.put(beanName, ioUtils);
 		}
-		Boolean future = BeanLoader.loadBean(this, beanName, loader);
-		if (future) {
-			LOG.info(String.format("bean %s deployed", beanName));
-		} else {
-			LOG.error(String.format("Could not deploy bean %s", beanName));
+		Future<Boolean> deployed = BeanLoader.loadBean(this, beanName, loader);
+		List<File> tmpFiles = ioUtils.getTmpFiles();
+		if (tmpFiles != null) {
+			tmpResources.addFile(deployed, tmpFiles);
 		}
 	}
 
@@ -257,12 +261,13 @@ public class MetaCreator {
 			Set<String> beanNames = annotationDB.getAnnotationIndex().get(
 					Stateless.class.getName());
 			Map<String, URL> classOwnersURL = annotationDB.getClassOwnersURLs();
+			DataSourceInitializer.initializeDataSource(dataSourcePath);
 			if (beanNames != null) {
 				deployBeans(beanNames, classOwnersURL, archivesURLs);
 			}
 		} finally {
 			// gets rid from all created temporary files
-			TmpResources.removeTempFiles();
+			tmpResources.removeTempFiles();
 		}
 	}
 
@@ -302,6 +307,10 @@ public class MetaCreator {
 		}
 		URL[] archives = urlList.toArray(new URL[urlList.size()]);
 		scanForBeans(archives);
+	}
+
+	public Iterator<Future<Boolean>> getDeployeds() {
+		return tmpResources.getDeployeds();
 	}
 
 	/**

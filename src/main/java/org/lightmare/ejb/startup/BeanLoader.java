@@ -3,8 +3,11 @@ package org.lightmare.ejb.startup;
 import static org.lightmare.ejb.meta.MetaContainer.addMetaData;
 import static org.lightmare.ejb.meta.MetaContainer.checkMetaData;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -15,9 +18,12 @@ import java.util.concurrent.ThreadFactory;
 import javax.ejb.Stateless;
 import javax.persistence.PersistenceContext;
 
+import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.ejb.meta.MetaData;
+import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.fs.FileUtils;
 
 /**
  * Class for running in distinct thread to load libraries and stateless beans
@@ -28,8 +34,51 @@ import org.lightmare.libraries.LibraryLoader;
  */
 public class BeanLoader implements Callable<Boolean> {
 
-	private static ExecutorService loaderPool = Executors
-			.newSingleThreadExecutor(new ThreadFactory() {
+	private static final int LOADER_POOL_SIZE = 5;
+
+	private static class ResourceCleaner implements Runnable {
+
+		Map.Entry<Future<Boolean>, List<File>> tmpResource;
+
+		public ResourceCleaner(
+				Map.Entry<Future<Boolean>, List<File>> tmpResource) {
+			this.tmpResource = tmpResource;
+		}
+
+		@Override
+		public void run() {
+
+			Future<Boolean> future = tmpResource.getKey();
+			List<File> tmpFiles = tmpResource.getValue();
+
+			try {
+
+				future.get();
+				for (File tmpFile : tmpFiles) {
+					FileUtils.deleteFile(tmpFile);
+					LOG.info(String.format(
+							"Cleaning temporal resource %s done",
+							tmpFile.getName()));
+				}
+
+			} catch (InterruptedException ex) {
+				LOG.error(String.format(
+						"Could not remove temporal resources cause %s",
+						ex.getMessage()), ex);
+			} catch (ExecutionException ex) {
+				LOG.error(String.format(
+						"Could not remove temporal resources cause %s",
+						ex.getMessage()), ex);
+			}
+
+		}
+
+	}
+
+	private static final Logger LOG = Logger.getLogger(BeanLoader.class);
+
+	private static ExecutorService loaderPool = Executors.newFixedThreadPool(
+			LOADER_POOL_SIZE, new ThreadFactory() {
 
 				@Override
 				public Thread newThread(Runnable runnable) {
@@ -52,6 +101,32 @@ public class BeanLoader implements Callable<Boolean> {
 		this.loader = loader;
 	}
 
+	private void retriveConnections(MetaData metaData) throws IOException {
+
+		Class<?> beanClass = metaData.getBeanClass();
+		Field[] fields = beanClass.getDeclaredFields();
+
+		PersistenceContext context;
+		String unitName;
+		boolean checkForEmf;
+		for (Field field : fields) {
+			context = field.getAnnotation(PersistenceContext.class);
+			if (context != null) {
+				metaData.setConnectorField(field);
+				unitName = context.unitName();
+				String jndiName = context.name();
+				checkForEmf = JPAManager.checkForEmf(unitName);
+				if (checkForEmf) {
+					continue;
+				} else {
+					creator.configureConnection(unitName, beanName, jndiName);
+					metaData.setUnitName(unitName);
+				}
+				break;
+			}
+		}
+	}
+
 	/**
 	 * Creates {@link MetaData} for bean class
 	 * 
@@ -59,24 +134,11 @@ public class BeanLoader implements Callable<Boolean> {
 	 * @throws ClassNotFoundException
 	 */
 	private MetaData createMeta(Class<?> beanClass) throws IOException {
-		Field[] fields = beanClass.getDeclaredFields();
-		PersistenceContext context;
-		String unitName;
+
 		MetaData metaData = new MetaData();
 		metaData.setBeanClass(beanClass);
-
-		for (Field field : fields) {
-			context = field.getAnnotation(PersistenceContext.class);
-			if (context != null) {
-				metaData.setConnectorField(field);
-				unitName = context.unitName();
-				String jndiName = context.name();
-				if (MetaCreator.configuration.isServer()) {
-					creator.configureConnection(unitName, beanName, jndiName);
-					metaData.setUnitName(unitName);
-				}
-				break;
-			}
+		if (MetaCreator.configuration.isServer()) {
+			retriveConnections(metaData);
 		}
 
 		metaData.setLoader(loader);
@@ -112,26 +174,41 @@ public class BeanLoader implements Callable<Boolean> {
 		}
 	}
 
+	private boolean realCall() {
+
+		boolean deployed = false;
+
+		try {
+			LibraryLoader.loadCurrentLibraries(loader);
+			deployed = createBeanClass();
+			LOG.info(String.format("bean %s deployed", beanName));
+		} catch (IOException ex) {
+			LOG.error(String.format("Could not deploy bean %s cause %s",
+					beanName, ex.getMessage()), ex);
+		}
+
+		return deployed;
+	}
+
 	@Override
 	public Boolean call() throws Exception {
 
-		LibraryLoader.loadCurrentLibraries(loader);
+		boolean deployed = realCall();
 
-		return createBeanClass();
+		return deployed;
 	}
 
-	public static boolean loadBean(MetaCreator creator, String beanName,
-			ClassLoader loader) throws IOException {
+	public static Future<Boolean> loadBean(MetaCreator creator,
+			String beanName, ClassLoader loader) throws IOException {
 		Future<Boolean> future = loaderPool.submit(new BeanLoader(creator,
 				beanName, loader));
 
-		try {
-			return future.get();
-		} catch (InterruptedException ex) {
-			throw new IOException(ex);
-		} catch (ExecutionException ex) {
-			throw new IOException(ex);
-		}
+		return future;
+	}
 
+	public static void removeResources(
+			Map.Entry<Future<Boolean>, List<File>> tmpResource) {
+		ResourceCleaner cleaner = new ResourceCleaner(tmpResource);
+		loaderPool.submit(cleaner);
 	}
 }

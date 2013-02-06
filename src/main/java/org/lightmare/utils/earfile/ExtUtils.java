@@ -10,8 +10,6 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.lightmare.ejb.meta.TmpResources;
-
 public class ExtUtils extends DirUtils {
 
 	private File tmpFile;
@@ -38,7 +36,7 @@ public class ExtUtils extends DirUtils {
 		tmpFile.delete();
 		tmpFile.mkdir();
 
-		TmpResources.addFile(tmpFile);
+		getForAddTmpFiles().add(tmpFile);
 		ZipFile zipFile = getEarFile();
 		Enumeration<? extends ZipEntry> zipFileEntries = zipFile.entries();
 
@@ -58,9 +56,9 @@ public class ExtUtils extends DirUtils {
 			File parrent = file.getParentFile();
 			if (!parrent.exists()) {
 				parrent.mkdirs();
-				TmpResources.addFile(parrent);
+				getForAddTmpFiles().add(parrent);
 			}
-			TmpResources.addFile(file);
+			getForAddTmpFiles().add(file);
 			if (!entry.isDirectory()) {
 
 				if (!file.exists()) {

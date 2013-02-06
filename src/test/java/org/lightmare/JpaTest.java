@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -26,20 +29,23 @@ import org.lightmare.logger.Configure;
 public class JpaTest {
 
 	public static DBCreator getDBCreator() throws ClassNotFoundException,
-			IOException, ParseException {
+			IOException, ParseException, InterruptedException,
+			ExecutionException {
 		DBCreator creator = getDBCreator(null, null, null, null);
 		return creator;
 	}
 
 	public static DBCreator getDBCreator(String unitName)
-			throws ClassNotFoundException, IOException, ParseException {
+			throws ClassNotFoundException, IOException, ParseException,
+			InterruptedException, ExecutionException {
 		DBCreator creator = getDBCreator(null, null, unitName, null);
 		return creator;
 	}
 
 	public static DBCreator getDBCreator(String path, String dataSourcePath,
 			String unitName, String jndi) throws ClassNotFoundException,
-			IOException, ParseException {
+			IOException, ParseException, InterruptedException,
+			ExecutionException {
 		Configure.configure();
 		Map<String, String> properties = new HashMap<String, String>();
 
@@ -81,6 +87,12 @@ public class JpaTest {
 		} else {
 			metaCreator = builder.build();
 			metaCreator.scanForBeans();
+		}
+		Iterator<Future<Boolean>> deployeds = metaCreator.getDeployeds();
+		Future<Boolean> deployed;
+		while (deployeds.hasNext()) {
+			deployed = deployeds.next();
+			System.out.println(deployed.get());
 		}
 		Map<String, URL> classOwnershipURLs = metaCreator.getAnnotationDB()
 				.getClassOwnersURLs();

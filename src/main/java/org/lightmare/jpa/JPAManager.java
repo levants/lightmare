@@ -3,11 +3,11 @@ package org.lightmare.jpa;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
@@ -15,8 +15,6 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
 import org.lightmare.jndi.NamingUtils;
-import org.lightmare.jpa.datasource.DataSourceInitializer;
-import org.lightmare.jpa.datasource.FileParsers;
 
 /**
  * Creates and caches {@link EntityManagerFactory} for each ejb bean
@@ -28,7 +26,8 @@ import org.lightmare.jpa.datasource.FileParsers;
 public class JPAManager {
 
 	// Keeps unique EntityManagerFactories builded by unit names
-	private static ConcurrentMap<String, EntityManagerFactory> connections = new ConcurrentHashMap<String, EntityManagerFactory>();
+	private static Map<String, EntityManagerFactory> connections = Collections
+			.synchronizedMap(new HashMap<String, EntityManagerFactory>());
 
 	private List<String> classes;
 
@@ -40,11 +39,14 @@ public class JPAManager {
 
 	private boolean swapDataSource;
 
-	private String dataSourcePath;
-
 	boolean scanArchives;
 
 	private JPAManager() {
+	}
+
+	public static boolean checkForEmf(String unitName) {
+
+		return connections.containsKey(unitName);
 	}
 
 	/**
@@ -92,12 +94,6 @@ public class JPAManager {
 		cfg.setSwapDataSource(swapDataSource);
 		cfg.setScanArchives(scanArchives);
 
-		if (checkForDataSource()
-				&& !DataSourceInitializer.checkDSPath(dataSourcePath)) {
-			FileParsers parsers = new FileParsers();
-			parsers.parseStandaloneXml(dataSourcePath);
-		}
-
 		Ejb3ConfigurationImpl configured = cfg.configure(unitName, properties);
 
 		emf = configured != null ? configured.buildEntityManagerFactory()
@@ -133,23 +129,13 @@ public class JPAManager {
 	}
 
 	/**
-	 * Checks if DataSource path is provided
-	 * 
-	 * @return boolean
-	 */
-	private boolean checkForDataSource() {
-		return dataSourcePath != null && !dataSourcePath.isEmpty();
-	}
-
-	/**
 	 * Checks if entity classes or persistence.xml path are provided
 	 * 
 	 * @param classes
 	 * @return boolean
 	 */
 	private boolean checkForBuild() {
-		return checkForClasses() || checkForPath() || checkForURL()
-				|| checkForDataSource();
+		return checkForClasses() || checkForPath() || checkForURL();
 	}
 
 	/**
@@ -241,11 +227,6 @@ public class JPAManager {
 
 		public Builder setSwapDataSource(boolean swapDataSource) {
 			manager.swapDataSource = swapDataSource;
-			return this;
-		}
-
-		public Builder setDataSourcePath(String dataSourcePath) {
-			manager.dataSourcePath = dataSourcePath;
 			return this;
 		}
 

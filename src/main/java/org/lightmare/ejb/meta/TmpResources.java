@@ -1,11 +1,14 @@
 package org.lightmare.ejb.meta;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.Future;
 
-import org.lightmare.utils.fs.FileUtils;
+import org.jboss.netty.util.internal.ConcurrentHashMap;
+import org.lightmare.ejb.startup.BeanLoader;
 
 /**
  * Caches all temporal {@link File} instances and deletes them after processing
@@ -15,24 +18,30 @@ import org.lightmare.utils.fs.FileUtils;
  */
 public class TmpResources {
 
-	private static final Set<File> TMP_Files = Collections
-			.synchronizedSet(new HashSet<File>());
+	private ConcurrentMap<Future<Boolean>, List<File>> TMP_FILES = new ConcurrentHashMap<Future<Boolean>, List<File>>();
 
-	public static void addFile(File file) {
-		TMP_Files.add(file);
-		file.deleteOnExit();
-	}
+	public void addFile(Future<Boolean> future, List<File> files) {
 
-	public static void removeTempFiles() {
-
-		synchronized (TMP_Files) {
-			for (File tmpFile : TMP_Files) {
-				FileUtils.deleteFile(tmpFile);
-			}
+		TMP_FILES.putIfAbsent(future, files);
+		for (File file : files) {
+			file.deleteOnExit();
 		}
 	}
 
-	public static int size() {
-		return TMP_Files.size();
+	public void removeTempFiles() {
+
+		for (Map.Entry<Future<Boolean>, List<File>> tmpFiles : TMP_FILES
+				.entrySet()) {
+			BeanLoader.removeResources(tmpFiles);
+		}
+	}
+
+	public Iterator<Future<Boolean>> getDeployeds() {
+
+		return TMP_FILES.keySet().iterator();
+	}
+
+	public int size() {
+		return TMP_FILES.size();
 	}
 }
