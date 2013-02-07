@@ -18,9 +18,11 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
+import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.fs.FileUtils;
 
 /**
@@ -86,19 +88,25 @@ public class BeanLoader implements Callable<String> {
 
 	private String beanName;
 
+	private String className;
+
 	private ClassLoader loader;
 
 	private List<File> tmpFiles;
 
-	public BeanLoader(MetaCreator creator, String beanName, ClassLoader loader,
-			List<File> tmpFiles) {
+	private MetaData metaData;
+
+	public BeanLoader(MetaCreator creator, String beanName, String className,
+			ClassLoader loader, MetaData metaData, List<File> tmpFiles) {
 		this.creator = creator;
 		this.beanName = beanName;
+		this.className = className;
 		this.loader = loader;
 		this.tmpFiles = tmpFiles;
+		this.metaData = metaData;
 	}
 
-	private void retriveConnections(MetaData metaData) throws IOException {
+	private void retriveConnections() throws IOException {
 
 		Class<?> beanClass = metaData.getBeanClass();
 		Field[] fields = beanClass.getDeclaredFields();
@@ -130,44 +138,49 @@ public class BeanLoader implements Callable<String> {
 	 * @param beanClass
 	 * @throws ClassNotFoundException
 	 */
-	private MetaData createMeta(Class<?> beanClass) throws IOException {
+	private void createMeta(Class<?> beanClass) throws IOException {
 
-		MetaData metaData = new MetaData();
 		metaData.setBeanClass(beanClass);
 		if (MetaCreator.configuration.isServer()) {
-			retriveConnections(metaData);
+			retriveConnections();
 		}
 
 		metaData.setLoader(loader);
-
-		return metaData;
 	}
 
-	private String createBeanClass() throws IOException {
+	private void checkBean(String name) throws BeanInUseException {
 		if (checkMetaData(beanName)) {
 			throw new BeanInUseException(String.format(
 					"bean % is alredy in use", beanName));
-		} else {
-			try {
-				Class<?> beanClass;
-				if (loader == null) {
-					beanClass = Class.forName(beanName);
-				} else {
-					beanClass = Class.forName(beanName, true, loader);
-				}
-				MetaData metaData = createMeta(beanClass);
-				Stateless annotation = beanClass.getAnnotation(Stateless.class);
-				String beanEjbName = annotation.name();
-				if (beanEjbName == null || beanEjbName.isEmpty()) {
-					beanEjbName = beanClass.getSimpleName();
-				}
-				addMetaData(beanEjbName, metaData);
+		}
 
-				return beanEjbName;
+	}
 
-			} catch (ClassNotFoundException ex) {
-				throw new IOException(ex);
+	private String createBeanClass() throws IOException {
+		checkBean(beanName);
+		try {
+			Class<?> beanClass;
+			if (loader == null) {
+				beanClass = Class.forName(className);
+			} else {
+				beanClass = Class.forName(className, true, loader);
 			}
+			Stateless annotation = beanClass.getAnnotation(Stateless.class);
+			String beanEjbName = annotation.name();
+			if (beanEjbName == null || beanEjbName.isEmpty()) {
+				beanEjbName = beanName;
+			} else {
+				checkBean(beanEjbName);
+				addMetaData(beanEjbName, metaData);
+				MetaContainer.removeMeta(beanName);
+			}
+			createMeta(beanClass);
+			metaData.setInProgress(false);
+
+			return beanEjbName;
+
+		} catch (ClassNotFoundException ex) {
+			throw new IOException(ex);
 		}
 	}
 
@@ -189,29 +202,42 @@ public class BeanLoader implements Callable<String> {
 
 	@Override
 	public String call() throws Exception {
-		String deployed;
-		if (tmpFiles != null) {
-			synchronized (tmpFiles) {
-				deployed = realCall();
-				tmpFiles.notifyAll();
-			}
-		} else {
-			deployed = realCall();
-		}
 
-		return deployed;
+		synchronized (metaData) {
+			String deployed;
+			if (tmpFiles != null) {
+				synchronized (tmpFiles) {
+					deployed = realCall();
+					tmpFiles.notifyAll();
+				}
+			} else {
+				deployed = realCall();
+			}
+
+			metaData.notifyAll();
+
+			return deployed;
+		}
 	}
 
-	public static Future<String> loadBean(MetaCreator creator, String beanName,
-			ClassLoader loader, List<File> tmpFiles) throws IOException {
+	public static Future<String> loadBean(MetaCreator creator,
+			String className, ClassLoader loader, List<File> tmpFiles)
+			throws IOException {
+		MetaData metaData = new MetaData();
+		String beanName = BeanUtils.parseName(className);
+		MetaData tmpMeta = MetaContainer.addMetaData(beanName, metaData);
+		if (tmpMeta != null && !tmpMeta.isInProgress()) {
+			throw new BeanInUseException(String.format(
+					"bean % is alredy in use", beanName));
+		}
 		Future<String> future = loaderPool.submit(new BeanLoader(creator,
-				beanName, loader, tmpFiles));
+				beanName, className, loader, metaData, tmpFiles));
 
 		return future;
 	}
 
-	public static <V> void removeResources(List<File> tmpDatas) {
-		ResourceCleaner cleaner = new ResourceCleaner(tmpDatas);
+	public static <V> void removeResources(List<File> tmpFiles) {
+		ResourceCleaner cleaner = new ResourceCleaner(tmpFiles);
 		loaderPool.submit(cleaner);
 	}
 }

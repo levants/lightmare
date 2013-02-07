@@ -1,6 +1,7 @@
 package org.lightmare.ejb.meta;
 
 import java.lang.reflect.Field;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.persistence.PersistenceContext;
 
@@ -20,6 +21,8 @@ public class MetaData {
 	private String unitName;
 
 	private ClassLoader loader;
+
+	private AtomicBoolean inProgress = new AtomicBoolean();
 
 	public Class<?> getBeanClass() {
 		return beanClass;
@@ -51,5 +54,13 @@ public class MetaData {
 
 	public void setLoader(ClassLoader loader) {
 		this.loader = loader;
+	}
+
+	public boolean isInProgress() {
+		return inProgress.get();
+	}
+
+	public void setInProgress(boolean inProgress) {
+		this.inProgress.getAndSet(inProgress);
 	}
 }

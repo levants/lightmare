@@ -14,6 +14,7 @@ import javax.persistence.EntityManagerFactory;
 import org.lightmare.config.Configuration;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.handlers.BeanLocalHandler;
+import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.libraries.LibraryLoader;
@@ -27,6 +28,31 @@ import org.lightmare.remote.rpc.RPCall;
  * 
  */
 public class EjbConnector {
+
+	/**
+	 * Gets {@link MetaData} from {@link MetaContainer} and waits while
+	 * {@link MetaData#isInProgress()}
+	 * 
+	 * @param beanName
+	 * @return {@link MetaData}
+	 * @throws IOException
+	 */
+	private MetaData getMeta(String beanName) throws IOException {
+		MetaData metaData = getMetaData(beanName);
+		if (metaData == null) {
+			throw new IOException(String.format("Bean %s is not deployed",
+					beanName));
+		}
+		while (metaData.isInProgress()) {
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException ex) {
+				throw new IOException(ex);
+			}
+		}
+
+		return metaData;
+	}
 
 	/**
 	 * Gets connection for {@link Stateless} bean {@link Class} from cache
@@ -62,15 +88,21 @@ public class EjbConnector {
 	 * 
 	 * @param metaData
 	 * @return {@link InvocationHandler}
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
+	 * @throws IOException
 	 */
 	private <T> InvocationHandler getHandler(MetaData metaData)
-			throws InstantiationException, IllegalAccessException {
+			throws IOException {
 
 		LibraryLoader.loadCurrentLibraries(metaData.getLoader());
 
-		T beanInstance = getBeanInstance(metaData);
+		T beanInstance;
+		try {
+			beanInstance = getBeanInstance(metaData);
+		} catch (InstantiationException ex) {
+			throw new IOException(ex);
+		} catch (IllegalAccessException ex) {
+			throw new IOException(ex);
+		}
 
 		EntityManagerFactory emf = getEntityManagerFactory(metaData);
 		Field connectorField = metaData.getConnectorField();
@@ -94,14 +126,10 @@ public class EjbConnector {
 		InvocationHandler handler;
 		Configuration configuration = MetaCreator.configuration;
 		if (configuration.isServer()) {
-			MetaData metaData = getMetaData(beanName);
-			try {
-				handler = getHandler(metaData);
-			} catch (InstantiationException ex) {
-				throw new IOException(ex);
-			} catch (IllegalAccessException ex) {
-				throw new IOException(ex);
-			}
+
+			MetaData metaData = getMeta(beanName);
+			handler = getHandler(metaData);
+
 		} else {
 			if (rpcArgs.length != 2) {
 				throw new IOException(
