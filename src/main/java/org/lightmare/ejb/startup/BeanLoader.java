@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -20,7 +19,6 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.ejb.meta.MetaData;
-import org.lightmare.ejb.meta.TmpData;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.fs.FileUtils;
@@ -36,17 +34,19 @@ public class BeanLoader implements Callable<String> {
 
 	private static final int LOADER_POOL_SIZE = 5;
 
-	private static class ResourceCleaner<V> implements Runnable {
+	private static class ResourceCleaner implements Runnable {
 
-		List<TmpData<V>> tmpDatas;
+		List<File> tmpFiles;
 
-		public ResourceCleaner(List<TmpData<V>> tmpDatas) {
-			this.tmpDatas = tmpDatas;
+		public ResourceCleaner(List<File> tmpFiles) {
+			this.tmpFiles = tmpFiles;
 		}
 
-		private void clearTmpData(TmpData<V> tmpData) {
+		private void clearTmpData() throws InterruptedException {
 
-			List<File> tmpFiles = tmpData.getTmpFiles();
+			synchronized (tmpFiles) {
+				tmpFiles.wait();
+			}
 
 			for (File tmpFile : tmpFiles) {
 				FileUtils.deleteFile(tmpFile);
@@ -58,23 +58,10 @@ public class BeanLoader implements Callable<String> {
 		@Override
 		public void run() {
 
-			for (TmpData<V> tmpData : tmpDatas) {
-				Future<V> future = tmpData.getFuture();
-				try {
-					future.get();
-				} catch (InterruptedException ex) {
-					LOG.error(String.format(
-							"Could not remove temporal resources cause %s",
-							ex.getMessage()), ex);
-				} catch (ExecutionException ex) {
-					LOG.error(String.format(
-							"Could not remove temporal resources cause %s",
-							ex.getMessage()), ex);
-				}
-			}
-
-			for (TmpData<V> tmpData : tmpDatas) {
-				clearTmpData(tmpData);
+			try {
+				clearTmpData();
+			} catch (InterruptedException ex) {
+				LOG.error("Coluld not clear temporary resources", ex);
 			}
 
 		}
@@ -101,10 +88,14 @@ public class BeanLoader implements Callable<String> {
 
 	private ClassLoader loader;
 
-	public BeanLoader(MetaCreator creator, String beanName, ClassLoader loader) {
+	private List<File> tmpFiles;
+
+	public BeanLoader(MetaCreator creator, String beanName, ClassLoader loader,
+			List<File> tmpFiles) {
 		this.creator = creator;
 		this.beanName = beanName;
 		this.loader = loader;
+		this.tmpFiles = tmpFiles;
 	}
 
 	private void retriveConnections(MetaData metaData) throws IOException {
@@ -198,22 +189,29 @@ public class BeanLoader implements Callable<String> {
 
 	@Override
 	public String call() throws Exception {
-
-		String deployed = realCall();
+		String deployed;
+		if (tmpFiles != null) {
+			synchronized (tmpFiles) {
+				deployed = realCall();
+				tmpFiles.notifyAll();
+			}
+		} else {
+			deployed = realCall();
+		}
 
 		return deployed;
 	}
 
 	public static Future<String> loadBean(MetaCreator creator, String beanName,
-			ClassLoader loader) throws IOException {
+			ClassLoader loader, List<File> tmpFiles) throws IOException {
 		Future<String> future = loaderPool.submit(new BeanLoader(creator,
-				beanName, loader));
+				beanName, loader, tmpFiles));
 
 		return future;
 	}
 
-	public static <V> void removeResources(List<TmpData<V>> tmpDatas) {
-		ResourceCleaner<V> cleaner = new ResourceCleaner<V>(tmpDatas);
+	public static <V> void removeResources(List<File> tmpDatas) {
+		ResourceCleaner cleaner = new ResourceCleaner(tmpDatas);
 		loaderPool.submit(cleaner);
 	}
 }

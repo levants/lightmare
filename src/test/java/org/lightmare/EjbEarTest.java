@@ -146,6 +146,15 @@ public class EjbEarTest {
 
 	@AfterClass
 	public static void end() {
+		int i = 0;
+		while (i < 2) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException ex) {
+				ex.printStackTrace();
+			}
+			i++;
+		}
 		MetaCreator.closeAllConnections();
 	}
 }

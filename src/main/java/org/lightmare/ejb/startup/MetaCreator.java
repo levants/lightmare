@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Future;
 
 import javax.ejb.Local;
 import javax.ejb.Remote;
@@ -207,10 +206,10 @@ public class MetaCreator {
 			loader = LibraryLoader.getEnrichedLoader(libURLs);
 			aggregateds.put(beanName, ioUtils);
 		}
-		Future<String> deployed = BeanLoader.loadBean(this, beanName, loader);
 		List<File> tmpFiles = ioUtils.getTmpFiles();
+		BeanLoader.loadBean(this, beanName, loader, tmpFiles);
 		if (tmpFiles != null) {
-			tmpResources.addFile(currentURL, deployed, tmpFiles);
+			tmpResources.addFile(tmpFiles);
 		}
 	}
 

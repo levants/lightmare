@@ -338,6 +338,10 @@ public abstract class AbstractIOUtils {
 		return urls;
 	}
 
+	protected void lockObject(Object objectForLock) {
+
+	}
+
 	protected List<File> getForAddTmpFiles() {
 		if (tmpFiles == null) {
 			tmpFiles = new ArrayList<File>();
