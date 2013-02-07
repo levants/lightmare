@@ -19,6 +19,7 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
+import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.meta.TmpData;
 import org.lightmare.jpa.JPAManager;
@@ -101,13 +102,17 @@ public class BeanLoader implements Callable<String> {
 
 	private ClassLoader loader;
 
-	public BeanLoader(MetaCreator creator, String beanName, ClassLoader loader) {
+	private MetaData metaData;
+
+	public BeanLoader(MetaCreator creator, String beanName, ClassLoader loader,
+			MetaData metaData) {
 		this.creator = creator;
 		this.beanName = beanName;
 		this.loader = loader;
+		this.metaData = metaData;
 	}
 
-	private void retriveConnections(MetaData metaData) throws IOException {
+	private void retriveConnections() throws IOException {
 
 		Class<?> beanClass = metaData.getBeanClass();
 		Field[] fields = beanClass.getDeclaredFields();
@@ -139,44 +144,49 @@ public class BeanLoader implements Callable<String> {
 	 * @param beanClass
 	 * @throws ClassNotFoundException
 	 */
-	private MetaData createMeta(Class<?> beanClass) throws IOException {
+	private void createMeta(Class<?> beanClass) throws IOException {
 
-		MetaData metaData = new MetaData();
 		metaData.setBeanClass(beanClass);
 		if (MetaCreator.configuration.isServer()) {
-			retriveConnections(metaData);
+			retriveConnections();
 		}
 
 		metaData.setLoader(loader);
-
-		return metaData;
 	}
 
-	private String createBeanClass() throws IOException {
+	private void checkBean(String name) throws BeanInUseException {
 		if (checkMetaData(beanName)) {
 			throw new BeanInUseException(String.format(
 					"bean % is alredy in use", beanName));
-		} else {
-			try {
-				Class<?> beanClass;
-				if (loader == null) {
-					beanClass = Class.forName(beanName);
-				} else {
-					beanClass = Class.forName(beanName, true, loader);
-				}
-				MetaData metaData = createMeta(beanClass);
-				Stateless annotation = beanClass.getAnnotation(Stateless.class);
-				String beanEjbName = annotation.name();
-				if (beanEjbName == null || beanEjbName.isEmpty()) {
-					beanEjbName = beanClass.getSimpleName();
-				}
-				addMetaData(beanEjbName, metaData);
+		}
 
-				return beanEjbName;
+	}
 
-			} catch (ClassNotFoundException ex) {
-				throw new IOException(ex);
+	private String createBeanClass() throws IOException {
+		checkBean(beanName);
+		try {
+			Class<?> beanClass;
+			if (loader == null) {
+				beanClass = Class.forName(beanName);
+			} else {
+				beanClass = Class.forName(beanName, true, loader);
 			}
+			Stateless annotation = beanClass.getAnnotation(Stateless.class);
+			String beanEjbName = annotation.name();
+			if (beanEjbName == null || beanEjbName.isEmpty()) {
+				beanEjbName = beanClass.getSimpleName();
+			} else {
+				checkBean(beanEjbName);
+				addMetaData(beanEjbName, metaData);
+				MetaContainer.removeMeta(beanName);
+			}
+			createMeta(beanClass);
+			metaData.setInProgress(false);
+
+			return beanEjbName;
+
+		} catch (ClassNotFoundException ex) {
+			throw new IOException(ex);
 		}
 	}
 
@@ -206,8 +216,14 @@ public class BeanLoader implements Callable<String> {
 
 	public static Future<String> loadBean(MetaCreator creator, String beanName,
 			ClassLoader loader) throws IOException {
+		MetaData metaData = new MetaData();
+		metaData = MetaContainer.addMetaData(beanName, metaData);
+		if (!metaData.isInProgress()) {
+			throw new BeanInUseException(String.format(
+					"bean % is alredy in use", beanName));
+		}
 		Future<String> future = loaderPool.submit(new BeanLoader(creator,
-				beanName, loader));
+				beanName, loader, metaData));
 
 		return future;
 	}

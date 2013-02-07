@@ -21,16 +21,32 @@ public class MetaContainer {
 
 	private static ConcurrentMap<String, MetaData> ejbs = new ConcurrentHashMap<String, MetaData>();
 
-	public static void addMetaData(String beanName, MetaData metaData) {
-		ejbs.put(beanName, metaData);
+	public static MetaData addMetaData(String beanName, MetaData metaData) {
+		return ejbs.putIfAbsent(beanName, metaData);
 	}
 
 	public static boolean checkMetaData(String beanName) {
+		boolean check;
+		MetaData metaData = ejbs.get(beanName);
+		check = metaData == null;
+		if (!check) {
+			synchronized (metaData) {
+				check = metaData.isInProgress();
+			}
+		}
+		return check;
+	}
+
+	public boolean checkBean(String beanName) {
 		return ejbs.containsKey(beanName);
 	}
 
 	public static MetaData getMetaData(String beanName) {
 		return ejbs.get(beanName);
+	}
+
+	public static void removeMeta(String beanName) {
+		ejbs.remove(beanName);
 	}
 
 	public static EntityManagerFactory getConnection(String unitName) {
