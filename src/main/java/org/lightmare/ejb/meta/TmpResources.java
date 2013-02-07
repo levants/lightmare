@@ -1,12 +1,14 @@
 package org.lightmare.ejb.meta;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.HashSet;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Future;
 
+import org.jboss.netty.util.internal.ConcurrentHashMap;
 import org.lightmare.ejb.startup.BeanLoader;
 
 /**
@@ -17,22 +19,28 @@ import org.lightmare.ejb.startup.BeanLoader;
  */
 public class TmpResources<V> {
 
-	private Set<TmpData<V>> TMP_FILES = Collections
-			.synchronizedSet(new HashSet<TmpData<V>>());
+	private ConcurrentMap<URL, List<TmpData<V>>> TMP_FILES = new ConcurrentHashMap<URL, List<TmpData<V>>>();
 
-	public void addFile(Future<V> future, List<File> files) {
+	public void addFile(URL url, Future<V> future, List<File> files) {
 
 		for (File file : files) {
 			file.deleteOnExit();
 		}
 		TmpData<V> tmpData = new TmpData<V>(future, files);
-		TMP_FILES.add(tmpData);
+		List<TmpData<V>> tmpDatas = TMP_FILES.get(url);
+		if (tmpDatas == null) {
+			tmpDatas = new ArrayList<TmpData<V>>();
+			TMP_FILES.put(url, tmpDatas);
+		}
+		tmpDatas.add(tmpData);
 	}
 
 	public void removeTempFiles() {
 
-		for (TmpData<V> tmpData : TMP_FILES) {
-			BeanLoader.removeResources(tmpData);
+		List<TmpData<V>> tmpDatas;
+		for (Map.Entry<URL, List<TmpData<V>>> tmpFiles : TMP_FILES.entrySet()) {
+			tmpDatas = tmpFiles.getValue();
+			BeanLoader.removeResources(tmpDatas);
 		}
 	}
 

@@ -105,15 +105,18 @@ public class JpaTest {
 		System.out
 				.println("====================================================");
 		EntityManagerFactory emf = null;
-		if (jndi == null) {
-			emf = JPAManager.getConnection(unitName);
-		} else {
-			try {
-				emf = (EntityManagerFactory) new InitialContext().lookup(String
-						.format("java:comp/env/%s", jndi));
-			} catch (NamingException ex) {
-				ex.printStackTrace();
+		while (emf == null) {
+			if (jndi == null) {
+				emf = JPAManager.getConnection(unitName);
+			} else {
+				try {
+					emf = (EntityManagerFactory) new InitialContext()
+							.lookup(String.format("java:comp/env/%s", jndi));
+				} catch (NamingException ex) {
+					ex.printStackTrace();
+				}
 			}
+			// Thread.sleep(1000);
 		}
 		EntityManager em = emf.createEntityManager();
 		DBCreator creator = new DBCreator(em);

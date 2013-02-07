@@ -210,7 +210,7 @@ public class MetaCreator {
 		Future<String> deployed = BeanLoader.loadBean(this, beanName, loader);
 		List<File> tmpFiles = ioUtils.getTmpFiles();
 		if (tmpFiles != null) {
-			tmpResources.addFile(deployed, tmpFiles);
+			tmpResources.addFile(currentURL, deployed, tmpFiles);
 		}
 	}
 

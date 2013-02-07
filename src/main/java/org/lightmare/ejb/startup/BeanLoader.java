@@ -38,36 +38,43 @@ public class BeanLoader implements Callable<String> {
 
 	private static class ResourceCleaner<V> implements Runnable {
 
-		TmpData<V> tmpData;
+		List<TmpData<V>> tmpDatas;
 
-		public ResourceCleaner(TmpData<V> tmpData) {
-			this.tmpData = tmpData;
+		public ResourceCleaner(List<TmpData<V>> tmpDatas) {
+			this.tmpDatas = tmpDatas;
+		}
+
+		private void clearTmpData(TmpData<V> tmpData) {
+
+			List<File> tmpFiles = tmpData.getTmpFiles();
+
+			for (File tmpFile : tmpFiles) {
+				FileUtils.deleteFile(tmpFile);
+				LOG.info(String.format("Cleaning temporal resource %s done",
+						tmpFile.getName()));
+			}
 		}
 
 		@Override
 		public void run() {
 
-			Future<V> future = tmpData.getFuture();
-			List<File> tmpFiles = tmpData.getTmpFiles();
-
-			try {
-
-				future.get();
-				for (File tmpFile : tmpFiles) {
-					FileUtils.deleteFile(tmpFile);
-					LOG.info(String.format(
-							"Cleaning temporal resource %s done",
-							tmpFile.getName()));
+			for (TmpData<V> tmpData : tmpDatas) {
+				Future<V> future = tmpData.getFuture();
+				try {
+					future.get();
+				} catch (InterruptedException ex) {
+					LOG.error(String.format(
+							"Could not remove temporal resources cause %s",
+							ex.getMessage()), ex);
+				} catch (ExecutionException ex) {
+					LOG.error(String.format(
+							"Could not remove temporal resources cause %s",
+							ex.getMessage()), ex);
 				}
+			}
 
-			} catch (InterruptedException ex) {
-				LOG.error(String.format(
-						"Could not remove temporal resources cause %s",
-						ex.getMessage()), ex);
-			} catch (ExecutionException ex) {
-				LOG.error(String.format(
-						"Could not remove temporal resources cause %s",
-						ex.getMessage()), ex);
+			for (TmpData<V> tmpData : tmpDatas) {
+				clearTmpData(tmpData);
 			}
 
 		}
@@ -205,8 +212,8 @@ public class BeanLoader implements Callable<String> {
 		return future;
 	}
 
-	public static <V> void removeResources(TmpData<V> tmpData) {
-		ResourceCleaner<V> cleaner = new ResourceCleaner<V>(tmpData);
+	public static <V> void removeResources(List<TmpData<V>> tmpDatas) {
+		ResourceCleaner<V> cleaner = new ResourceCleaner<V>(tmpDatas);
 		loaderPool.submit(cleaner);
 	}
 }
