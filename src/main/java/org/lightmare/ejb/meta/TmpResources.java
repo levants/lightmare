@@ -15,23 +15,23 @@ import org.lightmare.ejb.startup.BeanLoader;
  * @author levan
  * 
  */
-public class TmpResources {
+public class TmpResources<V> {
 
-	private Set<TmpData<Boolean>> TMP_FILES = Collections
-			.synchronizedSet(new HashSet<TmpData<Boolean>>());
+	private Set<TmpData<V>> TMP_FILES = Collections
+			.synchronizedSet(new HashSet<TmpData<V>>());
 
-	public void addFile(Future<Boolean> future, List<File> files) {
+	public void addFile(Future<V> future, List<File> files) {
 
 		for (File file : files) {
 			file.deleteOnExit();
 		}
-		TmpData<Boolean> tmpData = new TmpData<Boolean>(future, files);
+		TmpData<V> tmpData = new TmpData<V>(future, files);
 		TMP_FILES.add(tmpData);
 	}
 
 	public void removeTempFiles() {
 
-		for (TmpData<Boolean> tmpData : TMP_FILES) {
+		for (TmpData<V> tmpData : TMP_FILES) {
 			BeanLoader.removeResources(tmpData);
 		}
 	}

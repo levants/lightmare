@@ -59,7 +59,7 @@ public class MetaCreator {
 
 	private boolean scanArchives;
 
-	private TmpResources tmpResources;
+	private TmpResources<String> tmpResources;
 
 	/**
 	 * {@link Configuration} container class for server
@@ -71,7 +71,7 @@ public class MetaCreator {
 	private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
 	private MetaCreator() {
-		tmpResources = new TmpResources();
+		tmpResources = new TmpResources<String>();
 	}
 
 	public AnnotationDB getAnnotationDB() {
@@ -207,7 +207,7 @@ public class MetaCreator {
 			loader = LibraryLoader.getEnrichedLoader(libURLs);
 			aggregateds.put(beanName, ioUtils);
 		}
-		Future<Boolean> deployed = BeanLoader.loadBean(this, beanName, loader);
+		Future<String> deployed = BeanLoader.loadBean(this, beanName, loader);
 		List<File> tmpFiles = ioUtils.getTmpFiles();
 		if (tmpFiles != null) {
 			tmpResources.addFile(deployed, tmpFiles);

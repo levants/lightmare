@@ -32,7 +32,7 @@ import org.lightmare.utils.fs.FileUtils;
  * @author levan
  * 
  */
-public class BeanLoader implements Callable<Boolean> {
+public class BeanLoader implements Callable<String> {
 
 	private static final int LOADER_POOL_SIZE = 5;
 
@@ -145,7 +145,7 @@ public class BeanLoader implements Callable<Boolean> {
 		return metaData;
 	}
 
-	private Boolean createBeanClass() throws IOException {
+	private String createBeanClass() throws IOException {
 		if (checkMetaData(beanName)) {
 			throw new BeanInUseException(String.format(
 					"bean % is alredy in use", beanName));
@@ -159,13 +159,13 @@ public class BeanLoader implements Callable<Boolean> {
 				}
 				MetaData metaData = createMeta(beanClass);
 				Stateless annotation = beanClass.getAnnotation(Stateless.class);
-				String beanName = annotation.name();
-				if (beanName == null || beanName.isEmpty()) {
-					beanName = beanClass.getSimpleName();
+				String beanEjbName = annotation.name();
+				if (beanEjbName == null || beanEjbName.isEmpty()) {
+					beanEjbName = beanClass.getSimpleName();
 				}
-				addMetaData(beanName, metaData);
+				addMetaData(beanEjbName, metaData);
 
-				return true;
+				return beanEjbName;
 
 			} catch (ClassNotFoundException ex) {
 				throw new IOException(ex);
@@ -173,9 +173,9 @@ public class BeanLoader implements Callable<Boolean> {
 		}
 	}
 
-	private boolean realCall() {
+	private String realCall() {
 
-		boolean deployed = false;
+		String deployed = beanName;
 
 		try {
 			LibraryLoader.loadCurrentLibraries(loader);
@@ -190,16 +190,16 @@ public class BeanLoader implements Callable<Boolean> {
 	}
 
 	@Override
-	public Boolean call() throws Exception {
+	public String call() throws Exception {
 
-		boolean deployed = realCall();
+		String deployed = realCall();
 
 		return deployed;
 	}
 
-	public static Future<Boolean> loadBean(MetaCreator creator,
-			String beanName, ClassLoader loader) throws IOException {
-		Future<Boolean> future = loaderPool.submit(new BeanLoader(creator,
+	public static Future<String> loadBean(MetaCreator creator, String beanName,
+			ClassLoader loader) throws IOException {
+		Future<String> future = loaderPool.submit(new BeanLoader(creator,
 				beanName, loader));
 
 		return future;
