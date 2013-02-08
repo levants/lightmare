@@ -5,7 +5,7 @@ import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.ejb.startup.MetaCreator;
 
 /**
- * Runnable class for shut down hoock
+ * Runnable class for shut down hook
  * 
  * @author levan
  * 
@@ -33,7 +33,7 @@ public class ShutDown implements Runnable {
 	 * 
 	 * @param tmpResources
 	 */
-	public static void setHoock(TmpResources tmpResources) {
+	public static void setHook(TmpResources tmpResources) {
 
 		ShutDown shutDown = new ShutDown(tmpResources);
 		Thread shutDownThread = new Thread(shutDown);

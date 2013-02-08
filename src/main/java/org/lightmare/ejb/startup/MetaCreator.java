@@ -78,7 +78,7 @@ public class MetaCreator {
 
 	private MetaCreator() {
 		tmpResources = new TmpResources();
-		ShutDown.setHoock(tmpResources);
+		ShutDown.setHook(tmpResources);
 	}
 
 	public AnnotationDB getAnnotationDB() {
