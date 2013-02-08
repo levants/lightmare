@@ -244,9 +244,12 @@ public class EarFileReaderTest {
 
 	@Test
 	public void extractEjbJarTest() {
-		AbstractIOUtils ioUtils = new EarUtils(EAR_PATH);
-		ioUtils.setXmlFromJar(true);
+
 		try {
+			AbstractIOUtils ioUtils = AbstractIOUtils
+					.getAppropriatedType(new File(EAR_PATH).toURI().toURL());
+			ioUtils.setXmlFromJar(true);
+			ioUtils.scan();
 			InputStream stream = ioUtils.earReader();
 			Set<String> apps = ioUtils.appXmlParser(stream);
 			Assert.assertTrue("could not find ejb applications",
@@ -277,6 +280,8 @@ public class EarFileReaderTest {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}

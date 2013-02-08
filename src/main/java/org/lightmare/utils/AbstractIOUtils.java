@@ -78,6 +78,15 @@ public abstract class AbstractIOUtils {
 		isDirectory = realFile.isDirectory();
 	}
 
+	/**
+	 * Ensures that all temporary files will be removed at finish of program
+	 * 
+	 * @param file
+	 */
+	protected void ensureTmpFile(File file) {
+		file.deleteOnExit();
+	}
+
 	public boolean isExecuted() {
 		return executed;
 	}
@@ -348,6 +357,16 @@ public abstract class AbstractIOUtils {
 		}
 
 		return tmpFiles;
+	}
+
+	/**
+	 * Saves temporary files at cache
+	 * 
+	 * @param tmpFile
+	 */
+	protected void addTmpFile(File tmpFile) {
+		ensureTmpFile(tmpFile);
+		getForAddTmpFiles().add(tmpFile);
 	}
 
 	public List<File> getTmpFiles() {
