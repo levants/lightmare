@@ -13,7 +13,7 @@ import org.lightmare.ejb.startup.BeanLoader;
  * @author levan
  * 
  */
-public class TmpResources<V> {
+public class TmpResources {
 
 	private Set<List<File>> TMP_FILES = new HashSet<List<File>>();
 

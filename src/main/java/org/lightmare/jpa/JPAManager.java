@@ -14,6 +14,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
+import org.apache.log4j.Logger;
+import org.lightmare.ejb.meta.ConnectionSemaphore;
 import org.lightmare.jndi.NamingUtils;
 
 /**
@@ -26,8 +28,8 @@ import org.lightmare.jndi.NamingUtils;
 public class JPAManager {
 
 	// Keeps unique EntityManagerFactories builded by unit names
-	private static Map<String, EntityManagerFactory> connections = Collections
-			.synchronizedMap(new HashMap<String, EntityManagerFactory>());
+	private static Map<String, ConnectionSemaphore> connections = Collections
+			.synchronizedMap(new HashMap<String, ConnectionSemaphore>());
 
 	private List<String> classes;
 
@@ -41,12 +43,52 @@ public class JPAManager {
 
 	boolean scanArchives;
 
+	private static Logger LOG = Logger.getLogger(JPAManager.class);
+
 	private JPAManager() {
 	}
 
 	public static boolean checkForEmf(String unitName) {
 
 		return connections.containsKey(unitName);
+	}
+
+	public static ConnectionSemaphore setSemaphore(String unitName,
+			String jndiName) {
+
+		ConnectionSemaphore semaphore = null;
+
+		if (unitName != null && !unitName.isEmpty()) {
+
+			semaphore = new ConnectionSemaphore();
+			semaphore.setInProgress(true);
+			connections.put(unitName, semaphore);
+			if (jndiName != null && !jndiName.isEmpty()) {
+				connections.put(jndiName, semaphore);
+			}
+		}
+
+		return semaphore;
+	}
+
+	public static boolean isInProgress(String jndiName) {
+
+		boolean inProgress;
+		ConnectionSemaphore semaphore = connections.get(jndiName);
+		inProgress = semaphore != null;
+		while (inProgress) {
+			synchronized (semaphore) {
+				try {
+					semaphore.wait();
+					inProgress = semaphore.isInProgress();
+				} catch (InterruptedException ex) {
+					inProgress = false;
+					LOG.error(ex);
+				}
+			}
+		}
+
+		return inProgress;
 	}
 
 	/**
@@ -166,34 +208,68 @@ public class JPAManager {
 	}
 
 	public void setConnection(String unitName, String name) throws IOException {
-		if (!connections.containsKey(unitName)) {
-			EntityManagerFactory emf = createEntityManagerFactory(unitName);
-			connections.put(unitName, emf);
-			if (name != null && !name.isEmpty()) {
-				NamingUtils namingUtils = new NamingUtils();
-				try {
-					namingUtils.getContext().bind(
-							String.format("java:comp/env/%s", name), emf);
-				} catch (NamingException ex) {
-					throw new IOException(String.format(
-							"could not bind connection %s", unitName), ex);
+		ConnectionSemaphore semaphore = connections.get(unitName);
+		synchronized (semaphore) {
+			if (semaphore.isInProgress()) {
+				EntityManagerFactory emf = createEntityManagerFactory(unitName);
+				semaphore.setEmf(emf);
+				semaphore.setInProgress(false);
+				if (name != null && !name.isEmpty()) {
+					NamingUtils namingUtils = new NamingUtils();
+					try {
+						namingUtils.getContext().bind(
+								String.format("java:comp/env/%s", name), emf);
+					} catch (NamingException ex) {
+						throw new IOException(String.format(
+								"could not bind connection %s", unitName), ex);
+					}
 				}
+			} else {
+				throw new IOException(String.format(
+						"Connection %s was not in progress", unitName));
 			}
+
+			semaphore.notifyAll();
 		}
 	}
 
-	public static EntityManagerFactory getConnection(String unitName) {
-		return connections.get(unitName);
+	public static EntityManagerFactory getConnection(String unitName)
+			throws IOException {
+
+		EntityManagerFactory emf = null;
+		ConnectionSemaphore semaphore = connections.get(unitName);
+		if (semaphore != null) {
+			synchronized (semaphore) {
+				while (semaphore.isInProgress()) {
+					try {
+						semaphore.wait();
+						Thread.sleep(10);
+					} catch (InterruptedException ex) {
+						throw new IOException(ex);
+					}
+				}
+
+				emf = semaphore.getEmf();
+			}
+		}
+
+		return emf;
 	}
 
 	/**
 	 * Closes all existing {@link EntityManagerFactory} instances kept in cache
 	 */
 	public static void closeEntityManagerFactories() {
-		Collection<EntityManagerFactory> emfs = connections.values();
-		for (EntityManagerFactory emf : emfs) {
-			emf.close();
+		Collection<ConnectionSemaphore> semaphores = connections.values();
+		EntityManagerFactory emf;
+		for (ConnectionSemaphore semaphore : semaphores) {
+			emf = semaphore.getEmf();
+			if (emf != null) {
+				emf.close();
+			}
 		}
+
+		connections.clear();
 	}
 
 	public static class Builder {

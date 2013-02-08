@@ -21,6 +21,9 @@ public class Configuration {
 	// cache for all configuration passed programmatically or read from file
 	private final Map<String, String> config = new HashMap<String, String>();
 
+	// Default semaphore capacity
+	public static final int SEMAPHORE_SIZE = 1;
+
 	/**
 	 * <a href="netty.io">Netty</a> server / client configuration properties for
 	 * RPC calls

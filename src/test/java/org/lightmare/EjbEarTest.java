@@ -48,8 +48,9 @@ public class EjbEarTest {
 				creator = JpaTest.getDBCreator(path, "./ds/standalone.xml",
 						"testUnit", null);
 			} else {
-				creator = JpaTest.getDBCreator(EarFileReaderTest.EAR_PATH,
-						"./ds/standalone.xml", "testUnit", null);
+				creator = JpaTest
+						.getDBCreator(EarFileReaderTest.EAR_PATH,
+								"./ds/standalone.xml", "testUnit", null/* "persistence/emf" */);
 
 			}
 			personToAdd = creator.createPersonToAdd();

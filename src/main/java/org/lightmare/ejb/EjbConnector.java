@@ -59,8 +59,10 @@ public class EjbConnector {
 	 * 
 	 * @param unitName
 	 * @return {@link EntityManagerFactory}
+	 * @throws IOException
 	 */
-	private EntityManagerFactory getEntityManagerFactory(MetaData metaData) {
+	private EntityManagerFactory getEntityManagerFactory(MetaData metaData)
+			throws IOException {
 
 		String unitName = metaData.getUnitName();
 

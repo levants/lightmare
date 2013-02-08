@@ -20,6 +20,8 @@ public class MetaData {
 
 	private String unitName;
 
+	private String jndiName;
+
 	private ClassLoader loader;
 
 	private AtomicBoolean inProgress = new AtomicBoolean();
@@ -46,6 +48,14 @@ public class MetaData {
 
 	public void setUnitName(String unitName) {
 		this.unitName = unitName;
+	}
+
+	public String getJndiName() {
+		return jndiName;
+	}
+
+	public void setJndiName(String jndiName) {
+		this.jndiName = jndiName;
 	}
 
 	public ClassLoader getLoader() {

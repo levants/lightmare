@@ -1,8 +1,5 @@
 package org.lightmare.ejb.startup;
 
-import static org.lightmare.ejb.meta.MetaContainer.addMetaData;
-import static org.lightmare.ejb.meta.MetaContainer.checkMetaData;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -18,6 +15,7 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
+import org.lightmare.ejb.meta.ConnectionSemaphore;
 import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.JPAManager;
@@ -96,14 +94,30 @@ public class BeanLoader implements Callable<String> {
 
 	private MetaData metaData;
 
+	private Object conn;
+
 	public BeanLoader(MetaCreator creator, String beanName, String className,
-			ClassLoader loader, MetaData metaData, List<File> tmpFiles) {
+			ClassLoader loader, MetaData metaData, List<File> tmpFiles,
+			Object conn) {
 		this.creator = creator;
 		this.beanName = beanName;
 		this.className = className;
 		this.loader = loader;
 		this.tmpFiles = tmpFiles;
 		this.metaData = metaData;
+		this.conn = conn;
+	}
+
+	private void lockSemaphore(ConnectionSemaphore semaphore, String unitName,
+			String jndiName) throws IOException {
+		synchronized (semaphore) {
+			creator.configureConnection(unitName, beanName, jndiName);
+			semaphore.notifyAll();
+		}
+	}
+
+	private void notifyConn() {
+		conn.notifyAll();
 	}
 
 	private void retriveConnections() throws IOException {
@@ -113,19 +127,30 @@ public class BeanLoader implements Callable<String> {
 
 		PersistenceContext context;
 		String unitName;
+		String jndiName;
 		boolean checkForEmf;
+		if (fields == null || fields.length == 0) {
+			notifyConn();
+		}
 		for (Field field : fields) {
 			context = field.getAnnotation(PersistenceContext.class);
 			if (context != null) {
 				metaData.setConnectorField(field);
 				unitName = context.unitName();
-				String jndiName = context.name();
+				jndiName = context.name();
+				metaData.setUnitName(unitName);
+				metaData.setJndiName(jndiName);
 				checkForEmf = JPAManager.checkForEmf(unitName);
 				if (checkForEmf) {
-					continue;
+					notifyConn();
+					break;
 				} else {
-					creator.configureConnection(unitName, beanName, jndiName);
-					metaData.setUnitName(unitName);
+					ConnectionSemaphore semaphore = JPAManager.setSemaphore(
+							unitName, jndiName);
+					notifyConn();
+					if (semaphore != null) {
+						lockSemaphore(semaphore, unitName, jndiName);
+					}
 				}
 				break;
 			}
@@ -143,13 +168,16 @@ public class BeanLoader implements Callable<String> {
 		metaData.setBeanClass(beanClass);
 		if (MetaCreator.configuration.isServer()) {
 			retriveConnections();
+		} else {
+			notifyConn();
 		}
 
 		metaData.setLoader(loader);
 	}
 
 	private void checkBean(String name) throws BeanInUseException {
-		if (checkMetaData(beanName)) {
+		if (MetaContainer.checkMetaData(beanName)) {
+			notifyConn();
 			throw new BeanInUseException(String.format(
 					"bean % is alredy in use", beanName));
 		}
@@ -171,7 +199,7 @@ public class BeanLoader implements Callable<String> {
 				beanEjbName = beanName;
 			} else {
 				checkBean(beanEjbName);
-				addMetaData(beanEjbName, metaData);
+				MetaContainer.addMetaData(beanEjbName, metaData);
 				MetaContainer.removeMeta(beanName);
 			}
 			createMeta(beanClass);
@@ -180,6 +208,7 @@ public class BeanLoader implements Callable<String> {
 			return beanEjbName;
 
 		} catch (ClassNotFoundException ex) {
+			notifyConn();
 			throw new IOException(ex);
 		}
 	}
@@ -203,26 +232,28 @@ public class BeanLoader implements Callable<String> {
 	@Override
 	public String call() throws Exception {
 
-		synchronized (metaData) {
-			String deployed;
-			if (tmpFiles != null) {
-				synchronized (tmpFiles) {
+		synchronized (conn) {
+			synchronized (metaData) {
+				String deployed;
+				if (tmpFiles != null) {
+					synchronized (tmpFiles) {
+						deployed = realCall();
+						tmpFiles.notifyAll();
+					}
+				} else {
 					deployed = realCall();
-					tmpFiles.notifyAll();
 				}
-			} else {
-				deployed = realCall();
+
+				metaData.notifyAll();
+
+				return deployed;
 			}
-
-			metaData.notifyAll();
-
-			return deployed;
 		}
 	}
 
 	public static Future<String> loadBean(MetaCreator creator,
-			String className, ClassLoader loader, List<File> tmpFiles)
-			throws IOException {
+			String className, ClassLoader loader, List<File> tmpFiles,
+			Object conn) throws IOException {
 		MetaData metaData = new MetaData();
 		String beanName = BeanUtils.parseName(className);
 		MetaData tmpMeta = MetaContainer.addMetaData(beanName, metaData);
@@ -231,7 +262,7 @@ public class BeanLoader implements Callable<String> {
 					"bean % is alredy in use", beanName));
 		}
 		Future<String> future = loaderPool.submit(new BeanLoader(creator,
-				beanName, className, loader, metaData, tmpFiles));
+				beanName, className, loader, metaData, tmpFiles, conn));
 
 		return future;
 	}

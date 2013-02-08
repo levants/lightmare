@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import javax.ejb.Local;
 import javax.ejb.Remote;
@@ -28,6 +30,7 @@ import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RpcListener;
 import org.lightmare.scannotation.AnnotationDB;
+import org.lightmare.shutdown.ShutDown;
 import org.lightmare.utils.AbstractIOUtils;
 
 /**
@@ -58,7 +61,11 @@ public class MetaCreator {
 
 	private boolean scanArchives;
 
-	private TmpResources<String> tmpResources;
+	private TmpResources tmpResources;
+
+	private boolean await;
+
+	private Object conn = new Object();
 
 	/**
 	 * {@link Configuration} container class for server
@@ -70,7 +77,9 @@ public class MetaCreator {
 	private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
 	private MetaCreator() {
-		tmpResources = new TmpResources<String>();
+		tmpResources = new TmpResources();
+		Runtime.getRuntime().addShutdownHook(
+				new Thread(new ShutDown(tmpResources)));
 	}
 
 	public AnnotationDB getAnnotationDB() {
@@ -190,6 +199,21 @@ public class MetaCreator {
 		return modifiedArchives.toArray(new URL[modifiedArchives.size()]);
 	}
 
+	private void awaitOperation(Future<String> future) {
+
+		if (await) {
+			try {
+				String nameFromFuture = future.get();
+				LOG.info(String.format("Deploy processing of %s finished",
+						nameFromFuture));
+			} catch (InterruptedException ex) {
+				LOG.error(ex.getMessage(), ex);
+			} catch (ExecutionException ex) {
+				LOG.error(ex.getMessage(), ex);
+			}
+		}
+	}
+
 	private void deployBean(String beanName, Map<String, URL> classOwnersURL,
 			Map<URL, AbstractIOUtils> archivesURLs) throws IOException {
 		URL currentURL = classOwnersURL.get(beanName);
@@ -207,9 +231,19 @@ public class MetaCreator {
 			aggregateds.put(beanName, ioUtils);
 		}
 		List<File> tmpFiles = ioUtils.getTmpFiles();
-		BeanLoader.loadBean(this, beanName, loader, tmpFiles);
+
+		Future<String> future = BeanLoader.loadBean(this, beanName, loader,
+				tmpFiles, conn);
+		awaitOperation(future);
 		if (tmpFiles != null) {
 			tmpResources.addFile(tmpFiles);
+		}
+		synchronized (conn) {
+			try {
+				conn.wait();
+			} catch (InterruptedException ex) {
+				LOG.error(ex);
+			}
 		}
 	}
 
@@ -371,6 +405,11 @@ public class MetaCreator {
 
 		public Builder setScanArchives(boolean scanArchives) {
 			creator.scanArchives = scanArchives;
+			return this;
+		}
+
+		public Builder setAwaitSeploiment(boolean await) {
+			creator.await = await;
 			return this;
 		}
 
