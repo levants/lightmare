@@ -243,7 +243,7 @@ public class BeanLoader implements Callable<String> {
 				} else {
 					deployed = realCall();
 				}
-
+				notifyConn();
 				metaData.notifyAll();
 
 				return deployed;

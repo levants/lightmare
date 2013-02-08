@@ -1,4 +1,4 @@
-package org.lightmare.shutdown;
+package org.lightmare.utils.shutdown;
 
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.meta.TmpResources;
@@ -25,7 +25,20 @@ public class ShutDown implements Runnable {
 
 		MetaCreator.closeAllConnections();
 		tmpResources.removeTempFiles();
-		LOG.info("Lightmare servfer is going to shut down");
+		LOG.info("Lightmare server is going to shut down");
+	}
+
+	/**
+	 * Sets shut down hook for application
+	 * 
+	 * @param tmpResources
+	 */
+	public static void setHoock(TmpResources tmpResources) {
+
+		ShutDown shutDown = new ShutDown(tmpResources);
+		Thread shutDownThread = new Thread(shutDown);
+		Runtime runtime = Runtime.getRuntime();
+		runtime.addShutdownHook(shutDownThread);
 	}
 
 }

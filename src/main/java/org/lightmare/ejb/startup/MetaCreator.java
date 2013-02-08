@@ -30,8 +30,8 @@ import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RpcListener;
 import org.lightmare.scannotation.AnnotationDB;
-import org.lightmare.shutdown.ShutDown;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.shutdown.ShutDown;
 
 /**
  * Determines and saves in cache ejb beans {@link MetaData} on startup
@@ -78,8 +78,7 @@ public class MetaCreator {
 
 	private MetaCreator() {
 		tmpResources = new TmpResources();
-		Runtime.getRuntime().addShutdownHook(
-				new Thread(new ShutDown(tmpResources)));
+		ShutDown.setHoock(tmpResources);
 	}
 
 	public AnnotationDB getAnnotationDB() {
@@ -238,28 +237,31 @@ public class MetaCreator {
 		if (tmpFiles != null) {
 			tmpResources.addFile(tmpFiles);
 		}
-		synchronized (conn) {
-			try {
-				conn.wait();
-			} catch (InterruptedException ex) {
-				LOG.error(ex);
-			}
-		}
 	}
 
 	private void deployBeans(Set<String> beanNames,
 			Map<String, URL> classOwnersURL,
 			Map<URL, AbstractIOUtils> archivesURLs) {
-		for (String beanName : beanNames) {
-			LOG.info(String.format("deploing bean %s", beanName));
-			try {
-				deployBean(beanName, classOwnersURL, archivesURLs);
-			} catch (IOException ex) {
-				LOG.error(String.format("Could not deploy bean %s", beanName),
-						ex);
-			} catch (Exception ex) {
-				LOG.error(String.format("Could not deploy bean %s", beanName),
-						ex);
+		synchronized (conn) {
+			for (String beanName : beanNames) {
+				LOG.info(String.format("deploing bean %s", beanName));
+				try {
+					deployBean(beanName, classOwnersURL, archivesURLs);
+				} catch (IOException ex) {
+					LOG.error(
+							String.format("Could not deploy bean %s", beanName),
+							ex);
+				} catch (Exception ex) {
+					LOG.error(
+							String.format("Could not deploy bean %s", beanName),
+							ex);
+				}
+
+				try {
+					conn.wait();
+				} catch (InterruptedException ex) {
+					LOG.error(ex);
+				}
 			}
 		}
 	}

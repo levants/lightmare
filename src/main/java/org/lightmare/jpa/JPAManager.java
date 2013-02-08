@@ -264,7 +264,7 @@ public class JPAManager {
 		EntityManagerFactory emf;
 		for (ConnectionSemaphore semaphore : semaphores) {
 			emf = semaphore.getEmf();
-			if (emf != null) {
+			if (emf != null && emf.isOpen()) {
 				emf.close();
 			}
 		}
