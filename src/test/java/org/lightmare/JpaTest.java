@@ -105,6 +105,7 @@ public class JpaTest {
 		System.out
 				.println("====================================================");
 		EntityManagerFactory emf = null;
+		int tryCount = 1;
 		while (emf == null) {
 			if (jndi == null) {
 				emf = JPAManager.getConnection(unitName);
@@ -116,8 +117,11 @@ public class JpaTest {
 					ex.printStackTrace();
 				}
 			}
-			// Thread.sleep(1000);
+			tryCount++;
+			Thread.sleep(10);
 		}
+		System.out
+				.format("tryes for get EntityManagerFactory are %s", tryCount);
 		EntityManager em = emf.createEntityManager();
 		DBCreator creator = new DBCreator(em);
 		creator.createDB();
