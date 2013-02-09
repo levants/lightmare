@@ -17,13 +17,22 @@ public class DSContext extends MemoryContext {
 	@Override
 	public Object lookup(String name) throws NamingException {
 
-		// Checks if connection is in progress and waits for finish
-		JPAManager.isInProgress(name);
+		Object value;
+		if (name.startsWith("java:comp/env/")) {
 
-		// Gets EntityManagerFactory from parent
-		EntityManagerFactory emf = (EntityManagerFactory) super.lookup(name);
+			// Checks if connection is in progress and waits for finish
+			JPAManager.isInProgress(name);
 
-		return emf.createEntityManager();
+			// Gets EntityManagerFactory from parent
+			EntityManagerFactory emf = (EntityManagerFactory) super
+					.lookup(name);
+
+			value = emf.createEntityManager();
+		} else {
+			value = super.lookup(name);
+		}
+
+		return value;
 	}
 
 	@Override
