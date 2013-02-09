@@ -241,7 +241,7 @@ public class JPAManager {
 								"could not bind connection %s", unitName), ex);
 					}
 				}
-			} else {
+			} else if (semaphore.getEmf() == null) {
 				throw new IOException(String.format(
 						"Connection %s was not in progress", unitName));
 			}
