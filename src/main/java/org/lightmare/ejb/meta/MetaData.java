@@ -20,6 +20,8 @@ public class MetaData {
 
 	private Field transactionField;
 
+	private Field unitField;
+
 	private String unitName;
 
 	private String jndiName;
@@ -50,6 +52,14 @@ public class MetaData {
 
 	public void setTransactionField(Field transactionField) {
 		this.transactionField = transactionField;
+	}
+
+	public Field getUnitField() {
+		return unitField;
+	}
+
+	public void setUnitField(Field unitField) {
+		this.unitField = unitField;
 	}
 
 	public String getUnitName() {

@@ -14,6 +14,7 @@ import java.util.concurrent.ThreadFactory;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
@@ -127,8 +128,9 @@ public class BeanLoader implements Callable<String> {
 		}
 	}
 
-	private boolean checkOnBreak(PersistenceContext context, Resource resource) {
-		return context != null && resource != null;
+	private boolean checkOnBreak(PersistenceContext context, Resource resource,
+			PersistenceUnit unit) {
+		return context != null && resource != null && unit != null;
 	}
 
 	private void retrieveConnections() throws IOException {
@@ -136,6 +138,7 @@ public class BeanLoader implements Callable<String> {
 		Class<?> beanClass = metaData.getBeanClass();
 		Field[] fields = beanClass.getDeclaredFields();
 
+		PersistenceUnit unit;
 		PersistenceContext context;
 		Resource resource;
 		String unitName;
@@ -147,6 +150,7 @@ public class BeanLoader implements Callable<String> {
 		for (Field field : fields) {
 			context = field.getAnnotation(PersistenceContext.class);
 			resource = field.getAnnotation(Resource.class);
+			unit = field.getAnnotation(PersistenceUnit.class);
 			if (context != null) {
 				metaData.setConnectorField(field);
 				unitName = context.unitName();
@@ -161,7 +165,7 @@ public class BeanLoader implements Callable<String> {
 				}
 				if (checkForEmf) {
 					notifyConn();
-					if (checkOnBreak(context, resource)) {
+					if (checkOnBreak(context, resource, unit)) {
 						break;
 					}
 				} else {
@@ -172,16 +176,18 @@ public class BeanLoader implements Callable<String> {
 						lockSemaphore(semaphore, unitName, jndiName);
 					}
 
-					if (checkOnBreak(context, resource)) {
+					if (checkOnBreak(context, resource, unit)) {
 						break;
 					}
 				}
 			} else if (resource != null) {
 
 				metaData.setTransactionField(field);
-				if (checkOnBreak(context, resource)) {
+				if (checkOnBreak(context, resource, unit)) {
 					break;
 				}
+			} else if (unit != null) {
+				metaData.setUnitField(field);
 			}
 		}
 	}

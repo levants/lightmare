@@ -29,6 +29,8 @@ public class BeanHandler implements InvocationHandler {
 
 	private final Field transactionField;
 
+	private final Field unitField;
+
 	public BeanHandler(final MetaData metaData, final Object bean,
 			final EntityManagerFactory emf) {
 
@@ -36,6 +38,7 @@ public class BeanHandler implements InvocationHandler {
 		this.emf = emf;
 		this.connectionField = metaData.getConnectorField();
 		this.transactionField = metaData.getTransactionField();
+		this.unitField = metaData.getUnitField();
 	}
 
 	private void setFieldValue(Field field, Object value) throws IOException {
@@ -102,6 +105,9 @@ public class BeanHandler implements InvocationHandler {
 		EntityManager em = null;
 		if (emf != null) {
 			em = emf.createEntityManager();
+			if (unitField != null) {
+				setFieldValue(unitField, emf);
+			}
 			setTransactionField(em);
 		}
 
