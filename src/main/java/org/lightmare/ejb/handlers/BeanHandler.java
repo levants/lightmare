@@ -41,6 +41,13 @@ public class BeanHandler implements InvocationHandler {
 		this.unitField = metaData.getUnitField();
 	}
 
+	/**
+	 * Sets passed value to beans {@link Field}
+	 * 
+	 * @param field
+	 * @param value
+	 * @throws IOException
+	 */
 	private void setFieldValue(Field field, Object value) throws IOException {
 		boolean access = field.isAccessible();
 		if (!access) {
@@ -56,6 +63,14 @@ public class BeanHandler implements InvocationHandler {
 		field.setAccessible(access);
 	}
 
+	/**
+	 * Invokes passed bean {@link Method}
+	 * 
+	 * @param method
+	 * @param arguments
+	 * @return {@link Object}
+	 * @throws IOException
+	 */
 	private Object invoke(Method method, Object... arguments)
 			throws IOException {
 
@@ -114,6 +129,14 @@ public class BeanHandler implements InvocationHandler {
 		return em;
 	}
 
+	/**
+	 * Creates {@link EntityTransaction} and begins if there is not
+	 * {@link javax.annotation.Resource} annotation in current bean and returns
+	 * this {@link EntityTransaction} or <code>null</code> in another case
+	 * 
+	 * @param em
+	 * @return {@link EntityTransaction}
+	 */
 	private EntityTransaction beginTransaction(EntityManager em) {
 		EntityTransaction transaction = null;
 		if (transactionField == null) {
@@ -124,12 +147,24 @@ public class BeanHandler implements InvocationHandler {
 		return transaction;
 	}
 
+	/**
+	 * Closes {@link EntityManager} if it open
+	 * 
+	 * @param em
+	 */
 	private void closeEntityManager(EntityManager em) {
 		if (em != null && em.isOpen()) {
 			em.close();
 		}
 	}
 
+	/**
+	 * Closes {@link EntityManager} if there is not
+	 * {@link javax.annotation.Resource} annotation in current bean
+	 * 
+	 * @param transaction
+	 * @param em
+	 */
 	private void close(EntityTransaction transaction, EntityManager em) {
 
 		if (transactionField == null) {
