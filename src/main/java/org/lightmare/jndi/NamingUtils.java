@@ -6,7 +6,16 @@ import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.naming.spi.InitialContextFactory;
 
+/**
+ * Utility class to initialize and set (
+ * {@link System#setProperty(String, String)}) the {@link InitialContextFactory}
+ * for simple jndi extensions
+ * 
+ * @author levan
+ * 
+ */
 public class NamingUtils {
 
 	private static boolean isContextFactory;
@@ -26,8 +35,7 @@ public class NamingUtils {
 				Properties properties = new Properties();
 				properties.put(Context.INITIAL_CONTEXT_FACTORY,
 						"org.lightmare.jndi.DSInitialContextFactory");
-				properties.put(Context.URL_PKG_PREFIXES,
-						"org.lightmare.jndi");
+				properties.put(Context.URL_PKG_PREFIXES, "org.lightmare.jndi");
 				context = new InitialContext(properties);
 			} catch (NamingException ex) {
 				throw new IOException(ex);
