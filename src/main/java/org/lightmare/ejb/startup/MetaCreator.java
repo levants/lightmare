@@ -199,7 +199,7 @@ public class MetaCreator {
 		return modifiedArchives.toArray(new URL[modifiedArchives.size()]);
 	}
 
-	private void awaitDeployments(Future<String> future) {
+	private void awaitDeployment(Future<String> future) {
 
 		if (await) {
 			try {
@@ -242,7 +242,7 @@ public class MetaCreator {
 
 		Future<String> future = BeanLoader.loadBean(this, beanName, loader,
 				tmpFiles, conn);
-		awaitDeployments(future);
+		awaitDeployment(future);
 		if (tmpFiles != null) {
 			tmpResources.addFile(tmpFiles);
 		}
