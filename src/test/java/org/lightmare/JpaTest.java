@@ -105,14 +105,16 @@ public class JpaTest {
 		System.out
 				.println("====================================================");
 		EntityManagerFactory emf = null;
+		EntityManager em = null;
 		int tryCount = 0;
-		while (emf == null) {
+		while (emf == null || em == null) {
 			if (jndi == null) {
 				emf = JPAManager.getConnection(unitName);
+				em = emf.createEntityManager();
 			} else {
 				try {
-					emf = (EntityManagerFactory) new InitialContext()
-							.lookup(String.format("java:comp/env/%s", jndi));
+					em = (EntityManager) new InitialContext().lookup(String
+							.format("java:comp/env/%s", jndi));
 				} catch (NamingException ex) {
 					ex.printStackTrace();
 				}
@@ -121,7 +123,6 @@ public class JpaTest {
 		}
 		System.out
 				.format("tryes for get EntityManagerFactory are %s", tryCount);
-		EntityManager em = emf.createEntityManager();
 		DBCreator creator = new DBCreator(em);
 		creator.createDB();
 

@@ -131,7 +131,7 @@ public class BeanLoader implements Callable<String> {
 		return context != null && resource != null;
 	}
 
-	private void retriveConnections() throws IOException {
+	private void retrieveConnections() throws IOException {
 
 		Class<?> beanClass = metaData.getBeanClass();
 		Field[] fields = beanClass.getDeclaredFields();
@@ -196,7 +196,7 @@ public class BeanLoader implements Callable<String> {
 
 		metaData.setBeanClass(beanClass);
 		if (MetaCreator.configuration.isServer()) {
-			retriveConnections();
+			retrieveConnections();
 		} else {
 			notifyConn();
 		}

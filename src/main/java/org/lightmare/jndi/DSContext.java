@@ -3,11 +3,19 @@ package org.lightmare.jndi;
 import java.util.Hashtable;
 
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.lightmare.jpa.JPAManager;
 import org.osjava.sj.memory.MemoryContext;
 
+/**
+ * Extentions of simple jndi {@link MemoryContext} for {@link EntityManager}
+ * retrieving
+ * 
+ * @author levan
+ * 
+ */
 public class DSContext extends MemoryContext {
 
 	public DSContext(Hashtable<?, ?> env) {
