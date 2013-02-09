@@ -1,5 +1,6 @@
 package org.lightmare.ejb.handlers;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -10,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+import org.lightmare.ejb.meta.MetaData;
+
 /**
  * Handler class to intercept bean method calls to provide database transactions
  * 
@@ -18,17 +21,53 @@ import javax.persistence.EntityTransaction;
  */
 public class BeanHandler implements InvocationHandler {
 
-	private final Field field;
-
 	private final Object bean;
 
 	private final EntityManagerFactory emf;
 
-	public BeanHandler(final Field field, final Object bean,
+	private final Field connectionField;
+
+	private final Field transactionField;
+
+	public BeanHandler(final MetaData metaData, final Object bean,
 			final EntityManagerFactory emf) {
-		this.field = field;
+
 		this.bean = bean;
 		this.emf = emf;
+		this.connectionField = metaData.getConnectorField();
+		this.transactionField = metaData.getTransactionField();
+	}
+
+	private void setFieldValue(Field field, Object value) throws IOException {
+		boolean access = field.isAccessible();
+		if (!access) {
+			field.setAccessible(true);
+		}
+		try {
+			field.set(bean, value);
+		} catch (IllegalArgumentException ex) {
+			throw new IOException(ex);
+		} catch (IllegalAccessException ex) {
+			throw new IOException(ex);
+		}
+		field.setAccessible(access);
+	}
+
+	private Object invoke(Method method, Object... arguments)
+			throws IOException {
+
+		Object value;
+		try {
+			value = method.invoke(bean, arguments);
+		} catch (IllegalAccessException ex) {
+			throw new IOException(ex);
+		} catch (IllegalArgumentException ex) {
+			throw new IOException(ex);
+		} catch (InvocationTargetException ex) {
+			throw new IOException(ex);
+		}
+
+		return value;
 	}
 
 	/**
@@ -38,14 +77,17 @@ public class BeanHandler implements InvocationHandler {
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 */
-	private void setConnection(EntityManager em)
-			throws IllegalArgumentException, IllegalAccessException {
-		boolean access = field.isAccessible();
-		if (!access) {
-			field.setAccessible(true);
+	private void setConnection(EntityManager em) throws IOException {
+		setFieldValue(connectionField, em);
+	}
+
+	private void setTransactionField(EntityManager em) throws IOException {
+
+		setConnection(em);
+		if (transactionField != null) {
+			EntityTransaction entityTransaction = em.getTransaction();
+			setFieldValue(transactionField, entityTransaction);
 		}
-		field.set(bean, em);
-		field.setAccessible(access);
 	}
 
 	/**
@@ -56,21 +98,39 @@ public class BeanHandler implements InvocationHandler {
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 */
-	private EntityManager createEntityManager()
-			throws IllegalArgumentException, IllegalAccessException {
+	private EntityManager createEntityManager() throws IOException {
 		EntityManager em = null;
 		if (emf != null) {
 			em = emf.createEntityManager();
-			setConnection(em);
+			setTransactionField(em);
 		}
 
 		return em;
+	}
+
+	private EntityTransaction beginTransaction(EntityManager em) {
+		EntityTransaction transaction = null;
+		if (transactionField == null) {
+			transaction = em.getTransaction();
+			transaction.begin();
+		}
+
+		return transaction;
 	}
 
 	private void closeEntityManager(EntityManager em) {
 		if (em != null && em.isOpen()) {
 			em.close();
 		}
+	}
+
+	private void close(EntityTransaction transaction, EntityManager em) {
+
+		if (transactionField == null) {
+			transaction.commit();
+		}
+
+		closeEntityManager(em);
 	}
 
 	/**
@@ -85,12 +145,10 @@ public class BeanHandler implements InvocationHandler {
 	 * @throws InvocationTargetException
 	 */
 	private Object invokeTransaction(final EntityManager em,
-			final Method method, Object[] arguments) throws IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException {
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
-		Object value = method.invoke(bean, arguments);
-		transaction.commit();
+			final Method method, Object[] arguments) throws IOException {
+		EntityTransaction transaction = beginTransaction(em);
+		Object value = invoke(method, arguments);
+		close(transaction, em);
 		return value;
 	}
 

@@ -4,7 +4,6 @@ import static org.lightmare.ejb.meta.MetaContainer.getMetaData;
 import static org.lightmare.jpa.JPAManager.getConnection;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
@@ -107,9 +106,8 @@ public class EjbConnector {
 		}
 
 		EntityManagerFactory emf = getEntityManagerFactory(metaData);
-		Field connectorField = metaData.getConnectorField();
-		InvocationHandler handler = new BeanHandler(connectorField,
-				beanInstance, emf);
+
+		InvocationHandler handler = new BeanHandler(metaData, beanInstance, emf);
 
 		return handler;
 	}

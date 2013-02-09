@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.persistence.PersistenceContext;
 
@@ -126,12 +127,17 @@ public class BeanLoader implements Callable<String> {
 		}
 	}
 
+	private boolean checkOnBreak(PersistenceContext context, Resource resource) {
+		return context != null && resource != null;
+	}
+
 	private void retriveConnections() throws IOException {
 
 		Class<?> beanClass = metaData.getBeanClass();
 		Field[] fields = beanClass.getDeclaredFields();
 
 		PersistenceContext context;
+		Resource resource;
 		String unitName;
 		String jndiName;
 		boolean checkForEmf;
@@ -140,6 +146,7 @@ public class BeanLoader implements Callable<String> {
 		}
 		for (Field field : fields) {
 			context = field.getAnnotation(PersistenceContext.class);
+			resource = field.getAnnotation(Resource.class);
 			if (context != null) {
 				metaData.setConnectorField(field);
 				unitName = context.unitName();
@@ -154,7 +161,9 @@ public class BeanLoader implements Callable<String> {
 				}
 				if (checkForEmf) {
 					notifyConn();
-					break;
+					if (checkOnBreak(context, resource)) {
+						break;
+					}
 				} else {
 					ConnectionSemaphore semaphore = JPAManager.setSemaphore(
 							unitName, jndiName);
@@ -162,6 +171,15 @@ public class BeanLoader implements Callable<String> {
 					if (semaphore != null) {
 						lockSemaphore(semaphore, unitName, jndiName);
 					}
+
+					if (checkOnBreak(context, resource)) {
+						break;
+					}
+				}
+			} else if (resource != null) {
+
+				metaData.setTransactionField(field);
+				if (checkOnBreak(context, resource)) {
 					break;
 				}
 			}

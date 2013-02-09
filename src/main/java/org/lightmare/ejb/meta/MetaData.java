@@ -18,6 +18,8 @@ public class MetaData {
 
 	private Field connectorField;
 
+	private Field transactionField;
+
 	private String unitName;
 
 	private String jndiName;
@@ -40,6 +42,14 @@ public class MetaData {
 
 	public void setConnectorField(Field connectorField) {
 		this.connectorField = connectorField;
+	}
+
+	public Field getTransactionField() {
+		return transactionField;
+	}
+
+	public void setTransactionField(Field transactionField) {
+		this.transactionField = transactionField;
 	}
 
 	public String getUnitName() {
