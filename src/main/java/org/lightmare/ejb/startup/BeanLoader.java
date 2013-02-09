@@ -146,7 +146,12 @@ public class BeanLoader implements Callable<String> {
 				jndiName = context.name();
 				metaData.setUnitName(unitName);
 				metaData.setJndiName(jndiName);
-				checkForEmf = JPAManager.checkForEmf(unitName);
+				if (jndiName == null || jndiName.isEmpty()) {
+					checkForEmf = JPAManager.checkForEmf(unitName);
+				} else {
+					checkForEmf = JPAManager.checkForEmf(unitName)
+							&& JPAManager.checkForEmf(jndiName);
+				}
 				if (checkForEmf) {
 					notifyConn();
 					break;

@@ -50,7 +50,26 @@ public class JPAManager {
 
 	public static boolean checkForEmf(String unitName) {
 
-		return connections.containsKey(unitName);
+		boolean check = unitName != null && !unitName.isEmpty();
+
+		if (check) {
+			check = connections.containsKey(unitName);
+		}
+
+		return check;
+	}
+
+	private static ConnectionSemaphore createSemaphore(String unitName) {
+
+		ConnectionSemaphore semaphore = connections.get(unitName);
+
+		if (semaphore == null) {
+			semaphore = new ConnectionSemaphore();
+			semaphore.setInProgress(true);
+			connections.put(unitName, semaphore);
+		}
+
+		return semaphore;
 	}
 
 	public static ConnectionSemaphore setSemaphore(String unitName,
@@ -60,9 +79,7 @@ public class JPAManager {
 
 		if (unitName != null && !unitName.isEmpty()) {
 
-			semaphore = new ConnectionSemaphore();
-			semaphore.setInProgress(true);
-			connections.put(unitName, semaphore);
+			semaphore = createSemaphore(unitName);
 			if (jndiName != null && !jndiName.isEmpty()) {
 				connections.put(jndiName, semaphore);
 			}
