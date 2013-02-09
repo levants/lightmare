@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -94,11 +95,13 @@ public class BeanLoader implements Callable<String> {
 
 	private MetaData metaData;
 
-	private Object conn;
+	private CountDownLatch conn;
+
+	private boolean isCounted;
 
 	public BeanLoader(MetaCreator creator, String beanName, String className,
 			ClassLoader loader, MetaData metaData, List<File> tmpFiles,
-			Object conn) {
+			CountDownLatch conn) {
 		this.creator = creator;
 		this.beanName = beanName;
 		this.className = className;
@@ -117,7 +120,10 @@ public class BeanLoader implements Callable<String> {
 	}
 
 	private void notifyConn() {
-		conn.notifyAll();
+		if (!isCounted) {
+			conn.countDown();
+			isCounted = true;
+		}
 	}
 
 	private void retriveConnections() throws IOException {
@@ -151,8 +157,8 @@ public class BeanLoader implements Callable<String> {
 					if (semaphore != null) {
 						lockSemaphore(semaphore, unitName, jndiName);
 					}
+					break;
 				}
-				break;
 			}
 		}
 	}
@@ -232,7 +238,7 @@ public class BeanLoader implements Callable<String> {
 	@Override
 	public String call() throws Exception {
 
-		synchronized (conn) {
+		try {
 			synchronized (metaData) {
 				String deployed;
 				if (tmpFiles != null) {
@@ -248,16 +254,21 @@ public class BeanLoader implements Callable<String> {
 
 				return deployed;
 			}
+		} catch (Exception ex) {
+			LOG.error(ex.getMessage(), ex);
+			notifyConn();
+			return null;
 		}
 	}
 
 	public static Future<String> loadBean(MetaCreator creator,
 			String className, ClassLoader loader, List<File> tmpFiles,
-			Object conn) throws IOException {
+			CountDownLatch conn) throws IOException {
 		MetaData metaData = new MetaData();
 		String beanName = BeanUtils.parseName(className);
 		MetaData tmpMeta = MetaContainer.addMetaData(beanName, metaData);
 		if (tmpMeta != null && !tmpMeta.isInProgress()) {
+			conn.countDown();
 			throw new BeanInUseException(String.format(
 					"bean % is alredy in use", beanName));
 		}

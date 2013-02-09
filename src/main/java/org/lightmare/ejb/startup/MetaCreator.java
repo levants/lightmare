@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -65,7 +66,7 @@ public class MetaCreator {
 
 	private boolean await;
 
-	private Object conn = new Object();
+	private CountDownLatch conn;
 
 	/**
 	 * {@link Configuration} container class for server
@@ -198,7 +199,7 @@ public class MetaCreator {
 		return modifiedArchives.toArray(new URL[modifiedArchives.size()]);
 	}
 
-	private void awaitOperation(Future<String> future) {
+	private void awaitDeployments(Future<String> future) {
 
 		if (await) {
 			try {
@@ -210,6 +211,14 @@ public class MetaCreator {
 			} catch (ExecutionException ex) {
 				LOG.error(ex.getMessage(), ex);
 			}
+		}
+	}
+
+	private void awaitDeployments() {
+		try {
+			conn.await();
+		} catch (InterruptedException ex) {
+			LOG.error(ex);
 		}
 	}
 
@@ -233,7 +242,7 @@ public class MetaCreator {
 
 		Future<String> future = BeanLoader.loadBean(this, beanName, loader,
 				tmpFiles, conn);
-		awaitOperation(future);
+		awaitDeployments(future);
 		if (tmpFiles != null) {
 			tmpResources.addFile(tmpFiles);
 		}
@@ -242,28 +251,17 @@ public class MetaCreator {
 	private void deployBeans(Set<String> beanNames,
 			Map<String, URL> classOwnersURL,
 			Map<URL, AbstractIOUtils> archivesURLs) {
-		synchronized (conn) {
-			for (String beanName : beanNames) {
-				LOG.info(String.format("deploing bean %s", beanName));
-				try {
-					deployBean(beanName, classOwnersURL, archivesURLs);
-				} catch (IOException ex) {
-					LOG.error(
-							String.format("Could not deploy bean %s", beanName),
-							ex);
-				} catch (Exception ex) {
-					LOG.error(
-							String.format("Could not deploy bean %s", beanName),
-							ex);
-				}
-
-				try {
-					conn.wait();
-				} catch (InterruptedException ex) {
-					LOG.error(ex);
-				}
+		conn = new CountDownLatch(beanNames.size());
+		for (String beanName : beanNames) {
+			LOG.info(String.format("deploing bean %s", beanName));
+			try {
+				deployBean(beanName, classOwnersURL, archivesURLs);
+			} catch (IOException ex) {
+				LOG.error(String.format("Could not deploy bean %s", beanName),
+						ex);
 			}
 		}
+		awaitDeployments();
 	}
 
 	/**
