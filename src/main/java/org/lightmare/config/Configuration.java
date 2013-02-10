@@ -70,6 +70,10 @@ public class Configuration {
 
 	private static final Logger LOG = Logger.getLogger(Configuration.class);
 
+	public Configuration() {
+		setDefaults();
+	}
+
 	public void setDefaults() {
 		if (!config.containsKey(IP_ADDRESS)) {
 			config.put(IP_ADDRESS, IP_ADDRESS_DEF);
