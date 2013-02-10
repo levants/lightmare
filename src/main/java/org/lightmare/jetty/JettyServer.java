@@ -17,9 +17,9 @@ import com.sun.jersey.spi.container.servlet.ServletContainer;
  */
 public class JettyServer implements Runnable {
 
-	private static int HTTP_SERVER_PORT = 8080;
+	private static final int HTTP_SERVER_PORT = 8080;
 
-	private static Logger LOG = Logger.getLogger(JettyServer.class);
+	private static final Logger LOG = Logger.getLogger(JettyServer.class);
 
 	@Override
 	public void run() {

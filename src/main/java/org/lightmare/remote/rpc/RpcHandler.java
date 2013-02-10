@@ -19,7 +19,7 @@ import org.lightmare.utils.RpcUtils;
  */
 public class RpcHandler extends SimpleChannelHandler {
 
-	private static Logger LOG = Logger.getLogger(RpcHandler.class);
+	private static final Logger LOG = Logger.getLogger(RpcHandler.class);
 
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent ev)

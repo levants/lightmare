@@ -39,7 +39,7 @@ public class Configuration {
 	public static final String CONNECTION_TIMEOUT = "timeout";
 
 	// runtime to get avaliable processors
-	private static final Runtime runtime = Runtime.getRuntime();
+	private static final Runtime RUNTIME = Runtime.getRuntime();
 
 	/**
 	 * Default properties
@@ -68,7 +68,7 @@ public class Configuration {
 
 	private static final String CONFIG_FILE = "./config/config.properties";
 
-	private static Logger logger = Logger.getLogger(Configuration.class);
+	private static final Logger LOG = Logger.getLogger(Configuration.class);
 
 	public void setDefaults() {
 		if (!config.containsKey(IP_ADDRESS)) {
@@ -85,7 +85,7 @@ public class Configuration {
 
 		if (config.containsKey(WORKER_POOL)) {
 
-			int workers = runtime.availableProcessors() * WORKER_POOL_DEF;
+			int workers = RUNTIME.availableProcessors() * WORKER_POOL_DEF;
 			String workerProperty = String.valueOf(workers);
 			config.put(WORKER_POOL, workerProperty);
 		}
@@ -126,7 +126,7 @@ public class Configuration {
 				configFile.mkdirs();
 			}
 		} catch (IOException ex) {
-			logger.error("Could not open config file", ex);
+			LOG.error("Could not open config file", ex);
 		}
 
 	}
@@ -138,7 +138,7 @@ public class Configuration {
 			loadFromStream(propertiesStream);
 			propertiesStream.close();
 		} catch (IOException ex) {
-			logger.error("Could not open config file", ex);
+			LOG.error("Could not open config file", ex);
 		}
 
 	}
@@ -148,14 +148,14 @@ public class Configuration {
 				.getResourceAsStream(new StringBuilder("META-INF/").append(
 						resourceName).toString());
 		if (resourceStream == null) {
-			logger.error("Configuration resource doesn't exist");
+			LOG.error("Configuration resource doesn't exist");
 			return;
 		}
 		loadFromStream(resourceStream);
 		try {
 			resourceStream.close();
 		} catch (IOException ex) {
-			logger.error("Could not load resource", ex);
+			LOG.error("Could not load resource", ex);
 		}
 	}
 
@@ -173,7 +173,7 @@ public class Configuration {
 			}
 			propertiesStream.close();
 		} catch (IOException ex) {
-			logger.error("Could not load configuration", ex);
+			LOG.error("Could not load configuration", ex);
 		}
 	}
 

@@ -16,7 +16,7 @@ import org.lightmare.utils.RpcUtils;
 @Consumes("application/json;charset=utf-8")
 public class RestRPC {
 
-	private static Logger LOG = Logger.getLogger(RestRPC.class);
+	private static final Logger LOG = Logger.getLogger(RestRPC.class);
 
 	@GET
 	public String call(@QueryParam("param") String param) {

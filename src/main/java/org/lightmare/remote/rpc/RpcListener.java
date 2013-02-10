@@ -55,8 +55,8 @@ public class RpcListener {
 			"info-channels");
 	private static Channel channel;
 	private static ServerSocketChannelFactory factory;
-	private static final Runtime runtime = Runtime.getRuntime();
-	private static Logger logger = Logger.getLogger(RpcListener.class);
+	private static final Runtime RUNTIME = Runtime.getRuntime();
+	private static final Logger LOG = Logger.getLogger(RpcListener.class);
 
 	/**
 	 * Set boss and worker thread pools size from configuration
@@ -65,14 +65,14 @@ public class RpcListener {
 		Integer bossCount;
 		Integer workerCount;
 		boss = new OrderedMemoryAwareThreadPoolExecutor(
-				(bossCount = MetaCreator.configuration
+				(bossCount = MetaCreator.CONFIG
 						.getIntValue("boss_pool_size")) != null ? bossCount : 1,
 				400000000, 2000000000, 60, TimeUnit.SECONDS,
 				new ThreadFactoryUtil("netty-boss-thread", Thread.MAX_PRIORITY));
 		worker = new OrderedMemoryAwareThreadPoolExecutor(
-				(workerCount = MetaCreator.configuration
+				(workerCount = MetaCreator.CONFIG
 						.getIntValue("worker_pool_size")) != null ? workerCount
-						: runtime.availableProcessors() * 3, 400000000,
+						: RUNTIME.availableProcessors() * 3, 400000000,
 				2000000000, 60, TimeUnit.SECONDS, new ThreadFactoryUtil(
 						"netty-worker-thread", (Thread.MAX_PRIORITY - 1)));
 		workerPool = new NioWorkerPool(worker, workerCount);
@@ -97,17 +97,17 @@ public class RpcListener {
 		bootstrap.setOption("tcpNoDelay", true);
 		bootstrap.setOption("child.keepAlive", true);
 		bootstrap.setOption("backlog", 500);
-		bootstrap.setOption("connectTimeoutMillis", MetaCreator.configuration
+		bootstrap.setOption("connectTimeoutMillis", MetaCreator.CONFIG
 				.getIntValue(Configuration.CONNECTION_TIMEOUT));
 		try {
 			channel = bootstrap.bind(new InetSocketAddress(Inet4Address
-					.getByName(MetaCreator.configuration
+					.getByName(MetaCreator.CONFIG
 							.getStringValue("listening_ip")),
-					MetaCreator.configuration.getIntValue("listening_port")));
+					MetaCreator.CONFIG.getIntValue("listening_port")));
 			channelGroup.add(channel);
-			logger.info(channel.getLocalAddress());
+			LOG.info(channel.getLocalAddress());
 		} catch (UnknownHostException ex) {
-			logger.error(ex.getMessage(), ex);
+			LOG.error(ex.getMessage(), ex);
 		}
 	}
 }

@@ -20,7 +20,7 @@ public class NamingUtils {
 
 	private static boolean isContextFactory;
 
-	private static volatile Context context;
+	private static Context context;
 
 	public void setInitialCotext() throws IOException {
 		if (!isContextFactory) {

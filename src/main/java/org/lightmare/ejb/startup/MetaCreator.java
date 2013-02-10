@@ -71,7 +71,7 @@ public class MetaCreator {
 	/**
 	 * {@link Configuration} container class for server
 	 */
-	public static final Configuration configuration = new Configuration();
+	public static final Configuration CONFIG = new Configuration();
 
 	private Map<String, AbstractIOUtils> aggregateds = new HashMap<String, AbstractIOUtils>();
 
@@ -276,7 +276,7 @@ public class MetaCreator {
 
 		try {
 			// starts RPC server if configured as remote and server
-			if (configuration.isRemote() && configuration.isServer()) {
+			if (CONFIG.isRemote() && CONFIG.isServer()) {
 				RpcListener.startServer();
 			}
 			// Loads libraries from specified path
@@ -414,49 +414,49 @@ public class MetaCreator {
 		}
 
 		public Builder setRemote(boolean remote) {
-			configuration.setRemote(remote);
+			CONFIG.setRemote(remote);
 			return this;
 		}
 
 		public Builder setServer(boolean server) {
-			configuration.setServer(server);
-			configuration.setClient(!server);
+			CONFIG.setServer(server);
+			CONFIG.setClient(!server);
 			return this;
 		}
 
 		public Builder setClient(boolean client) {
-			configuration.setClient(client);
-			configuration.setServer(!client);
+			CONFIG.setClient(client);
+			CONFIG.setServer(!client);
 			return this;
 		}
 
 		public Builder setProperty(String key, String property) {
-			configuration.putValue(key, property);
+			CONFIG.putValue(key, property);
 			return this;
 		}
 
 		public Builder setIpAddress(String property) {
-			configuration.putValue(Configuration.IP_ADDRESS, property);
+			CONFIG.putValue(Configuration.IP_ADDRESS, property);
 			return this;
 		}
 
 		public Builder setPort(String property) {
-			configuration.putValue(Configuration.PORT, property);
+			CONFIG.putValue(Configuration.PORT, property);
 			return this;
 		}
 
 		public Builder setMasterThreads(String property) {
-			configuration.putValue(Configuration.BOSS_POOL, property);
+			CONFIG.putValue(Configuration.BOSS_POOL, property);
 			return this;
 		}
 
 		public Builder setWorkerThreads(String property) {
-			configuration.putValue(Configuration.WORKER_POOL, property);
+			CONFIG.putValue(Configuration.WORKER_POOL, property);
 			return this;
 		}
 
 		public Builder setTimeout(String property) {
-			configuration.putValue(Configuration.CONNECTION_TIMEOUT, property);
+			CONFIG.putValue(Configuration.CONNECTION_TIMEOUT, property);
 			return this;
 		}
 

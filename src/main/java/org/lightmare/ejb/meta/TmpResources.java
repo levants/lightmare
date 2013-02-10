@@ -15,24 +15,24 @@ import org.lightmare.ejb.startup.BeanLoader;
  */
 public class TmpResources {
 
-	private Set<List<File>> TMP_FILES = new HashSet<List<File>>();
+	private Set<List<File>> tmpFiles = new HashSet<List<File>>();
 
 	public void addFile(List<File> files) {
 
 		for (File file : files) {
 			file.deleteOnExit();
 		}
-		TMP_FILES.add(files);
+		tmpFiles.add(files);
 	}
 
 	public void removeTempFiles() {
 
-		for (List<File> files : TMP_FILES) {
+		for (List<File> files : tmpFiles) {
 			BeanLoader.removeResources(files);
 		}
 	}
 
 	public int size() {
-		return TMP_FILES.size();
+		return tmpFiles.size();
 	}
 }

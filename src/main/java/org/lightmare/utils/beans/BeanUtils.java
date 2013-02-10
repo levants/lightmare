@@ -16,12 +16,14 @@ public class BeanUtils {
 	 */
 	public static String parseName(String name) {
 
+		String simpleName = name;
+
 		int index = name.lastIndexOf('.');
 		if (index > -1) {
 			index++;
-			name = name.substring(index);
+			simpleName = name.substring(index);
 		}
 
-		return name;
+		return simpleName;
 	}
 }

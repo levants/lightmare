@@ -43,7 +43,7 @@ public class JPAManager {
 
 	boolean scanArchives;
 
-	private static Logger LOG = Logger.getLogger(JPAManager.class);
+	private static final Logger LOG = Logger.getLogger(JPAManager.class);
 
 	private JPAManager() {
 	}

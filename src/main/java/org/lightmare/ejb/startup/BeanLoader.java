@@ -201,7 +201,7 @@ public class BeanLoader implements Callable<String> {
 	private void createMeta(Class<?> beanClass) throws IOException {
 
 		metaData.setBeanClass(beanClass);
-		if (MetaCreator.configuration.isServer()) {
+		if (MetaCreator.CONFIG.isServer()) {
 			retrieveConnections();
 		} else {
 			notifyConn();

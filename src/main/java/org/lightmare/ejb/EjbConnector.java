@@ -124,7 +124,7 @@ public class EjbConnector {
 	public <T> T connectToBean(String beanName, Class<T> interfaceClass,
 			Object... rpcArgs) throws IOException {
 		InvocationHandler handler;
-		Configuration configuration = MetaCreator.configuration;
+		Configuration configuration = MetaCreator.CONFIG;
 		if (configuration.isServer()) {
 
 			MetaData metaData = getMeta(beanName);

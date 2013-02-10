@@ -48,7 +48,7 @@ public class RPCall {
 
 	private static ExecutorService worker;
 
-	private static Logger LOG = Logger.getLogger(RPCall.class);
+	private static final Logger LOG = Logger.getLogger(RPCall.class);
 
 	private RPCall() {
 		configure();
@@ -63,13 +63,13 @@ public class RPCall {
 	private static void configure() {
 		if (boss == null || worker == null) {
 
-			bossPoolSize = MetaCreator.configuration
+			bossPoolSize = MetaCreator.CONFIG
 					.getIntValue(Configuration.BOSS_POOL);
 
-			workerPoolSize = MetaCreator.configuration
+			workerPoolSize = MetaCreator.CONFIG
 					.getIntValue(Configuration.WORKER_POOL);
 
-			timeout = MetaCreator.configuration
+			timeout = MetaCreator.CONFIG
 					.getLongValue(Configuration.CONNECTION_TIMEOUT);
 
 			boss = new OrderedMemoryAwareThreadPoolExecutor(bossPoolSize,

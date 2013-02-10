@@ -140,11 +140,11 @@ public class DataSourceInitializer {
 		return null;
 	}
 
-	public void registerDataSource(Properties c3p0Properties,
+	public void registerDataSource(Properties poolingProperties,
 			DataSource dataSource, String jndiName) throws IOException {
 		try {
 			DataSource namedDataSource = DataSources.pooledDataSource(
-					dataSource, c3p0Properties);
+					dataSource, poolingProperties);
 			context.rebind(jndiName, namedDataSource);
 			LOG.info(String.format("data source %s initialized", jndiName));
 		} catch (SQLException ex) {
@@ -160,14 +160,15 @@ public class DataSourceInitializer {
 	}
 
 	public void registerDataSource(Properties properties,
-			Properties c3p0Properties) throws IOException {
+			Properties poolingProperties) throws IOException {
 		String jndiName = properties.getProperty("name");
 		LOG.info(String.format("Initializing data source %s", jndiName));
 		DataSource dataSource = initilizeDriver(properties);
-		if (c3p0Properties == null) {
-			c3p0Properties = getDefaultPooling();
+		Properties poolProps = poolingProperties;
+		if (poolingProperties == null) {
+			poolProps = getDefaultPooling();
 		}
-		registerDataSource(c3p0Properties, dataSource, jndiName);
+		registerDataSource(poolProps, dataSource, jndiName);
 	}
 
 	public void registerDataSource(Properties properties) throws IOException {

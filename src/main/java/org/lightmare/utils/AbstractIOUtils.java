@@ -165,14 +165,15 @@ public abstract class AbstractIOUtils {
 		} catch (URISyntaxException ex) {
 			throw new IOException(ex);
 		}
+		FileType typToCheck = fileType;
 		if (fileType == null) {
-			fileType = getType(appFile);
+			typToCheck = getType(appFile);
 		}
-		if (fileType.equals(FileType.EDIR)) {
+		if (typToCheck.equals(FileType.EDIR)) {
 			ioUtils = new DirUtils(appFile);
-		} else if (fileType.equals(FileType.EAR)) {
+		} else if (typToCheck.equals(FileType.EAR)) {
 			ioUtils = new ExtUtils(appFile);
-		} else if (fileType.equals(FileType.JAR)) {
+		} else if (typToCheck.equals(FileType.JAR)) {
 			ioUtils = new JarUtils(appFile);
 		}
 
@@ -345,10 +346,6 @@ public abstract class AbstractIOUtils {
 		urls = fullURLs.toArray(new URL[fullURLs.size()]);
 
 		return urls;
-	}
-
-	protected void lockObject(Object objectForLock) {
-
 	}
 
 	protected List<File> getForAddTmpFiles() {
