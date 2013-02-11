@@ -60,11 +60,16 @@ public class DataSourceInitializer {
 
 	private static Properties getDefaultPooling() {
 		Properties c3p0Properties = new Properties();
-		c3p0Properties.setProperty("maxPoolSize", "5");
-		c3p0Properties.setProperty("minPoolSize", "15");
-		c3p0Properties.setProperty("maxIdleTime", "1800");
-		c3p0Properties.setProperty("maxStatements", "50");
-		c3p0Properties.setProperty("acquireIncrement", "50");
+		c3p0Properties.setProperty(PoolConfig.MAX_POOL_SIZE,
+				PoolConfig.MAX_POOL_SIZE_DEF_VALUE);
+		c3p0Properties.setProperty(PoolConfig.MIN_POOL_SIZE,
+				PoolConfig.MIN_POOL_SIZE_DEF_VALUE);
+		c3p0Properties.setProperty(PoolConfig.MAX_IDLE_TIMEOUT,
+				PoolConfig.MAX_IDLE_TIMEOUT_DEF_VALUE);
+		c3p0Properties.setProperty(PoolConfig.MAX_STATEMENTS,
+				PoolConfig.MAX_STATEMENTS_DEF_VALUE);
+		c3p0Properties.setProperty(PoolConfig.AQUIRE_INCREMENT,
+				PoolConfig.AQUIRE_INCREMENT_DEF_VALUE);
 
 		return c3p0Properties;
 	}
