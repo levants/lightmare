@@ -121,8 +121,8 @@ public class JpaTest {
 			}
 			tryCount++;
 		}
-		System.out
-				.format("tryes for get EntityManagerFactory are %s", tryCount);
+		System.out.format("tryes for get EntityManagerFactory are %s\n",
+				tryCount);
 		DBCreator creator = new DBCreator(em);
 		creator.createDB();
 
