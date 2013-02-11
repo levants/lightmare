@@ -28,7 +28,7 @@ import org.lightmare.jndi.NamingUtils;
 public class JPAManager {
 
 	// Keeps unique EntityManagerFactories builded by unit names
-	private static ConcurrentMap<String, ConnectionSemaphore> connections = new ConcurrentHashMap<String, ConnectionSemaphore>();
+	private static final ConcurrentMap<String, ConnectionSemaphore> CONNECTIONS = new ConcurrentHashMap<String, ConnectionSemaphore>();
 
 	private List<String> classes;
 
@@ -52,7 +52,7 @@ public class JPAManager {
 		boolean check = unitName != null && !unitName.isEmpty();
 
 		if (check) {
-			check = connections.containsKey(unitName);
+			check = CONNECTIONS.containsKey(unitName);
 		}
 
 		return check;
@@ -60,12 +60,12 @@ public class JPAManager {
 
 	private static ConnectionSemaphore createSemaphore(String unitName) {
 
-		ConnectionSemaphore semaphore = connections.get(unitName);
+		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 
 		if (semaphore == null) {
 			semaphore = new ConnectionSemaphore();
 			semaphore.setInProgress(true);
-			connections.put(unitName, semaphore);
+			CONNECTIONS.put(unitName, semaphore);
 		}
 
 		return semaphore;
@@ -80,7 +80,7 @@ public class JPAManager {
 
 			semaphore = createSemaphore(unitName);
 			if (jndiName != null && !jndiName.isEmpty()) {
-				connections.putIfAbsent(jndiName, semaphore);
+				CONNECTIONS.putIfAbsent(jndiName, semaphore);
 			}
 		}
 
@@ -90,7 +90,7 @@ public class JPAManager {
 	public static boolean isInProgress(String jndiName) {
 
 		boolean inProgress;
-		ConnectionSemaphore semaphore = connections.get(jndiName);
+		ConnectionSemaphore semaphore = CONNECTIONS.get(jndiName);
 		inProgress = semaphore != null;
 		while (inProgress) {
 			synchronized (semaphore) {
@@ -224,7 +224,7 @@ public class JPAManager {
 	}
 
 	public void setConnection(String unitName, String name) throws IOException {
-		ConnectionSemaphore semaphore = connections.get(unitName);
+		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 		synchronized (semaphore) {
 			if (semaphore.isInProgress()) {
 				EntityManagerFactory emf = createEntityManagerFactory(unitName);
@@ -253,7 +253,7 @@ public class JPAManager {
 			throws IOException {
 
 		EntityManagerFactory emf = null;
-		ConnectionSemaphore semaphore = connections.get(unitName);
+		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 		if (semaphore != null) {
 			synchronized (semaphore) {
 				while (semaphore.isInProgress()) {
@@ -276,7 +276,7 @@ public class JPAManager {
 	 * Closes all existing {@link EntityManagerFactory} instances kept in cache
 	 */
 	public static void closeEntityManagerFactories() {
-		Collection<ConnectionSemaphore> semaphores = connections.values();
+		Collection<ConnectionSemaphore> semaphores = CONNECTIONS.values();
 		EntityManagerFactory emf;
 		for (ConnectionSemaphore semaphore : semaphores) {
 			emf = semaphore.getEmf();
@@ -285,7 +285,7 @@ public class JPAManager {
 			}
 		}
 
-		connections.clear();
+		CONNECTIONS.clear();
 	}
 
 	public static class Builder {
