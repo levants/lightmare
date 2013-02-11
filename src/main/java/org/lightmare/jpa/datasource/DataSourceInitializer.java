@@ -60,10 +60,11 @@ public class DataSourceInitializer {
 
 	private static Properties getDefaultPooling() {
 		Properties c3p0Properties = new Properties();
-		c3p0Properties.setProperty("hibernate.c3p0.min_size", "5");
-		c3p0Properties.setProperty("hibernate.c3p0.max_size", "15");
-		c3p0Properties.setProperty("hibernate.c3p0.timeout", "1800");
-		c3p0Properties.setProperty("hibernate.c3p0.max_statements", "50");
+		c3p0Properties.setProperty("maxPoolSize", "5");
+		c3p0Properties.setProperty("minPoolSize", "15");
+		c3p0Properties.setProperty("maxIdleTime", "1800");
+		c3p0Properties.setProperty("maxStatements", "50");
+		c3p0Properties.setProperty("acquireIncrement", "50");
 
 		return c3p0Properties;
 	}
