@@ -3,11 +3,11 @@ package org.lightmare.jpa;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
@@ -28,8 +28,7 @@ import org.lightmare.jndi.NamingUtils;
 public class JPAManager {
 
 	// Keeps unique EntityManagerFactories builded by unit names
-	private static Map<String, ConnectionSemaphore> connections = Collections
-			.synchronizedMap(new HashMap<String, ConnectionSemaphore>());
+	private static ConcurrentMap<String, ConnectionSemaphore> connections = new ConcurrentHashMap<String, ConnectionSemaphore>();
 
 	private List<String> classes;
 
@@ -81,7 +80,7 @@ public class JPAManager {
 
 			semaphore = createSemaphore(unitName);
 			if (jndiName != null && !jndiName.isEmpty()) {
-				connections.put(jndiName, semaphore);
+				connections.putIfAbsent(jndiName, semaphore);
 			}
 		}
 
