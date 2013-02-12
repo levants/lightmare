@@ -20,15 +20,16 @@ import org.lightmare.jpa.JPAManager;
  */
 public class MetaContainer {
 
-	private static ConcurrentMap<String, MetaData> ejbs = new ConcurrentHashMap<String, MetaData>();
+	// Cached bean meta data
+	private static final ConcurrentMap<String, MetaData> EJBS = new ConcurrentHashMap<String, MetaData>();
 
 	public static MetaData addMetaData(String beanName, MetaData metaData) {
-		return ejbs.putIfAbsent(beanName, metaData);
+		return EJBS.putIfAbsent(beanName, metaData);
 	}
 
 	public static boolean checkMetaData(String beanName) {
 		boolean check;
-		MetaData metaData = ejbs.get(beanName);
+		MetaData metaData = EJBS.get(beanName);
 		check = metaData == null;
 		if (!check) {
 			synchronized (metaData) {
@@ -39,18 +40,19 @@ public class MetaContainer {
 	}
 
 	public boolean checkBean(String beanName) {
-		return ejbs.containsKey(beanName);
+		return EJBS.containsKey(beanName);
 	}
 
 	public static MetaData getMetaData(String beanName) {
-		return ejbs.get(beanName);
+		return EJBS.get(beanName);
 	}
 
 	public static void removeMeta(String beanName) {
-		ejbs.remove(beanName);
+		EJBS.remove(beanName);
 	}
 
-	public static EntityManagerFactory getConnection(String unitName) throws IOException {
+	public static EntityManagerFactory getConnection(String unitName)
+			throws IOException {
 		return JPAManager.getConnection(unitName);
 	}
 
@@ -59,6 +61,6 @@ public class MetaContainer {
 	}
 
 	public static Iterator<MetaData> getBeanClasses() {
-		return ejbs.values().iterator();
+		return EJBS.values().iterator();
 	}
 }
