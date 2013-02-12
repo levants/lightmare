@@ -103,7 +103,7 @@ public class JPAManager {
 							&& !semaphore.isBound();
 				} catch (InterruptedException ex) {
 					inProgress = false;
-					LOG.error(ex);
+					LOG.error(ex.getMessage(), ex);
 				}
 			}
 		}
@@ -248,22 +248,25 @@ public class JPAManager {
 	 * @throws IOException
 	 */
 	private void bindJndiName(ConnectionSemaphore semaphore) throws IOException {
-		String jndiName = semaphore.getJndiName();
-		String unitName = semaphore.getUnitName();
 		boolean bound = semaphore.isBound();
-		if (!bound && jndiName != null && !jndiName.isEmpty()) {
-			NamingUtils namingUtils = new NamingUtils();
-			try {
-				Context context = namingUtils.getContext();
-				if (context.lookup(jndiName) == null) {
-					namingUtils.getContext().bind(
-							String.format("java:comp/env/%s", jndiName),
-							semaphore.getEmf());
+		if (!bound) {
+			String jndiName = semaphore.getJndiName();
+			if (jndiName != null && !jndiName.isEmpty()) {
+				NamingUtils namingUtils = new NamingUtils();
+				try {
+					Context context = namingUtils.getContext();
+					if (context.lookup(jndiName) == null) {
+						namingUtils.getContext().bind(jndiName,
+								semaphore.getEmf());
+					}
+					semaphore.setBound(true);
+				} catch (NamingException ex) {
+					throw new IOException(String.format(
+							"could not bind connection %s",
+							semaphore.getUnitName()), ex);
 				}
+			} else {
 				semaphore.setBound(true);
-			} catch (NamingException ex) {
-				throw new IOException(String.format(
-						"could not bind connection %s", unitName), ex);
 			}
 		}
 	}
@@ -296,7 +299,6 @@ public class JPAManager {
 				while (semaphore.isInProgress()) {
 					try {
 						semaphore.wait();
-						Thread.sleep(10);
 					} catch (InterruptedException ex) {
 						throw new IOException(ex);
 					}
@@ -317,7 +319,6 @@ public class JPAManager {
 				while (semaphore.isInProgress()) {
 					try {
 						semaphore.wait();
-						Thread.sleep(10);
 					} catch (InterruptedException ex) {
 						throw new IOException(ex);
 					}
@@ -334,7 +335,7 @@ public class JPAManager {
 	private static void unbindConnection(ConnectionSemaphore semaphore) {
 
 		String jndiName = semaphore.getJndiName();
-		if (jndiName != null) {
+		if (jndiName != null && semaphore.isBound()) {
 			NamingUtils namingUtils = new NamingUtils();
 			try {
 				Context context = namingUtils.getContext();

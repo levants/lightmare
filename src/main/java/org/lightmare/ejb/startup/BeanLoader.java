@@ -21,6 +21,7 @@ import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.ejb.meta.ConnectionSemaphore;
 import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
+import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.beans.BeanUtils;
@@ -160,6 +161,7 @@ public class BeanLoader implements Callable<String> {
 				if (jndiName == null || jndiName.isEmpty()) {
 					checkForEmf = JPAManager.checkForEmf(unitName);
 				} else {
+					jndiName = NamingUtils.createJndiName(jndiName);
 					checkForEmf = JPAManager.checkForEmf(unitName)
 							&& JPAManager.checkForEmf(jndiName);
 				}

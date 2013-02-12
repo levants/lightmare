@@ -22,6 +22,11 @@ public class NamingUtils {
 
 	private static Context context;
 
+	public static String createJndiName(String jndiName) {
+
+		return String.format("java:comp/env/%s", jndiName);
+	}
+
 	public void setInitialCotext() throws IOException {
 		if (!isContextFactory) {
 			System.getProperties().put(Context.INITIAL_CONTEXT_FACTORY,
