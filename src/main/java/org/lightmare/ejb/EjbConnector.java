@@ -60,16 +60,16 @@ public class EjbConnector {
 	 * @return {@link EntityManagerFactory}
 	 * @throws IOException
 	 */
-	private EntityManagerFactory getEntityManagerFactory(MetaData metaData)
-			throws IOException {
+	private void getEntityManagerFactory(MetaData metaData) throws IOException {
 
-		String unitName = metaData.getUnitName();
+		if (metaData.getEmf() == null) {
+			String unitName = metaData.getUnitName();
 
-		if (unitName == null || unitName.isEmpty()) {
-			return null;
+			if (unitName != null && !unitName.isEmpty()) {
+				EntityManagerFactory emf = getConnection(unitName);
+				metaData.setEmf(emf);
+			}
 		}
-		EntityManagerFactory emf = getConnection(unitName);
-		return emf;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -105,9 +105,9 @@ public class EjbConnector {
 			throw new IOException(ex);
 		}
 
-		EntityManagerFactory emf = getEntityManagerFactory(metaData);
+		getEntityManagerFactory(metaData);
 
-		InvocationHandler handler = new BeanHandler(metaData, beanInstance, emf);
+		InvocationHandler handler = new BeanHandler(metaData, beanInstance);
 
 		return handler;
 	}

@@ -3,6 +3,7 @@ package org.lightmare.ejb.meta;
 import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -25,6 +26,8 @@ public class MetaData {
 	private String unitName;
 
 	private String jndiName;
+
+	private EntityManagerFactory emf;
 
 	private ClassLoader loader;
 
@@ -76,6 +79,14 @@ public class MetaData {
 
 	public void setJndiName(String jndiName) {
 		this.jndiName = jndiName;
+	}
+
+	public EntityManagerFactory getEmf() {
+		return emf;
+	}
+
+	public void setEmf(EntityManagerFactory emf) {
+		this.emf = emf;
 	}
 
 	public ClassLoader getLoader() {

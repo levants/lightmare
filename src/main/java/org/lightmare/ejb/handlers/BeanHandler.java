@@ -31,11 +31,10 @@ public class BeanHandler implements InvocationHandler {
 
 	private final Field unitField;
 
-	public BeanHandler(final MetaData metaData, final Object bean,
-			final EntityManagerFactory emf) {
+	public BeanHandler(final MetaData metaData, final Object bean) {
 
 		this.bean = bean;
-		this.emf = emf;
+		this.emf = metaData.getEmf();
 		this.connectionField = metaData.getConnectorField();
 		this.transactionField = metaData.getTransactionField();
 		this.unitField = metaData.getUnitField();
@@ -190,6 +189,7 @@ public class BeanHandler implements InvocationHandler {
 		EntityTransaction transaction = beginTransaction(em);
 		Object value = invoke(method, arguments);
 		close(transaction, em);
+
 		return value;
 	}
 
@@ -211,7 +211,9 @@ public class BeanHandler implements InvocationHandler {
 			} else {
 				value = realMethod.invoke(bean, arguments);
 			}
+
 			return value;
+
 		} finally {
 			closeEntityManager(em);
 		}
