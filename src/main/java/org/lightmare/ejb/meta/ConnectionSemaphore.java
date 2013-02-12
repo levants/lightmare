@@ -1,6 +1,7 @@
 package org.lightmare.ejb.meta;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -17,6 +18,8 @@ public class ConnectionSemaphore {
 	private boolean bound;
 
 	private EntityManagerFactory emf;
+
+	private static final AtomicInteger users = new AtomicInteger();
 
 	public boolean isInProgress() {
 		return inProgress.get();
@@ -64,5 +67,17 @@ public class ConnectionSemaphore {
 
 	public void setEmf(EntityManagerFactory emf) {
 		this.emf = emf;
+	}
+
+	public int incrementUser() {
+		return users.incrementAndGet();
+	}
+
+	public int decrementUser() {
+		return users.decrementAndGet();
+	}
+
+	public int getUsers() {
+		return users.get();
 	}
 }

@@ -53,7 +53,7 @@ public class MetaContainer {
 
 	public static EntityManagerFactory getConnection(String unitName)
 			throws IOException {
-		return JPAManager.getConnection(unitName);
+		return JPAManager.getEntityManagerFactory(unitName);
 	}
 
 	public static void closeConnections() {

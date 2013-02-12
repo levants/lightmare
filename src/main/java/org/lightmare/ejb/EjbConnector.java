@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import org.lightmare.config.Configuration;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.handlers.BeanLocalHandler;
+import org.lightmare.ejb.meta.ConnectionSemaphore;
 import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.startup.MetaCreator;
@@ -66,8 +67,8 @@ public class EjbConnector {
 			String unitName = metaData.getUnitName();
 
 			if (unitName != null && !unitName.isEmpty()) {
-				EntityManagerFactory emf = getConnection(unitName);
-				metaData.setEmf(emf);
+				ConnectionSemaphore semaphore = getConnection(unitName);
+				metaData.setConnection(semaphore);
 			}
 		}
 	}

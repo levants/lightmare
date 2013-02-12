@@ -70,6 +70,7 @@ public class JPAManager {
 			semaphore.setCached(true);
 			CONNECTIONS.put(unitName, semaphore);
 		}
+		semaphore.incrementUser();
 
 		return semaphore;
 	}
@@ -286,7 +287,27 @@ public class JPAManager {
 		}
 	}
 
-	public static EntityManagerFactory getConnection(String unitName)
+	public static ConnectionSemaphore getConnection(String unitName)
+			throws IOException {
+
+		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
+		if (semaphore != null) {
+			synchronized (semaphore) {
+				while (semaphore.isInProgress()) {
+					try {
+						semaphore.wait();
+						Thread.sleep(10);
+					} catch (InterruptedException ex) {
+						throw new IOException(ex);
+					}
+				}
+			}
+		}
+
+		return semaphore;
+	}
+
+	public static EntityManagerFactory getEntityManagerFactory(String unitName)
 			throws IOException {
 
 		EntityManagerFactory emf = null;
@@ -307,6 +328,53 @@ public class JPAManager {
 		}
 
 		return emf;
+
+	}
+
+	private static void unbindConnection(ConnectionSemaphore semaphore) {
+
+		String jndiName = semaphore.getJndiName();
+		if (jndiName != null) {
+			NamingUtils namingUtils = new NamingUtils();
+			try {
+				Context context = namingUtils.getContext();
+				if (context.lookup(jndiName) != null) {
+					context.unbind(jndiName);
+				}
+			} catch (NamingException ex) {
+				LOG.error(ex.getMessage(), ex);
+			} catch (IOException ex) {
+				LOG.error(ex.getMessage(), ex);
+			}
+		}
+	}
+
+	private static void closeConnection(ConnectionSemaphore semaphore) {
+		int users = semaphore.decrementUser();
+		if (users <= 0) {
+			EntityManagerFactory emf = semaphore.getEmf();
+			closeEntityManagerFactory(emf);
+			unbindConnection(semaphore);
+			CONNECTIONS.remove(semaphore.getUnitName());
+		}
+	}
+
+	public static void removeConnection(String unitName) {
+
+		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
+		if (semaphore != null) {
+			synchronized (semaphore) {
+				closeConnection(semaphore);
+			}
+		}
+
+	}
+
+	private static void closeEntityManagerFactory(EntityManagerFactory emf) {
+
+		if (emf != null && emf.isOpen()) {
+			emf.close();
+		}
 	}
 
 	/**
@@ -317,9 +385,7 @@ public class JPAManager {
 		EntityManagerFactory emf;
 		for (ConnectionSemaphore semaphore : semaphores) {
 			emf = semaphore.getEmf();
-			if (emf != null && emf.isOpen()) {
-				emf.close();
-			}
+			closeEntityManagerFactory(emf);
 		}
 
 		CONNECTIONS.clear();

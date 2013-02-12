@@ -27,6 +27,8 @@ public class MetaData {
 
 	private String jndiName;
 
+	private ConnectionSemaphore connection;
+
 	private EntityManagerFactory emf;
 
 	private ClassLoader loader;
@@ -85,8 +87,15 @@ public class MetaData {
 		return emf;
 	}
 
-	public void setEmf(EntityManagerFactory emf) {
-		this.emf = emf;
+	public ConnectionSemaphore getConnection() {
+		return connection;
+	}
+
+	public void setConnection(ConnectionSemaphore connection) {
+		this.connection = connection;
+		if (connection != null) {
+			emf = connection.getEmf();
+		}
 	}
 
 	public ClassLoader getLoader() {

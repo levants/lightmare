@@ -109,7 +109,7 @@ public class JpaTest {
 		int tryCount = 0;
 		while (emf == null || em == null) {
 			if (jndi == null) {
-				emf = JPAManager.getConnection(unitName);
+				emf = JPAManager.getEntityManagerFactory(unitName);
 				em = emf.createEntityManager();
 			} else {
 				try {
@@ -142,7 +142,8 @@ public class JpaTest {
 	@Test
 	public void addEntityTest() {
 		try {
-			EntityManagerFactory emf = JPAManager.getConnection("testUnit");
+			EntityManagerFactory emf = JPAManager
+					.getEntityManagerFactory("testUnit");
 			Assert.assertNotNull("could not create EntityManagerFactory", emf);
 			System.out.println(emf);
 		} catch (Exception ex) {
