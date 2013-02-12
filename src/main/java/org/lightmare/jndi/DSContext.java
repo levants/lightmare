@@ -34,8 +34,11 @@ public class DSContext extends MemoryContext {
 			// Gets EntityManagerFactory from parent
 			EntityManagerFactory emf = (EntityManagerFactory) super
 					.lookup(name);
-
-			value = emf.createEntityManager();
+			if (emf == null) {
+				value = emf;
+			} else {
+				value = emf.createEntityManager();
+			}
 		} else {
 			value = super.lookup(name);
 		}

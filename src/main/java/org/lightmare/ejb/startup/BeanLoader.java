@@ -190,6 +190,9 @@ public class BeanLoader implements Callable<String> {
 				}
 			} else if (unit != null) {
 				metaData.setUnitField(field);
+				if (checkOnBreak(context, resource, unit)) {
+					break;
+				}
 			}
 		}
 	}
@@ -269,8 +272,8 @@ public class BeanLoader implements Callable<String> {
 	@Override
 	public String call() throws Exception {
 
-		try {
-			synchronized (metaData) {
+		synchronized (metaData) {
+			try {
 				String deployed;
 				if (tmpFiles != null) {
 					synchronized (tmpFiles) {
@@ -284,11 +287,13 @@ public class BeanLoader implements Callable<String> {
 				metaData.notifyAll();
 
 				return deployed;
+
+			} catch (Exception ex) {
+				LOG.error(ex.getMessage(), ex);
+				metaData.notifyAll();
+				notifyConn();
+				return null;
 			}
-		} catch (Exception ex) {
-			LOG.error(ex.getMessage(), ex);
-			notifyConn();
-			return null;
 		}
 	}
 
