@@ -138,8 +138,8 @@ public class MetaCreator {
 		return classes;
 	}
 
-	protected void configureConnection(String unitName, String beanName,
-			String jndiName) throws IOException {
+	protected void configureConnection(String unitName, String beanName)
+			throws IOException {
 
 		JPAManager.Builder builder = new JPAManager.Builder();
 		Map<String, String> classOwnersFiles = annotationDB
@@ -171,8 +171,7 @@ public class MetaCreator {
 		}
 		builder.setPath(persXmlPath).setProperties(prop)
 				.setSwapDataSource(swapDataSource)
-				.setScanArchives(scanArchives).build()
-				.setConnection(unitName, jndiName);
+				.setScanArchives(scanArchives).build().setConnection(unitName);
 	}
 
 	private URL[] getFullArchives(URL[] archives,

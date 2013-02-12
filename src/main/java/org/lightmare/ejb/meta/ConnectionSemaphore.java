@@ -8,7 +8,13 @@ public class ConnectionSemaphore {
 
 	private AtomicBoolean inProgress = new AtomicBoolean();
 
-	private String name;
+	private String unitName;
+
+	private String jndiName;
+
+	private boolean cached;
+
+	private boolean bound;
 
 	private EntityManagerFactory emf;
 
@@ -20,12 +26,36 @@ public class ConnectionSemaphore {
 		this.inProgress.getAndSet(inProgress);
 	}
 
-	public String getName() {
-		return name;
+	public String getUnitName() {
+		return unitName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
+	}
+
+	public String getJndiName() {
+		return jndiName;
+	}
+
+	public void setJndiName(String jndiName) {
+		this.jndiName = jndiName;
+	}
+
+	public boolean isCached() {
+		return cached;
+	}
+
+	public void setCached(boolean cached) {
+		this.cached = cached;
+	}
+
+	public boolean isBound() {
+		return bound;
+	}
+
+	public void setBound(boolean bound) {
+		this.bound = bound;
 	}
 
 	public EntityManagerFactory getEmf() {

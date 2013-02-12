@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -64,7 +65,9 @@ public class JPAManager {
 
 		if (semaphore == null) {
 			semaphore = new ConnectionSemaphore();
+			semaphore.setUnitName(unitName);
 			semaphore.setInProgress(true);
+			semaphore.setCached(true);
 			CONNECTIONS.put(unitName, semaphore);
 		}
 
@@ -80,6 +83,7 @@ public class JPAManager {
 
 			semaphore = createSemaphore(unitName);
 			if (jndiName != null && !jndiName.isEmpty()) {
+				semaphore.setJndiName(jndiName);
 				CONNECTIONS.putIfAbsent(jndiName, semaphore);
 			}
 		}
@@ -87,16 +91,15 @@ public class JPAManager {
 		return semaphore;
 	}
 
-	public static boolean isInProgress(String jndiName) {
-
-		boolean inProgress;
-		ConnectionSemaphore semaphore = CONNECTIONS.get(jndiName);
-		inProgress = semaphore != null;
-		while (inProgress) {
-			synchronized (semaphore) {
+	private static void awaitConnection(ConnectionSemaphore semaphore) {
+		synchronized (semaphore) {
+			boolean inProgress = semaphore.isInProgress()
+					&& !semaphore.isBound();
+			while (inProgress) {
 				try {
 					semaphore.wait();
-					inProgress = semaphore.isInProgress();
+					inProgress = semaphore.isInProgress()
+							&& !semaphore.isBound();
 				} catch (InterruptedException ex) {
 					inProgress = false;
 					LOG.error(ex);
@@ -104,6 +107,18 @@ public class JPAManager {
 			}
 		}
 
+	}
+
+	public static boolean isInProgress(String jndiName) {
+
+		ConnectionSemaphore semaphore = CONNECTIONS.get(jndiName);
+		boolean inProgress = semaphore != null;
+		if (inProgress) {
+			inProgress = semaphore.isInProgress() && !semaphore.isBound();
+			if (inProgress) {
+				awaitConnection(semaphore);
+			}
+		}
 		return inProgress;
 	}
 
@@ -223,26 +238,48 @@ public class JPAManager {
 		return emf;
 	}
 
-	public void setConnection(String unitName, String name) throws IOException {
+	/**
+	 * Binds {@link EntityManagerFactory} to {@link javax.naming.InitialContext}
+	 * 
+	 * @param jndiName
+	 * @param unitName
+	 * @param emf
+	 * @throws IOException
+	 */
+	private void bindJndiName(ConnectionSemaphore semaphore) throws IOException {
+		String jndiName = semaphore.getJndiName();
+		String unitName = semaphore.getUnitName();
+		boolean bound = semaphore.isBound();
+		if (!bound && jndiName != null && !jndiName.isEmpty()) {
+			NamingUtils namingUtils = new NamingUtils();
+			try {
+				Context context = namingUtils.getContext();
+				if (context.lookup(jndiName) == null) {
+					namingUtils.getContext().bind(
+							String.format("java:comp/env/%s", jndiName),
+							semaphore.getEmf());
+				}
+				semaphore.setBound(true);
+			} catch (NamingException ex) {
+				throw new IOException(String.format(
+						"could not bind connection %s", unitName), ex);
+			}
+		}
+	}
+
+	public void setConnection(String unitName) throws IOException {
 		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 		synchronized (semaphore) {
 			if (semaphore.isInProgress()) {
 				EntityManagerFactory emf = createEntityManagerFactory(unitName);
 				semaphore.setEmf(emf);
 				semaphore.setInProgress(false);
-				if (name != null && !name.isEmpty()) {
-					NamingUtils namingUtils = new NamingUtils();
-					try {
-						namingUtils.getContext().bind(
-								String.format("java:comp/env/%s", name), emf);
-					} catch (NamingException ex) {
-						throw new IOException(String.format(
-								"could not bind connection %s", unitName), ex);
-					}
-				}
+				bindJndiName(semaphore);
 			} else if (semaphore.getEmf() == null) {
 				throw new IOException(String.format(
 						"Connection %s was not in progress", unitName));
+			} else {
+				bindJndiName(semaphore);
 			}
 
 			semaphore.notifyAll();
