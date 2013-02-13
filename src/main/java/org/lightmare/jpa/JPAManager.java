@@ -62,17 +62,20 @@ public class JPAManager {
 	private static ConnectionSemaphore createSemaphore(String unitName) {
 
 		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
-
+		ConnectionSemaphore current = null;
 		if (semaphore == null) {
 			semaphore = new ConnectionSemaphore();
 			semaphore.setUnitName(unitName);
 			semaphore.setInProgress(true);
 			semaphore.setCached(true);
-			CONNECTIONS.put(unitName, semaphore);
+			current = CONNECTIONS.putIfAbsent(unitName, semaphore);
 		}
-		semaphore.incrementUser();
+		if (current == null) {
+			current = semaphore;
+		}
+		current.incrementUser();
 
-		return semaphore;
+		return current;
 	}
 
 	public static ConnectionSemaphore setSemaphore(String unitName,

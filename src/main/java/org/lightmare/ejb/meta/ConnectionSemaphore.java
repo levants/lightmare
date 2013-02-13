@@ -21,6 +21,9 @@ public class ConnectionSemaphore {
 
 	private static final AtomicInteger users = new AtomicInteger();
 
+	// Check if needs configure EntityManagerFactory
+	private AtomicBoolean check = new AtomicBoolean();
+
 	public boolean isInProgress() {
 		return inProgress.get();
 	}
@@ -79,5 +82,9 @@ public class ConnectionSemaphore {
 
 	public int getUsers() {
 		return users.get();
+	}
+
+	public boolean isCheck() {
+		return check.getAndSet(true);
 	}
 }
