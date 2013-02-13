@@ -74,6 +74,7 @@ public class BeanLoader implements Callable<String> {
 
 	private static final Logger LOG = Logger.getLogger(BeanLoader.class);
 
+	// Thread pool for deploying and removal of beans and temporal resources
 	private static ExecutorService loaderPool = Executors.newFixedThreadPool(
 			LOADER_POOL_SIZE, new ThreadFactory() {
 
