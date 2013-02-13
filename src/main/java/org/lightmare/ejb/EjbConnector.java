@@ -43,11 +43,17 @@ public class EjbConnector {
 			throw new IOException(String.format("Bean %s is not deployed",
 					beanName));
 		}
-		while (metaData.isInProgress()) {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException ex) {
-				throw new IOException(ex);
+		boolean inProgress = metaData.isInProgress();
+		if (inProgress) {
+			synchronized (metaData) {
+				while (inProgress) {
+					try {
+						metaData.wait();
+						inProgress = metaData.isInProgress();
+					} catch (InterruptedException ex) {
+						throw new IOException(ex);
+					}
+				}
 			}
 		}
 
@@ -74,13 +80,19 @@ public class EjbConnector {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T> T getBeanInstance(MetaData metaData)
-			throws InstantiationException, IllegalAccessException {
+	private <T> T getBeanInstance(MetaData metaData) throws IOException {
 
 		Class<? extends T> beanClass = (Class<? extends T>) metaData
 				.getBeanClass();
 
-		T beanInstance = beanClass.newInstance();
+		T beanInstance;
+		try {
+			beanInstance = beanClass.newInstance();
+		} catch (InstantiationException ex) {
+			throw new IOException(ex);
+		} catch (IllegalAccessException ex) {
+			throw new IOException(ex);
+		}
 
 		return beanInstance;
 	}
@@ -97,14 +109,7 @@ public class EjbConnector {
 
 		LibraryLoader.loadCurrentLibraries(metaData.getLoader());
 
-		T beanInstance;
-		try {
-			beanInstance = getBeanInstance(metaData);
-		} catch (InstantiationException ex) {
-			throw new IOException(ex);
-		} catch (IllegalAccessException ex) {
-			throw new IOException(ex);
-		}
+		T beanInstance = getBeanInstance(metaData);
 
 		getEntityManagerFactory(metaData);
 

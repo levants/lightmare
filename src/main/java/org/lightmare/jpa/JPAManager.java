@@ -84,8 +84,11 @@ public class JPAManager {
 
 			semaphore = createSemaphore(unitName);
 			if (jndiName != null && !jndiName.isEmpty()) {
-				semaphore.setJndiName(jndiName);
-				CONNECTIONS.putIfAbsent(jndiName, semaphore);
+				ConnectionSemaphore existent = CONNECTIONS.putIfAbsent(
+						jndiName, semaphore);
+				if (existent == null) {
+					semaphore.setJndiName(jndiName);
+				}
 			}
 		}
 
@@ -273,20 +276,16 @@ public class JPAManager {
 
 	public void setConnection(String unitName) throws IOException {
 		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
-		synchronized (semaphore) {
-			if (semaphore.isInProgress()) {
-				EntityManagerFactory emf = createEntityManagerFactory(unitName);
-				semaphore.setEmf(emf);
-				semaphore.setInProgress(false);
-				bindJndiName(semaphore);
-			} else if (semaphore.getEmf() == null) {
-				throw new IOException(String.format(
-						"Connection %s was not in progress", unitName));
-			} else {
-				bindJndiName(semaphore);
-			}
-
-			semaphore.notifyAll();
+		if (semaphore.isInProgress()) {
+			EntityManagerFactory emf = createEntityManagerFactory(unitName);
+			semaphore.setEmf(emf);
+			semaphore.setInProgress(false);
+			bindJndiName(semaphore);
+		} else if (semaphore.getEmf() == null) {
+			throw new IOException(String.format(
+					"Connection %s was not in progress", unitName));
+		} else {
+			bindJndiName(semaphore);
 		}
 	}
 

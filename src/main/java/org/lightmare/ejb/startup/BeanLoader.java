@@ -117,8 +117,10 @@ public class BeanLoader implements Callable<String> {
 	private void lockSemaphore(ConnectionSemaphore semaphore, String unitName,
 			String jndiName) throws IOException {
 		synchronized (semaphore) {
-			creator.configureConnection(unitName, beanName);
-			semaphore.notifyAll();
+			if (semaphore.getUsers() == 1) {
+				creator.configureConnection(unitName, beanName);
+				semaphore.notifyAll();
+			}
 		}
 	}
 
