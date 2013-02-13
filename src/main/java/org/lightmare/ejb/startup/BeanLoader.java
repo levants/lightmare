@@ -114,6 +114,14 @@ public class BeanLoader implements Callable<String> {
 		this.conn = conn;
 	}
 
+	/**
+	 * Locks {@link ConnectionSemaphore} if needed for connection proccessing
+	 * 
+	 * @param semaphore
+	 * @param unitName
+	 * @param jndiName
+	 * @throws IOException
+	 */
 	private void lockSemaphore(ConnectionSemaphore semaphore, String unitName,
 			String jndiName) throws IOException {
 		synchronized (semaphore) {
@@ -136,6 +144,14 @@ public class BeanLoader implements Callable<String> {
 		return context != null && resource != null && unit != null;
 	}
 
+	/**
+	 * Finds and caches {@link PersistenceContext}, {@link PersistenceUnit} and
+	 * {@link Resource} annotated {@link Field}s in bean class and configures
+	 * connections and creates {@link ConnectionSemaphore}s if it does not
+	 * exists for {@link PersistenceContext#unitName()} object
+	 * 
+	 * @throws IOException
+	 */
 	private void retrieveConnections() throws IOException {
 
 		Class<?> beanClass = metaData.getBeanClass();
