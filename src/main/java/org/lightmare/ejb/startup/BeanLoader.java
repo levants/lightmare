@@ -132,6 +132,10 @@ public class BeanLoader implements Callable<String> {
 		}
 	}
 
+	/**
+	 * Increases {@link CountDownLatch} conn if it is first time in current
+	 * thread
+	 */
 	private void notifyConn() {
 		if (!isCounted) {
 			conn.countDown();
@@ -233,6 +237,12 @@ public class BeanLoader implements Callable<String> {
 		metaData.setLoader(loader);
 	}
 
+	/**
+	 * Cecks if bean is already deployed
+	 * 
+	 * @param name
+	 * @throws BeanInUseException
+	 */
 	private void checkBean(String name) throws BeanInUseException {
 		if (MetaContainer.checkMetaData(beanName)) {
 			notifyConn();
@@ -242,6 +252,12 @@ public class BeanLoader implements Callable<String> {
 
 	}
 
+	/**
+	 * Loads and caches bean {@link Class} by name
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	private String createBeanClass() throws IOException {
 		checkBean(beanName);
 		try {
@@ -315,6 +331,17 @@ public class BeanLoader implements Callable<String> {
 		}
 	}
 
+	/**
+	 * Creates and starts bean deployment process
+	 * 
+	 * @param creator
+	 * @param className
+	 * @param loader
+	 * @param tmpFiles
+	 * @param conn
+	 * @return {@link Future}
+	 * @throws IOException
+	 */
 	public static Future<String> loadBean(MetaCreator creator,
 			String className, ClassLoader loader, List<File> tmpFiles,
 			CountDownLatch conn) throws IOException {
@@ -332,6 +359,11 @@ public class BeanLoader implements Callable<String> {
 		return future;
 	}
 
+	/**
+	 * Creates and starts temporal resources removal process
+	 * 
+	 * @param tmpFiles
+	 */
 	public static <V> void removeResources(List<File> tmpFiles) {
 		ResourceCleaner cleaner = new ResourceCleaner(tmpFiles);
 		loaderPool.submit(cleaner);
