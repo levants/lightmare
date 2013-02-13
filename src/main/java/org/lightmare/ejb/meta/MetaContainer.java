@@ -32,9 +32,7 @@ public class MetaContainer {
 		MetaData metaData = EJBS.get(beanName);
 		check = metaData == null;
 		if (!check) {
-			synchronized (metaData) {
-				check = metaData.isInProgress();
-			}
+			check = metaData.isInProgress();
 		}
 		return check;
 	}
