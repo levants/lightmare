@@ -38,6 +38,12 @@ public class BeanLoader implements Callable<String> {
 
 	private static final int LOADER_POOL_SIZE = 5;
 
+	/**
+	 * {@link Callable} implementation for temporal resources removal
+	 * 
+	 * @author levan
+	 * 
+	 */
 	private static class ResourceCleaner implements Runnable {
 
 		List<File> tmpFiles;
@@ -46,6 +52,11 @@ public class BeanLoader implements Callable<String> {
 			this.tmpFiles = tmpFiles;
 		}
 
+		/**
+		 * Removes temporal resources after deploy {@link Thread} notifies
+		 * 
+		 * @throws InterruptedException
+		 */
 		private void clearTmpData() throws InterruptedException {
 
 			synchronized (tmpFiles) {
