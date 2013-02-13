@@ -24,6 +24,7 @@ import javax.persistence.Entity;
 import org.apache.log4j.Logger;
 import org.lightmare.annotations.UnitName;
 import org.lightmare.config.Configuration;
+import org.lightmare.ejb.meta.ArchiveData;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.JPAManager;
@@ -73,7 +74,12 @@ public class MetaCreator {
 	 */
 	public static final Configuration CONFIG = new Configuration();
 
+	// Data for cache at deploy time
 	private Map<String, AbstractIOUtils> aggregateds = new HashMap<String, AbstractIOUtils>();
+
+	private Map<URL, ArchiveData> archivesURLs;
+
+	private Map<String, URL> classOwnersURL;
 
 	private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
@@ -174,22 +180,24 @@ public class MetaCreator {
 				.setScanArchives(scanArchives).build().setConnection(unitName);
 	}
 
-	private URL[] getFullArchives(URL[] archives,
-			Map<URL, AbstractIOUtils> archivesURLs) throws IOException {
+	private URL[] getFullArchives(URL[] archives) throws IOException {
 		List<URL> modifiedArchives = new ArrayList<URL>();
 		AbstractIOUtils ioUtils;
 		List<URL> ejbURLs;
+		ArchiveData archiveData;
 		for (URL archive : archives) {
 			ioUtils = AbstractIOUtils.getAppropriatedType(archive);
 			if (ioUtils != null) {
 				ioUtils.scan(persXmlFromJar);
 				ejbURLs = ioUtils.getEjbURLs();
 				modifiedArchives.addAll(ejbURLs);
+				archiveData = new ArchiveData();
+				archiveData.setIoUtils(ioUtils);
 				if (ejbURLs.isEmpty()) {
-					archivesURLs.put(archive, ioUtils);
+					archivesURLs.put(archive, archiveData);
 				} else {
 					for (URL ejbURL : ejbURLs) {
-						archivesURLs.put(ejbURL, ioUtils);
+						archivesURLs.put(ejbURL, archiveData);
 					}
 				}
 			}
@@ -221,20 +229,28 @@ public class MetaCreator {
 		}
 	}
 
-	private void deployBean(String beanName, Map<String, URL> classOwnersURL,
-			Map<URL, AbstractIOUtils> archivesURLs) throws IOException {
+	private void deployBean(String beanName) throws IOException {
 		URL currentURL = classOwnersURL.get(beanName);
-		AbstractIOUtils ioUtils = archivesURLs.get(currentURL);
+		ArchiveData archiveData = archivesURLs.get(currentURL);
+		if (archiveData == null) {
+			archiveData = new ArchiveData();
+		}
+		AbstractIOUtils ioUtils = archiveData.getIoUtils();
 		if (ioUtils == null) {
 			ioUtils = AbstractIOUtils.getAppropriatedType(currentURL);
+			archiveData.setIoUtils(ioUtils);
 		}
 		ClassLoader loader = null;
+		// Finds appropriated ClassLoader if needed and or creates new one
 		if (ioUtils != null) {
 			if (!ioUtils.isExecuted()) {
 				ioUtils.scan(persXmlFromJar);
 			}
 			URL[] libURLs = ioUtils.getURLs();
-			loader = LibraryLoader.getEnrichedLoader(libURLs);
+			if (archiveData.getLoader() == null) {
+				loader = LibraryLoader.getEnrichedLoader(libURLs);
+				archiveData.setLoader(loader);
+			}
 			aggregateds.put(beanName, ioUtils);
 		}
 		List<File> tmpFiles = ioUtils.getTmpFiles();
@@ -247,14 +263,12 @@ public class MetaCreator {
 		}
 	}
 
-	private void deployBeans(Set<String> beanNames,
-			Map<String, URL> classOwnersURL,
-			Map<URL, AbstractIOUtils> archivesURLs) {
+	private void deployBeans(Set<String> beanNames) {
 		conn = new CountDownLatch(beanNames.size());
 		for (String beanName : beanNames) {
 			LOG.info(String.format("deploing bean %s", beanName));
 			try {
-				deployBean(beanName, classOwnersURL, archivesURLs);
+				deployBean(beanName);
 			} catch (IOException ex) {
 				LOG.error(String.format("Could not deploy bean %s", beanName),
 						ex);
@@ -282,8 +296,8 @@ public class MetaCreator {
 			if (libraryPaths != null) {
 				LibraryLoader.loadLibraries(libraryPaths);
 			}
-			Map<URL, AbstractIOUtils> archivesURLs = new HashMap<URL, AbstractIOUtils>();
-			URL[] fullArchives = getFullArchives(archives, archivesURLs);
+			archivesURLs = new HashMap<URL, ArchiveData>();
+			URL[] fullArchives = getFullArchives(archives);
 			annotationDB = new AnnotationDB();
 			annotationDB.setScanFieldAnnotations(false);
 			annotationDB.setScanParameterAnnotations(false);
@@ -291,10 +305,10 @@ public class MetaCreator {
 			annotationDB.scanArchives(fullArchives);
 			Set<String> beanNames = annotationDB.getAnnotationIndex().get(
 					Stateless.class.getName());
-			Map<String, URL> classOwnersURL = annotationDB.getClassOwnersURLs();
+			classOwnersURL = annotationDB.getClassOwnersURLs();
 			DataSourceInitializer.initializeDataSource(dataSourcePath);
 			if (beanNames != null) {
-				deployBeans(beanNames, classOwnersURL, archivesURLs);
+				deployBeans(beanNames);
 			}
 		} finally {
 			// gets rid from all created temporary files
