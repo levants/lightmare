@@ -240,14 +240,14 @@ public class MetaCreator {
 			ioUtils = AbstractIOUtils.getAppropriatedType(currentURL);
 			archiveData.setIoUtils(ioUtils);
 		}
-		ClassLoader loader = null;
+		ClassLoader loader = archiveData.getLoader();
 		// Finds appropriated ClassLoader if needed and or creates new one
 		if (ioUtils != null) {
 			if (!ioUtils.isExecuted()) {
 				ioUtils.scan(persXmlFromJar);
 			}
 			URL[] libURLs = ioUtils.getURLs();
-			if (archiveData.getLoader() == null) {
+			if (loader == null) {
 				loader = LibraryLoader.getEnrichedLoader(libURLs);
 				archiveData.setLoader(loader);
 			}
