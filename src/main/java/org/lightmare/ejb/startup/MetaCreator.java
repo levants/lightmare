@@ -242,18 +242,19 @@ public class MetaCreator {
 		}
 		ClassLoader loader = archiveData.getLoader();
 		// Finds appropriated ClassLoader if needed and or creates new one
+		List<File> tmpFiles = null;
 		if (ioUtils != null) {
-			if (!ioUtils.isExecuted()) {
-				ioUtils.scan(persXmlFromJar);
-			}
-			URL[] libURLs = ioUtils.getURLs();
 			if (loader == null) {
+				if (!ioUtils.isExecuted()) {
+					ioUtils.scan(persXmlFromJar);
+				}
+				URL[] libURLs = ioUtils.getURLs();
 				loader = LibraryLoader.getEnrichedLoader(libURLs);
 				archiveData.setLoader(loader);
 			}
+			tmpFiles = ioUtils.getTmpFiles();
 			aggregateds.put(beanName, ioUtils);
 		}
-		List<File> tmpFiles = ioUtils.getTmpFiles();
 
 		Future<String> future = BeanLoader.loadBean(this, beanName, loader,
 				tmpFiles, conn);
