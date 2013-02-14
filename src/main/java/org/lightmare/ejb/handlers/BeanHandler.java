@@ -12,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import org.lightmare.ejb.meta.MetaData;
+import org.lightmare.utils.reflect.MetaUtils;
 
 /**
  * Handler class to intercept bean method calls to provide database transactions
@@ -48,18 +49,7 @@ public class BeanHandler implements InvocationHandler {
 	 * @throws IOException
 	 */
 	private void setFieldValue(Field field, Object value) throws IOException {
-		boolean access = field.isAccessible();
-		if (!access) {
-			field.setAccessible(true);
-		}
-		try {
-			field.set(bean, value);
-		} catch (IllegalArgumentException ex) {
-			throw new IOException(ex);
-		} catch (IllegalAccessException ex) {
-			throw new IOException(ex);
-		}
-		field.setAccessible(access);
+		MetaUtils.setFieldValue(field, bean, value);
 	}
 
 	/**
@@ -72,19 +62,7 @@ public class BeanHandler implements InvocationHandler {
 	 */
 	private Object invoke(Method method, Object... arguments)
 			throws IOException {
-
-		Object value;
-		try {
-			value = method.invoke(bean, arguments);
-		} catch (IllegalAccessException ex) {
-			throw new IOException(ex);
-		} catch (IllegalArgumentException ex) {
-			throw new IOException(ex);
-		} catch (InvocationTargetException ex) {
-			throw new IOException(ex);
-		}
-
-		return value;
+		return MetaUtils.invoke(method, bean, arguments);
 	}
 
 	/**

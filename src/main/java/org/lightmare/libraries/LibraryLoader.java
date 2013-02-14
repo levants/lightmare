@@ -3,13 +3,14 @@ package org.lightmare.libraries;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.lightmare.utils.reflect.MetaUtils;
 
 /**
  * Class for load jar or class files from specified path
@@ -96,36 +97,20 @@ public class LibraryLoader {
 	private static void loadLibraryFromPath(String libraryPath)
 			throws IOException {
 		File file = new File(libraryPath);
-		try {
-			if (file.exists()) {
-				Set<URL> urls = new HashSet<URL>();
-				getSubfiles(file, urls);
+		if (file.exists()) {
+			Set<URL> urls = new HashSet<URL>();
+			getSubfiles(file, urls);
 
-				URL[] paths = urls.toArray(new URL[urls.size()]);
-				URLClassLoader urlLoader = (URLClassLoader) ClassLoader
-						.getSystemClassLoader();
+			URL[] paths = urls.toArray(new URL[urls.size()]);
+			URLClassLoader urlLoader = (URLClassLoader) ClassLoader
+					.getSystemClassLoader();
 
-				Method method = URLClassLoader.class.getDeclaredMethod(
-						"addURL", URL.class);
-				boolean accessible = method.isAccessible();
-				method.setAccessible(true);
-				for (URL url : paths) {
-					method.invoke(urlLoader, new Object[] { url });
-				}
-				method.setAccessible(accessible);
+			Method method = MetaUtils.getDeclaredMethod(URLClassLoader.class,
+					"addURL", URL.class);
+			for (URL url : paths) {
+				MetaUtils
+						.invokePrivate(method, urlLoader, new Object[] { url });
 			}
-		} catch (MalformedURLException ex) {
-			throw new IOException(ex);
-		} catch (NoSuchMethodException ex) {
-			throw new IOException(ex);
-		} catch (SecurityException ex) {
-			throw new IOException(ex);
-		} catch (IllegalAccessException ex) {
-			throw new IOException(ex);
-		} catch (IllegalArgumentException ex) {
-			throw new IOException(ex);
-		} catch (InvocationTargetException ex) {
-			throw new IOException(ex);
 		}
 	}
 
