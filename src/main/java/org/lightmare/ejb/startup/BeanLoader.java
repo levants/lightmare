@@ -250,28 +250,12 @@ public class BeanLoader implements Callable<String> {
 	}
 
 	/**
-	 * Cecks if bean is already deployed
-	 * 
-	 * @param name
-	 * @throws BeanInUseException
-	 */
-	private void checkBean(String name) throws BeanInUseException {
-		if (MetaContainer.checkMetaData(beanName)) {
-			notifyConn();
-			throw new BeanInUseException(String.format(
-					"bean % is alredy in use", beanName));
-		}
-
-	}
-
-	/**
 	 * Loads and caches bean {@link Class} by name
 	 * 
 	 * @return
 	 * @throws IOException
 	 */
 	private String createBeanClass() throws IOException {
-		checkBean(beanName);
 		try {
 			Class<?> beanClass;
 			if (loader == null) {
@@ -284,7 +268,6 @@ public class BeanLoader implements Callable<String> {
 			if (beanEjbName == null || beanEjbName.isEmpty()) {
 				beanEjbName = beanName;
 			} else {
-				checkBean(beanEjbName);
 				try {
 					MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
 				} catch (BeanInUseException ex) {
