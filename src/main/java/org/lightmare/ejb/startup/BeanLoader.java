@@ -304,7 +304,7 @@ public class BeanLoader implements Callable<String> {
 		}
 	}
 
-	private String realCall() {
+	private String deploy() {
 
 		String deployed = beanName;
 
@@ -328,11 +328,11 @@ public class BeanLoader implements Callable<String> {
 				String deployed;
 				if (tmpFiles != null) {
 					synchronized (tmpFiles) {
-						deployed = realCall();
+						deployed = deploy();
 						tmpFiles.notifyAll();
 					}
 				} else {
-					deployed = realCall();
+					deployed = deploy();
 				}
 				notifyConn();
 				metaData.notifyAll();
