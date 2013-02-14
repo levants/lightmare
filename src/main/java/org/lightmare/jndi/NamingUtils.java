@@ -22,11 +22,22 @@ public class NamingUtils {
 
 	private static Context context;
 
+	/**
+	 * Creates jndi name pefixes for ejb objects
+	 * 
+	 * @param jndiName
+	 * @return
+	 */
 	public static String createJndiName(String jndiName) {
 
 		return String.format("java:comp/env/%s", jndiName);
 	}
 
+	/**
+	 * Creates and sets {@link InitialContext}
+	 * 
+	 * @throws IOException
+	 */
 	public void setInitialCotext() throws IOException {
 		if (!isContextFactory) {
 			System.getProperties().put(Context.INITIAL_CONTEXT_FACTORY,
@@ -48,6 +59,13 @@ public class NamingUtils {
 		}
 	}
 
+	/**
+	 * Getter for {@link Context} with check if it is initialized if not calls
+	 * {@link NamingUtils#setInitialCotext()} method
+	 * 
+	 * @return {@link Context}
+	 * @throws IOException
+	 */
 	public Context getContext() throws IOException {
 		if (context == null) {
 			synchronized (NamingUtils.class) {
