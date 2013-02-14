@@ -53,6 +53,13 @@ public class MetaContainer {
 		}
 	}
 
+	/**
+	 * Checks if bean with associated name deployed and if yes if is deployment
+	 * in progress
+	 * 
+	 * @param beanName
+	 * @return boolean
+	 */
 	public static boolean checkMetaData(String beanName) {
 		boolean check;
 		MetaData metaData = EJBS.get(beanName);
@@ -63,10 +70,22 @@ public class MetaContainer {
 		return check;
 	}
 
+	/**
+	 * Checks if bean with associated name deployed
+	 * 
+	 * @param beanName
+	 * @return boolean
+	 */
 	public boolean checkBean(String beanName) {
 		return EJBS.containsKey(beanName);
 	}
 
+	/**
+	 * Waits while {@link MetaData#isInProgress()} is true
+	 * 
+	 * @param metaData
+	 * @throws IOException
+	 */
 	public static void awaitMetaData(MetaData metaData) throws IOException {
 		boolean inProgress = metaData.isInProgress();
 		if (inProgress) {
@@ -83,10 +102,25 @@ public class MetaContainer {
 		}
 	}
 
+	/**
+	 * Gets deployed bean {@link MetaData} by name without checking deployment
+	 * progress
+	 * 
+	 * @param beanName
+	 * @return {@link MetaData}
+	 */
 	public static MetaData getMetaData(String beanName) {
 		return EJBS.get(beanName);
 	}
 
+	/**
+	 * Check if {@link MetaData} with associated name deployed and if it is
+	 * waits while {@link MetaData#isInProgress()} true before return it
+	 * 
+	 * @param beanName
+	 * @return {@link MetaData}
+	 * @throws IOException
+	 */
 	public static MetaData getSyncMetaData(String beanName) throws IOException {
 		MetaData metaData = getMetaData(beanName);
 		if (metaData == null) {
@@ -98,6 +132,11 @@ public class MetaContainer {
 		return metaData;
 	}
 
+	/**
+	 * Removed {@link MetaData} from cache
+	 * 
+	 * @param beanName
+	 */
 	public static void removeMeta(String beanName) {
 		EJBS.remove(beanName);
 	}
