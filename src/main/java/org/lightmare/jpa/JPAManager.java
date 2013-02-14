@@ -297,15 +297,7 @@ public class JPAManager {
 
 		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 		if (semaphore != null) {
-			synchronized (semaphore) {
-				while (semaphore.isInProgress()) {
-					try {
-						semaphore.wait();
-					} catch (InterruptedException ex) {
-						throw new IOException(ex);
-					}
-				}
-			}
+			awaitConnection(semaphore);
 		}
 
 		return semaphore;
@@ -317,17 +309,8 @@ public class JPAManager {
 		EntityManagerFactory emf = null;
 		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 		if (semaphore != null) {
-			synchronized (semaphore) {
-				while (semaphore.isInProgress()) {
-					try {
-						semaphore.wait();
-					} catch (InterruptedException ex) {
-						throw new IOException(ex);
-					}
-				}
-
-				emf = semaphore.getEmf();
-			}
+			awaitConnection(semaphore);
+			emf = semaphore.getEmf();
 		}
 
 		return emf;
@@ -366,9 +349,8 @@ public class JPAManager {
 
 		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 		if (semaphore != null) {
-			synchronized (semaphore) {
-				closeConnection(semaphore);
-			}
+			awaitConnection(semaphore);
+			closeConnection(semaphore);
 		}
 
 	}

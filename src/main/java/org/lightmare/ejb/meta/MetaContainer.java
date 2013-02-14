@@ -41,8 +41,35 @@ public class MetaContainer {
 		return EJBS.containsKey(beanName);
 	}
 
+	public static void awaitMetaData(MetaData metaData) throws IOException {
+		boolean inProgress = metaData.isInProgress();
+		if (inProgress) {
+			synchronized (metaData) {
+				while (inProgress) {
+					try {
+						metaData.wait();
+						inProgress = metaData.isInProgress();
+					} catch (InterruptedException ex) {
+						throw new IOException(ex);
+					}
+				}
+			}
+		}
+	}
+
 	public static MetaData getMetaData(String beanName) {
 		return EJBS.get(beanName);
+	}
+
+	public static MetaData getSyncMetaData(String beanName) throws IOException {
+		MetaData metaData = getMetaData(beanName);
+		if (metaData == null) {
+			throw new IOException(String.format("Bean %s is not deployed",
+					beanName));
+		}
+		awaitMetaData(metaData);
+
+		return metaData;
 	}
 
 	public static void removeMeta(String beanName) {

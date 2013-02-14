@@ -1,6 +1,5 @@
 package org.lightmare.ejb;
 
-import static org.lightmare.ejb.meta.MetaContainer.getMetaData;
 import static org.lightmare.jpa.JPAManager.getConnection;
 
 import java.io.IOException;
@@ -38,24 +37,8 @@ public class EjbConnector {
 	 * @throws IOException
 	 */
 	private MetaData getMeta(String beanName) throws IOException {
-		MetaData metaData = getMetaData(beanName);
-		if (metaData == null) {
-			throw new IOException(String.format("Bean %s is not deployed",
-					beanName));
-		}
-		boolean inProgress = metaData.isInProgress();
-		if (inProgress) {
-			synchronized (metaData) {
-				while (inProgress) {
-					try {
-						metaData.wait();
-						inProgress = metaData.isInProgress();
-					} catch (InterruptedException ex) {
-						throw new IOException(ex);
-					}
-				}
-			}
-		}
+
+		MetaData metaData = MetaContainer.getSyncMetaData(beanName);
 
 		return metaData;
 	}
@@ -79,9 +62,9 @@ public class EjbConnector {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private <T> T getBeanInstance(MetaData metaData) throws IOException {
 
+		@SuppressWarnings("unchecked")
 		Class<? extends T> beanClass = (Class<? extends T>) metaData
 				.getBeanClass();
 
@@ -126,7 +109,7 @@ public class EjbConnector {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
-	@SuppressWarnings("unchecked")
+
 	public <T> T connectToBean(String beanName, Class<T> interfaceClass,
 			Object... rpcArgs) throws IOException {
 		InvocationHandler handler;
@@ -147,6 +130,8 @@ public class EjbConnector {
 		}
 
 		Class<?>[] interfaceArray = { interfaceClass };
+
+		@SuppressWarnings("unchecked")
 		T beanInstance = (T) Proxy.newProxyInstance(Thread.currentThread()
 				.getContextClassLoader(), interfaceArray, handler);
 
