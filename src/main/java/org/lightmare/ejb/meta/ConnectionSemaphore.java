@@ -5,6 +5,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.persistence.EntityManagerFactory;
 
+/**
+ * Container class for {@link EntityManagerFactory} with checking if connection
+ * configuration in progress
+ * 
+ * @author Levan
+ * 
+ */
 public class ConnectionSemaphore {
 
 	private AtomicBoolean inProgress = new AtomicBoolean();
