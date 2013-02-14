@@ -24,6 +24,13 @@ import com.mchange.v2.c3p0.DataSources;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
+/**
+ * Parses xml and property files to initialize and cache {@link DataSource}
+ * objects
+ * 
+ * @author levan
+ * 
+ */
 public class DataSourceInitializer {
 
 	private NamingUtils namingUtils;
@@ -58,6 +65,11 @@ public class DataSourceInitializer {
 		}
 	}
 
+	/**
+	 * Sets default connection pooling properties
+	 * 
+	 * @return
+	 */
 	private static Properties getDefaultPooling() {
 		Properties c3p0Properties = new Properties();
 		c3p0Properties.setProperty(PoolConfig.MAX_POOL_SIZE,
@@ -74,6 +86,13 @@ public class DataSourceInitializer {
 		return c3p0Properties;
 	}
 
+	/**
+	 * Initializes appropriated driver and {@link DataSource} objects
+	 * 
+	 * @param properties
+	 * @return
+	 * @throws IOException
+	 */
 	public DataSource initilizeDriver(Properties properties) throws IOException {
 
 		String driver = properties.getProperty("driver").trim();
@@ -146,6 +165,14 @@ public class DataSourceInitializer {
 		return null;
 	}
 
+	/**
+	 * Registers {@link DataSource} object in jndi {@link Context}
+	 * 
+	 * @param poolingProperties
+	 * @param dataSource
+	 * @param jndiName
+	 * @throws IOException
+	 */
 	public void registerDataSource(Properties poolingProperties,
 			DataSource dataSource, String jndiName) throws IOException {
 		try {
@@ -165,6 +192,15 @@ public class DataSourceInitializer {
 		}
 	}
 
+	/**
+	 * Initializes and registers {@link DataSource} object in jndi
+	 * {@link Context}
+	 * 
+	 * @param poolingProperties
+	 * @param dataSource
+	 * @param jndiName
+	 * @throws IOException
+	 */
 	public void registerDataSource(Properties properties,
 			Properties poolingProperties) throws IOException {
 		String jndiName = properties.getProperty("name");
@@ -177,6 +213,13 @@ public class DataSourceInitializer {
 		registerDataSource(poolProps, dataSource, jndiName);
 	}
 
+	/**
+	 * Parses xml file and initializes and registers {@link DataSource} object
+	 * in jndi
+	 * 
+	 * @param properties
+	 * @throws IOException
+	 */
 	public void registerDataSource(Properties properties) throws IOException {
 		registerDataSource(properties, null);
 	}
