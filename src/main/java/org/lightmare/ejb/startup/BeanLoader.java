@@ -363,7 +363,7 @@ public class BeanLoader implements Callable<String> {
 		if (tmpMeta != null && !tmpMeta.isInProgress()) {
 			conn.countDown();
 			throw new BeanInUseException(String.format(
-					"bean % is alredy in use", beanName));
+					"bean %s is alredy in use", beanName));
 		}
 		Future<String> future = loaderPool.submit(new BeanLoader(creator,
 				beanName, className, loader, metaData, tmpFiles, conn));
