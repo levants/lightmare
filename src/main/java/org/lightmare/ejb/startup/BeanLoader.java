@@ -285,7 +285,12 @@ public class BeanLoader implements Callable<String> {
 				beanEjbName = beanName;
 			} else {
 				checkBean(beanEjbName);
-				MetaContainer.addMetaData(beanEjbName, metaData);
+				try {
+					MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
+				} catch (BeanInUseException ex) {
+					notifyConn();
+					throw ex;
+				}
 				MetaContainer.removeMeta(beanName);
 			}
 			createMeta(beanClass);
@@ -359,11 +364,11 @@ public class BeanLoader implements Callable<String> {
 			CountDownLatch conn) throws IOException {
 		MetaData metaData = new MetaData();
 		String beanName = BeanUtils.parseName(className);
-		MetaData tmpMeta = MetaContainer.addMetaData(beanName, metaData);
-		if (tmpMeta != null && !tmpMeta.isInProgress()) {
+		try {
+			MetaContainer.checkAndAddMetaData(beanName, metaData);
+		} catch (BeanInUseException ex) {
 			conn.countDown();
-			throw new BeanInUseException(String.format(
-					"bean %s is alredy in use", beanName));
+			throw ex;
 		}
 		Future<String> future = loaderPool.submit(new BeanLoader(creator,
 				beanName, className, loader, metaData, tmpFiles, conn));

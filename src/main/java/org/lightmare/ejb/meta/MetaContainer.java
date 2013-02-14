@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.JPAManager;
 
 /**
@@ -23,8 +24,33 @@ public class MetaContainer {
 	// Cached bean meta data
 	private static final ConcurrentMap<String, MetaData> EJBS = new ConcurrentHashMap<String, MetaData>();
 
+	/**
+	 * Adds {@link MetaData} to cache on specified bean name if absent and
+	 * returns previous value on this name or null if such value does not exists
+	 * 
+	 * @param beanName
+	 * @param metaData
+	 * @return
+	 */
 	public static MetaData addMetaData(String beanName, MetaData metaData) {
 		return EJBS.putIfAbsent(beanName, metaData);
+	}
+
+	/**
+	 * Check if {@link MetaData} is ceched for specified bean name if true
+	 * throws {@link BeanInUseException}
+	 * 
+	 * @param beanName
+	 * @param metaData
+	 * @throws BeanInUseException
+	 */
+	public static void checkAndAddMetaData(String beanName, MetaData metaData)
+			throws BeanInUseException {
+		MetaData tmpMeta = addMetaData(beanName, metaData);
+		if (tmpMeta != null && !tmpMeta.isInProgress()) {
+			throw new BeanInUseException(String.format(
+					"bean %s is alredy in use", beanName));
+		}
 	}
 
 	public static boolean checkMetaData(String beanName) {
