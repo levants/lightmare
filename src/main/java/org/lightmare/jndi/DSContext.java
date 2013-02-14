@@ -26,18 +26,21 @@ public class DSContext extends MemoryContext {
 	public Object lookup(String name) throws NamingException {
 
 		Object value;
+		// Checks if it is request for entity manager
 		if (name.startsWith("java:comp/env/")) {
 
 			// Checks if connection is in progress and waits for finish
 			JPAManager.isInProgress(name);
 
 			// Gets EntityManagerFactory from parent
-			EntityManagerFactory emf = (EntityManagerFactory) super
-					.lookup(name);
-			if (emf == null) {
-				value = emf;
-			} else {
+			Object candidate = super.lookup(name);
+			if (candidate == null) {
+				value = candidate;
+			} else if (candidate instanceof EntityManagerFactory) {
+				EntityManagerFactory emf = (EntityManagerFactory) (candidate);
 				value = emf.createEntityManager();
+			} else {
+				value = candidate;
 			}
 		} else {
 			value = super.lookup(name);
