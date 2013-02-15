@@ -1,11 +1,10 @@
 package org.lightmare.jpa.datasource;
 
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -13,16 +12,11 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import oracle.jdbc.pool.OracleDataSource;
-
-import org.apache.derby.jdbc.EmbeddedDataSource40;
 import org.apache.log4j.Logger;
-import org.h2.jdbcx.JdbcDataSource;
 import org.lightmare.jndi.NamingUtils;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /**
  * Parses xml and property files to initialize and cache {@link DataSource}
@@ -90,7 +84,7 @@ public class DataSourceInitializer {
 	 * Initializes appropriated driver and {@link DataSource} objects
 	 * 
 	 * @param properties
-	 * @return
+	 * @return {@link DataSource}
 	 * @throws IOException
 	 */
 	public DataSource initilizeDriver(Properties properties) throws IOException {
@@ -100,69 +94,18 @@ public class DataSourceInitializer {
 		String user = properties.getProperty("user").trim();
 		String password = properties.getProperty("password").trim();
 
-		if (DriverConfig.isOracle(driver)) {
-			try {
-				OracleDataSource dataSource = new OracleDataSource();
-				dataSource.setURL(url);
-				dataSource.setUser(user);
-				dataSource.setPassword(password);
-				return dataSource;
-			} catch (SQLException ex) {
-				throw new IOException(ex);
-			}
-		} else if (DriverConfig.isMySQL(driver)) {
-
-			MysqlDataSource dataSource = new MysqlDataSource();
-			dataSource.setUrl(url);
-			dataSource.setUser(user);
-			dataSource.setPassword(password);
-			return dataSource;
-
-		} else if (DriverConfig.isDB2(driver)) {
-
-			throw new IOException("This type of driver is not supported yet");
-
-		} else if (DriverConfig.isMsSQL(driver)) {
-
-			SQLServerDataSource dataSource = new SQLServerDataSource();
-			dataSource.setURL(url);
-			dataSource.setUser(user);
-			dataSource.setPassword(password);
-			return dataSource;
-
-		} else if (DriverConfig.isH2(driver)) {
-
-			JdbcDataSource dataSource = new JdbcDataSource();
-			dataSource.setURL(url);
-			dataSource.setUser(user);
-			dataSource.setPassword(password);
-			return dataSource;
-
-		} else if (DriverConfig.isDerby(driver)) {
-			EmbeddedDataSource40 dataSource = new EmbeddedDataSource40();
-			String[] props = url.split(";");
-			if (props.length == 0) {
-				return null;
-			}
-			List<String> settingsList = Arrays.asList(props);
-			Set<String> settings = new HashSet<String>();
-			settings.addAll(settingsList);
-			if (settings.contains("create=true")) {
-				dataSource.setCreateDatabase("create");
-			}
-			String jdbcUrl;
-			for (String setting : settings) {
-				if (setting.contains("jdbc:derby:")) {
-					jdbcUrl = setting.replaceAll("jdbc:derby:", "").trim();
-					dataSource.setDatabaseName(jdbcUrl);
-					break;
-				}
-			}
-			dataSource.setUser(user);
-			dataSource.setPassword(password);
-			return dataSource;
+		ComboPooledDataSource dataSource = new ComboPooledDataSource();
+		dataSource.setJdbcUrl(url);
+		try {
+			dataSource.setDriverClass(driver);
+		} catch (PropertyVetoException ex) {
+			throw new IOException(ex);
 		}
-		return null;
+		dataSource.setUser(user);
+		dataSource.setPassword(password);
+
+		return dataSource;
+
 	}
 
 	/**
