@@ -14,6 +14,7 @@ import javassist.bytecode.AnnotationsAttribute;
 import javassist.bytecode.ClassFile;
 import javassist.bytecode.annotation.Annotation;
 
+import org.apache.log4j.Logger;
 import org.scannotation.archiveiterator.Filter;
 import org.scannotation.archiveiterator.IteratorFactory;
 import org.scannotation.archiveiterator.StreamIterator;
@@ -37,6 +38,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 	// To store which class in which File is found
 	protected Map<String, String> classOwnersFiles = new HashMap<String, String>();
+
+	private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
 
 	private String getFileName(URL url) {
 		String fileName = url.getFile();
@@ -130,6 +133,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 	@Override
 	public void scanArchives(URL... urls) throws IOException {
+		LOG.info("Started scanning for archives on @Stateless annotation");
 		for (URL url : urls) {
 			Filter filter = new Filter() {
 				public boolean accepts(String subFileName) {
@@ -142,6 +146,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 					return false;
 				}
 			};
+			LOG.info(String.format("Scanning URL %s ", url));
 
 			StreamIterator it = IteratorFactory.create(url, filter);
 
@@ -149,7 +154,11 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 			while ((stream = it.next()) != null) {
 				scanClass(stream, url);
 			}
+
+			LOG.info(String.format("Finished URL %s scanning", url));
 		}
+
+		LOG.info("Finished scanning for archives on @Stateless annotation");
 	}
 
 	public Map<String, URL> getClassOwnersURLs() {
