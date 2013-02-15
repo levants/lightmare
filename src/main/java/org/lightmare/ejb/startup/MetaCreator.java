@@ -475,6 +475,7 @@ public class MetaCreator {
 		}
 
 		public MetaCreator build() {
+			LOG.info("Lightmare application is starts working");
 			return creator;
 		}
 
