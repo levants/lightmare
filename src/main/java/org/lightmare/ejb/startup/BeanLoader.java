@@ -155,6 +155,23 @@ public class BeanLoader implements Callable<String> {
 		}
 	}
 
+	/**
+	 * Checks if bean {@link MetaData} with same name already cached if it is
+	 * increases {@link CountDownLatch} for connection and throws
+	 * {@link BeanInUseException} else caches meta data with associated name
+	 * 
+	 * @param beanEjbName
+	 * @throws BeanInUseException
+	 */
+	private void checkAndSetBean(String beanEjbName) throws BeanInUseException {
+		try {
+			MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
+		} catch (BeanInUseException ex) {
+			notifyConn();
+			throw ex;
+		}
+	}
+
 	private boolean checkOnBreak(PersistenceContext context, Resource resource,
 			PersistenceUnit unit) {
 		return context != null && resource != null && unit != null;
@@ -267,15 +284,8 @@ public class BeanLoader implements Callable<String> {
 			String beanEjbName = annotation.name();
 			if (beanEjbName == null || beanEjbName.isEmpty()) {
 				beanEjbName = beanName;
-			} else {
-				try {
-					MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
-				} catch (BeanInUseException ex) {
-					notifyConn();
-					throw ex;
-				}
-				MetaContainer.removeMeta(beanName);
 			}
+			checkAndSetBean(beanEjbName);
 			createMeta(beanClass);
 			metaData.setInProgress(false);
 
@@ -347,12 +357,6 @@ public class BeanLoader implements Callable<String> {
 			CountDownLatch conn) throws IOException {
 		MetaData metaData = new MetaData();
 		String beanName = BeanUtils.parseName(className);
-		try {
-			MetaContainer.checkAndAddMetaData(beanName, metaData);
-		} catch (BeanInUseException ex) {
-			conn.countDown();
-			throw ex;
-		}
 		Future<String> future = loaderPool.submit(new BeanLoader(creator,
 				beanName, className, loader, metaData, tmpFiles, conn));
 
