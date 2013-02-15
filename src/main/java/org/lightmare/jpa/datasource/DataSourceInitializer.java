@@ -122,7 +122,7 @@ public class DataSourceInitializer {
 			DataSource namedDataSource = DataSources.pooledDataSource(
 					dataSource, poolingProperties);
 			context.rebind(jndiName, namedDataSource);
-			LOG.info(String.format("data source %s initialized", jndiName));
+			LOG.info(String.format("Data source %s initialized", jndiName));
 		} catch (SQLException ex) {
 			LOG.error(String.format("Could not initialize data source %s",
 					jndiName), ex);
