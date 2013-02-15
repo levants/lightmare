@@ -172,6 +172,15 @@ public class BeanLoader implements Callable<String> {
 		}
 	}
 
+	/**
+	 * Checks if {@link PersistenceContext}, {@link Resource} and
+	 * {@link PersistenceUnit} annotated fields are cached already
+	 * 
+	 * @param context
+	 * @param resource
+	 * @param unit
+	 * @return boolean
+	 */
 	private boolean checkOnBreak(PersistenceContext context, Resource resource,
 			PersistenceUnit unit) {
 		return context != null && resource != null && unit != null;
@@ -222,6 +231,7 @@ public class BeanLoader implements Callable<String> {
 						break;
 					}
 				} else {
+					// Sets connection semaphore for this connection
 					ConnectionSemaphore semaphore = JPAManager.setSemaphore(
 							unitName, jndiName);
 					notifyConn();
