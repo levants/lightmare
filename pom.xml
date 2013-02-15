@@ -143,26 +143,8 @@
 		<!-- end of hibernate -->
 
 		<!-- drivers -->
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.3.0</version>
-			<scope>provided</scope>
-		</dependency>
 
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
-			<scope>provided</scope>
-		</dependency>
 
-		<dependency>
-			<groupId>com.microsoft</groupId>
-			<artifactId>sqljdbc4</artifactId>
-			<version>4.0.2206.100</version>
-			<scope>provided</scope>
-		</dependency>
 		<!-- end of drivers -->
 
 		<!-- startup -->
@@ -252,12 +234,6 @@
 		</dependency>
 		<!-- end of loggers -->
 
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>10.9.1.0</version>
-			<scope>test</scope>
-		</dependency>
 
 		<dependency>
 			<groupId>com.h2database</groupId>
