@@ -47,7 +47,7 @@ public class MetaContainer {
 	public static void checkAndAddMetaData(String beanName, MetaData metaData)
 			throws BeanInUseException {
 		MetaData tmpMeta = addMetaData(beanName, metaData);
-		if (tmpMeta != null && !tmpMeta.isInProgress()) {
+		if (tmpMeta != null) {
 			throw new BeanInUseException(String.format(
 					"bean %s is alredy in use", beanName));
 		}
