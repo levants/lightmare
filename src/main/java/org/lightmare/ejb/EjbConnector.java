@@ -18,10 +18,11 @@ import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;
+import org.lightmare.utils.reflect.MetaUtils;
 
 /**
- * Connector class for get ejb beans or call remotely procedure in ejb bean
- * (RPC) by interface class
+ * Connector class for get ejb beans or call remote procedure in ejb bean (RPC)
+ * by interface class
  * 
  * @author Levan
  * 
@@ -68,14 +69,7 @@ public class EjbConnector {
 		Class<? extends T> beanClass = (Class<? extends T>) metaData
 				.getBeanClass();
 
-		T beanInstance;
-		try {
-			beanInstance = beanClass.newInstance();
-		} catch (InstantiationException ex) {
-			throw new IOException(ex);
-		} catch (IllegalAccessException ex) {
-			throw new IOException(ex);
-		}
+		T beanInstance = MetaUtils.instantiate(beanClass);
 
 		return beanInstance;
 	}

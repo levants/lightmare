@@ -15,6 +15,23 @@ import java.lang.reflect.Method;
 public class MetaUtils {
 
 	/**
+	 * Creates {@link Class} instance by {@link Class#newInstance()} method call
+	 * 
+	 * @param clazz
+	 * @return
+	 */
+	public static <T> T instantiate(Class<T> clazz) throws IOException {
+
+		try {
+			return clazz.newInstance();
+		} catch (InstantiationException ex) {
+			throw new IOException(ex);
+		} catch (IllegalAccessException ex) {
+			throw new IOException(ex);
+		}
+	}
+
+	/**
 	 * Gets declared method from class
 	 * 
 	 * @param clazz
