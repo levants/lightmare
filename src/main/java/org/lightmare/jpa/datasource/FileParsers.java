@@ -23,6 +23,16 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.mchange.v2.codegen.bean.Property;
+
+/**
+ * Parses xml files to initialize {@link javax.sql.DataSource}s and bind them to
+ * <a href="http://www.oracle.com/technetwork/java/jndi/index.html">jndi</a>
+ * {@link javax.naming.Context} by name
+ * 
+ * @author levan
+ * 
+ */
 public class FileParsers {
 
 	public static final String JBOSS_TAG_NAME = "urn:jboss:domain:datasources:1.0";
@@ -56,6 +66,14 @@ public class FileParsers {
 		return data;
 	}
 
+	/**
+	 * Parses xml document to initialize {@link javax.sql.DataSource}s
+	 * configuration properties
+	 * 
+	 * @param stream
+	 * @return {@link Document}
+	 * @throws IOException
+	 */
 	public static Document parse(InputStream stream) throws IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;
@@ -72,6 +90,15 @@ public class FileParsers {
 		return document;
 	}
 
+	/**
+	 * Initializes <a
+	 * href="http://www.oracle.com/technetwork/java/javase/jdbc/index.html"
+	 * >jdbc</a> driver for appropriated {@link javax.sql.DataSource} for
+	 * connection pooling
+	 * 
+	 * @param nodeList
+	 * @param properties
+	 */
 	public void setDataFromJBossDriver(NodeList nodeList, Properties properties) {
 		Element thisElement = (Element) nodeList.item(0);
 		String name = getContext(thisElement);
@@ -79,6 +106,12 @@ public class FileParsers {
 		properties.setProperty("driver", driverName);
 	}
 
+	/**
+	 * Gets security information from {@link javax.sql.DataSource} meta data
+	 * 
+	 * @param nodeList
+	 * @param properties
+	 */
 	public void setDataFromJBossSecurity(NodeList nodeList,
 			Properties properties) {
 		for (int i = 0; i < nodeList.getLength(); i++) {
@@ -105,6 +138,13 @@ public class FileParsers {
 		}
 	}
 
+	/**
+	 * Gets {@link javax.sql.DataSource}s configuration properties as
+	 * {@link List} of {@link Property}
+	 * 
+	 * @param nodeList
+	 * @return
+	 */
 	public List<Properties> getDataFromJBoss(NodeList nodeList) {
 		List<Properties> properties = new ArrayList<Properties>();
 		for (int i = 0; i < nodeList.getLength(); i++) {
