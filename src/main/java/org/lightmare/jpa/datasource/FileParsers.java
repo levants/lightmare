@@ -41,10 +41,12 @@ public class FileParsers {
 
 	public Document document(File file) throws MalformedURLException,
 			IOException {
+
 		return document(file.toURI().toURL());
 	}
 
 	public Document document(URL url) throws IOException {
+
 		URLConnection connection = url.openConnection();
 		InputStream stream = connection.getInputStream();
 		try {
@@ -61,6 +63,7 @@ public class FileParsers {
 	 * @return {@link String}
 	 */
 	public static String getContext(Element element) {
+
 		NodeList textList = element.getChildNodes();
 		String data = ((Node) textList.item(0)).getNodeValue().trim();
 		return data;
@@ -75,6 +78,7 @@ public class FileParsers {
 	 * @throws IOException
 	 */
 	public static Document parse(InputStream stream) throws IOException {
+
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;
 		Document document;
@@ -100,6 +104,7 @@ public class FileParsers {
 	 * @param properties
 	 */
 	public void setDataFromJBossDriver(NodeList nodeList, Properties properties) {
+
 		Element thisElement = (Element) nodeList.item(0);
 		String name = getContext(thisElement);
 		String driverName = DriverConfig.getDriverName(name);
@@ -114,6 +119,7 @@ public class FileParsers {
 	 */
 	public void setDataFromJBossSecurity(NodeList nodeList,
 			Properties properties) {
+
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Element thisElement = (Element) nodeList.item(i);
 			NodeList userList = thisElement.getElementsByTagName("user-name");
@@ -146,6 +152,7 @@ public class FileParsers {
 	 * @return
 	 */
 	public List<Properties> getDataFromJBoss(NodeList nodeList) {
+
 		List<Properties> properties = new ArrayList<Properties>();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Element thisElement = (Element) nodeList.item(i);
@@ -209,6 +216,5 @@ public class FileParsers {
 		}
 
 		DataSourceInitializer.setDsAsInitialized(dataSourcePath);
-
 	}
 }
