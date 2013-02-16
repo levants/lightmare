@@ -133,7 +133,15 @@ public class FileParsers {
 		return properties;
 	}
 
+	/**
+	 * Parses standalone.xml file and initializes {@link javax.sql.DataSource}s
+	 * and binds them to jndi context
+	 * 
+	 * @param dataSourcePath
+	 * @throws IOException
+	 */
 	public void parseStandaloneXml(String dataSourcePath) throws IOException {
+
 		File file = new File(dataSourcePath);
 		Document document = document(file);
 		NodeList nodeList = document.getElementsByTagName("datasource");
@@ -141,6 +149,7 @@ public class FileParsers {
 		List<Properties> properties = getDataFromJBoss(nodeList);
 		DataSourceInitializer initializer = new DataSourceInitializer();
 
+		// Blocking semaphore before all data source initialization finished
 		CountDownLatch dsLatch = new CountDownLatch(properties.size());
 
 		for (Properties props : properties) {
