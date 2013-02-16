@@ -30,18 +30,34 @@ import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.fs.FileUtils;
 
 /**
- * Class for running in distinct thread to load libraries and stateless beans
- * and cache
+ * Class for running in distinct thread to initialize
+ * {@link javax.sql.DataSource}s load libraries and {@link javax.ejb.Stateless}
+ * session beans and cache them and clean resources after deployments
  * 
  * @author levan
  * 
  */
-public class BeanLoader implements Callable<String> {
+public class BeanLoader {
 
 	private static final int LOADER_POOL_SIZE = 5;
 
+	private static final Logger LOG = Logger.getLogger(BeanLoader.class);
+
+	// Thread pool for deploying and removal of beans and temporal resources
+	private static ExecutorService loaderPool = Executors.newFixedThreadPool(
+			LOADER_POOL_SIZE, new ThreadFactory() {
+
+				@Override
+				public Thread newThread(Runnable runnable) {
+					Thread thread = new Thread(runnable);
+					thread.setName(String.format("Ejb-Loader-Thread-%s",
+							thread.getId()));
+					return thread;
+				}
+			});
+
 	/**
-	 * {@link Runnable} implementation for initializing and deploynd
+	 * {@link Runnable} implementation for initializing and deploying
 	 * {@link javax.sql.DataSource}
 	 * 
 	 * @author levan
@@ -133,272 +149,270 @@ public class BeanLoader implements Callable<String> {
 
 	}
 
-	private static final Logger LOG = Logger.getLogger(BeanLoader.class);
-
-	// Thread pool for deploying and removal of beans and temporal resources
-	private static ExecutorService loaderPool = Executors.newFixedThreadPool(
-			LOADER_POOL_SIZE, new ThreadFactory() {
-
-				@Override
-				public Thread newThread(Runnable runnable) {
-					Thread thread = new Thread(runnable);
-					thread.setName(String.format("Ejb-Loader-Thread-%s",
-							thread.getId()));
-					return thread;
-				}
-			});
-
-	private MetaCreator creator;
-
-	private String beanName;
-
-	private String className;
-
-	private ClassLoader loader;
-
-	private List<File> tmpFiles;
-
-	private MetaData metaData;
-
-	private CountDownLatch conn;
-
-	private boolean isCounted;
-
-	public BeanLoader(MetaCreator creator, String beanName, String className,
-			ClassLoader loader, MetaData metaData, List<File> tmpFiles,
-			CountDownLatch conn) {
-		this.creator = creator;
-		this.beanName = beanName;
-		this.className = className;
-		this.loader = loader;
-		this.tmpFiles = tmpFiles;
-		this.metaData = metaData;
-		this.conn = conn;
-	}
-
 	/**
-	 * Locks {@link ConnectionSemaphore} if needed for connection proccessing
+	 * {@link Callable} implementation for deploying {@link javax.ejb.Stateless}
+	 * session beans and cache {@link MetaData} keyed by bean name
 	 * 
-	 * @param semaphore
-	 * @param unitName
-	 * @param jndiName
-	 * @throws IOException
-	 */
-	private void lockSemaphore(ConnectionSemaphore semaphore, String unitName,
-			String jndiName) throws IOException {
-		synchronized (semaphore) {
-			if (!semaphore.isCheck()) {
-				creator.configureConnection(unitName, beanName);
-				semaphore.notifyAll();
-			}
-		}
-	}
-
-	/**
-	 * Increases {@link CountDownLatch} conn if it is first time in current
-	 * thread
-	 */
-	private void notifyConn() {
-		if (!isCounted) {
-			conn.countDown();
-			isCounted = true;
-		}
-	}
-
-	/**
-	 * Checks if bean {@link MetaData} with same name already cached if it is
-	 * increases {@link CountDownLatch} for connection and throws
-	 * {@link BeanInUseException} else caches meta data with associated name
+	 * @author levan
 	 * 
-	 * @param beanEjbName
-	 * @throws BeanInUseException
 	 */
-	private void checkAndSetBean(String beanEjbName) throws BeanInUseException {
-		try {
-			MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
-		} catch (BeanInUseException ex) {
-			notifyConn();
-			throw ex;
+	private static class BeanDeployer implements Callable<String> {
+
+		private MetaCreator creator;
+
+		private String beanName;
+
+		private String className;
+
+		private ClassLoader loader;
+
+		private List<File> tmpFiles;
+
+		private MetaData metaData;
+
+		private CountDownLatch conn;
+
+		private boolean isCounted;
+
+		public BeanDeployer(MetaCreator creator, String beanName,
+				String className, ClassLoader loader, MetaData metaData,
+				List<File> tmpFiles, CountDownLatch conn) {
+			this.creator = creator;
+			this.beanName = beanName;
+			this.className = className;
+			this.loader = loader;
+			this.tmpFiles = tmpFiles;
+			this.metaData = metaData;
+			this.conn = conn;
 		}
-	}
 
-	/**
-	 * Checks if {@link PersistenceContext}, {@link Resource} and
-	 * {@link PersistenceUnit} annotated fields are cached already
-	 * 
-	 * @param context
-	 * @param resource
-	 * @param unit
-	 * @return boolean
-	 */
-	private boolean checkOnBreak(PersistenceContext context, Resource resource,
-			PersistenceUnit unit) {
-		return context != null && resource != null && unit != null;
-	}
-
-	/**
-	 * Finds and caches {@link PersistenceContext}, {@link PersistenceUnit} and
-	 * {@link Resource} annotated {@link Field}s in bean class and configures
-	 * connections and creates {@link ConnectionSemaphore}s if it does not
-	 * exists for {@link PersistenceContext#unitName()} object
-	 * 
-	 * @throws IOException
-	 */
-	private void retrieveConnections() throws IOException {
-
-		Class<?> beanClass = metaData.getBeanClass();
-		Field[] fields = beanClass.getDeclaredFields();
-
-		PersistenceUnit unit;
-		PersistenceContext context;
-		Resource resource;
-		String unitName;
-		String jndiName;
-		boolean checkForEmf;
-		if (fields == null || fields.length == 0) {
-			notifyConn();
-		}
-		for (Field field : fields) {
-			context = field.getAnnotation(PersistenceContext.class);
-			resource = field.getAnnotation(Resource.class);
-			unit = field.getAnnotation(PersistenceUnit.class);
-			if (context != null) {
-				metaData.setConnectorField(field);
-				unitName = context.unitName();
-				jndiName = context.name();
-				metaData.setUnitName(unitName);
-				metaData.setJndiName(jndiName);
-				if (jndiName == null || jndiName.isEmpty()) {
-					checkForEmf = JPAManager.checkForEmf(unitName);
-				} else {
-					jndiName = NamingUtils.createJndiName(jndiName);
-					checkForEmf = JPAManager.checkForEmf(unitName)
-							&& JPAManager.checkForEmf(jndiName);
-				}
-				if (checkForEmf) {
-					notifyConn();
-					if (checkOnBreak(context, resource, unit)) {
-						break;
-					}
-				} else {
-					// Sets connection semaphore for this connection
-					ConnectionSemaphore semaphore = JPAManager.setSemaphore(
-							unitName, jndiName);
-					notifyConn();
-					if (semaphore != null) {
-						lockSemaphore(semaphore, unitName, jndiName);
-					}
-
-					if (checkOnBreak(context, resource, unit)) {
-						break;
-					}
-				}
-			} else if (resource != null) {
-
-				metaData.setTransactionField(field);
-				if (checkOnBreak(context, resource, unit)) {
-					break;
-				}
-			} else if (unit != null) {
-				metaData.setUnitField(field);
-				if (checkOnBreak(context, resource, unit)) {
-					break;
+		/**
+		 * Locks {@link ConnectionSemaphore} if needed for connection
+		 * proccessing
+		 * 
+		 * @param semaphore
+		 * @param unitName
+		 * @param jndiName
+		 * @throws IOException
+		 */
+		private void lockSemaphore(ConnectionSemaphore semaphore,
+				String unitName, String jndiName) throws IOException {
+			synchronized (semaphore) {
+				if (!semaphore.isCheck()) {
+					creator.configureConnection(unitName, beanName);
+					semaphore.notifyAll();
 				}
 			}
 		}
-	}
 
-	/**
-	 * Creates {@link MetaData} for bean class
-	 * 
-	 * @param beanClass
-	 * @throws ClassNotFoundException
-	 */
-	private void createMeta(Class<?> beanClass) throws IOException {
-
-		metaData.setBeanClass(beanClass);
-		if (MetaCreator.CONFIG.isServer()) {
-			retrieveConnections();
-		} else {
-			notifyConn();
-		}
-
-		metaData.setLoader(loader);
-	}
-
-	/**
-	 * Loads and caches bean {@link Class} by name
-	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	private String createBeanClass() throws IOException {
-		try {
-			Class<?> beanClass;
-			if (loader == null) {
-				beanClass = Class.forName(className);
-			} else {
-				beanClass = Class.forName(className, true, loader);
+		/**
+		 * Increases {@link CountDownLatch} conn if it is first time in current
+		 * thread
+		 */
+		private void notifyConn() {
+			if (!isCounted) {
+				conn.countDown();
+				isCounted = true;
 			}
-			Stateless annotation = beanClass.getAnnotation(Stateless.class);
-			String beanEjbName = annotation.name();
-			if (beanEjbName == null || beanEjbName.isEmpty()) {
-				beanEjbName = beanName;
-			}
-			checkAndSetBean(beanEjbName);
-			createMeta(beanClass);
-			metaData.setInProgress(false);
-
-			return beanEjbName;
-
-		} catch (ClassNotFoundException ex) {
-			notifyConn();
-			throw new IOException(ex);
-		}
-	}
-
-	private String deploy() {
-
-		String deployed = beanName;
-
-		try {
-			LibraryLoader.loadCurrentLibraries(loader);
-			deployed = createBeanClass();
-			LOG.info(String.format("bean %s deployed", beanName));
-		} catch (IOException ex) {
-			LOG.error(String.format("Could not deploy bean %s cause %s",
-					beanName, ex.getMessage()), ex);
 		}
 
-		return deployed;
-	}
-
-	@Override
-	public String call() throws Exception {
-
-		synchronized (metaData) {
+		/**
+		 * Checks if bean {@link MetaData} with same name already cached if it
+		 * is increases {@link CountDownLatch} for connection and throws
+		 * {@link BeanInUseException} else caches meta data with associated name
+		 * 
+		 * @param beanEjbName
+		 * @throws BeanInUseException
+		 */
+		private void checkAndSetBean(String beanEjbName)
+				throws BeanInUseException {
 			try {
-				String deployed;
-				if (tmpFiles != null) {
-					synchronized (tmpFiles) {
-						deployed = deploy();
-						tmpFiles.notifyAll();
-					}
-				} else {
-					deployed = deploy();
-				}
+				MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
+			} catch (BeanInUseException ex) {
 				notifyConn();
-				metaData.notifyAll();
-
-				return deployed;
-
-			} catch (Exception ex) {
-				LOG.error(ex.getMessage(), ex);
-				metaData.notifyAll();
-				notifyConn();
-				return null;
+				throw ex;
 			}
 		}
+
+		/**
+		 * Checks if {@link PersistenceContext}, {@link Resource} and
+		 * {@link PersistenceUnit} annotated fields are cached already
+		 * 
+		 * @param context
+		 * @param resource
+		 * @param unit
+		 * @return boolean
+		 */
+		private boolean checkOnBreak(PersistenceContext context,
+				Resource resource, PersistenceUnit unit) {
+			return context != null && resource != null && unit != null;
+		}
+
+		/**
+		 * Finds and caches {@link PersistenceContext}, {@link PersistenceUnit}
+		 * and {@link Resource} annotated {@link Field}s in bean class and
+		 * configures connections and creates {@link ConnectionSemaphore}s if it
+		 * does not exists for {@link PersistenceContext#unitName()} object
+		 * 
+		 * @throws IOException
+		 */
+		private void retrieveConnections() throws IOException {
+
+			Class<?> beanClass = metaData.getBeanClass();
+			Field[] fields = beanClass.getDeclaredFields();
+
+			PersistenceUnit unit;
+			PersistenceContext context;
+			Resource resource;
+			String unitName;
+			String jndiName;
+			boolean checkForEmf;
+			if (fields == null || fields.length == 0) {
+				notifyConn();
+			}
+			for (Field field : fields) {
+				context = field.getAnnotation(PersistenceContext.class);
+				resource = field.getAnnotation(Resource.class);
+				unit = field.getAnnotation(PersistenceUnit.class);
+				if (context != null) {
+					metaData.setConnectorField(field);
+					unitName = context.unitName();
+					jndiName = context.name();
+					metaData.setUnitName(unitName);
+					metaData.setJndiName(jndiName);
+					if (jndiName == null || jndiName.isEmpty()) {
+						checkForEmf = JPAManager.checkForEmf(unitName);
+					} else {
+						jndiName = NamingUtils.createJndiName(jndiName);
+						checkForEmf = JPAManager.checkForEmf(unitName)
+								&& JPAManager.checkForEmf(jndiName);
+					}
+					if (checkForEmf) {
+						notifyConn();
+						if (checkOnBreak(context, resource, unit)) {
+							break;
+						}
+					} else {
+						// Sets connection semaphore for this connection
+						ConnectionSemaphore semaphore = JPAManager
+								.setSemaphore(unitName, jndiName);
+						notifyConn();
+						if (semaphore != null) {
+							lockSemaphore(semaphore, unitName, jndiName);
+						}
+
+						if (checkOnBreak(context, resource, unit)) {
+							break;
+						}
+					}
+				} else if (resource != null) {
+
+					metaData.setTransactionField(field);
+					if (checkOnBreak(context, resource, unit)) {
+						break;
+					}
+				} else if (unit != null) {
+					metaData.setUnitField(field);
+					if (checkOnBreak(context, resource, unit)) {
+						break;
+					}
+				}
+			}
+		}
+
+		/**
+		 * Creates {@link MetaData} for bean class
+		 * 
+		 * @param beanClass
+		 * @throws ClassNotFoundException
+		 */
+		private void createMeta(Class<?> beanClass) throws IOException {
+
+			metaData.setBeanClass(beanClass);
+			if (MetaCreator.CONFIG.isServer()) {
+				retrieveConnections();
+			} else {
+				notifyConn();
+			}
+
+			metaData.setLoader(loader);
+		}
+
+		/**
+		 * Loads and caches bean {@link Class} by name
+		 * 
+		 * @return
+		 * @throws IOException
+		 */
+		private String createBeanClass() throws IOException {
+			try {
+				Class<?> beanClass;
+				if (loader == null) {
+					beanClass = Class.forName(className);
+				} else {
+					beanClass = Class.forName(className, true, loader);
+				}
+				Stateless annotation = beanClass.getAnnotation(Stateless.class);
+				String beanEjbName = annotation.name();
+				if (beanEjbName == null || beanEjbName.isEmpty()) {
+					beanEjbName = beanName;
+				}
+				checkAndSetBean(beanEjbName);
+				createMeta(beanClass);
+				metaData.setInProgress(false);
+
+				return beanEjbName;
+
+			} catch (ClassNotFoundException ex) {
+				notifyConn();
+				throw new IOException(ex);
+			}
+		}
+
+		private String deploy() {
+
+			String deployed = beanName;
+
+			try {
+				LibraryLoader.loadCurrentLibraries(loader);
+				deployed = createBeanClass();
+				LOG.info(String.format("bean %s deployed", beanName));
+			} catch (IOException ex) {
+				LOG.error(String.format("Could not deploy bean %s cause %s",
+						beanName, ex.getMessage()), ex);
+			}
+
+			return deployed;
+		}
+
+		@Override
+		public String call() throws Exception {
+
+			synchronized (metaData) {
+				try {
+					String deployed;
+					if (tmpFiles != null) {
+						synchronized (tmpFiles) {
+							deployed = deploy();
+							tmpFiles.notifyAll();
+						}
+					} else {
+						deployed = deploy();
+					}
+					notifyConn();
+					metaData.notifyAll();
+
+					return deployed;
+
+				} catch (Exception ex) {
+					LOG.error(ex.getMessage(), ex);
+					metaData.notifyAll();
+					notifyConn();
+					return null;
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -417,8 +431,9 @@ public class BeanLoader implements Callable<String> {
 			CountDownLatch conn) throws IOException {
 		MetaData metaData = new MetaData();
 		String beanName = BeanUtils.parseName(className);
-		Future<String> future = loaderPool.submit(new BeanLoader(creator,
-				beanName, className, loader, metaData, tmpFiles, conn));
+		BeanDeployer beanDeployer = new BeanDeployer(creator, beanName,
+				className, loader, metaData, tmpFiles, conn);
+		Future<String> future = loaderPool.submit(beanDeployer);
 
 		return future;
 	}
