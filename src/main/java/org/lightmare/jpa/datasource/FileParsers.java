@@ -9,12 +9,14 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.CountDownLatch;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
+import org.lightmare.ejb.startup.BeanLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -138,12 +140,23 @@ public class FileParsers {
 
 		List<Properties> properties = getDataFromJBoss(nodeList);
 		DataSourceInitializer initializer = new DataSourceInitializer();
+
+		CountDownLatch dsLatch = new CountDownLatch(properties.size());
+
 		for (Properties props : properties) {
 			try {
-				initializer.registerDataSource(props);
-			} catch (Exception ex) {
+
+				BeanLoader.initializeDatasource(initializer, props, dsLatch);
+
+			} catch (IOException ex) {
 				LOG.error("Could not initialize datasource", ex);
 			}
+		}
+
+		try {
+			dsLatch.await();
+		} catch (InterruptedException ex) {
+			throw new IOException(ex);
 		}
 
 		DataSourceInitializer.setDsAsInitialized(dataSourcePath);

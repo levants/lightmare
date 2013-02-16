@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -23,6 +24,7 @@ import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.JPAManager;
+import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.fs.FileUtils;
@@ -39,7 +41,55 @@ public class BeanLoader implements Callable<String> {
 	private static final int LOADER_POOL_SIZE = 5;
 
 	/**
-	 * {@link Callable} implementation for temporal resources removal
+	 * {@link Runnable} implementation for initializing and deploynd
+	 * {@link javax.sql.DataSource}
+	 * 
+	 * @author levan
+	 * 
+	 */
+	private static class ConnectionDeployer implements Runnable {
+
+		private DataSourceInitializer initializer;
+
+		private Properties properties;
+
+		private CountDownLatch dsLatch;
+
+		private boolean countedDown;
+
+		public ConnectionDeployer(DataSourceInitializer initializer,
+				Properties properties, CountDownLatch dsLatch) {
+
+			this.initializer = initializer;
+			this.properties = properties;
+			this.dsLatch = dsLatch;
+		}
+
+		private void notifyDs() {
+
+			if (!countedDown) {
+				dsLatch.countDown();
+				countedDown = true;
+			}
+		}
+
+		@Override
+		public void run() {
+
+			try {
+				initializer.registerDataSource(properties);
+				notifyDs();
+			} catch (IOException ex) {
+				notifyDs();
+				LOG.error("Could not initialize datasource", ex);
+			}
+
+		}
+
+	}
+
+	/**
+	 * {@link Runnable} implementation for temporal resources removal
 	 * 
 	 * @author levan
 	 * 
@@ -371,6 +421,21 @@ public class BeanLoader implements Callable<String> {
 				beanName, className, loader, metaData, tmpFiles, conn));
 
 		return future;
+	}
+
+	/**
+	 * Initialized {@link javax.sql.DataSource}s in parallel mode
+	 * 
+	 * @param initializer
+	 * @param properties
+	 * @param sdLatch
+	 */
+	public static void initializeDatasource(DataSourceInitializer initializer,
+			Properties properties, CountDownLatch dsLatch) throws IOException {
+
+		ConnectionDeployer connectionDeployer = new ConnectionDeployer(
+				initializer, properties, dsLatch);
+		loaderPool.submit(connectionDeployer);
 	}
 
 	/**
