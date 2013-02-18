@@ -31,8 +31,9 @@ public class DSInitialContextFactory implements InitialContextFactory {
 		if (!sharingEnv.containsKey(SHARE_DATA_PROPERTY)) {
 			sharingEnv.put(SHARE_DATA_PROPERTY, SHARE_DATA_PROPERTY_VALUE);
 		}
+		Context dsContext = new DSContext(sharingEnv);
 
-		return new DSContext(sharingEnv);
+		return dsContext;
 	}
 
 }
