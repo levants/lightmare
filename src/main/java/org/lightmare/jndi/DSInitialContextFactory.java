@@ -16,6 +16,8 @@ public class DSInitialContextFactory implements InitialContextFactory {
 
 	private static final String SHARE_DATA_PROPERTY = "org.osjava.sj.jndi.shared";
 
+	private static final String SHARE_DATA_PROPERTY_VALUE = "true";
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Context getInitialContext(Hashtable<?, ?> properties)
@@ -27,7 +29,7 @@ public class DSInitialContextFactory implements InitialContextFactory {
 
 		// all instances will share stored data
 		if (!sharingEnv.containsKey(SHARE_DATA_PROPERTY)) {
-			sharingEnv.put(SHARE_DATA_PROPERTY, "true");
+			sharingEnv.put(SHARE_DATA_PROPERTY, SHARE_DATA_PROPERTY_VALUE);
 		}
 
 		return new DSContext(sharingEnv);
