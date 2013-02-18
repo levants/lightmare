@@ -7,7 +7,7 @@ import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
 /**
- * * Extension of factory class {@link InitialContextFactory}
+ * Extension of factory class {@link InitialContextFactory}
  * 
  * @author levan
  * 

@@ -10,7 +10,7 @@ import org.lightmare.jpa.JPAManager;
 import org.osjava.sj.memory.MemoryContext;
 
 /**
- * Extentions of simple jndi {@link MemoryContext} for {@link EntityManager}
+ * Extensions of simple jndi {@link MemoryContext} for {@link EntityManager}
  * retrieving
  * 
  * @author levan
