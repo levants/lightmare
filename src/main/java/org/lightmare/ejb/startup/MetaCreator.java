@@ -114,6 +114,10 @@ public class MetaCreator {
 		return isValid;
 	}
 
+	private List<String> translateToList(Set<String> classSet) {
+		return Arrays.asList(classSet.toArray(new String[classSet.size()]));
+	}
+
 	/**
 	 * Defines belonginess of {@link javax.persistence.Entity} annotated classes
 	 * to jar file
@@ -121,10 +125,6 @@ public class MetaCreator {
 	 * @param classSet
 	 * @return {@link List}<String>
 	 */
-	private List<String> translateToList(Set<String> classSet) {
-		return Arrays.asList(classSet.toArray(new String[classSet.size()]));
-	}
-
 	private void filterEntitiesForJar(Set<String> classSet,
 			String fileNameForBean) {
 
