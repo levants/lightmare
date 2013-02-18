@@ -92,6 +92,14 @@ public class MetaCreator {
 		return annotationDB;
 	}
 
+	/**
+	 * Checks weather {@link javax.persistence.Entity} annotated classes is need
+	 * to be filtered by {@link org.lightmare.annotations.UnitName} value
+	 * 
+	 * @param className
+	 * @return boolean
+	 * @throws IOException
+	 */
 	private boolean checkForUnitName(String className) throws IOException {
 		boolean isValid = false;
 		Class<?> entityClass;
@@ -106,6 +114,13 @@ public class MetaCreator {
 		return isValid;
 	}
 
+	/**
+	 * Defines belonginess of {@link javax.persistence.Entity} annotated classes
+	 * to jar file
+	 * 
+	 * @param classSet
+	 * @return {@link List}<String>
+	 */
 	private List<String> translateToList(Set<String> classSet) {
 		return Arrays.asList(classSet.toArray(new String[classSet.size()]));
 	}
@@ -126,6 +141,14 @@ public class MetaCreator {
 		}
 	}
 
+	/**
+	 * Filters {@link javax.persistence.Entity} annotated classes by name or by
+	 * {@link org.lightmare.annotations.UnitName} by configuration
+	 * 
+	 * @param classSet
+	 * @return {@link List}<String>
+	 * @throws IOException
+	 */
 	private List<String> filterEntities(Set<String> classSet)
 			throws IOException {
 		List<String> classes;
@@ -221,6 +244,11 @@ public class MetaCreator {
 		return modifiedArchives.toArray(new URL[modifiedArchives.size()]);
 	}
 
+	/**
+	 * Awaits for {@link Future} tasks if it set so by configuration
+	 * 
+	 * @param future
+	 */
 	private void awaitDeployment(Future<String> future) {
 
 		if (await) {
@@ -236,6 +264,9 @@ public class MetaCreator {
 		}
 	}
 
+	/**
+	 * Awaits for {@link CountDownLatch} of deployments
+	 */
 	private void awaitDeployments() {
 		try {
 			conn.await();
@@ -244,6 +275,12 @@ public class MetaCreator {
 		}
 	}
 
+	/**
+	 * Starts bean deployment process for bean name
+	 * 
+	 * @param beanName
+	 * @throws IOException
+	 */
 	private void deployBean(String beanName) throws IOException {
 		URL currentURL = classOwnersURL.get(beanName);
 		ArchiveData archiveData = archivesURLs.get(currentURL);
@@ -256,8 +293,10 @@ public class MetaCreator {
 			archiveData.setIoUtils(ioUtils);
 		}
 		ClassLoader loader = archiveData.getLoader();
+
 		// Finds appropriated ClassLoader if needed and or creates new one
 		List<File> tmpFiles = null;
+
 		if (ioUtils != null) {
 			if (loader == null) {
 				if (!ioUtils.isExecuted()) {
