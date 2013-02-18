@@ -144,6 +144,13 @@ public class MetaCreator {
 		return classes;
 	}
 
+	/**
+	 * Creates connection associated with unit name if such does not exists
+	 * 
+	 * @param unitName
+	 * @param beanName
+	 * @throws IOException
+	 */
 	protected void configureConnection(String unitName, String beanName)
 			throws IOException {
 
@@ -180,6 +187,14 @@ public class MetaCreator {
 				.setScanArchives(scanArchives).build().setConnection(unitName);
 	}
 
+	/**
+	 * Gets {@link URL} array for all classes and jar libraries within archive
+	 * file for class loading policy
+	 * 
+	 * @param archives
+	 * @return {@link URL}[]
+	 * @throws IOException
+	 */
 	private URL[] getFullArchives(URL[] archives) throws IOException {
 		List<URL> modifiedArchives = new ArrayList<URL>();
 		AbstractIOUtils ioUtils;
