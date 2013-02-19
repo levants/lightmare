@@ -150,7 +150,41 @@ public class MetaContainer {
 	}
 
 	/**
-	 * Undeploys bean (removes it's {@link MetaData} from cache)
+	 * Removes bean (removes it's {@link MetaData} from cache) by bean class
+	 * name
+	 * 
+	 * @param beanName
+	 * @throws IOException
+	 */
+	public static void undeploy(String beanName) throws IOException {
+
+		MetaData metaData = null;
+		try {
+			metaData = getSyncMetaData(beanName);
+		} catch (IOException ex) {
+			LOG.error(String.format("Could not get bean resources %s cause %s",
+					beanName, ex.getMessage()), ex);
+		}
+		// Removes MetaData from cache
+		removeMeta(beanName);
+		if (metaData != null) {
+
+			// Gets connection to clear
+			String unitName = metaData.getUnitName();
+			ConnectionSemaphore semaphore = metaData.getConnection();
+			if (semaphore == null) {
+				semaphore = JPAManager.getConnection(unitName);
+			}
+			if (semaphore != null && semaphore.getUsers() <= 1) {
+				JPAManager.removeConnection(unitName);
+			}
+			metaData = null;
+		}
+	}
+
+	/**
+	 * Removes bean (removes it's {@link MetaData} from cache) by {@link URL} of
+	 * archive file
 	 * 
 	 * @param url
 	 * @throws IOException
@@ -159,28 +193,8 @@ public class MetaContainer {
 
 		synchronized (MetaContainer.class) {
 			String beanName = getBeanName(url);
-			MetaData metaData = null;
-			try {
-				metaData = getSyncMetaData(beanName);
-			} catch (IOException ex) {
-				LOG.error(String.format(
-						"Could not get bean resources %s cause %s", beanName,
-						ex.getMessage()), ex);
-			}
-			// Removes MetaData from cache
-			removeMeta(beanName);
-			if (metaData != null) {
-
-				// Gets connection to clear
-				String unitName = metaData.getUnitName();
-				ConnectionSemaphore semaphore = metaData.getConnection();
-				if (semaphore == null) {
-					semaphore = JPAManager.getConnection(unitName);
-				}
-				if (semaphore != null && semaphore.getUsers() <= 1) {
-					JPAManager.removeConnection(unitName);
-				}
-				metaData = null;
+			if (beanName != null) {
+				undeploy(beanName);
 			}
 		}
 	}
