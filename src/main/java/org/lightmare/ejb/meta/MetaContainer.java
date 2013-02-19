@@ -167,11 +167,17 @@ public class MetaContainer {
 						"Could not get bean resources %s cause %s", beanName,
 						ex.getMessage()), ex);
 			}
+			// Removes MetaData from cache
 			removeMeta(beanName);
 			if (metaData != null) {
+
+				// Gets connection to clear
+				String unitName = metaData.getUnitName();
 				ConnectionSemaphore semaphore = metaData.getConnection();
+				if (semaphore == null) {
+					semaphore = JPAManager.getConnection(unitName);
+				}
 				if (semaphore != null && semaphore.getUsers() <= 1) {
-					String unitName = semaphore.getUnitName();
 					JPAManager.removeConnection(unitName);
 				}
 				metaData = null;
