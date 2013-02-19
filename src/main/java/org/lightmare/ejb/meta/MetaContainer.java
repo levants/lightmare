@@ -182,11 +182,23 @@ public class MetaContainer {
 		EJBS.remove(beanName);
 	}
 
+	/**
+	 * Gets {@link javax.persistence.EntityManagerFactory} from cache for
+	 * associated unit name
+	 * 
+	 * @param unitName
+	 * @return {@link javax.persistence.EntityManagerFactory}
+	 * @throws IOException
+	 */
 	public static EntityManagerFactory getConnection(String unitName)
 			throws IOException {
 		return JPAManager.getEntityManagerFactory(unitName);
 	}
 
+	/**
+	 * Closes all {@link javax.persistence.EntityManagerFactory} cached
+	 * instances
+	 */
 	public static void closeConnections() {
 		closeEntityManagerFactories();
 	}
