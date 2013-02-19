@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -211,6 +212,47 @@ public class MetaCreator {
 	}
 
 	/**
+	 * Caches each archive by it's {@link URL} for deployment
+	 * 
+	 * @param ejbURLs
+	 * @param archiveData
+	 */
+	private void fillArchiveURLs(Collection<URL> ejbURLs,
+			ArchiveData archiveData) {
+
+		for (URL ejbURL : ejbURLs) {
+			archivesURLs.put(ejbURL, archiveData);
+		}
+	}
+
+	/**
+	 * Caches each archive by it's {@link URL} for deployment and creates fill
+	 * {@link URL} array for scanning and finding {@link javax.ejb.Stateless}
+	 * annotated classes
+	 * 
+	 * @param archive
+	 * @param modifiedArchives
+	 * @throws IOException
+	 */
+	private void fillArchiveURLs(URL archive, List<URL> modifiedArchives)
+			throws IOException {
+
+		AbstractIOUtils ioUtils = AbstractIOUtils.getAppropriatedType(archive);
+		if (ioUtils != null) {
+			ioUtils.scan(persXmlFromJar);
+			List<URL> ejbURLs = ioUtils.getEjbURLs();
+			modifiedArchives.addAll(ejbURLs);
+			ArchiveData archiveData = new ArchiveData();
+			archiveData.setIoUtils(ioUtils);
+			if (ejbURLs.isEmpty()) {
+				archivesURLs.put(archive, archiveData);
+			} else {
+				fillArchiveURLs(ejbURLs, archiveData);
+			}
+		}
+	}
+
+	/**
 	 * Gets {@link URL} array for all classes and jar libraries within archive
 	 * file for class loading policy
 	 * 
@@ -219,26 +261,10 @@ public class MetaCreator {
 	 * @throws IOException
 	 */
 	private URL[] getFullArchives(URL[] archives) throws IOException {
+
 		List<URL> modifiedArchives = new ArrayList<URL>();
-		AbstractIOUtils ioUtils;
-		List<URL> ejbURLs;
-		ArchiveData archiveData;
 		for (URL archive : archives) {
-			ioUtils = AbstractIOUtils.getAppropriatedType(archive);
-			if (ioUtils != null) {
-				ioUtils.scan(persXmlFromJar);
-				ejbURLs = ioUtils.getEjbURLs();
-				modifiedArchives.addAll(ejbURLs);
-				archiveData = new ArchiveData();
-				archiveData.setIoUtils(ioUtils);
-				if (ejbURLs.isEmpty()) {
-					archivesURLs.put(archive, archiveData);
-				} else {
-					for (URL ejbURL : ejbURLs) {
-						archivesURLs.put(ejbURL, archiveData);
-					}
-				}
-			}
+			fillArchiveURLs(archive, modifiedArchives);
 		}
 
 		return modifiedArchives.toArray(new URL[modifiedArchives.size()]);
@@ -333,8 +359,8 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Scan application for find all {@link Stateless} beans and {@link Remote}
-	 * or {@link Local} proxy interfaces
+	 * Scan application for find all {@link javax.ejb.Stateless} beans and
+	 * {@link Remote} or {@link Local} proxy interfaces
 	 * 
 	 * @param archives
 	 * @throws IOException
@@ -372,8 +398,8 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Scan application for find all {@link Stateless} beans and {@link Remote}
-	 * or {@link Local} proxy interfaces
+	 * Scan application for find all {@link javax.ejb.Stateless} beans and
+	 * {@link Remote} or {@link Local} proxy interfaces
 	 * 
 	 * @throws ClassNotFoundException
 	 * @throws IOException
@@ -390,8 +416,8 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Scan application for find all {@link Stateless} beans and {@link Remote}
-	 * or {@link Local} proxy interfaces
+	 * Scan application for find all {@link javax.ejb.Stateless} beans and
+	 * {@link Remote} or {@link Local} proxy interfaces
 	 * 
 	 * @throws ClassNotFoundException
 	 * @throws IOException
