@@ -3,12 +3,14 @@ package org.lightmare.ejb.meta;
 import static org.lightmare.jpa.JPAManager.closeEntityManagerFactories;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.JPAManager;
 
@@ -23,6 +25,11 @@ public class MetaContainer {
 
 	// Cached bean meta data
 	private static final ConcurrentMap<String, MetaData> EJBS = new ConcurrentHashMap<String, MetaData>();
+
+	// Cached bean class name by its URL for undeploy processing
+	private static final ConcurrentMap<URL, String> EJB_URLS = new ConcurrentHashMap<URL, String>();
+
+	private static final Logger LOG = Logger.getLogger(MetaContainer.class);
 
 	/**
 	 * Adds {@link MetaData} to cache on specified bean name if absent and
@@ -130,6 +137,40 @@ public class MetaContainer {
 		awaitMetaData(metaData);
 
 		return metaData;
+	}
+
+	/**
+	 * Gets bean name by containing archive {@link URL} address
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public static String getBeanName(URL url) {
+		return EJB_URLS.get(url);
+	}
+
+	/**
+	 * Undeploys bean (removes it's {@link MetaData} from cache)
+	 * 
+	 * @param url
+	 * @throws IOException
+	 */
+	public static void undeploy(URL url) throws IOException {
+
+		synchronized (MetaContainer.class) {
+			String beanName = getBeanName(url);
+			@SuppressWarnings("unused")
+			MetaData metaData;
+			try {
+				metaData = getSyncMetaData(beanName);
+			} catch (IOException ex) {
+				LOG.error(String.format(
+						"Could not get bean resources %s cause %s", beanName,
+						ex.getMessage()), ex);
+			}
+			removeMeta(beanName);
+			metaData = null;
+		}
 	}
 
 	/**
