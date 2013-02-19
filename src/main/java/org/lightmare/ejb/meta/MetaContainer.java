@@ -203,6 +203,12 @@ public class MetaContainer {
 		closeEntityManagerFactories();
 	}
 
+	/**
+	 * Gets {@link java.util.Iterator}<MetaData> over all cached
+	 * {@link org.lightmare.ejb.meta.MetaData}
+	 * 
+	 * @return {@link java.util.Iterator}<MetaData>
+	 */
 	public static Iterator<MetaData> getBeanClasses() {
 		return EJBS.values().iterator();
 	}
