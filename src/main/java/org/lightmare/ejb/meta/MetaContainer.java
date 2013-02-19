@@ -150,6 +150,25 @@ public class MetaContainer {
 	}
 
 	/**
+	 * Clears connection from cache
+	 * 
+	 * @param metaData
+	 * @throws IOException
+	 */
+	private static void clearConnection(MetaData metaData) throws IOException {
+
+		// Gets connection to clear
+		String unitName = metaData.getUnitName();
+		ConnectionSemaphore semaphore = metaData.getConnection();
+		if (semaphore == null) {
+			semaphore = JPAManager.getConnection(unitName);
+		}
+		if (semaphore != null && semaphore.getUsers() <= 1) {
+			JPAManager.removeConnection(unitName);
+		}
+	}
+
+	/**
 	 * Removes bean (removes it's {@link MetaData} from cache) by bean class
 	 * name
 	 * 
@@ -168,16 +187,7 @@ public class MetaContainer {
 		// Removes MetaData from cache
 		removeMeta(beanName);
 		if (metaData != null) {
-
-			// Gets connection to clear
-			String unitName = metaData.getUnitName();
-			ConnectionSemaphore semaphore = metaData.getConnection();
-			if (semaphore == null) {
-				semaphore = JPAManager.getConnection(unitName);
-			}
-			if (semaphore != null && semaphore.getUsers() <= 1) {
-				JPAManager.removeConnection(unitName);
-			}
+			clearConnection(metaData);
 			metaData = null;
 		}
 	}
