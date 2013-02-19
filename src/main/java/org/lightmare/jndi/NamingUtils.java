@@ -33,6 +33,17 @@ public class NamingUtils {
 		return String.format("java:comp/env/%s", jndiName);
 	}
 
+	public void unbind(String name) throws IOException {
+
+		try {
+			getContext().unbind(name);
+		} catch (NamingException ex) {
+			throw new IOException(ex);
+		} catch (IOException ex) {
+			throw new IOException(ex);
+		}
+	}
+
 	/**
 	 * Creates and sets {@link InitialContext}
 	 * 

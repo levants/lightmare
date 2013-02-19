@@ -351,6 +351,15 @@ public class JPAManager {
 		if (semaphore != null) {
 			awaitConnection(semaphore);
 			closeConnection(semaphore);
+			NamingUtils namingUtils = new NamingUtils();
+			try {
+				String jndiName = NamingUtils.createJndiName(unitName);
+				namingUtils.unbind(jndiName);
+			} catch (IOException ex) {
+				LOG.error(String.format(
+						"Could not unbind jndi name %s cause %s", unitName,
+						ex.getMessage()), ex);
+			}
 		}
 
 	}

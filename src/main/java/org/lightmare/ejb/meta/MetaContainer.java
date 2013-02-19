@@ -159,8 +159,7 @@ public class MetaContainer {
 
 		synchronized (MetaContainer.class) {
 			String beanName = getBeanName(url);
-			@SuppressWarnings("unused")
-			MetaData metaData;
+			MetaData metaData = null;
 			try {
 				metaData = getSyncMetaData(beanName);
 			} catch (IOException ex) {
@@ -169,7 +168,14 @@ public class MetaContainer {
 						ex.getMessage()), ex);
 			}
 			removeMeta(beanName);
-			metaData = null;
+			if (metaData != null) {
+				ConnectionSemaphore semaphore = metaData.getConnection();
+				if (semaphore != null && semaphore.getUsers() <= 1) {
+					String unitName = semaphore.getUnitName();
+					JPAManager.removeConnection(unitName);
+				}
+				metaData = null;
+			}
 		}
 	}
 
