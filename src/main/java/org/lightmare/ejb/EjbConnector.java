@@ -63,6 +63,13 @@ public class EjbConnector {
 		}
 	}
 
+	/**
+	 * Instantiates bean by class
+	 * 
+	 * @param metaData
+	 * @return Bean instance
+	 * @throws IOException
+	 */
 	private <T> T getBeanInstance(MetaData metaData) throws IOException {
 
 		@SuppressWarnings("unchecked")
