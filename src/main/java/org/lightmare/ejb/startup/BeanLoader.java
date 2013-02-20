@@ -296,6 +296,7 @@ public class BeanLoader {
 				// Sets connection semaphore for this connection
 				ConnectionSemaphore semaphore = JPAManager.setSemaphore(
 						unitName, jndiName);
+				metaData.setConnection(semaphore);
 				notifyConn();
 				if (semaphore != null) {
 					lockSemaphore(semaphore, unitName, jndiName);
