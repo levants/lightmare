@@ -46,6 +46,9 @@ public class JPAManager {
 	private static final Logger LOG = Logger.getLogger(JPAManager.class);
 
 	private JPAManager() {
+		throw new AssertionError(String.format(
+				"Call of %s class constructor is not allowed", getClass()
+						.getName()));
 	}
 
 	public static boolean checkForEmf(String unitName) {
