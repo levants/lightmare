@@ -297,6 +297,14 @@ public class JPAManager {
 		}
 	}
 
+	/**
+	 * Gets {@link ConnectionSemaphore} from cache, awaits if connection
+	 * instantiation is in progress
+	 * 
+	 * @param unitName
+	 * @return {@link ConnectionSemaphore}
+	 * @throws IOException
+	 */
 	public static ConnectionSemaphore getConnection(String unitName)
 			throws IOException {
 
@@ -308,6 +316,14 @@ public class JPAManager {
 		return semaphore;
 	}
 
+	/**
+	 * Gets {@link EntityManagerFactory} from {@link ConnectionSemaphore},
+	 * awaits if connection
+	 * 
+	 * @param unitName
+	 * @return {@link EntityManagerFactory}
+	 * @throws IOException
+	 */
 	public static EntityManagerFactory getEntityManagerFactory(String unitName)
 			throws IOException {
 
@@ -322,6 +338,11 @@ public class JPAManager {
 
 	}
 
+	/**
+	 * Unbinds connection from {@link javax.naming.Context}
+	 * 
+	 * @param semaphore
+	 */
 	private static void unbindConnection(ConnectionSemaphore semaphore) {
 
 		String jndiName = semaphore.getJndiName();
@@ -340,6 +361,12 @@ public class JPAManager {
 		}
 	}
 
+	/**
+	 * Closes connection ({@link EntityManagerFactory}) in passed
+	 * {@link ConnectionSemaphore}
+	 * 
+	 * @param semaphore
+	 */
 	private static void closeConnection(ConnectionSemaphore semaphore) {
 		int users = semaphore.decrementUser();
 		if (users <= 0) {
@@ -350,6 +377,12 @@ public class JPAManager {
 		}
 	}
 
+	/**
+	 * Removes {@link ConnectionSemaphore} from cache and unbinds name from
+	 * {@link javax.naming.Context}
+	 * 
+	 * @param unitName
+	 */
 	public static void removeConnection(String unitName) {
 
 		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
@@ -369,6 +402,11 @@ public class JPAManager {
 
 	}
 
+	/**
+	 * Closes passed {@link EntityManagerFactory}
+	 * 
+	 * @param emf
+	 */
 	private static void closeEntityManagerFactory(EntityManagerFactory emf) {
 
 		if (emf != null && emf.isOpen()) {
@@ -390,6 +428,12 @@ public class JPAManager {
 		CONNECTIONS.clear();
 	}
 
+	/**
+	 * Builder class for instantiate {@link JPAManager} class object
+	 * 
+	 * @author Levan
+	 * 
+	 */
 	public static class Builder {
 
 		private JPAManager manager;

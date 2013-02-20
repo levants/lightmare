@@ -16,6 +16,7 @@ import org.lightmare.ejb.meta.ConnectionSemaphore;
 import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.startup.MetaCreator;
+import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.utils.reflect.MetaUtils;
@@ -57,7 +58,7 @@ public class EjbConnector {
 			String unitName = metaData.getUnitName();
 
 			if (unitName != null && !unitName.isEmpty()) {
-				ConnectionSemaphore semaphore = getConnection(unitName);
+				ConnectionSemaphore semaphore = JPAManager.getConnection(unitName);
 				metaData.setConnection(semaphore);
 			}
 		}
