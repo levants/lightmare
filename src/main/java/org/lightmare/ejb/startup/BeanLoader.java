@@ -187,8 +187,7 @@ public class BeanLoader {
 		}
 
 		/**
-		 * Locks {@link ConnectionSemaphore} if needed for connection
-		 * proccessing
+		 * Locks {@link ConnectionSemaphore} if needed for connection processing
 		 * 
 		 * @param semaphore
 		 * @param unitName
@@ -249,6 +248,66 @@ public class BeanLoader {
 		}
 
 		/**
+		 * Checks weather connection with passed unit or jndi name already
+		 * exists
+		 * 
+		 * @param unitName
+		 * @param jndiName
+		 * @return <code>boolean</code>
+		 */
+		private boolean checkOnEmf(String unitName, String jndiName) {
+			boolean checkForEmf;
+			if (jndiName == null || jndiName.isEmpty()) {
+				checkForEmf = JPAManager.checkForEmf(unitName);
+			} else {
+				jndiName = NamingUtils.createJndiName(jndiName);
+				checkForEmf = JPAManager.checkForEmf(unitName)
+						&& JPAManager.checkForEmf(jndiName);
+			}
+
+			return checkForEmf;
+		}
+
+		/**
+		 * Creates {@link ConnectionSemaphore} if such does not exists
+		 * 
+		 * @param context
+		 * @param field
+		 * @param resource
+		 * @param unit
+		 * @return <code>boolean</code>
+		 * @throws IOException
+		 */
+		private boolean identifyConnections(PersistenceContext context,
+				Field field, Resource resource, PersistenceUnit unit)
+				throws IOException {
+
+			metaData.setConnectorField(field);
+			String unitName = context.unitName();
+			String jndiName = context.name();
+			metaData.setUnitName(unitName);
+			metaData.setJndiName(jndiName);
+			boolean checkForEmf = checkOnEmf(unitName, jndiName);
+			boolean checkOnAnnotations = false;
+			if (checkForEmf) {
+				notifyConn();
+				checkOnAnnotations = checkOnBreak(context, resource, unit);
+			} else {
+				// Sets connection semaphore for this connection
+				ConnectionSemaphore semaphore = JPAManager.setSemaphore(
+						unitName, jndiName);
+				notifyConn();
+				if (semaphore != null) {
+					lockSemaphore(semaphore, unitName, jndiName);
+				}
+
+				checkOnAnnotations = checkOnBreak(context, resource, unit);
+			}
+
+			return checkOnAnnotations;
+		}
+
+		/**
 		 * Finds and caches {@link PersistenceContext}, {@link PersistenceUnit}
 		 * and {@link Resource} annotated {@link Field}s in bean class and
 		 * configures connections and creates {@link ConnectionSemaphore}s if it
@@ -264,9 +323,7 @@ public class BeanLoader {
 			PersistenceUnit unit;
 			PersistenceContext context;
 			Resource resource;
-			String unitName;
-			String jndiName;
-			boolean checkForEmf;
+			boolean checkOnAnnotations = false;
 			if (fields == null || fields.length == 0) {
 				notifyConn();
 			}
@@ -275,47 +332,18 @@ public class BeanLoader {
 				resource = field.getAnnotation(Resource.class);
 				unit = field.getAnnotation(PersistenceUnit.class);
 				if (context != null) {
-					metaData.setConnectorField(field);
-					unitName = context.unitName();
-					jndiName = context.name();
-					metaData.setUnitName(unitName);
-					metaData.setJndiName(jndiName);
-					if (jndiName == null || jndiName.isEmpty()) {
-						checkForEmf = JPAManager.checkForEmf(unitName);
-					} else {
-						jndiName = NamingUtils.createJndiName(jndiName);
-						checkForEmf = JPAManager.checkForEmf(unitName)
-								&& JPAManager.checkForEmf(jndiName);
-					}
-					if (checkForEmf) {
-						notifyConn();
-						if (checkOnBreak(context, resource, unit)) {
-							break;
-						}
-					} else {
-						// Sets connection semaphore for this connection
-						ConnectionSemaphore semaphore = JPAManager
-								.setSemaphore(unitName, jndiName);
-						notifyConn();
-						if (semaphore != null) {
-							lockSemaphore(semaphore, unitName, jndiName);
-						}
-
-						if (checkOnBreak(context, resource, unit)) {
-							break;
-						}
-					}
+					checkOnAnnotations = identifyConnections(context, field,
+							resource, unit);
 				} else if (resource != null) {
-
 					metaData.setTransactionField(field);
-					if (checkOnBreak(context, resource, unit)) {
-						break;
-					}
+					checkOnAnnotations = checkOnBreak(context, resource, unit);
 				} else if (unit != null) {
 					metaData.setUnitField(field);
-					if (checkOnBreak(context, resource, unit)) {
-						break;
-					}
+					checkOnAnnotations = checkOnBreak(context, resource, unit);
+				}
+
+				if (checkOnAnnotations) {
+					break;
 				}
 			}
 		}
