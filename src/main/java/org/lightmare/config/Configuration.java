@@ -68,6 +68,11 @@ public class Configuration {
 
 	private static final String CONFIG_FILE = "./config/config.properties";
 
+	// String prefixes for jndi names
+	public static final String JPA_NAME = "java:comp/env/";
+
+	public static final String EJB_NAME = "ejb:bean/";
+
 	private static final Logger LOG = Logger.getLogger(Configuration.class);
 
 	public Configuration() {

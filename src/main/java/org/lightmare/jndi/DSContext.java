@@ -42,6 +42,10 @@ public class DSContext extends MemoryContext {
 			} else {
 				value = candidate;
 			}
+		} else if (name.startsWith("ejb:bean/")) {
+			
+			MetaContainer
+			
 		} else {
 			value = super.lookup(name);
 		}

@@ -260,7 +260,7 @@ public class BeanLoader {
 			if (jndiName == null || jndiName.isEmpty()) {
 				checkForEmf = JPAManager.checkForEmf(unitName);
 			} else {
-				jndiName = NamingUtils.createJndiName(jndiName);
+				jndiName = NamingUtils.createJpaJndiName(jndiName);
 				checkForEmf = JPAManager.checkForEmf(unitName)
 						&& JPAManager.checkForEmf(jndiName);
 			}

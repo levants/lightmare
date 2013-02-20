@@ -386,7 +386,7 @@ public class JPAManager {
 			closeConnection(semaphore);
 			NamingUtils namingUtils = new NamingUtils();
 			try {
-				String jndiName = NamingUtils.createJndiName(unitName);
+				String jndiName = NamingUtils.createJpaJndiName(unitName);
 				namingUtils.unbind(jndiName);
 			} catch (IOException ex) {
 				LOG.error(String.format(

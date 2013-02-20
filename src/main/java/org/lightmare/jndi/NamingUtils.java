@@ -8,6 +8,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
+import org.lightmare.config.Configuration;
+
 /**
  * Utility class to initialize and set (
  * {@link System#setProperty(String, String)}) the {@link InitialContextFactory}
@@ -28,9 +30,28 @@ public class NamingUtils {
 	 * @param jndiName
 	 * @return
 	 */
-	public static String createJndiName(String jndiName) {
+	public static String createJpaJndiName(String jndiName) {
 
-		return String.format("java:comp/env/%s", jndiName);
+		return String.format("%s%s", Configuration.JPA_NAME, jndiName);
+	}
+
+	public static String formatJpaJndiName(String jndiName) {
+
+		String name = jndiName.replace(Configuration.JPA_NAME, "");
+
+		return name;
+	}
+
+	public static String createEjbJndiName(String jndiName) {
+
+		return String.format("%s%s", Configuration.EJB_NAME, jndiName);
+	}
+
+	public static String formatEjbJndiName(String jndiName) {
+
+		String name = jndiName.replace(Configuration.EJB_NAME, "");
+
+		return name;
 	}
 
 	public void unbind(String name) throws IOException {
