@@ -294,10 +294,13 @@ public class BeanLoader {
 
 			if (checkForEmf) {
 				notifyConn();
+				semaphore = JPAManager.getSemaphore(unitName);
+				metaData.setConnection(semaphore);
 				checkOnAnnotations = checkOnBreak(context, resource, unit);
 			} else {
 				// Sets connection semaphore for this connection
 				semaphore = JPAManager.setSemaphore(unitName, jndiName);
+				metaData.setConnection(semaphore);
 				notifyConn();
 				if (semaphore != null) {
 					lockSemaphore(semaphore, unitName, jndiName);
