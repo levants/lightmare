@@ -62,6 +62,11 @@ public class JPAManager {
 		return check;
 	}
 
+	public static ConnectionSemaphore getSemaphore(String unitName) {
+
+		return CONNECTIONS.get(unitName);
+	}
+
 	private static ConnectionSemaphore createSemaphore(String unitName) {
 
 		ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);

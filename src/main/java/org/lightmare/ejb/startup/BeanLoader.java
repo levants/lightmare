@@ -289,13 +289,17 @@ public class BeanLoader {
 			metaData.setJndiName(jndiName);
 			boolean checkForEmf = checkOnEmf(unitName, jndiName);
 			boolean checkOnAnnotations = false;
+
+			ConnectionSemaphore semaphore;
+
 			if (checkForEmf) {
 				notifyConn();
+				semaphore = JPAManager.getSemaphore(unitName);
+				metaData.setConnection(semaphore);
 				checkOnAnnotations = checkOnBreak(context, resource, unit);
 			} else {
 				// Sets connection semaphore for this connection
-				ConnectionSemaphore semaphore = JPAManager.setSemaphore(
-						unitName, jndiName);
+				semaphore = JPAManager.setSemaphore(unitName, jndiName);
 				metaData.setConnection(semaphore);
 				notifyConn();
 				if (semaphore != null) {
