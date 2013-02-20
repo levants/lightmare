@@ -344,6 +344,11 @@ public class MetaCreator {
 		}
 	}
 
+	/**
+	 * Deploys single bean by class name
+	 * 
+	 * @param beanNames
+	 */
 	private void deployBeans(Set<String> beanNames) {
 		conn = new CountDownLatch(beanNames.size());
 		for (String beanName : beanNames) {
