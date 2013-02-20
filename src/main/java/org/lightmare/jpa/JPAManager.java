@@ -429,7 +429,7 @@ public class JPAManager {
 	}
 
 	/**
-	 * Builder class for instantiate {@link JPAManager} class object
+	 * Builder class to create {@link JPAManager} class object
 	 * 
 	 * @author Levan
 	 * 
