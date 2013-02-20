@@ -158,11 +158,7 @@ public class JPAManager {
 			Enumeration<URL> xmls;
 			ConfigLoader configLoader = new ConfigLoader();
 			if (checkForPath) {
-				try {
-					xmls = configLoader.readFile(path);
-				} catch (IOException ex) {
-					throw new PersistenceException(ex);
-				}
+				xmls = configLoader.readFile(path);
 			} else {
 				xmls = configLoader.readURL(url);
 			}
