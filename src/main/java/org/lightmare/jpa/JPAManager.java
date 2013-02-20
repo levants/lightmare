@@ -13,7 +13,6 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
 
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.meta.ConnectionSemaphore;
