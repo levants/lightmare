@@ -294,7 +294,6 @@ public class BeanLoader {
 
 			if (checkForEmf) {
 				notifyConn();
-				semaphore = JPAManager.getSemaphore(unitName);
 				checkOnAnnotations = checkOnBreak(context, resource, unit);
 			} else {
 				// Sets connection semaphore for this connection
