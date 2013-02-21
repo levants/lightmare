@@ -51,12 +51,13 @@ public class DSContext extends MemoryContext {
 			}
 		} else if (jndiName.startsWith("ejb:")) {
 
-			name = NamingUtils.formatEjbJndiName(jndiName);
+			NamingUtils.BeanDescriptor descriptor = NamingUtils
+					.parseEjbJndiName(jndiName);
 			EjbConnector ejbConnection = new EjbConnector();
 			try {
-				MetaData metaData = MetaContainer.getSyncMetaData(name);
-				Class<?> beanClass = metaData.getBeanClass();
-				value = ejbConnection.connectToBean(name, beanClass);
+				String beanName = descriptor.getBeanName();
+				String interfaceName = descriptor.getInterfaceName();
+				value = ejbConnection.connectToBean(beanName, interfaceName);
 			} catch (IOException ex) {
 				throw new NamingException(ex.getMessage());
 			}
