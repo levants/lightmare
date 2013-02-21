@@ -17,6 +17,8 @@ public class MetaData {
 
 	private Class<?> beanClass;
 
+	private Class<?> interfaceClass;
+
 	private Field connectorField;
 
 	private Field transactionField;
@@ -41,6 +43,14 @@ public class MetaData {
 
 	public void setBeanClass(Class<?> beanClass) {
 		this.beanClass = beanClass;
+	}
+
+	public Class<?> getInterfaceClass() {
+		return interfaceClass;
+	}
+
+	public void setInterfaceClass(Class<?> interfaceClass) {
+		this.interfaceClass = interfaceClass;
 	}
 
 	public Field getConnectorField() {
