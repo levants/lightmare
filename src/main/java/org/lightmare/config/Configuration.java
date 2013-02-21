@@ -71,7 +71,9 @@ public class Configuration {
 	// String prefixes for jndi names
 	public static final String JPA_NAME = "java:comp/env/";
 
-	public static final String EJB_NAME = "ejb:bean/";
+	public static final String EJB_NAME = "ejb:";
+
+	public static final int EJB_NAME_LENGTH = 4;
 
 	private static final Logger LOG = Logger.getLogger(Configuration.class);
 
