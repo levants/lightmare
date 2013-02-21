@@ -25,6 +25,42 @@ public class NamingUtils {
 	private static Context context;
 
 	/**
+	 * Descriptor class which contains ejb bean class name and its interface
+	 * class name
+	 * 
+	 * @author levan
+	 * 
+	 */
+	public static class BeanDescriptor {
+
+		private String beanName;
+
+		private String interfaceName;
+
+		public BeanDescriptor(String beanName, String interfaceName) {
+
+			this.beanName = beanName;
+			this.interfaceName = interfaceName;
+		}
+
+		public String getBeanName() {
+			return beanName;
+		}
+
+		public void setBeanName(String beanName) {
+			this.beanName = beanName;
+		}
+
+		public String getInterfaceName() {
+			return interfaceName;
+		}
+
+		public void setInterfaceName(String interfaceName) {
+			this.interfaceName = interfaceName;
+		}
+	}
+
+	/**
 	 * Creates jndi name pefixes for ejb objects
 	 * 
 	 * @param jndiName
@@ -52,6 +88,28 @@ public class NamingUtils {
 		String name = jndiName.replace(Configuration.EJB_NAME, "");
 
 		return name;
+	}
+
+	/**
+	 * Parses bean jndi name for lookup bean
+	 * 
+	 * @param jndiName
+	 * @return {@link BeanDescriptor}
+	 */
+	public static BeanDescriptor parseEjbJndiName(String jndiName) {
+
+		String pureName = jndiName.substring(Configuration.EJB_NAME_LENGTH);
+		String[] formatedNames = pureName.split("\\");
+		String beanNames = formatedNames[1];
+		String[] beanDescriptors = beanNames.split("!");
+
+		String interfaceName = beanDescriptors[0];
+		String beanName = beanDescriptors[1];
+
+		BeanDescriptor descriptor = new BeanDescriptor(beanName, interfaceName);
+
+		return descriptor;
+
 	}
 
 	public void unbind(String name) throws IOException {
