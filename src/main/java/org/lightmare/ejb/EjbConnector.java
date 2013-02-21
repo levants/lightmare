@@ -1,7 +1,5 @@
 package org.lightmare.ejb;
 
-import static org.lightmare.jpa.JPAManager.getConnection;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
@@ -58,7 +56,8 @@ public class EjbConnector {
 			String unitName = metaData.getUnitName();
 
 			if (unitName != null && !unitName.isEmpty()) {
-				ConnectionSemaphore semaphore = JPAManager.getConnection(unitName);
+				ConnectionSemaphore semaphore = JPAManager
+						.getConnection(unitName);
 				metaData.setConnection(semaphore);
 			}
 		}
