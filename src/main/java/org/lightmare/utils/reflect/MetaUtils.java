@@ -15,6 +15,47 @@ import java.lang.reflect.Method;
 public class MetaUtils {
 
 	/**
+	 * Loads class by name
+	 * 
+	 * @param className
+	 * @return {@link Class}
+	 * @throws IOException
+	 */
+	public static Class<?> classForName(String className) throws IOException {
+
+		Class<?> clazz = classForName(className, null);
+
+		return clazz;
+	}
+
+	/**
+	 * Loads class by name with specific {@link ClassLoader} if it is not
+	 * <code>null</code>
+	 * 
+	 * @param className
+	 * @param loader
+	 * @return {@link Class}
+	 * @throws IOException
+	 */
+	public static Class<?> classForName(String className, ClassLoader loader)
+			throws IOException {
+
+		Class<?> clazz;
+		try {
+			if (loader == null) {
+				clazz = Class.forName(className);
+			} else {
+				clazz = Class.forName(className, true, loader);
+			}
+
+			return clazz;
+
+		} catch (ClassNotFoundException ex) {
+			throw new IOException(ex);
+		}
+	}
+
+	/**
 	 * Creates {@link Class} instance by {@link Class#newInstance()} method call
 	 * 
 	 * @param clazz
