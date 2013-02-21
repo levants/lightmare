@@ -8,8 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.lightmare.ejb.EjbConnector;
-import org.lightmare.ejb.meta.MetaContainer;
-import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.JPAManager;
 import org.osjava.sj.memory.MemoryContext;
 
