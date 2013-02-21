@@ -49,7 +49,7 @@ public class DSContext extends MemoryContext {
 			} else {
 				value = candidate;
 			}
-		} else if (jndiName.startsWith("ejb:bean/")) {
+		} else if (jndiName.startsWith("ejb:")) {
 
 			name = NamingUtils.formatEjbJndiName(jndiName);
 			EjbConnector ejbConnection = new EjbConnector();
