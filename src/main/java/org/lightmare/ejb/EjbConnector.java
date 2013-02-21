@@ -103,10 +103,49 @@ public class EjbConnector {
 	}
 
 	/**
-	 * Creates custom implementation of bean {@link Class}
+	 * Instantiates bean with {@link Proxy} utility
 	 * 
 	 * @param interfaceClass
-	 * @return T implementation of bean interface
+	 * @param handler
+	 * @return <code>T</code> implementation of bean interface
+	 */
+	private <T> T instatiateBean(Class<T> interfaceClass,
+			InvocationHandler handler) {
+
+		Class<?>[] interfaceArray = { interfaceClass };
+
+		@SuppressWarnings("unchecked")
+		T beanInstance = (T) Proxy.newProxyInstance(Thread.currentThread()
+				.getContextClassLoader(), interfaceArray, handler);
+
+		return beanInstance;
+	}
+
+	/**
+	 * 
+	 * @param metaData
+	 * @param rpcArgs
+	 * @return <code>T</code> implementation of bean interface
+	 * @throws IOException
+	 */
+	private <T> T connectToBean(MetaData metaData, Object... rpcArgs)
+			throws IOException {
+
+		InvocationHandler handler = getHandler(metaData);
+		Class<?> interfaceClass = metaData.getInterfaceClass();
+
+		@SuppressWarnings("unchecked")
+		T beanInstance = (T) instatiateBean(interfaceClass, handler);
+
+		return beanInstance;
+	}
+
+	/**
+	 * Creates custom implementation of bean {@link Class} by class name and its
+	 * proxy interface {@link Class} instance
+	 * 
+	 * @param interfaceClass
+	 * @return <code>T</code> implementation of bean interface
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
@@ -118,6 +157,7 @@ public class EjbConnector {
 		if (configuration.isServer()) {
 
 			MetaData metaData = getMeta(beanName);
+			metaData.setInterfaceClass(interfaceClass);
 			handler = getHandler(metaData);
 
 		} else {
@@ -130,12 +170,37 @@ public class EjbConnector {
 			handler = new BeanLocalHandler(new RPCall(host, port));
 		}
 
-		Class<?>[] interfaceArray = { interfaceClass };
-
-		@SuppressWarnings("unchecked")
-		T beanInstance = (T) Proxy.newProxyInstance(Thread.currentThread()
-				.getContextClassLoader(), interfaceArray, handler);
+		T beanInstance = (T) instatiateBean(interfaceClass, handler);
 
 		return beanInstance;
+	}
+
+	/**
+	 * Creates custom implementation of bean {@link Class} by class name and its
+	 * proxy interface name
+	 * 
+	 * @param beanName
+	 * @param interfaceName
+	 * @param rpcArgs
+	 * @return <code>T</code> implementation of bean interface
+	 * @throws IOException
+	 */
+	public <T> T connectToBean(String beanName, String interfaceName,
+			Object... rpcArgs) throws IOException {
+
+		MetaData metaData = getMeta(beanName);
+
+		if (metaData.getInterfaceClass() == null) {
+			@SuppressWarnings("unchecked")
+			Class<T> interfaceClass = (Class<T>) MetaUtils
+					.classForName(interfaceName);
+			metaData.setInterfaceClass(interfaceClass);
+		}
+
+		@SuppressWarnings("unchecked")
+		T beanInstance = (T) connectToBean(metaData);
+
+		return beanInstance;
+
 	}
 }
