@@ -13,23 +13,23 @@ import org.lightmare.utils.AbstractIOUtils;
  */
 public class ArchiveData {
 
-	private AbstractIOUtils ioUtils;
+    private AbstractIOUtils ioUtils;
 
-	private ClassLoader loader;
+    private ClassLoader loader;
 
-	public AbstractIOUtils getIoUtils() {
-		return ioUtils;
-	}
+    public AbstractIOUtils getIoUtils() {
+	return ioUtils;
+    }
 
-	public void setIoUtils(AbstractIOUtils ioUtils) {
-		this.ioUtils = ioUtils;
-	}
+    public void setIoUtils(AbstractIOUtils ioUtils) {
+	this.ioUtils = ioUtils;
+    }
 
-	public ClassLoader getLoader() {
-		return loader;
-	}
+    public ClassLoader getLoader() {
+	return loader;
+    }
 
-	public void setLoader(ClassLoader loader) {
-		this.loader = loader;
-	}
+    public void setLoader(ClassLoader loader) {
+	this.loader = loader;
+    }
 }

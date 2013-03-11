@@ -34,80 +34,79 @@ import org.lightmare.utils.concurrent.ThreadFactoryUtil;
  */
 public class RpcListener {
 
-	/**
-	 * Boss pool for Netty network
-	 */
-	private static ExecutorService boss;
-	/**
-	 * Worker pool for Netty server
-	 */
-	private static ExecutorService worker;
+    /**
+     * Boss pool for Netty network
+     */
+    private static ExecutorService boss;
+    /**
+     * Worker pool for Netty server
+     */
+    private static ExecutorService worker;
 
-	/**
-	 * {@link NioWorkerPool} for Netty server
-	 */
-	private static WorkerPool<NioWorker> workerPool;
+    /**
+     * {@link NioWorkerPool} for Netty server
+     */
+    private static WorkerPool<NioWorker> workerPool;
 
-	/**
-	 * {@link ChannelGroup} "info-channels" for only info requests
-	 */
-	public static ChannelGroup channelGroup = new DefaultChannelGroup(
-			"info-channels");
-	private static Channel channel;
-	private static ServerSocketChannelFactory factory;
-	private static final Runtime RUNTIME = Runtime.getRuntime();
-	private static final Logger LOG = Logger.getLogger(RpcListener.class);
+    /**
+     * {@link ChannelGroup} "info-channels" for only info requests
+     */
+    public static ChannelGroup channelGroup = new DefaultChannelGroup(
+	    "info-channels");
+    private static Channel channel;
+    private static ServerSocketChannelFactory factory;
+    private static final Runtime RUNTIME = Runtime.getRuntime();
+    private static final Logger LOG = Logger.getLogger(RpcListener.class);
 
-	/**
-	 * Set boss and worker thread pools size from configuration
-	 */
-	private static void setNettyPools() {
-		Integer bossCount;
-		Integer workerCount;
-		boss = new OrderedMemoryAwareThreadPoolExecutor(
-				(bossCount = MetaCreator.CONFIG
-						.getIntValue("boss_pool_size")) != null ? bossCount : 1,
-				400000000, 2000000000, 60, TimeUnit.SECONDS,
-				new ThreadFactoryUtil("netty-boss-thread", Thread.MAX_PRIORITY));
-		worker = new OrderedMemoryAwareThreadPoolExecutor(
-				(workerCount = MetaCreator.CONFIG
-						.getIntValue("worker_pool_size")) != null ? workerCount
-						: RUNTIME.availableProcessors() * 3, 400000000,
-				2000000000, 60, TimeUnit.SECONDS, new ThreadFactoryUtil(
-						"netty-worker-thread", (Thread.MAX_PRIORITY - 1)));
-		workerPool = new NioWorkerPool(worker, workerCount);
+    /**
+     * Set boss and worker thread pools size from configuration
+     */
+    private static void setNettyPools() {
+	Integer bossCount;
+	Integer workerCount;
+	boss = new OrderedMemoryAwareThreadPoolExecutor(
+		(bossCount = MetaCreator.CONFIG.getIntValue("boss_pool_size")) != null ? bossCount
+			: 1, 400000000, 2000000000, 60, TimeUnit.SECONDS,
+		new ThreadFactoryUtil("netty-boss-thread", Thread.MAX_PRIORITY));
+	worker = new OrderedMemoryAwareThreadPoolExecutor(
+		(workerCount = MetaCreator.CONFIG
+			.getIntValue("worker_pool_size")) != null ? workerCount
+			: RUNTIME.availableProcessors() * 3, 400000000,
+		2000000000, 60, TimeUnit.SECONDS, new ThreadFactoryUtil(
+			"netty-worker-thread", (Thread.MAX_PRIORITY - 1)));
+	workerPool = new NioWorkerPool(worker, workerCount);
+    }
+
+    /**
+     * Starts server
+     * 
+     */
+    public static void startServer() {
+	setNettyPools();
+	factory = new NioServerSocketChannelFactory(boss, workerPool);
+	ServerBootstrap bootstrap = new ServerBootstrap(factory);
+	bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
+
+	    @Override
+	    public ChannelPipeline getPipeline() throws Exception {
+		return Channels.pipeline(new RcpEncoder(), new RpcDecoder(),
+			new RpcHandler());
+	    }
+	});
+	bootstrap.setOption("tcpNoDelay", true);
+	bootstrap.setOption("child.keepAlive", true);
+	bootstrap.setOption("backlog", 500);
+	bootstrap.setOption("connectTimeoutMillis", MetaCreator.CONFIG
+		.getIntValue(Configuration.CONNECTION_TIMEOUT));
+	try {
+	    channel = bootstrap.bind(new InetSocketAddress(Inet4Address
+		    .getByName(MetaCreator.CONFIG
+			    .getStringValue("listening_ip")),
+		    MetaCreator.CONFIG.getIntValue("listening_port")));
+	    channelGroup.add(channel);
+	    LOG.info(channel.getLocalAddress());
+	} catch (UnknownHostException ex) {
+	    LOG.error(ex.getMessage(), ex);
 	}
-
-	/**
-	 * Starts server
-	 * 
-	 */
-	public static void startServer() {
-		setNettyPools();
-		factory = new NioServerSocketChannelFactory(boss, workerPool);
-		ServerBootstrap bootstrap = new ServerBootstrap(factory);
-		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-
-			@Override
-			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new RcpEncoder(), new RpcDecoder(),
-						new RpcHandler());
-			}
-		});
-		bootstrap.setOption("tcpNoDelay", true);
-		bootstrap.setOption("child.keepAlive", true);
-		bootstrap.setOption("backlog", 500);
-		bootstrap.setOption("connectTimeoutMillis", MetaCreator.CONFIG
-				.getIntValue(Configuration.CONNECTION_TIMEOUT));
-		try {
-			channel = bootstrap.bind(new InetSocketAddress(Inet4Address
-					.getByName(MetaCreator.CONFIG
-							.getStringValue("listening_ip")),
-					MetaCreator.CONFIG.getIntValue("listening_port")));
-			channelGroup.add(channel);
-			LOG.info(channel.getLocalAddress());
-		} catch (UnknownHostException ex) {
-			LOG.error(ex.getMessage(), ex);
-		}
-	}
+    }
 }

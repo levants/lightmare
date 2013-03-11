@@ -19,43 +19,43 @@ import org.lightmare.remote.rcp.wrappers.RcpWrapper;
  */
 public class RcpHandler extends SimpleChannelHandler {
 
-	private BlockingQueue<RcpWrapper> answer;
+    private BlockingQueue<RcpWrapper> answer;
 
-	public RcpHandler() {
-		answer = new LinkedBlockingQueue<RcpWrapper>();
-	}
+    public RcpHandler() {
+	answer = new LinkedBlockingQueue<RcpWrapper>();
+    }
 
-	@Override
-	public void messageReceived(ChannelHandlerContext ctx, final MessageEvent ev) {
-		ev.getFuture().getChannel().close().awaitUninterruptibly()
-				.addListener(new ChannelFutureListener() {
-					public void operationComplete(ChannelFuture future)
-							throws Exception {
-						boolean offered = answer.offer((RcpWrapper) ev
-								.getMessage());
-						assert offered;
-					}
-				});
-	}
+    @Override
+    public void messageReceived(ChannelHandlerContext ctx, final MessageEvent ev) {
+	ev.getFuture().getChannel().close().awaitUninterruptibly()
+		.addListener(new ChannelFutureListener() {
+		    public void operationComplete(ChannelFuture future)
+			    throws Exception {
+			boolean offered = answer.offer((RcpWrapper) ev
+				.getMessage());
+			assert offered;
+		    }
+		});
+    }
 
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent ev) {
-		ev.getCause().printStackTrace();
-		ev.getChannel().close().awaitUninterruptibly();
-	}
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent ev) {
+	ev.getCause().printStackTrace();
+	ev.getChannel().close().awaitUninterruptibly();
+    }
 
-	public RcpWrapper getWrapper() {
-		boolean interrupted = false;
-		for (;;) {
-			try {
-				RcpWrapper responce = answer.take();
-				if (interrupted) {
-					Thread.currentThread().interrupt();
-				}
-				return responce;
-			} catch (InterruptedException ex) {
-				interrupted = true;
-			}
+    public RcpWrapper getWrapper() {
+	boolean interrupted = false;
+	for (;;) {
+	    try {
+		RcpWrapper responce = answer.take();
+		if (interrupted) {
+		    Thread.currentThread().interrupt();
 		}
+		return responce;
+	    } catch (InterruptedException ex) {
+		interrupted = true;
+	    }
 	}
+    }
 }

@@ -16,28 +16,28 @@ import org.lightmare.utils.RpcUtils;
 @Consumes("application/json;charset=utf-8")
 public class RestRPC {
 
-	private static final Logger LOG = Logger.getLogger(RestRPC.class);
+    private static final Logger LOG = Logger.getLogger(RestRPC.class);
 
-	@GET
-	public String call(@QueryParam("param") String param) {
+    @GET
+    public String call(@QueryParam("param") String param) {
 
-		String response = "not yet implemented";
-		try {
-			response = RpcUtils.write(response);
-		} catch (IOException ex) {
-			LOG.error("Could not serialize response", ex);
-			response = String.format("{error:'%s'}", ex.getMessage());
-		}
-
-		return response;
+	String response = "not yet implemented";
+	try {
+	    response = RpcUtils.write(response);
+	} catch (IOException ex) {
+	    LOG.error("Could not serialize response", ex);
+	    response = String.format("{error:'%s'}", ex.getMessage());
 	}
 
-	@GET
-	public String publish() {
+	return response;
+    }
 
-		RestPublisher publisher = new RestPublisher();
-		String beansDescriptor = publisher.publishAll();
+    @GET
+    public String publish() {
 
-		return beansDescriptor;
-	}
+	RestPublisher publisher = new RestPublisher();
+	String beansDescriptor = publisher.publishAll();
+
+	return beansDescriptor;
+    }
 }

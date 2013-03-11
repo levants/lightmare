@@ -12,33 +12,33 @@ import org.lightmare.ejb.startup.MetaCreator;
  */
 public class ShutDown implements Runnable {
 
-	private TmpResources tmpResources;
+    private TmpResources tmpResources;
 
-	private static final Logger LOG = Logger.getLogger(ShutDown.class);
+    private static final Logger LOG = Logger.getLogger(ShutDown.class);
 
-	public ShutDown(TmpResources tmpResources) {
-		this.tmpResources = tmpResources;
-	}
+    public ShutDown(TmpResources tmpResources) {
+	this.tmpResources = tmpResources;
+    }
 
-	@Override
-	public void run() {
+    @Override
+    public void run() {
 
-		MetaCreator.closeAllConnections();
-		tmpResources.removeTempFiles();
-		LOG.info("Lightmare server is going to shut down");
-	}
+	MetaCreator.closeAllConnections();
+	tmpResources.removeTempFiles();
+	LOG.info("Lightmare server is going to shut down");
+    }
 
-	/**
-	 * Sets shut down hook for application
-	 * 
-	 * @param tmpResources
-	 */
-	public static void setHook(TmpResources tmpResources) {
+    /**
+     * Sets shut down hook for application
+     * 
+     * @param tmpResources
+     */
+    public static void setHook(TmpResources tmpResources) {
 
-		ShutDown shutDown = new ShutDown(tmpResources);
-		Thread shutDownThread = new Thread(shutDown);
-		Runtime runtime = Runtime.getRuntime();
-		runtime.addShutdownHook(shutDownThread);
-	}
+	ShutDown shutDown = new ShutDown(tmpResources);
+	Thread shutDownThread = new Thread(shutDown);
+	Runtime runtime = Runtime.getRuntime();
+	runtime.addShutdownHook(shutDownThread);
+    }
 
 }

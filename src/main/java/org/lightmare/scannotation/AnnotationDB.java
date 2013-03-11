@@ -28,145 +28,145 @@ import org.scannotation.archiveiterator.StreamIterator;
  */
 public class AnnotationDB extends org.scannotation.AnnotationDB {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// To store which class in which URL is found
-	protected Map<String, URL> classOwnersURLs = new HashMap<String, URL>();
+    // To store which class in which URL is found
+    protected Map<String, URL> classOwnersURLs = new HashMap<String, URL>();
 
-	// To store which class in which File is found
-	protected Map<String, String> classOwnersFiles = new HashMap<String, String>();
+    // To store which class in which File is found
+    protected Map<String, String> classOwnersFiles = new HashMap<String, String>();
 
-	private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
+    private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
 
-	private String getFileName(URL url) {
-		String fileName = url.getFile();
-		int lastIndex = fileName.lastIndexOf("/");
-		if (lastIndex > -1) {
-			++lastIndex;
-			fileName = fileName.substring(lastIndex);
+    private String getFileName(URL url) {
+	String fileName = url.getFile();
+	int lastIndex = fileName.lastIndexOf("/");
+	if (lastIndex > -1) {
+	    ++lastIndex;
+	    fileName = fileName.substring(lastIndex);
+	}
+
+	return fileName;
+    }
+
+    private boolean ignoreScan(String intf) {
+	for (String ignored : ignoredPackages) {
+	    if (intf.startsWith(ignored + ".")) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    protected void populate(Annotation[] annotations, String className, URL url) {
+	if (annotations == null)
+	    return;
+	Set<String> classAnnotations = classIndex.get(className);
+	String fileName;
+	for (Annotation ann : annotations) {
+	    Set<String> classes = annotationIndex.get(ann.getTypeName());
+	    if (classes == null) {
+		classes = new HashSet<String>();
+		annotationIndex.put(ann.getTypeName(), classes);
+	    }
+	    classes.add(className);
+	    if (!classOwnersURLs.containsKey(className)) {
+		classOwnersURLs.put(className, url);
+	    }
+	    if (!classOwnersFiles.containsKey(className)) {
+		fileName = getFileName(url);
+		classOwnersFiles.put(className, fileName);
+	    }
+	    classAnnotations.add(ann.getTypeName());
+	}
+    }
+
+    protected void scanClass(ClassFile cf, URL url) {
+	String className = cf.getName();
+	AnnotationsAttribute visible = (AnnotationsAttribute) cf
+		.getAttribute(AnnotationsAttribute.visibleTag);
+	AnnotationsAttribute invisible = (AnnotationsAttribute) cf
+		.getAttribute(AnnotationsAttribute.invisibleTag);
+
+	if (visible != null) {
+	    populate(visible.getAnnotations(), className, url);
+	}
+	if (invisible != null) {
+	    populate(invisible.getAnnotations(), className, url);
+	}
+    }
+
+    public void scanClass(InputStream bits, URL url) throws IOException {
+	DataInputStream dstream = new DataInputStream(new BufferedInputStream(
+		bits));
+	ClassFile cf = null;
+	try {
+	    cf = new ClassFile(dstream);
+	    classIndex.put(cf.getName(), new HashSet<String>());
+	    if (scanClassAnnotations) {
+		scanClass(cf, url);
+	    }
+	    if (scanMethodAnnotations || scanParameterAnnotations) {
+		scanMethods(cf);
+	    }
+	    if (scanFieldAnnotations) {
+		scanFields(cf);
+	    }
+
+	    // create an index of interfaces the class implements
+	    if (cf.getInterfaces() != null) {
+		Set<String> intfs = new HashSet<String>();
+		for (String intf : cf.getInterfaces()) {
+		    intfs.add(intf);
 		}
+		implementsIndex.put(cf.getName(), intfs);
+	    }
 
-		return fileName;
+	} finally {
+	    dstream.close();
+	    bits.close();
 	}
+    }
 
-	private boolean ignoreScan(String intf) {
-		for (String ignored : ignoredPackages) {
-			if (intf.startsWith(ignored + ".")) {
-				return true;
-			}
+    @Override
+    public void scanArchives(URL... urls) throws IOException {
+	LOG.info("Started scanning for archives on @Stateless annotation");
+	for (URL url : urls) {
+	    Filter filter = new Filter() {
+		public boolean accepts(String subFileName) {
+		    if (subFileName.endsWith(".class")) {
+			if (subFileName.startsWith("/"))
+			    subFileName = subFileName.substring(1);
+			if (!ignoreScan(subFileName.replace('/', '.')))
+			    return true;
+		    }
+		    return false;
 		}
-		return false;
+	    };
+	    LOG.info(String.format("Scanning URL %s ", url));
+
+	    StreamIterator it = IteratorFactory.create(url, filter);
+
+	    InputStream stream;
+	    while ((stream = it.next()) != null) {
+		scanClass(stream, url);
+	    }
+
+	    LOG.info(String.format("Finished URL %s scanning", url));
 	}
 
-	protected void populate(Annotation[] annotations, String className, URL url) {
-		if (annotations == null)
-			return;
-		Set<String> classAnnotations = classIndex.get(className);
-		String fileName;
-		for (Annotation ann : annotations) {
-			Set<String> classes = annotationIndex.get(ann.getTypeName());
-			if (classes == null) {
-				classes = new HashSet<String>();
-				annotationIndex.put(ann.getTypeName(), classes);
-			}
-			classes.add(className);
-			if (!classOwnersURLs.containsKey(className)) {
-				classOwnersURLs.put(className, url);
-			}
-			if (!classOwnersFiles.containsKey(className)) {
-				fileName = getFileName(url);
-				classOwnersFiles.put(className, fileName);
-			}
-			classAnnotations.add(ann.getTypeName());
-		}
-	}
+	LOG.info("Finished scanning for archives on @Stateless annotation");
+    }
 
-	protected void scanClass(ClassFile cf, URL url) {
-		String className = cf.getName();
-		AnnotationsAttribute visible = (AnnotationsAttribute) cf
-				.getAttribute(AnnotationsAttribute.visibleTag);
-		AnnotationsAttribute invisible = (AnnotationsAttribute) cf
-				.getAttribute(AnnotationsAttribute.invisibleTag);
+    public Map<String, URL> getClassOwnersURLs() {
+	return classOwnersURLs;
+    }
 
-		if (visible != null) {
-			populate(visible.getAnnotations(), className, url);
-		}
-		if (invisible != null) {
-			populate(invisible.getAnnotations(), className, url);
-		}
-	}
-
-	public void scanClass(InputStream bits, URL url) throws IOException {
-		DataInputStream dstream = new DataInputStream(new BufferedInputStream(
-				bits));
-		ClassFile cf = null;
-		try {
-			cf = new ClassFile(dstream);
-			classIndex.put(cf.getName(), new HashSet<String>());
-			if (scanClassAnnotations) {
-				scanClass(cf, url);
-			}
-			if (scanMethodAnnotations || scanParameterAnnotations) {
-				scanMethods(cf);
-			}
-			if (scanFieldAnnotations) {
-				scanFields(cf);
-			}
-
-			// create an index of interfaces the class implements
-			if (cf.getInterfaces() != null) {
-				Set<String> intfs = new HashSet<String>();
-				for (String intf : cf.getInterfaces()) {
-					intfs.add(intf);
-				}
-				implementsIndex.put(cf.getName(), intfs);
-			}
-
-		} finally {
-			dstream.close();
-			bits.close();
-		}
-	}
-
-	@Override
-	public void scanArchives(URL... urls) throws IOException {
-		LOG.info("Started scanning for archives on @Stateless annotation");
-		for (URL url : urls) {
-			Filter filter = new Filter() {
-				public boolean accepts(String subFileName) {
-					if (subFileName.endsWith(".class")) {
-						if (subFileName.startsWith("/"))
-							subFileName = subFileName.substring(1);
-						if (!ignoreScan(subFileName.replace('/', '.')))
-							return true;
-					}
-					return false;
-				}
-			};
-			LOG.info(String.format("Scanning URL %s ", url));
-
-			StreamIterator it = IteratorFactory.create(url, filter);
-
-			InputStream stream;
-			while ((stream = it.next()) != null) {
-				scanClass(stream, url);
-			}
-
-			LOG.info(String.format("Finished URL %s scanning", url));
-		}
-
-		LOG.info("Finished scanning for archives on @Stateless annotation");
-	}
-
-	public Map<String, URL> getClassOwnersURLs() {
-		return classOwnersURLs;
-	}
-
-	public Map<String, String> getClassOwnersFiles() {
-		return classOwnersFiles;
-	}
+    public Map<String, String> getClassOwnersFiles() {
+	return classOwnersFiles;
+    }
 
 }

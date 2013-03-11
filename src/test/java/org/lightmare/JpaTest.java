@@ -26,133 +26,133 @@ import org.lightmare.logger.Configure;
 @Ignore
 public class JpaTest {
 
-	public static DBCreator getDBCreator() throws ClassNotFoundException,
-			IOException, ParseException, InterruptedException,
-			ExecutionException {
-		DBCreator creator = getDBCreator(null, null, null, null);
-		return creator;
+    public static DBCreator getDBCreator() throws ClassNotFoundException,
+	    IOException, ParseException, InterruptedException,
+	    ExecutionException {
+	DBCreator creator = getDBCreator(null, null, null, null);
+	return creator;
+    }
+
+    public static DBCreator getDBCreator(String unitName)
+	    throws ClassNotFoundException, IOException, ParseException,
+	    InterruptedException, ExecutionException {
+	DBCreator creator = getDBCreator(null, null, unitName, null);
+	return creator;
+    }
+
+    public static DBCreator getDBCreator(String path, String dataSourcePath,
+	    String unitName, String jndi) throws ClassNotFoundException,
+	    IOException, ParseException, InterruptedException,
+	    ExecutionException {
+	Configure.configure();
+	Map<String, String> properties = new HashMap<String, String>();
+
+	properties.put("hibernate.default_schema", "PERSONS");
+	properties.put("hibernate.show_sql", "true");
+	properties.put("hibernate.sql_trace", "true");
+
+	// properties.put("hibernate.connection.url",
+	// "jdbc:derby:target/database/jpa-test-database;create=true");
+
+	// properties.put("hibernate.connection.username", "user");
+	// properties.put("hibernate.connection.password", "password");
+
+	properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+	properties.put("hibernate.cache.provider_class",
+		"org.hibernate.cache.NoCacheProvider");
+	properties.put("hibernate.connection.driver_class", "org.h2.Driver");
+	properties.put("hibernate.hbm2ddl.auto", "create-drop");
+	// <!-- hiberanate key generation properties -->
+	properties.put("hibernate.jdbc.use_get_generated_keys", "true");
+	properties.put("hibernate.max_fetch_depth", "3");
+	MetaCreator.Builder builder = new MetaCreator.Builder()
+		.setPersistenceProperties(properties);
+	if (unitName != null) {
+	    builder.setScanForEntities(true).setUnitName(unitName);
+	}
+	builder.setSwapDataSource(true);
+	if (dataSourcePath != null) {
+	    builder.setSwapDataSource(true).setDataSourcePath(dataSourcePath);
 	}
 
-	public static DBCreator getDBCreator(String unitName)
-			throws ClassNotFoundException, IOException, ParseException,
-			InterruptedException, ExecutionException {
-		DBCreator creator = getDBCreator(null, null, unitName, null);
-		return creator;
+	MetaCreator metaCreator;
+	if (path != null) {
+	    builder.setXmlFromJar(true);
+	    File file = new File(path);
+	    File[] files = { file };
+	    metaCreator = builder.build();
+	    metaCreator.scanForBeans(files);
+	} else {
+	    metaCreator = builder.build();
+	    metaCreator.scanForBeans();
 	}
-
-	public static DBCreator getDBCreator(String path, String dataSourcePath,
-			String unitName, String jndi) throws ClassNotFoundException,
-			IOException, ParseException, InterruptedException,
-			ExecutionException {
-		Configure.configure();
-		Map<String, String> properties = new HashMap<String, String>();
-
-		properties.put("hibernate.default_schema", "PERSONS");
-		properties.put("hibernate.show_sql", "true");
-		properties.put("hibernate.sql_trace", "true");
-
-		// properties.put("hibernate.connection.url",
-		// "jdbc:derby:target/database/jpa-test-database;create=true");
-
-		// properties.put("hibernate.connection.username", "user");
-		// properties.put("hibernate.connection.password", "password");
-
-		properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-		properties.put("hibernate.cache.provider_class",
-				"org.hibernate.cache.NoCacheProvider");
-		properties.put("hibernate.connection.driver_class", "org.h2.Driver");
-		properties.put("hibernate.hbm2ddl.auto", "create-drop");
-		// <!-- hiberanate key generation properties -->
-		properties.put("hibernate.jdbc.use_get_generated_keys", "true");
-		properties.put("hibernate.max_fetch_depth", "3");
-		MetaCreator.Builder builder = new MetaCreator.Builder()
-				.setPersistenceProperties(properties);
-		if (unitName != null) {
-			builder.setScanForEntities(true).setUnitName(unitName);
-		}
-		builder.setSwapDataSource(true);
-		if (dataSourcePath != null) {
-			builder.setSwapDataSource(true).setDataSourcePath(dataSourcePath);
-		}
-
-		MetaCreator metaCreator;
-		if (path != null) {
-			builder.setXmlFromJar(true);
-			File file = new File(path);
-			File[] files = { file };
-			metaCreator = builder.build();
-			metaCreator.scanForBeans(files);
-		} else {
-			metaCreator = builder.build();
-			metaCreator.scanForBeans();
-		}
-		Map<String, URL> classOwnershipURLs = metaCreator.getAnnotationDB()
-				.getClassOwnersURLs();
-		Map<String, String> classOwnershipFiles = metaCreator.getAnnotationDB()
-				.getClassOwnersFiles();
-		System.out
-				.println("============URLs of scanned classes ================");
-		for (Map.Entry<String, URL> entry : classOwnershipURLs.entrySet()) {
-			System.out.format("%s ------ %s\n", entry.getKey(),
-					entry.getValue());
-		}
-		System.out
-				.println("============Files of scanned classes ================");
-		for (Map.Entry<String, String> entry : classOwnershipFiles.entrySet()) {
-			System.out.format("%s ------ %s\n", entry.getKey(),
-					entry.getValue());
-		}
-		System.out
-				.println("====================================================");
-		EntityManagerFactory emf = null;
-		EntityManager em = null;
-		int tryCount = 0;
-		while (emf == null || em == null) {
-			if (jndi == null) {
-				emf = JPAManager.getEntityManagerFactory(unitName);
-				em = emf.createEntityManager();
-			} else {
-				try {
-					em = (EntityManager) new InitialContext().lookup(String
-							.format("java:comp/env/%s", jndi));
-				} catch (NamingException ex) {
-					ex.printStackTrace();
-				}
-			}
-			tryCount++;
-		}
-		System.out.format("tryes for get EntityManagerFactory are %s\n",
-				tryCount);
-		DBCreator creator = new DBCreator(em);
-		creator.createDB();
-
-		return creator;
+	Map<String, URL> classOwnershipURLs = metaCreator.getAnnotationDB()
+		.getClassOwnersURLs();
+	Map<String, String> classOwnershipFiles = metaCreator.getAnnotationDB()
+		.getClassOwnersFiles();
+	System.out
+		.println("============URLs of scanned classes ================");
+	for (Map.Entry<String, URL> entry : classOwnershipURLs.entrySet()) {
+	    System.out.format("%s ------ %s\n", entry.getKey(),
+		    entry.getValue());
 	}
-
-	@BeforeClass
-	public static void start() {
-
+	System.out
+		.println("============Files of scanned classes ================");
+	for (Map.Entry<String, String> entry : classOwnershipFiles.entrySet()) {
+	    System.out.format("%s ------ %s\n", entry.getKey(),
+		    entry.getValue());
+	}
+	System.out
+		.println("====================================================");
+	EntityManagerFactory emf = null;
+	EntityManager em = null;
+	int tryCount = 0;
+	while (emf == null || em == null) {
+	    if (jndi == null) {
+		emf = JPAManager.getEntityManagerFactory(unitName);
+		em = emf.createEntityManager();
+	    } else {
 		try {
-			getDBCreator();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		    em = (EntityManager) new InitialContext().lookup(String
+			    .format("java:comp/env/%s", jndi));
+		} catch (NamingException ex) {
+		    ex.printStackTrace();
 		}
+	    }
+	    tryCount++;
 	}
+	System.out.format("tryes for get EntityManagerFactory are %s\n",
+		tryCount);
+	DBCreator creator = new DBCreator(em);
+	creator.createDB();
 
-	@Test
-	public void addEntityTest() {
-		try {
-			EntityManagerFactory emf = JPAManager
-					.getEntityManagerFactory("testUnit");
-			Assert.assertNotNull("could not create EntityManagerFactory", emf);
-			System.out.println(emf);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
+	return creator;
+    }
 
-	@AfterClass
-	public static void end() {
-		MetaCreator.closeAllConnections();
+    @BeforeClass
+    public static void start() {
+
+	try {
+	    getDBCreator();
+	} catch (Exception ex) {
+	    ex.printStackTrace();
 	}
+    }
+
+    @Test
+    public void addEntityTest() {
+	try {
+	    EntityManagerFactory emf = JPAManager
+		    .getEntityManagerFactory("testUnit");
+	    Assert.assertNotNull("could not create EntityManagerFactory", emf);
+	    System.out.println(emf);
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @AfterClass
+    public static void end() {
+	MetaCreator.closeAllConnections();
+    }
 }

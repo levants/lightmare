@@ -15,112 +15,112 @@ import javax.persistence.PersistenceContext;
  */
 public class MetaData {
 
-	private Class<?> beanClass;
+    private Class<?> beanClass;
 
-	private Class<?> interfaceClass;
+    private Class<?> interfaceClass;
 
-	private Field connectorField;
+    private Field connectorField;
 
-	private Field transactionField;
+    private Field transactionField;
 
-	private Field unitField;
+    private Field unitField;
 
-	private String unitName;
+    private String unitName;
 
-	private String jndiName;
+    private String jndiName;
 
-	private ConnectionSemaphore connection;
+    private ConnectionSemaphore connection;
 
-	private EntityManagerFactory emf;
+    private EntityManagerFactory emf;
 
-	private ClassLoader loader;
+    private ClassLoader loader;
 
-	private AtomicBoolean inProgress = new AtomicBoolean();
+    private AtomicBoolean inProgress = new AtomicBoolean();
 
-	public Class<?> getBeanClass() {
-		return beanClass;
+    public Class<?> getBeanClass() {
+	return beanClass;
+    }
+
+    public void setBeanClass(Class<?> beanClass) {
+	this.beanClass = beanClass;
+    }
+
+    public Class<?> getInterfaceClass() {
+	return interfaceClass;
+    }
+
+    public void setInterfaceClass(Class<?> interfaceClass) {
+	this.interfaceClass = interfaceClass;
+    }
+
+    public Field getConnectorField() {
+	return connectorField;
+    }
+
+    public void setConnectorField(Field connectorField) {
+	this.connectorField = connectorField;
+    }
+
+    public Field getTransactionField() {
+	return transactionField;
+    }
+
+    public void setTransactionField(Field transactionField) {
+	this.transactionField = transactionField;
+    }
+
+    public Field getUnitField() {
+	return unitField;
+    }
+
+    public void setUnitField(Field unitField) {
+	this.unitField = unitField;
+    }
+
+    public String getUnitName() {
+	return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+	this.unitName = unitName;
+    }
+
+    public String getJndiName() {
+	return jndiName;
+    }
+
+    public void setJndiName(String jndiName) {
+	this.jndiName = jndiName;
+    }
+
+    public EntityManagerFactory getEmf() {
+	return emf;
+    }
+
+    public ConnectionSemaphore getConnection() {
+	return connection;
+    }
+
+    public void setConnection(ConnectionSemaphore connection) {
+	this.connection = connection;
+	if (connection != null) {
+	    emf = connection.getEmf();
 	}
+    }
 
-	public void setBeanClass(Class<?> beanClass) {
-		this.beanClass = beanClass;
-	}
+    public ClassLoader getLoader() {
+	return loader;
+    }
 
-	public Class<?> getInterfaceClass() {
-		return interfaceClass;
-	}
+    public void setLoader(ClassLoader loader) {
+	this.loader = loader;
+    }
 
-	public void setInterfaceClass(Class<?> interfaceClass) {
-		this.interfaceClass = interfaceClass;
-	}
+    public boolean isInProgress() {
+	return inProgress.get();
+    }
 
-	public Field getConnectorField() {
-		return connectorField;
-	}
-
-	public void setConnectorField(Field connectorField) {
-		this.connectorField = connectorField;
-	}
-
-	public Field getTransactionField() {
-		return transactionField;
-	}
-
-	public void setTransactionField(Field transactionField) {
-		this.transactionField = transactionField;
-	}
-
-	public Field getUnitField() {
-		return unitField;
-	}
-
-	public void setUnitField(Field unitField) {
-		this.unitField = unitField;
-	}
-
-	public String getUnitName() {
-		return unitName;
-	}
-
-	public void setUnitName(String unitName) {
-		this.unitName = unitName;
-	}
-
-	public String getJndiName() {
-		return jndiName;
-	}
-
-	public void setJndiName(String jndiName) {
-		this.jndiName = jndiName;
-	}
-
-	public EntityManagerFactory getEmf() {
-		return emf;
-	}
-
-	public ConnectionSemaphore getConnection() {
-		return connection;
-	}
-
-	public void setConnection(ConnectionSemaphore connection) {
-		this.connection = connection;
-		if (connection != null) {
-			emf = connection.getEmf();
-		}
-	}
-
-	public ClassLoader getLoader() {
-		return loader;
-	}
-
-	public void setLoader(ClassLoader loader) {
-		this.loader = loader;
-	}
-
-	public boolean isInProgress() {
-		return inProgress.get();
-	}
-
-	public void setInProgress(boolean inProgress) {
-		this.inProgress.getAndSet(inProgress);
-	}
+    public void setInProgress(boolean inProgress) {
+	this.inProgress.getAndSet(inProgress);
+    }
 }

@@ -6,19 +6,25 @@ import java.lang.reflect.Method;
 import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.utils.RpcUtils;
 
+/**
+ * Local handler class for remote call
+ * 
+ * @author levan
+ * 
+ */
 public class BeanLocalHandler implements InvocationHandler {
 
-	private RPCall rpCall;
+    private RPCall rpCall;
 
-	public BeanLocalHandler(RPCall rpCall) {
-		this.rpCall = rpCall;
-	}
+    public BeanLocalHandler(RPCall rpCall) {
+	this.rpCall = rpCall;
+    }
 
-	@Override
-	public Object invoke(Object proxy, Method method, Object[] args)
-			throws Throwable {
-		Object value = RpcUtils.callRemoteMethod(proxy, method, args, rpCall);
-		return value;
-	}
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args)
+	    throws Throwable {
+	Object value = RpcUtils.callRemoteMethod(proxy, method, args, rpCall);
+	return value;
+    }
 
 }

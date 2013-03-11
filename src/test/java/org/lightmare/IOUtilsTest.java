@@ -15,42 +15,41 @@ import org.lightmare.utils.AbstractIOUtils;
 
 public class IOUtilsTest {
 
-	private static final String EAR_PATH = "./lib/loader-tester.ear";
+    private static final String EAR_PATH = "./lib/loader-tester.ear";
 
-	private static AnnotationDB annotationDB = new AnnotationDB();
+    private static AnnotationDB annotationDB = new AnnotationDB();
 
-	@Test
-	public void scanTest() {
-		try {
-			AbstractIOUtils ioUtils = AbstractIOUtils.getAppropriatedType(new File(EAR_PATH)
-					.toURI().toURL());
-			ioUtils.scan(true);
+    @Test
+    public void scanTest() {
+	try {
+	    AbstractIOUtils ioUtils = AbstractIOUtils
+		    .getAppropriatedType(new File(EAR_PATH).toURI().toURL());
+	    ioUtils.scan(true);
 
-			Map<URL, URL> xmlURLs = ioUtils.getXmlURLs();
-			Assert.assertTrue("Could not find application ejb jar urls",
-					xmlURLs.size() > 0);
-			Set<URL> urlSet = xmlURLs.keySet();
-			URL[] urls = urlSet.toArray(new URL[urlSet.size()]);
-			annotationDB.scanArchives(urls);
-			Map<String, String> classOwnershipFiles = annotationDB
-					.getClassOwnersFiles();
-			Assert.assertTrue("Could not find class ownership files",
-					classOwnershipFiles.size() > 0);
-			System.out
-					.println("============Files of scanned classes ================");
-			for (Map.Entry<String, String> entry : classOwnershipFiles
-					.entrySet()) {
-				System.out.format("%s ------ %s\n", entry.getKey(),
-						entry.getValue());
-			}
-			System.out
-					.println("====================================================");
-			
+	    Map<URL, URL> xmlURLs = ioUtils.getXmlURLs();
+	    Assert.assertTrue("Could not find application ejb jar urls",
+		    xmlURLs.size() > 0);
+	    Set<URL> urlSet = xmlURLs.keySet();
+	    URL[] urls = urlSet.toArray(new URL[urlSet.size()]);
+	    annotationDB.scanArchives(urls);
+	    Map<String, String> classOwnershipFiles = annotationDB
+		    .getClassOwnersFiles();
+	    Assert.assertTrue("Could not find class ownership files",
+		    classOwnershipFiles.size() > 0);
+	    System.out
+		    .println("============Files of scanned classes ================");
+	    for (Map.Entry<String, String> entry : classOwnershipFiles
+		    .entrySet()) {
+		System.out.format("%s ------ %s\n", entry.getKey(),
+			entry.getValue());
+	    }
+	    System.out
+		    .println("====================================================");
 
-		} catch (MalformedURLException ex) {
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+	} catch (MalformedURLException ex) {
+	    ex.printStackTrace();
+	} catch (IOException ex) {
+	    ex.printStackTrace();
 	}
+    }
 }

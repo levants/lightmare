@@ -23,229 +23,229 @@ import org.lightmare.jpa.JPAManager;
  */
 public class MetaContainer {
 
-	// Cached bean meta data
-	private static final ConcurrentMap<String, MetaData> EJBS = new ConcurrentHashMap<String, MetaData>();
+    // Cached bean meta data
+    private static final ConcurrentMap<String, MetaData> EJBS = new ConcurrentHashMap<String, MetaData>();
 
-	// Cached bean class name by its URL for undeploy processing
-	private static final ConcurrentMap<URL, String> EJB_URLS = new ConcurrentHashMap<URL, String>();
+    // Cached bean class name by its URL for undeploy processing
+    private static final ConcurrentMap<URL, String> EJB_URLS = new ConcurrentHashMap<URL, String>();
 
-	private static final Logger LOG = Logger.getLogger(MetaContainer.class);
+    private static final Logger LOG = Logger.getLogger(MetaContainer.class);
 
-	/**
-	 * Adds {@link MetaData} to cache on specified bean name if absent and
-	 * returns previous value on this name or null if such value does not exists
-	 * 
-	 * @param beanName
-	 * @param metaData
-	 * @return
-	 */
-	public static MetaData addMetaData(String beanName, MetaData metaData) {
-		return EJBS.putIfAbsent(beanName, metaData);
+    /**
+     * Adds {@link MetaData} to cache on specified bean name if absent and
+     * returns previous value on this name or null if such value does not exists
+     * 
+     * @param beanName
+     * @param metaData
+     * @return
+     */
+    public static MetaData addMetaData(String beanName, MetaData metaData) {
+	return EJBS.putIfAbsent(beanName, metaData);
+    }
+
+    /**
+     * Check if {@link MetaData} is ceched for specified bean name if true
+     * throws {@link BeanInUseException}
+     * 
+     * @param beanName
+     * @param metaData
+     * @throws BeanInUseException
+     */
+    public static void checkAndAddMetaData(String beanName, MetaData metaData)
+	    throws BeanInUseException {
+	MetaData tmpMeta = addMetaData(beanName, metaData);
+	if (tmpMeta != null) {
+	    throw new BeanInUseException(String.format(
+		    "bean %s is alredy in use", beanName));
 	}
+    }
 
-	/**
-	 * Check if {@link MetaData} is ceched for specified bean name if true
-	 * throws {@link BeanInUseException}
-	 * 
-	 * @param beanName
-	 * @param metaData
-	 * @throws BeanInUseException
-	 */
-	public static void checkAndAddMetaData(String beanName, MetaData metaData)
-			throws BeanInUseException {
-		MetaData tmpMeta = addMetaData(beanName, metaData);
-		if (tmpMeta != null) {
-			throw new BeanInUseException(String.format(
-					"bean %s is alredy in use", beanName));
+    /**
+     * Checks if bean with associated name deployed and if yes if is deployment
+     * in progress
+     * 
+     * @param beanName
+     * @return boolean
+     */
+    public static boolean checkMetaData(String beanName) {
+	boolean check;
+	MetaData metaData = EJBS.get(beanName);
+	check = metaData == null;
+	if (!check) {
+	    check = metaData.isInProgress();
+	}
+	return check;
+    }
+
+    /**
+     * Checks if bean with associated name deployed
+     * 
+     * @param beanName
+     * @return boolean
+     */
+    public boolean checkBean(String beanName) {
+	return EJBS.containsKey(beanName);
+    }
+
+    /**
+     * Waits while {@link MetaData#isInProgress()} is true
+     * 
+     * @param metaData
+     * @throws IOException
+     */
+    public static void awaitMetaData(MetaData metaData) throws IOException {
+	boolean inProgress = metaData.isInProgress();
+	if (inProgress) {
+	    synchronized (metaData) {
+		while (inProgress) {
+		    try {
+			metaData.wait();
+			inProgress = metaData.isInProgress();
+		    } catch (InterruptedException ex) {
+			throw new IOException(ex);
+		    }
 		}
+	    }
 	}
+    }
 
-	/**
-	 * Checks if bean with associated name deployed and if yes if is deployment
-	 * in progress
-	 * 
-	 * @param beanName
-	 * @return boolean
-	 */
-	public static boolean checkMetaData(String beanName) {
-		boolean check;
-		MetaData metaData = EJBS.get(beanName);
-		check = metaData == null;
-		if (!check) {
-			check = metaData.isInProgress();
-		}
-		return check;
+    /**
+     * Gets deployed bean {@link MetaData} by name without checking deployment
+     * progress
+     * 
+     * @param beanName
+     * @return {@link MetaData}
+     */
+    public static MetaData getMetaData(String beanName) {
+	return EJBS.get(beanName);
+    }
+
+    /**
+     * Check if {@link MetaData} with associated name deployed and if it is
+     * waits while {@link MetaData#isInProgress()} true before return it
+     * 
+     * @param beanName
+     * @return {@link MetaData}
+     * @throws IOException
+     */
+    public static MetaData getSyncMetaData(String beanName) throws IOException {
+	MetaData metaData = getMetaData(beanName);
+	if (metaData == null) {
+	    throw new IOException(String.format("Bean %s is not deployed",
+		    beanName));
 	}
+	awaitMetaData(metaData);
 
-	/**
-	 * Checks if bean with associated name deployed
-	 * 
-	 * @param beanName
-	 * @return boolean
-	 */
-	public boolean checkBean(String beanName) {
-		return EJBS.containsKey(beanName);
+	return metaData;
+    }
+
+    /**
+     * Gets bean name by containing archive {@link URL} address
+     * 
+     * @param url
+     * @return
+     */
+    public static String getBeanName(URL url) {
+	return EJB_URLS.get(url);
+    }
+
+    /**
+     * Clears connection from cache
+     * 
+     * @param metaData
+     * @throws IOException
+     */
+    private static void clearConnection(MetaData metaData) throws IOException {
+
+	// Gets connection to clear
+	String unitName = metaData.getUnitName();
+	ConnectionSemaphore semaphore = metaData.getConnection();
+	if (semaphore == null) {
+	    semaphore = JPAManager.getConnection(unitName);
 	}
-
-	/**
-	 * Waits while {@link MetaData#isInProgress()} is true
-	 * 
-	 * @param metaData
-	 * @throws IOException
-	 */
-	public static void awaitMetaData(MetaData metaData) throws IOException {
-		boolean inProgress = metaData.isInProgress();
-		if (inProgress) {
-			synchronized (metaData) {
-				while (inProgress) {
-					try {
-						metaData.wait();
-						inProgress = metaData.isInProgress();
-					} catch (InterruptedException ex) {
-						throw new IOException(ex);
-					}
-				}
-			}
-		}
+	if (semaphore != null && semaphore.getUsers() <= 1) {
+	    JPAManager.removeConnection(unitName);
 	}
+    }
 
-	/**
-	 * Gets deployed bean {@link MetaData} by name without checking deployment
-	 * progress
-	 * 
-	 * @param beanName
-	 * @return {@link MetaData}
-	 */
-	public static MetaData getMetaData(String beanName) {
-		return EJBS.get(beanName);
+    /**
+     * Removes bean (removes it's {@link MetaData} from cache) by bean class
+     * name
+     * 
+     * @param beanName
+     * @throws IOException
+     */
+    public static void undeploy(String beanName) throws IOException {
+
+	MetaData metaData = null;
+	try {
+	    metaData = getSyncMetaData(beanName);
+	} catch (IOException ex) {
+	    LOG.error(String.format("Could not get bean resources %s cause %s",
+		    beanName, ex.getMessage()), ex);
 	}
-
-	/**
-	 * Check if {@link MetaData} with associated name deployed and if it is
-	 * waits while {@link MetaData#isInProgress()} true before return it
-	 * 
-	 * @param beanName
-	 * @return {@link MetaData}
-	 * @throws IOException
-	 */
-	public static MetaData getSyncMetaData(String beanName) throws IOException {
-		MetaData metaData = getMetaData(beanName);
-		if (metaData == null) {
-			throw new IOException(String.format("Bean %s is not deployed",
-					beanName));
-		}
-		awaitMetaData(metaData);
-
-		return metaData;
+	// Removes MetaData from cache
+	removeMeta(beanName);
+	if (metaData != null) {
+	    clearConnection(metaData);
+	    metaData = null;
 	}
+    }
 
-	/**
-	 * Gets bean name by containing archive {@link URL} address
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public static String getBeanName(URL url) {
-		return EJB_URLS.get(url);
+    /**
+     * Removes bean (removes it's {@link MetaData} from cache) by {@link URL} of
+     * archive file
+     * 
+     * @param url
+     * @throws IOException
+     */
+    public static void undeploy(URL url) throws IOException {
+
+	synchronized (MetaContainer.class) {
+	    String beanName = getBeanName(url);
+	    if (beanName != null) {
+		undeploy(beanName);
+	    }
 	}
+    }
 
-	/**
-	 * Clears connection from cache
-	 * 
-	 * @param metaData
-	 * @throws IOException
-	 */
-	private static void clearConnection(MetaData metaData) throws IOException {
+    /**
+     * Removed {@link MetaData} from cache
+     * 
+     * @param beanName
+     */
+    public static void removeMeta(String beanName) {
+	EJBS.remove(beanName);
+    }
 
-		// Gets connection to clear
-		String unitName = metaData.getUnitName();
-		ConnectionSemaphore semaphore = metaData.getConnection();
-		if (semaphore == null) {
-			semaphore = JPAManager.getConnection(unitName);
-		}
-		if (semaphore != null && semaphore.getUsers() <= 1) {
-			JPAManager.removeConnection(unitName);
-		}
-	}
+    /**
+     * Gets {@link javax.persistence.EntityManagerFactory} from cache for
+     * associated unit name
+     * 
+     * @param unitName
+     * @return {@link javax.persistence.EntityManagerFactory}
+     * @throws IOException
+     */
+    public static EntityManagerFactory getConnection(String unitName)
+	    throws IOException {
+	return JPAManager.getEntityManagerFactory(unitName);
+    }
 
-	/**
-	 * Removes bean (removes it's {@link MetaData} from cache) by bean class
-	 * name
-	 * 
-	 * @param beanName
-	 * @throws IOException
-	 */
-	public static void undeploy(String beanName) throws IOException {
+    /**
+     * Closes all {@link javax.persistence.EntityManagerFactory} cached
+     * instances
+     */
+    public static void closeConnections() {
+	closeEntityManagerFactories();
+    }
 
-		MetaData metaData = null;
-		try {
-			metaData = getSyncMetaData(beanName);
-		} catch (IOException ex) {
-			LOG.error(String.format("Could not get bean resources %s cause %s",
-					beanName, ex.getMessage()), ex);
-		}
-		// Removes MetaData from cache
-		removeMeta(beanName);
-		if (metaData != null) {
-			clearConnection(metaData);
-			metaData = null;
-		}
-	}
-
-	/**
-	 * Removes bean (removes it's {@link MetaData} from cache) by {@link URL} of
-	 * archive file
-	 * 
-	 * @param url
-	 * @throws IOException
-	 */
-	public static void undeploy(URL url) throws IOException {
-
-		synchronized (MetaContainer.class) {
-			String beanName = getBeanName(url);
-			if (beanName != null) {
-				undeploy(beanName);
-			}
-		}
-	}
-
-	/**
-	 * Removed {@link MetaData} from cache
-	 * 
-	 * @param beanName
-	 */
-	public static void removeMeta(String beanName) {
-		EJBS.remove(beanName);
-	}
-
-	/**
-	 * Gets {@link javax.persistence.EntityManagerFactory} from cache for
-	 * associated unit name
-	 * 
-	 * @param unitName
-	 * @return {@link javax.persistence.EntityManagerFactory}
-	 * @throws IOException
-	 */
-	public static EntityManagerFactory getConnection(String unitName)
-			throws IOException {
-		return JPAManager.getEntityManagerFactory(unitName);
-	}
-
-	/**
-	 * Closes all {@link javax.persistence.EntityManagerFactory} cached
-	 * instances
-	 */
-	public static void closeConnections() {
-		closeEntityManagerFactories();
-	}
-
-	/**
-	 * Gets {@link java.util.Iterator}<MetaData> over all cached
-	 * {@link org.lightmare.ejb.meta.MetaData}
-	 * 
-	 * @return {@link java.util.Iterator}<MetaData>
-	 */
-	public static Iterator<MetaData> getBeanClasses() {
-		return EJBS.values().iterator();
-	}
+    /**
+     * Gets {@link java.util.Iterator}<MetaData> over all cached
+     * {@link org.lightmare.ejb.meta.MetaData}
+     * 
+     * @return {@link java.util.Iterator}<MetaData>
+     */
+    public static Iterator<MetaData> getBeanClasses() {
+	return EJBS.values().iterator();
+    }
 }

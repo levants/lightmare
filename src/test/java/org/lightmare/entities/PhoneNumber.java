@@ -15,40 +15,40 @@ import org.lightmare.annotations.UnitName;
 @UnitName("testUnit")
 public class PhoneNumber {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.entities.PhoneNumber")
-	@TableGenerator(name = "org.lightmare.entities.PhoneNumber", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "PHONE_NUMBERS", valueColumnName = "KEY_VALUE", allocationSize = 20)
-	@Column(name = "phone_number_id")
-	private Integer phoneNumberId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.entities.PhoneNumber")
+    @TableGenerator(name = "org.lightmare.entities.PhoneNumber", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "PHONE_NUMBERS", valueColumnName = "KEY_VALUE", allocationSize = 20)
+    @Column(name = "phone_number_id")
+    private Integer phoneNumberId;
 
-	@Column(name = "person_id")
-	private Integer personId;
+    @Column(name = "person_id")
+    private Integer personId;
 
-	@Column(name = "phone_number")
-	private String phoneNumber;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-	public Integer gerPersonId() {
-		return personId;
-	}
+    public Integer gerPersonId() {
+	return personId;
+    }
 
-	public Integer getPhoneNumberId() {
-		return phoneNumberId;
-	}
+    public Integer getPhoneNumberId() {
+	return phoneNumberId;
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public String getPhoneNumber() {
+	return phoneNumber;
+    }
 
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
-	}
+    public void setPersonId(Integer personId) {
+	this.personId = personId;
+    }
 
-	public void setPhoneNumberId(Integer phoneNumberId) {
-		this.phoneNumberId = phoneNumberId;
-	}
+    public void setPhoneNumberId(Integer phoneNumberId) {
+	this.phoneNumberId = phoneNumberId;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public void setPhoneNumber(String phoneNumber) {
+	this.phoneNumber = phoneNumber;
+    }
 
 }

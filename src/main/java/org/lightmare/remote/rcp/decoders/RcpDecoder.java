@@ -19,30 +19,30 @@ import org.lightmare.utils.RpcUtils;
  */
 public class RcpDecoder extends FrameDecoder {
 
-	@Override
-	protected RcpWrapper decode(ChannelHandlerContext context, Channel channel,
-			ChannelBuffer buffer) throws IOException {
+    @Override
+    protected RcpWrapper decode(ChannelHandlerContext context, Channel channel,
+	    ChannelBuffer buffer) throws IOException {
 
-		if (buffer.readableBytes() < RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE) {
-			buffer.resetReaderIndex();
-			return null;
-		}
-
-		boolean valid = buffer.readByte() > 0;
-		int dataSize = buffer.readInt();
-
-		if (buffer.readableBytes() < dataSize) {
-			buffer.resetReaderIndex();
-			return null;
-		}
-
-		byte[] data = new byte[dataSize];
-		Object value = RpcUtils.deserialize(data);
-		RcpWrapper rcp = new RcpWrapper();
-		rcp.setValid(valid);
-		rcp.setValue(value);
-
-		return rcp;
+	if (buffer.readableBytes() < RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE) {
+	    buffer.resetReaderIndex();
+	    return null;
 	}
+
+	boolean valid = buffer.readByte() > 0;
+	int dataSize = buffer.readInt();
+
+	if (buffer.readableBytes() < dataSize) {
+	    buffer.resetReaderIndex();
+	    return null;
+	}
+
+	byte[] data = new byte[dataSize];
+	Object value = RpcUtils.deserialize(data);
+	RcpWrapper rcp = new RcpWrapper();
+	rcp.setValid(valid);
+	rcp.setValue(value);
+
+	return rcp;
+    }
 
 }

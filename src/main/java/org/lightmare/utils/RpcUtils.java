@@ -27,185 +27,185 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  */
 public class RpcUtils {
 
-	public static final int PROTOCOL_SIZE = 20;
+    public static final int PROTOCOL_SIZE = 20;
 
-	public static final int INT_SIZE = 4;
+    public static final int INT_SIZE = 4;
 
-	public static final int BYTE_SIZE = 1;
+    public static final int BYTE_SIZE = 1;
 
-	private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
-	private static boolean mapperConfigured;
+    private static boolean mapperConfigured;
 
-	private static ObjectMapper getMapper() {
-		if (mapperConfigured) {
-			return MAPPER;
-		} else {
-			synchronized (RpcUtils.class) {
-				MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-				mapperConfigured = true;
-			}
+    private static ObjectMapper getMapper() {
+	if (mapperConfigured) {
+	    return MAPPER;
+	} else {
+	    synchronized (RpcUtils.class) {
+		MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		mapperConfigured = true;
+	    }
 
-			return MAPPER;
-		}
+	    return MAPPER;
 	}
+    }
 
-	/**
-	 * Serializes java type ({@link Object}) to byte array with java native
-	 * serialization api
-	 * 
-	 * @param value
-	 * @return byte[]
-	 * @throws IOException
-	 */
-	public static byte[] serialize(Object value) throws IOException {
+    /**
+     * Serializes java type ({@link Object}) to byte array with java native
+     * serialization api
+     * 
+     * @param value
+     * @return byte[]
+     * @throws IOException
+     */
+    public static byte[] serialize(Object value) throws IOException {
 
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		ObjectOutputStream objectStream = new ObjectOutputStream(stream);
+	ByteArrayOutputStream stream = new ByteArrayOutputStream();
+	ObjectOutputStream objectStream = new ObjectOutputStream(stream);
 
-		try {
+	try {
 
-			objectStream.writeObject(value);
-			byte[] data = stream.toByteArray();
+	    objectStream.writeObject(value);
+	    byte[] data = stream.toByteArray();
 
-			return data;
+	    return data;
 
-		} finally {
-			stream.close();
-			objectStream.close();
-		}
+	} finally {
+	    stream.close();
+	    objectStream.close();
 	}
+    }
 
-	/**
-	 * Serializes {@link Object} to josn {@link String} with <a
-	 * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
-	 * 
-	 * @param value
-	 * @return {@link String}
-	 * @throws IOException
-	 */
-	public static <T> String write(Object value) throws IOException {
-		String data;
-		try {
-			data = getMapper().writeValueAsString(value);
-			return data;
-		} catch (JsonGenerationException ex) {
-			throw new IOException(ex);
-		} catch (JsonMappingException ex) {
-			throw new IOException(ex);
-		} catch (IOException ex) {
-			throw new IOException(ex);
-		}
+    /**
+     * Serializes {@link Object} to josn {@link String} with <a
+     * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
+     * 
+     * @param value
+     * @return {@link String}
+     * @throws IOException
+     */
+    public static <T> String write(Object value) throws IOException {
+	String data;
+	try {
+	    data = getMapper().writeValueAsString(value);
+	    return data;
+	} catch (JsonGenerationException ex) {
+	    throw new IOException(ex);
+	} catch (JsonMappingException ex) {
+	    throw new IOException(ex);
+	} catch (IOException ex) {
+	    throw new IOException(ex);
 	}
+    }
 
-	/**
-	 * Deserializes byte array in java type ({@link Object}) with java native
-	 * serialization api
-	 * 
-	 * @param data
-	 * @return {@link Object}
-	 * @throws IOException
-	 */
-	public static Object deserialize(byte[] data) throws IOException {
+    /**
+     * Deserializes byte array in java type ({@link Object}) with java native
+     * serialization api
+     * 
+     * @param data
+     * @return {@link Object}
+     * @throws IOException
+     */
+    public static Object deserialize(byte[] data) throws IOException {
 
-		ByteArrayInputStream stream = new ByteArrayInputStream(data);
-		ObjectInputStream objectStream = new ObjectInputStream(stream);
-		try {
+	ByteArrayInputStream stream = new ByteArrayInputStream(data);
+	ObjectInputStream objectStream = new ObjectInputStream(stream);
+	try {
 
-			Object value = objectStream.readObject();
+	    Object value = objectStream.readObject();
 
-			return value;
+	    return value;
 
-		} catch (ClassNotFoundException ex) {
+	} catch (ClassNotFoundException ex) {
 
-			throw new IOException(ex);
+	    throw new IOException(ex);
 
-		} finally {
-			stream.close();
-			objectStream.close();
-		}
+	} finally {
+	    stream.close();
+	    objectStream.close();
 	}
+    }
 
-	/**
-	 * Deserializes josn {@link String} to {@link Object} with <a
-	 * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
-	 * 
-	 * @param data
-	 * @param valueClass
-	 * @return T
-	 * @throws IOException
-	 */
-	public static <T> T read(String data, Class<T> valueClass)
-			throws IOException {
-		T value;
-		try {
-			value = getMapper().readValue(data, valueClass);
-			return value;
-		} catch (JsonGenerationException ex) {
-			throw new IOException(ex);
-		} catch (JsonMappingException ex) {
-			throw new IOException(ex);
-		} catch (IOException ex) {
-			throw new IOException(ex);
-		}
+    /**
+     * Deserializes josn {@link String} to {@link Object} with <a
+     * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
+     * 
+     * @param data
+     * @param valueClass
+     * @return T
+     * @throws IOException
+     */
+    public static <T> T read(String data, Class<T> valueClass)
+	    throws IOException {
+	T value;
+	try {
+	    value = getMapper().readValue(data, valueClass);
+	    return value;
+	} catch (JsonGenerationException ex) {
+	    throw new IOException(ex);
+	} catch (JsonMappingException ex) {
+	    throw new IOException(ex);
+	} catch (IOException ex) {
+	    throw new IOException(ex);
 	}
+    }
 
-	/**
-	 * Calls remote method for java RPC api
-	 * 
-	 * @param proxy
-	 * @param method
-	 * @param arguments
-	 * @return {@link Object}
-	 * @throws IOException
-	 */
-	public static Object callRemoteMethod(Object proxy, Method method,
-			Object[] arguments, RPCall rpCall) throws IOException {
+    /**
+     * Calls remote method for java RPC api
+     * 
+     * @param proxy
+     * @param method
+     * @param arguments
+     * @return {@link Object}
+     * @throws IOException
+     */
+    public static Object callRemoteMethod(Object proxy, Method method,
+	    Object[] arguments, RPCall rpCall) throws IOException {
 
-		RpcWrapper wrapper = new RpcWrapper();
-		wrapper.setBeanName(proxy.getClass().getSimpleName());
-		wrapper.setMethodName(method.getName());
-		wrapper.setParamTypes(method.getParameterTypes());
-		wrapper.setInterfaceClass(proxy.getClass());
-		wrapper.setParams(arguments);
+	RpcWrapper wrapper = new RpcWrapper();
+	wrapper.setBeanName(proxy.getClass().getSimpleName());
+	wrapper.setMethodName(method.getName());
+	wrapper.setParamTypes(method.getParameterTypes());
+	wrapper.setInterfaceClass(proxy.getClass());
+	wrapper.setParams(arguments);
 
-		return rpCall.call(wrapper);
+	return rpCall.call(wrapper);
+    }
+
+    /**
+     * Calls {@link javax.ejb.Stateless} bean method by {@link RcpWrapper} for
+     * java RPC calls
+     * 
+     * @param wrapper
+     * @return {@link Object}
+     * @throws IOException
+     */
+    public static Object callBeanMethod(RpcWrapper wrapper) throws IOException {
+
+	String beanName = wrapper.getBeanName();
+	String methodName = wrapper.getMethodName();
+	Class<?>[] paramTypes = wrapper.getParamTypes();
+	Class<?> interfaceClass = wrapper.getInterfaceClass();
+	Object[] params = wrapper.getParams();
+
+	try {
+
+	    Object bean = new EjbConnector().connectToBean(beanName,
+		    interfaceClass);
+	    Method beanMethod = bean.getClass().getDeclaredMethod(methodName,
+		    paramTypes);
+	    return beanMethod.invoke(bean, params);
+
+	} catch (IllegalArgumentException ex) {
+	    throw new IOException(ex);
+	} catch (InvocationTargetException ex) {
+	    throw new IOException(ex);
+	} catch (NoSuchMethodException ex) {
+	    throw new IOException(ex);
+	} catch (SecurityException ex) {
+	    throw new IOException(ex);
+	} catch (IllegalAccessException ex) {
+	    throw new IOException(ex);
 	}
-
-	/**
-	 * Calls {@link javax.ejb.Stateless} bean method by {@link RcpWrapper} for
-	 * java RPC calls
-	 * 
-	 * @param wrapper
-	 * @return {@link Object}
-	 * @throws IOException
-	 */
-	public static Object callBeanMethod(RpcWrapper wrapper) throws IOException {
-
-		String beanName = wrapper.getBeanName();
-		String methodName = wrapper.getMethodName();
-		Class<?>[] paramTypes = wrapper.getParamTypes();
-		Class<?> interfaceClass = wrapper.getInterfaceClass();
-		Object[] params = wrapper.getParams();
-
-		try {
-
-			Object bean = new EjbConnector().connectToBean(beanName,
-					interfaceClass);
-			Method beanMethod = bean.getClass().getDeclaredMethod(methodName,
-					paramTypes);
-			return beanMethod.invoke(bean, params);
-
-		} catch (IllegalArgumentException ex) {
-			throw new IOException(ex);
-		} catch (InvocationTargetException ex) {
-			throw new IOException(ex);
-		} catch (NoSuchMethodException ex) {
-			throw new IOException(ex);
-		} catch (SecurityException ex) {
-			throw new IOException(ex);
-		} catch (IllegalAccessException ex) {
-			throw new IOException(ex);
-		}
-	}
+    }
 }

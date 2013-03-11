@@ -15,40 +15,40 @@ import org.lightmare.annotations.UnitName;
 @UnitName("testUnit")
 public class Email {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.entities.Email")
-	@TableGenerator(name = "org.lightmare.entities.Email", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "EMAILS", valueColumnName = "KEY_VALUE", allocationSize = 20)
-	@Column(name = "email_id")
-	private Integer emailId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.entities.Email")
+    @TableGenerator(name = "org.lightmare.entities.Email", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "EMAILS", valueColumnName = "KEY_VALUE", allocationSize = 20)
+    @Column(name = "email_id")
+    private Integer emailId;
 
-	@Column(name = "person_id")
-	private Integer personId;
+    @Column(name = "person_id")
+    private Integer personId;
 
-	@Column(name = "email_address")
-	private String emailAddress;
+    @Column(name = "email_address")
+    private String emailAddress;
 
-	public String getEmailAddress() {
-		return emailAddress;
-	}
+    public String getEmailAddress() {
+	return emailAddress;
+    }
 
-	public Integer getEmailId() {
-		return emailId;
-	}
+    public Integer getEmailId() {
+	return emailId;
+    }
 
-	public Integer gerPersonId() {
-		return personId;
-	}
+    public Integer gerPersonId() {
+	return personId;
+    }
 
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
+    public void setEmailAddress(String emailAddress) {
+	this.emailAddress = emailAddress;
+    }
 
-	public void setEmailId(Integer emailId) {
-		this.emailId = emailId;
-	}
+    public void setEmailId(Integer emailId) {
+	this.emailId = emailId;
+    }
 
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
-	}
+    public void setPersonId(Integer personId) {
+	this.personId = personId;
+    }
 
 }

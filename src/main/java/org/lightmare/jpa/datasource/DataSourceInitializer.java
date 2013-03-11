@@ -27,152 +27,152 @@ import com.mchange.v2.c3p0.DataSources;
  */
 public class DataSourceInitializer {
 
-	private NamingUtils namingUtils;
+    private NamingUtils namingUtils;
 
-	private Context context;
+    private Context context;
 
-	private static final Set<String> INITIALIZED_SOURCES = Collections
-			.synchronizedSet(new HashSet<String>());
+    private static final Set<String> INITIALIZED_SOURCES = Collections
+	    .synchronizedSet(new HashSet<String>());
 
-	public static final Logger LOG = Logger
-			.getLogger(DataSourceInitializer.class);
+    public static final Logger LOG = Logger
+	    .getLogger(DataSourceInitializer.class);
 
-	public DataSourceInitializer() throws IOException {
-		this.namingUtils = new NamingUtils();
-		context = this.namingUtils.getContext();
+    public DataSourceInitializer() throws IOException {
+	this.namingUtils = new NamingUtils();
+	context = this.namingUtils.getContext();
+    }
+
+    private static boolean checkForDataSource(String path) {
+	return path != null && !path.isEmpty();
+    }
+
+    /**
+     * Initialized datasource
+     * 
+     * @throws IOException
+     */
+    public static void initializeDataSource(String path) throws IOException {
+	if (checkForDataSource(path)
+		&& !DataSourceInitializer.checkDSPath(path)) {
+	    FileParsers parsers = new FileParsers();
+	    parsers.parseStandaloneXml(path);
 	}
+    }
 
-	private static boolean checkForDataSource(String path) {
-		return path != null && !path.isEmpty();
+    /**
+     * Sets default connection pooling properties
+     * 
+     * @return
+     */
+    private static Properties getDefaultPooling() {
+	Properties c3p0Properties = new Properties();
+	c3p0Properties.setProperty(PoolConfig.MAX_POOL_SIZE,
+		PoolConfig.MAX_POOL_SIZE_DEF_VALUE);
+	c3p0Properties.setProperty(PoolConfig.MIN_POOL_SIZE,
+		PoolConfig.MIN_POOL_SIZE_DEF_VALUE);
+	c3p0Properties.setProperty(PoolConfig.MAX_IDLE_TIMEOUT,
+		PoolConfig.MAX_IDLE_TIMEOUT_DEF_VALUE);
+	c3p0Properties.setProperty(PoolConfig.MAX_STATEMENTS,
+		PoolConfig.MAX_STATEMENTS_DEF_VALUE);
+	c3p0Properties.setProperty(PoolConfig.AQUIRE_INCREMENT,
+		PoolConfig.AQUIRE_INCREMENT_DEF_VALUE);
+
+	return c3p0Properties;
+    }
+
+    /**
+     * Initializes appropriated driver and {@link DataSource} objects
+     * 
+     * @param properties
+     * @return {@link DataSource}
+     * @throws IOException
+     */
+    public DataSource initilizeDriver(Properties properties) throws IOException {
+
+	String driver = properties.getProperty("driver").trim();
+	String url = properties.getProperty("url").trim();
+	String user = properties.getProperty("user").trim();
+	String password = properties.getProperty("password").trim();
+
+	ComboPooledDataSource dataSource = new ComboPooledDataSource();
+	dataSource.setJdbcUrl(url);
+	try {
+	    dataSource.setDriverClass(driver);
+	} catch (PropertyVetoException ex) {
+	    throw new IOException(ex);
 	}
+	dataSource.setUser(user);
+	dataSource.setPassword(password);
 
-	/**
-	 * Initialized datasource
-	 * 
-	 * @throws IOException
-	 */
-	public static void initializeDataSource(String path) throws IOException {
-		if (checkForDataSource(path)
-				&& !DataSourceInitializer.checkDSPath(path)) {
-			FileParsers parsers = new FileParsers();
-			parsers.parseStandaloneXml(path);
-		}
+	return dataSource;
+
+    }
+
+    /**
+     * Registers {@link DataSource} object in jndi {@link Context}
+     * 
+     * @param poolingProperties
+     * @param dataSource
+     * @param jndiName
+     * @throws IOException
+     */
+    public void registerDataSource(Properties poolingProperties,
+	    DataSource dataSource, String jndiName) throws IOException {
+	try {
+	    DataSource namedDataSource = DataSources.pooledDataSource(
+		    dataSource, poolingProperties);
+	    context.rebind(jndiName, namedDataSource);
+	    LOG.info(String.format("Data source %s initialized", jndiName));
+	} catch (SQLException ex) {
+	    LOG.error(String.format("Could not initialize data source %s",
+		    jndiName), ex);
+	} catch (NamingException ex) {
+	    LOG.error(String.format("Could not initialize data source %s",
+		    jndiName), ex);
+	} catch (Exception ex) {
+	    LOG.error(String.format("Could not initialize data source %s",
+		    jndiName), ex);
 	}
+    }
 
-	/**
-	 * Sets default connection pooling properties
-	 * 
-	 * @return
-	 */
-	private static Properties getDefaultPooling() {
-		Properties c3p0Properties = new Properties();
-		c3p0Properties.setProperty(PoolConfig.MAX_POOL_SIZE,
-				PoolConfig.MAX_POOL_SIZE_DEF_VALUE);
-		c3p0Properties.setProperty(PoolConfig.MIN_POOL_SIZE,
-				PoolConfig.MIN_POOL_SIZE_DEF_VALUE);
-		c3p0Properties.setProperty(PoolConfig.MAX_IDLE_TIMEOUT,
-				PoolConfig.MAX_IDLE_TIMEOUT_DEF_VALUE);
-		c3p0Properties.setProperty(PoolConfig.MAX_STATEMENTS,
-				PoolConfig.MAX_STATEMENTS_DEF_VALUE);
-		c3p0Properties.setProperty(PoolConfig.AQUIRE_INCREMENT,
-				PoolConfig.AQUIRE_INCREMENT_DEF_VALUE);
-
-		return c3p0Properties;
+    /**
+     * Initializes and registers {@link DataSource} object in jndi
+     * {@link Context}
+     * 
+     * @param poolingProperties
+     * @param dataSource
+     * @param jndiName
+     * @throws IOException
+     */
+    public void registerDataSource(Properties properties,
+	    Properties poolingProperties) throws IOException {
+	String jndiName = properties.getProperty("name");
+	LOG.info(String.format("Initializing data source %s", jndiName));
+	DataSource dataSource = initilizeDriver(properties);
+	Properties poolProps = poolingProperties;
+	if (poolingProperties == null) {
+	    poolProps = getDefaultPooling();
 	}
+	registerDataSource(poolProps, dataSource, jndiName);
+    }
 
-	/**
-	 * Initializes appropriated driver and {@link DataSource} objects
-	 * 
-	 * @param properties
-	 * @return {@link DataSource}
-	 * @throws IOException
-	 */
-	public DataSource initilizeDriver(Properties properties) throws IOException {
+    /**
+     * Parses xml file and initializes and registers {@link DataSource} object
+     * in jndi
+     * 
+     * @param properties
+     * @throws IOException
+     */
+    public void registerDataSource(Properties properties) throws IOException {
+	registerDataSource(properties, null);
+    }
 
-		String driver = properties.getProperty("driver").trim();
-		String url = properties.getProperty("url").trim();
-		String user = properties.getProperty("user").trim();
-		String password = properties.getProperty("password").trim();
+    public static void setDsAsInitialized(String datasourcePath) {
+	INITIALIZED_SOURCES.add(datasourcePath);
+    }
 
-		ComboPooledDataSource dataSource = new ComboPooledDataSource();
-		dataSource.setJdbcUrl(url);
-		try {
-			dataSource.setDriverClass(driver);
-		} catch (PropertyVetoException ex) {
-			throw new IOException(ex);
-		}
-		dataSource.setUser(user);
-		dataSource.setPassword(password);
-
-		return dataSource;
-
-	}
-
-	/**
-	 * Registers {@link DataSource} object in jndi {@link Context}
-	 * 
-	 * @param poolingProperties
-	 * @param dataSource
-	 * @param jndiName
-	 * @throws IOException
-	 */
-	public void registerDataSource(Properties poolingProperties,
-			DataSource dataSource, String jndiName) throws IOException {
-		try {
-			DataSource namedDataSource = DataSources.pooledDataSource(
-					dataSource, poolingProperties);
-			context.rebind(jndiName, namedDataSource);
-			LOG.info(String.format("Data source %s initialized", jndiName));
-		} catch (SQLException ex) {
-			LOG.error(String.format("Could not initialize data source %s",
-					jndiName), ex);
-		} catch (NamingException ex) {
-			LOG.error(String.format("Could not initialize data source %s",
-					jndiName), ex);
-		} catch (Exception ex) {
-			LOG.error(String.format("Could not initialize data source %s",
-					jndiName), ex);
-		}
-	}
-
-	/**
-	 * Initializes and registers {@link DataSource} object in jndi
-	 * {@link Context}
-	 * 
-	 * @param poolingProperties
-	 * @param dataSource
-	 * @param jndiName
-	 * @throws IOException
-	 */
-	public void registerDataSource(Properties properties,
-			Properties poolingProperties) throws IOException {
-		String jndiName = properties.getProperty("name");
-		LOG.info(String.format("Initializing data source %s", jndiName));
-		DataSource dataSource = initilizeDriver(properties);
-		Properties poolProps = poolingProperties;
-		if (poolingProperties == null) {
-			poolProps = getDefaultPooling();
-		}
-		registerDataSource(poolProps, dataSource, jndiName);
-	}
-
-	/**
-	 * Parses xml file and initializes and registers {@link DataSource} object
-	 * in jndi
-	 * 
-	 * @param properties
-	 * @throws IOException
-	 */
-	public void registerDataSource(Properties properties) throws IOException {
-		registerDataSource(properties, null);
-	}
-
-	public static void setDsAsInitialized(String datasourcePath) {
-		INITIALIZED_SOURCES.add(datasourcePath);
-	}
-
-	public static boolean checkDSPath(String datasourcePath) {
-		return INITIALIZED_SOURCES.contains(datasourcePath);
-	}
+    public static boolean checkDSPath(String datasourcePath) {
+	return INITIALIZED_SOURCES.contains(datasourcePath);
+    }
 
 }

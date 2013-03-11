@@ -10,89 +10,95 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+/**
+ * Implementation of {@link DirUtils} for ear files
+ * 
+ * @author levan
+ * 
+ */
 public class ExtUtils extends DirUtils {
 
-	private File tmpFile;
+    private File tmpFile;
 
-	public ExtUtils(String path) {
-		super(path);
+    public ExtUtils(String path) {
+	super(path);
+    }
+
+    public ExtUtils(File file) {
+	super(file);
+    }
+
+    public ExtUtils(URL url) throws IOException {
+	super(url);
+    }
+
+    /**
+     * Exctracts ear file into the temporary file
+     * 
+     * @throws IOException
+     */
+    protected void exctractEar() throws IOException {
+	tmpFile = File.createTempFile(realFile.getName(), "");
+	tmpFile.delete();
+	tmpFile.mkdir();
+
+	addTmpFile(tmpFile);
+	ZipFile zipFile = getEarFile();
+	Enumeration<? extends ZipEntry> zipFileEntries = zipFile.entries();
+
+	while (zipFileEntries.hasMoreElements()) {
+	    ZipEntry entry = zipFileEntries.nextElement();
+	    exctractFile(entry);
 	}
 
-	public ExtUtils(File file) {
-		super(file);
-	}
+    }
 
-	public ExtUtils(URL url) throws IOException {
-		super(url);
-	}
+    protected void exctractFile(ZipEntry entry) throws IOException {
+	InputStream extStream = null;
+	OutputStream out = null;
+	try {
+	    extStream = getEarFile().getInputStream(entry);
+	    File file = new File(tmpFile, entry.getName());
+	    File parrent = file.getParentFile();
+	    if (!parrent.exists()) {
+		parrent.mkdirs();
+		addTmpFile(parrent);
+	    }
+	    addTmpFile(file);
+	    if (!entry.isDirectory()) {
 
-	/**
-	 * Exctracts ear file into the temporary file
-	 * 
-	 * @throws IOException
-	 */
-	protected void exctractEar() throws IOException {
-		tmpFile = File.createTempFile(realFile.getName(), "");
-		tmpFile.delete();
-		tmpFile.mkdir();
-
-		addTmpFile(tmpFile);
-		ZipFile zipFile = getEarFile();
-		Enumeration<? extends ZipEntry> zipFileEntries = zipFile.entries();
-
-		while (zipFileEntries.hasMoreElements()) {
-			ZipEntry entry = zipFileEntries.nextElement();
-			exctractFile(entry);
+		if (!file.exists()) {
+		    file.createNewFile();
 		}
 
-	}
+		out = new FileOutputStream(file);
 
-	protected void exctractFile(ZipEntry entry) throws IOException {
-		InputStream extStream = null;
-		OutputStream out = null;
-		try {
-			extStream = getEarFile().getInputStream(entry);
-			File file = new File(tmpFile, entry.getName());
-			File parrent = file.getParentFile();
-			if (!parrent.exists()) {
-				parrent.mkdirs();
-				addTmpFile(parrent);
-			}
-			addTmpFile(file);
-			if (!entry.isDirectory()) {
-
-				if (!file.exists()) {
-					file.createNewFile();
-				}
-
-				out = new FileOutputStream(file);
-
-				byte[] buffer = new byte[1024];
-				int len;
-				while ((len = extStream.read(buffer)) != -1) {
-					out.write(buffer, 0, len);
-				}
-			} else {
-				file.mkdir();
-			}
-
-		} finally {
-			if (extStream != null) {
-				extStream.close();
-			}
-
-			if (out != null) {
-				out.close();
-			}
+		byte[] buffer = new byte[1024];
+		int len;
+		while ((len = extStream.read(buffer)) != -1) {
+		    out.write(buffer, 0, len);
 		}
-	}
+	    } else {
+		file.mkdir();
+	    }
 
-	@Override
-	protected void scanArchive(Object... args) throws IOException {
-		exctractEar();
-		super.realFile = tmpFile;
-		super.path = tmpFile.getPath();
-		super.isDirectory = tmpFile.isDirectory();
-		super.scanArchive(args);
+	} finally {
+	    if (extStream != null) {
+		extStream.close();
+	    }
+
+	    if (out != null) {
+		out.close();
+	    }
 	}
+    }
+
+    @Override
+    protected void scanArchive(Object... args) throws IOException {
+	exctractEar();
+	super.realFile = tmpFile;
+	super.path = tmpFile.getPath();
+	super.isDirectory = tmpFile.isDirectory();
+	super.scanArchive(args);
+    }
 }

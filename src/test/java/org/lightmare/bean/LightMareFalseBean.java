@@ -5,9 +5,9 @@ import javax.ejb.Stateless;
 @Stateless
 public class LightMareFalseBean implements LightMareFalseBeanRemote {
 
-	@Override
-	public boolean isFalse() {
-		return true;
-	}
+    @Override
+    public boolean isFalse() {
+	return true;
+    }
 
 }

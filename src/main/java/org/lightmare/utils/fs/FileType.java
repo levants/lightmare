@@ -8,5 +8,5 @@ package org.lightmare.utils.fs;
  */
 public enum FileType {
 
-	DIR, JAR, EAR, JDIR, EDIR;
+    DIR, JAR, EAR, JDIR, EDIR;
 }

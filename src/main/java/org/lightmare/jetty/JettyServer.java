@@ -17,36 +17,36 @@ import com.sun.jersey.spi.container.servlet.ServletContainer;
  */
 public class JettyServer implements Runnable {
 
-	private static final int HTTP_SERVER_PORT = 8080;
+    private static final int HTTP_SERVER_PORT = 8080;
 
-	private static final Logger LOG = Logger.getLogger(JettyServer.class);
+    private static final Logger LOG = Logger.getLogger(JettyServer.class);
 
-	@Override
-	public void run() {
+    @Override
+    public void run() {
 
-		try {
-			Server jettyServer = new Server(HTTP_SERVER_PORT);
-			ContextHandlerCollection contexts = new ContextHandlerCollection();
-			jettyServer.setHandler(contexts);
+	try {
+	    Server jettyServer = new Server(HTTP_SERVER_PORT);
+	    ContextHandlerCollection contexts = new ContextHandlerCollection();
+	    jettyServer.setHandler(contexts);
 
-			ServletContextHandler ctxRest = new ServletContextHandler(contexts,
-					"/rest", ServletContextHandler.SESSIONS);
+	    ServletContextHandler ctxRest = new ServletContextHandler(contexts,
+		    "/rest", ServletContextHandler.SESSIONS);
 
-			ServletContainer container = new ServletContainer();
-			ServletHolder restHolder = new ServletHolder();
-			restHolder.setInitParameter(
-					"com.sun.jersey.config.property.packages",
-					"rg.lightmare.rest");
-			restHolder.setInitOrder(1);
-			restHolder.setServlet(container);
-			ctxRest.addServlet(restHolder, "/*");
+	    ServletContainer container = new ServletContainer();
+	    ServletHolder restHolder = new ServletHolder();
+	    restHolder.setInitParameter(
+		    "com.sun.jersey.config.property.packages",
+		    "rg.lightmare.rest");
+	    restHolder.setInitOrder(1);
+	    restHolder.setServlet(container);
+	    ctxRest.addServlet(restHolder, "/*");
 
-			contexts.setHandlers(new Handler[] { ctxRest });
-			jettyServer.start();
-			jettyServer.join();
+	    contexts.setHandlers(new Handler[] { ctxRest });
+	    jettyServer.start();
+	    jettyServer.join();
 
-		} catch (Exception ex) {
-			LOG.error("Error while starting jetty server", ex);
-		}
+	} catch (Exception ex) {
+	    LOG.error("Error while starting jetty server", ex);
 	}
+    }
 }

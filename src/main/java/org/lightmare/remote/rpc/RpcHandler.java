@@ -19,30 +19,30 @@ import org.lightmare.utils.RpcUtils;
  */
 public class RpcHandler extends SimpleChannelHandler {
 
-	private static final Logger LOG = Logger.getLogger(RpcHandler.class);
+    private static final Logger LOG = Logger.getLogger(RpcHandler.class);
 
-	@Override
-	public void messageReceived(ChannelHandlerContext ctx, MessageEvent ev)
-			throws IOException {
-		RpcWrapper wrapper = (RpcWrapper) ev.getMessage();
-		SocketAddress address = ev.getRemoteAddress();
+    @Override
+    public void messageReceived(ChannelHandlerContext ctx, MessageEvent ev)
+	    throws IOException {
+	RpcWrapper wrapper = (RpcWrapper) ev.getMessage();
+	SocketAddress address = ev.getRemoteAddress();
 
-		RcpWrapper rcp = new RcpWrapper();
-		Object value;
-		try {
-			value = RpcUtils.callBeanMethod(wrapper);
-			rcp.setValid(true);
-		} catch (Exception ex) {
-			LOG.error(ex.getMessage(), ex);
-			value = ex;
-		}
-
-		rcp.setValue(value);
-		ev.getChannel().write(rcp, address);
-		try {
-			super.messageReceived(ctx, ev);
-		} catch (Exception ex) {
-			throw new IOException(ex);
-		}
+	RcpWrapper rcp = new RcpWrapper();
+	Object value;
+	try {
+	    value = RpcUtils.callBeanMethod(wrapper);
+	    rcp.setValid(true);
+	} catch (Exception ex) {
+	    LOG.error(ex.getMessage(), ex);
+	    value = ex;
 	}
+
+	rcp.setValue(value);
+	ev.getChannel().write(rcp, address);
+	try {
+	    super.messageReceived(ctx, ev);
+	} catch (Exception ex) {
+	    throw new IOException(ex);
+	}
+    }
 }

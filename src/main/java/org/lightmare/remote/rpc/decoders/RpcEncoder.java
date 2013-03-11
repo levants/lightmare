@@ -12,46 +12,52 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.RpcUtils;
 
+/**
+ * Encoder class for netty remote procedure call
+ * 
+ * @author levan
+ * 
+ */
 public class RpcEncoder extends SimpleChannelHandler {
 
-	@Override
-	public void writeRequested(ChannelHandlerContext ctx, MessageEvent ev)
-			throws IOException {
+    @Override
+    public void writeRequested(ChannelHandlerContext ctx, MessageEvent ev)
+	    throws IOException {
 
-		RpcWrapper wrapper = (RpcWrapper) ev.getMessage();
+	RpcWrapper wrapper = (RpcWrapper) ev.getMessage();
 
-		String beanName = wrapper.getBeanName();
-		String methodName = wrapper.getMethodName();
-		Class<?>[] paramTypes = wrapper.getParamTypes();
-		Class<?> interfaceClass = wrapper.getInterfaceClass();
-		Object[] params = wrapper.getParams();
+	String beanName = wrapper.getBeanName();
+	String methodName = wrapper.getMethodName();
+	Class<?>[] paramTypes = wrapper.getParamTypes();
+	Class<?> interfaceClass = wrapper.getInterfaceClass();
+	Object[] params = wrapper.getParams();
 
-		byte[] beanNameBt = beanName.getBytes("UTF8");
-		byte[] beanMethodBt = RpcUtils.serialize(methodName);
-		byte[] paramTypesBt = RpcUtils.serialize(paramTypes);
-		byte[] interfaceClassBt = RpcUtils.serialize(interfaceClass);
-		byte[] paramBt = RpcUtils.serialize(params);
+	byte[] beanNameBt = beanName.getBytes("UTF8");
+	byte[] beanMethodBt = RpcUtils.serialize(methodName);
+	byte[] paramTypesBt = RpcUtils.serialize(paramTypes);
+	byte[] interfaceClassBt = RpcUtils.serialize(interfaceClass);
+	byte[] paramBt = RpcUtils.serialize(params);
 
-		int paramsSize = RpcUtils.PROTOCOL_SIZE + beanNameBt.length
-				+ beanMethodBt.length + paramTypesBt.length
-				+ interfaceClassBt.length + paramBt.length;
+	int paramsSize = RpcUtils.PROTOCOL_SIZE + beanNameBt.length
+		+ beanMethodBt.length + paramTypesBt.length
+		+ interfaceClassBt.length + paramBt.length;
 
-		ChannelBuffer buffer = ChannelBuffers.buffer(paramsSize);
+	ChannelBuffer buffer = ChannelBuffers.buffer(paramsSize);
 
-		buffer.writeInt(beanNameBt.length);
-		buffer.writeInt(beanMethodBt.length);
-		buffer.writeInt(paramTypesBt.length);
-		buffer.writeInt(interfaceClassBt.length);
-		buffer.writeInt(paramBt.length);
+	buffer.writeInt(beanNameBt.length);
+	buffer.writeInt(beanMethodBt.length);
+	buffer.writeInt(paramTypesBt.length);
+	buffer.writeInt(interfaceClassBt.length);
+	buffer.writeInt(paramBt.length);
 
-		buffer.writeBytes(beanNameBt);
-		buffer.writeBytes(beanMethodBt);
-		buffer.writeBytes(paramTypesBt);
-		buffer.writeBytes(interfaceClassBt);
-		buffer.writeBytes(paramBt);
+	buffer.writeBytes(beanNameBt);
+	buffer.writeBytes(beanMethodBt);
+	buffer.writeBytes(paramTypesBt);
+	buffer.writeBytes(interfaceClassBt);
+	buffer.writeBytes(paramBt);
 
-		ChannelFuture future = ev.getFuture();
-		Channels.write(ctx, future, buffer);
+	ChannelFuture future = ev.getFuture();
+	Channels.write(ctx, future, buffer);
 
-	}
+    }
 }

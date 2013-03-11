@@ -34,339 +34,339 @@ import org.w3c.dom.NodeList;
  */
 public abstract class AbstractIOUtils {
 
-	protected Map<URL, URL> xmlURLs;
+    protected Map<URL, URL> xmlURLs;
 
-	protected Map<String, URL> xmlFiles;
+    protected Map<String, URL> xmlFiles;
 
-	protected List<URL> libURLs;
+    protected List<URL> libURLs;
 
-	protected List<URL> ejbURLs;
+    protected List<URL> ejbURLs;
 
-	protected String path;
+    protected String path;
 
-	protected File realFile;
+    protected File realFile;
 
-	protected ZipFile earFile;
+    protected ZipFile earFile;
 
-	protected List<File> tmpFiles;
+    protected List<File> tmpFiles;
 
-	protected boolean isDirectory;
+    protected boolean isDirectory;
 
-	protected boolean xmlFromJar;
+    protected boolean xmlFromJar;
 
-	protected boolean executed;
+    protected boolean executed;
 
-	public AbstractIOUtils(String path) {
-		this.path = path;
-		realFile = new File(path);
-		isDirectory = realFile.isDirectory();
+    public AbstractIOUtils(String path) {
+	this.path = path;
+	realFile = new File(path);
+	isDirectory = realFile.isDirectory();
+    }
+
+    public AbstractIOUtils(File file) {
+	this.path = file.getPath();
+	realFile = file;
+	isDirectory = realFile.isDirectory();
+    }
+
+    public AbstractIOUtils(URL url) throws IOException {
+	this.path = url.toString();
+	try {
+	    realFile = new File(url.toURI());
+	} catch (URISyntaxException ex) {
+	    throw new IOException(ex);
+	}
+	isDirectory = realFile.isDirectory();
+    }
+
+    /**
+     * Ensures that all temporary files will be removed at finish of program
+     * 
+     * @param file
+     */
+    protected void ensureTmpFile(File file) {
+	file.deleteOnExit();
+    }
+
+    public boolean isExecuted() {
+	return executed;
+    }
+
+    public void setXmlFromJar(boolean xmlFromJar) {
+	this.xmlFromJar = xmlFromJar;
+    }
+
+    public Map<URL, URL> getXmlURLs() {
+	if (xmlURLs == null) {
+	    xmlURLs = new HashMap<URL, URL>();
 	}
 
-	public AbstractIOUtils(File file) {
-		this.path = file.getPath();
-		realFile = file;
-		isDirectory = realFile.isDirectory();
+	return xmlURLs;
+    }
+
+    public Map<String, URL> getXmlFiles() {
+	if (xmlFiles == null) {
+	    xmlFiles = new HashMap<String, URL>();
 	}
 
-	public AbstractIOUtils(URL url) throws IOException {
-		this.path = url.toString();
-		try {
-			realFile = new File(url.toURI());
-		} catch (URISyntaxException ex) {
-			throw new IOException(ex);
+	return xmlFiles;
+    }
+
+    public List<URL> getLibURLs() {
+	if (libURLs == null) {
+	    libURLs = new ArrayList<URL>();
+	}
+
+	return libURLs;
+    }
+
+    public List<URL> getEjbURLs() {
+	if (ejbURLs == null) {
+	    ejbURLs = new ArrayList<URL>();
+	}
+
+	return ejbURLs;
+    }
+
+    public ZipFile getEarFile() throws IOException {
+	if (earFile == null) {
+	    earFile = new ZipFile(path);
+	}
+
+	return earFile;
+    }
+
+    private static FileType getType(File appFile) {
+	FileType fileType;
+	String appPath = appFile.getPath();
+	if (appFile.isDirectory() && appPath.endsWith(".ear")) {
+	    fileType = FileType.EDIR;
+	} else if (appPath.endsWith(".ear")) {
+	    fileType = FileType.EAR;
+	} else if (appPath.endsWith(".jar")) {
+	    fileType = FileType.JAR;
+	} else {
+	    boolean isEarDir = FileUtils.checkOnEarDir(appFile);
+	    if (isEarDir) {
+		fileType = FileType.EDIR;
+	    } else {
+		fileType = FileType.DIR;
+	    }
+	}
+
+	return fileType;
+    }
+
+    public static AbstractIOUtils getAppropriatedType(URL url, FileType fileType)
+	    throws IOException {
+	AbstractIOUtils ioUtils = null;
+	File appFile;
+	try {
+	    appFile = new File(url.toURI());
+	} catch (URISyntaxException ex) {
+	    throw new IOException(ex);
+	}
+	FileType typToCheck = fileType;
+	if (fileType == null) {
+	    typToCheck = getType(appFile);
+	}
+	if (typToCheck.equals(FileType.EDIR)) {
+	    ioUtils = new DirUtils(appFile);
+	} else if (typToCheck.equals(FileType.EAR)) {
+	    ioUtils = new ExtUtils(appFile);
+	} else if (typToCheck.equals(FileType.JAR)) {
+	    ioUtils = new JarUtils(appFile);
+	}
+
+	return ioUtils;
+    }
+
+    public static AbstractIOUtils getAppropriatedType(URL url)
+	    throws IOException {
+	AbstractIOUtils ioUtils = getAppropriatedType(url, null);
+
+	return ioUtils;
+    }
+
+    /**
+     * Finds persistence.xml {@link URL} by class name
+     * 
+     * @param classOwnersFiles
+     * @param className
+     * @return {@link URL}
+     */
+    public URL getAppropriatedURL(Map<String, String> classOwnersFiles,
+	    String className) {
+	String jarName = classOwnersFiles.get(className);
+	URL xmlURL;
+	if (jarName == null || jarName.isEmpty()) {
+	    xmlURL = null;
+	} else {
+	    xmlURL = getXmlFiles().get(jarName);
+	}
+
+	return xmlURL;
+    }
+
+    /**
+     * Finds persistence.xml {@link URL} by class name
+     * 
+     * @param annotationDB
+     * @param className
+     * @return {@link URL}
+     */
+    public URL getAppropriatedURL(AnnotationDB annotationDB, String className) {
+	Map<String, String> classOwnersFiles = annotationDB
+		.getClassOwnersFiles();
+	URL xmlURL = getAppropriatedURL(classOwnersFiles, className);
+	return xmlURL;
+    }
+
+    public Set<String> appXmlParser(InputStream xmlStream) throws IOException {
+	try {
+	    Document document = FileParsers.parse(xmlStream);
+	    NodeList nodeList = document.getElementsByTagName("ejb");
+	    Set<String> ejbNames = new HashSet<String>();
+	    String ejbName;
+	    for (int i = 0; i < nodeList.getLength(); i++) {
+		Element ejbElement = (Element) nodeList.item(i);
+		ejbName = FileParsers.getContext(ejbElement);
+		if (ejbName != null) {
+		    ejbNames.add(ejbName);
 		}
-		isDirectory = realFile.isDirectory();
+	    }
+
+	    return ejbNames;
+	} finally {
+	    xmlStream.close();
+	}
+    }
+
+    public Set<String> appXmlParser() throws IOException {
+	InputStream stream = earReader();
+	Set<String> jarNames = appXmlParser(stream);
+
+	return jarNames;
+    }
+
+    public abstract InputStream earReader() throws IOException;
+
+    public void readEntries() throws IOException {
+	InputStream xmlStream = earReader();
+	Set<String> jarNames = appXmlParser(xmlStream);
+
+	extractEjbJars(jarNames);
+    }
+
+    /**
+     * Gets {@link URL}s in {@link List} for ejb library files from ear
+     * {@link File}
+     * 
+     * @throws IOException
+     */
+    public abstract void getEjbLibs() throws IOException;
+
+    public abstract void extractEjbJars(Set<String> jarNames)
+	    throws IOException;
+
+    public abstract boolean checkOnOrm(String jarName) throws IOException;
+
+    /**
+     * Scans project directory for class or jar files and persistence.xml (uses
+     * for development process)
+     * 
+     * @param files
+     * @throws MalformedURLException
+     */
+    public void scanDirectory(File... files) throws MalformedURLException {
+	File parentFile;
+	if (files.length >= 1) {
+	    parentFile = files[0];
+	} else {
+	    parentFile = realFile;
+	}
+	File[] subFiles = parentFile.listFiles();
+	String fileName;
+	URL fileURL;
+	for (File subFile : subFiles) {
+	    fileName = subFile.getName();
+	    if (subFile.isDirectory()) {
+		scanDirectory(subFile);
+	    } else if (fileName.endsWith(".jar") || fileName.endsWith(".class")) {
+		fileURL = subFile.toURI().toURL();
+		getEjbURLs().add(fileURL);
+		getLibURLs().add(fileURL);
+	    } else if (fileName.equals("persistence.xml")) {
+		fileURL = subFile.toURI().toURL();
+		getXmlURLs().put(realFile.toURI().toURL(), fileURL);
+	    }
+	}
+    }
+
+    protected abstract void scanArchive(Object... args) throws IOException;
+
+    public void scan(Object... args) throws IOException {
+	scanArchive(args);
+	executed = true;
+    }
+
+    public URL[] getLibs() {
+	URL[] urls;
+	if (libURLs == null) {
+	    urls = null;
+	} else {
+	    urls = libURLs.toArray(new URL[libURLs.size()]);
 	}
 
-	/**
-	 * Ensures that all temporary files will be removed at finish of program
-	 * 
-	 * @param file
-	 */
-	protected void ensureTmpFile(File file) {
-		file.deleteOnExit();
+	return urls;
+    }
+
+    public URL[] getEjbs() {
+	URL[] urls;
+	if (ejbURLs == null) {
+	    urls = null;
+	} else {
+	    urls = ejbURLs.toArray(new URL[ejbURLs.size()]);
 	}
 
-	public boolean isExecuted() {
-		return executed;
+	return urls;
+    }
+
+    public URL[] getURLs() {
+
+	List<URL> fullURLs = new ArrayList<URL>();
+	URL[] urls;
+
+	if (ejbURLs != null) {
+	    fullURLs.addAll(ejbURLs);
+	}
+	if (libURLs != null) {
+	    fullURLs.addAll(libURLs);
 	}
 
-	public void setXmlFromJar(boolean xmlFromJar) {
-		this.xmlFromJar = xmlFromJar;
+	urls = fullURLs.toArray(new URL[fullURLs.size()]);
+
+	return urls;
+    }
+
+    protected List<File> getForAddTmpFiles() {
+	if (tmpFiles == null) {
+	    tmpFiles = new ArrayList<File>();
 	}
 
-	public Map<URL, URL> getXmlURLs() {
-		if (xmlURLs == null) {
-			xmlURLs = new HashMap<URL, URL>();
-		}
+	return tmpFiles;
+    }
 
-		return xmlURLs;
-	}
+    /**
+     * Saves temporary files at cache
+     * 
+     * @param tmpFile
+     */
+    protected void addTmpFile(File tmpFile) {
+	ensureTmpFile(tmpFile);
+	getForAddTmpFiles().add(tmpFile);
+    }
 
-	public Map<String, URL> getXmlFiles() {
-		if (xmlFiles == null) {
-			xmlFiles = new HashMap<String, URL>();
-		}
-
-		return xmlFiles;
-	}
-
-	public List<URL> getLibURLs() {
-		if (libURLs == null) {
-			libURLs = new ArrayList<URL>();
-		}
-
-		return libURLs;
-	}
-
-	public List<URL> getEjbURLs() {
-		if (ejbURLs == null) {
-			ejbURLs = new ArrayList<URL>();
-		}
-
-		return ejbURLs;
-	}
-
-	public ZipFile getEarFile() throws IOException {
-		if (earFile == null) {
-			earFile = new ZipFile(path);
-		}
-
-		return earFile;
-	}
-
-	private static FileType getType(File appFile) {
-		FileType fileType;
-		String appPath = appFile.getPath();
-		if (appFile.isDirectory() && appPath.endsWith(".ear")) {
-			fileType = FileType.EDIR;
-		} else if (appPath.endsWith(".ear")) {
-			fileType = FileType.EAR;
-		} else if (appPath.endsWith(".jar")) {
-			fileType = FileType.JAR;
-		} else {
-			boolean isEarDir = FileUtils.checkOnEarDir(appFile);
-			if (isEarDir) {
-				fileType = FileType.EDIR;
-			} else {
-				fileType = FileType.DIR;
-			}
-		}
-
-		return fileType;
-	}
-
-	public static AbstractIOUtils getAppropriatedType(URL url, FileType fileType)
-			throws IOException {
-		AbstractIOUtils ioUtils = null;
-		File appFile;
-		try {
-			appFile = new File(url.toURI());
-		} catch (URISyntaxException ex) {
-			throw new IOException(ex);
-		}
-		FileType typToCheck = fileType;
-		if (fileType == null) {
-			typToCheck = getType(appFile);
-		}
-		if (typToCheck.equals(FileType.EDIR)) {
-			ioUtils = new DirUtils(appFile);
-		} else if (typToCheck.equals(FileType.EAR)) {
-			ioUtils = new ExtUtils(appFile);
-		} else if (typToCheck.equals(FileType.JAR)) {
-			ioUtils = new JarUtils(appFile);
-		}
-
-		return ioUtils;
-	}
-
-	public static AbstractIOUtils getAppropriatedType(URL url)
-			throws IOException {
-		AbstractIOUtils ioUtils = getAppropriatedType(url, null);
-
-		return ioUtils;
-	}
-
-	/**
-	 * Finds persistence.xml {@link URL} by class name
-	 * 
-	 * @param classOwnersFiles
-	 * @param className
-	 * @return {@link URL}
-	 */
-	public URL getAppropriatedURL(Map<String, String> classOwnersFiles,
-			String className) {
-		String jarName = classOwnersFiles.get(className);
-		URL xmlURL;
-		if (jarName == null || jarName.isEmpty()) {
-			xmlURL = null;
-		} else {
-			xmlURL = getXmlFiles().get(jarName);
-		}
-
-		return xmlURL;
-	}
-
-	/**
-	 * Finds persistence.xml {@link URL} by class name
-	 * 
-	 * @param annotationDB
-	 * @param className
-	 * @return {@link URL}
-	 */
-	public URL getAppropriatedURL(AnnotationDB annotationDB, String className) {
-		Map<String, String> classOwnersFiles = annotationDB
-				.getClassOwnersFiles();
-		URL xmlURL = getAppropriatedURL(classOwnersFiles, className);
-		return xmlURL;
-	}
-
-	public Set<String> appXmlParser(InputStream xmlStream) throws IOException {
-		try {
-			Document document = FileParsers.parse(xmlStream);
-			NodeList nodeList = document.getElementsByTagName("ejb");
-			Set<String> ejbNames = new HashSet<String>();
-			String ejbName;
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Element ejbElement = (Element) nodeList.item(i);
-				ejbName = FileParsers.getContext(ejbElement);
-				if (ejbName != null) {
-					ejbNames.add(ejbName);
-				}
-			}
-
-			return ejbNames;
-		} finally {
-			xmlStream.close();
-		}
-	}
-
-	public Set<String> appXmlParser() throws IOException {
-		InputStream stream = earReader();
-		Set<String> jarNames = appXmlParser(stream);
-
-		return jarNames;
-	}
-
-	public abstract InputStream earReader() throws IOException;
-
-	public void readEntries() throws IOException {
-		InputStream xmlStream = earReader();
-		Set<String> jarNames = appXmlParser(xmlStream);
-
-		extractEjbJars(jarNames);
-	}
-
-	/**
-	 * Gets {@link URL}s in {@link List} for ejb library files from ear
-	 * {@link File}
-	 * 
-	 * @throws IOException
-	 */
-	public abstract void getEjbLibs() throws IOException;
-
-	public abstract void extractEjbJars(Set<String> jarNames)
-			throws IOException;
-
-	public abstract boolean checkOnOrm(String jarName) throws IOException;
-
-	/**
-	 * Scans project directory for class or jar files and persistence.xml (uses
-	 * for development process)
-	 * 
-	 * @param files
-	 * @throws MalformedURLException
-	 */
-	public void scanDirectory(File... files) throws MalformedURLException {
-		File parentFile;
-		if (files.length >= 1) {
-			parentFile = files[0];
-		} else {
-			parentFile = realFile;
-		}
-		File[] subFiles = parentFile.listFiles();
-		String fileName;
-		URL fileURL;
-		for (File subFile : subFiles) {
-			fileName = subFile.getName();
-			if (subFile.isDirectory()) {
-				scanDirectory(subFile);
-			} else if (fileName.endsWith(".jar") || fileName.endsWith(".class")) {
-				fileURL = subFile.toURI().toURL();
-				getEjbURLs().add(fileURL);
-				getLibURLs().add(fileURL);
-			} else if (fileName.equals("persistence.xml")) {
-				fileURL = subFile.toURI().toURL();
-				getXmlURLs().put(realFile.toURI().toURL(), fileURL);
-			}
-		}
-	}
-
-	protected abstract void scanArchive(Object... args) throws IOException;
-
-	public void scan(Object... args) throws IOException {
-		scanArchive(args);
-		executed = true;
-	}
-
-	public URL[] getLibs() {
-		URL[] urls;
-		if (libURLs == null) {
-			urls = null;
-		} else {
-			urls = libURLs.toArray(new URL[libURLs.size()]);
-		}
-
-		return urls;
-	}
-
-	public URL[] getEjbs() {
-		URL[] urls;
-		if (ejbURLs == null) {
-			urls = null;
-		} else {
-			urls = ejbURLs.toArray(new URL[ejbURLs.size()]);
-		}
-
-		return urls;
-	}
-
-	public URL[] getURLs() {
-
-		List<URL> fullURLs = new ArrayList<URL>();
-		URL[] urls;
-
-		if (ejbURLs != null) {
-			fullURLs.addAll(ejbURLs);
-		}
-		if (libURLs != null) {
-			fullURLs.addAll(libURLs);
-		}
-
-		urls = fullURLs.toArray(new URL[fullURLs.size()]);
-
-		return urls;
-	}
-
-	protected List<File> getForAddTmpFiles() {
-		if (tmpFiles == null) {
-			tmpFiles = new ArrayList<File>();
-		}
-
-		return tmpFiles;
-	}
-
-	/**
-	 * Saves temporary files at cache
-	 * 
-	 * @param tmpFile
-	 */
-	protected void addTmpFile(File tmpFile) {
-		ensureTmpFile(tmpFile);
-		getForAddTmpFiles().add(tmpFile);
-	}
-
-	public List<File> getTmpFiles() {
-		return tmpFiles;
-	}
+    public List<File> getTmpFiles() {
+	return tmpFiles;
+    }
 }

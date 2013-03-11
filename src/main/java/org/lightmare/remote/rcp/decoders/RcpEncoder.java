@@ -22,27 +22,27 @@ import org.lightmare.utils.RpcUtils;
  */
 public class RcpEncoder extends SimpleChannelHandler {
 
-	@Override
-	public void writeRequested(ChannelHandlerContext ctx, MessageEvent ev)
-			throws IOException {
+    @Override
+    public void writeRequested(ChannelHandlerContext ctx, MessageEvent ev)
+	    throws IOException {
 
-		RcpWrapper wrapper = (RcpWrapper) ev.getMessage();
-		boolean valid = wrapper.isValid();
+	RcpWrapper wrapper = (RcpWrapper) ev.getMessage();
+	boolean valid = wrapper.isValid();
 
-		Object value = wrapper.getValue();
+	Object value = wrapper.getValue();
 
-		byte[] valueBt = RpcUtils.serialize(value);
-		int valueSize = valueBt.length;
+	byte[] valueBt = RpcUtils.serialize(value);
+	int valueSize = valueBt.length;
 
-		int protSize = RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE + valueSize;
+	int protSize = RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE + valueSize;
 
-		ChannelBuffer buffer = ChannelBuffers.buffer(protSize);
+	ChannelBuffer buffer = ChannelBuffers.buffer(protSize);
 
-		buffer.writeInt(valueSize);
-		buffer.writeByte(valid ? 1 : 0);
-		buffer.writeBytes(valueBt);
+	buffer.writeInt(valueSize);
+	buffer.writeByte(valid ? 1 : 0);
+	buffer.writeBytes(valueBt);
 
-		ChannelFuture future = ev.getFuture();
-		Channels.write(ctx, future, buffer);
-	}
+	ChannelFuture future = ev.getFuture();
+	Channels.write(ctx, future, buffer);
+    }
 }

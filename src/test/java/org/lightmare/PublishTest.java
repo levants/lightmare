@@ -6,11 +6,11 @@ import org.lightmare.rest.RestPublisher;
 
 public class PublishTest {
 
-	@Test
-	public void publisherTest() {
+    @Test
+    public void publisherTest() {
 
-		RestPublisher restPublisher = new RestPublisher();
-		String publish = restPublisher.publish(LightMareBean.class);
-		System.out.println(publish);
-	}
+	RestPublisher restPublisher = new RestPublisher();
+	String publish = restPublisher.publish(LightMareBean.class);
+	System.out.println(publish);
+    }
 }

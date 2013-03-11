@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * To define unit name of entitiy class
+ * To define unit name of {@link javax.persistence.Entity} class
  * 
  * @author Levan
  * 
@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UnitName {
 
-	String value() default "";
+    String value() default "";
 }
