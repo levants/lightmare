@@ -10,8 +10,15 @@ import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
 import org.lightmare.ejb.meta.MetaData;
+import org.lightmare.jpa.jta.UserTransactionImpl;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
@@ -81,7 +88,9 @@ public class BeanHandler implements InvocationHandler {
 	setConnection(em);
 	if (transactionField != null) {
 	    EntityTransaction entityTransaction = em.getTransaction();
-	    setFieldValue(transactionField, entityTransaction);
+	    UserTransaction transaction = new UserTransactionImpl(
+		    entityTransaction);
+	    setFieldValue(transactionField, transaction);
 	}
     }
 
@@ -107,18 +116,27 @@ public class BeanHandler implements InvocationHandler {
     }
 
     /**
-     * Creates {@link EntityTransaction} and begins if there is not
-     * {@link javax.annotation.Resource} annotation in current bean and returns
-     * this {@link EntityTransaction} or <code>null</code> in another case
+     * Creates {@link EntityTransaction} and {@link UserTransaction} and begins
+     * if there is not {@link javax.annotation.Resource} annotation in current
+     * bean and returns this {@link EntityTransaction} or <code>null</code> in
+     * another case
      * 
      * @param em
-     * @return {@link EntityTransaction}
+     * @return {@link UserTransaction}
      */
-    private EntityTransaction beginTransaction(EntityManager em) {
-	EntityTransaction transaction = null;
+    private UserTransaction beginTransaction(EntityManager em)
+	    throws IOException {
+	UserTransaction transaction = null;
 	if (transactionField == null) {
-	    transaction = em.getTransaction();
-	    transaction.begin();
+	    EntityTransaction entityTransaction = em.getTransaction();
+	    transaction = new UserTransactionImpl(entityTransaction);
+	    try {
+		transaction.begin();
+	    } catch (NotSupportedException ex) {
+		throw new IOException(ex);
+	    } catch (SystemException ex) {
+		throw new IOException(ex);
+	    }
 	}
 
 	return transaction;
@@ -142,17 +160,32 @@ public class BeanHandler implements InvocationHandler {
      * @param transaction
      * @param em
      */
-    private void close(EntityTransaction transaction, EntityManager em) {
+    private void close(UserTransaction transaction, EntityManager em)
+	    throws IOException {
 
 	if (transactionField == null) {
-	    transaction.commit();
+	    try {
+		transaction.commit();
+	    } catch (SecurityException ex) {
+		throw new IOException(ex);
+	    } catch (IllegalStateException ex) {
+		throw new IOException(ex);
+	    } catch (RollbackException ex) {
+		throw new IOException(ex);
+	    } catch (HeuristicMixedException ex) {
+		throw new IOException(ex);
+	    } catch (HeuristicRollbackException ex) {
+		throw new IOException(ex);
+	    } catch (SystemException ex) {
+		throw new IOException(ex);
+	    }
 	}
 
 	closeEntityManager(em);
     }
 
     /**
-     * Invokes method surrounded with {@link EntityTransaction} begin and commit
+     * Invokes method surrounded with {@link UserTransaction} begin and commit
      * 
      * @param em
      * @param method
@@ -164,7 +197,7 @@ public class BeanHandler implements InvocationHandler {
      */
     private Object invokeTransaction(final EntityManager em,
 	    final Method method, Object[] arguments) throws IOException {
-	EntityTransaction transaction = beginTransaction(em);
+	UserTransaction transaction = beginTransaction(em);
 	Object value = invoke(method, arguments);
 	close(transaction, em);
 
@@ -184,10 +217,10 @@ public class BeanHandler implements InvocationHandler {
 		    .getAnnotation(TransactionAttribute.class);
 	    Object value;
 
-	    if (transaction != null) {
-		value = invokeTransaction(em, realMethod, arguments);
-	    } else {
+	    if (transaction == null) {
 		value = realMethod.invoke(bean, arguments);
+	    } else {
+		value = invokeTransaction(em, realMethod, arguments);
 	    }
 
 	    return value;
