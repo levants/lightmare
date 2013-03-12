@@ -53,6 +53,14 @@ public class UserTransactionImpl implements UserTransaction {
 	    boolean isActive = transaction.isActive();
 	    active += isActive ? 1 : 0;
 	}
+
+	if (requareNews != null && checkNews()) {
+	    for (EntityTransaction transaction : requareNews) {
+		boolean isActive = transaction.isActive();
+		active += isActive ? 1 : 0;
+	    }
+	}
+
 	return active;
     }
 

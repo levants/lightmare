@@ -2,6 +2,7 @@ package org.lightmare.ejb.startup;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Properties;
@@ -15,6 +16,7 @@ import java.util.concurrent.ThreadFactory;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.PersistenceContext;
@@ -381,22 +383,33 @@ public class BeanLoader {
 	 * @param beanClass
 	 * @return <code>boolean</code>
 	 */
-	private boolean checkOnTransactional(Class<?> beanClass) {
+	private void checkOnTransactional(Class<?> beanClass) {
 
 	    TransactionAttribute transactionAttribute = beanClass
 		    .getAnnotation(TransactionAttribute.class);
 	    TransactionManagement transactionManagement = beanClass
 		    .getAnnotation(TransactionManagement.class);
-	    boolean transactional = true;
-	    if (transactionAttribute == null
-		    && (transactionManagement == null || transactionManagement
-			    .value().equals(TransactionManagementType.BEAN))) {
+	    boolean transactional = false;
+	    TransactionAttributeType transactionAttrType;
+	    TransactionManagementType transactionManType;
+	    if (transactionAttribute == null) {
 
-		transactional = false;
+		transactional = true;
+		transactionAttrType = TransactionAttributeType.REQUIRED;
+		transactionManType = TransactionManagementType.CONTAINER;
 
+	    } else if (transactionManagement == null) {
+
+		transactionAttrType = transactionAttribute.value();
+		transactionManType = TransactionManagementType.CONTAINER;
+	    } else {
+		transactionAttrType = transactionAttribute.value();
+		transactionManType = transactionManagement.value();
 	    }
 
-	    return transactional;
+	    metaData.setTransactional(transactional);
+	    metaData.setTranscanntionAttrType(transactionAttrType);
+	    metaData.setTransactionManType(transactionManType);
 	}
 
 	/**
@@ -413,6 +426,9 @@ public class BeanLoader {
 		} else {
 		    beanClass = Class.forName(className, true, loader);
 		}
+
+		checkOnTransactional(beanClass);
+
 		Stateless annotation = beanClass.getAnnotation(Stateless.class);
 		String beanEjbName = annotation.name();
 		if (beanEjbName == null || beanEjbName.isEmpty()) {
