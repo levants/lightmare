@@ -18,10 +18,10 @@ public class BeanTransactions {
 	boolean isReqNew;
 	if (attribute == null) {
 	    isReqNew = false;
-	}else{
+	} else {
 	    isReqNew = true;
 	}
-	
-	return isReqNew
+
+	return isReqNew;
     }
 }
