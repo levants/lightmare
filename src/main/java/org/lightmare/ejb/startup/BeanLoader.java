@@ -378,10 +378,11 @@ public class BeanLoader {
 
 	/**
 	 * Checks if bean class is annotated as {@link TransactionAttribute} and
-	 * {@link TransactionManagement}
+	 * {@link TransactionManagement} and caches
+	 * {@link TransactionAttribute#value()} and
+	 * {@link TransactionManagement#value()} in {@link MetaData} object
 	 * 
 	 * @param beanClass
-	 * @return <code>boolean</code>
 	 */
 	private void checkOnTransactional(Class<?> beanClass) {
 
