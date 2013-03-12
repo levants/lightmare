@@ -6,9 +6,13 @@ import java.util.Hashtable;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.transaction.UserTransaction;
 
 import org.lightmare.ejb.EjbConnector;
+import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.jpa.JPAManager;
+import org.lightmare.jpa.jta.UserTransactionImpl;
 import org.osjava.sj.memory.MemoryContext;
 
 /**
@@ -29,9 +33,13 @@ public class DSContext extends MemoryContext {
 
 	Object value;
 	String name;
-	// Checks if it is request for entity manager
-	if (jndiName.startsWith("java:comp/env/")) {
+	if (jndiName.equals("java:comp/env/UserTransaction")) {
 
+	    UserTransaction transaction = MetaContainer.getTransaction();
+	    value = transaction;
+
+	} else if (jndiName.startsWith("java:comp/env/")) {
+	    // Checks if it is request for entity manager
 	    name = NamingUtils.formatJpaJndiName(jndiName);
 
 	    // Checks if connection is in progress and waits for finish
@@ -43,7 +51,8 @@ public class DSContext extends MemoryContext {
 		value = candidate;
 	    } else if (candidate instanceof EntityManagerFactory) {
 		EntityManagerFactory emf = (EntityManagerFactory) (candidate);
-		value = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();
+		value = em;
 	    } else {
 		value = candidate;
 	    }

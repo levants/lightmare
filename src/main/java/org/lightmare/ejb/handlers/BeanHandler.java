@@ -17,6 +17,7 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
+import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.jta.UserTransactionImpl;
 import org.lightmare.utils.reflect.MetaUtils;
@@ -72,6 +73,17 @@ public class BeanHandler implements InvocationHandler {
 	return MetaUtils.invoke(method, bean, arguments);
     }
 
+    private Object invokeBeanMethod(Method method, EntityManager em,
+	    Object... arguments) throws IOException {
+
+	getTransaction(em);
+	Object value = invoke(method, bean, arguments);
+	MetaContainer.removeTransaction();
+	closeEntityManager(em);
+
+	return value;
+    }
+
     /**
      * Sets {@link EntityManager} at beans's annotated field
      * 
@@ -83,13 +95,29 @@ public class BeanHandler implements InvocationHandler {
 	setFieldValue(connectionField, em);
     }
 
+    /**
+     * Creates and caches {@link UserTransaction} per thread
+     * 
+     * @param em
+     * @return {@link UserTransaction}
+     */
+    private UserTransaction getTransaction(EntityManager em) {
+
+	UserTransaction transaction = null;
+	if (em != null) {
+	    EntityTransaction entityTransaction = em.getTransaction();
+	    transaction = new UserTransactionImpl(entityTransaction);
+	    MetaContainer.setTransaction(transaction);
+	}
+
+	return transaction;
+    }
+
     private void setTransactionField(EntityManager em) throws IOException {
 
 	setConnection(em);
 	if (transactionField != null) {
-	    EntityTransaction entityTransaction = em.getTransaction();
-	    UserTransaction transaction = new UserTransactionImpl(
-		    entityTransaction);
+	    UserTransaction transaction = getTransaction(em);
 	    setFieldValue(transactionField, transaction);
 	}
     }
@@ -128,8 +156,7 @@ public class BeanHandler implements InvocationHandler {
 	    throws IOException {
 	UserTransaction transaction = null;
 	if (transactionField == null) {
-	    EntityTransaction entityTransaction = em.getTransaction();
-	    transaction = new UserTransactionImpl(entityTransaction);
+	    transaction = getTransaction(em);
 	    try {
 		transaction.begin();
 	    } catch (NotSupportedException ex) {
@@ -181,6 +208,7 @@ public class BeanHandler implements InvocationHandler {
 	    }
 	}
 
+	MetaContainer.removeTransaction();
 	closeEntityManager(em);
     }
 
@@ -218,7 +246,7 @@ public class BeanHandler implements InvocationHandler {
 	    Object value;
 
 	    if (transaction == null) {
-		value = realMethod.invoke(bean, arguments);
+		value = invokeBeanMethod(realMethod, em, arguments);
 	    } else {
 		value = invokeTransaction(em, realMethod, arguments);
 	    }
