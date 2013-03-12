@@ -37,6 +37,8 @@ public class MetaData {
 
     private AtomicBoolean inProgress = new AtomicBoolean();
 
+    private boolean transactional;
+
     public Class<?> getBeanClass() {
 	return beanClass;
     }
@@ -122,5 +124,13 @@ public class MetaData {
 
     public void setInProgress(boolean inProgress) {
 	this.inProgress.getAndSet(inProgress);
+    }
+
+    public boolean isTransactional() {
+	return transactional;
+    }
+
+    public void setTransactional(boolean transactional) {
+	this.transactional = transactional;
     }
 }

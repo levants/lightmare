@@ -14,6 +14,9 @@ import java.util.concurrent.ThreadFactory;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
@@ -369,6 +372,31 @@ public class BeanLoader {
 	    }
 
 	    metaData.setLoader(loader);
+	}
+
+	/**
+	 * Checks if bean class is annotated as {@link TransactionAttribute} and
+	 * {@link TransactionManagement}
+	 * 
+	 * @param beanClass
+	 * @return <code>boolean</code>
+	 */
+	private boolean checkOnTransactional(Class<?> beanClass) {
+
+	    TransactionAttribute transactionAttribute = beanClass
+		    .getAnnotation(TransactionAttribute.class);
+	    TransactionManagement transactionManagement = beanClass
+		    .getAnnotation(TransactionManagement.class);
+	    boolean transactional = true;
+	    if (transactionAttribute == null
+		    && (transactionManagement == null || transactionManagement
+			    .value().equals(TransactionManagementType.BEAN))) {
+
+		transactional = false;
+
+	    }
+
+	    return transactional;
 	}
 
 	/**

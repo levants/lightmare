@@ -6,13 +6,11 @@ import java.util.Hashtable;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.transaction.UserTransaction;
 
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.jpa.JPAManager;
-import org.lightmare.jpa.jta.UserTransactionImpl;
 import org.osjava.sj.memory.MemoryContext;
 
 /**
