@@ -90,12 +90,7 @@ public class BeanHandler implements InvocationHandler {
      */
     private UserTransaction getTransaction(EntityManager em) {
 
-	UserTransaction transaction = null;
-	if (em != null) {
-	    EntityTransaction entityTransaction = em.getTransaction();
-	    transaction = new UserTransactionImpl(entityTransaction);
-	    MetaContainer.setTransaction(transaction);
-	}
+	UserTransaction transaction = BeanTransactions.getTransaction(em);
 
 	return transaction;
     }
@@ -173,7 +168,7 @@ public class BeanHandler implements InvocationHandler {
 	if (transactionField == null) {
 	    BeanTransactions.addTransaction(this, method, em);
 	} else {
-	    BeanTransactions.getTransaction();
+	    setTransactionField(em);
 	}
 	Object value = invoke(method, arguments);
 	close(method);

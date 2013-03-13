@@ -48,7 +48,32 @@ public class BeanTransactions {
 	if (transaction == null) {
 	    transaction = new UserTransactionImpl(entityTransactions);
 	    MetaContainer.setTransaction(transaction);
+	} else if (entityTransactions.length > 0) {
+
+	    ((UserTransactionImpl) transaction)
+		    .addTransactions(entityTransactions);
 	}
+
+	return transaction;
+    }
+
+    /**
+     * Gets existing transaction from cache
+     * 
+     * @param entityTransactions
+     * @return {@link UserTransaction}
+     */
+    public static UserTransaction getTransaction(EntityManager em) {
+
+	UserTransaction transaction = MetaContainer.getTransaction();
+	if (transaction == null) {
+	    transaction = new UserTransactionImpl();
+	    MetaContainer.setTransaction(transaction);
+	}
+
+	EntityTransaction entityTransaction = getEntityTransaction(em);
+	addEntityTransaction((UserTransactionImpl) transaction,
+		entityTransaction, em);
 
 	return transaction;
     }
@@ -249,15 +274,13 @@ public class BeanTransactions {
      * Decides whether commit or not {@link UserTransaction} by
      * {@link TransactionAttribute} annotation
      * 
+     * @param type
      * @param handler
-     * @param method
      * @throws IOException
      */
-    public static void commitTransaction(BeanHandler handler, Method method)
-	    throws IOException {
+    private static void commitTransaction(TransactionAttributeType type,
+	    BeanHandler handler) throws IOException {
 
-	TransactionAttributeType type = getTransactionType(
-		handler.getMetaData(), method);
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
 
 	if (type.equals(TransactionAttributeType.REQUIRED)) {
@@ -269,6 +292,24 @@ public class BeanTransactions {
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 
 	    transaction.commitReqNew();
+	}
+    }
+
+    /**
+     * Decides whether commit or not {@link UserTransaction} by
+     * {@link TransactionAttribute} annotation
+     * 
+     * @param handler
+     * @param method
+     * @throws IOException
+     */
+    public static void commitTransaction(BeanHandler handler, Method method)
+	    throws IOException {
+
+	TransactionAttributeType type = getTransactionType(
+		handler.getMetaData(), method);
+	if (type != null) {
+	    commitTransaction(type, handler);
 	}
     }
 }
