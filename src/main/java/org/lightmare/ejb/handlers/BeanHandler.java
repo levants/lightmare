@@ -8,13 +8,10 @@ import java.lang.reflect.Method;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.transaction.UserTransaction;
 
-import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.jta.BeanTransactions;
-import org.lightmare.jpa.jta.UserTransactionImpl;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
