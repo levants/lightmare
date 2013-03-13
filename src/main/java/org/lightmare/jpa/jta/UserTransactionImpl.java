@@ -90,7 +90,9 @@ public class UserTransactionImpl implements UserTransaction {
 	    SystemException {
 
 	for (EntityTransaction transaction : transactions) {
-	    transaction.rollback();
+	    if (transaction.isActive()) {
+		transaction.rollback();
+	    }
 	}
     }
 
@@ -98,12 +100,14 @@ public class UserTransactionImpl implements UserTransaction {
     public void setRollbackOnly() throws IllegalStateException, SystemException {
 
 	for (EntityTransaction transaction : transactions) {
-	    transaction.setRollbackOnly();
+	    if (transaction.isActive()) {
+		transaction.setRollbackOnly();
+	    }
 	}
     }
 
     @Override
-    public void setTransactionTimeout(int arg0) throws SystemException {
+    public void setTransactionTimeout(int time) throws SystemException {
 
 	throw new UnsupportedOperationException(
 		"Timeouts are not supported yet");
@@ -128,7 +132,8 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     /**
-     * Check if requareNews transactions stack is empty
+     * Check if {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} type
+     * transactions stack is empty
      * 
      * @return <code>boolean</code>
      */
@@ -139,6 +144,12 @@ public class UserTransactionImpl implements UserTransaction {
 	return notEmpty;
     }
 
+    /**
+     * Check if {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} type
+     * transactions referenced {@link EntityManager} stack is empty
+     * 
+     * @return <code>boolean</code>
+     */
     private boolean checkNewEms() {
 
 	boolean notEmpty = !getNewEms().isEmpty();
@@ -158,6 +169,13 @@ public class UserTransactionImpl implements UserTransaction {
 	getNews().push(entityTransaction);
     }
 
+    /**
+     * Adds {@link EntityManager} to collection to close after
+     * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} type transactions
+     * processing
+     * 
+     * @param em
+     */
     public void pushReqNewEm(EntityManager em) {
 
 	getNewEms().push(em);
@@ -207,6 +225,12 @@ public class UserTransactionImpl implements UserTransaction {
 	Collections.addAll(this.transactions, transactions);
     }
 
+    /**
+     * Adds {@link EntityManager} to collection to close after transactions
+     * processing
+     * 
+     * @param em
+     */
     public void addEntityManager(EntityManager em) {
 
 	if (ems == null) {
