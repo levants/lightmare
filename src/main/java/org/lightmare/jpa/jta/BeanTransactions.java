@@ -144,7 +144,7 @@ public class BeanTransactions {
 	return entityTransaction;
     }
 
-    public static boolean checkOnNull(Object data) {
+    private static boolean checkOnNull(Object data) {
 
 	return data != null;
     }
@@ -160,7 +160,7 @@ public class BeanTransactions {
 	}
     }
 
-    public static void addReqNewTransaction(UserTransactionImpl transaction,
+    private static void addReqNewTransaction(UserTransactionImpl transaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
 	if (checkOnNull(entityTransaction)) {
