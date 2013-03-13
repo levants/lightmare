@@ -1,11 +1,13 @@
 package org.lightmare.jpa.jta;
 
 import java.lang.reflect.InvocationHandler;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
@@ -24,13 +26,22 @@ public class UserTransactionImpl implements UserTransaction {
 
     private List<EntityTransaction> transactions;
 
+    private List<EntityManager> ems;
+
     private Stack<EntityTransaction> requareNews;
+
+    private Stack<EntityManager> requareNewEms;
 
     private InvocationHandler caller;
 
     public UserTransactionImpl(EntityTransaction... transactions) {
 
-	this.transactions = Arrays.asList(transactions);
+	if (transactions.length > 0) {
+	    this.transactions = new ArrayList<EntityTransaction>(
+		    Arrays.asList(transactions));
+	} else {
+	    this.transactions = new ArrayList<EntityTransaction>();
+	}
     }
 
     @Override
@@ -47,8 +58,12 @@ public class UserTransactionImpl implements UserTransaction {
 	    IllegalStateException, SystemException {
 
 	for (EntityTransaction transaction : transactions) {
-	    transaction.commit();
+	    if (transaction.isActive()) {
+		transaction.commit();
+	    }
 	}
+
+	closeEntityManagers();
     }
 
     @Override
@@ -103,6 +118,15 @@ public class UserTransactionImpl implements UserTransaction {
 	return requareNews;
     }
 
+    private Stack<EntityManager> getNewEms() {
+
+	if (requareNewEms == null) {
+	    requareNewEms = new Stack<EntityManager>();
+	}
+
+	return requareNewEms;
+    }
+
     /**
      * Check if requareNews transactions stack is empty
      * 
@@ -111,6 +135,13 @@ public class UserTransactionImpl implements UserTransaction {
     private boolean checkNews() {
 
 	boolean notEmpty = !getNews().isEmpty();
+
+	return notEmpty;
+    }
+
+    private boolean checkNewEms() {
+
+	boolean notEmpty = !getNewEms().isEmpty();
 
 	return notEmpty;
     }
@@ -127,6 +158,11 @@ public class UserTransactionImpl implements UserTransaction {
 	getNews().push(entityTransaction);
     }
 
+    public void pushReqNewEm(EntityManager em) {
+
+	getNewEms().push(em);
+    }
+
     /**
      * Commits new {@link EntityTransaction} at the end of
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
@@ -137,6 +173,17 @@ public class UserTransactionImpl implements UserTransaction {
 	if (checkNews()) {
 	    EntityTransaction entityTransaction = getNews().pop();
 	    entityTransaction.commit();
+	}
+	closeReqNew();
+    }
+
+    private void closeReqNew() {
+
+	if (checkNewEms()) {
+	    EntityManager em = getNewEms().pop();
+	    if (em.isOpen()) {
+		em.close();
+	    }
 	}
     }
 
@@ -158,6 +205,24 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void addTransactions(EntityTransaction... transactions) {
 	Collections.addAll(this.transactions, transactions);
+    }
+
+    public void addEntityManager(EntityManager em) {
+
+	if (ems == null) {
+	    ems = new ArrayList<EntityManager>();
+	}
+
+	ems.add(em);
+    }
+
+    private void closeEntityManagers() {
+
+	for (EntityManager em : ems) {
+	    if (em.isOpen()) {
+		em.close();
+	    }
+	}
     }
 
     /**

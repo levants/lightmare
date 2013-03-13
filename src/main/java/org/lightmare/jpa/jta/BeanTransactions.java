@@ -106,6 +106,46 @@ public class BeanTransactions {
 	return status;
     }
 
+    private static EntityTransaction getEntityTransaction(EntityManager em) {
+
+	EntityTransaction entityTransaction;
+	if (em == null) {
+	    entityTransaction = null;
+	} else {
+	    entityTransaction = em.getTransaction();
+	    entityTransaction.begin();
+	}
+
+	return entityTransaction;
+    }
+
+    public static boolean checkOnNull(Object data) {
+
+	return data != null;
+    }
+
+    private static void addEntityTransaction(UserTransactionImpl transaction,
+	    EntityTransaction entityTransaction, EntityManager em) {
+
+	if (checkOnNull(entityTransaction)) {
+	    transaction.addTransaction(entityTransaction);
+	}
+	if (checkOnNull(em)) {
+	    transaction.addEntityManager(em);
+	}
+    }
+
+    public static void addReqNewTransaction(UserTransactionImpl transaction,
+	    EntityTransaction entityTransaction, EntityManager em) {
+
+	if (checkOnNull(entityTransaction)) {
+	    transaction.pushReqNew(entityTransaction);
+	}
+	if (checkOnNull(em)) {
+	    transaction.pushReqNewEm(em);
+	}
+    }
+
     /**
      * Decides whether create or join {@link UserTransaction} by
      * {@link TransactionAttribute} annotation
@@ -128,15 +168,13 @@ public class BeanTransactions {
 		transaction.setCaller(handler);
 	    }
 
-	    entityTransaction = em.getTransaction();
-	    entityTransaction.begin();
-	    transaction.addTransaction(entityTransaction);
+	    entityTransaction = getEntityTransaction(em);
+	    addEntityTransaction(transaction, entityTransaction, em);
 
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 
-	    entityTransaction = em.getTransaction();
-	    entityTransaction.begin();
-	    transaction.pushReqNew(entityTransaction);
+	    entityTransaction = getEntityTransaction(em);
+	    addReqNewTransaction(transaction, entityTransaction, em);
 
 	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
 
@@ -144,9 +182,8 @@ public class BeanTransactions {
 	    if (status == 0) {
 		throw new EJBException(MANDATORY_ERROR);
 	    } else {
-		entityTransaction = em.getTransaction();
-		entityTransaction.begin();
-		transaction.addTransaction(entityTransaction);
+		entityTransaction = getEntityTransaction(em);
+		addEntityTransaction(transaction, entityTransaction, em);
 	    }
 	} else if (type.equals(TransactionAttributeType.NEVER)) {
 

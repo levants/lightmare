@@ -6,19 +6,14 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
+import org.lightmare.jpa.jta.BeanTransactions;
 import org.lightmare.jpa.jta.UserTransactionImpl;
 import org.lightmare.utils.reflect.MetaUtils;
 
@@ -74,17 +69,6 @@ public class BeanHandler implements InvocationHandler {
     private Object invoke(Method method, Object... arguments)
 	    throws IOException {
 	return MetaUtils.invoke(method, bean, arguments);
-    }
-
-    private Object invokeBeanMethod(Method method, EntityManager em,
-	    Object... arguments) throws IOException {
-
-	getTransaction(em);
-	Object value = invoke(method, bean, arguments);
-	MetaContainer.removeTransaction();
-	closeEntityManager(em);
-
-	return value;
     }
 
     /**
@@ -147,32 +131,6 @@ public class BeanHandler implements InvocationHandler {
     }
 
     /**
-     * Creates {@link EntityTransaction} and {@link UserTransaction} and begins
-     * if there is not {@link javax.annotation.Resource} annotation in current
-     * bean and returns this {@link EntityTransaction} or <code>null</code> in
-     * another case
-     * 
-     * @param em
-     * @return {@link UserTransaction}
-     */
-    private UserTransaction beginTransaction(EntityManager em)
-	    throws IOException {
-	UserTransaction transaction = null;
-	if (transactionField == null) {
-	    transaction = getTransaction(em);
-	    try {
-		transaction.begin();
-	    } catch (NotSupportedException ex) {
-		throw new IOException(ex);
-	    } catch (SystemException ex) {
-		throw new IOException(ex);
-	    }
-	}
-
-	return transaction;
-    }
-
-    /**
      * Closes {@link EntityManager} if it open
      * 
      * @param em
@@ -190,29 +148,12 @@ public class BeanHandler implements InvocationHandler {
      * @param transaction
      * @param em
      */
-    private void close(UserTransaction transaction, EntityManager em)
-	    throws IOException {
+    private void close(Method method) throws IOException {
 
 	if (transactionField == null) {
-	    try {
-		transaction.commit();
-	    } catch (SecurityException ex) {
-		throw new IOException(ex);
-	    } catch (IllegalStateException ex) {
-		throw new IOException(ex);
-	    } catch (RollbackException ex) {
-		throw new IOException(ex);
-	    } catch (HeuristicMixedException ex) {
-		throw new IOException(ex);
-	    } catch (HeuristicRollbackException ex) {
-		throw new IOException(ex);
-	    } catch (SystemException ex) {
-		throw new IOException(ex);
-	    }
-	}
 
-	MetaContainer.removeTransaction();
-	closeEntityManager(em);
+	    BeanTransactions.commitTransaction(this, method);
+	}
     }
 
     /**
@@ -226,11 +167,16 @@ public class BeanHandler implements InvocationHandler {
      * @throws IllegalArgumentException
      * @throws InvocationTargetException
      */
-    private Object invokeTransaction(final EntityManager em,
+    private Object invokeBeanMethod(final EntityManager em,
 	    final Method method, Object[] arguments) throws IOException {
-	UserTransaction transaction = beginTransaction(em);
+
+	if (transactionField == null) {
+	    BeanTransactions.addTransaction(this, method, em);
+	} else {
+	    BeanTransactions.getTransaction();
+	}
 	Object value = invoke(method, arguments);
-	close(transaction, em);
+	close(method);
 
 	return value;
     }
@@ -244,15 +190,9 @@ public class BeanHandler implements InvocationHandler {
 	try {
 	    Method realMethod = bean.getClass().getDeclaredMethod(
 		    method.getName(), method.getParameterTypes());
-	    TransactionAttribute transaction = realMethod
-		    .getAnnotation(TransactionAttribute.class);
 	    Object value;
 
-	    if (transaction == null) {
-		value = invokeBeanMethod(realMethod, em, arguments);
-	    } else {
-		value = invokeTransaction(em, realMethod, arguments);
-	    }
+	    value = invokeBeanMethod(em, realMethod, arguments);
 
 	    return value;
 
