@@ -67,11 +67,18 @@ public class EjbEarTest {
 	}
     }
 
+    public void getThreadId() {
+	System.out.println("=======thread id============");
+	System.out.println(Thread.currentThread().getId());
+	System.out.println("============================");
+    }
+
     @Test
     @RunOrder(1)
     public void addPersonTest() {
 	try {
 	    bean.addPerson(personToAdd);
+	    getThreadId();
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
@@ -87,6 +94,7 @@ public class EjbEarTest {
 	    bean.editPerson(personToEdit);
 	    check = bean.getPerson(1000);
 	    Assert.assertNotNull("could not insert person", check);
+	    getThreadId();
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
@@ -104,6 +112,7 @@ public class EjbEarTest {
 	    Assert.assertNotNull("could not insert person", check);
 	    bean.addPerson(personToIdGeneratorNew);
 	    System.out.println(personToIdGeneratorNew.getPersonId());
+	    getThreadId();
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
@@ -115,6 +124,7 @@ public class EjbEarTest {
 	try {
 	    Person person = bean.getPerson(1000);
 	    Assert.assertNotNull("could not fing person", person);
+	    getThreadId();
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
@@ -126,6 +136,7 @@ public class EjbEarTest {
 	try {
 	    List<Person> persons = bean.getPersons("last", "first");
 	    Assert.assertTrue("could not select persons", !persons.isEmpty());
+	    getThreadId();
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
@@ -140,6 +151,7 @@ public class EjbEarTest {
 		    "LightMareFalseBean", LightMareFalseBeanRemote.class);
 	    boolean check = falseBean.isFalse();
 	    Assert.assertTrue(check);
+	    getThreadId();
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
