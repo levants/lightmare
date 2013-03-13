@@ -40,6 +40,8 @@ public class BeanHandler implements InvocationHandler {
 
     private final Field unitField;
 
+    private final MetaData metaData;
+
     public BeanHandler(final MetaData metaData, final Object bean) {
 
 	this.bean = bean;
@@ -47,6 +49,7 @@ public class BeanHandler implements InvocationHandler {
 	this.connectionField = metaData.getConnectorField();
 	this.transactionField = metaData.getTransactionField();
 	this.unitField = metaData.getUnitField();
+	this.metaData = metaData;
     }
 
     /**
@@ -256,5 +259,10 @@ public class BeanHandler implements InvocationHandler {
 	} finally {
 	    closeEntityManager(em);
 	}
+    }
+
+    public MetaData getMetaData() {
+
+	return metaData;
     }
 }

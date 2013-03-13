@@ -3,9 +3,7 @@ package org.lightmare.ejb.meta;
 import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -43,7 +41,7 @@ public class MetaData {
 
     private boolean transactional;
 
-    private TransactionAttributeType transcanntionAttrType;
+    private TransactionAttributeType transactionAttrType;
 
     private TransactionManagementType transactionManType;
 
@@ -142,13 +140,13 @@ public class MetaData {
 	this.transactional = transactional;
     }
 
-    public TransactionAttributeType getTranscanntionAttrType() {
-	return transcanntionAttrType;
+    public TransactionAttributeType getTransactionAttrType() {
+	return transactionAttrType;
     }
 
-    public void setTranscanntionAttrType(
-	    TransactionAttributeType transcanntionAttrType) {
-	this.transcanntionAttrType = transcanntionAttrType;
+    public void setTransactionAttrType(
+	    TransactionAttributeType transactionAttrType) {
+	this.transactionAttrType = transactionAttrType;
     }
 
     public TransactionManagementType getTransactionManType() {

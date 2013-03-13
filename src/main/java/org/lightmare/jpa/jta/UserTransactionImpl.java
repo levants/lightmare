@@ -1,5 +1,9 @@
 package org.lightmare.jpa.jta;
 
+import java.lang.reflect.InvocationHandler;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 import javax.persistence.EntityTransaction;
@@ -18,13 +22,15 @@ import javax.transaction.UserTransaction;
  */
 public class UserTransactionImpl implements UserTransaction {
 
-    private EntityTransaction[] transactions;
+    private List<EntityTransaction> transactions;
 
     private Stack<EntityTransaction> requareNews;
 
+    private InvocationHandler caller;
+
     public UserTransactionImpl(EntityTransaction... transactions) {
 
-	this.transactions = transactions;
+	this.transactions = Arrays.asList(transactions);
     }
 
     @Override
@@ -134,4 +140,49 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Adds {@link EntityTransaction} to transactions {@link List} for further
+     * processing
+     * 
+     * @param transaction
+     */
+    public void addTransaction(EntityTransaction transaction) {
+	transactions.add(transaction);
+    }
+
+    /**
+     * Adds {@link EntityTransaction}s to transactions {@link List} for further
+     * processing
+     * 
+     * @param transactions
+     */
+    public void addTransactions(EntityTransaction... transactions) {
+	Collections.addAll(this.transactions, transactions);
+    }
+
+    /**
+     * Checks if this object was created by passed {@link InvocationHandler}
+     * object
+     * 
+     * @param handler
+     * @return <code>boolean</code>
+     */
+    public boolean checkCaller(InvocationHandler handler) {
+
+	boolean check = (caller != null);
+	if (check) {
+	    check = caller.equals(handler);
+	}
+
+	return check;
+    }
+
+    public void setCaller(InvocationHandler handler) {
+	caller = handler;
+    }
+
+    public InvocationHandler getCaller() {
+
+	return caller;
+    }
 }

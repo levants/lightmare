@@ -2,7 +2,6 @@ package org.lightmare.ejb.startup;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Properties;
@@ -409,7 +408,7 @@ public class BeanLoader {
 	    }
 
 	    metaData.setTransactional(transactional);
-	    metaData.setTranscanntionAttrType(transactionAttrType);
+	    metaData.setTransactionAttrType(transactionAttrType);
 	    metaData.setTransactionManType(transactionManType);
 	}
 
