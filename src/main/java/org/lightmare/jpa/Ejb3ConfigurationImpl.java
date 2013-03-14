@@ -112,6 +112,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.internal.StandardServiceRegistryImpl;
 import org.hibernate.service.jdbc.connections.internal.DatasourceConnectionProviderImpl;
 import org.jboss.logging.Logger;
+import org.lightmare.jpa.packaging.PersistenceXmlLoaderImpl;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
@@ -409,7 +410,7 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 	    while (xmls.hasMoreElements()) {
 		URL url = xmls.nextElement();
 		LOG.trace("Analyzing persistence.xml: " + url);
-		List<PersistenceMetadata> metadataFiles = PersistenceXmlLoader
+		List<PersistenceMetadata> metadataFiles = PersistenceXmlLoaderImpl
 			.deploy(url, integration, cfg.getEntityResolver(),
 				PersistenceUnitTransactionType.RESOURCE_LOCAL);
 		for (PersistenceMetadata metadata : metadataFiles) {
@@ -439,7 +440,8 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 			} else if (persistenceUnitName == null
 				|| metadata.getName().equals(
 					persistenceUnitName)) {
-			    if (classes != null
+			    if (!metadata.getExcludeUnlistedClasses()
+				    && classes != null
 				    && metadata.getName().equals(
 					    persistenceUnitName)) {
 				metadata.setClasses(classes);
