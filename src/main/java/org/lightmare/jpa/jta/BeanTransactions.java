@@ -160,6 +160,14 @@ public class BeanTransactions {
 	}
     }
 
+    private static void addEntityManager(UserTransactionImpl transaction,
+	    EntityManager em) {
+
+	if (checkOnNull(em)) {
+	    transaction.addEntityManager(em);
+	}
+    }
+
     private static void addReqNewTransaction(UserTransactionImpl transaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
@@ -186,7 +194,10 @@ public class BeanTransactions {
 	    EntityManager em) throws IOException {
 
 	EntityTransaction entityTransaction;
-	if (type.equals(TransactionAttributeType.REQUIRED)) {
+	if (type.equals(TransactionAttributeType.NOT_SUPPORTED)) {
+
+	    addEntityManager(transaction, em);
+	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
 
 	    Object caller = transaction.getCaller();
 	    if (caller == null) {
@@ -215,6 +226,8 @@ public class BeanTransactions {
 	    int status = getStatus(transaction);
 	    if (status > 0) {
 		throw new EJBException(NEVER_ERROR);
+	    } else {
+		addEntityManager(transaction, em);
 	    }
 
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
@@ -348,6 +361,9 @@ public class BeanTransactions {
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 
 	    transaction.commitReqNew();
+	} else {
+
+	    transaction.closeEntityManagers();
 	}
     }
 
@@ -367,5 +383,14 @@ public class BeanTransactions {
 	if (type != null) {
 	    commitTransaction(type, handler);
 	}
+    }
+
+    /**
+     * Closes cached {@link EntityManager}s after method calll
+     */
+    public static void closeEntityManagers() {
+
+	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
+	transaction.closeEntityManagers();
     }
 }

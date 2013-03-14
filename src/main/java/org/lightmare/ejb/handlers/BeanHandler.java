@@ -133,6 +133,9 @@ public class BeanHandler implements InvocationHandler {
 	if (transactionField == null) {
 
 	    BeanTransactions.commitTransaction(this, method);
+	} else {
+
+	    BeanTransactions.closeEntityManagers();
 	}
     }
 

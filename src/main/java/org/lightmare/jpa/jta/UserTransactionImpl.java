@@ -233,18 +233,25 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void addEntityManager(EntityManager em) {
 
-	if (ems == null) {
-	    ems = new ArrayList<EntityManager>();
-	}
+	if (em != null) {
+	    if (ems == null) {
+		ems = new ArrayList<EntityManager>();
+	    }
 
-	ems.add(em);
+	    ems.add(em);
+	}
     }
 
-    private void closeEntityManagers() {
+    /**
+     * Closes all contained {@link EntityManager}s
+     */
+    public void closeEntityManagers() {
 
-	for (EntityManager em : ems) {
-	    if (em.isOpen()) {
-		em.close();
+	if (ems != null) {
+	    for (EntityManager em : ems) {
+		if (em.isOpen()) {
+		    em.close();
+		}
 	    }
 	}
     }
