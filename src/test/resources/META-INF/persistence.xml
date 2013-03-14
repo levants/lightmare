@@ -3,9 +3,9 @@
 	<persistence-unit name="testUnit" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/personsDerby</jta-data-source>
-		<class>ge.gov.mia.lightmare.entities.Email</class>
-		<class>ge.gov.mia.lightmare.entities.Person</class>
-		<class>ge.gov.mia.lightmare.entities.PhoneNumber</class>
+		<class>org.lightmare.entities.Email</class>
+		<class>org.lightmare.entities.Person</class>
+		<class>org.lightmare.entities.PhoneNumber</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- <property name="hibernate.default_schema" value="PERSONS" /> <property 
