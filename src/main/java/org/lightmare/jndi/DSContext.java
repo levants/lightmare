@@ -36,7 +36,7 @@ public class DSContext extends MemoryContext {
 	    UserTransaction transaction = MetaContainer.getTransaction();
 	    value = transaction;
 
-	} else if (jndiName.startsWith("java:comp/env/")) {
+	} else if (jndiName.startsWith(NamingUtils.CONNECTION_NAME_PREF)) {
 	    // Checks if it is request for entity manager
 	    name = NamingUtils.formatJpaJndiName(jndiName);
 
@@ -54,7 +54,7 @@ public class DSContext extends MemoryContext {
 	    } else {
 		value = candidate;
 	    }
-	} else if (jndiName.startsWith("ejb:")) {
+	} else if (jndiName.startsWith(NamingUtils.EJB_NAME_PREF)) {
 
 	    NamingUtils.BeanDescriptor descriptor = NamingUtils
 		    .parseEjbJndiName(jndiName);

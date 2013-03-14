@@ -22,6 +22,10 @@ public class NamingUtils {
 
     public static final String USER_TRANSACTION_NAME = "java:comp/UserTransaction";
 
+    public static final String CONNECTION_NAME_PREF = "java:comp/env/";
+
+    public static final String EJB_NAME_PREF = "ejb:";
+
     private static boolean isContextFactory;
 
     private static Context context;
