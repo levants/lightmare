@@ -262,7 +262,9 @@ public class JPAManager {
 		try {
 		    Context context = namingUtils.getContext();
 		    if (context.lookup(jndiName) == null) {
-			namingUtils.getContext().bind(jndiName,
+			String fullJndiName = NamingUtils
+				.createJpaJndiName(jndiName);
+			namingUtils.getContext().bind(fullJndiName,
 				semaphore.getEmf());
 		    }
 		    semaphore.setBound(true);
