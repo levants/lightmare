@@ -327,7 +327,6 @@ public class BeanLoader {
 
 	    Class<?> beanClass = metaData.getBeanClass();
 	    Method[] methods = beanClass.getDeclaredMethods();
-	    EJB ejbAnnot;
 	    for (Method method : methods) {
 		if (method.isAnnotationPresent(EJB.class)) {
 		    metaData.addInject(method);
