@@ -271,6 +271,62 @@ public class BeanTransactions {
     }
 
     /**
+     * Calls {@link UserTransaction#rollback()} method of passed
+     * {@link UserTransaction} with {@link IOException} throw
+     * 
+     * @param transaction
+     * @throws IOException
+     */
+    private static void rollback(UserTransaction transaction)
+	    throws IOException {
+	try {
+	    transaction.rollback();
+	} catch (IllegalStateException ex) {
+	    throw new IOException(ex);
+	} catch (SecurityException ex) {
+	    throw new IOException(ex);
+	} catch (SystemException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
+     * Decides whether rollback or not {@link UserTransaction} by
+     * {@link TransactionAttribute} annotation
+     * 
+     * @param type
+     * @param handler
+     * @throws IOException
+     */
+    private static void rollbackTransaction(TransactionAttributeType type,
+	    BeanHandler handler) throws IOException {
+
+	if (type.equals(TransactionAttributeType.REQUIRED)
+		|| type.equals(TransactionAttributeType.MANDATORY)) {
+	    UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
+	    rollback(transaction);
+	}
+    }
+
+    /**
+     * Decides whether rollback or not {@link UserTransaction} by
+     * {@link TransactionAttribute} annotation
+     * 
+     * @param handler
+     * @param method
+     * @throws IOException
+     */
+    public static void rollbackTransaction(BeanHandler handler, Method method)
+	    throws IOException {
+
+	TransactionAttributeType type = getTransactionType(
+		handler.getMetaData(), method);
+	if (type != null) {
+	    rollbackTransaction(type, handler);
+	}
+    }
+
+    /**
      * Decides whether commit or not {@link UserTransaction} by
      * {@link TransactionAttribute} annotation
      * 

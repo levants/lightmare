@@ -94,7 +94,6 @@ public class BeanHandler implements InvocationHandler {
 
     private void setTransactionField(EntityManager em) throws IOException {
 
-	setConnection(em);
 	if (transactionField != null) {
 	    UserTransaction transaction = getTransaction(em);
 	    setFieldValue(transactionField, transaction);
@@ -116,21 +115,10 @@ public class BeanHandler implements InvocationHandler {
 	    if (unitField != null) {
 		setFieldValue(unitField, emf);
 	    }
-	    setTransactionField(em);
+	    setConnection(em);
 	}
 
 	return em;
-    }
-
-    /**
-     * Closes {@link EntityManager} if it open
-     * 
-     * @param em
-     */
-    private void closeEntityManager(EntityManager em) {
-	if (em != null && em.isOpen()) {
-	    em.close();
-	}
     }
 
     /**
@@ -173,23 +161,40 @@ public class BeanHandler implements InvocationHandler {
 	return value;
     }
 
+    /**
+     * Calls {@link BeanTransactions#rollbackTransaction(BeanHandler, Method))}
+     * is case of {@link Throwable} is thrown at passed {@link Method} execution
+     * time
+     * 
+     * @param method
+     * @throws IOException
+     */
+    private void rollback(Method method) throws IOException {
+
+	if (method != null) {
+	    BeanTransactions.rollbackTransaction(this, method);
+	}
+    }
+
     @Override
     public Object invoke(Object proxy, Method method, Object[] arguments)
 	    throws Throwable {
 
 	EntityManager em = createEntityManager();
+	Method realMethod = null;
 
 	try {
-	    Method realMethod = bean.getClass().getDeclaredMethod(
-		    method.getName(), method.getParameterTypes());
+	    realMethod = bean.getClass().getDeclaredMethod(method.getName(),
+		    method.getParameterTypes());
 	    Object value;
 
 	    value = invokeBeanMethod(em, realMethod, arguments);
 
 	    return value;
 
-	} finally {
-	    closeEntityManager(em);
+	} catch (Throwable th) {
+	    rollback(realMethod);
+	    throw new Throwable(th);
 	}
     }
 

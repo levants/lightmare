@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import org.lightmare.entities.Person;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class LightMareBean implements LightMareBeanRemote {
 
     @PersistenceContext(unitName = "testUnit", name = "persistence/em")
