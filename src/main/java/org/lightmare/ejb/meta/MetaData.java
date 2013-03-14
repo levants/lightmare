@@ -1,6 +1,10 @@
 package org.lightmare.ejb.meta;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.ejb.TransactionAttributeType;
@@ -44,6 +48,8 @@ public class MetaData {
     private TransactionAttributeType transactionAttrType;
 
     private TransactionManagementType transactionManType;
+
+    private Set<Field> injects;
 
     public Class<?> getBeanClass() {
 	return beanClass;
@@ -156,5 +162,17 @@ public class MetaData {
     public void setTransactionManType(
 	    TransactionManagementType transactionManType) {
 	this.transactionManType = transactionManType;
+    }
+
+    public Set<Field> getInjects() {
+	return injects;
+    }
+
+    public void addInject(Field field) {
+
+	if (injects == null) {
+	    injects = new HashSet<Field>();
+	}
+	injects.add(field);
     }
 }

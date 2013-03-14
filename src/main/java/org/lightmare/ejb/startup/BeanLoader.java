@@ -13,6 +13,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -332,6 +333,7 @@ public class BeanLoader {
 	    PersistenceUnit unit;
 	    PersistenceContext context;
 	    Resource resource;
+	    EJB ejbAnnot;
 	    boolean checkOnAnnotations = false;
 	    if (fields == null || fields.length == 0) {
 		notifyConn();
@@ -340,6 +342,7 @@ public class BeanLoader {
 		context = field.getAnnotation(PersistenceContext.class);
 		resource = field.getAnnotation(Resource.class);
 		unit = field.getAnnotation(PersistenceUnit.class);
+		ejbAnnot = field.getAnnotation(EJB.class);
 		if (context != null) {
 		    checkOnAnnotations = identifyConnections(context, field,
 			    resource, unit);
@@ -349,6 +352,8 @@ public class BeanLoader {
 		} else if (unit != null) {
 		    metaData.setUnitField(field);
 		    checkOnAnnotations = checkOnBreak(context, resource, unit);
+		} else if (ejbAnnot != null) {
+		    metaData.addInject(field);
 		}
 
 		if (checkOnAnnotations) {
