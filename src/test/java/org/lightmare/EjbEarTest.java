@@ -4,6 +4,9 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.naming.InitialContext;
+import javax.transaction.UserTransaction;
+
 import junit.framework.Assert;
 
 import org.junit.AfterClass;
@@ -15,6 +18,7 @@ import org.lightmare.bean.LightMareFalseBeanRemote;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.entities.Person;
+import org.lightmare.jndi.NamingUtils;
 import org.lightmare.unitorder.RunOrder;
 import org.lightmare.unitorder.SortedRunner;
 
@@ -152,6 +156,23 @@ public class EjbEarTest {
 	    boolean check = falseBean.isFalse();
 	    Assert.assertTrue(check);
 	    getThreadId();
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @Test
+    public void getUserTransactionTest() {
+	try {
+	    InitialContext context = new InitialContext();
+	    UserTransaction transaction = (UserTransaction) context
+		    .lookup(NamingUtils.USER_TRANSACTION_NAME);
+	    Assert.assertNotNull(
+		    "Could not find UserTransaction by jndi lookup",
+		    transaction);
+	    System.out
+		    .format("\nRetrived UserTransaction object name is %s \n====================\n",
+			    transaction);
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}

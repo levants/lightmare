@@ -31,7 +31,7 @@ public class DSContext extends MemoryContext {
 
 	Object value;
 	String name;
-	if (jndiName.equals("java:comp/env/UserTransaction")) {
+	if (jndiName.equals(NamingUtils.USER_TRANSACTION_NAME)) {
 
 	    UserTransaction transaction = MetaContainer.getTransaction();
 	    value = transaction;

@@ -20,6 +20,8 @@ import org.lightmare.config.Configuration;
  */
 public class NamingUtils {
 
+    public static final String USER_TRANSACTION_NAME = "java:comp/UserTransaction";
+
     private static boolean isContextFactory;
 
     private static Context context;
