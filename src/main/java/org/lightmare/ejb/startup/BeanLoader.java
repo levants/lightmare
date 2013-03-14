@@ -3,6 +3,7 @@ package org.lightmare.ejb.startup;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
@@ -318,6 +319,23 @@ public class BeanLoader {
 	}
 
 	/**
+	 * Caches {@link EJB} annotated methods
+	 * 
+	 * @param beanClass
+	 */
+	private void cacheInjectMethods() {
+
+	    Class<?> beanClass = metaData.getBeanClass();
+	    Method[] methods = beanClass.getDeclaredMethods();
+	    EJB ejbAnnot;
+	    for (Method method : methods) {
+		if (method.isAnnotationPresent(EJB.class)) {
+		    metaData.addInject(method);
+		}
+	    }
+	}
+
+	/**
 	 * Finds and caches {@link PersistenceContext}, {@link PersistenceUnit}
 	 * and {@link Resource} annotated {@link Field}s in bean class and
 	 * configures connections and creates {@link ConnectionSemaphore}s if it
@@ -360,6 +378,10 @@ public class BeanLoader {
 		    break;
 		}
 	    }
+
+	    // caches EJB annotated methods
+	    cacheInjectMethods();
+
 	}
 
 	/**

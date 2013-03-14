@@ -49,7 +49,7 @@ public class MetaData {
 
     private TransactionManagementType transactionManType;
 
-    private Set<Field> injects;
+    private Set<Object> injects;
 
     public Class<?> getBeanClass() {
 	return beanClass;
@@ -164,15 +164,15 @@ public class MetaData {
 	this.transactionManType = transactionManType;
     }
 
-    public Set<Field> getInjects() {
+    public Set<Object> getInjects() {
 	return injects;
     }
 
-    public void addInject(Field field) {
+    public void addInject(Object inject) {
 
 	if (injects == null) {
-	    injects = new HashSet<Field>();
+	    injects = new HashSet<Object>();
 	}
-	injects.add(field);
+	injects.add(inject);
     }
 }
