@@ -36,6 +36,13 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 
+/**
+ * Implementation and bug fixes for
+ * {@link org.hibernate.ejb.packaging.PersistenceXmlLoader} class
+ * 
+ * @author levan
+ * 
+ */
 public final class PersistenceXmlLoaderImpl {
 
     private static final EntityManagerMessageLogger LOG = Logger
