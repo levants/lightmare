@@ -130,12 +130,12 @@ public class BeanHandler implements InvocationHandler {
      */
     private void close(Method method) throws IOException {
 
-	if (transactionField == null) {
-
-	    BeanTransactions.commitTransaction(this, method);
-	} else {
-
-	    BeanTransactions.closeEntityManagers();
+	if (method != null) {
+	    if (transactionField == null) {
+		BeanTransactions.commitTransaction(this, method);
+	    } else {
+		BeanTransactions.closeEntityManagers();
+	    }
 	}
     }
 
@@ -159,7 +159,6 @@ public class BeanHandler implements InvocationHandler {
 	    setTransactionField(em);
 	}
 	Object value = invoke(method, arguments);
-	close(method);
 
 	return value;
     }
@@ -198,6 +197,8 @@ public class BeanHandler implements InvocationHandler {
 	} catch (Throwable th) {
 	    rollback(realMethod);
 	    throw new Throwable(th);
+	} finally {
+	    close(realMethod);
 	}
     }
 

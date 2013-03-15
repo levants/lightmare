@@ -57,13 +57,15 @@ public class UserTransactionImpl implements UserTransaction {
 	    HeuristicRollbackException, SecurityException,
 	    IllegalStateException, SystemException {
 
-	for (EntityTransaction transaction : transactions) {
-	    if (transaction.isActive()) {
-		transaction.commit();
+	try {
+	    for (EntityTransaction transaction : transactions) {
+		if (transaction.isActive()) {
+		    transaction.commit();
+		}
 	    }
+	} finally {
+	    closeEntityManagers();
 	}
-
-	closeEntityManagers();
     }
 
     @Override
@@ -89,10 +91,14 @@ public class UserTransactionImpl implements UserTransaction {
     public void rollback() throws IllegalStateException, SecurityException,
 	    SystemException {
 
-	for (EntityTransaction transaction : transactions) {
-	    if (transaction.isActive()) {
-		transaction.rollback();
+	try {
+	    for (EntityTransaction transaction : transactions) {
+		if (transaction.isActive()) {
+		    transaction.rollback();
+		}
 	    }
+	} finally {
+	    closeEntityManagers();
 	}
     }
 
@@ -188,11 +194,14 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void commitReqNew() {
 
-	if (checkNews()) {
-	    EntityTransaction entityTransaction = getNews().pop();
-	    entityTransaction.commit();
+	try {
+	    if (checkNews()) {
+		EntityTransaction entityTransaction = getNews().pop();
+		entityTransaction.commit();
+	    }
+	} finally {
+	    closeReqNew();
 	}
-	closeReqNew();
     }
 
     private void closeReqNew() {

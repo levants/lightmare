@@ -246,8 +246,8 @@ public class BeanTransactions {
      * @param entityTransaction
      * @throws IOException
      */
-    public static void addTransaction(BeanHandler handler, Method method,
-	    EntityManager em) throws IOException {
+    public static TransactionAttributeType addTransaction(BeanHandler handler,
+	    Method method, EntityManager em) throws IOException {
 
 	MetaData metaData = handler.getMetaData();
 	TransactionAttributeType type = getTransactionType(metaData, method);
@@ -256,6 +256,7 @@ public class BeanTransactions {
 	    addTransaction(handler, type, transaction, em);
 	}
 
+	return type;
     }
 
     /**
@@ -347,7 +348,7 @@ public class BeanTransactions {
      * @param handler
      * @throws IOException
      */
-    private static void commitTransaction(TransactionAttributeType type,
+    public static void commitTransaction(TransactionAttributeType type,
 	    BeanHandler handler) throws IOException {
 
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
