@@ -162,6 +162,7 @@ public class EjbEarTest {
     }
 
     @Test
+    @RunOrder(7)
     public void getUserTransactionTest() {
 	try {
 	    InitialContext context = new InitialContext();
