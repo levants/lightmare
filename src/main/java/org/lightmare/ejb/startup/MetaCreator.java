@@ -46,7 +46,7 @@ public class MetaCreator {
 
     private static AnnotationDB annotationDB;
 
-    private Map<String, String> prop;
+    private Map<Object, Object> prop;
 
     private boolean scanForEntities;
 
@@ -467,7 +467,8 @@ public class MetaCreator {
 	}
 
 	public Builder setPersistenceProperties(Map<String, String> properties) {
-	    creator.prop = properties;
+	    creator.prop = new HashMap<Object, Object>();
+	    creator.prop.putAll(properties);
 	    return this;
 	}
 

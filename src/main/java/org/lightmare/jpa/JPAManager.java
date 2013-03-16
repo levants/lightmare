@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,6 +18,7 @@ import javax.persistence.Persistence;
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.meta.ConnectionSemaphore;
 import org.lightmare.jndi.NamingUtils;
+import org.lightmare.jpa.jta.HibernateConfig;
 
 /**
  * Creates and caches {@link EntityManagerFactory} for each ejb bean
@@ -36,7 +38,7 @@ public class JPAManager {
 
     private URL url;
 
-    private Map<?, ?> properties;
+    private Map<Object, Object> properties;
 
     private boolean swapDataSource;
 
@@ -133,6 +135,16 @@ public class JPAManager {
 	return inProgress;
     }
 
+    private void addTransactionManager() {
+	if (properties == null) {
+	    properties = new HashMap<Object, Object>();
+	}
+	properties.put(HibernateConfig.FACTORY_KEY,
+		HibernateConfig.FACTORY_VALUE);
+	properties.put(HibernateConfig.PLATFORM_KEY,
+		HibernateConfig.PLATFORM_VALUE);
+    }
+
     /**
      * Creates {@link EntityManagerFactory} by hibernate or by extended builder
      * {@link Ejb3ConfigurationImpl} if entity classes or persistence.xml file
@@ -173,6 +185,10 @@ public class JPAManager {
 
 	cfg.setSwapDataSource(swapDataSource);
 	cfg.setScanArchives(scanArchives);
+
+	if (!swapDataSource) {
+	    addTransactionManager();
+	}
 
 	Ejb3ConfigurationImpl configured = cfg.configure(unitName, properties);
 
@@ -455,7 +471,7 @@ public class JPAManager {
 	    return this;
 	}
 
-	public Builder setProperties(Map<?, ?> properties) {
+	public Builder setProperties(Map<Object, Object> properties) {
 	    manager.properties = properties;
 	    return this;
 	}
