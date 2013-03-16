@@ -131,6 +131,19 @@ public class BeanTransactions {
 	return status;
     }
 
+    /**
+     * Checks if transaction is active and if it is not vegins transaction
+     * 
+     * @param entityTransaction
+     */
+    private static void beginEntityTransaction(
+	    EntityTransaction entityTransaction) {
+
+	if (!entityTransaction.isActive()) {
+	    entityTransaction.begin();
+	}
+    }
+
     private static EntityTransaction getEntityTransaction(EntityManager em) {
 
 	EntityTransaction entityTransaction;
@@ -138,7 +151,7 @@ public class BeanTransactions {
 	    entityTransaction = null;
 	} else {
 	    entityTransaction = em.getTransaction();
-	    entityTransaction.begin();
+	    beginEntityTransaction(entityTransaction);
 	}
 
 	return entityTransaction;
