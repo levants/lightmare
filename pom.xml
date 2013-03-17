@@ -36,7 +36,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hibernate.version>4.1.9.Final</hibernate.version>
-		<jta.version>2.1.3</jta.version>
+		<jta.version>3.8.0</jta.version>
 		<netty.version>3.6.2.Final</netty.version>
 		<jackson.version>2.0.6</jackson.version>
 		<jetty.version>7.4.5.v20110725</jetty.version>
@@ -145,19 +145,19 @@
 
 		<!-- JTA provider -->
 		<dependency>
-			<groupId>org.codehaus.btm</groupId>
-			<artifactId>btm</artifactId>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-jta</artifactId>
 			<version>${jta.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.btm</groupId>
-			<artifactId>btm</artifactId>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-jta</artifactId>
 			<version>${jta.version}</version>
 			<classifier>javadoc</classifier>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.btm</groupId>
-			<artifactId>btm</artifactId>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-jta</artifactId>
 			<version>${jta.version}</version>
 			<classifier>sources</classifier>
 		</dependency>
