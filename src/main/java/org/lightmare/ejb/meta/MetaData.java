@@ -1,14 +1,16 @@
 package org.lightmare.ejb.meta;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagementType;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 
 /**
  * Container class to save bean {@link Field} with annotation
@@ -23,19 +25,9 @@ public class MetaData {
 
     private Class<?> interfaceClass;
 
-    private Field connectorField;
-
     private Field transactionField;
 
-    private Field unitField;
-
-    private String unitName;
-
-    private String jndiName;
-
-    private ConnectionSemaphore connection;
-
-    private EntityManagerFactory emf;
+    private Collection<ConnectionData> connections;
 
     private ClassLoader loader;
 
@@ -65,14 +57,6 @@ public class MetaData {
 	this.interfaceClass = interfaceClass;
     }
 
-    public Field getConnectorField() {
-	return connectorField;
-    }
-
-    public void setConnectorField(Field connectorField) {
-	this.connectorField = connectorField;
-    }
-
     public Field getTransactionField() {
 	return transactionField;
     }
@@ -81,42 +65,37 @@ public class MetaData {
 	this.transactionField = transactionField;
     }
 
-    public Field getUnitField() {
-	return unitField;
+    public Collection<ConnectionData> getConnections() {
+	return connections;
     }
 
-    public void setUnitField(Field unitField) {
-	this.unitField = unitField;
+    public void setConnections(Collection<ConnectionData> connections) {
+	this.connections = connections;
     }
 
-    public String getUnitName() {
-	return unitName;
+    public void addConnection(ConnectionData connection) {
+
+	if (connections == null) {
+	    connections = new ArrayList<ConnectionData>();
+	}
+
+	connections.add(connection);
     }
 
-    public void setUnitName(String unitName) {
-	this.unitName = unitName;
-    }
+    public void addUnitFields(Collection<Field> unitFields) {
 
-    public String getJndiName() {
-	return jndiName;
-    }
+	if (connections != null) {
+	    String unitName;
+	    for (Field unitField : unitFields) {
+		unitName = unitField.getAnnotation(PersistenceUnit.class)
+			.unitName();
+		for (ConnectionData connection : connections) {
 
-    public void setJndiName(String jndiName) {
-	this.jndiName = jndiName;
-    }
-
-    public EntityManagerFactory getEmf() {
-	return emf;
-    }
-
-    public ConnectionSemaphore getConnection() {
-	return connection;
-    }
-
-    public void setConnection(ConnectionSemaphore connection) {
-	this.connection = connection;
-	if (connection != null) {
-	    emf = connection.getEmf();
+		    if (unitName.equals(connection.getUnitName())) {
+			connection.setUnitField(unitField);
+		    }
+		}
+	    }
 	}
     }
 

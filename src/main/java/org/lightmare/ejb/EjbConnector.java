@@ -3,6 +3,7 @@ package org.lightmare.ejb;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+import java.util.Collection;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManagerFactory;
@@ -10,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import org.lightmare.config.Configuration;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.handlers.BeanLocalHandler;
+import org.lightmare.ejb.meta.ConnectionData;
 import org.lightmare.ejb.meta.ConnectionSemaphore;
 import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
@@ -50,15 +52,36 @@ public class EjbConnector {
      * @return {@link EntityManagerFactory}
      * @throws IOException
      */
-    private void getEntityManagerFactory(MetaData metaData) throws IOException {
+    private void getEntityManagerFactory(ConnectionData connection)
+	    throws IOException {
 
-	if (metaData.getEmf() == null) {
-	    String unitName = metaData.getUnitName();
+	if (connection.getEmf() == null) {
+	    String unitName = connection.getUnitName();
 
 	    if (unitName != null && !unitName.isEmpty()) {
 		ConnectionSemaphore semaphore = JPAManager
 			.getConnection(unitName);
-		metaData.setConnection(semaphore);
+		connection.setConnection(semaphore);
+	    }
+	}
+    }
+
+    /**
+     * Gets connections for {@link Stateless} bean {@link Class} from cache
+     * 
+     * @param unitName
+     * @return {@link EntityManagerFactory}
+     * @throws IOException
+     */
+
+    private void getEntityManagerFactories(MetaData metaData)
+	    throws IOException {
+
+	Collection<ConnectionData> connections = metaData.getConnections();
+	if (connections != null && !connections.isEmpty()) {
+
+	    for (ConnectionData connection : connections) {
+		getEntityManagerFactory(connection);
 	    }
 	}
     }
@@ -95,7 +118,7 @@ public class EjbConnector {
 
 	T beanInstance = getBeanInstance(metaData);
 
-	getEntityManagerFactory(metaData);
+	getEntityManagerFactories(metaData);
 
 	InvocationHandler handler = new BeanHandler(metaData, beanInstance);
 

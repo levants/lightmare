@@ -5,11 +5,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 
+import org.lightmare.ejb.meta.ConnectionData;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.jta.BeanTransactions;
 import org.lightmare.utils.reflect.MetaUtils;
@@ -24,23 +27,17 @@ public class BeanHandler implements InvocationHandler {
 
     private final Object bean;
 
-    private final EntityManagerFactory emf;
-
-    private final Field connectionField;
-
     private final Field transactionField;
 
-    private final Field unitField;
+    private final Collection<ConnectionData> connections;
 
     private final MetaData metaData;
 
     public BeanHandler(final MetaData metaData, final Object bean) {
 
 	this.bean = bean;
-	this.emf = metaData.getEmf();
-	this.connectionField = metaData.getConnectorField();
 	this.transactionField = metaData.getTransactionField();
-	this.unitField = metaData.getUnitField();
+	this.connections = metaData.getConnections();
 	this.metaData = metaData;
     }
 
@@ -75,7 +72,8 @@ public class BeanHandler implements InvocationHandler {
      * @throws IllegalArgumentException
      * @throws IllegalAccessException
      */
-    private void setConnection(EntityManager em) throws IOException {
+    private void setConnection(Field connectionField, EntityManager em)
+	    throws IOException {
 	setFieldValue(connectionField, em);
     }
 
@@ -85,17 +83,18 @@ public class BeanHandler implements InvocationHandler {
      * @param em
      * @return {@link UserTransaction}
      */
-    private UserTransaction getTransaction(EntityManager em) {
+    private UserTransaction getTransaction(Collection<EntityManager> ems) {
 
-	UserTransaction transaction = BeanTransactions.getTransaction(em);
+	UserTransaction transaction = BeanTransactions.getTransaction(ems);
 
 	return transaction;
     }
 
-    private void setTransactionField(EntityManager em) throws IOException {
+    private void setTransactionField(Collection<EntityManager> ems)
+	    throws IOException {
 
 	if (transactionField != null) {
-	    UserTransaction transaction = getTransaction(em);
+	    UserTransaction transaction = getTransaction(ems);
 	    setFieldValue(transactionField, transaction);
 	}
     }
@@ -108,17 +107,36 @@ public class BeanHandler implements InvocationHandler {
      * @throws IllegalArgumentException
      * @throws IllegalAccessException
      */
-    private EntityManager createEntityManager() throws IOException {
+    private EntityManager createEntityManager(ConnectionData connection)
+	    throws IOException {
+	EntityManagerFactory emf = connection.getEmf();
+	Field connectionField = connection.getConnectionField();
+	Field unitField = connection.getUnitField();
 	EntityManager em = null;
 	if (emf != null) {
 	    em = emf.createEntityManager();
 	    if (unitField != null) {
 		setFieldValue(unitField, emf);
 	    }
-	    setConnection(em);
+	    setConnection(connectionField, em);
 	}
 
 	return em;
+    }
+
+    private Collection<EntityManager> createEntityManagers() throws IOException {
+
+	Collection<EntityManager> ems = null;
+	if (connections != null) {
+
+	    ems = new ArrayList<EntityManager>();
+	    for (ConnectionData connection : connections) {
+		EntityManager em = createEntityManager(connection);
+		ems.add(em);
+	    }
+	}
+
+	return ems;
     }
 
     /**
@@ -150,13 +168,13 @@ public class BeanHandler implements InvocationHandler {
      * @throws IllegalArgumentException
      * @throws InvocationTargetException
      */
-    private Object invokeBeanMethod(final EntityManager em,
+    private Object invokeBeanMethod(final Collection<EntityManager> ems,
 	    final Method method, Object[] arguments) throws IOException {
 
 	if (transactionField == null) {
-	    BeanTransactions.addTransaction(this, method, em);
+	    BeanTransactions.addTransaction(this, method, ems);
 	} else {
-	    setTransactionField(em);
+	    setTransactionField(ems);
 	}
 	Object value = invoke(method, arguments);
 
@@ -182,7 +200,7 @@ public class BeanHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] arguments)
 	    throws Throwable {
 
-	EntityManager em = createEntityManager();
+	Collection<EntityManager> ems = createEntityManagers();
 	Method realMethod = null;
 
 	try {
@@ -190,7 +208,7 @@ public class BeanHandler implements InvocationHandler {
 		    method.getParameterTypes());
 	    Object value;
 
-	    value = invokeBeanMethod(em, realMethod, arguments);
+	    value = invokeBeanMethod(ems, realMethod, arguments);
 
 	    return value;
 

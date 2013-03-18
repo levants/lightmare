@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
@@ -25,6 +26,7 @@ import javax.persistence.PersistenceUnit;
 
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
+import org.lightmare.ejb.meta.ConnectionData;
 import org.lightmare.ejb.meta.ConnectionSemaphore;
 import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
@@ -180,6 +182,8 @@ public class BeanLoader {
 
 	private boolean isCounted;
 
+	private List<Field> unitFields;
+
 	public BeanDeployer(MetaCreator creator, String beanName,
 		String className, ClassLoader loader, MetaData metaData,
 		List<File> tmpFiles, CountDownLatch conn) {
@@ -239,18 +243,13 @@ public class BeanLoader {
 	    }
 	}
 
-	/**
-	 * Checks if {@link PersistenceContext}, {@link Resource} and
-	 * {@link PersistenceUnit} annotated fields are cached already
-	 * 
-	 * @param context
-	 * @param resource
-	 * @param unit
-	 * @return boolean
-	 */
-	private boolean checkOnBreak(PersistenceContext context,
-		Resource resource, PersistenceUnit unit) {
-	    return context != null && resource != null && unit != null;
+	private void addUnitField(Field unitField) {
+
+	    if (unitFields == null) {
+		unitFields = new ArrayList<Field>();
+	    }
+
+	    unitFields.add(unitField);
 	}
 
 	/**
@@ -284,38 +283,37 @@ public class BeanLoader {
 	 * @return <code>boolean</code>
 	 * @throws IOException
 	 */
-	private boolean identifyConnections(PersistenceContext context,
+	private void identifyConnections(PersistenceContext context,
 		Field field, Resource resource, PersistenceUnit unit)
 		throws IOException {
 
-	    metaData.setConnectorField(field);
+	    ConnectionData connection = new ConnectionData();
+
+	    connection.setConnectionField(field);
 	    String unitName = context.unitName();
 	    String jndiName = context.name();
-	    metaData.setUnitName(unitName);
-	    metaData.setJndiName(jndiName);
+	    connection.setUnitName(unitName);
+	    connection.setJndiName(jndiName);
 	    boolean checkForEmf = checkOnEmf(unitName, jndiName);
-	    boolean checkOnAnnotations = false;
 
 	    ConnectionSemaphore semaphore;
 
 	    if (checkForEmf) {
 		notifyConn();
 		semaphore = JPAManager.getSemaphore(unitName);
-		metaData.setConnection(semaphore);
-		checkOnAnnotations = checkOnBreak(context, resource, unit);
+		connection.setConnection(semaphore);
 	    } else {
 		// Sets connection semaphore for this connection
 		semaphore = JPAManager.setSemaphore(unitName, jndiName);
-		metaData.setConnection(semaphore);
+		connection.setConnection(semaphore);
 		notifyConn();
 		if (semaphore != null) {
 		    lockSemaphore(semaphore, unitName, jndiName);
 		}
 
-		checkOnAnnotations = checkOnBreak(context, resource, unit);
 	    }
 
-	    return checkOnAnnotations;
+	    metaData.addConnection(connection);
 	}
 
 	/**
@@ -351,7 +349,6 @@ public class BeanLoader {
 	    PersistenceContext context;
 	    Resource resource;
 	    EJB ejbAnnot;
-	    boolean checkOnAnnotations = false;
 	    if (fields == null || fields.length == 0) {
 		notifyConn();
 	    }
@@ -361,21 +358,19 @@ public class BeanLoader {
 		unit = field.getAnnotation(PersistenceUnit.class);
 		ejbAnnot = field.getAnnotation(EJB.class);
 		if (context != null) {
-		    checkOnAnnotations = identifyConnections(context, field,
-			    resource, unit);
+		    identifyConnections(context, field, resource, unit);
 		} else if (resource != null) {
 		    metaData.setTransactionField(field);
-		    checkOnAnnotations = checkOnBreak(context, resource, unit);
 		} else if (unit != null) {
-		    metaData.setUnitField(field);
-		    checkOnAnnotations = checkOnBreak(context, resource, unit);
+		    addUnitField(field);
 		} else if (ejbAnnot != null) {
 		    metaData.addInject(field);
 		}
 
-		if (checkOnAnnotations) {
-		    break;
-		}
+	    }
+
+	    if (unitFields != null && !unitFields.isEmpty()) {
+		metaData.addUnitFields(unitFields);
 	    }
 
 	    // caches EJB annotated methods

@@ -4,6 +4,7 @@ import static org.lightmare.jpa.JPAManager.closeEntityManagerFactories;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -161,14 +162,20 @@ public class MetaContainer {
      */
     private static void clearConnection(MetaData metaData) throws IOException {
 
-	// Gets connection to clear
-	String unitName = metaData.getUnitName();
-	ConnectionSemaphore semaphore = metaData.getConnection();
-	if (semaphore == null) {
-	    semaphore = JPAManager.getConnection(unitName);
-	}
-	if (semaphore != null && semaphore.getUsers() <= 1) {
-	    JPAManager.removeConnection(unitName);
+	Collection<ConnectionData> connections = metaData.getConnections();
+
+	if (connections != null) {
+	    for (ConnectionData connection : connections) {
+		// Gets connection to clear
+		String unitName = connection.getUnitName();
+		ConnectionSemaphore semaphore = connection.getConnection();
+		if (semaphore == null) {
+		    semaphore = JPAManager.getConnection(unitName);
+		}
+		if (semaphore != null && semaphore.getUsers() <= 1) {
+		    JPAManager.removeConnection(unitName);
+		}
+	    }
 	}
     }
 

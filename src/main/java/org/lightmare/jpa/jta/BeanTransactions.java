@@ -2,6 +2,8 @@ package org.lightmare.jpa.jta;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.ejb.EJBException;
 import javax.ejb.TransactionAttribute;
@@ -36,6 +38,30 @@ public class BeanTransactions {
     private static final String SUPPORTS_ERROR = "TransactionAttributeType.SUPPORTS is not yet implemented";
 
     /**
+     * Inner class to cache {@link EntityTransaction}s and {@link EntityManager}
+     * s in one {@link Collection} for {@link UserTransaction} implementation
+     * 
+     * @author levan
+     * 
+     */
+    private static class TransactionData {
+
+	EntityManager em;
+
+	EntityTransaction entityTransaction;
+    }
+
+    private static TransactionData createTransactionData(
+	    EntityTransaction entityTransaction, EntityManager em) {
+
+	TransactionData transactionData = new TransactionData();
+	transactionData.em = em;
+	transactionData.entityTransaction = entityTransaction;
+
+	return transactionData;
+    }
+
+    /**
      * Gets existing transaction from cache
      * 
      * @param entityTransactions
@@ -63,7 +89,7 @@ public class BeanTransactions {
      * @param entityTransactions
      * @return {@link UserTransaction}
      */
-    public static UserTransaction getTransaction(EntityManager em) {
+    public static UserTransaction getTransaction(Collection<EntityManager> ems) {
 
 	UserTransaction transaction = MetaContainer.getTransaction();
 	if (transaction == null) {
@@ -71,9 +97,9 @@ public class BeanTransactions {
 	    MetaContainer.setTransaction(transaction);
 	}
 
-	EntityTransaction entityTransaction = getEntityTransaction(em);
-	addEntityTransaction((UserTransactionImpl) transaction,
-		entityTransaction, em);
+	Collection<TransactionData> entityTransactions = getEntityTransactions(ems);
+	addEntityTransactions((UserTransactionImpl) transaction,
+		entityTransactions);
 
 	return transaction;
     }
@@ -157,6 +183,21 @@ public class BeanTransactions {
 	return entityTransaction;
     }
 
+    private static Collection<TransactionData> getEntityTransactions(
+	    Collection<EntityManager> ems) {
+
+	Collection<TransactionData> entityTransactions = new ArrayList<TransactionData>();
+	if (ems != null) {
+	    for (EntityManager em : ems) {
+		EntityTransaction entityTransaction = getEntityTransaction(em);
+		TransactionData transactionData = createTransactionData(
+			entityTransaction, em);
+		entityTransactions.add(transactionData);
+	    }
+	}
+	return entityTransactions;
+    }
+
     private static boolean checkOnNull(Object data) {
 
 	return data != null;
@@ -173,11 +214,30 @@ public class BeanTransactions {
 	}
     }
 
+    private static void addEntityTransactions(UserTransactionImpl transaction,
+	    Collection<TransactionData> entityTransactions) {
+
+	for (TransactionData transactionData : entityTransactions) {
+
+	    addEntityTransaction(transaction,
+		    transactionData.entityTransaction, transactionData.em);
+	}
+    }
+
     private static void addEntityManager(UserTransactionImpl transaction,
 	    EntityManager em) {
 
 	if (checkOnNull(em)) {
 	    transaction.addEntityManager(em);
+	}
+    }
+
+    private static void addEntityManagers(UserTransactionImpl transaction,
+	    Collection<EntityManager> ems) {
+	if (ems != null) {
+	    for (EntityManager em : ems) {
+		addEntityManager(transaction, em);
+	    }
 	}
     }
 
@@ -189,6 +249,17 @@ public class BeanTransactions {
 	}
 	if (checkOnNull(em)) {
 	    transaction.pushReqNewEm(em);
+	}
+    }
+
+    private static void addReqNewTransactions(UserTransactionImpl transaction,
+	    Collection<TransactionData> entityTransactions) {
+
+	if (entityTransactions != null) {
+	    for (TransactionData transactionData : entityTransactions) {
+		addReqNewTransaction(transaction,
+			transactionData.entityTransaction, transactionData.em);
+	    }
 	}
     }
 
@@ -204,12 +275,12 @@ public class BeanTransactions {
      */
     private static void addTransaction(BeanHandler handler,
 	    TransactionAttributeType type, UserTransactionImpl transaction,
-	    EntityManager em) throws IOException {
+	    Collection<EntityManager> ems) throws IOException {
 
-	EntityTransaction entityTransaction;
+	Collection<TransactionData> entityTransactions;
 	if (type.equals(TransactionAttributeType.NOT_SUPPORTED)) {
 
-	    addEntityManager(transaction, em);
+	    addEntityManagers(transaction, ems);
 	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
 
 	    Object caller = transaction.getCaller();
@@ -217,13 +288,13 @@ public class BeanTransactions {
 		transaction.setCaller(handler);
 	    }
 
-	    entityTransaction = getEntityTransaction(em);
-	    addEntityTransaction(transaction, entityTransaction, em);
+	    entityTransactions = getEntityTransactions(ems);
+	    addEntityTransactions(transaction, entityTransactions);
 
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 
-	    entityTransaction = getEntityTransaction(em);
-	    addReqNewTransaction(transaction, entityTransaction, em);
+	    entityTransactions = getEntityTransactions(ems);
+	    addReqNewTransactions(transaction, entityTransactions);
 
 	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
 
@@ -231,8 +302,8 @@ public class BeanTransactions {
 	    if (status == 0) {
 		throw new EJBException(MANDATORY_ERROR);
 	    } else {
-		entityTransaction = getEntityTransaction(em);
-		addEntityTransaction(transaction, entityTransaction, em);
+		entityTransactions = getEntityTransactions(ems);
+		addEntityTransactions(transaction, entityTransactions);
 	    }
 	} else if (type.equals(TransactionAttributeType.NEVER)) {
 
@@ -240,7 +311,7 @@ public class BeanTransactions {
 	    if (status > 0) {
 		throw new EJBException(NEVER_ERROR);
 	    } else {
-		addEntityManager(transaction, em);
+		addEntityManagers(transaction, ems);
 	    }
 
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
@@ -260,13 +331,13 @@ public class BeanTransactions {
      * @throws IOException
      */
     public static TransactionAttributeType addTransaction(BeanHandler handler,
-	    Method method, EntityManager em) throws IOException {
+	    Method method, Collection<EntityManager> ems) throws IOException {
 
 	MetaData metaData = handler.getMetaData();
 	TransactionAttributeType type = getTransactionType(metaData, method);
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
 	if (type != null) {
-	    addTransaction(handler, type, transaction, em);
+	    addTransaction(handler, type, transaction, ems);
 	}
 
 	return type;
