@@ -76,7 +76,10 @@ public class BeanTransactions {
 	    transaction = new UserTransactionImpl(entityTransactions);
 	    MetaContainer.setTransaction(transaction);
 	}
-	if (ObjectUtils.avaliable(entityTransactions)) {
+
+	// If entityTransactions array is available then adds it to
+	// UserTransaction object
+	if (ObjectUtils.available(entityTransactions)) {
 
 	    ((UserTransactionImpl) transaction)
 		    .addTransactions(entityTransactions);
@@ -189,7 +192,7 @@ public class BeanTransactions {
 	    Collection<EntityManager> ems) {
 
 	Collection<TransactionData> entityTransactions = null;
-	if (ObjectUtils.avaliable(ems)) {
+	if (ObjectUtils.available(ems)) {
 	    entityTransactions = new ArrayList<TransactionData>();
 	    for (EntityManager em : ems) {
 		EntityTransaction entityTransaction = getEntityTransaction(em);
@@ -215,7 +218,7 @@ public class BeanTransactions {
     private static void addEntityTransactions(UserTransactionImpl transaction,
 	    Collection<TransactionData> entityTransactions) {
 
-	if (ObjectUtils.avaliable(entityTransactions)) {
+	if (ObjectUtils.available(entityTransactions)) {
 	    for (TransactionData transactionData : entityTransactions) {
 		addEntityTransaction(transaction,
 			transactionData.entityTransaction, transactionData.em);
@@ -233,7 +236,7 @@ public class BeanTransactions {
 
     private static void addEntityManagers(UserTransactionImpl transaction,
 	    Collection<EntityManager> ems) {
-	if (ObjectUtils.avaliable(ems)) {
+	if (ObjectUtils.available(ems)) {
 	    for (EntityManager em : ems) {
 		addEntityManager(transaction, em);
 	    }
@@ -254,7 +257,7 @@ public class BeanTransactions {
     private static void addReqNewTransactions(UserTransactionImpl transaction,
 	    Collection<TransactionData> entityTransactions) {
 
-	if (ObjectUtils.avaliable(entityTransactions)) {
+	if (ObjectUtils.available(entityTransactions)) {
 	    for (TransactionData transactionData : entityTransactions) {
 		addReqNewTransaction(transaction,
 			transactionData.entityTransaction, transactionData.em);

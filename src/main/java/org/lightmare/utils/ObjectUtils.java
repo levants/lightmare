@@ -15,38 +15,38 @@ public class ObjectUtils {
 	return data != null;
     }
 
-    public static boolean avaliable(Collection<?> collection) {
+    public static boolean available(Collection<?> collection) {
 
 	return collection != null && !collection.isEmpty();
     }
 
-    public static boolean avaliable(Object[] collection) {
+    public static boolean available(Object[] collection) {
 
 	return collection != null && collection.length > 0;
     }
 
-    public static boolean avaliableAll(Collection<?>... collections) {
+    public static boolean availableAll(Collection<?>... collections) {
 
 	boolean avaliable = notNull(collections);
 	if (avaliable) {
 	    Collection<?> collection;
 	    for (int i = 0; i < collections.length && avaliable; i++) {
 		collection = collections[i];
-		avaliable = avaliable && avaliable(collection);
+		avaliable = avaliable && available(collection);
 	    }
 	}
 
 	return avaliable;
     }
 
-    public static boolean avaliableAll(Object[]... collections) {
+    public static boolean availableAll(Object[]... collections) {
 
 	boolean avaliable = notNull(collections);
 	if (avaliable) {
 	    Object[] collection;
 	    for (int i = 0; i < collections.length && avaliable; i++) {
 		collection = collections[i];
-		avaliable = avaliable && avaliable(collection);
+		avaliable = avaliable && available(collection);
 	    }
 	}
 
