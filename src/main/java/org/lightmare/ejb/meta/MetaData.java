@@ -3,8 +3,7 @@ package org.lightmare.ejb.meta;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.ejb.TransactionAttributeType;
@@ -41,7 +40,7 @@ public class MetaData {
 
     private TransactionManagementType transactionManType;
 
-    private Set<Object> injects;
+    private List<Object> injects;
 
     public Class<?> getBeanClass() {
 	return beanClass;
@@ -153,14 +152,14 @@ public class MetaData {
 	this.transactionManType = transactionManType;
     }
 
-    public Set<Object> getInjects() {
+    public List<Object> getInjects() {
 	return injects;
     }
 
     public void addInject(Object inject) {
 
 	if (injects == null) {
-	    injects = new HashSet<Object>();
+	    injects = new ArrayList<Object>();
 	}
 	injects.add(inject);
     }
