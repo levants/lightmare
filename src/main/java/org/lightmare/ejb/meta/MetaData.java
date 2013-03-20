@@ -12,6 +12,8 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
+import org.lightmare.utils.ObjectUtils;
+
 /**
  * Container class to save bean {@link Field} with annotation
  * {@link PersistenceContext} and bean class
@@ -84,7 +86,7 @@ public class MetaData {
 
     public void addUnitFields(Collection<Field> unitFields) {
 
-	if (connections != null) {
+	if (ObjectUtils.avaliable(connections)) {
 	    String unitName;
 	    for (Field unitField : unitFields) {
 		unitName = unitField.getAnnotation(PersistenceUnit.class)
