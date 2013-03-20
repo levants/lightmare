@@ -281,12 +281,12 @@ public class BeanLoader {
 	 * @return <code>boolean</code>
 	 * @throws IOException
 	 */
-	private void identifyConnections(PersistenceContext context, Field field)
-		throws IOException {
+	private void identifyConnections(PersistenceContext context,
+		Field connectionField) throws IOException {
 
 	    ConnectionData connection = new ConnectionData();
 
-	    connection.setConnectionField(field);
+	    connection.setConnectionField(connectionField);
 	    String unitName = context.unitName();
 	    String jndiName = context.name();
 	    connection.setUnitName(unitName);
