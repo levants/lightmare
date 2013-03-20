@@ -75,7 +75,8 @@ public class BeanTransactions {
 	if (transaction == null) {
 	    transaction = new UserTransactionImpl(entityTransactions);
 	    MetaContainer.setTransaction(transaction);
-	} else if (entityTransactions.length > 0) {
+	}
+	if (ObjectUtils.avaliable(entityTransactions)) {
 
 	    ((UserTransactionImpl) transaction)
 		    .addTransactions(entityTransactions);
