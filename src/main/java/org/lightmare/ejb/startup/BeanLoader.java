@@ -278,13 +278,10 @@ public class BeanLoader {
 	 * 
 	 * @param context
 	 * @param field
-	 * @param resource
-	 * @param unit
 	 * @return <code>boolean</code>
 	 * @throws IOException
 	 */
-	private void identifyConnections(PersistenceContext context,
-		Field field, Resource resource, PersistenceUnit unit)
+	private void identifyConnections(PersistenceContext context, Field field)
 		throws IOException {
 
 	    ConnectionData connection = new ConnectionData();
@@ -358,7 +355,7 @@ public class BeanLoader {
 		unit = field.getAnnotation(PersistenceUnit.class);
 		ejbAnnot = field.getAnnotation(EJB.class);
 		if (context != null) {
-		    identifyConnections(context, field, resource, unit);
+		    identifyConnections(context, field);
 		} else if (resource != null) {
 		    metaData.setTransactionField(field);
 		} else if (unit != null) {
