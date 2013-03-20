@@ -144,7 +144,7 @@
 		<!-- end of hibernate -->
 
 		<!-- JTA provider -->
-		<dependency>
+		<!-- dependency>
 			<groupId>com.atomikos</groupId>
 			<artifactId>transactions-jta</artifactId>
 			<version>${jta.version}</version>
@@ -160,7 +160,7 @@
 			<artifactId>transactions-jta</artifactId>
 			<version>${jta.version}</version>
 			<classifier>sources</classifier>
-		</dependency>
+		</dependency!-->
 		<!-- end of JTA provider -->
 
 		<!-- startup -->
