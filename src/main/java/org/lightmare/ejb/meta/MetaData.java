@@ -84,19 +84,29 @@ public class MetaData {
 	connections.add(connection);
     }
 
+    private void addUnitField(String unitName, Field unitField) {
+
+	for (ConnectionData connection : connections) {
+	    if (unitName.equals(connection.getUnitName())) {
+		connection.setUnitField(unitField);
+	    }
+	}
+    }
+
+    /**
+     * Adds {@link javax.ejb.PersistenceUnit} annotated field to
+     * {@link MetaData} for cache
+     * 
+     * @param unitFields
+     */
     public void addUnitFields(Collection<Field> unitFields) {
 
-	if (ObjectUtils.avaliable(connections)) {
+	if (ObjectUtils.avaliableAll(connections, unitFields)) {
 	    String unitName;
 	    for (Field unitField : unitFields) {
 		unitName = unitField.getAnnotation(PersistenceUnit.class)
 			.unitName();
-		for (ConnectionData connection : connections) {
-
-		    if (unitName.equals(connection.getUnitName())) {
-			connection.setUnitField(unitField);
-		    }
-		}
+		addUnitField(unitName, unitField);
 	    }
 	}
     }
