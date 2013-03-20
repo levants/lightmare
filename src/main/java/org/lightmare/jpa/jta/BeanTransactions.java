@@ -21,6 +21,7 @@ import org.hibernate.cfg.NotYetImplementedException;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Class to manage {@link javax.transaction.UserTransaction} for
@@ -186,8 +187,9 @@ public class BeanTransactions {
     private static Collection<TransactionData> getEntityTransactions(
 	    Collection<EntityManager> ems) {
 
-	Collection<TransactionData> entityTransactions = new ArrayList<TransactionData>();
-	if (ems != null) {
+	Collection<TransactionData> entityTransactions = null;
+	if (ObjectUtils.avaliable(ems)) {
+	    entityTransactions = new ArrayList<TransactionData>();
 	    for (EntityManager em : ems) {
 		EntityTransaction entityTransaction = getEntityTransaction(em);
 		TransactionData transactionData = createTransactionData(
@@ -198,18 +200,13 @@ public class BeanTransactions {
 	return entityTransactions;
     }
 
-    private static boolean checkOnNull(Object data) {
-
-	return data != null;
-    }
-
     private static void addEntityTransaction(UserTransactionImpl transaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
-	if (checkOnNull(entityTransaction)) {
+	if (ObjectUtils.notNull(entityTransaction)) {
 	    transaction.addTransaction(entityTransaction);
 	}
-	if (checkOnNull(em)) {
+	if (ObjectUtils.notNull(em)) {
 	    transaction.addEntityManager(em);
 	}
     }
@@ -217,24 +214,25 @@ public class BeanTransactions {
     private static void addEntityTransactions(UserTransactionImpl transaction,
 	    Collection<TransactionData> entityTransactions) {
 
-	for (TransactionData transactionData : entityTransactions) {
-
-	    addEntityTransaction(transaction,
-		    transactionData.entityTransaction, transactionData.em);
+	if (ObjectUtils.avaliable(entityTransactions)) {
+	    for (TransactionData transactionData : entityTransactions) {
+		addEntityTransaction(transaction,
+			transactionData.entityTransaction, transactionData.em);
+	    }
 	}
     }
 
     private static void addEntityManager(UserTransactionImpl transaction,
 	    EntityManager em) {
 
-	if (checkOnNull(em)) {
+	if (ObjectUtils.notNull(em)) {
 	    transaction.addEntityManager(em);
 	}
     }
 
     private static void addEntityManagers(UserTransactionImpl transaction,
 	    Collection<EntityManager> ems) {
-	if (ems != null) {
+	if (ObjectUtils.avaliable(ems)) {
 	    for (EntityManager em : ems) {
 		addEntityManager(transaction, em);
 	    }
@@ -244,10 +242,10 @@ public class BeanTransactions {
     private static void addReqNewTransaction(UserTransactionImpl transaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
-	if (checkOnNull(entityTransaction)) {
+	if (ObjectUtils.notNull(entityTransaction)) {
 	    transaction.pushReqNew(entityTransaction);
 	}
-	if (checkOnNull(em)) {
+	if (ObjectUtils.notNull(em)) {
 	    transaction.pushReqNewEm(em);
 	}
     }
@@ -255,7 +253,7 @@ public class BeanTransactions {
     private static void addReqNewTransactions(UserTransactionImpl transaction,
 	    Collection<TransactionData> entityTransactions) {
 
-	if (entityTransactions != null) {
+	if (ObjectUtils.avaliable(entityTransactions)) {
 	    for (TransactionData transactionData : entityTransactions) {
 		addReqNewTransaction(transaction,
 			transactionData.entityTransaction, transactionData.em);
@@ -336,7 +334,7 @@ public class BeanTransactions {
 	MetaData metaData = handler.getMetaData();
 	TransactionAttributeType type = getTransactionType(metaData, method);
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
-	if (type != null) {
+	if (ObjectUtils.notNull(type)) {
 	    addTransaction(handler, type, transaction, ems);
 	}
 
@@ -419,7 +417,7 @@ public class BeanTransactions {
 
 	TransactionAttributeType type = getTransactionType(
 		handler.getMetaData(), method);
-	if (type != null) {
+	if (ObjectUtils.notNull(type)) {
 	    rollbackTransaction(type, handler);
 	}
     }
@@ -465,7 +463,7 @@ public class BeanTransactions {
 
 	TransactionAttributeType type = getTransactionType(
 		handler.getMetaData(), method);
-	if (type != null) {
+	if (ObjectUtils.notNull(type)) {
 	    commitTransaction(type, handler);
 	}
     }
