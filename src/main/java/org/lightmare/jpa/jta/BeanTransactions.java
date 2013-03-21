@@ -514,6 +514,13 @@ public class BeanTransactions {
 	transaction.closeEntityManagers();
     }
 
+    /**
+     * Removes {@link UserTransaction} attribute from cache if passed
+     * {@link BeanHandler} is first in ejb injection method chain
+     * 
+     * @param handler
+     * @param type
+     */
     private static void remove(BeanHandler handler,
 	    TransactionAttributeType type) {
 
