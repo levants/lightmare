@@ -16,6 +16,8 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
+import org.lightmare.utils.ObjectUtils;
+
 /**
  * {@link UserTransaction} implementation for jndi and ejb beans
  * 
@@ -36,7 +38,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     public UserTransactionImpl(EntityTransaction... transactions) {
 
-	if (transactions.length > 0) {
+	if (ObjectUtils.available(transactions)) {
 	    this.transactions = new ArrayList<EntityTransaction>(
 		    Arrays.asList(transactions));
 	} else {
@@ -44,11 +46,37 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
-    @Override
-    public void begin() throws NotSupportedException, SystemException {
+    private void beginAll() throws NotSupportedException, SystemException {
 
 	for (EntityTransaction transaction : transactions) {
 	    transaction.begin();
+	}
+    }
+
+    @Override
+    public void begin() throws NotSupportedException, SystemException {
+
+	if (ObjectUtils.available(transactions)) {
+	    beginAll();
+	}
+    }
+
+    private void commit(EntityTransaction transaction)
+	    throws RollbackException, HeuristicMixedException,
+	    HeuristicRollbackException, SecurityException,
+	    IllegalStateException, SystemException {
+
+	if (transaction.isActive()) {
+	    transaction.commit();
+	}
+    }
+
+    private void commitAll() throws RollbackException, HeuristicMixedException,
+	    HeuristicRollbackException, SecurityException,
+	    IllegalStateException, SystemException {
+
+	for (EntityTransaction transaction : transactions) {
+	    commit(transaction);
 	}
     }
 
@@ -58,10 +86,8 @@ public class UserTransactionImpl implements UserTransaction {
 	    IllegalStateException, SystemException {
 
 	try {
-	    for (EntityTransaction transaction : transactions) {
-		if (transaction.isActive()) {
-		    transaction.commit();
-		}
+	    if (ObjectUtils.available(transactions)) {
+		commitAll();
 	    }
 	} finally {
 	    closeEntityManagers();
@@ -72,12 +98,14 @@ public class UserTransactionImpl implements UserTransaction {
     public int getStatus() throws SystemException {
 
 	int active = 0;
-	for (EntityTransaction transaction : transactions) {
-	    boolean isActive = transaction.isActive();
-	    active += isActive ? 1 : 0;
+	if (ObjectUtils.available(transactions)) {
+	    for (EntityTransaction transaction : transactions) {
+		boolean isActive = transaction.isActive();
+		active += isActive ? 1 : 0;
+	    }
 	}
 
-	if (requareNews != null && checkNews()) {
+	if (ObjectUtils.available(requareNews)) {
 	    for (EntityTransaction transaction : requareNews) {
 		boolean isActive = transaction.isActive();
 		active += isActive ? 1 : 0;
@@ -87,28 +115,55 @@ public class UserTransactionImpl implements UserTransaction {
 	return active;
     }
 
+    private void rollback(EntityTransaction transaction) {
+
+	if (transaction.isActive()) {
+	    transaction.rollback();
+	}
+    }
+
+    private void rollbackAll() throws IllegalStateException, SecurityException,
+	    SystemException {
+
+	for (EntityTransaction transaction : transactions) {
+	    rollback(transaction);
+	}
+    }
+
     @Override
     public void rollback() throws IllegalStateException, SecurityException,
 	    SystemException {
 
 	try {
-	    for (EntityTransaction transaction : transactions) {
-		if (transaction.isActive()) {
-		    transaction.rollback();
-		}
+	    if (ObjectUtils.available(transactions)) {
+		rollbackAll();
 	    }
 	} finally {
 	    closeEntityManagers();
 	}
     }
 
+    private void setRollbackOnly(EntityTransaction transaction)
+	    throws IllegalStateException, SystemException {
+
+	if (transaction.isActive()) {
+	    transaction.setRollbackOnly();
+	}
+    }
+
+    private void setRollbackOnlyAll() throws IllegalStateException,
+	    SystemException {
+
+	for (EntityTransaction transaction : transactions) {
+	    setRollbackOnly(transaction);
+	}
+    }
+
     @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
 
-	for (EntityTransaction transaction : transactions) {
-	    if (transaction.isActive()) {
-		transaction.setRollbackOnly();
-	    }
+	if (ObjectUtils.available(transactions)) {
+	    setRollbackOnlyAll();
 	}
     }
 
@@ -145,7 +200,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private boolean checkNews() {
 
-	boolean notEmpty = !getNews().isEmpty();
+	boolean notEmpty = ObjectUtils.available(requareNews);
 
 	return notEmpty;
     }
@@ -158,7 +213,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private boolean checkNewEms() {
 
-	boolean notEmpty = !getNewEms().isEmpty();
+	boolean notEmpty = ObjectUtils.available(requareNewEms);
 
 	return notEmpty;
     }
@@ -191,13 +246,22 @@ public class UserTransactionImpl implements UserTransaction {
      * Commits new {@link EntityTransaction} at the end of
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
      * methods
+     * 
+     * @throws SystemException
+     * @throws HeuristicRollbackException
+     * @throws HeuristicMixedException
+     * @throws RollbackException
+     * @throws IllegalStateException
+     * @throws SecurityException
      */
-    public void commitReqNew() {
+    public void commitReqNew() throws SecurityException, IllegalStateException,
+	    RollbackException, HeuristicMixedException,
+	    HeuristicRollbackException, SystemException {
 
 	try {
 	    if (checkNews()) {
 		EntityTransaction entityTransaction = getNews().pop();
-		entityTransaction.commit();
+		commit(entityTransaction);
 	    }
 	} finally {
 	    closeReqNew();
@@ -242,7 +306,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void addEntityManager(EntityManager em) {
 
-	if (em != null) {
+	if (ObjectUtils.notNull(em)) {
 	    if (ems == null) {
 		ems = new ArrayList<EntityManager>();
 	    }
@@ -251,17 +315,27 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    private void closeEntityManager(EntityManager em) {
+
+	if (em.isOpen()) {
+	    em.close();
+	}
+    }
+
+    private void closeAllEntityManagers() {
+
+	for (EntityManager em : ems) {
+	    closeEntityManager(em);
+	}
+    }
+
     /**
      * Closes all contained {@link EntityManager}s
      */
     public void closeEntityManagers() {
 
-	if (ems != null) {
-	    for (EntityManager em : ems) {
-		if (em.isOpen()) {
-		    em.close();
-		}
-	    }
+	if (ObjectUtils.available(ems)) {
+	    closeAllEntityManagers();
 	}
     }
 
@@ -274,7 +348,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public boolean checkCaller(InvocationHandler handler) {
 
-	boolean check = (caller != null);
+	boolean check = ObjectUtils.notNull(caller);
 	if (check) {
 	    check = caller.equals(handler);
 	}
