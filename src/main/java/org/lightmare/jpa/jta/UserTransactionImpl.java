@@ -1,8 +1,6 @@
 package org.lightmare.jpa.jta;
 
 import java.lang.reflect.InvocationHandler;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -26,9 +24,9 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class UserTransactionImpl implements UserTransaction {
 
-    private List<EntityTransaction> transactions;
+    private Stack<EntityTransaction> transactions;
 
-    private List<EntityManager> ems;
+    private Stack<EntityManager> ems;
 
     private Stack<EntityTransaction> requareNews;
 
@@ -38,11 +36,10 @@ public class UserTransactionImpl implements UserTransaction {
 
     public UserTransactionImpl(EntityTransaction... transactions) {
 
+	this.transactions = new Stack<EntityTransaction>();
+
 	if (ObjectUtils.available(transactions)) {
-	    this.transactions = new ArrayList<EntityTransaction>(
-		    Arrays.asList(transactions));
-	} else {
-	    this.transactions = new ArrayList<EntityTransaction>();
+	    addTransactions(transactions);
 	}
     }
 
@@ -75,7 +72,9 @@ public class UserTransactionImpl implements UserTransaction {
 	    HeuristicRollbackException, SecurityException,
 	    IllegalStateException, SystemException {
 
-	for (EntityTransaction transaction : transactions) {
+	EntityTransaction transaction;
+	while (ObjectUtils.notEmpty(transactions)) {
+	    transaction = transactions.pop();
 	    commit(transaction);
 	}
     }
@@ -125,7 +124,9 @@ public class UserTransactionImpl implements UserTransaction {
     private void rollbackAll() throws IllegalStateException, SecurityException,
 	    SystemException {
 
-	for (EntityTransaction transaction : transactions) {
+	EntityTransaction transaction;
+	while (ObjectUtils.notEmpty(transactions)) {
+	    transaction = transactions.pop();
 	    rollback(transaction);
 	}
     }
@@ -308,10 +309,10 @@ public class UserTransactionImpl implements UserTransaction {
 
 	if (ObjectUtils.notNull(em)) {
 	    if (ems == null) {
-		ems = new ArrayList<EntityManager>();
+		ems = new Stack<EntityManager>();
 	    }
 
-	    ems.add(em);
+	    ems.push(em);
 	}
     }
 
@@ -324,7 +325,9 @@ public class UserTransactionImpl implements UserTransaction {
 
     private void closeAllEntityManagers() {
 
-	for (EntityManager em : ems) {
+	EntityManager em;
+	while (ObjectUtils.notEmpty(ems)) {
+	    em = ems.pop();
 	    closeEntityManager(em);
 	}
     }

@@ -52,4 +52,9 @@ public class ObjectUtils {
 
 	return avaliable;
     }
+
+    public static boolean notEmpty(Collection<?> collection) {
+
+	return !collection.isEmpty();
+    }
 }
