@@ -265,6 +265,15 @@ public class BeanTransactions {
 	}
     }
 
+    private static void addCaller(UserTransactionImpl transaction,
+	    BeanHandler handler) {
+
+	Object caller = transaction.getCaller();
+	if (caller == null) {
+	    transaction.setCaller(handler);
+	}
+    }
+
     /**
      * Decides whether create or join {@link UserTransaction} by
      * {@link TransactionAttribute} annotation
@@ -280,15 +289,12 @@ public class BeanTransactions {
 	    Collection<EntityManager> ems) throws IOException {
 
 	Collection<TransactionData> entityTransactions;
+	addCaller(transaction, handler);
+
 	if (type.equals(TransactionAttributeType.NOT_SUPPORTED)) {
 
 	    addEntityManagers(transaction, ems);
 	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
-
-	    Object caller = transaction.getCaller();
-	    if (caller == null) {
-		transaction.setCaller(handler);
-	    }
 
 	    entityTransactions = getEntityTransactions(ems);
 	    addEntityTransactions(transaction, entityTransactions);
@@ -506,5 +512,33 @@ public class BeanTransactions {
 
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
 	transaction.closeEntityManagers();
+    }
+
+    private static void remove(BeanHandler handler,
+	    TransactionAttributeType type) {
+
+	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
+
+	boolean check = transaction.checkCaller(handler);
+	if (check) {
+	    MetaContainer.removeTransaction();
+	}
+    }
+
+    /**
+     * Removes {@link UserTransaction} attribute from cache
+     * 
+     * @param handler
+     * @param method
+     */
+    public static void remove(BeanHandler handler, Method method) {
+
+	TransactionAttributeType type = getTransactionType(
+		handler.getMetaData(), method);
+	if (ObjectUtils.notNull(type)) {
+	    remove(handler, type);
+	} else {
+	    MetaContainer.removeTransaction();
+	}
     }
 }

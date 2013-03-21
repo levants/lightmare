@@ -15,6 +15,7 @@ import javax.transaction.UserTransaction;
 import org.lightmare.ejb.meta.ConnectionData;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.jta.BeanTransactions;
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
@@ -93,7 +94,7 @@ public class BeanHandler implements InvocationHandler {
     private void setTransactionField(Collection<EntityManager> ems)
 	    throws IOException {
 
-	if (transactionField != null) {
+	if (ObjectUtils.notNull(transactionField)) {
 	    UserTransaction transaction = getTransaction(ems);
 	    setFieldValue(transactionField, transaction);
 	}
@@ -109,11 +110,12 @@ public class BeanHandler implements InvocationHandler {
      */
     private EntityManager createEntityManager(ConnectionData connection)
 	    throws IOException {
+
 	EntityManagerFactory emf = connection.getEmf();
 	Field connectionField = connection.getConnectionField();
 	Field unitField = connection.getUnitField();
 	EntityManager em = null;
-	if (emf != null) {
+	if (ObjectUtils.notNull(emf)) {
 	    em = emf.createEntityManager();
 	    if (unitField != null) {
 		setFieldValue(unitField, emf);
@@ -127,8 +129,7 @@ public class BeanHandler implements InvocationHandler {
     private Collection<EntityManager> createEntityManagers() throws IOException {
 
 	Collection<EntityManager> ems = null;
-	if (connections != null) {
-
+	if (ObjectUtils.available(connections)) {
 	    ems = new ArrayList<EntityManager>();
 	    for (ConnectionData connection : connections) {
 		EntityManager em = createEntityManager(connection);
@@ -148,12 +149,16 @@ public class BeanHandler implements InvocationHandler {
      */
     private void close(Method method) throws IOException {
 
-	if (method != null) {
-	    if (transactionField == null) {
-		BeanTransactions.commitTransaction(this, method);
-	    } else {
-		BeanTransactions.closeEntityManagers();
+	try {
+	    if (ObjectUtils.notNull(method)) {
+		if (transactionField == null) {
+		    BeanTransactions.commitTransaction(this, method);
+		} else {
+		    BeanTransactions.closeEntityManagers();
+		}
 	    }
+	} finally {
+	    BeanTransactions.remove(this, method);
 	}
     }
 
