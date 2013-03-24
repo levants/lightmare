@@ -3,7 +3,6 @@ package org.lightmare.ejb.startup;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -28,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.ejb.meta.ConnectionData;
 import org.lightmare.ejb.meta.ConnectionSemaphore;
+import org.lightmare.ejb.meta.InjectionData;
 import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jndi.NamingUtils;
@@ -314,19 +314,28 @@ public class BeanLoader {
 	}
 
 	/**
-	 * Caches {@link EJB} annotated methods
+	 * Caches {@link EJB} annotated fields
 	 * 
 	 * @param beanClass
 	 */
-	private void cacheInjectMethods() {
+	private void cacheInjectFields(Field field) {
 
-	    Class<?> beanClass = metaData.getBeanClass();
-	    Method[] methods = beanClass.getDeclaredMethods();
-	    for (Method method : methods) {
-		if (method.isAnnotationPresent(EJB.class)) {
-		    metaData.addInject(method);
-		}
-	    }
+	    EJB ejb = field.getAnnotation(EJB.class);
+
+	    Class<?> beanClass = field.getClass();
+	    Class<?> interfaceClass = ejb.beanInterface();
+	    String name = ejb.beanName();
+	    String description = ejb.description();
+	    String mappedName = ejb.mappedName();
+
+	    InjectionData injectionData = new InjectionData();
+	    injectionData.setBeanClass(beanClass);
+	    injectionData.setInterfaceClass(interfaceClass);
+	    injectionData.setName(name);
+	    injectionData.setDescription(description);
+	    injectionData.setMappedName(mappedName);
+
+	    metaData.addInject(injectionData);
 	}
 
 	/**
@@ -361,7 +370,8 @@ public class BeanLoader {
 		} else if (unit != null) {
 		    addUnitField(field);
 		} else if (ejbAnnot != null) {
-		    metaData.addInject(field);
+		    // caches EJB annotated fields
+		    cacheInjectFields(field);
 		}
 
 	    }
@@ -369,10 +379,6 @@ public class BeanLoader {
 	    if (unitFields != null && !unitFields.isEmpty()) {
 		metaData.addUnitFields(unitFields);
 	    }
-
-	    // caches EJB annotated methods
-	    cacheInjectMethods();
-
 	}
 
 	/**

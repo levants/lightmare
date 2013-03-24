@@ -40,7 +40,7 @@ public class MetaData {
 
     private TransactionManagementType transactionManType;
 
-    private List<Object> injects;
+    private List<InjectionData> injects;
 
     public Class<?> getBeanClass() {
 	return beanClass;
@@ -152,14 +152,14 @@ public class MetaData {
 	this.transactionManType = transactionManType;
     }
 
-    public List<Object> getInjects() {
+    public List<InjectionData> getInjects() {
 	return injects;
     }
 
-    public void addInject(Object inject) {
+    public void addInject(InjectionData inject) {
 
 	if (injects == null) {
-	    injects = new ArrayList<Object>();
+	    injects = new ArrayList<InjectionData>();
 	}
 	injects.add(inject);
     }
