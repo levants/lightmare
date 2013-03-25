@@ -74,7 +74,8 @@ public class BeanHandler implements InvocationHandler {
     }
 
     /**
-     * Sets injected ejb bean as values to annotated fields respectively
+     * Sets injected ejb bean as values to {@link javax.ejb.EJB} annotated
+     * fields respectively
      * 
      * @throws IOException
      */
@@ -88,8 +89,9 @@ public class BeanHandler implements InvocationHandler {
     }
 
     /**
-     * Method to configure (injections, {@link PersistenceUnit} annotated fields
-     * and etc.) {@link BeanHandler} after initialization
+     * Method to configure (injections {@link javax.ejb.EJB} or
+     * {@link PersistenceUnit} annotated fields and etc.) {@link BeanHandler}
+     * after initialization
      * 
      * @throws IOException
      */
