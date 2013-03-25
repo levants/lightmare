@@ -322,14 +322,18 @@ public class BeanLoader {
 
 	    EJB ejb = field.getAnnotation(EJB.class);
 
-	    Class<?> beanClass = field.getClass();
 	    Class<?> interfaceClass = ejb.beanInterface();
+	    if (interfaceClass == null || interfaceClass.equals(Object.class)) {
+		interfaceClass = field.getType();
+	    }
 	    String name = ejb.beanName();
+	    if (name == null || name.isEmpty()) {
+		name = BeanUtils.nameFromInterface(interfaceClass);
+	    }
 	    String description = ejb.description();
 	    String mappedName = ejb.mappedName();
 
 	    InjectionData injectionData = new InjectionData();
-	    injectionData.setBeanClass(beanClass);
 	    injectionData.setInterfaceClass(interfaceClass);
 	    injectionData.setName(name);
 	    injectionData.setDescription(description);
