@@ -10,9 +10,13 @@ import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.transaction.UserTransaction;
 
+import org.lightmare.ejb.EjbConnector;
 import org.lightmare.ejb.meta.ConnectionData;
+import org.lightmare.ejb.meta.InjectionData;
+import org.lightmare.ejb.meta.MetaContainer;
 import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.jta.BeanTransactions;
 import org.lightmare.utils.ObjectUtils;
@@ -32,6 +36,8 @@ public class BeanHandler implements InvocationHandler {
 
     private final Collection<ConnectionData> connections;
 
+    private final Collection<InjectionData> injects;
+
     private final MetaData metaData;
 
     public BeanHandler(final MetaData metaData, final Object bean) {
@@ -39,7 +45,57 @@ public class BeanHandler implements InvocationHandler {
 	this.bean = bean;
 	this.transactionField = metaData.getTransactionField();
 	this.connections = metaData.getConnections();
+	this.injects = metaData.getInjects();
 	this.metaData = metaData;
+    }
+
+    /**
+     * Sets each injected ejb bean as value to annotated field respectively for
+     * passed {@link InjectionData} object
+     */
+    private void configureInject(InjectionData inject) throws IOException {
+
+	MetaData injectMetaData = inject.getMetaData();
+	if (injectMetaData == null) {
+	    String beanName;
+	    if (inject.getMappedName() == null) {
+		beanName = inject.getName();
+	    } else {
+		beanName = inject.getMappedName();
+	    }
+	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
+
+	    inject.setMetaData(injectMetaData);
+	}
+	EjbConnector ejcConnector = new EjbConnector();
+	Object injectBean = ejcConnector.connectToBean(injectMetaData);
+
+	MetaUtils.setFieldValue(inject.getField(), bean, injectBean);
+    }
+
+    /**
+     * Sets injected ejb bean as values to annotated fields respectively
+     * 
+     * @throws IOException
+     */
+    private void configureInjects() throws IOException {
+
+	if (ObjectUtils.available(injects)) {
+	    for (InjectionData inject : injects) {
+		configureInject(inject);
+	    }
+	}
+    }
+
+    /**
+     * Method to configure (injections, {@link PersistenceUnit} annotated fields
+     * and etc.) {@link BeanHandler} after initialization
+     * 
+     * @throws IOException
+     */
+    public void configure() throws IOException {
+	// TODO Add other configurations
+	configureInjects();
     }
 
     /**
@@ -117,7 +173,7 @@ public class BeanHandler implements InvocationHandler {
 	EntityManager em = null;
 	if (ObjectUtils.notNull(emf)) {
 	    em = emf.createEntityManager();
-	    if (unitField != null) {
+	    if (ObjectUtils.notNull(unitField)) {
 		setFieldValue(unitField, emf);
 	    }
 	    setConnection(connectionField, em);

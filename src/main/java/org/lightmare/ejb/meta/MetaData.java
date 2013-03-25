@@ -42,6 +42,8 @@ public class MetaData {
 
     private List<InjectionData> injects;
 
+    private Collection<Field> unitFields;
+
     public Class<?> getBeanClass() {
 	return beanClass;
     }
@@ -107,6 +109,8 @@ public class MetaData {
 			.unitName();
 		addUnitField(unitName, unitField);
 	    }
+
+	    this.unitFields = unitFields;
 	}
     }
 
@@ -162,5 +166,9 @@ public class MetaData {
 	    injects = new ArrayList<InjectionData>();
 	}
 	injects.add(inject);
+    }
+
+    public Collection<Field> getUnitFields() {
+	return this.unitFields;
     }
 }

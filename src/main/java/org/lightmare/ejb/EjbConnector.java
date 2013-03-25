@@ -120,7 +120,8 @@ public class EjbConnector {
 
 	getEntityManagerFactories(metaData);
 
-	InvocationHandler handler = new BeanHandler(metaData, beanInstance);
+	BeanHandler handler = new BeanHandler(metaData, beanInstance);
+	handler.configure();
 
 	return handler;
     }
@@ -151,7 +152,7 @@ public class EjbConnector {
      * @return <code>T</code> implementation of bean interface
      * @throws IOException
      */
-    private <T> T connectToBean(MetaData metaData, Object... rpcArgs)
+    public <T> T connectToBean(MetaData metaData, Object... rpcArgs)
 	    throws IOException {
 
 	InvocationHandler handler = getHandler(metaData);
