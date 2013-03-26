@@ -7,13 +7,13 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.lightmare.bean.InjectMainBeanRemote;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.ejb.startup.MetaCreator;
+import org.lightmare.injections.InjectMainBean;
+import org.lightmare.injections.InjectMainBeanRemote;
 
-@Ignore
+//@Ignore
 public class InjectTest {
 
     private InjectMainBeanRemote bean;
@@ -23,9 +23,13 @@ public class InjectTest {
 
 	MetaCreator.Builder builder = new MetaCreator.Builder();
 	MetaCreator creator = builder.build();
+	Package pkg = InjectMainBean.class.getPackage();
+	String resource = pkg.getName();
+	resource = resource.replace('.', '/');
+	System.out.println(resource);
 	try {
 	    URL url = InjectMainBeanRemote.class.getClassLoader().getResource(
-		    "");
+		    resource);
 	    URL[] urls = { url };
 	    creator.scanForBeans(urls);
 	} catch (IOException ex) {

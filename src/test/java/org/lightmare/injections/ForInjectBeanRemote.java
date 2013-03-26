@@ -1,4 +1,4 @@
-package org.lightmare.bean;
+package org.lightmare.injections;
 
 public interface ForInjectBeanRemote {
 

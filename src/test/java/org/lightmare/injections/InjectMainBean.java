@@ -1,4 +1,4 @@
-package org.lightmare.bean;
+package org.lightmare.injections;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

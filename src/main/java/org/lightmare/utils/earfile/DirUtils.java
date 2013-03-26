@@ -14,7 +14,7 @@ import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
 
 /**
- * Implementation of {@link AbstractIOUtils} for directories
+ * Implementation of {@link AbstractIOUtils} for ear directories
  * 
  * @author levan
  * 
