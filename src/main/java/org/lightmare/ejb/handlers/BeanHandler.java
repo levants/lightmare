@@ -58,12 +58,14 @@ public class BeanHandler implements InvocationHandler {
 	MetaData injectMetaData = inject.getMetaData();
 	if (injectMetaData == null) {
 	    String beanName;
-	    if (inject.getMappedName() == null) {
+	    String mappedName = inject.getMappedName();
+	    if (mappedName == null || mappedName.isEmpty()) {
 		beanName = inject.getName();
 	    } else {
 		beanName = inject.getMappedName();
 	    }
 	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
+	    injectMetaData.setInterfaceClass(inject.getInterfaceClass());
 
 	    inject.setMetaData(injectMetaData);
 	}

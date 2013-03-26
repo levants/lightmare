@@ -13,7 +13,6 @@ import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.injections.InjectMainBean;
 import org.lightmare.injections.InjectMainBeanRemote;
 
-//@Ignore
 public class InjectTest {
 
     private InjectMainBeanRemote bean;
