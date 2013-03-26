@@ -170,8 +170,7 @@ public class EjbConnector {
      * 
      * @param interfaceClass
      * @return <code>T</code> implementation of bean interface
-     * @throws InstantiationException
-     * @throws IllegalAccessException
+     * @throws IOException
      */
 
     public <T> T connectToBean(String beanName, Class<T> interfaceClass,
