@@ -202,6 +202,8 @@ public class FileParsers {
 	BeanLoader.DataSourceParameters parameters;
 	for (Properties props : properties) {
 	    try {
+		// Initializes and fills BeanLoader.DataSourceParameters class
+		// to deploy data source
 		parameters = new BeanLoader.DataSourceParameters();
 		parameters.initializer = initializer;
 		parameters.properties = props;

@@ -341,6 +341,8 @@ public class MetaCreator {
 	    aggregateds.put(beanName, ioUtils);
 	}
 
+	// Initializes and fills BeanLoader.BeanParameters class to deploy
+	// stateless ejb bean
 	BeanLoader.BeanParameters parameters = new BeanLoader.BeanParameters();
 	parameters.creator = this;
 	parameters.className = beanName;
