@@ -341,8 +341,14 @@ public class MetaCreator {
 	    aggregateds.put(beanName, ioUtils);
 	}
 
-	Future<String> future = BeanLoader.loadBean(this, beanName, loader,
-		tmpFiles, conn);
+	BeanLoader.BeanParameters parameters = new BeanLoader.BeanParameters();
+	parameters.creator = this;
+	parameters.className = beanName;
+	parameters.loader = loader;
+	parameters.tmpFiles = tmpFiles;
+	parameters.conn = conn;
+
+	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);
 	if (tmpFiles != null) {
 	    tmpResources.addFile(tmpFiles);

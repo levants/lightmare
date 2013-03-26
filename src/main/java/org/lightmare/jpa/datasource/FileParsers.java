@@ -199,10 +199,14 @@ public class FileParsers {
 	// Blocking semaphore before all data source initialization finished
 	CountDownLatch dsLatch = new CountDownLatch(properties.size());
 
+	BeanLoader.DataSourceParameters parameters;
 	for (Properties props : properties) {
 	    try {
-
-		BeanLoader.initializeDatasource(initializer, props, dsLatch);
+		parameters = new BeanLoader.DataSourceParameters();
+		parameters.initializer = initializer;
+		parameters.properties = props;
+		parameters.dsLatch = dsLatch;
+		BeanLoader.initializeDatasource(parameters);
 
 	    } catch (IOException ex) {
 		LOG.error("Could not initialize datasource", ex);

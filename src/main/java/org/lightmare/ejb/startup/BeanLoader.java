@@ -81,12 +81,11 @@ public class BeanLoader {
 
 	private boolean countedDown;
 
-	public ConnectionDeployer(DataSourceInitializer initializer,
-		Properties properties, CountDownLatch dsLatch) {
+	public ConnectionDeployer(DataSourceParameters parameters) {
 
-	    this.initializer = initializer;
-	    this.properties = properties;
-	    this.dsLatch = dsLatch;
+	    this.initializer = parameters.initializer;
+	    this.properties = parameters.properties;
+	    this.dsLatch = parameters.dsLatch;
 	}
 
 	private void notifyDs() {
@@ -184,16 +183,14 @@ public class BeanLoader {
 
 	private List<Field> unitFields;
 
-	public BeanDeployer(MetaCreator creator, String beanName,
-		String className, ClassLoader loader, MetaData metaData,
-		List<File> tmpFiles, CountDownLatch conn) {
-	    this.creator = creator;
-	    this.beanName = beanName;
-	    this.className = className;
-	    this.loader = loader;
-	    this.tmpFiles = tmpFiles;
-	    this.metaData = metaData;
-	    this.conn = conn;
+	public BeanDeployer(BeanParameters parameters) {
+	    this.creator = parameters.creator;
+	    this.beanName = parameters.beanName;
+	    this.className = parameters.className;
+	    this.loader = parameters.loader;
+	    this.tmpFiles = parameters.tmpFiles;
+	    this.metaData = parameters.metaData;
+	    this.conn = parameters.conn;
 	}
 
 	/**
@@ -521,6 +518,44 @@ public class BeanLoader {
     }
 
     /**
+     * Contains parameters for bean deploy classes
+     * 
+     * @author levan
+     * 
+     */
+    public static class BeanParameters {
+
+	public MetaCreator creator;
+
+	public String className;
+
+	public String beanName;
+
+	public ClassLoader loader;
+
+	public List<File> tmpFiles;
+
+	public CountDownLatch conn;
+
+	public MetaData metaData;
+    }
+
+    /**
+     * Contains parameters for data source deploy classes
+     * 
+     * @author levan
+     * 
+     */
+    public static class DataSourceParameters {
+
+	public DataSourceInitializer initializer;
+
+	public Properties properties;
+
+	public CountDownLatch dsLatch;
+    }
+
+    /**
      * Creates and starts bean deployment process
      * 
      * @param creator
@@ -531,13 +566,13 @@ public class BeanLoader {
      * @return {@link Future}
      * @throws IOException
      */
-    public static Future<String> loadBean(MetaCreator creator,
-	    String className, ClassLoader loader, List<File> tmpFiles,
-	    CountDownLatch conn) throws IOException {
-	MetaData metaData = new MetaData();
-	String beanName = BeanUtils.parseName(className);
-	BeanDeployer beanDeployer = new BeanDeployer(creator, beanName,
-		className, loader, metaData, tmpFiles, conn);
+    public static Future<String> loadBean(BeanParameters parameters)
+	    throws IOException {
+
+	parameters.metaData = new MetaData();
+	String beanName = BeanUtils.parseName(parameters.className);
+	parameters.beanName = beanName;
+	BeanDeployer beanDeployer = new BeanDeployer(parameters);
 	Future<String> future = loaderPool.submit(beanDeployer);
 
 	return future;
@@ -550,11 +585,11 @@ public class BeanLoader {
      * @param properties
      * @param sdLatch
      */
-    public static void initializeDatasource(DataSourceInitializer initializer,
-	    Properties properties, CountDownLatch dsLatch) throws IOException {
+    public static void initializeDatasource(DataSourceParameters parameters)
+	    throws IOException {
 
 	ConnectionDeployer connectionDeployer = new ConnectionDeployer(
-		initializer, properties, dsLatch);
+		parameters);
 	loaderPool.submit(connectionDeployer);
     }
 
