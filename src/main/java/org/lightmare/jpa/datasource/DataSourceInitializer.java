@@ -20,6 +20,7 @@ import org.lightmare.jndi.NamingUtils;
 import com.mchange.v2.c3p0.C3P0Registry;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
+import com.mchange.v2.c3p0.PooledDataSource;
 
 /**
  * Parses xml and property files to initialize and cache {@link DataSource}
@@ -126,7 +127,12 @@ public class DataSourceInitializer {
 	try {
 	    DataSource namedDataSource = DataSources.pooledDataSource(
 		    dataSource, poolingProperties);
-	    context.rebind(jndiName, namedDataSource);
+	    if (namedDataSource instanceof PooledDataSource) {
+		context.rebind(jndiName, namedDataSource);
+	    } else {
+		throw new IOException(
+			"Data source is not PooledDataSource instance");
+	    }
 	    LOG.info(String.format("Data source %s initialized", jndiName));
 	} catch (SQLException ex) {
 	    LOG.error(String.format("Could not initialize data source %s",
