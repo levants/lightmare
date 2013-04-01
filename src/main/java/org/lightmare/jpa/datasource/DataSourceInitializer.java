@@ -4,7 +4,9 @@ import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -64,19 +66,19 @@ public class DataSourceInitializer {
      * 
      * @return
      */
-    private static Properties getDefaultPooling() {
-	Properties c3p0Properties = new Properties();
-	c3p0Properties.setProperty(PoolConfig.MAX_POOL_SIZE,
+    private static Map<Object, Object> getDefaultPooling() {
+	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
+	c3p0Properties.put(PoolConfig.MAX_POOL_SIZE,
 		PoolConfig.MAX_POOL_SIZE_DEF_VALUE);
-	c3p0Properties.setProperty(PoolConfig.INITIAL_POOL_SIZE,
+	c3p0Properties.put(PoolConfig.INITIAL_POOL_SIZE,
 		PoolConfig.INITIAL_POOL_SIZE_DEF_VALUE);
-	c3p0Properties.setProperty(PoolConfig.MIN_POOL_SIZE,
+	c3p0Properties.put(PoolConfig.MIN_POOL_SIZE,
 		PoolConfig.MIN_POOL_SIZE_DEF_VALUE);
-	c3p0Properties.setProperty(PoolConfig.MAX_IDLE_TIMEOUT,
+	c3p0Properties.put(PoolConfig.MAX_IDLE_TIMEOUT,
 		PoolConfig.MAX_IDLE_TIMEOUT_DEF_VALUE);
-	c3p0Properties.setProperty(PoolConfig.MAX_STATEMENTS,
+	c3p0Properties.put(PoolConfig.MAX_STATEMENTS,
 		PoolConfig.MAX_STATEMENTS_DEF_VALUE);
-	c3p0Properties.setProperty(PoolConfig.AQUIRE_INCREMENT,
+	c3p0Properties.put(PoolConfig.AQUIRE_INCREMENT,
 		PoolConfig.AQUIRE_INCREMENT_DEF_VALUE);
 
 	return c3p0Properties;
@@ -118,7 +120,7 @@ public class DataSourceInitializer {
      * @param jndiName
      * @throws IOException
      */
-    public void registerDataSource(Properties poolingProperties,
+    public void registerDataSource(Map<Object, Object> poolingProperties,
 	    DataSource dataSource, String jndiName) throws IOException {
 	try {
 	    DataSource namedDataSource = DataSources.pooledDataSource(
@@ -151,7 +153,7 @@ public class DataSourceInitializer {
 	String jndiName = properties.getProperty("name");
 	LOG.info(String.format("Initializing data source %s", jndiName));
 	DataSource dataSource = initilizeDriver(properties);
-	Properties poolProps = poolingProperties;
+	Map<Object, Object> poolProps = poolingProperties;
 	if (poolingProperties == null) {
 	    poolProps = getDefaultPooling();
 	}
