@@ -119,25 +119,28 @@ public class BeanTransactions {
      */
     public static TransactionAttributeType getTransactionType(
 	    MetaData metaData, Method method) {
-
-	TransactionAttributeType attrType = metaData.getTransactionAttrType();
-	TransactionManagementType manType = metaData.getTransactionManType();
-
-	TransactionAttribute attr = method
-		.getAnnotation(TransactionAttribute.class);
-
 	TransactionAttributeType type;
-	if (manType.equals(TransactionManagementType.CONTAINER)) {
-
-	    if (attr == null) {
-		type = attrType;
-	    } else {
-		type = attr.value();
-	    }
-	} else {
+	if (method == null) {
 	    type = null;
-	}
+	} else {
+	    TransactionAttributeType attrType = metaData
+		    .getTransactionAttrType();
+	    TransactionManagementType manType = metaData
+		    .getTransactionManType();
 
+	    TransactionAttribute attr = method
+		    .getAnnotation(TransactionAttribute.class);
+	    if (manType.equals(TransactionManagementType.CONTAINER)) {
+
+		if (attr == null) {
+		    type = attrType;
+		} else {
+		    type = attr.value();
+		}
+	    } else {
+		type = null;
+	    }
+	}
 	return type;
     }
 
@@ -316,8 +319,8 @@ public class BeanTransactions {
 	    }
 	} else if (type.equals(TransactionAttributeType.NEVER)) {
 
-	    int status = getStatus(transaction);
 	    try {
+		int status = getStatus(transaction);
 		if (status > 0) {
 		    throw new EJBException(NEVER_ERROR);
 		}
@@ -327,7 +330,11 @@ public class BeanTransactions {
 
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
 
-	    throw new NotYetImplementedException(SUPPORTS_ERROR);
+	    try {
+		throw new NotYetImplementedException(SUPPORTS_ERROR);
+	    } finally {
+		addEntityManagers(transaction, ems);
+	    }
 	}
     }
 
@@ -474,7 +481,6 @@ public class BeanTransactions {
 		commit(transaction);
 	    }
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
-
 	    commitReqNew(transaction);
 	} else {
 	    transaction.closeEntityManagers();
@@ -497,8 +503,7 @@ public class BeanTransactions {
 	if (ObjectUtils.notNull(type)) {
 	    commitTransaction(type, handler);
 	} else {
-	    UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
-	    transaction.closeEntityManagers();
+	    closeEntityManagers();
 	}
     }
 
