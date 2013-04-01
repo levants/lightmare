@@ -432,24 +432,6 @@ public class BeanTransactions {
      * Decides whether rollback or not {@link UserTransaction} by
      * {@link TransactionAttribute} annotation
      * 
-     * @param type
-     * @param handler
-     * @throws IOException
-     */
-    private static void rollbackTransaction(TransactionAttributeType type,
-	    BeanHandler handler) throws IOException {
-
-	if (type.equals(TransactionAttributeType.REQUIRED)
-		|| type.equals(TransactionAttributeType.MANDATORY)) {
-	    UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
-	    rollback(transaction);
-	}
-    }
-
-    /**
-     * Decides whether rollback or not {@link UserTransaction} by
-     * {@link TransactionAttribute} annotation
-     * 
      * @param handler
      * @param method
      * @throws IOException
@@ -459,8 +441,16 @@ public class BeanTransactions {
 
 	TransactionAttributeType type = getTransactionType(
 		handler.getMetaData(), method);
-	if (ObjectUtils.notNull(type)) {
-	    rollbackTransaction(type, handler);
+	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
+	try {
+	    if (ObjectUtils.notNull(type)) {
+		rollback(transaction);
+	    } else {
+		transaction.closeEntityManagers();
+	    }
+	} catch (IOException ex) {
+	    transaction.closeEntityManagers();
+	    throw ex;
 	}
     }
 
@@ -507,6 +497,9 @@ public class BeanTransactions {
 		handler.getMetaData(), method);
 	if (ObjectUtils.notNull(type)) {
 	    commitTransaction(type, handler);
+	} else {
+	    UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
+	    transaction.closeEntityManagers();
 	}
     }
 
