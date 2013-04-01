@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.lightmare.jndi.NamingUtils;
 
+import com.mchange.v2.c3p0.C3P0Registry;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
 
@@ -177,6 +178,22 @@ public class DataSourceInitializer {
 
     public static boolean checkDSPath(String datasourcePath) {
 	return INITIALIZED_SOURCES.contains(datasourcePath);
+    }
+
+    /**
+     * Destroys all registered pooled {@link DataSource}s for shut down hook
+     */
+    public static void cleanUp() {
+
+	@SuppressWarnings("unchecked")
+	Set<DataSource> dataSources = C3P0Registry.getPooledDataSources();
+	for (DataSource dataSource : dataSources) {
+	    try {
+		DataSources.destroy(dataSource);
+	    } catch (SQLException ex) {
+		LOG.error("Could not destroy data source", ex);
+	    }
+	}
     }
 
 }

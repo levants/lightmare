@@ -23,8 +23,8 @@ public class ShutDown implements Runnable {
     @Override
     public void run() {
 
-	MetaCreator.closeAllConnections();
 	tmpResources.removeTempFiles();
+	MetaCreator.closeAllConnections();
 	LOG.info("Lightmare server is going to shut down");
     }
 
