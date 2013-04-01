@@ -256,7 +256,7 @@ public class BeanHandler implements InvocationHandler {
      */
     private void rollback(Method method) throws IOException {
 
-	if (method != null) {
+	if (ObjectUtils.notNull(method)) {
 	    BeanTransactions.rollbackTransaction(this, method);
 	}
     }

@@ -308,6 +308,7 @@ public class BeanTransactions {
 
 	    int status = getStatus(transaction);
 	    if (status == 0) {
+		addEntityManagers(transaction, ems);
 		throw new EJBException(MANDATORY_ERROR);
 	    } else {
 		entityTransactions = getEntityTransactions(ems);
@@ -316,9 +317,11 @@ public class BeanTransactions {
 	} else if (type.equals(TransactionAttributeType.NEVER)) {
 
 	    int status = getStatus(transaction);
-	    if (status > 0) {
-		throw new EJBException(NEVER_ERROR);
-	    } else {
+	    try {
+		if (status > 0) {
+		    throw new EJBException(NEVER_ERROR);
+		}
+	    } finally {
 		addEntityManagers(transaction, ems);
 	    }
 
@@ -346,6 +349,8 @@ public class BeanTransactions {
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
 	if (ObjectUtils.notNull(type)) {
 	    addTransaction(handler, type, transaction, ems);
+	} else {
+	    addEntityManagers(transaction, ems);
 	}
 
 	return type;

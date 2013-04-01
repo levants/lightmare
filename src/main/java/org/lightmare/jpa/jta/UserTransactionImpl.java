@@ -1,6 +1,7 @@
 package org.lightmare.jpa.jta;
 
 import java.lang.reflect.InvocationHandler;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -313,6 +314,21 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 
 	    ems.push(em);
+	}
+    }
+
+    /**
+     * Adds {@link EntityManager}'s to collection to close after transactions
+     * processing
+     * 
+     * @param em
+     */
+    public void addEntityManagers(Collection<EntityManager> ems) {
+
+	if (ObjectUtils.available(ems)) {
+	    for (EntityManager em : ems) {
+		addEntityManager(em);
+	    }
 	}
     }
 
