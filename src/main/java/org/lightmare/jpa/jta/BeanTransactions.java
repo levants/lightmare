@@ -477,7 +477,6 @@ public class BeanTransactions {
 
 	    commitReqNew(transaction);
 	} else {
-
 	    transaction.closeEntityManagers();
 	}
     }
