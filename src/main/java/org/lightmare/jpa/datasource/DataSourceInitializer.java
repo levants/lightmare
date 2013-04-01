@@ -68,6 +68,8 @@ public class DataSourceInitializer {
 	Properties c3p0Properties = new Properties();
 	c3p0Properties.setProperty(PoolConfig.MAX_POOL_SIZE,
 		PoolConfig.MAX_POOL_SIZE_DEF_VALUE);
+	c3p0Properties.setProperty(PoolConfig.INITIAL_POOL_SIZE,
+		PoolConfig.INITIAL_POOL_SIZE_DEF_VALUE);
 	c3p0Properties.setProperty(PoolConfig.MIN_POOL_SIZE,
 		PoolConfig.MIN_POOL_SIZE_DEF_VALUE);
 	c3p0Properties.setProperty(PoolConfig.MAX_IDLE_TIMEOUT,
