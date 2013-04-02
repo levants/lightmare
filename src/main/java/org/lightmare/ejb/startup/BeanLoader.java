@@ -205,8 +205,11 @@ public class BeanLoader {
 		String unitName, String jndiName) throws IOException {
 	    synchronized (semaphore) {
 		if (!semaphore.isCheck()) {
-		    creator.configureConnection(unitName, beanName);
-		    semaphore.notifyAll();
+		    try {
+			creator.configureConnection(unitName, beanName);
+		    } finally {
+			semaphore.notifyAll();
+		    }
 		}
 	    }
 	}
@@ -492,27 +495,29 @@ public class BeanLoader {
 	public String call() throws Exception {
 
 	    synchronized (metaData) {
+		String deployed;
 		try {
-		    String deployed;
 		    if (tmpFiles != null) {
 			synchronized (tmpFiles) {
-			    deployed = deploy();
-			    tmpFiles.notifyAll();
+			    try {
+				deployed = deploy();
+			    } finally {
+				tmpFiles.notifyAll();
+			    }
 			}
 		    } else {
 			deployed = deploy();
 		    }
-		    notifyConn();
-		    metaData.notifyAll();
-
-		    return deployed;
 
 		} catch (Exception ex) {
 		    LOG.error(ex.getMessage(), ex);
-		    metaData.notifyAll();
+		    deployed = null;
+		} finally {
 		    notifyConn();
-		    return null;
+		    metaData.notifyAll();
 		}
+
+		return deployed;
 	    }
 	}
 
