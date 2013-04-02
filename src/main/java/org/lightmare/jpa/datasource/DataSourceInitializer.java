@@ -139,7 +139,8 @@ public class DataSourceInitializer {
      * @return {@link DataSource}
      * @throws IOException
      */
-    public DataSource initilizeDriver(Properties properties) throws IOException {
+    public DataSource initilizeDataSource(Properties properties)
+	    throws IOException {
 
 	String driver = properties.getProperty("driver").trim();
 	String url = properties.getProperty("url").trim();
@@ -160,24 +161,29 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Registers {@link DataSource} object in jndi {@link Context}
+     * Initializes and registers {@link DataSource} object in jndi by
+     * {@link Properties} {@link Context}
      * 
      * @param poolingProperties
      * @param dataSource
      * @param jndiName
      * @throws IOException
      */
-    public void registerDataSource(Properties properties,
-	    DataSource dataSource, String jndiName) throws IOException {
+    public void registerDataSource(Properties properties) throws IOException {
+	String jndiName = properties.getProperty("name");
+	LOG.info(String.format("Initializing data source %s", jndiName));
+	Map<Object, Object> configMap = configProperties(properties);
 	try {
-	    Map<Object, Object> configMap = configProperties(properties);
+	    DataSource dataSource = initilizeDataSource(properties);
 	    DataSource namedDataSource = DataSources.pooledDataSource(
 		    dataSource, configMap);
 	    if (namedDataSource instanceof PooledDataSource) {
 		context.rebind(jndiName, namedDataSource);
 	    } else {
 		throw new IOException(
-			"Data source is not PooledDataSource instance");
+			String.format(
+				"Could not initialize data source %s (it is not PooledDataSource instance)",
+				jndiName));
 	    }
 	    LOG.info(String.format("Data source %s initialized", jndiName));
 	} catch (SQLException ex) {
@@ -190,22 +196,6 @@ public class DataSourceInitializer {
 	    LOG.error(String.format("Could not initialize data source %s",
 		    jndiName), ex);
 	}
-    }
-
-    /**
-     * Initializes and registers {@link DataSource} object in jndi by
-     * {@link Properties} {@link Context}
-     * 
-     * @param poolingProperties
-     * @param dataSource
-     * @param jndiName
-     * @throws IOException
-     */
-    public void registerDataSource(Properties properties) throws IOException {
-	String jndiName = properties.getProperty("name");
-	LOG.info(String.format("Initializing data source %s", jndiName));
-	DataSource dataSource = initilizeDriver(properties);
-	registerDataSource(properties, dataSource, jndiName);
     }
 
     public static void setDsAsInitialized(String datasourcePath) {
