@@ -15,6 +15,7 @@ import javax.transaction.UserTransaction;
 import org.apache.log4j.Logger;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.JPAManager;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Container class to save {@link MetaData} for bean interface {@link Class} and
@@ -59,7 +60,7 @@ public class MetaContainer {
     public static void checkAndAddMetaData(String beanName, MetaData metaData)
 	    throws BeanInUseException {
 	MetaData tmpMeta = addMetaData(beanName, metaData);
-	if (tmpMeta != null) {
+	if (ObjectUtils.notNull(tmpMeta)) {
 	    throw new BeanInUseException(String.format(
 		    "bean %s is alredy in use", beanName));
 	}
@@ -164,7 +165,7 @@ public class MetaContainer {
 
 	Collection<ConnectionData> connections = metaData.getConnections();
 
-	if (connections != null) {
+	if (ObjectUtils.available(connections)) {
 	    for (ConnectionData connection : connections) {
 		// Gets connection to clear
 		String unitName = connection.getUnitName();
@@ -172,7 +173,7 @@ public class MetaContainer {
 		if (semaphore == null) {
 		    semaphore = JPAManager.getConnection(unitName);
 		}
-		if (semaphore != null && semaphore.getUsers() <= 1) {
+		if (ObjectUtils.notNull(semaphore) && semaphore.getUsers() <= 1) {
 		    JPAManager.removeConnection(unitName);
 		}
 	    }
@@ -197,7 +198,7 @@ public class MetaContainer {
 	}
 	// Removes MetaData from cache
 	removeMeta(beanName);
-	if (metaData != null) {
+	if (ObjectUtils.notNull(metaData)) {
 	    clearConnection(metaData);
 	    metaData = null;
 	}
@@ -214,7 +215,7 @@ public class MetaContainer {
 
 	synchronized (MetaContainer.class) {
 	    String beanName = getBeanName(url);
-	    if (beanName != null) {
+	    if (ObjectUtils.notNull(beanName)) {
 		undeploy(beanName);
 	    }
 	}

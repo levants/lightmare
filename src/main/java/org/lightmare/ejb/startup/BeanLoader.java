@@ -34,6 +34,7 @@ import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.fs.FileUtils;
 
@@ -304,7 +305,7 @@ public class BeanLoader {
 		semaphore = JPAManager.setSemaphore(unitName, jndiName);
 		connection.setConnection(semaphore);
 		notifyConn();
-		if (semaphore != null) {
+		if (ObjectUtils.notNull(semaphore)) {
 		    lockSemaphore(semaphore, unitName, jndiName);
 		}
 
@@ -368,20 +369,20 @@ public class BeanLoader {
 		resource = field.getAnnotation(Resource.class);
 		unit = field.getAnnotation(PersistenceUnit.class);
 		ejbAnnot = field.getAnnotation(EJB.class);
-		if (context != null) {
+		if (ObjectUtils.notNull(context)) {
 		    identifyConnections(context, field);
-		} else if (resource != null) {
+		} else if (ObjectUtils.notNull(resource)) {
 		    metaData.setTransactionField(field);
-		} else if (unit != null) {
+		} else if (ObjectUtils.notNull(unit)) {
 		    addUnitField(field);
-		} else if (ejbAnnot != null) {
+		} else if (ObjectUtils.notNull(ejbAnnot)) {
 		    // caches EJB annotated fields
 		    cacheInjectFields(field);
 		}
 
 	    }
 
-	    if (unitFields != null && !unitFields.isEmpty()) {
+	    if (ObjectUtils.available(unitFields)) {
 		metaData.addUnitFields(unitFields);
 	    }
 	}
@@ -497,7 +498,7 @@ public class BeanLoader {
 	    synchronized (metaData) {
 		String deployed;
 		try {
-		    if (tmpFiles != null) {
+		    if (ObjectUtils.notNull(tmpFiles)) {
 			synchronized (tmpFiles) {
 			    try {
 				deployed = deploy();

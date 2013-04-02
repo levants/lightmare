@@ -24,6 +24,7 @@ import org.lightmare.remote.rcp.decoders.RcpDecoder;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.decoders.RpcEncoder;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 
 /**
@@ -133,7 +134,7 @@ public class RPCall {
 
 	    if (response.isValid()) {
 		return value;
-	    } else if (value != null) {
+	    } else if (ObjectUtils.notNull(value)) {
 		throw new IOException((Exception) value);
 	    } else {
 		return value;

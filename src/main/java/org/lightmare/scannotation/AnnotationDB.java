@@ -15,6 +15,7 @@ import javassist.bytecode.ClassFile;
 import javassist.bytecode.annotation.Annotation;
 
 import org.apache.log4j.Logger;
+import org.lightmare.utils.ObjectUtils;
 import org.scannotation.archiveiterator.Filter;
 import org.scannotation.archiveiterator.IteratorFactory;
 import org.scannotation.archiveiterator.StreamIterator;
@@ -91,10 +92,10 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	AnnotationsAttribute invisible = (AnnotationsAttribute) cf
 		.getAttribute(AnnotationsAttribute.invisibleTag);
 
-	if (visible != null) {
+	if (ObjectUtils.notNull(visible)) {
 	    populate(visible.getAnnotations(), className, url);
 	}
-	if (invisible != null) {
+	if (ObjectUtils.notNull(invisible)) {
 	    populate(invisible.getAnnotations(), className, url);
 	}
     }
@@ -117,7 +118,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    }
 
 	    // create an index of interfaces the class implements
-	    if (cf.getInterfaces() != null) {
+	    if (ObjectUtils.notNull(cf.getInterfaces())) {
 		Set<String> intfs = new HashSet<String>();
 		for (String intf : cf.getInterfaces()) {
 		    intfs.add(intf);
@@ -151,7 +152,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    StreamIterator it = IteratorFactory.create(url, filter);
 
 	    InputStream stream;
-	    while ((stream = it.next()) != null) {
+	    while (ObjectUtils.notNull((stream = it.next()))) {
 		scanClass(stream, url);
 	    }
 

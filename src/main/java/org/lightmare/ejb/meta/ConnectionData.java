@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.lightmare.utils.ObjectUtils;
+
 /**
  * Container class to cache connection in {@link org.lightmare.MetaData} for trn
  * 
@@ -70,7 +72,7 @@ public class ConnectionData {
 
     public void setConnection(ConnectionSemaphore connection) {
 	this.connection = connection;
-	if (connection != null) {
+	if (ObjectUtils.notNull(connection)) {
 	    emf = connection.getEmf();
 	}
     }

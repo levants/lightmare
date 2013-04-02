@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.lightmare.jndi.NamingUtils;
+import org.lightmare.utils.ObjectUtils;
 
 import com.mchange.v2.c3p0.C3P0Registry;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -47,7 +48,7 @@ public class DataSourceInitializer {
     }
 
     private static boolean checkForDataSource(String path) {
-	return path != null && !path.isEmpty();
+	return ObjectUtils.available(path);
     }
 
     /**

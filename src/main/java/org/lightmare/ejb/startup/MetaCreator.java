@@ -34,6 +34,7 @@ import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RpcListener;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.shutdown.ShutDown;
 
 /**
@@ -140,7 +141,8 @@ public class MetaCreator {
 	String fileNameForEntity;
 	for (String entityName : classSet) {
 	    fileNameForEntity = classOwnersFiles.get(entityName);
-	    if (fileNameForEntity != null && fileNameForBean != null
+	    if (ObjectUtils.notNull(fileNameForEntity)
+		    && ObjectUtils.notNull(fileNameForBean)
 		    && !fileNameForEntity.equals(fileNameForBean)) {
 		classSet.remove(entityName);
 	    }
@@ -188,7 +190,7 @@ public class MetaCreator {
 		.getClassOwnersFiles();
 	AbstractIOUtils ioUtils = aggregateds.get(beanName);
 
-	if (ioUtils != null) {
+	if (ObjectUtils.notNull(ioUtils)) {
 	    URL jarURL = ioUtils.getAppropriatedURL(classOwnersFiles, beanName);
 	    builder.setURL(jarURL);
 	}
@@ -204,7 +206,7 @@ public class MetaCreator {
 			.getName());
 		classSet.retainAll(unitNamedSet);
 	    }
-	    if (ioUtils != null) {
+	    if (ObjectUtils.notNull(ioUtils)) {
 		String fileNameForBean = classOwnersFiles.get(beanName);
 		filterEntitiesForJar(classSet, fileNameForBean);
 	    }
@@ -243,7 +245,7 @@ public class MetaCreator {
 	    throws IOException {
 
 	AbstractIOUtils ioUtils = AbstractIOUtils.getAppropriatedType(archive);
-	if (ioUtils != null) {
+	if (ObjectUtils.notNull(ioUtils)) {
 	    ioUtils.scan(persXmlFromJar);
 	    List<URL> ejbURLs = ioUtils.getEjbURLs();
 	    modifiedArchives.addAll(ejbURLs);
@@ -328,7 +330,7 @@ public class MetaCreator {
 	// Finds appropriated ClassLoader if needed and or creates new one
 	List<File> tmpFiles = null;
 
-	if (ioUtils != null) {
+	if (ObjectUtils.notNull(ioUtils)) {
 	    if (loader == null) {
 		if (!ioUtils.isExecuted()) {
 		    ioUtils.scan(persXmlFromJar);
@@ -352,7 +354,7 @@ public class MetaCreator {
 
 	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);
-	if (tmpFiles != null) {
+	if (ObjectUtils.available(tmpFiles)) {
 	    tmpResources.addFile(tmpFiles);
 	}
     }
@@ -392,7 +394,7 @@ public class MetaCreator {
 		RpcListener.startServer();
 	    }
 	    // Loads libraries from specified path
-	    if (libraryPaths != null) {
+	    if (ObjectUtils.notNull(libraryPaths)) {
 		LibraryLoader.loadLibraries(libraryPaths);
 	    }
 	    archivesURLs = new HashMap<URL, ArchiveData>();
@@ -406,7 +408,7 @@ public class MetaCreator {
 		    Stateless.class.getName());
 	    classOwnersURL = annotationDB.getClassOwnersURLs();
 	    DataSourceInitializer.initializeDataSource(dataSourcePath);
-	    if (beanNames != null) {
+	    if (ObjectUtils.available(beanNames)) {
 		deployBeans(beanNames);
 	    }
 	} finally {

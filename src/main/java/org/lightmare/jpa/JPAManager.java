@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.lightmare.ejb.meta.ConnectionSemaphore;
 import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.jta.HibernateConfig;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Creates and caches {@link EntityManagerFactory} for each ejb bean
@@ -51,7 +52,7 @@ public class JPAManager {
 
     public static boolean checkForEmf(String unitName) {
 
-	boolean check = unitName != null && !unitName.isEmpty();
+	boolean check = ObjectUtils.available(unitName);
 
 	if (check) {
 	    check = CONNECTIONS.containsKey(unitName);
@@ -89,10 +90,10 @@ public class JPAManager {
 
 	ConnectionSemaphore semaphore = null;
 
-	if (unitName != null && !unitName.isEmpty()) {
+	if (ObjectUtils.available(unitName)) {
 
 	    semaphore = createSemaphore(unitName);
-	    if (jndiName != null && !jndiName.isEmpty()) {
+	    if (ObjectUtils.available(jndiName)) {
 		ConnectionSemaphore existent = CONNECTIONS.putIfAbsent(
 			jndiName, semaphore);
 		if (existent == null) {
@@ -125,7 +126,7 @@ public class JPAManager {
     public static boolean isInProgress(String jndiName) {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(jndiName);
-	boolean inProgress = semaphore != null;
+	boolean inProgress = ObjectUtils.notNull(semaphore);
 	if (inProgress) {
 	    inProgress = semaphore.isInProgress() && !semaphore.isBound();
 	    if (inProgress) {
@@ -192,8 +193,8 @@ public class JPAManager {
 
 	Ejb3ConfigurationImpl configured = cfg.configure(unitName, properties);
 
-	emf = configured != null ? configured.buildEntityManagerFactory()
-		: null;
+	emf = ObjectUtils.notNull(configured) ? configured
+		.buildEntityManagerFactory() : null;
 	return emf;
     }
 
@@ -203,7 +204,7 @@ public class JPAManager {
      * @return boolean
      */
     private boolean checkForClasses() {
-	return classes != null && !classes.isEmpty();
+	return ObjectUtils.available(classes);
     }
 
     /**
@@ -212,7 +213,7 @@ public class JPAManager {
      * @return boolean
      */
     private boolean checkForPath() {
-	return path != null && !path.isEmpty();
+	return ObjectUtils.available(path);
     }
 
     /**
@@ -221,7 +222,8 @@ public class JPAManager {
      * @return boolean
      */
     private boolean checkForURL() {
-	return url != null && !url.toString().isEmpty();
+	return ObjectUtils.notNull(url)
+		&& ObjectUtils.available(url.toString());
     }
 
     /**
@@ -273,7 +275,7 @@ public class JPAManager {
 	boolean bound = semaphore.isBound();
 	if (!bound) {
 	    String jndiName = semaphore.getJndiName();
-	    if (jndiName != null && !jndiName.isEmpty()) {
+	    if (ObjectUtils.available(jndiName)) {
 		NamingUtils namingUtils = new NamingUtils();
 		try {
 		    Context context = namingUtils.getContext();
@@ -322,7 +324,7 @@ public class JPAManager {
 	    throws IOException {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
-	if (semaphore != null) {
+	if (ObjectUtils.notNull(semaphore)) {
 	    awaitConnection(semaphore);
 	}
 
@@ -342,7 +344,7 @@ public class JPAManager {
 
 	EntityManagerFactory emf = null;
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
-	if (semaphore != null) {
+	if (ObjectUtils.notNull(semaphore)) {
 	    awaitConnection(semaphore);
 	    emf = semaphore.getEmf();
 	}
@@ -359,11 +361,11 @@ public class JPAManager {
     private static void unbindConnection(ConnectionSemaphore semaphore) {
 
 	String jndiName = semaphore.getJndiName();
-	if (jndiName != null && semaphore.isBound()) {
+	if (ObjectUtils.notNull(jndiName) && semaphore.isBound()) {
 	    NamingUtils namingUtils = new NamingUtils();
 	    try {
 		Context context = namingUtils.getContext();
-		if (context.lookup(jndiName) != null) {
+		if (ObjectUtils.notNull(context.lookup(jndiName))) {
 		    context.unbind(jndiName);
 		}
 	    } catch (NamingException ex) {
@@ -399,7 +401,7 @@ public class JPAManager {
     public static void removeConnection(String unitName) {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
-	if (semaphore != null) {
+	if (ObjectUtils.notNull(semaphore)) {
 	    awaitConnection(semaphore);
 	    closeConnection(semaphore);
 	    NamingUtils namingUtils = new NamingUtils();
@@ -422,7 +424,7 @@ public class JPAManager {
      */
     private static void closeEntityManagerFactory(EntityManagerFactory emf) {
 
-	if (emf != null && emf.isOpen()) {
+	if (ObjectUtils.notNull(emf) && emf.isOpen()) {
 	    emf.close();
 	}
     }

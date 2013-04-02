@@ -25,6 +25,11 @@ public class ObjectUtils {
 	return collection != null && collection.length > 0;
     }
 
+    public static boolean available(CharSequence chars) {
+
+	return chars != null && chars.length() > 0;
+    }
+
     public static boolean availableAll(Collection<?>... collections) {
 
 	boolean avaliable = notNull(collections);

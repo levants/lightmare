@@ -10,6 +10,7 @@ import java.net.URLClassLoader;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
@@ -79,13 +80,13 @@ public class LibraryLoader {
     }
 
     public static void loadCurrentLibraries(ClassLoader loader) {
-	if (loader != null) {
+	if (ObjectUtils.notNull(loader)) {
 	    Thread.currentThread().setContextClassLoader(loader);
 	}
     }
 
     public static void loadCurrentLibraries(Thread thread, ClassLoader loader) {
-	if (loader != null) {
+	if (ObjectUtils.notNull(loader)) {
 	    thread.setContextClassLoader(loader);
 	}
     }

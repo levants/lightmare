@@ -19,6 +19,7 @@ import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
@@ -29,6 +30,8 @@ import org.lightmare.utils.reflect.MetaUtils;
  * 
  */
 public class EjbConnector {
+
+    private static final int RPC_ARGS_LENGTH = 2;
 
     /**
      * Gets {@link MetaData} from {@link MetaContainer} and waits while
@@ -58,7 +61,7 @@ public class EjbConnector {
 	if (connection.getEmf() == null) {
 	    String unitName = connection.getUnitName();
 
-	    if (unitName != null && !unitName.isEmpty()) {
+	    if (ObjectUtils.available(unitName)) {
 		ConnectionSemaphore semaphore = JPAManager
 			.getConnection(unitName);
 		connection.setConnection(semaphore);
@@ -78,7 +81,7 @@ public class EjbConnector {
 	    throws IOException {
 
 	Collection<ConnectionData> connections = metaData.getConnections();
-	if (connections != null && !connections.isEmpty()) {
+	if (ObjectUtils.available(connections)) {
 
 	    for (ConnectionData connection : connections) {
 		getEntityManagerFactory(connection);
@@ -184,7 +187,7 @@ public class EjbConnector {
 	    handler = getHandler(metaData);
 
 	} else {
-	    if (rpcArgs.length != 2) {
+	    if (rpcArgs.length != RPC_ARGS_LENGTH) {
 		throw new IOException(
 			"Could not resolve host and port arguments");
 	    }
