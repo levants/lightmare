@@ -21,11 +21,4 @@ public class PoolConfig {
     public static final String MAX_IDLE_TIMEOUT_DEF_VALUE = "1800";
     public static final String MAX_STATEMENTS_DEF_VALUE = "50";
     public static final String AQUIRE_INCREMENT_DEF_VALUE = "50";
-
-    public static final String DEF_SUFFIX = "_DEF_VALUE";
-
-    public static String getDefaultValue(String key) {
-	return String.format("%s%s", key, DEF_SUFFIX);
-    }
-
 }
