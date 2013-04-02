@@ -145,6 +145,53 @@ public class FileParsers {
     }
 
     /**
+     * Gets security information from {@link javax.sql.DataSource} meta data
+     * 
+     * @param nodeList
+     * @param properties
+     */
+    public void setDataFromJBossPool(NodeList nodeList, Properties properties) {
+
+	for (int i = 0; i < nodeList.getLength(); i++) {
+	    Element thisElement = (Element) nodeList.item(i);
+	    NodeList minPoolSizeList = thisElement
+		    .getElementsByTagName("min-pool-size");
+	    int elementLength = minPoolSizeList.getLength();
+	    if (elementLength == 0) {
+		continue;
+	    }
+	    Element minPoolSizeElement = (Element) minPoolSizeList.item(0);
+	    String minPoolSize = getContext(minPoolSizeElement);
+
+	    properties.setProperty(PoolConfig.MIN_POOL_SIZE, minPoolSize);
+
+	    NodeList maxPoolSizeList = thisElement
+		    .getElementsByTagName("max-pool-size");
+	    elementLength = maxPoolSizeList.getLength();
+	    if (elementLength == 0) {
+		continue;
+	    }
+	    Element maxPoolSizeElement = (Element) maxPoolSizeList.item(0);
+	    String maxPoolSize = getContext(maxPoolSizeElement);
+
+	    properties.setProperty(PoolConfig.MAX_POOL_SIZE, maxPoolSize);
+
+	    NodeList initPoolSizeList = thisElement
+		    .getElementsByTagName("prefill");
+	    elementLength = initPoolSizeList.getLength();
+	    if (elementLength == 0) {
+		continue;
+	    }
+	    Element initPoolSizeElement = (Element) initPoolSizeList.item(0);
+	    String prefill = getContext(initPoolSizeElement);
+	    if (prefill.equals("true")) {
+		properties.setProperty(PoolConfig.INITIAL_POOL_SIZE,
+			minPoolSize);
+	    }
+	}
+    }
+
+    /**
      * Gets {@link javax.sql.DataSource}s configuration properties as
      * {@link List} of {@link Property}
      * 
@@ -170,6 +217,9 @@ public class FileParsers {
 	    NodeList securityList = thisElement
 		    .getElementsByTagName("security");
 	    setDataFromJBossSecurity(securityList, props);
+
+	    NodeList poolList = thisElement.getElementsByTagName("pool");
+	    setDataFromJBossPool(poolList, props);
 
 	    NodeList driverList = thisElement.getElementsByTagName("driver");
 	    setDataFromJBossDriver(driverList, props);

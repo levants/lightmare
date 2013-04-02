@@ -64,6 +64,52 @@ public class DataSourceInitializer {
     }
 
     /**
+     * Add single property to defaults
+     * 
+     * @param defaults
+     * @param initial
+     * @param key
+     */
+    private void setProperty(Map<Object, Object> defaults,
+	    Map<Object, Object> initial, Object key) {
+
+	Object property;
+	if (initial.containsKey(key)) {
+	    property = initial.get(key);
+	    defaults.put(key, property);
+	}
+    }
+
+    /**
+     * Add initialized properties to defaults
+     * 
+     * @param defaults
+     * @param initial
+     */
+    private void fillDefaults(Map<Object, Object> defaults,
+	    Map<Object, Object> initial) {
+
+	Set<Object> keys = defaults.keySet();
+	for (Object key : keys) {
+	    setProperty(defaults, initial, key);
+	}
+    }
+
+    /**
+     * Generates pooling configuration properties
+     * 
+     * @param initial
+     * @return
+     */
+    private Map<Object, Object> configProperties(Map<Object, Object> initial) {
+
+	Map<Object, Object> propertiesMap = getDefaultPooling();
+	fillDefaults(propertiesMap, initial);
+
+	return propertiesMap;
+    }
+
+    /**
      * Sets default connection pooling properties
      * 
      * @return
@@ -111,7 +157,6 @@ public class DataSourceInitializer {
 	dataSource.setPassword(password);
 
 	return dataSource;
-
     }
 
     /**
@@ -122,11 +167,12 @@ public class DataSourceInitializer {
      * @param jndiName
      * @throws IOException
      */
-    public void registerDataSource(Map<Object, Object> poolingProperties,
+    public void registerDataSource(Properties properties,
 	    DataSource dataSource, String jndiName) throws IOException {
 	try {
+	    Map<Object, Object> configMap = configProperties(properties);
 	    DataSource namedDataSource = DataSources.pooledDataSource(
-		    dataSource, poolingProperties);
+		    dataSource, configMap);
 	    if (namedDataSource instanceof PooledDataSource) {
 		context.rebind(jndiName, namedDataSource);
 	    } else {
@@ -147,35 +193,19 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Initializes and registers {@link DataSource} object in jndi
-     * {@link Context}
+     * Initializes and registers {@link DataSource} object in jndi by
+     * {@link Properties} {@link Context}
      * 
      * @param poolingProperties
      * @param dataSource
      * @param jndiName
      * @throws IOException
      */
-    public void registerDataSource(Properties properties,
-	    Properties poolingProperties) throws IOException {
+    public void registerDataSource(Properties properties) throws IOException {
 	String jndiName = properties.getProperty("name");
 	LOG.info(String.format("Initializing data source %s", jndiName));
 	DataSource dataSource = initilizeDriver(properties);
-	Map<Object, Object> poolProps = poolingProperties;
-	if (poolingProperties == null) {
-	    poolProps = getDefaultPooling();
-	}
-	registerDataSource(poolProps, dataSource, jndiName);
-    }
-
-    /**
-     * Parses xml file and initializes and registers {@link DataSource} object
-     * in jndi
-     * 
-     * @param properties
-     * @throws IOException
-     */
-    public void registerDataSource(Properties properties) throws IOException {
-	registerDataSource(properties, null);
+	registerDataSource(properties, dataSource, jndiName);
     }
 
     public static void setDsAsInitialized(String datasourcePath) {
