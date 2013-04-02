@@ -7,7 +7,7 @@
 	<packaging>jar</packaging>
 
 	<name>lightmare</name>
-	<version>0.0.41-SNAPSHOT</version>
+	<version>0.0.42-SNAPSHOT</version>
 	<description>Embeddable and remote ejb container for Stateless session beans and JPA / Hibernate ORM support</description>
 	<url>https://github.com/levants/lightmare</url>
 
