@@ -22,6 +22,7 @@ import org.lightmare.utils.ObjectUtils;
 import com.mchange.v2.c3p0.C3P0Registry;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
+import com.mchange.v2.c3p0.DriverManagerDataSource;
 import com.mchange.v2.c3p0.PooledDataSource;
 
 /**
@@ -160,6 +161,7 @@ public class DataSourceInitializer {
 	    } else {
 		dataSource = DataSources
 			.unpooledDataSource(url, user, password);
+		((DriverManagerDataSource) dataSource).setDriverClass(driver);
 	    }
 	} catch (SQLException ex) {
 	    throw new IOException(ex);
