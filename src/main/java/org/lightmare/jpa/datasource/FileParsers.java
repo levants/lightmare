@@ -38,13 +38,13 @@ public class FileParsers {
     public static final String JBOSS_TAG_NAME = "urn:jboss:domain:datasources:1.0";
 
     private static final String DATA_SURCE_TAG = "datasource";
-    private static final String USER_TAG = "user_name";
+    private static final String USER_TAG = "user-name";
     private static final String PASSWORD_TAG = "password";
     private static final String DRIVER_TAG = "driver";
     private static final String MAX_POOL_TAG = "max-pool-size";
     private static final String MIN_POOL_TAG = "min-pool-size";
     private static final String INITIAL_POOL_TAG = "prefill";
-    private static final String JNDI_NAME_TAG = "prefill";
+    private static final String JNDI_NAME_TAG = "jndi-name";
     private static final String CONNECTION_URL_TAG = "connection-url";
     private static final String SECURITY_TAG = "security";
     private static final String POOL_TAG = "pool";
@@ -120,7 +120,8 @@ public class FileParsers {
 	Element thisElement = (Element) nodeList.item(0);
 	String name = getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
-	properties.setProperty(DRIVER_TAG, driverName);
+	properties.setProperty(DataSourceInitializer.DRIVER_PROPERTY,
+		driverName);
     }
 
     /**

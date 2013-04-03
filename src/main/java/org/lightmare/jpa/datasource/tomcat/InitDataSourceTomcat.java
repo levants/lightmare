@@ -86,7 +86,7 @@ public class InitDataSourceTomcat {
      */
     public static void registerDataSource(Properties properties)
 	    throws IOException {
-	String jndiName = properties.getProperty("name");
+	String jndiName = DataSourceInitializer.getJndiName(properties);
 	LOG.info(String.format("Initializing data source %s", jndiName));
 	try {
 	    DataSource dataSource = initilizeDataSource(properties);

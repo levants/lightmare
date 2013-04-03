@@ -80,7 +80,7 @@ public class InitDataSourceC3p0 {
      */
     public static void registerDataSource(Properties properties)
 	    throws IOException {
-	String jndiName = properties.getProperty("name");
+	String jndiName = DataSourceInitializer.getJndiName(properties);
 	LOG.info(String.format("Initializing data source %s", jndiName));
 	Map<Object, Object> configMap = PoolConfig.configProperties(properties);
 	try {
