@@ -43,7 +43,9 @@ public class JPAManager {
 
     private boolean swapDataSource;
 
-    boolean scanArchives;
+    private boolean scanArchives;
+
+    public static boolean pooledDataSource;
 
     private static final Logger LOG = Logger.getLogger(JPAManager.class);
 
@@ -485,6 +487,11 @@ public class JPAManager {
 
 	public Builder setScanArchives(boolean scanArchives) {
 	    manager.scanArchives = scanArchives;
+	    return this;
+	}
+
+	public Builder setDataSourcePooledType(boolean dsPooledType) {
+	    JPAManager.pooledDataSource = dsPooledType;
 	    return this;
 	}
 

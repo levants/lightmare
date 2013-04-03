@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.lightmare.jndi.NamingUtils;
+import org.lightmare.jpa.JPAManager;
 import org.lightmare.utils.ObjectUtils;
 
 import com.mchange.v2.c3p0.C3P0Registry;
@@ -148,17 +149,26 @@ public class DataSourceInitializer {
 	String user = properties.getProperty("user").trim();
 	String password = properties.getProperty("password").trim();
 
-	ComboPooledDataSource dataSource = new ComboPooledDataSource();
-	dataSource.setJdbcUrl(url);
+	DataSource dataSource;
 	try {
-	    dataSource.setDriverClass(driver);
+	    if (JPAManager.pooledDataSource) {
+		dataSource = new ComboPooledDataSource();
+		((ComboPooledDataSource) dataSource).setDriverClass(driver);
+		((ComboPooledDataSource) dataSource).setJdbcUrl(url);
+		((ComboPooledDataSource) dataSource).setUser(user);
+		((ComboPooledDataSource) dataSource).setPassword(password);
+	    } else {
+		dataSource = DataSources
+			.unpooledDataSource(url, user, password);
+	    }
+	} catch (SQLException ex) {
+	    throw new IOException(ex);
 	} catch (PropertyVetoException ex) {
 	    throw new IOException(ex);
 	}
-	dataSource.setUser(user);
-	dataSource.setPassword(password);
 
 	return dataSource;
+
     }
 
     /**

@@ -575,6 +575,11 @@ public class MetaCreator {
 	    return this;
 	}
 
+	public Builder setDataSourcePooledType(boolean dsPooledType) {
+	    JPAManager.pooledDataSource = dsPooledType;
+	    return this;
+	}
+
 	public MetaCreator build() {
 	    LOG.info("Lightmare application starts working");
 	    return creator;
