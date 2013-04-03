@@ -34,6 +34,11 @@ public class DataSourceInitializer {
     public static final Logger LOG = Logger
 	    .getLogger(DataSourceInitializer.class);
 
+    public static final String USER_PROPERTY = "user";
+    public static final String PASSWORD_PROPERTY = "password";
+    public static final String URL_PROPERTY = "url";
+    public static final String JNDI_NAME_PROPERTY = "name";
+
     public DataSourceInitializer() {
     }
 

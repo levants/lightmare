@@ -37,6 +37,18 @@ public class FileParsers {
 
     public static final String JBOSS_TAG_NAME = "urn:jboss:domain:datasources:1.0";
 
+    private static final String DATA_SURCE_TAG = "datasource";
+    private static final String USER_TAG = "user_name";
+    private static final String PASSWORD_TAG = "password";
+    private static final String DRIVER_TAG = "driver";
+    private static final String MAX_POOL_TAG = "max-pool-size";
+    private static final String MIN_POOL_TAG = "min-pool-size";
+    private static final String INITIAL_POOL_TAG = "prefill";
+    private static final String JNDI_NAME_TAG = "prefill";
+    private static final String CONNECTION_URL_TAG = "connection-url";
+    private static final String SECURITY_TAG = "security";
+    private static final String POOL_TAG = "pool";
+
     private static final Logger LOG = Logger.getLogger(FileParsers.class);
 
     public Document document(File file) throws MalformedURLException,
@@ -108,7 +120,7 @@ public class FileParsers {
 	Element thisElement = (Element) nodeList.item(0);
 	String name = getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
-	properties.setProperty("driver", driverName);
+	properties.setProperty(DRIVER_TAG, driverName);
     }
 
     /**
@@ -122,7 +134,7 @@ public class FileParsers {
 
 	for (int i = 0; i < nodeList.getLength(); i++) {
 	    Element thisElement = (Element) nodeList.item(i);
-	    NodeList userList = thisElement.getElementsByTagName("user-name");
+	    NodeList userList = thisElement.getElementsByTagName(USER_TAG);
 	    int elementLength = userList.getLength();
 	    if (elementLength == 0) {
 		continue;
@@ -130,9 +142,9 @@ public class FileParsers {
 	    Element userElement = (Element) userList.item(0);
 	    String user = getContext(userElement);
 
-	    properties.setProperty("user", user);
+	    properties.setProperty(DataSourceInitializer.USER_PROPERTY, user);
 
-	    NodeList passList = thisElement.getElementsByTagName("password");
+	    NodeList passList = thisElement.getElementsByTagName(PASSWORD_TAG);
 	    elementLength = passList.getLength();
 	    if (elementLength == 0) {
 		continue;
@@ -140,7 +152,8 @@ public class FileParsers {
 	    Element passElement = (Element) passList.item(0);
 	    String password = getContext(passElement);
 
-	    properties.setProperty("password", password);
+	    properties.setProperty(DataSourceInitializer.PASSWORD_PROPERTY,
+		    password);
 	}
     }
 
@@ -155,7 +168,7 @@ public class FileParsers {
 	for (int i = 0; i < nodeList.getLength(); i++) {
 	    Element thisElement = (Element) nodeList.item(i);
 	    NodeList minPoolSizeList = thisElement
-		    .getElementsByTagName("min-pool-size");
+		    .getElementsByTagName(MIN_POOL_TAG);
 	    int elementLength = minPoolSizeList.getLength();
 	    if (elementLength == 0) {
 		continue;
@@ -166,7 +179,7 @@ public class FileParsers {
 	    properties.setProperty(PoolConfig.MIN_POOL_SIZE, minPoolSize);
 
 	    NodeList maxPoolSizeList = thisElement
-		    .getElementsByTagName("max-pool-size");
+		    .getElementsByTagName(MAX_POOL_TAG);
 	    elementLength = maxPoolSizeList.getLength();
 	    if (elementLength == 0) {
 		continue;
@@ -177,14 +190,14 @@ public class FileParsers {
 	    properties.setProperty(PoolConfig.MAX_POOL_SIZE, maxPoolSize);
 
 	    NodeList initPoolSizeList = thisElement
-		    .getElementsByTagName("prefill");
+		    .getElementsByTagName(INITIAL_POOL_TAG);
 	    elementLength = initPoolSizeList.getLength();
 	    if (elementLength == 0) {
 		continue;
 	    }
 	    Element initPoolSizeElement = (Element) initPoolSizeList.item(0);
 	    String prefill = getContext(initPoolSizeElement);
-	    if (prefill.equals("true")) {
+	    if (Boolean.valueOf(prefill)) {
 		properties.setProperty(PoolConfig.INITIAL_POOL_SIZE,
 			minPoolSize);
 	    }
@@ -204,24 +217,25 @@ public class FileParsers {
 	for (int i = 0; i < nodeList.getLength(); i++) {
 	    Element thisElement = (Element) nodeList.item(i);
 	    Properties props = new Properties();
-	    props.setProperty("name", thisElement.getAttribute("jndi-name"));
+	    props.setProperty(DataSourceInitializer.JNDI_NAME_PROPERTY,
+		    thisElement.getAttribute(JNDI_NAME_TAG));
 	    NodeList urlList = thisElement
-		    .getElementsByTagName("connection-url");
+		    .getElementsByTagName(CONNECTION_URL_TAG);
 	    int urlElementLength = urlList.getLength();
 	    if (urlElementLength == 0) {
 		continue;
 	    }
 	    Element urlElement = (Element) urlList.item(0);
 	    String url = getContext(urlElement);
-	    props.setProperty("url", url);
+	    props.setProperty(DataSourceInitializer.URL_PROPERTY, url);
 	    NodeList securityList = thisElement
-		    .getElementsByTagName("security");
+		    .getElementsByTagName(SECURITY_TAG);
 	    setDataFromJBossSecurity(securityList, props);
 
-	    NodeList poolList = thisElement.getElementsByTagName("pool");
+	    NodeList poolList = thisElement.getElementsByTagName(POOL_TAG);
 	    setDataFromJBossPool(poolList, props);
 
-	    NodeList driverList = thisElement.getElementsByTagName("driver");
+	    NodeList driverList = thisElement.getElementsByTagName(DRIVER_TAG);
 	    setDataFromJBossDriver(driverList, props);
 
 	    properties.add(props);
@@ -241,7 +255,7 @@ public class FileParsers {
 
 	File file = new File(dataSourcePath);
 	Document document = document(file);
-	NodeList nodeList = document.getElementsByTagName("datasource");
+	NodeList nodeList = document.getElementsByTagName(DATA_SURCE_TAG);
 
 	List<Properties> properties = getDataFromJBoss(nodeList);
 	DataSourceInitializer initializer = new DataSourceInitializer();
