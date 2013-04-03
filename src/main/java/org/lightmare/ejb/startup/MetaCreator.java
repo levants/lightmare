@@ -30,6 +30,8 @@ import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.PoolConfig;
+import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RpcListener;
 import org.lightmare.scannotation.AnnotationDB;
@@ -577,6 +579,11 @@ public class MetaCreator {
 
 	public Builder setDataSourcePooledType(boolean dsPooledType) {
 	    JPAManager.pooledDataSource = dsPooledType;
+	    return this;
+	}
+
+	public Builder setPoolProviderType(PoolProviderType poolProviderType) {
+	    PoolConfig.poolProviderType = poolProviderType;
 	    return this;
 	}
 
