@@ -169,9 +169,8 @@ public class PoolConfig {
 
 	InputStream stream;
 	if (ObjectUtils.notAvailable(poolPath)) {
-	    poolPath = DEFAULT_POOL_PATH;
 	    ClassLoader loader = Thread.currentThread().getContextClassLoader();
-	    stream = loader.getResourceAsStream(poolPath);
+	    stream = loader.getResourceAsStream(DEFAULT_POOL_PATH);
 	} else {
 	    File file = new File(poolPath);
 	    stream = new FileInputStream(file);
