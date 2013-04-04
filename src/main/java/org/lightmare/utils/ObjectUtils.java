@@ -1,6 +1,7 @@
 package org.lightmare.utils;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Utility class to help with general object checks
@@ -20,6 +21,30 @@ public class ObjectUtils {
 	return collection != null && !collection.isEmpty();
     }
 
+    public static boolean available(Map<?, ?> map) {
+
+	return map != null && !map.isEmpty();
+    }
+
+    public static boolean notAvailable(Map<?, ?> map) {
+
+	return !available(map);
+    }
+
+    public static boolean availableAll(Map<?, ?>... maps) {
+
+	boolean avaliable = notNull(maps);
+	if (avaliable) {
+	    Map<?, ?> map;
+	    for (int i = 0; i < maps.length && avaliable; i++) {
+		map = maps[i];
+		avaliable = avaliable && available(map);
+	    }
+	}
+
+	return avaliable;
+    }
+
     public static boolean available(Object[] collection) {
 
 	return collection != null && collection.length > 0;
@@ -28,6 +53,11 @@ public class ObjectUtils {
     public static boolean available(CharSequence chars) {
 
 	return chars != null && chars.length() > 0;
+    }
+
+    public static boolean notAvailable(CharSequence chars) {
+
+	return !available(chars);
     }
 
     public static boolean availableAll(Collection<?>... collections) {

@@ -41,7 +41,7 @@ public class InitDataSourceTomcat {
 	String user = properties.getProperty("user").trim();
 	String password = properties.getProperty("password").trim();
 
-	Map<Object, Object> configMap = PoolConfig.configProperties(properties);
+	Map<Object, Object> configMap = PoolConfig.merge(properties);
 
 	DataSource dataSource;
 	PoolProperties poolProperties = new PoolProperties();

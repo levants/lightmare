@@ -559,6 +559,10 @@ public class BeanLoader {
 
 	public Properties properties;
 
+	public Properties poolProperties;
+
+	public String poolPath;
+
 	public CountDownLatch dsLatch;
     }
 

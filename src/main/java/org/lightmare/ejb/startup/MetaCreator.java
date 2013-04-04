@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -478,6 +479,13 @@ public class MetaCreator {
 	    creator = new MetaCreator();
 	}
 
+	private void initPoolProperties() {
+
+	    if (ObjectUtils.notAvailable(PoolConfig.poolProperties)) {
+		PoolConfig.poolProperties = new HashMap<Object, Object>();
+	    }
+	}
+
 	public Builder setPersistenceProperties(Map<String, String> properties) {
 	    creator.prop = new HashMap<Object, Object>();
 	    creator.prop.putAll(properties);
@@ -584,6 +592,23 @@ public class MetaCreator {
 
 	public Builder setPoolProviderType(PoolProviderType poolProviderType) {
 	    PoolConfig.poolProviderType = poolProviderType;
+	    return this;
+	}
+
+	public Builder setPoolPropertiesPath(String path) {
+	    PoolConfig.poolPath = path;
+	    return this;
+	}
+
+	public Builder setPoolProperties(Properties properties) {
+	    initPoolProperties();
+	    PoolConfig.poolProperties.putAll(properties);
+	    return this;
+	}
+
+	public Builder addPoolProperty(Object key, Object value) {
+	    initPoolProperties();
+	    PoolConfig.poolProperties.put(key, value);
 	    return this;
 	}
 

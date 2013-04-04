@@ -1,13 +1,19 @@
 package org.lightmare.jpa.datasource;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.reflect.MetaUtils;
 
 /**
  * Configuration with default parameters for c3p0 connection pooling
@@ -34,6 +40,12 @@ public class PoolConfig {
     public static final String AQUIRE_INCREMENT_DEF_VALUE = "50";
     public static final String MAX_IDLE_TIME_EXCESS_CONN_DEF_VALUE = "0";
     public static final String STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE = "1";
+
+    private static final String DEFAULT_POOL_PATH = "META-INF/pool.properties";
+
+    public static String poolPath;
+
+    public static Map<Object, Object> poolProperties;
 
     /**
      * Enumeration to choose which type connection pool should be in use
@@ -67,25 +79,35 @@ public class PoolConfig {
 		PoolConfig.MAX_STATEMENTS_DEF_VALUE);
 	c3p0Properties.put(PoolConfig.AQUIRE_INCREMENT,
 		PoolConfig.AQUIRE_INCREMENT_DEF_VALUE);
+	c3p0Properties.put(STAT_CACHE_NUM_DEFF_THREADS,
+		STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE);
 
 	return c3p0Properties;
     }
 
-    /**
-     * Add single property to defaults
-     * 
-     * @param defaults
-     * @param initial
-     * @param key
-     */
-    private static void setProperty(Map<Object, Object> defaults,
-	    Map<Object, Object> initial, Object key) {
+    private static boolean checkModifiers(Field field) {
 
-	Object property;
-	if (initial.containsKey(key)) {
-	    property = initial.get(key);
-	    defaults.put(key, property);
+	return Modifier.isStatic(field.getModifiers())
+		&& Modifier.isFinal(field.getModifiers())
+		&& field.getType().equals(String.class);
+    }
+
+    private static Set<Object> unsopportedKeys() throws IOException {
+
+	Set<Object> keys = new HashSet<Object>();
+	Field[] fields = DataSourceInitializer.class.getDeclaredFields();
+	Object key;
+	String apprEnd = "_PROPERTY";
+	String name;
+	for (Field field : fields) {
+	    name = field.getName();
+	    if (checkModifiers(field) && name.endsWith(apprEnd)) {
+		key = MetaUtils.getFieldValue(field);
+		keys.add(key);
+	    }
 	}
+
+	return keys;
     }
 
     /**
@@ -97,24 +119,25 @@ public class PoolConfig {
     private static void fillDefaults(Map<Object, Object> defaults,
 	    Map<Object, Object> initial) {
 
-	Set<Object> keys = defaults.keySet();
-	for (Object key : keys) {
-	    setProperty(defaults, initial, key);
-	}
+	defaults.putAll(initial);
     }
 
     /**
      * Generates pooling configuration properties
      * 
      * @param initial
-     * @return
+     * @return {@link Map}<Object, Object>
+     * @throws IOException
      */
-    public static Map<Object, Object> configProperties(
-	    Map<Object, Object> initial) {
+    private static Map<Object, Object> configProperties(
+	    Map<Object, Object> initial) throws IOException {
 
 	Map<Object, Object> propertiesMap = getDefaultPooling();
 	fillDefaults(propertiesMap, initial);
-
+	Set<Object> keys = unsopportedKeys();
+	for (Object key : keys) {
+	    propertiesMap.remove(key);
+	}
 	return propertiesMap;
     }
 
@@ -142,18 +165,25 @@ public class PoolConfig {
      * @return {@link Properties}
      * @throws IOException
      */
-    public static Properties load(String path) throws IOException {
+    public static Map<Object, Object> load() throws IOException {
 
-	ClassLoader loader = Thread.currentThread().getContextClassLoader();
-	if (!ObjectUtils.available(path)) {
-	    path = "META-INF/pool.properties";
+	InputStream stream;
+	if (ObjectUtils.notAvailable(poolPath)) {
+	    poolPath = DEFAULT_POOL_PATH;
+	    ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	    stream = loader.getResourceAsStream(poolPath);
+	} else {
+	    File file = new File(poolPath);
+	    stream = new FileInputStream(file);
 	}
-	InputStream stream = loader.getResourceAsStream(path);
 	try {
-	    Properties properties;
+	    Map<Object, Object> properties;
+	    Properties propertiesToLoad;
 	    if (ObjectUtils.notNull(stream)) {
-		properties = new Properties();
-		properties.load(stream);
+		propertiesToLoad = new Properties();
+		propertiesToLoad.load(stream);
+		properties = new HashMap<Object, Object>();
+		properties.putAll(propertiesToLoad);
 	    } else {
 		properties = null;
 	    }
@@ -164,5 +194,29 @@ public class PoolConfig {
 		stream.close();
 	    }
 	}
+    }
+
+    /**
+     * Merges passed properties, startup time passed properties and properties
+     * loaded from file
+     * 
+     * @param properties
+     * @return {@link Map}<Object, Object> merged properties map
+     * @throws IOException
+     */
+    public static Map<Object, Object> merge(Map<Object, Object> properties)
+	    throws IOException {
+
+	Map<Object, Object> configMap = configProperties(properties);
+	Map<Object, Object> loaded = load();
+	if (ObjectUtils.notNull(loaded)) {
+	    fillDefaults(configMap, loaded);
+	}
+
+	if (ObjectUtils.notNull(poolProperties)) {
+	    fillDefaults(configMap, poolProperties);
+	}
+
+	return configMap;
     }
 }

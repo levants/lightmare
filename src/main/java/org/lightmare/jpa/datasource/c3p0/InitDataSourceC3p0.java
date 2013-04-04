@@ -82,7 +82,7 @@ public class InitDataSourceC3p0 {
 	    throws IOException {
 	String jndiName = DataSourceInitializer.getJndiName(properties);
 	LOG.info(String.format("Initializing data source %s", jndiName));
-	Map<Object, Object> configMap = PoolConfig.configProperties(properties);
+	Map<Object, Object> configMap = PoolConfig.merge(properties);
 	try {
 	    DataSource dataSource = initilizeDataSource(properties);
 	    DataSource namedDataSource = DataSources.pooledDataSource(

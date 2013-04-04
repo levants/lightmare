@@ -67,6 +67,7 @@ public class JpaTest {
 	properties.put("hibernate.max_fetch_depth", "3");
 	MetaCreator.Builder builder = new MetaCreator.Builder()
 		.setPersistenceProperties(properties);
+	builder.setPoolPropertiesPath("./pool/pool.properties");
 	if (unitName != null) {
 	    builder.setScanForEntities(true).setUnitName(unitName);
 	}

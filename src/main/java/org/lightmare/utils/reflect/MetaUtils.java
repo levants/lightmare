@@ -150,16 +150,61 @@ public class MetaUtils {
     public static void setFieldValue(Field field, Object data, Object value)
 	    throws IOException {
 	boolean accessible = field.isAccessible();
-	if (!accessible) {
-	    field.setAccessible(true);
-	}
+
 	try {
+	    if (!accessible) {
+		field.setAccessible(true);
+	    }
 	    field.set(data, value);
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
 	} catch (IllegalAccessException ex) {
 	    throw new IOException(ex);
+	} finally {
+	    field.setAccessible(accessible);
 	}
+    }
+
+    /**
+     * Gets value of specific field in specific {@link Object}
+     * 
+     * @param field
+     * @param data
+     * @return {@link Object}
+     * @throws IOException
+     */
+    public static Object getFieldValue(Field field, Object data)
+	    throws IOException {
+
+	Object value;
+	boolean accessible = field.isAccessible();
+	try {
+	    if (!accessible) {
+		field.setAccessible(true);
+	    }
+	    value = field.get(data);
+	} catch (IllegalArgumentException ex) {
+	    throw new IOException(ex);
+	} catch (IllegalAccessException ex) {
+	    throw new IOException(ex);
+	}
+
 	field.setAccessible(accessible);
+
+	return value;
+    }
+
+    /**
+     * Gets value of specific static field
+     * 
+     * @param field
+     * @return {@link Object}
+     * @throws IOException
+     */
+    public static Object getFieldValue(Field field) throws IOException {
+
+	Object value = getFieldValue(field, null);
+
+	return value;
     }
 }
