@@ -35,6 +35,12 @@ public class PoolConfig {
     public static final String MAX_IDLE_TIME_EXCESS_CONN_DEF_VALUE = "0";
     public static final String STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE = "1";
 
+    /**
+     * Enumeration to choose which type connection pool should be in use
+     * 
+     * @author levan
+     * 
+     */
     public static enum PoolProviderType {
 
 	C3P0, TOMCAT;
