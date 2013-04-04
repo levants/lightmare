@@ -49,17 +49,16 @@ public class InitDataSourceC3p0 {
 	DataSource dataSource;
 	try {
 	    if (JPAManager.pooledDataSource) {
-		dataSource = new ComboPooledDataSource();
-		((ComboPooledDataSource) dataSource).setDriverClass(driver);
-		((ComboPooledDataSource) dataSource).setJdbcUrl(url);
-		((ComboPooledDataSource) dataSource).setUser(user);
-		((ComboPooledDataSource) dataSource).setPassword(password);
+		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
+		comboPooledDataSource.setDriverClass(driver);
+		comboPooledDataSource.setJdbcUrl(url);
+		comboPooledDataSource.setUser(user);
+		comboPooledDataSource.setPassword(password);
+		dataSource = comboPooledDataSource;
 	    } else {
+		DataSourceInitializer.initializeDriver(driver);
 		dataSource = DataSources
 			.unpooledDataSource(url, user, password);
-		// ((DriverManagerDataSource)
-		// dataSource).setDriverClass(driver);
-		DataSourceInitializer.initializeDriver(driver);
 	    }
 	} catch (SQLException ex) {
 	    throw new IOException(ex);
