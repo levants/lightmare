@@ -1,4 +1,4 @@
-package org.lightmare.jpa.datasource.c3p0;
+package org.lightmare.jpa.datasource;
 
 import java.io.IOException;
 import java.io.InputStream;
