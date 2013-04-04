@@ -18,7 +18,6 @@ import org.lightmare.jpa.datasource.PoolConfig;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
-import com.mchange.v2.c3p0.DriverManagerDataSource;
 import com.mchange.v2.c3p0.PooledDataSource;
 
 /**
@@ -58,7 +57,9 @@ public class InitDataSourceC3p0 {
 	    } else {
 		dataSource = DataSources
 			.unpooledDataSource(url, user, password);
-		((DriverManagerDataSource) dataSource).setDriverClass(driver);
+		// ((DriverManagerDataSource)
+		// dataSource).setDriverClass(driver);
+		DataSourceInitializer.initializeDriver(driver);
 	    }
 	} catch (SQLException ex) {
 	    throw new IOException(ex);

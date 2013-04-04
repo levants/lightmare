@@ -55,6 +55,21 @@ public class DataSourceInitializer {
     }
 
     /**
+     * Loads jdbc driver class
+     * 
+     * @param driver
+     */
+    public static void initializeDriver(String driver) throws IOException {
+
+	ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	try {
+	    Class.forName(driver, true, loader);
+	} catch (ClassNotFoundException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
      * Initialized datasource
      * 
      * @throws IOException

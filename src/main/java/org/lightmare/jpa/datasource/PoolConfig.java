@@ -1,8 +1,13 @@
 package org.lightmare.jpa.datasource;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
+
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Configuration with default parameters for c3p0 connection pooling
@@ -122,5 +127,36 @@ public class PoolConfig {
 	}
 
 	return propertyInt;
+    }
+
+    /**
+     * Loads {@link Properties} from specific path
+     * 
+     * @param path
+     * @return {@link Properties}
+     * @throws IOException
+     */
+    public static Properties load(String path) throws IOException {
+
+	ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	if (!ObjectUtils.available(path)) {
+	    path = "META-INF/pool.properties";
+	}
+	InputStream stream = loader.getResourceAsStream(path);
+	try {
+	    Properties properties;
+	    if (ObjectUtils.notNull(stream)) {
+		properties = new Properties();
+		properties.load(stream);
+	    } else {
+		properties = null;
+	    }
+
+	    return properties;
+	} finally {
+	    if (ObjectUtils.notNull(stream)) {
+		stream.close();
+	    }
+	}
     }
 }
