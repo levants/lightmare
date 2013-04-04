@@ -22,8 +22,13 @@ public class PoolProperties {
 	}
 	InputStream stream = loader.getResourceAsStream(path);
 	try {
-	    Properties properties = new Properties();
-	    properties.load(stream);
+	    Properties properties;
+	    if (ObjectUtils.notNull(stream)) {
+		properties = new Properties();
+		properties.load(stream);
+	    } else {
+		properties = null;
+	    }
 
 	    return properties;
 	} finally {
