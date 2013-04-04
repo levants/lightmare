@@ -68,6 +68,7 @@ public class JpaTest {
 	MetaCreator.Builder builder = new MetaCreator.Builder()
 		.setPersistenceProperties(properties);
 	builder.setPoolPropertiesPath("./pool/pool.properties");
+	builder.addPoolProperty("statementCacheNumDeferredCloseThreads", "3");
 	if (unitName != null) {
 	    builder.setScanForEntities(true).setUnitName(unitName);
 	}
