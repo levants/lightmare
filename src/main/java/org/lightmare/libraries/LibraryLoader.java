@@ -21,6 +21,22 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class LibraryLoader {
 
+    private static final String ADD_URL_METHOD_NAME = "addURL";
+
+    private static Method addURLMethod;
+
+    private static Method getURLMethod() throws IOException {
+
+	if (addURLMethod == null) {
+	    synchronized (LibraryLoader.class) {
+		addURLMethod = MetaUtils.getDeclaredMethod(
+			URLClassLoader.class, ADD_URL_METHOD_NAME, URL.class);
+	    }
+	}
+
+	return addURLMethod;
+    }
+
     /**
      * Gets all jar or class subfiles from specified {@link File} recursively
      * 
@@ -65,8 +81,8 @@ public class LibraryLoader {
 	    throws IOException {
 	getSubfiles(file, urls);
 	URL[] paths = urls.toArray(new URL[urls.size()]);
-	URLClassLoader urlLoader = URLClassLoader.newInstance(paths, Thread
-		.currentThread().getContextClassLoader());
+	URLClassLoader urlLoader = URLClassLoader.newInstance(paths,
+		MetaUtils.getContextClassLoader());
 	return urlLoader;
     }
 
@@ -106,8 +122,7 @@ public class LibraryLoader {
 	    URLClassLoader urlLoader = (URLClassLoader) ClassLoader
 		    .getSystemClassLoader();
 
-	    Method method = MetaUtils.getDeclaredMethod(URLClassLoader.class,
-		    "addURL", URL.class);
+	    Method method = getURLMethod();
 	    for (URL url : paths) {
 		MetaUtils
 			.invokePrivate(method, urlLoader, new Object[] { url });
