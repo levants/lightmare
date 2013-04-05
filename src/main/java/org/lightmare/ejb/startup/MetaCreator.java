@@ -38,6 +38,7 @@ import org.lightmare.remote.rpc.RpcListener;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.reflect.MetaUtils;
 import org.lightmare.utils.shutdown.ShutDown;
 
 /**
@@ -108,11 +109,7 @@ public class MetaCreator {
     private boolean checkForUnitName(String className) throws IOException {
 	boolean isValid = false;
 	Class<?> entityClass;
-	try {
-	    entityClass = Class.forName(className);
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	}
+	entityClass = MetaUtils.initClassForName(className);
 	UnitName annotation = entityClass.getAnnotation(UnitName.class);
 	isValid = annotation.value().equals(annotatedUnitName);
 

@@ -1,7 +1,5 @@
 package org.lightmare.jndi;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.Hashtable;
 
 import javax.naming.Context;
@@ -11,6 +9,7 @@ import javax.naming.spi.InitialContextFactory;
 import javax.naming.spi.InitialContextFactoryBuilder;
 
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.reflect.MetaUtils;
 
 /**
  * Extension of factory builder class {@link InitialContextFactoryBuilder}
@@ -39,9 +38,9 @@ public class DSInitialContextFactoryBuilder implements
     private InitialContextFactory simulateBuilderlessNamingManager(
 	    String requestedFactory) throws NoInitialContextException {
 	try {
-	    ClassLoader loader = getContextClassLoader();
-	    Class<?> requestedClass = Class.forName(requestedFactory, true,
-		    loader);
+	    Class<?> requestedClass = MetaUtils
+		    .initClassForName(requestedFactory);
+
 	    return (InitialContextFactory) requestedClass.newInstance();
 	} catch (Exception ex) {
 	    NoInitialContextException ne = new NoInitialContextException(
@@ -49,17 +48,6 @@ public class DSInitialContextFactoryBuilder implements
 	    ne.setRootCause(ex);
 	    throw ne;
 	}
-    }
-
-    private ClassLoader getContextClassLoader() {
-
-	@SuppressWarnings("rawtypes")
-	PrivilegedAction<?> action = new PrivilegedAction() {
-	    public Object run() {
-		return Thread.currentThread().getContextClassLoader();
-	    }
-	};
-	return (ClassLoader) AccessController.doPrivileged(action);
     }
 
 }

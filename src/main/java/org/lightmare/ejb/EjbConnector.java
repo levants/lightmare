@@ -142,8 +142,8 @@ public class EjbConnector {
 	Class<?>[] interfaceArray = { interfaceClass };
 
 	@SuppressWarnings("unchecked")
-	T beanInstance = (T) Proxy.newProxyInstance(Thread.currentThread()
-		.getContextClassLoader(), interfaceArray, handler);
+	T beanInstance = (T) Proxy.newProxyInstance(
+		MetaUtils.getContextClassLoader(), interfaceArray, handler);
 
 	return beanInstance;
     }

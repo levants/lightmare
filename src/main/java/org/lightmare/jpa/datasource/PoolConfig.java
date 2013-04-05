@@ -179,7 +179,7 @@ public class PoolConfig {
 
 	InputStream stream;
 	if (ObjectUtils.notAvailable(poolPath)) {
-	    ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	    ClassLoader loader = MetaUtils.getContextClassLoader();
 	    stream = loader.getResourceAsStream(DEFAULT_POOL_PATH);
 	} else {
 	    File file = new File(poolPath);

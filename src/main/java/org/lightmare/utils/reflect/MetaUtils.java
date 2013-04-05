@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 /**
  * Class to use reflection {@link Method} calls and {@link Field} information
@@ -48,6 +50,49 @@ public class MetaUtils {
 		clazz = Class.forName(className, true, loader);
 	    }
 
+	    return clazz;
+
+	} catch (ClassNotFoundException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
+     * Gets current {@link Thread}'s context {@link ClassLoader} object
+     * 
+     * @return {@link ClassLoader}
+     */
+    public static ClassLoader getContextClassLoader() {
+
+	PrivilegedAction<ClassLoader> action = new PrivilegedAction<ClassLoader>() {
+
+	    public ClassLoader run() {
+		Thread currentThread = Thread.currentThread();
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+		return classLoader;
+	    }
+	};
+	ClassLoader loader = AccessController.doPrivileged(action);
+
+	return loader;
+    }
+
+    /**
+     * Loads class by name with current {@link Thread}'s {@link ClassLoader} and
+     * initializes it
+     * 
+     * @param className
+     * @param loader
+     * @return {@link Class}
+     * @throws IOException
+     */
+    public static Class<?> initClassForName(String className)
+	    throws IOException {
+
+	Class<?> clazz;
+	try {
+	    ClassLoader loader = getContextClassLoader();
+	    clazz = Class.forName(className, true, loader);
 	    return clazz;
 
 	} catch (ClassNotFoundException ex) {

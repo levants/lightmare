@@ -15,6 +15,7 @@ import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.jpa.datasource.c3p0.InitDataSourceC3p0;
 import org.lightmare.jpa.datasource.tomcat.InitDataSourceTomcat;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.reflect.MetaUtils;
 
 import com.mchange.v2.c3p0.C3P0Registry;
 import com.mchange.v2.c3p0.DataSources;
@@ -61,12 +62,7 @@ public class DataSourceInitializer {
      */
     public static void initializeDriver(String driver) throws IOException {
 
-	ClassLoader loader = Thread.currentThread().getContextClassLoader();
-	try {
-	    Class.forName(driver, true, loader);
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	}
+	MetaUtils.initClassForName(driver);
     }
 
     /**
@@ -75,6 +71,7 @@ public class DataSourceInitializer {
      * @throws IOException
      */
     public static void initializeDataSource(String path) throws IOException {
+
 	if (checkForDataSource(path)
 		&& !DataSourceInitializer.checkDSPath(path)) {
 	    FileParsers parsers = new FileParsers();

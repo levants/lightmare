@@ -37,6 +37,7 @@ import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.fs.FileUtils;
+import org.lightmare.utils.reflect.MetaUtils;
 
 /**
  * Class for running in distinct thread to initialize
@@ -450,15 +451,8 @@ public class BeanLoader {
 	 */
 	private String createBeanClass() throws IOException {
 	    try {
-		Class<?> beanClass;
-		if (loader == null) {
-		    beanClass = Class.forName(className);
-		} else {
-		    beanClass = Class.forName(className, true, loader);
-		}
-
+		Class<?> beanClass = MetaUtils.classForName(className, loader);
 		checkOnTransactional(beanClass);
-
 		Stateless annotation = beanClass.getAnnotation(Stateless.class);
 		String beanEjbName = annotation.name();
 		if (beanEjbName == null || beanEjbName.isEmpty()) {
@@ -470,9 +464,9 @@ public class BeanLoader {
 
 		return beanEjbName;
 
-	    } catch (ClassNotFoundException ex) {
+	    } catch (IOException ex) {
 		notifyConn();
-		throw new IOException(ex);
+		throw ex;
 	    }
 	}
 
