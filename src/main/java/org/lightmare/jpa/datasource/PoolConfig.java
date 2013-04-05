@@ -31,6 +31,7 @@ public class PoolConfig {
     public static final String AQUIRE_INCREMENT = "acquireIncrement";
     public static final String MAX_IDLE_TIME_EXCESS_CONN = "maxIdleTimeExcessConnections";
     public static final String STAT_CACHE_NUM_DEFF_THREADS = "statementCacheNumDeferredCloseThreads";
+    public static final String DATA_SOURCE_NAME = "dataSourceName";
 
     public static final String MAX_POOL_SIZE_DEF_VALUE = "15";
     public static final String INITIAL_POOL_SIZE_DEF_VALUE = "5";
@@ -135,9 +136,18 @@ public class PoolConfig {
 	Map<Object, Object> propertiesMap = getDefaultPooling();
 	fillDefaults(propertiesMap, initial);
 	Set<Object> keys = unsopportedKeys();
+	Object dataSourceName = null;
 	for (Object key : keys) {
+	    if (key.equals(DataSourceInitializer.JNDI_NAME_PROPERTY)) {
+		dataSourceName = propertiesMap
+			.get(DataSourceInitializer.JNDI_NAME_PROPERTY);
+	    }
 	    propertiesMap.remove(key);
 	}
+	if (ObjectUtils.notNull(dataSourceName)) {
+	    propertiesMap.put(DATA_SOURCE_NAME, dataSourceName);
+	}
+
 	return propertiesMap;
     }
 
