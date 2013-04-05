@@ -37,7 +37,7 @@ public class PoolConfig {
     public static final String MIN_POOL_SIZE_DEF_VALUE = "5";
     public static final String MAX_IDLE_TIMEOUT_DEF_VALUE = "0";
     public static final String MAX_STATEMENTS_DEF_VALUE = "50";
-    public static final String AQUIRE_INCREMENT_DEF_VALUE = "50";
+    public static final String AQUIRE_INCREMENT_DEF_VALUE = "5";
     public static final String MAX_IDLE_TIME_EXCESS_CONN_DEF_VALUE = "0";
     public static final String STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE = "1";
 
