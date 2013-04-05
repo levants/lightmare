@@ -92,6 +92,6 @@ public class ConnectionSemaphore {
     }
 
     public boolean isCheck() {
-	return check.getAndSet(true);
+	return check.getAndSet(Boolean.TRUE);
     }
 }

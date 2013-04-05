@@ -24,7 +24,7 @@ public class ConfigLoader {
     public Enumeration<URL> readURL(final URL url) {
 	Enumeration<URL> xmls = new Enumeration<URL>() {
 
-	    private boolean nextElement = true;
+	    private boolean nextElement = Boolean.TRUE;
 
 	    @Override
 	    public boolean hasMoreElements() {
@@ -33,7 +33,7 @@ public class ConfigLoader {
 
 	    @Override
 	    public URL nextElement() {
-		nextElement = false;
+		nextElement = Boolean.FALSE;
 		return url;
 	    }
 	};

@@ -45,7 +45,7 @@ public class RcpHandler extends SimpleChannelHandler {
     }
 
     public RcpWrapper getWrapper() {
-	boolean interrupted = false;
+	boolean interrupted = Boolean.TRUE;
 	for (;;) {
 	    try {
 		RcpWrapper responce = answer.take();
@@ -54,7 +54,7 @@ public class RcpHandler extends SimpleChannelHandler {
 		}
 		return responce;
 	    } catch (InterruptedException ex) {
-		interrupted = true;
+		interrupted = Boolean.FALSE;
 	    }
 	}
     }

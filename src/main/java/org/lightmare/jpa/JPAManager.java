@@ -75,8 +75,8 @@ public class JPAManager {
 	if (semaphore == null) {
 	    semaphore = new ConnectionSemaphore();
 	    semaphore.setUnitName(unitName);
-	    semaphore.setInProgress(true);
-	    semaphore.setCached(true);
+	    semaphore.setInProgress(Boolean.TRUE);
+	    semaphore.setCached(Boolean.TRUE);
 	    current = CONNECTIONS.putIfAbsent(unitName, semaphore);
 	}
 	if (current == null) {
@@ -287,14 +287,14 @@ public class JPAManager {
 			namingUtils.getContext().bind(fullJndiName,
 				semaphore.getEmf());
 		    }
-		    semaphore.setBound(true);
+		    semaphore.setBound(Boolean.TRUE);
 		} catch (NamingException ex) {
 		    throw new IOException(String.format(
 			    "could not bind connection %s",
 			    semaphore.getUnitName()), ex);
 		}
 	    } else {
-		semaphore.setBound(true);
+		semaphore.setBound(Boolean.TRUE);
 	    }
 	}
     }
@@ -457,7 +457,7 @@ public class JPAManager {
 
 	public Builder() {
 	    manager = new JPAManager();
-	    manager.scanArchives = true;
+	    manager.scanArchives = Boolean.TRUE;
 	}
 
 	public Builder setClasses(List<String> classes) {

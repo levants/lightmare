@@ -54,7 +54,7 @@ public class Configuration {
 
     public static final String CONNECTION_TIMEOUT_DEF = "1000";
 
-    public static final boolean SERVER_DEF = true;
+    public static final boolean SERVER_DEF = Boolean.TRUE;
 
     /**
      * Properties which version of server is running remote it requires server

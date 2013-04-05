@@ -49,11 +49,11 @@ public class InitDataSourceTomcat {
 	poolProperties.setDriverClassName(driver);
 	poolProperties.setUsername(user);
 	poolProperties.setPassword(password);
-	poolProperties.setJmxEnabled(true);
-	poolProperties.setTestWhileIdle(false);
-	poolProperties.setTestOnBorrow(true);
+	poolProperties.setJmxEnabled(Boolean.TRUE);
+	poolProperties.setTestWhileIdle(Boolean.FALSE);
+	poolProperties.setTestOnBorrow(Boolean.TRUE);
 	poolProperties.setValidationQuery("SELECT 1");
-	poolProperties.setTestOnReturn(false);
+	poolProperties.setTestOnReturn(Boolean.FALSE);
 	poolProperties.setValidationInterval(30000);
 	poolProperties.setTimeBetweenEvictionRunsMillis(30000);
 	poolProperties.setMaxActive(PoolConfig.asInt(configMap,
@@ -64,8 +64,8 @@ public class InitDataSourceTomcat {
 	poolProperties.setRemoveAbandonedTimeout(60);
 	poolProperties.setMinEvictableIdleTimeMillis(30000);
 	poolProperties.setMinIdle(10);
-	poolProperties.setLogAbandoned(true);
-	poolProperties.setRemoveAbandoned(true);
+	poolProperties.setLogAbandoned(Boolean.TRUE);
+	poolProperties.setRemoveAbandoned(Boolean.TRUE);
 	poolProperties
 		.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"
 			+ "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");

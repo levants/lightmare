@@ -47,7 +47,7 @@ public class MetaUtils {
 	    if (loader == null) {
 		clazz = Class.forName(className);
 	    } else {
-		clazz = Class.forName(className, true, loader);
+		clazz = Class.forName(className, Boolean.TRUE, loader);
 	    }
 
 	    return clazz;
@@ -92,7 +92,7 @@ public class MetaUtils {
 	Class<?> clazz;
 	try {
 	    ClassLoader loader = getContextClassLoader();
-	    clazz = Class.forName(className, true, loader);
+	    clazz = Class.forName(className, Boolean.TRUE, loader);
 	    return clazz;
 
 	} catch (ClassNotFoundException ex) {
@@ -176,7 +176,7 @@ public class MetaUtils {
 	boolean accessible = method.isAccessible();
 	try {
 	    if (!accessible) {
-		method.setAccessible(true);
+		method.setAccessible(Boolean.TRUE);
 	    }
 
 	    return invoke(method, data, arguments);
@@ -186,7 +186,7 @@ public class MetaUtils {
     }
 
     /**
-     * Sets value to {@link Field} sets accessible true remporary if needed
+     * Sets value to {@link Field} sets accessible Boolean.TRUE remporary if needed
      * 
      * @param field
      * @param value
@@ -198,7 +198,7 @@ public class MetaUtils {
 
 	try {
 	    if (!accessible) {
-		field.setAccessible(true);
+		field.setAccessible(Boolean.TRUE);
 	    }
 	    field.set(data, value);
 	} catch (IllegalArgumentException ex) {
@@ -225,7 +225,7 @@ public class MetaUtils {
 	boolean accessible = field.isAccessible();
 	try {
 	    if (!accessible) {
-		field.setAccessible(true);
+		field.setAccessible(Boolean.TRUE);
 	    }
 	    value = field.get(data);
 	} catch (IllegalArgumentException ex) {

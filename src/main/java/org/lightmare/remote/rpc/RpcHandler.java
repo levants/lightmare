@@ -31,7 +31,7 @@ public class RpcHandler extends SimpleChannelHandler {
 	Object value;
 	try {
 	    value = RpcUtils.callBeanMethod(wrapper);
-	    rcp.setValid(true);
+	    rcp.setValid(Boolean.TRUE);
 	} catch (Exception ex) {
 	    LOG.error(ex.getMessage(), ex);
 	    value = ex;

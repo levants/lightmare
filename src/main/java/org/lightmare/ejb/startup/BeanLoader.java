@@ -94,7 +94,7 @@ public class BeanLoader {
 
 	    if (!countedDown) {
 		dsLatch.countDown();
-		countedDown = true;
+		countedDown = Boolean.TRUE;
 	    }
 	}
 
@@ -223,7 +223,7 @@ public class BeanLoader {
 	private void notifyConn() {
 	    if (!isCounted) {
 		conn.countDown();
-		isCounted = true;
+		isCounted = Boolean.TRUE;
 	    }
 	}
 
@@ -425,7 +425,7 @@ public class BeanLoader {
 	    TransactionManagementType transactionManType;
 	    if (transactionAttribute == null) {
 
-		transactional = true;
+		transactional = Boolean.TRUE;
 		transactionAttrType = TransactionAttributeType.REQUIRED;
 		transactionManType = TransactionManagementType.CONTAINER;
 

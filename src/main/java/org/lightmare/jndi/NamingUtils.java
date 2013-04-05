@@ -140,7 +140,7 @@ public class NamingUtils {
 		    "org.lightmare.jndi.DSInitialContextFactory");
 	    System.getProperties().put(Context.URL_PKG_PREFIXES,
 		    "org.lightmare.jndi");
-	    isContextFactory = true;
+	    isContextFactory = Boolean.TRUE;
 	}
 	if (context == null) {
 	    try {

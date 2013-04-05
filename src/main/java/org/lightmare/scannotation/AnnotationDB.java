@@ -56,7 +56,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     private boolean ignoreScan(String intf) {
 	for (String ignored : ignoredPackages) {
 	    if (intf.startsWith(ignored + ".")) {
-		return true;
+		return Boolean.TRUE;
 	    }
 	}
 	return false;
@@ -142,7 +142,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 			if (subFileName.startsWith("/"))
 			    subFileName = subFileName.substring(1);
 			if (!ignoreScan(subFileName.replace('/', '.')))
-			    return true;
+			    return Boolean.TRUE;
 		    }
 		    return false;
 		}

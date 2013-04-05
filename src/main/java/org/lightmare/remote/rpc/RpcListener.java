@@ -93,8 +93,8 @@ public class RpcListener {
 			new RpcHandler());
 	    }
 	});
-	bootstrap.setOption("tcpNoDelay", true);
-	bootstrap.setOption("child.keepAlive", true);
+	bootstrap.setOption("tcpNoDelay", Boolean.TRUE);
+	bootstrap.setOption("child.keepAlive", Boolean.TRUE);
 	bootstrap.setOption("backlog", 500);
 	bootstrap.setOption("connectTimeoutMillis", MetaCreator.CONFIG
 		.getIntValue(Configuration.CONNECTION_TIMEOUT));

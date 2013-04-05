@@ -93,8 +93,8 @@ public class RPCall {
 	bootstrap.getPipeline().addLast("encoder", new RpcEncoder());
 	bootstrap.getPipeline().addLast("decoder", new RcpDecoder());
 	bootstrap.getPipeline().addLast("handler", handler);
-	bootstrap.setOption("tcpNoDelay", true);
-	bootstrap.setOption("keepAlive", true);
+	bootstrap.setOption("tcpNoDelay", Boolean.TRUE);
+	bootstrap.setOption("keepAlive", Boolean.TRUE);
 	if (timeout > 0) {
 	    bootstrap.setOption("connectTimeoutMillis", timeout);
 	}

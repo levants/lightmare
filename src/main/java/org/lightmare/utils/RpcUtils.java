@@ -43,7 +43,7 @@ public class RpcUtils {
 	} else {
 	    synchronized (RpcUtils.class) {
 		MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		mapperConfigured = true;
+		mapperConfigured = Boolean.TRUE;
 	    }
 
 	    return MAPPER;

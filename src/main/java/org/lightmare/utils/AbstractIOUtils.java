@@ -309,7 +309,7 @@ public abstract class AbstractIOUtils {
 
     public void scan(Object... args) throws IOException {
 	scanArchive(args);
-	executed = true;
+	executed = Boolean.TRUE;
     }
 
     public URL[] getLibs() {
