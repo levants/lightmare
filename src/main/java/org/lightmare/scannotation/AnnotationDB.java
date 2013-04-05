@@ -59,7 +59,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		return Boolean.TRUE;
 	    }
 	}
-	return false;
+	return Boolean.FALSE;
     }
 
     protected void populate(Annotation[] annotations, String className, URL url) {
@@ -144,7 +144,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 			if (!ignoreScan(subFileName.replace('/', '.')))
 			    return Boolean.TRUE;
 		    }
-		    return false;
+		    return Boolean.FALSE;
 		}
 	    };
 	    LOG.info(String.format("Scanning URL %s ", url));

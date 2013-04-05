@@ -420,7 +420,7 @@ public class BeanLoader {
 		    .getAnnotation(TransactionAttribute.class);
 	    TransactionManagement transactionManagement = beanClass
 		    .getAnnotation(TransactionManagement.class);
-	    boolean transactional = false;
+	    boolean transactional = Boolean.FALSE;
 	    TransactionAttributeType transactionAttrType;
 	    TransactionManagementType transactionManType;
 	    if (transactionAttribute == null) {
@@ -460,7 +460,7 @@ public class BeanLoader {
 		}
 		checkAndSetBean(beanEjbName);
 		createMeta(beanClass);
-		metaData.setInProgress(false);
+		metaData.setInProgress(Boolean.FALSE);
 
 		return beanEjbName;
 

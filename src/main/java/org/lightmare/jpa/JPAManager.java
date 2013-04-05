@@ -117,7 +117,7 @@ public class JPAManager {
 		    inProgress = semaphore.isInProgress()
 			    && !semaphore.isBound();
 		} catch (InterruptedException ex) {
-		    inProgress = false;
+		    inProgress = Boolean.FALSE;
 		    LOG.error(ex.getMessage(), ex);
 		}
 	    }
@@ -304,7 +304,7 @@ public class JPAManager {
 	if (semaphore.isInProgress()) {
 	    EntityManagerFactory emf = createEntityManagerFactory(unitName);
 	    semaphore.setEmf(emf);
-	    semaphore.setInProgress(false);
+	    semaphore.setInProgress(Boolean.FALSE);
 	    bindJndiName(semaphore);
 	} else if (semaphore.getEmf() == null) {
 	    throw new IOException(String.format(

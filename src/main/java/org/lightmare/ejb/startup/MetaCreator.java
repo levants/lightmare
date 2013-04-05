@@ -107,7 +107,7 @@ public class MetaCreator {
      * @throws IOException
      */
     private boolean checkForUnitName(String className) throws IOException {
-	boolean isValid = false;
+	boolean isValid = Boolean.FALSE;
 	Class<?> entityClass;
 	entityClass = MetaUtils.initClassForName(className);
 	UnitName annotation = entityClass.getAnnotation(UnitName.class);
@@ -400,9 +400,9 @@ public class MetaCreator {
 	    archivesURLs = new HashMap<URL, ArchiveData>();
 	    URL[] fullArchives = getFullArchives(archives);
 	    annotationDB = new AnnotationDB();
-	    annotationDB.setScanFieldAnnotations(false);
-	    annotationDB.setScanParameterAnnotations(false);
-	    annotationDB.setScanMethodAnnotations(false);
+	    annotationDB.setScanFieldAnnotations(Boolean.FALSE);
+	    annotationDB.setScanParameterAnnotations(Boolean.FALSE);
+	    annotationDB.setScanMethodAnnotations(Boolean.FALSE);
 	    annotationDB.scanArchives(fullArchives);
 	    Set<String> beanNames = annotationDB.getAnnotationIndex().get(
 		    Stateless.class.getName());
@@ -501,7 +501,7 @@ public class MetaCreator {
 
 	public Builder setPersXmlPath(String path) {
 	    creator.persXmlPath = path;
-	    creator.scanArchives = false;
+	    creator.scanArchives = Boolean.FALSE;
 	    return this;
 	}
 
