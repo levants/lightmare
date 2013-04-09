@@ -1,9 +1,6 @@
 package org.lightmare.deploy;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -14,11 +11,10 @@ import java.nio.file.WatchService;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.utils.ObjectUtils;
 
-@Ignore
+//@Ignore
 public class WatchTest {
 
     @Test
@@ -91,14 +87,8 @@ public class WatchTest {
 		    Path prePath = ((WatchEvent<Path>) currentEvent).context();
 		    Path path = dir.resolve(prePath);
 		    System.out.println(path.toString());
-		    File file = path.toFile();
-		    URL url = path.toUri().toURL();
-		    System.out.println(url);
-		    System.out.println(file);
 		}
 	    } catch (InterruptedException ex) {
-		ex.printStackTrace();
-	    } catch (MalformedURLException ex) {
 		ex.printStackTrace();
 	    }
 	}
