@@ -18,6 +18,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.utils.ObjectUtils;
 
+@Ignore
 public class WatchTest {
 
     @Test
