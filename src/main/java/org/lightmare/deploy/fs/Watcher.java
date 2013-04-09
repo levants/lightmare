@@ -13,6 +13,8 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 import org.lightmare.cache.MetaContainer;
@@ -20,6 +22,7 @@ import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 
 /**
  * {@link File} modification event handler for deployments if java version is
@@ -29,6 +32,14 @@ import org.lightmare.utils.ObjectUtils;
  * 
  */
 public class Watcher implements Runnable {
+
+    private static final String DEPLOY_THREAD_NAME = "deploy_thread";
+
+    private static final int DEPLOY_POOL_PRIORITY = Thread.MAX_PRIORITY - 5;
+
+    private static final ExecutorService DEPLOY_POOL = Executors
+	    .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME,
+		    DEPLOY_POOL_PRIORITY));
 
     private static final Logger LOG = Logger.getLogger(Watcher.class);
 
@@ -166,6 +177,14 @@ public class Watcher implements Runnable {
 	    LOG.fatal("system going to shut down cause of hot deployment");
 	    MetaCreator.closeAllConnections();
 	    System.exit(-1);
+	} finally {
+	    DEPLOY_POOL.shutdown();
 	}
+    }
+
+    public static void startWatch(MetaCreator creator) {
+
+	Watcher watcher = new Watcher(creator);
+	DEPLOY_POOL.submit(watcher);
     }
 }
