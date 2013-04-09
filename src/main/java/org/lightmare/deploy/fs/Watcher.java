@@ -2,6 +2,7 @@ package org.lightmare.deploy.fs;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.lightmare.cache.MetaContainer;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.utils.ObjectUtils;
 
@@ -28,6 +30,45 @@ public class Watcher implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(Watcher.class);
 
+    private MetaCreator creator;
+
+    public Watcher(MetaCreator creator) {
+	this.creator = creator;
+    }
+
+    private URL getAppropriateURL(String fileName) throws IOException {
+
+	File file = new File(fileName);
+	URL url = file.toURI().toURL();
+
+	return url;
+    }
+
+    private void deployFile(URL url) throws IOException {
+
+	URL[] archives = { url };
+	creator.scanForBeans(archives);
+    }
+
+    private void undeployFile(URL url) throws IOException {
+
+	MetaContainer.undeploy(url);
+    }
+
+    private void undeployFile(String fileName) throws IOException {
+
+	URL url = getAppropriateURL(fileName);
+	undeployFile(url);
+    }
+
+    private void redeployFile(String fileName) throws IOException {
+
+	URL url = getAppropriateURL(fileName);
+	undeployFile(url);
+	deployFile(url);
+
+    }
+
     private void handleEvent(WatchEvent<?> currentEvent) throws Exception {
 	if (currentEvent == null) {
 	    return;
@@ -37,13 +78,13 @@ public class Watcher implements Runnable {
 	Kind<?> kind = currentEvent.kind();
 	if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
 	    LOG.info(String.format("Modify: %s, count: %s\n", fileName, count));
-	    // redeployFile(fileName);
+	    redeployFile(fileName);
 	} else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
 	    LOG.info(String.format("Delete: %s, count: %s\n", fileName, count));
-	    // undeployFile(fileName);
+	    undeployFile(fileName);
 	} else if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
 	    LOG.info(String.format("Create: %s, count: %s\n", fileName, count));
-	    // redeployFile(fileName);
+	    redeployFile(fileName);
 	}
     }
 
@@ -52,14 +93,10 @@ public class Watcher implements Runnable {
 	while (true) {
 	    WatchKey key = watch.take();
 	    List<WatchEvent<?>> events = key.pollEvents();
-	    String fileName;
 	    WatchEvent<?> currentEvent = null;
 	    int times = 0;
 	    for (WatchEvent<?> event : events) {
-		fileName = event.context().toString();
-		if (event.kind() == StandardWatchEventKinds.OVERFLOW
-			|| !(fileName.endsWith(".jar") || fileName
-				.endsWith("-ds.xml"))) {
+		if (event.kind() == StandardWatchEventKinds.OVERFLOW) {
 		    continue;
 		}
 		if (times == 0 || event.count() > currentEvent.count()) {
