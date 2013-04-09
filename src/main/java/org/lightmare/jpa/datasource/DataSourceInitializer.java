@@ -104,6 +104,10 @@ public class DataSourceInitializer {
 	INITIALIZED_SOURCES.add(datasourcePath);
     }
 
+    public static void removeInitialized(String datasourcePath) {
+	INITIALIZED_SOURCES.remove(datasourcePath);
+    }
+
     public static boolean checkDSPath(String datasourcePath) {
 	return INITIALIZED_SOURCES.contains(datasourcePath);
     }
@@ -145,6 +149,7 @@ public class DataSourceInitializer {
 		close(jndiName);
 	    }
 	}
+	removeInitialized(dataSourcePath);
     }
 
     /**
