@@ -17,6 +17,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.deploy.MetaCreator;
+import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -44,6 +46,16 @@ public class Watcher implements Runnable {
 	return url;
     }
 
+    private void deployFile(String fileName) throws IOException {
+	if (fileName.endsWith(".xml")) {
+	    FileParsers fileParsers = new FileParsers();
+	    fileParsers.parseStandaloneXml(fileName);
+	} else {
+	    URL url = getAppropriateURL(fileName);
+	    deployFile(url);
+	}
+    }
+
     private void deployFile(URL url) throws IOException {
 
 	URL[] archives = { url };
@@ -57,16 +69,18 @@ public class Watcher implements Runnable {
 
     private void undeployFile(String fileName) throws IOException {
 
-	URL url = getAppropriateURL(fileName);
-	undeployFile(url);
+	if (fileName.endsWith(".xml")) {
+	    DataSourceInitializer.undeploy(fileName);
+	} else {
+	    URL url = getAppropriateURL(fileName);
+	    undeployFile(url);
+	}
     }
 
     private void redeployFile(String fileName) throws IOException {
 
-	URL url = getAppropriateURL(fileName);
-	undeployFile(url);
-	deployFile(url);
-
+	undeployFile(fileName);
+	deployFile(fileName);
     }
 
     private void handleEvent(WatchEvent<?> currentEvent) throws Exception {
