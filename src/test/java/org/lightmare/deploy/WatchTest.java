@@ -11,10 +11,11 @@ import java.nio.file.WatchService;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.utils.ObjectUtils;
 
-//@Ignore
+@Ignore
 public class WatchTest {
 
     @Test
