@@ -21,7 +21,7 @@ import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.jboss.netty.channel.socket.nio.WorkerPool;
 import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
 import org.lightmare.config.Configuration;
-import org.lightmare.ejb.startup.MetaCreator;
+import org.lightmare.deploy.MetaCreator;
 import org.lightmare.remote.rcp.decoders.RcpEncoder;
 import org.lightmare.remote.rpc.decoders.RpcDecoder;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;

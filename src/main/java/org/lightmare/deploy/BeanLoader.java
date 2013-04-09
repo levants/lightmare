@@ -1,4 +1,4 @@
-package org.lightmare.ejb.startup;
+package org.lightmare.deploy;
 
 import java.io.File;
 import java.io.IOException;

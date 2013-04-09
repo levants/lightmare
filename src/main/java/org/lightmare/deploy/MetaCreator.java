@@ -1,4 +1,4 @@
-package org.lightmare.ejb.startup;
+package org.lightmare.deploy;
 
 import static org.lightmare.ejb.meta.MetaContainer.closeConnections;
 
@@ -522,6 +522,7 @@ public class MetaCreator {
 
 	public Builder setDataSourcePath(String dataSourcePath) {
 	    creator.dataSourcePath = dataSourcePath;
+	    CONFIG.putValue(Configuration.DATA_SOURCE_PATH, dataSourcePath);
 	    return this;
 	}
 
@@ -574,6 +575,12 @@ public class MetaCreator {
 
 	public Builder setWorkerThreads(String property) {
 	    CONFIG.putValue(Configuration.WORKER_POOL, property);
+	    return this;
+	}
+
+	public Builder addDeploymentPath(String deploymentPath) {
+
+	    CONFIG.addDeploymentPath(deploymentPath);
 	    return this;
 	}
 

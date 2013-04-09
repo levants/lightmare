@@ -10,8 +10,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.bean.LightMareBeanRemote;
 import org.lightmare.bean.LightMareFalseBeanRemote;
+import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.EjbConnector;
-import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.entities.Person;
 import org.lightmare.unitorder.RunOrder;
 

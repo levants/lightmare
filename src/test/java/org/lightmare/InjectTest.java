@@ -8,8 +8,8 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.EjbConnector;
-import org.lightmare.ejb.startup.MetaCreator;
 import org.lightmare.injections.InjectMainBean;
 import org.lightmare.injections.InjectMainBeanRemote;
 

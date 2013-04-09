@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -38,6 +41,11 @@ public class Configuration {
 
     public static final String CONNECTION_TIMEOUT = "timeout";
 
+    // properties for datasource path and deployment path
+    public static final String DATA_SOURCE_PATH = "dspath";
+
+    public static Set<String> DEPLOYMENT_PATH;
+
     // runtime to get avaliable processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
@@ -55,6 +63,11 @@ public class Configuration {
     public static final String CONNECTION_TIMEOUT_DEF = "1000";
 
     public static final boolean SERVER_DEF = Boolean.TRUE;
+
+    public static final String DATA_SOURCE_PATH_DEF = "./ds";
+
+    public static final Set<String> DEPLOYMENT_PATH_DEF = new HashSet<String>(
+	    Arrays.asList("./deploy"));
 
     /**
      * Properties which version of server is running remote it requires server
@@ -90,19 +103,27 @@ public class Configuration {
 	    config.put(PORT, PORT_DEF);
 	}
 
-	if (config.containsKey(BOSS_POOL)) {
+	if (!config.containsKey(BOSS_POOL)) {
 	    config.put(BOSS_POOL, BOSS_POOL_DEF);
 	}
 
-	if (config.containsKey(WORKER_POOL)) {
+	if (!config.containsKey(WORKER_POOL)) {
 
 	    int workers = RUNTIME.availableProcessors() * WORKER_POOL_DEF;
 	    String workerProperty = String.valueOf(workers);
 	    config.put(WORKER_POOL, workerProperty);
 	}
 
-	if (config.containsKey(CONNECTION_TIMEOUT)) {
+	if (!config.containsKey(CONNECTION_TIMEOUT)) {
 	    config.put(CONNECTION_TIMEOUT, CONNECTION_TIMEOUT_DEF);
+	}
+
+	if (!config.containsKey(DATA_SOURCE_PATH)) {
+	    config.put(DATA_SOURCE_PATH, DATA_SOURCE_PATH_DEF);
+	}
+
+	if (DEPLOYMENT_PATH == null) {
+	    DEPLOYMENT_PATH = DEPLOYMENT_PATH_DEF;
 	}
     }
 
@@ -210,5 +231,21 @@ public class Configuration {
 
     public void setClient(boolean client) {
 	this.client = client;
+    }
+
+    public void addDeploymentPath(String path) {
+
+	synchronized (Configuration.class) {
+	    if (DEPLOYMENT_PATH == null) {
+		DEPLOYMENT_PATH = new HashSet<String>();
+	    }
+
+	    DEPLOYMENT_PATH.add(path);
+	}
+    }
+
+    public Set<String> getDeploymentPath() {
+
+	return DEPLOYMENT_PATH;
     }
 }

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.lightmare.ejb.startup.BeanLoader;
+import org.lightmare.deploy.BeanLoader;
 
 /**
  * Caches all temporal {@link File} instances and deletes them after processing

@@ -19,7 +19,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.lightmare.ejb.startup.MetaCreator;
+import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.logger.Configure;
 
