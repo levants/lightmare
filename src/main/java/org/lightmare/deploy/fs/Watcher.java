@@ -83,11 +83,13 @@ public class Watcher implements Runnable {
 	deployFile(fileName);
     }
 
-    private void handleEvent(WatchEvent<Path> currentEvent) throws IOException {
+    private void handleEvent(Path dir, WatchEvent<Path> currentEvent)
+	    throws IOException {
 	if (currentEvent == null) {
 	    return;
 	}
-	Path path = currentEvent.context();
+	Path prePath = currentEvent.context();
+	Path path = dir.resolve(prePath);
 	String fileName = path.toString();
 	int count = currentEvent.count();
 	Kind<?> kind = currentEvent.kind();
@@ -106,6 +108,7 @@ public class Watcher implements Runnable {
     @SuppressWarnings("unchecked")
     private void runService(WatchService watch) throws IOException {
 
+	Path dir;
 	while (true) {
 	    try {
 		WatchKey key;
@@ -113,6 +116,7 @@ public class Watcher implements Runnable {
 		List<WatchEvent<?>> events = key.pollEvents();
 		WatchEvent<?> currentEvent = null;
 		int times = 0;
+		dir = (Path) key.watchable();
 		for (WatchEvent<?> event : events) {
 		    if (event.kind() == StandardWatchEventKinds.OVERFLOW) {
 			continue;
@@ -125,7 +129,7 @@ public class Watcher implements Runnable {
 		    if (!valid || !key.isValid()) {
 			break;
 		    }
-		    handleEvent((WatchEvent<Path>) currentEvent);
+		    handleEvent(dir, (WatchEvent<Path>) currentEvent);
 		}
 	    } catch (InterruptedException ex) {
 		throw new IOException(ex);
