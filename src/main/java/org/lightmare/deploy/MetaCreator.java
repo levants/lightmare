@@ -87,6 +87,8 @@ public class MetaCreator {
 
     private Map<String, URL> classOwnersURL;
 
+    private Map<URL, URL> realOwnersURL;
+
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
     private MetaCreator() {
