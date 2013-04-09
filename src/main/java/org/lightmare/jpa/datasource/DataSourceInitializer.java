@@ -8,9 +8,11 @@ import java.util.Properties;
 import java.util.Set;
 
 import javax.naming.Context;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.jpa.datasource.c3p0.InitDataSourceC3p0;
 import org.lightmare.jpa.datasource.tomcat.InitDataSourceTomcat;
@@ -103,6 +105,26 @@ public class DataSourceInitializer {
 
     public static boolean checkDSPath(String datasourcePath) {
 	return INITIALIZED_SOURCES.contains(datasourcePath);
+    }
+
+    /**
+     * Closes and unbinds from context data source with specified jndi name
+     * 
+     * @param jndiName
+     * @throws IOException
+     */
+    public static void close(String jndiName) throws IOException {
+
+	NamingUtils utils = new NamingUtils();
+	Context context = utils.getContext();
+	try {
+	    @SuppressWarnings("unused")
+	    DataSource dataSource = (DataSource) context.lookup(jndiName);
+	    dataSource = null;
+	    context.unbind(jndiName);
+	} catch (NamingException ex) {
+	    throw new IOException(ex);
+	}
     }
 
     /**
