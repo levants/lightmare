@@ -154,7 +154,24 @@ public class MetaContainer {
      * @return
      */
     public static Collection<String> getBeanNames(URL url) {
-	return EJB_URLS.get(url);
+
+	synchronized (MetaContainer.class) {
+
+	    return EJB_URLS.get(url);
+	}
+    }
+
+    /**
+     * Removes cached bean names {@link Collection} by containing file
+     * {@link URL} as key
+     * 
+     * @param url
+     */
+    public static void removeBeanNames(URL url) {
+
+	synchronized (MetaContainer.class) {
+	    EJB_URLS.remove(url);
+	}
     }
 
     /**
@@ -241,6 +258,7 @@ public class MetaContainer {
 		    undeployBean(beanName);
 		}
 	    }
+	    removeBeanNames(url);
 	}
     }
 
