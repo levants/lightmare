@@ -128,6 +128,17 @@ public class DataSourceInitializer {
     }
 
     /**
+     * Closes and unbinds from {@link Context} all data sources from passed file
+     * path
+     * 
+     * @param dataSourcePath
+     */
+    public static void undeploy(String dataSourcePath) {
+
+	
+    }
+
+    /**
      * Destroys all registered pooled {@link DataSource}s for shut down hook
      */
     public static void cleanUp() {

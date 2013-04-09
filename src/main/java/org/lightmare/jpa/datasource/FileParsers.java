@@ -3,10 +3,11 @@ package org.lightmare.jpa.datasource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
@@ -51,13 +52,12 @@ public class FileParsers {
 
     private static final Logger LOG = Logger.getLogger(FileParsers.class);
 
-    public Document document(File file) throws MalformedURLException,
-	    IOException {
+    public static Document document(File file) throws IOException {
 
 	return document(file.toURI().toURL());
     }
 
-    public Document document(URL url) throws IOException {
+    public static Document document(URL url) throws IOException {
 
 	URLConnection connection = url.openConnection();
 	InputStream stream = connection.getInputStream();
@@ -245,6 +245,52 @@ public class FileParsers {
 	return properties;
     }
 
+    private static NodeList getDataSourceTags(Document document) {
+
+	NodeList nodeList = document.getElementsByTagName(DATA_SURCE_TAG);
+
+	return nodeList;
+    }
+
+    private static NodeList getDataSourceTags(File file) throws IOException {
+
+	Document document = document(file);
+	NodeList nodeList = getDataSourceTags(document);
+
+	return nodeList;
+    }
+
+    private static NodeList getDataSourceTags(String dataSourcePath)
+	    throws IOException {
+
+	File file = new File(dataSourcePath);
+	NodeList nodeList = getDataSourceTags(file);
+
+	return nodeList;
+    }
+
+    /**
+     * Retrieves data source jndi names from passed file
+     * 
+     * @param dataSourcePath
+     * @return
+     * @throws IOException
+     */
+    public static Collection<String> dataSourceNames(String dataSourcePath)
+	    throws IOException {
+
+	Collection<String> jndiNames = new HashSet<String>();
+	NodeList nodeList = getDataSourceTags(dataSourcePath);
+	String jndiName;
+	for (int i = 0; i < nodeList.getLength(); i++) {
+	    Element thisElement = (Element) nodeList.item(i);
+	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
+	    jndiNames.add(jndiName);
+	}
+
+	return jndiNames;
+    }
+
     /**
      * Parses standalone.xml file and initializes {@link javax.sql.DataSource}s
      * and binds them to jndi context
@@ -254,9 +300,7 @@ public class FileParsers {
      */
     public void parseStandaloneXml(String dataSourcePath) throws IOException {
 
-	File file = new File(dataSourcePath);
-	Document document = document(file);
-	NodeList nodeList = document.getElementsByTagName(DATA_SURCE_TAG);
+	NodeList nodeList = getDataSourceTags(dataSourcePath);
 
 	List<Properties> properties = getDataFromJBoss(nodeList);
 	DataSourceInitializer initializer = new DataSourceInitializer();
