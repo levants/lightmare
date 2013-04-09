@@ -371,9 +371,13 @@ public class JPAManager {
 		    context.unbind(jndiName);
 		}
 	    } catch (NamingException ex) {
-		LOG.error(ex.getMessage(), ex);
+		LOG.error(String.format(
+			"Could not unbind jndi name %s cause %s", jndiName,
+			ex.getMessage()), ex);
 	    } catch (IOException ex) {
-		LOG.error(ex.getMessage(), ex);
+		LOG.error(String.format(
+			"Could not unbind jndi name %s cause %s", jndiName,
+			ex.getMessage()), ex);
 	    }
 	}
     }
@@ -405,18 +409,9 @@ public class JPAManager {
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 	if (ObjectUtils.notNull(semaphore)) {
 	    awaitConnection(semaphore);
+	    unbindConnection(semaphore);
 	    closeConnection(semaphore);
-	    NamingUtils namingUtils = new NamingUtils();
-	    try {
-		String jndiName = NamingUtils.createJpaJndiName(unitName);
-		namingUtils.unbind(jndiName);
-	    } catch (IOException ex) {
-		LOG.error(String.format(
-			"Could not unbind jndi name %s cause %s", unitName,
-			ex.getMessage()), ex);
-	    }
 	}
-
     }
 
     /**

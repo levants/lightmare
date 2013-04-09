@@ -11,8 +11,11 @@ import java.nio.file.WatchEvent.Kind;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.lightmare.deploy.MetaCreator;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * {@link File} modification event handler for deployments if java version is
@@ -44,6 +47,34 @@ public class Watcher implements Runnable {
 	}
     }
 
+    private void runService(WatchService watch) throws Exception {
+
+	while (true) {
+	    WatchKey key = watch.take();
+	    List<WatchEvent<?>> events = key.pollEvents();
+	    String fileName;
+	    WatchEvent<?> currentEvent = null;
+	    int times = 0;
+	    for (WatchEvent<?> event : events) {
+		fileName = event.context().toString();
+		if (event.kind() == StandardWatchEventKinds.OVERFLOW
+			|| !(fileName.endsWith(".jar") || fileName
+				.endsWith("-ds.xml"))) {
+		    continue;
+		}
+		if (times == 0 || event.count() > currentEvent.count()) {
+		    currentEvent = event;
+		}
+		times++;
+		boolean valid = key.reset();
+		if (!valid || !key.isValid()) {
+		    break;
+		}
+		handleEvent(currentEvent);
+	    }
+	}
+    }
+
     @Override
     public void run() {
 	try {
@@ -53,44 +84,25 @@ public class Watcher implements Runnable {
 		watch = fs.newWatchService();
 	    } catch (IOException ex) {
 		LOG.error(ex.getMessage(), ex);
+		throw ex;
 	    }
-	    Path deployPath = fs.getPath("./deploy");
-	    Path dataSrPatg = fs.getPath("./ds");
-	    deployPath.register(watch, StandardWatchEventKinds.ENTRY_CREATE,
-		    StandardWatchEventKinds.ENTRY_MODIFY,
-		    StandardWatchEventKinds.OVERFLOW,
-		    StandardWatchEventKinds.ENTRY_DELETE);
-	    dataSrPatg.register(watch, StandardWatchEventKinds.ENTRY_CREATE,
-		    StandardWatchEventKinds.ENTRY_MODIFY,
-		    StandardWatchEventKinds.OVERFLOW,
-		    StandardWatchEventKinds.ENTRY_DELETE);
-	    while (true) {
-		WatchKey key = watch.take();
-		List<WatchEvent<?>> events = key.pollEvents();
-		String fileName;
-		WatchEvent<?> currentEvent = null;
-		int times = 0;
-		for (WatchEvent<?> event : events) {
-		    fileName = event.context().toString();
-		    if (event.kind() == StandardWatchEventKinds.OVERFLOW
-			    || !(fileName.endsWith(".jar") || fileName
-				    .endsWith("-ds.xml"))) {
-			continue;
-		    }
-		    if (times == 0 || event.count() > currentEvent.count()) {
-			currentEvent = event;
-		    }
-		    times++;
-		    boolean valid = key.reset();
-		    if (!valid || !key.isValid()) {
-			break;
-		    }
-		    handleEvent(currentEvent);
+	    Path deployPath;
+	    Set<String> deployments = MetaCreator.CONFIG.getDeploymentPath();
+	    if (ObjectUtils.available(deployments)) {
+		for (String path : deployments) {
+		    deployPath = fs.getPath(path);
+		    deployPath.register(watch,
+			    StandardWatchEventKinds.ENTRY_CREATE,
+			    StandardWatchEventKinds.ENTRY_MODIFY,
+			    StandardWatchEventKinds.OVERFLOW,
+			    StandardWatchEventKinds.ENTRY_DELETE);
+		    runService(watch);
 		}
 	    }
 	} catch (Exception ex) {
 	    LOG.fatal(ex.getMessage(), ex);
 	    LOG.fatal("system going to shut down cause of hot deployment");
+	    MetaCreator.closeAllConnections();
 	    System.exit(-1);
 	}
     }
