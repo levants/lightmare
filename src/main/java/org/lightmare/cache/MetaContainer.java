@@ -1,4 +1,4 @@
-package org.lightmare.ejb.meta;
+package org.lightmare.cache;
 
 import static org.lightmare.jpa.JPAManager.closeEntityManagerFactories;
 
@@ -284,7 +284,7 @@ public class MetaContainer {
 
     /**
      * Gets {@link java.util.Iterator}<MetaData> over all cached
-     * {@link org.lightmare.ejb.meta.MetaData}
+     * {@link org.lightmare.cache.MetaData}
      * 
      * @return {@link java.util.Iterator}<MetaData>
      */

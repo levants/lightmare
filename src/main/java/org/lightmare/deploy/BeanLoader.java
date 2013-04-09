@@ -24,12 +24,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
 import org.apache.log4j.Logger;
+import org.lightmare.cache.ConnectionData;
+import org.lightmare.cache.ConnectionSemaphore;
+import org.lightmare.cache.InjectionData;
+import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.exceptions.BeanInUseException;
-import org.lightmare.ejb.meta.ConnectionData;
-import org.lightmare.ejb.meta.ConnectionSemaphore;
-import org.lightmare.ejb.meta.InjectionData;
-import org.lightmare.ejb.meta.MetaContainer;
-import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;

@@ -8,14 +8,14 @@ import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManagerFactory;
 
+import org.lightmare.cache.ConnectionData;
+import org.lightmare.cache.ConnectionSemaphore;
+import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.MetaData;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.handlers.BeanLocalHandler;
-import org.lightmare.ejb.meta.ConnectionData;
-import org.lightmare.ejb.meta.ConnectionSemaphore;
-import org.lightmare.ejb.meta.MetaContainer;
-import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;

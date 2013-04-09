@@ -1,4 +1,4 @@
-package org.lightmare.ejb.meta;
+package org.lightmare.cache;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;

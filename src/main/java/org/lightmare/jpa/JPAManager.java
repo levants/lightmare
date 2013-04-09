@@ -16,7 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.apache.log4j.Logger;
-import org.lightmare.ejb.meta.ConnectionSemaphore;
+import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.utils.ObjectUtils;

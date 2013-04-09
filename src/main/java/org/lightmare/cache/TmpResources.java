@@ -1,4 +1,4 @@
-package org.lightmare.ejb.meta;
+package org.lightmare.cache;
 
 import java.io.File;
 import java.util.HashSet;

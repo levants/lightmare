@@ -1,4 +1,4 @@
-package org.lightmare.ejb.meta;
+package org.lightmare.cache;
 
 import java.lang.reflect.Field;
 
@@ -7,7 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Container class to cache connection in {@link org.lightmare.MetaData} for trn
+ * Container class to cache connection in {@link org.lightmare.cache.MetaData} for trn
  * 
  * @author levan
  * 

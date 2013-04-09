@@ -13,11 +13,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.transaction.UserTransaction;
 
+import org.lightmare.cache.ConnectionData;
+import org.lightmare.cache.InjectionData;
+import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
-import org.lightmare.ejb.meta.ConnectionData;
-import org.lightmare.ejb.meta.InjectionData;
-import org.lightmare.ejb.meta.MetaContainer;
-import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.jpa.jta.BeanTransactions;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;

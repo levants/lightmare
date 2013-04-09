@@ -1,6 +1,6 @@
 package org.lightmare.deploy;
 
-import static org.lightmare.ejb.meta.MetaContainer.closeConnections;
+import static org.lightmare.cache.MetaContainer.closeConnections;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,10 +25,10 @@ import javax.persistence.Entity;
 
 import org.apache.log4j.Logger;
 import org.lightmare.annotations.UnitName;
+import org.lightmare.cache.ArchiveData;
+import org.lightmare.cache.MetaData;
+import org.lightmare.cache.TmpResources;
 import org.lightmare.config.Configuration;
-import org.lightmare.ejb.meta.ArchiveData;
-import org.lightmare.ejb.meta.MetaData;
-import org.lightmare.ejb.meta.TmpResources;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.PoolConfig;

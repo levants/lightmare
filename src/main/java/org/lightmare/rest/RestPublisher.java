@@ -4,8 +4,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Iterator;
 
-import org.lightmare.ejb.meta.MetaContainer;
-import org.lightmare.ejb.meta.MetaData;
+import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.MetaData;
 
 /**
  * To describe beans and it's methods with parameters as json string

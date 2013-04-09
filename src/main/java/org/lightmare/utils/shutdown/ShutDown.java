@@ -1,8 +1,8 @@
 package org.lightmare.utils.shutdown;
 
 import org.apache.log4j.Logger;
+import org.lightmare.cache.TmpResources;
 import org.lightmare.deploy.MetaCreator;
-import org.lightmare.ejb.meta.TmpResources;
 
 /**
  * Runnable class for shut down hook

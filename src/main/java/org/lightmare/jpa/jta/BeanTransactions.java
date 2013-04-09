@@ -18,9 +18,9 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import org.hibernate.cfg.NotYetImplementedException;
+import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.handlers.BeanHandler;
-import org.lightmare.ejb.meta.MetaContainer;
-import org.lightmare.ejb.meta.MetaData;
 import org.lightmare.utils.ObjectUtils;
 
 /**
