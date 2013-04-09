@@ -3,6 +3,7 @@ package org.lightmare.deploy;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -185,6 +186,8 @@ public class BeanLoader {
 
 	private List<Field> unitFields;
 
+	private URL url;
+
 	public BeanDeployer(BeanParameters parameters) {
 	    this.creator = parameters.creator;
 	    this.beanName = parameters.beanName;
@@ -193,6 +196,7 @@ public class BeanLoader {
 	    this.tmpFiles = parameters.tmpFiles;
 	    this.metaData = parameters.metaData;
 	    this.conn = parameters.conn;
+	    this.url = parameters.url;
 	}
 
 	/**
@@ -455,7 +459,7 @@ public class BeanLoader {
 		checkOnTransactional(beanClass);
 		Stateless annotation = beanClass.getAnnotation(Stateless.class);
 		String beanEjbName = annotation.name();
-		if (beanEjbName == null || beanEjbName.isEmpty()) {
+		if (ObjectUtils.notAvailable(beanEjbName)) {
 		    beanEjbName = beanName;
 		}
 		checkAndSetBean(beanEjbName);
@@ -477,6 +481,9 @@ public class BeanLoader {
 	    try {
 		LibraryLoader.loadCurrentLibraries(loader);
 		deployed = createBeanClass();
+		if (ObjectUtils.notNull(url)) {
+		    MetaContainer.addBeanName(url, deployed);
+		}
 		LOG.info(String.format("bean %s deployed", beanName));
 	    } catch (IOException ex) {
 		LOG.error(String.format("Could not deploy bean %s cause %s",
@@ -539,6 +546,8 @@ public class BeanLoader {
 	public CountDownLatch conn;
 
 	public MetaData metaData;
+
+	public URL url;
     }
 
     /**

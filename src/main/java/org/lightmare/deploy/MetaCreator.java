@@ -351,6 +351,7 @@ public class MetaCreator {
 	parameters.loader = loader;
 	parameters.tmpFiles = tmpFiles;
 	parameters.conn = conn;
+	parameters.url = currentURL;
 
 	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);

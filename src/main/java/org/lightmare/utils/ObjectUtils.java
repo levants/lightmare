@@ -31,6 +31,16 @@ public class ObjectUtils {
 	return !available(map);
     }
 
+    public static boolean notAvailable(Collection<?> collection) {
+
+	return !available(collection);
+    }
+
+    public static boolean notAvailable(Collection<?>... collections) {
+
+	return !available(collections);
+    }
+
     public static boolean availableAll(Map<?, ?>... maps) {
 
 	boolean avaliable = notNull(maps);

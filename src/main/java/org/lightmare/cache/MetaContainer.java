@@ -2,9 +2,11 @@ package org.lightmare.cache;
 
 import static org.lightmare.jpa.JPAManager.closeEntityManagerFactories;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -30,7 +32,7 @@ public class MetaContainer {
     private static final ConcurrentMap<String, MetaData> EJBS = new ConcurrentHashMap<String, MetaData>();
 
     // Cached bean class name by its URL for undeploy processing
-    private static final ConcurrentMap<URL, String> EJB_URLS = new ConcurrentHashMap<URL, String>();
+    private static final ConcurrentMap<URL, Collection<String>> EJB_URLS = new ConcurrentHashMap<URL, Collection<String>>();
 
     // Caches UserTransaction object per thread
     private static final ThreadLocal<UserTransaction> TRANSACTION_HOLDER = new ThreadLocal<UserTransaction>();
@@ -151,8 +153,26 @@ public class MetaContainer {
      * @param url
      * @return
      */
-    public static String getBeanName(URL url) {
+    public static Collection<String> getBeanNames(URL url) {
 	return EJB_URLS.get(url);
+    }
+
+    /**
+     * Caches bean name by {@link URL} of jar ear or any file
+     * 
+     * @param beanName
+     */
+    public static void addBeanName(URL url, String beanName) {
+
+	synchronized (MetaContainer.class) {
+	    Collection<String> beanNames = EJB_URLS.get(url);
+	    if (ObjectUtils.notAvailable(beanNames)) {
+		beanNames = new HashSet<String>();
+		EJB_URLS.put(url, beanNames);
+	    }
+
+	    beanNames.add(beanName);
+	}
     }
 
     /**
@@ -188,7 +208,7 @@ public class MetaContainer {
      * @param beanName
      * @throws IOException
      */
-    public static void undeploy(String beanName) throws IOException {
+    public static void undeployBean(String beanName) throws IOException {
 
 	MetaData metaData = null;
 	try {
@@ -215,11 +235,39 @@ public class MetaContainer {
     public static void undeploy(URL url) throws IOException {
 
 	synchronized (MetaContainer.class) {
-	    String beanName = getBeanName(url);
-	    if (ObjectUtils.notNull(beanName)) {
-		undeploy(beanName);
+	    Collection<String> beanNames = getBeanNames(url);
+	    if (ObjectUtils.available(beanNames)) {
+		for (String beanName : beanNames) {
+		    undeployBean(beanName);
+		}
 	    }
 	}
+    }
+
+    /**
+     * Removes bean (removes it's {@link MetaData} from cache) by {@link File}
+     * of archive file
+     * 
+     * @param file
+     * @throws IOException
+     */
+    public static void undeploy(File file) throws IOException {
+
+	URL url = file.toURI().toURL();
+	undeploy(url);
+    }
+
+    /**
+     * Removes bean (removes it's {@link MetaData} from cache) by {@link File}
+     * path of archive file
+     * 
+     * @param path
+     * @throws IOException
+     */
+    public static void undeploy(String path) throws IOException {
+
+	File file = new File(path);
+	undeploy(file);
     }
 
     /**
