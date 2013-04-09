@@ -16,7 +16,6 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.lightmare.cache.MetaContainer;
-import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.FileParsers;
@@ -37,24 +36,6 @@ public class Watcher implements Runnable {
 
     public Watcher(MetaCreator creator) {
 	this.creator = creator;
-    }
-
-    private String getAppropriatePath(String fileName) {
-	String path;
-	String directory;
-	StringBuilder builder = new StringBuilder();
-	if (fileName.endsWith(".xml")) {
-	    directory = creator.CONFIG
-		    .getStringValue(Configuration.DATA_SOURCE_PATH);
-	    builder.append(directory);
-	    builder.append("/");
-	    builder.append(fileName);
-	} else {
-
-	}
-	path = builder.toString();
-
-	return path;
     }
 
     private URL getAppropriateURL(String fileName) throws IOException {
@@ -102,11 +83,12 @@ public class Watcher implements Runnable {
 	deployFile(fileName);
     }
 
-    private void handleEvent(WatchEvent<?> currentEvent) throws Exception {
+    private void handleEvent(WatchEvent<Path> currentEvent) throws Exception {
 	if (currentEvent == null) {
 	    return;
 	}
-	String fileName = currentEvent.context().toString();
+	Path path = currentEvent.context();
+	String fileName = path.toString();
 	int count = currentEvent.count();
 	Kind<?> kind = currentEvent.kind();
 	if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
@@ -121,6 +103,7 @@ public class Watcher implements Runnable {
 	}
     }
 
+    @SuppressWarnings("unchecked")
     private void runService(WatchService watch) throws Exception {
 
 	while (true) {
@@ -140,7 +123,7 @@ public class Watcher implements Runnable {
 		if (!valid || !key.isValid()) {
 		    break;
 		}
-		handleEvent(currentEvent);
+		handleEvent((WatchEvent<Path>) currentEvent);
 	    }
 	}
     }
