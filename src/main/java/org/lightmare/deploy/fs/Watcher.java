@@ -83,7 +83,7 @@ public class Watcher implements Runnable {
 	deployFile(fileName);
     }
 
-    private void handleEvent(WatchEvent<Path> currentEvent) throws Exception {
+    private void handleEvent(WatchEvent<Path> currentEvent) throws IOException {
 	if (currentEvent == null) {
 	    return;
 	}
@@ -104,26 +104,31 @@ public class Watcher implements Runnable {
     }
 
     @SuppressWarnings("unchecked")
-    private void runService(WatchService watch) throws Exception {
+    private void runService(WatchService watch) throws IOException {
 
 	while (true) {
-	    WatchKey key = watch.take();
-	    List<WatchEvent<?>> events = key.pollEvents();
-	    WatchEvent<?> currentEvent = null;
-	    int times = 0;
-	    for (WatchEvent<?> event : events) {
-		if (event.kind() == StandardWatchEventKinds.OVERFLOW) {
-		    continue;
+	    try {
+		WatchKey key;
+		key = watch.take();
+		List<WatchEvent<?>> events = key.pollEvents();
+		WatchEvent<?> currentEvent = null;
+		int times = 0;
+		for (WatchEvent<?> event : events) {
+		    if (event.kind() == StandardWatchEventKinds.OVERFLOW) {
+			continue;
+		    }
+		    if (times == 0 || event.count() > currentEvent.count()) {
+			currentEvent = event;
+		    }
+		    times++;
+		    boolean valid = key.reset();
+		    if (!valid || !key.isValid()) {
+			break;
+		    }
+		    handleEvent((WatchEvent<Path>) currentEvent);
 		}
-		if (times == 0 || event.count() > currentEvent.count()) {
-		    currentEvent = event;
-		}
-		times++;
-		boolean valid = key.reset();
-		if (!valid || !key.isValid()) {
-		    break;
-		}
-		handleEvent((WatchEvent<Path>) currentEvent);
+	    } catch (InterruptedException ex) {
+		throw new IOException(ex);
 	    }
 	}
     }
@@ -152,7 +157,7 @@ public class Watcher implements Runnable {
 		    runService(watch);
 		}
 	    }
-	} catch (Exception ex) {
+	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
 	    LOG.fatal("system going to shut down cause of hot deployment");
 	    MetaCreator.closeAllConnections();
