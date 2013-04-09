@@ -2,6 +2,7 @@ package org.lightmare.jpa.datasource;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
@@ -132,10 +133,18 @@ public class DataSourceInitializer {
      * path
      * 
      * @param dataSourcePath
+     * @throws IOException
      */
-    public static void undeploy(String dataSourcePath) {
+    public static void undeploy(String dataSourcePath) throws IOException {
 
-	
+	Collection<String> jndiNames = FileParsers
+		.dataSourceNames(dataSourcePath);
+	if (ObjectUtils.available(dataSourcePath)) {
+
+	    for (String jndiName : jndiNames) {
+		close(jndiName);
+	    }
+	}
     }
 
     /**
