@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.lightmare.cache.MetaContainer;
+import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.FileParsers;
@@ -36,6 +37,24 @@ public class Watcher implements Runnable {
 
     public Watcher(MetaCreator creator) {
 	this.creator = creator;
+    }
+
+    private String getAppropriatePath(String fileName) {
+	String path;
+	String directory;
+	StringBuilder builder = new StringBuilder();
+	if (fileName.endsWith(".xml")) {
+	    directory = creator.CONFIG
+		    .getStringValue(Configuration.DATA_SOURCE_PATH);
+	    builder.append(directory);
+	    builder.append("/");
+	    builder.append(fileName);
+	} else {
+
+	}
+	path = builder.toString();
+
+	return path;
     }
 
     private URL getAppropriateURL(String fileName) throws IOException {
