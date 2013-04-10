@@ -23,6 +23,7 @@ import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
+import org.lightmare.utils.fs.WatchUtils;
 
 /**
  * {@link File} modification event handler for deployments if java version is
@@ -55,6 +56,7 @@ public class Watcher implements Runnable {
 
 	File file = new File(fileName);
 	URL url = file.toURI().toURL();
+	url = WatchUtils.clearURL(url);
 
 	return url;
     }
