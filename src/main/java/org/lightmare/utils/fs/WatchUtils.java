@@ -1,7 +1,7 @@
 package org.lightmare.utils.fs;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.lightmare.cache.DeployData;
@@ -18,12 +18,14 @@ public class WatchUtils {
     public static URL clearURL(URL url) throws IOException {
 
 	URL normURL;
-	try {
-	    normURL = url.toURI().normalize().toURL();
-	} catch (URISyntaxException ex) {
-	    throw new IOException(ex);
+	String path = url.toString();
+	if (path.endsWith(File.separator)) {
+	    int from = 0;
+	    int to = path.length() - 1;
+	    path = path.substring(from, to);
 	}
-
+	normURL = new URL(path);
+	
 	return normURL;
     }
 
