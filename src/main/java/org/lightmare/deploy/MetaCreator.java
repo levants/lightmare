@@ -690,6 +690,7 @@ public class MetaCreator {
 	}
 
 	public MetaCreator build() {
+	    MetaCreator.CONFIG.configure();
 	    LOG.info("Lightmare application starts working");
 	    return creator;
 	}

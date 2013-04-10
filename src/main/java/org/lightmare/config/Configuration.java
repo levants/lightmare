@@ -91,7 +91,6 @@ public class Configuration {
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
     public Configuration() {
-	setDefaults();
     }
 
     public void setDefaults() {
@@ -125,6 +124,10 @@ public class Configuration {
 	if (DEPLOYMENT_PATH == null) {
 	    DEPLOYMENT_PATH = DEPLOYMENT_PATH_DEF;
 	}
+    }
+
+    public void configure() {
+	setDefaults();
     }
 
     public String getStringValue(String key) {
