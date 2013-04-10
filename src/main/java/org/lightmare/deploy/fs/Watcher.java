@@ -37,6 +37,8 @@ public class Watcher implements Runnable {
 
     private static final int DEPLOY_POOL_PRIORITY = Thread.MAX_PRIORITY - 5;
 
+    private static final long SLEEP_TIME = 5500L;
+
     private static final ExecutorService DEPLOY_POOL = Executors
 	    .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME,
 		    DEPLOY_POOL_PRIORITY));
@@ -120,7 +122,9 @@ public class Watcher implements Runnable {
     private void runService(WatchService watch) throws IOException {
 
 	Path dir;
-	while (true) {
+	boolean toRun = true;
+	boolean valid;
+	while (toRun) {
 	    try {
 		WatchKey key;
 		key = watch.take();
@@ -136,11 +140,12 @@ public class Watcher implements Runnable {
 			currentEvent = event;
 		    }
 		    times++;
-		    boolean valid = key.reset();
-		    if (!valid || !key.isValid()) {
-			break;
+		    valid = key.reset();
+		    toRun = valid && key.isValid();
+		    if (toRun) {
+			Thread.sleep(SLEEP_TIME);
+			handleEvent(dir, (WatchEvent<Path>) currentEvent);
 		    }
-		    handleEvent(dir, (WatchEvent<Path>) currentEvent);
 		}
 	    } catch (InterruptedException ex) {
 		throw new IOException(ex);
