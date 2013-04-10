@@ -30,6 +30,7 @@ import org.lightmare.cache.DeployData;
 import org.lightmare.cache.MetaData;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.config.Configuration;
+import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.PoolConfig;
@@ -89,6 +90,8 @@ public class MetaCreator {
     private Map<String, URL> classOwnersURL;
 
     private Map<URL, DeployData> realURL;
+
+    private boolean hotDeployment;
 
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
@@ -392,6 +395,9 @@ public class MetaCreator {
 	    }
 	}
 	awaitDeployments();
+	if (hotDeployment) {
+	    Watcher.startWatch(this);
+	}
     }
 
     /**
@@ -486,6 +492,28 @@ public class MetaCreator {
      */
     public static void closeAllConnections() {
 	closeConnections();
+    }
+
+    public void clear() {
+
+	if (ObjectUtils.available(realURL)) {
+	    realURL.clear();
+	    realURL = null;
+	}
+
+	if (ObjectUtils.available(aggregateds)) {
+	    aggregateds.clear();
+	}
+
+	if (ObjectUtils.available(archivesURLs)) {
+	    archivesURLs.clear();
+	    archivesURLs = null;
+	}
+
+	if (ObjectUtils.available(classOwnersURL)) {
+	    classOwnersURL.clear();
+	    classOwnersURL = null;
+	}
     }
 
     /**
@@ -639,6 +667,11 @@ public class MetaCreator {
 	public Builder addPoolProperty(Object key, Object value) {
 	    initPoolProperties();
 	    PoolConfig.poolProperties.put(key, value);
+	    return this;
+	}
+
+	public Builder setHotDeployment(boolean hotDeployment) {
+	    creator.hotDeployment = hotDeployment;
 	    return this;
 	}
 
