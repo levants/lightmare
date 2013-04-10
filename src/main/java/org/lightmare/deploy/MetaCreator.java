@@ -87,7 +87,7 @@ public class MetaCreator {
 
     private Map<String, URL> classOwnersURL;
 
-    private Map<URL, URL> realOwnersURL;
+    private Map<URL, URL> realURL;
 
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
@@ -227,10 +227,11 @@ public class MetaCreator {
      * @param archiveData
      */
     private void fillArchiveURLs(Collection<URL> ejbURLs,
-	    ArchiveData archiveData) {
+	    ArchiveData archiveData, URL archive) {
 
 	for (URL ejbURL : ejbURLs) {
 	    archivesURLs.put(ejbURL, archiveData);
+	    realURL.put(ejbURL, archive);
 	}
     }
 
@@ -255,8 +256,9 @@ public class MetaCreator {
 	    archiveData.setIoUtils(ioUtils);
 	    if (ejbURLs.isEmpty()) {
 		archivesURLs.put(archive, archiveData);
+		realURL.put(archive, archive);
 	    } else {
-		fillArchiveURLs(ejbURLs, archiveData);
+		fillArchiveURLs(ejbURLs, archiveData, archive);
 	    }
 	}
     }
@@ -401,6 +403,9 @@ public class MetaCreator {
 		LibraryLoader.loadLibraries(libraryPaths);
 	    }
 	    archivesURLs = new HashMap<URL, ArchiveData>();
+	    if (ObjectUtils.available(archives)) {
+		realURL = new HashMap<URL, URL>();
+	    }
 	    URL[] fullArchives = getFullArchives(archives);
 	    annotationDB = new AnnotationDB();
 	    annotationDB.setScanFieldAnnotations(Boolean.FALSE);
