@@ -25,7 +25,7 @@ public class WatchUtils {
 	    path = path.substring(from, to);
 	}
 	normURL = new URL(path);
-	
+
 	return normURL;
     }
 

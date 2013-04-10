@@ -488,6 +488,7 @@ public class BeanLoader {
 		chekcWatch = WatchUtils.checkForWatch(deployData);
 		if (chekcWatch) {
 		    URL url = deployData.getUrl();
+		    url = WatchUtils.clearURL(url);
 		    MetaContainer.addBeanName(url, deployed);
 		}
 		LOG.info(String.format("bean %s deployed", beanName));
