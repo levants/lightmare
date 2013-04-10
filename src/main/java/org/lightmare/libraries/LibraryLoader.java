@@ -80,7 +80,7 @@ public class LibraryLoader {
     public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
 	    throws IOException {
 	getSubfiles(file, urls);
-	URL[] paths = urls.toArray(new URL[urls.size()]);
+	URL[] paths = ObjectUtils.toArray(urls, URL.class);
 	URLClassLoader urlLoader = URLClassLoader.newInstance(paths,
 		MetaUtils.getContextClassLoader());
 	return urlLoader;
@@ -118,7 +118,7 @@ public class LibraryLoader {
 	    Set<URL> urls = new HashSet<URL>();
 	    getSubfiles(file, urls);
 
-	    URL[] paths = urls.toArray(new URL[urls.size()]);
+	    URL[] paths = ObjectUtils.toArray(urls, URL.class);
 	    URLClassLoader urlLoader = (URLClassLoader) ClassLoader
 		    .getSystemClassLoader();
 

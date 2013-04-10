@@ -121,7 +121,7 @@ public class MetaCreator {
     private List<String> translateToList(Set<String> classSet) {
 
 	String[] classArray = new String[classSet.size()];
-	classArray = classSet.toArray(classArray);
+	classArray = ObjectUtils.toArray(classSet, String.class);
 	List<String> classList = Arrays.asList(classArray);
 
 	return classList;
@@ -278,7 +278,7 @@ public class MetaCreator {
 	    fillArchiveURLs(archive, modifiedArchives);
 	}
 
-	return modifiedArchives.toArray(new URL[modifiedArchives.size()]);
+	return ObjectUtils.toArray(modifiedArchives, URL.class);
     }
 
     /**
@@ -446,7 +446,7 @@ public class MetaCreator {
 	    url = file.toURI().toURL();
 	    urlList.add(url);
 	}
-	URL[] archives = urlList.toArray(new URL[urlList.size()]);
+	URL[] archives = ObjectUtils.toArray(urlList, URL.class);
 	scanForBeans(archives);
     }
 
@@ -458,6 +458,13 @@ public class MetaCreator {
      * @throws IOException
      */
     public void scanForBeans(String... paths) throws IOException {
+
+	if (ObjectUtils.notAvailable(paths)
+		&& ObjectUtils.available(CONFIG.getDeploymentPath())) {
+
+	    Set<String> deployments = CONFIG.getDeploymentPath();
+	    paths = ObjectUtils.toArray(deployments, String.class);
+	}
 	List<URL> urlList = new ArrayList<URL>();
 	URL archive;
 	File file;
@@ -466,7 +473,7 @@ public class MetaCreator {
 	    archive = file.toURI().toURL();
 	    urlList.add(archive);
 	}
-	URL[] archives = urlList.toArray(new URL[urlList.size()]);
+	URL[] archives = ObjectUtils.toArray(urlList, URL.class);
 	scanForBeans(archives);
     }
 

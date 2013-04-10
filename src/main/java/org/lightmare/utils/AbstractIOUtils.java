@@ -317,7 +317,7 @@ public abstract class AbstractIOUtils {
 	if (libURLs == null) {
 	    urls = null;
 	} else {
-	    urls = libURLs.toArray(new URL[libURLs.size()]);
+	    urls = ObjectUtils.toArray(libURLs, URL.class);
 	}
 
 	return urls;
@@ -328,7 +328,7 @@ public abstract class AbstractIOUtils {
 	if (ejbURLs == null) {
 	    urls = null;
 	} else {
-	    urls = ejbURLs.toArray(new URL[ejbURLs.size()]);
+	    urls = ObjectUtils.toArray(ejbURLs, URL.class);
 	}
 
 	return urls;
@@ -346,7 +346,7 @@ public abstract class AbstractIOUtils {
 	    fullURLs.addAll(libURLs);
 	}
 
-	urls = fullURLs.toArray(new URL[fullURLs.size()]);
+	urls = ObjectUtils.toArray(fullURLs, URL.class);
 
 	return urls;
     }

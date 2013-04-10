@@ -1,0 +1,44 @@
+package org.lightmare.utils;
+
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ObjectUtilsTest {
+
+    @Test
+    public void toArrayTest() {
+
+	try {
+	    String[] strings = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
+		    "10" };
+	    List<String> list = new ArrayList<String>(Arrays.asList(strings));
+
+	    String[] strings1 = new String[list.size()];
+	    strings1 = list.toArray(strings1);
+	    String[] strings2 = ObjectUtils.toArray(list, String.class);
+
+	    Assert.assertArrayEquals("Arrays do not match", strings1, strings2);
+
+	    String homePath = System.getProperty("user.home");
+	    File file = new File(homePath);
+
+	    URL[] urls = { file.toURI().toURL() };
+	    List<URL> urlList = new ArrayList<URL>(Arrays.asList(urls));
+
+	    URL[] urls1 = new URL[urlList.size()];
+	    urls1 = urlList.toArray(urls1);
+	    URL[] urls2 = ObjectUtils.toArray(urlList, URL.class);
+
+	    Assert.assertArrayEquals("Arrays do not match", urls1, urls2);
+
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	}
+    }
+}

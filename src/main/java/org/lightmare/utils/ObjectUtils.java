@@ -1,5 +1,6 @@
 package org.lightmare.utils;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 
@@ -60,6 +61,11 @@ public class ObjectUtils {
 	return collection != null && collection.length > 0;
     }
 
+    public static boolean notAvailable(Object[] collection) {
+
+	return !available(collection);
+    }
+
     public static boolean available(CharSequence chars) {
 
 	return chars != null && chars.length() > 0;
@@ -101,5 +107,19 @@ public class ObjectUtils {
     public static boolean notEmpty(Collection<?> collection) {
 
 	return !collection.isEmpty();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T[] toArray(Collection<T> collection, Class<T> type) {
+
+	T[] array;
+	if (notNull(collection)) {
+	    array = (T[]) Array.newInstance(type, collection.size());
+	    array = collection.toArray(array);
+	} else {
+	    array = null;
+	}
+
+	return array;
     }
 }
