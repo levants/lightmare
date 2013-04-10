@@ -1,5 +1,7 @@
 package org.lightmare.utils.fs;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.lightmare.cache.DeployData;
@@ -12,6 +14,18 @@ import org.lightmare.utils.ObjectUtils;
  * 
  */
 public class WatchUtils {
+
+    public static URL clearURL(URL url) throws IOException {
+
+	URL normURL;
+	try {
+	    normURL = url.toURI().normalize().toURL();
+	} catch (URISyntaxException ex) {
+	    throw new IOException(ex);
+	}
+
+	return normURL;
+    }
 
     public static boolean checkForWatch(DeployData deployData) {
 
