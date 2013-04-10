@@ -35,6 +35,12 @@ public class ExtUtils extends DirUtils {
     public ExtUtils(URL url) throws IOException {
 	super(url);
     }
+    
+    @Override
+    public FileType getType() {
+
+	return type;
+    }
 
     /**
      * Exctracts ear file into the temporary file

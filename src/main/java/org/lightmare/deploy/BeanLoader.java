@@ -27,6 +27,7 @@ import javax.persistence.PersistenceUnit;
 import org.apache.log4j.Logger;
 import org.lightmare.cache.ConnectionData;
 import org.lightmare.cache.ConnectionSemaphore;
+import org.lightmare.cache.DeployData;
 import org.lightmare.cache.InjectionData;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
@@ -38,6 +39,7 @@ import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.fs.FileUtils;
+import org.lightmare.utils.fs.WatchUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
@@ -186,7 +188,9 @@ public class BeanLoader {
 
 	private List<Field> unitFields;
 
-	private URL url;
+	private DeployData deployData;
+
+	private boolean chekcWatch;
 
 	public BeanDeployer(BeanParameters parameters) {
 	    this.creator = parameters.creator;
@@ -196,7 +200,7 @@ public class BeanLoader {
 	    this.tmpFiles = parameters.tmpFiles;
 	    this.metaData = parameters.metaData;
 	    this.conn = parameters.conn;
-	    this.url = parameters.url;
+	    this.deployData = parameters.deployData;
 	}
 
 	/**
@@ -481,7 +485,9 @@ public class BeanLoader {
 	    try {
 		LibraryLoader.loadCurrentLibraries(loader);
 		deployed = createBeanClass();
-		if (ObjectUtils.notNull(url)) {
+		chekcWatch = WatchUtils.checkForWatch(deployData);
+		if (chekcWatch) {
+		    URL url = deployData.getUrl();
 		    MetaContainer.addBeanName(url, deployed);
 		}
 		LOG.info(String.format("bean %s deployed", beanName));
@@ -547,7 +553,7 @@ public class BeanLoader {
 
 	public MetaData metaData;
 
-	public URL url;
+	public DeployData deployData;
     }
 
     /**

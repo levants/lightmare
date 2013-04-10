@@ -79,6 +79,8 @@ public abstract class AbstractIOUtils {
 	isDirectory = realFile.isDirectory();
     }
 
+    public abstract FileType getType();
+
     /**
      * Ensures that all temporary files will be removed at finish of program
      * 
@@ -372,6 +374,4 @@ public abstract class AbstractIOUtils {
     public List<File> getTmpFiles() {
 	return tmpFiles;
     }
-
-    public abstract getType();
 }

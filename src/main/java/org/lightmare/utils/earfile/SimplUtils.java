@@ -23,6 +23,12 @@ public class SimplUtils extends AbstractIOUtils {
     }
 
     @Override
+    public FileType getType() {
+
+	return type;
+    }
+
+    @Override
     public InputStream earReader() throws IOException {
 	return null;
     }

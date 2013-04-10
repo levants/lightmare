@@ -34,6 +34,12 @@ public class JarUtils extends AbstractIOUtils {
     public JarUtils(URL url) throws IOException {
 	super(url);
     }
+    
+    @Override
+    public FileType getType() {
+
+	return type;
+    }
 
     @Override
     public InputStream earReader() throws IOException {

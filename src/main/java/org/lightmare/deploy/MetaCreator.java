@@ -260,9 +260,9 @@ public class MetaCreator {
 	    deployData.setUrl(archive);
 	    if (ejbURLs.isEmpty()) {
 		archivesURLs.put(archive, archiveData);
-		realURL.put(archive, archive);
+		realURL.put(archive, deployData);
 	    } else {
-		fillArchiveURLs(ejbURLs, archiveData, archive);
+		fillArchiveURLs(ejbURLs, archiveData, deployData);
 	    }
 	}
     }
@@ -352,11 +352,11 @@ public class MetaCreator {
 	}
 
 	// Archive file url which contains this bean
-	URL beanURL;
+	DeployData deployData;
 	if (ObjectUtils.available(realURL)) {
-	    beanURL = realURL.get(currentURL);
+	    deployData = realURL.get(currentURL);
 	} else {
-	    beanURL = null;
+	    deployData = null;
 	}
 	// Initializes and fills BeanLoader.BeanParameters class to deploy
 	// stateless ejb bean
@@ -366,7 +366,7 @@ public class MetaCreator {
 	parameters.loader = loader;
 	parameters.tmpFiles = tmpFiles;
 	parameters.conn = conn;
-	parameters.url = beanURL;
+	parameters.deployData = deployData;
 
 	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);
@@ -415,7 +415,7 @@ public class MetaCreator {
 	    }
 	    archivesURLs = new HashMap<URL, ArchiveData>();
 	    if (ObjectUtils.available(archives)) {
-		realURL = new HashMap<URL, URL>();
+		realURL = new HashMap<URL, DeployData>();
 	    }
 	    URL[] fullArchives = getFullArchives(archives);
 	    annotationDB = new AnnotationDB();

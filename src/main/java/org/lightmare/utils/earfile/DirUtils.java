@@ -37,6 +37,12 @@ public class DirUtils extends AbstractIOUtils {
     }
 
     @Override
+    public FileType getType() {
+
+	return type;
+    }
+
+    @Override
     public InputStream earReader() throws IOException {
 
 	String xmlPath = "META-INF/application.xml";

@@ -14,6 +14,7 @@ import java.util.zip.ZipInputStream;
 
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.fs.FileType;
 
 /**
  * Utility class for checking jar, ear and zip files read contents and etc.
@@ -33,6 +34,12 @@ public class EarUtils extends AbstractIOUtils {
 
     public EarUtils(URL url) throws IOException {
 	super(url);
+    }
+
+    @Override
+    public FileType getType() {
+
+	return FileType.EAR;
     }
 
     @Override
