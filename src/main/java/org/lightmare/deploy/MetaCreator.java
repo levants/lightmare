@@ -413,35 +413,37 @@ public class MetaCreator {
      */
     public void scanForBeans(URL[] archives) throws IOException {
 
-	try {
-	    // starts RPC server if configured as remote and server
-	    if (CONFIG.isRemote() && CONFIG.isServer()) {
-		RpcListener.startServer();
+	synchronized (this) {
+	    try {
+		// starts RPC server if configured as remote and server
+		if (CONFIG.isRemote() && CONFIG.isServer()) {
+		    RpcListener.startServer();
+		}
+		// Loads libraries from specified path
+		if (ObjectUtils.notNull(libraryPaths)) {
+		    LibraryLoader.loadLibraries(libraryPaths);
+		}
+		archivesURLs = new HashMap<URL, ArchiveData>();
+		if (ObjectUtils.available(archives)) {
+		    realURL = new HashMap<URL, DeployData>();
+		}
+		URL[] fullArchives = getFullArchives(archives);
+		annotationDB = new AnnotationDB();
+		annotationDB.setScanFieldAnnotations(Boolean.FALSE);
+		annotationDB.setScanParameterAnnotations(Boolean.FALSE);
+		annotationDB.setScanMethodAnnotations(Boolean.FALSE);
+		annotationDB.scanArchives(fullArchives);
+		Set<String> beanNames = annotationDB.getAnnotationIndex().get(
+			Stateless.class.getName());
+		classOwnersURL = annotationDB.getClassOwnersURLs();
+		DataSourceInitializer.initializeDataSource(dataSourcePath);
+		if (ObjectUtils.available(beanNames)) {
+		    deployBeans(beanNames);
+		}
+	    } finally {
+		// gets rid from all created temporary files
+		tmpResources.removeTempFiles();
 	    }
-	    // Loads libraries from specified path
-	    if (ObjectUtils.notNull(libraryPaths)) {
-		LibraryLoader.loadLibraries(libraryPaths);
-	    }
-	    archivesURLs = new HashMap<URL, ArchiveData>();
-	    if (ObjectUtils.available(archives)) {
-		realURL = new HashMap<URL, DeployData>();
-	    }
-	    URL[] fullArchives = getFullArchives(archives);
-	    annotationDB = new AnnotationDB();
-	    annotationDB.setScanFieldAnnotations(Boolean.FALSE);
-	    annotationDB.setScanParameterAnnotations(Boolean.FALSE);
-	    annotationDB.setScanMethodAnnotations(Boolean.FALSE);
-	    annotationDB.scanArchives(fullArchives);
-	    Set<String> beanNames = annotationDB.getAnnotationIndex().get(
-		    Stateless.class.getName());
-	    classOwnersURL = annotationDB.getClassOwnersURLs();
-	    DataSourceInitializer.initializeDataSource(dataSourcePath);
-	    if (ObjectUtils.available(beanNames)) {
-		deployBeans(beanNames);
-	    }
-	} finally {
-	    // gets rid from all created temporary files
-	    tmpResources.removeTempFiles();
 	}
     }
 
