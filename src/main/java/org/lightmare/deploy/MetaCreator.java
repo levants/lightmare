@@ -478,7 +478,16 @@ public class MetaCreator {
 		&& ObjectUtils.available(CONFIG.getDeploymentPath())) {
 
 	    Set<String> deployments = CONFIG.getDeploymentPath();
-	    paths = ObjectUtils.toArray(deployments, String.class);
+	    List<String> pathList = new ArrayList<String>();
+	    File deployFile;
+	    for (String deployment : deployments) {
+		deployFile = new File(deployment);
+		String[] subDeployments = deployFile.list();
+		if (ObjectUtils.available(subDeployments)) {
+		    pathList.addAll(Arrays.asList(subDeployments));
+		}
+	    }
+	    paths = ObjectUtils.toArray(pathList, String.class);
 	}
 	List<URL> urlList = new ArrayList<URL>();
 	URL archive;

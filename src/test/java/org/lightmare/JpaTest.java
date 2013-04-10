@@ -69,6 +69,8 @@ public class JpaTest {
 		.setPersistenceProperties(properties);
 	builder.setPoolPropertiesPath("./pool/pool.properties");
 	builder.addPoolProperty("statementCacheNumDeferredCloseThreads", "3");
+	builder.setHotDeployment(true);
+	builder.set
 	if (unitName != null) {
 	    builder.setScanForEntities(true).setUnitName(unitName);
 	}
