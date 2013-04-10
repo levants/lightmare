@@ -78,7 +78,7 @@ additional propertie to hibernate to continue scannin in depth for @Entity annot
 ```
 path to folder with jar libraries to load in parent (server) class loader in addition
 
-Complete example how to use MetaCreator's Builder is there:
+Complete example how to use MetaCreator's Builder is here:
 
 ```java
   MetaCreator.Builder builder = new MetaCreator.Builder();
