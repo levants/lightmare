@@ -12,6 +12,7 @@ import java.util.jar.JarFile;
 
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.fs.FileType;
 
 /**
  * Implementation of {@link AbstractIOUtils} for ear directories
@@ -20,6 +21,8 @@ import org.lightmare.utils.AbstractIOUtils;
  * 
  */
 public class DirUtils extends AbstractIOUtils {
+
+    public static final FileType type = FileType.EDIR;
 
     public DirUtils(String path) {
 	super(path);

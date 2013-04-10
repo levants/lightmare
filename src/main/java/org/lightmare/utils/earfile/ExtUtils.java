@@ -10,6 +10,8 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.lightmare.utils.fs.FileType;
+
 /**
  * Implementation of {@link DirUtils} for ear files
  * 
@@ -17,6 +19,8 @@ import java.util.zip.ZipFile;
  * 
  */
 public class ExtUtils extends DirUtils {
+    
+    public static final FileType type = FileType.EAR;
 
     private File tmpFile;
 

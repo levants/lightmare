@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.Set;
 
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.fs.FileType;
 
 /**
  * Implementation of {@link AbstractIOUtils} for directories
@@ -14,6 +15,8 @@ import org.lightmare.utils.AbstractIOUtils;
  * 
  */
 public class SimplUtils extends AbstractIOUtils {
+
+    public static final FileType type = FileType.DIR;
 
     public SimplUtils(File file) {
 	super(file);

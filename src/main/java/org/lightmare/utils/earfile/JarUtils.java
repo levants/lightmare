@@ -11,6 +11,7 @@ import java.util.zip.ZipFile;
 
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.fs.FileType;
 
 /**
  * Implementation of {@link AbstractIOUtils} for jar files
@@ -19,6 +20,8 @@ import org.lightmare.utils.AbstractIOUtils;
  * 
  */
 public class JarUtils extends AbstractIOUtils {
+
+    public static final FileType type = FileType.JAR;
 
     public JarUtils(String path) {
 	super(path);
