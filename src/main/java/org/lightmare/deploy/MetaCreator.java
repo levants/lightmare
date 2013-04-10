@@ -26,6 +26,7 @@ import javax.persistence.Entity;
 import org.apache.log4j.Logger;
 import org.lightmare.annotations.UnitName;
 import org.lightmare.cache.ArchiveData;
+import org.lightmare.cache.DeployData;
 import org.lightmare.cache.MetaData;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.config.Configuration;
@@ -87,7 +88,7 @@ public class MetaCreator {
 
     private Map<String, URL> classOwnersURL;
 
-    private Map<URL, URL> realURL;
+    private Map<URL, DeployData> realURL;
 
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
@@ -227,11 +228,11 @@ public class MetaCreator {
      * @param archiveData
      */
     private void fillArchiveURLs(Collection<URL> ejbURLs,
-	    ArchiveData archiveData, URL archive) {
+	    ArchiveData archiveData, DeployData deployData) {
 
 	for (URL ejbURL : ejbURLs) {
 	    archivesURLs.put(ejbURL, archiveData);
-	    realURL.put(ejbURL, archive);
+	    realURL.put(ejbURL, deployData);
 	}
     }
 
@@ -254,6 +255,9 @@ public class MetaCreator {
 	    modifiedArchives.addAll(ejbURLs);
 	    ArchiveData archiveData = new ArchiveData();
 	    archiveData.setIoUtils(ioUtils);
+	    DeployData deployData = new DeployData();
+	    deployData.setType(ioUtils.getType());
+	    deployData.setUrl(archive);
 	    if (ejbURLs.isEmpty()) {
 		archivesURLs.put(archive, archiveData);
 		realURL.put(archive, archive);
