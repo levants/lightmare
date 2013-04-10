@@ -347,6 +347,13 @@ public class MetaCreator {
 	    aggregateds.put(beanName, ioUtils);
 	}
 
+	// Archive file url which contains this bean
+	URL beanURL;
+	if (ObjectUtils.available(realURL)) {
+	    beanURL = realURL.get(currentURL);
+	} else {
+	    beanURL = null;
+	}
 	// Initializes and fills BeanLoader.BeanParameters class to deploy
 	// stateless ejb bean
 	BeanLoader.BeanParameters parameters = new BeanLoader.BeanParameters();
@@ -355,7 +362,7 @@ public class MetaCreator {
 	parameters.loader = loader;
 	parameters.tmpFiles = tmpFiles;
 	parameters.conn = conn;
-	parameters.url = currentURL;
+	parameters.url = beanURL;
 
 	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);
