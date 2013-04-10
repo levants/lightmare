@@ -93,6 +93,8 @@ public class MetaCreator {
 
     private boolean hotDeployment;
 
+    private boolean watchStatus;
+
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
     private MetaCreator() {
@@ -395,8 +397,9 @@ public class MetaCreator {
 	    }
 	}
 	awaitDeployments();
-	if (hotDeployment) {
+	if (hotDeployment && !watchStatus) {
 	    Watcher.startWatch(this);
+	    watchStatus = true;
 	}
     }
 
