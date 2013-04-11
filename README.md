@@ -93,3 +93,16 @@ Complete example how to use MetaCreator's Builder is here:
   MetaCreator metaCreator = builder.build();
   metaCreator.scanForBeans(files);
 ```
+To call ejb stateless session bean in non standard way:
+
+```java
+  EjbConnector connector = new EjbConnector();
+  connector.connectToBean("FooBean",
+		    FooBeanRemote.class);
+```
+or bean can be reached as if it is deployed on JBoss server:
+
+```java
+  Context context = new InitialContext(someJndiProperties);
+  FooBeanRemote fooBean = (FooBeanRemote)context.lookup("ejb:fooModule//FooBean!FooBeanRemote")
+```
