@@ -281,10 +281,10 @@ public class JPAManager {
 		NamingUtils namingUtils = new NamingUtils();
 		try {
 		    Context context = namingUtils.getContext();
-		    if (context.lookup(jndiName) == null) {
-			String fullJndiName = NamingUtils
-				.createJpaJndiName(jndiName);
-			namingUtils.getContext().bind(fullJndiName,
+		    String fullJndiName = NamingUtils
+			    .createJpaJndiName(jndiName);
+		    if (context.lookup(fullJndiName) == null) {
+			namingUtils.getContext().rebind(fullJndiName,
 				semaphore.getEmf());
 		    }
 		    semaphore.setBound(Boolean.TRUE);
@@ -396,6 +396,12 @@ public class JPAManager {
 	    closeEntityManagerFactory(emf);
 	    unbindConnection(semaphore);
 	    CONNECTIONS.remove(semaphore.getUnitName());
+	    String jndiName = semaphore.getJndiName();
+	    if (ObjectUtils.available(jndiName)) {
+		CONNECTIONS.remove(jndiName);
+		semaphore.setBound(Boolean.FALSE);
+		semaphore.setCached(Boolean.FALSE);
+	    }
 	}
     }
 
