@@ -26,7 +26,7 @@ public class ConnectionSemaphore {
 
     private EntityManagerFactory emf;
 
-    private static final AtomicInteger users = new AtomicInteger();
+    private final AtomicInteger users = new AtomicInteger();
 
     // Check if needs configure EntityManagerFactory
     private AtomicBoolean check = new AtomicBoolean();
