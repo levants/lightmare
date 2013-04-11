@@ -367,8 +367,9 @@ public class JPAManager {
 	    NamingUtils namingUtils = new NamingUtils();
 	    try {
 		Context context = namingUtils.getContext();
-		if (ObjectUtils.notNull(context.lookup(jndiName))) {
-		    context.unbind(jndiName);
+		String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
+		if (ObjectUtils.notNull(context.lookup(fullJndiName))) {
+		    context.unbind(fullJndiName);
 		}
 	    } catch (NamingException ex) {
 		LOG.error(String.format(
