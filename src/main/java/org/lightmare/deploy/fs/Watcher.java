@@ -80,6 +80,7 @@ public class Watcher implements Runnable {
     private void undeployFile(URL url) throws IOException {
 
 	MetaContainer.undeploy(url);
+	creator.clear();
     }
 
     private void undeployFile(String fileName) throws IOException {
