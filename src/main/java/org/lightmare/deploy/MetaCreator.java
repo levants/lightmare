@@ -434,8 +434,7 @@ public class MetaCreator {
 		Set<String> beanNames = annotationDB.getAnnotationIndex().get(
 			Stateless.class.getName());
 		classOwnersURL = annotationDB.getClassOwnersURLs();
-		DataSourceInitializer.initializeDataSources(CONFIG
-			.getDataSourcePath());
+		DataSourceInitializer.initializeDataSources();
 		if (ObjectUtils.available(beanNames)) {
 		    deployBeans(beanNames);
 		}
