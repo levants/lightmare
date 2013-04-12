@@ -76,7 +76,7 @@ public class JpaTest {
 	}
 	builder.setSwapDataSource(true);
 	if (dataSourcePath != null) {
-	    builder.setSwapDataSource(true).setDataSourcePath(dataSourcePath);
+	    builder.setSwapDataSource(true).addDataSourcePath(dataSourcePath);
 	}
 
 	MetaCreator metaCreator;

@@ -588,9 +588,9 @@ public class MetaCreator {
 	    return this;
 	}
 
-	public Builder setDataSourcePath(String dataSourcePath) {
+	public Builder addDataSourcePath(String dataSourcePath) {
 	    creator.dataSourcePath = dataSourcePath;
-	    CONFIG.putValue(Configuration.DATA_SOURCE_PATH, dataSourcePath);
+	    CONFIG.addDataSourcePath(dataSourcePath);
 	    return this;
 	}
 

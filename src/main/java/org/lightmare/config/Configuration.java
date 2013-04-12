@@ -42,9 +42,11 @@ public class Configuration {
     public static final String CONNECTION_TIMEOUT = "timeout";
 
     // properties for datasource path and deployment path
-    public static final String DATA_SOURCE_PATH = "dspath";
+    public static final String DATA_SOURCE_PATH_KEY = "dspath";
 
-    public static Set<String> DEPLOYMENT_PATH;
+    public Set<String> DEPLOYMENT_PATH;
+
+    public Set<String> DATA_SOURCE_PATH;
 
     // runtime to get avaliable processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
@@ -118,10 +120,6 @@ public class Configuration {
 
 	if (!config.containsKey(CONNECTION_TIMEOUT)) {
 	    config.put(CONNECTION_TIMEOUT, CONNECTION_TIMEOUT_DEF);
-	}
-
-	if (!config.containsKey(DATA_SOURCE_PATH)) {
-	    config.put(DATA_SOURCE_PATH, DATA_SOURCE_PATH_DEF);
 	}
 
 	if (DEPLOYMENT_PATH == null) {
@@ -250,7 +248,23 @@ public class Configuration {
 	}
     }
 
+    public void addDataSourcePath(String path) {
+
+	synchronized (Configuration.class) {
+	    if (DATA_SOURCE_PATH == null) {
+		DATA_SOURCE_PATH = new HashSet<String>();
+	    }
+
+	    DATA_SOURCE_PATH.add(path);
+	}
+    }
+
     public Set<String> getDeploymentPath() {
+
+	return DEPLOYMENT_PATH;
+    }
+
+    public Set<String> getDataSourcePath() {
 
 	return DEPLOYMENT_PATH;
     }

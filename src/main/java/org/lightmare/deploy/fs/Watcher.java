@@ -11,6 +11,7 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchEvent.Kind;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -38,8 +39,6 @@ public class Watcher implements Runnable {
 
     private static final int DEPLOY_POOL_PRIORITY = Thread.MAX_PRIORITY - 5;
 
-    private static final String DATA_SOURCE_FILE_EXT = ".xml";
-
     private static final long SLEEP_TIME = 5500L;
 
     private static final ExecutorService DEPLOY_POOL = Executors
@@ -54,12 +53,17 @@ public class Watcher implements Runnable {
 
     private MetaCreator creator;
 
+    private static enum WatchFileType {
+	DATA_SOURCE, DEPLOYMENT, NONE;
+    }
+
     private Watcher() {
 	deployments = MetaCreator.CONFIG.getDeploymentPath();
-	String dataSource = MetaCreator.CONFIG;
+	dataSources = MetaCreator.CONFIG.getDataSourcePath();
     }
 
     public Watcher(MetaCreator creator) {
+	this();
 	this.creator = creator;
     }
 
@@ -72,11 +76,31 @@ public class Watcher implements Runnable {
 	return url;
     }
 
+    private WatchFileType checkType(String fileName) {
+
+	WatchFileType type;
+	File file = new File(fileName);
+	String path = file.getParent();
+
+	if (ObjectUtils.available(deployments) && deployments.contains(path)) {
+	    type = WatchFileType.DEPLOYMENT;
+	} else if (ObjectUtils.available(dataSources)
+		&& deployments.contains(path)) {
+	    type = WatchFileType.DATA_SOURCE;
+	} else {
+	    type = WatchFileType.NONE;
+	}
+
+	return type;
+    }
+
     private void deployFile(String fileName) throws IOException {
-	if (fileName.endsWith(".xml")) {
+
+	WatchFileType type = checkType(fileName);
+	if (type.equals(WatchFileType.DATA_SOURCE)) {
 	    FileParsers fileParsers = new FileParsers();
 	    fileParsers.parseStandaloneXml(fileName);
-	} else {
+	} else if (type.equals(WatchFileType.DEPLOYMENT)) {
 	    URL url = getAppropriateURL(fileName);
 	    deployFile(url);
 	}
@@ -96,9 +120,10 @@ public class Watcher implements Runnable {
 
     private void undeployFile(String fileName) throws IOException {
 
-	if (fileName.endsWith(DATA_SOURCE_FILE_EXT)) {
+	WatchFileType type = checkType(fileName);
+	if (type.equals(WatchFileType.DATA_SOURCE)) {
 	    DataSourceInitializer.undeploy(fileName);
-	} else {
+	} else if (type.equals(WatchFileType.DEPLOYMENT)) {
 	    URL url = getAppropriateURL(fileName);
 	    undeployFile(url);
 	}
@@ -167,6 +192,25 @@ public class Watcher implements Runnable {
 	}
     }
 
+    private void registerPath(FileSystem fs, String path, WatchService watch)
+	    throws IOException {
+
+	Path deployPath = fs.getPath(path);
+	deployPath.register(watch, StandardWatchEventKinds.ENTRY_CREATE,
+		StandardWatchEventKinds.ENTRY_MODIFY,
+		StandardWatchEventKinds.OVERFLOW,
+		StandardWatchEventKinds.ENTRY_DELETE);
+	runService(watch);
+    }
+
+    private void registerPaths(Collection<String> paths, FileSystem fs,
+	    WatchService watch) throws IOException {
+
+	for (String path : paths) {
+	    registerPath(fs, path, watch);
+	}
+    }
+
     @Override
     public void run() {
 	try {
@@ -178,18 +222,11 @@ public class Watcher implements Runnable {
 		LOG.error(ex.getMessage(), ex);
 		throw ex;
 	    }
-	    Path deployPath;
-	    Set<String> deployments = MetaCreator.CONFIG.getDeploymentPath();
 	    if (ObjectUtils.available(deployments)) {
-		for (String path : deployments) {
-		    deployPath = fs.getPath(path);
-		    deployPath.register(watch,
-			    StandardWatchEventKinds.ENTRY_CREATE,
-			    StandardWatchEventKinds.ENTRY_MODIFY,
-			    StandardWatchEventKinds.OVERFLOW,
-			    StandardWatchEventKinds.ENTRY_DELETE);
-		    runService(watch);
-		}
+		registerPaths(deployments, fs, watch);
+	    }
+	    if (ObjectUtils.available(dataSources)) {
+		registerPaths(dataSources, fs, watch);
 	    }
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
