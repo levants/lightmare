@@ -67,8 +67,6 @@ public class MetaCreator {
 
     private boolean swapDataSource;
 
-    private String dataSourcePath;
-
     private boolean scanArchives;
 
     private TmpResources tmpResources;
@@ -436,7 +434,8 @@ public class MetaCreator {
 		Set<String> beanNames = annotationDB.getAnnotationIndex().get(
 			Stateless.class.getName());
 		classOwnersURL = annotationDB.getClassOwnersURLs();
-		DataSourceInitializer.initializeDataSource(dataSourcePath);
+		DataSourceInitializer.initializeDataSources(CONFIG
+			.getDataSourcePath());
 		if (ObjectUtils.available(beanNames)) {
 		    deployBeans(beanNames);
 		}
@@ -589,7 +588,6 @@ public class MetaCreator {
 	}
 
 	public Builder addDataSourcePath(String dataSourcePath) {
-	    creator.dataSourcePath = dataSourcePath;
 	    CONFIG.addDataSourcePath(dataSourcePath);
 	    return this;
 	}

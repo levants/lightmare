@@ -266,6 +266,6 @@ public class Configuration {
 
     public Set<String> getDataSourcePath() {
 
-	return DEPLOYMENT_PATH;
+	return DATA_SOURCE_PATH;
     }
 }

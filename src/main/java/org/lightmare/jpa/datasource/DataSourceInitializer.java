@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.jpa.datasource.c3p0.InitDataSourceC3p0;
@@ -79,6 +80,21 @@ public class DataSourceInitializer {
 		&& !DataSourceInitializer.checkDSPath(path)) {
 	    FileParsers parsers = new FileParsers();
 	    parsers.parseStandaloneXml(path);
+	}
+    }
+
+    /**
+     * Initialized datasources
+     * 
+     * @throws IOException
+     */
+    public static void initializeDataSources() throws IOException {
+
+	Collection<String> paths = MetaCreator.CONFIG.getDataSourcePath();
+	if (ObjectUtils.available(paths)) {
+	    for (String path : paths) {
+		initializeDataSource(path);
+	    }
 	}
     }
 
