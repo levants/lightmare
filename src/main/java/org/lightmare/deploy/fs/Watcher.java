@@ -38,6 +38,8 @@ public class Watcher implements Runnable {
 
     private static final int DEPLOY_POOL_PRIORITY = Thread.MAX_PRIORITY - 5;
 
+    private static final String DATA_SOURCE_FILE_EXT = ".xml";
+
     private static final long SLEEP_TIME = 5500L;
 
     private static final ExecutorService DEPLOY_POOL = Executors
@@ -85,7 +87,7 @@ public class Watcher implements Runnable {
 
     private void undeployFile(String fileName) throws IOException {
 
-	if (fileName.endsWith(".xml")) {
+	if (fileName.endsWith(DATA_SOURCE_FILE_EXT)) {
 	    DataSourceInitializer.undeploy(fileName);
 	} else {
 	    URL url = getAppropriateURL(fileName);
