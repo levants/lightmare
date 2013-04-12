@@ -32,6 +32,7 @@ public class RestRPC {
 	return response;
     }
 
+    @Path("/publish")
     @GET
     public String publish() {
 
