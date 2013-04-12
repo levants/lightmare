@@ -591,6 +591,19 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * This method is deprecated should use
+	 * {@link MetaCreator.Builder#addDataSourcePath(String)} instead
+	 * 
+	 * @param dataSourcePath
+	 * @return {@link MetaCreator.Builder}
+	 */
+	@Deprecated
+	public Builder setDataSourcePath(String dataSourcePath) {
+	    CONFIG.addDataSourcePath(dataSourcePath);
+	    return this;
+	}
+
 	public Builder setScanArchives(boolean scanArchives) {
 	    creator.scanArchives = scanArchives;
 	    return this;
