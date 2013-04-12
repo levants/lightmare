@@ -69,6 +69,9 @@ public class Configuration {
     public static final Set<String> DEPLOYMENT_PATH_DEF = new HashSet<String>(
 	    Arrays.asList("./deploy"));
 
+    public static final Set<String> DATA_SOURCES_DEF = new HashSet<String>(
+	    Arrays.asList("./ds"));
+
     /**
      * Properties which version of server is running remote it requires server
      * client RPC infrastructure or local (embeddable mode)

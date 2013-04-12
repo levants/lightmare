@@ -46,9 +46,18 @@ public class Watcher implements Runnable {
 	    .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME,
 		    DEPLOY_POOL_PRIORITY));
 
+    private Set<String> deployments;
+
+    private Set<String> dataSources;
+
     private static final Logger LOG = Logger.getLogger(Watcher.class);
 
     private MetaCreator creator;
+
+    private Watcher() {
+	deployments = MetaCreator.CONFIG.getDeploymentPath();
+	String dataSource = MetaCreator.CONFIG;
+    }
 
     public Watcher(MetaCreator creator) {
 	this.creator = creator;
