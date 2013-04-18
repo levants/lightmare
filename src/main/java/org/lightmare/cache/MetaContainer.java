@@ -190,6 +190,20 @@ public class MetaContainer {
     }
 
     /**
+     * checks containing archive {@link URL} address
+     * 
+     * @param url
+     * @return
+     */
+    public static boolean chackDeployment(URL url) {
+
+	synchronized (MetaContainer.class) {
+
+	    return EJB_URLS.containsKey(url);
+	}
+    }
+
+    /**
      * Removes cached bean names {@link Collection} by containing file
      * {@link URL} as key
      * 
