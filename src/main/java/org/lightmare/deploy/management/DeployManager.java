@@ -5,6 +5,7 @@ import java.io.Writer;
 import java.net.URL;
 import java.util.Set;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Servlet to manage deployed applications
+ * {@link Servlet} to manage deployed applications
  * 
  * @author levan
  * 
