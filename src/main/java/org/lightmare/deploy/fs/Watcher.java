@@ -99,13 +99,13 @@ public class Watcher implements Runnable {
 	}
     }
 
-    private void deployFile(URL url) throws IOException {
+    public static void deployFile(URL url) throws IOException {
 
 	URL[] archives = { url };
 	MetaContainer.getCreator().scanForBeans(archives);
     }
 
-    private void undeployFile(URL url) throws IOException {
+    public static void undeployFile(URL url) throws IOException {
 
 	MetaContainer.undeploy(url);
 	MetaContainer.getCreator().clear();
