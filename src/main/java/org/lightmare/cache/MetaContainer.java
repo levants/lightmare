@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -15,6 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 
 import org.apache.log4j.Logger;
+import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.utils.ObjectUtils;
@@ -28,6 +30,8 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class MetaContainer {
 
+    private static MetaCreator creator;
+
     // Cached bean meta data
     private static final ConcurrentMap<String, MetaData> EJBS = new ConcurrentHashMap<String, MetaData>();
 
@@ -38,6 +42,30 @@ public class MetaContainer {
     private static final ThreadLocal<UserTransaction> TRANSACTION_HOLDER = new ThreadLocal<UserTransaction>();
 
     private static final Logger LOG = Logger.getLogger(MetaContainer.class);
+
+    /**
+     * Gets cached {@link MetaCreator} object
+     * 
+     * @return
+     */
+    public static MetaCreator getCreator() {
+
+	return creator;
+    }
+
+    /**
+     * Caches {@link MetaCreator} object
+     * 
+     * @param metaCreator
+     */
+    public static void setCreator(MetaCreator metaCreator) {
+
+	synchronized (MetaContainer.class) {
+	    if (creator == null) {
+		creator = metaCreator;
+	    }
+	}
+    }
 
     /**
      * Adds {@link MetaData} to cache on specified bean name if absent and
@@ -190,6 +218,18 @@ public class MetaContainer {
 
 	    beanNames.add(beanName);
 	}
+    }
+
+    /**
+     * Lists set for deployed application {@link URL}'s
+     * 
+     * @return {@link Set}<URL>
+     */
+    public static Set<URL> listApplications() {
+
+	Set<URL> apps = EJB_URLS.keySet();
+
+	return apps;
     }
 
     /**

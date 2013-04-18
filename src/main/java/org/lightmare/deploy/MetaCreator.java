@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.lightmare.annotations.UnitName;
 import org.lightmare.cache.ArchiveData;
 import org.lightmare.cache.DeployData;
+import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.config.Configuration;
@@ -396,7 +397,7 @@ public class MetaCreator {
 	}
 	awaitDeployments();
 	if (hotDeployment && !watchStatus) {
-	    Watcher.startWatch(this);
+	    Watcher.startWatch();
 	    watchStatus = true;
 	}
     }
@@ -701,6 +702,7 @@ public class MetaCreator {
 
 	public MetaCreator build() {
 	    MetaCreator.CONFIG.configure();
+	    MetaContainer.setCreator(creator);
 	    LOG.info("Lightmare application starts working");
 	    return creator;
 	}

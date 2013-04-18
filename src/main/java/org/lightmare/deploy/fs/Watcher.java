@@ -51,8 +51,6 @@ public class Watcher implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(Watcher.class);
 
-    private MetaCreator creator;
-
     private static enum WatchFileType {
 	DATA_SOURCE, DEPLOYMENT, NONE;
     }
@@ -60,11 +58,6 @@ public class Watcher implements Runnable {
     private Watcher() {
 	deployments = MetaCreator.CONFIG.getDeploymentPath();
 	dataSources = MetaCreator.CONFIG.getDataSourcePath();
-    }
-
-    public Watcher(MetaCreator creator) {
-	this();
-	this.creator = creator;
     }
 
     private URL getAppropriateURL(String fileName) throws IOException {
@@ -109,13 +102,13 @@ public class Watcher implements Runnable {
     private void deployFile(URL url) throws IOException {
 
 	URL[] archives = { url };
-	creator.scanForBeans(archives);
+	MetaContainer.getCreator().scanForBeans(archives);
     }
 
     private void undeployFile(URL url) throws IOException {
 
 	MetaContainer.undeploy(url);
-	creator.clear();
+	MetaContainer.getCreator().clear();
     }
 
     private void undeployFile(String fileName) throws IOException {
@@ -238,9 +231,9 @@ public class Watcher implements Runnable {
 	}
     }
 
-    public static void startWatch(MetaCreator creator) {
+    public static void startWatch() {
 
-	Watcher watcher = new Watcher(creator);
+	Watcher watcher = new Watcher();
 	DEPLOY_POOL.submit(watcher);
     }
 }
