@@ -33,9 +33,11 @@ public class DeployManager extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String BEGIN_TAGS = "<tr><td><a href=\"DeployManager?redeploy=";
+    private static final String BEGIN_TAGS = "<tr><td><a name = \"";
 
-    private static final String BEGIN_NAME_TAGS = "\">";
+    private static final String NAME_OF_TAGS = "\" href=\"";
+
+    private static final String BEGIN_NAME_TAGS = "\" onClick=\"sendRequest(this.name)\">";
 
     private static final String END_NAME_TAGS = "</a>";
 
@@ -45,13 +47,13 @@ public class DeployManager extends HttpServlet {
 
     private static final String BEGIN_PAGE = "<html><head><script type=\"text/javascript\">\n"
 	    + "/* <![CDATA[ */\n"
-	    + "function sendRequest(redeploy){xmlhttp.open(\"GET\",\"DeployManager?redeploy=\" + redeploy,true);\n"
+	    + "function sendRequest(redeploy){var xmlhttp = new XMLHttpRequest()\n; xmlhttp.open(\"GET\",\"DeployManager?redeploy=\" + redeploy,true);\n"
 	    + "xmlhttp.send();}\n"
 	    + "/* ]]> */\n"
 	    + "</script>\n"
-	    + "</head>\n" + "<table>\n";
+	    + "</head>\n" + "<body>\n<table>\n";
 
-    private static final String END_PAGE = "</table>\n</html>";
+    private static final String END_PAGE = "</body></table>\n</html>";
 
     private static final Logger LOG = Logger.getLogger(DeployManager.class);
 
@@ -119,6 +121,8 @@ public class DeployManager extends HttpServlet {
 	StringBuilder builder = new StringBuilder();
 	builder.append(BEGIN_TAGS);
 	builder.append(app);
+	builder.append(NAME_OF_TAGS);
+	builder.append("#");
 	builder.append(BEGIN_NAME_TAGS);
 	builder.append(app);
 	builder.append(END_NAME_TAGS);
