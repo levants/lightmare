@@ -47,7 +47,7 @@ public class DeployManager extends HttpServlet {
 
     private static final String BEGIN_PAGE = "<html><head><script type=\"text/javascript\">\n"
 	    + "/* <![CDATA[ */\n"
-	    + "function sendRequest(redeploy){var xmlhttp = new XMLHttpRequest()\n; xmlhttp.open(\"GET\",\"DeployManager?redeploy=\" + redeploy,true);\n"
+	    + "function sendRequest(redeploy){var xmlhttp = new XMLHttpRequest();\n xmlhttp.open(\"GET\",\"DeployManager?redeploy=\" + redeploy,true);\n"
 	    + "xmlhttp.send();}\n"
 	    + "/* ]]> */\n"
 	    + "</script>\n"
