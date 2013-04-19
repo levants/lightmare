@@ -72,18 +72,20 @@ public class DeployManager extends HttpServlet {
 
     private static final String END_PAGE = "</body></table>\n" + "</html>";
 
-    private static final String LOGIN_PAGE = "<html>\n" + "\t\t<head>\n"
-	    + "\t\t\t<title>Login</title>\n" + "\t\t</head>\n" + "\t\t<body>\n"
-	    + "\t\t\t<table>\n" + "\t\t\t\t<tr>\n" + "\t\t\t\t\t<td>\n"
-	    + "\t\t\t\t\t\t<form name = \"ManagementLogin\" method=\"post\">"
-	    + "\t\t\t\t\t\t\t<input type=\"user\" name=\"user\">"
-	    + "\t\t\t\t\t\t\t<input type=\"password\" name=\"password\">"
-	    + "\t\t\t\t\t\t\t<input type=\"submit\" value=\"Submit\">"
-	    + "\t\t\t\t\t\t</form>" + "\t\t\t\t\t</td>\n" + "\t\t\t\t</tr>\n";
+    private static final String LOGIN_PAGE = "<html>\n"
+	    + "\t\t<head>\n"
+	    + "\t\t\t<title>Login</title>\n"
+	    + "\t\t</head>\n"
+	    + "\t\t<body>\n"
+	    + "\t\t\t\t\t\t<br><form name = \"ManagementLogin\" method=\"post\">"
+	    + "\t\t\t\t\t\t\t<br><input type=\"user\" name=\"user\"></br>"
+	    + "\t\t\t\t\t\t\t<br><input type=\"password\" name=\"password\"></br>"
+	    + "\t\t\t\t\t\t\t<br><input type=\"submit\" value=\"Submit\"></br>"
+	    + "\t\t\t\t\t\t</form></br>\n";
 
-    private static final String INCORRECT_MESSAGE = "<tr><td><b>invalid user name / passowd</b></td></tr>";
+    private static final String INCORRECT_MESSAGE = "<br><b>invalid user name / passowd</b></br>";
 
-    private static final String END_LOGIN_PAGE = "\t\t\t</table>\n" + "</html>";
+    private static final String END_LOGIN_PAGE = "</html>";
 
     private static final String USER_PARAMETER_NAME = "user";
 
