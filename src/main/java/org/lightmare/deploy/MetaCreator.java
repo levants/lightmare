@@ -700,7 +700,7 @@ public class MetaCreator {
 	    return this;
 	}
 
-	public MetaCreator build() {
+	public MetaCreator build() throws IOException {
 	    MetaCreator.CONFIG.configure();
 	    MetaContainer.setCreator(creator);
 	    LOG.info("Lightmare application starts working");
