@@ -20,13 +20,14 @@ public class InjectTest {
     @BeforeClass
     public static void init() {
 
-	MetaCreator.Builder builder = new MetaCreator.Builder();
-	MetaCreator creator = builder.build();
-	Package pkg = InjectMainBean.class.getPackage();
-	String resource = pkg.getName();
-	resource = resource.replace('.', '/');
-	System.out.println(resource);
 	try {
+	    MetaCreator.Builder builder = new MetaCreator.Builder();
+	    MetaCreator creator = builder.build();
+	    Package pkg = InjectMainBean.class.getPackage();
+	    String resource = pkg.getName();
+	    resource = resource.replace('.', '/');
+	    System.out.println(resource);
+
 	    URL url = InjectMainBeanRemote.class.getClassLoader().getResource(
 		    resource);
 	    URL[] urls = { url };
