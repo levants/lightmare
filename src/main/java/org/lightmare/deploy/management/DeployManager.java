@@ -52,12 +52,19 @@ public class DeployManager extends HttpServlet {
 
     private static final String UNDEPLOY_TYPE = "undeploy";
 
+    private static final String FILE_TYPE_PARAMETER_NAME = "fileType";
+
+    private static final String APP_DEPLOYMENT_TYPE = "application";
+
+    private static final String DTS_DEPLOYMENT_TYPE = "datasource";
+
     private static final String BEGIN_PAGE = "<html>\n"
 	    + "\t<head><script type=\"text/javascript\">\n"
 	    + "/* <![CDATA[ */\n"
-	    + "\t\tfunction sendRequest(redeploy, type){\n "
+	    + "\t\tfunction sendRequest(redeploy, type, fileType){\n "
 	    + "\t\t\tvar xmlhttp = new XMLHttpRequest();\n "
-	    + "\t\t\txmlhttp.open(\"GET\",\"DeployManager?file=\" + redeploy + \"&type=\" + type, true);\n"
+	    + "\t\t\tvar reqUrl = \"DeployManager?file=\" + redeploy + \"&type=\" + type + \"&fileType=\" + fileType"
+	    + "\t\t\txmlhttp.open(\"GET\", reqUrl, true);\n"
 	    + "\t\t\txmlhttp.send();\n" + "}\n" + "/* ]]> */\n" + "</script>\n"
 	    + "\t<title>Deployment management</title>" + "</head>\n"
 	    + "\t<body>\n" + "\t<table>\n"
