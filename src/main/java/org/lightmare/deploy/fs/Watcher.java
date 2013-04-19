@@ -30,6 +30,8 @@ import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 import org.lightmare.utils.fs.WatchUtils;
 
 /**
+ * Deployment manager, {@link Watcher#deployFile(URL)},
+ * {@link Watcher#undeployFile(URL)}, {@link Watcher#listDeployments()} and
  * {@link File} modification event handler for deployments if java version is
  * 1.7 or above
  * 
