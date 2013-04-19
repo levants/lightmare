@@ -66,7 +66,9 @@ public class DeployManager extends HttpServlet {
 	    + "}\n"
 	    + "/* ]]> */\n"
 	    + "</script>\n"
-	    + "</head>\n" + "<body>\n<table>\n";
+	    + "<title>Deployment management</title>"
+	    + "</head>\n"
+	    + "<body>\n<table>\n";
 
     private static final String END_PAGE = "</body></table>\n</html>";
 
