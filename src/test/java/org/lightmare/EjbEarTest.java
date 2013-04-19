@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lightmare.bean.LightMareBeanRemote;
 import org.lightmare.bean.LightMareFalseBeanRemote;
+import org.lightmare.cache.MetaContainer;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.entities.Person;
@@ -193,5 +194,6 @@ public class EjbEarTest {
 	    i++;
 	}
 	MetaCreator.closeAllConnections();
+	MetaContainer.clear();
     }
 }

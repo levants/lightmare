@@ -70,6 +70,19 @@ public class MetaContainer {
     }
 
     /**
+     * Removes all cached resources
+     */
+    public static void clear() {
+
+	if (ObjectUtils.notNull(creator)) {
+	    synchronized (MetaContainer.class) {
+		creator.clear();
+		creator = null;
+	    }
+	}
+    }
+
+    /**
      * Adds {@link MetaData} to cache on specified bean name if absent and
      * returns previous value on this name or null if such value does not exists
      * 

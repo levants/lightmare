@@ -527,6 +527,8 @@ public class MetaCreator {
 	    classOwnersURL.clear();
 	    classOwnersURL = null;
 	}
+
+	closeConnections();
     }
 
     /**
