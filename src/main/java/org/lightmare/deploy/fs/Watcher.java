@@ -121,6 +121,11 @@ public class Watcher implements Runnable {
 	return type;
     }
 
+    /**
+     * Lists all deployed {@link File}s
+     * 
+     * @return {@link List}<File>
+     */
     public static List<File> listDeployments() {
 
 	Set<String> paths = MetaCreator.CONFIG.getDeploymentPath();
@@ -136,6 +141,11 @@ public class Watcher implements Runnable {
 	return list;
     }
 
+    /**
+     * Lists all data source {@link File}s
+     * 
+     * @return {@link List}<File>
+     */
     public static List<File> listDataSources() {
 
 	Set<String> paths = MetaCreator.CONFIG.getDataSourcePath();
