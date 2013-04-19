@@ -123,6 +123,15 @@ public class Watcher implements Runnable {
 	return type;
     }
 
+    private static void fillFileList(File[] files, List<File> list) {
+
+	if (ObjectUtils.available(files)) {
+	    for (File file : files) {
+		list.add(file);
+	    }
+	}
+    }
+
     /**
      * Lists all deployed {@link File}s
      * 
@@ -133,10 +142,10 @@ public class Watcher implements Runnable {
 	Set<String> paths = MetaCreator.CONFIG.getDeploymentPath();
 	File[] files;
 	List<File> list = new ArrayList<File>();
-	for (String path : paths) {
-	    files = new File(path).listFiles(new DeployFiletr());
-	    for (File file : files) {
-		list.add(file);
+	if (ObjectUtils.available(paths)) {
+	    for (String path : paths) {
+		files = new File(path).listFiles(new DeployFiletr());
+		fillFileList(files, list);
 	    }
 	}
 
@@ -153,10 +162,10 @@ public class Watcher implements Runnable {
 	Set<String> paths = MetaCreator.CONFIG.getDataSourcePath();
 	File[] files;
 	List<File> list = new ArrayList<File>();
-	for (String path : paths) {
-	    files = new File(path).listFiles(new DeployFiletr());
-	    for (File file : files) {
-		list.add(file);
+	if (ObjectUtils.available(paths)) {
+	    for (String path : paths) {
+		files = new File(path).listFiles(new DeployFiletr());
+		fillFileList(files, list);
 	    }
 	}
 
