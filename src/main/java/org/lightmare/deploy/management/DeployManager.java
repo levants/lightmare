@@ -161,7 +161,6 @@ public class DeployManager extends HttpServlet {
 	builder.append(REDEPLOY_NAME_TAG);
 	builder.append(type);
 	builder.append(REDEPLOY_END_TAG);
-	builder.append(END_TAGS);
     }
 
     private String getTag(String app, String fileType) {
@@ -175,6 +174,8 @@ public class DeployManager extends HttpServlet {
 
 	fillDeployType(builder, app, UNDEPLOY_TYPE, fileType);
 	fillDeployType(builder, app, REDEPLOY_TYPE, fileType);
+
+	builder.append(END_TAGS);
 
 	return builder.toString();
     }
