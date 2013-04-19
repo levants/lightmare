@@ -532,6 +532,15 @@ public class MetaCreator {
     }
 
     /**
+     * Closes all connections clears all caches
+     */
+    public static void close() {
+
+	closeConnections();
+	MetaContainer.clear();
+    }
+
+    /**
      * Builder class to provide properties for lightmare
      * 
      * @author levan
