@@ -39,7 +39,7 @@ public class DeployManager extends HttpServlet {
 
     private static final String END_NAME_TAGS = "</a></td>\n";
 
-    private static final String END_TAGS = "</td></tr>";
+    private static final String END_TAGS = "</td><td><a href = \"DeployManager\">reload</a></td></tr>";
 
     private static final String UNDEPLOY_START = "<td><a name = \"";
 
@@ -57,20 +57,18 @@ public class DeployManager extends HttpServlet {
 
     private static final String UNDEPLOY_TYPE = "undeploy";
 
-    private static final String BEGIN_PAGE = "<html><head><script type=\"text/javascript\">\n"
+    private static final String BEGIN_PAGE = "<html>\n"
+	    + "\t<head><script type=\"text/javascript\">\n"
 	    + "/* <![CDATA[ */\n"
-	    + "function sendRequest(redeploy, type){\n "
-	    + "\t\tvar xmlhttp = new XMLHttpRequest();\n "
-	    + "\t\txmlhttp.open(\"GET\",\"DeployManager?file=\" + redeploy + \"&type=\" + type, true);\n"
-	    + "\t\txmlhttp.send();\n"
-	    + "}\n"
-	    + "/* ]]> */\n"
-	    + "</script>\n"
-	    + "<title>Deployment management</title>"
-	    + "</head>\n"
-	    + "<body>\n<table>\n";
+	    + "\t\tfunction sendRequest(redeploy, type){\n "
+	    + "\t\t\tvar xmlhttp = new XMLHttpRequest();\n "
+	    + "\t\t\txmlhttp.open(\"GET\",\"DeployManager?file=\" + redeploy + \"&type=\" + type, true);\n"
+	    + "\t\t\txmlhttp.send();\n" + "}\n" + "/* ]]> */\n" + "</script>\n"
+	    + "\t<title>Deployment management</title>" + "</head>\n"
+	    + "\t<body>\n" + "\t<table>\n"
+	    + "\t\t<tr><td><br><b>deployments</b></br></td></tr>\n";
 
-    private static final String END_PAGE = "</body></table>\n</html>";
+    private static final String END_PAGE = "</body></table>\n" + "</html>";
 
     private static final Logger LOG = Logger.getLogger(DeployManager.class);
 
