@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
-import java.net.URL;
 import java.util.List;
 
 import javax.servlet.Servlet;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.fs.WatchUtils;
 
 /**
  * {@link Servlet} to manage deployed applications
@@ -28,6 +26,7 @@ public class DeployManager extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    // html tags
     private static final String BEGIN_TAGS = "<tr><td><a name = \"";
 
     private static final String NAME_OF_TAGS = "\" href=\"#\"\">";
@@ -36,27 +35,15 @@ public class DeployManager extends HttpServlet {
 
     private static final String END_TAGS = "</td><td><a href = \"DeployManager\">reload</a></td></tr>";
 
-    private static final String UNDEPLOY_START = "<td><a name = \"";
+    private static final String REDEPLOY_START_TAG = "<td><a name = \"";
 
-    private static final String UNDEPLOY_END = "\" href=\"#\" onClick=\"sendRequest(this.name, 'undeploy')\">undeploy</a></td>";
+    private static final String REDEPLOY_TYPE_TAG = "\" href=\"#\" onClick=\"sendRequest(this.name, '";
 
-    private static final String REDEPLOY_START = "<td><a name = \"";
+    private static final String REDEPLOY_FILE_TYPE_TAG = "', '";
 
-    private static final String REDEPLOY_END = "\" href=\"#\" onClick=\"sendRequest(this.name, 'redeploy')\">redeploy</a></td>";
+    private static final String REDEPLOY_NAME_TAG = "')\">";
 
-    private static final String REDEPLOY_PARAM_NAME = "file";
-
-    private static final String TYPE_PARAM_NAME = "type";
-
-    private static final String REDEPLOY_TYPE = "redeploy";
-
-    private static final String UNDEPLOY_TYPE = "undeploy";
-
-    private static final String FILE_TYPE_PARAMETER_NAME = "fileType";
-
-    private static final String APP_DEPLOYMENT_TYPE = "application";
-
-    private static final String DTS_DEPLOYMENT_TYPE = "datasource";
+    private static final String REDEPLOY_END_TAG = "</a></td>";
 
     private static final String BEGIN_PAGE = "<html>\n"
 	    + "\t<head><script type=\"text/javascript\">\n"
@@ -67,8 +54,11 @@ public class DeployManager extends HttpServlet {
 	    + "\t\t\txmlhttp.open(\"GET\", reqUrl, true);\n"
 	    + "\t\t\txmlhttp.send();\n" + "}\n" + "/* ]]> */\n" + "</script>\n"
 	    + "\t<title>Deployment management</title>" + "</head>\n"
-	    + "\t<body>\n" + "\t<table>\n"
-	    + "\t\t<tr><td><br><b>deployments</b></br></td></tr>\n";
+	    + "\t<body>\n" + "\t<table>\n";
+
+    private static final String TYPE_TAG = "\t\t<tr><td><br><b>";
+
+    private static final String END_TYPE_TAG = "</b></br></td></tr>\n";
 
     private static final String END_PAGE = "</body></table>\n" + "</html>";
 
@@ -86,6 +76,25 @@ public class DeployManager extends HttpServlet {
     private static final String INCORRECT_MESSAGE = "<br><b>invalid user name / passowd</b></br>";
 
     private static final String END_LOGIN_PAGE = "</html>";
+
+    private static final String DEPLOYMENTS = "deployments";
+
+    private static final String DATA_SOURCES = "datasources";
+
+    // http parameters
+    private static final String REDEPLOY_PARAM_NAME = "file";
+
+    private static final String TYPE_PARAM_NAME = "type";
+
+    private static final String REDEPLOY_TYPE = "redeploy";
+
+    private static final String UNDEPLOY_TYPE = "undeploy";
+
+    protected static final String FILE_TYPE_PARAMETER_NAME = "fileType";
+
+    private static final String APP_DEPLOYMENT_TYPE = "application";
+
+    private static final String DTS_DEPLOYMENT_TYPE = "datasource";
 
     private static final String USER_PARAMETER_NAME = "user";
 
@@ -108,20 +117,54 @@ public class DeployManager extends HttpServlet {
 
     private String getApplications() {
 
-	List<File> files = Watcher.listDeployments();
+	List<File> apps = Watcher.listDeployments();
+	List<File> dss = Watcher.listDataSources();
 	StringBuilder builder = new StringBuilder();
 	builder.append(BEGIN_PAGE);
+	builder.append(TYPE_TAG);
+	builder.append(DEPLOYMENTS);
+	builder.append(END_TYPE_TAG);
 	String tag;
-	for (File app : files) {
-	    tag = getTag(app.getPath());
-	    builder.append(tag);
+	if (ObjectUtils.available(apps)) {
+	    for (File app : apps) {
+		tag = getTag(app.getPath(), APP_DEPLOYMENT_TYPE);
+		builder.append(tag);
+	    }
 	}
+
+	builder.append(BEGIN_PAGE);
+	builder.append(TYPE_TAG);
+	builder.append(DATA_SOURCES);
+	builder.append(END_TYPE_TAG);
+
+	if (ObjectUtils.available(dss)) {
+	    for (File ds : dss) {
+		tag = getTag(ds.getPath(), DTS_DEPLOYMENT_TYPE);
+		builder.append(tag);
+	    }
+	}
+
 	builder.append(END_PAGE);
 
 	return builder.toString();
     }
 
-    private String getTag(String app) {
+    private void fillDeployType(StringBuilder builder, String app, String type,
+	    String fileType) {
+
+	builder.append(REDEPLOY_START_TAG);
+	builder.append(app);
+	builder.append(REDEPLOY_TYPE_TAG);
+	builder.append(type);
+	builder.append(REDEPLOY_FILE_TYPE_TAG);
+	builder.append(fileType);
+	builder.append(REDEPLOY_NAME_TAG);
+	builder.append(type);
+	builder.append(REDEPLOY_END_TAG);
+	builder.append(END_TAGS);
+    }
+
+    private String getTag(String app, String fileType) {
 
 	StringBuilder builder = new StringBuilder();
 	builder.append(BEGIN_TAGS);
@@ -129,34 +172,11 @@ public class DeployManager extends HttpServlet {
 	builder.append(NAME_OF_TAGS);
 	builder.append(app);
 	builder.append(END_NAME_TAGS);
-	builder.append(UNDEPLOY_START);
-	builder.append(app);
-	builder.append(UNDEPLOY_END);
-	builder.append(REDEPLOY_START);
-	builder.append(app);
-	builder.append(REDEPLOY_END);
-	builder.append(END_TAGS);
+
+	fillDeployType(builder, app, UNDEPLOY_TYPE, fileType);
+	fillDeployType(builder, app, REDEPLOY_TYPE, fileType);
 
 	return builder.toString();
-    }
-
-    private URL getURL(String fileName) throws IOException {
-
-	URL url = new File(fileName).toURI().toURL();
-	url = WatchUtils.clearURL(url);
-
-	return url;
-    }
-
-    private void redeploy(URL url) throws IOException {
-
-	Watcher.undeployFile(url);
-	Watcher.deployFile(url);
-    }
-
-    private void undeploy(URL url) throws IOException {
-
-	Watcher.undeployFile(url);
     }
 
     private String toLoginPage(boolean incorrect) {
@@ -211,11 +231,10 @@ public class DeployManager extends HttpServlet {
 	    String fileName = request.getParameter(REDEPLOY_PARAM_NAME);
 	    String type = request.getParameter(TYPE_PARAM_NAME);
 	    if (ObjectUtils.available(fileName)) {
-		URL url = getURL(fileName);
 		if (type == null || REDEPLOY_TYPE.equals(type)) {
-		    redeploy(url);
+		    Watcher.redeployFile(fileName);
 		} else if (UNDEPLOY_TYPE.equals(type)) {
-		    undeploy(url);
+		    Watcher.undeployFile(fileName);
 		}
 	    }
 	    html = getApplications();

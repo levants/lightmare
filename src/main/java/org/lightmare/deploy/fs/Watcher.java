@@ -94,7 +94,7 @@ public class Watcher implements Runnable {
 	dataSources = MetaCreator.CONFIG.getDataSourcePath();
     }
 
-    private URL getAppropriateURL(String fileName) throws IOException {
+    private static URL getAppropriateURL(String fileName) throws IOException {
 
 	File file = new File(fileName);
 	URL url = file.toURI().toURL();
@@ -103,11 +103,14 @@ public class Watcher implements Runnable {
 	return url;
     }
 
-    private WatchFileType checkType(String fileName) {
+    private static WatchFileType checkType(String fileName) {
 
 	WatchFileType type;
 	File file = new File(fileName);
 	String path = file.getParent();
+
+	Set<String> deployments = MetaCreator.CONFIG.getDeploymentPath();
+	Set<String> dataSources = MetaCreator.CONFIG.getDataSourcePath();
 
 	if (ObjectUtils.available(deployments) && deployments.contains(path)) {
 	    type = WatchFileType.DEPLOYMENT;
@@ -161,7 +164,7 @@ public class Watcher implements Runnable {
 	return list;
     }
 
-    private void deployFile(String fileName) throws IOException {
+    public static void deployFile(String fileName) throws IOException {
 
 	WatchFileType type = checkType(fileName);
 	if (type.equals(WatchFileType.DATA_SOURCE)) {
@@ -185,7 +188,7 @@ public class Watcher implements Runnable {
 	MetaContainer.getCreator().clear();
     }
 
-    private void undeployFile(String fileName) throws IOException {
+    public static void undeployFile(String fileName) throws IOException {
 
 	WatchFileType type = checkType(fileName);
 	if (type.equals(WatchFileType.DATA_SOURCE)) {
@@ -196,7 +199,7 @@ public class Watcher implements Runnable {
 	}
     }
 
-    private void redeployFile(String fileName) throws IOException {
+    public static void redeployFile(String fileName) throws IOException {
 
 	undeployFile(fileName);
 	deployFile(fileName);
