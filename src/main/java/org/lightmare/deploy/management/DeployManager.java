@@ -49,7 +49,7 @@ public class DeployManager extends HttpServlet {
 
     private static final String REDEPLOY_END = "\" href=\"#\" onClick=\"sendRequest(this.name, 'redeploy')\">redeploy</a></td>";
 
-    private static final String REDEPLOY_PARAM_NAME = "redeploy";
+    private static final String REDEPLOY_PARAM_NAME = "file";
 
     private static final String TYPE_PARAM_NAME = "type";
 
@@ -61,7 +61,7 @@ public class DeployManager extends HttpServlet {
 	    + "/* <![CDATA[ */\n"
 	    + "function sendRequest(redeploy, type){\n "
 	    + "\t\tvar xmlhttp = new XMLHttpRequest();\n "
-	    + "\t\txmlhttp.open(\"GET\",\"DeployManager?redeploy=\" + redeploy + \"&type=\" + type, true);\n"
+	    + "\t\txmlhttp.open(\"GET\",\"DeployManager?file=\" + redeploy + \"&type=\" + type, true);\n"
 	    + "\t\txmlhttp.send();\n"
 	    + "}\n"
 	    + "/* ]]> */\n"
