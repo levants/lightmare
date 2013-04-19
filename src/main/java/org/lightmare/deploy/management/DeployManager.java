@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.WatchUtils;
@@ -86,8 +85,6 @@ public class DeployManager extends HttpServlet {
     private static final String PASS_PARAMETER_NAME = "password";
 
     private static final String DEPLOY_PASS_KEY = "deploy_manager_pass";
-
-    private static final Logger LOG = Logger.getLogger(DeployManager.class);
 
     /**
      * Class to cache authenticated users for {@link DeployManager} servlet page
