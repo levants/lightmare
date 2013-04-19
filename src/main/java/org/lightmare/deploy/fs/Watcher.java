@@ -136,6 +136,21 @@ public class Watcher implements Runnable {
 	return list;
     }
 
+    public static List<File> listDataSources() {
+
+	Set<String> paths = MetaCreator.CONFIG.getDataSourcePath();
+	File[] files;
+	List<File> list = new ArrayList<File>();
+	for (String path : paths) {
+	    files = new File(path).listFiles(new DeployFiletr());
+	    for (File file : files) {
+		list.add(file);
+	    }
+	}
+
+	return list;
+    }
+
     private void deployFile(String fileName) throws IOException {
 
 	WatchFileType type = checkType(fileName);
