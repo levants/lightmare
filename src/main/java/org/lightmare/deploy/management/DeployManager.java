@@ -1,15 +1,11 @@
 package org.lightmare.deploy.management;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -19,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.lightmare.cache.MetaContainer;
-import org.lightmare.deploy.MetaCreator;
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.WatchUtils;
@@ -108,53 +102,9 @@ public class DeployManager extends HttpServlet {
 	private String userName;
     }
 
-    /**
-     * To filter only deployed sub files from directory
-     * 
-     * @author levan
-     * 
-     */
-    private static class DeployFiletr implements FileFilter {
-
-	@Override
-	public boolean accept(File file) {
-
-	    boolean accept;
-	    try {
-		URL url = file.toURI().toURL();
-		url = WatchUtils.clearURL(url);
-		accept = MetaContainer.chackDeployment(url);
-	    } catch (MalformedURLException ex) {
-		LOG.error(ex.getMessage(), ex);
-		accept = false;
-	    } catch (IOException ex) {
-		LOG.error(ex.getMessage(), ex);
-		accept = false;
-	    }
-
-	    return accept;
-	}
-
-    }
-
-    private List<File> listDeployments() {
-
-	Set<String> paths = MetaCreator.CONFIG.getDeploymentPath();
-	File[] files;
-	List<File> list = new ArrayList<File>();
-	for (String path : paths) {
-	    files = new File(path).listFiles(new DeployFiletr());
-	    for (File file : files) {
-		list.add(file);
-	    }
-	}
-
-	return list;
-    }
-
     private String getApplications() {
 
-	List<File> files = listDeployments();
+	List<File> files = Watcher.listDeployments();
 	StringBuilder builder = new StringBuilder();
 	builder.append(BEGIN_PAGE);
 	String tag;

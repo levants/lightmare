@@ -1,7 +1,9 @@
 package org.lightmare.deploy.fs;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -11,6 +13,7 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchEvent.Kind;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -55,6 +58,35 @@ public class Watcher implements Runnable {
 	DATA_SOURCE, DEPLOYMENT, NONE;
     }
 
+    /**
+     * To filter only deployed sub files from directory
+     * 
+     * @author levan
+     * 
+     */
+    private static class DeployFiletr implements FileFilter {
+
+	@Override
+	public boolean accept(File file) {
+
+	    boolean accept;
+	    try {
+		URL url = file.toURI().toURL();
+		url = WatchUtils.clearURL(url);
+		accept = MetaContainer.chackDeployment(url);
+	    } catch (MalformedURLException ex) {
+		LOG.error(ex.getMessage(), ex);
+		accept = false;
+	    } catch (IOException ex) {
+		LOG.error(ex.getMessage(), ex);
+		accept = false;
+	    }
+
+	    return accept;
+	}
+
+    }
+
     private Watcher() {
 	deployments = MetaCreator.CONFIG.getDeploymentPath();
 	dataSources = MetaCreator.CONFIG.getDataSourcePath();
@@ -85,6 +117,21 @@ public class Watcher implements Runnable {
 	}
 
 	return type;
+    }
+
+    public static List<File> listDeployments() {
+
+	Set<String> paths = MetaCreator.CONFIG.getDeploymentPath();
+	File[] files;
+	List<File> list = new ArrayList<File>();
+	for (String path : paths) {
+	    files = new File(path).listFiles(new DeployFiletr());
+	    for (File file : files) {
+		list.add(file);
+	    }
+	}
+
+	return list;
     }
 
     private void deployFile(String fileName) throws IOException {
