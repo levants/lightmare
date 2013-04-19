@@ -160,12 +160,12 @@ public class Watcher implements Runnable {
     public static List<File> listDataSources() {
 
 	Set<String> paths = MetaCreator.CONFIG.getDataSourcePath();
-	File[] files;
+	File file;
 	List<File> list = new ArrayList<File>();
 	if (ObjectUtils.available(paths)) {
 	    for (String path : paths) {
-		files = new File(path).listFiles(new DeployFiletr());
-		fillFileList(files, list);
+		file = new File(path);
+		list.add(file);
 	    }
 	}
 
