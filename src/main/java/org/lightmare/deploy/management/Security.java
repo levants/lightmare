@@ -51,6 +51,11 @@ public class Security {
 	}
     }
 
+    public boolean check() {
+
+	return ObjectUtils.notAvailable(cache);
+    }
+
     public boolean authenticate(String user, String pass) {
 
 	boolean valid;
