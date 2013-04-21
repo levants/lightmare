@@ -648,6 +648,11 @@ public class MetaCreator {
 	    return this;
 	}
 
+	public Builder setAdminUsersPth(String property) {
+	    CONFIG.putValue(Configuration.ADMIN_USERS_PATH, property);
+	    return this;
+	}
+
 	public Builder setIpAddress(String property) {
 	    CONFIG.putValue(Configuration.IP_ADDRESS, property);
 	    return this;

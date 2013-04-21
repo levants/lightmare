@@ -24,6 +24,9 @@ public class Configuration {
     // cache for all configuration passed programmatically or read from file
     private final Map<String, String> config = new HashMap<String, String>();
 
+    // path where stored adminitrator users
+    public static final String ADMIN_USERS_PATH = "adminUsersPath";
+
     // Default semaphore capacity
     public static final int SEMAPHORE_SIZE = 1;
 
@@ -54,6 +57,8 @@ public class Configuration {
     /**
      * Default properties
      */
+    public static final String ADMIN_USERS_PATH_DEF = "./admin/users.properties";
+
     public static final String IP_ADDRESS_DEF = "0.0.0.0";
 
     public static final String PORT_DEF = "1199";
