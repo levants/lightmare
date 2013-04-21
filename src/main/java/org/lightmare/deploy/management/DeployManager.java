@@ -102,6 +102,8 @@ public class DeployManager extends HttpServlet {
 
     private static final String DEPLOY_PASS_KEY = "deploy_manager_pass";
 
+    private Security security;
+
     /**
      * Class to cache authenticated users for {@link DeployManager} servlet page
      * 
@@ -219,6 +221,18 @@ public class DeployManager extends HttpServlet {
 	}
 
 	return valid;
+    }
+
+    @Override
+    public void init() throws ServletException {
+
+	try {
+	    security = new Security();
+	} catch (IOException ex) {
+
+	}
+
+	super.init();
     }
 
     @Override
