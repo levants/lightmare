@@ -88,7 +88,7 @@ public class LibraryLoader {
 
     public static ClassLoader getEnrichedLoader(URL[] urls) {
 	URLClassLoader urlLoader = null;
-	if (urls.length > 0) {
+	if (ObjectUtils.available(urls)) {
 	    urlLoader = URLClassLoader.newInstance(urls,
 		    MetaUtils.getContextClassLoader());
 	}
@@ -107,8 +107,12 @@ public class LibraryLoader {
 	}
     }
 
-    public static void loadEarLibraries() {
+    public static void loadURLToSystem(URL[] urls, Method method,
+	    URLClassLoader urlLoader) throws IOException {
 
+	for (URL url : urls) {
+	    MetaUtils.invokePrivate(method, urlLoader, url);
+	}
     }
 
     private static void loadLibraryFromPath(String libraryPath)
@@ -123,10 +127,7 @@ public class LibraryLoader {
 		    .getSystemClassLoader();
 
 	    Method method = getURLMethod();
-	    for (URL url : paths) {
-		MetaUtils
-			.invokePrivate(method, urlLoader, new Object[] { url });
-	    }
+	    loadURLToSystem(paths, method, urlLoader);
 	}
     }
 
