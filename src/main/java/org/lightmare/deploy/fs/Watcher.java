@@ -193,7 +193,6 @@ public class Watcher implements Runnable {
     public static void undeployFile(URL url) throws IOException {
 
 	MetaContainer.undeploy(url);
-	MetaContainer.getCreator().clear();
     }
 
     public static void undeployFile(String fileName) throws IOException {
