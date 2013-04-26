@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,20 +39,40 @@ public class LibraryLoader {
 	return addURLMethod;
     }
 
+    /**
+     * Gets current {@link Thread}'s context {@link ClassLoader} object
+     * 
+     * @return {@link ClassLoader}
+     */
+    public static ClassLoader getContextClassLoader() {
+
+	PrivilegedAction<ClassLoader> action = new PrivilegedAction<ClassLoader>() {
+
+	    public ClassLoader run() {
+		Thread currentThread = Thread.currentThread();
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+		return classLoader;
+	    }
+	};
+	ClassLoader loader = AccessController.doPrivileged(action);
+
+	return loader;
+    }
+
     public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
 	    throws IOException {
 	FileUtils.getSubfiles(file, urls);
 	URL[] paths = ObjectUtils.toArray(urls, URL.class);
-	URLClassLoader urlLoader = URLClassLoader.newInstance(paths,
-		MetaUtils.getContextClassLoader());
+	ClassLoader parent = getContextClassLoader();
+	URLClassLoader urlLoader = URLClassLoader.newInstance(paths, parent);
 	return urlLoader;
     }
 
     public static ClassLoader getEnrichedLoader(URL[] urls) {
 	EjbClassLoader urlLoader = null;
 	if (ObjectUtils.available(urls)) {
-	    urlLoader = new EjbClassLoader(urls,
-		    MetaUtils.getContextClassLoader());
+	    ClassLoader parent = getContextClassLoader();
+	    urlLoader = EjbClassLoader.newInstance(urls, parent);
 	}
 	return urlLoader;
     }

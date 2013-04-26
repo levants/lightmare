@@ -5,8 +5,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
+
+import org.lightmare.libraries.LibraryLoader;
 
 /**
  * Class to use reflection {@link Method} calls and {@link Field} information
@@ -135,26 +135,6 @@ public class MetaUtils {
     }
 
     /**
-     * Gets current {@link Thread}'s context {@link ClassLoader} object
-     * 
-     * @return {@link ClassLoader}
-     */
-    public static ClassLoader getContextClassLoader() {
-
-	PrivilegedAction<ClassLoader> action = new PrivilegedAction<ClassLoader>() {
-
-	    public ClassLoader run() {
-		Thread currentThread = Thread.currentThread();
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-		return classLoader;
-	    }
-	};
-	ClassLoader loader = AccessController.doPrivileged(action);
-
-	return loader;
-    }
-
-    /**
      * Loads class by name with current {@link Thread}'s {@link ClassLoader} and
      * initializes it
      * 
@@ -168,7 +148,7 @@ public class MetaUtils {
 
 	Class<?> clazz;
 	try {
-	    ClassLoader loader = getContextClassLoader();
+	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    clazz = Class.forName(className, Boolean.TRUE, loader);
 	    return clazz;
 

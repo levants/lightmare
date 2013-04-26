@@ -2,6 +2,8 @@ package org.lightmare.libraries.loaders;
 
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 /**
  * Distinct {@link URLClassLoader} implementations for deployed ejb applications
@@ -17,5 +19,40 @@ public class EjbClassLoader extends URLClassLoader {
 
     public EjbClassLoader(final URL[] urls, final ClassLoader parent) {
 	super(urls, parent);
+    }
+
+    public static EjbClassLoader newInstance(final URL[] urls) {
+
+	PrivilegedAction<EjbClassLoader> action = new PrivilegedAction<EjbClassLoader>() {
+
+	    @Override
+	    public EjbClassLoader run() {
+
+		EjbClassLoader ejbClassLoader = new EjbClassLoader(urls);
+
+		return ejbClassLoader;
+	    }
+	};
+	EjbClassLoader loader = AccessController.doPrivileged(action);
+
+	return loader;
+    }
+
+    public static EjbClassLoader newInstance(final URL[] urls,
+	    final ClassLoader parent) {
+
+	PrivilegedAction<EjbClassLoader> action = new PrivilegedAction<EjbClassLoader>() {
+
+	    @Override
+	    public EjbClassLoader run() {
+
+		EjbClassLoader ejbClassLoader = new EjbClassLoader(urls, parent);
+
+		return ejbClassLoader;
+	    }
+	};
+	EjbClassLoader loader = AccessController.doPrivileged(action);
+
+	return loader;
     }
 }

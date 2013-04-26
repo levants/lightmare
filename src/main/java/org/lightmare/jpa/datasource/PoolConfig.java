@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
@@ -179,7 +180,7 @@ public class PoolConfig {
 
 	InputStream stream;
 	if (ObjectUtils.notAvailable(poolPath)) {
-	    ClassLoader loader = MetaUtils.getContextClassLoader();
+	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    stream = loader.getResourceAsStream(DEFAULT_POOL_PATH);
 	} else {
 	    File file = new File(poolPath);
