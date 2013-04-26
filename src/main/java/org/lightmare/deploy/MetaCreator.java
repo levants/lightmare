@@ -440,6 +440,8 @@ public class MetaCreator {
 		    deployBeans(beanNames);
 		}
 	    } finally {
+		// clears cached resources
+		clearCache();
 		// gets rid from all created temporary files
 		tmpResources.removeTempFiles();
 	    }
@@ -507,7 +509,7 @@ public class MetaCreator {
 	closeConnections();
     }
 
-    public void clear() {
+    private void clearCache() {
 
 	if (ObjectUtils.available(realURL)) {
 	    realURL.clear();
@@ -527,7 +529,11 @@ public class MetaCreator {
 	    classOwnersURL.clear();
 	    classOwnersURL = null;
 	}
+    }
 
+    public void clear() {
+
+	clearCache();
 	closeConnections();
     }
 
