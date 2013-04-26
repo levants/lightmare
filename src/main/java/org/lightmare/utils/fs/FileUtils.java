@@ -1,9 +1,15 @@
 package org.lightmare.utils.fs;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Set;
+
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Utility for removing {@link File}s recursively from file system
@@ -12,6 +18,60 @@ import java.net.URL;
  * 
  */
 public class FileUtils {
+
+    private static File[] listJavaFiles(File file) {
+
+	File[] subFiles = file.listFiles(new FilenameFilter() {
+
+	    @Override
+	    public boolean accept(File file, String name) {
+		return name.endsWith(".jar") || name.endsWith(".class")
+			|| file.isDirectory();
+	    }
+	});
+
+	return subFiles;
+    }
+
+    private static void addURL(Collection<URL> urls, File file)
+	    throws IOException {
+
+	try {
+	    urls.add(file.toURI().toURL());
+	} catch (MalformedURLException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    private static void addSubDirectory(File[] files, Set<URL> urls)
+	    throws IOException {
+
+	for (File subFile : files) {
+	    if (subFile.isDirectory()) {
+		getSubfiles(subFile, urls);
+	    } else {
+		addURL(urls, subFile);
+	    }
+	}
+    }
+
+    /**
+     * Gets all jar or class subfiles from specified {@link File} recursively
+     * 
+     * @param file
+     * @param urls
+     * @throws IOException
+     */
+    public static void getSubfiles(File file, Set<URL> urls) throws IOException {
+	if (file.isDirectory()) {
+	    File[] subFiles = listJavaFiles(file);
+	    if (ObjectUtils.available(subFiles)) {
+		addSubDirectory(subFiles, urls);
+	    }
+	} else {
+	    addURL(urls, file);
+	}
+    }
 
     /**
      * Check whether passed {@link URL} is from extracted ear directory
