@@ -117,7 +117,8 @@ public class EjbConnector {
     private <T> InvocationHandler getHandler(MetaData metaData)
 	    throws IOException {
 
-	LibraryLoader.loadCurrentLibraries(metaData.getLoader());
+	ClassLoader loader = metaData.getLoader();
+	LibraryLoader.loadCurrentLibraries(loader);
 
 	T beanInstance = getBeanInstance(metaData);
 
