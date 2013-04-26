@@ -44,7 +44,8 @@ import org.lightmare.utils.reflect.MetaUtils;
 import org.lightmare.utils.shutdown.ShutDown;
 
 /**
- * Determines and saves in cache ejb beans {@link org.lightmare.cache.MetaData} on startup
+ * Determines and saves in cache ejb beans {@link org.lightmare.cache.MetaData}
+ * on startup
  * 
  * @author Levan
  * 
@@ -440,7 +441,7 @@ public class MetaCreator {
 		}
 	    } finally {
 		// clears cached resources
-		clearCache();
+		clear();
 		// gets rid from all created temporary files
 		tmpResources.removeTempFiles();
 	    }
@@ -508,7 +509,7 @@ public class MetaCreator {
 	closeConnections();
     }
 
-    private void clearCache() {
+    public void clear() {
 
 	if (ObjectUtils.available(realURL)) {
 	    realURL.clear();
@@ -528,12 +529,6 @@ public class MetaCreator {
 	    classOwnersURL.clear();
 	    classOwnersURL = null;
 	}
-    }
-
-    public void clear() {
-
-	clearCache();
-	closeConnections();
     }
 
     /**
