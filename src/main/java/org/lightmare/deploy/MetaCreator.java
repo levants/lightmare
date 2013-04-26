@@ -28,7 +28,6 @@ import org.lightmare.annotations.UnitName;
 import org.lightmare.cache.ArchiveData;
 import org.lightmare.cache.DeployData;
 import org.lightmare.cache.MetaContainer;
-import org.lightmare.cache.MetaData;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.fs.Watcher;
@@ -45,7 +44,7 @@ import org.lightmare.utils.reflect.MetaUtils;
 import org.lightmare.utils.shutdown.ShutDown;
 
 /**
- * Determines and saves in cache ejb beans {@link MetaData} on startup
+ * Determines and saves in cache ejb beans {@link org.lightmare.cache.MetaData} on startup
  * 
  * @author Levan
  * 
