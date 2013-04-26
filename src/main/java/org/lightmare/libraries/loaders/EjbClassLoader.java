@@ -3,6 +3,12 @@ package org.lightmare.libraries.loaders;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+/**
+ * Distinct {@link URLClassLoader} implementations for deployed ejb applications
+ * 
+ * @author levan
+ * 
+ */
 public class EjbClassLoader extends URLClassLoader {
 
     public EjbClassLoader(final URL[] urls) {
@@ -11,20 +17,5 @@ public class EjbClassLoader extends URLClassLoader {
 
     public EjbClassLoader(final URL[] urls, final ClassLoader parent) {
 	super(urls, parent);
-    }
-
-    public static EjbClassLoader newInstance(final URL[] urls) {
-	URLClassLoader urlLoader = newInstance(urls);
-	EjbClassLoader instance = new EjbClassLoader(urls, urlLoader);
-
-	return instance;
-    }
-
-    public static EjbClassLoader newInstance(final URL[] urls,
-	    ClassLoader parent) {
-	URLClassLoader urlLoader = newInstance(urls, parent);
-	EjbClassLoader instance = new EjbClassLoader(urls, urlLoader);
-
-	return instance;
     }
 }
