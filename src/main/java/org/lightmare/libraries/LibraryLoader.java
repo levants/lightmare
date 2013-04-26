@@ -10,6 +10,7 @@ import java.net.URLClassLoader;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.lightmare.libraries.loaders.EjbClassLoader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
@@ -87,9 +88,9 @@ public class LibraryLoader {
     }
 
     public static ClassLoader getEnrichedLoader(URL[] urls) {
-	URLClassLoader urlLoader = null;
+	EjbClassLoader urlLoader = null;
 	if (ObjectUtils.available(urls)) {
-	    urlLoader = URLClassLoader.newInstance(urls,
+	    urlLoader = new EjbClassLoader(urls,
 		    MetaUtils.getContextClassLoader());
 	}
 	return urlLoader;

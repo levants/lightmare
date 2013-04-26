@@ -1,6 +1,7 @@
 package org.lightmare.utils.reflect;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,6 +16,82 @@ import java.security.PrivilegedAction;
  * 
  */
 public class MetaUtils {
+
+    /**
+     * Makes accessible passed {@link Constructor}'s and invokes
+     * {@link Constructor#newInstance(Object...)} method
+     * 
+     * @param constructor
+     * @param parameters
+     * @return <code>T</code>
+     * @throws IOException
+     */
+    public static <T> T newInstance(Constructor<T> constructor,
+	    Object... parameters) throws IOException {
+
+	boolean accessible = constructor.isAccessible();
+	try {
+	    if (!accessible) {
+		constructor.setAccessible(Boolean.TRUE);
+	    }
+	    T instance = constructor.newInstance(parameters);
+
+	    return instance;
+	} catch (InstantiationException ex) {
+	    throw new IOException(ex);
+	} catch (IllegalAccessException ex) {
+	    throw new IOException(ex);
+	} catch (IllegalArgumentException ex) {
+	    throw new IOException(ex);
+	} catch (InvocationTargetException ex) {
+	    throw new IOException(ex);
+	} finally {
+	    constructor.setAccessible(accessible);
+	}
+    }
+
+    /**
+     * Gets declared constructor for given {@link Class} and given parameters
+     * 
+     * @param type
+     * @param parameterTypes
+     * @return {@link Constructor}
+     * @throws IOException
+     */
+    public static <T> Constructor<T> getConstructor(Class<T> type,
+	    Class<?>... parameterTypes) throws IOException {
+
+	try {
+	    Constructor<T> constructor = type
+		    .getDeclaredConstructor(parameterTypes);
+
+	    return constructor;
+	} catch (NoSuchMethodException ex) {
+	    throw new IOException(ex);
+	} catch (SecurityException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
+     * Instantiates class by {@link Constructor} (MetaUtils
+     * {@link #newInstance(Constructor, Object...)}) after
+     * {@link MetaUtils#getConstructor(Class, Class...)} method call
+     * 
+     * @param type
+     * @param parameterTypes
+     * @param parameters
+     * @return <code>T</code>
+     * @throws IOException
+     */
+    public static <T> T callConstructor(Class<T> type,
+	    Class<?>[] parameterTypes, Object... parameters) throws IOException {
+
+	Constructor<T> constructor = getConstructor(type, parameterTypes);
+	T instance = newInstance(constructor, parameters);
+
+	return instance;
+    }
 
     /**
      * Loads class by name
@@ -186,7 +263,8 @@ public class MetaUtils {
     }
 
     /**
-     * Sets value to {@link Field} sets accessible Boolean.TRUE remporary if needed
+     * Sets value to {@link Field} sets accessible Boolean.TRUE remporary if
+     * needed
      * 
      * @param field
      * @param value
