@@ -68,6 +68,20 @@ public class LibraryLoader {
 	return urlLoader;
     }
 
+    /**
+     * Closes passed {@link ClassLoader} if it is instance of
+     * {@link URLClassLoader} class
+     * 
+     * @param loader
+     * @throws IOException
+     */
+    public static void clearClassLoader(ClassLoader loader) throws IOException {
+
+	if (loader instanceof URLClassLoader) {
+	    ((URLClassLoader) loader).close();
+	}
+    }
+
     public static ClassLoader getEnrichedLoader(URL[] urls) {
 	EjbClassLoader urlLoader = null;
 	if (ObjectUtils.available(urls)) {
