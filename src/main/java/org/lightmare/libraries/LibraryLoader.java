@@ -75,7 +75,7 @@ public class LibraryLoader {
      * @param loader
      * @throws IOException
      */
-    public static void clearClassLoader(ClassLoader loader) throws IOException {
+    public static void closeClassLoader(ClassLoader loader) throws IOException {
 
 	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
 	    ((URLClassLoader) loader).close();

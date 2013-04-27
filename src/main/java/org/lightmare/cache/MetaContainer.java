@@ -309,7 +309,7 @@ public class MetaContainer {
 	if (ObjectUtils.notNull(metaData)) {
 	    clearConnection(metaData);
 	    ClassLoader loader = metaData.getLoader();
-	    LibraryLoader.clearClassLoader(loader);
+	    LibraryLoader.closeClassLoader(loader);
 	    metaData.setLoader(null);
 	    metaData = null;
 	}
