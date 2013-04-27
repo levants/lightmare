@@ -79,6 +79,7 @@ public class LibraryLoader {
 
 	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
 	    ((URLClassLoader) loader).close();
+	    loader.clearAssertionStatus();
 	}
     }
 
