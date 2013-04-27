@@ -310,7 +310,6 @@ public class MetaContainer {
 	    clearConnection(metaData);
 	    ClassLoader loader = metaData.getLoader();
 	    LibraryLoader.closeClassLoader(loader);
-	    metaData.setLoader(null);
 	    metaData = null;
 	}
     }
