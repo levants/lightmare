@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.JPAManager;
+import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -307,6 +308,9 @@ public class MetaContainer {
 	removeMeta(beanName);
 	if (ObjectUtils.notNull(metaData)) {
 	    clearConnection(metaData);
+	    ClassLoader loader = metaData.getLoader();
+	    LibraryLoader.clearClassLoader(loader);
+	    metaData.setLoader(null);
 	    metaData = null;
 	}
     }
