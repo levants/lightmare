@@ -117,9 +117,6 @@ public class EjbConnector {
     private <T> InvocationHandler getHandler(MetaData metaData)
 	    throws IOException {
 
-	ClassLoader loader = metaData.getLoader();
-	LibraryLoader.loadCurrentLibraries(loader);
-
 	T beanInstance = getBeanInstance(metaData);
 
 	getEntityManagerFactories(metaData);
@@ -138,10 +135,12 @@ public class EjbConnector {
      * @return <code>T</code> implementation of bean interface
      */
     private <T> T instatiateBean(Class<T> interfaceClass,
-	    InvocationHandler handler) {
+	    InvocationHandler handler, ClassLoader loader) {
 
 	Class<?>[] interfaceArray = { interfaceClass };
-	ClassLoader loader = LibraryLoader.getContextClassLoader();
+	if (loader == null) {
+	    loader = LibraryLoader.getContextClassLoader();
+	}
 
 	@SuppressWarnings("unchecked")
 	T beanInstance = (T) Proxy.newProxyInstance(loader, interfaceArray,
@@ -162,9 +161,10 @@ public class EjbConnector {
 
 	InvocationHandler handler = getHandler(metaData);
 	Class<?> interfaceClass = metaData.getInterfaceClass();
+	ClassLoader loader = metaData.getLoader();
 
 	@SuppressWarnings("unchecked")
-	T beanInstance = (T) instatiateBean(interfaceClass, handler);
+	T beanInstance = (T) instatiateBean(interfaceClass, handler, loader);
 
 	return beanInstance;
     }
@@ -182,11 +182,13 @@ public class EjbConnector {
 	    Object... rpcArgs) throws IOException {
 	InvocationHandler handler;
 	Configuration configuration = MetaCreator.CONFIG;
+	ClassLoader loader;
 	if (configuration.isServer()) {
 
 	    MetaData metaData = getMeta(beanName);
 	    metaData.setInterfaceClass(interfaceClass);
 	    handler = getHandler(metaData);
+	    loader = metaData.getLoader();
 
 	} else {
 	    if (rpcArgs.length != RPC_ARGS_LENGTH) {
@@ -196,9 +198,10 @@ public class EjbConnector {
 	    String host = (String) rpcArgs[0];
 	    int port = (Integer) rpcArgs[1];
 	    handler = new BeanLocalHandler(new RPCall(host, port));
+	    loader = null;
 	}
 
-	T beanInstance = (T) instatiateBean(interfaceClass, handler);
+	T beanInstance = (T) instatiateBean(interfaceClass, handler, loader);
 
 	return beanInstance;
     }
