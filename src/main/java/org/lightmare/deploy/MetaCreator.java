@@ -349,7 +349,7 @@ public class MetaCreator {
 		    ioUtils.scan(persXmlFromJar);
 		}
 		URL[] libURLs = ioUtils.getURLs();
-		loader = LibraryLoader.getEnrichedLoader(libURLs);
+		loader = LibraryLoader.initializeLoader(libURLs);
 		archiveData.setLoader(loader);
 	    }
 	    tmpFiles = ioUtils.getTmpFiles();

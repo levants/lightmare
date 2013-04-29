@@ -9,6 +9,9 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 import org.lightmare.libraries.loaders.EjbClassLoader;
 import org.lightmare.utils.ObjectUtils;
@@ -37,6 +40,44 @@ public class LibraryLoader {
 	}
 
 	return addURLMethod;
+    }
+
+    /**
+     * Initializes and returns enriched {@link ClassLoader} in separated
+     * {@link Thread} to load bean and library classes
+     * 
+     * @param urls
+     * @return {@link ClassLoader}
+     * @throws IOException
+     */
+    public static ClassLoader initializeLoader(final URL[] urls)
+	    throws IOException {
+
+	Callable<ClassLoader> initializer = new Callable<ClassLoader>() {
+
+	    @Override
+	    public ClassLoader call() throws Exception {
+
+		ClassLoader loader = getEnrichedLoader(urls);
+
+		return loader;
+	    }
+	};
+
+	FutureTask<ClassLoader> task = new FutureTask<ClassLoader>(initializer);
+	Thread thread = new Thread(task);
+	thread.start();
+
+	ClassLoader initLoader;
+	try {
+	    initLoader = task.get();
+	} catch (InterruptedException ex) {
+	    throw new IOException(ex);
+	} catch (ExecutionException ex) {
+	    throw new IOException(ex);
+	}
+
+	return initLoader;
     }
 
     /**
