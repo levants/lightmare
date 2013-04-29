@@ -108,13 +108,14 @@ public class Watcher implements Runnable {
 	WatchFileType type;
 	File file = new File(fileName);
 	String path = file.getParent();
+	String parentPath = WatchUtils.clearPath(path);
 
 	Set<String> apps = MetaCreator.CONFIG.getDeploymentPath();
 	Set<String> dss = MetaCreator.CONFIG.getDataSourcePath();
 
-	if (ObjectUtils.available(apps) && apps.contains(path)) {
+	if (ObjectUtils.available(apps) && apps.contains(parentPath)) {
 	    type = WatchFileType.DEPLOYMENT;
-	} else if (ObjectUtils.available(dss) && dss.contains(path)) {
+	} else if (ObjectUtils.available(dss) && dss.contains(parentPath)) {
 	    type = WatchFileType.DATA_SOURCE;
 	} else {
 	    type = WatchFileType.NONE;
