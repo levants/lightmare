@@ -104,12 +104,15 @@ public class BeanLoader {
 	@Override
 	public void run() {
 
+	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    try {
 		initializer.registerDataSource(properties);
 		notifyDs();
 	    } catch (IOException ex) {
 		notifyDs();
 		LOG.error("Could not initialize datasource", ex);
+	    } finally {
+		LibraryLoader.loadCurrentLibraries(loader);
 	    }
 
 	}
@@ -151,10 +154,13 @@ public class BeanLoader {
 	@Override
 	public void run() {
 
+	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    try {
 		clearTmpData();
 	    } catch (InterruptedException ex) {
 		LOG.error("Coluld not clear temporary resources", ex);
+	    } finally {
+		LibraryLoader.loadCurrentLibraries(loader);
 	    }
 
 	}
@@ -503,30 +509,35 @@ public class BeanLoader {
 	@Override
 	public String call() throws Exception {
 
-	    synchronized (metaData) {
-		String deployed;
-		try {
-		    if (ObjectUtils.notNull(tmpFiles)) {
-			synchronized (tmpFiles) {
-			    try {
-				deployed = deploy();
-			    } finally {
-				tmpFiles.notifyAll();
+	    ClassLoader currentLoader = LibraryLoader.getContextClassLoader();
+	    try {
+		synchronized (metaData) {
+		    String deployed;
+		    try {
+			if (ObjectUtils.notNull(tmpFiles)) {
+			    synchronized (tmpFiles) {
+				try {
+				    deployed = deploy();
+				} finally {
+				    tmpFiles.notifyAll();
+				}
 			    }
+			} else {
+			    deployed = deploy();
 			}
-		    } else {
-			deployed = deploy();
+
+		    } catch (Exception ex) {
+			LOG.error(ex.getMessage(), ex);
+			deployed = null;
+		    } finally {
+			notifyConn();
+			metaData.notifyAll();
 		    }
 
-		} catch (Exception ex) {
-		    LOG.error(ex.getMessage(), ex);
-		    deployed = null;
-		} finally {
-		    notifyConn();
-		    metaData.notifyAll();
+		    return deployed;
 		}
-
-		return deployed;
+	    } finally {
+		LibraryLoader.loadCurrentLibraries(currentLoader);
 	    }
 	}
 

@@ -219,9 +219,11 @@ public class EjbConnector {
 	MetaData metaData = getMeta(beanName);
 
 	if (metaData.getInterfaceClass() == null) {
+	    ClassLoader loader = metaData.getLoader();
+
 	    @SuppressWarnings("unchecked")
-	    Class<T> interfaceClass = (Class<T>) MetaUtils
-		    .classForName(interfaceName);
+	    Class<T> interfaceClass = (Class<T>) MetaUtils.classForName(
+		    interfaceName, loader);
 	    metaData.setInterfaceClass(interfaceClass);
 	}
 
