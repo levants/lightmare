@@ -55,6 +55,8 @@ public class LibraryLoader {
     public static ClassLoader initializeLoader(final URL[] urls)
 	    throws IOException {
 
+	// Callable<ClassLoader> implementation to initialize ClassLoader in
+	// separate thread
 	Callable<ClassLoader> initializer = new Callable<ClassLoader>() {
 
 	    @Override
