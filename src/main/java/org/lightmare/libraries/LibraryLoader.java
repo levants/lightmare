@@ -32,6 +32,30 @@ public class LibraryLoader {
 
     private static Method addURLMethod;
 
+    /**
+     * {@link Callable}<ClassLoader> implementation to initialize
+     * {@link ClassLoader} in separate thread
+     * 
+     * @author levan
+     * 
+     */
+    private static class LibraryLoaderInit implements Callable<ClassLoader> {
+
+	private URL[] urls;
+
+	public LibraryLoaderInit(final URL[] urls) {
+	    this.urls = urls;
+	}
+
+	@Override
+	public ClassLoader call() throws Exception {
+
+	    ClassLoader loader = getEnrichedLoader(urls);
+
+	    return loader;
+	}
+    }
+
     private static Method getURLMethod() throws IOException {
 
 	if (addURLMethod == null) {
@@ -55,19 +79,7 @@ public class LibraryLoader {
     public static ClassLoader initializeLoader(final URL[] urls)
 	    throws IOException {
 
-	// Callable<ClassLoader> implementation to initialize ClassLoader in
-	// separate thread
-	Callable<ClassLoader> initializer = new Callable<ClassLoader>() {
-
-	    @Override
-	    public ClassLoader call() throws Exception {
-
-		ClassLoader loader = getEnrichedLoader(urls);
-
-		return loader;
-	    }
-	};
-
+	LibraryLoaderInit initializer = new LibraryLoaderInit(urls);
 	FutureTask<ClassLoader> task = new FutureTask<ClassLoader>(initializer);
 	Thread thread = new Thread(task);
 	thread.setName(LOADER_THREAD_NAME);
