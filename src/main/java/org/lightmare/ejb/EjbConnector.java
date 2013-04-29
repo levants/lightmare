@@ -226,7 +226,7 @@ public class EjbConnector {
 
 	    @SuppressWarnings("unchecked")
 	    Class<T> interfaceClass = (Class<T>) MetaUtils.classForName(
-		    interfaceName, loader);
+		    interfaceName, Boolean.FALSE, loader);
 	    metaData.setInterfaceClass(interfaceClass);
 	}
 
