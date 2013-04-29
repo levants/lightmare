@@ -86,16 +86,16 @@ public class LibraryLoader {
 	thread.setPriority(Thread.MAX_PRIORITY);
 	thread.start();
 
-	ClassLoader initLoader;
+	ClassLoader ejbLoader;
 	try {
-	    initLoader = task.get();
+	    ejbLoader = task.get();
 	} catch (InterruptedException ex) {
 	    throw new IOException(ex);
 	} catch (ExecutionException ex) {
 	    throw new IOException(ex);
 	}
 
-	return initLoader;
+	return ejbLoader;
     }
 
     /**
