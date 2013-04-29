@@ -28,6 +28,8 @@ public class LibraryLoader {
 
     private static final String ADD_URL_METHOD_NAME = "addURL";
 
+    private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
+
     private static Method addURLMethod;
 
     private static Method getURLMethod() throws IOException {
@@ -66,6 +68,8 @@ public class LibraryLoader {
 
 	FutureTask<ClassLoader> task = new FutureTask<ClassLoader>(initializer);
 	Thread thread = new Thread(task);
+	thread.setName(LOADER_THREAD_NAME);
+	thread.setPriority(Thread.MAX_PRIORITY);
 	thread.start();
 
 	ClassLoader initLoader;
