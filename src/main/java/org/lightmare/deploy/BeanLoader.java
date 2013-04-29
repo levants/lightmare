@@ -465,7 +465,8 @@ public class BeanLoader {
 	 */
 	private String createBeanClass() throws IOException {
 	    try {
-		Class<?> beanClass = MetaUtils.classForName(className, loader);
+		Class<?> beanClass = MetaUtils.classForName(className,
+			Boolean.FALSE, loader);
 		checkOnTransactional(beanClass);
 		Stateless annotation = beanClass.getAnnotation(Stateless.class);
 		String beanEjbName = annotation.name();

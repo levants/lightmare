@@ -135,6 +135,34 @@ public class MetaUtils {
     }
 
     /**
+     * Loads and if initialize parameter is true initializes class by name with
+     * specific {@link ClassLoader} if it is not <code>null</code>
+     * 
+     * @param className
+     * @param initialize
+     * @param loader
+     * @return {@link Class}
+     * @throws IOException
+     */
+    public static Class<?> classForName(String className, boolean initialize,
+	    ClassLoader loader) throws IOException {
+
+	Class<?> clazz;
+	try {
+	    if (loader == null) {
+		clazz = Class.forName(className);
+	    } else {
+		clazz = Class.forName(className, initialize, loader);
+	    }
+
+	    return clazz;
+
+	} catch (ClassNotFoundException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
      * Loads class by name with current {@link Thread}'s {@link ClassLoader} and
      * initializes it
      * 
