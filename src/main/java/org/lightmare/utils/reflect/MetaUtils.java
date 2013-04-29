@@ -212,7 +212,7 @@ public class MetaUtils {
      * @throws IOException
      */
     public static Method getDeclaredMethod(Class<?> clazz, String methodName,
-	    Class<?> parameterTypes) throws IOException {
+	    Class<?>... parameterTypes) throws IOException {
 
 	try {
 	    return clazz.getDeclaredMethod(methodName, parameterTypes);
