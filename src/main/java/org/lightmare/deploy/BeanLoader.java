@@ -485,7 +485,7 @@ public class BeanLoader {
 	private String deployFile() {
 
 	    String deployed = beanName;
-
+	    ClassLoader currentLoader = LibraryLoader.getContextClassLoader();
 	    try {
 		LibraryLoader.loadCurrentLibraries(loader);
 		deployed = createBeanClass();
@@ -499,6 +499,8 @@ public class BeanLoader {
 	    } catch (IOException ex) {
 		LOG.error(String.format("Could not deploy bean %s cause %s",
 			beanName, ex.getMessage()), ex);
+	    } finally {
+		LibraryLoader.loadCurrentLibraries(currentLoader);
 	    }
 
 	    return deployed;
@@ -545,13 +547,9 @@ public class BeanLoader {
 	@Override
 	public String call() throws Exception {
 
-	    ClassLoader currentLoader = LibraryLoader.getContextClassLoader();
-	    try {
-		String deployed = deploy();
-		return deployed;
-	    } finally {
-		LibraryLoader.loadCurrentLibraries(currentLoader);
-	    }
+	    String deployed = deploy();
+
+	    return deployed;
 	}
 
     }
