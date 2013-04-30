@@ -686,6 +686,7 @@ public class BeanLoader {
      * @param tmpFiles
      */
     public static <V> void removeResources(List<File> tmpFiles) {
+
 	ResourceCleaner cleaner = new ResourceCleaner(tmpFiles);
 	Callable<Boolean> privileged = AccessController
 		.doPrivileged(new ContextLoaderAction<Boolean>(cleaner));
