@@ -482,7 +482,7 @@ public class BeanLoader {
 	    }
 	}
 
-	private String deploy() {
+	private String deployFile() {
 
 	    String deployed = beanName;
 
@@ -504,36 +504,51 @@ public class BeanLoader {
 	    return deployed;
 	}
 
+	private String deployExtracted() {
+
+	    String deployed;
+	    synchronized (tmpFiles) {
+		try {
+		    deployed = deployFile();
+		} finally {
+		    tmpFiles.notifyAll();
+		}
+	    }
+
+	    return deployed;
+	}
+
+	private String deploy() {
+
+	    synchronized (metaData) {
+		String deployed;
+		try {
+		    if (ObjectUtils.notNull(tmpFiles)) {
+			deployed = deployExtracted();
+		    } else {
+			deployed = deployFile();
+		    }
+
+		} catch (Exception ex) {
+		    LOG.error(ex.getMessage(), ex);
+		    deployed = null;
+		} finally {
+		    notifyConn();
+		    metaData.notifyAll();
+		}
+
+		return deployed;
+
+	    }
+	}
+
 	@Override
 	public String call() throws Exception {
 
 	    ClassLoader currentLoader = LibraryLoader.getContextClassLoader();
 	    try {
-		synchronized (metaData) {
-		    String deployed;
-		    try {
-			if (ObjectUtils.notNull(tmpFiles)) {
-			    synchronized (tmpFiles) {
-				try {
-				    deployed = deploy();
-				} finally {
-				    tmpFiles.notifyAll();
-				}
-			    }
-			} else {
-			    deployed = deploy();
-			}
-
-		    } catch (Exception ex) {
-			LOG.error(ex.getMessage(), ex);
-			deployed = null;
-		    } finally {
-			notifyConn();
-			metaData.notifyAll();
-		    }
-
-		    return deployed;
-		}
+		String deployed = deploy();
+		return deployed;
 	    } finally {
 		LibraryLoader.loadCurrentLibraries(currentLoader);
 	    }
