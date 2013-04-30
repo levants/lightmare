@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -65,9 +67,38 @@ public class BeanLoader {
 		    Thread thread = new Thread(runnable);
 		    thread.setName(String.format("Ejb-Loader-Thread-%s",
 			    thread.getId()));
+		    thread.setPriority(Thread.MAX_PRIORITY);
 		    return thread;
 		}
 	    });
+
+    /**
+     * PrivilegedAction implementation to set
+     * {@link Executors#privilegedCallableUsingCurrentClassLoader()} passed
+     * {@link Callable} class
+     * 
+     * @author levan
+     * 
+     * @param <T>
+     */
+    private static class ContextLoaderAction<T> implements
+	    PrivilegedAction<Callable<T>> {
+
+	private final Callable<T> current;
+
+	public ContextLoaderAction(Callable<T> current) {
+	    this.current = current;
+	}
+
+	@Override
+	public Callable<T> run() {
+	    Callable<T> privileged = Executors
+		    .privilegedCallableUsingCurrentClassLoader(current);
+
+	    return privileged;
+	}
+
+    }
 
     /**
      * {@link Runnable} implementation for initializing and deploying
@@ -76,7 +107,7 @@ public class BeanLoader {
      * @author levan
      * 
      */
-    private static class ConnectionDeployer implements Runnable {
+    private static class ConnectionDeployer implements Callable<Boolean> {
 
 	private DataSourceInitializer initializer;
 
@@ -102,17 +133,22 @@ public class BeanLoader {
 	}
 
 	@Override
-	public void run() {
+	public Boolean call() throws Exception {
 
+	    boolean result;
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    try {
 		initializer.registerDataSource(properties);
+		result = Boolean.TRUE;
 	    } catch (IOException ex) {
+		result = Boolean.FALSE;
 		LOG.error("Could not initialize datasource", ex);
 	    } finally {
 		notifyDs();
 		LibraryLoader.loadCurrentLibraries(loader);
 	    }
+
+	    return result;
 	}
     }
 
@@ -122,7 +158,7 @@ public class BeanLoader {
      * @author levan
      * 
      */
-    private static class ResourceCleaner implements Runnable {
+    private static class ResourceCleaner implements Callable<Boolean> {
 
 	List<File> tmpFiles;
 
@@ -149,17 +185,21 @@ public class BeanLoader {
 	}
 
 	@Override
-	public void run() {
+	public Boolean call() throws Exception {
 
+	    boolean result;
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    try {
 		clearTmpData();
+		result = Boolean.TRUE;
 	    } catch (InterruptedException ex) {
+		result = Boolean.FALSE;
 		LOG.error("Coluld not clear temporary resources", ex);
 	    } finally {
 		LibraryLoader.loadCurrentLibraries(loader);
 	    }
 
+	    return result;
 	}
 
     }
@@ -631,9 +671,13 @@ public class BeanLoader {
     public static void initializeDatasource(DataSourceParameters parameters)
 	    throws IOException {
 
-	ConnectionDeployer connectionDeployer = new ConnectionDeployer(
+	final ConnectionDeployer connectionDeployer = new ConnectionDeployer(
 		parameters);
-	LOADER_POOL.submit(connectionDeployer);
+	Callable<Boolean> privileged = AccessController
+		.doPrivileged(new ContextLoaderAction<Boolean>(
+			connectionDeployer));
+
+	LOADER_POOL.submit(privileged);
     }
 
     /**
@@ -643,6 +687,9 @@ public class BeanLoader {
      */
     public static <V> void removeResources(List<File> tmpFiles) {
 	ResourceCleaner cleaner = new ResourceCleaner(tmpFiles);
-	LOADER_POOL.submit(cleaner);
+	Callable<Boolean> privileged = AccessController
+		.doPrivileged(new ContextLoaderAction<Boolean>(cleaner));
+
+	LOADER_POOL.submit(privileged);
     }
 }
