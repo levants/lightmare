@@ -1,7 +1,6 @@
 package org.lightmare.jpa.datasource;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,9 +19,6 @@ import org.lightmare.jpa.datasource.c3p0.InitDataSourceC3p0;
 import org.lightmare.jpa.datasource.tomcat.InitDataSourceTomcat;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
-
-import com.mchange.v2.c3p0.C3P0Registry;
-import com.mchange.v2.c3p0.DataSources;
 
 /**
  * Parses xml and property files to initialize and cache {@link DataSource}
@@ -166,22 +162,6 @@ public class DataSourceInitializer {
 	    }
 	}
 	removeInitialized(dataSourcePath);
-    }
-
-    /**
-     * Destroys all registered pooled {@link DataSource}s for shut down hook
-     */
-    public static void cleanUp() {
-
-	@SuppressWarnings("unchecked")
-	Set<DataSource> dataSources = C3P0Registry.getPooledDataSources();
-	for (DataSource dataSource : dataSources) {
-	    try {
-		DataSources.destroy(dataSource);
-	    } catch (SQLException ex) {
-		LOG.error("Could not destroy data source", ex);
-	    }
-	}
     }
 
 }

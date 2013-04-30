@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -16,6 +17,7 @@ import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.PoolConfig;
 
+import com.mchange.v2.c3p0.C3P0Registry;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
 import com.mchange.v2.c3p0.PooledDataSource;
@@ -107,6 +109,36 @@ public class InitDataSourceC3p0 {
 	} catch (Exception ex) {
 	    LOG.error(String.format("Could not initialize data source %s",
 		    jndiName), ex);
+	}
+    }
+
+    /**
+     * Descroys passed {@link DataSource} for shut down
+     * 
+     * @param dataSource
+     */
+    public static void cleanUp(DataSource dataSource) {
+
+	try {
+	    DataSources.destroy(dataSource);
+	} catch (SQLException ex) {
+	    LOG.error("Could not destroy data source", ex);
+	}
+    }
+
+    /**
+     * Destroys all registered pooled {@link DataSource}s for shut down hook
+     */
+    public static void cleanUp() {
+
+	@SuppressWarnings("unchecked")
+	Set<DataSource> dataSources = C3P0Registry.getPooledDataSources();
+	for (DataSource dataSource : dataSources) {
+	    try {
+		DataSources.destroy(dataSource);
+	    } catch (SQLException ex) {
+		LOG.error("Could not destroy data source", ex);
+	    }
 	}
     }
 }

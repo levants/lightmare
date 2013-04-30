@@ -109,4 +109,16 @@ public class InitDataSourceTomcat {
 		    jndiName), ex);
 	}
     }
+
+    /**
+     * Closes passed {@link javax.sql.DataSource} for shut down
+     * 
+     * @param dataSource
+     */
+    public static void cleanUp(javax.sql.DataSource dataSource) {
+
+	if (dataSource instanceof DataSource) {
+	    ((DataSource) dataSource).close();
+	}
+    }
 }
