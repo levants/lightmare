@@ -57,8 +57,8 @@ public class BeanLoader {
     private static final Logger LOG = Logger.getLogger(BeanLoader.class);
 
     // Thread pool for deploying and removal of beans and temporal resources
-    private static ExecutorService loaderPool = Executors.newFixedThreadPool(
-	    LOADER_POOL_SIZE, new ThreadFactory() {
+    private static final ExecutorService LOADER_POOL = Executors
+	    .newFixedThreadPool(LOADER_POOL_SIZE, new ThreadFactory() {
 
 		@Override
 		public Thread newThread(Runnable runnable) {
@@ -603,7 +603,7 @@ public class BeanLoader {
 	String beanName = BeanUtils.parseName(parameters.className);
 	parameters.beanName = beanName;
 	BeanDeployer beanDeployer = new BeanDeployer(parameters);
-	Future<String> future = loaderPool.submit(beanDeployer);
+	Future<String> future = LOADER_POOL.submit(beanDeployer);
 
 	return future;
     }
@@ -620,7 +620,7 @@ public class BeanLoader {
 
 	ConnectionDeployer connectionDeployer = new ConnectionDeployer(
 		parameters);
-	loaderPool.submit(connectionDeployer);
+	LOADER_POOL.submit(connectionDeployer);
     }
 
     /**
@@ -630,6 +630,6 @@ public class BeanLoader {
      */
     public static <V> void removeResources(List<File> tmpFiles) {
 	ResourceCleaner cleaner = new ResourceCleaner(tmpFiles);
-	loaderPool.submit(cleaner);
+	LOADER_POOL.submit(cleaner);
     }
 }
