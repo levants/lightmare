@@ -68,6 +68,7 @@ public class BeanLoader {
 		    thread.setName(String.format("Ejb-Loader-Thread-%s",
 			    thread.getId()));
 		    thread.setPriority(Thread.MAX_PRIORITY);
+
 		    return thread;
 		}
 	    });
@@ -92,8 +93,7 @@ public class BeanLoader {
 
 	@Override
 	public Callable<T> run() {
-	    Callable<T> privileged = Executors
-		    .privilegedCallableUsingCurrentClassLoader(current);
+	    Callable<T> privileged = Executors.privilegedCallable(current);
 
 	    return privileged;
 	}

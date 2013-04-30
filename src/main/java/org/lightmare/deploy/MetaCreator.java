@@ -51,7 +51,7 @@ import org.lightmare.utils.shutdown.ShutDown;
  * @author Levan
  * 
  */
-public class MetaCreator {
+public class MetaCreator {	
 
     private static AnnotationDB annotationDB;
 

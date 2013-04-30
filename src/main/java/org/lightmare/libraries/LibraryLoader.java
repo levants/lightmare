@@ -13,6 +13,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import org.apache.log4j.Logger;
 import org.lightmare.libraries.loaders.EjbClassLoader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.FileUtils;
@@ -31,6 +32,8 @@ public class LibraryLoader {
     private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
 
     private static Method addURLMethod;
+
+    private static final Logger LOG = Logger.getLogger(LibraryLoader.class);
 
     /**
      * {@link Callable}<ClassLoader> implementation to initialize
@@ -147,19 +150,18 @@ public class LibraryLoader {
     public static ClassLoader cloneContextClassLoader(URL... urls)
 	    throws IOException {
 
-	URLClassLoader loader;
+	URLClassLoader loader = (URLClassLoader) getEnrichedLoader(urls);
 	try {
-	    loader = (URLClassLoader) getEnrichedLoader(urls);
 	    // get all resources for cloning
 	    URL[] urlArray = loader.getURLs();
 	    URL[] urlClone = urlArray.clone();
 
 	    ClassLoader parent = getContextClassLoader();
 	    ClassLoader clone = EjbClassLoader.newInstance(urlClone, parent);
-	    loader.close();
 
 	    return clone;
 	} finally {
+	    closeClassLoader(loader);
 	    // dereference cloned class loader instance
 	    loader = null;
 	}
@@ -225,8 +227,12 @@ public class LibraryLoader {
     public static void closeClassLoader(ClassLoader loader) throws IOException {
 
 	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
-	    ((URLClassLoader) loader).close();
-	    loader.clearAssertionStatus();
+	    try {
+		loader.clearAssertionStatus();
+		((URLClassLoader) loader).close();
+	    } catch (Throwable th) {
+		LOG.error(th.getMessage(), th);
+	    }
 	}
     }
 }
