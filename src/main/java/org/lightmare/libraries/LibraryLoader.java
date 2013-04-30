@@ -153,7 +153,9 @@ public class LibraryLoader {
 	    // get all resources for cloning
 	    URL[] urlArray = loader.getURLs();
 	    URL[] urlClone = urlArray.clone();
-	    ClassLoader clone = EjbClassLoader.newInstance(urlClone);
+
+	    ClassLoader parent = ClassLoader.getSystemClassLoader();
+	    ClassLoader clone = EjbClassLoader.newInstance(urlClone, parent);
 	    loader.close();
 
 	    return clone;
