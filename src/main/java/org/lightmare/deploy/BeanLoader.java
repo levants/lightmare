@@ -107,11 +107,10 @@ public class BeanLoader {
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    try {
 		initializer.registerDataSource(properties);
-		notifyDs();
 	    } catch (IOException ex) {
-		notifyDs();
 		LOG.error("Could not initialize datasource", ex);
 	    } finally {
+		notifyDs();
 		LibraryLoader.loadCurrentLibraries(loader);
 	    }
 	}
