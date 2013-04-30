@@ -150,6 +150,7 @@ public class LibraryLoader {
 	URLClassLoader loader;
 	try {
 	    loader = (URLClassLoader) getEnrichedLoader(urls);
+	    // get all resources for cloning
 	    URL[] urlArray = loader.getURLs();
 	    URL[] urlClone = urlArray.clone();
 	    ClassLoader clone = EjbClassLoader.newInstance(urlClone);
@@ -157,6 +158,7 @@ public class LibraryLoader {
 
 	    return clone;
 	} finally {
+	    // dereference cloned class loader instance
 	    loader = null;
 	}
     }
