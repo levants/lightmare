@@ -118,16 +118,6 @@ public class LibraryLoader {
 	return loader;
     }
 
-    public static ClassLoader cloneContextClassLoader(URL... urls)
-	    throws IOException {
-
-	ClassLoader loader = getEnrichedLoader(urls);
-	URL[] urlArray = ((URLClassLoader) loader).getURLs();
-	ClassLoader clone = EjbClassLoader.newInstance(urlArray);
-
-	return clone;
-    }
-
     public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
 	    throws IOException {
 	FileUtils.getSubfiles(file, urls);
@@ -137,21 +127,6 @@ public class LibraryLoader {
 	return urlLoader;
     }
 
-    /**
-     * Closes passed {@link ClassLoader} if it is instance of
-     * {@link URLClassLoader} class
-     * 
-     * @param loader
-     * @throws IOException
-     */
-    public static void closeClassLoader(ClassLoader loader) throws IOException {
-
-	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
-	    ((URLClassLoader) loader).close();
-	    loader.clearAssertionStatus();
-	}
-    }
-
     public static ClassLoader getEnrichedLoader(URL[] urls) throws IOException {
 	EjbClassLoader urlLoader = null;
 	if (ObjectUtils.available(urls)) {
@@ -159,6 +134,24 @@ public class LibraryLoader {
 	    urlLoader = EjbClassLoader.newInstance(urls, parent);
 	}
 	return urlLoader;
+    }
+
+    /**
+     * Initializes new {@link ClassLoader} from loaded {@link URL}'s from
+     * enriched {@link ClassLoader} for beans and libraries
+     * 
+     * @param urls
+     * @return {@link ClassLoader}
+     * @throws IOException
+     */
+    public static ClassLoader cloneContextClassLoader(URL... urls)
+	    throws IOException {
+
+	ClassLoader loader = getEnrichedLoader(urls);
+	URL[] urlArray = ((URLClassLoader) loader).getURLs();
+	ClassLoader clone = EjbClassLoader.newInstance(urlArray);
+
+	return clone;
     }
 
     public static void loadCurrentLibraries(ClassLoader loader) {
@@ -208,6 +201,21 @@ public class LibraryLoader {
 
 	for (String libraryPath : libraryPaths) {
 	    loadLibraryFromPath(libraryPath);
+	}
+    }
+
+    /**
+     * Closes passed {@link ClassLoader} if it is instance of
+     * {@link URLClassLoader} class
+     * 
+     * @param loader
+     * @throws IOException
+     */
+    public static void closeClassLoader(ClassLoader loader) throws IOException {
+
+	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
+	    ((URLClassLoader) loader).close();
+	    loader.clearAssertionStatus();
 	}
     }
 }
