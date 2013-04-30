@@ -135,8 +135,8 @@ public class DataSourceInitializer {
 	NamingUtils utils = new NamingUtils();
 	Context context = utils.getContext();
 	try {
-	    @SuppressWarnings("unused")
 	    DataSource dataSource = (DataSource) context.lookup(jndiName);
+	    cleanUp(dataSource);
 	    dataSource = null;
 	    context.unbind(jndiName);
 	} catch (NamingException ex) {
@@ -162,6 +162,20 @@ public class DataSourceInitializer {
 	    }
 	}
 	removeInitialized(dataSourcePath);
+    }
+
+    /**
+     * Clean and destroy data source
+     * 
+     * @param dataSource
+     */
+    public static void cleanUp(DataSource dataSource) {
+
+	if (PoolConfig.poolProviderType.equals(PoolProviderType.C3P0)) {
+	    InitDataSourceC3p0.cleanUp(dataSource);
+	} else if (PoolConfig.poolProviderType.equals(PoolProviderType.TOMCAT)) {
+	    InitDataSourceTomcat.cleanUp(dataSource);
+	}
     }
 
 }
