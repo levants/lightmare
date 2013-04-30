@@ -147,11 +147,18 @@ public class LibraryLoader {
     public static ClassLoader cloneContextClassLoader(URL... urls)
 	    throws IOException {
 
-	ClassLoader loader = getEnrichedLoader(urls);
-	URL[] urlArray = ((URLClassLoader) loader).getURLs();
-	ClassLoader clone = EjbClassLoader.newInstance(urlArray);
+	URLClassLoader loader;
+	try {
+	    loader = (URLClassLoader) getEnrichedLoader(urls);
+	    URL[] urlArray = loader.getURLs();
+	    URL[] urlClone = urlArray.clone();
+	    ClassLoader clone = EjbClassLoader.newInstance(urlClone);
+	    loader.close();
 
-	return clone;
+	    return clone;
+	} finally {
+	    loader = null;
+	}
     }
 
     public static void loadCurrentLibraries(ClassLoader loader) {
