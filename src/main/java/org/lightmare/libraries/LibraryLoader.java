@@ -50,7 +50,7 @@ public class LibraryLoader {
 	@Override
 	public ClassLoader call() throws Exception {
 
-	    ClassLoader loader = getEnrichedLoader(urls);
+	    ClassLoader loader = cloneContextClassLoader(urls);
 
 	    return loader;
 	}
@@ -118,6 +118,16 @@ public class LibraryLoader {
 	return loader;
     }
 
+    public static ClassLoader cloneContextClassLoader(URL... urls)
+	    throws IOException {
+
+	ClassLoader loader = getEnrichedLoader(urls);
+	URL[] urlArray = ((URLClassLoader) loader).getURLs();
+	ClassLoader clone = EjbClassLoader.newInstance(urlArray);
+
+	return clone;
+    }
+
     public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
 	    throws IOException {
 	FileUtils.getSubfiles(file, urls);
@@ -142,7 +152,7 @@ public class LibraryLoader {
 	}
     }
 
-    public static ClassLoader getEnrichedLoader(URL[] urls) {
+    public static ClassLoader getEnrichedLoader(URL[] urls) throws IOException {
 	EjbClassLoader urlLoader = null;
 	if (ObjectUtils.available(urls)) {
 	    ClassLoader parent = getContextClassLoader();
