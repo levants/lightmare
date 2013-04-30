@@ -57,7 +57,7 @@ public class Configuration {
     /**
      * Default properties
      */
-    public static final String ADMIN_USERS_PATH_DEF = ".config/admin/users.properties";
+    public static final String ADMIN_USERS_PATH_DEF = "./config/admin/users.properties";
 
     public static final String IP_ADDRESS_DEF = "0.0.0.0";
 
