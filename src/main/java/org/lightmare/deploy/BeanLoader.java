@@ -56,6 +56,8 @@ public class BeanLoader {
 
     private static final int LOADER_POOL_SIZE = 5;
 
+    private static final String LOADER_THREAD_NAME = "Ejb-Loader-Thread-%s";
+
     private static final Logger LOG = Logger.getLogger(BeanLoader.class);
 
     // Thread pool for deploying and removal of beans and temporal resources
@@ -65,7 +67,7 @@ public class BeanLoader {
 		@Override
 		public Thread newThread(Runnable runnable) {
 		    Thread thread = new Thread(runnable);
-		    thread.setName(String.format("Ejb-Loader-Thread-%s",
+		    thread.setName(String.format(LOADER_THREAD_NAME,
 			    thread.getId()));
 		    thread.setPriority(Thread.MAX_PRIORITY);
 
