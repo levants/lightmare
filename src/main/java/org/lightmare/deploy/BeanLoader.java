@@ -196,7 +196,7 @@ public class BeanLoader {
 		result = Boolean.TRUE;
 	    } catch (InterruptedException ex) {
 		result = Boolean.FALSE;
-		LOG.error("Coluld not clear temporary resources", ex);
+		LOG.error("Coluld not clean temporary resources", ex);
 	    } finally {
 		LibraryLoader.loadCurrentLibraries(loader);
 	    }
