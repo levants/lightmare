@@ -46,14 +46,17 @@ public class LibraryLoader {
 
 	private URL[] urls;
 
-	public LibraryLoaderInit(final URL[] urls) {
+	private ClassLoader parent;
+
+	public LibraryLoaderInit(final URL[] urls, final ClassLoader parent) {
 	    this.urls = urls;
+	    this.parent = parent;
 	}
 
 	@Override
 	public ClassLoader call() throws Exception {
 
-	    ClassLoader loader = cloneContextClassLoader(urls);
+	    ClassLoader loader = cloneContextClassLoader(urls, parent);
 
 	    return loader;
 	}
@@ -82,7 +85,9 @@ public class LibraryLoader {
     public static ClassLoader initializeLoader(final URL[] urls)
 	    throws IOException {
 
-	LibraryLoaderInit initializer = new LibraryLoaderInit(urls);
+	ClassLoader parent = getContextClassLoader();
+
+	LibraryLoaderInit initializer = new LibraryLoaderInit(urls, parent);
 	FutureTask<ClassLoader> task = new FutureTask<ClassLoader>(initializer);
 	Thread thread = new Thread(task);
 	thread.setName(LOADER_THREAD_NAME);
@@ -130,10 +135,13 @@ public class LibraryLoader {
 	return urlLoader;
     }
 
-    public static ClassLoader getEnrichedLoader(URL[] urls) throws IOException {
+    public static ClassLoader getEnrichedLoader(URL[] urls, ClassLoader parent)
+	    throws IOException {
 	EjbClassLoader urlLoader = null;
 	if (ObjectUtils.available(urls)) {
-	    ClassLoader parent = getContextClassLoader();
+	    if (parent == null) {
+		parent = getContextClassLoader();
+	    }
 	    urlLoader = EjbClassLoader.newInstance(urls, parent);
 	}
 	return urlLoader;
@@ -147,16 +155,18 @@ public class LibraryLoader {
      * @return {@link ClassLoader}
      * @throws IOException
      */
-    public static ClassLoader cloneContextClassLoader(URL... urls)
-	    throws IOException {
+    public static ClassLoader cloneContextClassLoader(final URL[] urls,
+	    ClassLoader parent) throws IOException {
 
-	URLClassLoader loader = (URLClassLoader) getEnrichedLoader(urls);
+	URLClassLoader loader = (URLClassLoader) getEnrichedLoader(urls, parent);
 	try {
 	    // get all resources for cloning
 	    URL[] urlArray = loader.getURLs();
 	    URL[] urlClone = urlArray.clone();
 
-	    ClassLoader parent = getContextClassLoader();
+	    if (parent == null) {
+		parent = getContextClassLoader();
+	    }
 	    ClassLoader clone = EjbClassLoader.newInstance(urlClone, parent);
 
 	    return clone;
