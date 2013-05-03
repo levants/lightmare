@@ -8,7 +8,6 @@ import java.util.Properties;
 
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.config.Configuration;
-import org.lightmare.deploy.MetaCreator;
 import org.lightmare.utils.ObjectUtils;
 
 /**
