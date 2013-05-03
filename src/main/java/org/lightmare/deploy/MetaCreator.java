@@ -78,11 +78,6 @@ public class MetaCreator {
 
     private CountDownLatch conn;
 
-    /**
-     * {@link Configuration} container class for server
-     */
-    public static final Configuration CONFIG = new Configuration();
-
     // Data for cache at deploy time
     private Map<String, AbstractIOUtils> aggregateds = new HashMap<String, AbstractIOUtils>();
 
@@ -416,8 +411,9 @@ public class MetaCreator {
 
 	synchronized (this) {
 	    try {
+		Configuration config = MetaContainer.CONFIG;
 		// starts RPC server if configured as remote and server
-		if (CONFIG.isRemote() && CONFIG.isServer()) {
+		if (config.isRemote() && config.isServer()) {
 		    RpcListener.startServer();
 		}
 		// Loads libraries from specified path
@@ -477,10 +473,11 @@ public class MetaCreator {
      */
     public void scanForBeans(String... paths) throws IOException {
 
+	Configuration config = MetaContainer.CONFIG;
 	if (ObjectUtils.notAvailable(paths)
-		&& ObjectUtils.available(CONFIG.getDeploymentPath())) {
+		&& ObjectUtils.available(config.getDeploymentPath())) {
 
-	    Set<DeploymentDirectory> deployments = CONFIG.getDeploymentPath();
+	    Set<DeploymentDirectory> deployments = config.getDeploymentPath();
 	    List<String> pathList = new ArrayList<String>();
 	    File deployFile;
 	    for (DeploymentDirectory deployment : deployments) {
@@ -603,7 +600,7 @@ public class MetaCreator {
 	}
 
 	public Builder addDataSourcePath(String dataSourcePath) {
-	    CONFIG.addDataSourcePath(dataSourcePath);
+	    MetaContainer.CONFIG.addDataSourcePath(dataSourcePath);
 	    return this;
 	}
 
@@ -616,7 +613,7 @@ public class MetaCreator {
 	 */
 	@Deprecated
 	public Builder setDataSourcePath(String dataSourcePath) {
-	    CONFIG.addDataSourcePath(dataSourcePath);
+	    MetaContainer.CONFIG.addDataSourcePath(dataSourcePath);
 	    return this;
 	}
 
@@ -631,55 +628,56 @@ public class MetaCreator {
 	}
 
 	public Builder setRemote(boolean remote) {
-	    CONFIG.setRemote(remote);
+	    MetaContainer.CONFIG.setRemote(remote);
 	    return this;
 	}
 
 	public Builder setServer(boolean server) {
-	    CONFIG.setServer(server);
-	    CONFIG.setClient(!server);
+	    MetaContainer.CONFIG.setServer(server);
+	    MetaContainer.CONFIG.setClient(!server);
 	    return this;
 	}
 
 	public Builder setClient(boolean client) {
-	    CONFIG.setClient(client);
-	    CONFIG.setServer(!client);
+	    MetaContainer.CONFIG.setClient(client);
+	    MetaContainer.CONFIG.setServer(!client);
 	    return this;
 	}
 
 	public Builder setProperty(String key, String property) {
-	    CONFIG.putValue(key, property);
+	    MetaContainer.CONFIG.putValue(key, property);
 	    return this;
 	}
 
 	public Builder setAdminUsersPth(String property) {
-	    CONFIG.putValue(Configuration.ADMIN_USERS_PATH, property);
+	    MetaContainer.CONFIG.putValue(Configuration.ADMIN_USERS_PATH,
+		    property);
 	    return this;
 	}
 
 	public Builder setIpAddress(String property) {
-	    CONFIG.putValue(Configuration.IP_ADDRESS, property);
+	    MetaContainer.CONFIG.putValue(Configuration.IP_ADDRESS, property);
 	    return this;
 	}
 
 	public Builder setPort(String property) {
-	    CONFIG.putValue(Configuration.PORT, property);
+	    MetaContainer.CONFIG.putValue(Configuration.PORT, property);
 	    return this;
 	}
 
 	public Builder setMasterThreads(String property) {
-	    CONFIG.putValue(Configuration.BOSS_POOL, property);
+	    MetaContainer.CONFIG.putValue(Configuration.BOSS_POOL, property);
 	    return this;
 	}
 
 	public Builder setWorkerThreads(String property) {
-	    CONFIG.putValue(Configuration.WORKER_POOL, property);
+	    MetaContainer.CONFIG.putValue(Configuration.WORKER_POOL, property);
 	    return this;
 	}
 
 	public Builder addDeploymentPath(String deploymentPath, boolean scan) {
 	    String clearPath = WatchUtils.clearPath(deploymentPath);
-	    CONFIG.addDeploymentPath(clearPath, scan);
+	    MetaContainer.CONFIG.addDeploymentPath(clearPath, scan);
 	    return this;
 	}
 
@@ -689,7 +687,8 @@ public class MetaCreator {
 	}
 
 	public Builder setTimeout(String property) {
-	    CONFIG.putValue(Configuration.CONNECTION_TIMEOUT, property);
+	    MetaContainer.CONFIG.putValue(Configuration.CONNECTION_TIMEOUT,
+		    property);
 	    return this;
 	}
 
@@ -726,7 +725,7 @@ public class MetaCreator {
 	}
 
 	public MetaCreator build() throws IOException {
-	    MetaCreator.CONFIG.configure();
+	    MetaContainer.CONFIG.configure();
 	    MetaContainer.setCreator(creator);
 	    LOG.info("Lightmare application starts working");
 	    return creator;

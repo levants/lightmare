@@ -450,7 +450,7 @@ public class BeanLoader {
 	private void createMeta(Class<?> beanClass) throws IOException {
 
 	    metaData.setBeanClass(beanClass);
-	    if (MetaCreator.CONFIG.isServer()) {
+	    if (MetaContainer.CONFIG.isServer()) {
 		retrieveConnections();
 	    } else {
 		notifyConn();

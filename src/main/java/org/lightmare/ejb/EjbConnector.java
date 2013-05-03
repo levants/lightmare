@@ -13,7 +13,6 @@ import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.config.Configuration;
-import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.handlers.BeanLocalHandler;
 import org.lightmare.jpa.JPAManager;
@@ -181,7 +180,7 @@ public class EjbConnector {
     public <T> T connectToBean(String beanName, Class<T> interfaceClass,
 	    Object... rpcArgs) throws IOException {
 	InvocationHandler handler;
-	Configuration configuration = MetaCreator.CONFIG;
+	Configuration configuration = MetaContainer.CONFIG;
 	ClassLoader loader;
 	if (configuration.isServer()) {
 

@@ -20,8 +20,8 @@ import org.jboss.netty.channel.socket.nio.NioWorker;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.jboss.netty.channel.socket.nio.WorkerPool;
 import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
+import org.lightmare.cache.MetaContainer;
 import org.lightmare.config.Configuration;
-import org.lightmare.deploy.MetaCreator;
 import org.lightmare.remote.rcp.decoders.RcpEncoder;
 import org.lightmare.remote.rpc.decoders.RpcDecoder;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
@@ -62,15 +62,16 @@ public class RpcListener {
      * Set boss and worker thread pools size from configuration
      */
     private static void setNettyPools() {
+
 	Integer bossCount;
 	Integer workerCount;
+	Configuration config = MetaContainer.CONFIG;
 	boss = new OrderedMemoryAwareThreadPoolExecutor(
-		(bossCount = MetaCreator.CONFIG.getIntValue("boss_pool_size")) != null ? bossCount
+		(bossCount = config.getIntValue("boss_pool_size")) != null ? bossCount
 			: 1, 400000000, 2000000000, 60, TimeUnit.SECONDS,
 		new ThreadFactoryUtil("netty-boss-thread", Thread.MAX_PRIORITY));
 	worker = new OrderedMemoryAwareThreadPoolExecutor(
-		(workerCount = MetaCreator.CONFIG
-			.getIntValue("worker_pool_size")) != null ? workerCount
+		(workerCount = config.getIntValue("worker_pool_size")) != null ? workerCount
 			: RUNTIME.availableProcessors() * 3, 400000000,
 		2000000000, 60, TimeUnit.SECONDS, new ThreadFactoryUtil(
 			"netty-worker-thread", (Thread.MAX_PRIORITY - 1)));
@@ -82,6 +83,7 @@ public class RpcListener {
      * 
      */
     public static void startServer() {
+
 	setNettyPools();
 	factory = new NioServerSocketChannelFactory(boss, workerPool);
 	ServerBootstrap bootstrap = new ServerBootstrap(factory);
@@ -93,16 +95,16 @@ public class RpcListener {
 			new RpcHandler());
 	    }
 	});
+	Configuration config = MetaContainer.CONFIG;
 	bootstrap.setOption("tcpNoDelay", Boolean.TRUE);
 	bootstrap.setOption("child.keepAlive", Boolean.TRUE);
 	bootstrap.setOption("backlog", 500);
-	bootstrap.setOption("connectTimeoutMillis", MetaCreator.CONFIG
-		.getIntValue(Configuration.CONNECTION_TIMEOUT));
+	bootstrap.setOption("connectTimeoutMillis",
+		config.getIntValue(Configuration.CONNECTION_TIMEOUT));
 	try {
 	    channel = bootstrap.bind(new InetSocketAddress(Inet4Address
-		    .getByName(MetaCreator.CONFIG
-			    .getStringValue("listening_ip")),
-		    MetaCreator.CONFIG.getIntValue("listening_port")));
+		    .getByName(config.getStringValue("listening_ip")), config
+		    .getIntValue("listening_port")));
 	    channelGroup.add(channel);
 	    LOG.info(channel.getLocalAddress());
 	} catch (UnknownHostException ex) {

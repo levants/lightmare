@@ -16,6 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 
 import org.apache.log4j.Logger;
+import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.JPAManager;
@@ -31,7 +32,13 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class MetaContainer {
 
+    // Cached instance of MetaCreator
     private static MetaCreator creator;
+
+    /**
+     * {@link Configuration} container class for server
+     */
+    public static final Configuration CONFIG = new Configuration();
 
     // Cached bean meta data
     private static final ConcurrentMap<String, MetaData> EJBS = new ConcurrentHashMap<String, MetaData>();

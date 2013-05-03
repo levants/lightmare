@@ -91,8 +91,8 @@ public class Watcher implements Runnable {
     }
 
     private Watcher() {
-	deployments = MetaCreator.CONFIG.getDeploymentPath();
-	dataSources = MetaCreator.CONFIG.getDataSourcePath();
+	deployments = MetaContainer.CONFIG.getDeploymentPath();
+	dataSources = MetaContainer.CONFIG.getDataSourcePath();
     }
 
     private static URL getAppropriateURL(String fileName) throws IOException {
@@ -113,8 +113,8 @@ public class Watcher implements Runnable {
 	path = file.getParent();
 	String parentPath = WatchUtils.clearPath(path);
 
-	Set<DeploymentDirectory> apps = MetaCreator.CONFIG.getDeploymentPath();
-	Set<String> dss = MetaCreator.CONFIG.getDataSourcePath();
+	Set<DeploymentDirectory> apps = MetaContainer.CONFIG.getDeploymentPath();
+	Set<String> dss = MetaContainer.CONFIG.getDataSourcePath();
 
 	if (ObjectUtils.available(apps) && apps.contains(parentPath)) {
 	    type = WatchFileType.DEPLOYMENT;
@@ -143,7 +143,7 @@ public class Watcher implements Runnable {
      */
     public static List<File> listDeployments() {
 
-	Set<DeploymentDirectory> deploymetDirss = MetaCreator.CONFIG
+	Set<DeploymentDirectory> deploymetDirss = MetaContainer.CONFIG
 		.getDeploymentPath();
 	File[] files;
 	List<File> list = new ArrayList<File>();
@@ -166,7 +166,7 @@ public class Watcher implements Runnable {
      */
     public static List<File> listDataSources() {
 
-	Set<String> paths = MetaCreator.CONFIG.getDataSourcePath();
+	Set<String> paths = MetaContainer.CONFIG.getDataSourcePath();
 	File file;
 	List<File> list = new ArrayList<File>();
 	if (ObjectUtils.available(paths)) {
