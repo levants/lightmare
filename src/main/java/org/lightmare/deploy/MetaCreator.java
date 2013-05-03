@@ -51,7 +51,7 @@ import org.lightmare.utils.shutdown.ShutDown;
  * @author Levan
  * 
  */
-public class MetaCreator {	
+public class MetaCreator {
 
     private static AnnotationDB annotationDB;
 
@@ -479,14 +479,17 @@ public class MetaCreator {
 	if (ObjectUtils.notAvailable(paths)
 		&& ObjectUtils.available(CONFIG.getDeploymentPath())) {
 
-	    Set<String> deployments = CONFIG.getDeploymentPath();
+	    Set<Configuration.DeploymentDirectory> deployments = CONFIG
+		    .getDeploymentPath();
 	    List<String> pathList = new ArrayList<String>();
 	    File deployFile;
-	    for (String deployment : deployments) {
-		deployFile = new File(deployment);
-		String[] subDeployments = deployFile.list();
-		if (ObjectUtils.available(subDeployments)) {
-		    pathList.addAll(Arrays.asList(subDeployments));
+	    for (Configuration.DeploymentDirectory deployment : deployments) {
+		deployFile = new File(deployment.getPath());
+		if (deployment.isScan()) {
+		    String[] subDeployments = deployFile.list();
+		    if (ObjectUtils.available(subDeployments)) {
+			pathList.addAll(Arrays.asList(subDeployments));
+		    }
 		}
 	    }
 	    paths = ObjectUtils.toArray(pathList, String.class);
@@ -674,9 +677,14 @@ public class MetaCreator {
 	    return this;
 	}
 
-	public Builder addDeploymentPath(String deploymentPath) {
+	public Builder addDeploymentPath(String deploymentPath, boolean scan) {
 	    String clearPath = WatchUtils.clearPath(deploymentPath);
-	    CONFIG.addDeploymentPath(clearPath);
+	    CONFIG.addDeploymentPath(clearPath, scan);
+	    return this;
+	}
+
+	public Builder addDeploymentPath(String deploymentPath) {
+	    addDeploymentPath(deploymentPath, Boolean.FALSE);
 	    return this;
 	}
 

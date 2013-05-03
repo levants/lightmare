@@ -22,6 +22,7 @@ import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 import org.lightmare.cache.MetaContainer;
+import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.FileParsers;
@@ -50,7 +51,7 @@ public class Watcher implements Runnable {
 	    .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME,
 		    DEPLOY_POOL_PRIORITY));
 
-    private Set<String> deployments;
+    private Set<Configuration.DeploymentDirectory> deployments;
 
     private Set<String> dataSources;
 
@@ -112,7 +113,8 @@ public class Watcher implements Runnable {
 	path = file.getParent();
 	String parentPath = WatchUtils.clearPath(path);
 
-	Set<String> apps = MetaCreator.CONFIG.getDeploymentPath();
+	Set<Configuration.DeploymentDirectory> apps = MetaCreator.CONFIG
+		.getDeploymentPath();
 	Set<String> dss = MetaCreator.CONFIG.getDataSourcePath();
 
 	if (ObjectUtils.available(apps) && apps.contains(parentPath)) {
@@ -142,11 +144,14 @@ public class Watcher implements Runnable {
      */
     public static List<File> listDeployments() {
 
-	Set<String> paths = MetaCreator.CONFIG.getDeploymentPath();
+	Set<Configuration.DeploymentDirectory> deploymetDirss = MetaCreator.CONFIG
+		.getDeploymentPath();
 	File[] files;
 	List<File> list = new ArrayList<File>();
-	if (ObjectUtils.available(paths)) {
-	    for (String path : paths) {
+	if (ObjectUtils.available(deploymetDirss)) {
+	    String path;
+	    for (Configuration.DeploymentDirectory deployment : deploymetDirss) {
+		path = deployment.getPath();
 		files = new File(path).listFiles(new DeployFiletr());
 		fillFileList(files, list);
 	    }
@@ -283,7 +288,33 @@ public class Watcher implements Runnable {
 	runService(watch);
     }
 
-    private void registerPaths(Collection<String> paths, FileSystem fs,
+    private void registerPaths(
+	    Collection<Configuration.DeploymentDirectory> deploymentDirss,
+	    FileSystem fs, WatchService watch) throws IOException {
+
+	String path;
+	boolean scan;
+	File directory;
+	File[] files;
+	for (Configuration.DeploymentDirectory deployment : deploymentDirss) {
+	    path = deployment.getPath();
+	    scan = deployment.isScan();
+	    if (scan) {
+		directory = new File(path);
+		files = directory.listFiles();
+		if (ObjectUtils.available(files)) {
+		    for (File file : files) {
+			path = file.getPath();
+			registerPath(fs, path, watch);
+		    }
+		}
+	    } else {
+		registerPath(fs, path, watch);
+	    }
+	}
+    }
+
+    private void registerDsPaths(Collection<String> paths, FileSystem fs,
 	    WatchService watch) throws IOException {
 
 	for (String path : paths) {
@@ -306,7 +337,7 @@ public class Watcher implements Runnable {
 		registerPaths(deployments, fs, watch);
 	    }
 	    if (ObjectUtils.available(dataSources)) {
-		registerPaths(dataSources, fs, watch);
+		registerDsPaths(dataSources, fs, watch);
 	    }
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
