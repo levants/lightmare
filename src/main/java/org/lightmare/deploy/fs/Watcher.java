@@ -15,6 +15,7 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -113,11 +114,25 @@ public class Watcher implements Runnable {
 	path = file.getParent();
 	String parentPath = WatchUtils.clearPath(path);
 
-	Set<DeploymentDirectory> apps = MetaContainer.CONFIG.getDeploymentPath();
+	Set<DeploymentDirectory> apps = MetaContainer.CONFIG
+		.getDeploymentPath();
 	Set<String> dss = MetaContainer.CONFIG.getDataSourcePath();
 
-	if (ObjectUtils.available(apps) && apps.contains(parentPath)) {
-	    type = WatchFileType.DEPLOYMENT;
+	if (ObjectUtils.available(apps)) {
+	    String deploymantPath;
+	    Iterator<DeploymentDirectory> iterator = apps.iterator();
+	    boolean notDeployment = Boolean.TRUE;
+	    DeploymentDirectory deployment;
+	    while (iterator.hasNext() && notDeployment) {
+		deployment = iterator.next();
+		deploymantPath = deployment.getPath();
+		notDeployment = !deploymantPath.equals(parentPath);
+	    }
+	    if (notDeployment) {
+		type = WatchFileType.NONE;
+	    } else {
+		type = WatchFileType.DEPLOYMENT;
+	    }
 	} else if (ObjectUtils.available(dss) && dss.contains(filePath)) {
 	    type = WatchFileType.DATA_SOURCE;
 	} else {
