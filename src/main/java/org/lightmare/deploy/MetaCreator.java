@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.lightmare.annotations.UnitName;
 import org.lightmare.cache.ArchiveData;
 import org.lightmare.cache.DeployData;
+import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.config.Configuration;
@@ -479,11 +480,10 @@ public class MetaCreator {
 	if (ObjectUtils.notAvailable(paths)
 		&& ObjectUtils.available(CONFIG.getDeploymentPath())) {
 
-	    Set<Configuration.DeploymentDirectory> deployments = CONFIG
-		    .getDeploymentPath();
+	    Set<DeploymentDirectory> deployments = CONFIG.getDeploymentPath();
 	    List<String> pathList = new ArrayList<String>();
 	    File deployFile;
-	    for (Configuration.DeploymentDirectory deployment : deployments) {
+	    for (DeploymentDirectory deployment : deployments) {
 		deployFile = new File(deployment.getPath());
 		if (deployment.isScan()) {
 		    String[] subDeployments = deployFile.list();

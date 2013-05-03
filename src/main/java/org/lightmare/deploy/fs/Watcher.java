@@ -21,8 +21,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
+import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.cache.MetaContainer;
-import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.FileParsers;
@@ -51,7 +51,7 @@ public class Watcher implements Runnable {
 	    .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME,
 		    DEPLOY_POOL_PRIORITY));
 
-    private Set<Configuration.DeploymentDirectory> deployments;
+    private Set<DeploymentDirectory> deployments;
 
     private Set<String> dataSources;
 
@@ -113,8 +113,7 @@ public class Watcher implements Runnable {
 	path = file.getParent();
 	String parentPath = WatchUtils.clearPath(path);
 
-	Set<Configuration.DeploymentDirectory> apps = MetaCreator.CONFIG
-		.getDeploymentPath();
+	Set<DeploymentDirectory> apps = MetaCreator.CONFIG.getDeploymentPath();
 	Set<String> dss = MetaCreator.CONFIG.getDataSourcePath();
 
 	if (ObjectUtils.available(apps) && apps.contains(parentPath)) {
@@ -144,13 +143,13 @@ public class Watcher implements Runnable {
      */
     public static List<File> listDeployments() {
 
-	Set<Configuration.DeploymentDirectory> deploymetDirss = MetaCreator.CONFIG
+	Set<DeploymentDirectory> deploymetDirss = MetaCreator.CONFIG
 		.getDeploymentPath();
 	File[] files;
 	List<File> list = new ArrayList<File>();
 	if (ObjectUtils.available(deploymetDirss)) {
 	    String path;
-	    for (Configuration.DeploymentDirectory deployment : deploymetDirss) {
+	    for (DeploymentDirectory deployment : deploymetDirss) {
 		path = deployment.getPath();
 		files = new File(path).listFiles(new DeployFiletr());
 		fillFileList(files, list);
@@ -288,15 +287,14 @@ public class Watcher implements Runnable {
 	runService(watch);
     }
 
-    private void registerPaths(
-	    Collection<Configuration.DeploymentDirectory> deploymentDirss,
+    private void registerPaths(Collection<DeploymentDirectory> deploymentDirss,
 	    FileSystem fs, WatchService watch) throws IOException {
 
 	String path;
 	boolean scan;
 	File directory;
 	File[] files;
-	for (Configuration.DeploymentDirectory deployment : deploymentDirss) {
+	for (DeploymentDirectory deployment : deploymentDirss) {
 	    path = deployment.getPath();
 	    scan = deployment.isScan();
 	    if (scan) {

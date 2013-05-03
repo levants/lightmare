@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.lightmare.cache.DeploymentDirectory;
 
 /**
  * Easy way to retrieve configuration properties from configuration file
@@ -99,46 +100,6 @@ public class Configuration {
     public static final int EJB_NAME_LENGTH = 4;
 
     private static final Logger LOG = Logger.getLogger(Configuration.class);
-
-    /**
-     * Container class to cache deployment directory information
-     * 
-     * @author levan
-     * 
-     */
-    public static class DeploymentDirectory {
-
-	private String path;
-
-	private boolean scan;
-
-	public DeploymentDirectory(String path) {
-
-	    this.path = path;
-	}
-
-	public DeploymentDirectory(String path, boolean scan) {
-
-	    this(path);
-	    this.scan = scan;
-	}
-
-	public boolean isScan() {
-	    return scan;
-	}
-
-	public void setScan(boolean scan) {
-	    this.scan = scan;
-	}
-
-	public String getPath() {
-	    return path;
-	}
-
-	public void setPath(String path) {
-	    this.path = path;
-	}
-    }
 
     public Configuration() {
     }
