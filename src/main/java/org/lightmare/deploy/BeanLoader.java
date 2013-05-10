@@ -71,6 +71,9 @@ public class BeanLoader {
 			    thread.getId()));
 		    thread.setPriority(Thread.MAX_PRIORITY);
 
+		    ClassLoader parent = getCurrent();
+		    thread.setContextClassLoader(parent);
+
 		    return thread;
 		}
 	    });
@@ -642,7 +645,13 @@ public class BeanLoader {
 
     private static ClassLoader getCurrent() {
 
-	ClassLoader current = MetaContainer.getCreator().getCurrent();
+	ClassLoader current;
+	ClassLoader creatorLoader = MetaContainer.getCreator().getCurrent();
+	if (ObjectUtils.notNull(creatorLoader)) {
+	    current = creatorLoader;
+	} else {
+	    current = LibraryLoader.getContextClassLoader();
+	}
 
 	return current;
     }
