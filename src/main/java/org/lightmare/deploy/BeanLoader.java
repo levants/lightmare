@@ -138,7 +138,7 @@ public class BeanLoader {
 	public Boolean call() throws Exception {
 
 	    boolean result;
-	    ClassLoader loader = LibraryLoader.getContextClassLoader();
+	    ClassLoader loader = getCurrent();
 	    try {
 		initializer.registerDataSource(properties);
 		result = Boolean.TRUE;
@@ -190,7 +190,7 @@ public class BeanLoader {
 	public Boolean call() throws Exception {
 
 	    boolean result;
-	    ClassLoader loader = LibraryLoader.getContextClassLoader();
+	    ClassLoader loader = getCurrent();
 	    try {
 		clearTmpData();
 		result = Boolean.TRUE;
