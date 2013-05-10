@@ -527,7 +527,7 @@ public class BeanLoader {
 	private String deployFile() {
 
 	    String deployed = beanName;
-	    ClassLoader currentLoader = LibraryLoader.getContextClassLoader();
+	    ClassLoader currentLoader = getCurrent();
 	    try {
 		LibraryLoader.loadCurrentLibraries(loader);
 		deployed = createBeanClass();
@@ -638,6 +638,13 @@ public class BeanLoader {
 	public String poolPath;
 
 	public CountDownLatch dsLatch;
+    }
+
+    private static ClassLoader getCurrent() {
+
+	ClassLoader current = MetaContainer.getCreator().getCurrent();
+
+	return current;
     }
 
     /**

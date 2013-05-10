@@ -91,6 +91,8 @@ public class MetaCreator {
 
     private boolean watchStatus;
 
+    private ClassLoader current;
+
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
     private MetaCreator() {
@@ -420,6 +422,8 @@ public class MetaCreator {
 		if (ObjectUtils.notNull(libraryPaths)) {
 		    LibraryLoader.loadLibraries(libraryPaths);
 		}
+		// Gets and caches class loader
+		current = LibraryLoader.getContextClassLoader();
 		archivesURLs = new HashMap<URL, ArchiveData>();
 		if (ObjectUtils.available(archives)) {
 		    realURL = new HashMap<URL, DeployData>();
@@ -501,6 +505,11 @@ public class MetaCreator {
 	}
 	URL[] archives = ObjectUtils.toArray(urlList, URL.class);
 	scanForBeans(archives);
+    }
+
+    public ClassLoader getCurrent() {
+
+	return current;
     }
 
     /**
