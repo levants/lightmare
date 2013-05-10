@@ -646,9 +646,15 @@ public class BeanLoader {
     private static ClassLoader getCurrent() {
 
 	ClassLoader current;
-	ClassLoader creatorLoader = MetaContainer.getCreator().getCurrent();
-	if (ObjectUtils.notNull(creatorLoader)) {
-	    current = creatorLoader;
+	MetaCreator creator = MetaContainer.getCreator();
+	ClassLoader creatorLoader;
+	if (ObjectUtils.notNull(creator)) {
+	    creatorLoader = creator.getCurrent();
+	    if (ObjectUtils.notNull(creatorLoader)) {
+		current = creatorLoader;
+	    } else {
+		current = LibraryLoader.getContextClassLoader();
+	    }
 	} else {
 	    current = LibraryLoader.getContextClassLoader();
 	}
