@@ -168,7 +168,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		<!-- end of hibernate -->
 
 		<!-- data source providers -->
