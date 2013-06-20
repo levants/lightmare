@@ -1,4 +1,4 @@
-package org.lightmare.deploy;
+package org.lightmare.ejb.embeddable;
 
 import java.io.IOException;
 import java.util.Map;
@@ -7,6 +7,7 @@ import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
 
 import org.apache.log4j.Logger;
+import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jndi.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 
@@ -17,48 +18,40 @@ import org.lightmare.utils.ObjectUtils;
  * @author levan
  * 
  */
-public class EJBConteainerImpl extends EJBContainer {
+public class EJBContainerImpl extends EJBContainer {
 
     private MetaCreator creator;
 
-    private static final Logger LOG = Logger.getLogger(EJBConteainerImpl.class);
+    private static final Logger LOG = Logger.getLogger(EJBContainerImpl.class);
 
-    public static EJBContainer createEjbContainer() {
-
-	EJBConteainerImpl container = new EJBConteainerImpl();
+    protected EJBContainerImpl() {
 
 	try {
-	    container.creator = new MetaCreator.Builder().build();
-	    container.creator.scanForBeans();
+	    this.creator = new MetaCreator.Builder().build();
+	    this.creator.scanForBeans();
 
 	} catch (IOException ex) {
 	    LOG.error("Could not initialize EJBContainer", ex);
 	}
-
-	return container;
-
     }
 
-    public static EJBContainer createEjbContainer(Map<?, ?> properties) {
-
-	EJBConteainerImpl container = new EJBConteainerImpl();
+    protected EJBContainerImpl(Map<?, ?> properties) {
 
 	try {
 
 	    MetaCreator.Builder builder = new MetaCreator.Builder();
-	    for (Map.Entry<?, ?> entry : properties.entrySet()) {
-		builder.setProperty((String) entry.getKey(),
-			(String) entry.getValue());
+	    if (ObjectUtils.available(properties)) {
+		for (Map.Entry<?, ?> entry : properties.entrySet()) {
+		    builder.setProperty((String) entry.getKey(),
+			    (String) entry.getValue());
+		}
 	    }
-	    container.creator = builder.build();
-	    container.creator.scanForBeans();
+	    this.creator = builder.build();
+	    this.creator.scanForBeans();
 
 	} catch (IOException ex) {
 	    LOG.error("Could not initialize EJBContainer", ex);
 	}
-
-	return container;
-
     }
 
     @Override
