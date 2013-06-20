@@ -65,7 +65,7 @@ public class PoolConfig {
      */
     public static enum PoolProviderType {
 
-	C3P0, TOMCAT;
+	DBCP, C3P0, TOMCAT;
     }
 
     public static PoolProviderType poolProviderType = PoolProviderType.C3P0;
