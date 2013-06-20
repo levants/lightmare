@@ -22,6 +22,8 @@ import org.lightmare.jpa.datasource.PoolConfig;
  */
 public class InitDataSourceDbcp {
 
+    private static final int DEFAULT_TRANSACTION_ISOLATION = 1;
+
     public static final Logger LOG = Logger
 	    .getLogger(DataSourceInitializer.class);
 
@@ -58,7 +60,8 @@ public class InitDataSourceDbcp {
 	dataSource.setDataSourceName(jndiName);
 	dataSource.setDefaultAutoCommit(Boolean.FALSE);
 	dataSource.setDefaultReadOnly(Boolean.FALSE);
-	dataSource.setDefaultTransactionIsolation(1);
+	dataSource
+		.setDefaultTransactionIsolation(DEFAULT_TRANSACTION_ISOLATION);
 	dataSource.setLoginTimeout(PoolConfig.asInt(properties,
 		PoolConfig.MAX_IDLE_TIMEOUT));
 	dataSource.setMaxActive(PoolConfig.asInt(properties,
