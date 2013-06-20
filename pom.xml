@@ -110,6 +110,12 @@
 			<version>3.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>javax.ejb-api</artifactId>
+			<version>3.2-b02</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- end of ejb -->
 
 		<!-- servlet -->
