@@ -16,6 +16,7 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.jpa.datasource.c3p0.InitDataSourceC3p0;
+import org.lightmare.jpa.datasource.dbcp.InitDataSourceDbcp;
 import org.lightmare.jpa.datasource.tomcat.InitDataSourceTomcat;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
@@ -105,7 +106,9 @@ public class DataSourceInitializer {
      */
     public void registerDataSource(Properties properties) throws IOException {
 
-	if (PoolConfig.poolProviderType.equals(PoolProviderType.C3P0)) {
+	if (PoolConfig.poolProviderType.equals(PoolProviderType.DBCP)) {
+	    InitDataSourceDbcp.registerDataSource(properties);
+	} else if (PoolConfig.poolProviderType.equals(PoolProviderType.C3P0)) {
 	    InitDataSourceC3p0.registerDataSource(properties);
 	} else if (PoolConfig.poolProviderType.equals(PoolProviderType.TOMCAT)) {
 	    InitDataSourceTomcat.registerDataSource(properties);
@@ -171,11 +174,12 @@ public class DataSourceInitializer {
      */
     public static void cleanUp(DataSource dataSource) {
 
-	if (PoolConfig.poolProviderType.equals(PoolProviderType.C3P0)) {
+	if (PoolConfig.poolProviderType.equals(PoolProviderType.DBCP)) {
+	    InitDataSourceDbcp.cleanUp(dataSource);
+	} else if (PoolConfig.poolProviderType.equals(PoolProviderType.C3P0)) {
 	    InitDataSourceC3p0.cleanUp(dataSource);
 	} else if (PoolConfig.poolProviderType.equals(PoolProviderType.TOMCAT)) {
 	    InitDataSourceTomcat.cleanUp(dataSource);
 	}
     }
-
 }
