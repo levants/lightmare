@@ -26,6 +26,10 @@ public class InitDataSourceTomcat {
     public static final Logger LOG = Logger
 	    .getLogger(DataSourceInitializer.class);
 
+    private static final String JDBC_INTERCEPTOR_KEY = "org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;";
+
+    private static final String JDBC_INTERCEPTOR_VALUE = "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer";
+
     /**
      * Initializes appropriated driver and {@link DataSource} objects
      * 
@@ -66,9 +70,8 @@ public class InitDataSourceTomcat {
 	poolProperties.setMinIdle(10);
 	poolProperties.setLogAbandoned(Boolean.TRUE);
 	poolProperties.setRemoveAbandoned(Boolean.TRUE);
-	poolProperties
-		.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"
-			+ "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
+	poolProperties.setJdbcInterceptors(String.format("%s%s",
+		JDBC_INTERCEPTOR_KEY, JDBC_INTERCEPTOR_VALUE));
 	dataSource = new DataSource();
 	dataSource.setPoolProperties(poolProperties);
 
