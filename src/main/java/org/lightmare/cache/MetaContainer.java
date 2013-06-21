@@ -16,6 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 
 import org.apache.log4j.Logger;
+import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
@@ -45,6 +46,9 @@ public class MetaContainer {
 
     // Cached bean class name by its URL for undeploy processing
     private static final ConcurrentMap<URL, Collection<String>> EJB_URLS = new ConcurrentHashMap<URL, Collection<String>>();
+
+    // Cached REST resource classes
+    private static final ConcurrentMap<Class<?>, Resource> REST_RESOURCES = new ConcurrentHashMap<Class<?>, Resource>();
 
     // Caches UserTransaction object per thread
     private static final ThreadLocal<UserTransaction> TRANSACTION_HOLDER = new ThreadLocal<UserTransaction>();
@@ -436,5 +440,16 @@ public class MetaContainer {
      */
     public static Iterator<MetaData> getBeanClasses() {
 	return EJBS.values().iterator();
+    }
+
+    public static void putResource(Class<?> resourceClass, Resource resource) {
+	REST_RESOURCES.putIfAbsent(resourceClass, resource);
+    }
+
+    public static Resource getResource(Class<?> resourceClass) {
+
+	Resource resource = REST_RESOURCES.get(resourceClass);
+
+	return resource;
     }
 }
