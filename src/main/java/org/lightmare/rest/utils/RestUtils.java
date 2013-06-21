@@ -9,6 +9,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 
 import org.lightmare.rest.RestConfig;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Utility class for REST resources
@@ -50,13 +51,17 @@ public class RestUtils {
 	if (valid) {
 
 	    RestConfig config = RestConfig.get();
-	    config.registerClass(beanClass);
+	    if (ObjectUtils.notNull(config)) {
+		config.registerClass(beanClass);
+	    }
 	}
     }
 
     public static void remove(Class<?> beanClass) {
 
 	RestConfig config = RestConfig.get();
-	config.unregister(beanClass);
+	if (ObjectUtils.notNull(config)) {
+	    config.unregister(beanClass);
+	}
     }
 }
