@@ -18,7 +18,6 @@ import java.util.concurrent.ThreadFactory;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
@@ -511,11 +510,7 @@ public class BeanLoader {
 		Class<?> beanClass = MetaUtils.classForName(className,
 			Boolean.FALSE, loader);
 		checkOnTransactional(beanClass);
-		Stateless annotation = beanClass.getAnnotation(Stateless.class);
-		String beanEjbName = annotation.name();
-		if (ObjectUtils.notAvailable(beanEjbName)) {
-		    beanEjbName = beanName;
-		}
+		String beanEjbName = BeanUtils.beanName(beanClass);
 		checkAndSetBean(beanEjbName);
 		RestUtils.add(beanClass);
 		createMeta(beanClass);
