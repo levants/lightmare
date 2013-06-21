@@ -1,5 +1,6 @@
 package org.lightmare.rest.utils;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 import javax.ws.rs.DELETE;
@@ -10,6 +11,9 @@ import javax.ws.rs.Path;
 
 import org.lightmare.rest.RestConfig;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.RpcUtils;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Utility class for REST resources
@@ -18,6 +22,16 @@ import org.lightmare.utils.ObjectUtils;
  * 
  */
 public class RestUtils {
+
+    public static final ObjectMapper MAPPER = new ObjectMapper();
+
+    public static <T> T convert(String json, Class<T> valueClass)
+	    throws IOException {
+
+	T value = RpcUtils.read(json, valueClass);
+
+	return value;
+    }
 
     private static boolean checkAnnotation(Method method) {
 
