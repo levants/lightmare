@@ -6,8 +6,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-
-import com.sun.jersey.spi.container.servlet.ServletContainer;
+import org.glassfish.jersey.servlet.ServletContainer;
 
 /**
  * Jetty embeddable server to listen rest requests
@@ -36,7 +35,7 @@ public class JettyServer implements Runnable {
 	    ServletHolder restHolder = new ServletHolder();
 	    restHolder.setInitParameter(
 		    "com.sun.jersey.config.property.packages",
-		    "rg.lightmare.rest");
+		    "org.lightmare.rest");
 	    restHolder.setInitOrder(1);
 	    restHolder.setServlet(container);
 	    ctxRest.addServlet(restHolder, "/*");
