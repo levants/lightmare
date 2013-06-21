@@ -1,5 +1,7 @@
 package org.lightmare.entities;
 
+import java.io.IOException;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.lightmare.annotations.UnitName;
+import org.lightmare.rest.utils.RestUtils;
 
 @Entity
 @Table(name = "EMAILS", schema = "PERSONS")
@@ -51,4 +54,15 @@ public class Email {
 	this.personId = personId;
     }
 
+    public static Email valueOf(String json) {
+
+	Email email = null;
+	try {
+	    email = RestUtils.convert(json, Email.class);
+	} catch (IOException ex) {
+	    ex.printStackTrace();
+	}
+
+	return email;
+    }
 }

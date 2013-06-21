@@ -1,5 +1,6 @@
 package org.lightmare.entities;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.lightmare.annotations.UnitName;
+import org.lightmare.rest.utils.RestUtils;
 
 @Entity
 @Table(name = "PERSONS", schema = "PERSONS")
@@ -146,4 +148,15 @@ public class Person {
 	this.totalSalary = totalSalary;
     }
 
+    public static Person valueOf(String json) {
+
+	Person person = null;
+	try {
+	    person = RestUtils.convert(json, Person.class);
+	} catch (IOException ex) {
+	    ex.printStackTrace();
+	}
+
+	return person;
+    }
 }

@@ -7,11 +7,16 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 
 import org.lightmare.entities.Person;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+@Path("lightmare")
 public class LightMareBean implements LightMareBeanRemote {
 
     @PersistenceContext(unitName = "testUnit", name = "persistence/em")
@@ -31,13 +36,15 @@ public class LightMareBean implements LightMareBeanRemote {
     }
 
     @Override
-    public Person getPerson(Integer personId) {
+    @GET
+    public Person getPerson(@QueryParam("personId") Integer personId) {
 	return em.find(Person.class, personId);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addPerson(Person person) {
+    @PUT
+    public void addPerson(@QueryParam("person") Person person) {
 	em.persist(person);
     }
 
