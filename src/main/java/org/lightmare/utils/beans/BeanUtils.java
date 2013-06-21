@@ -1,5 +1,9 @@
 package org.lightmare.utils.beans;
 
+import javax.ejb.Stateless;
+
+import org.lightmare.utils.ObjectUtils;
+
 /**
  * Utility class for ejb beans
  * 
@@ -53,5 +57,16 @@ public class BeanUtils {
 	}
 
 	return beanName;
+    }
+
+    public static String beanName(Class<?> beanClass) {
+
+	Stateless annotation = beanClass.getAnnotation(Stateless.class);
+	String beanEjbName = annotation.name();
+	if (ObjectUtils.notAvailable(beanEjbName)) {
+	    beanEjbName = beanClass.getSimpleName();
+	}
+
+	return beanEjbName;
     }
 }
