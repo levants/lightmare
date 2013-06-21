@@ -452,4 +452,9 @@ public class MetaContainer {
 
 	return resource;
     }
+
+    public static void removeResource(Class<?> resourceClass) {
+
+	REST_RESOURCES.remove(resourceClass);
+    }
 }
