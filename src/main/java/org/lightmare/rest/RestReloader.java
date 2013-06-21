@@ -13,15 +13,15 @@ import org.glassfish.jersey.server.spi.ContainerLifecycleListener;
  * 
  */
 @Provider
-public class Reloader implements ContainerLifecycleListener {
+public class RestReloader implements ContainerLifecycleListener {
 
-    private static Reloader reloader;
+    private static RestReloader reloader;
 
-    public Reloader() {
+    public RestReloader() {
 	reloader = this;
     }
 
-    public static Reloader get() {
+    public static RestReloader get() {
 
 	return reloader;
     }
