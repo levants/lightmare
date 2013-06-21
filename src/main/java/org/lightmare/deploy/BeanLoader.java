@@ -38,6 +38,7 @@ import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.fs.FileUtils;
@@ -534,6 +535,8 @@ public class BeanLoader {
 	    try {
 		LibraryLoader.loadCurrentLibraries(loader);
 		deployed = createBeanClass();
+		Class<?> beanClass = metaData.getBeanClass();
+		RestUtils.add(beanClass);
 		chekcWatch = WatchUtils.checkForWatch(deployData);
 		if (chekcWatch) {
 		    URL url = deployData.getUrl();
