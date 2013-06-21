@@ -318,6 +318,24 @@
 			<classifier>sources</classifier>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>${jersey.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-multipart</artifactId>
+			<version>${jersey.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-multipart</artifactId>
+			<version>${jersey.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- end of jar-rs with jersey -->
 
 		<!-- jackson json serialization -->

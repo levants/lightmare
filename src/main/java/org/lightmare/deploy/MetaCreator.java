@@ -38,6 +38,7 @@ import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RpcListener;
+import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -395,6 +396,7 @@ public class MetaCreator {
 	    }
 	}
 	awaitDeployments();
+	RestUtils.reload();
 	if (hotDeployment && !watchStatus) {
 	    Watcher.startWatch();
 	    watchStatus = true;

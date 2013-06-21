@@ -517,6 +517,7 @@ public class BeanLoader {
 		    beanEjbName = beanName;
 		}
 		checkAndSetBean(beanEjbName);
+		RestUtils.add(beanClass);
 		createMeta(beanClass);
 		metaData.setInProgress(Boolean.FALSE);
 
@@ -535,8 +536,6 @@ public class BeanLoader {
 	    try {
 		LibraryLoader.loadCurrentLibraries(loader);
 		deployed = createBeanClass();
-		Class<?> beanClass = metaData.getBeanClass();
-		RestUtils.add(beanClass);
 		chekcWatch = WatchUtils.checkForWatch(deployData);
 		if (chekcWatch) {
 		    URL url = deployData.getUrl();

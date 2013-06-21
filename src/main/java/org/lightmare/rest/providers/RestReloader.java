@@ -1,4 +1,4 @@
-package org.lightmare.rest;
+package org.lightmare.rest.providers;
 
 import javax.ws.rs.ext.Provider;
 

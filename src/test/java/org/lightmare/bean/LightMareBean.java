@@ -7,9 +7,10 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 import org.lightmare.entities.Person;
@@ -37,13 +38,17 @@ public class LightMareBean implements LightMareBeanRemote {
 
     @Override
     @GET
+    @Produces("application/json;charset=utf-8")
+    @Consumes("application/json;charset=utf-8")
     public Person getPerson(@QueryParam("personId") Integer personId) {
 	return em.find(Person.class, personId);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    @PUT
+    // @PUT
+    // @Produces("application/json;charset=utf-8")
+    // @Consumes("application/json;charset=utf-8")
     public void addPerson(@QueryParam("person") Person person) {
 	em.persist(person);
     }
