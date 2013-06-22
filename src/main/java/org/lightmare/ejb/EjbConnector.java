@@ -233,6 +233,5 @@ public class EjbConnector {
 	T beanInstance = (T) connectToBean(metaData);
 
 	return beanInstance;
-
     }
 }
