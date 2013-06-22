@@ -3,6 +3,7 @@ package org.lightmare.rest.providers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import javax.ws.rs.container.ContainerRequestContext;
@@ -17,7 +18,6 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.Inflector;
 import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
-import org.lightmare.utils.reflect.MetaUtils;
 
 /**
  * {@link Inflector} implementation for ejb beans
@@ -100,12 +100,21 @@ public class RestInflector implements
 	ResponseBuilder responseBuilder;
 	Object value = null;
 	try {
-	    Object bean = new EjbConnector().connectToBean(metaData);
+	    EjbConnector connector = new EjbConnector();
+	    InvocationHandler handler = connector.getHandler(metaData);
+	    Object bean = connector.connectToBean(metaData);
 	    Object params = getParameters(data);
+	    Object[] arguments;
 	    if (params == null) {
-		value = MetaUtils.invoke(method, bean);
+		arguments = new Object[0];
+		value = handler.invoke(bean, method, arguments);
 	    } else {
-		value = MetaUtils.invoke(method, bean, params);
+		if (params instanceof Object[]) {
+		    arguments = (Object[]) params;
+		} else {
+		    arguments = new Object[] { params };
+		}
+		value = handler.invoke(bean, method, arguments);
 	    }
 
 	    if (type == null) {
@@ -114,7 +123,7 @@ public class RestInflector implements
 		responseBuilder = Response.ok(value, type);
 	    }
 
-	} catch (IOException ex) {
+	} catch (Throwable ex) {
 	    LOG.error(ex.getMessage(), ex);
 	    responseBuilder = Response.status(new ErrorStatusType(ex
 		    .getMessage()));
