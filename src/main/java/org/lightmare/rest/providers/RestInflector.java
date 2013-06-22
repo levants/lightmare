@@ -77,7 +77,6 @@ public class RestInflector implements
 
 	Object params;
 	if (data.hasEntity()) {
-
 	    InputStream stream = data.getEntityStream();
 	    ObjectInputStream objectStream = new ObjectInputStream(stream);
 	    try {

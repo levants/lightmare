@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.glassfish.jersey.server.model.MethodHandler;
+import org.glassfish.jersey.server.model.Parameter;
 import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.server.model.ResourceMethod;
 import org.glassfish.jersey.server.model.ResourceModelComponent;
@@ -28,6 +29,7 @@ public class RestConfigTest {
 	System.out.println(handlers);
 	Class<?> beanClass;
 	Method realMethod;
+	List<Parameter> parameters;
 	for (ResourceMethod method : methods) {
 	    System.out.println(method);
 	    realMethod = method.getInvocable().getHandlingMethod();
@@ -35,6 +37,13 @@ public class RestConfigTest {
 	    MethodHandler handler = method.getInvocable().getHandler();
 	    List<? extends ResourceModelComponent> components = method
 		    .getInvocable().getComponents();
+	    parameters = method.getInvocable().getParameters();
+	    MethodHandler methodHandler = method.getInvocable().getHandler();
+	    System.out.println(methodHandler);
+	    for (Parameter parameter : parameters) {
+		System.out.println(parameter);
+		System.out.println(parameter.getRawType());
+	    }
 	    System.out.println(components);
 	    beanClass = handler.getHandlerClass();
 	    System.out.println(beanClass);
