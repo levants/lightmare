@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.cache.MetaContainer;
@@ -28,7 +27,6 @@ public class RestConfig extends ResourceConfig {
 
     public RestConfig() {
 	super();
-	register(MultiPartFeature.class);
 	register(ObjectMapperProvider.class);
 	register(JacksonFeature.class);
 	synchronized (RestConfig.class) {
