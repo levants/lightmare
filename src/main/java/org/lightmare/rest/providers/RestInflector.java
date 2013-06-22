@@ -93,7 +93,9 @@ public class RestInflector implements
 
 		Object param = request.readEntity(parameter.getRawType(),
 			parameter.getType(), parameter.getAnnotations());
-		paramsList.add(param);
+		if (ObjectUtils.notNull(param)) {
+		    paramsList.add(param);
+		}
 	    }
 
 	    params = paramsList.toArray();
