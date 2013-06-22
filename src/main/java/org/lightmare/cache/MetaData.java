@@ -26,6 +26,10 @@ public class MetaData {
 
     private Class<?> interfaceClass;
 
+    private Class<?>[] localInterfaces;
+
+    private Class<?>[] remoteInterfaces;
+
     private Field transactionField;
 
     private Collection<ConnectionData> connections;
@@ -58,6 +62,22 @@ public class MetaData {
 
     public void setInterfaceClass(Class<?> interfaceClass) {
 	this.interfaceClass = interfaceClass;
+    }
+
+    public Class<?>[] getLocalInterfaces() {
+	return localInterfaces;
+    }
+
+    public void setLocalInterfaces(Class<?>[] localInterfaces) {
+	this.localInterfaces = localInterfaces;
+    }
+
+    public Class<?>[] getRemoteInterfaces() {
+	return remoteInterfaces;
+    }
+
+    public void setRemoteInterfaces(Class<?>[] remoteInterfaces) {
+	this.remoteInterfaces = remoteInterfaces;
     }
 
     public Field getTransactionField() {
