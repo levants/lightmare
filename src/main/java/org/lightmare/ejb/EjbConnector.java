@@ -113,7 +113,7 @@ public class EjbConnector {
      * @return {@link InvocationHandler}
      * @throws IOException
      */
-    private <T> InvocationHandler getHandler(MetaData metaData)
+    public <T> InvocationHandler getHandler(MetaData metaData)
 	    throws IOException {
 
 	T beanInstance = getBeanInstance(metaData);
@@ -124,6 +124,27 @@ public class EjbConnector {
 	handler.configure();
 
 	return handler;
+    }
+
+    /**
+     * Instantiates bean with {@link Proxy} utility
+     * 
+     * @param interfaces
+     * @param handler
+     * @return <code>T</code> implementation of bean interface
+     */
+    private <T> T instatiateBean(Class<T>[] interfaces,
+	    InvocationHandler handler, ClassLoader loader) {
+
+	if (loader == null) {
+	    loader = LibraryLoader.getContextClassLoader();
+	}
+
+	@SuppressWarnings("unchecked")
+	T beanInstance = (T) Proxy
+		.newProxyInstance(loader, interfaces, handler);
+
+	return beanInstance;
     }
 
     /**
@@ -155,6 +176,7 @@ public class EjbConnector {
      * @return <code>T</code> implementation of bean interface
      * @throws IOException
      */
+    @SuppressWarnings("unchecked")
     public <T> T connectToBean(MetaData metaData, Object... rpcArgs)
 	    throws IOException {
 
@@ -162,8 +184,13 @@ public class EjbConnector {
 	Class<?> interfaceClass = metaData.getInterfaceClass();
 	ClassLoader loader = metaData.getLoader();
 
-	@SuppressWarnings("unchecked")
-	T beanInstance = (T) instatiateBean(interfaceClass, handler, loader);
+	T beanInstance;
+	if (interfaceClass == null) {
+	    Class<T>[] interfaces = (Class<T>[]) metaData.getLocalInterfaces();
+	    beanInstance = (T) instatiateBean(interfaces, handler, loader);
+	} else {
+	    beanInstance = (T) instatiateBean(interfaceClass, handler, loader);
+	}
 
 	return beanInstance;
     }

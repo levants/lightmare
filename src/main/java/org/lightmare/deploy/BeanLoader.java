@@ -18,6 +18,8 @@ import java.util.concurrent.ThreadFactory;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
@@ -500,6 +502,58 @@ public class BeanLoader {
 	}
 
 	/**
+	 * Identifies bean interfaces
+	 * 
+	 * @param beanClass
+	 */
+	private void indentifyInterfaces(Class<?> beanClass) {
+
+	    Class<?>[] remoteInterface = null;
+	    Class<?>[] localInterface = null;
+	    Class<?>[] interfaces;
+	    List<Class<?>> interfacesList;
+	    Remote remote = beanClass.getAnnotation(Remote.class);
+	    Local local = beanClass.getAnnotation(Local.class);
+	    interfaces = beanClass.getInterfaces();
+	    if (ObjectUtils.notNull(remote)) {
+		remoteInterface = remote.value();
+	    }
+	    interfacesList = new ArrayList<Class<?>>();
+	    for (Class<?> interfaceClass : interfaces) {
+		if (interfaceClass.isAnnotationPresent(Remote.class))
+		    interfacesList.add(interfaceClass);
+	    }
+
+	    if (ObjectUtils.available(interfacesList)) {
+		remoteInterface = interfacesList
+			.toArray(new Class<?>[interfacesList.size()]);
+	    }
+
+	    if (ObjectUtils.notNull(local)) {
+		localInterface = local.value();
+	    }
+	    interfacesList = new ArrayList<Class<?>>();
+	    for (Class<?> interfaceClass : interfaces) {
+		if (interfaceClass.isAnnotationPresent(Local.class))
+		    interfacesList.add(interfaceClass);
+	    }
+
+	    if (ObjectUtils.available(interfacesList)) {
+		localInterface = interfacesList
+			.toArray(new Class<?>[interfacesList.size()]);
+	    }
+
+	    if (ObjectUtils.notAvailable(localInterface)
+		    && ObjectUtils.notAvailable(remoteInterface)) {
+
+		localInterface = interfaces;
+	    }
+
+	    metaData.setLocalInterfaces(localInterface);
+	    metaData.setRemoteInterfaces(remoteInterface);
+	}
+
+	/**
 	 * Loads and caches bean {@link Class} by name
 	 * 
 	 * @return
@@ -514,6 +568,7 @@ public class BeanLoader {
 		checkAndSetBean(beanEjbName);
 		RestUtils.add(beanClass);
 		createMeta(beanClass);
+		indentifyInterfaces(beanClass);
 		metaData.setInProgress(Boolean.FALSE);
 
 		return beanEjbName;
