@@ -11,23 +11,18 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
-import org.glassfish.jersey.process.Inflector;
 import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.server.model.ResourceMethod;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
-import org.lightmare.ejb.EjbConnector;
 import org.lightmare.rest.RestConfig;
+import org.lightmare.rest.providers.RestInflector;
 import org.lightmare.rest.providers.RestReloader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.beans.BeanUtils;
-import org.lightmare.utils.reflect.MetaUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -109,45 +104,24 @@ public class RestUtils {
 	Iterator<Class<?>> iterator = handlers.iterator();
 	beanClass = iterator.next();
 	beanEjbName = BeanUtils.beanName(beanClass);
-	final MetaData metaData = MetaContainer.getSyncMetaData(beanEjbName);
-	MediaType preType;
+	List<MediaType> types;
+	MetaData metaData = MetaContainer.getSyncMetaData(beanEjbName);
+	Method realMethod;
+	MediaType type;
 	for (ResourceMethod method : methods) {
 	    methodBuilder = builder.addMethod(method.getHttpMethod());
-	    methodBuilder.consumes(method.getConsumedTypes());
+	    types = method.getConsumedTypes();
+	    methodBuilder.consumes(types);
 	    methodBuilder.produces(method.getProducedTypes());
-	    final Method realMethod = method.getInvocable().getHandlingMethod();
-	    List<MediaType> types = method.getConsumedTypes();
+	    realMethod = method.getInvocable().getHandlingMethod();
 	    if (ObjectUtils.available(types)) {
-		preType = types.iterator().next();
+		type = types.iterator().next();
 	    } else {
-		preType = null;
+		type = null;
 	    }
-	    final MediaType type = preType;
-	    methodBuilder
-		    .handledBy(new Inflector<ContainerRequestContext, Response>() {
-
-			@Override
-			public Response apply(ContainerRequestContext data) {
-
-			    Object value = null;
-			    try {
-				Object bean = new EjbConnector()
-					.connectToBean(metaData);
-				value = MetaUtils.invoke(realMethod, bean);
-
-			    } catch (IOException ex) {
-				ex.printStackTrace();
-			    }
-
-			    ResponseBuilder responseBuilder;
-			    if (type == null) {
-				responseBuilder = Response.ok(value);
-			    } else {
-				responseBuilder = Response.ok(value, type);
-			    }
-			    return responseBuilder.build();
-			}
-		    });
+	    RestInflector inflector = new RestInflector(realMethod, metaData,
+		    type);
+	    methodBuilder.handledBy(inflector);
 	}
 	Resource intercepted = builder.build();
 
