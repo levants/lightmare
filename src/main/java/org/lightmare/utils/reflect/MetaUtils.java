@@ -271,6 +271,52 @@ public class MetaUtils {
     }
 
     /**
+     * Common method to invoke static {@link Method}
+     * 
+     * @param method
+     * @param arguments
+     * @return
+     * @throws IOException
+     */
+    public static Object invokeStatic(Method method, Object... arguments)
+	    throws IOException {
+
+	try {
+
+	    return method.invoke(null, arguments);
+	} catch (IllegalAccessException ex) {
+	    throw new IOException(ex);
+	} catch (IllegalArgumentException ex) {
+	    throw new IOException(ex);
+	} catch (InvocationTargetException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
+     * Common method to invoke private static {@link Method}
+     * 
+     * @param method
+     * @param arguments
+     * @return
+     * @throws IOException
+     */
+    public static Object invokePrivateStatic(Method method, Object... arguments)
+	    throws IOException {
+
+	boolean accessible = method.isAccessible();
+	try {
+	    if (!accessible) {
+		method.setAccessible(Boolean.TRUE);
+	    }
+
+	    return invokeStatic(method, arguments);
+	} finally {
+	    method.setAccessible(accessible);
+	}
+    }
+
+    /**
      * Sets value to {@link Field} sets accessible Boolean.TRUE remporary if
      * needed
      * 

@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response.Status.Family;
 import javax.ws.rs.core.Response.StatusType;
 
 import org.apache.log4j.Logger;
+import org.glassfish.jersey.internal.PropertiesDelegate;
 import org.glassfish.jersey.process.Inflector;
 import org.glassfish.jersey.server.ContainerRequest;
 import org.glassfish.jersey.server.model.Parameter;
@@ -86,18 +87,19 @@ public class RestInflector implements
 
 	Object[] params;
 	ContainerRequest request = (ContainerRequest) data;
-	request.bufferEntity();
-	if (ObjectUtils.available(parameters)) {
+	PropertiesDelegate delegate;
+	if (ObjectUtils.available(parameters) && request.bufferEntity()) {
 	    List<Object> paramsList = new ArrayList<Object>();
+	    delegate = request.getPropertiesDelegate();
 	    for (Parameter parameter : parameters) {
 
 		Object param = request.readEntity(parameter.getRawType(),
-			parameter.getType(), parameter.getAnnotations());
+			parameter.getType(), parameter.getAnnotations(),
+			delegate);
 		if (ObjectUtils.notNull(param)) {
 		    paramsList.add(param);
 		}
 	    }
-
 	    params = paramsList.toArray();
 	} else {
 	    params = new Object[PARAMS_DEF_LENGTH];
