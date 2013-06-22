@@ -59,7 +59,7 @@ public class RestConvertor {
 	return queryParams.get(0);
     }
 
-    private static Collection<Object> convertCollection(
+    protected static Collection<Object> convertCollection(
 	    List<String> queryParams, Collection<Object> collection)
 	    throws IOException {
 
