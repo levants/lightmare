@@ -1,5 +1,6 @@
 package org.lightmare.rest;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.rest.providers.ObjectMapperProvider;
 import org.lightmare.rest.providers.RestReloader;
+import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -46,10 +48,12 @@ public class RestConfig extends ResourceConfig {
 	}
     }
 
-    public void registerClass(Class<?> resourceClass, RestConfig oldConfig) {
+    public void registerClass(Class<?> resourceClass, RestConfig oldConfig)
+	    throws IOException {
 
 	Resource.Builder builder = Resource.builder(resourceClass);
-	Resource resource = builder.build();
+	Resource preResource = builder.build();
+	Resource resource = RestUtils.defineHandler(preResource);
 	Set<Resource> resources = getResources();
 	Set<Resource> newResources;
 	if (ObjectUtils.available(resources)) {

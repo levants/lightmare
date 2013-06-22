@@ -1,6 +1,8 @@
 package org.lightmare.rest.providers;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.lang.reflect.Method;
 
 import javax.ws.rs.container.ContainerRequestContext;
@@ -70,6 +72,28 @@ public class RestInflector implements
 	this.type = type;
     }
 
+    private Object getParameters(ContainerRequestContext data)
+	    throws IOException {
+
+	Object params;
+	if (data.hasEntity()) {
+
+	    InputStream stream = data.getEntityStream();
+	    ObjectInputStream objectStream = new ObjectInputStream(stream);
+	    try {
+		params = objectStream.readObject();
+	    } catch (ClassNotFoundException ex) {
+		throw new IOException(ex);
+	    } finally {
+		objectStream.close();
+	    }
+	} else {
+	    params = null;
+	}
+
+	return params;
+    }
+
     @Override
     public Response apply(ContainerRequestContext data) {
 
@@ -77,7 +101,12 @@ public class RestInflector implements
 	Object value = null;
 	try {
 	    Object bean = new EjbConnector().connectToBean(metaData);
-	    value = MetaUtils.invoke(method, bean);
+	    Object params = getParameters(data);
+	    if (params == null) {
+		value = MetaUtils.invoke(method, bean);
+	    } else {
+		value = MetaUtils.invoke(method, bean, params);
+	    }
 
 	    if (type == null) {
 		responseBuilder = Response.ok(value);

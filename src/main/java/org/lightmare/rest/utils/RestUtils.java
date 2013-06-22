@@ -96,6 +96,7 @@ public class RestUtils {
     public static Resource defineHandler(Resource resource) throws IOException {
 
 	Resource.Builder builder = Resource.builder();
+	builder.path(resource.getPath());
 	List<ResourceMethod> methods = resource.getAllMethods();
 	ResourceMethod.Builder methodBuilder;
 	Collection<Class<?>> handlers = resource.getHandlerClasses();
@@ -128,7 +129,7 @@ public class RestUtils {
 	return intercepted;
     }
 
-    public static void add(Class<?> beanClass) {
+    public static void add(Class<?> beanClass) throws IOException {
 
 	boolean valid = check(beanClass);
 	if (valid) {
