@@ -13,6 +13,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
+import org.glassfish.jersey.server.model.Invocable;
+import org.glassfish.jersey.server.model.Parameter;
 import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.server.model.ResourceMethod;
 import org.lightmare.cache.MetaContainer;
@@ -106,22 +108,27 @@ public class RestUtils {
 	beanClass = iterator.next();
 	beanEjbName = BeanUtils.beanName(beanClass);
 	List<MediaType> types;
+	Invocable invocable;
 	MetaData metaData = MetaContainer.getSyncMetaData(beanEjbName);
 	Method realMethod;
 	MediaType type;
+	List<Parameter> parameters;
 	for (ResourceMethod method : methods) {
 	    methodBuilder = builder.addMethod(method.getHttpMethod());
 	    types = method.getConsumedTypes();
 	    methodBuilder.consumes(types);
 	    methodBuilder.produces(method.getProducedTypes());
-	    realMethod = method.getInvocable().getHandlingMethod();
+	    methodBuilder.nameBindings(method.getNameBindings());
+	    invocable = method.getInvocable();
+	    realMethod = invocable.getHandlingMethod();
+	    parameters = invocable.getParameters();
 	    if (ObjectUtils.available(types)) {
 		type = types.iterator().next();
 	    } else {
 		type = null;
 	    }
 	    RestInflector inflector = new RestInflector(realMethod, metaData,
-		    type);
+		    type, parameters);
 	    methodBuilder.handledBy(inflector);
 	}
 	Resource intercepted = builder.build();

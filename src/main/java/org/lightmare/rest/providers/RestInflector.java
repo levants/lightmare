@@ -1,10 +1,10 @@
 package org.lightmare.rest.providers;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.MediaType;
@@ -16,8 +16,11 @@ import javax.ws.rs.core.Response.StatusType;
 
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.Inflector;
+import org.glassfish.jersey.server.ContainerRequest;
+import org.glassfish.jersey.server.model.Parameter;
 import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * {@link Inflector} implementation for ejb beans
@@ -33,6 +36,10 @@ public class RestInflector implements
     private MetaData metaData;
 
     private MediaType type;
+
+    private List<Parameter> parameters;
+
+    private static final int PARAMS_DEF_LENGTH = 0;
 
     /**
      * Error status for exception handling
@@ -65,29 +72,33 @@ public class RestInflector implements
 
     private static final Logger LOG = Logger.getLogger(RestInflector.class);
 
-    public RestInflector(Method method, MetaData metaData, MediaType type) {
+    public RestInflector(Method method, MetaData metaData, MediaType type,
+	    List<Parameter> parameters) {
 
 	this.method = method;
 	this.metaData = metaData;
 	this.type = type;
+	this.parameters = parameters;
     }
 
-    private Object getParameters(ContainerRequestContext data)
+    private Object[] getParameters(ContainerRequestContext data)
 	    throws IOException {
 
-	Object params;
-	if (data.hasEntity()) {
-	    InputStream stream = data.getEntityStream();
-	    ObjectInputStream objectStream = new ObjectInputStream(stream);
-	    try {
-		params = objectStream.readObject();
-	    } catch (ClassNotFoundException ex) {
-		throw new IOException(ex);
-	    } finally {
-		objectStream.close();
+	Object[] params;
+	ContainerRequest request = (ContainerRequest) data;
+	request.bufferEntity();
+	if (ObjectUtils.available(parameters)) {
+	    List<Object> paramsList = new ArrayList<Object>();
+	    for (Parameter parameter : parameters) {
+
+		Object param = request.readEntity(parameter.getRawType(),
+			parameter.getType(), parameter.getAnnotations());
+		paramsList.add(param);
 	    }
+
+	    params = paramsList.toArray();
 	} else {
-	    params = null;
+	    params = new Object[PARAMS_DEF_LENGTH];
 	}
 
 	return params;
@@ -102,19 +113,9 @@ public class RestInflector implements
 	    EjbConnector connector = new EjbConnector();
 	    InvocationHandler handler = connector.getHandler(metaData);
 	    Object bean = connector.connectToBean(metaData);
-	    Object params = getParameters(data);
-	    Object[] arguments;
-	    if (params == null) {
-		arguments = new Object[0];
-		value = handler.invoke(bean, method, arguments);
-	    } else {
-		if (params instanceof Object[]) {
-		    arguments = (Object[]) params;
-		} else {
-		    arguments = new Object[] { params };
-		}
-		value = handler.invoke(bean, method, arguments);
-	    }
+	    Object[] params = getParameters(data);
+
+	    value = handler.invoke(bean, method, params);
 
 	    if (type == null) {
 		responseBuilder = Response.ok(value);
