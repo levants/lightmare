@@ -66,7 +66,7 @@ public class RestConvertor {
 	Object value;
 	for (String param : queryParams) {
 	    value = convertContructs(null, param);
-	    collection.add(collection);
+	    collection.add(value);
 	}
 
 	return collection;
