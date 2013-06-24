@@ -98,7 +98,7 @@ public class RestUtils {
     public static Resource defineHandler(Resource resource) throws IOException {
 
 	Resource.Builder builder = Resource.builder(resource.getPath());
-	builder.path(resource.getPath());
+	builder.name(resource.getName());
 	List<ResourceMethod> methods = resource.getAllMethods();
 	ResourceMethod.Builder methodBuilder;
 	Collection<Class<?>> handlers = resource.getHandlerClasses();
@@ -107,31 +107,32 @@ public class RestUtils {
 	Iterator<Class<?>> iterator = handlers.iterator();
 	beanClass = iterator.next();
 	beanEjbName = BeanUtils.beanName(beanClass);
-	List<MediaType> types;
+	List<MediaType> consumedTypes;
+	List<MediaType> producedTypes;
 	Invocable invocable;
 	MetaData metaData = MetaContainer.getSyncMetaData(beanEjbName);
 	Method realMethod;
 	MediaType type;
 	List<Parameter> parameters;
-	// List<? extends ResourceModelComponent> components;
 	for (ResourceMethod method : methods) {
-	    methodBuilder = builder.addMethod(method.getHttpMethod());
-	    types = method.getConsumedTypes();
-	    methodBuilder.consumes(types);
-	    methodBuilder.produces(method.getProducedTypes());
-	    methodBuilder.nameBindings(method.getNameBindings());
+	    consumedTypes = method.getConsumedTypes();
+	    producedTypes = method.getProducedTypes();
 	    invocable = method.getInvocable();
 	    realMethod = invocable.getHandlingMethod();
 	    parameters = invocable.getParameters();
-	    // components = invocable.getHandler().getComponents();
-	    if (ObjectUtils.available(types)) {
-		type = types.iterator().next();
+	    if (ObjectUtils.available(consumedTypes)) {
+		type = consumedTypes.iterator().next();
 	    } else {
 		type = null;
 	    }
 	    RestInflector inflector = new RestInflector(realMethod, metaData,
 		    type, parameters);
+	    methodBuilder = builder.addMethod(method.getHttpMethod());
+	    methodBuilder.consumes(consumedTypes);
+	    methodBuilder.produces(producedTypes);
+	    methodBuilder.nameBindings(method.getNameBindings());
 	    methodBuilder.handledBy(inflector);
+	    methodBuilder.build();
 	}
 	List<Resource> children = resource.getChildResources();
 	if (ObjectUtils.available(children)) {

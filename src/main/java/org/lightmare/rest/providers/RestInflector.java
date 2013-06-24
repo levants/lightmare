@@ -17,9 +17,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.Response.Status.Family;
 import javax.ws.rs.core.Response.StatusType;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.MessageBodyReader;
-import javax.ws.rs.ext.ReaderInterceptorContext;
 
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.message.MessageBodyWorkers;
@@ -51,9 +49,6 @@ public class RestInflector implements
 
     @Context
     private MessageBodyWorkers workers;
-
-    @Context
-    private ReaderInterceptorContext context;
 
     /**
      * Error status for exception handling
@@ -113,7 +108,7 @@ public class RestInflector implements
 
 	Object[] params;
 	ContainerRequest request = (ContainerRequest) data;
-	if (ObjectUtils.available(parameters) && request.bufferEntity()) {
+	if (ObjectUtils.available(parameters)) {
 	    List<Object> paramsList = new ArrayList<Object>();
 	    MessageBodyReader<?> reader;
 	    Class<?> rawType;
@@ -121,8 +116,7 @@ public class RestInflector implements
 	    Annotation[] annotations;
 	    MediaType mediaType;
 	    Object param;
-	    UriInfo uriInfo = request.getUriInfo();
-	    MultivaluedMap<String, String> httpHeaders;
+	    MultivaluedMap<String, String> httpHeaders = request.getHeaders();
 	    mediaType = getMediaType(request);
 	    for (Parameter parameter : parameters) {
 		type = parameter.getType();
@@ -133,7 +127,6 @@ public class RestInflector implements
 		if (ObjectUtils.notNull(reader)
 			&& reader.isReadable(rawType, type, annotations,
 				mediaType)) {
-		    httpHeaders = uriInfo.getPathParameters();
 		    param = reader.readFrom((Class) rawType, type, annotations,
 			    mediaType, httpHeaders, request.getEntityStream());
 
@@ -162,17 +155,11 @@ public class RestInflector implements
 	    Object[] params = getParameters(data);
 
 	    value = handler.invoke(bean, method, params);
-
-	    if (type == null) {
-		responseBuilder = Response.ok(value);
-	    } else {
-		responseBuilder = Response.ok(value, type);
-	    }
-
+	    responseBuilder = Response.ok(value);
 	} catch (Throwable ex) {
 	    LOG.error(ex.getMessage(), ex);
-	    responseBuilder = Response.status(new ErrorStatusType(ex
-		    .getMessage()));
+	    responseBuilder = Response.status(
+		    new ErrorStatusType(ex.getMessage())).entity(ex.toString());
 	}
 
 	return responseBuilder.build();
