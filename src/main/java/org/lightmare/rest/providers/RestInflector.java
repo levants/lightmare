@@ -26,7 +26,6 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.internal.util.collection.MultivaluedStringMap;
 import org.glassfish.jersey.message.MessageBodyWorkers;
 import org.glassfish.jersey.process.Inflector;
-import org.glassfish.jersey.server.ContainerRequest;
 import org.glassfish.jersey.server.model.Parameter;
 import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
@@ -148,11 +147,10 @@ public class RestInflector implements
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private Object[] getParameters(ContainerRequestContext data)
+    private Object[] getParameters(ContainerRequestContext request)
 	    throws IOException {
 
 	Object[] params;
-	ContainerRequest request = (ContainerRequest) data;
 	boolean check = check(request);
 	if (ObjectUtils.available(parameters)) {
 	    List<Object> paramsList = new ArrayList<Object>();
