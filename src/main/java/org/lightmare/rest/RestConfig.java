@@ -9,6 +9,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.rest.providers.ObjectMapperProvider;
+import org.lightmare.rest.providers.RestInterceptor;
 import org.lightmare.rest.providers.RestReloader;
 import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -29,6 +30,7 @@ public class RestConfig extends ResourceConfig {
 	super();
 	register(ObjectMapperProvider.class);
 	register(JacksonFeature.class);
+	register(RestInterceptor.class);
 	synchronized (RestConfig.class) {
 	    if (reloader == null) {
 		reloader = new RestReloader();
