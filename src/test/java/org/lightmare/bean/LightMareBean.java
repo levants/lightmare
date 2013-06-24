@@ -18,6 +18,8 @@ import org.lightmare.entities.Person;
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 @Path("lightmare")
+@Produces("application/json;charset=utf-8")
+@Consumes("application/json;charset=utf-8")
 public class LightMareBean implements LightMareBeanRemote {
 
     @PersistenceContext(unitName = "testUnit", name = "persistence/em")
@@ -26,9 +28,8 @@ public class LightMareBean implements LightMareBeanRemote {
     @Override
     @GET
     @Path("list")
-    @Produces("application/json;charset=utf-8")
-    @Consumes("application/json;charset=utf-8")
-    public List<Person> getPersons(@QueryParam("last")String lastName, @QueryParam("first")String firstName) {
+    public List<Person> getPersons(@QueryParam("last") String lastName,
+	    @QueryParam("first") String firstName) {
 	return em
 		.createQuery(
 			"select c from Person as c where c.lastName like :lastName and c.firstName like :firstName\t\n",
