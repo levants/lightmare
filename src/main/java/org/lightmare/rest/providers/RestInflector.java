@@ -1,7 +1,6 @@
 package org.lightmare.rest.providers;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
@@ -9,7 +8,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,12 +17,10 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.MessageBodyReader;
-import javax.ws.rs.ext.MessageBodyWriter;
 
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.internal.util.collection.MultivaluedStringMap;
@@ -83,7 +79,7 @@ public class RestInflector implements
 	return mediaType;
     }
 
-    protected void copyAll(MultivaluedMap<String, String> from,
+    private void copyAll(MultivaluedMap<String, String> from,
 	    MultivaluedMap<String, String> to) {
 
 	for (Map.Entry<String, List<String>> entry : from.entrySet()) {
@@ -92,7 +88,7 @@ public class RestInflector implements
 	}
     }
 
-    protected void addAll(MultivaluedMap<String, String> from,
+    private void addAll(MultivaluedMap<String, String> from,
 	    MultivaluedMap<String, String> to) {
 
 	if (ObjectUtils.available(from)) {
@@ -100,7 +96,7 @@ public class RestInflector implements
 	}
     }
 
-    protected MultivaluedMap<String, String> extractParameters(
+    private MultivaluedMap<String, String> extractParameters(
 	    ContainerRequestContext request) {
 
 	MultivaluedMap<String, String> params = new MultivaluedStringMap();
@@ -123,94 +119,10 @@ public class RestInflector implements
 	return params;
     }
 
-    protected void writeParams(StringBuilder builder, List<String> params) {
+    private boolean check(ContainerRequestContext request) throws IOException {
 
-	Iterator<String> iterator = params.iterator();
-	while (iterator.hasNext()) {
-	    if (builder.length() > 0) {
-		builder.append(" ");
-	    }
-	    builder.append(iterator.next());
-	}
-    }
-
-    protected boolean check(ContainerRequestContext request) throws IOException {
-
-	InputStream entityStream = request.getEntityStream();
-
-	return (!request.hasEntity() || entityStream.available() == ZERO_AVAILABLE_STREAM);
-    }
-
-    protected void createStream(ContainerRequestContext request)
-	    throws IOException {
-
-	MultivaluedMap<String, String> params = extractParameters(request);
-	if (ObjectUtils.available(params)) {
-	    List<String> paramValues;
-	    StringBuilder paramBuilder = new StringBuilder();
-	    for (Parameter parameter : parameters) {
-		paramValues = params.get(parameter.getSourceName());
-		writeParams(paramBuilder, paramValues);
-	    }
-	    byte[] bts = paramBuilder.toString().getBytes();
-	    ByteArrayInputStream ios = new ByteArrayInputStream(bts);
-	    request.setEntityStream(ios);
-	}
-    }
-
-    protected MultivaluedMap<String, Object> getHeaders(
-	    ContainerRequestContext request) {
-
-	MultivaluedMap<String, String> headers = request.getHeaders();
-	MultivaluedMap<String, Object> headerObjects = new MultivaluedHashMap<String, Object>();
-	List<Object> values = new ArrayList<Object>();
-	for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
-	    for (String headerValue : entry.getValue()) {
-		values.add(headerValue);
-	    }
-	    headerObjects.put(entry.getKey(), values);
-	}
-
-	return headerObjects;
-    }
-
-    protected void writeToStream(ContainerRequestContext request)
-	    throws IOException {
-
-	MultivaluedMap<String, String> params = extractParameters(request);
-	MediaType mediaType = getMediaType(request);
-	Annotation[] annotations = new Annotation[PARAMS_DEF_LENGTH];
-	Class<String> stringClass = String.class;
-	Class<?> clazz = String.class;
-	Type type = String.class;
-	MessageBodyWriter<String> writer = workers.getMessageBodyWriter(
-		stringClass, type, annotations, MediaType.TEXT_PLAIN_TYPE);
-	List<String> paramValues;
-	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	String value;
-	MultivaluedMap<String, Object> headers = getHeaders(request);
-	for (Parameter parameter : parameters) {
-	    paramValues = params.get(parameter.getSourceName());
-	    if (ObjectUtils.available(paramValues)) {
-		if (paramValues.size() == 1) {
-		    value = paramValues.get(0);
-		} else {
-		    Entity<List<String>> entity = Entity.entity(paramValues,
-			    mediaType);
-		    value = entity.toString();
-		}
-
-		writer.writeTo(value, clazz, type, annotations, mediaType,
-			headers, baos);
-	    }
-	}
-	try {
-	    byte[] bts = baos.toByteArray();
-	    ByteArrayInputStream bis = new ByteArrayInputStream(bts);
-	    request.setEntityStream(bis);
-	} finally {
-	    baos.close();
-	}
+	return !request.hasEntity()
+		&& request.getEntityStream().available() == ZERO_AVAILABLE_STREAM;
     }
 
     protected InputStream getEntityStream(Parameter parameter,
@@ -241,6 +153,7 @@ public class RestInflector implements
 
 	Object[] params;
 	ContainerRequest request = (ContainerRequest) data;
+	boolean check = check(request);
 	if (ObjectUtils.available(parameters)) {
 	    List<Object> paramsList = new ArrayList<Object>();
 	    MessageBodyReader<?> reader;
@@ -252,20 +165,28 @@ public class RestInflector implements
 	    MultivaluedMap<String, String> httpHeaders = request.getHeaders();
 	    mediaType = getMediaType(request);
 	    MultivaluedMap<String, String> uriParams = extractParameters(request);
+	    InputStream entityStream;
 	    for (Parameter parameter : parameters) {
 		type = parameter.getType();
 		rawType = parameter.getRawType();
 		annotations = parameter.getAnnotations();
 		reader = workers.getMessageBodyReader(rawType, type,
 			annotations, mediaType);
-		InputStream entityStream = getEntityStream(parameter,
-			uriParams, mediaType);
+
+		if (check) {
+		    entityStream = getEntityStream(parameter, uriParams,
+			    mediaType);
+		} else {
+		    entityStream = request.getEntityStream();
+		}
 		if (ObjectUtils.notNull(reader)
 			&& reader.isReadable(rawType, type, annotations,
 				mediaType) && ObjectUtils.notNull(entityStream)) {
 		    param = reader.readFrom((Class) rawType, type, annotations,
 			    mediaType, httpHeaders, entityStream);
-		    entityStream.close();
+		    if (check) {
+			entityStream.close();
+		    }
 
 		    if (ObjectUtils.notNull(param)) {
 			paramsList.add(param);
