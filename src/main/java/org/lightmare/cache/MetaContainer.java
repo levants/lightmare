@@ -22,6 +22,7 @@ import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -318,6 +319,8 @@ public class MetaContainer {
 	// Removes MetaData from cache
 	removeMeta(beanName);
 	if (ObjectUtils.notNull(metaData)) {
+	    // Removes appropriated resource class from REST service
+	    RestUtils.remove(metaData.getBeanClass());
 	    clearConnection(metaData);
 	    ClassLoader loader = metaData.getLoader();
 	    LibraryLoader.closeClassLoader(loader);
