@@ -24,7 +24,11 @@ public class LightMareBean implements LightMareBeanRemote {
     private EntityManager em;
 
     @Override
-    public List<Person> getPersons(String lastName, String firstName) {
+    @GET
+    @Path("list")
+    @Produces("application/json;charset=utf-8")
+    @Consumes("application/json;charset=utf-8")
+    public List<Person> getPersons(@QueryParam("last")String lastName, @QueryParam("first")String firstName) {
 	return em
 		.createQuery(
 			"select c from Person as c where c.lastName like :lastName and c.firstName like :firstName\t\n",

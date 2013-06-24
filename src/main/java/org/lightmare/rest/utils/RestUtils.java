@@ -97,7 +97,7 @@ public class RestUtils {
 
     public static Resource defineHandler(Resource resource) throws IOException {
 
-	Resource.Builder builder = Resource.builder();
+	Resource.Builder builder = Resource.builder(resource.getPath());
 	builder.path(resource.getPath());
 	List<ResourceMethod> methods = resource.getAllMethods();
 	ResourceMethod.Builder methodBuilder;
@@ -113,6 +113,7 @@ public class RestUtils {
 	Method realMethod;
 	MediaType type;
 	List<Parameter> parameters;
+	// List<? extends ResourceModelComponent> components;
 	for (ResourceMethod method : methods) {
 	    methodBuilder = builder.addMethod(method.getHttpMethod());
 	    types = method.getConsumedTypes();
@@ -122,6 +123,7 @@ public class RestUtils {
 	    invocable = method.getInvocable();
 	    realMethod = invocable.getHandlingMethod();
 	    parameters = invocable.getParameters();
+	    // components = invocable.getHandler().getComponents();
 	    if (ObjectUtils.available(types)) {
 		type = types.iterator().next();
 	    } else {
@@ -130,6 +132,14 @@ public class RestUtils {
 	    RestInflector inflector = new RestInflector(realMethod, metaData,
 		    type, parameters);
 	    methodBuilder.handledBy(inflector);
+	}
+	List<Resource> children = resource.getChildResources();
+	if (ObjectUtils.available(children)) {
+	    Resource child;
+	    for (Resource preChild : children) {
+		child = defineHandler(preChild);
+		builder.addChildResource(child);
+	    }
 	}
 	Resource intercepted = builder.build();
 
