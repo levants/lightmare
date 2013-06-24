@@ -1,21 +1,28 @@
 package org.lightmare.rest.providers;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.Response.Status.Family;
 import javax.ws.rs.core.Response.StatusType;
+import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.ReaderInterceptorContext;
 
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.internal.PropertiesDelegate;
+import org.glassfish.jersey.message.MessageBodyWorkers;
 import org.glassfish.jersey.process.Inflector;
 import org.glassfish.jersey.server.ContainerRequest;
 import org.glassfish.jersey.server.model.Parameter;
@@ -41,6 +48,12 @@ public class RestInflector implements
     private List<Parameter> parameters;
 
     private static final int PARAMS_DEF_LENGTH = 0;
+
+    @Context
+    private MessageBodyWorkers workers;
+
+    @Context
+    private ReaderInterceptorContext context;
 
     /**
      * Error status for exception handling
@@ -82,22 +95,51 @@ public class RestInflector implements
 	this.parameters = parameters;
     }
 
+    private MediaType getMediaType(ContainerRequestContext request) {
+
+	MediaType mediaType = request.getMediaType();
+	if (mediaType == null && type == null) {
+	    mediaType = MediaType.APPLICATION_OCTET_STREAM_TYPE;
+	} else if (mediaType == null && ObjectUtils.notNull(type)) {
+	    mediaType = type;
+	}
+
+	return mediaType;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private Object[] getParameters(ContainerRequestContext data)
 	    throws IOException {
 
 	Object[] params;
 	ContainerRequest request = (ContainerRequest) data;
-	PropertiesDelegate delegate;
 	if (ObjectUtils.available(parameters) && request.bufferEntity()) {
 	    List<Object> paramsList = new ArrayList<Object>();
-	    delegate = request.getPropertiesDelegate();
+	    MessageBodyReader<?> reader;
+	    Class<?> rawType;
+	    Type type;
+	    Annotation[] annotations;
+	    MediaType mediaType;
+	    Object param;
+	    UriInfo uriInfo = request.getUriInfo();
+	    MultivaluedMap<String, String> httpHeaders;
+	    mediaType = getMediaType(request);
 	    for (Parameter parameter : parameters) {
+		type = parameter.getType();
+		rawType = parameter.getRawType();
+		annotations = parameter.getAnnotations();
+		reader = workers.getMessageBodyReader(rawType, type,
+			annotations, mediaType);
+		if (ObjectUtils.notNull(reader)
+			&& reader.isReadable(rawType, type, annotations,
+				mediaType)) {
+		    httpHeaders = uriInfo.getPathParameters();
+		    param = reader.readFrom((Class) rawType, type, annotations,
+			    mediaType, httpHeaders, request.getEntityStream());
 
-		Object param = request.readEntity(parameter.getRawType(),
-			parameter.getType(), parameter.getAnnotations(),
-			delegate);
-		if (ObjectUtils.notNull(param)) {
-		    paramsList.add(param);
+		    if (ObjectUtils.notNull(param)) {
+			paramsList.add(param);
+		    }
 		}
 	    }
 	    params = paramsList.toArray();
