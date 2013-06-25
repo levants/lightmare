@@ -1,5 +1,7 @@
 package org.lightmare.utils;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
@@ -14,7 +16,20 @@ public class ObjectUtils {
 
     public static boolean notNull(Object data) {
 
-	return data != null;
+	return (data != null);
+    }
+
+    public static boolean notNullAll(Object... datas) {
+
+	boolean valid = datas != null;
+	if (valid) {
+	    int length = datas.length;
+	    for (int i = 0; i < length && valid; i++) {
+		valid = datas[i] != null;
+	    }
+	}
+
+	return valid;
     }
 
     public static boolean available(Collection<?> collection) {
@@ -121,5 +136,12 @@ public class ObjectUtils {
 	}
 
 	return array;
+    }
+
+    public static void close(Closeable closeable) throws IOException {
+
+	if (ObjectUtils.notNull(closeable)) {
+	    closeable.close();
+	}
     }
 }
