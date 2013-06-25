@@ -1,5 +1,6 @@
 package org.lightmare.entities;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -9,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+
+import org.lightmare.rest.utils.RestUtils;
+import org.lightmare.utils.RpcUtils;
 
 @Entity
 @Table(name = "RELATIVES", schema = "PERSONS")
@@ -38,5 +42,30 @@ public class Relative implements Serializable {
 
     public void setName(String name) {
 	this.name = name;
+    }
+
+    public static Relative valueOf(String json) {
+
+	Relative relative = null;
+	try {
+	    relative = RestUtils.convert(json, Relative.class);
+	} catch (IOException ex) {
+	    ex.printStackTrace();
+	}
+
+	return relative;
+    }
+
+    @Override
+    public String toString() {
+
+	String value;
+	try {
+	    value = RpcUtils.write(this);
+	} catch (IOException ex) {
+	    ex.printStackTrace();
+	    value = super.toString();
+	}
+	return value;
     }
 }
