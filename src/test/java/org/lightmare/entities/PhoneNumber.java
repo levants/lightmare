@@ -12,7 +12,6 @@ import javax.persistence.TableGenerator;
 
 import org.lightmare.annotations.UnitName;
 import org.lightmare.rest.utils.RestUtils;
-import org.lightmare.utils.RpcUtils;
 
 @Entity
 @Table(name = "PHONE_NUMBERS", schema = "PERSONS")
@@ -65,18 +64,5 @@ public class PhoneNumber {
 	}
 
 	return phone;
-    }
-    
-    @Override
-    public String toString() {
-
-	String value;
-	try {
-	    value = RpcUtils.write(this);
-	} catch (IOException ex) {
-	    ex.printStackTrace();
-	    value = super.toString();
-	}
-	return value;
     }
 }

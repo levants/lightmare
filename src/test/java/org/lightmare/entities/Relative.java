@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.lightmare.rest.utils.RestUtils;
-import org.lightmare.utils.RpcUtils;
 
 @Entity
 @Table(name = "RELATIVES", schema = "PERSONS")
@@ -54,18 +53,5 @@ public class Relative implements Serializable {
 	}
 
 	return relative;
-    }
-
-    @Override
-    public String toString() {
-
-	String value;
-	try {
-	    value = RpcUtils.write(this);
-	} catch (IOException ex) {
-	    ex.printStackTrace();
-	    value = super.toString();
-	}
-	return value;
     }
 }

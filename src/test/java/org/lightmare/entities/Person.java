@@ -18,7 +18,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.lightmare.annotations.UnitName;
 import org.lightmare.rest.utils.RestUtils;
-import org.lightmare.utils.RpcUtils;
 
 @Entity
 @Table(name = "PERSONS", schema = "PERSONS")
@@ -159,18 +158,5 @@ public class Person {
 	}
 
 	return person;
-    }
-
-    @Override
-    public String toString() {
-
-	String value;
-	try {
-	    value = RpcUtils.write(this);
-	} catch (IOException ex) {
-	    ex.printStackTrace();
-	    value = super.toString();
-	}
-	return value;
     }
 }
