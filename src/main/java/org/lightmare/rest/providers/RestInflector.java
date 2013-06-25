@@ -3,10 +3,8 @@ package org.lightmare.rest.providers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -124,12 +122,32 @@ public class RestInflector implements
 		&& request.getEntityStream().available() == ZERO_AVAILABLE_STREAM;
     }
 
+    private boolean available(InputStream entityStream,
+	    MessageBodyReader<?> reader, Parameter parameter,
+	    MediaType mediaType) {
+
+	return ObjectUtils.notNullAll(reader, entityStream)
+		&& reader.isReadable(parameter.getRawType(),
+			parameter.getType(), parameter.getAnnotations(),
+			mediaType);
+    }
+
+    private MessageBodyReader<?> getReader(Parameter parameter,
+	    MediaType mediaType) {
+
+	MessageBodyReader<?> reader = workers.getMessageBodyReader(
+		parameter.getRawType(), parameter.getType(),
+		parameter.getAnnotations(), mediaType);
+
+	return reader;
+    }
+
     protected InputStream getEntityStream(Parameter parameter,
 	    MultivaluedMap<String, String> params, MediaType mediaType) {
 
 	List<String> paramValues = params.get(parameter.getSourceName());
 	String value;
-	InputStream entityStrem;
+	InputStream entityStream;
 	if (ObjectUtils.available(paramValues)) {
 	    if (paramValues.size() == 1) {
 		value = paramValues.get(0);
@@ -138,62 +156,102 @@ public class RestInflector implements
 			mediaType);
 		value = entity.toString();
 	    }
-	    entityStrem = new ByteArrayInputStream(value.getBytes());
+	    entityStream = new ByteArrayInputStream(value.getBytes());
 	} else {
-	    entityStrem = null;
+	    entityStream = null;
 	}
 
-	return entityStrem;
+	return entityStream;
+    }
+
+    private InputStream getEntityStream(boolean check,
+	    ContainerRequestContext request, Parameter parameter,
+	    MultivaluedMap<String, String> params, MediaType mediaType) {
+
+	InputStream entityStream;
+	if (check) {
+	    entityStream = getEntityStream(parameter, params, mediaType);
+	} else {
+	    entityStream = request.getEntityStream();
+	}
+
+	return entityStream;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    private Object extractParam(MessageBodyReader<?> reader,
+	    Parameter parameter, MediaType mediaType, InputStream entityStream,
+	    MultivaluedMap<String, String> httpHeaders, boolean check)
+	    throws IOException {
+
+	Object param;
+	try {
+	    param = reader.readFrom((Class) parameter.getRawType(),
+		    parameter.getType(), parameter.getAnnotations(), mediaType,
+		    httpHeaders, entityStream);
+
+	} finally {
+
+	    if (check) {
+		ObjectUtils.close(entityStream);
+	    }
+	}
+
+	return param;
+    }
+
+    private void fillParamList(Object param, List<Object> paramsList) {
+
+	if (ObjectUtils.notNull(param)) {
+	    paramsList.add(param);
+	}
+    }
+
+    private List<Object> extractParams(ContainerRequestContext request)
+	    throws IOException {
+
+	List<Object> paramsList = new ArrayList<Object>();
+	boolean check = check(request);
+	boolean valid;
+	MessageBodyReader<?> reader;
+	MediaType mediaType;
+	Object param;
+	MultivaluedMap<String, String> httpHeaders = request.getHeaders();
+	mediaType = getMediaType(request);
+	MultivaluedMap<String, String> uriParams = extractParameters(request);
+	InputStream entityStream;
+	for (Parameter parameter : parameters) {
+
+	    reader = getReader(parameter, mediaType);
+
+	    entityStream = getEntityStream(check, request, parameter,
+		    uriParams, mediaType);
+	    valid = available(entityStream, reader, parameter, mediaType);
+	    if (valid) {
+		param = extractParam(reader, parameter, mediaType,
+			entityStream, httpHeaders, check);
+
+		fillParamList(param, paramsList);
+	    }
+	}
+
+	return paramsList;
+    }
+
+    private Object[] getEmptyArray() {
+
+	return new Object[PARAMS_DEF_LENGTH];
+    }
+
     private Object[] getParameters(ContainerRequestContext request)
 	    throws IOException {
 
 	Object[] params;
 	if (ObjectUtils.available(parameters)) {
-	    List<Object> paramsList = new ArrayList<Object>();
-	    boolean check = check(request);
-	    MessageBodyReader<?> reader;
-	    Class<?> rawType;
-	    Type type;
-	    Annotation[] annotations;
-	    MediaType mediaType;
-	    Object param;
-	    MultivaluedMap<String, String> httpHeaders = request.getHeaders();
-	    mediaType = getMediaType(request);
-	    MultivaluedMap<String, String> uriParams = extractParameters(request);
-	    InputStream entityStream;
-	    for (Parameter parameter : parameters) {
-		type = parameter.getType();
-		rawType = parameter.getRawType();
-		annotations = parameter.getAnnotations();
-		reader = workers.getMessageBodyReader(rawType, type,
-			annotations, mediaType);
-
-		if (check) {
-		    entityStream = getEntityStream(parameter, uriParams,
-			    mediaType);
-		} else {
-		    entityStream = request.getEntityStream();
-		}
-		if (ObjectUtils.notNullAll(reader, entityStream)
-			&& reader.isReadable(rawType, type, annotations,
-				mediaType)) {
-		    param = reader.readFrom((Class) rawType, type, annotations,
-			    mediaType, httpHeaders, entityStream);
-		    if (check) {
-			ObjectUtils.close(entityStream);
-		    }
-
-		    if (ObjectUtils.notNull(param)) {
-			paramsList.add(param);
-		    }
-		}
-	    }
+	    List<Object> paramsList = extractParams(request);
 	    params = paramsList.toArray();
 	} else {
-	    params = new Object[PARAMS_DEF_LENGTH];
+	    params = getEmptyArray();
 	}
 
 	return params;
