@@ -66,7 +66,7 @@ public class RestUtils {
 	return value;
     }
 
-    private static boolean check(Class<?> resourceClass) {
+    private static boolean isAcceptable(Class<?> resourceClass) {
 
 	boolean valid = Resource.isAcceptable(resourceClass)
 		&& resourceClass.isAnnotationPresent(Path.class);
@@ -128,7 +128,7 @@ public class RestUtils {
 
     public static void add(Class<?> beanClass) throws IOException {
 
-	boolean valid = check(beanClass);
+	boolean valid = isAcceptable(beanClass);
 	if (valid) {
 
 	    RestReloader reloader = RestReloader.get();
