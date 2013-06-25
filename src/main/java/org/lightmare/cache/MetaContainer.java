@@ -460,4 +460,8 @@ public class MetaContainer {
 
 	REST_RESOURCES.remove(resourceClass);
     }
+
+    public static boolean hasRest() {
+	return ObjectUtils.available(REST_RESOURCES);
+    }
 }

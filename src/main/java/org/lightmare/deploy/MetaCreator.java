@@ -396,7 +396,9 @@ public class MetaCreator {
 	    }
 	}
 	awaitDeployments();
-	RestUtils.reload();
+	if (MetaContainer.hasRest()) {
+	    RestUtils.reload();
+	}
 	if (hotDeployment && !watchStatus) {
 	    Watcher.startWatch();
 	    watchStatus = true;
