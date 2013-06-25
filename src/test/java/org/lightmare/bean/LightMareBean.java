@@ -53,8 +53,6 @@ public class LightMareBean implements LightMareBeanRemote {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @PUT
-    // @Produces("application/json;charset=utf-8")
-    // @Consumes("application/json;charset=utf-8")
     public void addPerson(@QueryParam("person") Person person) {
 	em.persist(person);
     }
