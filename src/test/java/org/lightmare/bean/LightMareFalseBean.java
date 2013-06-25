@@ -10,7 +10,7 @@ public class LightMareFalseBean implements LightMareFalseBeanRemote {
 
     @Override
     public boolean isFalse() {
+
 	return true;
     }
-
 }
