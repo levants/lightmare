@@ -13,8 +13,4 @@ public interface LightMareBeanRemote {
     void addPerson(Person person);
 
     void editPerson(Person person);
-
-    boolean isCommon(Person person1, Person person2);
-
-    boolean isCommon(String last1, String last2);
 }
