@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 import org.lightmare.entities.Person;
+import org.lightmare.utils.ObjectUtils;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -65,6 +66,22 @@ public class LightMareBean implements LightMareBeanRemote {
 
     private void merge(Person person) {
 	em.merge(person);
+    }
+
+    @Override
+    @PUT
+    @Path("commonp")
+    public boolean isCommon(Person person1, Person person2) {
+
+	return ObjectUtils.notNull(person1) && person1.equals(person2);
+    }
+
+    @Override
+    @PUT
+    @Path("commonl")
+    public boolean isCommon(String last1, String last2) {
+
+	return ObjectUtils.notNull(last1) && last1.equals(last2);
     }
 
 }
