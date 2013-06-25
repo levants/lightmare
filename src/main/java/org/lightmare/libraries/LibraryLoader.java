@@ -75,6 +75,26 @@ public class LibraryLoader {
     }
 
     /**
+     * If passed {@link ClassLoader} is instance of {@link URLClassLoader} then
+     * gets {@link URL}[] of this {@link ClassLoader} calling
+     * {@link URLClassLoader#getURLs()} method
+     * 
+     * @param loader
+     * @return {@link URL}[]
+     */
+    private static URL[] getURLs(ClassLoader loader) {
+
+	URL[] urls;
+	if (loader instanceof URLClassLoader) {
+	    urls = ((URLClassLoader) loader).getURLs();
+	} else {
+	    urls = new URL[0];
+	}
+
+	return urls;
+    }
+
+    /**
      * Initializes and returns enriched {@link ClassLoader} in separated
      * {@link Thread} to load bean and library classes
      * 
@@ -175,6 +195,25 @@ public class LibraryLoader {
 	    // dereference cloned class loader instance
 	    loader = null;
 	}
+    }
+
+    /**
+     * Merges two {@link ClassLoader}s
+     * 
+     * @param newLoader
+     * @param oldLoader
+     * @return {@link ClassLoader}
+     */
+    public static ClassLoader createCommon(ClassLoader newLoader,
+	    ClassLoader oldLoader) {
+
+	URL[] urls = getURLs(oldLoader);
+	URLClassLoader commonLoader = URLClassLoader.newInstance(urls,
+		oldLoader);
+	urls = getURLs(newLoader);
+	commonLoader = URLClassLoader.newInstance(urls, newLoader);
+
+	return commonLoader;
     }
 
     public static void loadCurrentLibraries(ClassLoader loader) {
