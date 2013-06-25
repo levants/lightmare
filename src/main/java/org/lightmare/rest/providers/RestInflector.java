@@ -151,9 +151,9 @@ public class RestInflector implements
 	    throws IOException {
 
 	Object[] params;
-	boolean check = check(request);
 	if (ObjectUtils.available(parameters)) {
 	    List<Object> paramsList = new ArrayList<Object>();
+	    boolean check = check(request);
 	    MessageBodyReader<?> reader;
 	    Class<?> rawType;
 	    Type type;
@@ -177,13 +177,13 @@ public class RestInflector implements
 		} else {
 		    entityStream = request.getEntityStream();
 		}
-		if (ObjectUtils.notNull(reader)
+		if (ObjectUtils.notNullAll(reader, entityStream)
 			&& reader.isReadable(rawType, type, annotations,
-				mediaType) && ObjectUtils.notNull(entityStream)) {
+				mediaType)) {
 		    param = reader.readFrom((Class) rawType, type, annotations,
 			    mediaType, httpHeaders, entityStream);
 		    if (check) {
-			entityStream.close();
+			ObjectUtils.close(entityStream);
 		    }
 
 		    if (ObjectUtils.notNull(param)) {
