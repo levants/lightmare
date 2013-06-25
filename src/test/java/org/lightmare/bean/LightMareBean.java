@@ -71,7 +71,8 @@ public class LightMareBean implements LightMareBeanRemote {
     @Override
     @PUT
     @Path("commonp")
-    public boolean isCommon(Person person1, Person person2) {
+    public boolean isCommon(@QueryParam("person1") Person person1,
+	    @QueryParam("person1") Person person2) {
 
 	return ObjectUtils.notNull(person1) && person1.equals(person2);
     }
@@ -79,7 +80,8 @@ public class LightMareBean implements LightMareBeanRemote {
     @Override
     @PUT
     @Path("commonl")
-    public boolean isCommon(String last1, String last2) {
+    public boolean isCommon(@QueryParam("last1") String last1,
+	    @QueryParam("last2") String last2) {
 
 	return ObjectUtils.notNull(last1) && last1.equals(last2);
     }
