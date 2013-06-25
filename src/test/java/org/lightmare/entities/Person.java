@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -60,11 +61,11 @@ public class Person {
     @Column(name = "gender")
     private String gender;
 
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = Email.class)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Email.class)
     @JoinColumn(name = "PERSON_ID", referencedColumnName = "PERSON_ID")
     private Set<Email> emails;
 
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = PhoneNumber.class)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = PhoneNumber.class)
     @JoinColumn(name = "PERSON_ID", referencedColumnName = "PERSON_ID")
     private Set<PhoneNumber> phoneNumbers;
 
