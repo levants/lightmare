@@ -6,10 +6,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
@@ -70,30 +66,12 @@ public class RestUtils {
 	return value;
     }
 
-    private static boolean checkAnnotation(Method method) {
-
-	boolean valid = (method.isAnnotationPresent(GET.class)
-		|| method.isAnnotationPresent(POST.class)
-		|| method.isAnnotationPresent(PUT.class) || method
-		.isAnnotationPresent(DELETE.class));
-
-	return valid;
-    }
-
     private static boolean check(Class<?> resourceClass) {
 
 	boolean valid = Resource.isAcceptable(resourceClass)
 		&& resourceClass.isAnnotationPresent(Path.class);
-	Method[] methods = resourceClass.getDeclaredMethods();
-	int length = methods.length;
-	boolean isMethod = Boolean.FALSE;
-	Method method;
-	for (int i = 0; i < length && !isMethod && valid; i++) {
-	    method = methods[i];
-	    isMethod = checkAnnotation(method);
-	}
 
-	return valid && isMethod;
+	return valid;
     }
 
     public static Resource defineHandler(Resource resource) throws IOException {
