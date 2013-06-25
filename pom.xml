@@ -323,6 +323,16 @@
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>${jersey.version}</version>
 			<scope>provided</scope>
+			<exclusions>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-core-asl</artifactId>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-mapper-asl</artifactId>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-jaxrs</artifactId>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-xc</artifactId>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
