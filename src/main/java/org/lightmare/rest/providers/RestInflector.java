@@ -6,11 +6,12 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
@@ -49,6 +50,10 @@ public class RestInflector implements
     private static final int PARAMS_DEF_LENGTH = 0;
 
     private static final int ZERO_AVAILABLE_STREAM = 0;
+
+    private static final int PARAM_VALUES_INDEX = 0;
+
+    private static final int PARAM_VALIES_LENGTH = 0;
 
     @Context
     private MessageBodyWorkers workers;
@@ -142,33 +147,50 @@ public class RestInflector implements
 	return reader;
     }
 
-    protected InputStream getEntityStream(Parameter parameter,
+    private InputStream textToStream(String text) {
+
+	return new ByteArrayInputStream(text.getBytes());
+    }
+
+    protected List<InputStream> textsToStreams(Collection<String> params) {
+
+	List<InputStream> streams = new ArrayList<InputStream>();
+	if (ObjectUtils.available(params)) {
+	    InputStream stream;
+	    for (String param : params) {
+		stream = textToStream(param);
+		streams.add(stream);
+	    }
+	}
+
+	return streams;
+    }
+
+    protected Object getEntityStream(Parameter parameter,
 	    MultivaluedMap<String, String> params, MediaType mediaType) {
 
 	List<String> paramValues = params.get(parameter.getSourceName());
 	String value;
-	InputStream entityStream;
+	Object stream;
 	if (ObjectUtils.available(paramValues)) {
-	    if (paramValues.size() == 1) {
-		value = paramValues.get(0);
+	    if (paramValues.size() == PARAM_VALIES_LENGTH) {
+		value = paramValues.get(PARAM_VALUES_INDEX);
+		stream = textToStream(value);
 	    } else {
-		Entity<List<String>> entity = Entity.entity(paramValues,
-			mediaType);
-		value = entity.toString();
+		stream = textsToStreams(paramValues);
 	    }
-	    entityStream = new ByteArrayInputStream(value.getBytes());
 	} else {
-	    entityStream = null;
+	    stream = null;
 	}
 
-	return entityStream;
+	return stream;
     }
 
-    private InputStream getEntityStream(boolean check,
+    private Object getEntityStream(boolean check,
 	    ContainerRequestContext request, Parameter parameter,
 	    MultivaluedMap<String, String> params, MediaType mediaType) {
 
-	InputStream entityStream;
+	Object entityStream;
 	if (check) {
 	    entityStream = getEntityStream(parameter, params, mediaType);
 	} else {
@@ -207,31 +229,64 @@ public class RestInflector implements
 	}
     }
 
+    private void fillParamList(InputStream entityStream,
+	    MessageBodyReader<?> reader, boolean check,
+	    ContainerRequestContext request, Parameter parameter,
+	    MultivaluedMap<String, String> httpHeaders, MediaType mediaType,
+	    List<Object> paramsList) throws IOException {
+
+	boolean valid = available(entityStream, reader, parameter, mediaType);
+	if (valid) {
+	    Object param = extractParam(reader, parameter, mediaType,
+		    entityStream, httpHeaders, check);
+
+	    fillParamList(param, paramsList);
+	}
+    }
+
+    private void fillParamList(Object stream, MessageBodyReader<?> reader,
+	    boolean check, ContainerRequestContext request,
+	    Parameter parameter, MultivaluedMap<String, String> httpHeaders,
+	    MediaType mediaType, List<Object> paramsList) throws IOException {
+
+	InputStream entityStream;
+
+	if (stream instanceof InputStream) {
+	    entityStream = (InputStream) stream;
+	    fillParamList(entityStream, reader, check, request, parameter,
+		    httpHeaders, mediaType, paramsList);
+	} else if (stream instanceof List) {
+	    @SuppressWarnings("unchecked")
+	    Iterator<InputStream> streams = ((List<InputStream>) stream)
+		    .iterator();
+	    while (streams.hasNext()) {
+		entityStream = streams.next();
+		fillParamList(entityStream, reader, check, request, parameter,
+			httpHeaders, mediaType, paramsList);
+	    }
+	}
+    }
+
     private List<Object> extractParams(ContainerRequestContext request)
 	    throws IOException {
 
 	List<Object> paramsList = new ArrayList<Object>();
 	boolean check = check(request);
-	boolean valid;
 	MessageBodyReader<?> reader;
 	MediaType mediaType;
-	Object param;
 	MultivaluedMap<String, String> httpHeaders = request.getHeaders();
 	mediaType = getMediaType(request);
 	MultivaluedMap<String, String> uriParams = extractParameters(request);
-	InputStream entityStream;
+	Object stream;
 	for (Parameter parameter : parameters) {
 
 	    reader = getReader(parameter, mediaType);
 
-	    entityStream = getEntityStream(check, request, parameter,
-		    uriParams, mediaType);
-	    valid = available(entityStream, reader, parameter, mediaType);
-	    if (valid) {
-		param = extractParam(reader, parameter, mediaType,
-			entityStream, httpHeaders, check);
-
-		fillParamList(param, paramsList);
+	    stream = getEntityStream(check, request, parameter, uriParams,
+		    mediaType);
+	    if (ObjectUtils.notNull(stream)) {
+		fillParamList(stream, reader, check, request, parameter,
+			httpHeaders, mediaType, paramsList);
 	    }
 	}
 
