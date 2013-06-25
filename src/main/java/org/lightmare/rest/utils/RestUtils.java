@@ -19,6 +19,7 @@ import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.server.model.ResourceMethod;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
+import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.RestConfig;
 import org.lightmare.rest.providers.RestInflector;
 import org.lightmare.rest.providers.RestReloader;
@@ -169,10 +170,32 @@ public class RestUtils {
 	}
     }
 
+    public static ClassLoader getCommonLoader() {
+
+	Iterator<MetaData> iterator = MetaContainer.getBeanClasses();
+	MetaData metaData;
+	ClassLoader newLoader;
+	ClassLoader oldLoader = null;
+	ClassLoader commonLoader = null;
+	while (iterator.hasNext()) {
+	    metaData = iterator.next();
+	    newLoader = metaData.getLoader();
+	    if (ObjectUtils.notNull(oldLoader)
+		    && ObjectUtils.notNull(newLoader)) {
+		commonLoader = LibraryLoader.createCommon(newLoader, oldLoader);
+	    }
+	    newLoader = oldLoader;
+	}
+
+	return commonLoader;
+    }
+
     public static void reload() {
 
 	RestReloader reloader = RestReloader.get();
 	if (ObjectUtils.notNull(reloader) && ObjectUtils.notNull(config)) {
+	    ClassLoader commonLoader = getCommonLoader();
+	    config.setClassLoader(commonLoader);
 	    reloader.reload(config);
 	}
     }
