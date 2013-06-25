@@ -39,6 +39,7 @@ import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.rest.utils.RestCheck;
 import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
@@ -566,7 +567,9 @@ public class BeanLoader {
 		checkOnTransactional(beanClass);
 		String beanEjbName = BeanUtils.beanName(beanClass);
 		checkAndSetBean(beanEjbName);
-		RestUtils.add(beanClass);
+		if (RestCheck.check(beanClass)) {
+		    RestUtils.add(beanClass);
+		}
 		createMeta(beanClass);
 		indentifyInterfaces(beanClass);
 		metaData.setInProgress(Boolean.FALSE);
