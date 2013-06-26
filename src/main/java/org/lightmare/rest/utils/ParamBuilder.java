@@ -51,10 +51,15 @@ public class ParamBuilder {
 
     private static final int PARAM_VALIES_LENGTH = 1;
 
+    private ParamBuilder() {
+
+    }
+
     public ParamBuilder(MediaType mediaType, List<Parameter> parameters,
-	    ContainerRequestContext request) {
+	    MessageBodyWorkers workers, ContainerRequestContext request) {
 	this.mediaType = mediaType;
 	this.parameters = parameters;
+	this.workers = workers;
 	this.request = request;
     }
 
@@ -219,5 +224,43 @@ public class ParamBuilder {
 	}
 
 	return paramsList;
+    }
+
+    public static final class Builder {
+
+	private ParamBuilder target;
+
+	public Builder() {
+	    target = new ParamBuilder();
+	}
+
+	public ParamBuilder.Builder setMediaType(MediaType mediaType) {
+	    target.mediaType = mediaType;
+
+	    return this;
+	}
+
+	public ParamBuilder.Builder setParameters(List<Parameter> parameters) {
+	    target.parameters = parameters;
+
+	    return this;
+	}
+
+	public ParamBuilder.Builder setWorkers(MessageBodyWorkers workers) {
+	    target.workers = workers;
+
+	    return this;
+	}
+
+	public ParamBuilder.Builder setRequest(ContainerRequestContext request) {
+	    target.request = request;
+
+	    return this;
+	}
+
+	public ParamBuilder build() {
+
+	    return target;
+	}
     }
 }
