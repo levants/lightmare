@@ -42,6 +42,7 @@ import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.fs.FileUtils;
 import org.lightmare.utils.fs.WatchUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 import org.lightmare.utils.shutdown.ShutDown;
@@ -501,10 +502,10 @@ public class MetaCreator {
 	}
 	List<URL> urlList = new ArrayList<URL>();
 	URL archive;
-	File file;
+	String realPath;
 	for (String path : paths) {
-	    file = new File(path);
-	    archive = file.toURI().toURL();
+	    realPath = FileUtils.checkPath(path);
+	    archive = FileUtils.toURL(realPath);
 	    urlList.add(archive);
 	}
 	URL[] archives = ObjectUtils.toArray(urlList, URL.class);
