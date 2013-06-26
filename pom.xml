@@ -409,6 +409,12 @@
 			<version>${jackson.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>${jackson.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- end of jackson json serialization -->
 
 		<!-- jetty embeddable server -->

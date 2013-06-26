@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.cache.MetaContainer;
+import org.lightmare.rest.providers.JacksonFXmlFeature;
 import org.lightmare.rest.providers.ObjectMapperProvider;
 import org.lightmare.rest.providers.RestReloader;
 import org.lightmare.rest.utils.RestUtils;
@@ -28,7 +28,7 @@ public class RestConfig extends ResourceConfig {
     public RestConfig() {
 	super();
 	register(ObjectMapperProvider.class);
-	register(JacksonFeature.class);
+	register(JacksonFXmlFeature.class);
 	synchronized (RestConfig.class) {
 	    if (reloader == null) {
 		reloader = new RestReloader();

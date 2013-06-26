@@ -1,0 +1,34 @@
+package org.lightmare.rest.providers;
+
+import javax.ws.rs.core.Feature;
+import javax.ws.rs.core.FeatureContext;
+import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.MessageBodyWriter;
+
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+
+/**
+ * Class to register new json api instead of ald
+ * 
+ * @author Levan
+ * 
+ */
+public class JacksonFXmlFeature implements Feature {
+
+    private static final String DISABLE_JSON_KEY = "jersey.config.disableMoxyJson.";
+
+    @Override
+    public boolean configure(FeatureContext context) {
+
+	String runtimeType = context.getConfiguration().getRuntimeType().name()
+		.toLowerCase();
+	String disableMoxy = new StringBuilder().append(DISABLE_JSON_KEY)
+		.append(runtimeType).toString();
+	context.property(disableMoxy, Boolean.TRUE);
+	Class<?>[] ios = new Class[] { MessageBodyReader.class,
+		MessageBodyWriter.class };
+	context.register(JacksonJaxbJsonProvider.class, ios);
+
+	return Boolean.TRUE;
+    }
+}
