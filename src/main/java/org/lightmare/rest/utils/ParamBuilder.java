@@ -49,7 +49,7 @@ public class ParamBuilder {
 
     private static final int PARAM_VALUES_INDEX = 0;
 
-    private static final int PARAM_VALIES_LENGTH = 0;
+    private static final int PARAM_VALIES_LENGTH = 1;
 
     public ParamBuilder(MediaType mediaType, List<Parameter> parameters,
 	    ContainerRequestContext request) {
