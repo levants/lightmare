@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Set;
 
+import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -168,5 +169,38 @@ public class FileUtils {
 	for (File fileToDelete : files) {
 	    deleteFile(fileToDelete);
 	}
+    }
+
+    /**
+     * Checks passed path and if its empty path for current class directory
+     * 
+     * @param path
+     * @return {@link String}
+     */
+    public static String checkPath(String path) {
+
+	String realPath;
+	if (ObjectUtils.available(path)) {
+	    realPath = path;
+	} else if (ObjectUtils.notNull(path) && path.isEmpty()) {
+	    realPath = LibraryLoader.getContextClassLoader().getResource(path)
+		    .getFile();
+	} else {
+	    realPath = path;
+	}
+
+	return realPath;
+    }
+
+    public static URL toURL(File file) throws IOException {
+
+	return file.toURI().toURL();
+    }
+
+    public static URL toURL(String path) throws IOException {
+
+	File file = new File(path);
+
+	return toURL(file);
     }
 }
