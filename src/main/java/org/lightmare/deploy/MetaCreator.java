@@ -501,12 +501,10 @@ public class MetaCreator {
 	    paths = ObjectUtils.toArray(pathList, String.class);
 	}
 	List<URL> urlList = new ArrayList<URL>();
-	URL archive;
-	String realPath;
+	List<URL> archive;
 	for (String path : paths) {
-	    realPath = FileUtils.checkPath(path);
-	    archive = FileUtils.toURL(realPath);
-	    urlList.add(archive);
+	    archive = FileUtils.toURLWithClasspath(path);
+	    urlList.addAll(archive);
 	}
 	URL[] archives = ObjectUtils.toArray(urlList, URL.class);
 	scanForBeans(archives);
