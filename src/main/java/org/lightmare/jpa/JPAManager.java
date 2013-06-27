@@ -166,8 +166,8 @@ public class JPAManager {
 	EntityManagerFactory emf;
 	Ejb3ConfigurationImpl cfg;
 
-	boolean checkForPath = ObjectUtils.available(path);
-	boolean checkForURL = checkForURL();
+	boolean pathCheck = ObjectUtils.available(path);
+	boolean urlCheck = checkForURL();
 
 	Ejb3ConfigurationImpl.Builder builder = new Ejb3ConfigurationImpl.Builder();
 
@@ -175,10 +175,10 @@ public class JPAManager {
 	    builder.setClasses(classes);
 	}
 
-	if (checkForPath || checkForURL) {
+	if (pathCheck || urlCheck) {
 	    Enumeration<URL> xmls;
 	    ConfigLoader configLoader = new ConfigLoader();
-	    if (checkForPath) {
+	    if (pathCheck) {
 		xmls = configLoader.readFile(path);
 	    } else {
 		xmls = configLoader.readURL(url);
