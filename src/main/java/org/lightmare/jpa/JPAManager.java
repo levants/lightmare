@@ -202,6 +202,7 @@ public class JPAManager {
 
 	emf = ObjectUtils.notNull(configured) ? configured
 		.buildEntityManagerFactory() : null;
+
 	return emf;
     }
 
