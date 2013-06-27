@@ -65,7 +65,7 @@ public class BeanHandler implements InvocationHandler {
 		beanName = inject.getMappedName();
 	    }
 	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
-	    injectMetaData.setInterfaceClass(inject.getInterfaceClass());
+	    injectMetaData.setInterfaceClasses(inject.getInterfaceClasses());
 
 	    inject.setMetaData(injectMetaData);
 	}

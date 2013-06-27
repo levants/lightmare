@@ -393,10 +393,10 @@ public class BeanLoader {
 	    }
 	    String description = ejb.description();
 	    String mappedName = ejb.mappedName();
-
+	    Class<?>[] interfaceClasses = { interfaceClass };
 	    InjectionData injectionData = new InjectionData();
 	    injectionData.setField(field);
-	    injectionData.setInterfaceClass(interfaceClass);
+	    injectionData.setInterfaceClasses(interfaceClasses);
 	    injectionData.setName(name);
 	    injectionData.setDescription(description);
 	    injectionData.setMappedName(mappedName);

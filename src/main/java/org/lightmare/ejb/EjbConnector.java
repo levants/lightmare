@@ -171,15 +171,9 @@ public class EjbConnector {
 
     private Class<?>[] chooseInterface(MetaData metaData) {
 
-	Class<?>[] interfaceClasses;
-	Class<?> interfaceClass = metaData.getInterfaceClass();
-	if (interfaceClass == null) {
-	    interfaceClasses = metaData.getLocalInterfaces();
-	    if (interfaceClasses == null) {
-		interfaceClasses = metaData.getRemoteInterfaces();
-	    }
-	} else {
-	    interfaceClasses = new Class[] { interfaceClass };
+	Class<?>[] interfaceClasses = metaData.getInterfaceClasses();
+	if (ObjectUtils.notAvailable(interfaceClasses)) {
+
 	}
 
 	return interfaceClasses;
@@ -223,7 +217,10 @@ public class EjbConnector {
 	if (configuration.isServer()) {
 
 	    MetaData metaData = getMeta(beanName);
-	    metaData.setInterfaceClass(interfaceClass);
+	    if (ObjectUtils.notAvailable(metaData.getInterfaceClasses())) {
+		Class<?>[] interfaceClasses = { interfaceClass };
+		metaData.setInterfaceClasses(interfaceClasses);
+	    }
 	    handler = getHandler(metaData);
 	    loader = metaData.getLoader();
 
@@ -258,17 +255,19 @@ public class EjbConnector {
 
 	MetaData metaData = getMeta(beanName);
 
-	if (metaData.getInterfaceClass() == null) {
-	    ClassLoader loader = metaData.getLoader();
-
-	    @SuppressWarnings("unchecked")
-	    Class<T> interfaceClass = (Class<T>) MetaUtils.classForName(
-		    interfaceName, Boolean.FALSE, loader);
-	    metaData.setInterfaceClass(interfaceClass);
+	if (ObjectUtils.notAvailable(metaData.getInterfaceClasses())) {
+	    Class<?>[] interfaceClasses = chooseInterface(metaData);
+	    metaData.setInterfaceClasses(interfaceClasses);
 	}
 
+	ClassLoader loader = metaData.getLoader();
+
 	@SuppressWarnings("unchecked")
-	T beanInstance = (T) connectToBean(metaData);
+	Class<T> interfaceClass = (Class<T>) MetaUtils.classForName(
+		interfaceName, Boolean.FALSE, loader);
+
+	@SuppressWarnings("unchecked")
+	T beanInstance = (T) connectToBean(beanName, interfaceClass);
 
 	return beanInstance;
     }

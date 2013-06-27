@@ -24,7 +24,7 @@ public class MetaData {
 
     private Class<?> beanClass;
 
-    private Class<?> interfaceClass;
+    private Class<?>[] interfaceClasses;
 
     private Class<?>[] localInterfaces;
 
@@ -56,12 +56,12 @@ public class MetaData {
 	this.beanClass = beanClass;
     }
 
-    public Class<?> getInterfaceClass() {
-	return interfaceClass;
+    public Class<?>[] getInterfaceClasses() {
+	return interfaceClasses;
     }
 
-    public void setInterfaceClass(Class<?> interfaceClass) {
-	this.interfaceClass = interfaceClass;
+    public void setInterfaceClasses(Class<?>[] interfaceClasses) {
+	this.interfaceClasses = interfaceClasses;
     }
 
     public Class<?>[] getLocalInterfaces() {

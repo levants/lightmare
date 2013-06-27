@@ -12,7 +12,7 @@ public class InjectionData {
 
     private Class<?> beanClass;
 
-    private Class<?> interfaceClass;
+    private Class<?>[] interfaceClasses;
 
     private String name;
 
@@ -32,12 +32,12 @@ public class InjectionData {
 	this.beanClass = beanClass;
     }
 
-    public Class<?> getInterfaceClass() {
-	return interfaceClass;
+    public Class<?>[] getInterfaceClasses() {
+	return interfaceClasses;
     }
 
-    public void setInterfaceClass(Class<?> interfaceClass) {
-	this.interfaceClass = interfaceClass;
+    public void setInterfaceClasses(Class<?>[] interfaceClasses) {
+	this.interfaceClasses = interfaceClasses;
     }
 
     public String getName() {
