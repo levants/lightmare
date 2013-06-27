@@ -3,7 +3,10 @@ package org.lightmare.ejb;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManagerFactory;
@@ -169,11 +172,24 @@ public class EjbConnector {
 	return beanInstance;
     }
 
-    private Class<?>[] chooseInterface(MetaData metaData) {
+    private Class<?>[] setInterfaces(MetaData metaData) {
 
 	Class<?>[] interfaceClasses = metaData.getInterfaceClasses();
 	if (ObjectUtils.notAvailable(interfaceClasses)) {
 
+	    List<Class<?>> interfacesList = new ArrayList<Class<?>>();
+	    Class<?>[] interfaces = metaData.getLocalInterfaces();
+	    if (ObjectUtils.available(interfaces)) {
+		interfacesList.addAll(Arrays.asList(interfaces));
+	    }
+
+	    interfaces = metaData.getRemoteInterfaces();
+	    if (ObjectUtils.available(interfaces)) {
+		interfacesList.addAll(Arrays.asList(interfaces));
+	    }
+
+	    int size = interfacesList.size();
+	    interfaceClasses = interfacesList.toArray(new Class[size]);
 	}
 
 	return interfaceClasses;
@@ -191,7 +207,7 @@ public class EjbConnector {
 	    throws IOException {
 
 	InvocationHandler handler = getHandler(metaData);
-	Class<?>[] interfaces = chooseInterface(metaData);
+	Class<?>[] interfaces = setInterfaces(metaData);
 	ClassLoader loader = metaData.getLoader();
 
 	T beanInstance = (T) instatiateBean((Class<T>[]) interfaces, handler,
@@ -214,16 +230,12 @@ public class EjbConnector {
 	InvocationHandler handler;
 	Configuration configuration = MetaContainer.CONFIG;
 	ClassLoader loader;
-	if (configuration.isServer()) {
 
+	if (configuration.isServer()) {
 	    MetaData metaData = getMeta(beanName);
-	    if (ObjectUtils.notAvailable(metaData.getInterfaceClasses())) {
-		Class<?>[] interfaceClasses = { interfaceClass };
-		metaData.setInterfaceClasses(interfaceClasses);
-	    }
+	    setInterfaces(metaData);
 	    handler = getHandler(metaData);
 	    loader = metaData.getLoader();
-
 	} else {
 	    if (rpcArgs.length != RPC_ARGS_LENGTH) {
 		throw new IOException(
@@ -254,19 +266,12 @@ public class EjbConnector {
 	    Object... rpcArgs) throws IOException {
 
 	MetaData metaData = getMeta(beanName);
-
-	if (ObjectUtils.notAvailable(metaData.getInterfaceClasses())) {
-	    Class<?>[] interfaceClasses = chooseInterface(metaData);
-	    metaData.setInterfaceClasses(interfaceClasses);
-	}
-
 	ClassLoader loader = metaData.getLoader();
 
 	@SuppressWarnings("unchecked")
 	Class<T> interfaceClass = (Class<T>) MetaUtils.classForName(
 		interfaceName, Boolean.FALSE, loader);
 
-	@SuppressWarnings("unchecked")
 	T beanInstance = (T) connectToBean(beanName, interfaceClass);
 
 	return beanInstance;
