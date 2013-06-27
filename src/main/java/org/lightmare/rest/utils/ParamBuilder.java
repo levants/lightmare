@@ -18,6 +18,7 @@ import org.glassfish.jersey.internal.util.collection.MultivaluedStringMap;
 import org.glassfish.jersey.message.MessageBodyWorkers;
 import org.glassfish.jersey.server.model.Parameter;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.reflect.MetaUtils;
 
 /**
  * Translates REST request parameters to java objects
@@ -176,6 +177,18 @@ public class ParamBuilder {
 	}
     }
 
+    private void addNullParam(Parameter parameter) {
+
+	Class<?> paramType = parameter.getRawType();
+	Object nullParam;
+	if (paramType.isPrimitive()) {
+	    nullParam = MetaUtils.getDefault(paramType);
+	} else {
+	    nullParam = null;
+	}
+	paramsList.add(nullParam);
+    }
+
     private void readFromStream(InputStream entityStream, Parameter parameter)
 	    throws IOException {
 
@@ -220,6 +233,8 @@ public class ParamBuilder {
 	    stream = getEntityStream(request, parameter);
 	    if (ObjectUtils.notNull(stream)) {
 		fillParamList(stream, parameter);
+	    } else {
+		addNullParam(parameter);
 	    }
 	}
 
