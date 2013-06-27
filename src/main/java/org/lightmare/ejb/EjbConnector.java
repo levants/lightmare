@@ -169,6 +169,22 @@ public class EjbConnector {
 	return beanInstance;
     }
 
+    private Class<?>[] chooseInterface(MetaData metaData) {
+
+	Class<?>[] interfaceClasses;
+	Class<?> interfaceClass = metaData.getInterfaceClass();
+	if (interfaceClass == null) {
+	    interfaceClasses = metaData.getLocalInterfaces();
+	    if (interfaceClasses == null) {
+		interfaceClasses = metaData.getRemoteInterfaces();
+	    }
+	} else {
+	    interfaceClasses = new Class[] { interfaceClass };
+	}
+
+	return interfaceClasses;
+    }
+
     /**
      * 
      * @param metaData
@@ -181,16 +197,11 @@ public class EjbConnector {
 	    throws IOException {
 
 	InvocationHandler handler = getHandler(metaData);
-	Class<?> interfaceClass = metaData.getInterfaceClass();
+	Class<?>[] interfaces = chooseInterface(metaData);
 	ClassLoader loader = metaData.getLoader();
 
-	T beanInstance;
-	if (interfaceClass == null) {
-	    Class<T>[] interfaces = (Class<T>[]) metaData.getLocalInterfaces();
-	    beanInstance = (T) instatiateBean(interfaces, handler, loader);
-	} else {
-	    beanInstance = (T) instatiateBean(interfaceClass, handler, loader);
-	}
+	T beanInstance = (T) instatiateBean((Class<T>[]) interfaces, handler,
+		loader);
 
 	return beanInstance;
     }
