@@ -194,7 +194,7 @@ public class JPAManager {
 
 	cfg = builder.build();
 
-	if (!swapDataSource) {
+	if (ObjectUtils.isFalse(swapDataSource)) {
 	    addTransactionManager();
 	}
 
