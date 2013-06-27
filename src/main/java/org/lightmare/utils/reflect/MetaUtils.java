@@ -17,6 +17,23 @@ import org.lightmare.libraries.LibraryLoader;
  */
 public class MetaUtils {
 
+    // default values for primitives
+    private static byte byteDef;
+
+    private static boolean booleanDef;
+
+    private static char charDef;
+
+    private static short shortDef;
+
+    private static int intDef;
+
+    private static long longDef;
+
+    private static float floatDef;
+
+    private static double doubleDef;
+
     /**
      * Makes accessible passed {@link Constructor}'s and invokes
      * {@link Constructor#newInstance(Object...)} method
@@ -381,6 +398,44 @@ public class MetaUtils {
     public static Object getFieldValue(Field field) throws IOException {
 
 	Object value = getFieldValue(field, null);
+
+	return value;
+    }
+
+    /**
+     * Returns default values if passed class is primitive else returns null
+     * 
+     * @param clazz
+     * @return Object
+     */
+    public static Object getDefault(Class<?> clazz) {
+
+	Object value;
+	if (clazz.isPrimitive()) {
+
+	    if (clazz.equals(byte.class)) {
+		value = byteDef;
+	    } else if (clazz.equals(boolean.class)) {
+		value = booleanDef;
+	    } else if (clazz.equals(char.class)) {
+		value = charDef;
+	    } else if (clazz.equals(short.class)) {
+		value = shortDef;
+	    } else if (clazz.equals(int.class)) {
+		value = intDef;
+	    } else if (clazz.equals(long.class)) {
+		value = longDef;
+	    } else if (clazz.equals(float.class)) {
+		value = floatDef;
+	    } else if (clazz.equals(double.class)) {
+		value = doubleDef;
+	    } else {
+		value = null;
+	    }
+
+	} else {
+	    value = null;
+	}
 
 	return value;
     }
