@@ -195,36 +195,9 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 
     private String shortPath = "/META-INF/persistence.xml";
 
-    public Ejb3ConfigurationImpl() {
+    private Ejb3ConfigurationImpl() {
 	cfg = new Configuration();
 	cfg.setEntityNotFoundDelegate(ejb3EntityNotFoundDelegate);
-    }
-
-    public Ejb3ConfigurationImpl(List<String> classes) {
-	this();
-	this.classes = classes;
-    }
-
-    public Ejb3ConfigurationImpl(Enumeration<URL> xmls) {
-	this();
-	this.xmls = xmls;
-    }
-
-    public Ejb3ConfigurationImpl(List<String> classes, Enumeration<URL> xmls) {
-	this(classes);
-	this.xmls = xmls;
-    }
-
-    public void setShortPath(String shortPath) {
-	this.shortPath = shortPath;
-    }
-
-    public void setSwapDataSource(boolean swapDataSource) {
-	this.swapDataSource = swapDataSource;
-    }
-
-    public void setScanArchives(boolean scanArchives) {
-	this.scanArchives = scanArchives;
     }
 
     /**
@@ -1853,6 +1826,50 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 	public static XML_SEARCH getType(boolean searchHbm, boolean searchOrm) {
 	    return searchHbm ? searchOrm ? XML_SEARCH.BOTH : XML_SEARCH.HBM
 		    : searchOrm ? XML_SEARCH.ORM_XML : XML_SEARCH.NONE;
+	}
+    }
+
+    public static class Builder {
+
+	private Ejb3ConfigurationImpl target;
+
+	public Builder() {
+	    target = new Ejb3ConfigurationImpl();
+	}
+
+	public Builder setClasses(List<String> classes) {
+	    target.classes = classes;
+
+	    return this;
+	}
+
+	public Builder setXmls(Enumeration<URL> xmls) {
+	    target.xmls = xmls;
+
+	    return this;
+	}
+
+	public Builder setShortPath(String shortPath) {
+	    target.shortPath = shortPath;
+
+	    return this;
+	}
+
+	public Builder setSwapDataSource(boolean swapDataSource) {
+	    target.swapDataSource = swapDataSource;
+
+	    return this;
+	}
+
+	public Builder setScanArchives(boolean scanArchives) {
+	    target.scanArchives = scanArchives;
+
+	    return this;
+	}
+
+	public Ejb3ConfigurationImpl build() {
+
+	    return target;
 	}
     }
 }
