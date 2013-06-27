@@ -165,9 +165,15 @@ public class JPAManager {
 	EntityManagerFactory emf;
 	Ejb3ConfigurationImpl cfg;
 
-	boolean checkForPath = checkForPath();
+	boolean checkForPath = ObjectUtils.available(path);
 	boolean checkForURL = checkForURL();
-	boolean checkForClasses = checkForClasses();
+
+	Ejb3ConfigurationImpl.Builder builder = new Ejb3ConfigurationImpl.Builder();
+
+	if (ObjectUtils.available(classes)) {
+	    builder.setClasses(classes);
+	}
+
 	if (checkForPath || checkForURL) {
 	    Enumeration<URL> xmls;
 	    ConfigLoader configLoader = new ConfigLoader();
@@ -176,18 +182,16 @@ public class JPAManager {
 	    } else {
 		xmls = configLoader.readURL(url);
 	    }
-	    if (checkForClasses) {
-		cfg = new Ejb3ConfigurationImpl(classes, xmls);
-	    } else {
-		cfg = new Ejb3ConfigurationImpl(xmls);
-	    }
-	    cfg.setShortPath(configLoader.getShortPath());
-	} else {
-	    cfg = new Ejb3ConfigurationImpl(classes);
+
+	    builder.setXmls(xmls);
+	    String shortPath = configLoader.getShortPath();
+	    builder.setShortPath(shortPath);
 	}
 
-	cfg.setSwapDataSource(swapDataSource);
-	cfg.setScanArchives(scanArchives);
+	builder.setSwapDataSource(swapDataSource);
+	builder.setScanArchives(scanArchives);
+
+	cfg = builder.build();
 
 	if (!swapDataSource) {
 	    addTransactionManager();
@@ -198,24 +202,6 @@ public class JPAManager {
 	emf = ObjectUtils.notNull(configured) ? configured
 		.buildEntityManagerFactory() : null;
 	return emf;
-    }
-
-    /**
-     * Checks if entity classes are provided
-     * 
-     * @return boolean
-     */
-    private boolean checkForClasses() {
-	return ObjectUtils.available(classes);
-    }
-
-    /**
-     * Checks if entity persistence.xml path is provided
-     * 
-     * @return boolean
-     */
-    private boolean checkForPath() {
-	return ObjectUtils.available(path);
     }
 
     /**
@@ -235,7 +221,8 @@ public class JPAManager {
      * @return boolean
      */
     private boolean checkForBuild() {
-	return checkForClasses() || checkForPath() || checkForURL();
+	return ObjectUtils.available(classes) || ObjectUtils.available(path)
+		|| checkForURL() || swapDataSource;
     }
 
     /**
