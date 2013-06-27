@@ -185,4 +185,9 @@ public class ObjectUtils {
 
 	return value;
     }
+
+    public static boolean isFalse(Boolean data) {
+
+	return !data;
+    }
 }
