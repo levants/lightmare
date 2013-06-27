@@ -100,7 +100,7 @@ public class RestUtils {
 	    realMethod = invocable.getHandlingMethod();
 	    parameters = invocable.getParameters();
 	    if (ObjectUtils.available(consumedTypes)) {
-		type = consumedTypes.iterator().next();
+		type = ObjectUtils.getFirst(consumedTypes);
 	    } else {
 		type = null;
 	    }
