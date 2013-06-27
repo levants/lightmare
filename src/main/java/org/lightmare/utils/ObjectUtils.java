@@ -4,6 +4,8 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,6 +15,8 @@ import java.util.Map;
  * 
  */
 public class ObjectUtils {
+
+    private static final int FIRST_INDEX = 0;
 
     public static boolean notNull(Object data) {
 
@@ -143,5 +147,42 @@ public class ObjectUtils {
 	if (ObjectUtils.notNull(closeable)) {
 	    closeable.close();
 	}
+    }
+
+    private static <T> T getFirstFromList(List<T> list) {
+
+	T value;
+	if (available(list)) {
+	    value = list.get(FIRST_INDEX);
+	} else {
+	    value = null;
+	}
+
+	return value;
+    }
+
+    /**
+     * Peaks first element from collection
+     * 
+     * @param collection
+     * @return T
+     */
+    public static <T> T getFirst(Collection<T> collection) {
+
+	T value;
+	if (available(collection)) {
+
+	    if (collection instanceof List) {
+		value = getFirstFromList(((List<T>) collection));
+	    } else {
+		Iterator<T> iterator = collection.iterator();
+		value = iterator.next();
+	    }
+
+	} else {
+	    value = null;
+	}
+
+	return value;
     }
 }
