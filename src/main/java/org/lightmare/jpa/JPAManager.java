@@ -162,6 +162,7 @@ public class JPAManager {
     @SuppressWarnings("deprecation")
     private EntityManagerFactory buildEntityManagerFactory(String unitName)
 	    throws IOException {
+
 	EntityManagerFactory emf;
 	Ejb3ConfigurationImpl cfg;
 
