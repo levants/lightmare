@@ -66,6 +66,11 @@ public class RestUtils {
 	return value;
     }
 
+    public static String json(Object data) throws IOException {
+
+	return RpcUtils.write(data);
+    }
+
     private static boolean isAcceptable(Class<?> resourceClass) {
 
 	boolean valid = Resource.isAcceptable(resourceClass)
