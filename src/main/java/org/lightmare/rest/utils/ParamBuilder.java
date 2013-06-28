@@ -92,13 +92,13 @@ public class ParamBuilder {
 
 	MultivaluedMap<String, String> params = new MultivaluedStringMap();
 	MultivaluedMap<String, String> exts;
-
+	boolean decode = Boolean.TRUE;
 	UriInfo uriInfo = request.getUriInfo();
 	exts = request.getHeaders();
 	addAll(exts, params);
-	exts = uriInfo.getPathParameters();
+	exts = uriInfo.getPathParameters(decode);
 	addAll(exts, params);
-	exts = uriInfo.getQueryParameters();
+	exts = uriInfo.getQueryParameters(decode);
 	addAll(exts, params);
 	Map<String, Cookie> cookies = request.getCookies();
 	if (ObjectUtils.available(cookies)) {
