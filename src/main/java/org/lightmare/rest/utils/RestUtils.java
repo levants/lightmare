@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -41,18 +42,21 @@ public class RestUtils {
 
     private static void getConfig() {
 
-	if (config == null) {
-	    oldConfig = RestConfig.get();
-	    config = new RestConfig();
+	oldConfig = RestConfig.get();
+	config = new RestConfig();
+	if (ObjectUtils.notNull(oldConfig)) {
+	    config.registerAll(oldConfig);
+	    Map<String, Object> properties = oldConfig.getProperties();
+	    if (ObjectUtils.available(properties)) {
+		config.setProperties(properties);
+	    }
 	}
     }
 
     private static RestConfig get() {
 
-	if (config == null) {
-	    synchronized (RestUtils.class) {
-		getConfig();
-	    }
+	synchronized (RestUtils.class) {
+	    getConfig();
 	}
 
 	return config;
@@ -176,9 +180,9 @@ public class RestUtils {
     public static void reload() {
 
 	RestReloader reloader = RestReloader.get();
-	if (ObjectUtils.notNull(reloader) && ObjectUtils.notNull(config)) {
+	RestConfig conf = RestConfig.get();
+	if (ObjectUtils.notNull(reloader)) {
 	    ClassLoader commonLoader = getCommonLoader();
-	    RestConfig conf = RestConfig.get();
 	    if (ObjectUtils.notNull(commonLoader)) {
 		conf.setClassLoader(commonLoader);
 	    }

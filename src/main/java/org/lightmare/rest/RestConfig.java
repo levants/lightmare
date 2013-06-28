@@ -46,6 +46,26 @@ public class RestConfig extends ResourceConfig {
 	}
     }
 
+    public void registerAll(RestConfig oldConfig) {
+
+	Set<Resource> resources = getResources();
+	Set<Resource> newResources;
+	if (ObjectUtils.available(resources)) {
+	    newResources = new HashSet<Resource>(resources);
+	} else {
+	    newResources = new HashSet<Resource>();
+	}
+
+	if (ObjectUtils.notNull(oldConfig)) {
+	    Set<Resource> olds = oldConfig.getResources();
+	    if (ObjectUtils.available(olds)) {
+		newResources.addAll(olds);
+	    }
+	}
+
+	registerResources(newResources);
+    }
+
     public void registerClass(Class<?> resourceClass, RestConfig oldConfig)
 	    throws IOException {
 
@@ -55,9 +75,9 @@ public class RestConfig extends ResourceConfig {
 	Set<Resource> resources = getResources();
 	Set<Resource> newResources;
 	if (ObjectUtils.available(resources)) {
-	    newResources = new HashSet<Resource>();
-	} else {
 	    newResources = new HashSet<Resource>(resources);
+	} else {
+	    newResources = new HashSet<Resource>();
 	}
 
 	if (ObjectUtils.notNull(oldConfig)) {
