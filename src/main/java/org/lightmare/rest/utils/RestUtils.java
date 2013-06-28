@@ -167,7 +167,7 @@ public class RestUtils {
 		    && ObjectUtils.notNull(newLoader)) {
 		commonLoader = LibraryLoader.createCommon(newLoader, oldLoader);
 	    }
-	    newLoader = oldLoader;
+	    oldLoader = newLoader;
 	}
 
 	return commonLoader;
@@ -178,8 +178,11 @@ public class RestUtils {
 	RestReloader reloader = RestReloader.get();
 	if (ObjectUtils.notNull(reloader) && ObjectUtils.notNull(config)) {
 	    ClassLoader commonLoader = getCommonLoader();
-	    config.setClassLoader(commonLoader);
-	    reloader.reload(config);
+	    RestConfig conf = RestConfig.get();
+	    if (ObjectUtils.notNull(commonLoader)) {
+		conf.setClassLoader(commonLoader);
+	    }
+	    reloader.reload(conf);
 	}
     }
 }
