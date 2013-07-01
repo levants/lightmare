@@ -37,6 +37,10 @@ public class PoolConfig {
     public static final String AUTOCOMMIT_NAME = "autoCommit";
     public static final String AUTOCOMMIT_ON_CLOSE_NAME = "autoCommitOnClose";
     public static final String URESOLVED_TRANSACTIONS_NAME = "forceIgnoreUnresolvedTransactions";
+    // Connection recovery properties
+    public static final String ACQUIRE_RETRY_ATTEMPTS = "acquireRetryAttempts";
+    public static final String ACQUIRE_RETRY_DELAY = "acquireRetryDelay";
+    public static final String BREACK_AFTER_ACQUIRE_FAILURE = "breakAfterAcquireFailure";
 
     public static final String MAX_POOL_SIZE_DEF_VALUE = "15";
     public static final String INITIAL_POOL_SIZE_DEF_VALUE = "5";
@@ -50,6 +54,10 @@ public class PoolConfig {
     public static final String AUTOCOMMIT_DEF_VALUE = "false";
     public static final String AUTOCOMMIT_ON_CLOSE_DEF_VALUE = "false";
     public static final String URESOLVED_TRANSACTIONS_DEF_VALUE = "true";
+    // Connection recovery properties default values
+    public static final String ACQUIRE_RETRY_ATTEMPTS_DEF_VALUE = "0";
+    public static final String ACQUIRE_RETRY_DELAY_DEF_VALUE = "1000";
+    public static final String BREACK_AFTER_ACQUIRE_FAILURE_DEF_VALUE = "false";
 
     private static final String DEFAULT_POOL_PATH = "META-INF/pool.properties";
 
@@ -97,6 +105,13 @@ public class PoolConfig {
 		URESOLVED_TRANSACTIONS_DEF_VALUE);
 	c3p0Properties.put(AUTOCOMMIT_ON_CLOSE_NAME,
 		AUTOCOMMIT_ON_CLOSE_DEF_VALUE);
+
+	// Added Connection recovery properties
+	c3p0Properties.put(ACQUIRE_RETRY_ATTEMPTS,
+		ACQUIRE_RETRY_ATTEMPTS_DEF_VALUE);
+	c3p0Properties.put(ACQUIRE_RETRY_DELAY, ACQUIRE_RETRY_DELAY_DEF_VALUE);
+	c3p0Properties.put(BREACK_AFTER_ACQUIRE_FAILURE,
+		BREACK_AFTER_ACQUIRE_FAILURE_DEF_VALUE);
 
 	return c3p0Properties;
     }
