@@ -18,6 +18,11 @@ public class ObjectUtils {
 
     private static final int FIRST_INDEX = 0;
 
+    public static boolean notTrue(boolean statement) {
+
+	return !statement;
+    }
+
     public static boolean notNull(Object data) {
 
 	return (data != null);
