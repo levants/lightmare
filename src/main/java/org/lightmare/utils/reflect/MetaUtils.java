@@ -241,6 +241,40 @@ public class MetaUtils {
     }
 
     /**
+     * Returns passed {@link Field}'s modifier
+     * 
+     * @param field
+     * @return <code>int</code>
+     */
+    public static int getModifiers(Field field) {
+
+	return field.getModifiers();
+    }
+
+    /**
+     * Returns passed {@link Method}'s modifier
+     * 
+     * @param method
+     * @return <code>int</code>
+     */
+    public static int getModifiers(Method method) {
+
+	return method.getModifiers();
+    }
+
+    /**
+     * Returns type of passed {@link Field} invoking {@link Field#getType()}
+     * method
+     * 
+     * @param field
+     * @return {@link Class}<?>
+     */
+    public static Class<?> getType(Field field) {
+
+	return field.getType();
+    }
+
+    /**
      * Common method to invoke {@link Method}
      * 
      * @param method
