@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Class to use reflection {@link Method} calls and {@link Field} information
@@ -48,7 +49,7 @@ public class MetaUtils {
 
 	boolean accessible = constructor.isAccessible();
 	try {
-	    if (!accessible) {
+	    if (ObjectUtils.notTrue(accessible)) {
 		constructor.setAccessible(Boolean.TRUE);
 	    }
 	    T instance = constructor.newInstance(parameters);
@@ -311,7 +312,7 @@ public class MetaUtils {
 
 	boolean accessible = method.isAccessible();
 	try {
-	    if (!accessible) {
+	    if (ObjectUtils.notTrue(accessible)) {
 		method.setAccessible(Boolean.TRUE);
 	    }
 
@@ -357,7 +358,7 @@ public class MetaUtils {
 
 	boolean accessible = method.isAccessible();
 	try {
-	    if (!accessible) {
+	    if (ObjectUtils.notTrue(accessible)) {
 		method.setAccessible(Boolean.TRUE);
 	    }
 
@@ -380,7 +381,7 @@ public class MetaUtils {
 	boolean accessible = field.isAccessible();
 
 	try {
-	    if (!accessible) {
+	    if (ObjectUtils.notTrue(accessible)) {
 		field.setAccessible(Boolean.TRUE);
 	    }
 	    field.set(data, value);
@@ -407,7 +408,7 @@ public class MetaUtils {
 	Object value;
 	boolean accessible = field.isAccessible();
 	try {
-	    if (!accessible) {
+	    if (ObjectUtils.notTrue(accessible)) {
 		field.setAccessible(Boolean.TRUE);
 	    }
 	    value = field.get(data);
