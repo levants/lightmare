@@ -31,11 +31,11 @@ public class PoolConfig {
     public static final String MAX_POOL_SIZE = "maxPoolSize";
     public static final String INITIAL_POOL_SIZE = "initialPoolSize";
     public static final String MIN_POOL_SIZE = "minPoolSize";
-    public static final String MAX_IDLE_TIMEOUT = "maxIdleTime";
     public static final String MAX_STATEMENTS = "maxStatements";
     public static final String AQUIRE_INCREMENT = "acquireIncrement";
 
     // Pool timeout properties
+    public static final String MAX_IDLE_TIMEOUT = "maxIdleTime";
     public static final String MAX_IDLE_TIME_EXCESS_CONN = "maxIdleTimeExcessConnections";
     public static final String CHECK_OUT_TIMEOUT_NAME = "checkoutTimeout";
 
@@ -60,11 +60,11 @@ public class PoolConfig {
     public static final String MAX_POOL_SIZE_DEF_VALUE = "15";
     public static final String INITIAL_POOL_SIZE_DEF_VALUE = "5";
     public static final String MIN_POOL_SIZE_DEF_VALUE = "5";
-    public static final String MAX_IDLE_TIMEOUT_DEF_VALUE = "10000";
     public static final String MAX_STATEMENTS_DEF_VALUE = "50";
     public static final String AQUIRE_INCREMENT_DEF_VALUE = "5";
 
     // Pool timeout properties default values
+    public static final String MAX_IDLE_TIMEOUT_DEF_VALUE = "10000";
     public static final String MAX_IDLE_TIME_EXCESS_CONN_DEF_VALUE = "0";
     public static final String CHECK_OUT_TIMEOUT_DEF_VALUE = "180";
 
@@ -123,6 +123,8 @@ public class PoolConfig {
 	// Added pool timeout properties
 	c3p0Properties.put(PoolConfig.MAX_IDLE_TIMEOUT,
 		PoolConfig.MAX_IDLE_TIMEOUT_DEF_VALUE);
+	c3p0Properties.put(MAX_IDLE_TIME_EXCESS_CONN,
+		MAX_IDLE_TIME_EXCESS_CONN_DEF_VALUE);
 	c3p0Properties.put(CHECK_OUT_TIMEOUT_NAME, CHECK_OUT_TIMEOUT_DEF_VALUE);
 
 	// Added controller properties
