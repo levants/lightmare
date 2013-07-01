@@ -24,38 +24,58 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class PoolConfig {
 
+    // Data source name property
+    public static final String DATA_SOURCE_NAME = "dataSourceName";
+
+    // Pool properties
     public static final String MAX_POOL_SIZE = "maxPoolSize";
     public static final String INITIAL_POOL_SIZE = "initialPoolSize";
     public static final String MIN_POOL_SIZE = "minPoolSize";
     public static final String MAX_IDLE_TIMEOUT = "maxIdleTime";
     public static final String MAX_STATEMENTS = "maxStatements";
     public static final String AQUIRE_INCREMENT = "acquireIncrement";
+
+    // Pool timeout properties
     public static final String MAX_IDLE_TIME_EXCESS_CONN = "maxIdleTimeExcessConnections";
-    public static final String STAT_CACHE_NUM_DEFF_THREADS = "statementCacheNumDeferredCloseThreads";
-    public static final String DATA_SOURCE_NAME = "dataSourceName";
     public static final String CHECK_OUT_TIMEOUT_NAME = "checkoutTimeout";
+
+    // Controller properties
+    public static final String STAT_CACHE_NUM_DEFF_THREADS = "statementCacheNumDeferredCloseThreads";
+
     // Transaction properties
     public static final String AUTOCOMMIT_NAME = "autoCommit";
     public static final String AUTOCOMMIT_ON_CLOSE_NAME = "autoCommitOnClose";
     public static final String URESOLVED_TRANSACTIONS_NAME = "forceIgnoreUnresolvedTransactions";
+
     // Connection recovery properties
     public static final String ACQUIRE_RETRY_ATTEMPTS = "acquireRetryAttempts";
     public static final String ACQUIRE_RETRY_DELAY = "acquireRetryDelay";
     public static final String BREACK_AFTER_ACQUIRE_FAILURE = "breakAfterAcquireFailure";
 
+    // ===========================================//
+    // ================ Default Values ===========//
+    // ===========================================//
+
+    // Pool properties default values
     public static final String MAX_POOL_SIZE_DEF_VALUE = "15";
     public static final String INITIAL_POOL_SIZE_DEF_VALUE = "5";
     public static final String MIN_POOL_SIZE_DEF_VALUE = "5";
     public static final String MAX_IDLE_TIMEOUT_DEF_VALUE = "10000";
     public static final String MAX_STATEMENTS_DEF_VALUE = "50";
     public static final String AQUIRE_INCREMENT_DEF_VALUE = "5";
+
+    // Pool timeout properties default values
     public static final String MAX_IDLE_TIME_EXCESS_CONN_DEF_VALUE = "0";
-    public static final String STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE = "1";
     public static final String CHECK_OUT_TIMEOUT_DEF_VALUE = "180";
+
+    // Controller properties default values
+    public static final String STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE = "1";
+
     // Transaction properties default values
     public static final String AUTOCOMMIT_DEF_VALUE = "false";
     public static final String AUTOCOMMIT_ON_CLOSE_DEF_VALUE = "false";
     public static final String URESOLVED_TRANSACTIONS_DEF_VALUE = "true";
+
     // Connection recovery properties default values
     public static final String ACQUIRE_RETRY_ATTEMPTS_DEF_VALUE = "0";
     public static final String ACQUIRE_RETRY_DELAY_DEF_VALUE = "1000";
@@ -87,21 +107,28 @@ public class PoolConfig {
      */
     public static Map<Object, Object> getDefaultPooling() {
 	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
+
+	// Added pool properties
 	c3p0Properties.put(PoolConfig.MAX_POOL_SIZE,
 		PoolConfig.MAX_POOL_SIZE_DEF_VALUE);
 	c3p0Properties.put(PoolConfig.INITIAL_POOL_SIZE,
 		PoolConfig.INITIAL_POOL_SIZE_DEF_VALUE);
 	c3p0Properties.put(PoolConfig.MIN_POOL_SIZE,
 		PoolConfig.MIN_POOL_SIZE_DEF_VALUE);
-	c3p0Properties.put(PoolConfig.MAX_IDLE_TIMEOUT,
-		PoolConfig.MAX_IDLE_TIMEOUT_DEF_VALUE);
 	c3p0Properties.put(PoolConfig.MAX_STATEMENTS,
 		PoolConfig.MAX_STATEMENTS_DEF_VALUE);
 	c3p0Properties.put(PoolConfig.AQUIRE_INCREMENT,
 		PoolConfig.AQUIRE_INCREMENT_DEF_VALUE);
+
+	// Added pool timeout properties
+	c3p0Properties.put(PoolConfig.MAX_IDLE_TIMEOUT,
+		PoolConfig.MAX_IDLE_TIMEOUT_DEF_VALUE);
+	c3p0Properties.put(CHECK_OUT_TIMEOUT_NAME, CHECK_OUT_TIMEOUT_DEF_VALUE);
+
+	// Added controller properties
 	c3p0Properties.put(STAT_CACHE_NUM_DEFF_THREADS,
 		STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE);
-	c3p0Properties.put(CHECK_OUT_TIMEOUT_NAME, CHECK_OUT_TIMEOUT_DEF_VALUE);
+
 	// Added transaction properties
 	c3p0Properties.put(AUTOCOMMIT_NAME, AUTOCOMMIT_DEF_VALUE);
 	c3p0Properties.put(URESOLVED_TRANSACTIONS_NAME,
