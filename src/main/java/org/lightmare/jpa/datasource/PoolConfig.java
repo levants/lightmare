@@ -150,9 +150,11 @@ public class PoolConfig {
 
     private static boolean checkModifiers(Field field) {
 
-	return Modifier.isStatic(field.getModifiers())
-		&& Modifier.isFinal(field.getModifiers())
-		&& field.getType().equals(String.class);
+	int modifiers = MetaUtils.getModifiers(field);
+	Class<?> fieldType = MetaUtils.getType(field);
+
+	return Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers)
+		&& String.class.equals(fieldType);
     }
 
     private static Set<Object> unsopportedKeys() throws IOException {
