@@ -34,6 +34,7 @@ public class PoolConfig {
     public static final String STAT_CACHE_NUM_DEFF_THREADS = "statementCacheNumDeferredCloseThreads";
     public static final String DATA_SOURCE_NAME = "dataSourceName";
     public static final String CHECK_OUT_TIMEOUT_NAME = "checkoutTimeout";
+    // Transaction properties
     public static final String AUTOCOMMIT_NAME = "autoCommit";
     public static final String AUTOCOMMIT_ON_CLOSE_NAME = "autoCommitOnClose";
     public static final String URESOLVED_TRANSACTIONS_NAME = "forceIgnoreUnresolvedTransactions";
@@ -51,6 +52,7 @@ public class PoolConfig {
     public static final String MAX_IDLE_TIME_EXCESS_CONN_DEF_VALUE = "0";
     public static final String STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE = "1";
     public static final String CHECK_OUT_TIMEOUT_DEF_VALUE = "180";
+    // Transaction properties default values
     public static final String AUTOCOMMIT_DEF_VALUE = "false";
     public static final String AUTOCOMMIT_ON_CLOSE_DEF_VALUE = "false";
     public static final String URESOLVED_TRANSACTIONS_DEF_VALUE = "true";
@@ -100,6 +102,7 @@ public class PoolConfig {
 	c3p0Properties.put(STAT_CACHE_NUM_DEFF_THREADS,
 		STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE);
 	c3p0Properties.put(CHECK_OUT_TIMEOUT_NAME, CHECK_OUT_TIMEOUT_DEF_VALUE);
+	// Added transaction properties
 	c3p0Properties.put(AUTOCOMMIT_NAME, AUTOCOMMIT_DEF_VALUE);
 	c3p0Properties.put(URESOLVED_TRANSACTIONS_NAME,
 		URESOLVED_TRANSACTIONS_DEF_VALUE);
