@@ -66,7 +66,7 @@ public class PoolConfig {
     // Pool timeout properties default values
     public static final String MAX_IDLE_TIMEOUT_DEF_VALUE = "10000";
     public static final String MAX_IDLE_TIME_EXCESS_CONN_DEF_VALUE = "0";
-    public static final String CHECK_OUT_TIMEOUT_DEF_VALUE = "180";
+    public static final String CHECK_OUT_TIMEOUT_DEF_VALUE = "1800";
 
     // Controller properties default values
     public static final String STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE = "1";
