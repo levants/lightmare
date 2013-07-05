@@ -85,6 +85,10 @@ public class PoolConfig {
     public static final String ACQUIRE_RETRY_DELAY_DEF_VALUE = "1000";
     public static final String BREACK_AFTER_ACQUIRE_FAILURE_DEF_VALUE = "false";
 
+    // ===========================================//
+    // ===========End of default Values ===========//
+    // ===========================================//
+
     // Default value for data source properties file
     private static final String POOL_PATH_DEF_VALUE = "META-INF/pool.properties";
 
