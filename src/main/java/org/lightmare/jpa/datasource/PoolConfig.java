@@ -27,6 +27,10 @@ public class PoolConfig {
     // Data source name property
     public static final String DATA_SOURCE_NAME = "dataSourceName";
 
+    // ===========================================//
+    // ====== Data Source properties keys ========//
+    // ===========================================//
+
     // Pool properties
     public static final String MAX_POOL_SIZE = "maxPoolSize";
     public static final String INITIAL_POOL_SIZE = "initialPoolSize";
@@ -81,7 +85,8 @@ public class PoolConfig {
     public static final String ACQUIRE_RETRY_DELAY_DEF_VALUE = "1000";
     public static final String BREACK_AFTER_ACQUIRE_FAILURE_DEF_VALUE = "false";
 
-    private static final String DEFAULT_POOL_PATH = "META-INF/pool.properties";
+    // Default value for data source properties file
+    private static final String POOL_PATH_DEF_VALUE = "META-INF/pool.properties";
 
     public static String poolPath;
 
@@ -244,7 +249,7 @@ public class PoolConfig {
 	InputStream stream;
 	if (ObjectUtils.notAvailable(poolPath)) {
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
-	    stream = loader.getResourceAsStream(DEFAULT_POOL_PATH);
+	    stream = loader.getResourceAsStream(POOL_PATH_DEF_VALUE);
 	} else {
 	    File file = new File(poolPath);
 	    stream = new FileInputStream(file);
