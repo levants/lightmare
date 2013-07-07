@@ -191,6 +191,24 @@ public class ObjectUtils {
 	return value;
     }
 
+    /**
+     * Peaks first element from array
+     * 
+     * @param collection
+     * @return T
+     */
+    public static <T> T getFirst(T[] values) {
+
+	T value;
+	if (available(values)) {
+	    value = values[FIRST_INDEX];
+	} else {
+	    value = null;
+	}
+
+	return value;
+    }
+
     public static boolean isFalse(Boolean data) {
 
 	return !data;

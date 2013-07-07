@@ -3,11 +3,11 @@ package org.lightmare.deploy;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
@@ -25,6 +25,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptors;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
@@ -34,6 +35,7 @@ import org.lightmare.cache.ConnectionData;
 import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.cache.DeployData;
 import org.lightmare.cache.InjectionData;
+import org.lightmare.cache.InterceptorData;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.exceptions.BeanInUseException;
@@ -505,18 +507,65 @@ public class BeanLoader {
 	}
 
 	/**
-	 * Identifies and caches {@link Interceptors} annotation data
+	 * Caches {@link Interceptors} annotation defined data
+	 * 
+	 * @param beanClass
+	 * @param interceptorClasses
+	 * @throws IOException
 	 */
-	public void identifyInterceptors(Class<?> beanClass) {
+	private void cacheInterceptors(Class<?> beanClass,
+		Class<?>[] interceptorClasses, Method beanMethod)
+		throws IOException {
 
-	    List<Class<?>> interceptorsList = new ArrayList<Class<?>>();
+	    int length = interceptorClasses.length;
+	    Class<?> interceptorClass;
+	    List<Method> interceptorMethods;
+	    Method interceptorMethod;
+	    for (int i = 0; i < length; i++) {
+		interceptorClass = interceptorClasses[i];
+		interceptorMethods = MetaUtils.getAnnotatedMethods(beanClass,
+			AroundInvoke.class);
+		interceptorMethod = ObjectUtils.getFirst(interceptorMethods);
+		InterceptorData data = new InterceptorData();
+		data.setBeanClass(beanClass);
+		data.setBeanMethod(beanMethod);
+		data.setInterceptorClass(interceptorClass);
+		data.setInterceptorMethod(interceptorMethod);
+
+		metaData.addInterceptor(data);
+	    }
+	}
+
+	private void cacheInterceptors(Interceptors interceptors,
+		Class<?> beanClass, Method... beanMethods) throws IOException {
+
+	    Class<?>[] interceptorClasses = interceptors.value();
+	    if (ObjectUtils.available(interceptorClasses)) {
+		Method beanMethod = ObjectUtils.getFirst(beanMethods);
+		cacheInterceptors(beanClass, interceptorClasses, beanMethod);
+	    }
+	}
+
+	/**
+	 * Identifies and caches {@link Interceptors} annotation data
+	 * 
+	 * @throws IOException
+	 */
+	private void identifyInterceptors(Class<?> beanClass)
+		throws IOException {
+
 	    Interceptors interceptors = beanClass
 		    .getAnnotation(Interceptors.class);
 	    if (ObjectUtils.notNull(interceptors)) {
-		Class<?>[] interceptorClasses = interceptors.value();
-		if (ObjectUtils.available(interceptorClasses)) {
-		    List<Class<?>> classes = Arrays.asList(interceptorClasses);
-		    interceptorsList.addAll(classes);
+		cacheInterceptors(interceptors, beanClass);
+	    }
+
+	    List<Method> beanMethods = MetaUtils.getAnnotatedMethods(beanClass,
+		    Interceptors.class);
+	    if (ObjectUtils.available(beanMethods)) {
+		for (Method beanMethod : beanMethods) {
+		    interceptors = beanMethod.getAnnotation(Interceptors.class);
+		    cacheInterceptors(interceptors, beanClass, beanMethod);
 		}
 	    }
 	}
@@ -591,6 +640,7 @@ public class BeanLoader {
 		}
 		createMeta(beanClass);
 		indentifyInterfaces(beanClass);
+		identifyInterceptors(beanClass);
 		metaData.setInProgress(Boolean.FALSE);
 
 		return beanEjbName;

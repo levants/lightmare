@@ -15,7 +15,7 @@ public class InterceptorData {
 
     private Method beanMethod;
 
-    private Class<?> interceptorCLass;
+    private Class<?> interceptorClass;
 
     private Method interceptorMethod;
 
@@ -35,12 +35,12 @@ public class InterceptorData {
 	this.beanMethod = beanMethod;
     }
 
-    public Class<?> getInterceptorCLass() {
-	return interceptorCLass;
+    public Class<?> getInterceptorClass() {
+	return interceptorClass;
     }
 
-    public void setInterceptorCLass(Class<?> interceptorCLass) {
-	this.interceptorCLass = interceptorCLass;
+    public void setInterceptorClass(Class<?> interceptorCLass) {
+	this.interceptorClass = interceptorCLass;
     }
 
     public Method getInterceptorMethod() {

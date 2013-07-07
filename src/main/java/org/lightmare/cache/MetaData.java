@@ -3,7 +3,9 @@ package org.lightmare.cache;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.ejb.TransactionAttributeType;
@@ -47,6 +49,8 @@ public class MetaData {
     private List<InjectionData> injects;
 
     private Collection<Field> unitFields;
+
+    private Queue<InterceptorData> interceptors;
 
     public Class<?> getBeanClass() {
 	return beanClass;
@@ -190,5 +194,13 @@ public class MetaData {
 
     public Collection<Field> getUnitFields() {
 	return this.unitFields;
+    }
+
+    public void addInterceptor(InterceptorData interceptor) {
+
+	if (interceptors == null) {
+	    interceptors = new LinkedList<InterceptorData>();
+	}
+	interceptors.offer(interceptor);
     }
 }
