@@ -1,10 +1,13 @@
 package org.lightmare.utils.reflect;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
@@ -242,6 +245,45 @@ public class MetaUtils {
     }
 
     /**
+     * Gets all declared methods from class
+     * 
+     * @param clazz
+     * @param methodName
+     * @param parameterTypes
+     * @return {@link Method}
+     * @throws IOException
+     */
+    public static Method[] getDeclaredMethods(Class<?> clazz)
+	    throws IOException {
+
+	try {
+	    return clazz.getDeclaredMethods();
+	} catch (SecurityException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
+     * Gets declared field from passed class with specified name
+     * 
+     * @param clazz
+     * @param name
+     * @return {@link Field}
+     * @throws IOException
+     */
+    public static Field getDeclaredField(Class<?> clazz, String name)
+	    throws IOException {
+
+	try {
+	    return clazz.getDeclaredField(name);
+	} catch (NoSuchFieldException ex) {
+	    throw new IOException(ex);
+	} catch (SecurityException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
      * Returns passed {@link Field}'s modifier
      * 
      * @param field
@@ -435,6 +477,52 @@ public class MetaUtils {
 	Object value = getFieldValue(field, null);
 
 	return value;
+    }
+
+    /**
+     * Gets {@link List} of all {@link Method}s from passed class annotated with
+     * specified annotation
+     * 
+     * @param clazz
+     * @param annotationClass
+     * @return {@link List}<Method>
+     * @throws IOException
+     */
+    public static List<Method> getAnnotatedMethods(Class<?> clazz,
+	    Class<? extends Annotation> annotationClass) throws IOException {
+
+	List<Method> methods = new ArrayList<Method>();
+	Method[] allMethods = getDeclaredMethods(clazz);
+	for (Method method : allMethods) {
+	    if (method.isAnnotationPresent(annotationClass)) {
+		methods.add(method);
+	    }
+	}
+
+	return methods;
+    }
+
+    /**
+     * Gets {@link List} of all {@link Field}s from passed class annotated with
+     * specified annotation
+     * 
+     * @param clazz
+     * @param annotationClass
+     * @return {@link List}<Field>
+     * @throws IOException
+     */
+    public static List<Field> getAnnotatedFields(Class<?> clazz,
+	    Class<? extends Annotation> annotationClass) throws IOException {
+
+	List<Field> fields = new ArrayList<Field>();
+	Field[] allFields = clazz.getDeclaredFields();
+	for (Field field : allFields) {
+	    if (field.isAnnotationPresent(annotationClass)) {
+		fields.add(field);
+	    }
+	}
+
+	return fields;
     }
 
     /**
