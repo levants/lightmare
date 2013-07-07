@@ -203,4 +203,9 @@ public class MetaData {
 	}
 	interceptors.offer(interceptor);
     }
+
+    public Collection<InterceptorData> getInterceptors() {
+
+	return interceptors;
+    }
 }
