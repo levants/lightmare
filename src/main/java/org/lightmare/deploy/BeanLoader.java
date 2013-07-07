@@ -7,6 +7,7 @@ import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
@@ -24,6 +25,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.interceptor.Interceptors;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
@@ -500,6 +502,23 @@ public class BeanLoader {
 	    metaData.setTransactional(transactional);
 	    metaData.setTransactionAttrType(transactionAttrType);
 	    metaData.setTransactionManType(transactionManType);
+	}
+
+	/**
+	 * Identifies and caches {@link Interceptors} annotation data
+	 */
+	public void identifyInterceptors(Class<?> beanClass) {
+
+	    List<Class<?>> interceptorsList = new ArrayList<Class<?>>();
+	    Interceptors interceptors = beanClass
+		    .getAnnotation(Interceptors.class);
+	    if (ObjectUtils.notNull(interceptors)) {
+		Class<?>[] interceptorClasses = interceptors.value();
+		if (ObjectUtils.available(interceptorClasses)) {
+		    List<Class<?>> classes = Arrays.asList(interceptorClasses);
+		    interceptorsList.addAll(classes);
+		}
+	    }
 	}
 
 	/**

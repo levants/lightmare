@@ -34,6 +34,18 @@ public class InvocationContextImpl implements InvocationContext {
 	this.contextData = contextData;
     }
 
+    public void addMethod(Method method) {
+	methods.offer(method);
+    }
+
+    public void addTarget(Object target) {
+	targets.offer(target);
+    }
+
+    public void putContextData(String key, Object value) {
+	contextData.put(key, value);
+    }
+
     @Override
     public Object getTarget() {
 
