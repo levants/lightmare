@@ -8,6 +8,7 @@ import java.util.Queue;
 
 import javax.interceptor.InvocationContext;
 
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
@@ -26,12 +27,11 @@ public class InvocationContextImpl implements InvocationContext {
 
     private Map<String, Object> contextData = new HashMap<String, Object>();
 
-    public InvocationContextImpl(Queue<Method> methods, Object[] parameters,
-	    Queue<Object> targets, Map<String, Object> contextData) {
+    public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets,
+	    Object[] parameters) {
 	this.methods = methods;
-	this.parameters = parameters;
 	this.targets = targets;
-	this.contextData = contextData;
+	this.parameters = parameters;
     }
 
     public void addMethod(Method method) {
@@ -82,7 +82,12 @@ public class InvocationContextImpl implements InvocationContext {
 
 	Method method = methods.poll();
 	Object target = targets.poll();
-	Object value = MetaUtils.invoke(method, target, parameters);
+	Object value;
+	if (ObjectUtils.notNull(method) && ObjectUtils.notNull(target)) {
+	    value = MetaUtils.invoke(method, target, this);
+	} else {
+	    value = null;
+	}
 
 	return value;
     }
