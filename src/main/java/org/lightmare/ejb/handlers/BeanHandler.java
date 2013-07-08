@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -297,7 +298,7 @@ public class BeanHandler implements InvocationHandler {
 		}
 	    }
 
-	    InvocationContextImpl context = new InvocationContextImpl(methods,
+	    InvocationContext context = new InvocationContextImpl(methods,
 		    targets, parameters);
 	    try {
 		context.proceed();
