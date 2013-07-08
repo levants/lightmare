@@ -250,6 +250,14 @@ public class BeanHandler implements InvocationHandler {
 	return valid;
     }
 
+    /**
+     * Invokes first method from {@link javax.interceptor.Interceptors}
+     * annotated data
+     * 
+     * @param method
+     * @param parameters
+     * @throws IOException
+     */
     private void callInterceptors(Method method, Object[] parameters)
 	    throws IOException {
 
