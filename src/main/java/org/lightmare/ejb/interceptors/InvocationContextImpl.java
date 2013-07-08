@@ -72,7 +72,7 @@ public class InvocationContextImpl implements InvocationContext {
 	Object target = targets.poll();
 	Object value;
 	if (ObjectUtils.notNull(method) && ObjectUtils.notNull(target)) {
-	    value = MetaUtils.invoke(method, target, this);
+	    value = MetaUtils.invokePrivate(method, target, this);
 	} else {
 	    value = null;
 	}
