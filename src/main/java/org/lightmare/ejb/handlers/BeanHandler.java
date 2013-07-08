@@ -275,9 +275,10 @@ public class BeanHandler implements InvocationHandler {
      * @param parameters
      * @throws IOException
      */
-    private void callInterceptors(Method method, Object[] parameters)
+    private Object[] callInterceptors(Method method, Object[] parameters)
 	    throws IOException {
 
+	Object[] intercepteds;
 	Collection<InterceptorData> interceptorsCollection = metaData
 		.getInterceptors();
 	if (ObjectUtils.available(interceptorsCollection)) {
@@ -300,10 +301,15 @@ public class BeanHandler implements InvocationHandler {
 		    targets, parameters);
 	    try {
 		context.proceed();
+		intercepteds = context.getParameters();
 	    } catch (Exception ex) {
 		throw new IOException(ex);
 	    }
+	} else {
+	    intercepteds = parameters;
 	}
+
+	return intercepteds;
     }
 
     /**
@@ -327,10 +333,10 @@ public class BeanHandler implements InvocationHandler {
 	}
 
 	// Calls interceptors for this method or bean instance
-	callInterceptors(method, arguments);
+	Object[] intercepteds = callInterceptors(method, arguments);
 
 	// Calls for bean method
-	Object value = invoke(method, arguments);
+	Object value = invoke(method, intercepteds);
 
 	return value;
     }
