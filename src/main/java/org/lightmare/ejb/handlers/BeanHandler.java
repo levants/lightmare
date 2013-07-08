@@ -7,6 +7,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,9 +18,11 @@ import javax.transaction.UserTransaction;
 
 import org.lightmare.cache.ConnectionData;
 import org.lightmare.cache.InjectionData;
+import org.lightmare.cache.InterceptorData;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
+import org.lightmare.ejb.interceptors.InvocationContextImpl;
 import org.lightmare.jpa.jta.BeanTransactions;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
@@ -222,6 +227,60 @@ public class BeanHandler implements InvocationHandler {
 	}
     }
 
+    private void fillInterceptor(InterceptorData interceptorData,
+	    Queue<Method> methods, Queue<Object> targets) throws IOException {
+
+	Class<?> interceptorClass = interceptorData.getInterceptorClass();
+	Object interceptor = MetaUtils.instantiate(interceptorClass);
+	Method method = interceptorData.getInterceptorMethod();
+	methods.offer(method);
+	targets.offer(interceptor);
+    }
+
+    private boolean checkInterceptor(InterceptorData interceptor, Method method) {
+
+	boolean valid;
+	Method beanMethod = interceptor.getBeanMethod();
+	if (ObjectUtils.notNull(beanMethod)) {
+	    valid = beanMethod.equals(method);
+	} else {
+	    valid = Boolean.TRUE;
+	}
+
+	return valid;
+    }
+
+    private void callInterceptors(Method method, Object[] parameters)
+	    throws IOException {
+
+	Collection<InterceptorData> interceptorsCollection = metaData
+		.getInterceptors();
+	if (ObjectUtils.available(interceptorsCollection)) {
+
+	    Iterator<InterceptorData> interceptors = interceptorsCollection
+		    .iterator();
+	    InterceptorData interceptor;
+	    Queue<Method> methods = new LinkedList<Method>();
+	    Queue<Object> targets = new LinkedList<Object>();
+	    boolean valid;
+	    while (interceptors.hasNext()) {
+		interceptor = interceptors.next();
+		valid = checkInterceptor(interceptor, method);
+		if (valid) {
+		    fillInterceptor(interceptor, methods, targets);
+		}
+	    }
+
+	    InvocationContextImpl context = new InvocationContextImpl(methods,
+		    targets, parameters);
+	    try {
+		context.proceed();
+	    } catch (Exception ex) {
+		throw new IOException(ex);
+	    }
+	}
+    }
+
     /**
      * Invokes method surrounded with {@link UserTransaction} begin and commit
      * 
@@ -241,6 +300,10 @@ public class BeanHandler implements InvocationHandler {
 	} else {
 	    setTransactionField(ems);
 	}
+
+	// Calls interceptors for this method or bean instance
+	callInterceptors(method, arguments);
+
 	Object value = invoke(method, arguments);
 
 	return value;
@@ -269,8 +332,12 @@ public class BeanHandler implements InvocationHandler {
 	Method realMethod = null;
 
 	try {
-	    realMethod = bean.getClass().getDeclaredMethod(method.getName(),
-		    method.getParameterTypes());
+	    Class<?> beanClass = metaData.getBeanClass();
+	    String methodName = method.getName();
+	    Class<?>[] parameterTypes = method.getParameterTypes();
+	    realMethod = MetaUtils.getDeclaredMethod(beanClass, methodName,
+		    parameterTypes);
+
 	    Object value;
 
 	    value = invokeBeanMethod(ems, realMethod, arguments);
