@@ -227,6 +227,15 @@ public class BeanHandler implements InvocationHandler {
 	}
     }
 
+    /**
+     * Fills {@link Queue} of methods and targets for specified bean
+     * {@link Method} and {@link InterceptorData} object
+     * 
+     * @param interceptorData
+     * @param methods
+     * @param targets
+     * @throws IOException
+     */
     private void fillInterceptor(InterceptorData interceptorData,
 	    Queue<Method> methods, Queue<Object> targets) throws IOException {
 
@@ -237,6 +246,14 @@ public class BeanHandler implements InvocationHandler {
 	targets.offer(interceptor);
     }
 
+    /**
+     * Checks if current {@link javax.interceptor.Interceptors} data is valid
+     * for specified {@link Method} call
+     * 
+     * @param interceptor
+     * @param method
+     * @return <code>boolean</code>
+     */
     private boolean checkInterceptor(InterceptorData interceptor, Method method) {
 
 	boolean valid;
