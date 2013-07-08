@@ -361,6 +361,8 @@ public class BeanHandler implements InvocationHandler {
 	    Class<?> beanClass = metaData.getBeanClass();
 	    String methodName = method.getName();
 	    Class<?>[] parameterTypes = method.getParameterTypes();
+
+	    // Gets real method of bean class
 	    realMethod = MetaUtils.getDeclaredMethod(beanClass, methodName,
 		    parameterTypes);
 
