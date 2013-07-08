@@ -329,6 +329,7 @@ public class BeanHandler implements InvocationHandler {
 	// Calls interceptors for this method or bean instance
 	callInterceptors(method, arguments);
 
+	// Calls for bean method
 	Object value = invoke(method, arguments);
 
 	return value;
