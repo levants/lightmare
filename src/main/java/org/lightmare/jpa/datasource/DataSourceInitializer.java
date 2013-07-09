@@ -12,7 +12,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
-import org.lightmare.cache.MetaContainer;
+import org.lightmare.config.Configuration;
 import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.jpa.datasource.c3p0.InitDataSourceC3p0;
@@ -85,9 +85,10 @@ public class DataSourceInitializer {
      * 
      * @throws IOException
      */
-    public static void initializeDataSources() throws IOException {
+    public static void initializeDataSources(Configuration config)
+	    throws IOException {
 
-	Collection<String> paths = MetaContainer.CONFIG.getDataSourcePath();
+	Collection<String> paths = config.getDataSourcePath();
 	if (ObjectUtils.available(paths)) {
 	    for (String path : paths) {
 		initializeDataSource(path);
