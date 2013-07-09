@@ -94,13 +94,12 @@ public class RestInflector implements
     public Response apply(ContainerRequestContext data) {
 
 	Response response;
-	Object value = null;
 	try {
 	    EjbConnector connector = new EjbConnector();
 	    InvocationHandler handler = connector.getHandler(metaData);
 	    Object bean = connector.connectToBean(metaData);
 	    Object[] params = getParameters(data);
-	    value = handler.invoke(bean, method, params);
+	    Object value = handler.invoke(bean, method, params);
 	    response = Response.ok(value).build();
 	} catch (Throwable ex) {
 	    LOG.error(ex.getMessage(), ex);
