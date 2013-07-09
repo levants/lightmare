@@ -28,6 +28,8 @@ public class DeployManager extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String DEPLOY_MANAGER_DEFAULT_NAME = "/DeployManager";
+
     // html tags
     private static final String BEGIN_TAGS = "<tr><td><a name = \"";
 
