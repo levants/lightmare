@@ -578,42 +578,50 @@ public class MetaCreator {
 	public Builder setPersistenceProperties(Map<String, String> properties) {
 	    creator.prop = new HashMap<Object, Object>();
 	    creator.prop.putAll(properties);
+
 	    return this;
 	}
 
 	public Builder setScanForEntities(boolean scanForEnt) {
 	    creator.config.setScanForEntities(scanForEnt);
+
 	    return this;
 	}
 
 	public Builder setUnitName(String unitName) {
 	    creator.config.setAnnotatedUnitName(unitName);
+
 	    return this;
 	}
 
 	public Builder setPersXmlPath(String path) {
 	    creator.config.setPersXmlPath(path);
 	    creator.config.setScanArchives(Boolean.FALSE);
+
 	    return this;
 	}
 
 	public Builder setLibraryPath(String... libPaths) {
 	    creator.config.setLibraryPaths(libPaths);
+
 	    return this;
 	}
 
 	public Builder setXmlFromJar(boolean xmlFromJar) {
 	    creator.config.setPersXmlFromJar(xmlFromJar);
+
 	    return this;
 	}
 
 	public Builder setSwapDataSource(boolean swapDataSource) {
 	    creator.config.setSwapDataSource(swapDataSource);
+
 	    return this;
 	}
 
 	public Builder addDataSourcePath(String dataSourcePath) {
 	    creator.config.addDataSourcePath(dataSourcePath);
+
 	    return this;
 	}
 
@@ -627,111 +635,132 @@ public class MetaCreator {
 	@Deprecated
 	public Builder setDataSourcePath(String dataSourcePath) {
 	    creator.config.addDataSourcePath(dataSourcePath);
+
 	    return this;
 	}
 
 	public Builder setScanArchives(boolean scanArchives) {
 	    creator.config.setScanArchives(scanArchives);
+
 	    return this;
 	}
 
 	public Builder setAwaitSeploiment(boolean await) {
 	    creator.await = await;
+
 	    return this;
 	}
 
 	public Builder setRemote(boolean remote) {
 	    creator.config.setRemote(remote);
+
 	    return this;
 	}
 
 	public Builder setServer(boolean server) {
 	    Configuration.setServer(server);
 	    creator.config.setClient(!server);
+
 	    return this;
 	}
 
 	public Builder setClient(boolean client) {
 	    creator.config.setClient(client);
 	    Configuration.setServer(!client);
+
 	    return this;
 	}
 
 	public Builder setProperty(String key, String property) {
 	    creator.config.putValue(key, property);
+
 	    return this;
 	}
 
 	public Builder setAdminUsersPth(String property) {
 	    Configuration.setAdminUsersPath(property);
+
 	    return this;
 	}
 
 	public Builder setIpAddress(String property) {
 	    creator.config.putValue(Configuration.IP_ADDRESS, property);
+
 	    return this;
 	}
 
 	public Builder setPort(String property) {
 	    creator.config.putValue(Configuration.PORT, property);
+
 	    return this;
 	}
 
 	public Builder setMasterThreads(String property) {
 	    creator.config.putValue(Configuration.BOSS_POOL, property);
+
 	    return this;
 	}
 
 	public Builder setWorkerThreads(String property) {
 	    creator.config.putValue(Configuration.WORKER_POOL, property);
+
 	    return this;
 	}
 
 	public Builder addDeploymentPath(String deploymentPath, boolean scan) {
 	    String clearPath = WatchUtils.clearPath(deploymentPath);
 	    creator.config.addDeploymentPath(clearPath, scan);
+
 	    return this;
 	}
 
 	public Builder addDeploymentPath(String deploymentPath) {
 	    addDeploymentPath(deploymentPath, Boolean.FALSE);
+
 	    return this;
 	}
 
 	public Builder setTimeout(String property) {
 	    creator.config.putValue(Configuration.CONNECTION_TIMEOUT, property);
+
 	    return this;
 	}
 
 	public Builder setDataSourcePooledType(boolean dsPooledType) {
 	    JPAManager.pooledDataSource = dsPooledType;
+
 	    return this;
 	}
 
 	public Builder setPoolProviderType(PoolProviderType poolProviderType) {
 	    PoolConfig.poolProviderType = poolProviderType;
+
 	    return this;
 	}
 
 	public Builder setPoolPropertiesPath(String path) {
 	    PoolConfig.poolPath = path;
+
 	    return this;
 	}
 
 	public Builder setPoolProperties(Properties properties) {
 	    initPoolProperties();
 	    PoolConfig.poolProperties.putAll(properties);
+
 	    return this;
 	}
 
 	public Builder addPoolProperty(Object key, Object value) {
 	    initPoolProperties();
 	    PoolConfig.poolProperties.put(key, value);
+
 	    return this;
 	}
 
 	public Builder setHotDeployment(boolean hotDeployment) {
 	    creator.config.setHotDeployment(hotDeployment);
+
 	    return this;
 	}
 
@@ -739,7 +768,7 @@ public class MetaCreator {
 	    creator.config.configure();
 	    MetaContainer.setCreator(creator);
 	    LOG.info("Lightmare application starts working");
-	    
+
 	    return creator;
 	}
 
