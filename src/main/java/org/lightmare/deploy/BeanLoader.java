@@ -38,6 +38,7 @@ import org.lightmare.cache.InjectionData;
 import org.lightmare.cache.InterceptorData;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
+import org.lightmare.config.Configuration;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.JPAManager;
@@ -460,7 +461,7 @@ public class BeanLoader {
 	private void createMeta(Class<?> beanClass) throws IOException {
 
 	    metaData.setBeanClass(beanClass);
-	    if (MetaContainer.CONFIG.isServer()) {
+	    if (Configuration.isServer()) {
 		retrieveConnections();
 	    } else {
 		notifyConn();
@@ -746,6 +747,8 @@ public class BeanLoader {
 	public MetaData metaData;
 
 	public DeployData deployData;
+
+	public boolean server;
     }
 
     /**
