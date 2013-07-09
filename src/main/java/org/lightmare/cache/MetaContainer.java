@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -24,6 +25,7 @@ import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.fs.WatchUtils;
 
 /**
  * Container class to save {@link MetaData} for bean interface {@link Class} and
@@ -40,7 +42,7 @@ public class MetaContainer {
     /**
      * {@link Configuration} container class for server
      */
-    public static final Configuration CONFIG = new Configuration();
+    public static final Map<String, Configuration> CONFIGS = new ConcurrentHashMap<String, Configuration>();
 
     // Cached bean meta data
     private static final ConcurrentMap<String, MetaData> EJBS = new ConcurrentHashMap<String, MetaData>();
@@ -93,6 +95,45 @@ public class MetaContainer {
 		creator = null;
 	    }
 	}
+    }
+
+    /**
+     * Caches {@link Configuration} for specific {@link URL} array
+     * 
+     * @param archives
+     * @param config
+     */
+    public static void putConfig(URL[] archives, Configuration config) {
+
+	if (ObjectUtils.available(archives)) {
+	    for (URL archive : archives) {
+		String path = WatchUtils.clearPath(archive.getFile());
+		if (CONFIGS.containsKey(path)) {
+		    continue;
+		}
+		CONFIGS.put(path, config);
+	    }
+	}
+    }
+
+    /**
+     * Gets {@link Configuration} from cache for specific {@link URL} array
+     * 
+     * @param archives
+     * @param config
+     */
+    public static Configuration getConfig(URL[] archives) {
+
+	Configuration config;
+	URL archive = ObjectUtils.getFirst(archives);
+	if (ObjectUtils.notNull(archive)) {
+	    String path = WatchUtils.clearPath(archive.getFile());
+	    config = CONFIGS.get(path);
+	} else {
+	    config = null;
+	}
+
+	return config;
     }
 
     /**
