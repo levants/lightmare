@@ -17,7 +17,6 @@ import org.jboss.netty.channel.socket.nio.NioWorker;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.jboss.netty.channel.socket.nio.WorkerPool;
 import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
-import org.lightmare.cache.MetaContainer;
 import org.lightmare.config.Configuration;
 import org.lightmare.remote.rcp.RcpHandler;
 import org.lightmare.remote.rcp.decoders.RcpDecoder;
@@ -51,19 +50,12 @@ public class RPCall {
 
     private static final Logger LOG = Logger.getLogger(RPCall.class);
 
-    private RPCall() {
-	configure();
-    }
-
     public RPCall(String host, int port) {
-	this();
 	this.host = host;
 	this.port = port;
     }
 
-    private static void configure() {
-
-	Configuration config = MetaContainer.CONFIG;
+    public static void configure(Configuration config) {
 
 	if (boss == null || worker == null) {
 
