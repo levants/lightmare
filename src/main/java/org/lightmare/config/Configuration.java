@@ -13,6 +13,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.lightmare.cache.DeploymentDirectory;
+import org.lightmare.jpa.datasource.PoolConfig;
 
 /**
  * Easy way to retrieve configuration properties from configuration file
@@ -26,7 +27,7 @@ public class Configuration {
     private final Map<String, String> config = new HashMap<String, String>();
 
     // path where stored adminitrator users
-    public static final String ADMIN_USERS_PATH = "adminUsersPath";
+    public static final String ADMIN_USERS_PATH_KEY = "adminUsersPath";
 
     // Default semaphore capacity
     public static final int SEMAPHORE_SIZE = 1;
@@ -86,7 +87,7 @@ public class Configuration {
      */
     private boolean remote;
 
-    private boolean server = SERVER_DEF;
+    private static boolean server = SERVER_DEF;
 
     private boolean client;
 
@@ -98,6 +99,32 @@ public class Configuration {
     public static final String EJB_NAME = "ejb:";
 
     public static final int EJB_NAME_LENGTH = 4;
+
+    // Configuration properties for deployment
+    private boolean scanForEntities;
+
+    private String annotatedUnitName;
+
+    private String persXmlPath;
+
+    private String[] libraryPaths;
+
+    private boolean persXmlFromJar;
+
+    private boolean swapDataSource;
+
+    private boolean scanArchives;
+
+    private boolean hotDeployment;
+
+    private boolean watchStatus;
+
+    // Connection configuration
+    private boolean pooledDataSource;
+
+    private PoolConfig poolConfig;
+
+    private static String ADMIN_USERS_PATH;
 
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
@@ -227,12 +254,12 @@ public class Configuration {
 	this.remote = remote;
     }
 
-    public boolean isServer() {
+    public static boolean isServer() {
 	return server;
     }
 
-    public void setServer(boolean server) {
-	this.server = server;
+    public static void setServer(boolean serverValue) {
+	server = serverValue;
     }
 
     public boolean isClient() {
@@ -273,5 +300,101 @@ public class Configuration {
     public Set<String> getDataSourcePath() {
 
 	return DATA_SOURCE_PATH;
+    }
+
+    public boolean isScanForEntities() {
+	return scanForEntities;
+    }
+
+    public void setScanForEntities(boolean scanForEntities) {
+	this.scanForEntities = scanForEntities;
+    }
+
+    public String getAnnotatedUnitName() {
+	return annotatedUnitName;
+    }
+
+    public void setAnnotatedUnitName(String annotatedUnitName) {
+	this.annotatedUnitName = annotatedUnitName;
+    }
+
+    public String getPersXmlPath() {
+	return persXmlPath;
+    }
+
+    public void setPersXmlPath(String persXmlPath) {
+	this.persXmlPath = persXmlPath;
+    }
+
+    public String[] getLibraryPaths() {
+	return libraryPaths;
+    }
+
+    public void setLibraryPaths(String[] libraryPaths) {
+	this.libraryPaths = libraryPaths;
+    }
+
+    public boolean isPersXmlFromJar() {
+	return persXmlFromJar;
+    }
+
+    public void setPersXmlFromJar(boolean persXmlFromJar) {
+	this.persXmlFromJar = persXmlFromJar;
+    }
+
+    public boolean isSwapDataSource() {
+	return swapDataSource;
+    }
+
+    public void setSwapDataSource(boolean swapDataSource) {
+	this.swapDataSource = swapDataSource;
+    }
+
+    public boolean isScanArchives() {
+	return scanArchives;
+    }
+
+    public void setScanArchives(boolean scanArchives) {
+	this.scanArchives = scanArchives;
+    }
+
+    public boolean isHotDeployment() {
+	return hotDeployment;
+    }
+
+    public void setHotDeployment(boolean hotDeployment) {
+	this.hotDeployment = hotDeployment;
+    }
+
+    public boolean isWatchStatus() {
+	return watchStatus;
+    }
+
+    public void setWatchStatus(boolean watchStatus) {
+	this.watchStatus = watchStatus;
+    }
+
+    public boolean isPooledDataSource() {
+	return pooledDataSource;
+    }
+
+    public void setPooledDataSource(boolean pooledDataSource) {
+	this.pooledDataSource = pooledDataSource;
+    }
+
+    public PoolConfig getPoolConfig() {
+	return poolConfig;
+    }
+
+    public void setPoolConfig(PoolConfig poolConfig) {
+	this.poolConfig = poolConfig;
+    }
+
+    public static String getAdminUsersPath() {
+	return ADMIN_USERS_PATH;
+    }
+
+    public static void setAdminUsersPath(String aDMIN_USERS_PATH) {
+	ADMIN_USERS_PATH = aDMIN_USERS_PATH;
     }
 }
