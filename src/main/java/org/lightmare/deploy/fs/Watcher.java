@@ -15,6 +15,7 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,7 @@ import java.util.concurrent.Executors;
 import org.apache.log4j.Logger;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.cache.MetaContainer;
+import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.FileParsers;
@@ -92,8 +94,8 @@ public class Watcher implements Runnable {
     }
 
     private Watcher() {
-	deployments = MetaContainer.CONFIG.getDeploymentPath();
-	dataSources = MetaContainer.CONFIG.getDataSourcePath();
+	deployments = getDeployDirectories();
+	dataSources = getDataSourcePaths();
     }
 
     private static URL getAppropriateURL(String fileName) throws IOException {
@@ -105,6 +107,37 @@ public class Watcher implements Runnable {
 	return url;
     }
 
+    private static Set<DeploymentDirectory> getDeployDirectories() {
+
+	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+	Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
+	Set<DeploymentDirectory> deploymetDirssCurrent;
+	for (Configuration config : configs) {
+	    deploymetDirssCurrent = config.getDeploymentPath();
+	    if (config.isWatchStatus()
+		    && ObjectUtils.available(deploymetDirssCurrent)) {
+		deploymetDirss.addAll(deploymetDirssCurrent);
+	    }
+	}
+
+	return deploymetDirss;
+    }
+
+    private static Set<String> getDataSourcePaths() {
+
+	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+	Set<String> paths = new HashSet<String>();
+	Set<String> pathsCurrent;
+	for (Configuration config : configs) {
+	    pathsCurrent = config.getDataSourcePath();
+	    if (config.isWatchStatus() && ObjectUtils.available(pathsCurrent)) {
+		paths.addAll(pathsCurrent);
+	    }
+	}
+
+	return paths;
+    }
+
     private static WatchFileType checkType(String fileName) {
 
 	WatchFileType type;
@@ -114,9 +147,8 @@ public class Watcher implements Runnable {
 	path = file.getParent();
 	String parentPath = WatchUtils.clearPath(path);
 
-	Set<DeploymentDirectory> apps = MetaContainer.CONFIG
-		.getDeploymentPath();
-	Set<String> dss = MetaContainer.CONFIG.getDataSourcePath();
+	Set<DeploymentDirectory> apps = getDeployDirectories();
+	Set<String> dss = getDataSourcePaths();
 
 	if (ObjectUtils.available(apps)) {
 	    String deploymantPath;
@@ -158,8 +190,15 @@ public class Watcher implements Runnable {
      */
     public static List<File> listDeployments() {
 
-	Set<DeploymentDirectory> deploymetDirss = MetaContainer.CONFIG
-		.getDeploymentPath();
+	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+	Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
+	Set<DeploymentDirectory> deploymetDirssCurrent;
+	for (Configuration config : configs) {
+	    deploymetDirssCurrent = config.getDeploymentPath();
+	    if (ObjectUtils.available(deploymetDirssCurrent)) {
+		deploymetDirss.addAll(deploymetDirssCurrent);
+	    }
+	}
 	File[] files;
 	List<File> list = new ArrayList<File>();
 	if (ObjectUtils.available(deploymetDirss)) {
@@ -181,7 +220,15 @@ public class Watcher implements Runnable {
      */
     public static List<File> listDataSources() {
 
-	Set<String> paths = MetaContainer.CONFIG.getDataSourcePath();
+	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+	Set<String> paths = new HashSet<String>();
+	Set<String> pathsCurrent;
+	for (Configuration config : configs) {
+	    pathsCurrent = config.getDataSourcePath();
+	    if (ObjectUtils.available(pathsCurrent)) {
+		paths.addAll(pathsCurrent);
+	    }
+	}
 	File file;
 	List<File> list = new ArrayList<File>();
 	if (ObjectUtils.available(paths)) {
