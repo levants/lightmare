@@ -65,7 +65,10 @@ public class MetaContainer {
      */
     public static MetaCreator getCreator() {
 
-	return creator;
+	synchronized (MetaContainer.class) {
+
+	    return creator;
+	}
     }
 
     /**
