@@ -76,11 +76,7 @@ public class MetaContainer {
     public static void setCreator(MetaCreator metaCreator) throws IOException {
 
 	synchronized (MetaContainer.class) {
-	    if (creator == null) {
-		creator = metaCreator;
-	    } else {
-		throw new IOException("class MetaCreator is aleready cached");
-	    }
+	    creator = metaCreator;
 	}
     }
 

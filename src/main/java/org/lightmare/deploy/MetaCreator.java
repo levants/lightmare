@@ -560,7 +560,11 @@ public class MetaCreator {
 	private MetaCreator creator;
 
 	public Builder() {
-	    creator = new MetaCreator();
+
+	    creator = MetaContainer.getCreator();
+	    if (creator == null) {
+		creator = new MetaCreator();
+	    }
 	    creator.config = new Configuration();
 	}
 
