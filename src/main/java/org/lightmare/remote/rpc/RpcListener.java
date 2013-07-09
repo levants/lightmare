@@ -20,7 +20,6 @@ import org.jboss.netty.channel.socket.nio.NioWorker;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.jboss.netty.channel.socket.nio.WorkerPool;
 import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
-import org.lightmare.cache.MetaContainer;
 import org.lightmare.config.Configuration;
 import org.lightmare.remote.rcp.decoders.RcpEncoder;
 import org.lightmare.remote.rpc.decoders.RpcDecoder;
@@ -61,11 +60,10 @@ public class RpcListener {
     /**
      * Set boss and worker thread pools size from configuration
      */
-    private static void setNettyPools() {
+    private static void setNettyPools(Configuration config) {
 
 	Integer bossCount;
 	Integer workerCount;
-	Configuration config = MetaContainer.CONFIG;
 	boss = new OrderedMemoryAwareThreadPoolExecutor(
 		(bossCount = config.getIntValue("boss_pool_size")) != null ? bossCount
 			: 1, 400000000, 2000000000, 60, TimeUnit.SECONDS,
@@ -82,9 +80,9 @@ public class RpcListener {
      * Starts server
      * 
      */
-    public static void startServer() {
+    public static void startServer(Configuration config) {
 
-	setNettyPools();
+	setNettyPools(config);
 	factory = new NioServerSocketChannelFactory(boss, workerPool);
 	ServerBootstrap bootstrap = new ServerBootstrap(factory);
 	bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
@@ -95,7 +93,6 @@ public class RpcListener {
 			new RpcHandler());
 	    }
 	});
-	Configuration config = MetaContainer.CONFIG;
 	bootstrap.setOption("tcpNoDelay", Boolean.TRUE);
 	bootstrap.setOption("child.keepAlive", Boolean.TRUE);
 	bootstrap.setOption("backlog", 500);
