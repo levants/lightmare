@@ -739,6 +739,7 @@ public class MetaCreator {
 	    creator.config.configure();
 	    MetaContainer.setCreator(creator);
 	    LOG.info("Lightmare application starts working");
+	    
 	    return creator;
 	}
 
