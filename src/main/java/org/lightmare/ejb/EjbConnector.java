@@ -228,10 +228,9 @@ public class EjbConnector {
     public <T> T connectToBean(String beanName, Class<T> interfaceClass,
 	    Object... rpcArgs) throws IOException {
 	InvocationHandler handler;
-	Configuration configuration = MetaContainer.CONFIG;
 	ClassLoader loader;
 
-	if (configuration.isServer()) {
+	if (Configuration.isServer()) {
 	    MetaData metaData = getMeta(beanName);
 	    setInterfaces(metaData);
 	    handler = getHandler(metaData);
