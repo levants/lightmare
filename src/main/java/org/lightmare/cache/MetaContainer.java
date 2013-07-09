@@ -144,6 +144,7 @@ public class MetaContainer {
      * @return
      */
     public static MetaData addMetaData(String beanName, MetaData metaData) {
+
 	return EJBS.putIfAbsent(beanName, metaData);
     }
 
@@ -178,6 +179,7 @@ public class MetaContainer {
 	if (!check) {
 	    check = metaData.isInProgress();
 	}
+
 	return check;
     }
 
@@ -188,6 +190,7 @@ public class MetaContainer {
      * @return boolean
      */
     public boolean checkBean(String beanName) {
+
 	return EJBS.containsKey(beanName);
     }
 
@@ -433,6 +436,7 @@ public class MetaContainer {
      */
     public static EntityManagerFactory getConnection(String unitName)
 	    throws IOException {
+
 	return JPAManager.getEntityManagerFactory(unitName);
     }
 
@@ -502,6 +506,7 @@ public class MetaContainer {
     }
 
     public static boolean hasRest() {
+
 	return ObjectUtils.available(REST_RESOURCES);
     }
 }
