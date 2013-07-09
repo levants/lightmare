@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.lightmare.cache.MetaContainer;
 import org.lightmare.config.Configuration;
 import org.lightmare.utils.ObjectUtils;
 
@@ -39,8 +38,7 @@ public class Security {
 
     public void cacheUsers() throws IOException {
 
-	String path = MetaContainer.CONFIG
-		.getStringValue(Configuration.ADMIN_USERS_PATH);
+	String path = Configuration.getAdminUsersPath();
 	if (ObjectUtils.notAvailable(path)) {
 	    path = Configuration.ADMIN_USERS_PATH_DEF;
 	}
