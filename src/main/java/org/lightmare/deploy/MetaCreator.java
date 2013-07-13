@@ -563,8 +563,12 @@ public class MetaCreator {
 
 	    creator = MetaContainer.getCreator();
 	    if (creator == null) {
-		creator = new MetaCreator();
-		MetaContainer.setCreator(creator);
+		synchronized (this) {
+		    if (creator == null) {
+			creator = new MetaCreator();
+			MetaContainer.setCreator(creator);
+		    }
+		}
 	    }
 	    creator.config = new Configuration();
 	}
@@ -771,6 +775,5 @@ public class MetaCreator {
 
 	    return creator;
 	}
-
     }
 }
