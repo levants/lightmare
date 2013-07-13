@@ -564,6 +564,7 @@ public class MetaCreator {
 	    creator = MetaContainer.getCreator();
 	    if (creator == null) {
 		creator = new MetaCreator();
+		MetaContainer.setCreator(creator);
 	    }
 	    creator.config = new Configuration();
 	}
@@ -766,7 +767,6 @@ public class MetaCreator {
 
 	public MetaCreator build() throws IOException {
 	    creator.config.configure();
-	    MetaContainer.setCreator(creator);
 	    LOG.info("Lightmare application starts working");
 
 	    return creator;
