@@ -87,6 +87,21 @@ public class MetaCreator {
 	ShutDown.setHook(tmpResources);
     }
 
+    private static MetaCreator get() {
+
+	MetaCreator creator = MetaContainer.getCreator();
+	if (creator == null) {
+	    synchronized (MetaCreator.class) {
+		if (creator == null) {
+		    creator = new MetaCreator();
+		    MetaContainer.setCreator(creator);
+		}
+	    }
+	}
+
+	return creator;
+    }
+
     public AnnotationDB getAnnotationDB() {
 	return annotationDB;
     }
@@ -561,15 +576,7 @@ public class MetaCreator {
 
 	public Builder() {
 
-	    creator = MetaContainer.getCreator();
-	    if (creator == null) {
-		synchronized (this) {
-		    if (creator == null) {
-			creator = new MetaCreator();
-			MetaContainer.setCreator(creator);
-		    }
-		}
-	    }
+	    creator = MetaCreator.get();
 	    creator.config = new Configuration();
 	}
 
