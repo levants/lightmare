@@ -76,7 +76,7 @@ public class MetaContainer {
      * 
      * @param metaCreator
      */
-    public static void setCreator(MetaCreator metaCreator) throws IOException {
+    public static void setCreator(MetaCreator metaCreator) {
 
 	synchronized (MetaContainer.class) {
 	    creator = metaCreator;
