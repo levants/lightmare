@@ -574,10 +574,23 @@ public class MetaCreator {
 
 	private MetaCreator creator;
 
-	public Builder() {
+	public Builder(boolean cloneConfiguration) throws IOException {
 
 	    creator = MetaCreator.get();
-	    creator.config = new Configuration();
+	    Configuration config = creator.config;
+	    if (cloneConfiguration && ObjectUtils.notNull(config)) {
+		try {
+		    creator.config = (Configuration) config.clone();
+		} catch (CloneNotSupportedException ex) {
+		    throw new IOException(ex);
+		}
+	    } else {
+		creator.config = new Configuration();
+	    }
+	}
+
+	public Builder() throws IOException {
+	    this(Boolean.FALSE);
 	}
 
 	private void initPoolProperties() {
