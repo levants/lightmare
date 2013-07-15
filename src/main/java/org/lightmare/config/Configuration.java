@@ -49,9 +49,9 @@ public class Configuration {
     // properties for datasource path and deployment path
     public static final String DATA_SOURCE_PATH_KEY = "dspath";
 
-    public Set<DeploymentDirectory> DEPLOYMENT_PATH;
+    private Set<DeploymentDirectory> DEPLOYMENT_PATH;
 
-    public Set<String> DATA_SOURCE_PATH;
+    private Set<String> DATA_SOURCE_PATH;
 
     // runtime to get avaliable processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
