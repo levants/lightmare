@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,7 +22,12 @@ import org.lightmare.jpa.datasource.PoolConfig;
  * @author levan
  * 
  */
-public class Configuration {
+public class Configuration implements Cloneable, Serializable {
+
+    /**
+     * Default serial version UUID jast for clonning
+     */
+    private static final long serialVersionUID = 1L;
 
     // cache for all configuration passed programmatically or read from file
     private final Map<String, String> config = new HashMap<String, String>();
@@ -400,6 +406,7 @@ public class Configuration {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
+
 	return super.clone();
     }
 }
