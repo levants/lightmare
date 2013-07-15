@@ -25,7 +25,7 @@ import org.lightmare.jpa.datasource.PoolConfig;
 public class Configuration implements Cloneable, Serializable {
 
     /**
-     * Default serial version UUID jast for clonning
+     * Default serial version UUID just for cloning
      */
     private static final long serialVersionUID = 1L;
 
