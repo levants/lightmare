@@ -397,4 +397,9 @@ public class Configuration {
     public static void setAdminUsersPath(String aDMIN_USERS_PATH) {
 	ADMIN_USERS_PATH = aDMIN_USERS_PATH;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+	return super.clone();
+    }
 }
