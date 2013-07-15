@@ -40,7 +40,8 @@ public class DataSourceInitializer {
     public static final String USER_PROPERTY = "user";
     public static final String PASSWORD_PROPERTY = "password";
     public static final String URL_PROPERTY = "url";
-    public static final String JNDI_NAME_PROPERTY = "name";
+    public static final String JNDI_NAME_PROPERTY = "jndiname";
+    public static final String NAME_PROPERTY = "name";
 
     public DataSourceInitializer() {
     }

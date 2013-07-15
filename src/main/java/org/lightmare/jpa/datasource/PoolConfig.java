@@ -211,9 +211,9 @@ public class PoolConfig {
 	Set<Object> keys = unsopportedKeys();
 	Object dataSourceName = null;
 	for (Object key : keys) {
-	    if (key.equals(DataSourceInitializer.JNDI_NAME_PROPERTY)) {
+	    if (key.equals(DataSourceInitializer.NAME_PROPERTY)) {
 		dataSourceName = propertiesMap
-			.get(DataSourceInitializer.JNDI_NAME_PROPERTY);
+			.get(DataSourceInitializer.NAME_PROPERTY);
 	    }
 	    propertiesMap.remove(key);
 	}

@@ -9,6 +9,7 @@ import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
 import org.lightmare.config.Configuration;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Utility class to initialize and set (
@@ -25,6 +26,8 @@ public class NamingUtils {
     public static final String CONNECTION_NAME_PREF = "java:comp/env/";
 
     public static final String EJB_NAME_PREF = "ejb:";
+
+    private static final String DS_JNDI_FREFIX = "java:/";
 
     private static boolean isContextFactory;
 
@@ -94,6 +97,46 @@ public class NamingUtils {
 	String name = jndiName.replace(Configuration.EJB_NAME, "");
 
 	return name;
+    }
+
+    /**
+     * Clears jndi prefix "java:/" for data source name
+     * 
+     * @param jndiName
+     * @return {@link String}
+     */
+    public static String clearDataSourceName(String jndiName) {
+
+	String clearName;
+	if (ObjectUtils.available(jndiName)
+		&& jndiName.startsWith(DS_JNDI_FREFIX)) {
+	    clearName = jndiName.replace(DS_JNDI_FREFIX,
+		    ObjectUtils.EMPTY_STRING);
+	} else {
+	    clearName = jndiName;
+	}
+
+	return clearName;
+    }
+
+    /**
+     * Adds jndi prefix "java:/" to data source name
+     * 
+     * @param clearName
+     * @return {@link String}
+     */
+    public static String toJndiDataSourceName(String clearName) {
+
+	String jndiName;
+	if (ObjectUtils.available(clearName)
+		&& !clearName.contains(DS_JNDI_FREFIX)) {
+	    jndiName = new StringBuilder().append(DS_JNDI_FREFIX)
+		    .append(clearName).toString();
+	} else {
+	    jndiName = clearName;
+	}
+
+	return jndiName;
     }
 
     /**

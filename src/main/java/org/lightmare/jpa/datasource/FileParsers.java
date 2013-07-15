@@ -18,6 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
+import org.lightmare.jndi.NamingUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -215,11 +216,16 @@ public class FileParsers {
     public List<Properties> getDataFromJBoss(NodeList nodeList) {
 
 	List<Properties> properties = new ArrayList<Properties>();
+	String jndiName;
+	String clearName;
 	for (int i = 0; i < nodeList.getLength(); i++) {
 	    Element thisElement = (Element) nodeList.item(i);
 	    Properties props = new Properties();
+	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
+	    clearName = NamingUtils.clearDataSourceName(jndiName);
 	    props.setProperty(DataSourceInitializer.JNDI_NAME_PROPERTY,
-		    thisElement.getAttribute(JNDI_NAME_TAG));
+		    jndiName);
+	    props.setProperty(DataSourceInitializer.NAME_PROPERTY, clearName);
 	    NodeList urlList = thisElement
 		    .getElementsByTagName(CONNECTION_URL_TAG);
 	    int urlElementLength = urlList.getLength();
