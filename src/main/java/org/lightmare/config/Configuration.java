@@ -49,9 +49,9 @@ public class Configuration {
     // properties for datasource path and deployment path
     public static final String DATA_SOURCE_PATH_KEY = "dspath";
 
-    private Set<DeploymentDirectory> DEPLOYMENT_PATH;
+    private Set<DeploymentDirectory> deploymentPaths;
 
-    private Set<String> DATA_SOURCE_PATH;
+    private Set<String> dataSourcePaths;
 
     // runtime to get avaliable processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
@@ -75,10 +75,10 @@ public class Configuration {
 
     public static final String DATA_SOURCE_PATH_DEF = "./ds";
 
-    public static final Set<DeploymentDirectory> DEPLOYMENT_PATH_DEF = new HashSet<DeploymentDirectory>(
+    public static final Set<DeploymentDirectory> DEPLOYMENT_PATHS_DEF = new HashSet<DeploymentDirectory>(
 	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)));
 
-    public static final Set<String> DATA_SOURCES_DEF = new HashSet<String>(
+    public static final Set<String> DATA_SOURCES_PATHS_DEF = new HashSet<String>(
 	    Arrays.asList("./ds"));
 
     /**
@@ -155,8 +155,8 @@ public class Configuration {
 	    config.put(CONNECTION_TIMEOUT, CONNECTION_TIMEOUT_DEF);
 	}
 
-	if (DEPLOYMENT_PATH == null) {
-	    DEPLOYMENT_PATH = DEPLOYMENT_PATH_DEF;
+	if (deploymentPaths == null) {
+	    deploymentPaths = DEPLOYMENT_PATHS_DEF;
 	}
     }
 
@@ -273,33 +273,33 @@ public class Configuration {
     public void addDeploymentPath(String path, boolean scan) {
 
 	synchronized (Configuration.class) {
-	    if (DEPLOYMENT_PATH == null) {
-		DEPLOYMENT_PATH = new HashSet<DeploymentDirectory>();
+	    if (deploymentPaths == null) {
+		deploymentPaths = new HashSet<DeploymentDirectory>();
 	    }
 
-	    DEPLOYMENT_PATH.add(new DeploymentDirectory(path, scan));
+	    deploymentPaths.add(new DeploymentDirectory(path, scan));
 	}
     }
 
     public void addDataSourcePath(String path) {
 
 	synchronized (Configuration.class) {
-	    if (DATA_SOURCE_PATH == null) {
-		DATA_SOURCE_PATH = new HashSet<String>();
+	    if (dataSourcePaths == null) {
+		dataSourcePaths = new HashSet<String>();
 	    }
 
-	    DATA_SOURCE_PATH.add(path);
+	    dataSourcePaths.add(path);
 	}
     }
 
     public Set<DeploymentDirectory> getDeploymentPath() {
 
-	return DEPLOYMENT_PATH;
+	return deploymentPaths;
     }
 
     public Set<String> getDataSourcePath() {
 
-	return DATA_SOURCE_PATH;
+	return dataSourcePaths;
     }
 
     public boolean isScanForEntities() {
