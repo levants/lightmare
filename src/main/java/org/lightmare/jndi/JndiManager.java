@@ -19,7 +19,14 @@ import org.lightmare.utils.ObjectUtils;
  * @author levan
  * 
  */
-public class NamingUtils {
+public class JndiManager {
+
+    private static final Class<LightmareInitialContextFactory> FACTORY_CLASS = LightmareInitialContextFactory.class;
+
+    private static final String PACKAGE_PREFIXES = FACTORY_CLASS.getPackage()
+	    .getName();
+
+    private static final String FACTORY_CLASS_NAME = FACTORY_CLASS.getName();
 
     public static final String USER_TRANSACTION_NAME = "java:comp/UserTransaction";
 
@@ -180,17 +187,17 @@ public class NamingUtils {
     public void setInitialCotext() throws IOException {
 	if (!isContextFactory) {
 	    System.getProperties().put(Context.INITIAL_CONTEXT_FACTORY,
-		    "org.lightmare.jndi.DSInitialContextFactory");
+		    FACTORY_CLASS_NAME);
 	    System.getProperties().put(Context.URL_PKG_PREFIXES,
-		    "org.lightmare.jndi");
+		    PACKAGE_PREFIXES);
 	    isContextFactory = Boolean.TRUE;
 	}
 	if (context == null) {
 	    try {
 		Properties properties = new Properties();
 		properties.put(Context.INITIAL_CONTEXT_FACTORY,
-			"org.lightmare.jndi.DSInitialContextFactory");
-		properties.put(Context.URL_PKG_PREFIXES, "org.lightmare.jndi");
+			FACTORY_CLASS_NAME);
+		properties.put(Context.URL_PKG_PREFIXES, PACKAGE_PREFIXES);
 		context = new InitialContext(properties);
 	    } catch (NamingException ex) {
 		throw new IOException(ex);
@@ -200,14 +207,14 @@ public class NamingUtils {
 
     /**
      * Getter for {@link Context} with check if it is initialized if not calls
-     * {@link NamingUtils#setInitialCotext()} method
+     * {@link JndiManager#setInitialCotext()} method
      * 
      * @return {@link Context}
      * @throws IOException
      */
     public Context getContext() throws IOException {
 	if (context == null) {
-	    synchronized (NamingUtils.class) {
+	    synchronized (JndiManager.class) {
 		setInitialCotext();
 	    }
 	}

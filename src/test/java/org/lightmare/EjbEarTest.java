@@ -19,7 +19,7 @@ import org.lightmare.bean.LightMareFalseBeanRemote;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.entities.Person;
-import org.lightmare.jndi.NamingUtils;
+import org.lightmare.jndi.JndiManager;
 import org.lightmare.unitorder.RunOrder;
 import org.lightmare.unitorder.SortedRunner;
 
@@ -169,7 +169,7 @@ public class EjbEarTest {
 	try {
 	    InitialContext context = new InitialContext();
 	    UserTransaction transaction = (UserTransaction) context
-		    .lookup(NamingUtils.USER_TRANSACTION_NAME);
+		    .lookup(JndiManager.USER_TRANSACTION_NAME);
 	    Assert.assertNotNull(
 		    "Could not find UserTransaction by jndi lookup",
 		    transaction);

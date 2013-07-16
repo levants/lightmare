@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
 import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
 import org.apache.log4j.Logger;
-import org.lightmare.jndi.NamingUtils;
+import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.PoolConfig;
 
@@ -90,7 +90,7 @@ public class InitDataSourceDbcp {
 	try {
 	    DataSource dataSource = initilizeDataSource(properties);
 	    if (dataSource instanceof DataSource) {
-		NamingUtils namingUtils = new NamingUtils();
+		JndiManager namingUtils = new JndiManager();
 		Context context = namingUtils.getContext();
 		context.rebind(jndiName, dataSource);
 	    } else {

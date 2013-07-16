@@ -20,9 +20,9 @@ import org.osjava.sj.memory.MemoryContext;
  * @author levan
  * 
  */
-public class DSContext extends MemoryContext {
+public class LightmareContext extends MemoryContext {
 
-    public DSContext(Hashtable<?, ?> env) {
+    public LightmareContext(Hashtable<?, ?> env) {
 	super(env);
     }
 
@@ -31,14 +31,14 @@ public class DSContext extends MemoryContext {
 
 	Object value;
 	String name;
-	if (jndiName.equals(NamingUtils.USER_TRANSACTION_NAME)) {
+	if (jndiName.equals(JndiManager.USER_TRANSACTION_NAME)) {
 
 	    UserTransaction transaction = MetaContainer.getTransaction();
 	    value = transaction;
 
-	} else if (jndiName.startsWith(NamingUtils.CONNECTION_NAME_PREF)) {
+	} else if (jndiName.startsWith(JndiManager.CONNECTION_NAME_PREF)) {
 	    // Checks if it is request for entity manager
-	    name = NamingUtils.formatJpaJndiName(jndiName);
+	    name = JndiManager.formatJpaJndiName(jndiName);
 
 	    // Checks if connection is in progress and waits for finish
 	    JPAManager.isInProgress(name);
@@ -54,9 +54,9 @@ public class DSContext extends MemoryContext {
 	    } else {
 		value = candidate;
 	    }
-	} else if (jndiName.startsWith(NamingUtils.EJB_NAME_PREF)) {
+	} else if (jndiName.startsWith(JndiManager.EJB_NAME_PREF)) {
 
-	    NamingUtils.BeanDescriptor descriptor = NamingUtils
+	    JndiManager.BeanDescriptor descriptor = JndiManager
 		    .parseEjbJndiName(jndiName);
 	    EjbConnector ejbConnection = new EjbConnector();
 	    try {

@@ -12,7 +12,7 @@ import javax.naming.spi.InitialContextFactory;
  * @author levan
  * 
  */
-public class DSInitialContextFactory implements InitialContextFactory {
+public class LightmareInitialContextFactory implements InitialContextFactory {
 
     private static final String SHARE_DATA_PROPERTY = "org.osjava.sj.jndi.shared";
 
@@ -31,9 +31,9 @@ public class DSInitialContextFactory implements InitialContextFactory {
 	if (!sharingEnv.containsKey(SHARE_DATA_PROPERTY)) {
 	    sharingEnv.put(SHARE_DATA_PROPERTY, SHARE_DATA_PROPERTY_VALUE);
 	}
-	Context dsContext = new DSContext(sharingEnv);
+	Context lightmareContext = new LightmareContext(sharingEnv);
 
-	return dsContext;
+	return lightmareContext;
     }
 
 }

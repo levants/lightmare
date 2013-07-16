@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
-import org.lightmare.jndi.NamingUtils;
+import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.jpa.datasource.c3p0.InitDataSourceC3p0;
 import org.lightmare.jpa.datasource.dbcp.InitDataSourceDbcp;
@@ -137,7 +137,7 @@ public class DataSourceInitializer {
      */
     public static void close(String jndiName) throws IOException {
 
-	NamingUtils utils = new NamingUtils();
+	JndiManager utils = new JndiManager();
 	Context context = utils.getContext();
 	try {
 	    DataSource dataSource = (DataSource) context.lookup(jndiName);

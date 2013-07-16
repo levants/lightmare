@@ -8,7 +8,7 @@ import javax.naming.Context;
 
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.MetaCreator;
-import org.lightmare.jndi.NamingUtils;
+import org.lightmare.jndi.JndiManager;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -59,7 +59,7 @@ public class EJBContainerImpl extends EJBContainer {
 
 	Context context = null;
 	try {
-	    NamingUtils utils = new NamingUtils();
+	    JndiManager utils = new JndiManager();
 	    context = utils.getContext();
 	} catch (IOException ex) {
 	    LOG.error("Could not initialize Context", ex);

@@ -17,7 +17,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * @author levan
  * 
  */
-public class DSInitialContextFactoryBuilder implements
+public class LightmareInitialContextFactoryBuilder implements
 	InitialContextFactoryBuilder {
 
     @Override
@@ -31,7 +31,7 @@ public class DSInitialContextFactoryBuilder implements
 	if (ObjectUtils.notNull(requestedFactory)) {
 	    return simulateBuilderlessNamingManager(requestedFactory);
 	}
-	return new DSInitialContextFactory();
+	return new LightmareInitialContextFactory();
 
     }
 

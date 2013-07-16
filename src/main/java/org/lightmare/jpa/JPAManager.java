@@ -17,7 +17,7 @@ import javax.persistence.Persistence;
 
 import org.apache.log4j.Logger;
 import org.lightmare.cache.ConnectionSemaphore;
-import org.lightmare.jndi.NamingUtils;
+import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
@@ -277,10 +277,10 @@ public class JPAManager {
 	if (!bound) {
 	    String jndiName = semaphore.getJndiName();
 	    if (ObjectUtils.available(jndiName)) {
-		NamingUtils namingUtils = new NamingUtils();
+		JndiManager namingUtils = new JndiManager();
 		try {
 		    Context context = namingUtils.getContext();
-		    String fullJndiName = NamingUtils
+		    String fullJndiName = JndiManager
 			    .createJpaJndiName(jndiName);
 		    if (context.lookup(fullJndiName) == null) {
 			namingUtils.getContext().rebind(fullJndiName,
@@ -363,10 +363,10 @@ public class JPAManager {
 
 	String jndiName = semaphore.getJndiName();
 	if (ObjectUtils.notNull(jndiName) && semaphore.isBound()) {
-	    NamingUtils namingUtils = new NamingUtils();
+	    JndiManager namingUtils = new JndiManager();
 	    try {
 		Context context = namingUtils.getContext();
-		String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
+		String fullJndiName = JndiManager.createJpaJndiName(jndiName);
 		if (ObjectUtils.notNull(context.lookup(fullJndiName))) {
 		    context.unbind(fullJndiName);
 		}

@@ -10,7 +10,7 @@ import javax.naming.NamingException;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
-import org.lightmare.jndi.NamingUtils;
+import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.PoolConfig;
 
@@ -94,7 +94,7 @@ public class InitDataSourceTomcat {
 	try {
 	    DataSource dataSource = initilizeDataSource(properties);
 	    if (dataSource instanceof DataSource) {
-		NamingUtils namingUtils = new NamingUtils();
+		JndiManager namingUtils = new JndiManager();
 		Context context = namingUtils.getContext();
 		context.rebind(jndiName, dataSource);
 	    } else {
