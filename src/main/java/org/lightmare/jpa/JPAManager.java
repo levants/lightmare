@@ -180,6 +180,7 @@ public class JPAManager {
 
 	if (ObjectUtils.available(classes)) {
 	    builder.setClasses(classes);
+	    // Loads entity classes to current ClassLoader instance
 	    LibraryLoader.loadClasses(classes, loader);
 	}
 
