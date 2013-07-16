@@ -199,6 +199,7 @@ public class JPAManager {
 
 	builder.setSwapDataSource(swapDataSource);
 	builder.setScanArchives(scanArchives);
+	builder.setOverridenClassLoader(loader);
 
 	cfg = builder.build();
 
