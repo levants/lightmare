@@ -1879,7 +1879,7 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 	    return this;
 	}
 
-	public Builder setOvverridenLoader(ClassLoader overridenClassLoader) {
+	public Builder setOverridenClassLoader(ClassLoader overridenClassLoader) {
 	    target.overridenClassLoader = overridenClassLoader;
 
 	    return this;
