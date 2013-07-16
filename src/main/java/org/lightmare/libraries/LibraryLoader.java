@@ -217,16 +217,15 @@ public class LibraryLoader {
 	return commonLoader;
     }
 
-    public static void loadCurrentLibraries(ClassLoader loader) {
-	if (ObjectUtils.notNull(loader)) {
-	    Thread.currentThread().setContextClassLoader(loader);
-	}
-    }
-
     public static void loadCurrentLibraries(Thread thread, ClassLoader loader) {
 	if (ObjectUtils.notNull(loader)) {
 	    thread.setContextClassLoader(loader);
 	}
+    }
+
+    public static void loadCurrentLibraries(ClassLoader loader) {
+	Thread thread = Thread.currentThread();
+	loadCurrentLibraries(thread, loader);
     }
 
     public static void loadURLToSystem(URL[] urls, Method method,
