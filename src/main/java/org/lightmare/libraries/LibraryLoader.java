@@ -290,6 +290,19 @@ public class LibraryLoader {
     }
 
     /**
+     * Loads passed classes to specified current {@link Thread}'s context class
+     * loader
+     * 
+     * @param classes
+     */
+    public static void loadClasses(Collection<String> classes)
+	    throws IOException {
+
+	ClassLoader loader = getContextClassLoader();
+	loadClasses(classes, loader);
+    }
+
+    /**
      * Closes passed {@link ClassLoader} if it is instance of
      * {@link URLClassLoader} class
      * 
