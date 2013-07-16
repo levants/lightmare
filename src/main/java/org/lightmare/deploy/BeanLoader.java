@@ -272,7 +272,7 @@ public class BeanLoader {
 	    synchronized (semaphore) {
 		if (!semaphore.isCheck()) {
 		    try {
-			creator.configureConnection(unitName, beanName, metaData.getLoader());
+			creator.configureConnection(unitName, beanName, loader);
 		    } finally {
 			semaphore.notifyAll();
 		    }
