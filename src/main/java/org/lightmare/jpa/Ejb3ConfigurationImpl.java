@@ -370,7 +370,14 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
      */
     public Ejb3ConfigurationImpl configure(String persistenceUnitName,
 	    Map integration) {
+	Thread thread = Thread.currentThread();
+	ClassLoader loader = thread.getContextClassLoader();
 	try {
+	    if (loader.equals(overridenClassLoader)) {
+		thread = null;
+	    } else {
+		thread.setContextClassLoader(overridenClassLoader);
+	    }
 	    LOG.debugf("Look up for persistence unit: %s", persistenceUnitName);
 	    integration = integration == null ? CollectionHelper.EMPTY_MAP
 		    : Collections.unmodifiableMap(integration);
@@ -467,6 +474,10 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 	    } else {
 		throw new PersistenceException(getExceptionHeader()
 			+ "Unable to configure EntityManagerFactory", e);
+	    }
+	} finally {
+	    if (thread != null) {
+		thread.setContextClassLoader(loader);
 	    }
 	}
     }
@@ -1863,6 +1874,12 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 
 	public Builder setScanArchives(boolean scanArchives) {
 	    target.scanArchives = scanArchives;
+
+	    return this;
+	}
+
+	public Builder setOvverridenLoader(ClassLoader overridenClassLoader) {
+	    target.overridenClassLoader = overridenClassLoader;
 
 	    return this;
 	}
