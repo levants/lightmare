@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -263,6 +264,26 @@ public class LibraryLoader {
 
 	for (String libraryPath : libraryPaths) {
 	    loadLibraryFromPath(libraryPath);
+	}
+    }
+
+    /**
+     * Loads passed classes to specified {@link ClassLoader} instance
+     * 
+     * @param classes
+     * @param loader
+     */
+    public static void loadClasses(Collection<String> classes,
+	    ClassLoader loader) throws IOException {
+
+	if (ObjectUtils.available(classes) && ObjectUtils.notNull(loader)) {
+	    for (String className : classes) {
+		try {
+		    loader.loadClass(className);
+		} catch (ClassNotFoundException ex) {
+		    throw new IOException(ex);
+		}
+	    }
 	}
     }
 
