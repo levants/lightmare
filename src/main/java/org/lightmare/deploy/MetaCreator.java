@@ -190,8 +190,8 @@ public class MetaCreator {
      * @param beanName
      * @throws IOException
      */
-    protected void configureConnection(String unitName, String beanName)
-	    throws IOException {
+    protected void configureConnection(String unitName, String beanName,
+	    ClassLoader loader) throws IOException {
 
 	JPAManager.Builder builder = new JPAManager.Builder();
 	Map<String, String> classOwnersFiles = annotationDB
@@ -224,8 +224,8 @@ public class MetaCreator {
 	}
 	builder.setPath(config.getPersXmlPath()).setProperties(prop)
 		.setSwapDataSource(config.isSwapDataSource())
-		.setScanArchives(config.isScanArchives()).build()
-		.setConnection(unitName);
+		.setScanArchives(config.isScanArchives())
+		.setClassLoader(loader).build().setConnection(unitName);
     }
 
     /**
