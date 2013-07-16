@@ -373,7 +373,8 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 	Thread thread = Thread.currentThread();
 	ClassLoader loader = thread.getContextClassLoader();
 	try {
-	    if (loader.equals(overridenClassLoader)) {
+	    if (overridenClassLoader == null
+		    || loader.equals(overridenClassLoader)) {
 		thread = null;
 	    } else {
 		thread.setContextClassLoader(overridenClassLoader);
