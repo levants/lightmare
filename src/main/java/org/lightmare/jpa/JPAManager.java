@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.jndi.NamingUtils;
 import org.lightmare.jpa.jta.HibernateConfig;
+import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -44,6 +45,8 @@ public class JPAManager {
     private boolean swapDataSource;
 
     private boolean scanArchives;
+
+    private ClassLoader loader;
 
     public static boolean pooledDataSource;
 
@@ -171,8 +174,13 @@ public class JPAManager {
 
 	Ejb3ConfigurationImpl.Builder builder = new Ejb3ConfigurationImpl.Builder();
 
+	if (loader == null) {
+	    loader = LibraryLoader.getContextClassLoader();
+	}
+
 	if (ObjectUtils.available(classes)) {
 	    builder.setClasses(classes);
+	    LibraryLoader.loadClasses(classes, loader);
 	}
 
 	if (pathCheck || urlCheck) {
@@ -288,7 +296,8 @@ public class JPAManager {
 	}
     }
 
-    public void setConnection(String unitName) throws IOException {
+    public void setConnection(String unitName, ClassLoader loader)
+	    throws IOException {
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 	if (semaphore.isInProgress()) {
 	    EntityManagerFactory emf = createEntityManagerFactory(unitName);
@@ -483,6 +492,12 @@ public class JPAManager {
 
 	public Builder setDataSourcePooledType(boolean dsPooledType) {
 	    JPAManager.pooledDataSource = dsPooledType;
+	    return this;
+	}
+
+	public Builder setClassLoader(ClassLoader loader) {
+	    manager.loader = loader;
+
 	    return this;
 	}
 
