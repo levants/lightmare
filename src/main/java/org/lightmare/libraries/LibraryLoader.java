@@ -67,8 +67,11 @@ public class LibraryLoader {
 
 	if (addURLMethod == null) {
 	    synchronized (LibraryLoader.class) {
-		addURLMethod = MetaUtils.getDeclaredMethod(
-			URLClassLoader.class, ADD_URL_METHOD_NAME, URL.class);
+		if (addURLMethod == null) {
+		    addURLMethod = MetaUtils.getDeclaredMethod(
+			    URLClassLoader.class, ADD_URL_METHOD_NAME,
+			    URL.class);
+		}
 	    }
 	}
 
