@@ -11,6 +11,7 @@ import javax.transaction.UserTransaction;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.jpa.JPAManager;
+import org.lightmare.utils.NamingUtils;
 import org.osjava.sj.memory.MemoryContext;
 
 /**
@@ -31,14 +32,14 @@ public class LightmareContext extends MemoryContext {
 
 	Object value;
 	String name;
-	if (jndiName.equals(JndiManager.USER_TRANSACTION_NAME)) {
+	if (jndiName.equals(NamingUtils.USER_TRANSACTION_NAME)) {
 
 	    UserTransaction transaction = MetaContainer.getTransaction();
 	    value = transaction;
 
-	} else if (jndiName.startsWith(JndiManager.CONNECTION_NAME_PREF)) {
+	} else if (jndiName.startsWith(NamingUtils.CONNECTION_NAME_PREF)) {
 	    // Checks if it is request for entity manager
-	    name = JndiManager.formatJpaJndiName(jndiName);
+	    name = NamingUtils.formatJpaJndiName(jndiName);
 
 	    // Checks if connection is in progress and waits for finish
 	    JPAManager.isInProgress(name);
@@ -54,9 +55,9 @@ public class LightmareContext extends MemoryContext {
 	    } else {
 		value = candidate;
 	    }
-	} else if (jndiName.startsWith(JndiManager.EJB_NAME_PREF)) {
+	} else if (jndiName.startsWith(NamingUtils.EJB_NAME_PREF)) {
 
-	    JndiManager.BeanDescriptor descriptor = JndiManager
+	    NamingUtils.BeanDescriptor descriptor = NamingUtils
 		    .parseEjbJndiName(jndiName);
 	    EjbConnector ejbConnection = new EjbConnector();
 	    try {

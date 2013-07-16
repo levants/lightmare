@@ -20,6 +20,7 @@ import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -280,7 +281,7 @@ public class JPAManager {
 		JndiManager namingUtils = new JndiManager();
 		try {
 		    Context context = namingUtils.getContext();
-		    String fullJndiName = JndiManager
+		    String fullJndiName = NamingUtils
 			    .createJpaJndiName(jndiName);
 		    if (context.lookup(fullJndiName) == null) {
 			namingUtils.getContext().rebind(fullJndiName,
@@ -366,7 +367,7 @@ public class JPAManager {
 	    JndiManager namingUtils = new JndiManager();
 	    try {
 		Context context = namingUtils.getContext();
-		String fullJndiName = JndiManager.createJpaJndiName(jndiName);
+		String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
 		if (ObjectUtils.notNull(context.lookup(fullJndiName))) {
 		    context.unbind(fullJndiName);
 		}

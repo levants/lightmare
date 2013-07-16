@@ -40,12 +40,12 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.config.Configuration;
 import org.lightmare.ejb.exceptions.BeanInUseException;
-import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.utils.RestCheck;
 import org.lightmare.rest.utils.RestUtils;
+import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.fs.FileUtils;
@@ -331,7 +331,7 @@ public class BeanLoader {
 	    if (jndiName == null || jndiName.isEmpty()) {
 		checkForEmf = JPAManager.checkForEmf(unitName);
 	    } else {
-		jndiName = JndiManager.createJpaJndiName(jndiName);
+		jndiName = NamingUtils.createJpaJndiName(jndiName);
 		checkForEmf = JPAManager.checkForEmf(unitName)
 			&& JPAManager.checkForEmf(jndiName);
 	    }

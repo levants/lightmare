@@ -18,7 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
-import org.lightmare.jndi.JndiManager;
+import org.lightmare.utils.NamingUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -222,7 +222,7 @@ public class FileParsers {
 	    Element thisElement = (Element) nodeList.item(i);
 	    Properties props = new Properties();
 	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
-	    clearName = JndiManager.clearDataSourceName(jndiName);
+	    clearName = NamingUtils.clearDataSourceName(jndiName);
 	    props.setProperty(DataSourceInitializer.JNDI_NAME_PROPERTY,
 		    jndiName);
 	    props.setProperty(DataSourceInitializer.NAME_PROPERTY, clearName);
