@@ -262,8 +262,10 @@ public class LibraryLoader {
      */
     public static void loadLibraries(String... libraryPaths) throws IOException {
 
-	for (String libraryPath : libraryPaths) {
-	    loadLibraryFromPath(libraryPath);
+	if (ObjectUtils.available(libraryPaths)) {
+	    for (String libraryPath : libraryPaths) {
+		loadLibraryFromPath(libraryPath);
+	    }
 	}
     }
 
