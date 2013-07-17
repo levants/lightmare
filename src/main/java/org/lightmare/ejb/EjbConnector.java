@@ -35,6 +35,11 @@ public class EjbConnector {
 
     private static final int RPC_ARGS_LENGTH = 2;
 
+    private void loadLibraries(MetaData metaData) {
+	ClassLoader loader = metaData.getLoader();
+	LibraryLoader.loadCurrentLibraries(loader);
+    }
+
     /**
      * Gets {@link MetaData} from {@link MetaContainer} and waits while
      * {@link MetaData#isInProgress()}
@@ -46,6 +51,7 @@ public class EjbConnector {
     private MetaData getMeta(String beanName) throws IOException {
 
 	MetaData metaData = MetaContainer.getSyncMetaData(beanName);
+	loadLibraries(metaData);
 
 	return metaData;
     }
