@@ -141,8 +141,9 @@ public class EjbConnector {
 
 	if (loader == null) {
 	    loader = LibraryLoader.getContextClassLoader();
+	} else {
+	    LibraryLoader.loadCurrentLibraries(loader);
 	}
-	LibraryLoader.loadCurrentLibraries(loader);
 
 	@SuppressWarnings("unchecked")
 	T beanInstance = (T) Proxy
