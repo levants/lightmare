@@ -346,6 +346,18 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 								   // properties
 	}
 
+	ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	List<String> classNames = metadata.getClasses();
+	if ((classes == null || classes.isEmpty()) && classNames != null) {
+	    for (String className : classNames) {
+		try {
+		    loader.loadClass(className);
+		} catch (ClassNotFoundException ex) {
+		    LOG.error(ex.getMessage(), ex);
+		}
+	    }
+	}
+
 	configure(props, workingVars);
 	return this;
     }
