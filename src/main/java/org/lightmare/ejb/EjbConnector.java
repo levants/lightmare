@@ -51,7 +51,6 @@ public class EjbConnector {
     private MetaData getMeta(String beanName) throws IOException {
 
 	MetaData metaData = MetaContainer.getSyncMetaData(beanName);
-	loadLibraries(metaData);
 
 	return metaData;
     }
@@ -216,6 +215,7 @@ public class EjbConnector {
 	InvocationHandler handler = getHandler(metaData);
 	Class<?>[] interfaces = setInterfaces(metaData);
 	ClassLoader loader = metaData.getLoader();
+	loadLibraries(metaData);
 
 	T beanInstance = (T) instatiateBean((Class<T>[]) interfaces, handler,
 		loader);
@@ -242,6 +242,7 @@ public class EjbConnector {
 	    setInterfaces(metaData);
 	    handler = getHandler(metaData);
 	    loader = metaData.getLoader();
+	    loadLibraries(metaData);
 	} else {
 	    if (rpcArgs.length != RPC_ARGS_LENGTH) {
 		throw new IOException(
