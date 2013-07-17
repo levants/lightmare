@@ -370,6 +370,7 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 	loadEntityClasses(metadata);
 
 	configure(props, workingVars);
+
 	return this;
     }
 
