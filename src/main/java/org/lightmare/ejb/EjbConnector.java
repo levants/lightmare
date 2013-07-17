@@ -35,11 +35,6 @@ public class EjbConnector {
 
     private static final int RPC_ARGS_LENGTH = 2;
 
-    private void loadLibraries(MetaData metaData) {
-	ClassLoader loader = metaData.getLoader();
-	LibraryLoader.loadCurrentLibraries(loader);
-    }
-
     /**
      * Gets {@link MetaData} from {@link MetaContainer} and waits while
      * {@link MetaData#isInProgress()}
@@ -147,6 +142,7 @@ public class EjbConnector {
 	if (loader == null) {
 	    loader = LibraryLoader.getContextClassLoader();
 	}
+	LibraryLoader.loadCurrentLibraries(loader);
 
 	@SuppressWarnings("unchecked")
 	T beanInstance = (T) Proxy
@@ -165,14 +161,10 @@ public class EjbConnector {
     private <T> T instatiateBean(Class<T> interfaceClass,
 	    InvocationHandler handler, ClassLoader loader) {
 
-	Class<?>[] interfaceArray = { interfaceClass };
-	if (loader == null) {
-	    loader = LibraryLoader.getContextClassLoader();
-	}
-
 	@SuppressWarnings("unchecked")
-	T beanInstance = (T) Proxy.newProxyInstance(loader, interfaceArray,
-		handler);
+	Class<T>[] interfaceArray = (Class<T>[]) new Class<?>[] { interfaceClass };
+
+	T beanInstance = instatiateBean(interfaceArray, handler, loader);
 
 	return beanInstance;
     }
@@ -211,11 +203,9 @@ public class EjbConnector {
     public <T> T connectToBean(MetaData metaData, Object... rpcArgs)
 	    throws IOException {
 
-	loadLibraries(metaData);
 	InvocationHandler handler = getHandler(metaData);
 	Class<?>[] interfaces = setInterfaces(metaData);
 	ClassLoader loader = metaData.getLoader();
-	loadLibraries(metaData);
 
 	T beanInstance = (T) instatiateBean((Class<T>[]) interfaces, handler,
 		loader);
@@ -243,7 +233,6 @@ public class EjbConnector {
 	    setInterfaces(metaData);
 	    handler = getHandler(metaData);
 	    loader = metaData.getLoader();
-	    loadLibraries(metaData);
 	} else {
 	    if (rpcArgs.length != RPC_ARGS_LENGTH) {
 		throw new IOException(
