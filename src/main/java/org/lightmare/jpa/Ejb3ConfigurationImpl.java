@@ -201,6 +201,26 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
     }
 
     /**
+     * Loads entity classes to the current {@link ClassLoader} instance
+     * 
+     * @param metadata
+     */
+    private void loadEntityClasses(PersistenceMetadata metadata) {
+	// Loads entity classes to the current class loader
+	ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	List<String> classNames = metadata.getClasses();
+	if ((classes == null || classes.isEmpty()) && classNames != null) {
+	    for (String className : classNames) {
+		try {
+		    loader.loadClass(className);
+		} catch (ClassNotFoundException ex) {
+		    LOG.error(ex.getMessage(), ex);
+		}
+	    }
+	}
+    }
+
+    /**
      * Used to inject a datasource object as the connection provider. If used,
      * be sure to <b>not override</b> the hibernate.connection.provider_class
      * property
@@ -346,17 +366,8 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 								   // properties
 	}
 
-	ClassLoader loader = Thread.currentThread().getContextClassLoader();
-	List<String> classNames = metadata.getClasses();
-	if ((classes == null || classes.isEmpty()) && classNames != null) {
-	    for (String className : classNames) {
-		try {
-		    loader.loadClass(className);
-		} catch (ClassNotFoundException ex) {
-		    LOG.error(ex.getMessage(), ex);
-		}
-	    }
-	}
+	// Loads entity classes to the current class loader
+	loadEntityClasses(metadata);
 
 	configure(props, workingVars);
 	return this;
