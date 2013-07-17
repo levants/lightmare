@@ -206,7 +206,7 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
      * @param metadata
      */
     private void loadEntityClasses(PersistenceMetadata metadata) {
-	// Loads entity classes to the current class loader
+
 	ClassLoader loader = Thread.currentThread().getContextClassLoader();
 	List<String> classNames = metadata.getClasses();
 	if ((classes == null || classes.isEmpty()) && classNames != null) {
