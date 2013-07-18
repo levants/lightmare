@@ -363,7 +363,9 @@ public class MetaContainer {
 	removeMeta(beanName);
 	if (ObjectUtils.notNull(metaData)) {
 	    // Removes appropriated resource class from REST service
-	    RestUtils.remove(metaData.getBeanClass());
+	    if (MetaContainer.hasRest()) {
+		RestUtils.remove(metaData.getBeanClass());
+	    }
 	    clearConnection(metaData);
 	    ClassLoader loader = metaData.getLoader();
 	    LibraryLoader.closeClassLoader(loader);
@@ -378,16 +380,19 @@ public class MetaContainer {
      * @param url
      * @throws IOException
      */
-    public static void undeploy(URL url) throws IOException {
+    public static boolean undeploy(URL url) throws IOException {
 
 	synchronized (MetaContainer.class) {
 	    Collection<String> beanNames = getBeanNames(url);
-	    if (ObjectUtils.available(beanNames)) {
+	    boolean valid = ObjectUtils.available(beanNames);
+	    if (valid) {
 		for (String beanName : beanNames) {
 		    undeployBean(beanName);
 		}
 	    }
 	    removeBeanNames(url);
+
+	    return valid;
 	}
     }
 
@@ -398,10 +403,12 @@ public class MetaContainer {
      * @param file
      * @throws IOException
      */
-    public static void undeploy(File file) throws IOException {
+    public static boolean undeploy(File file) throws IOException {
 
 	URL url = file.toURI().toURL();
-	undeploy(url);
+	boolean valid = undeploy(url);
+
+	return valid;
     }
 
     /**
@@ -411,10 +418,12 @@ public class MetaContainer {
      * @param path
      * @throws IOException
      */
-    public static void undeploy(String path) throws IOException {
+    public static boolean undeploy(String path) throws IOException {
 
 	File file = new File(path);
-	undeploy(file);
+	boolean valid = undeploy(file);
+
+	return valid;
     }
 
     /**
