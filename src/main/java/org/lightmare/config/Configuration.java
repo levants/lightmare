@@ -15,6 +15,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.jpa.datasource.PoolConfig;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Easy way to retrieve configuration properties from configuration file
@@ -138,27 +139,39 @@ public class Configuration implements Cloneable, Serializable {
     }
 
     public void setDefaults() {
-	if (!config.containsKey(IP_ADDRESS)) {
+
+	boolean contains = config.containsKey(IP_ADDRESS);
+	if (ObjectUtils.notTrue(contains)) {
 	    config.put(IP_ADDRESS, IP_ADDRESS_DEF);
 	}
 
-	if (!config.containsKey(PORT)) {
+	contains = config.containsKey(PORT);
+	if (ObjectUtils.notTrue(contains)) {
 	    config.put(PORT, PORT_DEF);
 	}
 
-	if (!config.containsKey(BOSS_POOL)) {
+	contains = config.containsKey(BOSS_POOL);
+	if (ObjectUtils.notTrue(contains)) {
 	    config.put(BOSS_POOL, BOSS_POOL_DEF);
 	}
 
-	if (!config.containsKey(WORKER_POOL)) {
+	contains = config.containsKey(WORKER_POOL);
+	if (ObjectUtils.notTrue(contains)) {
 
 	    int workers = RUNTIME.availableProcessors() * WORKER_POOL_DEF;
 	    String workerProperty = String.valueOf(workers);
 	    config.put(WORKER_POOL, workerProperty);
 	}
 
-	if (!config.containsKey(CONNECTION_TIMEOUT)) {
+	contains = config.containsKey(CONNECTION_TIMEOUT);
+	if (ObjectUtils.notTrue(contains)) {
 	    config.put(CONNECTION_TIMEOUT, CONNECTION_TIMEOUT_DEF);
+	}
+
+	if (ObjectUtils.notTrue(hotDeployment)) {
+	    watchStatus = Boolean.TRUE;
+	} else {
+	    watchStatus = Boolean.FALSE;
 	}
 
 	if (deploymentPaths == null) {
