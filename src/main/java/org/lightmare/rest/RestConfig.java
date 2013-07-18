@@ -46,15 +46,20 @@ public class RestConfig extends ResourceConfig {
 	}
     }
 
-    public void registerAll(RestConfig oldConfig) {
+    private void clearResources() {
 
 	Set<Resource> resources = getResources();
-	Set<Resource> newResources;
+
 	if (ObjectUtils.available(resources)) {
-	    newResources = new HashSet<Resource>(resources);
-	} else {
-	    newResources = new HashSet<Resource>();
+	    getResources().clear();
 	}
+    }
+
+    public void registerAll(RestConfig oldConfig) {
+
+	clearResources();
+	Set<Resource> newResources;
+	newResources = new HashSet<Resource>();
 
 	if (ObjectUtils.notNull(oldConfig)) {
 	    Set<Resource> olds = oldConfig.getResources();
@@ -89,12 +94,14 @@ public class RestConfig extends ResourceConfig {
 
 	newResources.add(resource);
 
+	clearResources();
+
 	registerResources(newResources);
 
 	MetaContainer.putResource(resourceClass, resource);
     }
 
-    public void unregister(Class<?> resourceClass) {
+    public void unregister(Class<?> resourceClass, RestConfig oldConfig) {
 
 	Resource resource = MetaContainer.getResource(resourceClass);
 
@@ -105,8 +112,20 @@ public class RestConfig extends ResourceConfig {
 	} else {
 	    newResources = new HashSet<Resource>();
 	}
+
+	clearResources();
+
+	if (ObjectUtils.notNull(oldConfig)) {
+	    Set<Resource> olds = oldConfig.getResources();
+	    if (ObjectUtils.available(olds)) {
+		newResources.addAll(olds);
+	    }
+	}
+
 	newResources.remove(resource);
 
 	registerResources(newResources);
+
+	MetaContainer.removeResource(resourceClass);
     }
 }
