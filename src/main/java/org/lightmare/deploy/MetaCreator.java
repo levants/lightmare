@@ -456,13 +456,13 @@ public class MetaCreator {
 		    deployBeans(beanNames);
 		}
 	    } finally {
+
+		// Caches configuration
+		MetaContainer.putConfig(archives, config);
 		// clears cached resources
 		clear();
 		// gets rid from all created temporary files
 		tmpResources.removeTempFiles();
-		// Caches configuration
-		MetaContainer.putConfig(archives, config);
-
 	    }
 	}
     }
@@ -553,6 +553,8 @@ public class MetaCreator {
 	    classOwnersURL.clear();
 	    classOwnersURL = null;
 	}
+
+	config = null;
     }
 
     /**
