@@ -18,12 +18,19 @@ public class RestReloader implements ContainerLifecycleListener {
     private static RestReloader reloader;
 
     public RestReloader() {
-	reloader = this;
+	synchronized (RestReloader.class) {
+	    synchronized (this) {
+		reloader = this;
+	    }
+	}
     }
 
     public static RestReloader get() {
 
-	return reloader;
+	synchronized (RestReloader.class) {
+
+	    return reloader;
+	}
     }
 
     private Container container;
