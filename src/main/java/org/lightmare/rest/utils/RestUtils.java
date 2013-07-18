@@ -45,7 +45,6 @@ public class RestUtils {
 	oldConfig = RestConfig.get();
 	config = new RestConfig();
 	if (ObjectUtils.notNull(oldConfig)) {
-	    config.registerAll(oldConfig);
 	    Map<String, Object> properties = oldConfig.getProperties();
 	    if (ObjectUtils.available(properties)) {
 		config.setProperties(properties);
