@@ -101,9 +101,9 @@ public class RestConfig extends ResourceConfig {
 	Set<Resource> resources = getResources();
 	Set<Resource> newResources;
 	if (ObjectUtils.available(resources)) {
-	    newResources = new HashSet<Resource>();
-	} else {
 	    newResources = new HashSet<Resource>(resources);
+	} else {
+	    newResources = new HashSet<Resource>();
 	}
 	newResources.remove(resource);
 
