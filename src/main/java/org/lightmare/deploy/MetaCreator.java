@@ -406,7 +406,7 @@ public class MetaCreator {
 	boolean watchStatus = config.isWatchStatus();
 	if (hotDeployment && ObjectUtils.notTrue(watchStatus)) {
 	    Watcher.startWatch();
-	    watchStatus = true;
+	    watchStatus = Boolean.TRUE;
 	}
     }
 
