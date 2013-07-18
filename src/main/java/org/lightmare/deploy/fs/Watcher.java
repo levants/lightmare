@@ -29,6 +29,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.FileParsers;
+import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 import org.lightmare.utils.fs.WatchUtils;
@@ -261,7 +262,10 @@ public class Watcher implements Runnable {
 
     public static void undeployFile(URL url) throws IOException {
 
-	MetaContainer.undeploy(url);
+	boolean valid = MetaContainer.undeploy(url);
+	if (valid && MetaContainer.hasRest()) {
+	    RestUtils.reload();
+	}
     }
 
     public static void undeployFile(String fileName) throws IOException {
