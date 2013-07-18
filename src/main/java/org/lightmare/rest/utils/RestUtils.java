@@ -153,7 +153,7 @@ public class RestUtils {
 	RestReloader reloader = RestReloader.get();
 	if (ObjectUtils.notNull(reloader)) {
 	    RestConfig conf = get();
-	    conf.unregister(beanClass);
+	    conf.unregister(beanClass, oldConfig);
 	}
     }
 
