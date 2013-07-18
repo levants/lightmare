@@ -248,6 +248,8 @@ public class BeanLoader {
 
 	private boolean chekcWatch;
 
+	private Configuration config;
+
 	public BeanDeployer(BeanParameters parameters) {
 	    this.creator = parameters.creator;
 	    this.beanName = parameters.beanName;
@@ -257,6 +259,7 @@ public class BeanLoader {
 	    this.metaData = parameters.metaData;
 	    this.conn = parameters.conn;
 	    this.deployData = parameters.deployData;
+	    this.config = parameters.config;
 	}
 
 	/**
@@ -272,7 +275,8 @@ public class BeanLoader {
 	    synchronized (semaphore) {
 		if (!semaphore.isCheck()) {
 		    try {
-			creator.configureConnection(unitName, beanName, loader);
+			creator.configureConnection(unitName, beanName, loader,
+				config);
 		    } finally {
 			semaphore.notifyAll();
 		    }
@@ -749,6 +753,8 @@ public class BeanLoader {
 	public DeployData deployData;
 
 	public boolean server;
+
+	public Configuration config;
     }
 
     /**

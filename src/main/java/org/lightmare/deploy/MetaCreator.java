@@ -114,12 +114,13 @@ public class MetaCreator {
      * @return boolean
      * @throws IOException
      */
-    private boolean checkForUnitName(String className) throws IOException {
+    private boolean checkForUnitName(String className, Configuration cloneConfig)
+	    throws IOException {
 	boolean isValid = Boolean.FALSE;
 	Class<?> entityClass;
 	entityClass = MetaUtils.initClassForName(className);
 	UnitName annotation = entityClass.getAnnotation(UnitName.class);
-	isValid = annotation.value().equals(config.getAnnotatedUnitName());
+	isValid = annotation.value().equals(cloneConfig.getAnnotatedUnitName());
 
 	return isValid;
     }
@@ -165,15 +166,15 @@ public class MetaCreator {
      * @return {@link List}<String>
      * @throws IOException
      */
-    private List<String> filterEntities(Set<String> classSet)
-	    throws IOException {
+    private List<String> filterEntities(Set<String> classSet,
+	    Configuration cloneConfig) throws IOException {
 	List<String> classes;
 	if (config.getAnnotatedUnitName() == null) {
 	    classes = translateToList(classSet);
 	} else {
 	    Set<String> filtereds = new HashSet<String>();
 	    for (String className : classSet) {
-		if (checkForUnitName(className)) {
+		if (checkForUnitName(className, cloneConfig)) {
 		    filtereds.add(className);
 		}
 	    }
@@ -191,7 +192,7 @@ public class MetaCreator {
      * @throws IOException
      */
     protected void configureConnection(String unitName, String beanName,
-	    ClassLoader loader) throws IOException {
+	    ClassLoader loader, Configuration cloneConfig) throws IOException {
 
 	JPAManager.Builder builder = new JPAManager.Builder();
 	Map<String, String> classOwnersFiles = annotationDB
@@ -202,7 +203,7 @@ public class MetaCreator {
 	    URL jarURL = ioUtils.getAppropriatedURL(classOwnersFiles, beanName);
 	    builder.setURL(jarURL);
 	}
-	if (config.isScanForEntities()) {
+	if (cloneConfig.isScanForEntities()) {
 	    Set<String> classSet;
 	    Map<String, Set<String>> annotationIndex = annotationDB
 		    .getAnnotationIndex();
@@ -219,12 +220,12 @@ public class MetaCreator {
 		String fileNameForBean = classOwnersFiles.get(beanName);
 		filterEntitiesForJar(classSet, fileNameForBean);
 	    }
-	    List<String> classes = filterEntities(classSet);
+	    List<String> classes = filterEntities(classSet, cloneConfig);
 	    builder.setClasses(classes);
 	}
-	builder.setPath(config.getPersXmlPath()).setProperties(prop)
-		.setSwapDataSource(config.isSwapDataSource())
-		.setScanArchives(config.isScanArchives())
+	builder.setPath(cloneConfig.getPersXmlPath()).setProperties(prop)
+		.setSwapDataSource(cloneConfig.isSwapDataSource())
+		.setScanArchives(cloneConfig.isScanArchives())
 		.setClassLoader(loader).build().setConnection(unitName);
     }
 
@@ -374,6 +375,7 @@ public class MetaCreator {
 	parameters.tmpFiles = tmpFiles;
 	parameters.conn = conn;
 	parameters.deployData = deployData;
+	parameters.config = config;
 
 	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);
