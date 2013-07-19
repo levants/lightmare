@@ -36,6 +36,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hibernate.version>4.2.3.Final</hibernate.version>
+		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
 		<jta.version>3.8.0</jta.version>
 		<netty.version>3.6.2.Final</netty.version>
 		<jackson.version>2.2.0</jackson.version>
@@ -167,7 +168,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.0.1.Final</version>
+			<version>${hibernate-validator.version}</version>
 			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
