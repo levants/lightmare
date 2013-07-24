@@ -37,6 +37,7 @@ public class RestConfig extends ResourceConfig {
 		reloader = new RestReloader();
 	    }
 	    this.registerInstances(reloader);
+	    this.addPreResources(config);
 	    config = this;
 	}
     }
@@ -80,26 +81,7 @@ public class RestConfig extends ResourceConfig {
 	Resource.Builder builder = Resource.builder(resourceClass);
 	Resource preResource = builder.build();
 	Resource resource = RestUtils.defineHandler(preResource);
-	Set<Resource> resources = getResources();
-	Set<Resource> newResources;
-	if (ObjectUtils.available(resources)) {
-	    newResources = new HashSet<Resource>(resources);
-	} else {
-	    newResources = new HashSet<Resource>();
-	}
-
-	if (ObjectUtils.notNull(oldConfig)) {
-	    Set<Resource> olds = oldConfig.getResources();
-	    if (ObjectUtils.available(olds)) {
-		newResources.addAll(olds);
-	    }
-	}
-
-	newResources.add(resource);
-
-	clearResources();
-
-	registerResources(newResources);
+	addPreResource(resource);
 
 	MetaContainer.putResource(resourceClass, resource);
     }
@@ -107,28 +89,7 @@ public class RestConfig extends ResourceConfig {
     public void unregister(Class<?> resourceClass, RestConfig oldConfig) {
 
 	Resource resource = MetaContainer.getResource(resourceClass);
-
-	Set<Resource> resources = getResources();
-	Set<Resource> newResources;
-	if (ObjectUtils.available(resources)) {
-	    newResources = new HashSet<Resource>(resources);
-	} else {
-	    newResources = new HashSet<Resource>();
-	}
-
-	clearResources();
-
-	if (ObjectUtils.notNull(oldConfig)) {
-	    Set<Resource> olds = oldConfig.getResources();
-	    if (ObjectUtils.available(olds)) {
-		newResources.addAll(olds);
-	    }
-	}
-
-	newResources.remove(resource);
-
-	registerResources(newResources);
-
+	removePreResource(resource);
 	MetaContainer.removeResource(resourceClass);
     }
 
@@ -141,12 +102,27 @@ public class RestConfig extends ResourceConfig {
 	this.preResources.add(resource);
     }
 
+    public void removePreResource(Resource resource) {
+
+	if (ObjectUtils.available(this.preResources)) {
+	    this.preResources.remove(resource);
+	}
+    }
+
     public void addPreResources(Collection<Resource> preResources) {
 
 	if (this.preResources == null || this.preResources.isEmpty()) {
 	    this.preResources = new HashSet<Resource>();
 	}
 	this.preResources.addAll(preResources);
+    }
+
+    public void addPreResources(RestConfig oldConfig) {
+
+	if (this.preResources == null || this.preResources.isEmpty()) {
+	    this.preResources = new HashSet<Resource>();
+	}
+	this.preResources.addAll(oldConfig.getResources());
     }
 
     public void registerPreResources() {
