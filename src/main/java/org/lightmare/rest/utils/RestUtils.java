@@ -178,6 +178,7 @@ public class RestUtils {
 	    if (ObjectUtils.notNull(commonLoader)) {
 		conf.setClassLoader(commonLoader);
 	    }
+	    conf.registerPreResources();
 	    reloader.reload(conf);
 	}
     }
