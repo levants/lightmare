@@ -38,10 +38,12 @@ public class RestConfig extends ResourceConfig {
 		reloader = new RestReloader();
 	    }
 	    this.registerInstances(reloader);
-	    this.addPreResources(config);
-	    Map<String, Object> properties = config.getProperties();
-	    if (ObjectUtils.available(properties)) {
-		addProperties(properties);
+	    if (ObjectUtils.notNull(config)) {
+		this.addPreResources(config);
+		Map<String, Object> properties = config.getProperties();
+		if (ObjectUtils.available(properties)) {
+		    addProperties(properties);
+		}
 	    }
 	    config = this;
 	}
