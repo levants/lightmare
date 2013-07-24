@@ -1,6 +1,7 @@
 package org.lightmare.rest;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +23,8 @@ import org.lightmare.utils.ObjectUtils;
 public class RestConfig extends ResourceConfig {
 
     private static RestConfig config;
+
+    private Set<Resource> preResources;
 
     private RestReloader reloader = RestReloader.get();
 
@@ -127,5 +130,29 @@ public class RestConfig extends ResourceConfig {
 	registerResources(newResources);
 
 	MetaContainer.removeResource(resourceClass);
+    }
+
+    public void addPreResource(Resource resource) {
+
+	if (this.preResources == null || this.preResources.isEmpty()) {
+	    this.preResources = new HashSet<Resource>();
+	}
+
+	this.preResources.add(resource);
+    }
+
+    public void addPreResources(Collection<Resource> preResources) {
+
+	if (this.preResources == null || this.preResources.isEmpty()) {
+	    this.preResources = new HashSet<Resource>();
+	}
+	this.preResources.addAll(preResources);
+    }
+
+    public void registerPreResources() {
+
+	if (ObjectUtils.available(this.preResources)) {
+	    registerResources(preResources);
+	}
     }
 }
