@@ -173,7 +173,7 @@ public class RestUtils {
 
 	RestReloader reloader = RestReloader.get();
 	RestConfig conf = RestConfig.get();
-	if (ObjectUtils.notNull(reloader)) {
+	if (ObjectUtils.notNull(conf) && ObjectUtils.notNull(reloader)) {
 	    ClassLoader commonLoader = getCommonLoader();
 	    if (ObjectUtils.notNull(commonLoader)) {
 		conf.setClassLoader(commonLoader);
