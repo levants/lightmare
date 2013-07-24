@@ -3,6 +3,7 @@ package org.lightmare.rest;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.glassfish.jersey.server.ResourceConfig;
@@ -38,6 +39,10 @@ public class RestConfig extends ResourceConfig {
 	    }
 	    this.registerInstances(reloader);
 	    this.addPreResources(config);
+	    Map<String, Object> properties = config.getProperties();
+	    if (ObjectUtils.available(properties)) {
+		addProperties(properties);
+	    }
 	    config = this;
 	}
     }
