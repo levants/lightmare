@@ -126,8 +126,10 @@ public class RestConfig extends ResourceConfig {
 
     public void addPreResources(RestConfig oldConfig) {
 
-	addPreResources(oldConfig.getResources());
-	addPreResources(oldConfig.preResources);
+	if (ObjectUtils.notNull(oldConfig)) {
+	    addPreResources(oldConfig.getResources());
+	    addPreResources(oldConfig.preResources);
+	}
     }
 
     public void registerPreResources() {
