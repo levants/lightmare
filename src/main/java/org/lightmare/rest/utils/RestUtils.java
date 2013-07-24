@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -44,12 +43,6 @@ public class RestUtils {
 
 	oldConfig = RestConfig.get();
 	config = new RestConfig();
-	if (ObjectUtils.notNull(oldConfig)) {
-	    Map<String, Object> properties = oldConfig.getProperties();
-	    if (ObjectUtils.available(properties)) {
-		config.setProperties(properties);
-	    }
-	}
     }
 
     private static RestConfig get() {
