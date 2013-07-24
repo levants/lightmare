@@ -7,9 +7,8 @@ import java.util.Scanner;
 import javax.naming.InitialContext;
 import javax.transaction.UserTransaction;
 
-import junit.framework.Assert;
-
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;

@@ -3,8 +3,7 @@ package org.lightmare;
 import java.io.IOException;
 import java.util.Arrays;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.lightmare.utils.RpcUtils;
 

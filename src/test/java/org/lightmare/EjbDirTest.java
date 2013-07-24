@@ -4,9 +4,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
 
-import junit.framework.Assert;
-
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
