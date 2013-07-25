@@ -37,15 +37,26 @@ public class RpcUtils {
 
     private static boolean mapperConfigured;
 
+    private static void configureMapper() {
+
+	synchronized (RpcUtils.class) {
+	    if (ObjectUtils.notTrue(mapperConfigured)) {
+		MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		mapperConfigured = Boolean.TRUE;
+	    }
+	}
+    }
+
+    /**
+     * Configures {@link ObjectMapper} if {@link RpcUtils#mapperConfigured} is
+     * <code>false</code>
+     * 
+     * @return {@link ObjectMapper}
+     */
     private static ObjectMapper getMapper() {
 
 	if (ObjectUtils.notTrue(mapperConfigured)) {
-	    synchronized (RpcUtils.class) {
-		if (ObjectUtils.notTrue(mapperConfigured)) {
-		    MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		    mapperConfigured = Boolean.TRUE;
-		}
-	    }
+	    configureMapper();
 	}
 
 	return MAPPER;
