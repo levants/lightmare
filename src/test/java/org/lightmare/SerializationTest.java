@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.serialization.NativeSerializer;
 
 public class SerializationTest {
 
@@ -13,9 +13,9 @@ public class SerializationTest {
     public void nullTest() {
 
 	try {
-	    byte[] nullBt = RpcUtils.serialize(null);
+	    byte[] nullBt = NativeSerializer.serialize(null);
 	    System.out.println(Arrays.toString(nullBt));
-	    Object value = RpcUtils.deserialize(nullBt);
+	    Object value = NativeSerializer.deserialize(nullBt);
 	    System.out.println(value);
 
 	    Assert.assertNull("null serializetion is not valid", value);
