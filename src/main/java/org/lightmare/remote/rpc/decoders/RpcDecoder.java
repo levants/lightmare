@@ -8,6 +8,7 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.serialization.NativeSerializer;
 
 /**
  * Decoder class for netty remote procedure call
@@ -57,10 +58,12 @@ public class RpcDecoder extends FrameDecoder {
 	RpcWrapper wrapper = new RpcWrapper();
 
 	String beanName = new String(beanNameBt);
-	String methodName = (String) RpcUtils.deserialize(methodBt);
-	Class<?>[] paramTypes = (Class<?>[]) RpcUtils.deserialize(paramTypesBt);
-	Class<?> interfaceClass = (Class<?>) RpcUtils.deserialize(classBt);
-	Object[] params = (Object[]) RpcUtils.deserialize(paramBt);
+	String methodName = (String) NativeSerializer.deserialize(methodBt);
+	Class<?>[] paramTypes = (Class<?>[]) NativeSerializer
+		.deserialize(paramTypesBt);
+	Class<?> interfaceClass = (Class<?>) NativeSerializer
+		.deserialize(classBt);
+	Object[] params = (Object[]) NativeSerializer.deserialize(paramBt);
 
 	wrapper.setBeanName(beanName);
 	wrapper.setMethodName(methodName);

@@ -11,6 +11,7 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.serialization.NativeSerializer;
 
 /**
  * Encoder (extends {@link SimpleChannelHandler}) class @see <a
@@ -31,7 +32,7 @@ public class RcpEncoder extends SimpleChannelHandler {
 
 	Object value = wrapper.getValue();
 
-	byte[] valueBt = RpcUtils.serialize(value);
+	byte[] valueBt = NativeSerializer.serialize(value);
 	int valueSize = valueBt.length;
 
 	int protSize = RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE + valueSize;

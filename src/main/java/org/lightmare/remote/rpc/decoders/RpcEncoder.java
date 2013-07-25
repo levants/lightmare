@@ -11,6 +11,7 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.serialization.NativeSerializer;
 
 /**
  * Encoder class for netty remote procedure call
@@ -33,10 +34,10 @@ public class RpcEncoder extends SimpleChannelHandler {
 	Object[] params = wrapper.getParams();
 
 	byte[] beanNameBt = beanName.getBytes("UTF8");
-	byte[] beanMethodBt = RpcUtils.serialize(methodName);
-	byte[] paramTypesBt = RpcUtils.serialize(paramTypes);
-	byte[] interfaceClassBt = RpcUtils.serialize(interfaceClass);
-	byte[] paramBt = RpcUtils.serialize(params);
+	byte[] beanMethodBt = NativeSerializer.serialize(methodName);
+	byte[] paramTypesBt = NativeSerializer.serialize(paramTypes);
+	byte[] interfaceClassBt = NativeSerializer.serialize(interfaceClass);
+	byte[] paramBt = NativeSerializer.serialize(params);
 
 	int paramsSize = RpcUtils.PROTOCOL_SIZE + beanNameBt.length
 		+ beanMethodBt.length + paramTypesBt.length

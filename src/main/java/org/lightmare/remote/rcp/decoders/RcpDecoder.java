@@ -8,6 +8,7 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.serialization.NativeSerializer;
 
 /**
  * Decoder (extends {@link FrameDecoder}) class @see <a
@@ -37,7 +38,7 @@ public class RcpDecoder extends FrameDecoder {
 	}
 
 	byte[] data = new byte[dataSize];
-	Object value = RpcUtils.deserialize(data);
+	Object value = NativeSerializer.deserialize(data);
 	RcpWrapper rcp = new RcpWrapper();
 	rcp.setValid(valid);
 	rcp.setValue(value);

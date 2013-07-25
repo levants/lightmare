@@ -1,10 +1,6 @@
 package org.lightmare.utils;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 
 import org.lightmare.ejb.EjbConnector;
@@ -63,32 +59,6 @@ public class RpcUtils {
     }
 
     /**
-     * Serializes java type ({@link Object}) to byte array with java native
-     * serialization api
-     * 
-     * @param value
-     * @return byte[]
-     * @throws IOException
-     */
-    public static byte[] serialize(Object value) throws IOException {
-
-	ByteArrayOutputStream stream = new ByteArrayOutputStream();
-	ObjectOutputStream objectStream = new ObjectOutputStream(stream);
-
-	try {
-
-	    objectStream.writeObject(value);
-	    byte[] data = stream.toByteArray();
-
-	    return data;
-
-	} finally {
-	    stream.close();
-	    objectStream.close();
-	}
-    }
-
-    /**
      * Serializes {@link Object} to josn {@link String} with <a
      * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
      * 
@@ -107,34 +77,6 @@ public class RpcUtils {
 	    throw new IOException(ex);
 	} catch (IOException ex) {
 	    throw new IOException(ex);
-	}
-    }
-
-    /**
-     * Deserializes byte array in java type ({@link Object}) with java native
-     * serialization api
-     * 
-     * @param data
-     * @return {@link Object}
-     * @throws IOException
-     */
-    public static Object deserialize(byte[] data) throws IOException {
-
-	ByteArrayInputStream stream = new ByteArrayInputStream(data);
-	ObjectInputStream objectStream = new ObjectInputStream(stream);
-	try {
-
-	    Object value = objectStream.readObject();
-
-	    return value;
-
-	} catch (ClassNotFoundException ex) {
-
-	    throw new IOException(ex);
-
-	} finally {
-	    stream.close();
-	    objectStream.close();
 	}
     }
 
