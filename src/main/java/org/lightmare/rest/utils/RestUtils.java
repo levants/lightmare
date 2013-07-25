@@ -20,8 +20,8 @@ import org.lightmare.rest.RestConfig;
 import org.lightmare.rest.providers.RestInflector;
 import org.lightmare.rest.providers.RestReloader;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.beans.BeanUtils;
+import org.lightmare.utils.serialization.JsonSerializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -57,14 +57,14 @@ public class RestUtils {
     public static <T> T convert(String json, Class<T> valueClass)
 	    throws IOException {
 
-	T value = RpcUtils.read(json, valueClass);
+	T value = JsonSerializer.read(json, valueClass);
 
 	return value;
     }
 
     public static String json(Object data) throws IOException {
 
-	return RpcUtils.write(data);
+	return JsonSerializer.write(data);
     }
 
     private static boolean isAcceptable(Class<?> resourceClass) {
