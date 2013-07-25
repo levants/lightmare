@@ -96,7 +96,7 @@ public class RpcUtils {
      * @return {@link String}
      * @throws IOException
      */
-    public static <T> String write(Object value) throws IOException {
+    public static String write(Object value) throws IOException {
 	String data;
 	try {
 	    data = getMapper().writeValueAsString(value);
