@@ -38,16 +38,17 @@ public class RpcUtils {
     private static boolean mapperConfigured;
 
     private static ObjectMapper getMapper() {
-	if (mapperConfigured) {
-	    return MAPPER;
-	} else {
-	    synchronized (RpcUtils.class) {
-		MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		mapperConfigured = Boolean.TRUE;
-	    }
 
-	    return MAPPER;
+	if (ObjectUtils.notTrue(mapperConfigured)) {
+	    synchronized (RpcUtils.class) {
+		if (ObjectUtils.notTrue(mapperConfigured)) {
+		    MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		    mapperConfigured = Boolean.TRUE;
+		}
+	    }
 	}
+
+	return MAPPER;
     }
 
     /**
