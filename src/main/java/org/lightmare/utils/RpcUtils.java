@@ -5,13 +5,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
+import org.lightmare.utils.reflect.MetaUtils;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -200,24 +200,13 @@ public class RpcUtils {
 	Class<?> interfaceClass = wrapper.getInterfaceClass();
 	Object[] params = wrapper.getParams();
 
-	try {
+	Object bean = new EjbConnector()
+		.connectToBean(beanName, interfaceClass);
+	Class<?> beanClass = bean.getClass();
+	Method beanMethod = MetaUtils.getDeclaredMethod(beanClass, methodName,
+		paramTypes);
+	Object value = MetaUtils.invoke(beanMethod, bean, params);
 
-	    Object bean = new EjbConnector().connectToBean(beanName,
-		    interfaceClass);
-	    Method beanMethod = bean.getClass().getDeclaredMethod(methodName,
-		    paramTypes);
-	    return beanMethod.invoke(bean, params);
-
-	} catch (IllegalArgumentException ex) {
-	    throw new IOException(ex);
-	} catch (InvocationTargetException ex) {
-	    throw new IOException(ex);
-	} catch (NoSuchMethodException ex) {
-	    throw new IOException(ex);
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	} catch (IllegalAccessException ex) {
-	    throw new IOException(ex);
-	}
+	return value;
     }
 }
