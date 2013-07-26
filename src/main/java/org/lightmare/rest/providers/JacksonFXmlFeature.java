@@ -8,7 +8,9 @@ import javax.ws.rs.ext.MessageBodyWriter;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 /**
- * Class to register new json api instead of ald
+ * Class to register new JSON <a
+ * href="https://github.com/FasterXML/jackson-databind">jackson</a> provider
+ * instead of old
  * 
  * @author Levan
  * 
