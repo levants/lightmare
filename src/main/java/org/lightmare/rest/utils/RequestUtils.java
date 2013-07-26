@@ -28,6 +28,12 @@ public class RequestUtils {
 	return new Object[EMPRTY_LENGTH];
     }
 
+    /**
+     * Creates {@link InputStream} from passed {@link String} instance
+     * 
+     * @param text
+     * @return {@link InputStream}
+     */
     public static InputStream textToStream(String text) {
 
 	return new ByteArrayInputStream(text.getBytes());
