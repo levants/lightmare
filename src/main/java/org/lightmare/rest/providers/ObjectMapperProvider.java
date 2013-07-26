@@ -6,7 +6,8 @@ import javax.ws.rs.ext.Provider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Implementation of {@link ContextResolver} for {@link ObjectMapper} jackson
+ * Implementation of {@link ContextResolver} for {@link ObjectMapper} for <a
+ * href="https://github.com/FasterXML/jackson-core">jackson-jaxrs-providers</a>
  * library
  * 
  * @author levan
