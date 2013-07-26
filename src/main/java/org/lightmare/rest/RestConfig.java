@@ -118,7 +118,7 @@ public class RestConfig extends ResourceConfig {
      * 
      * @param resourceClass
      */
-    public void unregister(Class<?> resourceClass, RestConfig oldConfig) {
+    public void unregister(Class<?> resourceClass) {
 
 	Resource resource = MetaContainer.getResource(resourceClass);
 	removePreResource(resource);
