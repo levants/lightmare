@@ -49,7 +49,7 @@ public class JsonSerializer {
     }
 
     /**
-     * Serializes {@link Object} to josn {@link String} with <a
+     * Serializes {@link Object} to JSON {@link String} with <a
      * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
      * 
      * @param value
@@ -71,7 +71,7 @@ public class JsonSerializer {
     }
 
     /**
-     * Deserializes josn {@link String} to {@link Object} with <a
+     * Deserializes JSON {@link String} to {@link Object} with <a
      * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
      * 
      * @param data
