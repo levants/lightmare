@@ -12,7 +12,7 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.rest.providers.JacksonFXmlFeature;
 import org.lightmare.rest.providers.ObjectMapperProvider;
 import org.lightmare.rest.providers.RestReloader;
-import org.lightmare.rest.utils.RestUtils;
+import org.lightmare.rest.utils.ResourceBuilder;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -106,7 +106,7 @@ public class RestConfig extends ResourceConfig {
 
 	Resource.Builder builder = Resource.builder(resourceClass);
 	Resource preResource = builder.build();
-	Resource resource = RestUtils.rebuildResource(preResource);
+	Resource resource = ResourceBuilder.rebuildResource(preResource);
 	addPreResource(resource);
 
 	MetaContainer.putResource(resourceClass, resource);
