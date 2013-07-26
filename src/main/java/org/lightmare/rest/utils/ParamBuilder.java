@@ -87,6 +87,12 @@ public class ParamBuilder {
 	}
     }
 
+    /**
+     * Extracts all parameters from {@link ContainerRequestContext} object
+     * 
+     * @param request
+     * @return {@link MultivaluedMap}<String, String>
+     */
     private MultivaluedMap<String, String> extractParameters(
 	    ContainerRequestContext request) {
 
@@ -219,6 +225,12 @@ public class ParamBuilder {
 	}
     }
 
+    /**
+     * Extracts parameters from {@link ContainerRequestContext} instance
+     * 
+     * @return {@link List}<Object>
+     * @throws IOException
+     */
     public List<Object> extractParams() throws IOException {
 
 	paramsList = new ArrayList<Object>();
