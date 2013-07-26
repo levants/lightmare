@@ -165,6 +165,12 @@ public class RestUtils {
 	}
     }
 
+    /**
+     * Gets common class loader (enriched for each {@link ClassLoader} from
+     * {@link MetaData}) to add to REST server
+     * 
+     * @return {@link ClassLoader}
+     */
     public static ClassLoader getCommonLoader() {
 
 	Iterator<MetaData> iterator = MetaContainer.getBeanClasses();
