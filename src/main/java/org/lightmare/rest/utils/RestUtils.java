@@ -93,7 +93,7 @@ public class RestUtils {
      * @return {@link Resource}
      * @throws IOException
      */
-    public static Resource defineHandler(Resource resource) throws IOException {
+    public static Resource rebuildResource(Resource resource) throws IOException {
 
 	Resource.Builder builder = Resource.builder(resource.getPath());
 	builder.name(resource.getName());
@@ -137,7 +137,7 @@ public class RestUtils {
 	if (ObjectUtils.available(children)) {
 	    Resource child;
 	    for (Resource preChild : children) {
-		child = defineHandler(preChild);
+		child = rebuildResource(preChild);
 		builder.addChildResource(child);
 	    }
 	}

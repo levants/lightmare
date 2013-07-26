@@ -106,7 +106,7 @@ public class RestConfig extends ResourceConfig {
 
 	Resource.Builder builder = Resource.builder(resourceClass);
 	Resource preResource = builder.build();
-	Resource resource = RestUtils.defineHandler(preResource);
+	Resource resource = RestUtils.rebuildResource(preResource);
 	addPreResource(resource);
 
 	MetaContainer.putResource(resourceClass, resource);
