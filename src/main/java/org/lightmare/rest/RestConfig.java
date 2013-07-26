@@ -112,6 +112,12 @@ public class RestConfig extends ResourceConfig {
 	MetaContainer.putResource(resourceClass, resource);
     }
 
+    /**
+     * Removes {@link Resource} created from passed {@link Class} from
+     * pre-resources cache
+     * 
+     * @param resourceClass
+     */
     public void unregister(Class<?> resourceClass, RestConfig oldConfig) {
 
 	Resource resource = MetaContainer.getResource(resourceClass);
