@@ -11,7 +11,9 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Class to check REST classes
+ * Class to check if {@link Class} is annotated for jax.rs appropriated REST
+ * annotations and valid to create
+ * {@link org.glassfish.jersey.server.model.Resource} classes
  * 
  * @author levan
  * 
