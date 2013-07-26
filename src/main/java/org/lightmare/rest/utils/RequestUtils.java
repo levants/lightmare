@@ -21,12 +21,6 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class RequestUtils {
 
-    private static final int EMPRTY_LENGTH = 0;
-
-    public static Object[] getEmptyArray() {
-
-	return new Object[EMPRTY_LENGTH];
-    }
 
     /**
      * Creates {@link InputStream} from passed {@link String} instance

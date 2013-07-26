@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public class ObjectUtils {
 
+    private static final int EMPRTY_ARRAY_LENGTH = 0;
+
     private static final int FIRST_INDEX = 0;
 
     public static final String EMPTY_STRING = "";
@@ -147,6 +149,17 @@ public class ObjectUtils {
 	}
 
 	return array;
+    }
+
+    public static Object[] getEmptyArray() {
+
+	return new Object[EMPRTY_ARRAY_LENGTH];
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T[] getEmptyArray(Class<T> componentType) {
+
+	return (T[]) Array.newInstance(componentType, EMPRTY_ARRAY_LENGTH);
     }
 
     public static void close(Closeable closeable) throws IOException {

@@ -18,7 +18,6 @@ import org.glassfish.jersey.server.model.Parameter;
 import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.rest.utils.ParamBuilder;
-import org.lightmare.rest.utils.RequestUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -85,7 +84,7 @@ public class RestInflector implements
 	if (ObjectUtils.available(parameters)) {
 	    params = extraxtParameters(request);
 	} else {
-	    params = RequestUtils.getEmptyArray();
+	    params = ObjectUtils.getEmptyArray();
 	}
 
 	return params;
