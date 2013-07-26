@@ -16,7 +16,8 @@ import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Dynamically manage REST resources
+ * Dynamically manage REST resources, implementation of {@link ResourceConfig}
+ * class to add and remove {@link Resource}'s and reload at runtime
  * 
  * @author levan
  * 
@@ -25,8 +26,10 @@ public class RestConfig extends ResourceConfig {
 
     private static RestConfig config;
 
+    // Collection of resources before registration
     private Set<Resource> preResources;
 
+    // Reloader instance (implementation of ContainerLifecycleListener class)
     private RestReloader reloader = RestReloader.get();
 
     public RestConfig() {
