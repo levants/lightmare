@@ -27,6 +27,13 @@ public class RestCheck {
 	}
     }
 
+    /**
+     * Checks annotations on {@link Class} and its {@link Method}s for REST
+     * resources
+     * 
+     * @param method
+     * @return <code>boolean</code>
+     */
     private static boolean checkAnnotation(Method method) {
 
 	boolean valid = (method.isAnnotationPresent(GET.class)
@@ -37,6 +44,13 @@ public class RestCheck {
 	return valid;
     }
 
+    /**
+     * Checks if passed {@link Class} is available to create
+     * {@link org.glassfish.jersey.server.model.Resource} instance
+     * 
+     * @param resourceClass
+     * @return <code>boolean</code>
+     */
     public static boolean check(Class<?> resourceClass) {
 	;
 	Method[] methods = resourceClass.getDeclaredMethods();
