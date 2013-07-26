@@ -47,6 +47,16 @@ public class RequestUtils {
 	return streams;
     }
 
+    /**
+     * Gets appropriated {@link MessageBodyReader} for passed
+     * {@link MessageBodyWorkers} {@link Parameter} and {@link MediaType}
+     * arguments
+     * 
+     * @param workers
+     * @param parameter
+     * @param mediaType
+     * @return {@link MessageBodyReader}
+     */
     public static MessageBodyReader<?> getReader(MessageBodyWorkers workers,
 	    Parameter parameter, MediaType mediaType) {
 
