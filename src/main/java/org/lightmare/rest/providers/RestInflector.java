@@ -22,7 +22,8 @@ import org.lightmare.rest.utils.RequestUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * {@link Inflector} implementation for ejb beans
+ * Implementation of {@link Inflector} for ejb beans appropriate {@link Method}
+ * invocation for REST service
  * 
  * @author Levan
  * 
