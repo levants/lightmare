@@ -33,6 +33,13 @@ public class RequestUtils {
 	return new ByteArrayInputStream(text.getBytes());
     }
 
+    /**
+     * Converts {@link Collection} of {@link String}s to {@link List} of
+     * {@link InputStream}s for reading appropriate parameters
+     * 
+     * @param params
+     * @return {@link List}<InputStream>
+     */
     public static List<InputStream> textsToStreams(Collection<String> params) {
 
 	List<InputStream> streams = new ArrayList<InputStream>();
