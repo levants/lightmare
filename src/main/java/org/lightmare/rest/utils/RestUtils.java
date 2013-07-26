@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
+import org.glassfish.jersey.process.Inflector;
 import org.glassfish.jersey.server.model.Invocable;
 import org.glassfish.jersey.server.model.Parameter;
 import org.glassfish.jersey.server.model.Resource;
@@ -67,6 +68,12 @@ public class RestUtils {
 	return JsonSerializer.write(data);
     }
 
+    /**
+     * Checks if class is acceptable to build {@link Resource} instance
+     * 
+     * @param resourceClass
+     * @return <code>boolean</code>
+     */
     private static boolean isAcceptable(Class<?> resourceClass) {
 
 	boolean valid = Resource.isAcceptable(resourceClass)
@@ -75,6 +82,15 @@ public class RestUtils {
 	return valid;
     }
 
+    /**
+     * Builds new {@link Resource} from passed one with new
+     * {@link org.glassfish.jersey.process.Inflector} implementation
+     * {@link RestInflector} and with all child resources
+     * 
+     * @param resource
+     * @return {@link Resource}
+     * @throws IOException
+     */
     public static Resource defineHandler(Resource resource) throws IOException {
 
 	Resource.Builder builder = Resource.builder(resource.getPath());
