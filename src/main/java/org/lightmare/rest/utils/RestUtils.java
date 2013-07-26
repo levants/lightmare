@@ -145,6 +145,14 @@ public class RestUtils {
 	return intercepted;
     }
 
+    /**
+     * Adds bean {@link Class} as
+     * {@link org.glassfish.jersey.server.model.Resource} to {@link RestConfig}
+     * instance
+     * 
+     * @param beanClass
+     * @throws IOException
+     */
     public static void add(Class<?> beanClass) throws IOException {
 
 	boolean valid = isAcceptable(beanClass);
@@ -158,6 +166,13 @@ public class RestUtils {
 	}
     }
 
+    /**
+     * Removes bean {@link Class} as
+     * {@link org.glassfish.jersey.server.model.Resource} to {@link RestConfig}
+     * instance
+     * 
+     * @param beanClass
+     */
     public static void remove(Class<?> beanClass) {
 
 	RestReloader reloader = RestReloader.get();
@@ -193,6 +208,10 @@ public class RestUtils {
 	return commonLoader;
     }
 
+    /**
+     * Reloads {@link RestConfig} instance with new registered
+     * {@link org.glassfish.jersey.server.model.Resource}s
+     */
     public static void reload() {
 
 	RestReloader reloader = RestReloader.get();
