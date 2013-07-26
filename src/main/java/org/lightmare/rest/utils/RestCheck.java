@@ -52,7 +52,7 @@ public class RestCheck {
      * @return <code>boolean</code>
      */
     public static boolean check(Class<?> resourceClass) {
-	;
+
 	Method[] methods = resourceClass.getDeclaredMethods();
 	int length = methods.length;
 	boolean valid = Boolean.FALSE;
