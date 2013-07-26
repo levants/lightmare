@@ -132,6 +132,7 @@ public class RestUtils {
 	    methodBuilder.handledBy(inflector);
 	    methodBuilder.build();
 	}
+	// Registers children resources recursively
 	List<Resource> children = resource.getChildResources();
 	if (ObjectUtils.available(children)) {
 	    Resource child;
