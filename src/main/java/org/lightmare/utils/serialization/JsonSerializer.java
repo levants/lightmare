@@ -40,7 +40,7 @@ public class JsonSerializer {
      * 
      * @return {@link ObjectMapper}
      */
-    private static ObjectMapper getMapper() {
+    public static ObjectMapper getMapper() {
 
 	if (ObjectUtils.notTrue(mapperConfigured)) {
 	    configureMapper();
