@@ -3,7 +3,6 @@ package org.lightmare.rest.utils;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ws.rs.container.ContainerRequestContext;
@@ -28,8 +27,6 @@ import org.lightmare.utils.beans.BeanUtils;
  * 
  */
 public class ResourceBuilder {
-    
-    
 
     /**
      * Builds new {@link Resource} from passed one with new
@@ -50,8 +47,7 @@ public class ResourceBuilder {
 	Collection<Class<?>> handlers = resource.getHandlerClasses();
 	Class<?> beanClass;
 	String beanEjbName;
-	Iterator<Class<?>> iterator = handlers.iterator();
-	beanClass = iterator.next();
+	beanClass = ObjectUtils.getFirst(handlers);
 	beanEjbName = BeanUtils.beanName(beanClass);
 	List<MediaType> consumedTypes;
 	List<MediaType> producedTypes;
@@ -60,6 +56,8 @@ public class ResourceBuilder {
 	Method realMethod;
 	MediaType type;
 	List<Parameter> parameters;
+	// Inflector to define bean methods
+	Inflector<ContainerRequestContext, Response> inflector;
 	for (ResourceMethod method : methods) {
 	    consumedTypes = method.getConsumedTypes();
 	    producedTypes = method.getProducedTypes();
@@ -71,8 +69,8 @@ public class ResourceBuilder {
 	    } else {
 		type = null;
 	    }
-	    Inflector<ContainerRequestContext, Response> inflector = new RestInflector(
-		    realMethod, metaData, type, parameters);
+	    inflector = new RestInflector(realMethod, metaData, type,
+		    parameters);
 	    methodBuilder = builder.addMethod(method.getHttpMethod());
 	    methodBuilder.consumes(consumedTypes);
 	    methodBuilder.produces(producedTypes);
