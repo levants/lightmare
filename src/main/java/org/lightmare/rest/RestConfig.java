@@ -42,6 +42,8 @@ public class RestConfig extends ResourceConfig {
 	    }
 	    this.registerInstances(reloader);
 	    if (ObjectUtils.notNull(config)) {
+		// Adds resoures to pre resources from existing cached
+		// configuration
 		this.addPreResources(config);
 		Map<String, Object> properties = config.getProperties();
 		if (ObjectUtils.available(properties)) {
