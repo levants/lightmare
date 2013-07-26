@@ -22,6 +22,7 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
     public ObjectMapperProvider() {
 
+	// Gets appropriate ObjectMapper instance from JsonSerializer class
 	defaultObjectMapper = JsonSerializer.getMapper();
     }
 
