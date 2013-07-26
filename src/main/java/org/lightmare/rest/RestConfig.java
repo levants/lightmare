@@ -71,6 +71,12 @@ public class RestConfig extends ResourceConfig {
 	}
     }
 
+    /**
+     * Registers {@link Resource}s from passed {@link RestConfig} as
+     * {@link RestConfig#preResources} cache
+     * 
+     * @param oldConfig
+     */
     public void registerAll(RestConfig oldConfig) {
 
 	clearResources();
