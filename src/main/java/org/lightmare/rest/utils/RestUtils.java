@@ -210,7 +210,7 @@ public class RestUtils {
 
     /**
      * Reloads {@link RestConfig} instance with new registered
-     * {@link org.glassfish.jersey.server.model.Resource}s
+     * {@link org.glassfish.jersey.server.model.Resource}s to activate
      */
     public static void reload() {
 
