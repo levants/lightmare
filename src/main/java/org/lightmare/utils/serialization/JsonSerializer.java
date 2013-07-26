@@ -1,6 +1,7 @@
 package org.lightmare.utils.serialization;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
@@ -92,5 +93,39 @@ public class JsonSerializer {
 	} catch (IOException ex) {
 	    throw new IOException(ex);
 	}
+    }
+
+    /**
+     * Deserializes JSON {@link InputStream} to {@link Object} with <a
+     * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
+     * 
+     * @param data
+     * @param valueClass
+     * @return T
+     * @throws IOException
+     */
+    public static <T> T read(InputStream stream, Class<T> valueClass)
+	    throws IOException {
+
+	T value = getMapper().readValue(stream, valueClass);
+
+	return value;
+    }
+
+    /**
+     * Deserializes JSON (<code>byte[]</code>) to {@link Object} with <a
+     * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
+     * 
+     * @param data
+     * @param valueClass
+     * @return T
+     * @throws IOException
+     */
+    public static <T> T read(byte[] bytes, Class<T> valueClass)
+	    throws IOException {
+
+	T value = getMapper().readValue(bytes, valueClass);
+
+	return value;
     }
 }
