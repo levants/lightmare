@@ -66,7 +66,7 @@ public class ParamBuilder {
 
     private boolean check() throws IOException {
 
-	return !request.hasEntity()
+	return ObjectUtils.notTrue(request.hasEntity())
 		&& request.getEntityStream().available() == ZERO_AVAILABLE_STREAM;
     }
 
