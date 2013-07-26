@@ -5,9 +5,11 @@ import javax.ws.rs.ext.Provider;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spi.Container;
 import org.glassfish.jersey.server.spi.ContainerLifecycleListener;
+import org.lightmare.rest.RestConfig;
 
 /**
- * Reloads {@link ResourceConfig} at runtime
+ * Reloads {@link RestConfig} (implementation of {@link ResourceConfig}) at
+ * runtime
  * 
  * @author levan
  * 
