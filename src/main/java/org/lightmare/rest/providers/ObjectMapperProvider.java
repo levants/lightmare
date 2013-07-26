@@ -5,6 +5,13 @@ import javax.ws.rs.ext.Provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Implementation of {@link ContextResolver} for {@link ObjectMapper} jackson
+ * library
+ * 
+ * @author levan
+ * 
+ */
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
@@ -19,7 +26,7 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
     @Override
     public ObjectMapper getContext(Class<?> type) {
-	
+
 	return defaultObjectMapper;
     }
 
