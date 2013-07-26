@@ -7,7 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.ws.rs.Path;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.process.Inflector;
 import org.glassfish.jersey.server.model.Invocable;
@@ -121,8 +123,8 @@ public class RestUtils {
 	    } else {
 		type = null;
 	    }
-	    RestInflector inflector = new RestInflector(realMethod, metaData,
-		    type, parameters);
+	    Inflector<ContainerRequestContext, Response> inflector = new RestInflector(
+		    realMethod, metaData, type, parameters);
 	    methodBuilder = builder.addMethod(method.getHttpMethod());
 	    methodBuilder.consumes(consumedTypes);
 	    methodBuilder.produces(producedTypes);
