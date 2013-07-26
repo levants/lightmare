@@ -8,6 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 
 import org.lightmare.cache.MetaContainer;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Class to check REST classes
@@ -40,7 +41,7 @@ public class RestCheck {
 	int length = methods.length;
 	boolean valid = Boolean.FALSE;
 	Method method;
-	for (int i = 0; i < length && !valid; i++) {
+	for (int i = 0; i < length && ObjectUtils.notTrue(valid); i++) {
 	    method = methods[i];
 	    valid = checkAnnotation(method);
 	}
