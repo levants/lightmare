@@ -93,6 +93,14 @@ public class RestConfig extends ResourceConfig {
 	registerResources(newResources);
     }
 
+    /**
+     * Caches {@link Resource} created from passed {@link Class} for further
+     * registration
+     * 
+     * @param resourceClass
+     * @param oldConfig
+     * @throws IOException
+     */
     public void registerClass(Class<?> resourceClass, RestConfig oldConfig)
 	    throws IOException {
 
