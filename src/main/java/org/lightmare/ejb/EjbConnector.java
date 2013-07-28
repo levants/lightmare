@@ -234,13 +234,14 @@ public class EjbConnector {
 	    handler = getHandler(metaData);
 	    loader = metaData.getLoader();
 	} else {
-	    if (rpcArgs.length != RpcUtils.RPC_ARGS_LENGTH) {
+	    if (rpcArgs.length == RpcUtils.RPC_ARGS_LENGTH) {
+		String host = (String) rpcArgs[0];
+		int port = (Integer) rpcArgs[1];
+		handler = new BeanLocalHandler(new RPCall(host, port));
+		loader = null;
+	    } else {
 		throw new IOException(RpcUtils.RPC_ARGS_ERROR);
 	    }
-	    String host = (String) rpcArgs[0];
-	    int port = (Integer) rpcArgs[1];
-	    handler = new BeanLocalHandler(new RPCall(host, port));
-	    loader = null;
 	}
 
 	T beanInstance = (T) instatiateBean(interfaceClass, handler, loader);
