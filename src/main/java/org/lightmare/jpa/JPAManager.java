@@ -518,6 +518,13 @@ public class JPAManager {
 	    return this;
 	}
 
+	/**
+	 * Sets boolean check to scan deployed archive files for
+	 * {@link javax.persistence.Entity} annotated classes
+	 * 
+	 * @param scanArchives
+	 * @return {@link Builder}
+	 */
 	public Builder setScanArchives(boolean scanArchives) {
 	    manager.scanArchives = scanArchives;
 	    return this;
