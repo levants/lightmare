@@ -166,14 +166,14 @@ public class MetaCreator {
      * @throws IOException
      */
     private List<String> filterEntities(Set<String> classSet,
-	    Configuration cloneConfig) throws IOException {
+	    Configuration configClone) throws IOException {
 	List<String> classes;
-	if (config.getAnnotatedUnitName() == null) {
+	if (configClone.getAnnotatedUnitName() == null) {
 	    classes = translateToList(classSet);
 	} else {
 	    Set<String> filtereds = new HashSet<String>();
 	    for (String className : classSet) {
-		if (checkForUnitName(className, cloneConfig)) {
+		if (checkForUnitName(className, configClone)) {
 		    filtereds.add(className);
 		}
 	    }
