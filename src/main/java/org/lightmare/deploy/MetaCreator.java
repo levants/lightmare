@@ -726,6 +726,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets boolean checker to scan {@link javax.persistence.Entity}
+	 * annotated classes from appropriated deployed archive files
+	 * 
+	 * @param path
+	 * @return {@link Builder}
+	 */
 	public Builder setScanArchives(boolean scanArchives) {
 	    creator.config.setScanArchives(scanArchives);
 
