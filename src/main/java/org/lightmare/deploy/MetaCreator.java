@@ -649,6 +649,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets path for persistence.xml file
+	 * 
+	 * @param path
+	 * @return {@link Builder}
+	 */
 	public Builder setPersXmlPath(String path) {
 	    creator.config.setPersXmlPath(path);
 	    creator.config.setScanArchives(Boolean.FALSE);
