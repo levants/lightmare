@@ -691,7 +691,7 @@ public class MetaCreator {
 	 * Additional boolean checker to swap jta data source value with non jta
 	 * data source value
 	 * 
-	 * @param path
+	 * @param swapDataSource
 	 * @return {@link Builder}
 	 */
 	public Builder setSwapDataSource(boolean swapDataSource) {
