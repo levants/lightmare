@@ -138,7 +138,7 @@ public class BeanLoader {
 
 	private void notifyDs() {
 
-	    if (!countedDown) {
+	    if (ObjectUtils.notTrue(countedDown)) {
 		dsLatch.countDown();
 		countedDown = Boolean.TRUE;
 	    }
