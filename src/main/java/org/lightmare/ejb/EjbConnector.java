@@ -228,7 +228,6 @@ public class EjbConnector {
      * @return <code>T</code> implementation of bean interface
      * @throws IOException
      */
-
     public <T> T connectToBean(String beanName, Class<T> interfaceClass,
 	    Object... rpcArgs) throws IOException {
 
