@@ -532,6 +532,7 @@ public class JPAManager {
 
 	/**
 	 * Adds boolean check if application uses pooled data source
+	 * 
 	 * @param dsPooledType
 	 * @return {@link Builder}
 	 */
@@ -540,6 +541,12 @@ public class JPAManager {
 	    return this;
 	}
 
+	/**
+	 * Sets {@link ClassLoader} for persistence classes
+	 * 
+	 * @param loader
+	 * @return {@link Builder}
+	 */
 	public Builder setClassLoader(ClassLoader loader) {
 	    manager.loader = loader;
 
