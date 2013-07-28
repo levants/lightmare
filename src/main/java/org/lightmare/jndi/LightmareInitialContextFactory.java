@@ -16,7 +16,8 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
 
     private static final String SHARE_DATA_PROPERTY = "org.osjava.sj.jndi.shared";
 
-    private static final String SHARE_DATA_PROPERTY_VALUE = "true";
+    private static final String SHARE_DATA_PROPERTY_VALUE = Boolean.TRUE
+	    .toString();
 
     @SuppressWarnings("unchecked")
     @Override
