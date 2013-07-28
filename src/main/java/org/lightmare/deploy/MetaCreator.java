@@ -803,6 +803,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * File path for administrator user name and password
+	 * 
+	 * @param property
+	 * @return {@link Builder}
+	 */
 	public Builder setAdminUsersPth(String property) {
 	    Configuration.setAdminUsersPath(property);
 
