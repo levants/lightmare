@@ -207,7 +207,7 @@ public class MetaCreator {
 	    Map<String, Set<String>> annotationIndex = annotationDB
 		    .getAnnotationIndex();
 	    classSet = annotationIndex.get(Entity.class.getName());
-	    String annotatedUnitName = config.getAnnotatedUnitName();
+	    String annotatedUnitName = cloneConfig.getAnnotatedUnitName();
 	    if (annotatedUnitName == null) {
 		classSet = annotationIndex.get(Entity.class.getName());
 	    } else if (annotatedUnitName.equals(unitName)) {
@@ -223,7 +223,7 @@ public class MetaCreator {
 	    builder.setClasses(classes);
 	}
 	builder.setPath(cloneConfig.getPersXmlPath())
-		.setProperties(config.getPersistenceProperties())
+		.setProperties(cloneConfig.getPersistenceProperties())
 		.setSwapDataSource(cloneConfig.isSwapDataSource())
 		.setScanArchives(cloneConfig.isScanArchives())
 		.setClassLoader(loader).build().setConnection(unitName);
