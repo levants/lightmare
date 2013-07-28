@@ -727,7 +727,7 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Sets boolean checker to scan {@link javax.persistence.Entity}
+	 * Additional boolean checker to scan {@link javax.persistence.Entity}
 	 * annotated classes from appropriated deployed archive files
 	 * 
 	 * @param path
@@ -739,6 +739,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Additional boolean checker to block deployment processes
+	 * 
+	 * @param path
+	 * @return {@link Builder}
+	 */
 	public Builder setAwaitSeploiment(boolean await) {
 	    creator.await = await;
 
