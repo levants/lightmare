@@ -918,6 +918,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets which data source pool provider should use application by
+	 * {@link PoolProviderType} parameter
+	 * 
+	 * @param poolProviderType
+	 * @return {@link Builder}
+	 */
 	public Builder setPoolProviderType(PoolProviderType poolProviderType) {
 	    PoolConfig.poolProviderType = poolProviderType;
 
