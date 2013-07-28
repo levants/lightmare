@@ -866,6 +866,14 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Adds deploy file path to application with boolean checker if file is
+	 * directory to scan this directory for deployment files list
+	 * 
+	 * @param deploymentPath
+	 * @param scan
+	 * @return {@link Builder}
+	 */
 	public Builder addDeploymentPath(String deploymentPath, boolean scan) {
 	    String clearPath = WatchUtils.clearPath(deploymentPath);
 	    creator.config.addDeploymentPath(clearPath, scan);
