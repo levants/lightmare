@@ -881,6 +881,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Adds deploy file path to application
+	 * 
+	 * @param deploymentPath
+	 * @return {@link Builder}
+	 */
 	public Builder addDeploymentPath(String deploymentPath) {
 	    addDeploymentPath(deploymentPath, Boolean.FALSE);
 
