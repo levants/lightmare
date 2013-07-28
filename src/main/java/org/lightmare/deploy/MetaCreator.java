@@ -665,7 +665,7 @@ public class MetaCreator {
 	/**
 	 * Adds path for additional libraries to load at start time
 	 * 
-	 * @param path
+	 * @param libPaths
 	 * @return {@link Builder}
 	 */
 	public Builder setLibraryPath(String... libPaths) {
