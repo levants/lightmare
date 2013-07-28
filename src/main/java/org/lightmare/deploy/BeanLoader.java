@@ -287,7 +287,7 @@ public class BeanLoader {
 	 * thread
 	 */
 	private void notifyConn() {
-	    if (!isCounted) {
+	    if (ObjectUtils.notTrue(isCounted)) {
 		blocker.countDown();
 		isCounted = Boolean.TRUE;
 	    }
