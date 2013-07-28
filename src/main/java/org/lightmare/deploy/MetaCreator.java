@@ -740,7 +740,7 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Additional boolean checker to block deployment processes
+	 * Sets boolean checker to block deployment processes
 	 * 
 	 * @param await
 	 * @return {@link Builder}
