@@ -176,7 +176,7 @@ public class MetaContainer {
 	boolean check;
 	MetaData metaData = EJBS.get(beanName);
 	check = metaData == null;
-	if (!check) {
+	if (ObjectUtils.notTrue(check)) {
 	    check = metaData.isInProgress();
 	}
 
