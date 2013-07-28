@@ -906,6 +906,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Added boolean check if application is using pooled data source
+	 * 
+	 * @param dsPooledType
+	 * @return {@link Builder}
+	 */
 	public Builder setDataSourcePooledType(boolean dsPooledType) {
 	    JPAManager.pooledDataSource = dsPooledType;
 
