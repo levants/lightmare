@@ -688,8 +688,8 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Additional boolean checker to swap jta data source value with non jta
-	 * data source value
+	 * Sets boolean checker to swap jta data source value with non jta data
+	 * source value
 	 * 
 	 * @param swapDataSource
 	 * @return {@link Builder}
