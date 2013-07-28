@@ -50,7 +50,8 @@ public class EjbConnector {
     }
 
     /**
-     * Gets connection for {@link Stateless} bean {@link Class} from cache
+     * Gets connection for {@link javax.ejb.Stateless} bean {@link Class} from
+     * cache
      * 
      * @param unitName
      * @return {@link EntityManagerFactory}
