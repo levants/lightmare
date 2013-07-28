@@ -59,8 +59,6 @@ public class MetaCreator {
 
     private static AnnotationDB annotationDB;
 
-    // private Map<Object, Object> prop;
-
     private TmpResources tmpResources;
 
     private boolean await;
