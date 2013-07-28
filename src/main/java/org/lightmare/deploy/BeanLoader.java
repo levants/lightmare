@@ -110,7 +110,6 @@ public class BeanLoader {
 
 	    return privileged;
 	}
-
     }
 
     /**
@@ -214,7 +213,6 @@ public class BeanLoader {
 
 	    return result;
 	}
-
     }
 
     /**
@@ -448,7 +446,6 @@ public class BeanLoader {
 		    // caches EJB annotated fields
 		    cacheInjectFields(field);
 		}
-
 	    }
 
 	    if (ObjectUtils.available(unitFields)) {
@@ -714,7 +711,6 @@ public class BeanLoader {
 		}
 
 		return deployed;
-
 	    }
 	}
 
@@ -725,7 +721,6 @@ public class BeanLoader {
 
 	    return deployed;
 	}
-
     }
 
     /**
