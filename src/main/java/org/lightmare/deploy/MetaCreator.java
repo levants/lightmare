@@ -777,6 +777,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Additional boolean check is application in just client mode or not
+	 * 
+	 * @param client
+	 * @return {@link Builder}
+	 */
 	public Builder setClient(boolean client) {
 	    creator.config.setClient(client);
 	    Configuration.setServer(!client);
