@@ -828,6 +828,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets specific port in case when applicatin is in remore server mode
+	 * 
+	 * @param property
+	 * @return {@link Builder}
+	 */
 	public Builder setPort(String property) {
 	    creator.config.putValue(Configuration.PORT, property);
 
