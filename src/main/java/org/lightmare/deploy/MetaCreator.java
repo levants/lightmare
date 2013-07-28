@@ -700,6 +700,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Adds path for data source file
+	 * 
+	 * @param path
+	 * @return {@link Builder}
+	 */
 	public Builder addDataSourcePath(String dataSourcePath) {
 	    creator.config.addDataSourcePath(dataSourcePath);
 
