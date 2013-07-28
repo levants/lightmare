@@ -853,6 +853,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets amount of worker threads in case when application is in remote
+	 * server mode
+	 * 
+	 * @param property
+	 * @return {@link Builder}
+	 */
 	public Builder setWorkerThreads(String property) {
 	    creator.config.putValue(Configuration.WORKER_POOL, property);
 
