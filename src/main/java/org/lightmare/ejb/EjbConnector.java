@@ -171,7 +171,7 @@ public class EjbConnector {
 
     /**
      * Initializes and caches all interfaces for bean class from passed
-     * {@link MetaData} instance
+     * {@link MetaData} instance if it is not already cached
      * 
      * @param metaData
      * @return {@link Class}[]
