@@ -840,6 +840,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets amount for network master threads in case when application is in
+	 * remote server mode
+	 * 
+	 * @param property
+	 * @return {@link Builder}
+	 */
 	public Builder setMasterThreads(String property) {
 	    creator.config.putValue(Configuration.BOSS_POOL, property);
 
