@@ -238,7 +238,7 @@ public class BeanLoader {
 
 	private CountDownLatch blocker;
 
-	private boolean released;
+	private boolean countedDown;
 
 	private List<Field> unitFields;
 
@@ -287,9 +287,9 @@ public class BeanLoader {
 	 * thread
 	 */
 	private void releaseBlocker() {
-	    if (ObjectUtils.notTrue(released)) {
+	    if (ObjectUtils.notTrue(countedDown)) {
 		blocker.countDown();
-		released = Boolean.TRUE;
+		countedDown = Boolean.TRUE;
 	    }
 	}
 
