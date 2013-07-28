@@ -29,7 +29,8 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
 		.clone();
 
 	// all instances will share stored data
-	if (!sharingEnv.containsKey(SHARE_DATA_PROPERTY)) {
+	boolean notContainsKey = !sharingEnv.containsKey(SHARE_DATA_PROPERTY);
+	if (notContainsKey) {
 	    sharingEnv.put(SHARE_DATA_PROPERTY, SHARE_DATA_PROPERTY_VALUE);
 	}
 	Context lightmareContext = new LightmareContext(sharingEnv);
