@@ -36,9 +36,6 @@ public class Configuration implements Cloneable, Serializable {
     // path where stored adminitrator users
     public static final String ADMIN_USERS_PATH_KEY = "adminUsersPath";
 
-    // Default semaphore capacity
-    public static final int SEMAPHORE_SIZE = 1;
-
     /**
      * <a href="netty.io">Netty</a> server / client configuration properties for
      * RPC calls
