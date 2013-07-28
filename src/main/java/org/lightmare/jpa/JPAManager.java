@@ -506,6 +506,13 @@ public class JPAManager {
 	    return this;
 	}
 
+	/**
+	 * Sets boolean check property to swap jta data source value with non
+	 * jta data source value
+	 * 
+	 * @param swapDataSource
+	 * @return {@link Builder}
+	 */
 	public Builder setSwapDataSource(boolean swapDataSource) {
 	    manager.swapDataSource = swapDataSource;
 	    return this;
