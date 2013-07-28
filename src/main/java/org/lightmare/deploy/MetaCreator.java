@@ -604,6 +604,12 @@ public class MetaCreator {
 	    }
 	}
 
+	/**
+	 * Sets additional persistence properties
+	 * 
+	 * @param properties
+	 * @return {@link Builder}
+	 */
 	public Builder setPersistenceProperties(Map<String, String> properties) {
 
 	    if (ObjectUtils.available(properties)) {
