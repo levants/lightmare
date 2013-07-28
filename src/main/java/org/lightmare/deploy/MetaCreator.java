@@ -77,6 +77,7 @@ public class MetaCreator {
 
     private ClassLoader current;
 
+    // Configuration for appropriate archives URLs
     private Configuration config;
 
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
