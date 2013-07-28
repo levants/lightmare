@@ -751,6 +751,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets propert
+	 * 
+	 * @param path
+	 * @return {@link Builder}
+	 */
 	public Builder setRemote(boolean remote) {
 	    creator.config.setRemote(remote);
 
