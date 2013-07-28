@@ -356,7 +356,7 @@ public class JPAManager {
     }
 
     /**
-     * Unbinds connection from {@link javax.naming.Context}
+     * Removes connection from {@link javax.naming.Context} cache
      * 
      * @param semaphore
      */
