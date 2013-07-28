@@ -193,6 +193,7 @@ public class EjbConnector {
     }
 
     /**
+     * Creates appropriate bean {@link Proxy} instance by interface
      * 
      * @param metaData
      * @param rpcArgs
@@ -215,7 +216,7 @@ public class EjbConnector {
 
     /**
      * Creates custom implementation of bean {@link Class} by class name and its
-     * proxy interface {@link Class} instance
+     * {@link Proxy} interface {@link Class} instance
      * 
      * @param interfaceClass
      * @return <code>T</code> implementation of bean interface
