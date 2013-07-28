@@ -730,7 +730,7 @@ public class MetaCreator {
 	 * Additional boolean checker to scan {@link javax.persistence.Entity}
 	 * annotated classes from appropriated deployed archive files
 	 * 
-	 * @param path
+	 * @param scanArchives
 	 * @return {@link Builder}
 	 */
 	public Builder setScanArchives(boolean scanArchives) {
