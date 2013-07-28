@@ -573,7 +573,7 @@ public class BeanLoader {
 	}
 
 	/**
-	 * Identifies bean interfaces
+	 * Identifies and caches bean interfaces
 	 * 
 	 * @param beanClass
 	 */
