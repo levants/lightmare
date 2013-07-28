@@ -569,7 +569,8 @@ public class MetaCreator {
     }
 
     /**
-     * Builder class to provide properties for lightmare
+     * Builder class to provide properties for lightmare application and
+     * initialize {@link MetaCreator} instance
      * 
      * @author levan
      * 
