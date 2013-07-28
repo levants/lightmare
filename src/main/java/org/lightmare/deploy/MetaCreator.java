@@ -971,7 +971,7 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Additional boolean check is application in hot deployment (with watch
+	 * Sets boolean check is application in hot deployment (with watch
 	 * service on deployment directories) or not
 	 * 
 	 * @param hotDeployment
