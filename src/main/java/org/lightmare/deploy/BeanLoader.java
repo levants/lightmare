@@ -271,7 +271,7 @@ public class BeanLoader {
 	private void lockSemaphore(ConnectionSemaphore semaphore,
 		String unitName, String jndiName) throws IOException {
 	    synchronized (semaphore) {
-		if (!semaphore.isCheck()) {
+		if (ObjectUtils.notTrue(semaphore.isCheck())) {
 		    try {
 			creator.configureConnection(unitName, beanName, loader,
 				configuration);
