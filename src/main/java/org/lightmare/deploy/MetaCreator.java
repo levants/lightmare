@@ -59,12 +59,13 @@ public class MetaCreator {
 
     private static AnnotationDB annotationDB;
 
-    private Map<Object, Object> prop;
+    // private Map<Object, Object> prop;
 
     private TmpResources tmpResources;
 
     private boolean await;
 
+    // Blocker for deployments
     private CountDownLatch conn;
 
     // Data for cache at deploy time
@@ -223,7 +224,8 @@ public class MetaCreator {
 	    List<String> classes = filterEntities(classSet, cloneConfig);
 	    builder.setClasses(classes);
 	}
-	builder.setPath(cloneConfig.getPersXmlPath()).setProperties(prop)
+	builder.setPath(cloneConfig.getPersXmlPath())
+		.setProperties(config.getPersistenceProperties())
 		.setSwapDataSource(cloneConfig.isSwapDataSource())
 		.setScanArchives(cloneConfig.isScanArchives())
 		.setClassLoader(loader).build().setConnection(unitName);
@@ -605,8 +607,12 @@ public class MetaCreator {
 	}
 
 	public Builder setPersistenceProperties(Map<String, String> properties) {
-	    creator.prop = new HashMap<Object, Object>();
-	    creator.prop.putAll(properties);
+
+	    if (ObjectUtils.available(properties)) {
+		Map<Object, Object> persistenceProperties = new HashMap<Object, Object>();
+		persistenceProperties.putAll(properties);
+		creator.config.setPersistenceProperties(persistenceProperties);
+	    }
 
 	    return this;
 	}
