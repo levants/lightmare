@@ -169,6 +169,12 @@ public class ObjectUtils {
 	}
     }
 
+    /**
+     * Peaks first element from list
+     * 
+     * @param list
+     * @return T
+     */
     private static <T> T getFirstFromList(List<T> list) {
 
 	T value;
