@@ -970,6 +970,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Additional boolean check is application in hot deployment (with watch
+	 * service on deployment directories) or not
+	 * 
+	 * @param hotDeployment
+	 * @return {@link Builder}
+	 */
 	public Builder setHotDeployment(boolean hotDeployment) {
 	    creator.config.setHotDeployment(hotDeployment);
 
