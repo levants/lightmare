@@ -133,6 +133,8 @@ public class Configuration implements Cloneable, Serializable {
 
     private static String ADMIN_USERS_PATH;
 
+    private Map<Object, Object> persistenceProperties;
+
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
     public Configuration() {
@@ -415,6 +417,15 @@ public class Configuration implements Cloneable, Serializable {
 
     public static void setAdminUsersPath(String aDMIN_USERS_PATH) {
 	ADMIN_USERS_PATH = aDMIN_USERS_PATH;
+    }
+
+    public Map<Object, Object> getPersistenceProperties() {
+	return persistenceProperties;
+    }
+
+    public void setPersistenceProperties(
+	    Map<Object, Object> persistenceProperties) {
+	this.persistenceProperties = persistenceProperties;
     }
 
     @Override
