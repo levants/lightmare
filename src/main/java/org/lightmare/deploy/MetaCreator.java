@@ -912,7 +912,7 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Added boolean check if application is using pooled data source
+	 * Adds boolean check if application is using pooled data source
 	 * 
 	 * @param dsPooledType
 	 * @return {@link Builder}
