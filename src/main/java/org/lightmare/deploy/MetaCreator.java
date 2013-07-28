@@ -745,7 +745,7 @@ public class MetaCreator {
 	 * @param await
 	 * @return {@link Builder}
 	 */
-	public Builder setAwaitSeploiment(boolean await) {
+	public Builder setAwaitDeploiment(boolean await) {
 	    creator.await = await;
 
 	    return this;
