@@ -674,6 +674,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Additional boolean checker to scan persistence.xml files from
+	 * appropriated jar files
+	 * 
+	 * @param path
+	 * @return {@link Builder}
+	 */
 	public Builder setXmlFromJar(boolean xmlFromJar) {
 	    creator.config.setPersXmlFromJar(xmlFromJar);
 
