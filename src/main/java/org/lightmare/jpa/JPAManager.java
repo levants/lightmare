@@ -530,6 +530,11 @@ public class JPAManager {
 	    return this;
 	}
 
+	/**
+	 * Adds boolean check if application uses pooled data source
+	 * @param dsPooledType
+	 * @return {@link Builder}
+	 */
 	public Builder setDataSourcePooledType(boolean dsPooledType) {
 	    JPAManager.pooledDataSource = dsPooledType;
 	    return this;
