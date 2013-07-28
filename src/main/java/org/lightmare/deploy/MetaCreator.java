@@ -815,6 +815,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets specific IP address in case when application is in remote server
+	 * mode
+	 * 
+	 * @param property
+	 * @return {@link Builder}
+	 */
 	public Builder setIpAddress(String property) {
 	    creator.config.putValue(Configuration.IP_ADDRESS, property);
 
