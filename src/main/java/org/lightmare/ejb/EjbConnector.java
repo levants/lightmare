@@ -77,7 +77,6 @@ public class EjbConnector {
      * @return {@link EntityManagerFactory}
      * @throws IOException
      */
-
     private void getEntityManagerFactories(MetaData metaData)
 	    throws IOException {
 
