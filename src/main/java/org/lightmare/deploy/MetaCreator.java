@@ -893,6 +893,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Adds timeout for connection in case when application is in remote
+	 * server or client mode
+	 * 
+	 * @param property
+	 * @return {@link Builder}
+	 */
 	public Builder setTimeout(String property) {
 	    creator.config.putValue(Configuration.CONNECTION_TIMEOUT, property);
 
