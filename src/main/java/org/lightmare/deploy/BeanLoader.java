@@ -257,7 +257,7 @@ public class BeanLoader {
 	    this.metaData = parameters.metaData;
 	    this.blocker = parameters.blocker;
 	    this.deployData = parameters.deployData;
-	    this.config = parameters.config;
+	    this.config = parameters.configuration;
 	}
 
 	/**
@@ -749,7 +749,7 @@ public class BeanLoader {
 
 	public boolean server;
 
-	public Configuration config;
+	public Configuration configuration;
     }
 
     /**

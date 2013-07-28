@@ -78,7 +78,7 @@ public class MetaCreator {
     private ClassLoader current;
 
     // Configuration for appropriate archives URLs
-    private Configuration config;
+    private Configuration configuration;
 
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
@@ -259,7 +259,7 @@ public class MetaCreator {
 
 	AbstractIOUtils ioUtils = AbstractIOUtils.getAppropriatedType(archive);
 	if (ObjectUtils.notNull(ioUtils)) {
-	    ioUtils.scan(config.isPersXmlFromJar());
+	    ioUtils.scan(configuration.isPersXmlFromJar());
 	    List<URL> ejbURLs = ioUtils.getEjbURLs();
 	    modifiedArchives.addAll(ejbURLs);
 	    ArchiveData archiveData = new ArchiveData();
@@ -350,7 +350,7 @@ public class MetaCreator {
 	if (ObjectUtils.notNull(ioUtils)) {
 	    if (loader == null) {
 		if (!ioUtils.isExecuted()) {
-		    ioUtils.scan(config.isPersXmlFromJar());
+		    ioUtils.scan(configuration.isPersXmlFromJar());
 		}
 		URL[] libURLs = ioUtils.getURLs();
 		loader = LibraryLoader.initializeLoader(libURLs);
@@ -376,7 +376,7 @@ public class MetaCreator {
 	parameters.tmpFiles = tmpFiles;
 	parameters.blocker = blocker;
 	parameters.deployData = deployData;
-	parameters.config = config;
+	parameters.configuration = configuration;
 
 	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);
@@ -405,8 +405,8 @@ public class MetaCreator {
 	if (MetaContainer.hasRest()) {
 	    RestUtils.reload();
 	}
-	boolean hotDeployment = config.isHotDeployment();
-	boolean watchStatus = config.isWatchStatus();
+	boolean hotDeployment = configuration.isHotDeployment();
+	boolean watchStatus = configuration.isWatchStatus();
 	if (hotDeployment && ObjectUtils.notTrue(watchStatus)) {
 	    Watcher.startWatch();
 	    watchStatus = Boolean.TRUE;
@@ -424,17 +424,17 @@ public class MetaCreator {
     public void scanForBeans(URL[] archives) throws IOException {
 
 	synchronized (this) {
-	    if (config == null && ObjectUtils.available(archives)) {
-		config = MetaContainer.getConfig(archives);
+	    if (configuration == null && ObjectUtils.available(archives)) {
+		configuration = MetaContainer.getConfig(archives);
 	    }
 	    try {
 		// starts RPC server if configured as remote and server
-		if (config.isRemote() && Configuration.isServer()) {
-		    RpcListener.startServer(config);
-		} else if (config.isRemote()) {
-		    RPCall.configure(config);
+		if (configuration.isRemote() && Configuration.isServer()) {
+		    RpcListener.startServer(configuration);
+		} else if (configuration.isRemote()) {
+		    RPCall.configure(configuration);
 		}
-		String[] libraryPaths = config.getLibraryPaths();
+		String[] libraryPaths = configuration.getLibraryPaths();
 		// Loads libraries from specified path
 		if (ObjectUtils.notNull(libraryPaths)) {
 		    LibraryLoader.loadLibraries(libraryPaths);
@@ -454,14 +454,14 @@ public class MetaCreator {
 		Set<String> beanNames = annotationDB.getAnnotationIndex().get(
 			Stateless.class.getName());
 		classOwnersURL = annotationDB.getClassOwnersURLs();
-		DataSourceInitializer.initializeDataSources(config);
+		DataSourceInitializer.initializeDataSources(configuration);
 		if (ObjectUtils.available(beanNames)) {
 		    deployBeans(beanNames);
 		}
 	    } finally {
 
 		// Caches configuration
-		MetaContainer.putConfig(archives, config);
+		MetaContainer.putConfig(archives, configuration);
 		// clears cached resources
 		clear();
 		// gets rid from all created temporary files
@@ -498,9 +498,10 @@ public class MetaCreator {
     public void scanForBeans(String... paths) throws IOException {
 
 	if (ObjectUtils.notAvailable(paths)
-		&& ObjectUtils.available(config.getDeploymentPath())) {
+		&& ObjectUtils.available(configuration.getDeploymentPath())) {
 
-	    Set<DeploymentDirectory> deployments = config.getDeploymentPath();
+	    Set<DeploymentDirectory> deployments = configuration
+		    .getDeploymentPath();
 	    List<String> pathList = new ArrayList<String>();
 	    File deployFile;
 	    for (DeploymentDirectory deployment : deployments) {
@@ -557,7 +558,7 @@ public class MetaCreator {
 	    classOwnersURL = null;
 	}
 
-	config = null;
+	configuration = null;
     }
 
     /**
@@ -583,15 +584,15 @@ public class MetaCreator {
 	public Builder(boolean cloneConfiguration) throws IOException {
 
 	    creator = MetaCreator.get();
-	    Configuration config = creator.config;
+	    Configuration config = creator.configuration;
 	    if (cloneConfiguration && ObjectUtils.notNull(config)) {
 		try {
-		    creator.config = (Configuration) config.clone();
+		    creator.configuration = (Configuration) config.clone();
 		} catch (CloneNotSupportedException ex) {
 		    throw new IOException(ex);
 		}
 	    } else {
-		creator.config = new Configuration();
+		creator.configuration = new Configuration();
 	    }
 	}
 
@@ -617,7 +618,8 @@ public class MetaCreator {
 	    if (ObjectUtils.available(properties)) {
 		Map<Object, Object> persistenceProperties = new HashMap<Object, Object>();
 		persistenceProperties.putAll(properties);
-		creator.config.setPersistenceProperties(persistenceProperties);
+		creator.configuration
+			.setPersistenceProperties(persistenceProperties);
 	    }
 
 	    return this;
@@ -631,7 +633,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setScanForEntities(boolean scanForEnt) {
-	    creator.config.setScanForEntities(scanForEnt);
+	    creator.configuration.setScanForEntities(scanForEnt);
 
 	    return this;
 	}
@@ -646,7 +648,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setUnitName(String unitName) {
-	    creator.config.setAnnotatedUnitName(unitName);
+	    creator.configuration.setAnnotatedUnitName(unitName);
 
 	    return this;
 	}
@@ -658,8 +660,8 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPersXmlPath(String path) {
-	    creator.config.setPersXmlPath(path);
-	    creator.config.setScanArchives(Boolean.FALSE);
+	    creator.configuration.setPersXmlPath(path);
+	    creator.configuration.setScanArchives(Boolean.FALSE);
 
 	    return this;
 	}
@@ -671,7 +673,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setLibraryPath(String... libPaths) {
-	    creator.config.setLibraryPaths(libPaths);
+	    creator.configuration.setLibraryPaths(libPaths);
 
 	    return this;
 	}
@@ -684,7 +686,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setXmlFromJar(boolean xmlFromJar) {
-	    creator.config.setPersXmlFromJar(xmlFromJar);
+	    creator.configuration.setPersXmlFromJar(xmlFromJar);
 
 	    return this;
 	}
@@ -697,7 +699,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setSwapDataSource(boolean swapDataSource) {
-	    creator.config.setSwapDataSource(swapDataSource);
+	    creator.configuration.setSwapDataSource(swapDataSource);
 
 	    return this;
 	}
@@ -709,7 +711,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder addDataSourcePath(String dataSourcePath) {
-	    creator.config.addDataSourcePath(dataSourcePath);
+	    creator.configuration.addDataSourcePath(dataSourcePath);
 
 	    return this;
 	}
@@ -723,7 +725,7 @@ public class MetaCreator {
 	 */
 	@Deprecated
 	public Builder setDataSourcePath(String dataSourcePath) {
-	    creator.config.addDataSourcePath(dataSourcePath);
+	    creator.configuration.addDataSourcePath(dataSourcePath);
 
 	    return this;
 	}
@@ -736,7 +738,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setScanArchives(boolean scanArchives) {
-	    creator.config.setScanArchives(scanArchives);
+	    creator.configuration.setScanArchives(scanArchives);
 
 	    return this;
 	}
@@ -760,7 +762,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setRemote(boolean remote) {
-	    creator.config.setRemote(remote);
+	    creator.configuration.setRemote(remote);
 
 	    return this;
 	}
@@ -774,7 +776,7 @@ public class MetaCreator {
 	 */
 	public Builder setServer(boolean server) {
 	    Configuration.setServer(server);
-	    creator.config.setClient(!server);
+	    creator.configuration.setClient(!server);
 
 	    return this;
 	}
@@ -786,7 +788,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setClient(boolean client) {
-	    creator.config.setClient(client);
+	    creator.configuration.setClient(client);
 	    Configuration.setServer(!client);
 
 	    return this;
@@ -800,7 +802,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setProperty(String key, String property) {
-	    creator.config.putValue(key, property);
+	    creator.configuration.putValue(key, property);
 
 	    return this;
 	}
@@ -825,7 +827,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setIpAddress(String property) {
-	    creator.config.putValue(Configuration.IP_ADDRESS, property);
+	    creator.configuration.putValue(Configuration.IP_ADDRESS, property);
 
 	    return this;
 	}
@@ -837,7 +839,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPort(String property) {
-	    creator.config.putValue(Configuration.PORT, property);
+	    creator.configuration.putValue(Configuration.PORT, property);
 
 	    return this;
 	}
@@ -850,7 +852,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setMasterThreads(String property) {
-	    creator.config.putValue(Configuration.BOSS_POOL, property);
+	    creator.configuration.putValue(Configuration.BOSS_POOL, property);
 
 	    return this;
 	}
@@ -863,7 +865,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setWorkerThreads(String property) {
-	    creator.config.putValue(Configuration.WORKER_POOL, property);
+	    creator.configuration.putValue(Configuration.WORKER_POOL, property);
 
 	    return this;
 	}
@@ -878,7 +880,7 @@ public class MetaCreator {
 	 */
 	public Builder addDeploymentPath(String deploymentPath, boolean scan) {
 	    String clearPath = WatchUtils.clearPath(deploymentPath);
-	    creator.config.addDeploymentPath(clearPath, scan);
+	    creator.configuration.addDeploymentPath(clearPath, scan);
 
 	    return this;
 	}
@@ -903,7 +905,8 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setTimeout(String property) {
-	    creator.config.putValue(Configuration.CONNECTION_TIMEOUT, property);
+	    creator.configuration.putValue(Configuration.CONNECTION_TIMEOUT,
+		    property);
 
 	    return this;
 	}
@@ -980,13 +983,13 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setHotDeployment(boolean hotDeployment) {
-	    creator.config.setHotDeployment(hotDeployment);
+	    creator.configuration.setHotDeployment(hotDeployment);
 
 	    return this;
 	}
 
 	public MetaCreator build() throws IOException {
-	    creator.config.configure();
+	    creator.configuration.configure();
 	    LOG.info("Lightmare application starts working");
 
 	    return creator;
