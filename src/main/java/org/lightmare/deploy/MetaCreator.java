@@ -662,6 +662,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Adds path for additional libraries to load at start time
+	 * 
+	 * @param path
+	 * @return {@link Builder}
+	 */
 	public Builder setLibraryPath(String... libPaths) {
 	    creator.config.setLibraryPaths(libPaths);
 
