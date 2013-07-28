@@ -931,6 +931,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets path for data source pool additional properties
+	 * 
+	 * @param path
+	 * @return {@link Builder}
+	 */
 	public Builder setPoolPropertiesPath(String path) {
 	    PoolConfig.poolPath = path;
 
