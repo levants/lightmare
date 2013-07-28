@@ -169,6 +169,13 @@ public class EjbConnector {
 	return beanInstance;
     }
 
+    /**
+     * Initializes and caches all interfaces for bean class from passed
+     * {@link MetaData} instance
+     * 
+     * @param metaData
+     * @return {@link Class}[]
+     */
     private Class<?>[] setInterfaces(MetaData metaData) {
 
 	Class<?>[] interfaceClasses = metaData.getInterfaceClasses();
