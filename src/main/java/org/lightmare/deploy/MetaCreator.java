@@ -956,6 +956,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Adds instance property for pooled data source
+	 * 
+	 * @param key
+	 * @param value
+	 * @return {@link Builder}
+	 */
 	public Builder addPoolProperty(Object key, Object value) {
 	    initPoolProperties();
 	    PoolConfig.poolProperties.put(key, value);
