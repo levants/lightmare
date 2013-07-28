@@ -107,6 +107,7 @@ public class PoolConfig {
 	DBCP, C3P0, TOMCAT;
     }
 
+    // Default pool provider type
     public static PoolProviderType poolProviderType = PoolProviderType.C3P0;
 
     /**
