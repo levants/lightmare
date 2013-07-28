@@ -22,6 +22,7 @@ import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
@@ -32,8 +33,6 @@ import org.lightmare.utils.reflect.MetaUtils;
  * 
  */
 public class EjbConnector {
-
-    private static final int RPC_ARGS_LENGTH = 2;
 
     /**
      * Gets {@link MetaData} from {@link MetaContainer} and waits while
@@ -235,9 +234,8 @@ public class EjbConnector {
 	    handler = getHandler(metaData);
 	    loader = metaData.getLoader();
 	} else {
-	    if (rpcArgs.length != RPC_ARGS_LENGTH) {
-		throw new IOException(
-			"Could not resolve host and port arguments");
+	    if (rpcArgs.length != RpcUtils.RPC_ARGS_LENGTH) {
+		throw new IOException(RpcUtils.RPC_ARGS_ERROR);
 	    }
 	    String host = (String) rpcArgs[0];
 	    int port = (Integer) rpcArgs[1];
