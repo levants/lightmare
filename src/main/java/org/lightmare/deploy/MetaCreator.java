@@ -754,7 +754,7 @@ public class MetaCreator {
 	/**
 	 * Sets propert
 	 * 
-	 * @param path
+	 * @param remote
 	 * @return {@link Builder}
 	 */
 	public Builder setRemote(boolean remote) {
