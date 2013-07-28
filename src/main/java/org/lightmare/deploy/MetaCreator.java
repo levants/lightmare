@@ -752,7 +752,7 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Sets propert
+	 * Sets property is server or not in embedded mode
 	 * 
 	 * @param remote
 	 * @return {@link Builder}
