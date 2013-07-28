@@ -600,7 +600,7 @@ public class MetaCreator {
 
 	private void initPoolProperties() {
 
-	    if (ObjectUtils.notAvailable(PoolConfig.poolProperties)) {
+	    if (PoolConfig.poolProperties == null) {
 		PoolConfig.poolProperties = new HashMap<Object, Object>();
 	    }
 	}
