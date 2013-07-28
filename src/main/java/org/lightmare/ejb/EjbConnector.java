@@ -35,8 +35,8 @@ import org.lightmare.utils.reflect.MetaUtils;
 public class EjbConnector {
 
     /**
-     * Gets {@link MetaData} from {@link MetaContainer} and waits while
-     * {@link MetaData#isInProgress()}
+     * Gets {@link MetaData} from {@link MetaContainer} if it is not locked or
+     * waits while {@link MetaData#isInProgress()} is true
      * 
      * @param beanName
      * @return {@link MetaData}
