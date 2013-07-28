@@ -790,6 +790,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * To add any additional property
+	 * 
+	 * @param key
+	 * @param property
+	 * @return {@link Builder}
+	 */
 	public Builder setProperty(String key, String property) {
 	    creator.config.putValue(key, property);
 
