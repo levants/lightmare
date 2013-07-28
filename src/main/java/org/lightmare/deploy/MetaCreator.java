@@ -634,6 +634,15 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Adds property to use only {@link org.lightmare.annotations.UnitName}
+	 * annotated entities for which
+	 * {@link org.lightmare.annotations.UnitName#value()} matches passed
+	 * unit name
+	 * 
+	 * @param scanForEnt
+	 * @return {@link Builder}
+	 */
 	public Builder setUnitName(String unitName) {
 	    creator.config.setAnnotatedUnitName(unitName);
 
