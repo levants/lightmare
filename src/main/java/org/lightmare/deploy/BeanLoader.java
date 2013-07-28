@@ -236,7 +236,7 @@ public class BeanLoader {
 
 	private MetaData metaData;
 
-	private CountDownLatch conn;
+	private CountDownLatch blocker;
 
 	private boolean isCounted;
 
@@ -255,7 +255,7 @@ public class BeanLoader {
 	    this.loader = parameters.loader;
 	    this.tmpFiles = parameters.tmpFiles;
 	    this.metaData = parameters.metaData;
-	    this.conn = parameters.conn;
+	    this.blocker = parameters.blocker;
 	    this.deployData = parameters.deployData;
 	    this.config = parameters.config;
 	}
@@ -288,7 +288,7 @@ public class BeanLoader {
 	 */
 	private void notifyConn() {
 	    if (!isCounted) {
-		conn.countDown();
+		blocker.countDown();
 		isCounted = Boolean.TRUE;
 	    }
 	}
@@ -741,7 +741,7 @@ public class BeanLoader {
 
 	public List<File> tmpFiles;
 
-	public CountDownLatch conn;
+	public CountDownLatch blocker;
 
 	public MetaData metaData;
 

@@ -64,7 +64,7 @@ public class MetaCreator {
     private boolean await;
 
     // Blocker for deployments
-    private CountDownLatch conn;
+    private CountDownLatch blocker;
 
     // Data for cache at deploy time
     private Map<String, AbstractIOUtils> aggregateds = new HashMap<String, AbstractIOUtils>();
@@ -319,7 +319,7 @@ public class MetaCreator {
      */
     private void awaitDeployments() {
 	try {
-	    conn.await();
+	    blocker.await();
 	} catch (InterruptedException ex) {
 	    LOG.error(ex);
 	}
@@ -374,7 +374,7 @@ public class MetaCreator {
 	parameters.className = beanName;
 	parameters.loader = loader;
 	parameters.tmpFiles = tmpFiles;
-	parameters.conn = conn;
+	parameters.blocker = blocker;
 	parameters.deployData = deployData;
 	parameters.config = config;
 
@@ -391,7 +391,7 @@ public class MetaCreator {
      * @param beanNames
      */
     private void deployBeans(Set<String> beanNames) {
-	conn = new CountDownLatch(beanNames.size());
+	blocker = new CountDownLatch(beanNames.size());
 	for (String beanName : beanNames) {
 	    LOG.info(String.format("deploing bean %s", beanName));
 	    try {
