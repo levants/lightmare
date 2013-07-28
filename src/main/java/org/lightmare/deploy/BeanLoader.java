@@ -125,7 +125,7 @@ public class BeanLoader {
 
 	private Properties properties;
 
-	private CountDownLatch dsLatch;
+	private CountDownLatch blocker;
 
 	private boolean countedDown;
 
@@ -133,13 +133,13 @@ public class BeanLoader {
 
 	    this.initializer = parameters.initializer;
 	    this.properties = parameters.properties;
-	    this.dsLatch = parameters.dsLatch;
+	    this.blocker = parameters.blocker;
 	}
 
-	private void notifyDs() {
+	private void releaseBlocker() {
 
 	    if (ObjectUtils.notTrue(countedDown)) {
-		dsLatch.countDown();
+		blocker.countDown();
 		countedDown = Boolean.TRUE;
 	    }
 	}
@@ -156,7 +156,7 @@ public class BeanLoader {
 		result = Boolean.FALSE;
 		LOG.error("Could not initialize datasource", ex);
 	    } finally {
-		notifyDs();
+		releaseBlocker();
 		LibraryLoader.loadCurrentLibraries(loader);
 	    }
 
@@ -768,7 +768,7 @@ public class BeanLoader {
 
 	public String poolPath;
 
-	public CountDownLatch dsLatch;
+	public CountDownLatch blocker;
     }
 
     private static ClassLoader getCurrent() {

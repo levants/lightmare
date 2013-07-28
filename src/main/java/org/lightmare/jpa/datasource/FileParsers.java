@@ -322,7 +322,7 @@ public class FileParsers {
 		parameters = new BeanLoader.DataSourceParameters();
 		parameters.initializer = initializer;
 		parameters.properties = props;
-		parameters.dsLatch = dsLatch;
+		parameters.blocker = dsLatch;
 		BeanLoader.initializeDatasource(parameters);
 
 	    } catch (IOException ex) {
