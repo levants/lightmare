@@ -23,19 +23,23 @@ public class LightmareInitialContextFactoryBuilder implements
     @Override
     public InitialContextFactory createInitialContextFactory(Hashtable<?, ?> env)
 	    throws NamingException {
+
+	InitialContextFactory initialContextFactory;
 	String requestedFactory = null;
 	if (ObjectUtils.notNull(env)) {
 	    requestedFactory = (String) env
 		    .get(Context.INITIAL_CONTEXT_FACTORY);
 	}
 	if (ObjectUtils.notNull(requestedFactory)) {
-	    return simulateBuilderlessNamingManager(requestedFactory);
+	    initialContextFactory = simulateBuilderLessNamingManager(requestedFactory);
+	} else {
+	    initialContextFactory = new LightmareInitialContextFactory();
 	}
-	return new LightmareInitialContextFactory();
 
+	return initialContextFactory;
     }
 
-    private InitialContextFactory simulateBuilderlessNamingManager(
+    private InitialContextFactory simulateBuilderLessNamingManager(
 	    String requestedFactory) throws NoInitialContextException {
 	try {
 	    Class<?> requestedClass = MetaUtils
