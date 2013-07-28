@@ -778,7 +778,7 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Additional boolean check is application in just client mode or not
+	 * Sets boolean check is application in just client mode or not
 	 * 
 	 * @param client
 	 * @return {@link Builder}
