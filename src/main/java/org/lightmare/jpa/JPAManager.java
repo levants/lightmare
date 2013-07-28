@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
-import javax.persistence.Entity;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -474,6 +473,12 @@ public class JPAManager {
 	    return this;
 	}
 
+	/**
+	 * Sets {@link URL} for persistence.xml file
+	 * 
+	 * @param url
+	 * @return {@link Builder}
+	 */
 	public Builder setURL(URL url) {
 	    manager.url = url;
 	    return this;
