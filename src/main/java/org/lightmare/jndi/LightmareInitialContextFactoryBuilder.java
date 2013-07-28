@@ -12,7 +12,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
- * Extension of factory builder class {@link InitialContextFactoryBuilder}
+ * Implementation of {@link InitialContextFactoryBuilder} factory builder class
  * 
  * @author levan
  * 
@@ -48,7 +48,7 @@ public class LightmareInitialContextFactoryBuilder implements
 	    return (InitialContextFactory) requestedClass.newInstance();
 	} catch (Exception ex) {
 	    NoInitialContextException ne = new NoInitialContextException(
-		    "there is not initial cotext");
+		    "Could not find initial cotext");
 	    ne.setRootCause(ex);
 	    throw ne;
 	}
