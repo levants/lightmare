@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
+import javax.persistence.Entity;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -462,6 +463,12 @@ public class JPAManager {
 	    manager.scanArchives = Boolean.TRUE;
 	}
 
+	/**
+	 * Sets {@link javax.persistence.Entity} class names to initialize
+	 * 
+	 * @param classes
+	 * @return {@link Builder}
+	 */
 	public Builder setClasses(List<String> classes) {
 	    manager.classes = classes;
 	    return this;
