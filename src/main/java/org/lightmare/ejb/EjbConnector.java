@@ -257,7 +257,7 @@ public class EjbConnector {
 
     /**
      * Creates custom implementation of bean {@link Class} by class name and its
-     * proxy interface name
+     * {@link Proxy} interface name
      * 
      * @param beanName
      * @param interfaceName
