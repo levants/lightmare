@@ -336,7 +336,7 @@ public class MetaContainer {
 		    semaphore = JPAManager.getConnection(unitName);
 		}
 		if (ObjectUtils.notNull(semaphore)
-			&& semaphore.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS_IN_PARALLEL) {
+			&& semaphore.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS) {
 		    JPAManager.removeConnection(unitName);
 		}
 	    }

@@ -31,7 +31,8 @@ public class ConnectionSemaphore {
     // Check if needs configure EntityManagerFactory
     private AtomicBoolean check = new AtomicBoolean();
 
-    public static final int MINIMAL_USERS_IN_PARALLEL = 1;
+    // Default semaphore capacity
+    public static final int MINIMAL_USERS = 1;
 
     public boolean isInProgress() {
 	return inProgress.get();
