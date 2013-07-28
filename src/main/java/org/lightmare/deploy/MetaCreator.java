@@ -640,7 +640,7 @@ public class MetaCreator {
 	 * {@link org.lightmare.annotations.UnitName#value()} matches passed
 	 * unit name
 	 * 
-	 * @param scanForEnt
+	 * @param unitName
 	 * @return {@link Builder}
 	 */
 	public Builder setUnitName(String unitName) {
