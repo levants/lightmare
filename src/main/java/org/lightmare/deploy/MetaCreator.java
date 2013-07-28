@@ -943,6 +943,12 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets data source pool additional properties
+	 * 
+	 * @param properties
+	 * @return {@link Builder}
+	 */
 	public Builder setPoolProperties(Properties properties) {
 	    initPoolProperties();
 	    PoolConfig.poolProperties.putAll(properties);
