@@ -621,6 +621,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Adds property to scan for {@link javax.persistence.Entity} annotated
+	 * classes from deployed archives
+	 * 
+	 * @param scanForEnt
+	 * @return {@link Builder}
+	 */
 	public Builder setScanForEntities(boolean scanForEnt) {
 	    creator.config.setScanForEntities(scanForEnt);
 
