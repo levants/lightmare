@@ -191,7 +191,7 @@ public class MetaCreator {
      * @throws IOException
      */
     protected void configureConnection(String unitName, String beanName,
-	    ClassLoader loader, Configuration cloneConfig) throws IOException {
+	    ClassLoader loader, Configuration configClone) throws IOException {
 
 	JPAManager.Builder builder = new JPAManager.Builder();
 	Map<String, String> classOwnersFiles = annotationDB
@@ -202,12 +202,12 @@ public class MetaCreator {
 	    URL jarURL = ioUtils.getAppropriatedURL(classOwnersFiles, beanName);
 	    builder.setURL(jarURL);
 	}
-	if (cloneConfig.isScanForEntities()) {
+	if (configClone.isScanForEntities()) {
 	    Set<String> classSet;
 	    Map<String, Set<String>> annotationIndex = annotationDB
 		    .getAnnotationIndex();
 	    classSet = annotationIndex.get(Entity.class.getName());
-	    String annotatedUnitName = cloneConfig.getAnnotatedUnitName();
+	    String annotatedUnitName = configClone.getAnnotatedUnitName();
 	    if (annotatedUnitName == null) {
 		classSet = annotationIndex.get(Entity.class.getName());
 	    } else if (annotatedUnitName.equals(unitName)) {
@@ -219,13 +219,13 @@ public class MetaCreator {
 		String fileNameForBean = classOwnersFiles.get(beanName);
 		filterEntitiesForJar(classSet, fileNameForBean);
 	    }
-	    List<String> classes = filterEntities(classSet, cloneConfig);
+	    List<String> classes = filterEntities(classSet, configClone);
 	    builder.setClasses(classes);
 	}
-	builder.setPath(cloneConfig.getPersXmlPath())
-		.setProperties(cloneConfig.getPersistenceProperties())
-		.setSwapDataSource(cloneConfig.isSwapDataSource())
-		.setScanArchives(cloneConfig.isScanArchives())
+	builder.setPath(configClone.getPersXmlPath())
+		.setProperties(configClone.getPersistenceProperties())
+		.setSwapDataSource(configClone.isSwapDataSource())
+		.setScanArchives(configClone.isScanArchives())
 		.setClassLoader(loader).build().setConnection(unitName);
     }
 
