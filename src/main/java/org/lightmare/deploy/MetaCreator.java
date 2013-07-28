@@ -763,6 +763,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets property is application server or just client for other remote
+	 * server
+	 * 
+	 * @param server
+	 * @return {@link Builder}
+	 */
 	public Builder setServer(boolean server) {
 	    Configuration.setServer(server);
 	    creator.config.setClient(!server);
