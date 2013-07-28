@@ -286,7 +286,7 @@ public class BeanLoader {
 	 * Increases {@link CountDownLatch} conn if it is first time in current
 	 * thread
 	 */
-	private void notifyConn() {
+	private void releaseBlocker() {
 	    if (ObjectUtils.notTrue(isCounted)) {
 		blocker.countDown();
 		isCounted = Boolean.TRUE;
@@ -306,7 +306,7 @@ public class BeanLoader {
 	    try {
 		MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
 	    } catch (BeanInUseException ex) {
-		notifyConn();
+		releaseBlocker();
 		throw ex;
 	    }
 	}
@@ -364,14 +364,14 @@ public class BeanLoader {
 	    ConnectionSemaphore semaphore;
 
 	    if (checkForEmf) {
-		notifyConn();
+		releaseBlocker();
 		semaphore = JPAManager.getSemaphore(unitName);
 		connection.setConnection(semaphore);
 	    } else {
 		// Sets connection semaphore for this connection
 		semaphore = JPAManager.setSemaphore(unitName, jndiName);
 		connection.setConnection(semaphore);
-		notifyConn();
+		releaseBlocker();
 		if (ObjectUtils.notNull(semaphore)) {
 		    lockSemaphore(semaphore, unitName, jndiName);
 		}
@@ -429,7 +429,7 @@ public class BeanLoader {
 	    Resource resource;
 	    EJB ejbAnnot;
 	    if (fields == null || fields.length == 0) {
-		notifyConn();
+		releaseBlocker();
 	    }
 	    for (Field field : fields) {
 		context = field.getAnnotation(PersistenceContext.class);
@@ -465,7 +465,7 @@ public class BeanLoader {
 	    if (Configuration.isServer()) {
 		retrieveConnections();
 	    } else {
-		notifyConn();
+		releaseBlocker();
 	    }
 
 	    metaData.setLoader(loader);
@@ -648,7 +648,7 @@ public class BeanLoader {
 		return beanEjbName;
 
 	    } catch (IOException ex) {
-		notifyConn();
+		releaseBlocker();
 		throw ex;
 	    }
 	}
@@ -706,7 +706,7 @@ public class BeanLoader {
 		    LOG.error(ex.getMessage(), ex);
 		    deployed = null;
 		} finally {
-		    notifyConn();
+		    releaseBlocker();
 		    metaData.notifyAll();
 		}
 
