@@ -703,7 +703,7 @@ public class MetaCreator {
 	/**
 	 * Adds path for data source file
 	 * 
-	 * @param path
+	 * @param dataSourcePath
 	 * @return {@link Builder}
 	 */
 	public Builder addDataSourcePath(String dataSourcePath) {
