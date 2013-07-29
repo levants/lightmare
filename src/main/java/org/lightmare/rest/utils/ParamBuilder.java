@@ -46,10 +46,13 @@ public class ParamBuilder {
 
     private List<Object> paramsList;
 
+    // Value of not available InputStream check
     private static final int ZERO_AVAILABLE_STREAM = 0;
 
+    // Default index for parameters (used for MultivaluedMap)
     private static final int PARAM_VALUES_INDEX = 0;
 
+    // Default length of parameters list (used for MultivaluedMap)
     private static final int PARAM_VALIES_LENGTH = 1;
 
     private ParamBuilder() {
