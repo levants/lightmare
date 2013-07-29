@@ -56,15 +56,11 @@
 		<!-- jersey -->
 		<jersey.version>2.0</jersey.version>
 		<!-- end of jersey -->
-		<!-- tomcat jdbc -->
+		<!-- data sources on connection pooling -->
 		<tomcat-jdbc.version>7.0.37</tomcat-jdbc.version>
-		<!-- end of tomcat jdbc -->
-		<!-- c3p0 -->
 		<c3p0.version>0.9.2</c3p0.version>
-		<!-- end of c3p0 -->
-		<!-- dbcp -->
 		<dbcp.version>1.4</dbcp.version>
-		<!-- end of dbcp -->
+		<!-- end of data sources and connection pooling -->
 	</properties>
 
 	<build>
