@@ -36,9 +36,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- java ee components versions -->
-		<jaxrs.version>2.0</jaxrs.version>
 		<jta.version>3.8.0</jta.version>
 		<servlet.version>3.0.1</servlet.version>
+		<jaxrs.version>2.0</jaxrs.version>
 		<!-- end of java ee components versions -->
 		<!-- hibernate -->
 		<hibernate.version>4.2.3.Final</hibernate.version>
