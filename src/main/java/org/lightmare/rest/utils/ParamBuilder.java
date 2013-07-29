@@ -327,6 +327,12 @@ public class ParamBuilder {
 	    return this;
 	}
 
+	/**
+	 * Adds {@link List}<Parameter> necessary parameter
+	 * 
+	 * @param parameters
+	 * @return {@link Builder}
+	 */
 	public ParamBuilder.Builder setParameters(List<Parameter> parameters) {
 	    target.parameters = parameters;
 
