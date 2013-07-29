@@ -19,6 +19,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class InvocationContextImpl implements InvocationContext {
 
+    // Caches methods in order for proceed calls
     private Queue<Method> methods = new LinkedList<Method>();
 
     private Object[] parameters;
