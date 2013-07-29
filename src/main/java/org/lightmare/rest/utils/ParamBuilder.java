@@ -315,6 +315,12 @@ public class ParamBuilder {
 	    target = new ParamBuilder();
 	}
 
+	/**
+	 * Adds {@link MediaType} necessary parameter
+	 * 
+	 * @param mediaType
+	 * @return {@link Builder}
+	 */
 	public ParamBuilder.Builder setMediaType(MediaType mediaType) {
 	    target.mediaType = mediaType;
 
