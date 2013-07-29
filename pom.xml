@@ -161,6 +161,13 @@
 			<scope>provided</scope>
 			<classifier>sources</classifier>
 		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>javax.transaction-api</artifactId>
+			<version>${jta.version}</version>
+			<scope>provided</scope>
+			<classifier>javadoc</classifier>
+		</dependency>
 		<!-- end of jta -->
 
 		<!-- cdi -->
