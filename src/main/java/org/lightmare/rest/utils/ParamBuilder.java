@@ -351,6 +351,12 @@ public class ParamBuilder {
 	    return this;
 	}
 
+	/**
+	 * Adds {@link ContainerRequestContext} necessary parameter
+	 * 
+	 * @param request
+	 * @return {@link Builder}
+	 */
 	public ParamBuilder.Builder setRequest(ContainerRequestContext request) {
 	    target.request = request;
 
