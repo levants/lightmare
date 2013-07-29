@@ -66,6 +66,12 @@ public class InvocationContextImpl implements InvocationContext {
     }
 
     @Override
+    public Object getTimer() {
+
+	return null;
+    }
+
+    @Override
     public Object proceed() throws Exception {
 
 	Method method = methods.poll();
