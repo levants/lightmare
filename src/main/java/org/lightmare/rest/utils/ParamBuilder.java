@@ -32,13 +32,13 @@ public class ParamBuilder {
 
     private List<Parameter> parameters;
 
+    private MessageBodyWorkers workers;
+
     private ContainerRequestContext request;
 
     private MultivaluedMap<String, String> httpHeaders;
 
     private MultivaluedMap<String, String> uriParams;
-
-    private MessageBodyWorkers workers;
 
     private MessageBodyReader<?> reader;
 
