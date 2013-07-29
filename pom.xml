@@ -49,7 +49,7 @@
 		<jackson.version>2.2.0</jackson.version>
 		<!-- end of jackson -->
 		<!-- jetty -->
-		<jetty.version>9.0.3.v20130506</jetty.version>
+		<jetty.version>9.0.4.v20130625</jetty.version>
 		<!-- end of jetty -->
 		<!-- jersey -->
 		<jersey.version>2.0</jersey.version>
