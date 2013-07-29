@@ -38,6 +38,7 @@
 		<!-- java ee components versions -->
 		<ejb.version>3.2</ejb.version>
 		<jta.version>1.2</jta.version>
+		<cdi.version>1.1</cdi.version>
 		<servlet.version>3.0.1</servlet.version>
 		<jaxrs.version>2.0</jaxrs.version>
 		<!-- end of java ee components versions -->
@@ -154,13 +155,13 @@
 		</dependency>
 		<!-- end of jta -->
 
-		<!-- interceptors -->
+		<!-- cdi -->
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
-			<version>1.1</version>
+			<version>cdi.version</version>
 		</dependency>
-		<!-- end of interceptors -->
+		<!-- end of cdi -->
 
 		<!-- servlet -->
 		<dependency>
