@@ -61,6 +61,8 @@ public class ResourceBuilder {
 	Invocable invocable = method.getInvocable();
 	Method realMethod = invocable.getHandlingMethod();
 	List<Parameter> parameters = invocable.getParameters();
+
+	// Defines media type
 	MediaType type;
 	if (ObjectUtils.available(consumedTypes)) {
 	    type = ObjectUtils.getFirst(consumedTypes);
@@ -70,6 +72,8 @@ public class ResourceBuilder {
 	// Inflector to define bean methods
 	Inflector<ContainerRequestContext, Response> inflector = new RestInflector(
 		realMethod, metaData, type, parameters);
+
+	// Builds new method for resource
 	ResourceMethod.Builder methodBuilder = builder.addMethod(method
 		.getHttpMethod());
 	methodBuilder.consumes(consumedTypes);
