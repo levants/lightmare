@@ -305,8 +305,6 @@ public class ParamBuilder {
 	return paramsList;
     }
 
-    // TODO Check if there is a another way to create ParamBuilder instance or
-    // check all parameters not to be null
     public static final class Builder {
 
 	private ParamBuilder target;
@@ -365,6 +363,10 @@ public class ParamBuilder {
 
 	public ParamBuilder build() throws IOException {
 
+	    // TODO Check if there is a another way to create ParamBuilder
+	    // instance or
+
+	    // checks all parameters not to be null
 	    target.checkOnBuild();
 
 	    return target;
