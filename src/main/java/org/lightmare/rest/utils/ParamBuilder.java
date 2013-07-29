@@ -339,6 +339,12 @@ public class ParamBuilder {
 	    return this;
 	}
 
+	/**
+	 * Adds {@link MessageBodyWorkers} necessary parameter
+	 * 
+	 * @param workers
+	 * @return {@link Builder}
+	 */
 	public ParamBuilder.Builder setWorkers(MessageBodyWorkers workers) {
 	    target.workers = workers;
 
