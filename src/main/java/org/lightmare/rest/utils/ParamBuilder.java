@@ -258,6 +258,14 @@ public class ParamBuilder {
 	}
     }
 
+    /**
+     * Reads from {@link InputStream} or {@link List} of {@link InputStream} in
+     * case that parameters are multi valued
+     * 
+     * @param stream
+     * @param parameter
+     * @throws IOException
+     */
     private void fillParamList(Object stream, Parameter parameter)
 	    throws IOException {
 
