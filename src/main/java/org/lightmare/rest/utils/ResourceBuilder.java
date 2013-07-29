@@ -83,6 +83,14 @@ public class ResourceBuilder {
 	methodBuilder.build();
     }
 
+    /**
+     * Registers child resources for passed {@link Builder} from appropriate
+     * {@link Resource} instance
+     * 
+     * @param resource
+     * @param builder
+     * @throws IOException
+     */
     private static void registerChildren(Resource resource,
 	    Resource.Builder builder) throws IOException {
 
