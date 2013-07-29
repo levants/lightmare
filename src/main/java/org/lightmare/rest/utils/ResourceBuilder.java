@@ -83,6 +83,20 @@ public class ResourceBuilder {
 	methodBuilder.build();
     }
 
+    private static void registerChildren(Resource resource,
+	    Resource.Builder builder) throws IOException {
+
+	// Registers children resources recursively
+	List<Resource> children = resource.getChildResources();
+	if (ObjectUtils.available(children)) {
+	    Resource child;
+	    for (Resource preChild : children) {
+		child = rebuildResource(preChild);
+		builder.addChildResource(child);
+	    }
+	}
+    }
+
     /**
      * Builds new {@link Resource} from passed one with new
      * {@link org.glassfish.jersey.process.Inflector} implementation
@@ -104,14 +118,8 @@ public class ResourceBuilder {
 	    addMethod(builder, method, metaData);
 	}
 	// Registers children resources recursively
-	List<Resource> children = resource.getChildResources();
-	if (ObjectUtils.available(children)) {
-	    Resource child;
-	    for (Resource preChild : children) {
-		child = rebuildResource(preChild);
-		builder.addChildResource(child);
-	    }
-	}
+	registerChildren(resource, builder);
+
 	Resource intercepted = builder.build();
 
 	return intercepted;
