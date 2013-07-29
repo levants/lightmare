@@ -226,13 +226,13 @@ public class PoolConfig {
     }
 
     /**
-     * Gets property as {@link Integer} value
+     * Gets property as <code>int</int> value
      * 
      * @param properties
      * @param key
      * @return <code>int</code>
      */
-    public static int asInt(Map<Object, Object> properties, Object key) {
+    public static Integer asInt(Map<Object, Object> properties, Object key) {
 
 	Object property = properties.get(key);
 	Integer propertyInt;
