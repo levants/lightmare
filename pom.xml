@@ -127,7 +127,7 @@
 		<dependency>
 			<groupId>javax.ejb</groupId>
 			<artifactId>javax.ejb-api</artifactId>
-			<version>3.2</version>
+			<version>${ejb.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- TODO: This two dependencies must be unified -->
