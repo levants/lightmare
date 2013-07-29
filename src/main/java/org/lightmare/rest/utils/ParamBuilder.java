@@ -247,6 +247,13 @@ public class ParamBuilder {
 	paramsList.add(nullParam);
     }
 
+    /**
+     * Reads from {@link InputStream} to java {@link Object} instance
+     * 
+     * @param entityStream
+     * @param parameter
+     * @throws IOException
+     */
     private void readFromStream(InputStream entityStream, Parameter parameter)
 	    throws IOException {
 
