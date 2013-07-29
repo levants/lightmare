@@ -76,21 +76,12 @@ public class ResourceBuilder {
 	Resource.Builder builder = Resource.builder(resource.getPath());
 	builder.name(resource.getName());
 	List<ResourceMethod> methods = resource.getAllMethods();
-	ResourceMethod.Builder methodBuilder;
 	Collection<Class<?>> handlers = resource.getHandlerClasses();
 	Class<?> beanClass;
 	String beanEjbName;
 	beanClass = ObjectUtils.getFirst(handlers);
 	beanEjbName = BeanUtils.beanName(beanClass);
-	List<MediaType> consumedTypes;
-	List<MediaType> producedTypes;
-	Invocable invocable;
 	MetaData metaData = MetaContainer.getSyncMetaData(beanEjbName);
-	Method realMethod;
-	MediaType type;
-	List<Parameter> parameters;
-	// Inflector to define bean methods
-	Inflector<ContainerRequestContext, Response> inflector;
 	for (ResourceMethod method : methods) {
 	    addMethod(builder, method, metaData);
 	}
