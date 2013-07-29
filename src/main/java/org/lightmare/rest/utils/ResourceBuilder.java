@@ -84,8 +84,8 @@ public class ResourceBuilder {
     }
 
     /**
-     * Registers child resources for passed {@link Builder} from appropriate
-     * {@link Resource} instance
+     * Registers child resources for passed {@link Resource.Builder} from
+     * appropriate {@link Resource} instance
      * 
      * @param resource
      * @param builder
@@ -128,8 +128,8 @@ public class ResourceBuilder {
 	// Registers children resources recursively
 	registerChildren(resource, builder);
 
-	Resource intercepted = builder.build();
+	Resource rebuiltResource = builder.build();
 
-	return intercepted;
+	return rebuiltResource;
     }
 }
