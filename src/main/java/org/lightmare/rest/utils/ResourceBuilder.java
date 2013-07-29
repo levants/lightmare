@@ -77,10 +77,8 @@ public class ResourceBuilder {
 	builder.name(resource.getName());
 	List<ResourceMethod> methods = resource.getAllMethods();
 	Collection<Class<?>> handlers = resource.getHandlerClasses();
-	Class<?> beanClass;
-	String beanEjbName;
-	beanClass = ObjectUtils.getFirst(handlers);
-	beanEjbName = BeanUtils.beanName(beanClass);
+	Class<?> beanClass = ObjectUtils.getFirst(handlers);
+	String beanEjbName = BeanUtils.beanName(beanClass);
 	MetaData metaData = MetaContainer.getSyncMetaData(beanEjbName);
 	for (ResourceMethod method : methods) {
 	    addMethod(builder, method, metaData);
