@@ -64,6 +64,45 @@ public class ParamBuilder {
 	this.request = request;
     }
 
+    private String errorOnBuild() throws IOException {
+
+	String errorPrefix = "Could not initialize ";
+	String errorClass = this.getClass().getName();
+	String errorReasonPrefix = " caouse";
+	String errorReasonSuffix = "is null";
+
+	String errorMessageBody;
+	if (mediaType == null) {
+	    errorMessageBody = "mediaType";
+	} else if (parameters == null) {
+	    errorMessageBody = "parameters";
+	} else if (workers == null) {
+	    errorMessageBody = "workers";
+	} else if (request == null) {
+	    errorMessageBody = "request";
+	} else {
+	    throw new IOException("Could not find null value");
+	}
+
+	String errorMessage = new StringBuilder().append(errorPrefix)
+		.append(errorClass).append(errorReasonPrefix)
+		.append(errorMessageBody).append(errorReasonSuffix).toString();
+
+	return errorMessage;
+    }
+
+    private boolean checkOnBuild() throws IOException {
+
+	boolean valid = ObjectUtils.notNullAll(mediaType, parameters, workers,
+		request);
+
+	if (ObjectUtils.notTrue(valid)) {
+	    String errorMessage = errorOnBuild();
+	    throw new IOException(errorMessage);
+	}
+	return valid;
+    }
+
     private boolean check() throws IOException {
 
 	return ObjectUtils.notTrue(request.hasEntity())
