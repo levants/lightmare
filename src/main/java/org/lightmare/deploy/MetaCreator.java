@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -954,7 +953,8 @@ public class MetaCreator {
 	 * @param properties
 	 * @return {@link Builder}
 	 */
-	public Builder setPoolProperties(Properties properties) {
+	public Builder setPoolProperties(
+		Map<? extends Object, ? extends Object> properties) {
 	    initPoolProperties();
 	    PoolConfig.poolProperties.putAll(properties);
 
