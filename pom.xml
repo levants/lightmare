@@ -62,7 +62,9 @@
 		<!-- c3p0 -->
 		<c3p0.version>0.9.2</c3p0.version>
 		<!-- end of c3p0 -->
+		<!-- dbcp -->
 		<dbcp.version>1.4</dbcp.version>
+		<!-- end of dbcp -->
 	</properties>
 
 	<build>
