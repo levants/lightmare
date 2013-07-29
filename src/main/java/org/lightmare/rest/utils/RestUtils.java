@@ -14,8 +14,6 @@ import org.lightmare.rest.providers.RestReloader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.serialization.JsonSerializer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * Utility class for REST resources
  * 
@@ -23,8 +21,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 
  */
 public class RestUtils {
-
-    public static final ObjectMapper MAPPER = new ObjectMapper();
 
     private static RestConfig config;
 
