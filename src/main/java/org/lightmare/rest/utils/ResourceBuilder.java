@@ -28,6 +28,13 @@ import org.lightmare.utils.beans.BeanUtils;
  */
 public class ResourceBuilder {
 
+    /**
+     * Gets {@link MetaData} for resource handler {@link Class}es first value
+     * 
+     * @param resource
+     * @return {@link MetaData}
+     * @throws IOException
+     */
     private static MetaData getMetaData(Resource resource) throws IOException {
 
 	Collection<Class<?>> handlers = resource.getHandlerClasses();
