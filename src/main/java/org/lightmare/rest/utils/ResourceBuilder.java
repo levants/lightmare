@@ -28,6 +28,17 @@ import org.lightmare.utils.beans.BeanUtils;
  */
 public class ResourceBuilder {
 
+    private static MetaData getMetaData(Resource resource) throws IOException {
+
+	Collection<Class<?>> handlers = resource.getHandlerClasses();
+	Class<?> beanClass = ObjectUtils.getFirst(handlers);
+	String beanEjbName = BeanUtils.beanName(beanClass);
+
+	MetaData metaData = MetaContainer.getSyncMetaData(beanEjbName);
+
+	return metaData;
+    }
+
     /**
      * Defines method for {@link Resource} to build
      * 
@@ -75,11 +86,9 @@ public class ResourceBuilder {
 
 	Resource.Builder builder = Resource.builder(resource.getPath());
 	builder.name(resource.getName());
+	MetaData metaData = getMetaData(resource);
+
 	List<ResourceMethod> methods = resource.getAllMethods();
-	Collection<Class<?>> handlers = resource.getHandlerClasses();
-	Class<?> beanClass = ObjectUtils.getFirst(handlers);
-	String beanEjbName = BeanUtils.beanName(beanClass);
-	MetaData metaData = MetaContainer.getSyncMetaData(beanEjbName);
 	for (ResourceMethod method : methods) {
 	    addMethod(builder, method, metaData);
 	}
