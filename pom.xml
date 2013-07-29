@@ -144,20 +144,6 @@
 			<classifier>javadoc</classifier>
 			<scope>provided</scope>
 		</dependency>
-		<!-- TODO: This two dependencies must be unified -->
-		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>javax.ejb-api</artifactId>
-			<version>3.2-b02</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>javax.ejb-api</artifactId>
-			<version>3.2-b02</version>
-			<classifier>sources</classifier>
-			<scope>provided</scope>
-		</dependency>
 		<!-- end of ejb -->
 
 		<!-- jta -->
