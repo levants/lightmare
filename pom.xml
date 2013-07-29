@@ -47,7 +47,9 @@
 		<!-- netty -->
 		<netty.version>3.6.2.Final</netty.version>
 		<!-- end of netty -->
+		<!-- jackson -->
 		<jackson.version>2.2.0</jackson.version>
+		<!-- end of jackson -->
 		<jetty.version>9.0.3.v20130506</jetty.version>
 		<jersey.version>2.0</jersey.version>
 		<tomcat-jdbc.version>7.0.37</tomcat-jdbc.version>
