@@ -37,7 +37,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- java ee components versions -->
 		<ejb.version>3.0</ejb.version>
-		<jta.version>3.8.0</jta.version>
+		<jta.version>1.2</jta.version>
 		<servlet.version>3.0.1</servlet.version>
 		<jaxrs.version>2.0</jaxrs.version>
 		<!-- end of java ee components versions -->
@@ -152,6 +152,14 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- end of ejb -->
+
+		<!-- jta -->
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>javax.transaction-api</artifactId>
+			<version>${jta.version}</version>
+		</dependency>
+		<!-- end of jta -->
 
 		<!-- servlet -->
 		<dependency>
