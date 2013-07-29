@@ -160,6 +160,7 @@
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
 			<version>${cdi.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- end of cdi -->
 
