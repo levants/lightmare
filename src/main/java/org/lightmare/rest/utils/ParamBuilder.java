@@ -208,6 +208,15 @@ public class ParamBuilder {
 			mediaType);
     }
 
+    /**
+     * Extracts parameter from passed {@link InputStream} (writes appropriate
+     * value to {@link Object} instance)
+     * 
+     * @param parameter
+     * @param entityStream
+     * @return {@link Object}
+     * @throws IOException
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private Object extractParam(Parameter parameter, InputStream entityStream)
 	    throws IOException {
