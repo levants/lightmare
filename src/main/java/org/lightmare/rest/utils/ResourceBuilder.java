@@ -29,6 +29,38 @@ import org.lightmare.utils.beans.BeanUtils;
 public class ResourceBuilder {
 
     /**
+     * Defines method for {@link Resource} to build
+     * 
+     * @param builder
+     * @param method
+     * @param metaData
+     */
+    private static void addMethod(Resource.Builder builder,
+	    ResourceMethod method, MetaData metaData) {
+
+	List<MediaType> consumedTypes = method.getConsumedTypes();
+	List<MediaType> producedTypes = method.getProducedTypes();
+	Invocable invocable = method.getInvocable();
+	Method realMethod = invocable.getHandlingMethod();
+	List<Parameter> parameters = invocable.getParameters();
+	MediaType type;
+	if (ObjectUtils.available(consumedTypes)) {
+	    type = ObjectUtils.getFirst(consumedTypes);
+	} else {
+	    type = null;
+	}
+	Inflector<ContainerRequestContext, Response> inflector = new RestInflector(
+		realMethod, metaData, type, parameters);
+	ResourceMethod.Builder methodBuilder = builder.addMethod(method
+		.getHttpMethod());
+	methodBuilder.consumes(consumedTypes);
+	methodBuilder.produces(producedTypes);
+	methodBuilder.nameBindings(method.getNameBindings());
+	methodBuilder.handledBy(inflector);
+	methodBuilder.build();
+    }
+
+    /**
      * Builds new {@link Resource} from passed one with new
      * {@link org.glassfish.jersey.process.Inflector} implementation
      * {@link RestInflector} and with all child resources
@@ -59,24 +91,7 @@ public class ResourceBuilder {
 	// Inflector to define bean methods
 	Inflector<ContainerRequestContext, Response> inflector;
 	for (ResourceMethod method : methods) {
-	    consumedTypes = method.getConsumedTypes();
-	    producedTypes = method.getProducedTypes();
-	    invocable = method.getInvocable();
-	    realMethod = invocable.getHandlingMethod();
-	    parameters = invocable.getParameters();
-	    if (ObjectUtils.available(consumedTypes)) {
-		type = ObjectUtils.getFirst(consumedTypes);
-	    } else {
-		type = null;
-	    }
-	    inflector = new RestInflector(realMethod, metaData, type,
-		    parameters);
-	    methodBuilder = builder.addMethod(method.getHttpMethod());
-	    methodBuilder.consumes(consumedTypes);
-	    methodBuilder.produces(producedTypes);
-	    methodBuilder.nameBindings(method.getNameBindings());
-	    methodBuilder.handledBy(inflector);
-	    methodBuilder.build();
+	    addMethod(builder, method, metaData);
 	}
 	// Registers children resources recursively
 	List<Resource> children = resource.getChildResources();
