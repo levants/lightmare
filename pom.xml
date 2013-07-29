@@ -147,6 +147,29 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- end of servlet -->
+
+		<!-- jaxrs -->
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>${jaxrs.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>${jaxrs.version}</version>
+			<classifier>javadoc</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>${jaxrs.version}</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<!-- end of jaxrs -->
 		<!-- java ee components -->
 
 		<!-- hibernate -->
@@ -284,26 +307,6 @@
 		<!-- end of netty -->
 
 		<!-- jar-rs with jersey -->
-		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
-			<version>${jaxrs.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
-			<version>${jaxrs.version}</version>
-			<classifier>javadoc</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
-			<version>${jaxrs.version}</version>
-			<classifier>sources</classifier>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet</artifactId>
