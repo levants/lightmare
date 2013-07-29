@@ -49,6 +49,7 @@ public class ResourceBuilder {
 	} else {
 	    type = null;
 	}
+	// Inflector to define bean methods
 	Inflector<ContainerRequestContext, Response> inflector = new RestInflector(
 		realMethod, metaData, type, parameters);
 	ResourceMethod.Builder methodBuilder = builder.addMethod(method
