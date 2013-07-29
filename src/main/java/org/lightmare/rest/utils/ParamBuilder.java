@@ -235,6 +235,11 @@ public class ParamBuilder {
 	}
     }
 
+    /**
+     * Initializes and adds null parameter to {@link List} of parameters
+     * 
+     * @param parameter
+     */
     private void addNullParam(Parameter parameter) {
 
 	Class<?> paramType = parameter.getRawType();
