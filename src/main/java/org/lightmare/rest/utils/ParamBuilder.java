@@ -64,6 +64,12 @@ public class ParamBuilder {
 	this.request = request;
     }
 
+    /**
+     * Creates error message if one of the necessary fields in null
+     * 
+     * @return String
+     * @throws IOException
+     */
     private String errorOnBuild() throws IOException {
 
 	String errorPrefix = "Could not initialize ";
@@ -91,6 +97,13 @@ public class ParamBuilder {
 	return errorMessage;
     }
 
+    /**
+     * Check if one of the necessary fields in null and if it is throws
+     * {@link IOException} with generated error message
+     * 
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
     private boolean checkOnBuild() throws IOException {
 
 	boolean valid = ObjectUtils.notNullAll(mediaType, parameters, workers,
@@ -326,7 +339,9 @@ public class ParamBuilder {
 	    return this;
 	}
 
-	public ParamBuilder build() {
+	public ParamBuilder build() throws IOException {
+
+	    target.checkOnBuild();
 
 	    return target;
 	}
