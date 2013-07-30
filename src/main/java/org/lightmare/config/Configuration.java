@@ -188,10 +188,16 @@ public class Configuration implements Cloneable, Serializable {
     }
 
     public int getIntValue(String key) {
-	return Integer.parseInt(config.get(key));
+
+	String value = getStringValue(key);
+
+	return Integer.parseInt(value);
     }
 
     public long getLongValue(String key) {
+	
+	
+	
 	return Long.parseLong(config.get(key));
     }
 
