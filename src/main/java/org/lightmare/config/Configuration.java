@@ -222,15 +222,20 @@ public class Configuration implements Cloneable, Serializable {
      * Loads configuration form file
      * 
      * @param configFilename
+     * @throws IOException
      */
-    public void loadFromFile(String configFilename) {
+    public void loadFromFile(String configFilename) throws IOException {
+
+	InputStream propertiesStream = null;
 	try {
-	    FileInputStream propertiesStream = new FileInputStream(new File(
-		    configFilename));
+	    propertiesStream = new FileInputStream(new File(configFilename));
 	    loadFromStream(propertiesStream);
-	    propertiesStream.close();
 	} catch (IOException ex) {
 	    LOG.error("Could not open config file", ex);
+	} finally {
+	    if (ObjectUtils.notNull(propertiesStream)) {
+		propertiesStream.close();
+	    }
 	}
 
     }
