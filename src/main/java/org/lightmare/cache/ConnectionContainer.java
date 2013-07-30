@@ -102,6 +102,13 @@ public class ConnectionContainer {
 
     }
 
+    /**
+     * Checks if {@link ConnectionSemaphore#isInProgress()} for appropriated
+     * unit name
+     * 
+     * @param jndiName
+     * @return <code>boolean</code>
+     */
     public static boolean isInProgress(String jndiName) {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(jndiName);
