@@ -21,6 +21,7 @@ public class JndiManager {
     // Name of InitialContextFactory implementation class
     private static final Class<LightmareInitialContextFactory> FACTORY_CLASS = LightmareInitialContextFactory.class;
 
+    // Name of InitialContextFactory implementation class package
     private static final String PACKAGE_PREFIXES = FACTORY_CLASS.getPackage()
 	    .getName();
 
