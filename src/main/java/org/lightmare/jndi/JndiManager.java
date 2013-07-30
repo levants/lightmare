@@ -18,6 +18,7 @@ import javax.naming.spi.InitialContextFactory;
  */
 public class JndiManager {
 
+    // Name of InitialContextFactory implementation class
     private static final Class<LightmareInitialContextFactory> FACTORY_CLASS = LightmareInitialContextFactory.class;
 
     private static final String PACKAGE_PREFIXES = FACTORY_CLASS.getPackage()
