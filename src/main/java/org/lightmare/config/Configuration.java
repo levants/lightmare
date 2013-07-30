@@ -183,6 +183,7 @@ public class Configuration implements Cloneable, Serializable {
     }
 
     public String getStringValue(String key) {
+
 	return config.get(key);
     }
 
