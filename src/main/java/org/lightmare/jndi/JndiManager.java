@@ -48,7 +48,7 @@ public class JndiManager {
      * 
      * @throws IOException
      */
-    public void setInitialCotext() throws IOException {
+    private void setInitialCotext() throws IOException {
 	if (!isContextFactory) {
 	    System.getProperties().put(Context.INITIAL_CONTEXT_FACTORY,
 		    FACTORY_CLASS_NAME);
