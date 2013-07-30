@@ -24,7 +24,7 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
     public Context getInitialContext(Hashtable<?, ?> properties)
 	    throws NamingException {
 
-	// clone the environnement
+	// clone the environment
 	Hashtable<Object, Object> sharingEnv = (Hashtable<Object, Object>) properties
 		.clone();
 
