@@ -21,6 +21,8 @@ public class TimerImpl implements Timer {
 
     private TimerHandle handle;
 
+    private ScheduleExpression schedule;
+
     private Date nextTimeout;
 
     private TimerImpl() {
@@ -49,7 +51,8 @@ public class TimerImpl implements Timer {
     @Override
     public ScheduleExpression getSchedule() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	return null;
+
+	return schedule;
     }
 
     @Override
