@@ -1,6 +1,7 @@
 package org.lightmare.cache;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -180,6 +181,20 @@ public class ConnectionContainer {
 			ex.getMessage()), ex);
 	    }
 	}
+    }
+
+    /**
+     * Closes all existing {@link EntityManagerFactory} instances kept in cache
+     */
+    public static void closeEntityManagerFactories() {
+	Collection<ConnectionSemaphore> semaphores = CONNECTIONS.values();
+	EntityManagerFactory emf;
+	for (ConnectionSemaphore semaphore : semaphores) {
+	    emf = semaphore.getEmf();
+	    JPAManager.closeEntityManagerFactory(emf);
+	}
+
+	CONNECTIONS.clear();
     }
 
     /**

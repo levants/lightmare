@@ -31,6 +31,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
 import org.apache.log4j.Logger;
+import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.ConnectionData;
 import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.cache.DeployData;
@@ -40,7 +41,6 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.config.Configuration;
 import org.lightmare.ejb.exceptions.BeanInUseException;
-import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.utils.RestCheck;
@@ -329,13 +329,11 @@ public class BeanLoader {
 	 * @return <code>boolean</code>
 	 */
 	private boolean checkOnEmf(String unitName, String jndiName) {
-	    boolean checkForEmf;
-	    if (jndiName == null || jndiName.isEmpty()) {
-		checkForEmf = JPAManager.checkForEmf(unitName);
-	    } else {
+	    boolean checkForEmf = ConnectionContainer.checkForEmf(unitName);
+	    if (ObjectUtils.available(jndiName)) {
 		jndiName = NamingUtils.createJpaJndiName(jndiName);
-		checkForEmf = JPAManager.checkForEmf(unitName)
-			&& JPAManager.checkForEmf(jndiName);
+		checkForEmf = checkForEmf
+			&& ConnectionContainer.checkForEmf(jndiName);
 	    }
 
 	    return checkForEmf;
@@ -365,11 +363,12 @@ public class BeanLoader {
 
 	    if (checkForEmf) {
 		releaseBlocker();
-		semaphore = JPAManager.getSemaphore(unitName);
+		semaphore = ConnectionContainer.getSemaphore(unitName);
 		connection.setConnection(semaphore);
 	    } else {
 		// Sets connection semaphore for this connection
-		semaphore = JPAManager.setSemaphore(unitName, jndiName);
+		semaphore = ConnectionContainer
+			.setSemaphore(unitName, jndiName);
 		connection.setConnection(semaphore);
 		releaseBlocker();
 		if (ObjectUtils.notNull(semaphore)) {

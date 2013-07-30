@@ -8,9 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 
+import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.ejb.EjbConnector;
-import org.lightmare.jpa.JPAManager;
 import org.lightmare.utils.NamingUtils;
 import org.osjava.sj.memory.MemoryContext;
 
@@ -42,7 +42,7 @@ public class LightmareContext extends MemoryContext {
 	    name = NamingUtils.formatJpaJndiName(jndiName);
 
 	    // Checks if connection is in progress and waits for finish
-	    JPAManager.isInProgress(name);
+	    ConnectionContainer.isInProgress(name);
 
 	    // Gets EntityManagerFactory from parent
 	    Object candidate = super.lookup(jndiName);

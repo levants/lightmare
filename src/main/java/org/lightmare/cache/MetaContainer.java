@@ -1,7 +1,5 @@
 package org.lightmare.cache;
 
-import static org.lightmare.jpa.JPAManager.closeEntityManagerFactories;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -21,7 +19,6 @@ import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
-import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.utils.RestUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -333,11 +330,11 @@ public class MetaContainer {
 		String unitName = connection.getUnitName();
 		ConnectionSemaphore semaphore = connection.getConnection();
 		if (semaphore == null) {
-		    semaphore = JPAManager.getConnection(unitName);
+		    semaphore = ConnectionContainer.getConnection(unitName);
 		}
 		if (ObjectUtils.notNull(semaphore)
 			&& semaphore.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS) {
-		    JPAManager.removeConnection(unitName);
+		    ConnectionContainer.removeConnection(unitName);
 		}
 	    }
 	}
@@ -446,7 +443,7 @@ public class MetaContainer {
     public static EntityManagerFactory getConnection(String unitName)
 	    throws IOException {
 
-	return JPAManager.getEntityManagerFactory(unitName);
+	return ConnectionContainer.getEntityManagerFactory(unitName);
     }
 
     /**
@@ -485,7 +482,7 @@ public class MetaContainer {
      * instances
      */
     public static void closeConnections() {
-	closeEntityManagerFactories();
+	ConnectionContainer.closeEntityManagerFactories();
     }
 
     /**

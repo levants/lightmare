@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManagerFactory;
 
+import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.ConnectionData;
 import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.cache.MetaContainer;
@@ -18,7 +19,6 @@ import org.lightmare.cache.MetaData;
 import org.lightmare.config.Configuration;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.handlers.BeanLocalHandler;
-import org.lightmare.jpa.JPAManager;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.utils.ObjectUtils;
@@ -64,7 +64,7 @@ public class EjbConnector {
 	    String unitName = connection.getUnitName();
 
 	    if (ObjectUtils.available(unitName)) {
-		ConnectionSemaphore semaphore = JPAManager
+		ConnectionSemaphore semaphore = ConnectionContainer
 			.getConnection(unitName);
 		connection.setConnection(semaphore);
 	    }

@@ -18,8 +18,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.deploy.MetaCreator;
-import org.lightmare.jpa.JPAManager;
 import org.lightmare.logger.Configure;
 
 @Ignore
@@ -112,7 +112,7 @@ public class JpaTest {
 	int tryCount = 0;
 	while (emf == null || em == null) {
 	    if (jndi == null) {
-		emf = JPAManager.getEntityManagerFactory(unitName);
+		emf = ConnectionContainer.getEntityManagerFactory(unitName);
 		em = emf.createEntityManager();
 	    } else {
 		try {
@@ -145,7 +145,7 @@ public class JpaTest {
     @Test
     public void addEntityTest() {
 	try {
-	    EntityManagerFactory emf = JPAManager
+	    EntityManagerFactory emf = ConnectionContainer
 		    .getEntityManagerFactory("testUnit");
 	    Assert.assertNotNull("could not create EntityManagerFactory", emf);
 	    System.out.println(emf);
