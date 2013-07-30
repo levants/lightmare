@@ -21,6 +21,8 @@ public class TimerImpl implements Timer {
 
     private TimerHandle handle;
 
+    private Date nextTimeout;
+
     private TimerImpl() {
 	handle = new TimerHandleImpl(this);
     }
@@ -40,7 +42,8 @@ public class TimerImpl implements Timer {
     @Override
     public Date getNextTimeout() throws IllegalStateException,
 	    NoSuchObjectLocalException, NoMoreTimeoutsException, EJBException {
-	return null;
+
+	return nextTimeout;
     }
 
     @Override
