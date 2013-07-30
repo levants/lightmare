@@ -64,6 +64,13 @@ public class ConnectionContainer {
 	return current;
     }
 
+    /**
+     * Caches {@link ConnectionSemaphore} with lock
+     * 
+     * @param unitName
+     * @param jndiName
+     * @return {@link ConnectionSemaphore}
+     */
     public static ConnectionSemaphore setSemaphore(String unitName,
 	    String jndiName) {
 
@@ -84,6 +91,11 @@ public class ConnectionContainer {
 	return semaphore;
     }
 
+    /**
+     * Waits until {@link ConnectionSemaphore} is in progress (locked)
+     * 
+     * @param semaphore
+     */
     private static void awaitConnection(ConnectionSemaphore semaphore) {
 	synchronized (semaphore) {
 	    boolean inProgress = semaphore.isInProgress()
