@@ -72,6 +72,9 @@ public class JPAManager {
 		|| checkForURL() || swapDataSource || scanArchives;
     }
 
+    /**
+     * Added transaction properties for JTA data sources
+     */
     private void addTransactionManager() {
 	if (properties == null) {
 	    properties = new HashMap<Object, Object>();
