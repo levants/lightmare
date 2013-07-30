@@ -44,5 +44,4 @@ public class TransactionContainer {
 
 	TRANSACTION_HOLDER.remove();
     }
-
 }
