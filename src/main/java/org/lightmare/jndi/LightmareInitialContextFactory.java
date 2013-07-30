@@ -37,5 +37,4 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
 
 	return lightmareContext;
     }
-
 }
