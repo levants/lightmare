@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
+import javax.ejb.Timer;
 import javax.interceptor.InvocationContext;
 
 import org.lightmare.utils.ObjectUtils;
@@ -28,11 +29,19 @@ public class InvocationContextImpl implements InvocationContext {
 
     private Map<String, Object> contextData = new HashMap<String, Object>();
 
+    private Timer timer;
+
     public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets,
 	    Object[] parameters) {
 	this.methods = methods;
 	this.targets = targets;
 	this.parameters = parameters;
+    }
+
+    public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets,
+	    Object[] parameters, Timer timer) {
+	this(methods, targets, parameters);
+	this.timer = timer;
     }
 
     @Override
@@ -70,7 +79,7 @@ public class InvocationContextImpl implements InvocationContext {
     public Object getTimer() {
 
 	// TODO find out usage of this method and write implementation
-	return null;
+	return timer;
     }
 
     @Override
