@@ -557,5 +557,4 @@ public class JPAManager {
 	    return manager;
 	}
     }
-
 }
