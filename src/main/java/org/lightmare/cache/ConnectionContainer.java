@@ -265,15 +265,4 @@ public class ConnectionContainer {
 	    closeConnection(semaphore);
 	}
     }
-
-    /**
-     * Gets {@link ConnectionSemaphore} from cache without waiting for lock
-     * 
-     * @param unitName
-     * @return {@link ConnectionSemaphore}
-     */
-    public static ConnectionSemaphore get(String unitName) {
-
-	return CONNECTIONS.get(unitName);
-    }
 }
