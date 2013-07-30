@@ -202,7 +202,10 @@ public class Configuration implements Cloneable, Serializable {
     }
 
     public boolean getBooleanValue(String key) {
-	return Boolean.parseBoolean(config.get(key));
+
+	String value = getStringValue(key);
+
+	return Boolean.parseBoolean(value);
     }
 
     public void putValue(String key, String value) {
