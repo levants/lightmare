@@ -19,6 +19,12 @@ import javax.ejb.TimerHandle;
 // TODO: Need proper implementation of Timer interface
 public class TimerImpl implements Timer {
 
+    private TimerHandle handle;
+
+    private TimerImpl() {
+	handle = new TimerHandleImpl(this);
+    }
+
     @Override
     public void cancel() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
@@ -64,7 +70,8 @@ public class TimerImpl implements Timer {
     @Override
     public TimerHandle getHandle() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	return null;
+
+	return handle;
     }
 
 }
