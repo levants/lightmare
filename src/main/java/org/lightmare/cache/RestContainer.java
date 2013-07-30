@@ -33,6 +33,11 @@ public class RestContainer {
 	REST_RESOURCES.remove(resourceClass);
     }
 
+    /**
+     * Checks if application has REST resources
+     * 
+     * @return
+     */
     public static boolean hasRest() {
 
 	return ObjectUtils.available(REST_RESOURCES);
