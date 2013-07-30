@@ -16,6 +16,7 @@ import javax.ejb.TimerHandle;
  * @author levan
  * 
  */
+// TODO: Need proper implementation of Timer interface
 public class TimerImpl implements Timer {
 
     @Override
