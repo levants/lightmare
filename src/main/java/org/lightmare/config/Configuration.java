@@ -195,10 +195,10 @@ public class Configuration implements Cloneable, Serializable {
     }
 
     public long getLongValue(String key) {
-	
-	
-	
-	return Long.parseLong(config.get(key));
+
+	String value = getStringValue(key);
+
+	return Long.parseLong(value);
     }
 
     public boolean getBooleanValue(String key) {
