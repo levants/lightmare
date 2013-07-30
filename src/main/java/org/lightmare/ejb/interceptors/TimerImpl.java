@@ -25,6 +25,8 @@ public class TimerImpl implements Timer {
 
     private Date nextTimeout;
 
+    private boolean persistent;
+
     private boolean calendarTimer;
 
     private Serializable info;
@@ -62,7 +64,8 @@ public class TimerImpl implements Timer {
     @Override
     public boolean isPersistent() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	return false;
+
+	return persistent;
     }
 
     @Override
