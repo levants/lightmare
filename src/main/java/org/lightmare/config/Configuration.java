@@ -202,18 +202,23 @@ public class Configuration implements Cloneable, Serializable {
 	config.put(key, value);
     }
 
-    public void loadFromFile() {
+    public void loadFromFile() throws IOException {
+
+	InputStream propertiesStream = null;
 	try {
 	    File configFile = new File(CONFIG_FILE);
 	    if (configFile.exists()) {
-		InputStream propertiesStream = new FileInputStream(configFile);
+		propertiesStream = new FileInputStream(configFile);
 		loadFromStream(propertiesStream);
-		propertiesStream.close();
 	    } else {
 		configFile.mkdirs();
 	    }
 	} catch (IOException ex) {
 	    LOG.error("Could not open config file", ex);
+	} finally {
+	    if (ObjectUtils.notNull(propertiesStream)) {
+		propertiesStream.close();
+	    }
 	}
 
     }
