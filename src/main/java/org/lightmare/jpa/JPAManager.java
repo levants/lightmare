@@ -210,7 +210,8 @@ public class JPAManager {
     }
 
     public void setConnection(String unitName) throws IOException {
-	ConnectionSemaphore semaphore = ConnectionContainer.get(unitName);
+	ConnectionSemaphore semaphore = ConnectionContainer
+		.getSemaphore(unitName);
 	if (semaphore.isInProgress()) {
 	    EntityManagerFactory emf = createEntityManagerFactory(unitName);
 	    semaphore.setEmf(emf);
