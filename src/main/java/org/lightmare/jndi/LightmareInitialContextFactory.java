@@ -19,12 +19,12 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
     private static final String SHARE_DATA_PROPERTY_VALUE = Boolean.TRUE
 	    .toString();
 
-    @SuppressWarnings("unchecked")
     @Override
     public Context getInitialContext(Hashtable<?, ?> properties)
 	    throws NamingException {
 
 	// clone the environment
+	@SuppressWarnings("unchecked")
 	Hashtable<Object, Object> sharingEnv = (Hashtable<Object, Object>) properties
 		.clone();
 
