@@ -51,6 +51,27 @@ public class JPAManager {
     private JPAManager() {
     }
 
+    /**
+     * Checks if entity persistence.xml {@link URL} is provided
+     * 
+     * @return boolean
+     */
+    private boolean checkForURL() {
+	return ObjectUtils.notNull(url)
+		&& ObjectUtils.available(url.toString());
+    }
+
+    /**
+     * Checks if entity classes or persistence.xml path are provided
+     * 
+     * @param classes
+     * @return boolean
+     */
+    private boolean checkForBuild() {
+	return ObjectUtils.available(classes) || ObjectUtils.available(path)
+		|| checkForURL() || swapDataSource || scanArchives;
+    }
+
     private void addTransactionManager() {
 	if (properties == null) {
 	    properties = new HashMap<Object, Object>();
@@ -124,27 +145,6 @@ public class JPAManager {
 		.buildEntityManagerFactory() : null;
 
 	return emf;
-    }
-
-    /**
-     * Checks if entity persistence.xml {@link URL} is provided
-     * 
-     * @return boolean
-     */
-    private boolean checkForURL() {
-	return ObjectUtils.notNull(url)
-		&& ObjectUtils.available(url.toString());
-    }
-
-    /**
-     * Checks if entity classes or persistence.xml path are provided
-     * 
-     * @param classes
-     * @return boolean
-     */
-    private boolean checkForBuild() {
-	return ObjectUtils.available(classes) || ObjectUtils.available(path)
-		|| checkForURL() || swapDataSource || scanArchives;
     }
 
     /**
