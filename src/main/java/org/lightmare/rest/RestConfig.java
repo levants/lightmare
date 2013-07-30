@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.model.Resource;
-import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.RestContainer;
 import org.lightmare.rest.providers.JacksonFXmlFeature;
 import org.lightmare.rest.providers.ObjectMapperProvider;
 import org.lightmare.rest.providers.RestReloader;
@@ -109,7 +109,7 @@ public class RestConfig extends ResourceConfig {
 	Resource resource = ResourceBuilder.rebuildResource(preResource);
 	addPreResource(resource);
 
-	MetaContainer.putResource(resourceClass, resource);
+	RestContainer.putResource(resourceClass, resource);
     }
 
     /**
@@ -120,9 +120,9 @@ public class RestConfig extends ResourceConfig {
      */
     public void unregister(Class<?> resourceClass) {
 
-	Resource resource = MetaContainer.getResource(resourceClass);
+	Resource resource = RestContainer.getResource(resourceClass);
 	removePreResource(resource);
-	MetaContainer.removeResource(resourceClass);
+	RestContainer.removeResource(resourceClass);
     }
 
     public void addPreResource(Resource resource) {

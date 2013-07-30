@@ -14,7 +14,6 @@ import java.util.concurrent.ConcurrentMap;
 import javax.persistence.EntityManagerFactory;
 
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
@@ -45,9 +44,6 @@ public class MetaContainer {
 
     // Cached bean class name by its URL for undeploy processing
     private static final ConcurrentMap<URL, Collection<String>> EJB_URLS = new ConcurrentHashMap<URL, Collection<String>>();
-
-    // Cached REST resource classes
-    private static final ConcurrentMap<Class<?>, Resource> REST_RESOURCES = new ConcurrentHashMap<Class<?>, Resource>();
 
     private static final Logger LOG = Logger.getLogger(MetaContainer.class);
 
@@ -356,7 +352,7 @@ public class MetaContainer {
 	removeMeta(beanName);
 	if (ObjectUtils.notNull(metaData)) {
 	    // Removes appropriated resource class from REST service
-	    if (MetaContainer.hasRest()) {
+	    if (RestContainer.hasRest()) {
 		RestUtils.remove(metaData.getBeanClass());
 	    }
 	    clearConnection(metaData);
@@ -458,26 +454,5 @@ public class MetaContainer {
      */
     public static Iterator<MetaData> getBeanClasses() {
 	return EJBS.values().iterator();
-    }
-
-    public static void putResource(Class<?> resourceClass, Resource resource) {
-	REST_RESOURCES.putIfAbsent(resourceClass, resource);
-    }
-
-    public static Resource getResource(Class<?> resourceClass) {
-
-	Resource resource = REST_RESOURCES.get(resourceClass);
-
-	return resource;
-    }
-
-    public static void removeResource(Class<?> resourceClass) {
-
-	REST_RESOURCES.remove(resourceClass);
-    }
-
-    public static boolean hasRest() {
-
-	return ObjectUtils.available(REST_RESOURCES);
     }
 }

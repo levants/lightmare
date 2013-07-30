@@ -25,6 +25,7 @@ import java.util.concurrent.Executors;
 import org.apache.log4j.Logger;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.RestContainer;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
@@ -263,7 +264,7 @@ public class Watcher implements Runnable {
     public static void undeployFile(URL url) throws IOException {
 
 	boolean valid = MetaContainer.undeploy(url);
-	if (valid && MetaContainer.hasRest()) {
+	if (valid && RestContainer.hasRest()) {
 	    RestUtils.reload();
 	}
     }

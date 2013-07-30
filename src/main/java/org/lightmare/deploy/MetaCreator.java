@@ -28,6 +28,7 @@ import org.lightmare.cache.ArchiveData;
 import org.lightmare.cache.DeployData;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.RestContainer;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.fs.Watcher;
@@ -401,7 +402,7 @@ public class MetaCreator {
 	    }
 	}
 	awaitDeployments();
-	if (MetaContainer.hasRest()) {
+	if (RestContainer.hasRest()) {
 	    RestUtils.reload();
 	}
 	boolean hotDeployment = configuration.isHotDeployment();

@@ -7,7 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 
-import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.RestContainer;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -22,7 +22,7 @@ public class RestCheck {
 
     public static void reload() {
 
-	if (MetaContainer.hasRest()) {
+	if (RestContainer.hasRest()) {
 	    RestUtils.reload();
 	}
     }
