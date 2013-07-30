@@ -40,6 +40,12 @@ public class ConnectionContainer {
 	return check;
     }
 
+    /**
+     * Gets {@link ConnectionSemaphore} from cache without waiting for lock
+     * 
+     * @param unitName
+     * @return {@link ConnectionSemaphore}
+     */
     public static ConnectionSemaphore getSemaphore(String unitName) {
 
 	return CONNECTIONS.get(unitName);
