@@ -45,6 +45,12 @@ public class ConnectionContainer {
 	return CONNECTIONS.get(unitName);
     }
 
+    /**
+     * Creates and locks {@link ConnectionSemaphore} instance
+     * 
+     * @param unitName
+     * @return {@link ConnectionSemaphore}
+     */
     private static ConnectionSemaphore createSemaphore(String unitName) {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
