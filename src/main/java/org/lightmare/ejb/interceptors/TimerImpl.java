@@ -25,6 +25,10 @@ public class TimerImpl implements Timer {
 
     private Date nextTimeout;
 
+    private boolean calendarTimer;
+
+    private Serializable info;
+
     private TimerImpl() {
 	handle = new TimerHandleImpl(this);
     }
@@ -64,13 +68,15 @@ public class TimerImpl implements Timer {
     @Override
     public boolean isCalendarTimer() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	return false;
+
+	return calendarTimer;
     }
 
     @Override
     public Serializable getInfo() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	return null;
+
+	return info;
     }
 
     @Override
