@@ -352,7 +352,6 @@ public class JPAManager {
 	}
 
 	return emf;
-
     }
 
     /**
