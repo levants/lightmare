@@ -18,8 +18,8 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import org.hibernate.cfg.NotYetImplementedException;
-import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
+import org.lightmare.cache.TransactionContainer;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.utils.ObjectUtils;
 
@@ -71,10 +71,10 @@ public class BeanTransactions {
     public static UserTransaction getTransaction(
 	    EntityTransaction... entityTransactions) {
 
-	UserTransaction transaction = MetaContainer.getTransaction();
+	UserTransaction transaction = TransactionContainer.getTransaction();
 	if (transaction == null) {
 	    transaction = new UserTransactionImpl(entityTransactions);
-	    MetaContainer.setTransaction(transaction);
+	    TransactionContainer.setTransaction(transaction);
 	}
 
 	// If entityTransactions array is available then adds it to
@@ -96,10 +96,10 @@ public class BeanTransactions {
      */
     public static UserTransaction getTransaction(Collection<EntityManager> ems) {
 
-	UserTransaction transaction = MetaContainer.getTransaction();
+	UserTransaction transaction = TransactionContainer.getTransaction();
 	if (transaction == null) {
 	    transaction = new UserTransactionImpl();
-	    MetaContainer.setTransaction(transaction);
+	    TransactionContainer.setTransaction(transaction);
 	}
 
 	Collection<TransactionData> entityTransactions = getEntityTransactions(ems);
@@ -530,7 +530,7 @@ public class BeanTransactions {
 
 	boolean check = transaction.checkCaller(handler);
 	if (check) {
-	    MetaContainer.removeTransaction();
+	    TransactionContainer.removeTransaction();
 	}
     }
 
@@ -549,7 +549,7 @@ public class BeanTransactions {
 	if (ObjectUtils.notNull(type)) {
 	    remove(handler, type);
 	} else {
-	    MetaContainer.removeTransaction();
+	    TransactionContainer.removeTransaction();
 	}
     }
 }

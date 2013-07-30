@@ -9,7 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 
 import org.lightmare.cache.ConnectionContainer;
-import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.TransactionContainer;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.utils.NamingUtils;
 import org.osjava.sj.memory.MemoryContext;
@@ -34,7 +34,7 @@ public class LightmareContext extends MemoryContext {
 	String name;
 	if (jndiName.equals(NamingUtils.USER_TRANSACTION_NAME)) {
 
-	    UserTransaction transaction = MetaContainer.getTransaction();
+	    UserTransaction transaction = TransactionContainer.getTransaction();
 	    value = transaction;
 
 	} else if (jndiName.startsWith(NamingUtils.CONNECTION_NAME_PREF)) {

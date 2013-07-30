@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.UserTransaction;
 
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.server.model.Resource;
@@ -49,9 +48,6 @@ public class MetaContainer {
 
     // Cached REST resource classes
     private static final ConcurrentMap<Class<?>, Resource> REST_RESOURCES = new ConcurrentHashMap<Class<?>, Resource>();
-
-    // Caches UserTransaction object per thread
-    private static final ThreadLocal<UserTransaction> TRANSACTION_HOLDER = new ThreadLocal<UserTransaction>();
 
     private static final Logger LOG = Logger.getLogger(MetaContainer.class);
 
@@ -444,37 +440,6 @@ public class MetaContainer {
 	    throws IOException {
 
 	return ConnectionContainer.getEntityManagerFactory(unitName);
-    }
-
-    /**
-     * Gets {@link UserTransaction} object from {@link ThreadLocal} per thread
-     * 
-     * @return {@link UserTransaction}
-     */
-    public static UserTransaction getTransaction() {
-
-	UserTransaction transaction = TRANSACTION_HOLDER.get();
-
-	return transaction;
-    }
-
-    /**
-     * Caches {@link UserTransaction} object in {@link ThreadLocal} per thread
-     * 
-     * @param transaction
-     */
-    public static void setTransaction(UserTransaction transaction) {
-
-	TRANSACTION_HOLDER.set(transaction);
-    }
-
-    /**
-     * Removes {@link UserTransaction} object from {@link ThreadLocal} per
-     * thread
-     */
-    public static void removeTransaction() {
-
-	TRANSACTION_HOLDER.remove();
     }
 
     /**
