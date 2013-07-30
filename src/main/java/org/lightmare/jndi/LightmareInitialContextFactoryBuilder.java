@@ -53,5 +53,4 @@ public class LightmareInitialContextFactoryBuilder implements
 	    throw ne;
 	}
     }
-
 }
