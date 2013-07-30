@@ -218,6 +218,11 @@ public class Configuration implements Cloneable, Serializable {
 
     }
 
+    /**
+     * Loads configuration form file
+     * 
+     * @param configFilename
+     */
     public void loadFromFile(String configFilename) {
 	try {
 	    FileInputStream propertiesStream = new FileInputStream(new File(
