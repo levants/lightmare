@@ -202,6 +202,11 @@ public class Configuration implements Cloneable, Serializable {
 	config.put(key, value);
     }
 
+    /**
+     * Loads configuration form file
+     * 
+     * @throws IOException
+     */
     public void loadFromFile() throws IOException {
 
 	InputStream propertiesStream = null;
