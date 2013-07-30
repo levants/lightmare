@@ -21,56 +21,48 @@ public class TimerImpl implements Timer {
     @Override
     public void cancel() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	// TODO Auto-generated method stub
 
     }
 
     @Override
     public long getTimeRemaining() throws IllegalStateException,
 	    NoSuchObjectLocalException, NoMoreTimeoutsException, EJBException {
-	// TODO Auto-generated method stub
 	return 0;
     }
 
     @Override
     public Date getNextTimeout() throws IllegalStateException,
 	    NoSuchObjectLocalException, NoMoreTimeoutsException, EJBException {
-	// TODO Auto-generated method stub
 	return null;
     }
 
     @Override
     public ScheduleExpression getSchedule() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	// TODO Auto-generated method stub
 	return null;
     }
 
     @Override
     public boolean isPersistent() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	// TODO Auto-generated method stub
 	return false;
     }
 
     @Override
     public boolean isCalendarTimer() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	// TODO Auto-generated method stub
 	return false;
     }
 
     @Override
     public Serializable getInfo() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	// TODO Auto-generated method stub
 	return null;
     }
 
     @Override
     public TimerHandle getHandle() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-	// TODO Auto-generated method stub
 	return null;
     }
 
