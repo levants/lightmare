@@ -224,7 +224,7 @@ public class Configuration implements Cloneable, Serializable {
     }
 
     /**
-     * Loads configuration form file
+     * Loads configuration form file by passed file path
      * 
      * @param configFilename
      * @throws IOException
