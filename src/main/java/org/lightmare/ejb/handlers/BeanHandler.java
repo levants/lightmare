@@ -155,6 +155,14 @@ public class BeanHandler implements InvocationHandler {
 	configureInjects();
     }
 
+    /**
+     * Method to set bean field and to configure (injections
+     * {@link javax.ejb.EJB} or {@link PersistenceUnit} annotated fields and
+     * etc.) {@link BeanHandler} after initialization
+     * 
+     * @param bean
+     * @throws IOException
+     */
     public void configure(final Object bean) throws IOException {
 
 	this.bean = bean;
