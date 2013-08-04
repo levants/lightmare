@@ -42,7 +42,7 @@ public class BeanHandler implements InvocationHandler {
 
     private final Field transactionField;
 
-    private final Collection<ConnectionData> connections;
+    private final Collection<ConnectionData> connectionDatas;
 
     private final Collection<InjectionData> injectionDatas;
 
@@ -54,7 +54,7 @@ public class BeanHandler implements InvocationHandler {
 
 	this.beanClass = metaData.getBeanClass();
 	this.transactionField = metaData.getTransactionField();
-	this.connections = metaData.getConnections();
+	this.connectionDatas = metaData.getConnections();
 	this.injectionDatas = metaData.getInjects();
 	this.interceptorDatas = metaData.getInterceptors();
 	this.metaData = metaData;
@@ -204,9 +204,9 @@ public class BeanHandler implements InvocationHandler {
     private Collection<EntityManager> createEntityManagers() throws IOException {
 
 	Collection<EntityManager> ems = null;
-	if (ObjectUtils.available(connections)) {
+	if (ObjectUtils.available(connectionDatas)) {
 	    ems = new ArrayList<EntityManager>();
-	    for (ConnectionData connection : connections) {
+	    for (ConnectionData connection : connectionDatas) {
 		EntityManager em = createEntityManager(connection);
 		ems.add(em);
 	    }
