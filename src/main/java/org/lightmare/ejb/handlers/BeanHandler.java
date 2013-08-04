@@ -104,26 +104,26 @@ public class BeanHandler implements InvocationHandler {
      * Sets each injected ejb bean as value to annotated field respectively for
      * passed {@link InjectionData} object
      */
-    private void configureInjection(InjectionData inject) throws IOException {
+    private void configureInjection(InjectionData injectionData) throws IOException {
 
-	MetaData injectMetaData = inject.getMetaData();
+	MetaData injectMetaData = injectionData.getMetaData();
 	if (injectMetaData == null) {
 	    String beanName;
-	    String mappedName = inject.getMappedName();
+	    String mappedName = injectionData.getMappedName();
 	    if (mappedName == null || mappedName.isEmpty()) {
-		beanName = inject.getName();
+		beanName = injectionData.getName();
 	    } else {
-		beanName = inject.getMappedName();
+		beanName = injectionData.getMappedName();
 	    }
 	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
-	    injectMetaData.setInterfaceClasses(inject.getInterfaceClasses());
+	    injectMetaData.setInterfaceClasses(injectionData.getInterfaceClasses());
 
-	    inject.setMetaData(injectMetaData);
+	    injectionData.setMetaData(injectMetaData);
 	}
 	EjbConnector ejcConnector = new EjbConnector();
 	Object injectBean = ejcConnector.connectToBean(injectMetaData);
 
-	setFieldValue(inject.getField(), injectBean);
+	setFieldValue(injectionData.getField(), injectBean);
     }
 
     /**
