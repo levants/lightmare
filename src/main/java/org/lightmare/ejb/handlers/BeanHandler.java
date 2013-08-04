@@ -104,7 +104,7 @@ public class BeanHandler implements InvocationHandler {
      * Sets each injected ejb bean as value to annotated field respectively for
      * passed {@link InjectionData} object
      */
-    private void configureInject(InjectionData inject) throws IOException {
+    private void configureInjection(InjectionData inject) throws IOException {
 
 	MetaData injectMetaData = inject.getMetaData();
 	if (injectMetaData == null) {
@@ -136,7 +136,7 @@ public class BeanHandler implements InvocationHandler {
 
 	if (ObjectUtils.available(injects)) {
 	    for (InjectionData inject : injects) {
-		configureInject(inject);
+		configureInjection(inject);
 	    }
 	}
     }
