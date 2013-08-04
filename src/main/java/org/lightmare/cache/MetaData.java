@@ -13,6 +13,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
+import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -51,6 +52,8 @@ public class MetaData {
     private Collection<Field> unitFields;
 
     private Queue<InterceptorData> interceptors;
+
+    private BeanHandler handler;
 
     public Class<?> getBeanClass() {
 	return beanClass;
@@ -207,5 +210,13 @@ public class MetaData {
     public Collection<InterceptorData> getInterceptors() {
 
 	return interceptors;
+    }
+
+    public BeanHandler getHandler() {
+	return handler;
+    }
+
+    public void setHandler(BeanHandler handler) {
+	this.handler = handler;
     }
 }
