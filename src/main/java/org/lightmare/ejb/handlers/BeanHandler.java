@@ -114,7 +114,7 @@ public class BeanHandler implements InvocationHandler {
 	EjbConnector ejcConnector = new EjbConnector();
 	Object injectBean = ejcConnector.connectToBean(injectMetaData);
 
-	MetaUtils.setFieldValue(inject.getField(), bean, injectBean);
+	setFieldValue(inject.getField(), injectBean);
     }
 
     /**
