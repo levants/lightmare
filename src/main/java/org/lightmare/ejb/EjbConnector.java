@@ -207,7 +207,8 @@ public class EjbConnector {
     }
 
     /**
-     * Creates appropriate bean {@link Proxy} instance by interface
+     * Creates appropriate bean {@link Proxy} instance by passed
+     * {@link MetaData} parameter
      * 
      * @param metaData
      * @param rpcArgs
@@ -215,8 +216,7 @@ public class EjbConnector {
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
-    public <T> T connectToBean(MetaData metaData, Object... rpcArgs)
-	    throws IOException {
+    public <T> T connectToBean(MetaData metaData) throws IOException {
 
 	InvocationHandler handler = getHandler(metaData);
 	Class<?>[] interfaces = setInterfaces(metaData);
