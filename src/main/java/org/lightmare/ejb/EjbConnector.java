@@ -121,8 +121,12 @@ public class EjbConnector {
 
 	T beanInstance = getBeanInstance(metaData);
 
+	// Caches EnriryManagerFactory instances in MetaData if they are not
+	// cached yet
 	setEntityManagerFactories(metaData);
 
+	// Initializes BeanHandler instance and caches it in MetaData if it was
+	// not cached yet
 	BeanHandler handler = BeanHandlerFactory.get(metaData, beanInstance);
 
 	return handler;
