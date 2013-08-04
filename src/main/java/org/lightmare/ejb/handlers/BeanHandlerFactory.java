@@ -13,6 +13,20 @@ import org.lightmare.cache.MetaData;
 public class BeanHandlerFactory {
 
     /**
+     * Sets bean instance and calls {@link BeanHandler#configure()} method
+     * 
+     * @param handler
+     * @param bean
+     * @throws IOException
+     */
+    private static void configure(final BeanHandler handler, final Object bean)
+	    throws IOException {
+
+	handler.setBean(bean);
+	handler.configure();
+    }
+
+    /**
      * Gets {@link BeanHandler} instance from {@link MetaData} or creates new
      * instance if it is null
      * 
@@ -29,9 +43,7 @@ public class BeanHandlerFactory {
 	    handler = new BeanHandler(metaData);
 	    metaData.setHandler(handler);
 	}
-
-	handler.setBean(bean);
-	handler.configure();
+	configure(handler, bean);
 
 	return handler;
     }
