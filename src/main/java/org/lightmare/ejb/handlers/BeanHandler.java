@@ -120,8 +120,8 @@ public class BeanHandler implements InvocationHandler {
 
 	    injectionData.setMetaData(injectMetaData);
 	}
-	EjbConnector ejcConnector = new EjbConnector();
-	Object injectBean = ejcConnector.connectToBean(injectMetaData);
+	EjbConnector ejbConnector = new EjbConnector();
+	Object injectBean = ejbConnector.connectToBean(injectMetaData);
 
 	setFieldValue(injectionData.getField(), injectBean);
     }
