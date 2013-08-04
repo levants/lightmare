@@ -194,6 +194,7 @@ public class EjbConnector {
 
 	    int size = interfacesList.size();
 	    interfaceClasses = interfacesList.toArray(new Class[size]);
+	    metaData.setInterfaceClasses(interfaceClasses);
 	}
 
 	return interfaceClasses;
