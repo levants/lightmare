@@ -36,7 +36,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class BeanHandler implements InvocationHandler {
 
-    private final Object bean;
+    private Object bean;
 
     private final Field transactionField;
 
@@ -53,6 +53,10 @@ public class BeanHandler implements InvocationHandler {
 	this.connections = metaData.getConnections();
 	this.injects = metaData.getInjects();
 	this.metaData = metaData;
+    }
+
+    public void setBean(final Object bean) {
+	this.bean = bean;
     }
 
     /**
