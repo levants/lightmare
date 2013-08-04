@@ -229,6 +229,21 @@ public class BeanHandler implements InvocationHandler {
     }
 
     /**
+     * Calls {@link BeanTransactions#rollbackTransaction(BeanHandler, Method))}
+     * is case of {@link Throwable} is thrown at passed {@link Method} execution
+     * time
+     * 
+     * @param method
+     * @throws IOException
+     */
+    private void rollback(Method method) throws IOException {
+
+	if (ObjectUtils.notNull(method)) {
+	    BeanTransactions.rollbackTransaction(this, method);
+	}
+    }
+
+    /**
      * Fills {@link Queue} of methods and targets for specified bean
      * {@link Method} and {@link InterceptorData} object
      * 
@@ -340,21 +355,6 @@ public class BeanHandler implements InvocationHandler {
 	Object value = invoke(method, intercepteds);
 
 	return value;
-    }
-
-    /**
-     * Calls {@link BeanTransactions#rollbackTransaction(BeanHandler, Method))}
-     * is case of {@link Throwable} is thrown at passed {@link Method} execution
-     * time
-     * 
-     * @param method
-     * @throws IOException
-     */
-    private void rollback(Method method) throws IOException {
-
-	if (ObjectUtils.notNull(method)) {
-	    BeanTransactions.rollbackTransaction(this, method);
-	}
     }
 
     @Override
