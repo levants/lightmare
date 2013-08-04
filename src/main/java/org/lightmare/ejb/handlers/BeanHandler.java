@@ -38,19 +38,25 @@ public class BeanHandler implements InvocationHandler {
 
     private Object bean;
 
+    private final Class<?> beanClass;
+
     private final Field transactionField;
 
     private final Collection<ConnectionData> connections;
 
     private final Collection<InjectionData> injects;
 
+    private final Collection<InterceptorData> interceptorDatas;
+
     private final MetaData metaData;
 
     protected BeanHandler(final MetaData metaData) {
 
+	this.beanClass = metaData.getBeanClass();
 	this.transactionField = metaData.getTransactionField();
 	this.connections = metaData.getConnections();
 	this.injects = metaData.getInjects();
+	this.interceptorDatas = metaData.getInterceptors();
 	this.metaData = metaData;
     }
 
@@ -298,11 +304,9 @@ public class BeanHandler implements InvocationHandler {
 	    throws IOException {
 
 	Object[] intercepteds;
-	Collection<InterceptorData> interceptorsCollection = metaData
-		.getInterceptors();
-	if (ObjectUtils.available(interceptorsCollection)) {
+	if (ObjectUtils.available(interceptorDatas)) {
 
-	    Iterator<InterceptorData> interceptors = interceptorsCollection
+	    Iterator<InterceptorData> interceptors = interceptorDatas
 		    .iterator();
 	    InterceptorData interceptor;
 	    Queue<Method> methods = new LinkedList<Method>();
@@ -368,7 +372,6 @@ public class BeanHandler implements InvocationHandler {
 	Method realMethod = null;
 
 	try {
-	    Class<?> beanClass = metaData.getBeanClass();
 	    String methodName = method.getName();
 	    Class<?>[] parameterTypes = method.getParameterTypes();
 
