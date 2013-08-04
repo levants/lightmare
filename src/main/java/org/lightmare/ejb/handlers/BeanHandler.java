@@ -83,7 +83,7 @@ public class BeanHandler implements InvocationHandler {
      * @return {@link Object}
      * @throws IOException
      */
-    private Object invoke(Method method, Object... arguments)
+    private Object invokeMethod(Method method, Object... arguments)
 	    throws IOException {
 	return MetaUtils.invoke(method, bean, arguments);
     }
@@ -359,7 +359,7 @@ public class BeanHandler implements InvocationHandler {
 	Object[] intercepteds = callInterceptors(method, arguments);
 
 	// Calls for bean method with "intercepted" parameters
-	Object value = invoke(method, intercepteds);
+	Object value = invokeMethod(method, intercepteds);
 
 	return value;
     }
