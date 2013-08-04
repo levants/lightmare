@@ -116,7 +116,7 @@ public class EjbConnector {
      * @return {@link InvocationHandler}
      * @throws IOException
      */
-    private <T> InvocationHandler getHandler(MetaData metaData)
+    private <T> InvocationHandler getBeanHandler(MetaData metaData)
 	    throws IOException {
 
 	T beanInstance = getBeanInstance(metaData);
@@ -216,7 +216,7 @@ public class EjbConnector {
     @SuppressWarnings("unchecked")
     public <T> T connectToBean(MetaData metaData) throws IOException {
 
-	InvocationHandler handler = getHandler(metaData);
+	InvocationHandler handler = getBeanHandler(metaData);
 	Class<?>[] interfaces = setInterfaces(metaData);
 	ClassLoader loader = metaData.getLoader();
 
@@ -243,7 +243,7 @@ public class EjbConnector {
 	if (Configuration.isServer()) {
 	    MetaData metaData = getMeta(beanName);
 	    setInterfaces(metaData);
-	    handler = getHandler(metaData);
+	    handler = getBeanHandler(metaData);
 	    loader = metaData.getLoader();
 	} else {
 	    if (rpcArgs.length == RpcUtils.RPC_ARGS_LENGTH) {
