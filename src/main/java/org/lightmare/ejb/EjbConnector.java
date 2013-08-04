@@ -18,6 +18,7 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.config.Configuration;
 import org.lightmare.ejb.handlers.BeanHandler;
+import org.lightmare.ejb.handlers.BeanHandlerFactory;
 import org.lightmare.ejb.handlers.BeanLocalHandler;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;
@@ -122,14 +123,7 @@ public class EjbConnector {
 
 	setEntityManagerFactories(metaData);
 
-	BeanHandler handler = metaData.getHandler();
-	if (handler == null) {
-	    handler = new BeanHandler(metaData, beanInstance);
-	    metaData.setHandler(handler);
-	} else {
-	    handler.setBean(beanInstance);
-	}
-	handler.configure();
+	BeanHandler handler = BeanHandlerFactory.get(metaData, beanInstance);
 
 	return handler;
     }
