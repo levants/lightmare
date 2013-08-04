@@ -26,11 +26,11 @@ public class BeanHandlerFactory {
 
 	BeanHandler handler = metaData.getHandler();
 	if (handler == null) {
-	    handler = new BeanHandler(metaData, bean);
+	    handler = new BeanHandler(metaData);
 	    metaData.setHandler(handler);
-	} else {
-	    handler.setBean(bean);
 	}
+
+	handler.setBean(bean);
 	handler.configure();
 
 	return handler;

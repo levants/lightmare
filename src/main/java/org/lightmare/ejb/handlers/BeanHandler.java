@@ -46,9 +46,8 @@ public class BeanHandler implements InvocationHandler {
 
     private final MetaData metaData;
 
-    protected BeanHandler(final MetaData metaData, final Object bean) {
+    protected BeanHandler(final MetaData metaData) {
 
-	this.bean = bean;
 	this.transactionField = metaData.getTransactionField();
 	this.connections = metaData.getConnections();
 	this.injects = metaData.getInjects();
