@@ -122,7 +122,13 @@ public class EjbConnector {
 
 	setEntityManagerFactories(metaData);
 
-	BeanHandler handler = new BeanHandler(metaData, beanInstance);
+	BeanHandler handler = metaData.getHandler();
+	if (handler == null) {
+	    handler = new BeanHandler(metaData, beanInstance);
+	    metaData.setHandler(handler);
+	} else {
+	    handler.setBean(beanInstance);
+	}
 	handler.configure();
 
 	return handler;
