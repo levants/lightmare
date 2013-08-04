@@ -115,7 +115,7 @@ public class EjbConnector {
      * @return {@link InvocationHandler}
      * @throws IOException
      */
-    public <T> InvocationHandler getHandler(MetaData metaData)
+    private <T> InvocationHandler getHandler(MetaData metaData)
 	    throws IOException {
 
 	T beanInstance = getBeanInstance(metaData);

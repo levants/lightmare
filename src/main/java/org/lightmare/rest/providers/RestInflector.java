@@ -96,8 +96,8 @@ public class RestInflector implements
 	Response response;
 	try {
 	    EjbConnector connector = new EjbConnector();
-	    InvocationHandler handler = connector.getHandler(metaData);
 	    Object bean = connector.connectToBean(metaData);
+	    InvocationHandler handler = metaData.getHandler();
 	    Object[] params = getParameters(data);
 	    Object value = handler.invoke(bean, method, params);
 	    response = Response.ok(value).build();
