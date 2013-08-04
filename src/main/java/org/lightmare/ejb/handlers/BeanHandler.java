@@ -56,6 +56,42 @@ public class BeanHandler implements InvocationHandler {
     }
 
     /**
+     * Sets passed value to beans {@link Field}
+     * 
+     * @param field
+     * @param value
+     * @throws IOException
+     */
+    private void setFieldValue(Field field, Object value) throws IOException {
+	MetaUtils.setFieldValue(field, bean, value);
+    }
+
+    /**
+     * Invokes passed bean {@link Method}
+     * 
+     * @param method
+     * @param arguments
+     * @return {@link Object}
+     * @throws IOException
+     */
+    private Object invoke(Method method, Object... arguments)
+	    throws IOException {
+	return MetaUtils.invoke(method, bean, arguments);
+    }
+
+    /**
+     * Sets {@link EntityManager} at beans's annotated field
+     * 
+     * @param em
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     */
+    private void setConnection(Field connectionField, EntityManager em)
+	    throws IOException {
+	setFieldValue(connectionField, em);
+    }
+
+    /**
      * Sets each injected ejb bean as value to annotated field respectively for
      * passed {@link InjectionData} object
      */
@@ -106,42 +142,6 @@ public class BeanHandler implements InvocationHandler {
     public void configure() throws IOException {
 	// TODO Add other configurations
 	configureInjects();
-    }
-
-    /**
-     * Sets passed value to beans {@link Field}
-     * 
-     * @param field
-     * @param value
-     * @throws IOException
-     */
-    private void setFieldValue(Field field, Object value) throws IOException {
-	MetaUtils.setFieldValue(field, bean, value);
-    }
-
-    /**
-     * Invokes passed bean {@link Method}
-     * 
-     * @param method
-     * @param arguments
-     * @return {@link Object}
-     * @throws IOException
-     */
-    private Object invoke(Method method, Object... arguments)
-	    throws IOException {
-	return MetaUtils.invoke(method, bean, arguments);
-    }
-
-    /**
-     * Sets {@link EntityManager} at beans's annotated field
-     * 
-     * @param em
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     */
-    private void setConnection(Field connectionField, EntityManager em)
-	    throws IOException {
-	setFieldValue(connectionField, em);
     }
 
     /**
