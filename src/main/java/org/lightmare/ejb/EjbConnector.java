@@ -57,7 +57,7 @@ public class EjbConnector {
      * @return {@link EntityManagerFactory}
      * @throws IOException
      */
-    private void getEntityManagerFactory(ConnectionData connection)
+    private void setEntityManagerFactory(ConnectionData connection)
 	    throws IOException {
 
 	if (connection.getEmf() == null) {
@@ -78,14 +78,14 @@ public class EjbConnector {
      * @return {@link EntityManagerFactory}
      * @throws IOException
      */
-    private void getEntityManagerFactories(MetaData metaData)
+    private void setEntityManagerFactories(MetaData metaData)
 	    throws IOException {
 
 	Collection<ConnectionData> connections = metaData.getConnections();
 	if (ObjectUtils.available(connections)) {
 
 	    for (ConnectionData connection : connections) {
-		getEntityManagerFactory(connection);
+		setEntityManagerFactory(connection);
 	    }
 	}
     }
@@ -120,7 +120,7 @@ public class EjbConnector {
 
 	T beanInstance = getBeanInstance(metaData);
 
-	getEntityManagerFactories(metaData);
+	setEntityManagerFactories(metaData);
 
 	BeanHandler handler = new BeanHandler(metaData, beanInstance);
 	handler.configure();
