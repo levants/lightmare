@@ -165,7 +165,7 @@ public class BeanHandler implements InvocationHandler {
      */
     public void configure(final Object bean) throws IOException {
 
-	this.bean = bean;
+	setBean(bean);
 	configure();
     }
 
