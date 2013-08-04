@@ -249,7 +249,8 @@ public class EjbConnector {
 	    if (rpcArgs.length == RpcUtils.RPC_ARGS_LENGTH) {
 		String host = (String) rpcArgs[0];
 		int port = (Integer) rpcArgs[1];
-		handler = new BeanLocalHandler(new RPCall(host, port));
+		RPCall call = new RPCall(host, port);
+		handler = new BeanLocalHandler(call);
 		loader = null;
 	    } else {
 		throw new IOException(RpcUtils.RPC_ARGS_ERROR);
