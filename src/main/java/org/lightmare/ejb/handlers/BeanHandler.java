@@ -104,7 +104,8 @@ public class BeanHandler implements InvocationHandler {
      * Sets each injected ejb bean as value to annotated field respectively for
      * passed {@link InjectionData} object
      */
-    private void configureInjection(InjectionData injectionData) throws IOException {
+    private void configureInjection(InjectionData injectionData)
+	    throws IOException {
 
 	MetaData injectMetaData = injectionData.getMetaData();
 	if (injectMetaData == null) {
@@ -116,7 +117,8 @@ public class BeanHandler implements InvocationHandler {
 		beanName = injectionData.getMappedName();
 	    }
 	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
-	    injectMetaData.setInterfaceClasses(injectionData.getInterfaceClasses());
+	    injectMetaData.setInterfaceClasses(injectionData
+		    .getInterfaceClasses());
 
 	    injectionData.setMetaData(injectMetaData);
 	}
@@ -151,6 +153,12 @@ public class BeanHandler implements InvocationHandler {
     public void configure() throws IOException {
 	// TODO Add other configurations
 	configureInjects();
+    }
+
+    public void configure(final Object bean) throws IOException {
+
+	this.bean = bean;
+	configure();
     }
 
     /**
