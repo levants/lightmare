@@ -16,7 +16,7 @@ public class BeanLocalHandler implements InvocationHandler {
 
     private RPCall rpCall;
 
-    public BeanLocalHandler(RPCall rpCall) {
+    protected BeanLocalHandler(RPCall rpCall) {
 	this.rpCall = rpCall;
     }
 

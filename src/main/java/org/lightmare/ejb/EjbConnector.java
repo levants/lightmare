@@ -19,9 +19,8 @@ import org.lightmare.cache.MetaData;
 import org.lightmare.config.Configuration;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.handlers.BeanHandlerFactory;
-import org.lightmare.ejb.handlers.BeanLocalHandler;
+import org.lightmare.ejb.handlers.BeanLocalHandlerFactory;
 import org.lightmare.libraries.LibraryLoader;
-import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.reflect.MetaUtils;
@@ -247,10 +246,7 @@ public class EjbConnector {
 	    loader = metaData.getLoader();
 	} else {
 	    if (rpcArgs.length == RpcUtils.RPC_ARGS_LENGTH) {
-		String host = (String) rpcArgs[0];
-		int port = (Integer) rpcArgs[1];
-		RPCall call = new RPCall(host, port);
-		handler = new BeanLocalHandler(call);
+		handler = BeanLocalHandlerFactory.get(rpcArgs);
 		loader = null;
 	    } else {
 		throw new IOException(RpcUtils.RPC_ARGS_ERROR);
