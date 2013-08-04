@@ -44,7 +44,7 @@ public class BeanHandler implements InvocationHandler {
 
     private final Collection<ConnectionData> connections;
 
-    private final Collection<InjectionData> injects;
+    private final Collection<InjectionData> injectionDatas;
 
     private final Collection<InterceptorData> interceptorDatas;
 
@@ -55,7 +55,7 @@ public class BeanHandler implements InvocationHandler {
 	this.beanClass = metaData.getBeanClass();
 	this.transactionField = metaData.getTransactionField();
 	this.connections = metaData.getConnections();
-	this.injects = metaData.getInjects();
+	this.injectionDatas = metaData.getInjects();
 	this.interceptorDatas = metaData.getInterceptors();
 	this.metaData = metaData;
     }
@@ -134,8 +134,8 @@ public class BeanHandler implements InvocationHandler {
      */
     private void configureInjects() throws IOException {
 
-	if (ObjectUtils.available(injects)) {
-	    for (InjectionData inject : injects) {
+	if (ObjectUtils.available(injectionDatas)) {
+	    for (InjectionData inject : injectionDatas) {
 		configureInjection(inject);
 	    }
 	}
