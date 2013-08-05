@@ -32,14 +32,14 @@ public class RestConfig extends ResourceConfig {
     // Reloader instance (implementation of ContainerLifecycleListener class)
     private RestReloader reloader = RestReloader.get();
 
-    private static final Lock lock = new ReentrantLock();
+    private static final Lock LOCK = new ReentrantLock();
 
     public RestConfig(boolean changeCache) {
 	super();
 	RestConfig config = RestContainer.getRestConfig();
 	register(ObjectMapperProvider.class);
 	register(JacksonFXmlFeature.class);
-	lock.lock();
+	LOCK.lock();
 	try {
 	    if (reloader == null) {
 		reloader = new RestReloader();
@@ -58,7 +58,7 @@ public class RestConfig extends ResourceConfig {
 		RestContainer.setRestConfig(this);
 	    }
 	} finally {
-	    lock.unlock();
+	    LOCK.unlock();
 	}
     }
 
