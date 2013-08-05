@@ -199,7 +199,8 @@ public class ConnectionContainer {
 	    try {
 		Context context = namingUtils.getContext();
 		String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
-		if (ObjectUtils.notNull(context.lookup(fullJndiName))) {
+		Object boundData = context.lookup(fullJndiName);
+		if (ObjectUtils.notNull(boundData)) {
 		    context.unbind(fullJndiName);
 		}
 	    } catch (NamingException ex) {
