@@ -275,7 +275,6 @@ public class ConnectionContainer {
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 	if (ObjectUtils.notNull(semaphore)) {
 	    awaitConnection(semaphore);
-	    unbindConnection(semaphore);
 	    closeConnection(semaphore);
 	}
     }
