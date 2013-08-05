@@ -229,6 +229,14 @@ public class ConnectionContainer {
     }
 
     /**
+     * Closes all {@link javax.persistence.EntityManagerFactory} cached
+     * instances
+     */
+    public static void closeConnections() {
+	ConnectionContainer.closeEntityManagerFactories();
+    }
+
+    /**
      * Closes connection ({@link EntityManagerFactory}) in passed
      * {@link ConnectionSemaphore}
      * 

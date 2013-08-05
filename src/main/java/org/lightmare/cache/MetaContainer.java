@@ -425,28 +425,6 @@ public class MetaContainer {
     }
 
     /**
-     * Gets {@link javax.persistence.EntityManagerFactory} from cache for
-     * associated unit name
-     * 
-     * @param unitName
-     * @return {@link javax.persistence.EntityManagerFactory}
-     * @throws IOException
-     */
-    public static EntityManagerFactory getConnection(String unitName)
-	    throws IOException {
-
-	return ConnectionContainer.getEntityManagerFactory(unitName);
-    }
-
-    /**
-     * Closes all {@link javax.persistence.EntityManagerFactory} cached
-     * instances
-     */
-    public static void closeConnections() {
-	ConnectionContainer.closeEntityManagerFactories();
-    }
-
-    /**
      * Gets {@link java.util.Iterator}<MetaData> over all cached
      * {@link org.lightmare.cache.MetaData}
      * 
