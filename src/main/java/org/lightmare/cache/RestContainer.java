@@ -83,7 +83,7 @@ public class RestContainer {
 	return ObjectUtils.available(REST_RESOURCES);
     }
 
-    public static void clearExistingResources(Set<Resource> existingResources) {
+    public static void removeResources(Set<Resource> existingResources) {
 
 	if (ObjectUtils.available(existingResources)) {
 

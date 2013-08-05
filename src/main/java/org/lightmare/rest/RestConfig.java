@@ -108,8 +108,6 @@ public class RestConfig extends ResourceConfig {
 	Resource preResource = builder.build();
 	Resource resource = ResourceBuilder.rebuildResource(preResource);
 	addPreResource(resource);
-
-	RestContainer.putResource(resourceClass, resource);
     }
 
     /**
@@ -122,7 +120,6 @@ public class RestConfig extends ResourceConfig {
 
 	Resource resource = RestContainer.getResource(resourceClass);
 	removePreResource(resource);
-	RestContainer.removeResource(resourceClass);
     }
 
     public void addPreResource(Resource resource) {
@@ -163,6 +160,8 @@ public class RestConfig extends ResourceConfig {
 
 	if (ObjectUtils.available(preResources)) {
 	    Set<Resource> existingResources = getResources();
+	    RestContainer.removeResources(existingResources);
+	    RestContainer.putResources(preResources);
 	    registerResources(preResources);
 	}
     }
