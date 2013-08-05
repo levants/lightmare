@@ -1,5 +1,8 @@
 package org.lightmare.rest.providers;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import javax.ws.rs.ext.Provider;
 
 import org.glassfish.jersey.server.ResourceConfig;
@@ -19,11 +22,15 @@ public class RestReloader implements ContainerLifecycleListener {
 
     private static RestReloader reloader;
 
+    private static final Lock lock = new ReentrantLock();
+
     public RestReloader() {
-	synchronized (RestReloader.class) {
-	    synchronized (this) {
-		reloader = this;
-	    }
+
+	lock.lock();
+	try {
+	    reloader = this;
+	} finally {
+	    lock.unlock();
 	}
     }
 
