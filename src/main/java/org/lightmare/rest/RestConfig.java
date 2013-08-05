@@ -50,7 +50,7 @@ public class RestConfig extends ResourceConfig {
 		    addProperties(properties);
 		}
 	    }
-	    if (changeCache) {
+	    if (changeCache && ObjectUtils.notTrue(this.equals(config))) {
 		config = this;
 	    }
 	}
@@ -61,7 +61,18 @@ public class RestConfig extends ResourceConfig {
     }
 
     public void cache() {
-	config = this;
+
+	if (ObjectUtils.notTrue(this.equals(config))) {
+	    if (ObjectUtils.notNull(config)) {
+
+		Map<String, Object> properties = config.getProperties();
+		if (ObjectUtils.available(properties)) {
+		    addProperties(properties);
+		}
+	    }
+
+	    config = this;
+	}
     }
 
     public static RestConfig get() {

@@ -29,8 +29,13 @@ public class RestUtils {
 
     private static void getConfig() {
 
-	existingConfig = RestConfig.get();
-	newConfig = new RestConfig(Boolean.FALSE);
+	if (existingConfig == null) {
+	    existingConfig = RestConfig.get();
+	}
+
+	if (newConfig == null) {
+	    newConfig = new RestConfig(Boolean.FALSE);
+	}
     }
 
     private static RestConfig get() {
@@ -142,16 +147,21 @@ public class RestUtils {
      */
     public static void reload() {
 
-	RestReloader reloader = RestReloader.get();
-	RestConfig conf = newConfig;
-	if (ObjectUtils.notNull(conf) && ObjectUtils.notNull(reloader)) {
-	    ClassLoader commonLoader = getCommonLoader();
-	    if (ObjectUtils.notNull(commonLoader)) {
-		conf.setClassLoader(commonLoader);
+	try {
+	    RestReloader reloader = RestReloader.get();
+	    RestConfig conf = get();
+	    if (ObjectUtils.notNull(conf) && ObjectUtils.notNull(reloader)) {
+		conf.cache();
+		ClassLoader commonLoader = getCommonLoader();
+		if (ObjectUtils.notNull(commonLoader)) {
+		    conf.setClassLoader(commonLoader);
+		}
+		conf.registerPreResources();
+		reloader.reload(conf);
 	    }
-	    conf.registerPreResources();
-	    conf.cache();
-	    reloader.reload(conf);
+	} finally {
+	    existingConfig = null;
+	    newConfig = null;
 	}
     }
 }
