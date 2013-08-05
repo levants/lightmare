@@ -111,6 +111,17 @@ public class MetaCreator {
 	return creator;
     }
 
+    private void configure(URL[] archives) {
+
+	if (configuration == null && ObjectUtils.available(archives)) {
+	    synchronized (this) {
+		if (configuration == null) {
+		    configuration = MetaContainer.getConfig(archives);
+		}
+	    }
+	}
+    }
+
     public AnnotationDB getAnnotationDB() {
 	return annotationDB;
     }
@@ -432,12 +443,11 @@ public class MetaCreator {
      */
     public void scanForBeans(URL[] archives) throws IOException {
 
-	if (configuration == null && ObjectUtils.available(archives)) {
-	    configuration = MetaContainer.getConfig(archives);
-	}
-
 	scannerLock.lock();
 	try {
+
+	    configure(archives);
+
 	    // starts RPC server if configured as remote and server
 	    if (configuration.isRemote() && Configuration.isServer()) {
 		RpcListener.startServer(configuration);
@@ -549,26 +559,36 @@ public class MetaCreator {
 
     public void clear() {
 
-	if (ObjectUtils.available(realURL)) {
-	    realURL.clear();
-	    realURL = null;
+	boolean locked = scannerLock.tryLock();
+	while (ObjectUtils.notTrue(locked)) {
+	    locked = scannerLock.tryLock();
 	}
+	if (locked) {
+	    try {
+		if (ObjectUtils.available(realURL)) {
+		    realURL.clear();
+		    realURL = null;
+		}
 
-	if (ObjectUtils.available(aggregateds)) {
-	    aggregateds.clear();
+		if (ObjectUtils.available(aggregateds)) {
+		    aggregateds.clear();
+		}
+
+		if (ObjectUtils.available(archivesURLs)) {
+		    archivesURLs.clear();
+		    archivesURLs = null;
+		}
+
+		if (ObjectUtils.available(classOwnersURL)) {
+		    classOwnersURL.clear();
+		    classOwnersURL = null;
+		}
+
+		configuration = null;
+	    } finally {
+		scannerLock.unlock();
+	    }
 	}
-
-	if (ObjectUtils.available(archivesURLs)) {
-	    archivesURLs.clear();
-	    archivesURLs = null;
-	}
-
-	if (ObjectUtils.available(classOwnersURL)) {
-	    classOwnersURL.clear();
-	    classOwnersURL = null;
-	}
-
-	configuration = null;
     }
 
     /**
