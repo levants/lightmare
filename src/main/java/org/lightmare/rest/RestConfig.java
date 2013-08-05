@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.model.Resource;
@@ -30,12 +32,15 @@ public class RestConfig extends ResourceConfig {
     // Reloader instance (implementation of ContainerLifecycleListener class)
     private RestReloader reloader = RestReloader.get();
 
+    private static final Lock lock = new ReentrantLock();
+
     public RestConfig(boolean changeCache) {
 	super();
 	RestConfig config = RestContainer.getRestConfig();
 	register(ObjectMapperProvider.class);
 	register(JacksonFXmlFeature.class);
-	synchronized (RestConfig.class) {
+	lock.lock();
+	try {
 	    if (reloader == null) {
 		reloader = new RestReloader();
 	    }
@@ -52,6 +57,8 @@ public class RestConfig extends ResourceConfig {
 	    if (changeCache) {
 		RestContainer.setRestConfig(this);
 	    }
+	} finally {
+	    lock.unlock();
 	}
     }
 
