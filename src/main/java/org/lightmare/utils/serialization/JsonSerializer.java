@@ -26,18 +26,18 @@ public class JsonSerializer {
 
     private static boolean mapperConfigured;
 
-    private static final Lock lock = new ReentrantLock();
+    private static final Lock LOCK = new ReentrantLock();
 
     private static void configureMapper() {
 
-	lock.lock();
+	LOCK.lock();
 	try {
 	    if (ObjectUtils.notTrue(mapperConfigured)) {
 		MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		mapperConfigured = Boolean.TRUE;
 	    }
 	} finally {
-	    lock.unlock();
+	    LOCK.unlock();
 	}
     }
 
