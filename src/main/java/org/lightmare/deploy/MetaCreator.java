@@ -84,7 +84,7 @@ public class MetaCreator {
 
     private static final Lock LOCK = new ReentrantLock();
 
-    private final Lock LOCK_CREATOR = new ReentrantLock();
+    private final Lock scannerlock = new ReentrantLock();
 
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
@@ -436,7 +436,7 @@ public class MetaCreator {
 	    configuration = MetaContainer.getConfig(archives);
 	}
 
-	LOCK_CREATOR.lock();
+	scannerlock.lock();
 	try {
 	    // starts RPC server if configured as remote and server
 	    if (configuration.isRemote() && Configuration.isServer()) {
@@ -476,7 +476,7 @@ public class MetaCreator {
 	    clear();
 	    // gets rid from all created temporary files
 	    tmpResources.removeTempFiles();
-	    LOCK_CREATOR.unlock();
+	    scannerlock.unlock();
 	}
     }
 
