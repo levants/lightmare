@@ -112,12 +112,12 @@ public class ConnectionContainer {
 
 	synchronized (semaphore) {
 	    boolean inProgress = semaphore.isInProgress()
-		    && !semaphore.isBound();
+		    && ObjectUtils.notTrue(semaphore.isBound());
 	    while (inProgress) {
 		try {
 		    semaphore.wait();
 		    inProgress = semaphore.isInProgress()
-			    && !semaphore.isBound();
+			    && ObjectUtils.notTrue(semaphore.isBound());
 		} catch (InterruptedException ex) {
 		    inProgress = Boolean.FALSE;
 		    LOG.error(ex.getMessage(), ex);
