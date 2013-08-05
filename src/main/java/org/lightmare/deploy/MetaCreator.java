@@ -84,6 +84,8 @@ public class MetaCreator {
 
     private static final Lock LOCK = new ReentrantLock();
 
+    private final Lock LOCK_CREATOR = new ReentrantLock();
+
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
     private MetaCreator() {
@@ -430,50 +432,51 @@ public class MetaCreator {
      */
     public void scanForBeans(URL[] archives) throws IOException {
 
-	synchronized (this) {
-	    if (configuration == null && ObjectUtils.available(archives)) {
-		configuration = MetaContainer.getConfig(archives);
-	    }
-	    try {
-		// starts RPC server if configured as remote and server
-		if (configuration.isRemote() && Configuration.isServer()) {
-		    RpcListener.startServer(configuration);
-		} else if (configuration.isRemote()) {
-		    RPCall.configure(configuration);
-		}
-		String[] libraryPaths = configuration.getLibraryPaths();
-		// Loads libraries from specified path
-		if (ObjectUtils.notNull(libraryPaths)) {
-		    LibraryLoader.loadLibraries(libraryPaths);
-		}
-		// Gets and caches class loader
-		current = LibraryLoader.getContextClassLoader();
-		archivesURLs = new HashMap<URL, ArchiveData>();
-		if (ObjectUtils.available(archives)) {
-		    realURL = new HashMap<URL, DeployData>();
-		}
-		URL[] fullArchives = getFullArchives(archives);
-		annotationDB = new AnnotationDB();
-		annotationDB.setScanFieldAnnotations(Boolean.FALSE);
-		annotationDB.setScanParameterAnnotations(Boolean.FALSE);
-		annotationDB.setScanMethodAnnotations(Boolean.FALSE);
-		annotationDB.scanArchives(fullArchives);
-		Set<String> beanNames = annotationDB.getAnnotationIndex().get(
-			Stateless.class.getName());
-		classOwnersURL = annotationDB.getClassOwnersURLs();
-		DataSourceInitializer.initializeDataSources(configuration);
-		if (ObjectUtils.available(beanNames)) {
-		    deployBeans(beanNames);
-		}
-	    } finally {
+	if (configuration == null && ObjectUtils.available(archives)) {
+	    configuration = MetaContainer.getConfig(archives);
+	}
 
-		// Caches configuration
-		MetaContainer.putConfig(archives, configuration);
-		// clears cached resources
-		clear();
-		// gets rid from all created temporary files
-		tmpResources.removeTempFiles();
+	LOCK_CREATOR.lock();
+	try {
+	    // starts RPC server if configured as remote and server
+	    if (configuration.isRemote() && Configuration.isServer()) {
+		RpcListener.startServer(configuration);
+	    } else if (configuration.isRemote()) {
+		RPCall.configure(configuration);
 	    }
+	    String[] libraryPaths = configuration.getLibraryPaths();
+	    // Loads libraries from specified path
+	    if (ObjectUtils.notNull(libraryPaths)) {
+		LibraryLoader.loadLibraries(libraryPaths);
+	    }
+	    // Gets and caches class loader
+	    current = LibraryLoader.getContextClassLoader();
+	    archivesURLs = new HashMap<URL, ArchiveData>();
+	    if (ObjectUtils.available(archives)) {
+		realURL = new HashMap<URL, DeployData>();
+	    }
+	    URL[] fullArchives = getFullArchives(archives);
+	    annotationDB = new AnnotationDB();
+	    annotationDB.setScanFieldAnnotations(Boolean.FALSE);
+	    annotationDB.setScanParameterAnnotations(Boolean.FALSE);
+	    annotationDB.setScanMethodAnnotations(Boolean.FALSE);
+	    annotationDB.scanArchives(fullArchives);
+	    Set<String> beanNames = annotationDB.getAnnotationIndex().get(
+		    Stateless.class.getName());
+	    classOwnersURL = annotationDB.getClassOwnersURLs();
+	    DataSourceInitializer.initializeDataSources(configuration);
+	    if (ObjectUtils.available(beanNames)) {
+		deployBeans(beanNames);
+	    }
+	} finally {
+
+	    // Caches configuration
+	    MetaContainer.putConfig(archives, configuration);
+	    // clears cached resources
+	    clear();
+	    // gets rid from all created temporary files
+	    tmpResources.removeTempFiles();
+	    LOCK_CREATOR.unlock();
 	}
     }
 
