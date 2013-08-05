@@ -162,6 +162,7 @@ public class RestConfig extends ResourceConfig {
 	    Set<Resource> existingResources = getResources();
 	    RestContainer.removeResources(existingResources);
 	    RestContainer.putResources(preResources);
+	    //RestContainer.setAvailability(false)
 	    registerResources(preResources);
 	}
     }

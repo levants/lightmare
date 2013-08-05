@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.utils.ObjectUtils;
@@ -18,6 +19,8 @@ public class RestContainer {
 
     // Cached REST resource classes
     private static final ConcurrentMap<Class<?>, Resource> REST_RESOURCES = new ConcurrentHashMap<Class<?>, Resource>();
+
+    private static final AtomicBoolean AVAILABLE = new AtomicBoolean();
 
     public static void putResource(Class<?> handlerClass, Resource resource) {
 	REST_RESOURCES.putIfAbsent(handlerClass, resource);
@@ -73,16 +76,6 @@ public class RestContainer {
 	}
     }
 
-    /**
-     * Checks if application has REST resources
-     * 
-     * @return
-     */
-    public static boolean hasRest() {
-
-	return ObjectUtils.available(REST_RESOURCES);
-    }
-
     public static void removeResources(Set<Resource> existingResources) {
 
 	if (ObjectUtils.available(existingResources)) {
@@ -91,5 +84,20 @@ public class RestContainer {
 		removeResource(existingResource);
 	    }
 	}
+    }
+
+    public static boolean setAvailability(boolean restValue) {
+
+	return AVAILABLE.getAndSet(restValue);
+    }
+
+    /**
+     * Checks if application has REST resources
+     * 
+     * @return
+     */
+    public static boolean hasRest() {
+
+	return AVAILABLE.get();
     }
 }
