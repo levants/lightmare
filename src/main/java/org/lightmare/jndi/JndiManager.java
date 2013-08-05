@@ -36,7 +36,7 @@ public class JndiManager {
 
     private static Context context;
 
-    private static final Lock lock = new ReentrantLock();
+    private static final Lock LOCK = new ReentrantLock();
 
     public void unbind(String name) throws IOException {
 
@@ -85,11 +85,11 @@ public class JndiManager {
      */
     public Context getContext() throws IOException {
 	if (context == null) {
-	    lock.lock();
+	    LOCK.lock();
 	    try {
 		setInitialCotext();
 	    } finally {
-		lock.unlock();
+		LOCK.unlock();
 	    }
 	}
 
