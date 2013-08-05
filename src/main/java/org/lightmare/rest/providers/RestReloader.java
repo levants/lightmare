@@ -22,15 +22,15 @@ public class RestReloader implements ContainerLifecycleListener {
 
     private static RestReloader reloader;
 
-    private static final Lock lock = new ReentrantLock();
+    private static final Lock LOCK = new ReentrantLock();
 
     public RestReloader() {
 
-	lock.lock();
+	LOCK.lock();
 	try {
 	    reloader = this;
 	} finally {
-	    lock.unlock();
+	    LOCK.unlock();
 	}
     }
 
