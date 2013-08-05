@@ -82,9 +82,9 @@ public class MetaCreator {
     // Configuration for appropriate archives URLs
     private Configuration configuration;
 
-    private static final Lock LOCK = new ReentrantLock();
-
     private final Lock scannerlock = new ReentrantLock();
+
+    private static final Lock LOCK = new ReentrantLock();
 
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
