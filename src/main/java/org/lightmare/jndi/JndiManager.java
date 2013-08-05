@@ -2,11 +2,15 @@ package org.lightmare.jndi;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
+
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Utility class to initialize and set (
@@ -32,6 +36,8 @@ public class JndiManager {
 
     private static Context context;
 
+    private static final Lock lock = new ReentrantLock();
+
     public void unbind(String name) throws IOException {
 
 	try {
@@ -49,7 +55,8 @@ public class JndiManager {
      * @throws IOException
      */
     private void setInitialCotext() throws IOException {
-	if (!isContextFactory) {
+
+	if (ObjectUtils.notTrue(isContextFactory)) {
 	    System.getProperties().put(Context.INITIAL_CONTEXT_FACTORY,
 		    FACTORY_CLASS_NAME);
 	    System.getProperties().put(Context.URL_PKG_PREFIXES,
@@ -78,8 +85,11 @@ public class JndiManager {
      */
     public Context getContext() throws IOException {
 	if (context == null) {
-	    synchronized (JndiManager.class) {
+	    lock.lock();
+	    try {
 		setInitialCotext();
+	    } finally {
+		lock.unlock();
 	    }
 	}
 
