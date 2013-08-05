@@ -71,9 +71,15 @@ public class RestConfig extends ResourceConfig {
 	}
     }
 
-    private void changeRestState() {
+    private void changeOnAddState() {
 
 	boolean available = ObjectUtils.available(preResources);
+	RestContainer.setAvailability(available);
+    }
+
+    public void changeOnRemoveState(Collection<Resource> existings) {
+
+	boolean available = ObjectUtils.available(existings);
 	RestContainer.setAvailability(available);
     }
 
@@ -114,6 +120,47 @@ public class RestConfig extends ResourceConfig {
 	Resource preResource = builder.build();
 	Resource resource = ResourceBuilder.rebuildResource(preResource);
 	addPreResource(resource);
+	changeOnAddState();
+    }
+
+    public void addPreResource(Resource resource) {
+
+	if (this.preResources == null || this.preResources.isEmpty()) {
+	    this.preResources = new HashSet<Resource>();
+	}
+
+	this.preResources.add(resource);
+
+	changeOnAddState();
+    }
+
+    public void addPreResources(Collection<Resource> preResources) {
+
+	if (ObjectUtils.available(preResources)) {
+	    if (this.preResources == null || this.preResources.isEmpty()) {
+		this.preResources = new HashSet<Resource>();
+	    }
+	    this.preResources.addAll(preResources);
+	}
+
+	changeOnAddState();
+    }
+
+    public void addPreResources(RestConfig oldConfig) {
+
+	if (ObjectUtils.notNull(oldConfig)) {
+	    addPreResources(oldConfig.getResources());
+	    addPreResources(oldConfig.preResources);
+	}
+
+	changeOnAddState();
+    }
+
+    private void removePreResource(Resource resource) {
+
+	if (ObjectUtils.available(this.preResources)) {
+	    this.preResources.remove(resource);
+	}
     }
 
     /**
@@ -126,48 +173,6 @@ public class RestConfig extends ResourceConfig {
 
 	Resource resource = RestContainer.getResource(resourceClass);
 	removePreResource(resource);
-    }
-
-    public void addPreResource(Resource resource) {
-
-	if (this.preResources == null || this.preResources.isEmpty()) {
-	    this.preResources = new HashSet<Resource>();
-	}
-
-	this.preResources.add(resource);
-
-	changeRestState();
-    }
-
-    public void removePreResource(Resource resource) {
-
-	if (ObjectUtils.available(this.preResources)) {
-	    this.preResources.remove(resource);
-	}
-
-	changeRestState();
-    }
-
-    public void addPreResources(Collection<Resource> preResources) {
-
-	if (ObjectUtils.available(preResources)) {
-	    if (this.preResources == null || this.preResources.isEmpty()) {
-		this.preResources = new HashSet<Resource>();
-	    }
-	    this.preResources.addAll(preResources);
-	}
-
-	changeRestState();
-    }
-
-    public void addPreResources(RestConfig oldConfig) {
-
-	if (ObjectUtils.notNull(oldConfig)) {
-	    addPreResources(oldConfig.getResources());
-	    addPreResources(oldConfig.preResources);
-	}
-
-	changeRestState();
     }
 
     public void registerPreResources() {

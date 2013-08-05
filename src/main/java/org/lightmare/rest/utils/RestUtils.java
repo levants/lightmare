@@ -1,6 +1,7 @@
 package org.lightmare.rest.utils;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
 
 import javax.ws.rs.Path;
@@ -102,6 +103,10 @@ public class RestUtils {
 	if (ObjectUtils.notNull(reloader)) {
 	    RestConfig conf = get();
 	    conf.unregister(beanClass);
+	    if(ObjectUtils.notNull(oldConfig)){
+		Collection<Resource> existings = oldConfig.getResources();
+		conf.changeOnRemoveState(existings);
+	    }
 	}
     }
 
