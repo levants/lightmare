@@ -52,6 +52,23 @@ public class RestInflector implements
 	this.parameters = parameters;
     }
 
+    /**
+     * Gets appropriated bean {@link Class} instance
+     * 
+     * @return
+     */
+    public Class<?> getBeanClass() {
+
+	Class<?> beanClass;
+	if (metaData == null) {
+	    beanClass = null;
+	} else {
+	    beanClass = metaData.getBeanClass();
+	}
+
+	return beanClass;
+    }
+
     private MediaType getMediaType(ContainerRequestContext request) {
 
 	MediaType mediaType = request.getMediaType();

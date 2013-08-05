@@ -1,12 +1,14 @@
 package org.lightmare.cache;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.rest.RestConfig;
+import org.lightmare.rest.providers.RestInflector;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -26,6 +28,27 @@ public class RestContainer {
 	REST_RESOURCES.putIfAbsent(handlerClass, resource);
     }
 
+    private static Class<?> getFromHandlerInstance(Resource resource) {
+
+	Class<?> handlerClass = null;
+
+	Set<Object> handlers = resource.getHandlerInstances();
+	if (ObjectUtils.available(handlers)) {
+	    Iterator<Object> iterator = handlers.iterator();
+	    Object handler;
+	    RestInflector inflector;
+	    while (iterator.hasNext() && ObjectUtils.notNull(handlerClass)) {
+		handler = iterator.next();
+		if (handler instanceof RestInflector) {
+		    inflector = (RestInflector) handler;
+		    handlerClass = inflector.getBeanClass();
+		}
+	    }
+	}
+
+	return handlerClass;
+    }
+
     private static Class<?> getHandlerClass(Resource resource) {
 
 	Class<?> handlerClass;
@@ -33,7 +56,7 @@ public class RestContainer {
 	if (ObjectUtils.available(handlerClasses)) {
 	    handlerClass = ObjectUtils.getFirst(handlerClasses);
 	} else {
-	    handlerClass = null;
+	    handlerClass = getFromHandlerInstance(resource);
 	}
 
 	return handlerClass;
