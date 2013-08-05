@@ -89,7 +89,7 @@ public class ConnectionContainer {
      * @param jndiName
      * @return {@link ConnectionSemaphore}
      */
-    public static ConnectionSemaphore setSemaphore(String unitName,
+    public static ConnectionSemaphore cacheSemaphore(String unitName,
 	    String jndiName) {
 
 	ConnectionSemaphore semaphore = null;

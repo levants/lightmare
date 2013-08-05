@@ -368,7 +368,7 @@ public class BeanLoader {
 	    } else {
 		// Sets connection semaphore for this connection
 		semaphore = ConnectionContainer
-			.setSemaphore(unitName, jndiName);
+			.cacheSemaphore(unitName, jndiName);
 		connection.setConnection(semaphore);
 		releaseBlocker();
 		if (ObjectUtils.notNull(semaphore)) {
