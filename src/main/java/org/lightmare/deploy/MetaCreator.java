@@ -82,7 +82,7 @@ public class MetaCreator {
     // Configuration for appropriate archives URLs
     private Configuration configuration;
 
-    private final Lock scannerlock = new ReentrantLock();
+    private final Lock scannerLock = new ReentrantLock();
 
     private static final Lock LOCK = new ReentrantLock();
 
@@ -436,7 +436,7 @@ public class MetaCreator {
 	    configuration = MetaContainer.getConfig(archives);
 	}
 
-	scannerlock.lock();
+	scannerLock.lock();
 	try {
 	    // starts RPC server if configured as remote and server
 	    if (configuration.isRemote() && Configuration.isServer()) {
@@ -476,7 +476,7 @@ public class MetaCreator {
 	    clear();
 	    // gets rid from all created temporary files
 	    tmpResources.removeTempFiles();
-	    scannerlock.unlock();
+	    scannerLock.unlock();
 	}
     }
 
