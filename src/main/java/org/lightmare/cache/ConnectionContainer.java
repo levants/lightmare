@@ -51,6 +51,12 @@ public class ConnectionContainer {
 	return CONNECTIONS.get(unitName);
     }
 
+    private static boolean checkOnProgress(ConnectionSemaphore semaphore) {
+
+	return semaphore.isInProgress()
+		&& ObjectUtils.notTrue(semaphore.isBound());
+    }
+
     /**
      * Creates and locks {@link ConnectionSemaphore} instance
      * 
@@ -111,13 +117,11 @@ public class ConnectionContainer {
     private static void awaitConnection(ConnectionSemaphore semaphore) {
 
 	synchronized (semaphore) {
-	    boolean inProgress = semaphore.isInProgress()
-		    && ObjectUtils.notTrue(semaphore.isBound());
+	    boolean inProgress = checkOnProgress(semaphore);
 	    while (inProgress) {
 		try {
 		    semaphore.wait();
-		    inProgress = semaphore.isInProgress()
-			    && ObjectUtils.notTrue(semaphore.isBound());
+		    inProgress = checkOnProgress(semaphore);
 		} catch (InterruptedException ex) {
 		    inProgress = Boolean.FALSE;
 		    LOG.error(ex.getMessage(), ex);
@@ -138,8 +142,7 @@ public class ConnectionContainer {
 	ConnectionSemaphore semaphore = CONNECTIONS.get(jndiName);
 	boolean inProgress = ObjectUtils.notNull(semaphore);
 	if (inProgress) {
-	    inProgress = semaphore.isInProgress()
-		    && ObjectUtils.notTrue(semaphore.isBound());
+	    inProgress = checkOnProgress(semaphore);
 	    if (inProgress) {
 		awaitConnection(semaphore);
 	    }
