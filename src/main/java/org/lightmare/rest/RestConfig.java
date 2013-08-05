@@ -71,6 +71,12 @@ public class RestConfig extends ResourceConfig {
 	}
     }
 
+    private void changeRestState() {
+
+	boolean available = ObjectUtils.available(preResources);
+	RestContainer.setAvailability(available);
+    }
+
     /**
      * Registers {@link Resource}s from passed {@link RestConfig} as
      * {@link RestConfig#preResources} cache
@@ -129,6 +135,8 @@ public class RestConfig extends ResourceConfig {
 	}
 
 	this.preResources.add(resource);
+
+	changeRestState();
     }
 
     public void removePreResource(Resource resource) {
@@ -136,6 +144,8 @@ public class RestConfig extends ResourceConfig {
 	if (ObjectUtils.available(this.preResources)) {
 	    this.preResources.remove(resource);
 	}
+
+	changeRestState();
     }
 
     public void addPreResources(Collection<Resource> preResources) {
@@ -146,6 +156,8 @@ public class RestConfig extends ResourceConfig {
 	    }
 	    this.preResources.addAll(preResources);
 	}
+
+	changeRestState();
     }
 
     public void addPreResources(RestConfig oldConfig) {
@@ -154,6 +166,8 @@ public class RestConfig extends ResourceConfig {
 	    addPreResources(oldConfig.getResources());
 	    addPreResources(oldConfig.preResources);
 	}
+
+	changeRestState();
     }
 
     public void registerPreResources() {
@@ -162,8 +176,6 @@ public class RestConfig extends ResourceConfig {
 	    Set<Resource> existingResources = getResources();
 	    RestContainer.removeResources(existingResources);
 	    RestContainer.putResources(preResources);
-	    boolean available = RestContainer.size() > ObjectUtils.EMPRTY_ARRAY_LENGTH;
-	    RestContainer.setAvailability(available);
 	    registerResources(preResources);
 	}
     }
