@@ -98,23 +98,6 @@ public class RestConfig extends ResourceConfig {
 	registerResources(newResources);
     }
 
-    /**
-     * Caches {@link Resource} created from passed {@link Class} for further
-     * registration
-     * 
-     * @param resourceClass
-     * @param oldConfig
-     * @throws IOException
-     */
-    public void registerClass(Class<?> resourceClass, RestConfig oldConfig)
-	    throws IOException {
-
-	Resource.Builder builder = Resource.builder(resourceClass);
-	Resource preResource = builder.build();
-	Resource resource = ResourceBuilder.rebuildResource(preResource);
-	addPreResource(resource);
-    }
-
     public void addPreResource(Resource resource) {
 
 	if (this.preResources == null || this.preResources.isEmpty()) {
@@ -150,6 +133,23 @@ public class RestConfig extends ResourceConfig {
 	if (ObjectUtils.available(this.preResources)) {
 	    this.preResources.remove(resource);
 	}
+    }
+
+    /**
+     * Caches {@link Resource} created from passed {@link Class} for further
+     * registration
+     * 
+     * @param resourceClass
+     * @param oldConfig
+     * @throws IOException
+     */
+    public void registerClass(Class<?> resourceClass, RestConfig oldConfig)
+	    throws IOException {
+
+	Resource.Builder builder = Resource.builder(resourceClass);
+	Resource preResource = builder.build();
+	Resource resource = ResourceBuilder.rebuildResource(preResource);
+	addPreResource(resource);
     }
 
     /**
