@@ -22,12 +22,20 @@ public class RestContainer {
     // Cached REST resource classes
     private static final ConcurrentMap<Class<?>, Resource> REST_RESOURCES = new ConcurrentHashMap<Class<?>, Resource>();
 
+    // Cached running instance of RestConfig class
     private static RestConfig restConfig;
 
     public static void putResource(Class<?> handlerClass, Resource resource) {
 	REST_RESOURCES.putIfAbsent(handlerClass, resource);
     }
 
+    /**
+     * Finds if {@link Resource} has handler instances and if they are instance
+     * of {@link RestInflector} and gets appropriate bean class
+     * 
+     * @param resource
+     * @return {@link Class}
+     */
     private static Class<?> getFromHandlerInstance(Resource resource) {
 
 	Class<?> handlerClass = null;
@@ -37,7 +45,7 @@ public class RestContainer {
 	    Iterator<Object> iterator = handlers.iterator();
 	    Object handler;
 	    RestInflector inflector;
-	    while (iterator.hasNext() && ObjectUtils.notNull(handlerClass)) {
+	    while (iterator.hasNext() && handlerClass == null) {
 		handler = iterator.next();
 		if (handler instanceof RestInflector) {
 		    inflector = (RestInflector) handler;
@@ -49,6 +57,13 @@ public class RestContainer {
 	return handlerClass;
     }
 
+    /**
+     * Gets handler bean class directly from {@link Resource} or from handler
+     * instances
+     * 
+     * @param resource
+     * @return {@link Class}
+     */
     private static Class<?> getHandlerClass(Resource resource) {
 
 	Class<?> handlerClass;
@@ -117,7 +132,7 @@ public class RestContainer {
     /**
      * Checks if application has REST resources
      * 
-     * @return
+     * @return <code>boolean</code>
      */
     public static boolean hasRest() {
 
