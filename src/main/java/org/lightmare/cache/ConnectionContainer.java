@@ -109,6 +109,7 @@ public class ConnectionContainer {
      * @param semaphore
      */
     private static void awaitConnection(ConnectionSemaphore semaphore) {
+
 	synchronized (semaphore) {
 	    boolean inProgress = semaphore.isInProgress()
 		    && !semaphore.isBound();
@@ -123,7 +124,6 @@ public class ConnectionContainer {
 		}
 	    }
 	}
-
     }
 
     /**
