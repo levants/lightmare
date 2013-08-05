@@ -32,7 +32,7 @@ public class RestConfig extends ResourceConfig {
     // Reloader instance (implementation of ContainerLifecycleListener class)
     private RestReloader reloader = RestReloader.get();
 
-    public RestConfig() {
+    public RestConfig(boolean changeCache) {
 	super();
 	register(ObjectMapperProvider.class);
 	register(JacksonFXmlFeature.class);
@@ -50,8 +50,18 @@ public class RestConfig extends ResourceConfig {
 		    addProperties(properties);
 		}
 	    }
-	    config = this;
+	    if (changeCache) {
+		config = this;
+	    }
 	}
+    }
+
+    public RestConfig() {
+	this(Boolean.TRUE);
+    }
+
+    public void cache() {
+	config = this;
     }
 
     public static RestConfig get() {

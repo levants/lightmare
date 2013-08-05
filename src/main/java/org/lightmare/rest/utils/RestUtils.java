@@ -23,14 +23,14 @@ import org.lightmare.utils.serialization.JsonSerializer;
  */
 public class RestUtils {
 
-    private static RestConfig config;
+    private static RestConfig newConfig;
 
-    private static RestConfig oldConfig;
+    private static RestConfig existingConfig;
 
     private static void getConfig() {
 
-	oldConfig = RestConfig.get();
-	config = new RestConfig();
+	existingConfig = RestConfig.get();
+	newConfig = new RestConfig(Boolean.FALSE);
     }
 
     private static RestConfig get() {
@@ -39,7 +39,7 @@ public class RestUtils {
 	    getConfig();
 	}
 
-	return config;
+	return newConfig;
     }
 
     public static <T> T convert(String json, Class<T> valueClass)
@@ -85,7 +85,7 @@ public class RestUtils {
 	    RestReloader reloader = RestReloader.get();
 	    if (ObjectUtils.notNull(reloader)) {
 		RestConfig conf = get();
-		conf.registerClass(beanClass, oldConfig);
+		conf.registerClass(beanClass, existingConfig);
 	    }
 	}
     }
@@ -103,8 +103,8 @@ public class RestUtils {
 	if (ObjectUtils.notNull(reloader)) {
 	    RestConfig conf = get();
 	    conf.unregister(beanClass);
-	    if(ObjectUtils.notNull(oldConfig)){
-		Collection<Resource> existings = oldConfig.getResources();
+	    if (ObjectUtils.notNull(existingConfig)) {
+		Collection<Resource> existings = existingConfig.getResources();
 		conf.changeOnRemoveState(existings);
 	    }
 	}
@@ -143,13 +143,14 @@ public class RestUtils {
     public static void reload() {
 
 	RestReloader reloader = RestReloader.get();
-	RestConfig conf = RestConfig.get();
+	RestConfig conf = newConfig;
 	if (ObjectUtils.notNull(conf) && ObjectUtils.notNull(reloader)) {
 	    ClassLoader commonLoader = getCommonLoader();
 	    if (ObjectUtils.notNull(commonLoader)) {
 		conf.setClassLoader(commonLoader);
 	    }
 	    conf.registerPreResources();
+	    conf.cache();
 	    reloader.reload(conf);
 	}
     }
