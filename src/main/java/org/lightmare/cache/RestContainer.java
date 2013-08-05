@@ -20,8 +20,8 @@ public class RestContainer {
     // Cached REST resource classes
     private static final ConcurrentMap<Class<?>, Resource> REST_RESOURCES = new ConcurrentHashMap<Class<?>, Resource>();
 
-    public static void putResource(Class<?> resourceClass, Resource resource) {
-	REST_RESOURCES.putIfAbsent(resourceClass, resource);
+    public static void putResource(Class<?> handlerClass, Resource resource) {
+	REST_RESOURCES.putIfAbsent(handlerClass, resource);
     }
 
     public static void putResource(Resource resource) {
