@@ -1,5 +1,6 @@
 package org.lightmare.cache;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -24,12 +25,33 @@ public class RestContainer {
 	REST_RESOURCES.putIfAbsent(handlerClass, resource);
     }
 
-    public static void putResource(Resource resource) {
+    private static Class<?> getHandlerClass(Resource resource) {
 
+	Class<?> handlerClass;
 	Set<Class<?>> handlerClasses = resource.getHandlerClasses();
 	if (ObjectUtils.available(handlerClasses)) {
-	    Class<?> handlerClass = ObjectUtils.getFirst(handlerClasses);
+	    handlerClass = ObjectUtils.getFirst(handlerClasses);
+	} else {
+	    handlerClass = null;
+	}
+
+	return handlerClass;
+    }
+
+    public static void putResource(Resource resource) {
+
+	Class<?> handlerClass = getHandlerClass(resource);
+	if (ObjectUtils.notNull(handlerClass)) {
 	    putResource(handlerClass, resource);
+	}
+    }
+
+    public static void putResources(Collection<Resource> resources) {
+
+	if (ObjectUtils.available(resources)) {
+	    for (Resource resource : resources) {
+		putResource(resource);
+	    }
 	}
     }
 
