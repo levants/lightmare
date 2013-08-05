@@ -28,7 +28,7 @@ public class RestUtils {
 
     private static RestConfig newConfig;
 
-    private static final Lock lock = new ReentrantLock();
+    private static final Lock LOCK = new ReentrantLock();
 
     private static void getConfig() {
 
@@ -40,11 +40,11 @@ public class RestUtils {
     private static RestConfig get() {
 
 	if (newConfig == null) {
-	    lock.lock();
+	    LOCK.lock();
 	    try {
 		getConfig();
 	    } finally {
-		lock.unlock();
+		LOCK.unlock();
 	    }
 	}
 
