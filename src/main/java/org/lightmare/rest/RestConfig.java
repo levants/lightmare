@@ -24,8 +24,6 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class RestConfig extends ResourceConfig {
 
-    private static RestConfig config;
-
     // Collection of resources before registration
     private Set<Resource> preResources;
 
@@ -34,6 +32,7 @@ public class RestConfig extends ResourceConfig {
 
     public RestConfig(boolean changeCache) {
 	super();
+	RestConfig config = RestContainer.getRestConfig();
 	register(ObjectMapperProvider.class);
 	register(JacksonFXmlFeature.class);
 	synchronized (RestConfig.class) {
@@ -62,6 +61,7 @@ public class RestConfig extends ResourceConfig {
 
     public void cache() {
 
+	RestConfig config = RestContainer.getRestConfig();
 	if (ObjectUtils.notTrue(this.equals(config))) {
 	    if (ObjectUtils.notNull(config)) {
 
@@ -71,15 +71,7 @@ public class RestConfig extends ResourceConfig {
 		}
 	    }
 
-	    config = this;
-	}
-    }
-
-    public static RestConfig get() {
-
-	synchronized (RestConfig.class) {
-
-	    return config;
+	    RestContainer.setRestConfig(this);
 	}
     }
 
@@ -90,18 +82,6 @@ public class RestConfig extends ResourceConfig {
 	if (ObjectUtils.available(resources)) {
 	    getResources().clear();
 	}
-    }
-
-    private void changeOnAddState() {
-
-	boolean available = ObjectUtils.available(preResources);
-	RestContainer.setAvailability(available);
-    }
-
-    public void changeOnRemoveState(Collection<Resource> existings) {
-
-	boolean available = ObjectUtils.available(existings);
-	RestContainer.setAvailability(available);
     }
 
     /**
@@ -141,7 +121,6 @@ public class RestConfig extends ResourceConfig {
 	Resource preResource = builder.build();
 	Resource resource = ResourceBuilder.rebuildResource(preResource);
 	addPreResource(resource);
-	changeOnAddState();
     }
 
     public void addPreResource(Resource resource) {
@@ -152,7 +131,6 @@ public class RestConfig extends ResourceConfig {
 
 	this.preResources.add(resource);
 
-	changeOnAddState();
     }
 
     public void addPreResources(Collection<Resource> preResources) {
@@ -164,7 +142,6 @@ public class RestConfig extends ResourceConfig {
 	    this.preResources.addAll(preResources);
 	}
 
-	changeOnAddState();
     }
 
     public void addPreResources(RestConfig oldConfig) {
@@ -174,7 +151,6 @@ public class RestConfig extends ResourceConfig {
 	    addPreResources(oldConfig.preResources);
 	}
 
-	changeOnAddState();
     }
 
     private void removePreResource(Resource resource) {

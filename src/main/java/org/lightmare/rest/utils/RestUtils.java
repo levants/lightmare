@@ -1,7 +1,6 @@
 package org.lightmare.rest.utils;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Iterator;
 
 import javax.ws.rs.Path;
@@ -9,6 +8,7 @@ import javax.ws.rs.Path;
 import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
+import org.lightmare.cache.RestContainer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.RestConfig;
 import org.lightmare.rest.providers.RestReloader;
@@ -30,7 +30,7 @@ public class RestUtils {
     private static void getConfig() {
 
 	if (existingConfig == null) {
-	    existingConfig = RestConfig.get();
+	    existingConfig = RestContainer.getRestConfig();
 	}
 
 	if (newConfig == null) {
@@ -108,10 +108,6 @@ public class RestUtils {
 	if (ObjectUtils.notNull(reloader)) {
 	    RestConfig conf = get();
 	    conf.unregister(beanClass);
-	    if (ObjectUtils.notNull(existingConfig)) {
-		Collection<Resource> existings = existingConfig.getResources();
-		conf.changeOnRemoveState(existings);
-	    }
 	}
     }
 
