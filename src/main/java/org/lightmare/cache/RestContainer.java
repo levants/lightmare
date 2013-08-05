@@ -1,5 +1,8 @@
 package org.lightmare.cache;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -41,5 +44,28 @@ public class RestContainer {
     public static boolean hasRest() {
 
 	return ObjectUtils.available(REST_RESOURCES);
+    }
+
+    public static void clearExistingResources(Set<Resource> existingResources) {
+
+	if (ObjectUtils.available(existingResources)) {
+	    Set<Map.Entry<Class<?>, Resource>> cacheds = REST_RESOURCES
+		    .entrySet();
+	    Iterator<Map.Entry<Class<?>, Resource>> iterator;
+	    Map.Entry<Class<?>, Resource> cached;
+	    boolean removed;
+	    for (Resource existingResource : existingResources) {
+
+		iterator = cacheds.iterator();
+		removed = Boolean.FALSE;
+		while (iterator.hasNext() && ObjectUtils.notTrue(removed)) {
+		    cached = iterator.next();
+		    removed = cached.getValue().equals(existingResource);
+		    if (removed) {
+			iterator.remove();
+		    }
+		}
+	    }
+	}
     }
 }

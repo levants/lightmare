@@ -161,7 +161,8 @@ public class RestConfig extends ResourceConfig {
 
     public void registerPreResources() {
 
-	if (ObjectUtils.available(this.preResources)) {
+	if (ObjectUtils.available(preResources)) {
+	    Set<Resource> existingResources = getResources();
 	    registerResources(preResources);
 	}
     }
