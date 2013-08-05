@@ -2,6 +2,8 @@ package org.lightmare.utils.serialization;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
@@ -24,13 +26,18 @@ public class JsonSerializer {
 
     private static boolean mapperConfigured;
 
+    private static final Lock lock = new ReentrantLock();
+
     private static void configureMapper() {
 
-	synchronized (RpcUtils.class) {
+	lock.lock();
+	try {
 	    if (ObjectUtils.notTrue(mapperConfigured)) {
 		MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		mapperConfigured = Boolean.TRUE;
 	    }
+	} finally {
+	    lock.unlock();
 	}
     }
 
