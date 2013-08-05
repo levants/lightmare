@@ -16,6 +16,8 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.ejb.Local;
 import javax.ejb.Remote;
@@ -80,6 +82,8 @@ public class MetaCreator {
     // Configuration for appropriate archives URLs
     private Configuration configuration;
 
+    private static final Lock lock = new ReentrantLock();
+
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
     private MetaCreator() {
@@ -91,11 +95,14 @@ public class MetaCreator {
 
 	MetaCreator creator = MetaContainer.getCreator();
 	if (creator == null) {
-	    synchronized (MetaCreator.class) {
+	    lock.lock();
+	    try {
 		if (creator == null) {
 		    creator = new MetaCreator();
 		    MetaContainer.setCreator(creator);
 		}
+	    } finally {
+		lock.unlock();
 	    }
 	}
 
