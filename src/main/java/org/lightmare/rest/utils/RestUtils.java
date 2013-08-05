@@ -2,6 +2,7 @@ package org.lightmare.rest.utils;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.ws.rs.Path;
 
@@ -144,13 +145,19 @@ public class RestUtils {
 	    RestReloader reloader = RestReloader.get();
 	    RestConfig conf = get();
 	    if (ObjectUtils.notNull(conf) && ObjectUtils.notNull(reloader)) {
-		conf.cache();
+		if (RestContainer.hasRest()) {
+		    RestConfig existingConfig = RestContainer.getRestConfig();
+		    Set<Resource> existingResources = existingConfig
+			    .getResources();
+		    RestContainer.removeResources(existingResources);
+		}
 		ClassLoader commonLoader = getCommonLoader();
 		if (ObjectUtils.notNull(commonLoader)) {
 		    conf.setClassLoader(commonLoader);
 		}
 		conf.registerPreResources();
 		reloader.reload(conf);
+		conf.cache();
 	    }
 	} finally {
 	    newConfig = null;
