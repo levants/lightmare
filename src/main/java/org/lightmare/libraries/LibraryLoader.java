@@ -36,7 +36,7 @@ public class LibraryLoader {
 
     private static Method addURLMethod;
 
-    private static final Lock lock = new ReentrantLock();
+    private static final Lock LOCK = new ReentrantLock();
 
     private static final Logger LOG = Logger.getLogger(LibraryLoader.class);
 
@@ -70,7 +70,7 @@ public class LibraryLoader {
     private static Method getURLMethod() throws IOException {
 
 	if (addURLMethod == null) {
-	    lock.lock();
+	    LOCK.lock();
 	    try {
 		if (addURLMethod == null) {
 		    addURLMethod = MetaUtils.getDeclaredMethod(
@@ -78,7 +78,7 @@ public class LibraryLoader {
 			    URL.class);
 		}
 	    } finally {
-		lock.unlock();
+		LOCK.unlock();
 	    }
 	}
 
