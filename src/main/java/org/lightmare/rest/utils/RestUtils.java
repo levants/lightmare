@@ -25,13 +25,7 @@ public class RestUtils {
 
     private static RestConfig newConfig;
 
-    private static RestConfig existingConfig;
-
     private static void getConfig() {
-
-	if (existingConfig == null) {
-	    existingConfig = RestContainer.getRestConfig();
-	}
 
 	if (newConfig == null) {
 	    newConfig = new RestConfig(Boolean.FALSE);
@@ -40,8 +34,10 @@ public class RestUtils {
 
     private static RestConfig get() {
 
-	synchronized (RestUtils.class) {
-	    getConfig();
+	if (newConfig == null) {
+	    synchronized (RestUtils.class) {
+		getConfig();
+	    }
 	}
 
 	return newConfig;
@@ -90,6 +86,7 @@ public class RestUtils {
 	    RestReloader reloader = RestReloader.get();
 	    if (ObjectUtils.notNull(reloader)) {
 		RestConfig conf = get();
+		RestConfig existingConfig = RestContainer.getRestConfig();
 		conf.registerClass(beanClass, existingConfig);
 	    }
 	}
@@ -156,7 +153,6 @@ public class RestUtils {
 		reloader.reload(conf);
 	    }
 	} finally {
-	    existingConfig = null;
 	    newConfig = null;
 	}
     }

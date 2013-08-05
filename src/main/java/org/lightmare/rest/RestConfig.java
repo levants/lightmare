@@ -49,8 +49,8 @@ public class RestConfig extends ResourceConfig {
 		    addProperties(properties);
 		}
 	    }
-	    if (changeCache && ObjectUtils.notTrue(this.equals(config))) {
-		config = this;
+	    if (changeCache) {
+		RestContainer.setRestConfig(this);
 	    }
 	}
     }
