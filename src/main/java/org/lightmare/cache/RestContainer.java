@@ -24,6 +24,15 @@ public class RestContainer {
 	REST_RESOURCES.putIfAbsent(resourceClass, resource);
     }
 
+    public static void putResource(Resource resource) {
+
+	Set<Class<?>> handlerClasses = resource.getHandlerClasses();
+	if (ObjectUtils.available(handlerClasses)) {
+	    Class<?> handlerClass = ObjectUtils.getFirst(handlerClasses);
+	    putResource(handlerClass, resource);
+	}
+    }
+
     public static Resource getResource(Class<?> resourceClass) {
 
 	Resource resource = REST_RESOURCES.get(resourceClass);
