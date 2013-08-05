@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class ObjectUtils {
 
-    private static final int EMPRTY_ARRAY_LENGTH = 0;
+    public static final int EMPRTY_ARRAY_LENGTH = 0;
 
     private static final int FIRST_INDEX = 0;
 

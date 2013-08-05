@@ -162,7 +162,8 @@ public class RestConfig extends ResourceConfig {
 	    Set<Resource> existingResources = getResources();
 	    RestContainer.removeResources(existingResources);
 	    RestContainer.putResources(preResources);
-	    //RestContainer.setAvailability(false)
+	    boolean available = RestContainer.size() > ObjectUtils.EMPRTY_ARRAY_LENGTH;
+	    RestContainer.setAvailability(available);
 	    registerResources(preResources);
 	}
     }

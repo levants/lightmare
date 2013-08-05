@@ -76,6 +76,11 @@ public class RestContainer {
 	}
     }
 
+    public static int size() {
+
+	return REST_RESOURCES.size();
+    }
+
     public static void removeResources(Set<Resource> existingResources) {
 
 	if (ObjectUtils.available(existingResources)) {
