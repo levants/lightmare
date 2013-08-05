@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 import org.lightmare.libraries.loaders.EjbClassLoader;
@@ -33,6 +35,8 @@ public class LibraryLoader {
     private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
 
     private static Method addURLMethod;
+
+    private static final Lock lock = new ReentrantLock();
 
     private static final Logger LOG = Logger.getLogger(LibraryLoader.class);
 
@@ -66,12 +70,15 @@ public class LibraryLoader {
     private static Method getURLMethod() throws IOException {
 
 	if (addURLMethod == null) {
-	    synchronized (LibraryLoader.class) {
+	    lock.lock();
+	    try {
 		if (addURLMethod == null) {
 		    addURLMethod = MetaUtils.getDeclaredMethod(
 			    URLClassLoader.class, ADD_URL_METHOD_NAME,
 			    URL.class);
 		}
+	    } finally {
+		lock.unlock();
 	    }
 	}
 
