@@ -143,6 +143,7 @@ public class ConnectionContainer {
 		awaitConnection(semaphore);
 	    }
 	}
+
 	return inProgress;
     }
 
