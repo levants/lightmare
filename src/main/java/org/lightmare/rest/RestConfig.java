@@ -63,14 +63,6 @@ public class RestConfig extends ResourceConfig {
 
 	RestConfig config = RestContainer.getRestConfig();
 	if (ObjectUtils.notTrue(this.equals(config))) {
-	    if (ObjectUtils.notNull(config)) {
-
-		Map<String, Object> properties = config.getProperties();
-		if (ObjectUtils.available(properties)) {
-		    addProperties(properties);
-		}
-	    }
-
 	    RestContainer.setRestConfig(this);
 	}
     }
