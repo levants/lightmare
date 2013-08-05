@@ -3,6 +3,8 @@ package org.lightmare.rest.utils;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.ws.rs.Path;
 
@@ -26,6 +28,8 @@ public class RestUtils {
 
     private static RestConfig newConfig;
 
+    private static final Lock lock = new ReentrantLock();
+
     private static void getConfig() {
 
 	if (newConfig == null) {
@@ -36,8 +40,11 @@ public class RestUtils {
     private static RestConfig get() {
 
 	if (newConfig == null) {
-	    synchronized (RestUtils.class) {
+	    lock.lock();
+	    try {
 		getConfig();
+	    } finally {
+		lock.unlock();
 	    }
 	}
 
