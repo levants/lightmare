@@ -1,7 +1,5 @@
 package org.lightmare.deploy;
 
-import static org.lightmare.cache.MetaContainer.closeConnections;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -550,7 +548,7 @@ public class MetaCreator {
      * Closes all existing connections
      */
     public static void closeAllConnections() {
-	closeConnections();
+	MetaContainer.closeConnections();
     }
 
     public void clear() {
@@ -592,7 +590,7 @@ public class MetaCreator {
      */
     public static void close() {
 
-	closeConnections();
+	MetaContainer.closeConnections();
 	MetaContainer.clear();
     }
 
