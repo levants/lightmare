@@ -661,6 +661,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	/**
+	 * Adds instant persistence property
+	 * 
+	 * @param key
+	 * @param property
+	 * @return {@link Builder}
+	 */
 	public Builder addPersistenceProperty(String key, String property) {
 
 	    Map<Object, Object> persistenceProperties = initPersistenceProperties();
