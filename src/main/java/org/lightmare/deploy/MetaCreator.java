@@ -552,6 +552,9 @@ public class MetaCreator {
 	ConnectionContainer.closeConnections();
     }
 
+    /**
+     * Clears all locally cached data
+     */
     public void clear() {
 
 	boolean locked = scannerLock.tryLock();
@@ -684,7 +687,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setScanForEntities(boolean scanForEnt) {
-	    
+
 	    creator.configuration.setScanForEntities(scanForEnt);
 
 	    return this;
@@ -700,7 +703,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setUnitName(String unitName) {
-	    
+
 	    creator.configuration.setAnnotatedUnitName(unitName);
 
 	    return this;
@@ -713,7 +716,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPersXmlPath(String path) {
-	    
+
 	    creator.configuration.setPersXmlPath(path);
 	    creator.configuration.setScanArchives(Boolean.FALSE);
 
@@ -727,7 +730,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setLibraryPath(String... libPaths) {
-	    
+
 	    creator.configuration.setLibraryPaths(libPaths);
 
 	    return this;
@@ -741,7 +744,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setXmlFromJar(boolean xmlFromJar) {
-	    
+
 	    creator.configuration.setPersXmlFromJar(xmlFromJar);
 
 	    return this;
@@ -755,7 +758,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setSwapDataSource(boolean swapDataSource) {
-	    
+
 	    creator.configuration.setSwapDataSource(swapDataSource);
 
 	    return this;
@@ -768,7 +771,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder addDataSourcePath(String dataSourcePath) {
-	    
+
 	    creator.configuration.addDataSourcePath(dataSourcePath);
 
 	    return this;
@@ -783,7 +786,7 @@ public class MetaCreator {
 	 */
 	@Deprecated
 	public Builder setDataSourcePath(String dataSourcePath) {
-	    
+
 	    creator.configuration.addDataSourcePath(dataSourcePath);
 
 	    return this;
@@ -797,7 +800,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setScanArchives(boolean scanArchives) {
-	    
+
 	    creator.configuration.setScanArchives(scanArchives);
 
 	    return this;
@@ -810,7 +813,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setAwaitDeploiment(boolean await) {
-	    
+
 	    creator.await = await;
 
 	    return this;
@@ -823,7 +826,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setRemote(boolean remote) {
-	    
+
 	    creator.configuration.setRemote(remote);
 
 	    return this;
@@ -837,7 +840,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setServer(boolean server) {
-	    
+
 	    Configuration.setServer(server);
 	    creator.configuration.setClient(!server);
 
@@ -851,7 +854,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setClient(boolean client) {
-	    
+
 	    creator.configuration.setClient(client);
 	    Configuration.setServer(!client);
 
@@ -866,7 +869,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setProperty(String key, String property) {
-	    
+
 	    creator.configuration.putValue(key, property);
 
 	    return this;
@@ -879,7 +882,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setAdminUsersPth(String property) {
-	    
+
 	    Configuration.setAdminUsersPath(property);
 
 	    return this;
@@ -893,7 +896,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setIpAddress(String property) {
-	    
+
 	    creator.configuration.putValue(Configuration.IP_ADDRESS, property);
 
 	    return this;
@@ -906,7 +909,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPort(String property) {
-	    
+
 	    creator.configuration.putValue(Configuration.PORT, property);
 
 	    return this;
@@ -920,7 +923,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setMasterThreads(String property) {
-	    
+
 	    creator.configuration.putValue(Configuration.BOSS_POOL, property);
 
 	    return this;
@@ -934,7 +937,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setWorkerThreads(String property) {
-	    
+
 	    creator.configuration.putValue(Configuration.WORKER_POOL, property);
 
 	    return this;
@@ -949,7 +952,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder addDeploymentPath(String deploymentPath, boolean scan) {
-	    
+
 	    String clearPath = WatchUtils.clearPath(deploymentPath);
 	    creator.configuration.addDeploymentPath(clearPath, scan);
 
@@ -963,7 +966,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder addDeploymentPath(String deploymentPath) {
-	    
+
 	    addDeploymentPath(deploymentPath, Boolean.FALSE);
 
 	    return this;
@@ -977,7 +980,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setTimeout(String property) {
-	    
+
 	    creator.configuration.putValue(Configuration.CONNECTION_TIMEOUT,
 		    property);
 
@@ -991,7 +994,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setDataSourcePooledType(boolean dsPooledType) {
-	    
+
 	    JPAManager.pooledDataSource = dsPooledType;
 
 	    return this;
@@ -1005,7 +1008,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPoolProviderType(PoolProviderType poolProviderType) {
-	    
+
 	    PoolConfig.poolProviderType = poolProviderType;
 
 	    return this;
@@ -1018,7 +1021,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPoolPropertiesPath(String path) {
-	    
+
 	    PoolConfig.poolPath = path;
 
 	    return this;
@@ -1032,7 +1035,7 @@ public class MetaCreator {
 	 */
 	public Builder setPoolProperties(
 		Map<? extends Object, ? extends Object> properties) {
-	    
+
 	    initPoolProperties();
 	    PoolConfig.poolProperties.putAll(properties);
 
@@ -1047,7 +1050,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder addPoolProperty(Object key, Object value) {
-	    
+
 	    initPoolProperties();
 	    PoolConfig.poolProperties.put(key, value);
 
@@ -1062,14 +1065,14 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setHotDeployment(boolean hotDeployment) {
-	    
+
 	    creator.configuration.setHotDeployment(hotDeployment);
 
 	    return this;
 	}
 
 	public MetaCreator build() throws IOException {
-	    
+
 	    creator.configuration.configure();
 	    LOG.info("Lightmare application starts working");
 
