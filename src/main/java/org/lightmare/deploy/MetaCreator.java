@@ -656,6 +656,15 @@ public class MetaCreator {
 
 	public Builder addPersistenceProperty(String key, String property) {
 
+	    Map<Object, Object> persistenceProperties = creator.configuration
+		    .getPersistenceProperties();
+	    if (persistenceProperties == null) {
+		persistenceProperties = new HashMap<Object, Object>();
+		creator.configuration
+			.setPersistenceProperties(persistenceProperties);
+	    }
+	    persistenceProperties.put(key, property);
+
 	    return this;
 	}
 
