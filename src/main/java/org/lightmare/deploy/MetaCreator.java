@@ -684,6 +684,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setScanForEntities(boolean scanForEnt) {
+	    
 	    creator.configuration.setScanForEntities(scanForEnt);
 
 	    return this;
