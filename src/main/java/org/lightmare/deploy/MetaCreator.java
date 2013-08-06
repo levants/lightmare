@@ -650,6 +650,11 @@ public class MetaCreator {
 	    return this;
 	}
 
+	public Builder addPersistenceProperty(String key, String property) {
+
+	    return this;
+	}
+
 	/**
 	 * Adds property to scan for {@link javax.persistence.Entity} annotated
 	 * classes from deployed archives
