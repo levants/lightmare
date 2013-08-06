@@ -632,6 +632,19 @@ public class MetaCreator {
 	    }
 	}
 
+	private Map<Object, Object> initPersistenceProperties() {
+
+	    Map<Object, Object> persistenceProperties = creator.configuration
+		    .getPersistenceProperties();
+	    if (persistenceProperties == null) {
+		persistenceProperties = new HashMap<Object, Object>();
+		creator.configuration
+			.setPersistenceProperties(persistenceProperties);
+	    }
+
+	    return persistenceProperties;
+	}
+
 	/**
 	 * Sets additional persistence properties
 	 * 
@@ -641,13 +654,7 @@ public class MetaCreator {
 	public Builder setPersistenceProperties(Map<String, String> properties) {
 
 	    if (ObjectUtils.available(properties)) {
-		Map<Object, Object> persistenceProperties = creator.configuration
-			.getPersistenceProperties();
-		if (persistenceProperties == null) {
-		    persistenceProperties = new HashMap<Object, Object>();
-		    creator.configuration
-			    .setPersistenceProperties(persistenceProperties);
-		}
+		Map<Object, Object> persistenceProperties = initPersistenceProperties();
 		persistenceProperties.putAll(properties);
 	    }
 
@@ -656,13 +663,7 @@ public class MetaCreator {
 
 	public Builder addPersistenceProperty(String key, String property) {
 
-	    Map<Object, Object> persistenceProperties = creator.configuration
-		    .getPersistenceProperties();
-	    if (persistenceProperties == null) {
-		persistenceProperties = new HashMap<Object, Object>();
-		creator.configuration
-			.setPersistenceProperties(persistenceProperties);
-	    }
+	    Map<Object, Object> persistenceProperties = initPersistenceProperties();
 	    persistenceProperties.put(key, property);
 
 	    return this;
