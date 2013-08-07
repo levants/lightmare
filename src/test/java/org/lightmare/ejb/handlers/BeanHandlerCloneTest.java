@@ -12,13 +12,16 @@ public class BeanHandlerCloneTest {
 
     private MetaData metaData;
 
-    @Test
-    public void handlerClonePerformanceTest() {
+    public void configure() {
 
 	// LightMareFalseBean bean = new LightMareFalseBean();
 	MetaData metaData = new MetaData();
 	metaData.setBeanClass(LightMareFalseBean.class);
 	metaData.setInterfaceClasses(new Class<?>[] { LightMareFalseBeanRemote.class });
+    }
+
+    @Test
+    public void handlerClonePerformanceTest() {
 
 	try {
 	    BeanHandler handler = new BeanHandler(metaData);
@@ -28,20 +31,11 @@ public class BeanHandlerCloneTest {
 	    start = System.currentTimeMillis();
 	    for (int i = 0; i < LIMIT; i++) {
 
-		handler = new BeanHandler(metaData);
-	    }
-	    current = System.currentTimeMillis();
-	    time = current - start;
-	    System.out.println(time);
-
-	    start = System.currentTimeMillis();
-	    for (int i = 0; i < LIMIT; i++) {
-
 		handler = (BeanHandler) handler.clone();
 	    }
 	    current = System.currentTimeMillis();
 	    time = current - start;
-	    System.out.println(time);
+	    System.out.format("cloning %s\n", time);
 	    System.out.println("=========");
 	    System.out.println(ObjectUtils.notNull(handler));
 	} catch (Exception ex) {
@@ -63,5 +57,7 @@ public class BeanHandlerCloneTest {
 	current = System.currentTimeMillis();
 	time = current - start;
 	System.out.println(time);
+	System.out.println("=========");
+	System.out.println(ObjectUtils.notNull(handler));
     }
 }
