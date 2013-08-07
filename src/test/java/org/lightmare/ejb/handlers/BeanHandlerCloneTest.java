@@ -2,11 +2,15 @@ package org.lightmare.ejb.handlers;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.lightmare.bean.LightMareFalseBean;
 import org.lightmare.bean.LightMareFalseBeanRemote;
 import org.lightmare.cache.MetaData;
+import org.lightmare.unitorder.RunOrder;
+import org.lightmare.unitorder.SortedRunner;
 import org.lightmare.utils.ObjectUtils;
 
+@RunWith(SortedRunner.class)
 public class BeanHandlerCloneTest {
 
     private static final int LIMIT = 100000;
@@ -23,6 +27,7 @@ public class BeanHandlerCloneTest {
     }
 
     @Test
+    @RunOrder(1)
     public void handlerClonePerformanceTest() {
 
 	try {
@@ -46,6 +51,7 @@ public class BeanHandlerCloneTest {
     }
 
     @Test
+    @RunOrder(1)
     public void newPerformanceTest() {
 
 	BeanHandler handler = new BeanHandler(metaData);
