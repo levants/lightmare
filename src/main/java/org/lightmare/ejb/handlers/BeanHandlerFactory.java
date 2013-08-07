@@ -26,6 +26,13 @@ public class BeanHandlerFactory {
 	handler.configure();
     }
 
+    /**
+     * Clones existing {@link BeanHandler} object
+     * 
+     * @param handler
+     * @return {@link BeanHandler}
+     * @throws IOException
+     */
     private static BeanHandler cloneHandler(BeanHandler handler)
 	    throws IOException {
 
