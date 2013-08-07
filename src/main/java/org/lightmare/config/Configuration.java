@@ -214,7 +214,8 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Gets value associated with particular key as <code>long</code> instance
+     * Gets value associated with particular key as <code>boolean</code>
+     * instance
      * 
      * @param key
      * @return {@link String}
