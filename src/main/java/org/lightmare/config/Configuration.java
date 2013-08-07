@@ -312,6 +312,12 @@ public class Configuration implements Cloneable {
 	this.client = client;
     }
 
+    /**
+     * Adds path for deployments file or directory
+     * 
+     * @param path
+     * @param scan
+     */
     public void addDeploymentPath(String path, boolean scan) {
 
 	synchronized (Configuration.class) {
