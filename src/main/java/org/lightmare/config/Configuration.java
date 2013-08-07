@@ -254,6 +254,12 @@ public class Configuration implements Cloneable {
 
     }
 
+    /**
+     * Loads configuration from file contained in classpath
+     * 
+     * @param resourceName
+     * @param loader
+     */
     public void loadFromResource(String resourceName, ClassLoader loader) {
 	InputStream resourceStream = loader
 		.getResourceAsStream(new StringBuilder("META-INF/").append(
