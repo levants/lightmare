@@ -60,6 +60,16 @@ public class BeanHandler implements InvocationHandler {
 	this.metaData = metaData;
     }
 
+    public MetaData getMetaData() {
+
+	return metaData;
+    }
+
+    public Object getBean() {
+
+	return bean;
+    }
+
     protected void setBean(final Object bean) {
 	this.bean = bean;
     }
@@ -407,10 +417,5 @@ public class BeanHandler implements InvocationHandler {
 	} finally {
 	    close(realMethod);
 	}
-    }
-
-    public MetaData getMetaData() {
-
-	return metaData;
     }
 }
