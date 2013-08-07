@@ -187,6 +187,12 @@ public class Configuration implements Cloneable {
 	return config.get(key);
     }
 
+    /**
+     * Gets value associated with particular key as {@link Integer} instance
+     * 
+     * @param key
+     * @return {@link String}
+     */
     public int getIntValue(String key) {
 
 	String value = getStringValue(key);
