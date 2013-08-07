@@ -200,6 +200,12 @@ public class Configuration implements Cloneable {
 	return Integer.parseInt(value);
     }
 
+    /**
+     * Gets value associated with particular key as <code>long</code> instance
+     * 
+     * @param key
+     * @return {@link String}
+     */
     public long getLongValue(String key) {
 
 	String value = getStringValue(key);
