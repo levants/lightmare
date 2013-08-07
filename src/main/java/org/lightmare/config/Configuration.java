@@ -213,6 +213,12 @@ public class Configuration implements Cloneable {
 	return Long.parseLong(value);
     }
 
+    /**
+     * Gets value associated with particular key as <code>long</code> instance
+     * 
+     * @param key
+     * @return {@link String}
+     */
     public boolean getBooleanValue(String key) {
 
 	String value = getStringValue(key);
