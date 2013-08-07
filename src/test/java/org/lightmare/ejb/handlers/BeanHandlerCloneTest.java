@@ -10,6 +10,8 @@ public class BeanHandlerCloneTest {
 
     private static final int LIMIT = 100000;
 
+    private MetaData metaData;
+
     @Test
     public void handlerClonePerformanceTest() {
 
@@ -45,5 +47,21 @@ public class BeanHandlerCloneTest {
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
+    }
+
+    public void newPerformanceTest() {
+
+	BeanHandler handler = new BeanHandler(metaData);
+	long start = 0L;
+	long current = 0L;
+	long time = 0L;
+	start = System.currentTimeMillis();
+	for (int i = 0; i < LIMIT; i++) {
+
+	    handler = new BeanHandler(metaData);
+	}
+	current = System.currentTimeMillis();
+	time = current - start;
+	System.out.println(time);
     }
 }
