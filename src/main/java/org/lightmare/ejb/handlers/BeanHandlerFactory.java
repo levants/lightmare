@@ -26,6 +26,19 @@ public class BeanHandlerFactory {
 	handler.configure();
     }
 
+    private static BeanHandler cloneHandler(BeanHandler handler)
+	    throws IOException {
+
+	BeanHandler cloneHandler;
+	try {
+	    cloneHandler = (BeanHandler) handler.clone();
+	} catch (CloneNotSupportedException ex) {
+	    throw new IOException(ex);
+	}
+
+	return cloneHandler;
+    }
+
     /**
      * Gets {@link BeanHandler} instance from {@link MetaData} or creates new
      * instance if it is null
@@ -43,8 +56,10 @@ public class BeanHandlerFactory {
 	    handler = new BeanHandler(metaData);
 	    metaData.setHandler(handler);
 	}
-	configure(handler, bean);
 
-	return handler;
+	BeanHandler cloneHandler = cloneHandler(handler);
+	configure(cloneHandler, bean);
+
+	return cloneHandler;
     }
 }
