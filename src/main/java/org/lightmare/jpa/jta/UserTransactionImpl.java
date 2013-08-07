@@ -365,11 +365,11 @@ public class UserTransactionImpl implements UserTransaction {
      * @param handler
      * @return <code>boolean</code>
      */
-    public boolean checkCaller(InvocationHandler handler) {
+    public boolean checkCaller(Object bean) {
 
 	boolean check = ObjectUtils.notNull(caller);
 	if (check) {
-	    check = caller.equals(handler);
+	    check = caller.equals(bean);
 	}
 
 	return check;
