@@ -45,6 +45,7 @@ public class BeanHandlerCloneTest {
 	}
     }
 
+    @Test
     public void newPerformanceTest() {
 
 	BeanHandler handler = new BeanHandler(metaData);
