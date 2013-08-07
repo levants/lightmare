@@ -33,7 +33,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     private Stack<EntityManager> requareNewEms;
 
-    private InvocationHandler caller;
+    private Object caller;
 
     public UserTransactionImpl(EntityTransaction... transactions) {
 
@@ -375,11 +375,11 @@ public class UserTransactionImpl implements UserTransaction {
 	return check;
     }
 
-    public void setCaller(InvocationHandler handler) {
+    public void setCaller(Object handler) {
 	caller = handler;
     }
 
-    public InvocationHandler getCaller() {
+    public Object getCaller() {
 
 	return caller;
     }
