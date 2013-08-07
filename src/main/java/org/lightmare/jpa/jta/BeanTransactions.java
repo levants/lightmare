@@ -273,7 +273,7 @@ public class BeanTransactions {
 
 	Object caller = transaction.getCaller();
 	if (caller == null) {
-	    transaction.setCaller(handler.getBean());
+	    transaction.setCaller(handler);
 	}
     }
 

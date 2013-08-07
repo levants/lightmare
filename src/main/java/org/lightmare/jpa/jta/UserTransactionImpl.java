@@ -15,6 +15,7 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
+import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -365,18 +366,18 @@ public class UserTransactionImpl implements UserTransaction {
      * @param handler
      * @return <code>boolean</code>
      */
-    public boolean checkCaller(Object bean) {
+    public boolean checkCaller(BeanHandler handler) {
 
 	boolean check = ObjectUtils.notNull(caller);
 	if (check) {
-	    check = caller.equals(bean);
+	    check = caller.equals(handler.getBean());
 	}
 
 	return check;
     }
 
-    public void setCaller(Object handler) {
-	caller = handler;
+    public void setCaller(BeanHandler handler) {
+	caller = handler.getBean();
     }
 
     public Object getCaller() {
