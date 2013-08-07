@@ -17,7 +17,7 @@ public class BeanHandlerCloneTest {
     public void configure() {
 
 	// LightMareFalseBean bean = new LightMareFalseBean();
-	MetaData metaData = new MetaData();
+	metaData = new MetaData();
 	metaData.setBeanClass(LightMareFalseBean.class);
 	metaData.setInterfaceClasses(new Class<?>[] { LightMareFalseBeanRemote.class });
     }
