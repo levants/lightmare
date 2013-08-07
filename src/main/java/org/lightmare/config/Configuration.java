@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,12 +22,7 @@ import org.lightmare.utils.ObjectUtils;
  * @author levan
  * 
  */
-public class Configuration implements Cloneable, Serializable {
-
-    /**
-     * Default serial version UUID just for cloning
-     */
-    private static final long serialVersionUID = 1L;
+public class Configuration implements Cloneable {
 
     // cache for all configuration passed programmatically or read from file
     private final Map<String, String> config = new HashMap<String, String>();
