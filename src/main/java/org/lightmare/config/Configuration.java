@@ -360,6 +360,11 @@ public class Configuration implements Cloneable {
 	}
     }
 
+    /**
+     * Adds path for data source file
+     * 
+     * @param path
+     */
     public void addDataSourcePath(String path) {
 
 	synchronized (Configuration.class) {
