@@ -1,5 +1,6 @@
 package org.lightmare.ejb.handlers;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.lightmare.bean.LightMareFalseBean;
 import org.lightmare.bean.LightMareFalseBeanRemote;
@@ -12,6 +13,7 @@ public class BeanHandlerCloneTest {
 
     private MetaData metaData;
 
+    @Before
     public void configure() {
 
 	// LightMareFalseBean bean = new LightMareFalseBean();
