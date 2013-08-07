@@ -1,6 +1,5 @@
 package org.lightmare.jpa.jta;
 
-import java.lang.reflect.InvocationHandler;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -360,8 +359,7 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     /**
-     * Checks if this object was created by passed {@link InvocationHandler}
-     * object
+     * Checks if this object was created by passed {@link BeanHandler} object
      * 
      * @param handler
      * @return <code>boolean</code>
