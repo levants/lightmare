@@ -34,7 +34,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * @author Levan
  * 
  */
-public class BeanHandler implements InvocationHandler {
+public class BeanHandler implements InvocationHandler, Cloneable {
 
     private Object bean;
 
@@ -417,5 +417,10 @@ public class BeanHandler implements InvocationHandler {
 	} finally {
 	    close(realMethod);
 	}
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+	return super.clone();
     }
 }
