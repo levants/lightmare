@@ -58,7 +58,7 @@ public class BeanHandlerCloneTest {
 	}
 	current = System.currentTimeMillis();
 	time = current - start;
-	System.out.println(time);
+	System.out.format("new %s\n", time);
 	System.out.println("=========");
 	System.out.println(ObjectUtils.notNull(handler));
     }
