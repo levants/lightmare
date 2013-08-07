@@ -188,7 +188,7 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Gets value associated with particular key as {@link Integer} instance
+     * Gets value associated with particular key as <code>int</code> instance
      * 
      * @param key
      * @return {@link String}
