@@ -262,6 +262,7 @@ public class LibraryLoader {
      * @param loader
      */
     public static void loadCurrentLibraries(Thread thread, ClassLoader loader) {
+
 	if (ObjectUtils.notNull(loader)) {
 	    thread.setContextClassLoader(loader);
 	}
