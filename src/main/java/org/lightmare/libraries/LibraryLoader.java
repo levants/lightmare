@@ -174,6 +174,15 @@ public class LibraryLoader {
 	return urlLoader;
     }
 
+    /**
+     * Gets new {@link ClassLoader} enriched with passed {@link URL} array and
+     * parent {@link ClassLoader} classes
+     * 
+     * @param urls
+     * @param parent
+     * @return {@link ClassLoader}
+     * @throws IOException
+     */
     public static ClassLoader getEnrichedLoader(URL[] urls, ClassLoader parent)
 	    throws IOException {
 	EjbClassLoader urlLoader = null;
