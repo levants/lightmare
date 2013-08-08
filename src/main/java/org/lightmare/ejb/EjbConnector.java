@@ -286,8 +286,8 @@ public class EjbConnector {
     }
 
     /**
-     * Creates {@link RestHandler} instance from custom implementation of bean
-     * {@link Class} from {@link MetaData} object
+     * Creates {@link RestHandler} instance for invoking bean methods by REST
+     * services
      * 
      * @param metaData
      * @return {@link RestHandler}
