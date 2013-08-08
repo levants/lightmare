@@ -265,6 +265,15 @@ public class MetaUtils {
 	}
     }
 
+    /**
+     * Finds if passed {@link Class} has declared public {@link Method} with
+     * appropriated name
+     * 
+     * @param clazz
+     * @param methodName
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
     private static boolean classHasPublicMethod(Class<?> clazz,
 	    String methodName) throws IOException {
 
