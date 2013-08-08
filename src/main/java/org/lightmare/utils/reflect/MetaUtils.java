@@ -288,7 +288,15 @@ public class MetaUtils {
 	return found;
     }
 
-
+    /**
+     * Finds if passed {@link Class} has public {@link Method} with appropriated
+     * name
+     * 
+     * @param clazz
+     * @param methodName
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
     public static boolean hasPublicMethod(Class<?> clazz, String methodName)
 	    throws IOException {
 
