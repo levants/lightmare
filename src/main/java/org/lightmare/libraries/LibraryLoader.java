@@ -183,6 +183,7 @@ public class LibraryLoader {
 	    }
 	    enrichedLoader = EjbClassLoader.newInstance(urls, parent);
 	}
+
 	return enrichedLoader;
     }
 
