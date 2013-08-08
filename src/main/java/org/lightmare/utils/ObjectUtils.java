@@ -52,6 +52,11 @@ public class ObjectUtils {
 	return valid;
     }
 
+    public static boolean notEmpty(Collection<?> collection) {
+
+	return !collection.isEmpty();
+    }
+
     public static boolean available(Collection<?> collection) {
 
 	return collection != null && !collection.isEmpty();
@@ -137,11 +142,6 @@ public class ObjectUtils {
 	}
 
 	return avaliable;
-    }
-
-    public static boolean notEmpty(Collection<?> collection) {
-
-	return !collection.isEmpty();
     }
 
     @SuppressWarnings("unchecked")
