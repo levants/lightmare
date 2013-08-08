@@ -58,7 +58,7 @@ public class ObjectUtils {
     }
 
     /**
-     * Checks if passed {@link Collection} instance on null and on emptiness
+     * Checks passed {@link Collection} instance on null and on emptiness
      * 
      * @param collection
      * @return <code></code>
