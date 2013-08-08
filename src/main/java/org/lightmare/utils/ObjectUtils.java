@@ -57,6 +57,12 @@ public class ObjectUtils {
 	return !collection.isEmpty();
     }
 
+    /**
+     * Checks if passed {@link Collection} instance on null and on emptiness
+     * 
+     * @param collection
+     * @return <code></code>
+     */
     public static boolean available(Collection<?> collection) {
 
 	return collection != null && !collection.isEmpty();
