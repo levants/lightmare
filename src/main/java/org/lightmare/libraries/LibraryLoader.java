@@ -275,6 +275,7 @@ public class LibraryLoader {
      * @param loader
      */
     public static void loadCurrentLibraries(ClassLoader loader) {
+
 	Thread thread = Thread.currentThread();
 	loadCurrentLibraries(thread, loader);
     }
