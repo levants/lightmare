@@ -243,7 +243,8 @@ public class LibraryLoader {
     }
 
     /**
-     * Sets passed loader current thread as context class loader
+     * Sets passed {@link ClassLoader} instance as current {@link Thread}'s
+     * context class loader
      * 
      * @param loader
      */
