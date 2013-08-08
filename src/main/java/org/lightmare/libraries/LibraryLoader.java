@@ -32,6 +32,8 @@ public class LibraryLoader {
 
     private static final String ADD_URL_METHOD_NAME = "addURL";
 
+    private static final String CLOSE_METHOD_NAME = "close";
+
     private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
 
     private static Method addURLMethod;
@@ -323,7 +325,7 @@ public class LibraryLoader {
 	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
 	    try {
 		loader.clearAssertionStatus();
-		if (loader instanceof URLClassLoader) {
+		if (MetaUtils.hasMethod(loader.getClass(), CLOSE_METHOD_NAME)) {
 		    ((URLClassLoader) loader).close();
 		}
 	    } catch (Throwable th) {
