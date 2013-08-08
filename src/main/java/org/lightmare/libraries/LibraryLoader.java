@@ -298,6 +298,7 @@ public class LibraryLoader {
 
     private static void loadLibraryFromPath(String libraryPath)
 	    throws IOException {
+
 	File file = new File(libraryPath);
 	if (file.exists()) {
 	    Set<URL> urls = new HashSet<URL>();
