@@ -29,6 +29,11 @@ public class ObjectUtils {
 	return !statement;
     }
 
+    public static boolean isFalse(Boolean data) {
+
+	return !data;
+    }
+
     public static boolean notNull(Object data) {
 
 	return (data != null);
@@ -240,10 +245,5 @@ public class ObjectUtils {
 	if (ObjectUtils.notNull(closeable)) {
 	    closeable.close();
 	}
-    }
-
-    public static boolean isFalse(Boolean data) {
-
-	return !data;
     }
 }
