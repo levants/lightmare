@@ -1,6 +1,11 @@
 package org.lightmare.ejb.handlers;
 
-
+/**
+ * Factory class to create a {@link RestHandler} instance
+ * 
+ * @author levan
+ * 
+ */
 public class ResthandlerFactory {
 
     public static <T> RestHandler<T> get(BeanHandler handler, T bean) {
