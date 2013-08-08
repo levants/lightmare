@@ -174,8 +174,7 @@ public class LibraryLoader {
      * @return {@link ClassLoader}
      * @throws IOException
      */
-    public static ClassLoader getEnrichedLoader(URL[] urls, ClassLoader parent)
-	    throws IOException {
+    public static ClassLoader getEnrichedLoader(URL[] urls, ClassLoader parent) {
 
 	ClassLoader enrichedLoader = null;
 	if (ObjectUtils.available(urls)) {
