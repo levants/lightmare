@@ -201,8 +201,8 @@ public class LibraryLoader {
 	FileUtils.getSubfiles(file, urls);
 	URL[] paths = ObjectUtils.toArray(urls, URL.class);
 	ClassLoader parent = getContextClassLoader();
-	URLClassLoader urlLoader = URLClassLoader.newInstance(paths, parent);
-	return urlLoader;
+	ClassLoader enrichedLoader = getEnrichedLoader(paths, parent);
+	return enrichedLoader;
     }
 
     /**
