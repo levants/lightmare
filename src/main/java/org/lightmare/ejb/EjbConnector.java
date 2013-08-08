@@ -117,7 +117,7 @@ public class EjbConnector {
      * @return {@link InvocationHandler}
      * @throws IOException
      */
-    private <T> InvocationHandler getBeanHandler(MetaData metaData)
+    private <T> BeanHandler getBeanHandler(MetaData metaData)
 	    throws IOException {
 
 	T beanInstance = getBeanInstance(metaData);
@@ -296,7 +296,7 @@ public class EjbConnector {
     public <T> RestHandler<T> createRestHandler(MetaData metaData)
 	    throws IOException {
 
-	BeanHandler handler = (BeanHandler) getBeanHandler(metaData);
+	BeanHandler handler = getBeanHandler(metaData);
 
 	@SuppressWarnings("unchecked")
 	Class<T> beanClass = (Class<T>) metaData.getBeanClass();
