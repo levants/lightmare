@@ -230,7 +230,8 @@ public class LibraryLoader {
     }
 
     /**
-     * Sets passed loader to passed thread as context class loader
+     * Sets passed {@link Thread}'s context class loader appropriated
+     * {@link ClassLoader} instance
      * 
      * @param thread
      * @param loader
@@ -241,6 +242,11 @@ public class LibraryLoader {
 	}
     }
 
+    /**
+     * Sets passed loader current thread as context class loader
+     * 
+     * @param loader
+     */
     public static void loadCurrentLibraries(ClassLoader loader) {
 	Thread thread = Thread.currentThread();
 	loadCurrentLibraries(thread, loader);
