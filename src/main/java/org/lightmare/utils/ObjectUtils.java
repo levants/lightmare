@@ -144,6 +144,14 @@ public class ObjectUtils {
 	return avaliable;
     }
 
+    /**
+     * Converts passed {@link Collection} to array of appropriated {@link Class}
+     * type
+     * 
+     * @param collection
+     * @param type
+     * @return <code>T[]</code>
+     */
     @SuppressWarnings("unchecked")
     public static <T> T[] toArray(Collection<T> collection, Class<T> type) {
 
