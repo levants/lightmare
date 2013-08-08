@@ -323,7 +323,9 @@ public class LibraryLoader {
 	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
 	    try {
 		loader.clearAssertionStatus();
-		((URLClassLoader) loader).close();
+		if (loader instanceof URLClassLoader) {
+		    ((URLClassLoader) loader).close();
+		}
 	    } catch (Throwable th) {
 		LOG.error(th.getMessage(), th);
 	    }
