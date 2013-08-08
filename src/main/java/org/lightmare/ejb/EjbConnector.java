@@ -297,12 +297,11 @@ public class EjbConnector {
 	    throws IOException {
 
 	BeanHandler handler = (BeanHandler) getBeanHandler(metaData);
-	Class<?>[] interfaces = setInterfaces(metaData);
-	ClassLoader loader = metaData.getLoader();
 
 	@SuppressWarnings("unchecked")
-	T beanInstance = instatiateBean((Class<T>[]) interfaces, handler,
-		loader);
+	Class<T> beanClass = (Class<T>) metaData.getBeanClass();
+
+	T beanInstance = MetaUtils.instantiate(beanClass);
 
 	RestHandler<T> restHandler = ResthandlerFactory.get(handler,
 		beanInstance);
