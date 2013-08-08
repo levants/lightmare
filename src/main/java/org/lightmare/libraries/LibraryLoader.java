@@ -202,6 +202,7 @@ public class LibraryLoader {
 	URL[] paths = ObjectUtils.toArray(urls, URL.class);
 	ClassLoader parent = getContextClassLoader();
 	ClassLoader enrichedLoader = getEnrichedLoader(paths, parent);
+
 	return enrichedLoader;
     }
 
