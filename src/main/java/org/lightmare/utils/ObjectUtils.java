@@ -212,6 +212,12 @@ public class ObjectUtils {
 	return value;
     }
 
+    /**
+     * Creates empty array of passed type
+     * 
+     * @param type
+     * @return <code>T[]</code>
+     */
     public static <T> T[] emptyArray(Class<T> type) {
 
 	@SuppressWarnings("unchecked")
