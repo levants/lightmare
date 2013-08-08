@@ -1,7 +1,6 @@
 package org.lightmare.rest.providers;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -17,6 +16,7 @@ import org.glassfish.jersey.process.Inflector;
 import org.glassfish.jersey.server.model.Parameter;
 import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
+import org.lightmare.ejb.handlers.RestHandler;
 import org.lightmare.rest.utils.ParamBuilder;
 import org.lightmare.utils.ObjectUtils;
 
@@ -113,10 +113,9 @@ public class RestInflector implements
 	Response response;
 	try {
 	    EjbConnector connector = new EjbConnector();
-	    Object bean = connector.connectToBean(metaData);
-	    InvocationHandler handler = metaData.getHandler();
+	    RestHandler<?> handler = connector.createRestHandler(metaData);
 	    Object[] params = getParameters(data);
-	    Object value = handler.invoke(bean, method, params);
+	    Object value = handler.invoke(method, params);
 	    response = Response.ok(value).build();
 	} catch (Throwable ex) {
 	    LOG.error(ex.getMessage(), ex);

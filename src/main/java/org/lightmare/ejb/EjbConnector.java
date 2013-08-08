@@ -20,6 +20,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.handlers.BeanHandlerFactory;
 import org.lightmare.ejb.handlers.BeanLocalHandlerFactory;
+import org.lightmare.ejb.handlers.RestHandler;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
@@ -281,5 +282,29 @@ public class EjbConnector {
 	T beanInstance = (T) connectToBean(beanName, interfaceClass);
 
 	return beanInstance;
+    }
+
+    /**
+     * Creates {@link RestHandler} instance from custom implementation of bean
+     * {@link Class} from {@link MetaData} object
+     * 
+     * @param metaData
+     * @return {@link RestHandler}
+     * @throws IOException
+     */
+    public <T> RestHandler<T> createRestHandler(MetaData metaData)
+	    throws IOException {
+
+	BeanHandler handler = (BeanHandler) getBeanHandler(metaData);
+	Class<?>[] interfaces = setInterfaces(metaData);
+	ClassLoader loader = metaData.getLoader();
+
+	@SuppressWarnings("unchecked")
+	T beanInstance = instatiateBean((Class<T>[]) interfaces, handler,
+		loader);
+
+	RestHandler<T> restHandler = new RestHandler<T>(handler, beanInstance);
+
+	return restHandler;
     }
 }
