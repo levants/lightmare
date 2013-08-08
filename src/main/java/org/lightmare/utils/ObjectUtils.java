@@ -70,7 +70,8 @@ public class ObjectUtils {
     }
 
     /**
-     * Checks passed {@link Map} instance on null and emptiness
+     * Checks passed {@link Map} instance on null and emptiness returns true if
+     * it is not null and is not empty
      * 
      * @param map
      * @return <code>boolean</code>
