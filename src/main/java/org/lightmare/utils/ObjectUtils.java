@@ -153,17 +153,18 @@ public class ObjectUtils {
 	return array;
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> T[] getEmptyArray(Class<T> componentType) {
+    /**
+     * Creates empty array of passed type
+     * 
+     * @param type
+     * @return <code>T[]</code>
+     */
+    public static <T> T[] emptyArray(Class<T> type) {
 
-	return (T[]) Array.newInstance(componentType, EMPRTY_ARRAY_LENGTH);
-    }
+	@SuppressWarnings("unchecked")
+	T[] empty = (T[]) Array.newInstance(type, EMPRTY_ARRAY_LENGTH);
 
-    public static void close(Closeable closeable) throws IOException {
-
-	if (ObjectUtils.notNull(closeable)) {
-	    closeable.close();
-	}
+	return empty;
     }
 
     /**
@@ -210,20 +211,6 @@ public class ObjectUtils {
     }
 
     /**
-     * Creates empty array of passed type
-     * 
-     * @param type
-     * @return <code>T[]</code>
-     */
-    public static <T> T[] emptyArray(Class<T> type) {
-
-	@SuppressWarnings("unchecked")
-	T[] empty = (T[]) Array.newInstance(type, EMPRTY_ARRAY_LENGTH);
-
-	return empty;
-    }
-
-    /**
      * Peaks first element from array
      * 
      * @param collection
@@ -239,6 +226,20 @@ public class ObjectUtils {
 	}
 
 	return value;
+    }
+
+    /**
+     * Checks if passed {@link Closeable} instance is not null and if not calls
+     * {@link Closeable#close()} method
+     * 
+     * @param closeable
+     * @throws IOException
+     */
+    public static void close(Closeable closeable) throws IOException {
+
+	if (ObjectUtils.notNull(closeable)) {
+	    closeable.close();
+	}
     }
 
     public static boolean isFalse(Boolean data) {
