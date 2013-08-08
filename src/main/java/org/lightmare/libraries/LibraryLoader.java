@@ -165,6 +165,15 @@ public class LibraryLoader {
 	return loader;
     }
 
+    /**
+     * Gets new {@link ClassLoader} enriched with passed {@link File} and it's
+     * sub files {@link URL}s and parent {@link ClassLoader} classes
+     * 
+     * @param file
+     * @param urls
+     * @return {@link ClassLoader}
+     * @throws IOException
+     */
     public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
 	    throws IOException {
 	FileUtils.getSubfiles(file, urls);
