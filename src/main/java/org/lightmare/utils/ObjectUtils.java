@@ -212,6 +212,14 @@ public class ObjectUtils {
 	return value;
     }
 
+    public static <T> T[] emptyArray(Class<T> type) {
+
+	@SuppressWarnings("unchecked")
+	T[] empty = (T[]) new Object[EMPRTY_ARRAY_LENGTH];
+
+	return empty;
+    }
+
     /**
      * Peaks first element from array
      * 
