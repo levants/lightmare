@@ -280,7 +280,7 @@ public class EjbConnector {
 	Class<T> interfaceClass = (Class<T>) MetaUtils.classForName(
 		interfaceName, Boolean.FALSE, loader);
 
-	T beanInstance = (T) connectToBean(beanName, interfaceClass);
+	T beanInstance = (T) connectToBean(beanName, interfaceClass, rpcArgs);
 
 	return beanInstance;
     }
