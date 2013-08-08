@@ -288,6 +288,22 @@ public class MetaUtils {
 	return found;
     }
 
+    private static boolean classHasPublicMethod(Class<?> clazz,
+	    String methodName) throws IOException {
+
+	Method[] methods = getDeclaredMethods(clazz);
+	boolean found = Boolean.FALSE;
+	int length = methods.length;
+	Method method;
+	for (int i = 0; i < length && ObjectUtils.notTrue(found); i++) {
+	    method = methods[i];
+	    found = method.getName().equals(methodName)
+		    && Modifier.isPublic(method.getModifiers());
+	}
+
+	return found;
+    }
+
     /**
      * Finds if passed {@link Class} has public {@link Method} with appropriated
      * name
@@ -300,14 +316,13 @@ public class MetaUtils {
     public static boolean hasPublicMethod(Class<?> clazz, String methodName)
 	    throws IOException {
 
-	Method[] methods = getDeclaredMethods(clazz);
+	Class<?> superClass = clazz;
 	boolean found = Boolean.FALSE;
-	int length = methods.length;
-	Method method;
-	for (int i = 0; i < length && ObjectUtils.notTrue(found); i++) {
-	    method = methods[i];
-	    found = method.getName().equals(methodName)
-		    && Modifier.isPublic(method.getModifiers());
+	while (ObjectUtils.notTrue(found)) {
+	    found = MetaUtils.classHasPublicMethod(superClass, methodName);
+	    if (ObjectUtils.notTrue(found)) {
+		superClass = superClass.getSuperclass();
+	    }
 	}
 
 	return found;
