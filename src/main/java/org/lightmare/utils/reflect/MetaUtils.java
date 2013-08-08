@@ -263,6 +263,14 @@ public class MetaUtils {
 	}
     }
 
+    /**
+     * Finds if passed {@link Class}
+     * 
+     * @param clazz
+     * @param methodName
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
     public static boolean hasMethod(Class<?> clazz, String methodName)
 	    throws IOException {
 
