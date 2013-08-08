@@ -21,6 +21,7 @@ import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.ejb.handlers.BeanHandlerFactory;
 import org.lightmare.ejb.handlers.BeanLocalHandlerFactory;
 import org.lightmare.ejb.handlers.RestHandler;
+import org.lightmare.ejb.handlers.ResthandlerFactory;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
@@ -303,7 +304,8 @@ public class EjbConnector {
 	T beanInstance = instatiateBean((Class<T>[]) interfaces, handler,
 		loader);
 
-	RestHandler<T> restHandler = new RestHandler<T>(handler, beanInstance);
+	RestHandler<T> restHandler = ResthandlerFactory.get(handler,
+		beanInstance);
 
 	return restHandler;
     }
