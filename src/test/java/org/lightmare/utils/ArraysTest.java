@@ -8,14 +8,6 @@ import org.junit.Test;
 
 public class ArraysTest {
 
-    private Class<String> stringType = String.class;
-
-    private Class<Integer> integerType = Integer.class;
-
-    private Class<Long> longType = Long.class;
-
-    private Class<URL> urlType = URL.class;
-
     private String format = "%s %s %s\n";
 
     private <T> void print(T[] empty) {
@@ -31,16 +23,16 @@ public class ArraysTest {
     @Test
     public void emptyArrayTest() {
 
-	String[] strings = ObjectUtils.emptyArray(stringType);
+	String[] strings = ObjectUtils.emptyArray(String.class);
 	print(strings);
 
-	Integer[] integers = ObjectUtils.emptyArray(integerType);
+	Integer[] integers = ObjectUtils.emptyArray(Integer.class);
 	print(integers);
 
-	Long[] longs = ObjectUtils.emptyArray(longType);
+	Long[] longs = ObjectUtils.emptyArray(Long.class);
 	print(longs);
 
-	URL[] urls = ObjectUtils.emptyArray(urlType);
+	URL[] urls = ObjectUtils.emptyArray(URL.class);
 	print(urls);
     }
 }
