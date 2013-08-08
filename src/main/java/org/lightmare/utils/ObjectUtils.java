@@ -221,7 +221,7 @@ public class ObjectUtils {
     public static <T> T[] emptyArray(Class<T> type) {
 
 	@SuppressWarnings("unchecked")
-	T[] empty = (T[]) new Object[EMPRTY_ARRAY_LENGTH];
+	T[] empty = (T[]) Array.newInstance(type, EMPRTY_ARRAY_LENGTH);
 
 	return empty;
     }
