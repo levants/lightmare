@@ -68,6 +68,12 @@ public class ObjectUtils {
 	return collection != null && !collection.isEmpty();
     }
 
+    /**
+     * Checks passed {@link Map} instance on null and emptiness
+     * 
+     * @param map
+     * @return <code>boolean</code>
+     */
     public static boolean available(Map<?, ?> map) {
 
 	return map != null && !map.isEmpty();
