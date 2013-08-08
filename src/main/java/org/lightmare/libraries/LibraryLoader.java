@@ -69,6 +69,12 @@ public class LibraryLoader {
 	}
     }
 
+    /**
+     * Gets {@link URLClassLoader} class addURL method
+     * 
+     * @return Method
+     * @throws IOException
+     */
     private static Method getURLMethod() throws IOException {
 
 	if (addURLMethod == null) {
