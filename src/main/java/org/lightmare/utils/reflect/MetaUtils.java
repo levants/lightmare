@@ -264,7 +264,7 @@ public class MetaUtils {
     }
 
     /**
-     * Finds if passed {@link Class}
+     * Finds if passed {@link Class} has {@link Method} with appropriated name
      * 
      * @param clazz
      * @param methodName
