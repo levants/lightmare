@@ -9,6 +9,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import javassist.Modifier;
+
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 
@@ -281,6 +283,23 @@ public class MetaUtils {
 	for (int i = 0; i < length && ObjectUtils.notTrue(found); i++) {
 	    method = methods[i];
 	    found = method.getName().equals(methodName);
+	}
+
+	return found;
+    }
+
+
+    public static boolean hasPublicMethod(Class<?> clazz, String methodName)
+	    throws IOException {
+
+	Method[] methods = getDeclaredMethods(clazz);
+	boolean found = Boolean.FALSE;
+	int length = methods.length;
+	Method method;
+	for (int i = 0; i < length && ObjectUtils.notTrue(found); i++) {
+	    method = methods[i];
+	    found = method.getName().equals(methodName)
+		    && Modifier.isPublic(method.getModifiers());
 	}
 
 	return found;
