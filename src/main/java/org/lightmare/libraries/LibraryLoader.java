@@ -325,6 +325,7 @@ public class LibraryLoader {
 	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
 	    try {
 		loader.clearAssertionStatus();
+		// Finds if loader associated class has "close" method
 		if (MetaUtils.hasMethod(loader.getClass(), CLOSE_METHOD_NAME)) {
 		    ((URLClassLoader) loader).close();
 		}
