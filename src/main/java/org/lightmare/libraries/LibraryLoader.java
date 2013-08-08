@@ -253,6 +253,14 @@ public class LibraryLoader {
 	loadCurrentLibraries(thread, loader);
     }
 
+    /**
+     * Adds {@link URL} array to system {@link ClassLoader} instance
+     * 
+     * @param urls
+     * @param method
+     * @param urlLoader
+     * @throws IOException
+     */
     public static void loadURLToSystem(URL[] urls, Method method,
 	    URLClassLoader urlLoader) throws IOException {
 
