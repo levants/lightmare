@@ -229,6 +229,12 @@ public class LibraryLoader {
 	return commonLoader;
     }
 
+    /**
+     * Sets passed loader to passed thread as context class loader
+     * 
+     * @param thread
+     * @param loader
+     */
     public static void loadCurrentLibraries(Thread thread, ClassLoader loader) {
 	if (ObjectUtils.notNull(loader)) {
 	    thread.setContextClassLoader(loader);
