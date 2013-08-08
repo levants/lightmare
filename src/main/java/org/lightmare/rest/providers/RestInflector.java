@@ -101,7 +101,7 @@ public class RestInflector implements
 	if (ObjectUtils.available(parameters)) {
 	    params = extraxtParameters(request);
 	} else {
-	    params = ObjectUtils.getEmptyArray();
+	    params = ObjectUtils.EMPTY_ARRAY;
 	}
 
 	return params;

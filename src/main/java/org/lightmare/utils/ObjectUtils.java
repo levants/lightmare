@@ -18,6 +18,8 @@ public class ObjectUtils {
 
     public static final int EMPRTY_ARRAY_LENGTH = 0;
 
+    public static final Object[] EMPTY_ARRAY = {};
+
     private static final int FIRST_INDEX = 0;
 
     public static final String EMPTY_STRING = "";
@@ -149,11 +151,6 @@ public class ObjectUtils {
 	}
 
 	return array;
-    }
-
-    public static Object[] getEmptyArray() {
-
-	return new Object[EMPRTY_ARRAY_LENGTH];
     }
 
     @SuppressWarnings("unchecked")
