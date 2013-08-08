@@ -198,6 +198,7 @@ public class LibraryLoader {
      */
     public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
 	    throws IOException {
+
 	FileUtils.getSubfiles(file, urls);
 	URL[] paths = ObjectUtils.toArray(urls, URL.class);
 	ClassLoader parent = getContextClassLoader();
