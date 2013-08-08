@@ -59,6 +59,7 @@ public class ObjectUtils {
 
     /**
      * Checks passed {@link Collection} instance on null and on emptiness
+     * returns true if it is not null and is not empty
      * 
      * @param collection
      * @return <code></code>
