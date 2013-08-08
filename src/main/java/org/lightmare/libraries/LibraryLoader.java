@@ -247,10 +247,9 @@ public class LibraryLoader {
 	    ClassLoader oldLoader) {
 
 	URL[] urls = getURLs(oldLoader);
-	URLClassLoader commonLoader = URLClassLoader.newInstance(urls,
-		oldLoader);
+	ClassLoader commonLoader = URLClassLoader.newInstance(urls, oldLoader);
 	urls = getURLs(newLoader);
-	commonLoader = URLClassLoader.newInstance(urls, newLoader);
+	commonLoader = getEnrichedLoader(urls, newLoader);
 
 	return commonLoader;
     }
