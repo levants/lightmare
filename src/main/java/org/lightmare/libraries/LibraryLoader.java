@@ -101,7 +101,7 @@ public class LibraryLoader {
 	if (loader instanceof URLClassLoader) {
 	    urls = ((URLClassLoader) loader).getURLs();
 	} else {
-	    urls = new URL[0];
+	    urls = ObjectUtils.emptyArray(URL.class);
 	}
 
 	return urls;
