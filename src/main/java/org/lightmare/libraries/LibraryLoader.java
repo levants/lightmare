@@ -166,24 +166,6 @@ public class LibraryLoader {
     }
 
     /**
-     * Gets new {@link ClassLoader} enriched with passed {@link File} and it's
-     * sub files {@link URL}s and parent {@link ClassLoader} classes
-     * 
-     * @param file
-     * @param urls
-     * @return {@link ClassLoader}
-     * @throws IOException
-     */
-    public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
-	    throws IOException {
-	FileUtils.getSubfiles(file, urls);
-	URL[] paths = ObjectUtils.toArray(urls, URL.class);
-	ClassLoader parent = getContextClassLoader();
-	URLClassLoader urlLoader = URLClassLoader.newInstance(paths, parent);
-	return urlLoader;
-    }
-
-    /**
      * Gets new {@link ClassLoader} enriched with passed {@link URL} array and
      * parent {@link ClassLoader} classes
      * 
@@ -201,6 +183,24 @@ public class LibraryLoader {
 	    }
 	    urlLoader = EjbClassLoader.newInstance(urls, parent);
 	}
+	return urlLoader;
+    }
+
+    /**
+     * Gets new {@link ClassLoader} enriched with passed {@link File} and it's
+     * sub files {@link URL}s and parent {@link ClassLoader} classes
+     * 
+     * @param file
+     * @param urls
+     * @return {@link ClassLoader}
+     * @throws IOException
+     */
+    public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
+	    throws IOException {
+	FileUtils.getSubfiles(file, urls);
+	URL[] paths = ObjectUtils.toArray(urls, URL.class);
+	ClassLoader parent = getContextClassLoader();
+	URLClassLoader urlLoader = URLClassLoader.newInstance(paths, parent);
 	return urlLoader;
     }
 
