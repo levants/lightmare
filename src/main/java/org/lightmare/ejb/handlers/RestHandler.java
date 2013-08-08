@@ -8,16 +8,16 @@ import java.lang.reflect.Method;
  * @author levan
  * 
  */
-public class RestHandler {
+public class RestHandler<T> {
 
     private final BeanHandler handler;
 
-    private final Object bean;
+    private final T bean;
 
-    public RestHandler(BeanHandler handler) {
+    public RestHandler(BeanHandler handler, T bean) {
 
 	this.handler = handler;
-	this.bean = handler.getBean();
+	this.bean = bean;
     }
 
     public Object invoke(Method method, Object[] args) throws Throwable {
