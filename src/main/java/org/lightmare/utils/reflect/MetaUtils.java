@@ -265,29 +265,6 @@ public class MetaUtils {
 	}
     }
 
-    /**
-     * Finds if passed {@link Class} has {@link Method} with appropriated name
-     * 
-     * @param clazz
-     * @param methodName
-     * @return <code>boolean</code>
-     * @throws IOException
-     */
-    public static boolean hasMethod(Class<?> clazz, String methodName)
-	    throws IOException {
-
-	Method[] methods = getDeclaredMethods(clazz);
-	boolean found = Boolean.FALSE;
-	int length = methods.length;
-	Method method;
-	for (int i = 0; i < length && ObjectUtils.notTrue(found); i++) {
-	    method = methods[i];
-	    found = method.getName().equals(methodName);
-	}
-
-	return found;
-    }
-
     private static boolean classHasPublicMethod(Class<?> clazz,
 	    String methodName) throws IOException {
 
