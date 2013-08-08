@@ -176,6 +176,7 @@ public class LibraryLoader {
      */
     public static ClassLoader getEnrichedLoader(URL[] urls, ClassLoader parent)
 	    throws IOException {
+
 	ClassLoader enrichedLoader = null;
 	if (ObjectUtils.available(urls)) {
 	    if (parent == null) {
