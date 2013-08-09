@@ -69,6 +69,17 @@ public class FileParsers {
     }
 
     /**
+     * Gets item with index 0 from passed {@link NodeList} instance
+     * 
+     * @param list
+     * @return {@link Node}
+     */
+    private static Node getFirst(NodeList list) {
+
+	return list.item(ObjectUtils.FIRST_INDEX);
+    }
+
+    /**
      * To get text from tag depended on jre installation
      * 
      * @param element
@@ -77,8 +88,8 @@ public class FileParsers {
     public static String getContext(Element element) {
 
 	NodeList textList = element.getChildNodes();
-	String data = ((Node) textList.item(ObjectUtils.FIRST_INDEX))
-		.getNodeValue().trim();
+	Node firstNode = getFirst(textList);
+	String data = firstNode.getNodeValue().trim();
 	return data;
     }
 
@@ -118,7 +129,7 @@ public class FileParsers {
      */
     public void setDataFromJBossDriver(NodeList nodeList, Properties properties) {
 
-	Element thisElement = (Element) nodeList.item(ObjectUtils.FIRST_INDEX);
+	Element thisElement = (Element) getFirst(nodeList);
 	String name = getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
 	properties.setProperty(DataSourceInitializer.DRIVER_PROPERTY,
@@ -141,8 +152,7 @@ public class FileParsers {
 	    if (elementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    Element userElement = (Element) userList
-		    .item(ObjectUtils.FIRST_INDEX);
+	    Element userElement = (Element) getFirst(userList);
 	    String user = getContext(userElement);
 
 	    properties.setProperty(DataSourceInitializer.USER_PROPERTY, user);
@@ -152,8 +162,7 @@ public class FileParsers {
 	    if (elementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    Element passElement = (Element) passList
-		    .item(ObjectUtils.FIRST_INDEX);
+	    Element passElement = (Element) getFirst(passList);
 	    String password = getContext(passElement);
 
 	    properties.setProperty(DataSourceInitializer.PASSWORD_PROPERTY,
@@ -177,8 +186,7 @@ public class FileParsers {
 	    if (elementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    Element minPoolSizeElement = (Element) minPoolSizeList
-		    .item(ObjectUtils.FIRST_INDEX);
+	    Element minPoolSizeElement = (Element) getFirst(minPoolSizeList);
 	    String minPoolSize = getContext(minPoolSizeElement);
 
 	    properties.setProperty(PoolConfig.MIN_POOL_SIZE, minPoolSize);
@@ -189,8 +197,7 @@ public class FileParsers {
 	    if (elementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    Element maxPoolSizeElement = (Element) maxPoolSizeList
-		    .item(ObjectUtils.FIRST_INDEX);
+	    Element maxPoolSizeElement = (Element) getFirst(maxPoolSizeList);
 	    String maxPoolSize = getContext(maxPoolSizeElement);
 
 	    properties.setProperty(PoolConfig.MAX_POOL_SIZE, maxPoolSize);
@@ -201,8 +208,7 @@ public class FileParsers {
 	    if (elementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    Element initPoolSizeElement = (Element) initPoolSizeList
-		    .item(ObjectUtils.FIRST_INDEX);
+	    Element initPoolSizeElement = (Element) getFirst(initPoolSizeList);
 	    String prefill = getContext(initPoolSizeElement);
 	    if (Boolean.valueOf(prefill)) {
 		properties.setProperty(PoolConfig.INITIAL_POOL_SIZE,
@@ -237,8 +243,7 @@ public class FileParsers {
 	    if (urlElementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    Element urlElement = (Element) urlList
-		    .item(ObjectUtils.FIRST_INDEX);
+	    Element urlElement = (Element) getFirst(urlList);
 	    String url = getContext(urlElement);
 	    props.setProperty(DataSourceInitializer.URL_PROPERTY, url);
 	    NodeList securityList = thisElement
