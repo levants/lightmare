@@ -45,6 +45,15 @@ public class EjbClassLoader extends URLClassLoader {
 	return loader;
     }
 
+    /**
+     * Constructs new instance of {@link EjbClassLoader} and loads passed
+     * {@link URL} array with {@link ClassLoader} parameter as parent class
+     * loader
+     * 
+     * @param urls
+     * @param parent
+     * @return {@link EjbClassLoader}
+     */
     public static EjbClassLoader newInstance(final URL[] urls,
 	    final ClassLoader parent) {
 
