@@ -20,18 +20,30 @@ public class DriverConfig {
 
     private static final String DERBY_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 
+    private static final String ORACLE_NAME = "oracle";
+
+    private static final String MYSQL_NAME = "mysql";
+
+    private static final String DB2_NAME = "db2";
+
+    private static final String MSSQL_NAME = "mssql";
+
+    private static final String H2_NAME = "h2";
+
+    private static final String DERBY_NAME = "derby";
+
     public static String getDriverName(String name) {
-	if ("oracle".equals(name)) {
+	if (ORACLE_NAME.equals(name)) {
 	    return ORACLE_DRIVER;
-	} else if ("mysql".equals(name)) {
+	} else if (MYSQL_NAME.equals(name)) {
 	    return MYSQL_DRIVER;
-	} else if ("db2".equals(name)) {
+	} else if (DB2_NAME.equals(name)) {
 	    return DB2_DRIVER;
-	} else if ("mssql".equals(name)) {
+	} else if (MSSQL_NAME.equals(name)) {
 	    return MSSQL_DRIVER;
-	} else if ("h2".equals(name)) {
+	} else if (H2_NAME.equals(name)) {
 	    return H2_DRIVER;
-	} else if ("derby".equals(name)) {
+	} else if (DERBY_NAME.equals(name)) {
 	    return DERBY_DRIVER;
 	} else {
 	    return null;
