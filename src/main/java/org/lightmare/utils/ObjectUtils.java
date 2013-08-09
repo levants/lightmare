@@ -16,11 +16,11 @@ import java.util.Map;
  */
 public class ObjectUtils {
 
-    public static final int EMPRTY_ARRAY_LENGTH = 0;
+    public static final int EMPTY_ARRAY_LENGTH = 0;
 
     public static final Object[] EMPTY_ARRAY = {};
 
-    private static final int FIRST_INDEX = 0;
+    public static final int FIRST_INDEX = 0;
 
     public static final String EMPTY_STRING = "";
 
@@ -189,7 +189,7 @@ public class ObjectUtils {
     public static <T> T[] emptyArray(Class<T> type) {
 
 	@SuppressWarnings("unchecked")
-	T[] empty = (T[]) Array.newInstance(type, EMPRTY_ARRAY_LENGTH);
+	T[] empty = (T[]) Array.newInstance(type, EMPTY_ARRAY_LENGTH);
 
 	return empty;
     }
