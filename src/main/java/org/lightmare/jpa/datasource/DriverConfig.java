@@ -8,6 +8,7 @@ package org.lightmare.jpa.datasource;
  */
 public class DriverConfig {
 
+    // Driver class names
     private static final String ORACLE_DRIVER = "oracle.jdbc.OracleDriver";
 
     private static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
