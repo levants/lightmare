@@ -21,6 +21,13 @@ public class EjbClassLoader extends URLClassLoader {
 	super(urls, parent);
     }
 
+    /**
+     * Constructs new instance of {@link EjbClassLoader} and loads passed
+     * {@link URL} array
+     * 
+     * @param urls
+     * @return {@link EjbClassLoader}
+     */
     public static EjbClassLoader newInstance(final URL[] urls) {
 
 	PrivilegedAction<EjbClassLoader> action = new PrivilegedAction<EjbClassLoader>() {
