@@ -94,16 +94,8 @@ public class EjbClassLoader extends URLClassLoader {
     public static EjbClassLoader newInstance(final URL[] urls,
 	    final ClassLoader parent) {
 
-	PrivilegedAction<EjbClassLoader> action = new PrivilegedAction<EjbClassLoader>() {
-
-	    @Override
-	    public EjbClassLoader run() {
-
-		EjbClassLoader ejbClassLoader = new EjbClassLoader(urls, parent);
-
-		return ejbClassLoader;
-	    }
-	};
+	PrivilegedAction<EjbClassLoader> action = new EjbLoaderAction(urls,
+		parent);
 	EjbClassLoader loader = AccessController.doPrivileged(action);
 
 	return loader;
