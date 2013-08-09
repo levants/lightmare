@@ -312,7 +312,7 @@ public class FileParsers {
 	DataSourceInitializer initializer = new DataSourceInitializer();
 
 	// Blocking semaphore before all data source initialization finished
-	CountDownLatch dsLatch = new CountDownLatch(properties.size());
+	CountDownLatch blocker = new CountDownLatch(properties.size());
 
 	BeanLoader.DataSourceParameters parameters;
 	for (Properties props : properties) {
@@ -322,7 +322,7 @@ public class FileParsers {
 		parameters = new BeanLoader.DataSourceParameters();
 		parameters.initializer = initializer;
 		parameters.properties = props;
-		parameters.blocker = dsLatch;
+		parameters.blocker = blocker;
 		BeanLoader.initializeDatasource(parameters);
 
 	    } catch (IOException ex) {
@@ -331,7 +331,7 @@ public class FileParsers {
 	}
 
 	try {
-	    dsLatch.await();
+	    blocker.await();
 	} catch (InterruptedException ex) {
 	    throw new IOException(ex);
 	}
