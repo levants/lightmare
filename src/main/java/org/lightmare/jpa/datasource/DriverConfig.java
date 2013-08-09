@@ -20,6 +20,7 @@ public class DriverConfig {
 
     private static final String DERBY_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 
+    // Database names
     private static final String ORACLE_NAME = "oracle";
 
     private static final String MYSQL_NAME = "mysql";
