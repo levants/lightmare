@@ -24,8 +24,8 @@ public class EjbClassLoader extends URLClassLoader {
     /**
      * Creates a new instance of {@link EjbClassLoader} for the specified
      * {@link URL}s and default parent class loader. If a security manager is
-     * installed, the <code>loadClass</code> method of the URLClassLoader
-     * returned by this method will invoke the
+     * installed, the <code>loadClass</code> method of the
+     * {@link EjbClassLoader} returned by this method will invoke the
      * <code>SecurityManager.checkPackageAccess</code> before loading the class.
      * 
      * @param urls
