@@ -25,8 +25,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.mchange.v2.codegen.bean.Property;
-
 /**
  * Parses xml files to initialize {@link javax.sql.DataSource}s and bind them to
  * <a href="http://www.oracle.com/technetwork/java/jndi/index.html">jndi</a>
@@ -208,7 +206,7 @@ public class FileParsers {
 
     /**
      * Gets {@link javax.sql.DataSource}s configuration properties as
-     * {@link List} of {@link Property}
+     * {@link List} of {@link Properties}
      * 
      * @param nodeList
      * @return
