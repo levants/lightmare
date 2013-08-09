@@ -21,6 +21,15 @@ public class ConfigLoader {
 	return shortPath;
     }
 
+    /**
+     * Converts passed to {@link Enumeration} to build persistence configuration
+     * 
+     * @see Ejb3ConfigurationImpl#configure(String, java.util.Map)
+     * 
+     * @param path
+     * @return Enumeration<{@link URL} >
+     * @throws IOException
+     */
     public Enumeration<URL> readURL(final URL url) {
 	Enumeration<URL> xmls = new Enumeration<URL>() {
 
