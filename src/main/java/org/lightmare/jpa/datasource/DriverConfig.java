@@ -33,7 +33,7 @@ public class DriverConfig {
     private static final String DERBY_NAME = "derby";
 
     public static String getDriverName(String name) {
-	
+
 	if (ORACLE_NAME.equals(name)) {
 	    return ORACLE_DRIVER;
 	} else if (MYSQL_NAME.equals(name)) {
@@ -52,26 +52,32 @@ public class DriverConfig {
     }
 
     public static boolean isOracle(String name) {
+
 	return ORACLE_DRIVER.equals(name);
     }
 
     public static boolean isMySQL(String name) {
+
 	return MYSQL_DRIVER.equals(name);
     }
 
     public static boolean isDB2(String name) {
+
 	return DB2_DRIVER.equals(name);
     }
 
     public static boolean isMsSQL(String name) {
+
 	return MSSQL_DRIVER.equals(name);
     }
 
     public static boolean isH2(String name) {
+
 	return H2_DRIVER.equals(name);
     }
 
     public static boolean isDerby(String name) {
+
 	return DERBY_DRIVER.equals(name);
     }
 }
