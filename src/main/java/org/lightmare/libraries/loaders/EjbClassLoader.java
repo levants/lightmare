@@ -22,11 +22,15 @@ public class EjbClassLoader extends URLClassLoader {
     }
 
     /**
-     * Constructs new instance of {@link EjbClassLoader} and loads passed
-     * {@link URL} array
+     * Creates a new instance of {@link EjbClassLoader} for the specified
+     * {@link URL}s and default parent class loader. If a security manager is
+     * installed, the <code>loadClass</code> method of the URLClassLoader
+     * returned by this method will invoke the
+     * <code>SecurityManager.checkPackageAccess</code> before loading the class.
      * 
      * @param urls
-     * @return {@link EjbClassLoader}
+     *            the URLs to search for classes and resources
+     * @return the resulting class loader
      */
     public static EjbClassLoader newInstance(final URL[] urls) {
 
