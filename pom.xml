@@ -59,7 +59,7 @@
 		<netty.version>3.6.2.Final</netty.version>
 		<!-- end of netty -->
 		<!-- data sources on connection pooling -->
-		<tomcat-jdbc.version>7.0.37</tomcat-jdbc.version>
+		<tomcat-jdbc.version>7.0.42</tomcat-jdbc.version>
 		<c3p0.version>0.9.2.1</c3p0.version>
 		<dbcp.version>1.4</dbcp.version>
 		<!-- end of data sources and connection pooling -->
