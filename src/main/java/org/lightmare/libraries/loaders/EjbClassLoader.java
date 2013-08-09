@@ -13,6 +13,43 @@ import java.security.PrivilegedAction;
  */
 public class EjbClassLoader extends URLClassLoader {
 
+    /**
+     * Implementation of {@link PrivilegedAction} for initialization of
+     * {@link EjbClassLoader} class
+     * 
+     * @author levan
+     * 
+     */
+    protected static class EjbLoaderAction implements
+	    PrivilegedAction<EjbClassLoader> {
+
+	private URL[] urls;
+
+	private ClassLoader parent;
+
+	public EjbLoaderAction(URL[] urls) {
+	    this.urls = urls;
+	}
+
+	public EjbLoaderAction(URL[] urls, ClassLoader parent) {
+	    this(urls);
+	    this.parent = parent;
+	}
+
+	@Override
+	public EjbClassLoader run() {
+
+	    EjbClassLoader ejbClassLoader;
+	    if (parent == null) {
+		ejbClassLoader = new EjbClassLoader(urls);
+	    } else {
+		ejbClassLoader = new EjbClassLoader(urls, parent);
+	    }
+
+	    return ejbClassLoader;
+	}
+    }
+
     public EjbClassLoader(final URL[] urls) {
 	super(urls);
     }
