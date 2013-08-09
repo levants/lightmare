@@ -32,6 +32,12 @@ public class DriverConfig {
 
     private static final String DERBY_NAME = "derby";
 
+    /**
+     * Resolves appropriate jdbc driver class name by database name
+     * 
+     * @param name
+     * @return {@link String}
+     */
     public static String getDriverName(String name) {
 
 	if (ORACLE_NAME.equals(name)) {
