@@ -709,8 +709,7 @@ public class Configuration implements Cloneable {
 
 	Configuration cloneConfig = (Configuration) super.clone();
 	cloneConfig.config.clear();
-	cloneConfig.config.putAll(this.config);
-	cloneConfig.configure();
+	cloneConfig.configure(this.config);
 
 	return cloneConfig;
     }
