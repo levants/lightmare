@@ -327,7 +327,7 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Configures and merges default properties and {@link PoolConfig} instance
+     * Configures server and connection pooling
      */
     public void configure() {
 
