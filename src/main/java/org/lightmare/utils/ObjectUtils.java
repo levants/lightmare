@@ -317,8 +317,10 @@ public class ObjectUtils {
 	int length = keys.length - 1;
 	Object[] subKeys = new Object[length];
 	Object key = getFirst(keys);
+	int j;
 	for (int i = length; i >= 1; i--) {
-	    subKeys[i] = keys[i];
+	    j = i - 1;
+	    subKeys[i] = keys[j];
 	}
 
 	Map<?, ?> result = getAsMap(from, subKeys);
