@@ -368,7 +368,7 @@ public class Configuration implements Cloneable {
 		key = entry2.getKey();
 		value2 = entry2.getValue();
 		if (value2 instanceof Map) {
-		    value1 = ObjectUtils.getAsMap(key, map2);
+		    value1 = ObjectUtils.getAsMap(key, map1);
 		    mergedValue = deepMerge(value1,
 			    (Map<Object, Object>) value2);
 		} else {
