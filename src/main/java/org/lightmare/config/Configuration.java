@@ -310,6 +310,7 @@ public class Configuration implements Cloneable {
      * @param loader
      */
     public void loadFromResource(String resourceName, ClassLoader loader) {
+
 	InputStream resourceStream = loader
 		.getResourceAsStream(new StringBuilder("META-INF/").append(
 			resourceName).toString());
@@ -331,6 +332,7 @@ public class Configuration implements Cloneable {
      * @throws IOException
      */
     public void loadFromStream(InputStream propertiesStream) {
+
 	try {
 	    Properties props = new Properties();
 	    props.load(propertiesStream);
@@ -349,19 +351,21 @@ public class Configuration implements Cloneable {
     }
 
     public void setRemote(boolean remoteValue) {
-
 	remote = remoteValue;
     }
 
     public static boolean isServer() {
+
 	return server;
     }
 
     public static void setServer(boolean serverValue) {
+
 	server = serverValue;
     }
 
     public boolean isClient() {
+
 	return getSubConfigValue(DEPLOY_CONFIG_KEY, CLIENT_KEY, Boolean.FALSE);
     }
 
