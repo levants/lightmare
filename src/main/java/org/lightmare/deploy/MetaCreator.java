@@ -238,6 +238,7 @@ public class MetaCreator {
 	    List<String> classes = filterEntities(classSet, configClone);
 	    builder.setClasses(classes);
 	}
+
 	builder.setPath(configClone.getPersXmlPath())
 		.setProperties(configClone.getPersistenceProperties())
 		.setSwapDataSource(configClone.isSwapDataSource())
