@@ -167,7 +167,8 @@ public class MetaCreator {
 	    fileNameForEntity = classOwnersFiles.get(entityName);
 	    if (ObjectUtils.notNull(fileNameForEntity)
 		    && ObjectUtils.notNull(fileNameForBean)
-		    && !fileNameForEntity.equals(fileNameForBean)) {
+		    && ObjectUtils.notTrue(fileNameForEntity
+			    .equals(fileNameForBean))) {
 		classSet.remove(entityName);
 	    }
 	}
@@ -364,7 +365,7 @@ public class MetaCreator {
 
 	if (ObjectUtils.notNull(ioUtils)) {
 	    if (loader == null) {
-		if (!ioUtils.isExecuted()) {
+		if (ioUtils.notExecuted()) {
 		    ioUtils.scan(configuration.isPersXmlFromJar());
 		}
 		URL[] libURLs = ioUtils.getURLs();
@@ -842,7 +843,7 @@ public class MetaCreator {
 	public Builder setServer(boolean server) {
 
 	    Configuration.setServer(server);
-	    creator.configuration.setClient(!server);
+	    creator.configuration.setClient(ObjectUtils.notTrue(server));
 
 	    return this;
 	}
@@ -856,7 +857,7 @@ public class MetaCreator {
 	public Builder setClient(boolean client) {
 
 	    creator.configuration.setClient(client);
-	    Configuration.setServer(!client);
+	    Configuration.setServer(ObjectUtils.notTrue(client));
 
 	    return this;
 	}
@@ -897,7 +898,8 @@ public class MetaCreator {
 	 */
 	public Builder setIpAddress(String property) {
 
-	    creator.configuration.putValue(Configuration.IP_ADDRESS_KEY, property);
+	    creator.configuration.putValue(Configuration.IP_ADDRESS_KEY,
+		    property);
 
 	    return this;
 	}
@@ -924,7 +926,8 @@ public class MetaCreator {
 	 */
 	public Builder setMasterThreads(String property) {
 
-	    creator.configuration.putValue(Configuration.BOSS_POOL_KEY, property);
+	    creator.configuration.putValue(Configuration.BOSS_POOL_KEY,
+		    property);
 
 	    return this;
 	}
@@ -938,7 +941,8 @@ public class MetaCreator {
 	 */
 	public Builder setWorkerThreads(String property) {
 
-	    creator.configuration.putValue(Configuration.WORKER_POOL_KEY, property);
+	    creator.configuration.putValue(Configuration.WORKER_POOL_KEY,
+		    property);
 
 	    return this;
 	}
@@ -981,8 +985,8 @@ public class MetaCreator {
 	 */
 	public Builder setTimeout(String property) {
 
-	    creator.configuration.putValue(Configuration.CONNECTION_TIMEOUT_KEY,
-		    property);
+	    creator.configuration.putValue(
+		    Configuration.CONNECTION_TIMEOUT_KEY, property);
 
 	    return this;
 	}

@@ -94,6 +94,11 @@ public abstract class AbstractIOUtils {
 	return executed;
     }
 
+    public boolean notExecuted() {
+
+	return ObjectUtils.notTrue(executed);
+    }
+
     public void setXmlFromJar(boolean xmlFromJar) {
 	this.xmlFromJar = xmlFromJar;
     }
