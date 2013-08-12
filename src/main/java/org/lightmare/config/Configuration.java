@@ -707,31 +707,6 @@ public class Configuration implements Cloneable {
 	return getConfigValue(DATA_SOURCE_PATH_KEY);
     }
 
-    public boolean isScanForEntities() {
-	return getConfigValue(SCAN_FOR_ENTITIES_KEY, Boolean.FALSE);
-    }
-
-    public void setScanForEntities(boolean scanForEntities) {
-
-	setConfigValue(SCAN_FOR_ENTITIES_KEY, scanForEntities);
-    }
-
-    public String getAnnotatedUnitName() {
-	return getConfigValue(ANNOTATED_UNIT_NAME_KEY);
-    }
-
-    public void setAnnotatedUnitName(String annotatedUnitName) {
-	setConfigValue(ANNOTATED_UNIT_NAME_KEY, annotatedUnitName);
-    }
-
-    public String getPersXmlPath() {
-	return getConfigValue(PERSISTENCE_XML_PATH_KEY);
-    }
-
-    public void setPersXmlPath(String persXmlPath) {
-	setConfigValue(PERSISTENCE_XML_PATH_KEY, persXmlPath);
-    }
-
     public String[] getLibraryPaths() {
 	return getConfigValue(LIBRARY_PATH_KEY);
     }
@@ -757,14 +732,29 @@ public class Configuration implements Cloneable {
     }
 
     // Persistence configuration
-    public Map<Object, Object> getPersistenceProperties() {
-	return getPersistenceConfigValue(PERSISTENCE_PROPERTIES_KEY);
+    public boolean isScanForEntities() {
+	return getConfigValue(SCAN_FOR_ENTITIES_KEY, Boolean.FALSE);
     }
 
-    public void setPersistenceProperties(
-	    Map<Object, Object> persistenceProperties) {
-	setPersistenceConfigValue(PERSISTENCE_PROPERTIES_KEY,
-		persistenceProperties);
+    public void setScanForEntities(boolean scanForEntities) {
+
+	setConfigValue(SCAN_FOR_ENTITIES_KEY, scanForEntities);
+    }
+
+    public String getAnnotatedUnitName() {
+	return getConfigValue(ANNOTATED_UNIT_NAME_KEY);
+    }
+
+    public void setAnnotatedUnitName(String annotatedUnitName) {
+	setConfigValue(ANNOTATED_UNIT_NAME_KEY, annotatedUnitName);
+    }
+
+    public String getPersXmlPath() {
+	return getConfigValue(PERSISTENCE_XML_PATH_KEY);
+    }
+
+    public void setPersXmlPath(String persXmlPath) {
+	setConfigValue(PERSISTENCE_XML_PATH_KEY, persXmlPath);
     }
 
     public boolean isPersXmlFromJar() {
@@ -798,6 +788,16 @@ public class Configuration implements Cloneable {
 
     public void setPooledDataSource(boolean pooledDataSource) {
 	setPersistenceConfigValue(POOLED_DATA_SOURCE_KEY, pooledDataSource);
+    }
+
+    public Map<Object, Object> getPersistenceProperties() {
+	return getPersistenceConfigValue(PERSISTENCE_PROPERTIES_KEY);
+    }
+
+    public void setPersistenceProperties(
+	    Map<Object, Object> persistenceProperties) {
+	setPersistenceConfigValue(PERSISTENCE_PROPERTIES_KEY,
+		persistenceProperties);
     }
 
     // Pool configuration
