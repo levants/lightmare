@@ -256,7 +256,7 @@ public class ObjectUtils {
     }
 
     @SuppressWarnings("unchecked")
-    public static <K, V, R> Map<K, V> getAsMap(Object key, Map<?, ?> from) {
+    public static <K, V> Map<K, V> getAsMap(Object key, Map<?, ?> from) {
 
 	Map<K, V> result;
 	if (ObjectUtils.available(from)) {
