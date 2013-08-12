@@ -250,11 +250,10 @@ public class Configuration implements Cloneable {
 
     public void setPersistenceConfigValue(Object key, Object value) {
 
-	Map<Object, Object> persistenceConfiguration = getSubConfigValue(
-		DEPLOY_CONFIG_KEY, PERSISTENCE_CONFIG_KEY);
+	Map<Object, Object> persistenceConfiguration = getConfigValue(PERSISTENCE_CONFIG_KEY);
 	if (persistenceConfiguration == null) {
 	    persistenceConfiguration = new HashMap<Object, Object>();
-	    setPoolConfigValue(PERSISTENCE_CONFIG_KEY, persistenceConfiguration);
+	    setConfigValue(PERSISTENCE_CONFIG_KEY, persistenceConfiguration);
 	}
 
 	persistenceConfiguration.put(key, value);
@@ -280,11 +279,10 @@ public class Configuration implements Cloneable {
 
     public void setPoolConfigValue(Object key, Object value) {
 
-	Map<Object, Object> poolConfiguration = getPoolConfigValue(POOL_CONFIG_KEY);
+	Map<Object, Object> poolConfiguration = getConfigValue(POOL_CONFIG_KEY);
 	if (poolConfiguration == null) {
 	    poolConfiguration = new HashMap<Object, Object>();
-	    setSubConfigValue(DEPLOY_CONFIG_KEY, POOL_CONFIG_KEY,
-		    poolConfiguration);
+	    setConfigValue(POOL_CONFIG_KEY, poolConfiguration);
 	}
 
 	poolConfiguration.put(key, value);
