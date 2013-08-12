@@ -314,9 +314,9 @@ public class ObjectUtils {
     public static <V> V getSubValue(Map<?, ?> from, Object... keys) {
 
 	V value;
-	int length = keys.length - 1;
+	int length = keys.length;
 	Object[] subKeys = new Object[length];
-	Object key = getFirst(keys);
+	Object key = keys[length - 1];
 	for (int i = 0; i < length; i++) {
 	    subKeys[i] = keys[i];
 	}
