@@ -633,6 +633,11 @@ public class MetaCreator {
 	    creator.configuration.configure(configuration);
 	}
 
+	public Builder(String path) throws IOException {
+	    this();
+	    creator.configuration.configure(path);
+	}
+
 	private Map<Object, Object> initPersistenceProperties() {
 
 	    Map<Object, Object> persistenceProperties = creator.configuration
