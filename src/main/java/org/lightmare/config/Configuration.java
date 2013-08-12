@@ -628,6 +628,14 @@ public class Configuration implements Cloneable {
 	}
     }
 
+    public static String getAdminUsersPath() {
+	return ADMIN_USERS_PATH;
+    }
+
+    public static void setAdminUsersPath(String aDMIN_USERS_PATH) {
+	ADMIN_USERS_PATH = aDMIN_USERS_PATH;
+    }
+
     public boolean isRemote() {
 
 	return remote;
@@ -730,14 +738,6 @@ public class Configuration implements Cloneable {
 
     public void setLibraryPaths(String[] libraryPaths) {
 	setConfigValue(LIBRARY_PATH_KEY, libraryPaths);
-    }
-
-    public static String getAdminUsersPath() {
-	return ADMIN_USERS_PATH;
-    }
-
-    public static void setAdminUsersPath(String aDMIN_USERS_PATH) {
-	ADMIN_USERS_PATH = aDMIN_USERS_PATH;
     }
 
     public boolean isHotDeployment() {
