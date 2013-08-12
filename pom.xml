@@ -49,6 +49,9 @@
 		<!-- jackson -->
 		<jackson.version>2.2.0</jackson.version>
 		<!-- end of jackson -->
+		<!-- yaml -->
+		<snakeyaml.version>1.13-SNAPSHOT</snakeyaml.version>
+		<!-- end of yaml -->
 		<!-- jetty -->
 		<jetty.version>9.0.4.v20130625</jetty.version>
 		<!-- end of jetty -->
@@ -493,6 +496,28 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- end of jackson json serialization -->
+
+		<!-- yeml snakeyaml -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>${snakeyaml.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>${snakeyaml.version}</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>${snakeyaml.version}</version>
+			<classifier>javadoc</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<!-- end of yaml snakeyaml -->
 
 		<!-- jetty embeddable server -->
 		<dependency>
