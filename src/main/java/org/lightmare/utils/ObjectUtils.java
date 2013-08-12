@@ -320,7 +320,7 @@ public class ObjectUtils {
 	int j;
 	for (int i = length; i >= 1; i--) {
 	    j = i - 1;
-	    subKeys[i] = keys[j];
+	    subKeys[j] = keys[i];
 	}
 
 	Map<?, ?> result = getAsMap(from, subKeys);
