@@ -125,7 +125,7 @@ public class Configuration implements Cloneable {
 
     private static final String PERSISTENCE_PROPERTIES_KEY = "persistenceProperties";
 
-    private static final String POOL_CONFIG_KEY = "poolConfig";
+    private static final String POOL_PROPERTIES_KEY = "poolProperties";
 
     private static final String POOL_PROPERTIES_PATH_KEY = "poolPropertiesPath";
 
@@ -205,7 +205,7 @@ public class Configuration implements Cloneable {
      */
     private void configurePool() {
 
-	Map<Object, Object> poolProperties = getConfigValue(POOL_CONFIG_KEY);
+	Map<Object, Object> poolProperties = getConfigValue(POOL_PROPERTIES_KEY);
 	if (ObjectUtils.available(poolProperties)) {
 
 	    setPoolProperties(poolProperties);
@@ -634,10 +634,6 @@ public class Configuration implements Cloneable {
     public static PoolConfig getPoolConfig() {
 
 	return POOL_CONFIG;
-    }
-
-    public void setPoolConfig(PoolConfig poolConfig) {
-	setConfigValue(POOL_CONFIG_KEY, poolConfig);
     }
 
     public static String getAdminUsersPath() {
