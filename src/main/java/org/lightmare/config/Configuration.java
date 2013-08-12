@@ -155,7 +155,7 @@ public class Configuration implements Cloneable {
 	if (from == null) {
 	    from = config;
 	}
-	Map<K, V> value = (Map<K, V>) from.get(key);
+	Map<K, V> value = (Map<K, V>) ObjectUtils.getAsMap(key, from);
 
 	return value;
     }
