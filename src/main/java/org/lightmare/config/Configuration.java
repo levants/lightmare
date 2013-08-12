@@ -106,7 +106,7 @@ public class Configuration implements Cloneable {
     private static final String HOT_DEPLOYMENT_KEY = "hotDeployment";
 
     private static final String WATCH_STATUS_KEY = "watchStatus";
-    
+
     private static final String LIBRARY_PATH_KEY = "libraryPaths";
 
     private static final String SCAN_FOR_ENTITIES_KEY = "scanForEntities";
@@ -124,7 +124,8 @@ public class Configuration implements Cloneable {
     private static final String POOLED_DATA_SOURCE_KEY = "pooledDataSource";
 
     private static final String PERSISTENCE_PROPERTIES_KEY = "persistenceProperties";
-    
+
+    // Connection pool prvider properties
     private static final String POOL_PROPERTIES_PATH_KEY = "poolPropertiesPath";
 
     private static final String POOL_PROVIDER_TYPE_KEY = "poolProviderType";
