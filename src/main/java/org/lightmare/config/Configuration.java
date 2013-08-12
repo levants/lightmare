@@ -81,11 +81,11 @@ public class Configuration implements Cloneable {
      * Properties which version of server is running remote it requires server
      * client RPC infrastructure or local (embeddable mode)
      */
-    private boolean remote;
+    private static final String REMOTE_KEY = "remote";
 
-    private static boolean server = SERVER_DEF;
+    private static final String SERVER_KEY = "server";
 
-    private boolean client;
+    private static final String CLIENT_KEY = "client";
 
     private static final String CONFIG_FILE = "./config/config.properties";
 
@@ -125,6 +125,10 @@ public class Configuration implements Cloneable {
     private boolean watchStatus;
 
     private static String ADMIN_USERS_PATH;
+
+    private static boolean server = SERVER_DEF;
+
+    private static boolean remote;
 
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
@@ -340,11 +344,13 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isRemote() {
+
 	return remote;
     }
 
-    public void setRemote(boolean remote) {
-	this.remote = remote;
+    public void setRemote(boolean remoteValue) {
+
+	remote = remoteValue;
     }
 
     public static boolean isServer() {
@@ -356,11 +362,11 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isClient() {
-	return client;
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, CLIENT_KEY, Boolean.FALSE);
     }
 
     public void setClient(boolean client) {
-	this.client = client;
+	setSubConfigValue(DEPLOY_CONFIG_KEY, CLIENT_KEY, client);
     }
 
     /**
