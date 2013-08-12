@@ -27,7 +27,7 @@ import org.yaml.snakeyaml.Yaml;
 public class Configuration implements Cloneable {
 
     // cache for all configuration passed programmatically or read from file
-    private final Map<String, Object> config = new HashMap<String, Object>();
+    private final Map<Object, Object> config = new HashMap<Object, Object>();
 
     // path where stored adminitrator users
     public static final String ADMIN_USERS_PATH_KEY = "adminUsersPath";
@@ -146,14 +146,14 @@ public class Configuration implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    private <K, V> Map<K, V> getAsMap(String key) {
+    private <K, V> Map<K, V> getAsMap(Object key) {
 
 	Map<K, V> value = (Map<K, V>) config.get(key);
 
 	return value;
     }
 
-    private <K, V> void setSubConfigValue(String key, K subKey, V value) {
+    private <K, V> void setSubConfigValue(Object key, K subKey, V value) {
 
 	Map<K, V> subConfig = getAsMap(key);
 	if (subConfig == null) {
@@ -164,7 +164,7 @@ public class Configuration implements Cloneable {
 	subConfig.put(subKey, value);
     }
 
-    private <K, V> V getSubConfigValue(String key, K subKey, V defaultValue) {
+    private <K, V> V getSubConfigValue(Object key, K subKey, V defaultValue) {
 
 	V def;
 	Map<K, V> subConfig = getAsMap(key);
@@ -180,7 +180,23 @@ public class Configuration implements Cloneable {
 	return def;
     }
 
-    private <K, V> V getSubConfigValue(String key, K subKey) {
+    private <K> boolean containsSubConfigKey(Object key, K subKey) {
+
+	Map<K, ?> subConfig = getAsMap(key);
+	boolean valid = ObjectUtils.available(subConfig);
+	if (valid) {
+	    valid = subConfig.containsKey(subKey);
+	}
+
+	return valid;
+    }
+
+    private <K> boolean containsConfigKey(K key) {
+
+	return containsSubConfigKey(DEPLOY_CONFIG_KEY, key);
+    }
+
+    private <K, V> V getSubConfigValue(Object key, K subKey) {
 
 	return getSubConfigValue(key, subKey, null);
     }
@@ -222,38 +238,59 @@ public class Configuration implements Cloneable {
 	}
     }
 
-    /**
-     * Merges configuration with default properties
-     */
-    public void setDefaults() {
+    private void configureServer() {
 
-	boolean contains = config.containsKey(IP_ADDRESS_KEY);
+	boolean contains = containsConfigKey(IP_ADDRESS_KEY);
 	if (ObjectUtils.notTrue(contains)) {
-	    config.put(IP_ADDRESS_KEY, IP_ADDRESS_DEF);
+	    setConfigValue(IP_ADDRESS_KEY, IP_ADDRESS_DEF);
 	}
 
-	contains = config.containsKey(PORT_KEY);
+	contains = containsConfigKey(PORT_KEY);
 	if (ObjectUtils.notTrue(contains)) {
-	    config.put(PORT_KEY, PORT_DEF);
+	    setConfigValue(PORT_KEY, PORT_DEF);
 	}
 
-	contains = config.containsKey(BOSS_POOL_KEY);
+	contains = containsConfigKey(BOSS_POOL_KEY);
 	if (ObjectUtils.notTrue(contains)) {
-	    config.put(BOSS_POOL_KEY, BOSS_POOL_DEF);
+	    setConfigValue(BOSS_POOL_KEY, BOSS_POOL_DEF);
 	}
 
-	contains = config.containsKey(WORKER_POOL_KEY);
+	contains = containsConfigKey(WORKER_POOL_KEY);
 	if (ObjectUtils.notTrue(contains)) {
 
 	    int workers = RUNTIME.availableProcessors() * WORKER_POOL_DEF;
 	    String workerProperty = String.valueOf(workers);
-	    config.put(WORKER_POOL_KEY, workerProperty);
+	    setConfigValue(WORKER_POOL_KEY, workerProperty);
 	}
 
-	contains = config.containsKey(CONNECTION_TIMEOUT_KEY);
+	contains = containsConfigKey(CONNECTION_TIMEOUT_KEY);
 	if (ObjectUtils.notTrue(contains)) {
-	    config.put(CONNECTION_TIMEOUT_KEY, CONNECTION_TIMEOUT_DEF);
+	    setConfigValue(CONNECTION_TIMEOUT_KEY, CONNECTION_TIMEOUT_DEF);
 	}
+
+	Object serverValue = getConfigValue(SERVER_KEY);
+	if (ObjectUtils.notNull(serverValue)) {
+	    if (serverValue instanceof Boolean) {
+		server = (Boolean) serverValue;
+	    } else {
+		server = Boolean.valueOf(serverValue.toString());
+	    }
+	}
+
+	Object remoteValue = getConfigValue(REMOTE_KEY);
+	if (ObjectUtils.notNull(remoteValue)) {
+	    if (remoteValue instanceof Boolean) {
+		remote = (Boolean) remoteValue;
+	    } else {
+		remote = Boolean.valueOf(remoteValue.toString());
+	    }
+	}
+    }
+
+    /**
+     * Merges configuration with default properties
+     */
+    public void configureDeployments() {
 
 	ADMIN_USERS_PATH = getConfigValue(ADMIN_USER_PATH_KEY,
 		ADMIN_USERS_PATH_DEF);
@@ -283,7 +320,8 @@ public class Configuration implements Cloneable {
      */
     public void configure() {
 
-	setDefaults();
+	configureServer();
+	configureDeployments();
 	configurePool();
     }
 
@@ -292,31 +330,11 @@ public class Configuration implements Cloneable {
      * 
      * @param configuration
      */
-    public void configure(Map<String, Object> configuration) {
+    public void configure(Map<Object, Object> configuration) {
 
 	if (ObjectUtils.available(configuration)) {
 	    config.putAll(configuration);
 	}
-
-	Object serverValue = configuration.get(SERVER_KEY);
-	if (ObjectUtils.notNull(serverValue)) {
-	    if (serverValue instanceof Boolean) {
-		server = (Boolean) serverValue;
-	    } else {
-		server = Boolean.valueOf(serverValue.toString());
-	    }
-	}
-
-	Object remoteValue = configuration.get(REMOTE_KEY);
-	if (ObjectUtils.notNull(remoteValue)) {
-	    if (remoteValue instanceof Boolean) {
-		remote = (Boolean) remoteValue;
-	    } else {
-		remote = Boolean.valueOf(remoteValue.toString());
-	    }
-	}
-
-	configure();
     }
 
     /**
@@ -334,7 +352,7 @@ public class Configuration implements Cloneable {
 		Yaml yaml = new Yaml();
 		Object configuration = yaml.load(stream);
 		if (configuration instanceof Map) {
-		    configure((Map<String, Object>) configuration);
+		    configure((Map<Object, Object>) configuration);
 		}
 	    } finally {
 		stream.close();

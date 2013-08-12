@@ -628,7 +628,7 @@ public class MetaCreator {
 	    this(Boolean.FALSE);
 	}
 
-	public Builder(Map<String, Object> configuration) throws IOException {
+	public Builder(Map<Object, Object> configuration) throws IOException {
 	    this();
 	    creator.configuration.configure(configuration);
 	}
@@ -1071,6 +1071,20 @@ public class MetaCreator {
 	public Builder setHotDeployment(boolean hotDeployment) {
 
 	    creator.configuration.setHotDeployment(hotDeployment);
+
+	    return this;
+	}
+
+	/**
+	 * Adds additional parameters from passed {@link Map} to existing
+	 * configuration
+	 * 
+	 * @param configuration
+	 * @return
+	 */
+	public Builder addConfiguration(Map<Object, Object> configuration) {
+
+	    creator.configuration.configure(configuration);
 
 	    return this;
 	}
