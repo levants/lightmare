@@ -234,7 +234,7 @@ public class Configuration implements Cloneable {
 
     private <K, V> Map<K, V> getWithInitialization(Object key) {
 
-	Map<K, V> result = getAsMap(key);
+	Map<K, V> result = getConfigValue(key);
 	if (result == null) {
 	    result = new HashMap<K, V>();
 	    setConfigValue(key, result);
