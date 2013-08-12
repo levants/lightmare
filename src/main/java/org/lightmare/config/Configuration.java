@@ -255,6 +255,7 @@ public class Configuration implements Cloneable {
      */
     private void configureServer() {
 
+	// Sets default values to remote server configuration
 	boolean contains = containsConfigKey(IP_ADDRESS_KEY);
 	if (ObjectUtils.notTrue(contains)) {
 	    setConfigValue(IP_ADDRESS_KEY, IP_ADDRESS_DEF);
@@ -283,6 +284,7 @@ public class Configuration implements Cloneable {
 	    setConfigValue(CONNECTION_TIMEOUT_KEY, CONNECTION_TIMEOUT_DEF);
 	}
 
+	 
 	Object serverValue = getConfigValue(SERVER_KEY);
 	if (ObjectUtils.notNull(serverValue)) {
 	    if (serverValue instanceof Boolean) {
