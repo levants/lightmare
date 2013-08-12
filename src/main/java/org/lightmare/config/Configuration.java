@@ -330,6 +330,7 @@ public class Configuration implements Cloneable {
 
 	setConfigValue(WATCH_STATUS_KEY, watchStatus);
 
+	// Sets deployments directories
 	Set<DeploymentDirectory> deploymentPaths = getConfigValue(DEMPLOYMENT_PATH_KEY);
 	if (deploymentPaths == null) {
 	    deploymentPaths = DEPLOYMENT_PATHS_DEF;
