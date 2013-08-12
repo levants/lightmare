@@ -16,6 +16,7 @@ import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.utils.ObjectUtils;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  * Easy way to retrieve configuration properties from configuration file
@@ -302,6 +303,24 @@ public class Configuration implements Cloneable {
 	}
 
 	configure();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void configure(String path) throws IOException {
+
+	File yamlFile = new File(path);
+	if (yamlFile.exists()) {
+	    InputStream stream = new FileInputStream(yamlFile);
+	    try {
+		Yaml yaml = new Yaml();
+		Object configuration = yaml.load(stream);
+		if (configuration instanceof Map) {
+		    configure((Map<String, Object>) configuration);
+		}
+	    } finally {
+		stream.close();
+	    }
+	}
     }
 
     /**

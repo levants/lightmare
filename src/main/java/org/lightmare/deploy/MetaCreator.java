@@ -628,6 +628,11 @@ public class MetaCreator {
 	    this(Boolean.FALSE);
 	}
 
+	public Builder(Map<String, Object> configuration) throws IOException {
+	    this();
+	    creator.configuration.configure(configuration);
+	}
+
 	private Map<Object, Object> initPersistenceProperties() {
 
 	    Map<Object, Object> persistenceProperties = creator.configuration
