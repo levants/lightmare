@@ -228,6 +228,7 @@ public class Configuration implements Cloneable {
 	Boolean hotDeployment = getConfigValue(HOT_DEPLOYMENT_KEY);
 	if (hotDeployment == null) {
 	    setConfigValue(HOT_DEPLOYMENT_KEY, Boolean.FALSE);
+	    hotDeployment = getConfigValue(HOT_DEPLOYMENT_KEY);
 	}
 	boolean watchStatus;
 	if (ObjectUtils.notTrue(hotDeployment)) {

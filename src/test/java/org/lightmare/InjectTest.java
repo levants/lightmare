@@ -1,6 +1,5 @@
 package org.lightmare;
 
-import java.io.IOException;
 import java.net.URL;
 
 import org.junit.Assert;
@@ -31,7 +30,7 @@ public class InjectTest {
 		    resource);
 	    URL[] urls = { url };
 	    creator.scanForBeans(urls);
-	} catch (IOException ex) {
+	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
     }
