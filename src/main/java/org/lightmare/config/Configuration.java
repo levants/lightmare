@@ -283,18 +283,18 @@ public class Configuration implements Cloneable {
      */
     private void configurePool() {
 
-	Map<Object, Object> poolProperties = getConfigValue(POOL_PROPERTIES_KEY);
+	Map<Object, Object> poolProperties = getPoolConfigValue(POOL_PROPERTIES_KEY);
 	if (ObjectUtils.available(poolProperties)) {
 
 	    setPoolProperties(poolProperties);
 	}
 
-	String type = getConfigValue(POOL_PROVIDER_TYPE_KEY);
+	String type = getPoolConfigValue(POOL_PROVIDER_TYPE_KEY);
 	if (ObjectUtils.available(type)) {
 	    getPoolConfig().setPoolProviderType(type);
 	}
 
-	String path = getConfigValue(POOL_PROPERTIES_PATH_KEY);
+	String path = getPoolConfigValue(POOL_PROPERTIES_PATH_KEY);
 	if (ObjectUtils.available(path)) {
 	    setPoolPropertiesPath(path);
 	}
