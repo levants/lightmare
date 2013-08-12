@@ -246,6 +246,9 @@ public class Configuration implements Cloneable {
 	}
     }
 
+    /**
+     * Configures server from properties
+     */
     private void configureServer() {
 
 	boolean contains = containsConfigKey(IP_ADDRESS_KEY);
