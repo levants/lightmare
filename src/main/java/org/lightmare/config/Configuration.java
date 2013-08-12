@@ -276,12 +276,15 @@ public class Configuration implements Cloneable {
 	    deploymentPaths = DEPLOYMENT_PATHS_DEF;
 	    setConfigValue(DEMPLOYMENT_PATH_KEY, deploymentPaths);
 	}
-
-	configurePool();
     }
 
+    /**
+     * Configures and merges default properties and {@link PoolConfig} instance
+     */
     public void configure() {
+
 	setDefaults();
+	configurePool();
     }
 
     /**
