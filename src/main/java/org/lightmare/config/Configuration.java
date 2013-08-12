@@ -272,8 +272,12 @@ public class Configuration implements Cloneable {
 
     public void setPoolConfigValue(Object key, Object value) {
 
-	Map<Object, Object> poolConfiguration = getSubConfigValue(
-		DEPLOY_CONFIG_KEY, POOL_CONFIG_KEY);
+	Map<Object, Object> poolConfiguration = getPoolConfigValue(POOL_CONFIG_KEY);
+	if (poolConfiguration == null) {
+	    poolConfiguration = new HashMap<Object, Object>();
+	    setSubConfigValue(DEPLOY_CONFIG_KEY, POOL_CONFIG_KEY,
+		    poolConfiguration);
+	}
 
 	poolConfiguration.put(key, value);
     }
