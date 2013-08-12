@@ -333,7 +333,18 @@ public class Configuration implements Cloneable {
     public void configure(Map<Object, Object> configuration) {
 
 	if (ObjectUtils.available(configuration)) {
-	    config.putAll(configuration);
+	    @SuppressWarnings("unchecked")
+	    Map<Object, Object> newConfig = (Map<Object, Object>) config
+		    .get(DEPLOY_CONFIG_KEY);
+	    Map<Object, Object> existingConfig = getAsMap(DEPLOY_CONFIG_KEY);
+	    if (ObjectUtils.notNull(newConfig)) {
+		if (existingConfig == null) {
+		    config.put(DEPLOY_CONFIG_KEY, newConfig);
+		} else {
+		    existingConfig.putAll(newConfig);
+		}
+	    }
+
 	}
     }
 
