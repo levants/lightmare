@@ -359,6 +359,8 @@ public class Configuration implements Cloneable {
 	    Map<Object, Object> newConfig = getAsMap(DEPLOY_CONFIG_KEY,
 		    configuration);
 	    Map<Object, Object> existingConfig = getAsMap(DEPLOY_CONFIG_KEY);
+
+	    // Merges new and existing configurations
 	    if (ObjectUtils.notNull(newConfig)) {
 		if (existingConfig == null) {
 		    config.put(DEPLOY_CONFIG_KEY, newConfig);
