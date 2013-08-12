@@ -609,6 +609,11 @@ public class Configuration implements Cloneable {
     @Override
     public Object clone() throws CloneNotSupportedException {
 
-	return super.clone();
+	Configuration cloneConfig = (Configuration) super.clone();
+	cloneConfig.config.clear();
+	cloneConfig.config.putAll(this.config);
+	cloneConfig.configure();
+
+	return cloneConfig;
     }
 }
