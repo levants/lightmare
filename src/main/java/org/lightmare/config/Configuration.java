@@ -352,6 +352,14 @@ public class Configuration implements Cloneable {
 	configurePool();
     }
 
+    /**
+     * Merges two {@link Map}s and if second {@link Map}'s value is instance of
+     * {@link Map} merges this value with first {@link Map}'s value recursively
+     * 
+     * @param map1
+     * @param map2
+     * @return {@link Map}<Object, Object>
+     */
     @SuppressWarnings("unchecked")
     protected Map<Object, Object> deepMerge(Map<Object, Object> map1,
 	    Map<Object, Object> map2) {
