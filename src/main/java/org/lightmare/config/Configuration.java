@@ -236,6 +236,9 @@ public class Configuration implements Cloneable {
 
 	V value = ObjectUtils.getSubValue(config, DEPLOY_CONFIG_KEY,
 		PERSISTENCE_CONFIG_KEY, key);
+	if (value == null) {
+	    value = defaultValue;
+	}
 
 	return value;
     }
@@ -253,10 +256,20 @@ public class Configuration implements Cloneable {
 	poolConfiguration.put(key, value);
     }
 
-    public <V> V getPoolConfigValue(Object key) {
+    public <V> V getPoolConfigValue(Object key, V defaultValue) {
 
 	V value = ObjectUtils.getSubValue(config, DEPLOY_CONFIG_KEY,
 		POOL_CONFIG_KEY, key);
+	if (value == null) {
+	    value = defaultValue;
+	}
+
+	return value;
+    }
+
+    public <V> V getPoolConfigValue(Object key) {
+
+	V value = getPoolConfigValue(key, null);
 
 	return value;
     }

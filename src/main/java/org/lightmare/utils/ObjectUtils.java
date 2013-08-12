@@ -291,9 +291,9 @@ public class ObjectUtils {
     public static Map<?, ?> getAsMap(Map<?, ?> from, Object... keys) {
 
 	Map<?, ?> result = from;
-	int length = keys.length - 1;
+	int length = keys.length;
 	Object key;
-	for (int i = length; i <= 0 && ObjectUtils.notNull(result); i--) {
+	for (int i = 0; i < length && ObjectUtils.notNull(result); i++) {
 	    key = keys[i];
 	    result = getAsMap(key, result);
 	}
