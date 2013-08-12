@@ -232,15 +232,23 @@ public class Configuration implements Cloneable {
 	return getSubConfigValue(DEPLOY_CONFIG_KEY, subKey);
     }
 
-    public <V> V getPersistenceConfigValue(Object key) {
+    public <V> V getPersistenceConfigValue(Object key, V defaultValue) {
 
 	Map<Object, Object> poolConfiguration = getSubConfigValue(
 		DEPLOY_CONFIG_KEY, PERSISTENCE_CONFIG_KEY);
 
 	@SuppressWarnings("unchecked")
 	V value = (V) poolConfiguration.get(key);
+	if (value == null) {
+	    value = defaultValue;
+	}
 
 	return value;
+    }
+
+    public <V> V getPersistenceConfigValue(Object key) {
+
+	return getPersistenceConfigValue(key, null);
     }
 
     public void setPersistenceConfigValue(Object key, Object value) {
@@ -720,38 +728,6 @@ public class Configuration implements Cloneable {
 	setConfigValue(LIBRARY_PATH_KEY, libraryPaths);
     }
 
-    public boolean isPersXmlFromJar() {
-	return getConfigValue(PERSISTENCE_XML_FROM_JAR_KEY, Boolean.FALSE);
-    }
-
-    public void setPersXmlFromJar(boolean persXmlFromJar) {
-	setConfigValue(PERSISTENCE_XML_FROM_JAR_KEY, persXmlFromJar);
-    }
-
-    public boolean isSwapDataSource() {
-	return getConfigValue(SWAP_DATASOURCE_KEY, Boolean.FALSE);
-    }
-
-    public void setSwapDataSource(boolean swapDataSource) {
-	setConfigValue(SWAP_DATASOURCE_KEY, swapDataSource);
-    }
-
-    public boolean isScanArchives() {
-	return getConfigValue(SCAN_ARCHIVES_KEY, Boolean.FALSE);
-    }
-
-    public void setScanArchives(boolean scanArchives) {
-	setConfigValue(SCAN_ARCHIVES_KEY, scanArchives);
-    }
-
-    public boolean isPooledDataSource() {
-	return getConfigValue(POOLED_DATA_SOURCE_KEY, Boolean.FALSE);
-    }
-
-    public void setPooledDataSource(boolean pooledDataSource) {
-	setConfigValue(POOLED_DATA_SOURCE_KEY, pooledDataSource);
-    }
-
     public static PoolConfig getPoolConfig() {
 
 	return POOL_CONFIG;
@@ -763,16 +739,6 @@ public class Configuration implements Cloneable {
 
     public static void setAdminUsersPath(String aDMIN_USERS_PATH) {
 	ADMIN_USERS_PATH = aDMIN_USERS_PATH;
-    }
-
-    public Map<Object, Object> getPersistenceProperties() {
-	return getPersistenceConfigValue(PERSISTENCE_PROPERTIES_KEY);
-    }
-
-    public void setPersistenceProperties(
-	    Map<Object, Object> persistenceProperties) {
-	setPersistenceConfigValue(PERSISTENCE_PROPERTIES_KEY,
-		persistenceProperties);
     }
 
     public boolean isHotDeployment() {
@@ -789,6 +755,50 @@ public class Configuration implements Cloneable {
 
     public void setWatchStatus(boolean watchStatus) {
 	setConfigValue(WATCH_STATUS_KEY, watchStatus);
+    }
+
+    // Persistence configuration
+    public Map<Object, Object> getPersistenceProperties() {
+	return getPersistenceConfigValue(PERSISTENCE_PROPERTIES_KEY);
+    }
+
+    public void setPersistenceProperties(
+	    Map<Object, Object> persistenceProperties) {
+	setPersistenceConfigValue(PERSISTENCE_PROPERTIES_KEY,
+		persistenceProperties);
+    }
+
+    public boolean isPersXmlFromJar() {
+	return getPersistenceConfigValue(PERSISTENCE_XML_FROM_JAR_KEY,
+		Boolean.FALSE);
+    }
+
+    public void setPersXmlFromJar(boolean persXmlFromJar) {
+	setPersistenceConfigValue(PERSISTENCE_XML_FROM_JAR_KEY, persXmlFromJar);
+    }
+
+    public boolean isSwapDataSource() {
+	return getPersistenceConfigValue(SWAP_DATASOURCE_KEY, Boolean.FALSE);
+    }
+
+    public void setSwapDataSource(boolean swapDataSource) {
+	setPersistenceConfigValue(SWAP_DATASOURCE_KEY, swapDataSource);
+    }
+
+    public boolean isScanArchives() {
+	return getPersistenceConfigValue(SCAN_ARCHIVES_KEY, Boolean.FALSE);
+    }
+
+    public void setScanArchives(boolean scanArchives) {
+	setPersistenceConfigValue(SCAN_ARCHIVES_KEY, scanArchives);
+    }
+
+    public boolean isPooledDataSource() {
+	return getPersistenceConfigValue(POOLED_DATA_SOURCE_KEY, Boolean.FALSE);
+    }
+
+    public void setPooledDataSource(boolean pooledDataSource) {
+	setPersistenceConfigValue(POOLED_DATA_SOURCE_KEY, pooledDataSource);
     }
 
     public void setDataSourcePooledType(boolean dsPooledType) {
