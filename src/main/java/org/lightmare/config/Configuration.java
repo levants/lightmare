@@ -73,12 +73,6 @@ public class Configuration implements Cloneable {
 
     public static final String DATA_SOURCE_PATH_DEF = "./ds";
 
-    public static final Set<DeploymentDirectory> DEPLOYMENT_PATHS_DEF = new HashSet<DeploymentDirectory>(
-	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)));
-
-    public static final Set<String> DATA_SOURCES_PATHS_DEF = new HashSet<String>(
-	    Arrays.asList("./ds"));
-
     /**
      * Properties which version of server is running remote it requires server
      * client RPC infrastructure or local (embeddable mode)
@@ -88,6 +82,12 @@ public class Configuration implements Cloneable {
     private static final String SERVER_KEY = "server";
 
     private static final String CLIENT_KEY = "client";
+
+    public static final Set<DeploymentDirectory> DEPLOYMENT_PATHS_DEF = new HashSet<DeploymentDirectory>(
+	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)));
+
+    public static final Set<String> DATA_SOURCES_PATHS_DEF = new HashSet<String>(
+	    Arrays.asList("./ds"));
 
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
