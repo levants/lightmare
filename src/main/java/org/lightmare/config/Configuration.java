@@ -200,6 +200,9 @@ public class Configuration implements Cloneable {
 	return getSubConfigValue(DEPLOY_CONFIG_KEY, subKey);
     }
 
+    /**
+     * Configuration for {@link PoolConfig} instance
+     */
     private void configurePool() {
 
 	Map<Object, Object> poolProperties = getConfigValue(POOL_CONFIG_KEY);
@@ -219,6 +222,9 @@ public class Configuration implements Cloneable {
 	}
     }
 
+    /**
+     * Merges configuration with default properties
+     */
     public void setDefaults() {
 
 	boolean contains = config.containsKey(IP_ADDRESS_KEY);
@@ -278,6 +284,11 @@ public class Configuration implements Cloneable {
 	setDefaults();
     }
 
+    /**
+     * Reads configuration from passed properties
+     * 
+     * @param configuration
+     */
     public void configure(Map<String, Object> configuration) {
 
 	if (ObjectUtils.available(configuration)) {
@@ -305,6 +316,11 @@ public class Configuration implements Cloneable {
 	configure();
     }
 
+    /**
+     * Reads configuration from passed file path
+     * 
+     * @param configuration
+     */
     @SuppressWarnings("unchecked")
     public void configure(String path) throws IOException {
 
