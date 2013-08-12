@@ -766,12 +766,13 @@ public class Configuration implements Cloneable {
     }
 
     public Map<Object, Object> getPersistenceProperties() {
-	return getConfigValue(PERSISTENCE_PROPERTIES_KEY);
+	return getPersistenceConfigValue(PERSISTENCE_PROPERTIES_KEY);
     }
 
     public void setPersistenceProperties(
 	    Map<Object, Object> persistenceProperties) {
-	setConfigValue(PERSISTENCE_PROPERTIES_KEY, persistenceProperties);
+	setPersistenceConfigValue(PERSISTENCE_PROPERTIES_KEY,
+		persistenceProperties);
     }
 
     public boolean isHotDeployment() {
