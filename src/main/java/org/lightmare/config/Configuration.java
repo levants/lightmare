@@ -739,28 +739,28 @@ public class Configuration implements Cloneable {
 
     // Persistence configuration
     public boolean isScanForEntities() {
-	return getConfigValue(SCAN_FOR_ENTITIES_KEY, Boolean.FALSE);
+	return getPersistenceConfigValue(SCAN_FOR_ENTITIES_KEY, Boolean.FALSE);
     }
 
     public void setScanForEntities(boolean scanForEntities) {
 
-	setConfigValue(SCAN_FOR_ENTITIES_KEY, scanForEntities);
+	setPersistenceConfigValue(SCAN_FOR_ENTITIES_KEY, scanForEntities);
     }
 
     public String getAnnotatedUnitName() {
-	return getConfigValue(ANNOTATED_UNIT_NAME_KEY);
+	return getPersistenceConfigValue(ANNOTATED_UNIT_NAME_KEY);
     }
 
     public void setAnnotatedUnitName(String annotatedUnitName) {
-	setConfigValue(ANNOTATED_UNIT_NAME_KEY, annotatedUnitName);
+	setPersistenceConfigValue(ANNOTATED_UNIT_NAME_KEY, annotatedUnitName);
     }
 
     public String getPersXmlPath() {
-	return getConfigValue(PERSISTENCE_XML_PATH_KEY);
+	return getPersistenceConfigValue(PERSISTENCE_XML_PATH_KEY);
     }
 
     public void setPersXmlPath(String persXmlPath) {
-	setConfigValue(PERSISTENCE_XML_PATH_KEY, persXmlPath);
+	setPersistenceConfigValue(PERSISTENCE_XML_PATH_KEY, persXmlPath);
     }
 
     public boolean isPersXmlFromJar() {
