@@ -355,7 +355,6 @@ public class Configuration implements Cloneable {
 		    existingConfig.putAll(newConfig);
 		}
 	    }
-
 	}
     }
 
