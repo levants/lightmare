@@ -313,17 +313,20 @@ public class Configuration implements Cloneable {
 	ADMIN_USERS_PATH = getConfigValue(ADMIN_USER_PATH_KEY,
 		ADMIN_USERS_PATH_DEF);
 
+	// Checks if application run in hot deployment mode
 	Boolean hotDeployment = getConfigValue(HOT_DEPLOYMENT_KEY);
 	if (hotDeployment == null) {
 	    setConfigValue(HOT_DEPLOYMENT_KEY, Boolean.FALSE);
 	    hotDeployment = getConfigValue(HOT_DEPLOYMENT_KEY);
 	}
+
 	boolean watchStatus;
 	if (ObjectUtils.notTrue(hotDeployment)) {
 	    watchStatus = Boolean.TRUE;
 	} else {
 	    watchStatus = Boolean.FALSE;
 	}
+
 	setConfigValue(WATCH_STATUS_KEY, watchStatus);
 
 	Set<DeploymentDirectory> deploymentPaths = getConfigValue(DEMPLOYMENT_PATH_KEY);
