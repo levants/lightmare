@@ -353,20 +353,19 @@ public class Configuration implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    private Map<Object, Object> deepMerge(Map<Object, Object> map1,
+    protected Map<Object, Object> deepMerge(Map<Object, Object> map1,
 	    Map<Object, Object> map2) {
 
 	if (map1 == null) {
 	    map1 = map2;
 	} else {
-	    Set<Map.Entry<Object, Object>> entries1 = map1.entrySet();
 	    Set<Map.Entry<Object, Object>> entries2 = map2.entrySet();
 	    Object key;
 	    Map<Object, Object> value1;
 	    Object value2;
 	    Object mergedValue;
 	    for (Map.Entry<Object, Object> entry2 : entries2) {
-		key = entry2.getValue();
+		key = entry2.getKey();
 		value2 = entry2.getValue();
 		if (value2 instanceof Map) {
 		    value1 = ObjectUtils.getAsMap(key, map2);
