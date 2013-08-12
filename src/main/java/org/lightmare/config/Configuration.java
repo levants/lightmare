@@ -320,6 +320,7 @@ public class Configuration implements Cloneable {
 	    hotDeployment = getConfigValue(HOT_DEPLOYMENT_KEY);
 	}
 
+	// Check if application needs watch service
 	boolean watchStatus;
 	if (ObjectUtils.notTrue(hotDeployment)) {
 	    watchStatus = Boolean.TRUE;
