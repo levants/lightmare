@@ -106,14 +106,14 @@ public class Configuration implements Cloneable {
     private static final String HOT_DEPLOYMENT_KEY = "hotDeployment";
 
     private static final String WATCH_STATUS_KEY = "watchStatus";
+    
+    private static final String LIBRARY_PATH_KEY = "libraryPaths";
 
     private static final String SCAN_FOR_ENTITIES_KEY = "scanForEntities";
 
     private static final String ANNOTATED_UNIT_NAME_KEY = "annotatedUnitName";
 
     private static final String PERSISTENCE_XML_PATH_KEY = "persistanceXmlPath";
-
-    private static final String LIBRARY_PATH_KEY = "libraryPaths";
 
     private static final String PERSISTENCE_XML_FROM_JAR_KEY = "persistenceXmlFromJar";
 
