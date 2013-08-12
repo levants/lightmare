@@ -309,6 +309,7 @@ public class Configuration implements Cloneable {
      */
     public void configureDeployments() {
 
+	// Sets administrator user configuration file path
 	ADMIN_USERS_PATH = getConfigValue(ADMIN_USER_PATH_KEY,
 		ADMIN_USERS_PATH_DEF);
 
