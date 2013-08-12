@@ -232,6 +232,17 @@ public class Configuration implements Cloneable {
 	return getSubConfigValue(DEPLOY_CONFIG_KEY, subKey);
     }
 
+    private <K, V> Map<K, V> getWithInitialization(Object key) {
+
+	Map<K, V> result = getAsMap(key);
+	if (result == null) {
+	    result = new HashMap<K, V>();
+	    setConfigValue(key, result);
+	}
+
+	return result;
+    }
+
     public <V> V getPersistenceConfigValue(Object key, V defaultValue) {
 
 	V value = ObjectUtils.getSubValue(config, DEPLOY_CONFIG_KEY,
@@ -242,7 +253,7 @@ public class Configuration implements Cloneable {
 
 	return value;
     }
-
+    
     public <V> V getPersistenceConfigValue(Object key) {
 
 	return getPersistenceConfigValue(key, null);
@@ -250,11 +261,7 @@ public class Configuration implements Cloneable {
 
     public void setPersistenceConfigValue(Object key, Object value) {
 
-	Map<Object, Object> persistenceConfiguration = getConfigValue(PERSISTENCE_CONFIG_KEY);
-	if (persistenceConfiguration == null) {
-	    persistenceConfiguration = new HashMap<Object, Object>();
-	    setConfigValue(PERSISTENCE_CONFIG_KEY, persistenceConfiguration);
-	}
+	Map<Object, Object> persistenceConfiguration = getWithInitialization(PERSISTENCE_CONFIG_KEY);
 
 	persistenceConfiguration.put(key, value);
     }
