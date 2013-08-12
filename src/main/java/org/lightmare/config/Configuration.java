@@ -146,11 +146,19 @@ public class Configuration implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    private <K, V> Map<K, V> getAsMap(Object key) {
+    private <K, V> Map<K, V> getAsMap(Object key, Map<Object, Object> from) {
 
-	Map<K, V> value = (Map<K, V>) config.get(key);
+	if (from == null) {
+	    from = config;
+	}
+	Map<K, V> value = (Map<K, V>) from.get(key);
 
 	return value;
+    }
+
+    private <K, V> Map<K, V> getAsMap(Object key) {
+
+	return getAsMap(key, null);
     }
 
     private <K, V> void setSubConfigValue(Object key, K subKey, V value) {
@@ -334,7 +342,7 @@ public class Configuration implements Cloneable {
 
 	if (ObjectUtils.available(configuration)) {
 	    @SuppressWarnings("unchecked")
-	    Map<Object, Object> newConfig = (Map<Object, Object>) config
+	    Map<Object, Object> newConfig = (Map<Object, Object>) configuration
 		    .get(DEPLOY_CONFIG_KEY);
 	    Map<Object, Object> existingConfig = getAsMap(DEPLOY_CONFIG_KEY);
 	    if (ObjectUtils.notNull(newConfig)) {
