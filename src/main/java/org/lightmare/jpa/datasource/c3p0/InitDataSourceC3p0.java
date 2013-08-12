@@ -40,8 +40,8 @@ public class InitDataSourceC3p0 {
      * @return {@link DataSource}
      * @throws IOException
      */
-    public static DataSource initilizeDataSource(Properties properties)
-	    throws IOException {
+    public static DataSource initilizeDataSource(Properties properties,
+	    PoolConfig poolConfig) throws IOException {
 
 	String driver = properties.getProperty("driver").trim();
 	String url = properties.getProperty("url").trim();
@@ -50,7 +50,7 @@ public class InitDataSourceC3p0 {
 
 	DataSource dataSource;
 	try {
-	    if (JPAManager.pooledDataSource) {
+	    if (poolConfig.isPooledDataSource()) {
 		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
 		comboPooledDataSource.setDriverClass(driver);
 		comboPooledDataSource.setJdbcUrl(url);
@@ -80,13 +80,13 @@ public class InitDataSourceC3p0 {
      * @param jndiName
      * @throws IOException
      */
-    public static void registerDataSource(Properties properties)
-	    throws IOException {
+    public static void registerDataSource(Properties properties,
+	    PoolConfig poolConfig) throws IOException {
 	String jndiName = DataSourceInitializer.getJndiName(properties);
 	LOG.info(String.format("Initializing data source %s", jndiName));
-	Map<Object, Object> configMap = PoolConfig.merge(properties);
+	Map<Object, Object> configMap = poolConfig.merge(properties);
 	try {
-	    DataSource dataSource = initilizeDataSource(properties);
+	    DataSource dataSource = initilizeDataSource(properties, poolConfig);
 	    DataSource namedDataSource = DataSources.pooledDataSource(
 		    dataSource, configMap);
 	    if (namedDataSource instanceof PooledDataSource) {

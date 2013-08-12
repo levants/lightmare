@@ -92,9 +92,11 @@ public class PoolConfig {
     // Default value for data source properties file
     private static final String POOL_PATH_DEF_VALUE = "META-INF/pool.properties";
 
-    public static String poolPath;
+    private String poolPath;
 
-    public static Map<Object, Object> poolProperties;
+    private Map<Object, Object> poolProperties = new HashMap<Object, Object>();
+
+    private boolean pooledDataSource;
 
     /**
      * Enumeration to choose which type connection pool should be in use
@@ -108,14 +110,14 @@ public class PoolConfig {
     }
 
     // Default pool provider type
-    public static PoolProviderType poolProviderType = PoolProviderType.C3P0;
+    private PoolProviderType poolProviderType = PoolProviderType.C3P0;
 
     /**
      * Sets default connection pooling properties
      * 
      * @return
      */
-    public static Map<Object, Object> getDefaultPooling() {
+    public Map<Object, Object> getDefaultPooling() {
 	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
 
 	// Added pool properties
@@ -158,7 +160,7 @@ public class PoolConfig {
 	return c3p0Properties;
     }
 
-    private static boolean checkModifiers(Field field) {
+    private boolean checkModifiers(Field field) {
 
 	int modifiers = MetaUtils.getModifiers(field);
 	Class<?> fieldType = MetaUtils.getType(field);
@@ -167,7 +169,7 @@ public class PoolConfig {
 		&& String.class.equals(fieldType);
     }
 
-    private static Set<Object> unsopportedKeys() throws IOException {
+    private Set<Object> unsopportedKeys() throws IOException {
 
 	Set<Object> keys = new HashSet<Object>();
 	Field[] fields = DataSourceInitializer.class.getDeclaredFields();
@@ -191,7 +193,7 @@ public class PoolConfig {
      * @param defaults
      * @param initial
      */
-    private static void fillDefaults(Map<Object, Object> defaults,
+    private void fillDefaults(Map<Object, Object> defaults,
 	    Map<Object, Object> initial) {
 
 	defaults.putAll(initial);
@@ -204,8 +206,8 @@ public class PoolConfig {
      * @return {@link Map}<Object, Object>
      * @throws IOException
      */
-    private static Map<Object, Object> configProperties(
-	    Map<Object, Object> initial) throws IOException {
+    private Map<Object, Object> configProperties(Map<Object, Object> initial)
+	    throws IOException {
 
 	Map<Object, Object> propertiesMap = getDefaultPooling();
 	fillDefaults(propertiesMap, initial);
@@ -256,7 +258,7 @@ public class PoolConfig {
      * @return {@link Properties}
      * @throws IOException
      */
-    public static Map<Object, Object> load() throws IOException {
+    public Map<Object, Object> load() throws IOException {
 
 	InputStream stream;
 	if (ObjectUtils.notAvailable(poolPath)) {
@@ -294,7 +296,7 @@ public class PoolConfig {
      * @return {@link Map}<Object, Object> merged properties map
      * @throws IOException
      */
-    public static Map<Object, Object> merge(Map<Object, Object> properties)
+    public Map<Object, Object> merge(Map<Object, Object> properties)
 	    throws IOException {
 
 	Map<Object, Object> configMap = configProperties(properties);
@@ -308,5 +310,37 @@ public class PoolConfig {
 	}
 
 	return configMap;
+    }
+
+    public String getPoolPath() {
+	return poolPath;
+    }
+
+    public void setPoolPath(String poolPath) {
+	this.poolPath = poolPath;
+    }
+
+    public Map<Object, Object> getPoolProperties() {
+	return poolProperties;
+    }
+
+    public void setPoolProperties(Map<Object, Object> poolProperties) {
+	this.poolProperties = poolProperties;
+    }
+
+    public boolean isPooledDataSource() {
+	return pooledDataSource;
+    }
+
+    public void setPooledDataSource(boolean pooledDataSource) {
+	this.pooledDataSource = pooledDataSource;
+    }
+
+    public PoolProviderType getPoolProviderType() {
+	return poolProviderType;
+    }
+
+    public void setPoolProviderType(PoolProviderType poolProviderType) {
+	this.poolProviderType = poolProviderType;
     }
 }

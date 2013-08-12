@@ -44,8 +44,6 @@ public class JPAManager {
 
     private ClassLoader loader;
 
-    public static boolean pooledDataSource;
-
     private static final Logger LOG = Logger.getLogger(JPAManager.class);
 
     private JPAManager() {
@@ -327,17 +325,6 @@ public class JPAManager {
 	 */
 	public Builder setScanArchives(boolean scanArchives) {
 	    manager.scanArchives = scanArchives;
-	    return this;
-	}
-
-	/**
-	 * Adds boolean check if application uses pooled data source
-	 * 
-	 * @param dsPooledType
-	 * @return {@link Builder}
-	 */
-	public Builder setDataSourcePooledType(boolean dsPooledType) {
-	    JPAManager.pooledDataSource = dsPooledType;
 	    return this;
 	}
 

@@ -37,15 +37,15 @@ public class InitDataSourceTomcat {
      * @return {@link DataSource}
      * @throws IOException
      */
-    public static DataSource initilizeDataSource(Properties properties)
-	    throws IOException {
+    public static DataSource initilizeDataSource(Properties properties,
+	    PoolConfig poolConfig) throws IOException {
 
 	String driver = properties.getProperty("driver").trim();
 	String url = properties.getProperty("url").trim();
 	String user = properties.getProperty("user").trim();
 	String password = properties.getProperty("password").trim();
 
-	Map<Object, Object> configMap = PoolConfig.merge(properties);
+	Map<Object, Object> configMap = poolConfig.merge(properties);
 
 	DataSource dataSource;
 	PoolProperties poolProperties = new PoolProperties();
@@ -87,12 +87,12 @@ public class InitDataSourceTomcat {
      * @param jndiName
      * @throws IOException
      */
-    public static void registerDataSource(Properties properties)
-	    throws IOException {
+    public static void registerDataSource(Properties properties,
+	    PoolConfig poolConfig) throws IOException {
 	String jndiName = DataSourceInitializer.getJndiName(properties);
 	LOG.info(String.format("Initializing data source %s", jndiName));
 	try {
-	    DataSource dataSource = initilizeDataSource(properties);
+	    DataSource dataSource = initilizeDataSource(properties, poolConfig);
 	    if (dataSource instanceof DataSource) {
 		JndiManager namingUtils = new JndiManager();
 		Context context = namingUtils.getContext();

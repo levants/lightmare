@@ -35,7 +35,6 @@ import org.lightmare.config.Configuration;
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
-import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;
@@ -629,13 +628,6 @@ public class MetaCreator {
 	    this(Boolean.FALSE);
 	}
 
-	private void initPoolProperties() {
-
-	    if (PoolConfig.poolProperties == null) {
-		PoolConfig.poolProperties = new HashMap<Object, Object>();
-	    }
-	}
-
 	private Map<Object, Object> initPersistenceProperties() {
 
 	    Map<Object, Object> persistenceProperties = creator.configuration
@@ -999,7 +991,7 @@ public class MetaCreator {
 	 */
 	public Builder setDataSourcePooledType(boolean dsPooledType) {
 
-	    JPAManager.pooledDataSource = dsPooledType;
+	    creator.configuration.setDataSourcePooledType(dsPooledType);
 
 	    return this;
 	}
@@ -1013,7 +1005,7 @@ public class MetaCreator {
 	 */
 	public Builder setPoolProviderType(PoolProviderType poolProviderType) {
 
-	    PoolConfig.poolProviderType = poolProviderType;
+	    creator.configuration.setPoolProviderType(poolProviderType);
 
 	    return this;
 	}
@@ -1026,7 +1018,7 @@ public class MetaCreator {
 	 */
 	public Builder setPoolPropertiesPath(String path) {
 
-	    PoolConfig.poolPath = path;
+	    creator.configuration.setPoolPropertiesPath(path);
 
 	    return this;
 	}
@@ -1040,8 +1032,7 @@ public class MetaCreator {
 	public Builder setPoolProperties(
 		Map<? extends Object, ? extends Object> properties) {
 
-	    initPoolProperties();
-	    PoolConfig.poolProperties.putAll(properties);
+	    creator.configuration.setPoolProperties(properties);
 
 	    return this;
 	}
@@ -1055,8 +1046,7 @@ public class MetaCreator {
 	 */
 	public Builder addPoolProperty(Object key, Object value) {
 
-	    initPoolProperties();
-	    PoolConfig.poolProperties.put(key, value);
+	    creator.configuration.addPoolProperty(key, value);
 
 	    return this;
 	}

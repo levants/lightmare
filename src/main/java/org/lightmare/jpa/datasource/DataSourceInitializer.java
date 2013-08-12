@@ -72,12 +72,13 @@ public class DataSourceInitializer {
      * 
      * @throws IOException
      */
-    public static void initializeDataSource(String path) throws IOException {
+    public static void initializeDataSource(String path, PoolConfig poolConfig)
+	    throws IOException {
 
 	if (checkForDataSource(path)
 		&& !DataSourceInitializer.checkDSPath(path)) {
 	    FileParsers parsers = new FileParsers();
-	    parsers.parseStandaloneXml(path);
+	    parsers.parseStandaloneXml(path, poolConfig);
 	}
     }
 
@@ -90,9 +91,10 @@ public class DataSourceInitializer {
 	    throws IOException {
 
 	Collection<String> paths = config.getDataSourcePath();
+	PoolConfig poolConfig = config.getPoolConfig();
 	if (ObjectUtils.available(paths)) {
 	    for (String path : paths) {
-		initializeDataSource(path);
+		initializeDataSource(path, poolConfig);
 	    }
 	}
     }
@@ -106,14 +108,17 @@ public class DataSourceInitializer {
      * @param jndiName
      * @throws IOException
      */
-    public void registerDataSource(Properties properties) throws IOException {
+    public void registerDataSource(Properties properties, PoolConfig poolConfig)
+	    throws IOException {
 
-	if (PoolConfig.poolProviderType.equals(PoolProviderType.DBCP)) {
+	if (poolConfig.getPoolProviderType().equals(PoolProviderType.DBCP)) {
 	    InitDataSourceDbcp.registerDataSource(properties);
-	} else if (PoolConfig.poolProviderType.equals(PoolProviderType.C3P0)) {
-	    InitDataSourceC3p0.registerDataSource(properties);
-	} else if (PoolConfig.poolProviderType.equals(PoolProviderType.TOMCAT)) {
-	    InitDataSourceTomcat.registerDataSource(properties);
+	} else if (poolConfig.getPoolProviderType().equals(
+		PoolProviderType.C3P0)) {
+	    InitDataSourceC3p0.registerDataSource(properties, poolConfig);
+	} else if (poolConfig.getPoolProviderType().equals(
+		PoolProviderType.TOMCAT)) {
+	    InitDataSourceTomcat.registerDataSource(properties, poolConfig);
 	}
     }
 
@@ -135,13 +140,14 @@ public class DataSourceInitializer {
      * @param jndiName
      * @throws IOException
      */
-    public static void close(String jndiName) throws IOException {
+    public static void close(String jndiName, PoolConfig poolConfig)
+	    throws IOException {
 
 	JndiManager utils = new JndiManager();
 	Context context = utils.getContext();
 	try {
 	    DataSource dataSource = (DataSource) context.lookup(jndiName);
-	    cleanUp(dataSource);
+	    cleanUp(dataSource, poolConfig);
 	    dataSource = null;
 	    context.unbind(jndiName);
 	} catch (NamingException ex) {
@@ -156,14 +162,15 @@ public class DataSourceInitializer {
      * @param dataSourcePath
      * @throws IOException
      */
-    public static void undeploy(String dataSourcePath) throws IOException {
+    public static void undeploy(String dataSourcePath, PoolConfig poolConfig)
+	    throws IOException {
 
 	Collection<String> jndiNames = FileParsers
 		.dataSourceNames(dataSourcePath);
 	if (ObjectUtils.available(dataSourcePath)) {
 
 	    for (String jndiName : jndiNames) {
-		close(jndiName);
+		close(jndiName, poolConfig);
 	    }
 	}
 	removeInitialized(dataSourcePath);
@@ -174,13 +181,15 @@ public class DataSourceInitializer {
      * 
      * @param dataSource
      */
-    public static void cleanUp(DataSource dataSource) {
+    public static void cleanUp(DataSource dataSource, PoolConfig poolConfig) {
 
-	if (PoolConfig.poolProviderType.equals(PoolProviderType.DBCP)) {
+	if (poolConfig.getPoolProviderType().equals(PoolProviderType.DBCP)) {
 	    InitDataSourceDbcp.cleanUp(dataSource);
-	} else if (PoolConfig.poolProviderType.equals(PoolProviderType.C3P0)) {
+	} else if (poolConfig.getPoolProviderType().equals(
+		PoolProviderType.C3P0)) {
 	    InitDataSourceC3p0.cleanUp(dataSource);
-	} else if (PoolConfig.poolProviderType.equals(PoolProviderType.TOMCAT)) {
+	} else if (poolConfig.getPoolProviderType().equals(
+		PoolProviderType.TOMCAT)) {
 	    InitDataSourceTomcat.cleanUp(dataSource);
 	}
     }

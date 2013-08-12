@@ -14,6 +14,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.jpa.datasource.PoolConfig;
+import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -566,7 +567,14 @@ public class Configuration implements Cloneable {
     }
 
     public PoolConfig getPoolConfig() {
-	return getConfigValue(POOL_CONFIG_KEY);
+
+	PoolConfig poolConfig = getConfigValue(POOL_CONFIG_KEY);
+	if (poolConfig == null) {
+	    setConfigValue(POOL_CONFIG_KEY, new PoolConfig());
+	}
+	poolConfig = getConfigValue(POOL_CONFIG_KEY);
+
+	return poolConfig;
     }
 
     public void setPoolConfig(PoolConfig poolConfig) {
@@ -604,6 +612,37 @@ public class Configuration implements Cloneable {
 
     public void setWatchStatus(boolean watchStatus) {
 	setConfigValue(WATCH_STATUS_KEY, watchStatus);
+    }
+
+    public void setDataSourcePooledType(boolean dsPooledType) {
+
+	PoolConfig poolConfig = getPoolConfig();
+	poolConfig.setPooledDataSource(dsPooledType);
+    }
+
+    public void setPoolPropertiesPath(String path) {
+
+	PoolConfig poolConfig = getPoolConfig();
+	poolConfig.setPoolPath(path);
+    }
+
+    public void setPoolProperties(
+	    Map<? extends Object, ? extends Object> properties) {
+
+	PoolConfig poolConfig = getPoolConfig();
+	poolConfig.getPoolProperties().putAll(properties);
+    }
+
+    public void addPoolProperty(Object key, Object value) {
+
+	PoolConfig poolConfig = getPoolConfig();
+	poolConfig.getPoolProperties().put(key, value);
+    }
+
+    public void setPoolProviderType(PoolProviderType poolProviderType) {
+
+	PoolConfig poolConfig = getPoolConfig();
+	poolConfig.setPoolProviderType(poolProviderType);
     }
 
     @Override
