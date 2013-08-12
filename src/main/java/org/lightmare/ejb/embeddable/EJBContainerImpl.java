@@ -35,16 +35,17 @@ public class EJBContainerImpl extends EJBContainer {
 	}
     }
 
+    @SuppressWarnings("unchecked")
     protected EJBContainerImpl(Map<?, ?> properties) {
 
 	try {
 
-	    MetaCreator.Builder builder = new MetaCreator.Builder();
+	    MetaCreator.Builder builder;
 	    if (ObjectUtils.available(properties)) {
-		for (Map.Entry<?, ?> entry : properties.entrySet()) {
-		    builder.setProperty((String) entry.getKey(),
-			    (String) entry.getValue());
-		}
+		builder = new MetaCreator.Builder(
+			(Map<Object, Object>) properties);
+	    } else {
+		builder = new MetaCreator.Builder();
 	    }
 	    this.creator = builder.build();
 	    this.creator.scanForBeans();
