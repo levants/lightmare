@@ -255,6 +255,13 @@ public class ObjectUtils {
 	return value;
     }
 
+    /**
+     * Gets value from passed {@link Map} as other {@link Map} instance
+     * 
+     * @param key
+     * @param from
+     * @return {@link Map}<K,V>
+     */
     @SuppressWarnings("unchecked")
     public static <K, V> Map<K, V> getAsMap(Object key, Map<?, ?> from) {
 
