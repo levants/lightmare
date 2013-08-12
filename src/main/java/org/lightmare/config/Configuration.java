@@ -141,6 +141,7 @@ public class Configuration implements Cloneable {
 
     private static boolean remote;
 
+    // Instance of pool configuration
     private static final PoolConfig POOL_CONFIG = new PoolConfig();
 
     private static final Logger LOG = Logger.getLogger(Configuration.class);
