@@ -25,7 +25,7 @@ import org.lightmare.utils.ObjectUtils;
 public class Configuration implements Cloneable {
 
     // cache for all configuration passed programmatically or read from file
-    private final Map<String, String> config = new HashMap<String, String>();
+    private final Map<String, Object> config = new HashMap<String, Object>();
 
     // path where stored adminitrator users
     public static final String ADMIN_USERS_PATH_KEY = "adminUsersPath";
@@ -184,7 +184,15 @@ public class Configuration implements Cloneable {
      */
     public String getStringValue(String key) {
 
-	return config.get(key);
+	Object value = config.get(key);
+	String textValue;
+	if (value == null) {
+	    textValue = null;
+	} else {
+	    textValue = value.toString();
+	}
+
+	return textValue;
     }
 
     /**
