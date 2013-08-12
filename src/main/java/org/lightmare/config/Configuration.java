@@ -134,6 +134,7 @@ public class Configuration implements Cloneable {
     // Configuration properties for deployment
     private static String ADMIN_USERS_PATH;
 
+    // Is configuration server or client (default is server)
     private static boolean server = SERVER_DEF;
 
     private static boolean remote;
