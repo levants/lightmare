@@ -255,6 +255,37 @@ public class ObjectUtils {
 	return value;
     }
 
+    @SuppressWarnings("unchecked")
+    public static <K, V, R> Map<K, V> getAsMap(Object key, Map<?, ?> from) {
+
+	Map<K, V> result;
+	if (ObjectUtils.available(from)) {
+	    Object objectValue = from.get(key);
+	    if (objectValue instanceof Map) {
+		result = (Map<K, V>) objectValue;
+	    } else {
+		result = null;
+	    }
+	} else {
+	    result = null;
+	}
+
+	return result;
+    }
+
+    public static Map<?, ?> getAsMap(Map<?, ?> from, Object... keys) {
+
+	Map<?, ?> result = from;
+	int length = keys.length - 1;
+	Object key;
+	for (int i = length; i <= 0 && ObjectUtils.notNull(result); i--) {
+	    key = keys[i];
+	    result = getAsMap(key, result);
+	}
+
+	return result;
+    }
+
     /**
      * Checks if passed {@link Closeable} instance is not null and if not calls
      * {@link Closeable#close()} method
