@@ -45,6 +45,8 @@ public class Configuration implements Cloneable {
     public static final String CONNECTION_TIMEOUT = "timeout";
 
     // properties for datasource path and deployment path
+    public static final String DEMPLOYMENT_PATH_KEY = "deploymentpath";
+
     public static final String DATA_SOURCE_PATH_KEY = "dspath";
 
     private Set<DeploymentDirectory> deploymentPaths;
@@ -98,33 +100,35 @@ public class Configuration implements Cloneable {
 
     public static final int EJB_NAME_LENGTH = 4;
 
+    // Configuration keys properties for deployment
+    private static final String DEPLOY_CONFIG_KEY = "deployConfiguration";
+
+    private static final String SCAN_FOR_ENTITIES_KEY = "scanForEntities";
+
+    private static final String ANNOTATED_UNIT_NAME_KEY = "annotatedUnitName";
+
+    private static final String PERSISTENCE_XML_PATH_KEY = "persistanceXmlPath";
+
+    private static final String LIBRARY_PATH_KEY = "libraryPaths";
+
+    private static final String PERSISTENCE_XML_FROM_JAR_KEY = "persistenceXmlFromJar";
+
+    private static final String SWAP_DATASOURCE_KEY = "swapDataSource";
+
+    private static final String SCAN_ARCHIVES_KEY = "scanArchives";
+
+    private static final String POOLED_DATA_SOURCE_KEY = "pooledDataSource";
+
+    private static final String PERSISTENCE_PROPERTIES_KEY = "persistenceProperties";
+
+    private static final String POOL_CONFIG_KEY = "poolConfig";
+
     // Configuration properties for deployment
-    private boolean scanForEntities;
-
-    private String annotatedUnitName;
-
-    private String persXmlPath;
-
-    private String[] libraryPaths;
-
-    private boolean persXmlFromJar;
-
-    private boolean swapDataSource;
-
-    private boolean scanArchives;
-
     private boolean hotDeployment;
 
     private boolean watchStatus;
 
-    // Connection configuration
-    private boolean pooledDataSource;
-
-    private PoolConfig poolConfig;
-
     private static String ADMIN_USERS_PATH;
-
-    private Map<Object, Object> persistenceProperties;
 
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
@@ -174,6 +178,14 @@ public class Configuration implements Cloneable {
 
     public void configure() {
 	setDefaults();
+    }
+
+    public void configure(Map<String, Object> configuration) {
+
+	configure();
+	if (ObjectUtils.available(configuration)) {
+	    config.putAll(configuration);
+	}
     }
 
     /**
@@ -394,60 +406,146 @@ public class Configuration implements Cloneable {
 	return dataSourcePaths;
     }
 
+    @SuppressWarnings("unchecked")
+    private <K, V> Map<K, V> getAsMap(String key) {
+
+	Map<K, V> value = (Map<K, V>) config.get(key);
+
+	return value;
+    }
+
+    private <K, V> void setSubConfigValue(String key, K subKey, V value) {
+
+	Map<K, V> subConfig = getAsMap(key);
+	if (subConfig == null) {
+	    subConfig = new HashMap<K, V>();
+	    config.put(key, subConfig);
+	}
+
+	subConfig.put(subKey, value);
+    }
+
+    private <K, V> V getSubConfigValue(String key, K subKey, V defaultValue) {
+
+	V def;
+	Map<K, V> subConfig = getAsMap(key);
+	if (ObjectUtils.available(subConfig)) {
+	    def = subConfig.get(subKey);
+	    if (def == null) {
+		def = defaultValue;
+	    }
+	} else {
+	    def = defaultValue;
+	}
+
+	return def;
+    }
+
+    private <K, V> V getSubConfigValue(String key, String subKey) {
+
+	return getSubConfigValue(key, subKey, null);
+    }
+
     public boolean isScanForEntities() {
-	return scanForEntities;
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, SCAN_FOR_ENTITIES_KEY,
+		Boolean.FALSE);
     }
 
     public void setScanForEntities(boolean scanForEntities) {
-	this.scanForEntities = scanForEntities;
+
+	setSubConfigValue(DEPLOY_CONFIG_KEY, SCAN_FOR_ENTITIES_KEY,
+		scanForEntities);
     }
 
     public String getAnnotatedUnitName() {
-	return annotatedUnitName;
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, ANNOTATED_UNIT_NAME_KEY);
     }
 
     public void setAnnotatedUnitName(String annotatedUnitName) {
-	this.annotatedUnitName = annotatedUnitName;
+	setSubConfigValue(DEPLOY_CONFIG_KEY, ANNOTATED_UNIT_NAME_KEY,
+		annotatedUnitName);
     }
 
     public String getPersXmlPath() {
-	return persXmlPath;
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, PERSISTENCE_XML_PATH_KEY);
     }
 
     public void setPersXmlPath(String persXmlPath) {
-	this.persXmlPath = persXmlPath;
+	setSubConfigValue(DEPLOY_CONFIG_KEY, PERSISTENCE_XML_PATH_KEY,
+		persXmlPath);
     }
 
     public String[] getLibraryPaths() {
-	return libraryPaths;
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, LIBRARY_PATH_KEY);
     }
 
     public void setLibraryPaths(String[] libraryPaths) {
-	this.libraryPaths = libraryPaths;
+	setSubConfigValue(DEPLOY_CONFIG_KEY, LIBRARY_PATH_KEY, libraryPaths);
     }
 
     public boolean isPersXmlFromJar() {
-	return persXmlFromJar;
+	return getSubConfigValue(DEPLOY_CONFIG_KEY,
+		PERSISTENCE_XML_FROM_JAR_KEY, Boolean.FALSE);
     }
 
     public void setPersXmlFromJar(boolean persXmlFromJar) {
-	this.persXmlFromJar = persXmlFromJar;
+	setSubConfigValue(DEPLOY_CONFIG_KEY, PERSISTENCE_XML_FROM_JAR_KEY,
+		persXmlFromJar);
     }
 
     public boolean isSwapDataSource() {
-	return swapDataSource;
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, SWAP_DATASOURCE_KEY,
+		Boolean.FALSE);
     }
 
     public void setSwapDataSource(boolean swapDataSource) {
-	this.swapDataSource = swapDataSource;
+	setSubConfigValue(DEPLOY_CONFIG_KEY, SWAP_DATASOURCE_KEY,
+		swapDataSource);
     }
 
     public boolean isScanArchives() {
-	return scanArchives;
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, SCAN_ARCHIVES_KEY,
+		Boolean.FALSE);
     }
 
     public void setScanArchives(boolean scanArchives) {
-	this.scanArchives = scanArchives;
+	setSubConfigValue(DEPLOY_CONFIG_KEY, SCAN_ARCHIVES_KEY, scanArchives);
+    }
+
+    public boolean isPooledDataSource() {
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, POOLED_DATA_SOURCE_KEY,
+		Boolean.FALSE);
+    }
+
+    public void setPooledDataSource(boolean pooledDataSource) {
+	setSubConfigValue(DEPLOY_CONFIG_KEY, POOLED_DATA_SOURCE_KEY,
+		pooledDataSource);
+    }
+
+    public PoolConfig getPoolConfig() {
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, POOL_CONFIG_KEY);
+    }
+
+    public void setPoolConfig(PoolConfig poolConfig) {
+	setSubConfigValue(DEPLOY_CONFIG_KEY, POOL_CONFIG_KEY, poolConfig);
+    }
+
+    public static String getAdminUsersPath() {
+	return ADMIN_USERS_PATH;
+    }
+
+    public static void setAdminUsersPath(String aDMIN_USERS_PATH) {
+	ADMIN_USERS_PATH = aDMIN_USERS_PATH;
+    }
+
+    public Map<Object, Object> getPersistenceProperties() {
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, PERSISTENCE_PROPERTIES_KEY);
+    }
+
+    public void setPersistenceProperties(
+	    Map<Object, Object> persistenceProperties) {
+	setSubConfigValue(DEPLOY_CONFIG_KEY, PERSISTENCE_PROPERTIES_KEY,
+		persistenceProperties);
     }
 
     public boolean isHotDeployment() {
@@ -464,39 +562,6 @@ public class Configuration implements Cloneable {
 
     public void setWatchStatus(boolean watchStatus) {
 	this.watchStatus = watchStatus;
-    }
-
-    public boolean isPooledDataSource() {
-	return pooledDataSource;
-    }
-
-    public void setPooledDataSource(boolean pooledDataSource) {
-	this.pooledDataSource = pooledDataSource;
-    }
-
-    public PoolConfig getPoolConfig() {
-	return poolConfig;
-    }
-
-    public void setPoolConfig(PoolConfig poolConfig) {
-	this.poolConfig = poolConfig;
-    }
-
-    public static String getAdminUsersPath() {
-	return ADMIN_USERS_PATH;
-    }
-
-    public static void setAdminUsersPath(String aDMIN_USERS_PATH) {
-	ADMIN_USERS_PATH = aDMIN_USERS_PATH;
-    }
-
-    public Map<Object, Object> getPersistenceProperties() {
-	return persistenceProperties;
-    }
-
-    public void setPersistenceProperties(
-	    Map<Object, Object> persistenceProperties) {
-	this.persistenceProperties = persistenceProperties;
     }
 
     @Override
