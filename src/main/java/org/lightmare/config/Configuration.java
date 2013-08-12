@@ -99,6 +99,12 @@ public class Configuration implements Cloneable {
     // Configuration keys properties for deployment
     private static final String DEPLOY_CONFIG_KEY = "deployConfiguration";
 
+    private static final String ADMIN_USER_PATH_KEY = "adminPath";
+
+    private static final String HOT_DEPLOYMENT_KEY = "hotDeployment";
+
+    private static final String WATCH_STATUS_KEY = "watchStatus";
+
     private static final String SCAN_FOR_ENTITIES_KEY = "scanForEntities";
 
     private static final String ANNOTATED_UNIT_NAME_KEY = "annotatedUnitName";
@@ -120,10 +126,6 @@ public class Configuration implements Cloneable {
     private static final String POOL_CONFIG_KEY = "poolConfig";
 
     // Configuration properties for deployment
-    private boolean hotDeployment;
-
-    private boolean watchStatus;
-
     private static String ADMIN_USERS_PATH;
 
     private static boolean server = SERVER_DEF;
@@ -133,6 +135,61 @@ public class Configuration implements Cloneable {
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
     public Configuration() {
+    }
+
+    @SuppressWarnings("unchecked")
+    private <K, V> Map<K, V> getAsMap(String key) {
+
+	Map<K, V> value = (Map<K, V>) config.get(key);
+
+	return value;
+    }
+
+    private <K, V> void setSubConfigValue(String key, K subKey, V value) {
+
+	Map<K, V> subConfig = getAsMap(key);
+	if (subConfig == null) {
+	    subConfig = new HashMap<K, V>();
+	    config.put(key, subConfig);
+	}
+
+	subConfig.put(subKey, value);
+    }
+
+    private <K, V> V getSubConfigValue(String key, K subKey, V defaultValue) {
+
+	V def;
+	Map<K, V> subConfig = getAsMap(key);
+	if (ObjectUtils.available(subConfig)) {
+	    def = subConfig.get(subKey);
+	    if (def == null) {
+		def = defaultValue;
+	    }
+	} else {
+	    def = defaultValue;
+	}
+
+	return def;
+    }
+
+    private <K, V> V getSubConfigValue(String key, K subKey) {
+
+	return getSubConfigValue(key, subKey, null);
+    }
+
+    private <K, V> void setConfigValue(K subKey, V value) {
+
+	setSubConfigValue(DEPLOY_CONFIG_KEY, subKey, value);
+    }
+
+    private <K, V> V getConfigValue(K subKey, V defaultValue) {
+
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, subKey, defaultValue);
+    }
+
+    private <K, V> V getConfigValue(K subKey) {
+
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, subKey);
     }
 
     public void setDefaults() {
@@ -165,18 +222,25 @@ public class Configuration implements Cloneable {
 	    config.put(CONNECTION_TIMEOUT_KEY, CONNECTION_TIMEOUT_DEF);
 	}
 
+	ADMIN_USERS_PATH = getConfigValue(ADMIN_USER_PATH_KEY,
+		ADMIN_USERS_PATH_DEF);
+
+	Boolean hotDeployment = getConfigValue(HOT_DEPLOYMENT_KEY);
+	if (hotDeployment == null) {
+	    setConfigValue(HOT_DEPLOYMENT_KEY, Boolean.FALSE);
+	}
+	boolean watchStatus;
 	if (ObjectUtils.notTrue(hotDeployment)) {
 	    watchStatus = Boolean.TRUE;
 	} else {
 	    watchStatus = Boolean.FALSE;
 	}
+	setConfigValue(WATCH_STATUS_KEY, watchStatus);
 
-	Set<DeploymentDirectory> deploymentPaths = getSubConfigValue(
-		DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY);
+	Set<DeploymentDirectory> deploymentPaths = getConfigValue(DEMPLOYMENT_PATH_KEY);
 	if (deploymentPaths == null) {
 	    deploymentPaths = DEPLOYMENT_PATHS_DEF;
-	    setSubConfigValue(DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY,
-		    deploymentPaths);
+	    setConfigValue(DEMPLOYMENT_PATH_KEY, deploymentPaths);
 	}
     }
 
@@ -186,10 +250,29 @@ public class Configuration implements Cloneable {
 
     public void configure(Map<String, Object> configuration) {
 
-	configure();
 	if (ObjectUtils.available(configuration)) {
 	    config.putAll(configuration);
 	}
+
+	Object serverValue = configuration.get(SERVER_KEY);
+	if (ObjectUtils.notNull(serverValue)) {
+	    if (serverValue instanceof Boolean) {
+		server = (Boolean) serverValue;
+	    } else {
+		server = Boolean.valueOf(serverValue.toString());
+	    }
+	}
+
+	Object remoteValue = configuration.get(REMOTE_KEY);
+	if (ObjectUtils.notNull(remoteValue)) {
+	    if (remoteValue instanceof Boolean) {
+		remote = (Boolean) remoteValue;
+	    } else {
+		remote = Boolean.valueOf(remoteValue.toString());
+	    }
+	}
+
+	configure();
     }
 
     /**
@@ -366,11 +449,11 @@ public class Configuration implements Cloneable {
 
     public boolean isClient() {
 
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, CLIENT_KEY, Boolean.FALSE);
+	return getConfigValue(CLIENT_KEY, Boolean.FALSE);
     }
 
     public void setClient(boolean client) {
-	setSubConfigValue(DEPLOY_CONFIG_KEY, CLIENT_KEY, client);
+	setConfigValue(CLIENT_KEY, client);
     }
 
     /**
@@ -381,12 +464,10 @@ public class Configuration implements Cloneable {
      */
     public void addDeploymentPath(String path, boolean scan) {
 
-	Set<DeploymentDirectory> deploymentPaths = getSubConfigValue(
-		DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY);
+	Set<DeploymentDirectory> deploymentPaths = getConfigValue(DEMPLOYMENT_PATH_KEY);
 	if (deploymentPaths == null) {
 	    deploymentPaths = new HashSet<DeploymentDirectory>();
-	    setSubConfigValue(DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY,
-		    deploymentPaths);
+	    setConfigValue(DEMPLOYMENT_PATH_KEY, deploymentPaths);
 	}
 
 	deploymentPaths.add(new DeploymentDirectory(path, scan));
@@ -399,12 +480,10 @@ public class Configuration implements Cloneable {
      */
     public void addDataSourcePath(String path) {
 
-	Set<String> dataSourcePaths = getSubConfigValue(DEPLOY_CONFIG_KEY,
-		DATA_SOURCE_PATH_KEY);
+	Set<String> dataSourcePaths = getConfigValue(DATA_SOURCE_PATH_KEY);
 	if (dataSourcePaths == null) {
 	    dataSourcePaths = new HashSet<String>();
-	    setSubConfigValue(DEPLOY_CONFIG_KEY, DATA_SOURCE_PATH_KEY,
-		    dataSourcePaths);
+	    setConfigValue(DATA_SOURCE_PATH_KEY, dataSourcePaths);
 	}
 
 	dataSourcePaths.add(path);
@@ -412,136 +491,85 @@ public class Configuration implements Cloneable {
 
     public Set<DeploymentDirectory> getDeploymentPath() {
 
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY);
+	return getConfigValue(DEMPLOYMENT_PATH_KEY);
     }
 
     public Set<String> getDataSourcePath() {
 
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, DATA_SOURCE_PATH_KEY);
-    }
-
-    @SuppressWarnings("unchecked")
-    private <K, V> Map<K, V> getAsMap(String key) {
-
-	Map<K, V> value = (Map<K, V>) config.get(key);
-
-	return value;
-    }
-
-    private <K, V> void setSubConfigValue(String key, K subKey, V value) {
-
-	Map<K, V> subConfig = getAsMap(key);
-	if (subConfig == null) {
-	    subConfig = new HashMap<K, V>();
-	    config.put(key, subConfig);
-	}
-
-	subConfig.put(subKey, value);
-    }
-
-    private <K, V> V getSubConfigValue(String key, K subKey, V defaultValue) {
-
-	V def;
-	Map<K, V> subConfig = getAsMap(key);
-	if (ObjectUtils.available(subConfig)) {
-	    def = subConfig.get(subKey);
-	    if (def == null) {
-		def = defaultValue;
-	    }
-	} else {
-	    def = defaultValue;
-	}
-
-	return def;
-    }
-
-    private <K, V> V getSubConfigValue(String key, String subKey) {
-
-	return getSubConfigValue(key, subKey, null);
+	return getConfigValue(DATA_SOURCE_PATH_KEY);
     }
 
     public boolean isScanForEntities() {
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, SCAN_FOR_ENTITIES_KEY,
-		Boolean.FALSE);
+	return getConfigValue(SCAN_FOR_ENTITIES_KEY, Boolean.FALSE);
     }
 
     public void setScanForEntities(boolean scanForEntities) {
 
-	setSubConfigValue(DEPLOY_CONFIG_KEY, SCAN_FOR_ENTITIES_KEY,
-		scanForEntities);
+	setConfigValue(SCAN_FOR_ENTITIES_KEY, scanForEntities);
     }
 
     public String getAnnotatedUnitName() {
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, ANNOTATED_UNIT_NAME_KEY);
+	return getConfigValue(ANNOTATED_UNIT_NAME_KEY);
     }
 
     public void setAnnotatedUnitName(String annotatedUnitName) {
-	setSubConfigValue(DEPLOY_CONFIG_KEY, ANNOTATED_UNIT_NAME_KEY,
-		annotatedUnitName);
+	setConfigValue(ANNOTATED_UNIT_NAME_KEY, annotatedUnitName);
     }
 
     public String getPersXmlPath() {
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, PERSISTENCE_XML_PATH_KEY);
+	return getConfigValue(PERSISTENCE_XML_PATH_KEY);
     }
 
     public void setPersXmlPath(String persXmlPath) {
-	setSubConfigValue(DEPLOY_CONFIG_KEY, PERSISTENCE_XML_PATH_KEY,
-		persXmlPath);
+	setConfigValue(PERSISTENCE_XML_PATH_KEY, persXmlPath);
     }
 
     public String[] getLibraryPaths() {
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, LIBRARY_PATH_KEY);
+	return getConfigValue(LIBRARY_PATH_KEY);
     }
 
     public void setLibraryPaths(String[] libraryPaths) {
-	setSubConfigValue(DEPLOY_CONFIG_KEY, LIBRARY_PATH_KEY, libraryPaths);
+	setConfigValue(LIBRARY_PATH_KEY, libraryPaths);
     }
 
     public boolean isPersXmlFromJar() {
-	return getSubConfigValue(DEPLOY_CONFIG_KEY,
-		PERSISTENCE_XML_FROM_JAR_KEY, Boolean.FALSE);
+	return getConfigValue(PERSISTENCE_XML_FROM_JAR_KEY, Boolean.FALSE);
     }
 
     public void setPersXmlFromJar(boolean persXmlFromJar) {
-	setSubConfigValue(DEPLOY_CONFIG_KEY, PERSISTENCE_XML_FROM_JAR_KEY,
-		persXmlFromJar);
+	setConfigValue(PERSISTENCE_XML_FROM_JAR_KEY, persXmlFromJar);
     }
 
     public boolean isSwapDataSource() {
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, SWAP_DATASOURCE_KEY,
-		Boolean.FALSE);
+	return getConfigValue(SWAP_DATASOURCE_KEY, Boolean.FALSE);
     }
 
     public void setSwapDataSource(boolean swapDataSource) {
-	setSubConfigValue(DEPLOY_CONFIG_KEY, SWAP_DATASOURCE_KEY,
-		swapDataSource);
+	setConfigValue(SWAP_DATASOURCE_KEY, swapDataSource);
     }
 
     public boolean isScanArchives() {
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, SCAN_ARCHIVES_KEY,
-		Boolean.FALSE);
+	return getConfigValue(SCAN_ARCHIVES_KEY, Boolean.FALSE);
     }
 
     public void setScanArchives(boolean scanArchives) {
-	setSubConfigValue(DEPLOY_CONFIG_KEY, SCAN_ARCHIVES_KEY, scanArchives);
+	setConfigValue(SCAN_ARCHIVES_KEY, scanArchives);
     }
 
     public boolean isPooledDataSource() {
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, POOLED_DATA_SOURCE_KEY,
-		Boolean.FALSE);
+	return getConfigValue(POOLED_DATA_SOURCE_KEY, Boolean.FALSE);
     }
 
     public void setPooledDataSource(boolean pooledDataSource) {
-	setSubConfigValue(DEPLOY_CONFIG_KEY, POOLED_DATA_SOURCE_KEY,
-		pooledDataSource);
+	setConfigValue(POOLED_DATA_SOURCE_KEY, pooledDataSource);
     }
 
     public PoolConfig getPoolConfig() {
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, POOL_CONFIG_KEY);
+	return getConfigValue(POOL_CONFIG_KEY);
     }
 
     public void setPoolConfig(PoolConfig poolConfig) {
-	setSubConfigValue(DEPLOY_CONFIG_KEY, POOL_CONFIG_KEY, poolConfig);
+	setConfigValue(POOL_CONFIG_KEY, poolConfig);
     }
 
     public static String getAdminUsersPath() {
@@ -553,29 +581,28 @@ public class Configuration implements Cloneable {
     }
 
     public Map<Object, Object> getPersistenceProperties() {
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, PERSISTENCE_PROPERTIES_KEY);
+	return getConfigValue(PERSISTENCE_PROPERTIES_KEY);
     }
 
     public void setPersistenceProperties(
 	    Map<Object, Object> persistenceProperties) {
-	setSubConfigValue(DEPLOY_CONFIG_KEY, PERSISTENCE_PROPERTIES_KEY,
-		persistenceProperties);
+	setConfigValue(PERSISTENCE_PROPERTIES_KEY, persistenceProperties);
     }
 
     public boolean isHotDeployment() {
-	return hotDeployment;
+	return getConfigValue(HOT_DEPLOYMENT_KEY, Boolean.FALSE);
     }
 
     public void setHotDeployment(boolean hotDeployment) {
-	this.hotDeployment = hotDeployment;
+	setConfigValue(HOT_DEPLOYMENT_KEY, hotDeployment);
     }
 
     public boolean isWatchStatus() {
-	return watchStatus;
+	return getConfigValue(WATCH_STATUS_KEY, Boolean.FALSE);
     }
 
     public void setWatchStatus(boolean watchStatus) {
-	this.watchStatus = watchStatus;
+	setConfigValue(WATCH_STATUS_KEY, watchStatus);
     }
 
     @Override
