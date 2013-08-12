@@ -251,6 +251,24 @@ public class Configuration implements Cloneable {
 	poolConfiguration.put(key, value);
     }
 
+    public <V> V getPoolConfigValue(Object key) {
+
+	Map<Object, Object> poolConfiguration = getSubConfigValue(
+		DEPLOY_CONFIG_KEY, POOL_CONFIG_KEY);
+
+	@SuppressWarnings("unchecked")
+	V value = (V) poolConfiguration.get(key);
+
+	return value;
+    }
+
+    public void setPoolConfigValue(Object key, Object value) {
+
+	Map<Object, Object> poolConfiguration = getSubConfigValue(
+		DEPLOY_CONFIG_KEY, POOL_CONFIG_KEY);
+
+	poolConfiguration.put(key, value);
+    }
 
     /**
      * Configuration for {@link PoolConfig} instance
