@@ -302,6 +302,36 @@ public class ObjectUtils {
     }
 
     /**
+     * Gets values from passed {@link Map} as other {@link Map} instance
+     * recursively by passed keys array and for first key get value from last
+     * {@link Map} instance
+     * 
+     * @param from
+     * @param keys
+     * @return <code>V</code>
+     */
+    @SuppressWarnings("unchecked")
+    public static <V> V getSubValue(Map<?, ?> from, Object... keys) {
+
+	V value;
+	int length = keys.length - 1;
+	Object[] subKeys = new Object[length];
+	Object key = getFirst(keys);
+	for (int i = length; i >= 1; i--) {
+	    subKeys[i] = keys[i];
+	}
+
+	Map<?, ?> result = getAsMap(from, subKeys);
+	if (ObjectUtils.available(result)) {
+	    value = (V) result.get(key);
+	} else {
+	    value = null;
+	}
+
+	return value;
+    }
+
+    /**
      * Checks if passed {@link Closeable} instance is not null and if not calls
      * {@link Closeable#close()} method
      * 
