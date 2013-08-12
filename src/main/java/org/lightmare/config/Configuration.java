@@ -109,6 +109,7 @@ public class Configuration implements Cloneable {
 
     private static final String LIBRARY_PATH_KEY = "libraryPaths";
 
+    // Persistence provider properties
     private static final String SCAN_FOR_ENTITIES_KEY = "scanForEntities";
 
     private static final String ANNOTATED_UNIT_NAME_KEY = "annotatedUnitName";
