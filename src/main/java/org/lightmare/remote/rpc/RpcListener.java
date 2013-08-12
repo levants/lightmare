@@ -97,7 +97,7 @@ public class RpcListener {
 	bootstrap.setOption("child.keepAlive", Boolean.TRUE);
 	bootstrap.setOption("backlog", 500);
 	bootstrap.setOption("connectTimeoutMillis",
-		config.getIntValue(Configuration.CONNECTION_TIMEOUT));
+		config.getIntValue(Configuration.CONNECTION_TIMEOUT_KEY));
 	try {
 	    channel = bootstrap.bind(new InetSocketAddress(Inet4Address
 		    .getByName(config.getStringValue("listening_ip")), config

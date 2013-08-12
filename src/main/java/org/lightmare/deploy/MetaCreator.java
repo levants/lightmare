@@ -897,7 +897,7 @@ public class MetaCreator {
 	 */
 	public Builder setIpAddress(String property) {
 
-	    creator.configuration.putValue(Configuration.IP_ADDRESS, property);
+	    creator.configuration.putValue(Configuration.IP_ADDRESS_KEY, property);
 
 	    return this;
 	}
@@ -910,7 +910,7 @@ public class MetaCreator {
 	 */
 	public Builder setPort(String property) {
 
-	    creator.configuration.putValue(Configuration.PORT, property);
+	    creator.configuration.putValue(Configuration.PORT_KEY, property);
 
 	    return this;
 	}
@@ -924,7 +924,7 @@ public class MetaCreator {
 	 */
 	public Builder setMasterThreads(String property) {
 
-	    creator.configuration.putValue(Configuration.BOSS_POOL, property);
+	    creator.configuration.putValue(Configuration.BOSS_POOL_KEY, property);
 
 	    return this;
 	}
@@ -938,7 +938,7 @@ public class MetaCreator {
 	 */
 	public Builder setWorkerThreads(String property) {
 
-	    creator.configuration.putValue(Configuration.WORKER_POOL, property);
+	    creator.configuration.putValue(Configuration.WORKER_POOL_KEY, property);
 
 	    return this;
 	}
@@ -981,7 +981,7 @@ public class MetaCreator {
 	 */
 	public Builder setTimeout(String property) {
 
-	    creator.configuration.putValue(Configuration.CONNECTION_TIMEOUT,
+	    creator.configuration.putValue(Configuration.CONNECTION_TIMEOUT_KEY,
 		    property);
 
 	    return this;

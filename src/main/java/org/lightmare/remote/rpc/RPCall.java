@@ -59,11 +59,11 @@ public class RPCall {
 
 	if (boss == null || worker == null) {
 
-	    bossPoolSize = config.getIntValue(Configuration.BOSS_POOL);
+	    bossPoolSize = config.getIntValue(Configuration.BOSS_POOL_KEY);
 
-	    workerPoolSize = config.getIntValue(Configuration.WORKER_POOL);
+	    workerPoolSize = config.getIntValue(Configuration.WORKER_POOL_KEY);
 
-	    timeout = config.getLongValue(Configuration.CONNECTION_TIMEOUT);
+	    timeout = config.getLongValue(Configuration.CONNECTION_TIMEOUT_KEY);
 
 	    boss = new OrderedMemoryAwareThreadPoolExecutor(bossPoolSize,
 		    400000000, 2000000000, 60, TimeUnit.SECONDS,

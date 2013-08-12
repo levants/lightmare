@@ -34,24 +34,20 @@ public class Configuration implements Cloneable {
      * <a href="netty.io">Netty</a> server / client configuration properties for
      * RPC calls
      */
-    public static final String IP_ADDRESS = "listening_ip";
+    public static final String IP_ADDRESS_KEY = "listeningIp";
 
-    public static final String PORT = "listening_port";
+    public static final String PORT_KEY = "listeningPort";
 
-    public static final String BOSS_POOL = "boss_pool_size";
+    public static final String BOSS_POOL_KEY = "bossPoolSize";
 
-    public static final String WORKER_POOL = "worker_pool_size";
+    public static final String WORKER_POOL_KEY = "workerPoolSize";
 
-    public static final String CONNECTION_TIMEOUT = "timeout";
+    public static final String CONNECTION_TIMEOUT_KEY = "timeout";
 
     // properties for datasource path and deployment path
-    public static final String DEMPLOYMENT_PATH_KEY = "deploymentpath";
+    public static final String DEMPLOYMENT_PATH_KEY = "deploymentPath";
 
-    public static final String DATA_SOURCE_PATH_KEY = "dspath";
-
-    private Set<DeploymentDirectory> deploymentPaths;
-
-    private Set<String> dataSourcePaths;
+    public static final String DATA_SOURCE_PATH_KEY = "dataSourcePath";
 
     // runtime to get avaliable processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
@@ -137,32 +133,32 @@ public class Configuration implements Cloneable {
 
     public void setDefaults() {
 
-	boolean contains = config.containsKey(IP_ADDRESS);
+	boolean contains = config.containsKey(IP_ADDRESS_KEY);
 	if (ObjectUtils.notTrue(contains)) {
-	    config.put(IP_ADDRESS, IP_ADDRESS_DEF);
+	    config.put(IP_ADDRESS_KEY, IP_ADDRESS_DEF);
 	}
 
-	contains = config.containsKey(PORT);
+	contains = config.containsKey(PORT_KEY);
 	if (ObjectUtils.notTrue(contains)) {
-	    config.put(PORT, PORT_DEF);
+	    config.put(PORT_KEY, PORT_DEF);
 	}
 
-	contains = config.containsKey(BOSS_POOL);
+	contains = config.containsKey(BOSS_POOL_KEY);
 	if (ObjectUtils.notTrue(contains)) {
-	    config.put(BOSS_POOL, BOSS_POOL_DEF);
+	    config.put(BOSS_POOL_KEY, BOSS_POOL_DEF);
 	}
 
-	contains = config.containsKey(WORKER_POOL);
+	contains = config.containsKey(WORKER_POOL_KEY);
 	if (ObjectUtils.notTrue(contains)) {
 
 	    int workers = RUNTIME.availableProcessors() * WORKER_POOL_DEF;
 	    String workerProperty = String.valueOf(workers);
-	    config.put(WORKER_POOL, workerProperty);
+	    config.put(WORKER_POOL_KEY, workerProperty);
 	}
 
-	contains = config.containsKey(CONNECTION_TIMEOUT);
+	contains = config.containsKey(CONNECTION_TIMEOUT_KEY);
 	if (ObjectUtils.notTrue(contains)) {
-	    config.put(CONNECTION_TIMEOUT, CONNECTION_TIMEOUT_DEF);
+	    config.put(CONNECTION_TIMEOUT_KEY, CONNECTION_TIMEOUT_DEF);
 	}
 
 	if (ObjectUtils.notTrue(hotDeployment)) {
@@ -171,8 +167,12 @@ public class Configuration implements Cloneable {
 	    watchStatus = Boolean.FALSE;
 	}
 
+	Set<DeploymentDirectory> deploymentPaths = getSubConfigValue(
+		DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY);
 	if (deploymentPaths == null) {
 	    deploymentPaths = DEPLOYMENT_PATHS_DEF;
+	    setSubConfigValue(DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY,
+		    deploymentPaths);
 	}
     }
 
@@ -372,8 +372,12 @@ public class Configuration implements Cloneable {
     public void addDeploymentPath(String path, boolean scan) {
 
 	synchronized (Configuration.class) {
+	    Set<DeploymentDirectory> deploymentPaths = getSubConfigValue(
+		    DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY);
 	    if (deploymentPaths == null) {
 		deploymentPaths = new HashSet<DeploymentDirectory>();
+		setSubConfigValue(DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY,
+			deploymentPaths);
 	    }
 
 	    deploymentPaths.add(new DeploymentDirectory(path, scan));
@@ -388,8 +392,12 @@ public class Configuration implements Cloneable {
     public void addDataSourcePath(String path) {
 
 	synchronized (Configuration.class) {
+	    Set<String> dataSourcePaths = getSubConfigValue(DEPLOY_CONFIG_KEY,
+		    DATA_SOURCE_PATH_KEY);
 	    if (dataSourcePaths == null) {
 		dataSourcePaths = new HashSet<String>();
+		setSubConfigValue(DEPLOY_CONFIG_KEY, DATA_SOURCE_PATH_KEY,
+			dataSourcePaths);
 	    }
 
 	    dataSourcePaths.add(path);
@@ -398,12 +406,12 @@ public class Configuration implements Cloneable {
 
     public Set<DeploymentDirectory> getDeploymentPath() {
 
-	return deploymentPaths;
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY);
     }
 
     public Set<String> getDataSourcePath() {
 
-	return dataSourcePaths;
+	return getSubConfigValue(DEPLOY_CONFIG_KEY, DATA_SOURCE_PATH_KEY);
     }
 
     @SuppressWarnings("unchecked")
