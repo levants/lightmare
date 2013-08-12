@@ -234,14 +234,8 @@ public class Configuration implements Cloneable {
 
     public <V> V getPersistenceConfigValue(Object key, V defaultValue) {
 
-	Map<Object, Object> poolConfiguration = getSubConfigValue(
-		DEPLOY_CONFIG_KEY, PERSISTENCE_CONFIG_KEY);
-
-	@SuppressWarnings("unchecked")
-	V value = (V) poolConfiguration.get(key);
-	if (value == null) {
-	    value = defaultValue;
-	}
+	V value = ObjectUtils.getSubValue(config, DEPLOY_CONFIG_KEY,
+		PERSISTENCE_CONFIG_KEY, key);
 
 	return value;
     }
@@ -259,18 +253,10 @@ public class Configuration implements Cloneable {
 	poolConfiguration.put(key, value);
     }
 
-    @SuppressWarnings("unchecked")
     public <V> V getPoolConfigValue(Object key) {
 
-	Map<Object, Object> poolConfiguration = getSubConfigValue(
-		DEPLOY_CONFIG_KEY, POOL_CONFIG_KEY);
-
-	V value;
-	if (ObjectUtils.available(poolConfiguration)) {
-	    value = (V) poolConfiguration.get(key);
-	} else {
-	    value = null;
-	}
+	V value = ObjectUtils.getSubValue(config, DEPLOY_CONFIG_KEY,
+		POOL_CONFIG_KEY, key);
 
 	return value;
     }
