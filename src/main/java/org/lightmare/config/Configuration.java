@@ -126,12 +126,18 @@ public class Configuration implements Cloneable {
 
     private static final String POOL_CONFIG_KEY = "poolConfig";
 
+    private static final String POOL_PROPERTIES_PATH_KEY = "poolPropertiesPath";
+
+    private static final String POOL_PROVIDER_TYPE_KEY = "poolProviderType";
+
     // Configuration properties for deployment
     private static String ADMIN_USERS_PATH;
 
     private static boolean server = SERVER_DEF;
 
     private static boolean remote;
+
+    private static final PoolConfig POOL_CONFIG = new PoolConfig();
 
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
@@ -193,6 +199,25 @@ public class Configuration implements Cloneable {
 	return getSubConfigValue(DEPLOY_CONFIG_KEY, subKey);
     }
 
+    private void configurePool() {
+
+	Map<Object, Object> poolProperties = getConfigValue(POOL_CONFIG_KEY);
+	if (ObjectUtils.available(poolProperties)) {
+
+	    setPoolProperties(poolProperties);
+	}
+
+	String type = getConfigValue(POOL_PROVIDER_TYPE_KEY);
+	if (ObjectUtils.available(type)) {
+	    getPoolConfig().setPoolProviderType(type);
+	}
+
+	String path = getConfigValue(POOL_PROPERTIES_PATH_KEY);
+	if (ObjectUtils.available(path)) {
+	    setPoolPropertiesPath(path);
+	}
+    }
+
     public void setDefaults() {
 
 	boolean contains = config.containsKey(IP_ADDRESS_KEY);
@@ -244,6 +269,8 @@ public class Configuration implements Cloneable {
 	    deploymentPaths = DEPLOYMENT_PATHS_DEF;
 	    setConfigValue(DEMPLOYMENT_PATH_KEY, deploymentPaths);
 	}
+
+	configurePool();
     }
 
     public void configure() {
@@ -566,15 +593,9 @@ public class Configuration implements Cloneable {
 	setConfigValue(POOLED_DATA_SOURCE_KEY, pooledDataSource);
     }
 
-    public PoolConfig getPoolConfig() {
+    public static PoolConfig getPoolConfig() {
 
-	PoolConfig poolConfig = getConfigValue(POOL_CONFIG_KEY);
-	if (poolConfig == null) {
-	    setConfigValue(POOL_CONFIG_KEY, new PoolConfig());
-	}
-	poolConfig = getConfigValue(POOL_CONFIG_KEY);
-
-	return poolConfig;
+	return POOL_CONFIG;
     }
 
     public void setPoolConfig(PoolConfig poolConfig) {

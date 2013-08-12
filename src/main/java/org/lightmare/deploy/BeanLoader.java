@@ -42,7 +42,6 @@ import org.lightmare.cache.MetaData;
 import org.lightmare.config.Configuration;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
-import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.utils.RestCheck;
 import org.lightmare.rest.utils.RestUtils;
@@ -126,8 +125,6 @@ public class BeanLoader {
 
 	private Properties properties;
 
-	private PoolConfig poolConfig;
-
 	private CountDownLatch blocker;
 
 	private boolean countedDown;
@@ -137,7 +134,6 @@ public class BeanLoader {
 	    this.initializer = parameters.initializer;
 	    this.properties = parameters.properties;
 	    this.blocker = parameters.blocker;
-	    this.poolConfig = parameters.poolConfig;
 	}
 
 	private void releaseBlocker() {
@@ -154,7 +150,7 @@ public class BeanLoader {
 	    boolean result;
 	    ClassLoader loader = getCurrent();
 	    try {
-		initializer.registerDataSource(properties, poolConfig);
+		initializer.registerDataSource(properties);
 		result = Boolean.TRUE;
 	    } catch (IOException ex) {
 		result = Boolean.FALSE;
@@ -770,8 +766,6 @@ public class BeanLoader {
 	public Properties poolProperties;
 
 	public String poolPath;
-
-	public PoolConfig poolConfig;
 
 	public CountDownLatch blocker;
     }

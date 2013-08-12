@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.lightmare.jndi.JndiManager;
-import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.PoolConfig;
 

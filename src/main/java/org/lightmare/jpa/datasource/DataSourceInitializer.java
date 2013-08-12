@@ -72,13 +72,12 @@ public class DataSourceInitializer {
      * 
      * @throws IOException
      */
-    public static void initializeDataSource(String path, PoolConfig poolConfig)
-	    throws IOException {
+    public static void initializeDataSource(String path) throws IOException {
 
 	if (checkForDataSource(path)
 		&& !DataSourceInitializer.checkDSPath(path)) {
 	    FileParsers parsers = new FileParsers();
-	    parsers.parseStandaloneXml(path, poolConfig);
+	    parsers.parseStandaloneXml(path);
 	}
     }
 
@@ -91,10 +90,9 @@ public class DataSourceInitializer {
 	    throws IOException {
 
 	Collection<String> paths = config.getDataSourcePath();
-	PoolConfig poolConfig = config.getPoolConfig();
 	if (ObjectUtils.available(paths)) {
 	    for (String path : paths) {
-		initializeDataSource(path, poolConfig);
+		initializeDataSource(path);
 	    }
 	}
     }
@@ -108,8 +106,9 @@ public class DataSourceInitializer {
      * @param jndiName
      * @throws IOException
      */
-    public void registerDataSource(Properties properties, PoolConfig poolConfig)
-	    throws IOException {
+    public void registerDataSource(Properties properties) throws IOException {
+
+	PoolConfig poolConfig = Configuration.getPoolConfig();
 
 	if (poolConfig.getPoolProviderType().equals(PoolProviderType.DBCP)) {
 	    InitDataSourceDbcp.registerDataSource(properties);
@@ -140,14 +139,13 @@ public class DataSourceInitializer {
      * @param jndiName
      * @throws IOException
      */
-    public static void close(String jndiName, PoolConfig poolConfig)
-	    throws IOException {
+    public static void close(String jndiName) throws IOException {
 
 	JndiManager utils = new JndiManager();
 	Context context = utils.getContext();
 	try {
 	    DataSource dataSource = (DataSource) context.lookup(jndiName);
-	    cleanUp(dataSource, poolConfig);
+	    cleanUp(dataSource);
 	    dataSource = null;
 	    context.unbind(jndiName);
 	} catch (NamingException ex) {
@@ -162,15 +160,14 @@ public class DataSourceInitializer {
      * @param dataSourcePath
      * @throws IOException
      */
-    public static void undeploy(String dataSourcePath, PoolConfig poolConfig)
-	    throws IOException {
+    public static void undeploy(String dataSourcePath) throws IOException {
 
 	Collection<String> jndiNames = FileParsers
 		.dataSourceNames(dataSourcePath);
 	if (ObjectUtils.available(dataSourcePath)) {
 
 	    for (String jndiName : jndiNames) {
-		close(jndiName, poolConfig);
+		close(jndiName);
 	    }
 	}
 	removeInitialized(dataSourcePath);
@@ -181,7 +178,9 @@ public class DataSourceInitializer {
      * 
      * @param dataSource
      */
-    public static void cleanUp(DataSource dataSource, PoolConfig poolConfig) {
+    public static void cleanUp(DataSource dataSource) {
+
+	PoolConfig poolConfig = Configuration.getPoolConfig();
 
 	if (poolConfig.getPoolProviderType().equals(PoolProviderType.DBCP)) {
 	    InitDataSourceDbcp.cleanUp(dataSource);

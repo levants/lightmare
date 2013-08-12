@@ -343,4 +343,8 @@ public class PoolConfig {
     public void setPoolProviderType(PoolProviderType poolProviderType) {
 	this.poolProviderType = poolProviderType;
     }
+
+    public void setPoolProviderType(String poolProviderTypeName) {
+	this.poolProviderType = PoolProviderType.valueOf(poolProviderTypeName);
+    }
 }

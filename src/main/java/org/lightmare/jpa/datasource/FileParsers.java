@@ -315,8 +315,7 @@ public class FileParsers {
      * @param dataSourcePath
      * @throws IOException
      */
-    public void parseStandaloneXml(String dataSourcePath, PoolConfig poolconfig)
-	    throws IOException {
+    public void parseStandaloneXml(String dataSourcePath) throws IOException {
 
 	NodeList nodeList = getDataSourceTags(dataSourcePath);
 
@@ -335,7 +334,6 @@ public class FileParsers {
 		parameters.initializer = initializer;
 		parameters.properties = props;
 		parameters.blocker = blocker;
-		parameters.poolConfig = poolconfig;
 
 		BeanLoader.initializeDatasource(parameters);
 

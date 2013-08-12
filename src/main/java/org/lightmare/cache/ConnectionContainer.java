@@ -12,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import org.apache.log4j.Logger;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.JPAManager;
+import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 
@@ -25,6 +26,9 @@ public class ConnectionContainer {
 
     // Keeps unique EntityManagerFactories builded by unit names
     private static final ConcurrentMap<String, ConnectionSemaphore> CONNECTIONS = new ConcurrentHashMap<String, ConnectionSemaphore>();
+
+    // Keeps unique PoolConfigs builded by unit names
+    private static final ConcurrentMap<String, PoolConfig.PoolProviderType> POOL_CONFIG_TYPES = new ConcurrentHashMap<String, PoolConfig.PoolProviderType>();
 
     private static final Logger LOG = Logger
 	    .getLogger(ConnectionContainer.class);
@@ -277,5 +281,22 @@ public class ConnectionContainer {
 	    awaitConnection(semaphore);
 	    closeConnection(semaphore);
 	}
+    }
+
+    public static void setPollProviderType(String jndiName,
+	    PoolConfig.PoolProviderType type) {
+	POOL_CONFIG_TYPES.put(jndiName, type);
+    }
+
+    public static PoolConfig.PoolProviderType getAndRemovePoolProviderType(
+	    String jndiName) {
+
+	PoolConfig.PoolProviderType type = POOL_CONFIG_TYPES.get(jndiName);
+	if (type == null) {
+	    type = new PoolConfig().getPoolProviderType();
+	}
+	POOL_CONFIG_TYPES.remove(jndiName);
+
+	return type;
     }
 }
