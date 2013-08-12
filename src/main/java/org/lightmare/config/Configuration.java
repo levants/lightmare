@@ -732,11 +732,6 @@ public class Configuration implements Cloneable {
 	setConfigValue(LIBRARY_PATH_KEY, libraryPaths);
     }
 
-    public static PoolConfig getPoolConfig() {
-
-	return POOL_CONFIG;
-    }
-
     public static String getAdminUsersPath() {
 	return ADMIN_USERS_PATH;
     }
@@ -803,6 +798,12 @@ public class Configuration implements Cloneable {
 
     public void setPooledDataSource(boolean pooledDataSource) {
 	setPersistenceConfigValue(POOLED_DATA_SOURCE_KEY, pooledDataSource);
+    }
+
+    // Pool configuration
+    public static PoolConfig getPoolConfig() {
+
+	return POOL_CONFIG;
     }
 
     public void setDataSourcePooledType(boolean dsPooledType) {
