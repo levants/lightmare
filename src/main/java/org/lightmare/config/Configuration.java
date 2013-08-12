@@ -371,17 +371,15 @@ public class Configuration implements Cloneable {
      */
     public void addDeploymentPath(String path, boolean scan) {
 
-	synchronized (Configuration.class) {
-	    Set<DeploymentDirectory> deploymentPaths = getSubConfigValue(
-		    DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY);
-	    if (deploymentPaths == null) {
-		deploymentPaths = new HashSet<DeploymentDirectory>();
-		setSubConfigValue(DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY,
-			deploymentPaths);
-	    }
-
-	    deploymentPaths.add(new DeploymentDirectory(path, scan));
+	Set<DeploymentDirectory> deploymentPaths = getSubConfigValue(
+		DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY);
+	if (deploymentPaths == null) {
+	    deploymentPaths = new HashSet<DeploymentDirectory>();
+	    setSubConfigValue(DEPLOY_CONFIG_KEY, DEMPLOYMENT_PATH_KEY,
+		    deploymentPaths);
 	}
+
+	deploymentPaths.add(new DeploymentDirectory(path, scan));
     }
 
     /**
@@ -391,17 +389,15 @@ public class Configuration implements Cloneable {
      */
     public void addDataSourcePath(String path) {
 
-	synchronized (Configuration.class) {
-	    Set<String> dataSourcePaths = getSubConfigValue(DEPLOY_CONFIG_KEY,
-		    DATA_SOURCE_PATH_KEY);
-	    if (dataSourcePaths == null) {
-		dataSourcePaths = new HashSet<String>();
-		setSubConfigValue(DEPLOY_CONFIG_KEY, DATA_SOURCE_PATH_KEY,
-			dataSourcePaths);
-	    }
-
-	    dataSourcePaths.add(path);
+	Set<String> dataSourcePaths = getSubConfigValue(DEPLOY_CONFIG_KEY,
+		DATA_SOURCE_PATH_KEY);
+	if (dataSourcePaths == null) {
+	    dataSourcePaths = new HashSet<String>();
+	    setSubConfigValue(DEPLOY_CONFIG_KEY, DATA_SOURCE_PATH_KEY,
+		    dataSourcePaths);
 	}
+
+	dataSourcePaths.add(path);
     }
 
     public Set<DeploymentDirectory> getDeploymentPath() {
