@@ -280,6 +280,14 @@ public class ObjectUtils {
 	return result;
     }
 
+    /**
+     * Gets values from passed {@link Map} as other {@link Map} instance
+     * recursively by passed keys array
+     * 
+     * @param from
+     * @param keys
+     * @return {@link Map}
+     */
     public static Map<?, ?> getAsMap(Map<?, ?> from, Object... keys) {
 
 	Map<?, ?> result = from;
