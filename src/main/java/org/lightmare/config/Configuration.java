@@ -124,12 +124,12 @@ public class Configuration implements Cloneable {
     private static final String POOLED_DATA_SOURCE_KEY = "pooledDataSource";
 
     private static final String PERSISTENCE_PROPERTIES_KEY = "persistenceProperties";
-
-    private static final String POOL_PROPERTIES_KEY = "poolProperties";
-
+    
     private static final String POOL_PROPERTIES_PATH_KEY = "poolPropertiesPath";
 
     private static final String POOL_PROVIDER_TYPE_KEY = "poolProviderType";
+
+    private static final String POOL_PROPERTIES_KEY = "poolProperties";
 
     // Configuration properties for deployment
     private static String ADMIN_USERS_PATH;
