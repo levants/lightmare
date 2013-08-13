@@ -268,7 +268,7 @@ public class Configuration implements Cloneable {
 
     /**
      * Sets specific value for appropriated key in persistence configuration sub
-     * {@link Map} of configuraion
+     * {@link Map} of configuration
      * 
      * @param key
      * @param value
