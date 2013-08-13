@@ -296,6 +296,13 @@ public class Configuration implements Cloneable {
 	return value;
     }
 
+    /**
+     * Sets specific value for appropriated key in connection pool configuration
+     * sub {@link Map} of configuraion
+     * 
+     * @param key
+     * @param value
+     */
     public void setPoolConfigValue(Object key, Object value) {
 
 	setWithInitialization(POOL_CONFIG_KEY, key, value);
