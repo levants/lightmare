@@ -1,7 +1,9 @@
 deployConfiguration: 
-                 persistenceProperties:
-                            hibernate.show_sql: "true" 
-                 poolProperties: 
-                            checkoutTimeout: "2000"
-                            maxStatements: "55"
-                            numHelperThreads: "3"
+                 persistenceConfig:
+                            persistenceProperties:
+                                          hibernate.show_sql: "true"
+                 poolConfig: 
+                            poolProperties: 
+                                          checkoutTimeout: "2000"
+                                          maxStatements: "55"
+                                          numHelperThreads: "3"
