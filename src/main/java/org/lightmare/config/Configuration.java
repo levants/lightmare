@@ -266,6 +266,13 @@ public class Configuration implements Cloneable {
 	return getPersistenceConfigValue(key, null);
     }
 
+    /**
+     * Sets specific value for appropriated key in persistence configuration sub
+     * {@link Map} of configuraion
+     * 
+     * @param key
+     * @param value
+     */
     public void setPersistenceConfigValue(Object key, Object value) {
 
 	setWithInitialization(PERSISTENCE_CONFIG_KEY, key, value);
