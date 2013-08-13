@@ -16,7 +16,7 @@ Get lightmare from maven central repository
     <dependency>
       <groupId>com.github.levants</groupId>
       <artifactId>lightmare</artifactId>
-      <version>0.0.72-SNAPSHOT</version>
+      <version>0.0.73-SNAPSHOT</version>
     </dependency>
     
 or download it from [Central Maven repository](https://oss.sonatype.org/content/repositories/snapshots/com/github/levants/lightmare/)
