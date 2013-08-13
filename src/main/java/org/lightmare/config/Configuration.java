@@ -268,6 +268,13 @@ public class Configuration implements Cloneable {
 	return value;
     }
 
+    /**
+     * Gets value for specific key from connection persistence sub {@link Map}
+     * of configuration
+     * 
+     * @param key
+     * @return <code>V</code>
+     */
     public <V> V getPersistenceConfigValue(Object key) {
 
 	return getPersistenceConfigValue(key, null);
