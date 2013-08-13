@@ -129,7 +129,7 @@ public class Configuration implements Cloneable {
     private static final String PERSISTENCE_PROPERTIES_KEY = "persistenceProperties";
 
     // Connection pool provider property keys
-    private static final String POOL_CONFIG_KEY = "poolConfg";
+    private static final String POOL_CONFIG_KEY = "poolConfig";
 
     private static final String POOL_PROPERTIES_PATH_KEY = "poolPropertiesPath";
 
