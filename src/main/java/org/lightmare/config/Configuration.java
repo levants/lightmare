@@ -271,6 +271,14 @@ public class Configuration implements Cloneable {
 	setWithInitialization(PERSISTENCE_CONFIG_KEY, key, value);
     }
 
+    /**
+     * Gets value for specific key from connection pool configuration sub
+     * {@link Map} of configuration if value is null then returns passed default
+     * value
+     * 
+     * @param key
+     * @return <code>V</code>
+     */
     public <V> V getPoolConfigValue(Object key, V defaultValue) {
 
 	V value = ObjectUtils.getSubValue(config, DEPLOY_CONFIG_KEY,
