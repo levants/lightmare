@@ -282,6 +282,13 @@ public class Configuration implements Cloneable {
 	return value;
     }
 
+    /**
+     * Gets value for specific key from connection pool configuration sub
+     * {@link Map} of configuration
+     * 
+     * @param key
+     * @return <code>V</code>
+     */
     public <V> V getPoolConfigValue(Object key) {
 
 	V value = getPoolConfigValue(key, null);
