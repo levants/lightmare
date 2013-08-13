@@ -250,6 +250,13 @@ public class Configuration implements Cloneable {
 	result.put(subKey, value);
     }
 
+    /**
+     * Gets value for specific key from connection persistence sub {@link Map}
+     * of configuration if value is null then returns passed default value
+     * 
+     * @param key
+     * @return <code>V</code>
+     */
     public <V> V getPersistenceConfigValue(Object key, V defaultValue) {
 
 	V value = ObjectUtils.getSubValue(config, DEPLOY_CONFIG_KEY,
