@@ -143,8 +143,7 @@ public class MetaCreator {
 
     private List<String> translateToList(Set<String> classSet) {
 
-	String[] classArray = ObjectUtils.toArray(classSet, String.class);
-	List<String> classList = Arrays.asList(classArray);
+	List<String> classList = new ArrayList<String>(classSet);
 
 	return classList;
     }
