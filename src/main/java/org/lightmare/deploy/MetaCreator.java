@@ -63,7 +63,7 @@ public class MetaCreator {
 
     private boolean await;
 
-    // Blocker for deployments
+    // Blocker for deployments connections or beans
     private CountDownLatch blocker;
 
     // Data for cache at deploy time
