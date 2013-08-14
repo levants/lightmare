@@ -82,6 +82,7 @@ public class MetaCreator {
 
     private final Lock scannerLock = new ReentrantLock();
 
+    // Lock for MetaCreator initialization
     private static final Lock LOCK = new ReentrantLock();
 
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
