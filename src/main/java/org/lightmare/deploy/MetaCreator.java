@@ -80,6 +80,7 @@ public class MetaCreator {
     // Configuration for appropriate archives URLs
     private Configuration configuration;
 
+    // Lock for deployment and directory scanning
     private final Lock scannerLock = new ReentrantLock();
 
     // Lock for MetaCreator initialization
