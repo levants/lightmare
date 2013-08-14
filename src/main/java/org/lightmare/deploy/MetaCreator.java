@@ -230,6 +230,8 @@ public class MetaCreator {
 	    } else if (annotatedUnitName.equals(unitName)) {
 		Set<String> unitNamedSet = annotationIndex.get(UnitName.class
 			.getName());
+		// Intersects entity classes with specific unit named annotated
+		// classes
 		classSet.retainAll(unitNamedSet);
 	    }
 	    if (ObjectUtils.notNull(ioUtils)) {
