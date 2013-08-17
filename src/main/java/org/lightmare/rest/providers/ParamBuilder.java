@@ -1,4 +1,4 @@
-package org.lightmare.rest.utils;
+package org.lightmare.rest.providers;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +17,7 @@ import javax.ws.rs.ext.MessageBodyReader;
 import org.glassfish.jersey.internal.util.collection.MultivaluedStringMap;
 import org.glassfish.jersey.message.MessageBodyWorkers;
 import org.glassfish.jersey.server.model.Parameter;
+import org.lightmare.rest.utils.RequestUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 

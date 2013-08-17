@@ -17,7 +17,6 @@ import org.glassfish.jersey.server.model.Parameter;
 import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.ejb.handlers.RestHandler;
-import org.lightmare.rest.utils.ParamBuilder;
 import org.lightmare.utils.ObjectUtils;
 
 /**
