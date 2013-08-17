@@ -17,9 +17,9 @@ import javax.ws.rs.ext.MessageBodyReader;
 import org.glassfish.jersey.internal.util.collection.MultivaluedStringMap;
 import org.glassfish.jersey.message.MessageBodyWorkers;
 import org.glassfish.jersey.server.model.Parameter;
-import org.lightmare.rest.utils.RequestUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.rest.RequestUtils;
 
 /**
  * Translates REST request parameters to java objects
