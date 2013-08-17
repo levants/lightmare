@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-import org.lightmare.rest.utils.RestProvider;
+import org.lightmare.rest.providers.RestProvider;
 
 @Entity
 @Table(name = "RELATIVES", schema = "PERSONS")

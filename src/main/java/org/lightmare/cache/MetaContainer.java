@@ -18,7 +18,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.libraries.LibraryLoader;
-import org.lightmare.rest.utils.RestProvider;
+import org.lightmare.rest.providers.RestProvider;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.WatchUtils;
 

@@ -43,7 +43,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
-import org.lightmare.rest.utils.RestProvider;
+import org.lightmare.rest.providers.RestProvider;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;

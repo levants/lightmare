@@ -1,4 +1,4 @@
-package org.lightmare.rest.utils;
+package org.lightmare.rest.providers;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -14,7 +14,6 @@ import org.lightmare.cache.MetaData;
 import org.lightmare.cache.RestContainer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.RestConfig;
-import org.lightmare.rest.providers.RestReloader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.serialization.JsonSerializer;
 

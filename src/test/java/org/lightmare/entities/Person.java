@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.lightmare.annotations.UnitName;
-import org.lightmare.rest.utils.RestProvider;
+import org.lightmare.rest.providers.RestProvider;
 
 @Entity
 @Table(name = "PERSONS", schema = "PERSONS")
