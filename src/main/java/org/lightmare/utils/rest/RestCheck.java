@@ -8,6 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 
 import org.lightmare.cache.RestContainer;
+import org.lightmare.rest.utils.RestProvider;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -23,7 +24,7 @@ public class RestCheck {
     public static void reload() {
 
 	if (RestContainer.hasRest()) {
-	    RestUtils.reload();
+	    RestProvider.reload();
 	}
     }
 
