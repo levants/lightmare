@@ -1,4 +1,4 @@
-package org.lightmare.rest.utils;
+package org.lightmare.rest.providers;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -16,7 +16,6 @@ import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.server.model.ResourceMethod;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
-import org.lightmare.rest.providers.RestInflector;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
 

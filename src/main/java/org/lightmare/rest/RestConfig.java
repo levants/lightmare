@@ -13,8 +13,8 @@ import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.cache.RestContainer;
 import org.lightmare.rest.providers.JacksonFXmlFeature;
 import org.lightmare.rest.providers.ObjectMapperProvider;
+import org.lightmare.rest.providers.ResourceBuilder;
 import org.lightmare.rest.providers.RestReloader;
-import org.lightmare.rest.utils.ResourceBuilder;
 import org.lightmare.utils.ObjectUtils;
 
 /**
