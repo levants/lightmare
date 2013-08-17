@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.lightmare.annotations.UnitName;
-import org.lightmare.rest.utils.RestUtils;
+import org.lightmare.rest.utils.RestProvider;
 
 @Entity
 @Table(name = "PERSONS", schema = "PERSONS")
@@ -153,7 +153,7 @@ public class Person {
 
 	Person person = null;
 	try {
-	    person = RestUtils.convert(json, Person.class);
+	    person = RestProvider.convert(json, Person.class);
 	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}

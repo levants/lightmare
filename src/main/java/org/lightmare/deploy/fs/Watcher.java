@@ -30,7 +30,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.FileParsers;
-import org.lightmare.rest.utils.RestUtils;
+import org.lightmare.rest.utils.RestProvider;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 import org.lightmare.utils.fs.WatchUtils;
@@ -265,7 +265,7 @@ public class Watcher implements Runnable {
 
 	boolean valid = MetaContainer.undeploy(url);
 	if (valid && RestContainer.hasRest()) {
-	    RestUtils.reload();
+	    RestProvider.reload();
 	}
     }
 

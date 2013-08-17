@@ -23,7 +23,7 @@ public class RestCheck {
     public static void reload() {
 
 	if (RestContainer.hasRest()) {
-	    RestUtils.reload();
+	    RestProvider.reload();
 	}
     }
 

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.lightmare.annotations.UnitName;
-import org.lightmare.rest.utils.RestUtils;
+import org.lightmare.rest.utils.RestProvider;
 
 @Entity
 @Table(name = "EMAILS", schema = "PERSONS")
@@ -58,7 +58,7 @@ public class Email {
 
 	Email email = null;
 	try {
-	    email = RestUtils.convert(json, Email.class);
+	    email = RestProvider.convert(json, Email.class);
 	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}

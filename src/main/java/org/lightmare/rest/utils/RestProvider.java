@@ -24,7 +24,7 @@ import org.lightmare.utils.serialization.JsonSerializer;
  * @author levan
  * 
  */
-public class RestUtils {
+public class RestProvider {
 
     private static RestConfig newConfig;
 

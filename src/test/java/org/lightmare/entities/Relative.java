@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-import org.lightmare.rest.utils.RestUtils;
+import org.lightmare.rest.utils.RestProvider;
 
 @Entity
 @Table(name = "RELATIVES", schema = "PERSONS")
@@ -47,7 +47,7 @@ public class Relative implements Serializable {
 
 	Relative relative = null;
 	try {
-	    relative = RestUtils.convert(json, Relative.class);
+	    relative = RestProvider.convert(json, Relative.class);
 	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}

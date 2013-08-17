@@ -44,7 +44,7 @@ import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.utils.RestCheck;
-import org.lightmare.rest.utils.RestUtils;
+import org.lightmare.rest.utils.RestProvider;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
@@ -637,7 +637,7 @@ public class BeanLoader {
 		String beanEjbName = BeanUtils.beanName(beanClass);
 		checkAndSetBean(beanEjbName);
 		if (RestCheck.check(beanClass)) {
-		    RestUtils.add(beanClass);
+		    RestProvider.add(beanClass);
 		}
 		createMeta(beanClass);
 		indentifyInterfaces(beanClass);
