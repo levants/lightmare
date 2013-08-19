@@ -289,6 +289,22 @@ public class MetaUtils {
 	return found;
     }
 
+
+    private static int createModifier(int[] modifiers) {
+
+	int modifier = 0;
+	if (ObjectUtils.available(modifiers)) {
+	    int length = modifiers.length;
+	    int modifierValue;
+	    for (int i = 0; i < length; i++) {
+		modifierValue = modifiers[i];
+		modifier = modifier | modifierValue;
+	    }
+	}
+
+	return modifier;
+    }
+
     /**
      * Finds if passed {@link Class} has declared public {@link Method} with
      * appropriated name
