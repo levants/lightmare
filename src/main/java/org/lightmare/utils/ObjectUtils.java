@@ -110,9 +110,9 @@ public class ObjectUtils {
 	return avaliable;
     }
 
-    public static boolean available(Object[] collection) {
+    public static <T> boolean available(T[] array) {
 
-	return collection != null && collection.length > 0;
+	return array != null && array.length > 0;
     }
 
     public static boolean notAvailable(Object[] collection) {
