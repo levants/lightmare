@@ -497,7 +497,7 @@
 		</dependency>
 		<!-- end of jackson json serialization -->
 
-		<!-- yeml snakeyaml -->
+		<!-- yaml snakeyaml -->
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
