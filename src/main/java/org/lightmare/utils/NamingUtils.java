@@ -132,7 +132,7 @@ public class NamingUtils {
 
 	String jndiName;
 	if (ObjectUtils.available(clearName)
-		&& !clearName.contains(DS_JNDI_FREFIX)) {
+		&& ObjectUtils.notTrue(clearName.contains(DS_JNDI_FREFIX))) {
 	    jndiName = new StringBuilder().append(DS_JNDI_FREFIX)
 		    .append(clearName).toString();
 	} else {
