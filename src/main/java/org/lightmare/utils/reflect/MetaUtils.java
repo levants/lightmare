@@ -265,7 +265,7 @@ public class MetaUtils {
     }
 
     /**
-     * Gets one modifier int value for passed collection
+     * Gets one modifier <code>int</code> value for passed collection
      * 
      * @param modifiers
      * @return <code>int</code>
