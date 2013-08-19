@@ -65,6 +65,12 @@ public class NamingUtils {
 	return String.format("%s%s", Configuration.JPA_NAME, jndiName);
     }
 
+    /**
+     * Converts passed JNDI name to JPA name
+     * 
+     * @param jndiName
+     * @return {@link String}
+     */
     public static String formatJpaJndiName(String jndiName) {
 
 	String name = jndiName.replace(Configuration.JPA_NAME, "");
