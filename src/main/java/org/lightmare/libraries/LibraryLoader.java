@@ -80,7 +80,7 @@ public class LibraryLoader {
 	if (addURLMethod == null) {
 	    LOCK.lock();
 	    try {
-		if (addURLMethod == null) {
+		if (addURLMethod == null && MetaUtils.hasPublicMethod(URLClassLoader.class, ADD_URL_METHOD_NAME)) {
 		    addURLMethod = MetaUtils.getDeclaredMethod(
 			    URLClassLoader.class, ADD_URL_METHOD_NAME,
 			    URL.class);
@@ -306,11 +306,13 @@ public class LibraryLoader {
 	    FileUtils.getSubfiles(file, urls);
 
 	    URL[] paths = ObjectUtils.toArray(urls, URL.class);
-	    URLClassLoader urlLoader = (URLClassLoader) ClassLoader
-		    .getSystemClassLoader();
+	    ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
+	    if (systemLoader instanceof URLClassLoader) {
+		URLClassLoader urlLoader = (URLClassLoader) systemLoader;
 
-	    Method method = getURLMethod();
-	    loadURLToSystem(paths, method, urlLoader);
+		Method method = getURLMethod();
+		loadURLToSystem(paths, method, urlLoader);
+	    }
 	}
     }
 

@@ -304,7 +304,7 @@ public class MetaUtils {
 
 	Class<?> superClass = clazz;
 	boolean found = Boolean.FALSE;
-	while (ObjectUtils.notTrue(found)) {
+	while (ObjectUtils.notNull(superClass) && ObjectUtils.notTrue(found)) {
 	    found = MetaUtils.classHasPublicMethod(superClass, methodName);
 	    if (ObjectUtils.notTrue(found)) {
 		superClass = superClass.getSuperclass();
