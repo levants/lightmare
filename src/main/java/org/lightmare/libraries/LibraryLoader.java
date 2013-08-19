@@ -240,7 +240,7 @@ public class LibraryLoader {
     }
 
     /**
-     * Merges two {@link ClassLoader}s
+     * Merges two {@link ClassLoader}s in one
      * 
      * @param newLoader
      * @param oldLoader
