@@ -19,7 +19,7 @@ public class NamingUtils {
     private static final String DS_JNDI_FREFIX = "java:/";
 
     /**
-     * Descriptor class which contains ejb bean class name and its interface
+     * Descriptor class which contains EJB bean class name and its interface
      * class name
      * 
      * @author levan
