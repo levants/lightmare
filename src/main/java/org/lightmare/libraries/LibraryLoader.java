@@ -80,7 +80,9 @@ public class LibraryLoader {
 	if (addURLMethod == null) {
 	    LOCK.lock();
 	    try {
-		if (addURLMethod == null && MetaUtils.hasPublicMethod(URLClassLoader.class, ADD_URL_METHOD_NAME)) {
+		if (addURLMethod == null
+			&& MetaUtils.hasMethod(URLClassLoader.class,
+				ADD_URL_METHOD_NAME)) {
 		    addURLMethod = MetaUtils.getDeclaredMethod(
 			    URLClassLoader.class, ADD_URL_METHOD_NAME,
 			    URL.class);
