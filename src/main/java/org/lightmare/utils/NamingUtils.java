@@ -99,7 +99,7 @@ public class NamingUtils {
     public static String formatEjbJndiName(String jndiName) {
 
 	String name = jndiName.replace(Configuration.EJB_NAME,
-		"");
+		ObjectUtils.EMPTY_STRING);
 
 	return name;
     }
