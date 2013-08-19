@@ -110,14 +110,14 @@ public class ObjectUtils {
 	return avaliable;
     }
 
-    public static <T> boolean available(T[] array) {
+    public static boolean available(Object[] array) {
 
 	return array != null && array.length > 0;
     }
 
-    public static boolean notAvailable(Object[] collection) {
+    public static boolean notAvailable(Object[] array) {
 
-	return !available(collection);
+	return !available(array);
     }
 
     public static boolean available(CharSequence chars) {
