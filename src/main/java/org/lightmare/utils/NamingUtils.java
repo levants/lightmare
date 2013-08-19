@@ -20,6 +20,8 @@ public class NamingUtils {
 
     private static final String ESCAME_CHARACTER = "\\";
 
+    private static final String EJB_APP_DELIM = "!";
+
     /**
      * Descriptor class which contains EJB bean class name and its interface
      * class name
@@ -157,7 +159,7 @@ public class NamingUtils {
 	String pureName = jndiName.substring(Configuration.EJB_NAME_LENGTH);
 	String[] formatedNames = pureName.split(ESCAME_CHARACTER);
 	String beanNames = formatedNames[1];
-	String[] beanDescriptors = beanNames.split("!");
+	String[] beanDescriptors = beanNames.split(EJB_APP_DELIM);
 
 	String interfaceName = beanDescriptors[0];
 	String beanName = beanDescriptors[1];
