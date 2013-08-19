@@ -18,6 +18,8 @@ public class NamingUtils {
 
     private static final String DS_JNDI_FREFIX = "java:/";
 
+    private static final String ESCAME_CHARACTER = "\\";
+
     /**
      * Descriptor class which contains EJB bean class name and its interface
      * class name
@@ -153,7 +155,7 @@ public class NamingUtils {
     public static BeanDescriptor parseEjbJndiName(String jndiName) {
 
 	String pureName = jndiName.substring(Configuration.EJB_NAME_LENGTH);
-	String[] formatedNames = pureName.split("\\");
+	String[] formatedNames = pureName.split(ESCAME_CHARACTER);
 	String beanNames = formatedNames[1];
 	String[] beanDescriptors = beanNames.split("!");
 
