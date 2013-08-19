@@ -103,7 +103,8 @@ public class RPCall {
 	final ChannelFuture future = bootstrap.connect(address);
 
 	try {
-	    if (!future.await(timeout, TimeUnit.MILLISECONDS)) {
+	    if (ObjectUtils.notTrue(future
+		    .await(timeout, TimeUnit.MILLISECONDS))) {
 		LOG.info("Trying to read data from server");
 		future.awaitUninterruptibly();
 	    }
@@ -114,7 +115,7 @@ public class RPCall {
 	final Channel channel = future.awaitUninterruptibly().getChannel();
 
 	try {
-	    if (!future.isSuccess()) {
+	    if (ObjectUtils.notTrue(future.isSuccess())) {
 		future.getCause().printStackTrace();
 		bootstrap.releaseExternalResources();
 		value = null;
