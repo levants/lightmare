@@ -299,6 +299,12 @@ public class LibraryLoader {
 	}
     }
 
+    /**
+     * Loads all files and sub files {@link URL}s to system class loader
+     * 
+     * @param libraryPath
+     * @throws IOException
+     */
     private static void loadLibraryFromPath(String libraryPath)
 	    throws IOException {
 
