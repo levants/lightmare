@@ -458,7 +458,7 @@ public class MetaUtils {
     }
 
     /**
-     * Common method to invoke static {@link Method}
+     * Common method to invoke static {@link Method} with reflection
      * 
      * @param method
      * @param arguments
