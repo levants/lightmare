@@ -265,40 +265,15 @@ public class MetaUtils {
     }
 
     /**
-     * Finds if passed {@link Class} has declared public {@link Method} with
-     * appropriated name
-     * 
-     * @param clazz
-     * @param methodName
-     * @return <code>boolean</code>
-     * @throws IOException
-     */
-    private static boolean classHasPublicMethod(Class<?> clazz,
-	    String methodName) throws IOException {
-
-	Method[] methods = getDeclaredMethods(clazz);
-	boolean found = Boolean.FALSE;
-	int length = methods.length;
-	Method method;
-	for (int i = 0; i < length && ObjectUtils.notTrue(found); i++) {
-	    method = methods[i];
-	    found = method.getName().equals(methodName)
-		    && Modifier.isPublic(method.getModifiers());
-	}
-
-	return found;
-    }
-
-    /**
      * Gets one modifier int value for passed collection
      * 
      * @param modifiers
      * @return <code>int</code>
      */
-    private static int createModifier(int[] modifiers) {
+    private static int calculateModifier(int[] modifiers) {
 
 	int modifier = 0;
-	if (ObjectUtils.available(modifiers)) {
+	if (ObjectUtils.notNull(modifiers)) {
 	    int length = modifiers.length;
 	    int modifierValue;
 	    for (int i = 0; i < length; i++) {
@@ -321,16 +296,19 @@ public class MetaUtils {
      * @throws IOException
      */
     private static boolean classHasMethod(Class<?> clazz, String methodName,
-	    int... modofiers) throws IOException {
+	    int... modifiers) throws IOException {
 
 	Method[] methods = getDeclaredMethods(clazz);
 	boolean found = Boolean.FALSE;
 	int length = methods.length;
+	int modifier = calculateModifier(modifiers);
 	Method method;
 	for (int i = 0; i < length && ObjectUtils.notTrue(found); i++) {
 	    method = methods[i];
-	    found = method.getName().equals(methodName)
-		    && Modifier.isPublic(method.getModifiers());
+	    found = method.getName().equals(methodName);
+	    if (found && ObjectUtils.notTrue(modifier == 0)) {
+		found = ((method.getModifiers() & modifier) > 0);
+	    }
 	}
 
 	return found;
@@ -351,7 +329,8 @@ public class MetaUtils {
 	Class<?> superClass = clazz;
 	boolean found = Boolean.FALSE;
 	while (ObjectUtils.notNull(superClass) && ObjectUtils.notTrue(found)) {
-	    found = MetaUtils.classHasPublicMethod(superClass, methodName);
+	    found = MetaUtils.classHasMethod(superClass, methodName,
+		    Modifier.PUBLIC);
 	    if (ObjectUtils.notTrue(found)) {
 		superClass = superClass.getSuperclass();
 	    }
