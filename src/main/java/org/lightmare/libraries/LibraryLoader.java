@@ -313,7 +313,9 @@ public class LibraryLoader {
 		URLClassLoader urlLoader = (URLClassLoader) systemLoader;
 
 		Method method = getURLMethod();
-		loadURLToSystem(paths, method, urlLoader);
+		if (ObjectUtils.notNull(method)) {
+		    loadURLToSystem(paths, method, urlLoader);
+		}
 	    }
 	}
     }
