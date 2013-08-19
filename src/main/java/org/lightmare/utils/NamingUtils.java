@@ -85,7 +85,7 @@ public class NamingUtils {
     }
 
     /**
-     * Clears jndi prefix "java:/" for data source name
+     * Clears JNDI prefix "java:/" for data source name
      * 
      * @param jndiName
      * @return {@link String}
