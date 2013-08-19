@@ -161,6 +161,5 @@ public class NamingUtils {
 	BeanDescriptor descriptor = new BeanDescriptor(beanName, interfaceName);
 
 	return descriptor;
-
     }
 }
