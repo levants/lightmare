@@ -59,6 +59,5 @@ public class RpcEncoder extends SimpleChannelHandler {
 
 	ChannelFuture future = ev.getFuture();
 	Channels.write(ctx, future, buffer);
-
     }
 }
