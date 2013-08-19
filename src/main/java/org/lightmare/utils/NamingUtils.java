@@ -77,6 +77,12 @@ public class NamingUtils {
 	return String.format("%s%s", Configuration.EJB_NAME, jndiName);
     }
 
+    /**
+     * Converts passed JNDI name to bean name
+     * 
+     * @param jndiName
+     * @return {@link String}
+     */
     public static String formatEjbJndiName(String jndiName) {
 
 	String name = jndiName.replace(Configuration.EJB_NAME, "");
