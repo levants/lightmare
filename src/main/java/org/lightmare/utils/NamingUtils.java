@@ -72,6 +72,12 @@ public class NamingUtils {
 	return name;
     }
 
+    /**
+     * Creates EJB names from passed JNDI name
+     * 
+     * @param jndiName
+     * @return {@link String}
+     */
     public static String createEjbJndiName(String jndiName) {
 
 	return String.format("%s%s", Configuration.EJB_NAME, jndiName);
