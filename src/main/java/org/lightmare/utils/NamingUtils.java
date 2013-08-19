@@ -22,6 +22,8 @@ public class NamingUtils {
 
     private static final String EJB_APP_DELIM = "!";
 
+    private static final int INTERFACE_IDEX = 0;
+
     /**
      * Descriptor class which contains EJB bean class name and its interface
      * class name
@@ -161,7 +163,7 @@ public class NamingUtils {
 	String beanNames = formatedNames[1];
 	String[] beanDescriptors = beanNames.split(EJB_APP_DELIM);
 
-	String interfaceName = beanDescriptors[0];
+	String interfaceName = beanDescriptors[INTERFACE_IDEX];
 	String beanName = beanDescriptors[1];
 
 	BeanDescriptor descriptor = new BeanDescriptor(beanName, interfaceName);
