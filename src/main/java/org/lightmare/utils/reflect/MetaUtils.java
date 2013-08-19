@@ -289,7 +289,12 @@ public class MetaUtils {
 	return found;
     }
 
-
+    /**
+     * Gets one modifier int value for passed collection
+     * 
+     * @param modifiers
+     * @return <code>int</code>
+     */
     private static int createModifier(int[] modifiers) {
 
 	int modifier = 0;
