@@ -27,6 +27,7 @@ public class RcpHandler extends SimpleChannelHandler {
 
     @Override
     public void messageReceived(ChannelHandlerContext ctx, final MessageEvent ev) {
+
 	ev.getFuture().getChannel().close().awaitUninterruptibly()
 		.addListener(new ChannelFutureListener() {
 		    public void operationComplete(ChannelFuture future)
@@ -40,11 +41,13 @@ public class RcpHandler extends SimpleChannelHandler {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent ev) {
+
 	ev.getCause().printStackTrace();
 	ev.getChannel().close().awaitUninterruptibly();
     }
 
     public RcpWrapper getWrapper() {
+
 	boolean interrupted = Boolean.TRUE;
 	for (;;) {
 	    try {
@@ -52,6 +55,7 @@ public class RcpHandler extends SimpleChannelHandler {
 		if (interrupted) {
 		    Thread.currentThread().interrupt();
 		}
+		
 		return responce;
 	    } catch (InterruptedException ex) {
 		interrupted = Boolean.FALSE;
