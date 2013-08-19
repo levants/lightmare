@@ -22,6 +22,8 @@ public class NamingUtils {
 
     private static final String EJB_APP_DELIM = "!";
 
+    private static final int BEAN_NAMES_INDEX = 1;
+
     private static final int INTERFACE_IDEX = 0;
 
     private static final int BEAN_INDEX = 1;
@@ -162,7 +164,7 @@ public class NamingUtils {
 
 	String pureName = jndiName.substring(Configuration.EJB_NAME_LENGTH);
 	String[] formatedNames = pureName.split(EJB_NAME_DELIM);
-	String beanNames = formatedNames[1];
+	String beanNames = formatedNames[BEAN_NAMES_INDEX];
 	String[] beanDescriptors = beanNames.split(EJB_APP_DELIM);
 
 	String interfaceName = beanDescriptors[INTERFACE_IDEX];
