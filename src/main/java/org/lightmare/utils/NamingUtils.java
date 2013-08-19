@@ -73,7 +73,8 @@ public class NamingUtils {
      */
     public static String formatJpaJndiName(String jndiName) {
 
-	String name = jndiName.replace(Configuration.JPA_NAME, "");
+	String name = jndiName.replace(Configuration.JPA_NAME,
+		ObjectUtils.EMPTY_STRING);
 
 	return name;
     }
@@ -97,7 +98,8 @@ public class NamingUtils {
      */
     public static String formatEjbJndiName(String jndiName) {
 
-	String name = jndiName.replace(Configuration.EJB_NAME, "");
+	String name = jndiName.replace(Configuration.EJB_NAME,
+		"");
 
 	return name;
     }
