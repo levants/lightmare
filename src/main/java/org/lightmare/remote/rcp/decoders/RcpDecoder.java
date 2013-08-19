@@ -45,5 +45,4 @@ public class RcpDecoder extends FrameDecoder {
 
 	return rcp;
     }
-
 }

@@ -94,13 +94,17 @@ public class RPCall {
     }
 
     public Object call(RpcWrapper wrapper) throws IOException {
+
+	Object value;
+
 	RcpHandler handler = new RcpHandler();
 	ClientBootstrap bootstrap = getBootstrap(handler);
 	SocketAddress address = new InetSocketAddress(host, port);
 	final ChannelFuture future = bootstrap.connect(address);
 
 	try {
-	    if (!future.await(timeout, TimeUnit.MILLISECONDS)) {
+	    if (ObjectUtils.notTrue(future
+		    .await(timeout, TimeUnit.MILLISECONDS))) {
 		LOG.info("Trying to read data from server");
 		future.awaitUninterruptibly();
 	    }
@@ -110,28 +114,28 @@ public class RPCall {
 
 	final Channel channel = future.awaitUninterruptibly().getChannel();
 
-	if (!future.isSuccess()) {
-	    future.getCause().printStackTrace();
-	    bootstrap.releaseExternalResources();
-	    return null;
-	}
 	try {
-	    ChannelFuture lastWriteFuture = channel.write(wrapper);
-	    lastWriteFuture.awaitUninterruptibly();
-	    RcpHandler handlerCl = (RcpHandler) lastWriteFuture
-		    .awaitUninterruptibly().getChannel().getPipeline()
-		    .getLast();
-	    RcpWrapper response = handlerCl.getWrapper();
-	    Object value = response.getValue();
-
-	    if (response.isValid()) {
-		return value;
-	    } else if (ObjectUtils.notNull(value)) {
-		throw new IOException((Exception) value);
+	    if (ObjectUtils.notTrue(future.isSuccess())) {
+		future.getCause().printStackTrace();
+		bootstrap.releaseExternalResources();
+		value = null;
 	    } else {
-		return value;
+
+		ChannelFuture lastWriteFuture = channel.write(wrapper);
+		lastWriteFuture.awaitUninterruptibly();
+		RcpHandler handlerCl = (RcpHandler) lastWriteFuture
+			.awaitUninterruptibly().getChannel().getPipeline()
+			.getLast();
+		RcpWrapper response = handlerCl.getWrapper();
+		value = response.getValue();
+
+		if (ObjectUtils.notTrue(response.isValid())
+			&& ObjectUtils.notNull(value)) {
+		    throw new IOException((Exception) value);
+		}
 	    }
 
+	    return value;
 	} finally {
 	    bootstrap.releaseExternalResources();
 	}

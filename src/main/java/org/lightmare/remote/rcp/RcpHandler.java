@@ -21,37 +21,62 @@ public class RcpHandler extends SimpleChannelHandler {
 
     private BlockingQueue<RcpWrapper> answer;
 
+    /**
+     * Implementation for {@link ChannelFutureListener} for remote procedure
+     * call
+     * 
+     * @author levan
+     * 
+     */
+    private static class ResponceListener implements ChannelFutureListener {
+
+	private final BlockingQueue<RcpWrapper> answer;
+
+	private final MessageEvent ev;
+
+	public ResponceListener(final BlockingQueue<RcpWrapper> answer,
+		final MessageEvent ev) {
+
+	    this.answer = answer;
+	    this.ev = ev;
+	}
+
+	@Override
+	public void operationComplete(ChannelFuture future) throws Exception {
+	    boolean offered = answer.offer((RcpWrapper) ev.getMessage());
+	    assert offered;
+	}
+    }
+
     public RcpHandler() {
 	answer = new LinkedBlockingQueue<RcpWrapper>();
     }
 
     @Override
     public void messageReceived(ChannelHandlerContext ctx, final MessageEvent ev) {
+
 	ev.getFuture().getChannel().close().awaitUninterruptibly()
-		.addListener(new ChannelFutureListener() {
-		    public void operationComplete(ChannelFuture future)
-			    throws Exception {
-			boolean offered = answer.offer((RcpWrapper) ev
-				.getMessage());
-			assert offered;
-		    }
-		});
+		.addListener(new ResponceListener(answer, ev));
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent ev) {
+
 	ev.getCause().printStackTrace();
 	ev.getChannel().close().awaitUninterruptibly();
     }
 
     public RcpWrapper getWrapper() {
+
+	RcpWrapper responce;
 	boolean interrupted = Boolean.TRUE;
 	for (;;) {
 	    try {
-		RcpWrapper responce = answer.take();
+		responce = answer.take();
 		if (interrupted) {
 		    Thread.currentThread().interrupt();
 		}
+
 		return responce;
 	    } catch (InterruptedException ex) {
 		interrupted = Boolean.FALSE;
