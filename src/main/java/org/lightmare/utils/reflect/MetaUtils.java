@@ -218,6 +218,7 @@ public class MetaUtils {
     public static <T> T instantiate(Class<T> clazz) throws IOException {
 
 	try {
+
 	    return clazz.newInstance();
 	} catch (InstantiationException ex) {
 	    throw new IOException(ex);
@@ -239,6 +240,7 @@ public class MetaUtils {
 	    Class<?>... parameterTypes) throws IOException {
 
 	try {
+
 	    return clazz.getDeclaredMethod(methodName, parameterTypes);
 	} catch (NoSuchMethodException ex) {
 	    throw new IOException(ex);
@@ -260,6 +262,7 @@ public class MetaUtils {
 	    throws IOException {
 
 	try {
+
 	    return clazz.getDeclaredMethods();
 	} catch (SecurityException ex) {
 	    throw new IOException(ex);
