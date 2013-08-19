@@ -6,10 +6,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
-
-import javassist.Modifier;
 
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
@@ -276,6 +275,32 @@ public class MetaUtils {
      */
     private static boolean classHasPublicMethod(Class<?> clazz,
 	    String methodName) throws IOException {
+
+	Method[] methods = getDeclaredMethods(clazz);
+	boolean found = Boolean.FALSE;
+	int length = methods.length;
+	Method method;
+	for (int i = 0; i < length && ObjectUtils.notTrue(found); i++) {
+	    method = methods[i];
+	    found = method.getName().equals(methodName)
+		    && Modifier.isPublic(method.getModifiers());
+	}
+
+	return found;
+    }
+
+    /**
+     * Finds if passed {@link Class} has declared public {@link Method} with
+     * appropriated name
+     * 
+     * @param clazz
+     * @param modifiers
+     * @param methodName
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
+    private static boolean classHasMethod(Class<?> clazz, String methodName,
+	    int... modofiers) throws IOException {
 
 	Method[] methods = getDeclaredMethods(clazz);
 	boolean found = Boolean.FALSE;
