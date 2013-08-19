@@ -55,7 +55,7 @@ public class NamingUtils {
     }
 
     /**
-     * Creates jndi name pefixes for ejb objects
+     * Creates jndi name prefixes for ejb objects
      * 
      * @param jndiName
      * @return
