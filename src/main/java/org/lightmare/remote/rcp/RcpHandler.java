@@ -21,6 +21,15 @@ public class RcpHandler extends SimpleChannelHandler {
 
     private BlockingQueue<RcpWrapper> answer;
 
+    private static class ResponceListener implements ChannelFutureListener {
+
+	@Override
+	public void operationComplete(ChannelFuture future) throws Exception {
+	    boolean offered = answer.offer((RcpWrapper) ev.getMessage());
+	    assert offered;
+	}
+    }
+
     public RcpHandler() {
 	answer = new LinkedBlockingQueue<RcpWrapper>();
     }
@@ -29,14 +38,7 @@ public class RcpHandler extends SimpleChannelHandler {
     public void messageReceived(ChannelHandlerContext ctx, final MessageEvent ev) {
 
 	ev.getFuture().getChannel().close().awaitUninterruptibly()
-		.addListener(new ChannelFutureListener() {
-		    public void operationComplete(ChannelFuture future)
-			    throws Exception {
-			boolean offered = answer.offer((RcpWrapper) ev
-				.getMessage());
-			assert offered;
-		    }
-		});
+		.addListener(new ResponceListener());
     }
 
     @Override
