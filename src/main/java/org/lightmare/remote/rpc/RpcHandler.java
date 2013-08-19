@@ -24,6 +24,7 @@ public class RpcHandler extends SimpleChannelHandler {
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent ev)
 	    throws IOException {
+	
 	RpcWrapper wrapper = (RpcWrapper) ev.getMessage();
 	SocketAddress address = ev.getRemoteAddress();
 
