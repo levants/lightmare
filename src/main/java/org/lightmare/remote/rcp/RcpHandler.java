@@ -48,14 +48,15 @@ public class RcpHandler extends SimpleChannelHandler {
 
     public RcpWrapper getWrapper() {
 
+	RcpWrapper responce;
 	boolean interrupted = Boolean.TRUE;
 	for (;;) {
 	    try {
-		RcpWrapper responce = answer.take();
+		responce = answer.take();
 		if (interrupted) {
 		    Thread.currentThread().interrupt();
 		}
-		
+
 		return responce;
 	    } catch (InterruptedException ex) {
 		interrupted = Boolean.FALSE;
