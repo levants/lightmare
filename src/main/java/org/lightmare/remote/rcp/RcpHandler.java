@@ -21,7 +21,25 @@ public class RcpHandler extends SimpleChannelHandler {
 
     private BlockingQueue<RcpWrapper> answer;
 
+    /**
+     * Implementation for {@link ChannelFutureListener} for remote procedure
+     * call
+     * 
+     * @author levan
+     * 
+     */
     private static class ResponceListener implements ChannelFutureListener {
+
+	private final BlockingQueue<RcpWrapper> answer;
+
+	private final MessageEvent ev;
+
+	public ResponceListener(final BlockingQueue<RcpWrapper> answer,
+		final MessageEvent ev) {
+
+	    this.answer = answer;
+	    this.ev = ev;
+	}
 
 	@Override
 	public void operationComplete(ChannelFuture future) throws Exception {
@@ -38,7 +56,7 @@ public class RcpHandler extends SimpleChannelHandler {
     public void messageReceived(ChannelHandlerContext ctx, final MessageEvent ev) {
 
 	ev.getFuture().getChannel().close().awaitUninterruptibly()
-		.addListener(new ResponceListener());
+		.addListener(new ResponceListener(answer, ev));
     }
 
     @Override
