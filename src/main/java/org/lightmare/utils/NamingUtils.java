@@ -125,7 +125,7 @@ public class NamingUtils {
     }
 
     /**
-     * Parses bean jndi name for lookup bean
+     * Parses bean JNDI name for lookup bean
      * 
      * @param jndiName
      * @return {@link BeanDescriptor}
