@@ -315,6 +315,31 @@ public class MetaUtils {
     }
 
     /**
+     * Finds if passed {@link Class} has {@link Method} with appropriated name
+     * and modifiers
+     * 
+     * @param clazz
+     * @param methodName
+     * @param modifiers
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
+    public static boolean hasMethod(Class<?> clazz, String methodName,
+	    int... modifiers) throws IOException {
+
+	Class<?> superClass = clazz;
+	boolean found = Boolean.FALSE;
+	while (ObjectUtils.notNull(superClass) && ObjectUtils.notTrue(found)) {
+	    found = MetaUtils.classHasMethod(superClass, methodName, modifiers);
+	    if (ObjectUtils.notTrue(found)) {
+		superClass = superClass.getSuperclass();
+	    }
+	}
+
+	return found;
+    }
+
+    /**
      * Finds if passed {@link Class} has public {@link Method} with appropriated
      * name
      * 
@@ -326,15 +351,7 @@ public class MetaUtils {
     public static boolean hasPublicMethod(Class<?> clazz, String methodName)
 	    throws IOException {
 
-	Class<?> superClass = clazz;
-	boolean found = Boolean.FALSE;
-	while (ObjectUtils.notNull(superClass) && ObjectUtils.notTrue(found)) {
-	    found = MetaUtils.classHasMethod(superClass, methodName,
-		    Modifier.PUBLIC);
-	    if (ObjectUtils.notTrue(found)) {
-		superClass = superClass.getSuperclass();
-	    }
-	}
+	boolean found = MetaUtils.hasMethod(clazz, methodName, Modifier.PUBLIC);
 
 	return found;
     }
