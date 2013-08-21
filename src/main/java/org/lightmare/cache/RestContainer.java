@@ -152,4 +152,9 @@ public class RestContainer {
 
 	return restConfig;
     }
+
+    public static void clear() {
+
+	REST_RESOURCES.clear();
+    }
 }
