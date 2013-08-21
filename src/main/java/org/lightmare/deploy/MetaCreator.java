@@ -595,8 +595,10 @@ public class MetaCreator {
 
     /**
      * Closes all connections clears all caches
+     * 
+     * @throws IOException
      */
-    public static void close() {
+    public static void close() throws IOException {
 
 	ConnectionContainer.closeConnections();
 	MetaContainer.clear();
