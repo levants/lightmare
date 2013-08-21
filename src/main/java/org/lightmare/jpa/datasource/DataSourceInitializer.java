@@ -148,8 +148,16 @@ public class DataSourceInitializer {
 	    cleanUp(dataSource);
 	    dataSource = null;
 	    context.unbind(jndiName);
+	    INITIALIZED_SOURCES.remove(jndiName);
 	} catch (NamingException ex) {
 	    throw new IOException(ex);
+	}
+    }
+
+    public static void closeAll() {
+	
+	for (String jndiName : INITIALIZED_SOURCES) {
+	    close(jndiName);
 	}
     }
 
