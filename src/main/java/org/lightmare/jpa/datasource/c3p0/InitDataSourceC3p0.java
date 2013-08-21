@@ -8,7 +8,6 @@ import java.util.Properties;
 import java.util.Set;
 
 import javax.naming.Context;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
@@ -90,8 +89,7 @@ public class InitDataSourceC3p0 {
 		    dataSource, configMap);
 	    if (namedDataSource instanceof PooledDataSource) {
 		JndiManager namingUtils = new JndiManager();
-		Context context = namingUtils.getContext();
-		context.rebind(jndiName, namedDataSource);
+		namingUtils.rebind(jndiName, namedDataSource);
 	    } else {
 		throw new IOException(
 			String.format(
@@ -102,7 +100,7 @@ public class InitDataSourceC3p0 {
 	} catch (SQLException ex) {
 	    LOG.error(String.format("Could not initialize data source %s",
 		    jndiName), ex);
-	} catch (NamingException ex) {
+	} catch (IOException ex) {
 	    LOG.error(String.format("Could not initialize data source %s",
 		    jndiName), ex);
 	} catch (Exception ex) {
