@@ -29,6 +29,8 @@ public class PoolConfig {
 
     public static final String DRIVER_KEY = "driver";
 
+    public static final String URL_KEY = "url";
+
     public static final String USER_KEY = "user";
 
     public static final String PASSWORD_KEY = "password";
