@@ -21,7 +21,7 @@ public abstract class InitDataSource {
     protected static final Logger LOG = Logger
 	    .getLogger(DataSourceInitializer.class);
 
-    private Properties properties;
+    protected Properties properties;
 
     protected String driver;
     protected String url;
