@@ -11,6 +11,7 @@ import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
 import org.apache.log4j.Logger;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.PoolConfig;
 
 /**
@@ -42,7 +43,6 @@ public class InitDataSourceDbcp {
 	String password = properties.getProperty("password").trim();
 
 	String jndiName = DataSourceInitializer.getJndiName(properties);
-	LOG.info(String.format("Initializing data source %s", jndiName));
 
 	DriverAdapterCPDS dacp = new DriverAdapterCPDS();
 
@@ -85,25 +85,25 @@ public class InitDataSourceDbcp {
     public static void registerDataSource(Properties properties)
 	    throws IOException {
 	String jndiName = DataSourceInitializer.getJndiName(properties);
-	LOG.info(String.format("Initializing data source %s", jndiName));
+	LOG.info(String.format(InitMessages.INITIALIZING_MESSAGE, jndiName));
 	try {
 	    DataSource dataSource = initilizeDataSource(properties);
 	    if (dataSource instanceof DataSource) {
 		JndiManager namingUtils = new JndiManager();
 		namingUtils.rebind(jndiName, dataSource);
 	    } else {
-		throw new IOException(
-			String.format(
-				"Could not initialize data source %s (it is not appropriated DataSource instance)",
-				jndiName));
+		throw new IOException(String.format(
+			InitMessages.NOT_APPR_INSTANCE_ERROR, jndiName));
 	    }
-	    LOG.info(String.format("Data source %s initialized", jndiName));
+	    LOG.info(String.format(InitMessages.INITIALIZED_MESSAGE, jndiName));
 	} catch (IOException ex) {
-	    LOG.error(String.format("Could not initialize data source %s",
-		    jndiName), ex);
+	    LOG.error(
+		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
+		    ex);
 	} catch (Exception ex) {
-	    LOG.error(String.format("Could not initialize data source %s",
-		    jndiName), ex);
+	    LOG.error(
+		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
+		    ex);
 	}
     }
 
@@ -118,7 +118,7 @@ public class InitDataSourceDbcp {
 	    try {
 		((SharedPoolDataSource) dataSource).close();
 	    } catch (Exception ex) {
-		LOG.error("Could not close DataSource", ex);
+		LOG.error(InitMessages.COULD_NOT_CLOSE_ERROR, ex);
 	    }
 	}
     }
