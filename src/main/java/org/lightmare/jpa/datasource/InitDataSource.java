@@ -24,14 +24,17 @@ public abstract class InitDataSource {
 
     protected Properties properties;
 
+    protected PoolConfig poolConfig;
+
     protected String driver;
     protected String url;
     protected String user;
     protected String password;
 
-    public InitDataSource(Properties properties) {
+    public InitDataSource(Properties properties, PoolConfig poolConfig) {
 
 	this.properties = properties;
+	this.poolConfig = poolConfig;
 	driver = properties.getProperty(DataSourceInitializer.DRIVER_PROPERTY)
 		.trim();
 	url = properties.getProperty(DataSourceInitializer.URL_PROPERTY).trim();
@@ -44,12 +47,10 @@ public abstract class InitDataSource {
     /**
      * Initializes appropriated driver and {@link DataSource} objects
      * 
-     * @param properties
      * @return {@link DataSource}
      * @throws IOException
      */
-    protected abstract DataSource initializeDataSource(Properties properties)
-	    throws IOException;
+    protected abstract DataSource initializeDataSource() throws IOException;
 
     /**
      * Destroys passed {@link DataSource} for shut down
