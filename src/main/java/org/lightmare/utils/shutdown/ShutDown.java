@@ -7,7 +7,6 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.RestContainer;
 import org.lightmare.cache.TmpResources;
-import org.lightmare.deploy.MetaCreator;
 
 /**
  * Runnable class for shut down hook
