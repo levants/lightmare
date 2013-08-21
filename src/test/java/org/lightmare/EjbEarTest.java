@@ -1,5 +1,6 @@
 package org.lightmare;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
@@ -191,6 +192,10 @@ public class EjbEarTest {
 	    }
 	    i++;
 	}
-	MetaCreator.close();
+	try {
+	    MetaCreator.close();
+	} catch (IOException ex) {
+	    ex.printStackTrace();
+	}
     }
 }
