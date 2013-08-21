@@ -85,6 +85,13 @@ public class JndiManager {
 	return context;
     }
 
+    /**
+     * Binds passed {@link Object} to {@link Context} by appropriate name
+     * 
+     * @param name
+     * @param data
+     * @throws IOException
+     */
     public void bind(String name, Object data) throws IOException {
 
 	try {
