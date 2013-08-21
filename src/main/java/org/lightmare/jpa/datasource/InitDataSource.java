@@ -52,6 +52,12 @@ public abstract class InitDataSource {
      */
     protected abstract DataSource initializeDataSource() throws IOException;
 
+    /*
+     * 
+     */
+    protected abstract void checkForInstance(DataSource dataSource)
+	    throws IOException;
+
     /**
      * Destroys passed {@link DataSource} for shut down
      * 
