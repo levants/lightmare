@@ -103,8 +103,6 @@ public class JndiManager {
 
 	} catch (NamingException ex) {
 	    throw new IOException(ex);
-	} catch (IOException ex) {
-	    throw new IOException(ex);
 	}
     }
 

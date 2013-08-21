@@ -8,7 +8,6 @@ import java.util.Properties;
 import java.util.Set;
 
 import javax.naming.Context;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
@@ -149,18 +148,13 @@ public class DataSourceInitializer {
     public static void close(String jndiName) throws IOException {
 
 	JndiManager utils = new JndiManager();
-	Context context = utils.getContext();
-	try {
-	    DataSource dataSource = (DataSource) context.lookup(jndiName);
-	    if (ObjectUtils.notNull(dataSource)) {
-		cleanUp(dataSource);
-	    }
-	    dataSource = null;
-	    utils.unbind(jndiName);
-	    INITIALIZED_NAMES.remove(jndiName);
-	} catch (NamingException ex) {
-	    throw new IOException(ex);
+	DataSource dataSource = utils.lookup(jndiName);
+	if (ObjectUtils.notNull(dataSource)) {
+	    cleanUp(dataSource);
 	}
+	dataSource = null;
+	utils.unbind(jndiName);
+	INITIALIZED_NAMES.remove(jndiName);
     }
 
     /**
