@@ -23,8 +23,8 @@ public class InitDataSourceDbcp extends InitDataSource {
 
     private static final int DEFAULT_TRANSACTION_ISOLATION = 1;
 
-    public InitDataSourceDbcp(Properties properties, PoolConfig poolConfig) {
-	super(properties, poolConfig);
+    public InitDataSourceDbcp(Properties properties) {
+	super(properties);
     }
 
     @Override

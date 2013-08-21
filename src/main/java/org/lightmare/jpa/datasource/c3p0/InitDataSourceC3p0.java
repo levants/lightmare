@@ -26,8 +26,8 @@ import com.mchange.v2.c3p0.PooledDataSource;
  */
 public class InitDataSourceC3p0 extends InitDataSource {
 
-    public InitDataSourceC3p0(Properties properties, PoolConfig poolConfig) {
-	super(properties, poolConfig);
+    public InitDataSourceC3p0(Properties properties) {
+	super(properties);
     }
 
     /**

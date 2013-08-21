@@ -24,8 +24,8 @@ public class InitDataSourceTomcat extends InitDataSource {
 
     private static final String JDBC_INTERCEPTOR_VALUE = "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer";
 
-    public InitDataSourceTomcat(Properties properties, PoolConfig poolConfig) {
-	super(properties, poolConfig);
+    public InitDataSourceTomcat(Properties properties) {
+	super(properties);
     }
 
     @Override
