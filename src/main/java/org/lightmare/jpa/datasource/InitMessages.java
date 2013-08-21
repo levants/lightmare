@@ -15,4 +15,6 @@ public class InitMessages {
 
     public static final String COULD_NOT_CLOSE_ERROR = "Could not close DataSource %s";
 
+    // Info Messages
+
 }
