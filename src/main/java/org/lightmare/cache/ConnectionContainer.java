@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import javax.naming.Context;
-import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 
 import org.apache.log4j.Logger;
@@ -207,16 +205,11 @@ public class ConnectionContainer {
 	if (ObjectUtils.notNull(jndiName) && semaphore.isBound()) {
 	    JndiManager namingUtils = new JndiManager();
 	    try {
-		Context context = namingUtils.getContext();
 		String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
-		Object boundData = context.lookup(fullJndiName);
+		Object boundData = namingUtils.lookup(fullJndiName);
 		if (ObjectUtils.notNull(boundData)) {
-		    context.unbind(fullJndiName);
+		    namingUtils.unbind(fullJndiName);
 		}
-	    } catch (NamingException ex) {
-		LOG.error(String.format(
-			"Could not unbind jndi name %s cause %s", jndiName,
-			ex.getMessage()), ex);
 	    } catch (IOException ex) {
 		LOG.error(String.format(
 			"Could not unbind jndi name %s cause %s", jndiName,
