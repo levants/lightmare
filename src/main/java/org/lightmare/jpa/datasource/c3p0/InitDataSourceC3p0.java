@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.naming.Context;
 import javax.sql.DataSource;
@@ -16,7 +15,6 @@ import org.lightmare.jpa.datasource.DataSourceInitializer;
 import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.PoolConfig;
 
-import com.mchange.v2.c3p0.C3P0Registry;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
 import com.mchange.v2.c3p0.PooledDataSource;
@@ -125,22 +123,6 @@ public class InitDataSourceC3p0 {
 	    DataSources.destroy(dataSource);
 	} catch (SQLException ex) {
 	    LOG.error(InitMessages.COULD_NOT_CLOSE_ERROR, ex);
-	}
-    }
-
-    /**
-     * Destroys all registered pooled {@link DataSource}s for shut down hook
-     */
-    public static void cleanUp() {
-
-	@SuppressWarnings("unchecked")
-	Set<DataSource> dataSources = C3P0Registry.getPooledDataSources();
-	for (DataSource dataSource : dataSources) {
-	    try {
-		DataSources.destroy(dataSource);
-	    } catch (SQLException ex) {
-		LOG.error(InitMessages.COULD_NOT_CLOSE_ERROR, ex);
-	    }
 	}
     }
 }
