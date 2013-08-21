@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import javax.naming.Context;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
@@ -91,8 +90,7 @@ public class InitDataSourceDbcp {
 	    DataSource dataSource = initilizeDataSource(properties);
 	    if (dataSource instanceof DataSource) {
 		JndiManager namingUtils = new JndiManager();
-		Context context = namingUtils.getContext();
-		context.rebind(jndiName, dataSource);
+		namingUtils.rebind(jndiName, dataSource);
 	    } else {
 		throw new IOException(
 			String.format(
@@ -100,7 +98,7 @@ public class InitDataSourceDbcp {
 				jndiName));
 	    }
 	    LOG.info(String.format("Data source %s initialized", jndiName));
-	} catch (NamingException ex) {
+	} catch (IOException ex) {
 	    LOG.error(String.format("Could not initialize data source %s",
 		    jndiName), ex);
 	} catch (Exception ex) {

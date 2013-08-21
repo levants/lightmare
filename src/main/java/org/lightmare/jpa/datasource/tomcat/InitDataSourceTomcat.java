@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.naming.Context;
-import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -95,8 +94,7 @@ public class InitDataSourceTomcat {
 	    DataSource dataSource = initilizeDataSource(properties, poolConfig);
 	    if (dataSource instanceof DataSource) {
 		JndiManager namingUtils = new JndiManager();
-		Context context = namingUtils.getContext();
-		context.rebind(jndiName, dataSource);
+		namingUtils.rebind(jndiName, dataSource);
 	    } else {
 		throw new IOException(
 			String.format(
@@ -104,7 +102,7 @@ public class InitDataSourceTomcat {
 				jndiName));
 	    }
 	    LOG.info(String.format("Data source %s initialized", jndiName));
-	} catch (NamingException ex) {
+	} catch (IOException ex) {
 	    LOG.error(String.format("Could not initialize data source %s",
 		    jndiName), ex);
 	} catch (Exception ex) {
