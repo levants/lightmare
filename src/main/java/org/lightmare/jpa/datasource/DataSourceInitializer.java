@@ -38,6 +38,7 @@ public class DataSourceInitializer {
     public static final Logger LOG = Logger
 	    .getLogger(DataSourceInitializer.class);
 
+    // Connection properties
     public static final String DRIVER_PROPERTY = "driver";
     public static final String USER_PROPERTY = "user";
     public static final String PASSWORD_PROPERTY = "password";
