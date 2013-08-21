@@ -296,4 +296,10 @@ public class ConnectionContainer {
 
 	return type;
     }
+
+    public static void clear() {
+
+	CONNECTIONS.clear();
+	POOL_CONFIG_TYPES.clear();
+    }
 }
