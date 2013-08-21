@@ -152,7 +152,9 @@ public class DataSourceInitializer {
 	Context context = utils.getContext();
 	try {
 	    DataSource dataSource = (DataSource) context.lookup(jndiName);
-	    cleanUp(dataSource);
+	    if (ObjectUtils.notNull(dataSource)) {
+		cleanUp(dataSource);
+	    }
 	    dataSource = null;
 	    context.unbind(jndiName);
 	    INITIALIZED_NAMES.remove(jndiName);
