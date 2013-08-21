@@ -600,7 +600,7 @@ public class MetaCreator {
      */
     public static void close() throws IOException {
 
-	ConnectionContainer.closeConnections();
+	ConnectionContainer.clear();
 	MetaContainer.clear();
     }
 
