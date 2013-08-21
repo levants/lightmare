@@ -20,16 +20,20 @@ public abstract class InitDataSource {
 
     private Properties properties;
 
+    private String driver;
+    private String url;
+    private String user;
+    private String password;
+
     public InitDataSource(Properties properties) {
 
 	this.properties = properties;
-	String driver = properties.getProperty(
-		DataSourceInitializer.DRIVER_PROPERTY).trim();
-	String url = properties.getProperty(DataSourceInitializer.URL_PROPERTY)
+	driver = properties.getProperty(DataSourceInitializer.DRIVER_PROPERTY)
 		.trim();
-	String user = properties.getProperty(
-		DataSourceInitializer.USER_PROPERTY).trim();
-	String password = properties.getProperty(
+	url = properties.getProperty(DataSourceInitializer.URL_PROPERTY).trim();
+	user = properties.getProperty(DataSourceInitializer.USER_PROPERTY)
+		.trim();
+	password = properties.getProperty(
 		DataSourceInitializer.PASSWORD_PROPERTY).trim();
     }
 }
