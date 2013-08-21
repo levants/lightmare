@@ -759,8 +759,6 @@ public class BeanLoader {
      */
     public static class DataSourceParameters {
 
-	public DataSourceInitializer initializer;
-
 	public Properties properties;
 
 	public Properties poolProperties;
