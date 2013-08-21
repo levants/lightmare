@@ -92,6 +92,24 @@ public class JndiManager {
      * @param data
      * @throws IOException
      */
+    public void rebind(String name, Object data) throws IOException {
+
+	try {
+	    getContext().rebind(name, data);
+	} catch (NamingException ex) {
+	    throw new IOException(ex);
+	} catch (IOException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
+     * Binds passed {@link Object} to {@link Context} by appropriate name
+     * 
+     * @param name
+     * @param data
+     * @throws IOException
+     */
     public void bind(String name, Object data) throws IOException {
 
 	try {
