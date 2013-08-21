@@ -23,10 +23,10 @@ public abstract class InitDataSource {
 
     private Properties properties;
 
-    private String driver;
-    private String url;
-    private String user;
-    private String password;
+    protected String driver;
+    protected String url;
+    protected String user;
+    protected String password;
 
     public InitDataSource(Properties properties) {
 
