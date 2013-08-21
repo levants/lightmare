@@ -428,8 +428,10 @@ public class MetaContainer {
 
 	if (ObjectUtils.notNull(creator)) {
 	    synchronized (MetaContainer.class) {
-		creator.clear();
-		creator = null;
+		if (ObjectUtils.notNull(creator)) {
+		    creator.clear();
+		    creator = null;
+		}
 	    }
 	}
 
