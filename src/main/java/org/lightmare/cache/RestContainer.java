@@ -153,6 +153,9 @@ public class RestContainer {
 	return restConfig;
     }
 
+    /**
+     * Clears cached rest resources
+     */
     public static void clear() {
 
 	REST_RESOURCES.clear();

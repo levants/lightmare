@@ -73,19 +73,6 @@ public class MetaContainer {
     }
 
     /**
-     * Removes all cached resources
-     */
-    public static void clear() {
-
-	if (ObjectUtils.notNull(creator)) {
-	    synchronized (MetaContainer.class) {
-		creator.clear();
-		creator = null;
-	    }
-	}
-    }
-
-    /**
      * Caches {@link Configuration} for specific {@link URL} array
      * 
      * @param archives
@@ -432,5 +419,22 @@ public class MetaContainer {
      */
     public static Iterator<MetaData> getBeanClasses() {
 	return EJBS.values().iterator();
+    }
+
+    /**
+     * Removes all cached resources
+     */
+    public static void clear() {
+
+	if (ObjectUtils.notNull(creator)) {
+	    synchronized (MetaContainer.class) {
+		creator.clear();
+		creator = null;
+	    }
+	}
+
+	CONFIGS.clear();
+	EJBS.clear();
+	EJB_URLS.clear();
     }
 }
