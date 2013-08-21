@@ -1,11 +1,14 @@
 package org.lightmare.jpa.datasource;
 
+import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.naming.Context;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+
+import com.mchange.v2.c3p0.DataSources;
 
 /**
  * Initializes and bind to {@link Context} pooled {@link DataSource} object
@@ -35,5 +38,19 @@ public abstract class InitDataSource {
 		.trim();
 	password = properties.getProperty(
 		DataSourceInitializer.PASSWORD_PROPERTY).trim();
+    }
+
+    /**
+     * Destroys passed {@link DataSource} for shut down
+     * 
+     * @param dataSource
+     */
+    public static void cleanUp(DataSource dataSource) {
+
+	try {
+	    DataSources.destroy(dataSource);
+	} catch (SQLException ex) {
+	    LOG.error(InitMessages.COULD_NOT_CLOSE_ERROR, ex);
+	}
     }
 }
