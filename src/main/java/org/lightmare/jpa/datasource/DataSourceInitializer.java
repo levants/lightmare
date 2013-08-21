@@ -33,6 +33,9 @@ public class DataSourceInitializer {
     private static final Set<String> INITIALIZED_SOURCES = Collections
 	    .synchronizedSet(new HashSet<String>());
 
+    private static final Set<String> INITIALIZED_NAMES = Collections
+	    .synchronizedSet(new HashSet<String>());
+
     public static final Logger LOG = Logger
 	    .getLogger(DataSourceInitializer.class);
 
@@ -119,6 +122,9 @@ public class DataSourceInitializer {
 		PoolProviderType.TOMCAT)) {
 	    InitDataSourceTomcat.registerDataSource(properties, poolConfig);
 	}
+
+	String jndiName = getJndiName(properties);
+	INITIALIZED_NAMES.add(jndiName);
     }
 
     public static void setDsAsInitialized(String datasourcePath) {
@@ -148,7 +154,7 @@ public class DataSourceInitializer {
 	    cleanUp(dataSource);
 	    dataSource = null;
 	    context.unbind(jndiName);
-	    INITIALIZED_SOURCES.remove(jndiName);
+	    INITIALIZED_NAMES.remove(jndiName);
 	} catch (NamingException ex) {
 	    throw new IOException(ex);
 	}
