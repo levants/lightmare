@@ -86,7 +86,7 @@ public class JndiManager {
     }
 
     /**
-     * Binds passed {@link Object} to {@link Context} by appropriate name
+     * Rebinds passed {@link Object} to {@link Context} by appropriate name
      * 
      * @param name
      * @param data
