@@ -41,6 +41,13 @@ public abstract class InitDataSource {
 		DataSourceInitializer.PASSWORD_PROPERTY).trim();
     }
 
+    /**
+     * Initializes appropriated driver and {@link DataSource} objects
+     * 
+     * @param properties
+     * @return {@link DataSource}
+     * @throws IOException
+     */
     protected abstract DataSource initializeDataSource(Properties properties)
 	    throws IOException;
 
