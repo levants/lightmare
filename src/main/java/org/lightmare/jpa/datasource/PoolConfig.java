@@ -27,6 +27,8 @@ public class PoolConfig {
     // Data source name property
     public static final String DATA_SOURCE_NAME = "dataSourceName";
 
+    public static final String USER_KEY = "user";
+
     // ===========================================//
     // ====== Data Source properties keys ========//
     // ===========================================//
