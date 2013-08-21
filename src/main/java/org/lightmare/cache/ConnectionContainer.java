@@ -242,8 +242,10 @@ public class ConnectionContainer {
     /**
      * Closes all {@link javax.persistence.EntityManagerFactory} cached
      * instances
+     * 
+     * @throws IOException
      */
-    public static void closeConnections() {
+    public static void closeConnections() throws IOException {
 	ConnectionContainer.closeEntityManagerFactories();
 	DataSourceInitializer.closeAll();
     }
