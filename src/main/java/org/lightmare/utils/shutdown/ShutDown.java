@@ -18,6 +18,8 @@ public class ShutDown implements Runnable {
 
     private TmpResources tmpResources;
 
+    private static final String SHUTDOWN_MESSAGE = "Lightmare server is going to shut down";
+
     private static final Logger LOG = Logger.getLogger(ShutDown.class);
 
     public ShutDown(TmpResources tmpResources) {
@@ -40,12 +42,14 @@ public class ShutDown implements Runnable {
     public void run() {
 
 	tmpResources.removeTempFiles();
+
 	try {
 	    clearAll();
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
 	}
-	LOG.info("Lightmare server is going to shut down");
+
+	LOG.info(SHUTDOWN_MESSAGE);
     }
 
     /**
@@ -60,5 +64,4 @@ public class ShutDown implements Runnable {
 	Runtime runtime = Runtime.getRuntime();
 	runtime.addShutdownHook(shutDownThread);
     }
-
 }
