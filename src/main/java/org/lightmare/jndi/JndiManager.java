@@ -39,23 +39,6 @@ public class JndiManager {
     private static final Lock LOCK = new ReentrantLock();
 
     /**
-     * Unbinds passed name from {@link Context}
-     * 
-     * @param name
-     * @throws IOException
-     */
-    public void unbind(String name) throws IOException {
-
-	try {
-	    getContext().unbind(name);
-	} catch (NamingException ex) {
-	    throw new IOException(ex);
-	} catch (IOException ex) {
-	    throw new IOException(ex);
-	}
-    }
-
-    /**
      * Creates and sets {@link InitialContext}
      * 
      * @throws IOException
@@ -100,5 +83,22 @@ public class JndiManager {
 	}
 
 	return context;
+    }
+
+    /**
+     * Unbinds passed name from {@link Context}
+     * 
+     * @param name
+     * @throws IOException
+     */
+    public void unbind(String name) throws IOException {
+
+	try {
+	    getContext().unbind(name);
+	} catch (NamingException ex) {
+	    throw new IOException(ex);
+	} catch (IOException ex) {
+	    throw new IOException(ex);
+	}
     }
 }
