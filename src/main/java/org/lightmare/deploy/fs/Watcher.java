@@ -407,7 +407,11 @@ public class Watcher implements Runnable {
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
 	    LOG.fatal("system going to shut down cause of hot deployment");
-	    MetaCreator.closeAllConnections();
+	    try {
+		MetaCreator.closeAllConnections();
+	    } catch (IOException cex) {
+		LOG.fatal(cex.getMessage(), cex);
+	    }
 	    System.exit(-1);
 	} finally {
 	    DEPLOY_POOL.shutdown();
