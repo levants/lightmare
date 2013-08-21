@@ -8,4 +8,9 @@ package org.lightmare.jpa.datasource;
  */
 public class InitErrors {
 
+    public static final String NOT_APPR_INSTANCE_ERROR = "Could not initialize data source %s (it is not appropriated DataSource instance)";
+
+    public static final String COULD_NOT_INIT_ERROR = "Could not initialize data source %s";
+
+    public static final String COULD_NOT_CLOSE_ERROR = "Could not close DataSource %s";
 }
