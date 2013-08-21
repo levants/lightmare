@@ -154,7 +154,7 @@ public class DataSourceInitializer {
 	}
     }
 
-    public static void closeAll() {
+    public static void closeAll() throws IOException {
 	
 	for (String jndiName : INITIALIZED_SOURCES) {
 	    close(jndiName);
