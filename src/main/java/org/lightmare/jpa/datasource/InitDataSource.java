@@ -1,5 +1,6 @@
 package org.lightmare.jpa.datasource;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -39,6 +40,9 @@ public abstract class InitDataSource {
 	password = properties.getProperty(
 		DataSourceInitializer.PASSWORD_PROPERTY).trim();
     }
+
+    protected abstract DataSource initializeDataSource(Properties properties)
+	    throws IOException;
 
     /**
      * Destroys passed {@link DataSource} for shut down
