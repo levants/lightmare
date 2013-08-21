@@ -74,6 +74,10 @@ public class EJBContainerImpl extends EJBContainer {
 	if (ObjectUtils.notNull(creator)) {
 	    creator.clear();
 	}
-	MetaCreator.close();
+	try {
+	    MetaCreator.close();
+	} catch (IOException ex) {
+	    LOG.fatal(ex.getMessage(), ex);
+	}
     }
 }
