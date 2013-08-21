@@ -85,6 +85,11 @@ public class JndiManager {
 	return context;
     }
 
+    public void bind(String name, Object data) {
+
+	getContext().bind(name, data);
+    }
+
     /**
      * Unbinds passed name from {@link Context}
      * 
