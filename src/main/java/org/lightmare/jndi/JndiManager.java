@@ -38,6 +38,12 @@ public class JndiManager {
 
     private static final Lock LOCK = new ReentrantLock();
 
+    /**
+     * Unbinds passed name from {@link Context}
+     * 
+     * @param name
+     * @throws IOException
+     */
     public void unbind(String name) throws IOException {
 
 	try {
