@@ -11,6 +11,7 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.PoolConfig;
 
 /**
@@ -89,25 +90,25 @@ public class InitDataSourceTomcat {
     public static void registerDataSource(Properties properties,
 	    PoolConfig poolConfig) throws IOException {
 	String jndiName = DataSourceInitializer.getJndiName(properties);
-	LOG.info(String.format("Initializing data source %s", jndiName));
+	LOG.info(String.format(InitMessages.INITIALIZING_MESSAGE, jndiName));
 	try {
 	    DataSource dataSource = initilizeDataSource(properties, poolConfig);
 	    if (dataSource instanceof DataSource) {
 		JndiManager namingUtils = new JndiManager();
 		namingUtils.rebind(jndiName, dataSource);
 	    } else {
-		throw new IOException(
-			String.format(
-				"Could not initialize data source %s (it is not PooledDataSource instance)",
-				jndiName));
+		throw new IOException(String.format(
+			InitMessages.NOT_APPR_INSTANCE_ERROR, jndiName));
 	    }
 	    LOG.info(String.format("Data source %s initialized", jndiName));
 	} catch (IOException ex) {
-	    LOG.error(String.format("Could not initialize data source %s",
-		    jndiName), ex);
+	    LOG.error(
+		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
+		    ex);
 	} catch (Exception ex) {
-	    LOG.error(String.format("Could not initialize data source %s",
-		    jndiName), ex);
+	    LOG.error(
+		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
+		    ex);
 	}
     }
 
