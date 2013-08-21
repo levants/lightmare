@@ -147,7 +147,7 @@ public class BeanLoader {
 	    boolean result;
 	    ClassLoader loader = getCurrent();
 	    try {
-		initializer.registerDataSource(properties);
+		DataSourceInitializer.registerDataSource(properties);
 		result = Boolean.TRUE;
 	    } catch (IOException ex) {
 		result = Boolean.FALSE;
