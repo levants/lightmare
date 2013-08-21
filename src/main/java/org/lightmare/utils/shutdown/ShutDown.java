@@ -3,6 +3,9 @@ package org.lightmare.utils.shutdown;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.lightmare.cache.ConnectionContainer;
+import org.lightmare.cache.MetaContainer;
+import org.lightmare.cache.RestContainer;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.deploy.MetaCreator;
 
@@ -20,6 +23,18 @@ public class ShutDown implements Runnable {
 
     public ShutDown(TmpResources tmpResources) {
 	this.tmpResources = tmpResources;
+    }
+
+    /**
+     * Clears cache and closes all resources
+     * 
+     * @throws IOException
+     */
+    public static void clearAll() throws IOException {
+
+	ConnectionContainer.clear();
+	MetaContainer.clear();
+	RestContainer.clear();
     }
 
     @Override
