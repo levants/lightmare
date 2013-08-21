@@ -29,7 +29,6 @@ public class EJBContainerImpl extends EJBContainer {
 	try {
 	    this.creator = new MetaCreator.Builder().build();
 	    this.creator.scanForBeans();
-
 	} catch (IOException ex) {
 	    LOG.error("Could not initialize EJBContainer", ex);
 	}
@@ -47,6 +46,7 @@ public class EJBContainerImpl extends EJBContainer {
 	    } else {
 		builder = new MetaCreator.Builder();
 	    }
+
 	    this.creator = builder.build();
 	    this.creator.scanForBeans();
 
@@ -72,10 +72,10 @@ public class EJBContainerImpl extends EJBContainer {
     @Override
     public void close() {
 
-	if (ObjectUtils.notNull(creator)) {
-	    creator.clear();
-	}
 	try {
+	    if (ObjectUtils.notNull(creator)) {
+		creator.clear();
+	    }
 	    MetaCreator.close();
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
