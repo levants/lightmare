@@ -112,7 +112,7 @@ public class InitDataSourceC3p0 {
     }
 
     /**
-     * Descroys passed {@link DataSource} for shut down
+     * Destroys passed {@link DataSource} for shut down
      * 
      * @param dataSource
      */
