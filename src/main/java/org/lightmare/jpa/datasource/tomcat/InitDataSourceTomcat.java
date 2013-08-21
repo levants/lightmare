@@ -100,7 +100,7 @@ public class InitDataSourceTomcat {
 		throw new IOException(String.format(
 			InitMessages.NOT_APPR_INSTANCE_ERROR, jndiName));
 	    }
-	    LOG.info(String.format("Data source %s initialized", jndiName));
+	    LOG.info(String.format(InitMessages.INITIALIZED_MESSAGE, jndiName));
 	} catch (IOException ex) {
 	    LOG.error(
 		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
