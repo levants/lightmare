@@ -297,8 +297,9 @@ public class ConnectionContainer {
 	return type;
     }
 
-    public static void clear() {
+    public static void clear() throws IOException {
 
+	closeConnections();
 	CONNECTIONS.clear();
 	POOL_CONFIG_TYPES.clear();
     }
