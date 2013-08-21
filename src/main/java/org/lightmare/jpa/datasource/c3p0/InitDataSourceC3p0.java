@@ -52,6 +52,7 @@ public class InitDataSourceC3p0 {
 		DataSourceInitializer.PASSWORD_PROPERTY).trim();
 
 	DataSource dataSource;
+	DataSource namedDataSource;
 	try {
 	    if (poolConfig.isPooledDataSource()) {
 		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
@@ -65,13 +66,18 @@ public class InitDataSourceC3p0 {
 		dataSource = DataSources
 			.unpooledDataSource(url, user, password);
 	    }
+
+	    Map<Object, Object> configMap = poolConfig.merge(properties);
+	    namedDataSource = DataSources.pooledDataSource(dataSource,
+		    configMap);
+
 	} catch (SQLException ex) {
 	    throw new IOException(ex);
 	} catch (PropertyVetoException ex) {
 	    throw new IOException(ex);
 	}
 
-	return dataSource;
+	return namedDataSource;
     }
 
     /**
@@ -87,23 +93,16 @@ public class InitDataSourceC3p0 {
 	    PoolConfig poolConfig) throws IOException {
 	String jndiName = DataSourceInitializer.getJndiName(properties);
 	LOG.info(String.format(InitMessages.INITIALIZING_MESSAGE, jndiName));
-	Map<Object, Object> configMap = poolConfig.merge(properties);
 	try {
 	    DataSource dataSource = initilizeDataSource(properties, poolConfig);
-	    DataSource namedDataSource = DataSources.pooledDataSource(
-		    dataSource, configMap);
-	    if (namedDataSource instanceof PooledDataSource) {
+	    if (dataSource instanceof PooledDataSource) {
 		JndiManager namingUtils = new JndiManager();
-		namingUtils.rebind(jndiName, namedDataSource);
+		namingUtils.rebind(jndiName, dataSource);
 	    } else {
 		throw new IOException(String.format(
 			InitMessages.NOT_APPR_INSTANCE_ERROR, jndiName));
 	    }
 	    LOG.info(String.format(InitMessages.INITIALIZED_MESSAGE, jndiName));
-	} catch (SQLException ex) {
-	    LOG.error(
-		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
-		    ex);
 	} catch (IOException ex) {
 	    LOG.error(
 		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
