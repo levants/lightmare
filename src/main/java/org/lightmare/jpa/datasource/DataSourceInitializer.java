@@ -155,8 +155,9 @@ public class DataSourceInitializer {
     }
 
     public static void closeAll() throws IOException {
-	
-	for (String jndiName : INITIALIZED_SOURCES) {
+
+	Set<String> dataSources = new HashSet<String>(INITIALIZED_SOURCES);
+	for (String jndiName : dataSources) {
 	    close(jndiName);
 	}
     }
