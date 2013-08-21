@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.naming.Context;
-import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -188,17 +186,15 @@ public class JPAManager {
 	if (!bound) {
 	    String jndiName = semaphore.getJndiName();
 	    if (ObjectUtils.available(jndiName)) {
-		JndiManager namingUtils = new JndiManager();
+		JndiManager jndiManager = new JndiManager();
 		try {
-		    Context context = namingUtils.getContext();
 		    String fullJndiName = NamingUtils
 			    .createJpaJndiName(jndiName);
-		    if (context.lookup(fullJndiName) == null) {
-			namingUtils.getContext().rebind(fullJndiName,
-				semaphore.getEmf());
+		    if (jndiManager.lookup(fullJndiName) == null) {
+			jndiManager.rebind(fullJndiName, semaphore.getEmf());
 		    }
 		    semaphore.setBound(Boolean.TRUE);
-		} catch (NamingException ex) {
+		} catch (IOException ex) {
 		    LOG.error(ex.getMessage(), ex);
 		    throw new IOException(String.format(
 			    "could not bind connection %s",
