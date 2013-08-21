@@ -121,8 +121,6 @@ public class BeanLoader {
      */
     private static class ConnectionDeployer implements Callable<Boolean> {
 
-	private DataSourceInitializer initializer;
-
 	private Properties properties;
 
 	private CountDownLatch blocker;
