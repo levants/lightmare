@@ -320,7 +320,6 @@ public class FileParsers {
 	NodeList nodeList = getDataSourceTags(dataSourcePath);
 
 	List<Properties> properties = getDataFromJBoss(nodeList);
-	DataSourceInitializer initializer = new DataSourceInitializer();
 
 	// Blocking semaphore before all data source initialization finished
 	CountDownLatch blocker = new CountDownLatch(properties.size());
@@ -331,7 +330,6 @@ public class FileParsers {
 		// Initializes and fills BeanLoader.DataSourceParameters class
 		// to deploy data source
 		parameters = new BeanLoader.DataSourceParameters();
-		parameters.initializer = initializer;
 		parameters.properties = props;
 		parameters.blocker = blocker;
 
