@@ -13,10 +13,6 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
-import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
-import org.lightmare.jpa.datasource.c3p0.InitDataSourceC3p0;
-import org.lightmare.jpa.datasource.dbcp.InitDataSourceDbcp;
-import org.lightmare.jpa.datasource.tomcat.InitDataSourceTomcat;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
@@ -111,17 +107,8 @@ public class DataSourceInitializer {
      */
     public void registerDataSource(Properties properties) throws IOException {
 
-	PoolConfig poolConfig = Configuration.getPoolConfig();
-
-	if (poolConfig.getPoolProviderType().equals(PoolProviderType.DBCP)) {
-	    InitDataSourceDbcp.registerDataSource(properties);
-	} else if (poolConfig.getPoolProviderType().equals(
-		PoolProviderType.C3P0)) {
-	    InitDataSourceC3p0.registerDataSource(properties, poolConfig);
-	} else if (poolConfig.getPoolProviderType().equals(
-		PoolProviderType.TOMCAT)) {
-	    InitDataSourceTomcat.registerDataSource(properties, poolConfig);
-	}
+	InitDataSource initDataSource = InitDataSourceFactory.get(properties);
+	initDataSource.registerDataSource();
 
 	// Caches jndiName for data source
 	String jndiName = getJndiName(properties);
@@ -198,16 +185,6 @@ public class DataSourceInitializer {
      */
     public static void cleanUp(DataSource dataSource) {
 
-	PoolConfig poolConfig = Configuration.getPoolConfig();
-
-	if (poolConfig.getPoolProviderType().equals(PoolProviderType.DBCP)) {
-	    InitDataSourceDbcp.cleanUp(dataSource);
-	} else if (poolConfig.getPoolProviderType().equals(
-		PoolProviderType.C3P0)) {
-	    InitDataSourceC3p0.cleanUp(dataSource);
-	} else if (poolConfig.getPoolProviderType().equals(
-		PoolProviderType.TOMCAT)) {
-	    InitDataSourceTomcat.cleanUp(dataSource);
-	}
+	InitDataSourceFactory.destroy(dataSource);
     }
 }

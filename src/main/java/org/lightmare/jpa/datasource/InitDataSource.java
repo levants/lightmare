@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Initializes and bind to {@link Context} pooled {@link DataSource} object
@@ -32,15 +33,18 @@ public abstract class InitDataSource {
 
     public InitDataSource(Properties properties) {
 
-	this.properties = properties;
-	this.poolConfig = Configuration.getPoolConfig();
-	driver = properties.getProperty(DataSourceInitializer.DRIVER_PROPERTY)
-		.trim();
-	url = properties.getProperty(DataSourceInitializer.URL_PROPERTY).trim();
-	user = properties.getProperty(DataSourceInitializer.USER_PROPERTY)
-		.trim();
-	password = properties.getProperty(
-		DataSourceInitializer.PASSWORD_PROPERTY).trim();
+	if (ObjectUtils.available(properties)) {
+	    this.properties = properties;
+	    this.poolConfig = Configuration.getPoolConfig();
+	    driver = properties.getProperty(
+		    DataSourceInitializer.DRIVER_PROPERTY).trim();
+	    url = properties.getProperty(DataSourceInitializer.URL_PROPERTY)
+		    .trim();
+	    user = properties.getProperty(DataSourceInitializer.USER_PROPERTY)
+		    .trim();
+	    password = properties.getProperty(
+		    DataSourceInitializer.PASSWORD_PROPERTY).trim();
+	}
     }
 
     /**

@@ -2,6 +2,8 @@ package org.lightmare.jpa.datasource;
 
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
 import org.lightmare.config.Configuration;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.jpa.datasource.c3p0.InitDataSourceC3p0;
@@ -19,7 +21,7 @@ public class InitDataSourceFactory {
     /**
      * Constructs appropriate {@link InitDataSource} instance
      * 
-     * @return
+     * @return {@link InitDataSource}
      */
     public static InitDataSource get(Properties properties) {
 
@@ -40,5 +42,17 @@ public class InitDataSourceFactory {
 	}
 
 	return initDataSource;
+    }
+
+    /**
+     * Constructs appropriate {@link InitDataSource} instance to close or
+     * destroy appropriate {@link DataSource} instance
+     * 
+     * @return {@link InitDataSource}
+     */
+    public static void destroy(DataSource dataSource) {
+
+	InitDataSource initDataSource = get(null);
+	initDataSource.cleanUp(dataSource);
     }
 }
