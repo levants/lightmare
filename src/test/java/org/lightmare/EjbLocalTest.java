@@ -1,5 +1,6 @@
 package org.lightmare;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -128,6 +129,11 @@ public class EjbLocalTest {
 
     @AfterClass
     public static void end() {
-	MetaCreator.closeAllConnections();
+	try {
+	    MetaCreator.closeAllConnections();
+	} catch (IOException ex) {
+	    // TODO Auto-generated catch block
+	    ex.printStackTrace();
+	}
     }
 }

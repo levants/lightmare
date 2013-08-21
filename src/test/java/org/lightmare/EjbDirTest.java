@@ -1,5 +1,6 @@
 package org.lightmare;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
@@ -144,6 +145,10 @@ public class EjbDirTest {
 
     @AfterClass
     public static void end() {
-	MetaCreator.closeAllConnections();
+	try {
+	    MetaCreator.closeAllConnections();
+	} catch (IOException ex) {
+	    ex.printStackTrace();
+	}
     }
 }
