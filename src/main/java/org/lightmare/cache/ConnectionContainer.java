@@ -203,12 +203,12 @@ public class ConnectionContainer {
 
 	String jndiName = semaphore.getJndiName();
 	if (ObjectUtils.notNull(jndiName) && semaphore.isBound()) {
-	    JndiManager namingUtils = new JndiManager();
+	    JndiManager jndiManager = new JndiManager();
 	    try {
 		String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
-		Object boundData = namingUtils.lookup(fullJndiName);
+		Object boundData = jndiManager.lookup(fullJndiName);
 		if (ObjectUtils.notNull(boundData)) {
-		    namingUtils.unbind(fullJndiName);
+		    jndiManager.unbind(fullJndiName);
 		}
 	    } catch (IOException ex) {
 		LOG.error(String.format(
