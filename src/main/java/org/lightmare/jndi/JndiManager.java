@@ -85,6 +85,21 @@ public class JndiManager {
 	return context;
     }
 
+    public <T> T lookup(String name) throws IOException {
+
+	try {
+	    @SuppressWarnings("unchecked")
+	    T value = (T) getContext().lookup(name);
+
+	    return value;
+
+	} catch (NamingException ex) {
+	    throw new IOException(ex);
+	} catch (IOException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
     /**
      * Rebinds passed {@link Object} to {@link Context} by appropriate name
      * 
