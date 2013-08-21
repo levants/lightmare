@@ -65,6 +65,7 @@ public class EJBContainerImpl extends EJBContainer {
 	} catch (IOException ex) {
 	    LOG.error("Could not initialize Context", ex);
 	}
+
 	return context;
     }
 
