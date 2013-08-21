@@ -131,7 +131,6 @@ public class BeanLoader {
 
 	public ConnectionDeployer(DataSourceParameters parameters) {
 
-	    this.initializer = parameters.initializer;
 	    this.properties = parameters.properties;
 	    this.blocker = parameters.blocker;
 	}
