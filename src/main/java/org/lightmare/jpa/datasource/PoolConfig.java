@@ -27,15 +27,6 @@ public class PoolConfig {
     // Data source name property
     public static final String DATA_SOURCE_NAME = "dataSourceName";
 
-    // Connection property keys
-    public static final String CN_DRIVER_KEY = "driver";
-
-    public static final String CN_URL_KEY = "url";
-
-    public static final String CN_USER_KEY = "user";
-
-    public static final String CN_PASSWORD_KEY = "password";
-
     // ===========================================//
     // ====== Data Source properties keys ========//
     // ===========================================//
