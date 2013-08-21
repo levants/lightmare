@@ -42,10 +42,14 @@ public class InitDataSourceC3p0 {
     public static DataSource initilizeDataSource(Properties properties,
 	    PoolConfig poolConfig) throws IOException {
 
-	String driver = properties.getProperty("driver").trim();
-	String url = properties.getProperty("url").trim();
-	String user = properties.getProperty("user").trim();
-	String password = properties.getProperty("password").trim();
+	String driver = properties.getProperty(
+		DataSourceInitializer.DRIVER_PROPERTY).trim();
+	String url = properties.getProperty(DataSourceInitializer.URL_PROPERTY)
+		.trim();
+	String user = properties.getProperty(
+		DataSourceInitializer.USER_PROPERTY).trim();
+	String password = properties.getProperty(
+		DataSourceInitializer.PASSWORD_PROPERTY).trim();
 
 	DataSource dataSource;
 	try {
