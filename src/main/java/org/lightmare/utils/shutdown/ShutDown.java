@@ -27,7 +27,7 @@ public class ShutDown implements Runnable {
 
 	tmpResources.removeTempFiles();
 	try {
-	    MetaCreator.closeAllConnections();
+	    MetaCreator.close();
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
 	}
