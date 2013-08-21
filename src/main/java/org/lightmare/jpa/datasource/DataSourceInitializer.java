@@ -147,13 +147,13 @@ public class DataSourceInitializer {
      */
     public static void close(String jndiName) throws IOException {
 
-	JndiManager utils = new JndiManager();
-	DataSource dataSource = utils.lookup(jndiName);
+	JndiManager jndiManager = new JndiManager();
+	DataSource dataSource = jndiManager.lookup(jndiName);
 	if (ObjectUtils.notNull(dataSource)) {
 	    cleanUp(dataSource);
 	}
 	dataSource = null;
-	utils.unbind(jndiName);
+	jndiManager.unbind(jndiName);
 	INITIALIZED_NAMES.remove(jndiName);
     }
 
