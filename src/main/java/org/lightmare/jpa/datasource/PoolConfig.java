@@ -28,13 +28,13 @@ public class PoolConfig {
     public static final String DATA_SOURCE_NAME = "dataSourceName";
 
     // Connection property keys
-    public static final String DRIVER_KEY = "driver";
+    public static final String CN_DRIVER_KEY = "driver";
 
-    public static final String URL_KEY = "url";
+    public static final String CN_URL_KEY = "url";
 
-    public static final String USER_KEY = "user";
+    public static final String CN_USER_KEY = "user";
 
-    public static final String PASSWORD_KEY = "password";
+    public static final String CN_PASSWORD_KEY = "password";
 
     // ===========================================//
     // ====== Data Source properties keys ========//
