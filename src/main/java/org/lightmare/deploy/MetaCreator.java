@@ -596,7 +596,11 @@ public class MetaCreator {
      */
     public static void close() {
 
-	ConnectionContainer.closeConnections();
+	try {
+	    ConnectionContainer.closeConnections();
+	} catch (IOException ex) {
+	    LOG.error(ex.getMessage(), ex);
+	}
 	MetaContainer.clear();
     }
 
