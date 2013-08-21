@@ -156,7 +156,7 @@ public class DataSourceInitializer {
 		cleanUp(dataSource);
 	    }
 	    dataSource = null;
-	    context.unbind(jndiName);
+	    utils.unbind(jndiName);
 	    INITIALIZED_NAMES.remove(jndiName);
 	} catch (NamingException ex) {
 	    throw new IOException(ex);
