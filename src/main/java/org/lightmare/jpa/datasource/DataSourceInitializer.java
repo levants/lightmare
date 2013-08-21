@@ -42,7 +42,7 @@ public class DataSourceInitializer {
     public static final String JNDI_NAME_PROPERTY = "jndiname";
     public static final String NAME_PROPERTY = "name";
 
-    public DataSourceInitializer() {
+    private DataSourceInitializer() {
     }
 
     private static boolean checkForDataSource(String path) {
@@ -105,7 +105,8 @@ public class DataSourceInitializer {
      * @param jndiName
      * @throws IOException
      */
-    public void registerDataSource(Properties properties) throws IOException {
+    public static void registerDataSource(Properties properties)
+	    throws IOException {
 
 	InitDataSource initDataSource = InitDataSourceFactory.get(properties);
 	initDataSource.registerDataSource();
