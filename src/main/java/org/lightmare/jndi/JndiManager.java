@@ -85,9 +85,15 @@ public class JndiManager {
 	return context;
     }
 
-    public void bind(String name, Object data) {
+    public void bind(String name, Object data) throws IOException {
 
-	getContext().bind(name, data);
+	try {
+	    getContext().bind(name, data);
+	} catch (NamingException ex) {
+	    throw new IOException(ex);
+	} catch (IOException ex) {
+	    throw new IOException(ex);
+	}
     }
 
     /**
