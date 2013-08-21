@@ -154,6 +154,11 @@ public class DataSourceInitializer {
 	}
     }
 
+    /**
+     * Closes and unbinds from context all existing sources
+     * 
+     * @throws IOException
+     */
     public static void closeAll() throws IOException {
 
 	Set<String> dataSources = new HashSet<String>(INITIALIZED_SOURCES);
