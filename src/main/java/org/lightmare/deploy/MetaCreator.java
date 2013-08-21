@@ -602,6 +602,7 @@ public class MetaCreator {
 
 	ConnectionContainer.clear();
 	MetaContainer.clear();
+	RestContainer.clear();
     }
 
     /**
