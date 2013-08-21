@@ -297,6 +297,11 @@ public class ConnectionContainer {
 	return type;
     }
 
+    /**
+     * Closes all connections and data sources and clears all cached data
+     * 
+     * @throws IOException
+     */
     public static void clear() throws IOException {
 
 	closeConnections();
