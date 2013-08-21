@@ -11,6 +11,7 @@ import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
 import org.apache.log4j.Logger;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.InitDataSource;
 import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.PoolConfig;
 
@@ -20,31 +21,16 @@ import org.lightmare.jpa.datasource.PoolConfig;
  * @author levan
  * 
  */
-public class InitDataSourceDbcp {
+public class InitDataSourceDbcp extends InitDataSource {
 
     private static final int DEFAULT_TRANSACTION_ISOLATION = 1;
 
-    public static final Logger LOG = Logger
-	    .getLogger(DataSourceInitializer.class);
+    public InitDataSourceDbcp(Properties properties, PoolConfig poolConfig) {
+	super(properties, poolConfig);
+    }
 
-    /**
-     * Initializes appropriated driver and {@link DataSource} objects
-     * 
-     * @param properties
-     * @return {@link DataSource}
-     * @throws IOException
-     */
-    public static DataSource initilizeDataSource(Properties properties)
-	    throws IOException {
-
-	String driver = properties.getProperty(
-		DataSourceInitializer.DRIVER_PROPERTY).trim();
-	String url = properties.getProperty(DataSourceInitializer.URL_PROPERTY)
-		.trim();
-	String user = properties.getProperty(
-		DataSourceInitializer.USER_PROPERTY).trim();
-	String password = properties.getProperty(
-		DataSourceInitializer.PASSWORD_PROPERTY).trim();
+    @Override
+    public DataSource initializeDataSource() throws IOException {
 
 	String jndiName = DataSourceInitializer.getJndiName(properties);
 
@@ -77,46 +63,17 @@ public class InitDataSourceDbcp {
 	return dataSource;
     }
 
-    /**
-     * Initializes and registers {@link DataSource} object in jndi by
-     * {@link Properties} {@link Context}
-     * 
-     * @param poolingProperties
-     * @param dataSource
-     * @param jndiName
-     * @throws IOException
-     */
-    public static void registerDataSource(Properties properties)
+    @Override
+    protected boolean checkForInstance(DataSource dataSource)
 	    throws IOException {
-	String jndiName = DataSourceInitializer.getJndiName(properties);
-	LOG.info(String.format(InitMessages.INITIALIZING_MESSAGE, jndiName));
-	try {
-	    DataSource dataSource = initilizeDataSource(properties);
-	    if (dataSource instanceof DataSource) {
-		JndiManager namingUtils = new JndiManager();
-		namingUtils.rebind(jndiName, dataSource);
-	    } else {
-		throw new IOException(String.format(
-			InitMessages.NOT_APPR_INSTANCE_ERROR, jndiName));
-	    }
-	    LOG.info(String.format(InitMessages.INITIALIZED_MESSAGE, jndiName));
-	} catch (IOException ex) {
-	    LOG.error(
-		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
-		    ex);
-	} catch (Exception ex) {
-	    LOG.error(
-		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
-		    ex);
-	}
+
+	boolean valid = (dataSource instanceof DataSource);
+
+	return valid;
     }
 
-    /**
-     * Closes passed {@link javax.sql.DataSource} for shut down
-     * 
-     * @param dataSource
-     */
-    public static void cleanUp(javax.sql.DataSource dataSource) {
+    @Override
+    public void cleanUp(javax.sql.DataSource dataSource) {
 
 	if (dataSource instanceof DataSource) {
 	    try {

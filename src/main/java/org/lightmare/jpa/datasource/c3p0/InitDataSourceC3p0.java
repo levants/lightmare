@@ -9,9 +9,8 @@ import java.util.Properties;
 import javax.naming.Context;
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
-import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.InitDataSource;
 import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.PoolConfig;
 
@@ -25,10 +24,11 @@ import com.mchange.v2.c3p0.PooledDataSource;
  * @author levan
  * 
  */
-public class InitDataSourceC3p0 {
+public class InitDataSourceC3p0 extends InitDataSource {
 
-    public static final Logger LOG = Logger
-	    .getLogger(DataSourceInitializer.class);
+    public InitDataSourceC3p0(Properties properties, PoolConfig poolConfig) {
+	super(properties, poolConfig);
+    }
 
     /**
      * Initializes appropriated driver and {@link DataSource} objects
@@ -37,17 +37,8 @@ public class InitDataSourceC3p0 {
      * @return {@link DataSource}
      * @throws IOException
      */
-    public static DataSource initilizeDataSource(Properties properties,
-	    PoolConfig poolConfig) throws IOException {
-
-	String driver = properties.getProperty(
-		DataSourceInitializer.DRIVER_PROPERTY).trim();
-	String url = properties.getProperty(DataSourceInitializer.URL_PROPERTY)
-		.trim();
-	String user = properties.getProperty(
-		DataSourceInitializer.USER_PROPERTY).trim();
-	String password = properties.getProperty(
-		DataSourceInitializer.PASSWORD_PROPERTY).trim();
+    @Override
+    public DataSource initializeDataSource() throws IOException {
 
 	DataSource dataSource;
 	DataSource namedDataSource;
@@ -78,38 +69,13 @@ public class InitDataSourceC3p0 {
 	return namedDataSource;
     }
 
-    /**
-     * Initializes and registers {@link DataSource} object in jndi by
-     * {@link Properties} {@link Context}
-     * 
-     * @param poolingProperties
-     * @param dataSource
-     * @param jndiName
-     * @throws IOException
-     */
-    public static void registerDataSource(Properties properties,
-	    PoolConfig poolConfig) throws IOException {
-	String jndiName = DataSourceInitializer.getJndiName(properties);
-	LOG.info(String.format(InitMessages.INITIALIZING_MESSAGE, jndiName));
-	try {
-	    DataSource dataSource = initilizeDataSource(properties, poolConfig);
-	    if (dataSource instanceof PooledDataSource) {
-		JndiManager namingUtils = new JndiManager();
-		namingUtils.rebind(jndiName, dataSource);
-	    } else {
-		throw new IOException(String.format(
-			InitMessages.NOT_APPR_INSTANCE_ERROR, jndiName));
-	    }
-	    LOG.info(String.format(InitMessages.INITIALIZED_MESSAGE, jndiName));
-	} catch (IOException ex) {
-	    LOG.error(
-		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
-		    ex);
-	} catch (Exception ex) {
-	    LOG.error(
-		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
-		    ex);
-	}
+    @Override
+    protected boolean checkForInstance(DataSource dataSource)
+	    throws IOException {
+
+	boolean valid = (dataSource instanceof PooledDataSource);
+
+	return valid;
     }
 
     /**
@@ -117,7 +83,8 @@ public class InitDataSourceC3p0 {
      * 
      * @param dataSource
      */
-    public static void cleanUp(DataSource dataSource) {
+    @Override
+    public void cleanUp(DataSource dataSource) {
 
 	try {
 	    DataSources.destroy(dataSource);
