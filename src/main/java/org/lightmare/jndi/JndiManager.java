@@ -85,6 +85,14 @@ public class JndiManager {
 	return context;
     }
 
+    /**
+     * Lookups data with passed name in {@link Context} and cast it in generic
+     * type
+     * 
+     * @param name
+     * @return <code>T</code>
+     * @throws IOException
+     */
     public <T> T lookup(String name) throws IOException {
 
 	try {
