@@ -29,6 +29,8 @@ public class PoolConfig {
 
     public static final String USER_KEY = "user";
 
+    public static final String PASSWORD_KEY = "password";
+
     // ===========================================//
     // ====== Data Source properties keys ========//
     // ===========================================//
