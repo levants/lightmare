@@ -1,5 +1,7 @@
 package org.lightmare.utils.shutdown;
 
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.deploy.MetaCreator;
@@ -24,7 +26,11 @@ public class ShutDown implements Runnable {
     public void run() {
 
 	tmpResources.removeTempFiles();
-	MetaCreator.closeAllConnections();
+	try {
+	    MetaCreator.closeAllConnections();
+	} catch (IOException ex) {
+	    LOG.fatal(ex.getMessage(), ex);
+	}
 	LOG.info("Lightmare server is going to shut down");
     }
 
