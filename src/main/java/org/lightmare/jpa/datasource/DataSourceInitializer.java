@@ -123,6 +123,7 @@ public class DataSourceInitializer {
 	    InitDataSourceTomcat.registerDataSource(properties, poolConfig);
 	}
 
+	// Caches jndiName for data source
 	String jndiName = getJndiName(properties);
 	INITIALIZED_NAMES.add(jndiName);
     }
