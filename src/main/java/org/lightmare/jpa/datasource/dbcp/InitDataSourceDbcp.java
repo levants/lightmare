@@ -94,7 +94,7 @@ public class InitDataSourceDbcp {
 	    } else {
 		throw new IOException(
 			String.format(
-				"Could not initialize data source %s (it is not PooledDataSource instance)",
+				"Could not initialize data source %s (it is not appropriated DataSource instance)",
 				jndiName));
 	    }
 	    LOG.info(String.format("Data source %s initialized", jndiName));
