@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
@@ -796,13 +795,5 @@ public class BeanLoader {
 		.doPrivileged(new ContextLoaderAction<Boolean>(cleaner));
 
 	LoaderPoolManager.submit(privileged);
-    }
-
-    /**
-     * Clears existing {@link ExecutorService}s for deployment
-     */
-    public static void clear() {
-
-	LoaderPoolManager.reload();
     }
 }
