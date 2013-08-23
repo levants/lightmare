@@ -21,6 +21,7 @@ public class LoaderPoolManager {
     // Amount of deployment thread pool
     private static final int LOADER_POOL_SIZE = 5;
 
+    // Name prefix of deployment threads
     private static final String LOADER_THREAD_NAME = "Ejb-Loader-Thread-%s";
 
     /**
