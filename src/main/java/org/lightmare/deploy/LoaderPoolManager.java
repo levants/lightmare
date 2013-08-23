@@ -40,6 +40,7 @@ public class LoaderPoolManager {
 	    if (ObjectUtils.notNull(creatorLoader)) {
 		current = creatorLoader;
 	    } else {
+		// Gets default, context class loader for current thread
 		current = LibraryLoader.getContextClassLoader();
 	    }
 	} else {
