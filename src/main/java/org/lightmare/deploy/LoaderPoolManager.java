@@ -117,9 +117,10 @@ public class LoaderPoolManager {
 
 	if (LOADER_POOL == null || LOADER_POOL.isShutdown()
 		|| LOADER_POOL.isTerminated()) {
-
-	    LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE,
-		    new LoaderThreadFactory());
+	    synchronized (LoaderPoolManager.class) {
+		LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE,
+			new LoaderThreadFactory());
+	    }
 	}
 
 	return LOADER_POOL;
