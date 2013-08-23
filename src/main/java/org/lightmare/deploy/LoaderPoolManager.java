@@ -56,7 +56,7 @@ public class LoaderPoolManager {
     private static final class LoaderThreadFactory implements ThreadFactory {
 
 	/**
-	 * Sets thread name
+	 * Constructs and sets thread name
 	 * 
 	 * @param thread
 	 */
