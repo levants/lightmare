@@ -31,6 +31,10 @@ public class PoolConfig {
     // ====== Data Source properties keys ========//
     // ===========================================//
 
+    // Class loader properties
+    public static final String CONTEXT_CLASS_LOADER_SOURCE = "contextClassLoaderSource";
+    public static final String PRIVILEGED_SPAWNED_THREADS = "privilegeSpawnedThreads";
+
     // Pool properties
     public static final String MAX_POOL_SIZE = "maxPoolSize";
     public static final String INITIAL_POOL_SIZE = "initialPoolSize";
