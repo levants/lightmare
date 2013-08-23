@@ -45,6 +45,7 @@ public class LoaderPoolManager {
 		current = LibraryLoader.getContextClassLoader();
 	    }
 	} else {
+	    // Gets default, context class loader for current thread
 	    current = LibraryLoader.getContextClassLoader();
 	}
 
