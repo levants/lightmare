@@ -108,6 +108,11 @@ public class BeanLoader {
 	    return LOADER_POOL;
 	}
 
+	public static void submit(Runnable runnable) {
+
+	    getLoaderPool().submit(runnable);
+	}
+
 	public static void reload() {
 
 	    LOADER_POOL.shutdown();
