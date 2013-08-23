@@ -107,6 +107,12 @@ public class BeanLoader {
 
 	    return LOADER_POOL;
 	}
+	
+	public static reload(){
+	    
+	    LOADER_POOL.shutdown();
+	    getLoaderPool();
+	}
     }
 
     /**
