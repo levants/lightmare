@@ -430,6 +430,12 @@ public class MetaContainer {
 	    synchronized (MetaContainer.class) {
 		if (ObjectUtils.notNull(creator)) {
 		    creator.clear();
+		    ClassLoader classLoader = creator.getCurrent();
+		    try {
+			LibraryLoader.closeClassLoader(classLoader);
+		    } catch (IOException ex) {
+			LOG.error(ex.getMessage(), ex);
+		    }
 		    creator = null;
 		}
 	    }
