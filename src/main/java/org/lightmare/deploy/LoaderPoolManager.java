@@ -55,14 +55,17 @@ public class LoaderPoolManager {
      */
     private static final class LoaderThreadFactory implements ThreadFactory {
 
+	private void nameThread(Thread thread) {
+
+	    String name = String.format(LOADER_THREAD_NAME, thread.getId());
+	    thread.setName(name);
+	}
+
 	@Override
 	public Thread newThread(Runnable runnable) {
 
 	    Thread thread = new Thread(runnable);
-
-	    String name = String.format(LOADER_THREAD_NAME, thread.getId());
-
-	    thread.setName(name);
+	    nameThread(thread);
 	    thread.setPriority(Thread.MAX_PRIORITY);
 
 	    ClassLoader parent = getCurrent();
