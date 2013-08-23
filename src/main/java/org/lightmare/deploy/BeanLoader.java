@@ -113,6 +113,13 @@ public class BeanLoader {
 	    getLoaderPool().submit(runnable);
 	}
 
+	public static <T> Future<T> submit(Callable<T> callable) {
+
+	    Future<T> future = getLoaderPool().submit(callable);
+
+	    return future;
+	}
+
 	public static void reload() {
 
 	    LOADER_POOL.shutdown();
