@@ -843,7 +843,7 @@ public class BeanLoader {
 	String beanName = BeanUtils.parseName(parameters.className);
 	parameters.beanName = beanName;
 	BeanDeployer beanDeployer = new BeanDeployer(parameters);
-	Future<String> future = LOADER_POOL.submit(beanDeployer);
+	Future<String> future = LoaderPoolManager.submit(beanDeployer);
 
 	return future;
     }
@@ -864,7 +864,7 @@ public class BeanLoader {
 		.doPrivileged(new ContextLoaderAction<Boolean>(
 			connectionDeployer));
 
-	LOADER_POOL.submit(privileged);
+	LoaderPoolManager.submit(privileged);
     }
 
     /**
@@ -878,6 +878,6 @@ public class BeanLoader {
 	Callable<Boolean> privileged = AccessController
 		.doPrivileged(new ContextLoaderAction<Boolean>(cleaner));
 
-	LOADER_POOL.submit(privileged);
+	LoaderPoolManager.submit(privileged);
     }
 }
