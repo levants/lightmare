@@ -96,7 +96,7 @@ public class BeanLoader {
 	private static ExecutorService LOADER_POOL = Executors
 		.newFixedThreadPool(LOADER_POOL_SIZE, new LoaderThreadFactory());
 
-	public ExecutorService getLoaderPool() {
+	public static ExecutorService getLoaderPool() {
 
 	    if (LOADER_POOL == null || LOADER_POOL.isShutdown()
 		    || LOADER_POOL.isTerminated()) {
@@ -107,9 +107,9 @@ public class BeanLoader {
 
 	    return LOADER_POOL;
 	}
-	
-	public static reload(){
-	    
+
+	public static void reload() {
+
 	    LOADER_POOL.shutdown();
 	    getLoaderPool();
 	}
