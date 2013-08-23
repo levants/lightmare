@@ -76,13 +76,18 @@ public class LoaderPoolManager {
 	    thread.setContextClassLoader(parent);
 	}
 
+	private void configureThread(Thread thread) {
+
+	    nameThread(thread);
+	    setPriority(thread);
+	    setContextClassLoader(thread);
+	}
+
 	@Override
 	public Thread newThread(Runnable runnable) {
 
 	    Thread thread = new Thread(runnable);
-	    nameThread(thread);
-	    setPriority(thread);
-	    setContextClassLoader(thread);
+	    configureThread(thread);
 
 	    return thread;
 	}
