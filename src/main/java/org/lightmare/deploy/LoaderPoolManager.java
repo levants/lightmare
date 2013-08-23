@@ -66,10 +66,20 @@ public class LoaderPoolManager {
 	    thread.setName(name);
 	}
 
+	/**
+	 * Sets priority of {@link Thread} instance
+	 * 
+	 * @param thread
+	 */
 	private void setPriority(Thread thread) {
 	    thread.setPriority(Thread.MAX_PRIORITY);
 	}
 
+	/**
+	 * Sets {@link ClassLoader} to passed {@link Thread} instance
+	 * 
+	 * @param thread
+	 */
 	private void setContextClassLoader(Thread thread) {
 
 	    ClassLoader parent = getCurrent();
