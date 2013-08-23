@@ -93,22 +93,20 @@ public class BeanLoader {
 	}
 
 	// Thread pool for deploying and removal of beans and temporal resources
-	private static final ExecutorService LOADER_POOL = Executors
-		.newFixedThreadPool(LOADER_POOL_SIZE, new ThreadFactory() {
+	private static ExecutorService LOADER_POOL = Executors
+		.newFixedThreadPool(LOADER_POOL_SIZE, new LoaderThreadFactory());
 
-		    @Override
-		    public Thread newThread(Runnable runnable) {
-			Thread thread = new Thread(runnable);
-			thread.setName(String.format(LOADER_THREAD_NAME,
-				thread.getId()));
-			thread.setPriority(Thread.MAX_PRIORITY);
+	public ExecutorService getLoaderPool() {
 
-			ClassLoader parent = getCurrent();
-			thread.setContextClassLoader(parent);
+	    if (LOADER_POOL == null || LOADER_POOL.isShutdown()
+		    || LOADER_POOL.isTerminated()) {
 
-			return thread;
-		    }
-		});
+		LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE,
+			new LoaderThreadFactory());
+	    }
+
+	    return LOADER_POOL;
+	}
     }
 
     /**
