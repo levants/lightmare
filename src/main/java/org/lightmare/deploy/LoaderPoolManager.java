@@ -10,6 +10,12 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 
+/**
+ * Manager class for application deployment
+ * 
+ * @author levan
+ * 
+ */
 public class LoaderPoolManager {
 
     private static final int LOADER_POOL_SIZE = 5;
