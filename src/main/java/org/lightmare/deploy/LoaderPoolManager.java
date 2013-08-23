@@ -102,6 +102,7 @@ public class LoaderPoolManager {
     public static void reload() {
 
 	LOADER_POOL.shutdown();
+	LOADER_POOL = null;
 	getLoaderPool();
     }
 }
