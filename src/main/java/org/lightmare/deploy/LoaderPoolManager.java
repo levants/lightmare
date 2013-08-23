@@ -22,6 +22,12 @@ public class LoaderPoolManager {
 
     private static final String LOADER_THREAD_NAME = "Ejb-Loader-Thread-%s";
 
+    /**
+     * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
+     * instance
+     * 
+     * @return {@link ClassLoader}
+     */
     protected static ClassLoader getCurrent() {
 
 	ClassLoader current;
