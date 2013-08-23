@@ -65,15 +65,15 @@ public abstract class InitDataSource {
 	    throws IOException;
 
     /**
-     * Initializes and registers {@link DataSource} object in jndi by
-     * {@link Properties} {@link Context}
+     * Initializes and registers {@link DataSource} object in JNDI
+     * {@link javax.naming.Context}
      * 
      * @param poolingProperties
      * @param dataSource
      * @param jndiName
      * @throws IOException
      */
-    public void registerDataSource() throws IOException {
+    public void create() throws IOException {
 	String jndiName = DataSourceInitializer.getJndiName(properties);
 	LOG.info(String.format(InitMessages.INITIALIZING_MESSAGE, jndiName));
 	try {

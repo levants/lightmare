@@ -109,7 +109,7 @@ public class DataSourceInitializer {
 	    throws IOException {
 
 	InitDataSource initDataSource = InitDataSourceFactory.get(properties);
-	initDataSource.registerDataSource();
+	initDataSource.create();
 
 	// Caches jndiName for data source
 	String jndiName = getJndiName(properties);
