@@ -56,7 +56,7 @@ public abstract class InitDataSource {
     protected abstract DataSource initializeDataSource() throws IOException;
 
     /**
-     * Checks if passed {@link DataSource} is appropriated
+     * Checks if passed {@link DataSource} is instance of appropriated
      * 
      * @param dataSource
      * @throws IOException
