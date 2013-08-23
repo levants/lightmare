@@ -113,13 +113,20 @@ public class LoaderPoolManager {
     private static ExecutorService LOADER_POOL = Executors.newFixedThreadPool(
 	    LOADER_POOL_SIZE, new LoaderThreadFactory());
 
+    private static boolean invalid() {
+
+	return LOADER_POOL == null || LOADER_POOL.isShutdown()
+		|| LOADER_POOL.isTerminated();
+    }
+
     protected static ExecutorService getLoaderPool() {
 
-	if (LOADER_POOL == null || LOADER_POOL.isShutdown()
-		|| LOADER_POOL.isTerminated()) {
+	if (invalid()) {
 	    synchronized (LoaderPoolManager.class) {
-		LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE,
-			new LoaderThreadFactory());
+		if (invalid()) {
+		    LOADER_POOL = Executors.newFixedThreadPool(
+			    LOADER_POOL_SIZE, new LoaderThreadFactory());
+		}
 	    }
 	}
 
