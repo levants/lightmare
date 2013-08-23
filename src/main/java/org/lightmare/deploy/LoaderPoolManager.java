@@ -150,8 +150,10 @@ public class LoaderPoolManager {
      */
     public static void reload() {
 
-	LOADER_POOL.shutdown();
-	LOADER_POOL = null;
+	synchronized (LoaderPoolManager.class) {
+	    LOADER_POOL.shutdown();
+	    LOADER_POOL = null;
+	}
 	getLoaderPool();
     }
 }
