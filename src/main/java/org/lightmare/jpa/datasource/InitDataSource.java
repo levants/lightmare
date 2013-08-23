@@ -99,7 +99,7 @@ public abstract class InitDataSource {
     }
 
     /**
-     * Destroys passed {@link DataSource} for shut down
+     * Destroys passed {@link DataSource} instance
      * 
      * @param dataSource
      */
