@@ -62,7 +62,7 @@ public class InitDataSourceDbcp extends InitDataSource {
     }
 
     @Override
-    protected boolean checkForInstance(DataSource dataSource)
+    protected boolean checkInstance(DataSource dataSource)
 	    throws IOException {
 
 	boolean valid = (dataSource instanceof DataSource);

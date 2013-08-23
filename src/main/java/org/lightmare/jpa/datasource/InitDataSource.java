@@ -61,7 +61,7 @@ public abstract class InitDataSource {
      * @param dataSource
      * @throws IOException
      */
-    protected abstract boolean checkForInstance(DataSource dataSource)
+    protected abstract boolean checkInstance(DataSource dataSource)
 	    throws IOException;
 
     /**
@@ -78,7 +78,7 @@ public abstract class InitDataSource {
 	LOG.info(String.format(InitMessages.INITIALIZING_MESSAGE, jndiName));
 	try {
 	    DataSource dataSource = initializeDataSource();
-	    boolean valid = checkForInstance(dataSource);
+	    boolean valid = checkInstance(dataSource);
 	    if (valid) {
 		JndiManager namingUtils = new JndiManager();
 		namingUtils.rebind(jndiName, dataSource);

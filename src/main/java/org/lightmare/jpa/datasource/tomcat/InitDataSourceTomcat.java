@@ -65,7 +65,7 @@ public class InitDataSourceTomcat extends InitDataSource {
     }
 
     @Override
-    protected boolean checkForInstance(javax.sql.DataSource dataSource)
+    protected boolean checkInstance(javax.sql.DataSource dataSource)
 	    throws IOException {
 
 	boolean valid = (dataSource instanceof DataSource);
