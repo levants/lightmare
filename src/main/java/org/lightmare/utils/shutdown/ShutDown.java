@@ -7,6 +7,7 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.RestContainer;
 import org.lightmare.cache.TmpResources;
+import org.lightmare.deploy.LoaderPoolManager;
 
 /**
  * Runnable class for shut down hook
@@ -36,6 +37,7 @@ public class ShutDown implements Runnable {
 	ConnectionContainer.clear();
 	MetaContainer.clear();
 	RestContainer.clear();
+	LoaderPoolManager.reload();
     }
 
     @Override
