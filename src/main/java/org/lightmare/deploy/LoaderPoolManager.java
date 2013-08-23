@@ -33,6 +33,7 @@ public class LoaderPoolManager {
     protected static ClassLoader getCurrent() {
 
 	ClassLoader current;
+
 	MetaCreator creator = MetaContainer.getCreator();
 	ClassLoader creatorLoader;
 	if (ObjectUtils.notNull(creator)) {
