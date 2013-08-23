@@ -18,6 +18,7 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class LoaderPoolManager {
 
+    // Amount of deployment thread pool
     private static final int LOADER_POOL_SIZE = 5;
 
     private static final String LOADER_THREAD_NAME = "Ejb-Loader-Thread-%s";
