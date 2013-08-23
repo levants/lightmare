@@ -119,6 +119,11 @@ public class LoaderPoolManager {
 		|| LOADER_POOL.isTerminated();
     }
 
+    /**
+     * Checks and if not valid reopens deploy {@link ExecutorService} instance
+     * 
+     * @return {@link ExecutorService}
+     */
     protected static ExecutorService getLoaderPool() {
 
 	if (invalid()) {
