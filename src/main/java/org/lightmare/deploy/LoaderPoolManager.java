@@ -86,6 +86,12 @@ public class LoaderPoolManager {
 	    thread.setContextClassLoader(parent);
 	}
 
+	/**
+	 * Configures (sets name, priority and {@link ClassLoader}) passed
+	 * {@link Thread} instance
+	 * 
+	 * @param thread
+	 */
 	private void configureThread(Thread thread) {
 
 	    nameThread(thread);
