@@ -129,6 +129,10 @@ public class PoolConfig {
 	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
 
 	// Add class loader properties
+	c3p0Properties.put(PoolConfig.CONTEXT_CLASS_LOADER_SOURCE,
+		PoolConfig.CONTEXT_CLASS_LOADER_SOURCE_DEF);
+	c3p0Properties.put(PoolConfig.INITIAL_POOL_SIZE,
+		PoolConfig.INITIAL_POOL_SIZE_DEF_VALUE);
 
 	// Added pool properties
 	c3p0Properties.put(PoolConfig.MAX_POOL_SIZE,
