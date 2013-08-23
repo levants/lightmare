@@ -880,4 +880,12 @@ public class BeanLoader {
 
 	LoaderPoolManager.submit(privileged);
     }
+
+    /**
+     * Clears existing {@link ExecutorService}s for deployment
+     */
+    public static void clear() {
+
+	LoaderPoolManager.reload();
+    }
 }
