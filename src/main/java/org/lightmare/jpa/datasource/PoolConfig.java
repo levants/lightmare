@@ -64,6 +64,10 @@ public class PoolConfig {
     // ================ Default Values ===========//
     // ===========================================//
 
+    // Class loader properties
+    public static final String CONTEXT_CLASS_LOADER_SOURCE_DEF = "library";
+    public static final String PRIVILEGED_SPAWNED_THREADS_DEF = "true";
+
     // Pool properties default values
     public static final String MAX_POOL_SIZE_DEF_VALUE = "15";
     public static final String INITIAL_POOL_SIZE_DEF_VALUE = "5";
