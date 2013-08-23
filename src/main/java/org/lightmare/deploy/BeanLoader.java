@@ -15,7 +15,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -62,73 +61,7 @@ import org.lightmare.utils.rest.RestCheck;
  */
 public class BeanLoader {
 
-    private static final int LOADER_POOL_SIZE = 5;
-
-    private static final String LOADER_THREAD_NAME = "Ejb-Loader-Thread-%s";
-
     private static final Logger LOG = Logger.getLogger(BeanLoader.class);
-
-    protected static final class LoaderPoolManager {
-
-	/**
-	 * Implementation of {@link ThreadFactory} interface for application
-	 * loading
-	 * 
-	 * @author levan
-	 * 
-	 */
-	private static final class LoaderThreadFactory implements ThreadFactory {
-
-	    @Override
-	    public Thread newThread(Runnable runnable) {
-		Thread thread = new Thread(runnable);
-		thread.setName(String.format(LOADER_THREAD_NAME, thread.getId()));
-		thread.setPriority(Thread.MAX_PRIORITY);
-
-		ClassLoader parent = getCurrent();
-		thread.setContextClassLoader(parent);
-
-		return thread;
-	    }
-	}
-
-	// Thread pool for deploying and removal of beans and temporal resources
-	private static ExecutorService LOADER_POOL = Executors
-		.newFixedThreadPool(LOADER_POOL_SIZE, new LoaderThreadFactory());
-
-	protected static ExecutorService getLoaderPool() {
-
-	    if (LOADER_POOL == null || LOADER_POOL.isShutdown()
-		    || LOADER_POOL.isTerminated()) {
-
-		LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE,
-			new LoaderThreadFactory());
-	    }
-
-	    return LOADER_POOL;
-	}
-
-	public static void submit(Runnable runnable) {
-
-	    getLoaderPool().submit(runnable);
-	}
-
-	public static <T> Future<T> submit(Callable<T> callable) {
-
-	    Future<T> future = getLoaderPool().submit(callable);
-
-	    return future;
-	}
-
-	/**
-	 * Clears existing {@link ExecutorService}s from loader threads
-	 */
-	public static void reload() {
-
-	    LOADER_POOL.shutdown();
-	    getLoaderPool();
-	}
-    }
 
     /**
      * PrivilegedAction implementation to set
@@ -189,7 +122,7 @@ public class BeanLoader {
 	public Boolean call() throws Exception {
 
 	    boolean result;
-	    ClassLoader loader = getCurrent();
+	    ClassLoader loader = LoaderPoolManager.getCurrent();
 	    try {
 		DataSourceInitializer.registerDataSource(properties);
 		result = Boolean.TRUE;
@@ -241,7 +174,7 @@ public class BeanLoader {
 	public Boolean call() throws Exception {
 
 	    boolean result;
-	    ClassLoader loader = getCurrent();
+	    ClassLoader loader = LoaderPoolManager.getCurrent();
 	    try {
 		clearTmpData();
 		result = Boolean.TRUE;
@@ -696,7 +629,7 @@ public class BeanLoader {
 	private String deployFile() {
 
 	    String deployed = beanName;
-	    ClassLoader currentLoader = getCurrent();
+	    ClassLoader currentLoader = LoaderPoolManager.getCurrent();
 	    try {
 		LibraryLoader.loadCurrentLibraries(loader);
 		deployed = createBeanClass();
@@ -807,25 +740,6 @@ public class BeanLoader {
 	public String poolPath;
 
 	public CountDownLatch blocker;
-    }
-
-    private static ClassLoader getCurrent() {
-
-	ClassLoader current;
-	MetaCreator creator = MetaContainer.getCreator();
-	ClassLoader creatorLoader;
-	if (ObjectUtils.notNull(creator)) {
-	    creatorLoader = creator.getCurrent();
-	    if (ObjectUtils.notNull(creatorLoader)) {
-		current = creatorLoader;
-	    } else {
-		current = LibraryLoader.getContextClassLoader();
-	    }
-	} else {
-	    current = LibraryLoader.getContextClassLoader();
-	}
-
-	return current;
     }
 
     /**
