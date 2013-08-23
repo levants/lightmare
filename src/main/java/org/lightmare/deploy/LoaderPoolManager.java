@@ -70,15 +70,19 @@ public class LoaderPoolManager {
 	    thread.setPriority(Thread.MAX_PRIORITY);
 	}
 
+	private void setContextClassLoader(Thread thread) {
+
+	    ClassLoader parent = getCurrent();
+	    thread.setContextClassLoader(parent);
+	}
+
 	@Override
 	public Thread newThread(Runnable runnable) {
 
 	    Thread thread = new Thread(runnable);
 	    nameThread(thread);
 	    setPriority(thread);
-
-	    ClassLoader parent = getCurrent();
-	    thread.setContextClassLoader(parent);
+	    setContextClassLoader(thread);
 
 	    return thread;
 	}
