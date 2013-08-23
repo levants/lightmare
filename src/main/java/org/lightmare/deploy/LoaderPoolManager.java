@@ -36,6 +36,7 @@ public class LoaderPoolManager {
 	MetaCreator creator = MetaContainer.getCreator();
 	ClassLoader creatorLoader;
 	if (ObjectUtils.notNull(creator)) {
+	    // Gets class loader for this deployment
 	    creatorLoader = creator.getCurrent();
 	    if (ObjectUtils.notNull(creatorLoader)) {
 		current = creatorLoader;
