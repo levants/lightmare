@@ -55,6 +55,11 @@ public class LoaderPoolManager {
      */
     private static final class LoaderThreadFactory implements ThreadFactory {
 
+	/**
+	 * Sets thread name
+	 * 
+	 * @param thread
+	 */
 	private void nameThread(Thread thread) {
 
 	    String name = String.format(LOADER_THREAD_NAME, thread.getId());
