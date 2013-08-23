@@ -120,6 +120,9 @@ public class BeanLoader {
 	    return future;
 	}
 
+	/**
+	 * Clears existing {@link ExecutorService}s from loader threads
+	 */
 	public static void reload() {
 
 	    LOADER_POOL.shutdown();
