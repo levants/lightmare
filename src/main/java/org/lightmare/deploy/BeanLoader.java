@@ -68,23 +68,26 @@ public class BeanLoader {
 
     private static final Logger LOG = Logger.getLogger(BeanLoader.class);
 
-    // Thread pool for deploying and removal of beans and temporal resources
-    private static final ExecutorService LOADER_POOL = Executors
-	    .newFixedThreadPool(LOADER_POOL_SIZE, new ThreadFactory() {
+    protected static final class LoaderPoolManager {
 
-		@Override
-		public Thread newThread(Runnable runnable) {
-		    Thread thread = new Thread(runnable);
-		    thread.setName(String.format(LOADER_THREAD_NAME,
-			    thread.getId()));
-		    thread.setPriority(Thread.MAX_PRIORITY);
+	// Thread pool for deploying and removal of beans and temporal resources
+	private static final ExecutorService LOADER_POOL = Executors
+		.newFixedThreadPool(LOADER_POOL_SIZE, new ThreadFactory() {
 
-		    ClassLoader parent = getCurrent();
-		    thread.setContextClassLoader(parent);
+		    @Override
+		    public Thread newThread(Runnable runnable) {
+			Thread thread = new Thread(runnable);
+			thread.setName(String.format(LOADER_THREAD_NAME,
+				thread.getId()));
+			thread.setPriority(Thread.MAX_PRIORITY);
 
-		    return thread;
-		}
-	    });
+			ClassLoader parent = getCurrent();
+			thread.setContextClassLoader(parent);
+
+			return thread;
+		    }
+		});
+    }
 
     /**
      * PrivilegedAction implementation to set
