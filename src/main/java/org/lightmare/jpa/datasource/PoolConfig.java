@@ -128,6 +128,8 @@ public class PoolConfig {
     public Map<Object, Object> getDefaultPooling() {
 	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
 
+	// Add class loader properties
+
 	// Added pool properties
 	c3p0Properties.put(PoolConfig.MAX_POOL_SIZE,
 		PoolConfig.MAX_POOL_SIZE_DEF_VALUE);
