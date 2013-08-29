@@ -302,6 +302,7 @@ public class JPAManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setProperties(Map<Object, Object> properties) {
+
 	    manager.properties = properties;
 	    return this;
 	}
