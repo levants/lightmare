@@ -276,7 +276,9 @@ public class JPAManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setURL(URL url) {
+
 	    manager.url = url;
+
 	    return this;
 	}
 
