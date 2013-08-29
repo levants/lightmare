@@ -264,6 +264,7 @@ public class JPAManager {
 	 */
 	public Builder setClasses(List<String> classes) {
 	    manager.classes = classes;
+
 	    return this;
 	}
 
