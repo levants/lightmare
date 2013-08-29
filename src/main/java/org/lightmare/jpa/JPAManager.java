@@ -291,6 +291,7 @@ public class JPAManager {
 	public Builder setPath(String path) {
 
 	    manager.path = path;
+
 	    return this;
 	}
 
