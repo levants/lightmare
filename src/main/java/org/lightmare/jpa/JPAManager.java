@@ -316,6 +316,7 @@ public class JPAManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setSwapDataSource(boolean swapDataSource) {
+	    
 	    manager.swapDataSource = swapDataSource;
 	    return this;
 	}
