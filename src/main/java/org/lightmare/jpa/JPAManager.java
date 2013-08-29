@@ -263,6 +263,7 @@ public class JPAManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setClasses(List<String> classes) {
+
 	    manager.classes = classes;
 
 	    return this;
