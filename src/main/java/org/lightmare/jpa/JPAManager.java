@@ -289,6 +289,7 @@ public class JPAManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setPath(String path) {
+
 	    manager.path = path;
 	    return this;
 	}
