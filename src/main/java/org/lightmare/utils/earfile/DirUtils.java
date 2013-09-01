@@ -48,10 +48,10 @@ public class DirUtils extends AbstractIOUtils {
     public InputStream earReader() throws IOException {
 
 	String appXmlPath;
-	if (path.endsWith(File.pathSeparator)) {
+	if (path.endsWith(FILE_SEPARATOR)) {
 	    appXmlPath = StringUtils.concat(path, APPLICATION_XML_PATH);
 	} else {
-	    appXmlPath = StringUtils.concat(path, File.pathSeparator,
+	    appXmlPath = StringUtils.concat(path, File.separator,
 		    APPLICATION_XML_PATH);
 	}
 	File xmlFile = new File(appXmlPath);
@@ -78,7 +78,7 @@ public class DirUtils extends AbstractIOUtils {
 	    for (File libFile : libJars) {
 		URL url = libFile.toURI().toURL();
 		jarPath = StringUtils.concat(url.toString(), ARCHIVE_URL_DELIM,
-			File.pathSeparator);
+			FILE_SEPARATOR);
 		jarURL = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
 		getLibURLs().add(url);
 		getLibURLs().add(jarURL);
