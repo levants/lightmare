@@ -87,6 +87,7 @@ public class FileUtils {
      * @throws IOException
      */
     public static boolean checkOnEarDir(URL url) throws IOException {
+
 	File file;
 	try {
 	    file = new File(url.toURI());
