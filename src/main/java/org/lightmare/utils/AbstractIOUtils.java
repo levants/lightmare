@@ -70,6 +70,8 @@ public abstract class AbstractIOUtils {
 
     public static final String PERSISTENCE_XML = "persistence.xml";
 
+    public static final String EJB_TAG_NAME = "ejb";
+
     public AbstractIOUtils(String path) {
 	this.path = path;
 	realFile = new File(path);
@@ -247,7 +249,7 @@ public abstract class AbstractIOUtils {
     public Set<String> appXmlParser(InputStream xmlStream) throws IOException {
 	try {
 	    Document document = FileParsers.parse(xmlStream);
-	    NodeList nodeList = document.getElementsByTagName("ejb");
+	    NodeList nodeList = document.getElementsByTagName(EJB_TAG_NAME);
 	    Set<String> ejbNames = new HashSet<String>();
 	    String ejbName;
 	    for (int i = 0; i < nodeList.getLength(); i++) {
