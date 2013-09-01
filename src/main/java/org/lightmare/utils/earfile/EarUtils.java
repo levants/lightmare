@@ -72,7 +72,7 @@ public class EarUtils extends AbstractIOUtils {
 	    libEntry = entries.nextElement();
 	    libPath = libEntry.toString();
 	    if ((libPath.startsWith("lib/") && !libPath.endsWith("lib/"))
-		    || libPath.endsWith(".jar")) {
+		    || libPath.endsWith(JAR_FILE_EXT)) {
 		earPath = StringUtils.concat(earURL.toString(),
 			ARCHIVE_URL_DELIM, libPath);
 		URL url = new URL(JAR, StringUtils.EMPTY_STRING, earPath);
