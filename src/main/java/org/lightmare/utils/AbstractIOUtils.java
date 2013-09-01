@@ -356,10 +356,10 @@ public abstract class AbstractIOUtils {
 	List<URL> fullURLs = new ArrayList<URL>();
 	URL[] urls;
 
-	if (ejbURLs != null) {
+	if (ObjectUtils.notNull(ejbURLs)) {
 	    fullURLs.addAll(ejbURLs);
 	}
-	if (libURLs != null) {
+	if (ObjectUtils.notNull(libURLs)) {
 	    fullURLs.addAll(libURLs);
 	}
 
