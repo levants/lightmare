@@ -131,7 +131,7 @@ public class EarUtils extends AbstractIOUtils {
 	boolean check = Boolean.FALSE;
 	while (ObjectUtils.notNull(xmlEntry) && ObjectUtils.notTrue(check)) {
 	    check = xmlEntry.getName().equals(ConfigLoader.XML_PATH);
-	    if (!check) {
+	    if (ObjectUtils.notTrue(check)) {
 		xmlEntry = zipStream.getNextEntry();
 	    }
 	}
