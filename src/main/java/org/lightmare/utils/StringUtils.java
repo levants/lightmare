@@ -1,5 +1,11 @@
 package org.lightmare.utils;
 
+/**
+ * Utility class for {@link String} operations
+ * 
+ * @author Levan
+ * 
+ */
 public class StringUtils {
 
     public static final String EMPTY_STRING = "";
