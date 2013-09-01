@@ -69,6 +69,7 @@ public class FileUtils {
      * @throws IOException
      */
     public static void getSubfiles(File file, Set<URL> urls) throws IOException {
+
 	if (file.isDirectory()) {
 	    File[] subFiles = listJavaFiles(file);
 	    if (ObjectUtils.available(subFiles)) {
