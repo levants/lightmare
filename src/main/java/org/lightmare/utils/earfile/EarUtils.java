@@ -111,13 +111,13 @@ public class EarUtils extends AbstractIOUtils {
 			ARCHIVE_URL_DELIM, ConfigLoader.XML_PATH);
 		url = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
 	    }
-
-	    return url;
 	} finally {
 
 	    ObjectUtils.close(jarStream);
 	    ObjectUtils.close(output);
 	}
+
+	return url;
     }
 
     @Override
