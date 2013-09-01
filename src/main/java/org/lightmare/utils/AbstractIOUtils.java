@@ -279,6 +279,7 @@ public abstract class AbstractIOUtils {
     }
 
     public Set<String> appXmlParser() throws IOException {
+
 	InputStream stream = earReader();
 	Set<String> jarNames = appXmlParser(stream);
 
