@@ -373,6 +373,7 @@ public abstract class AbstractIOUtils {
     }
 
     public URL[] getEjbs() {
+
 	URL[] urls;
 	if (ejbURLs == null) {
 	    urls = null;
