@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Utility for removing {@link File}s recursively from file system
@@ -124,10 +125,10 @@ public class FileUtils {
 	    if (isEarDir) {
 		String path = file.getPath();
 		String delim;
-		if (path.endsWith("/")) {
-		    delim = "";
+		if (path.endsWith(File.pathSeparator)) {
+		    delim = StringUtils.EMPTY_STRING;
 		} else {
-		    delim = "/";
+		    delim = File.pathSeparator;
 		}
 		String appxmlPath = String.format(
 			"%s%sMETA-INF/application.xml", path, delim);
