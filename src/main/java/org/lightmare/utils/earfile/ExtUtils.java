@@ -78,13 +78,10 @@ public class ExtUtils extends DirUtils {
 	}
 	addTmpFile(file);
 	if (ObjectUtils.notTrue(entry.isDirectory())) {
-
 	    if (ObjectUtils.notTrue(file.exists())) {
 		file.createNewFile();
 	    }
-
 	    OutputStream out = new FileOutputStream(file);
-
 	    write(extStream, out);
 	} else {
 	    file.mkdir();
