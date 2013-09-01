@@ -52,5 +52,4 @@ public class SimplUtils extends AbstractIOUtils {
     protected void scanArchive(Object... args) throws IOException {
 	getEjbURLs().add(realFile.toURI().toURL());
     }
-
 }
