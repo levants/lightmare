@@ -139,6 +139,7 @@ public class EarUtils extends AbstractIOUtils {
 
     @Override
     public void extractEjbJars(Set<String> jarNames) throws IOException {
+
 	ZipFile earFile = getEarFile();
 	URL url;
 	ZipEntry jarEntry;
