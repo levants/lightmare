@@ -137,6 +137,7 @@ public abstract class AbstractIOUtils {
     }
 
     public Map<String, URL> getXmlFiles() {
+
 	if (xmlFiles == null) {
 	    xmlFiles = new HashMap<String, URL>();
 	}
