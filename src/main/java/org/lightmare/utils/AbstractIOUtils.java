@@ -329,6 +329,7 @@ public abstract class AbstractIOUtils {
      * @throws MalformedURLException
      */
     public void scanDirectory(File... files) throws MalformedURLException {
+
 	File parentFile;
 	if (ObjectUtils.available(files)) {
 	    parentFile = ObjectUtils.getFirst(files);
