@@ -128,6 +128,7 @@ public abstract class AbstractIOUtils {
     }
 
     public void setXmlFromJar(boolean xmlFromJar) {
+
 	this.xmlFromJar = xmlFromJar;
     }
 
