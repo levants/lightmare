@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
 
@@ -95,13 +96,9 @@ public class ExtUtils extends DirUtils {
 	    }
 
 	} finally {
-	    if (extStream != null) {
-		extStream.close();
-	    }
 
-	    if (out != null) {
-		out.close();
-	    }
+	    ObjectUtils.close(extStream);
+	    ObjectUtils.close(out);
 	}
     }
 
