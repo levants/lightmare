@@ -116,6 +116,7 @@ public class DirUtils extends AbstractIOUtils {
 
     @Override
     public void extractEjbJars(Set<String> jarNames) throws IOException {
+
 	String xmlPath;
 	if (path.endsWith(File.pathSeparator)) {
 	    xmlPath = path;
