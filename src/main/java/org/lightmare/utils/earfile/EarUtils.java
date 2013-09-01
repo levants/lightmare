@@ -15,6 +15,7 @@ import java.util.zip.ZipInputStream;
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
 
 /**
@@ -73,7 +74,7 @@ public class EarUtils extends AbstractIOUtils {
 	    if ((libPath.startsWith("lib/") && !libPath.endsWith("lib/"))
 		    || libPath.endsWith(".jar")) {
 		earPath = String.format("%s!/%s", earURL.toString(), libPath);
-		URL url = new URL("jar", "", earPath);
+		URL url = new URL(JAR, StringUtils.EMPTY_STRING, earPath);
 		getLibURLs().add(url);
 	    }
 	}
