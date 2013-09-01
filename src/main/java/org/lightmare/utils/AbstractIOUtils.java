@@ -289,8 +289,8 @@ public abstract class AbstractIOUtils {
      */
     public void scanDirectory(File... files) throws MalformedURLException {
 	File parentFile;
-	if (files.length >= 1) {
-	    parentFile = files[0];
+	if (ObjectUtils.available(files)) {
+	    parentFile = ObjectUtils.getFirst(files);
 	} else {
 	    parentFile = realFile;
 	}
