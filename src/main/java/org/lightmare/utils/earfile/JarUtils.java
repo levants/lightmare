@@ -11,6 +11,7 @@ import java.util.zip.ZipFile;
 
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
 
@@ -78,8 +79,8 @@ public class JarUtils extends AbstractIOUtils {
 
     @Override
     protected void scanArchive(Object... args) throws IOException {
-	if (args.length > 0) {
-	    xmlFromJar = (Boolean) args[0];
+	if (ObjectUtils.available(args)) {
+	    xmlFromJar = (Boolean) ObjectUtils.getFirst(args);
 	}
 	extractEjbJars(Collections.<String> emptySet());
     }
