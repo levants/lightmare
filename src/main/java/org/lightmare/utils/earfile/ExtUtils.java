@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
 
 /**
@@ -19,7 +20,7 @@ import org.lightmare.utils.fs.FileType;
  * 
  */
 public class ExtUtils extends DirUtils {
-    
+
     public static final FileType type = FileType.EAR;
 
     private File tmpFile;
@@ -35,7 +36,7 @@ public class ExtUtils extends DirUtils {
     public ExtUtils(URL url) throws IOException {
 	super(url);
     }
-    
+
     @Override
     public FileType getType() {
 
@@ -48,7 +49,8 @@ public class ExtUtils extends DirUtils {
      * @throws IOException
      */
     protected void exctractEar() throws IOException {
-	tmpFile = File.createTempFile(realFile.getName(), "");
+	tmpFile = File.createTempFile(realFile.getName(),
+		StringUtils.EMPTY_STRING);
 	tmpFile.delete();
 	tmpFile.mkdir();
 
