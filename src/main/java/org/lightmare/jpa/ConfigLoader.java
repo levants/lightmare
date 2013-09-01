@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
+import org.lightmare.utils.StringUtils;
+
 /**
  * For getting resources from persistence.xml path
  * 
@@ -14,6 +16,8 @@ import java.util.Enumeration;
 public class ConfigLoader {
 
     public static final String XML_PATH = "META-INF/persistence.xml";
+
+    private static final String JAR_URL_DELIM = "!";
 
     private String shortPath;
 
@@ -46,7 +50,7 @@ public class ConfigLoader {
 		return url;
 	    }
 	};
-	shortPath = String.format("!%s", XML_PATH);
+	shortPath = StringUtils.concat(JAR_URL_DELIM, XML_PATH);
 
 	return xmls;
     }
