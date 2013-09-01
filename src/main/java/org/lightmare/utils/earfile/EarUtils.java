@@ -161,6 +161,7 @@ public class EarUtils extends AbstractIOUtils {
     }
 
     public void checkFile() throws IOException {
+
 	if (path.endsWith(EAR_FILE_EXT) && ObjectUtils.notTrue(isDirectory)) {
 	    getEjbLibs();
 	}
@@ -168,6 +169,7 @@ public class EarUtils extends AbstractIOUtils {
 
     @Override
     protected void scanArchive(Object... args) throws IOException {
+
 	if (args.length > 0) {
 	    xmlFromJar = (Boolean) args[0];
 	}
