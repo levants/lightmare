@@ -113,6 +113,7 @@ public abstract class AbstractIOUtils {
      * @param file
      */
     protected void ensureTmpFile(File file) {
+
 	file.deleteOnExit();
     }
 
