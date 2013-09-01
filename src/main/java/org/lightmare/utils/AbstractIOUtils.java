@@ -3,6 +3,7 @@ package org.lightmare.utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -315,6 +316,15 @@ public abstract class AbstractIOUtils {
      * @throws IOException
      */
     public abstract void getEjbLibs() throws IOException;
+
+    protected void write(InputStream in, OutputStream out) throws IOException {
+
+	byte[] buffer = new byte[1024];
+	int len;
+	while ((len = in.read(buffer)) != -1) {
+	    out.write(buffer, 0, len);
+	}
+    }
 
     public abstract void extractEjbJars(Set<String> jarNames)
 	    throws IOException;

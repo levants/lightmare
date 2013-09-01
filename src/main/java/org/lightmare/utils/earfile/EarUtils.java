@@ -101,11 +101,7 @@ public class EarUtils extends AbstractIOUtils {
 			UUID.randomUUID().toString(), JAR_FILE_EXT);
 		tmpFile.deleteOnExit();
 		output = new FileOutputStream(tmpFile);
-		byte[] buffer = new byte[1024];
-		int len;
-		while ((len = jarStream.read(buffer)) != -1) {
-		    output.write(buffer, 0, len);
-		}
+		write(jarStream, output);
 		URL jarURL = tmpFile.toURI().toURL();
 		String jarPath = StringUtils.concat(jarURL.toString(),
 			ARCHIVE_URL_DELIM, FILE_SEPARATOR,
