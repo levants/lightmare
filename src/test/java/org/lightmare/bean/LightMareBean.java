@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 import org.lightmare.entities.Person;
+import org.lightmare.utils.StringUtils;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -35,10 +36,8 @@ public class LightMareBean implements LightMareBeanRemote {
 		.createQuery(
 			"select c from Person as c where c.lastName like :lastName and c.firstName like :firstName\t\n",
 			Person.class)
-		.setParameter("lastName",
-			new StringBuilder(lastName).append("%").toString())
-		.setParameter("firstName",
-			new StringBuilder(firstName).append("%").toString())
+		.setParameter("lastName", StringUtils.concat(lastName, "%"))
+		.setParameter("firstName", StringUtils.concat(firstName, "%"))
 		.getResultList();
     }
 
