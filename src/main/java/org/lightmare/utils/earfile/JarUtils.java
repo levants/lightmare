@@ -71,6 +71,7 @@ public class JarUtils extends AbstractIOUtils {
 
     @Override
     public boolean checkOnOrm(String jarName) throws IOException {
+
 	ZipFile zipFile = getEarFile();
 	ZipEntry xmlEntry = zipFile.getEntry(ConfigLoader.XML_PATH);
 
