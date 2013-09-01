@@ -162,6 +162,7 @@ public abstract class AbstractIOUtils {
     }
 
     public ZipFile getEarFile() throws IOException {
+
 	if (earFile == null) {
 	    earFile = new ZipFile(path);
 	}
