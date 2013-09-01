@@ -94,24 +94,16 @@ public class EarUtils extends AbstractIOUtils {
 
 	URL url = null;
 	InputStream jarStream = getEarFile().getInputStream(entry);
-	FileOutputStream output = null;
-	try {
-	    if (ObjectUtils.notNull(jarStream)) {
-		File tmpFile = File.createTempFile(
-			UUID.randomUUID().toString(), JAR_FILE_EXT);
-		tmpFile.deleteOnExit();
-		output = new FileOutputStream(tmpFile);
-		write(jarStream, output);
-		URL jarURL = tmpFile.toURI().toURL();
-		String jarPath = StringUtils.concat(jarURL.toString(),
-			ARCHIVE_URL_DELIM, FILE_SEPARATOR,
-			ConfigLoader.XML_PATH);
-		url = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
-	    }
-	} finally {
-
-	    ObjectUtils.close(jarStream);
-	    ObjectUtils.close(output);
+	if (ObjectUtils.notNull(jarStream)) {
+	    File tmpFile = File.createTempFile(UUID.randomUUID().toString(),
+		    JAR_FILE_EXT);
+	    tmpFile.deleteOnExit();
+	    FileOutputStream output = new FileOutputStream(tmpFile);
+	    write(jarStream, output);
+	    URL jarURL = tmpFile.toURI().toURL();
+	    String jarPath = StringUtils.concat(jarURL.toString(),
+		    ARCHIVE_URL_DELIM, FILE_SEPARATOR, ConfigLoader.XML_PATH);
+	    url = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
 	}
 
 	return url;
