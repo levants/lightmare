@@ -103,6 +103,7 @@ public class DirUtils extends AbstractIOUtils {
     }
 
     private JarFile extracted(String jarName) throws IOException {
+
 	return new JarFile(jarName);
     }
 
@@ -111,7 +112,7 @@ public class DirUtils extends AbstractIOUtils {
 
 	JarEntry xmlEntry = extracted(jarName).getJarEntry(
 		ConfigLoader.XML_PATH);
-	
+
 	return (xmlEntry != null);
     }
 
