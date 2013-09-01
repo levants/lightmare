@@ -157,7 +157,7 @@ public class FileUtils {
 
 	if (file.isDirectory()) {
 	    File[] subFiles = file.listFiles();
-	    if (subFiles != null) {
+	    if (ObjectUtils.available(subFiles)) {
 		for (File subFile : subFiles) {
 		    deleteFile(subFile);
 		}
