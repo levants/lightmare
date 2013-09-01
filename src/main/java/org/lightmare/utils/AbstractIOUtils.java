@@ -273,7 +273,7 @@ public abstract class AbstractIOUtils {
 
 	    return ejbNames;
 	} finally {
-	    xmlStream.close();
+	    ObjectUtils.close(xmlStream);
 	}
     }
 
