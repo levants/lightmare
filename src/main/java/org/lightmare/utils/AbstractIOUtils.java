@@ -218,6 +218,7 @@ public abstract class AbstractIOUtils {
 
     public static AbstractIOUtils getAppropriatedType(URL url)
 	    throws IOException {
+
 	AbstractIOUtils ioUtils = getAppropriatedType(url, null);
 
 	return ioUtils;
