@@ -62,9 +62,9 @@ public abstract class AbstractIOUtils {
 
     public static final String JAR_FILE_EXT = ".jar";
 
-    public static final String EAR = "jar";
+    public static final String EAR = "ear";
 
-    public static final String EAR_FILE_EXT = ".jar";
+    public static final String EAR_FILE_EXT = ".ear";
 
     public static final String CLASS_FILE_EXT = ".class";
 
