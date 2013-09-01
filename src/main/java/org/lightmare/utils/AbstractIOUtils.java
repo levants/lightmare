@@ -282,10 +282,11 @@ public abstract class AbstractIOUtils {
 
     public Set<String> appXmlParser(InputStream xmlStream) throws IOException {
 
+	Set<String> ejbNames = new HashSet<String>();
+
 	try {
 	    Document document = FileParsers.parse(xmlStream);
 	    NodeList nodeList = document.getElementsByTagName(EJB_TAG_NAME);
-	    Set<String> ejbNames = new HashSet<String>();
 	    String ejbName;
 	    for (int i = 0; i < nodeList.getLength(); i++) {
 		Element ejbElement = (Element) nodeList.item(i);
@@ -294,11 +295,11 @@ public abstract class AbstractIOUtils {
 		    ejbNames.add(ejbName);
 		}
 	    }
-
-	    return ejbNames;
 	} finally {
 	    ObjectUtils.close(xmlStream);
 	}
+
+	return ejbNames;
     }
 
     public Set<String> appXmlParser() throws IOException {
