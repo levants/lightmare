@@ -140,11 +140,11 @@ public class DirUtils extends AbstractIOUtils {
 		getXmlURLs().put(currentURL, jarURL);
 	    }
 	}
-
     }
 
     @Override
     protected void scanArchive(Object... args) throws IOException {
+
 	if (ObjectUtils.available(args)) {
 	    xmlFromJar = (Boolean) ObjectUtils.getFirst(args);
 	}
