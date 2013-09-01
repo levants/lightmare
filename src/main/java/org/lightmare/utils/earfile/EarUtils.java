@@ -14,6 +14,7 @@ import java.util.zip.ZipInputStream;
 
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.FileType;
 
 /**
@@ -160,7 +161,7 @@ public class EarUtils extends AbstractIOUtils {
     }
 
     public void checkFile() throws IOException {
-	if (path.endsWith(".ear") && !isDirectory) {
+	if (path.endsWith(EAR_FILE_EXT) && ObjectUtils.notTrue(isDirectory)) {
 	    getEjbLibs();
 	}
     }
