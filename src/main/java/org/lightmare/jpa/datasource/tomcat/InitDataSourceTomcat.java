@@ -10,6 +10,7 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.lightmare.jpa.datasource.InitDataSource;
 import org.lightmare.jpa.datasource.PoolConfig;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Initializes and bind to {@link Context} tomcat pooled {@link DataSource}
@@ -56,7 +57,7 @@ public class InitDataSourceTomcat extends InitDataSource {
 	poolProperties.setMinIdle(10);
 	poolProperties.setLogAbandoned(Boolean.TRUE);
 	poolProperties.setRemoveAbandoned(Boolean.TRUE);
-	poolProperties.setJdbcInterceptors(String.format("%s%s",
+	poolProperties.setJdbcInterceptors(StringUtils.concat(
 		JDBC_INTERCEPTOR_KEY, JDBC_INTERCEPTOR_VALUE));
 	dataSource = new DataSource();
 	dataSource.setPoolProperties(poolProperties);
