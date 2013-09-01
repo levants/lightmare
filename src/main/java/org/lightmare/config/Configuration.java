@@ -16,6 +16,7 @@ import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -147,6 +148,8 @@ public class Configuration implements Cloneable {
 
     // Instance of pool configuration
     private static final PoolConfig POOL_CONFIG = new PoolConfig();
+
+    private static final String META_INF_PATH = "META-INF/";
 
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
@@ -649,9 +652,8 @@ public class Configuration implements Cloneable {
      */
     public void loadFromResource(String resourceName, ClassLoader loader) {
 
-	InputStream resourceStream = loader
-		.getResourceAsStream(new StringBuilder("META-INF/").append(
-			resourceName).toString());
+	InputStream resourceStream = loader.getResourceAsStream(StringUtils
+		.concat("META-INF/", resourceName));
 	if (resourceStream == null) {
 	    LOG.error("Configuration resource doesn't exist");
 	    return;
