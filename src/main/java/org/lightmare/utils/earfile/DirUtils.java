@@ -12,6 +12,7 @@ import java.util.jar.JarFile;
 
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
 
 /**
@@ -48,7 +49,7 @@ public class DirUtils extends AbstractIOUtils {
 	String xmlPath = "META-INF/application.xml";
 	String appXmlPath;
 	if (path.endsWith("/")) {
-	    appXmlPath = String.format("%s%s", path, xmlPath);
+	    appXmlPath = StringUtils.concat(path, xmlPath);
 	} else {
 	    appXmlPath = String.format("%s/%s", path, xmlPath);
 	}
