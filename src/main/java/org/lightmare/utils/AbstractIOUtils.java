@@ -68,6 +68,8 @@ public abstract class AbstractIOUtils {
 
     public static final String CLASS_FILE_EXT = ".class";
 
+    public static final String LIB = "lib";
+
     public static final String PERSISTENCE_XML = "persistence.xml";
 
     public static final char ARCHIVE_URL_DELIM = '!';

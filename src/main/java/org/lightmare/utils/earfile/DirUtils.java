@@ -94,7 +94,7 @@ public class DirUtils extends AbstractIOUtils {
 	    @Override
 	    public boolean accept(File file) {
 
-		return file.getName().endsWith("lib") && file.isDirectory();
+		return file.getName().endsWith(LIB) && file.isDirectory();
 	    }
 	});
 	if (ObjectUtils.available(files)) {
