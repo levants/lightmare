@@ -46,7 +46,7 @@ public class EarUtils extends AbstractIOUtils {
     public InputStream earReader() throws IOException {
 	InputStream xmlStream;
 	ZipFile zipFile = getEarFile();
-	ZipEntry entry = zipFile.getEntry("META-INF/application.xml");
+	ZipEntry entry = zipFile.getEntry(APPLICATION_XML_PATH);
 	if (entry == null) {
 	    xmlStream = null;
 	} else {
