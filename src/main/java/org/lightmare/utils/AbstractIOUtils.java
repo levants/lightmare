@@ -155,11 +155,11 @@ public abstract class AbstractIOUtils {
     private static FileType getType(File appFile) {
 	FileType fileType;
 	String appPath = appFile.getPath();
-	if (appFile.isDirectory() && appPath.endsWith(".ear")) {
+	if (appFile.isDirectory() && appPath.endsWith(EAR_FILE_EXT)) {
 	    fileType = FileType.EDIR;
-	} else if (appPath.endsWith(".ear")) {
+	} else if (appPath.endsWith(EAR_FILE_EXT)) {
 	    fileType = FileType.EAR;
-	} else if (appPath.endsWith(".jar")) {
+	} else if (appPath.endsWith(JAR_FILE_EXT)) {
 	    fileType = FileType.JAR;
 	} else {
 	    boolean isEarDir = FileUtils.checkOnEarDir(appFile);
@@ -310,7 +310,8 @@ public abstract class AbstractIOUtils {
 	    fileName = subFile.getName();
 	    if (subFile.isDirectory()) {
 		scanDirectory(subFile);
-	    } else if (fileName.endsWith(".jar") || fileName.endsWith(".class")) {
+	    } else if (fileName.endsWith(JAR_FILE_EXT)
+		    || fileName.endsWith(".class")) {
 		fileURL = subFile.toURI().toURL();
 		getEjbURLs().add(fileURL);
 		getLibURLs().add(fileURL);
