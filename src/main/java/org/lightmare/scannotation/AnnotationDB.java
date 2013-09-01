@@ -64,6 +64,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     }
 
     protected void populate(Annotation[] annotations, String className, URL url) {
+
 	if (annotations == null)
 	    return;
 	Set<String> classAnnotations = classIndex.get(className);
