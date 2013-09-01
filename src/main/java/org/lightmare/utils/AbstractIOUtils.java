@@ -170,6 +170,7 @@ public abstract class AbstractIOUtils {
     }
 
     private static FileType getType(File appFile) {
+
 	FileType fileType;
 	String appPath = appFile.getPath();
 	if (appFile.isDirectory() && appPath.endsWith(EAR_FILE_EXT)) {
