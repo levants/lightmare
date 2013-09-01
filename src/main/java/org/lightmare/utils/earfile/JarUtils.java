@@ -61,8 +61,8 @@ public class JarUtils extends AbstractIOUtils {
 
 	boolean checkOnOrm = checkOnOrm(path);
 	if (xmlFromJar && checkOnOrm) {
-	    String xmlPath = String.format("%s!/%s", currentURL.toString(),
-		    ConfigLoader.XML_PATH);
+	    String xmlPath = StringUtils.concat(currentURL.toString(),
+		    ARCHIVE_URL_DELIM, ConfigLoader.XML_PATH);
 	    URL xmlURL = new URL(JAR, StringUtils.EMPTY_STRING, xmlPath);
 	    getXmlFiles().put(realFile.getName(), xmlURL);
 	    getXmlURLs().put(currentURL, xmlURL);
