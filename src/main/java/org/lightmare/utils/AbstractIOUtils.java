@@ -68,6 +68,8 @@ public abstract class AbstractIOUtils {
 
     public static final String CLASS_FILE_EXT = ".class";
 
+    public static final String PERSISTENCE_XML = "persistence.xml";
+
     public AbstractIOUtils(String path) {
 	this.path = path;
 	realFile = new File(path);
@@ -317,7 +319,7 @@ public abstract class AbstractIOUtils {
 		fileURL = subFile.toURI().toURL();
 		getEjbURLs().add(fileURL);
 		getLibURLs().add(fileURL);
-	    } else if (fileName.equals("persistence.xml")) {
+	    } else if (fileName.equals(PERSISTENCE_XML)) {
 		fileURL = subFile.toURI().toURL();
 		getXmlURLs().put(realFile.toURI().toURL(), fileURL);
 	    }
