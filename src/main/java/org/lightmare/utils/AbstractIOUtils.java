@@ -357,6 +357,7 @@ public abstract class AbstractIOUtils {
     protected abstract void scanArchive(Object... args) throws IOException;
 
     public void scan(Object... args) throws IOException {
+
 	scanArchive(args);
 	executed = Boolean.TRUE;
     }
