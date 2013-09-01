@@ -43,6 +43,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
 
     private String getFileName(URL url) {
+
 	String fileName = url.getFile();
 	int lastIndex = fileName.lastIndexOf("/");
 	if (lastIndex > -1) {
