@@ -258,6 +258,7 @@ public abstract class AbstractIOUtils {
     }
 
     public Set<String> appXmlParser(InputStream xmlStream) throws IOException {
+
 	try {
 	    Document document = FileParsers.parse(xmlStream);
 	    NodeList nodeList = document.getElementsByTagName(EJB_TAG_NAME);
