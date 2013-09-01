@@ -121,6 +121,7 @@ public class EarUtils extends AbstractIOUtils {
 
     @Override
     public boolean checkOnOrm(String jarName) throws IOException {
+
 	ZipFile zipFile = getEarFile();
 	ZipEntry jarEntry = zipFile.getEntry(jarName);
 	InputStream stream = zipFile.getInputStream(jarEntry);
