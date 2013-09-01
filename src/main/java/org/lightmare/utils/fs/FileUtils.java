@@ -31,7 +31,8 @@ public class FileUtils {
 
 	    @Override
 	    public boolean accept(File file, String name) {
-		return name.endsWith(".jar") || name.endsWith(".class")
+		return name.endsWith(AbstractIOUtils.JAR_FILE_EXT)
+			|| name.endsWith(AbstractIOUtils.CLASS_FILE_EXT)
 			|| file.isDirectory();
 	    }
 	});
