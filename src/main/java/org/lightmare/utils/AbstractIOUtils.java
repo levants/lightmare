@@ -175,6 +175,18 @@ public abstract class AbstractIOUtils {
 	return earFile;
     }
 
+    protected String appendWithSeparator(String path) {
+
+	String delimitedPath;
+	if (path.endsWith(FILE_SEPARATOR)) {
+	    delimitedPath = path;
+	} else {
+	    delimitedPath = StringUtils.concat(path, FILE_SEPARATOR);
+	}
+
+	return delimitedPath;
+    }
+
     private static FileType getType(File appFile) {
 
 	FileType fileType;
