@@ -22,8 +22,6 @@ public class ObjectUtils {
 
     public static final int FIRST_INDEX = 0;
 
-    public static final String EMPTY_STRING = "";
-
     public static boolean notTrue(boolean statement) {
 
 	return !statement;
