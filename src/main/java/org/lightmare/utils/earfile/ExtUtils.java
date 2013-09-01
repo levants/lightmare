@@ -107,6 +107,7 @@ public class ExtUtils extends DirUtils {
 
     @Override
     protected void scanArchive(Object... args) throws IOException {
+
 	exctractEar();
 	super.realFile = tmpFile;
 	super.path = tmpFile.getPath();
