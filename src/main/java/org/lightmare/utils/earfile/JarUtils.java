@@ -11,6 +11,7 @@ import java.util.zip.ZipFile;
 
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
 
 /**
@@ -34,7 +35,7 @@ public class JarUtils extends AbstractIOUtils {
     public JarUtils(URL url) throws IOException {
 	super(url);
     }
-    
+
     @Override
     public FileType getType() {
 
@@ -61,7 +62,7 @@ public class JarUtils extends AbstractIOUtils {
 	if (xmlFromJar && checkOnOrm) {
 	    String xmlPath = String.format("%s!/%s", currentURL.toString(),
 		    ConfigLoader.XML_PATH);
-	    URL xmlURL = new URL("jar", "", xmlPath);
+	    URL xmlURL = new URL(JAR, StringUtils.EMPTY_STRING, xmlPath);
 	    getXmlFiles().put(realFile.getName(), xmlURL);
 	    getXmlURLs().put(currentURL, xmlURL);
 	}
