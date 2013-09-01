@@ -151,7 +151,7 @@ public class EarUtils extends AbstractIOUtils {
 	boolean checkOnOrm;
 	for (String jarName : jarNames) {
 	    checkOnOrm = checkOnOrm(jarName);
-	    jarPath = String.format("%s!/%s", earPath, jarName);
+	    jarPath = StringUtils.concat(earPath, ARCHIVE_URL_DELIM, jarName);
 	    jarURL = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
 	    getEjbURLs().add(jarURL);
 	    if (xmlFromJar && checkOnOrm) {
