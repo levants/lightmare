@@ -25,9 +25,9 @@ public class DirUtils extends AbstractIOUtils {
 
     public static final FileType type = FileType.EDIR;
 
-    private static final String JAR = "jar";
+    public static final String JAR = "jar";
 
-    private static final String JAR_FILE_EXT = ".jar";
+    public static final String JAR_FILE_EXT = ".jar";
 
     private static final String APPLICATION_XML_PATH = "META-INF/application.xml";
 
@@ -119,7 +119,7 @@ public class DirUtils extends AbstractIOUtils {
     @Override
     public void extractEjbJars(Set<String> jarNames) throws IOException {
 	String xmlPath;
-	if (path.endsWith("/")) {
+	if (path.endsWith(File.pathSeparator)) {
 	    xmlPath = path;
 	} else {
 	    xmlPath = String.format("%s/", path);
