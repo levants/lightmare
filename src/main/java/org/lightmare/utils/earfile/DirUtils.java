@@ -51,7 +51,8 @@ public class DirUtils extends AbstractIOUtils {
 	if (path.endsWith(File.pathSeparator)) {
 	    appXmlPath = StringUtils.concat(path, APPLICATION_XML_PATH);
 	} else {
-	    appXmlPath = StringUtils.concat(path, APPLICATION_XML_PATH);
+	    appXmlPath = StringUtils.concat(path, File.pathSeparator,
+		    APPLICATION_XML_PATH);
 	}
 	File xmlFile = new File(appXmlPath);
 	InputStream stream = new FileInputStream(xmlFile);
