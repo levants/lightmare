@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadFactory;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Manager class for application deployment
@@ -22,7 +23,7 @@ public class LoaderPoolManager {
     private static final int LOADER_POOL_SIZE = 5;
 
     // Name prefix of deployment threads
-    private static final String LOADER_THREAD_NAME = "Ejb-Loader-Thread-%s";
+    private static final String LOADER_THREAD_NAME = "Ejb-Loader-Thread-";
 
     /**
      * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
@@ -68,7 +69,8 @@ public class LoaderPoolManager {
 	 */
 	private void nameThread(Thread thread) {
 
-	    String name = String.format(LOADER_THREAD_NAME, thread.getId());
+	    String name = StringUtils
+		    .concat(LOADER_THREAD_NAME, thread.getId());
 	    thread.setName(name);
 	}
 
