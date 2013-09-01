@@ -74,7 +74,7 @@ public class JarUtils extends AbstractIOUtils {
 	ZipFile zipFile = getEarFile();
 	ZipEntry xmlEntry = zipFile.getEntry(ConfigLoader.XML_PATH);
 
-	return xmlEntry != null;
+	return ObjectUtils.notNull(xmlEntry);
     }
 
     @Override
