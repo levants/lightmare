@@ -70,6 +70,7 @@ public abstract class AbstractIOUtils {
 
     public static final String PERSISTENCE_XML = "persistence.xml";
 
+    // Application descriptor XML file tags
     public static final String EJB_TAG_NAME = "ejb";
 
     public AbstractIOUtils(String path) {
