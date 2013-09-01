@@ -233,6 +233,7 @@ public abstract class AbstractIOUtils {
      */
     public URL getAppropriatedURL(Map<String, String> classOwnersFiles,
 	    String className) {
+
 	String jarName = classOwnersFiles.get(className);
 	URL xmlURL;
 	if (jarName == null || jarName.isEmpty()) {
