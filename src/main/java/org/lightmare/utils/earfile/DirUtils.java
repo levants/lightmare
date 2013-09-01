@@ -52,7 +52,7 @@ public class DirUtils extends AbstractIOUtils {
 
 	String xmlPath = "META-INF/application.xml";
 	String appXmlPath;
-	if (path.endsWith("/")) {
+	if (path.endsWith(File.pathSeparator)) {
 	    appXmlPath = StringUtils.concat(path, xmlPath);
 	} else {
 	    appXmlPath = StringUtils.concat(path, xmlPath);
