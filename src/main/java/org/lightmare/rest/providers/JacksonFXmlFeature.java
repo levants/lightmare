@@ -5,6 +5,8 @@ import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 
+import org.lightmare.utils.StringUtils;
+
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 /**
@@ -24,8 +26,7 @@ public class JacksonFXmlFeature implements Feature {
 
 	String runtimeType = context.getConfiguration().getRuntimeType().name()
 		.toLowerCase();
-	String disableMoxy = new StringBuilder().append(DISABLE_JSON_KEY)
-		.append(runtimeType).toString();
+	String disableMoxy = StringUtils.concat(DISABLE_JSON_KEY, runtimeType);
 	context.property(disableMoxy, Boolean.TRUE);
 	Class<?>[] ios = new Class[] { MessageBodyReader.class,
 		MessageBodyWriter.class };
