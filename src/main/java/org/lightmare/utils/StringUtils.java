@@ -10,6 +10,12 @@ public class StringUtils {
 
     public static final String EMPTY_STRING = "";
 
+    /**
+     * Concatinates passed {@link Object}s in one {@link String} instance
+     * 
+     * @param parts
+     * @return {@link String}
+     */
     public static String concat(Object... parts) {
 
 	String resultText;
