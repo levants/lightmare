@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
@@ -130,8 +131,8 @@ public class FileUtils {
 		} else {
 		    delim = File.pathSeparator;
 		}
-		String appxmlPath = String.format(
-			"%s%sMETA-INF/application.xml", path, delim);
+		String appxmlPath = StringUtils.concat(path, delim,
+			AbstractIOUtils.APPLICATION_XML_PATH);
 		File appXmlFile = new File(appxmlPath);
 		isEarDir = appXmlFile.exists();
 	    }
