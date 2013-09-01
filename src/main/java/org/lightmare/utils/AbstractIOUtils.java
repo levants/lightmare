@@ -78,6 +78,8 @@ public abstract class AbstractIOUtils {
 
     public static final char ARCHIVE_URL_DELIM = '!';
 
+    public static final String FILE_SEPARATOR = File.separator;
+
     // Application descriptor XML file tags
     public static final String EJB_TAG_NAME = "ejb";
 
@@ -256,6 +258,7 @@ public abstract class AbstractIOUtils {
      * @return {@link URL}
      */
     public URL getAppropriatedURL(AnnotationDB annotationDB, String className) {
+
 	Map<String, String> classOwnersFiles = annotationDB
 		.getClassOwnersFiles();
 	URL xmlURL = getAppropriatedURL(classOwnersFiles, className);
