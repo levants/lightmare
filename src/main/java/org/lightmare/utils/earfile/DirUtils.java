@@ -68,7 +68,7 @@ public class DirUtils extends AbstractIOUtils {
 	    public boolean accept(File jarFile) {
 
 		return jarFile.getName().endsWith(JAR_FILE_EXT)
-			&& !jarFile.isDirectory();
+			&& ObjectUtils.notTrue(jarFile.isDirectory());
 	    }
 	});
 
