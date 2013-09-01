@@ -108,7 +108,7 @@ public class EarUtils extends AbstractIOUtils {
 		URL jarURL = tmpFile.toURI().toURL();
 		String jarPath = String.format("%s!/%s", jarURL.toString(),
 			ConfigLoader.XML_PATH);
-		url = new URL("jar", "", jarPath);
+		url = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
 	    }
 
 	    return url;
