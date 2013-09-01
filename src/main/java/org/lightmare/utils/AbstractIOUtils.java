@@ -240,7 +240,7 @@ public abstract class AbstractIOUtils {
 	    for (int i = 0; i < nodeList.getLength(); i++) {
 		Element ejbElement = (Element) nodeList.item(i);
 		ejbName = FileParsers.getContext(ejbElement);
-		if (ejbName != null) {
+		if (ObjectUtils.notNull(ejbName)) {
 		    ejbNames.add(ejbName);
 		}
 	    }
