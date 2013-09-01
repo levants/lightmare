@@ -45,7 +45,7 @@ public class ExtUtils extends DirUtils {
     }
 
     /**
-     * Exctracts ear file into the temporary file
+     * Extracts ear file into the temporary file
      * 
      * @throws IOException
      */
