@@ -87,6 +87,7 @@ public class EarUtils extends AbstractIOUtils {
      * @throws IOException
      */
     public URL extractEjbJar(ZipEntry entry) throws IOException {
+
 	URL url = null;
 	InputStream jarStream = getEarFile().getInputStream(entry);
 	FileOutputStream output = null;
