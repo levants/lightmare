@@ -74,7 +74,7 @@ public class DirUtils extends AbstractIOUtils {
 	});
 	String jarPath;
 	URL jarURL;
-	if (libJars != null) {
+	if (ObjectUtils.available(libJars)) {
 	    for (File libFile : libJars) {
 		URL url = libFile.toURI().toURL();
 		jarPath = StringUtils.concat(url.toString(), ARCHIVE_URL_DELIM,
