@@ -131,10 +131,10 @@ public class FileUtils {
 	    if (isEarDir) {
 		String path = file.getPath();
 		String delim;
-		if (path.endsWith(File.pathSeparator)) {
+		if (path.endsWith(AbstractIOUtils.FILE_SEPARATOR)) {
 		    delim = StringUtils.EMPTY_STRING;
 		} else {
-		    delim = File.pathSeparator;
+		    delim = AbstractIOUtils.FILE_SEPARATOR;
 		}
 		String appxmlPath = StringUtils.concat(path, delim,
 			AbstractIOUtils.APPLICATION_XML_PATH);
