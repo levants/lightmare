@@ -132,7 +132,7 @@ public class DirUtils extends AbstractIOUtils {
 	    if (xmlFromJar && checkOnOrm) {
 		jarPath = String.format("%s!/%s", currentURL.toString(),
 			ConfigLoader.XML_PATH);
-		URL jarURL = new URL("jar", "", jarPath);
+		URL jarURL = new URL("jar", StringUtils.EMPTY_STRING, jarPath);
 		getXmlFiles().put(jarName, jarURL);
 		getXmlURLs().put(currentURL, jarURL);
 	    }
