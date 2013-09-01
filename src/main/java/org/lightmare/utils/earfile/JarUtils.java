@@ -80,6 +80,7 @@ public class JarUtils extends AbstractIOUtils {
 
     @Override
     protected void scanArchive(Object... args) throws IOException {
+
 	if (ObjectUtils.available(args)) {
 	    xmlFromJar = (Boolean) ObjectUtils.getFirst(args);
 	}
