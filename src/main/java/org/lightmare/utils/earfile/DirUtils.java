@@ -29,6 +29,8 @@ public class DirUtils extends AbstractIOUtils {
 
     private static final String JAR_FILE_EXT = ".jar";
 
+    private static final String APPLICATION_XML_PATH = "META-INF/application.xml";
+
     public DirUtils(String path) {
 	super(path);
     }
@@ -50,12 +52,11 @@ public class DirUtils extends AbstractIOUtils {
     @Override
     public InputStream earReader() throws IOException {
 
-	String xmlPath = "META-INF/application.xml";
 	String appXmlPath;
 	if (path.endsWith(File.pathSeparator)) {
-	    appXmlPath = StringUtils.concat(path, xmlPath);
+	    appXmlPath = StringUtils.concat(path, APPLICATION_XML_PATH);
 	} else {
-	    appXmlPath = StringUtils.concat(path, xmlPath);
+	    appXmlPath = StringUtils.concat(path, APPLICATION_XML_PATH);
 	}
 	File xmlFile = new File(appXmlPath);
 	InputStream stream = new FileInputStream(xmlFile);
