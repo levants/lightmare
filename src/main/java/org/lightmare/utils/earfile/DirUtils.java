@@ -125,7 +125,7 @@ public class DirUtils extends AbstractIOUtils {
 	URL currentURL;
 	boolean checkOnOrm;
 	for (String jarName : jarNames) {
-	    fillXmlPath = String.format("%s%s", xmlPath, jarName);
+	    fillXmlPath = StringUtils.concat(xmlPath, jarName);
 	    checkOnOrm = checkOnOrm(fillXmlPath);
 	    currentURL = new File(fillXmlPath).toURI().toURL();
 	    getEjbURLs().add(currentURL);
