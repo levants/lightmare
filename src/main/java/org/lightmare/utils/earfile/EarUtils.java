@@ -97,7 +97,7 @@ public class EarUtils extends AbstractIOUtils {
 	try {
 	    if (jarStream != null) {
 		File tmpFile = File.createTempFile(
-			UUID.randomUUID().toString(), ".jar");
+			UUID.randomUUID().toString(), JAR_FILE_EXT);
 		tmpFile.deleteOnExit();
 		output = new FileOutputStream(tmpFile);
 		byte[] buffer = new byte[1024];
