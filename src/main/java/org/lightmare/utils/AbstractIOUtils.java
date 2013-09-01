@@ -362,6 +362,7 @@ public abstract class AbstractIOUtils {
     }
 
     public URL[] getLibs() {
+
 	URL[] urls;
 	if (libURLs == null) {
 	    urls = null;
