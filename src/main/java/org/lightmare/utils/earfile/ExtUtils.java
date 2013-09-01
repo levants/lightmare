@@ -69,38 +69,25 @@ public class ExtUtils extends DirUtils {
 
     protected void exctractFile(ZipEntry entry) throws IOException {
 
-	InputStream extStream = null;
-	OutputStream out = null;
-	try {
-	    extStream = getEarFile().getInputStream(entry);
-	    File file = new File(tmpFile, entry.getName());
-	    File parrent = file.getParentFile();
-	    if (ObjectUtils.notTrue(parrent.exists())) {
-		parrent.mkdirs();
-		addTmpFile(parrent);
-	    }
-	    addTmpFile(file);
-	    if (ObjectUtils.notTrue(entry.isDirectory())) {
+	InputStream extStream = getEarFile().getInputStream(entry);
+	File file = new File(tmpFile, entry.getName());
+	File parrent = file.getParentFile();
+	if (ObjectUtils.notTrue(parrent.exists())) {
+	    parrent.mkdirs();
+	    addTmpFile(parrent);
+	}
+	addTmpFile(file);
+	if (ObjectUtils.notTrue(entry.isDirectory())) {
 
-		if (ObjectUtils.notTrue(file.exists())) {
-		    file.createNewFile();
-		}
-
-		out = new FileOutputStream(file);
-
-		byte[] buffer = new byte[1024];
-		int len;
-		while ((len = extStream.read(buffer)) != -1) {
-		    out.write(buffer, 0, len);
-		}
-	    } else {
-		file.mkdir();
+	    if (ObjectUtils.notTrue(file.exists())) {
+		file.createNewFile();
 	    }
 
-	} finally {
+	    OutputStream out = new FileOutputStream(file);
 
-	    ObjectUtils.close(extStream);
-	    ObjectUtils.close(out);
+	    write(extStream, out);
+	} else {
+	    file.mkdir();
 	}
     }
 
