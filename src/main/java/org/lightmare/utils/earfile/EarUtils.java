@@ -170,8 +170,8 @@ public class EarUtils extends AbstractIOUtils {
     @Override
     protected void scanArchive(Object... args) throws IOException {
 
-	if (args.length > 0) {
-	    xmlFromJar = (Boolean) args[0];
+	if (ObjectUtils.available(args)) {
+	    xmlFromJar = (Boolean) ObjectUtils.getFirst(args);
 	}
 
 	getEjbLibs();
