@@ -192,6 +192,7 @@ public abstract class AbstractIOUtils {
 
     public static AbstractIOUtils getAppropriatedType(URL url, FileType fileType)
 	    throws IOException {
+
 	AbstractIOUtils ioUtils = null;
 	File appFile;
 	try {
