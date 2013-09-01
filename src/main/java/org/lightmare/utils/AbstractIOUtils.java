@@ -70,6 +70,8 @@ public abstract class AbstractIOUtils {
 
     public static final String LIB = "lib";
 
+    public static final String LIB_WITH_DELIM = "lib/";
+
     public static final String PERSISTENCE_XML = "persistence.xml";
 
     public static final String APPLICATION_XML_PATH = "META-INF/application.xml";
