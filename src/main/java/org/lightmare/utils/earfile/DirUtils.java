@@ -123,10 +123,10 @@ public class DirUtils extends AbstractIOUtils {
     public void extractEjbJars(Set<String> jarNames) throws IOException {
 
 	String xmlPath;
-	if (path.endsWith(File.pathSeparator)) {
+	if (path.endsWith(FILE_SEPARATOR)) {
 	    xmlPath = path;
 	} else {
-	    xmlPath = StringUtils.concat(path, File.pathSeparator);
+	    xmlPath = StringUtils.concat(path, FILE_SEPARATOR);
 	}
 
 	String fillXmlPath;
