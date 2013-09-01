@@ -128,6 +128,7 @@ public abstract class AbstractIOUtils {
     }
 
     public Map<URL, URL> getXmlURLs() {
+
 	if (xmlURLs == null) {
 	    xmlURLs = new HashMap<URL, URL>();
 	}
