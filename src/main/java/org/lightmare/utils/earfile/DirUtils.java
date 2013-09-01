@@ -72,6 +72,7 @@ public class DirUtils extends AbstractIOUtils {
 			&& !jarFile.isDirectory();
 	    }
 	});
+
 	String jarPath;
 	URL jarURL;
 	if (ObjectUtils.available(libJars)) {
