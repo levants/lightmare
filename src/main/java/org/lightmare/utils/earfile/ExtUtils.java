@@ -79,9 +79,9 @@ public class ExtUtils extends DirUtils {
 		addTmpFile(parrent);
 	    }
 	    addTmpFile(file);
-	    if (!entry.isDirectory()) {
+	    if (ObjectUtils.notTrue(entry.isDirectory())) {
 
-		if (!file.exists()) {
+		if (ObjectUtils.notTrue(file.exists())) {
 		    file.createNewFile();
 		}
 
