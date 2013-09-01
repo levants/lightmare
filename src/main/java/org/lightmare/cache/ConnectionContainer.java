@@ -184,11 +184,14 @@ public class ConnectionContainer {
     public static EntityManagerFactory getEntityManagerFactory(String unitName)
 	    throws IOException {
 
-	EntityManagerFactory emf = null;
+	EntityManagerFactory emf;
+
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 	if (ObjectUtils.notNull(semaphore)) {
 	    awaitConnection(semaphore);
 	    emf = semaphore.getEmf();
+	} else {
+	    emf = null;
 	}
 
 	return emf;
