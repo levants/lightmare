@@ -45,6 +45,7 @@ public class EarUtils extends AbstractIOUtils {
 
     @Override
     public InputStream earReader() throws IOException {
+
 	InputStream xmlStream;
 	ZipFile zipFile = getEarFile();
 	ZipEntry entry = zipFile.getEntry(APPLICATION_XML_PATH);
