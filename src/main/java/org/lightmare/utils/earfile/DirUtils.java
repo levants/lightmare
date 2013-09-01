@@ -79,7 +79,7 @@ public class DirUtils extends AbstractIOUtils {
 		URL url = libFile.toURI().toURL();
 		jarPath = StringUtils.concat(url.toString(), ARCHIVE_URL_DELIM,
 			File.pathSeparator);
-		jarURL = new URL(JAR, "", jarPath);
+		jarURL = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
 		getLibURLs().add(url);
 		getLibURLs().add(jarURL);
 	    }
