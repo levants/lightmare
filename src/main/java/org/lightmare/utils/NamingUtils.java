@@ -84,7 +84,7 @@ public class NamingUtils {
     public static String formatJpaJndiName(String jndiName) {
 
 	String name = jndiName.replace(Configuration.JPA_NAME,
-		ObjectUtils.EMPTY_STRING);
+		StringUtils.EMPTY_STRING);
 
 	return name;
     }
@@ -109,7 +109,7 @@ public class NamingUtils {
     public static String formatEjbJndiName(String jndiName) {
 
 	String name = jndiName.replace(Configuration.EJB_NAME,
-		ObjectUtils.EMPTY_STRING);
+		StringUtils.EMPTY_STRING);
 
 	return name;
     }
@@ -126,7 +126,7 @@ public class NamingUtils {
 	if (ObjectUtils.available(jndiName)
 		&& jndiName.startsWith(DS_JNDI_FREFIX)) {
 	    clearName = jndiName.replace(DS_JNDI_FREFIX,
-		    ObjectUtils.EMPTY_STRING);
+		    StringUtils.EMPTY_STRING);
 	} else {
 	    clearName = jndiName;
 	}
