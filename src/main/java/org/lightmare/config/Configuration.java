@@ -653,7 +653,7 @@ public class Configuration implements Cloneable {
     public void loadFromResource(String resourceName, ClassLoader loader) {
 
 	InputStream resourceStream = loader.getResourceAsStream(StringUtils
-		.concat("META-INF/", resourceName));
+		.concat(META_INF_PATH, resourceName));
 	if (resourceStream == null) {
 	    LOG.error("Configuration resource doesn't exist");
 	    return;
