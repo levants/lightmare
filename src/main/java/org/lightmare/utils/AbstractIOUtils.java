@@ -66,6 +66,8 @@ public abstract class AbstractIOUtils {
 
     public static final String EAR_FILE_EXT = ".jar";
 
+    public static final String CLASS_FILE_EXT = ".class";
+
     public AbstractIOUtils(String path) {
 	this.path = path;
 	realFile = new File(path);
@@ -311,7 +313,7 @@ public abstract class AbstractIOUtils {
 	    if (subFile.isDirectory()) {
 		scanDirectory(subFile);
 	    } else if (fileName.endsWith(JAR_FILE_EXT)
-		    || fileName.endsWith(".class")) {
+		    || fileName.endsWith(CLASS_FILE_EXT)) {
 		fileURL = subFile.toURI().toURL();
 		getEjbURLs().add(fileURL);
 		getLibURLs().add(fileURL);
