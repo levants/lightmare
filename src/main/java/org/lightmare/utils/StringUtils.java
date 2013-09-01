@@ -10,6 +10,8 @@ public class StringUtils {
 
     public static final String EMPTY_STRING = "";
 
+    public static final char SPACE = ' ';
+
     /**
      * Concatenates passed {@link Object}s in one {@link String} instance
      * 
