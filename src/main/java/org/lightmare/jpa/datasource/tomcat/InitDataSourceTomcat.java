@@ -25,6 +25,8 @@ public class InitDataSourceTomcat extends InitDataSource {
 
     private static final String JDBC_INTERCEPTOR_VALUE = "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer";
 
+    private static final String TEST_SQL = "SELECT 1";
+
     public InitDataSourceTomcat(Properties properties) {
 	super(properties);
     }
@@ -43,7 +45,7 @@ public class InitDataSourceTomcat extends InitDataSource {
 	poolProperties.setJmxEnabled(Boolean.TRUE);
 	poolProperties.setTestWhileIdle(Boolean.FALSE);
 	poolProperties.setTestOnBorrow(Boolean.TRUE);
-	poolProperties.setValidationQuery("SELECT 1");
+	poolProperties.setValidationQuery(TEST_SQL);
 	poolProperties.setTestOnReturn(Boolean.FALSE);
 	poolProperties.setValidationInterval(30000);
 	poolProperties.setTimeBetweenEvictionRunsMillis(30000);
