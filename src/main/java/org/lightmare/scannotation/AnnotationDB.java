@@ -55,6 +55,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     }
 
     private boolean ignoreScan(String intf) {
+
 	for (String ignored : ignoredPackages) {
 	    if (intf.startsWith(ignored + ".")) {
 		return Boolean.TRUE;
