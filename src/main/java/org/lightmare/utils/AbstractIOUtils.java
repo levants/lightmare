@@ -288,6 +288,7 @@ public abstract class AbstractIOUtils {
     public abstract InputStream earReader() throws IOException;
 
     public void readEntries() throws IOException {
+
 	InputStream xmlStream = earReader();
 	Set<String> jarNames = appXmlParser(xmlStream);
 
