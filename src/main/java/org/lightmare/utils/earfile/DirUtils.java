@@ -95,7 +95,7 @@ public class DirUtils extends AbstractIOUtils {
 		return file.getName().endsWith("lib") && file.isDirectory();
 	    }
 	});
-	if (files != null) {
+	if (ObjectUtils.available(files)) {
 	    for (File libDirectory : files) {
 		fillLibs(libDirectory);
 	    }
