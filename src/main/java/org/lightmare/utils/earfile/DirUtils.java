@@ -115,7 +115,7 @@ public class DirUtils extends AbstractIOUtils {
 	JarEntry xmlEntry = extracted(jarName).getJarEntry(
 		ConfigLoader.XML_PATH);
 
-	return (xmlEntry != null);
+	return ObjectUtils.notNull(xmlEntry);
     }
 
     @Override
