@@ -122,7 +122,7 @@ public class FileUtils {
 	boolean isEarDir = file.isDirectory();
 	if (isEarDir) {
 	    File[] files = file.listFiles();
-	    isEarDir = (files != null && files.length > 0);
+	    isEarDir = ObjectUtils.available(files);
 	    if (isEarDir) {
 		String path = file.getPath();
 		String delim;
