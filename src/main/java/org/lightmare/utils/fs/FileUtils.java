@@ -105,6 +105,7 @@ public class FileUtils {
      * @return boolean
      */
     public static boolean checkOnEarDir(String path) {
+
 	File file = new File(path);
 	boolean isEarDir = checkOnEarDir(file);
 
