@@ -57,6 +57,15 @@ public abstract class AbstractIOUtils {
 
     protected boolean executed;
 
+    // Cached file types and extentions
+    public static final String JAR = "jar";
+
+    public static final String JAR_FILE_EXT = ".jar";
+
+    public static final String EAR = "jar";
+
+    public static final String EAR_FILE_EXT = ".jar";
+
     public AbstractIOUtils(String path) {
 	this.path = path;
 	realFile = new File(path);

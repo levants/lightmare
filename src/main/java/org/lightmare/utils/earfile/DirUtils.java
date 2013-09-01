@@ -25,10 +25,6 @@ public class DirUtils extends AbstractIOUtils {
 
     public static final FileType type = FileType.EDIR;
 
-    public static final String JAR = "jar";
-
-    public static final String JAR_FILE_EXT = ".jar";
-
     private static final String APPLICATION_XML_PATH = "META-INF/application.xml";
 
     public DirUtils(String path) {
