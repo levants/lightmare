@@ -120,7 +120,7 @@ public class DirUtils extends AbstractIOUtils {
 	if (path.endsWith(File.pathSeparator)) {
 	    xmlPath = path;
 	} else {
-	    xmlPath = String.format("%s/", path);
+	    xmlPath = StringUtils.concat(path, File.pathSeparator);
 	}
 
 	String fillXmlPath;
