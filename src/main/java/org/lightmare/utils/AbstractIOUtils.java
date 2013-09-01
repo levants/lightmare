@@ -72,6 +72,8 @@ public abstract class AbstractIOUtils {
 
     public static final String PERSISTENCE_XML = "persistence.xml";
 
+    public static final String APPLICATION_XML_PATH = "META-INF/application.xml";
+
     public static final char ARCHIVE_URL_DELIM = '!';
 
     // Application descriptor XML file tags
