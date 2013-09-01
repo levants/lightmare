@@ -113,13 +113,9 @@ public class EarUtils extends AbstractIOUtils {
 
 	    return url;
 	} finally {
-	    if (jarStream != null) {
-		jarStream.close();
-	    }
 
-	    if (output != null) {
-		output.close();
-	    }
+	    ObjectUtils.close(jarStream);
+	    ObjectUtils.close(output);
 	}
     }
 
