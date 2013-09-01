@@ -25,6 +25,10 @@ public class DirUtils extends AbstractIOUtils {
 
     public static final FileType type = FileType.EDIR;
 
+    private static final String JAR = "jar";
+
+    private static final String JAR_FILE_EXT = ".jar";
+
     public DirUtils(String path) {
 	super(path);
     }
@@ -65,7 +69,7 @@ public class DirUtils extends AbstractIOUtils {
 
 	    @Override
 	    public boolean accept(File jarFile) {
-		return jarFile.getName().endsWith(".jar")
+		return jarFile.getName().endsWith(JAR_FILE_EXT)
 			&& !jarFile.isDirectory();
 	    }
 	});
@@ -75,7 +79,7 @@ public class DirUtils extends AbstractIOUtils {
 	    for (File libFile : libJars) {
 		URL url = libFile.toURI().toURL();
 		jarPath = String.format("%s!/", url.toString());
-		jarURL = new URL("jar", "", jarPath);
+		jarURL = new URL(JAR, "", jarPath);
 		getLibURLs().add(url);
 		getLibURLs().add(jarURL);
 	    }
