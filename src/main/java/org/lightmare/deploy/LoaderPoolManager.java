@@ -80,7 +80,7 @@ public class LoaderPoolManager {
 	 * @param thread
 	 */
 	private void setPriority(Thread thread) {
-	    
+
 	    thread.setPriority(Thread.MAX_PRIORITY);
 	}
 
@@ -165,8 +165,10 @@ public class LoaderPoolManager {
     public static void reload() {
 
 	synchronized (LoaderPoolManager.class) {
-	    LOADER_POOL.shutdown();
-	    LOADER_POOL = null;
+	    if (ObjectUtils.notNull(LOADER_POOL)) {
+		LOADER_POOL.shutdown();
+		LOADER_POOL = null;
+	    }
 	}
 	getLoaderPool();
     }
