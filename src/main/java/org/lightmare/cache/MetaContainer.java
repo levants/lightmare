@@ -177,6 +177,7 @@ public class MetaContainer {
      * @throws IOException
      */
     public static void awaitMetaData(MetaData metaData) throws IOException {
+
 	boolean inProgress = metaData.isInProgress();
 	if (inProgress) {
 	    synchronized (metaData) {
