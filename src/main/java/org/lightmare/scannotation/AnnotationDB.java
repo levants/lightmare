@@ -183,7 +183,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		scanClass(stream, url);
 	    }
 
-	    LOG.info(String.format("Finished URL scanning ", url));
+	    LOG.info(StringUtils.concat("Finished URL scanning ", url));
 	}
 
 	LOG.info("Finished scanning for archives on @Stateless annotation");
