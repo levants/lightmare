@@ -151,15 +151,20 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	LOG.info("Started scanning for archives on @Stateless annotation");
 	for (URL url : urls) {
 	    Filter filter = new Filter() {
+		
 		public boolean accepts(String subFileName) {
+		    
 		    if (subFileName.endsWith(AbstractIOUtils.CLASS_FILE_EXT)) {
 			if (subFileName
-				.startsWith(AbstractIOUtils.FILE_SEPARATOR))
+				.startsWith(AbstractIOUtils.FILE_SEPARATOR)) {
 			    subFileName = subFileName.substring(1);
+			}
 			if (!ignoreScan(subFileName.replace(
-				FILE_SEPARATOR_CHAR, FILE_EXTEWNTION_SELIM)))
+				FILE_SEPARATOR_CHAR, FILE_EXTEWNTION_SELIM))) {
 			    return Boolean.TRUE;
+			}
 		    }
+		    
 		    return Boolean.FALSE;
 		}
 	    };
