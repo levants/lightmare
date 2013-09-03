@@ -277,12 +277,14 @@ public class ConnectionContainer {
 	    EntityManagerFactory emf = semaphore.getEmf();
 	    JPAManager.closeEntityManagerFactory(emf);
 	    unbindConnection(semaphore);
-	    CONNECTIONS.remove(semaphore.getUnitName());
-	    String jndiName = semaphore.getJndiName();
-	    if (ObjectUtils.available(jndiName)) {
-		CONNECTIONS.remove(jndiName);
-		semaphore.setBound(Boolean.FALSE);
-		semaphore.setCached(Boolean.FALSE);
+	    synchronized (CONNECTIONS) {
+		CONNECTIONS.remove(semaphore.getUnitName());
+		String jndiName = semaphore.getJndiName();
+		if (ObjectUtils.available(jndiName)) {
+		    CONNECTIONS.remove(jndiName);
+		    semaphore.setBound(Boolean.FALSE);
+		    semaphore.setCached(Boolean.FALSE);
+		}
 	    }
 	}
     }
