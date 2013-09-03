@@ -132,6 +132,7 @@ public class MetaCreator {
      */
     private boolean checkForUnitName(String className, Configuration cloneConfig)
 	    throws IOException {
+
 	boolean isValid = Boolean.FALSE;
 	Class<?> entityClass;
 	entityClass = MetaUtils.initClassForName(className);
