@@ -247,7 +247,9 @@ public class ConnectionContainer {
 	    JPAManager.closeEntityManagerFactory(emf);
 	}
 
-	CONNECTIONS.clear();
+	synchronized (CONNECTIONS) {
+	    CONNECTIONS.clear();
+	}
     }
 
     /**
