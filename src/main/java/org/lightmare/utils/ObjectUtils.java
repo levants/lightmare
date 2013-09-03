@@ -345,5 +345,10 @@ public class ObjectUtils {
 
     public static void closeAll(Closeable... closeables) throws IOException {
 
+	if (available(closeables)) {
+	    for (Closeable closeable : closeables) {
+		close(closeable);
+	    }
+	}
     }
 }
