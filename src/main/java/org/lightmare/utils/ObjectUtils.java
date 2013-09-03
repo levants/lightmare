@@ -76,6 +76,12 @@ public class ObjectUtils {
 	return valid;
     }
 
+    /**
+     * Checks if passed {@link Collection} instance is not empty
+     * 
+     * @param collection
+     * @return <code>boolean</code>
+     */
     public static boolean notEmpty(Collection<?> collection) {
 
 	return !collection.isEmpty();
