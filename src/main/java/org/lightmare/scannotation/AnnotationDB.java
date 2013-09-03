@@ -146,6 +146,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     @Override
     public void scanArchives(URL... urls) throws IOException {
+	
 	LOG.info("Started scanning for archives on @Stateless annotation");
 	for (URL url : urls) {
 	    Filter filter = new Filter() {
