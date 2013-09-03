@@ -87,6 +87,8 @@ public abstract class AbstractIOUtils {
     // IO bytes size
     public static final int BUFFER_SIZE = 1024;
 
+    public static final int ZERO_OFFSET = 0;
+
     public AbstractIOUtils(String path) {
 	this.path = path;
 	realFile = new File(path);
