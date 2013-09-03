@@ -122,6 +122,12 @@ public class ObjectUtils {
 	return !available(map);
     }
 
+    /**
+     * Checks if passed {@link Collection} instance is null or is empty
+     * 
+     * @param collection
+     * @return <code>boolean</code>
+     */
     public static boolean notAvailable(Collection<?> collection) {
 
 	return !available(collection);
