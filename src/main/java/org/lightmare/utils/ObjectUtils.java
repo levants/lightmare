@@ -343,6 +343,13 @@ public class ObjectUtils {
 	}
     }
 
+    /**
+     * Checks if passed array of {@link Closeable}'s is valid and closes all of
+     * them
+     * 
+     * @param closeables
+     * @throws IOException
+     */
     public static void closeAll(Closeable... closeables) throws IOException {
 
 	if (available(closeables)) {
