@@ -51,6 +51,7 @@ public class DataSourceInitializer {
     }
 
     public static String getJndiName(Properties properties) {
+
 	String jndiName = properties
 		.getProperty(DataSourceInitializer.JNDI_NAME_PROPERTY);
 
