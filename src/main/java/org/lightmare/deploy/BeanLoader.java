@@ -603,6 +603,7 @@ public class BeanLoader {
 	 * @throws IOException
 	 */
 	private String createBeanClass() throws IOException {
+
 	    try {
 		Class<?> beanClass = MetaUtils.classForName(className,
 			Boolean.FALSE, loader);
