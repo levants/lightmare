@@ -111,6 +111,12 @@ public class ObjectUtils {
 	return map != null && !map.isEmpty();
     }
 
+    /**
+     * Checks if passed {@link Map} instance is null or is empty
+     * 
+     * @param map
+     * @return <code>boolean</code>
+     */
     public static boolean notAvailable(Map<?, ?> map) {
 
 	return !available(map);
