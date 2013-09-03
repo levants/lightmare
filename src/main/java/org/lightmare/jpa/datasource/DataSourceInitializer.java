@@ -86,7 +86,7 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Initialized data sources
+     * Initializes data sources
      * 
      * @throws IOException
      */
