@@ -150,6 +150,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 	LOG.info("Started scanning for archives on @Stateless annotation");
 	for (URL url : urls) {
+	    
 	    Filter filter = new Filter() {
 		
 		public boolean accepts(String subFileName) {
