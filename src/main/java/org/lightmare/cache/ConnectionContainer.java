@@ -265,7 +265,7 @@ public class ConnectionContainer {
     private static void closeConnection(ConnectionSemaphore semaphore) {
 
 	int users = semaphore.decrementUser();
-	if (users <= 0) {
+	if (users < ConnectionSemaphore.MINIMAL_USERS) {
 	    EntityManagerFactory emf = semaphore.getEmf();
 	    JPAManager.closeEntityManagerFactory(emf);
 	    unbindConnection(semaphore);
