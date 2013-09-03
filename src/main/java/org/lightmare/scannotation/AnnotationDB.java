@@ -74,25 +74,25 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     protected void populate(Annotation[] annotations, String className, URL url) {
 
-	if (annotations == null)
-	    return;
-	Set<String> classAnnotations = classIndex.get(className);
-	String fileName;
-	for (Annotation ann : annotations) {
-	    Set<String> classes = annotationIndex.get(ann.getTypeName());
-	    if (classes == null) {
-		classes = new HashSet<String>();
-		annotationIndex.put(ann.getTypeName(), classes);
+	if (ObjectUtils.notNull(annotations)) {
+	    Set<String> classAnnotations = classIndex.get(className);
+	    String fileName;
+	    for (Annotation ann : annotations) {
+		Set<String> classes = annotationIndex.get(ann.getTypeName());
+		if (classes == null) {
+		    classes = new HashSet<String>();
+		    annotationIndex.put(ann.getTypeName(), classes);
+		}
+		classes.add(className);
+		if (!classOwnersURLs.containsKey(className)) {
+		    classOwnersURLs.put(className, url);
+		}
+		if (!classOwnersFiles.containsKey(className)) {
+		    fileName = getFileName(url);
+		    classOwnersFiles.put(className, fileName);
+		}
+		classAnnotations.add(ann.getTypeName());
 	    }
-	    classes.add(className);
-	    if (!classOwnersURLs.containsKey(className)) {
-		classOwnersURLs.put(className, url);
-	    }
-	    if (!classOwnersFiles.containsKey(className)) {
-		fileName = getFileName(url);
-		classOwnersFiles.put(className, fileName);
-	    }
-	    classAnnotations.add(ann.getTypeName());
 	}
     }
 
@@ -113,7 +113,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     }
 
     public void scanClass(InputStream bits, URL url) throws IOException {
-	
+
 	DataInputStream dstream = new DataInputStream(new BufferedInputStream(
 		bits));
 	ClassFile cf = null;
@@ -147,7 +147,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     @Override
     public void scanArchives(URL... urls) throws IOException {
-	
+
 	LOG.info("Started scanning for archives on @Stateless annotation");
 	for (URL url : urls) {
 	    Filter filter = new Filter() {
