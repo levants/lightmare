@@ -500,6 +500,7 @@ public class MetaCreator {
      * @throws IOException
      */
     public void scanForBeans(File[] jars) throws IOException {
+
 	List<URL> urlList = new ArrayList<URL>();
 	URL url;
 	for (File file : jars) {
