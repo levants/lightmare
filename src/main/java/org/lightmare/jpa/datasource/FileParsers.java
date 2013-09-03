@@ -64,7 +64,7 @@ public class FileParsers {
 	try {
 	    return parse(stream);
 	} finally {
-	    stream.close();
+	    ObjectUtils.close(stream);
 	}
     }
 

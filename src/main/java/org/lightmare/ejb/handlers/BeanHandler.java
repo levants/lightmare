@@ -107,6 +107,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void setConnection(Field connectionField, EntityManager em)
 	    throws IOException {
+
 	setFieldValue(connectionField, em);
     }
 
