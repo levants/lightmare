@@ -656,7 +656,7 @@ public class Configuration implements Cloneable {
 	}
 	loadFromStream(resourceStream);
 	try {
-	    resourceStream.close();
+	    ObjectUtils.close(resourceStream);
 	} catch (IOException ex) {
 	    LOG.error("Could not load resource", ex);
 	}
