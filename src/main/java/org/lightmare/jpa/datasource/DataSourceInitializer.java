@@ -29,6 +29,7 @@ public class DataSourceInitializer {
     private static final Set<String> INITIALIZED_SOURCES = Collections
 	    .synchronizedSet(new HashSet<String>());
 
+    // Caches already initialized data source JNDI names
     private static final Set<String> INITIALIZED_NAMES = Collections
 	    .synchronizedSet(new HashSet<String>());
 
