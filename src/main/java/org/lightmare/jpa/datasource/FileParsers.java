@@ -62,6 +62,7 @@ public class FileParsers {
 	URLConnection connection = url.openConnection();
 	InputStream stream = connection.getInputStream();
 	try {
+
 	    return parse(stream);
 	} finally {
 	    ObjectUtils.close(stream);
