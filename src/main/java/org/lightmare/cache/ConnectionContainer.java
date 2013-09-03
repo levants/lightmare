@@ -296,6 +296,7 @@ public class ConnectionContainer {
 
     public static void setPollProviderType(String jndiName,
 	    PoolConfig.PoolProviderType type) {
+
 	POOL_CONFIG_TYPES.put(jndiName, type);
     }
 
