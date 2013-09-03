@@ -243,6 +243,7 @@ public class BeanLoader {
 	 */
 	private void lockSemaphore(ConnectionSemaphore semaphore,
 		String unitName, String jndiName) throws IOException {
+
 	    synchronized (semaphore) {
 		if (ObjectUtils.notTrue(semaphore.isCheck())) {
 		    try {
@@ -260,7 +261,7 @@ public class BeanLoader {
 	 * thread
 	 */
 	private void releaseBlocker() {
-	    
+
 	    if (ObjectUtils.notTrue(countedDown)) {
 		blocker.countDown();
 		countedDown = Boolean.TRUE;
@@ -277,7 +278,7 @@ public class BeanLoader {
 	 */
 	private void checkAndSetBean(String beanEjbName)
 		throws BeanInUseException {
-	    
+
 	    try {
 		MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
 	    } catch (BeanInUseException ex) {
@@ -304,7 +305,7 @@ public class BeanLoader {
 	 * @return <code>boolean</code>
 	 */
 	private boolean checkOnEmf(String unitName, String jndiName) {
-	    
+
 	    boolean checkForEmf = ConnectionContainer.checkForEmf(unitName);
 	    if (ObjectUtils.available(jndiName)) {
 		jndiName = NamingUtils.createJpaJndiName(jndiName);
