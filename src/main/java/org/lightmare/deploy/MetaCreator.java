@@ -352,6 +352,7 @@ public class MetaCreator {
      * @throws IOException
      */
     private void deployBean(String beanName) throws IOException {
+
 	URL currentURL = classOwnersURL.get(beanName);
 	ArchiveData archiveData = archivesURLs.get(currentURL);
 	if (archiveData == null) {
