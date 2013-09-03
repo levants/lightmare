@@ -30,9 +30,7 @@ public class Security {
 	try {
 	    cache.load(stream);
 	} finally {
-	    if (ObjectUtils.notNull(stream)) {
-		stream.close();
-	    }
+	    ObjectUtils.close(stream);
 	}
     }
 
