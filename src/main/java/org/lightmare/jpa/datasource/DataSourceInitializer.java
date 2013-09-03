@@ -46,6 +46,7 @@ public class DataSourceInitializer {
     }
 
     private static boolean checkForDataSource(String path) {
+
 	return ObjectUtils.available(path);
     }
 
