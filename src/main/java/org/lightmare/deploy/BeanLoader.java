@@ -276,6 +276,7 @@ public class BeanLoader {
 	 */
 	private void checkAndSetBean(String beanEjbName)
 		throws BeanInUseException {
+	    
 	    try {
 		MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
 	    } catch (BeanInUseException ex) {
