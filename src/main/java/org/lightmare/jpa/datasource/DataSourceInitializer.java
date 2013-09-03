@@ -170,7 +170,7 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Closes and unbinds from {@link Context} all data sources from passed file
+     * Closes and removes from {@link Context} all data sources from passed file
      * path
      * 
      * @param dataSourcePath
