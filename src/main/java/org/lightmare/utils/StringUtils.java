@@ -12,6 +12,8 @@ public class StringUtils {
 
     public static final char SPACE = ' ';
 
+    public static final int NOT_EXISTING_INDEX = -1;
+
     /**
      * Concatenates passed {@link Object}s in one {@link String} instance
      * 
