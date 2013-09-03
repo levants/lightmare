@@ -251,7 +251,7 @@ public class ConnectionContainer {
      * @throws IOException
      */
     public static void closeConnections() throws IOException {
-	
+
 	ConnectionContainer.closeEntityManagerFactories();
 	DataSourceInitializer.closeAll();
     }
@@ -263,6 +263,7 @@ public class ConnectionContainer {
      * @param semaphore
      */
     private static void closeConnection(ConnectionSemaphore semaphore) {
+
 	int users = semaphore.decrementUser();
 	if (users <= 0) {
 	    EntityManagerFactory emf = semaphore.getEmf();
