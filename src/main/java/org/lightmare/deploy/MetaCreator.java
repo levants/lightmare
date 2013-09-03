@@ -42,6 +42,7 @@ import org.lightmare.remote.rpc.RpcListener;
 import org.lightmare.rest.providers.RestProvider;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.FileUtils;
 import org.lightmare.utils.fs.WatchUtils;
@@ -142,13 +143,6 @@ public class MetaCreator {
 	return isValid;
     }
 
-    private List<String> translateToList(Set<String> classSet) {
-
-	List<String> classList = new ArrayList<String>(classSet);
-
-	return classList;
-    }
-
     /**
      * Defines belonginess of {@link javax.persistence.Entity} annotated classes
      * to jar file
@@ -186,7 +180,7 @@ public class MetaCreator {
 
 	List<String> classes;
 	if (configClone.getAnnotatedUnitName() == null) {
-	    classes = translateToList(classSet);
+	    classes = CollectionUtils.translateToList(classSet);
 	} else {
 	    Set<String> filtereds = new HashSet<String>();
 	    for (String className : classSet) {
@@ -194,7 +188,7 @@ public class MetaCreator {
 		    filtereds.add(className);
 		}
 	    }
-	    classes = translateToList(filtereds);
+	    classes = CollectionUtils.translateToList(filtereds);
 	}
 
 	return classes;

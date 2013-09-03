@@ -1,8 +1,10 @@
 package org.lightmare.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,5 +31,17 @@ public class CollectionUtils {
 	}
 
 	return set;
+    }
+
+    public static <T> List<T> translateToList(Collection<T> collection) {
+
+	List<T> list;
+	if (ObjectUtils.available(collection)) {
+	    list = new ArrayList<T>(collection);
+	} else {
+	    list = Collections.emptyList();
+	}
+
+	return list;
     }
 }
