@@ -24,6 +24,12 @@ public class ObjectUtils {
 
     public static final int SECOND_INDEX = 1;
 
+    /**
+     * Checks if passed boolean value is not true
+     * 
+     * @param statement
+     * @return <code>boolean</code>
+     */
     public static boolean notTrue(boolean statement) {
 
 	return !statement;
