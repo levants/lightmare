@@ -42,6 +42,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     // To store which class in which File is found
     protected Map<String, String> classOwnersFiles = new HashMap<String, String>();
 
+    // File separator and extension characters
     private static final char FILE_EXTEWNTION_SELIM = '.';
 
     private static final char FILE_SEPARATOR_CHAR = '/';
