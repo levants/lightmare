@@ -142,13 +142,13 @@ public class ObjectUtils {
 	return avaliable;
     }
 
-    public static boolean availableAll(Object[]... collections) {
+    public static boolean availableAll(Object[]... arrays) {
 
-	boolean avaliable = notNull(collections);
+	boolean avaliable = notNull(arrays);
 	if (avaliable) {
 	    Object[] collection;
-	    for (int i = 0; i < collections.length && avaliable; i++) {
-		collection = collections[i];
+	    for (int i = 0; i < arrays.length && avaliable; i++) {
+		collection = arrays[i];
 		avaliable = avaliable && available(collection);
 	    }
 	}
