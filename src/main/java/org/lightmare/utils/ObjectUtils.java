@@ -342,4 +342,8 @@ public class ObjectUtils {
 	    closeable.close();
 	}
     }
+
+    public static void closeAll(Closeable... closeables) throws IOException {
+
+    }
 }
