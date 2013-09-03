@@ -137,7 +137,8 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Closes and unbinds from context data source with specified jndi name
+     * Closes and unbinds from {@link Context} data source with specified JNDI
+     * name
      * 
      * @param jndiName
      * @throws IOException
