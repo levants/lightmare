@@ -222,6 +222,7 @@ public class BeanLoader {
 	private Configuration configuration;
 
 	public BeanDeployer(BeanParameters parameters) {
+
 	    this.creator = parameters.creator;
 	    this.beanName = parameters.beanName;
 	    this.className = parameters.className;
