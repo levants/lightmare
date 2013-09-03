@@ -214,6 +214,7 @@ public class MetaContainer {
      * @throws IOException
      */
     public static MetaData getSyncMetaData(String beanName) throws IOException {
+
 	MetaData metaData = getMetaData(beanName);
 	if (metaData == null) {
 	    throw new IOException(String.format("Bean %s is not deployed",
