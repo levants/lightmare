@@ -188,7 +188,7 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Clean and destroy data source
+     * Cleans and destroys passed {@link DataSource} instance
      * 
      * @param dataSource
      */
