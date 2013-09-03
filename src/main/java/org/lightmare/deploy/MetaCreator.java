@@ -412,6 +412,7 @@ public class MetaCreator {
      * @param beanNames
      */
     private void deployBeans(Set<String> beanNames) {
+
 	blocker = new CountDownLatch(beanNames.size());
 	for (String beanName : beanNames) {
 	    LOG.info(String.format("deploing bean %s", beanName));
