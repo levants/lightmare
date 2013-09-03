@@ -134,7 +134,7 @@ public class MetaContainer {
      */
     public static void checkAndAddMetaData(String beanName, MetaData metaData)
 	    throws BeanInUseException {
-	
+
 	MetaData tmpMeta = addMetaData(beanName, metaData);
 	if (ObjectUtils.notNull(tmpMeta)) {
 	    throw new BeanInUseException(String.format(
@@ -150,6 +150,7 @@ public class MetaContainer {
      * @return boolean
      */
     public static boolean checkMetaData(String beanName) {
+
 	boolean check;
 	MetaData metaData = EJBS.get(beanName);
 	check = metaData == null;
@@ -412,7 +413,7 @@ public class MetaContainer {
      * @param beanName
      */
     public static void removeMeta(String beanName) {
-	
+
 	EJBS.remove(beanName);
     }
 
@@ -423,7 +424,7 @@ public class MetaContainer {
      * @return {@link java.util.Iterator}<MetaData>
      */
     public static Iterator<MetaData> getBeanClasses() {
-	
+
 	return EJBS.values().iterator();
     }
 
