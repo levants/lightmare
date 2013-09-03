@@ -332,8 +332,7 @@ public abstract class AbstractIOUtils {
 		len = in.read(buffer);
 	    }
 	} finally {
-	    ObjectUtils.close(in);
-	    ObjectUtils.close(out);
+	    ObjectUtils.closeAll(in, out);
 	}
     }
 
