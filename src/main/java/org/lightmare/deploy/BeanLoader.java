@@ -82,6 +82,7 @@ public class BeanLoader {
 
 	@Override
 	public Callable<T> run() {
+
 	    Callable<T> privileged = Executors.privilegedCallable(current);
 
 	    return privileged;
