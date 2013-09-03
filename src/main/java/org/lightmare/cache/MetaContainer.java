@@ -134,6 +134,7 @@ public class MetaContainer {
      */
     public static void checkAndAddMetaData(String beanName, MetaData metaData)
 	    throws BeanInUseException {
+	
 	MetaData tmpMeta = addMetaData(beanName, metaData);
 	if (ObjectUtils.notNull(tmpMeta)) {
 	    throw new BeanInUseException(String.format(
