@@ -155,7 +155,7 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Closes and unbinds from context all existing sources
+     * Closes and unbinds from {@link Context} all existing data sources
      * 
      * @throws IOException
      */
