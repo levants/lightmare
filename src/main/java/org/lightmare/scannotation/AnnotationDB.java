@@ -41,6 +41,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     // To store which class in which File is found
     protected Map<String, String> classOwnersFiles = new HashMap<String, String>();
 
+    private static final char FILE_EXTEWNTION_SELIM = '.';
+
     private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
 
     private String getFileName(URL url) {
@@ -59,7 +61,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 	String value;
 	for (String ignored : ignoredPackages) {
-	    value = StringUtils.concat(ignored, ".");
+	    value = StringUtils.concat(ignored, FILE_EXTEWNTION_SELIM);
 	    if (intf.startsWith(value)) {
 		return Boolean.TRUE;
 	    }
@@ -148,7 +150,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		    if (subFileName.endsWith(".class")) {
 			if (subFileName.startsWith("/"))
 			    subFileName = subFileName.substring(1);
-			if (!ignoreScan(subFileName.replace('/', '.')))
+			if (!ignoreScan(subFileName.replace('/',
+				FILE_EXTEWNTION_SELIM)))
 			    return Boolean.TRUE;
 		    }
 		    return Boolean.FALSE;
