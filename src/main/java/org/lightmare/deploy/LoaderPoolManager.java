@@ -153,6 +153,11 @@ public class LoaderPoolManager {
 	return LOADER_POOL;
     }
 
+    /**
+     * Submit passed {@link Runnable} implementation in loader pool
+     * 
+     * @param runnable
+     */
     public static void submit(Runnable runnable) {
 
 	getLoaderPool().submit(runnable);
