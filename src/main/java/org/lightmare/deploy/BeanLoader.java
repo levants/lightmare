@@ -260,6 +260,7 @@ public class BeanLoader {
 	 * thread
 	 */
 	private void releaseBlocker() {
+	    
 	    if (ObjectUtils.notTrue(countedDown)) {
 		blocker.countDown();
 		countedDown = Boolean.TRUE;
