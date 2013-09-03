@@ -57,6 +57,12 @@ public class ObjectUtils {
 	return (data != null);
     }
 
+    /**
+     * Checks if not a single object passed objects is not null
+     * 
+     * @param datas
+     * @return <code>boolean</code>
+     */
     public static boolean notNullAll(Object... datas) {
 
 	boolean valid = notNull(datas);
