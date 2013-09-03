@@ -155,18 +155,23 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 		public boolean accepts(String subFileName) {
 
+		    boolean valid;
+
 		    if (subFileName.endsWith(AbstractIOUtils.CLASS_FILE_EXT)) {
+
 			if (subFileName
 				.startsWith(AbstractIOUtils.FILE_SEPARATOR)) {
 			    subFileName = subFileName.substring(1);
 			}
-			if (!ignoreScan(subFileName.replace(
-				FILE_SEPARATOR_CHAR, FILE_EXTEWNTION_SELIM))) {
-			    return Boolean.TRUE;
-			}
+
+			valid = !ignoreScan(subFileName.replace(
+				FILE_SEPARATOR_CHAR, FILE_EXTEWNTION_SELIM));
+		    } else {
+
+			valid = Boolean.FALSE;
 		    }
 
-		    return Boolean.FALSE;
+		    return valid;
 		}
 	    };
 	    LOG.info(String.format("Scanning URL %s ", url));
