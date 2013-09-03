@@ -133,6 +133,13 @@ public class ObjectUtils {
 	return !available(collection);
     }
 
+    /**
+     * Checks if there is null or empty {@link Collection} instance is passed
+     * collections
+     * 
+     * @param collections
+     * @return <code>boolean</code>
+     */
     public static boolean notAvailable(Collection<?>... collections) {
 
 	return !available(collections);
