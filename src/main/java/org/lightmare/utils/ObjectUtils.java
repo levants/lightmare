@@ -41,11 +41,11 @@ public class ObjectUtils {
 
     public static boolean notNullAll(Object... datas) {
 
-	boolean valid = datas != null;
+	boolean valid = notNull(datas);
 	if (valid) {
 	    int length = datas.length;
 	    for (int i = 0; i < length && valid; i++) {
-		valid = datas[i] != null;
+		valid = notNull(datas[i]);
 	    }
 	}
 
