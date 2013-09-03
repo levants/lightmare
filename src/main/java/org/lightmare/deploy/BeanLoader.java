@@ -121,6 +121,7 @@ public class BeanLoader {
 	public Boolean call() throws Exception {
 
 	    boolean result;
+
 	    ClassLoader loader = LoaderPoolManager.getCurrent();
 	    try {
 		DataSourceInitializer.registerDataSource(properties);
