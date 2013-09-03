@@ -82,6 +82,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     private void setFieldValue(Field field, Object value) throws IOException {
+
 	MetaUtils.setFieldValue(field, bean, value);
     }
 
