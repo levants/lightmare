@@ -183,7 +183,7 @@ public class MetaCreator {
      */
     private List<String> filterEntities(Set<String> classSet,
 	    Configuration configClone) throws IOException {
-	
+
 	List<String> classes;
 	if (configClone.getAnnotatedUnitName() == null) {
 	    classes = translateToList(classSet);
@@ -337,6 +337,7 @@ public class MetaCreator {
      * Awaits for {@link CountDownLatch} of deployments
      */
     private void awaitDeployments() {
+
 	try {
 	    blocker.await();
 	} catch (InterruptedException ex) {
