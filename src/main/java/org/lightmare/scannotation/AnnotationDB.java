@@ -140,8 +140,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    }
 
 	} finally {
-	    dstream.close();
-	    bits.close();
+	    ObjectUtils.closeAll(dstream, bits);
 	}
     }
 
