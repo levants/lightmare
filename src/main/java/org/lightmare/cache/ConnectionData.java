@@ -7,7 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Container class to cache connection in {@link org.lightmare.cache.MetaData} for trn
+ * Container class to cache connection in {@link org.lightmare.cache.MetaData}
+ * for trn
  * 
  * @author levan
  * 
@@ -71,6 +72,7 @@ public class ConnectionData {
     }
 
     public void setConnection(ConnectionSemaphore connection) {
+
 	this.connection = connection;
 	if (ObjectUtils.notNull(connection)) {
 	    emf = connection.getEmf();
