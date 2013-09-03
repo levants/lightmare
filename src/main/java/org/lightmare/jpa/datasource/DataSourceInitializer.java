@@ -78,7 +78,7 @@ public class DataSourceInitializer {
     public static void initializeDataSource(String path) throws IOException {
 
 	if (checkForDataSource(path)
-		&& !DataSourceInitializer.checkDSPath(path)) {
+		&& ObjectUtils.notTrue(DataSourceInitializer.checkDSPath(path))) {
 	    FileParsers parsers = new FileParsers();
 	    parsers.parseStandaloneXml(path);
 	}
