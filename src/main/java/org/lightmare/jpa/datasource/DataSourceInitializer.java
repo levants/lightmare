@@ -25,7 +25,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class DataSourceInitializer {
 
-    // Caches already initialized data source names
+    // Caches already initialized data source direct names
     private static final Set<String> INITIALIZED_SOURCES = Collections
 	    .synchronizedSet(new HashSet<String>());
 
