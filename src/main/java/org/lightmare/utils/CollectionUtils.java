@@ -42,7 +42,12 @@ public class CollectionUtils {
      */
     public static <T> Set<T> translateToSet(T[] array) {
 
-	List<T> collection = Arrays.asList(array);
+	List<T> collection;
+	if (ObjectUtils.available(array)) {
+	    collection = Arrays.asList(array);
+	} else {
+	    collection = null;
+	}
 
 	return translateToSet(collection);
     }
