@@ -44,6 +44,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     private static final char FILE_EXTEWNTION_SELIM = '.';
 
+    private static final char FILE_SEPARATOR_CHAR = '/';
+
     private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
 
     private String getFileName(URL url) {
@@ -152,8 +154,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 			if (subFileName
 				.startsWith(AbstractIOUtils.FILE_SEPARATOR))
 			    subFileName = subFileName.substring(1);
-			if (!ignoreScan(subFileName.replace('/',
-				FILE_EXTEWNTION_SELIM)))
+			if (!ignoreScan(subFileName.replace(
+				FILE_SEPARATOR_CHAR, FILE_EXTEWNTION_SELIM)))
 			    return Boolean.TRUE;
 		    }
 		    return Boolean.FALSE;
