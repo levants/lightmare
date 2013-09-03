@@ -16,6 +16,7 @@ import javassist.bytecode.annotation.Annotation;
 
 import org.apache.log4j.Logger;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 import org.scannotation.archiveiterator.Filter;
 import org.scannotation.archiveiterator.IteratorFactory;
 import org.scannotation.archiveiterator.StreamIterator;
@@ -56,8 +57,10 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     private boolean ignoreScan(String intf) {
 
+	String value;
 	for (String ignored : ignoredPackages) {
-	    if (intf.startsWith(ignored + ".")) {
+	    value = StringUtils.concat(ignored, ".");
+	    if (intf.startsWith(value)) {
 		return Boolean.TRUE;
 	    }
 	}
