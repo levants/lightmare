@@ -86,7 +86,7 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Initializes data sources
+     * Initializes data sources from passed {@link Configuration} instance
      * 
      * @throws IOException
      */
