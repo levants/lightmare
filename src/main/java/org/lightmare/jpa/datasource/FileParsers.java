@@ -60,6 +60,7 @@ public class FileParsers {
     public static Document document(URL url) throws IOException {
 
 	Document document;
+
 	URLConnection connection = url.openConnection();
 	InputStream stream = connection.getInputStream();
 	try {
