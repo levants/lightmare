@@ -528,7 +528,7 @@ public class Configuration implements Cloneable {
 		    configure((Map<Object, Object>) configuration);
 		}
 	    } finally {
-		stream.close();
+		ObjectUtils.close(stream);
 	    }
 	}
     }
