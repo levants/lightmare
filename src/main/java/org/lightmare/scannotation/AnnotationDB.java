@@ -161,7 +161,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 			if (subFileName
 				.startsWith(AbstractIOUtils.FILE_SEPARATOR)) {
-			    subFileName = subFileName.substring(1);
+			    subFileName = subFileName
+				    .substring(ObjectUtils.SECOND_INDEX);
 			}
 
 			valid = !ignoreScan(subFileName.replace(

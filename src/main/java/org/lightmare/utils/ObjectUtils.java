@@ -22,6 +22,8 @@ public class ObjectUtils {
 
     public static final int FIRST_INDEX = 0;
 
+    public static final int SECOND_INDEX = 1;
+
     public static boolean notTrue(boolean statement) {
 
 	return !statement;
