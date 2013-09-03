@@ -191,8 +191,12 @@ public class ConnectionContainer {
 	EntityManagerFactory emf;
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
-	if (ObjectUtils.notNull(semaphore)) {
-	    awaitConnection(semaphore);
+	boolean inProgress = ObjectUtils.notNull(semaphore);
+	if (inProgress) {
+	    inProgress = checkOnProgress(semaphore);
+	    if (inProgress) {
+		awaitConnection(semaphore);
+	    }
 	    emf = semaphore.getEmf();
 	} else {
 	    emf = null;
