@@ -251,6 +251,7 @@ public class ConnectionContainer {
      * @throws IOException
      */
     public static void closeConnections() throws IOException {
+	
 	ConnectionContainer.closeEntityManagerFactories();
 	DataSourceInitializer.closeAll();
     }
