@@ -328,7 +328,7 @@ public abstract class AbstractIOUtils {
 	    byte[] buffer = new byte[BUFFER_SIZE];
 	    int len;
 	    while ((len = in.read(buffer)) != -1) {
-		out.write(buffer, 0, len);
+		out.write(buffer, ZERO_OFFSET, len);
 	    }
 	} finally {
 	    ObjectUtils.close(in);
