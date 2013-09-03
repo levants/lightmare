@@ -325,7 +325,7 @@ public abstract class AbstractIOUtils {
     protected void write(InputStream in, OutputStream out) throws IOException {
 
 	try {
-	    byte[] buffer = new byte[1024];
+	    byte[] buffer = new byte[BUFFER_SIZE];
 	    int len;
 	    while ((len = in.read(buffer)) != -1) {
 		out.write(buffer, 0, len);
