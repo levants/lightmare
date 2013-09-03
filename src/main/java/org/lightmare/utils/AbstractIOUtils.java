@@ -84,6 +84,9 @@ public abstract class AbstractIOUtils {
     // Application descriptor XML file tags
     public static final String EJB_TAG_NAME = "ejb";
 
+    // IO bytes size
+    public static final int BUFFER_SIZE = 1024;
+
     public AbstractIOUtils(String path) {
 	this.path = path;
 	realFile = new File(path);
