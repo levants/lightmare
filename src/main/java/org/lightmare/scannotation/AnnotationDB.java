@@ -51,7 +51,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     private String getFileName(URL url) {
 
 	String fileName = url.getFile();
-	int lastIndex = fileName.lastIndexOf("/");
+	int lastIndex = fileName.lastIndexOf(AbstractIOUtils.FILE_SEPARATOR);
 	if (lastIndex > -1) {
 	    ++lastIndex;
 	    fileName = fileName.substring(lastIndex);
