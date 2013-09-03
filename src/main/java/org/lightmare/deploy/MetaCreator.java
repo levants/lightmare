@@ -183,6 +183,7 @@ public class MetaCreator {
      */
     private List<String> filterEntities(Set<String> classSet,
 	    Configuration configClone) throws IOException {
+	
 	List<String> classes;
 	if (configClone.getAnnotatedUnitName() == null) {
 	    classes = translateToList(classSet);
