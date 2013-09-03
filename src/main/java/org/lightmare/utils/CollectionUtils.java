@@ -1,6 +1,7 @@
 package org.lightmare.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -31,6 +32,19 @@ public class CollectionUtils {
 	}
 
 	return set;
+    }
+
+    /**
+     * Creates new {@link Set} from passed array instance
+     * 
+     * @param array
+     * @return {@link Set}<code><T></code>
+     */
+    public static <T> Set<T> translateToSet(T[] array) {
+
+	List<T> collection = Arrays.asList(array);
+
+	return translateToSet(collection);
     }
 
     /**
