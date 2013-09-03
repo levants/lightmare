@@ -113,6 +113,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     }
 
     public void scanClass(InputStream bits, URL url) throws IOException {
+	
 	DataInputStream dstream = new DataInputStream(new BufferedInputStream(
 		bits));
 	ClassFile cf = null;
