@@ -149,7 +149,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    Filter filter = new Filter() {
 		public boolean accepts(String subFileName) {
 		    if (subFileName.endsWith(AbstractIOUtils.CLASS_FILE_EXT)) {
-			if (subFileName.startsWith("/"))
+			if (subFileName
+				.startsWith(AbstractIOUtils.FILE_SEPARATOR))
 			    subFileName = subFileName.substring(1);
 			if (!ignoreScan(subFileName.replace('/',
 				FILE_EXTEWNTION_SELIM)))
