@@ -32,6 +32,12 @@ public class ConnectionContainer {
     private static final Logger LOG = Logger
 	    .getLogger(ConnectionContainer.class);
 
+    /**
+     * Checks if connection with passed unit name is cached
+     * 
+     * @param unitName
+     * @return <code>boolean</code>
+     */
     public static boolean checkForEmf(String unitName) {
 
 	boolean check = ObjectUtils.available(unitName);
