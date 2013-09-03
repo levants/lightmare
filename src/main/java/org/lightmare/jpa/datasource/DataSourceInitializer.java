@@ -137,7 +137,7 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Closes and unbinds from {@link Context} data source with specified JNDI
+     * Closes and removes from {@link Context} data source with specified JNDI
      * name
      * 
      * @param jndiName
@@ -156,7 +156,7 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Closes and unbinds from {@link Context} all initialized and cached data
+     * Closes and removes from {@link Context} all initialized and cached data
      * sources
      * 
      * @throws IOException
