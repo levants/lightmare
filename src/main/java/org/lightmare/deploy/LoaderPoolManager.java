@@ -163,6 +163,12 @@ public class LoaderPoolManager {
 	getLoaderPool().submit(runnable);
     }
 
+    /**
+     * Submits passed {@link Callable} implementation in loader pool
+     * 
+     * @param callable
+     * @return {@link Future}<code><T></code>
+     */
     public static <T> Future<T> submit(Callable<T> callable) {
 
 	Future<T> future = getLoaderPool().submit(callable);
