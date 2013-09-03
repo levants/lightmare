@@ -233,6 +233,7 @@ public class ConnectionContainer {
      * Closes all existing {@link EntityManagerFactory} instances kept in cache
      */
     public static void closeEntityManagerFactories() {
+
 	Collection<ConnectionSemaphore> semaphores = CONNECTIONS.values();
 	EntityManagerFactory emf;
 	for (ConnectionSemaphore semaphore : semaphores) {
