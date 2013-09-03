@@ -35,6 +35,12 @@ public class ObjectUtils {
 	return !statement;
     }
 
+    /**
+     * Chanks if passed boolean value is false
+     * 
+     * @param data
+     * @return <code>boolean</code>
+     */
     public static boolean isFalse(Boolean data) {
 
 	return !data;
