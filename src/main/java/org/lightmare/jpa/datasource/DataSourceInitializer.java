@@ -17,7 +17,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
- * Parses xml and property files to initialize and cache {@link DataSource}
+ * Parses XML and property files to initialize and cache {@link DataSource}
  * objects
  * 
  * @author levan
@@ -25,7 +25,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class DataSourceInitializer {
 
-    // Caches already initialized data source direct names
+    // Caches already initialized data source file paths
     private static final Set<String> INITIALIZED_SOURCES = Collections
 	    .synchronizedSet(new HashSet<String>());
 
