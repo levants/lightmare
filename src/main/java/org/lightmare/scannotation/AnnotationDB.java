@@ -15,6 +15,7 @@ import javassist.bytecode.ClassFile;
 import javassist.bytecode.annotation.Annotation;
 
 import org.apache.log4j.Logger;
+import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.scannotation.archiveiterator.Filter;
@@ -147,7 +148,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	for (URL url : urls) {
 	    Filter filter = new Filter() {
 		public boolean accepts(String subFileName) {
-		    if (subFileName.endsWith(".class")) {
+		    if (subFileName.endsWith(AbstractIOUtils.CLASS_FILE_EXT)) {
 			if (subFileName.startsWith("/"))
 			    subFileName = subFileName.substring(1);
 			if (!ignoreScan(subFileName.replace('/',
