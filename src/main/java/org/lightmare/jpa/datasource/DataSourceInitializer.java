@@ -71,7 +71,7 @@ public class DataSourceInitializer {
     }
 
     /**
-     * Initialized data source
+     * Initialized data source from passed file path
      * 
      * @throws IOException
      */
