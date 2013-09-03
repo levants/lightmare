@@ -119,8 +119,7 @@ public class LoaderPoolManager {
     }
 
     // Thread pool for deploying and removal of beans and temporal resources
-    private static ExecutorService LOADER_POOL = Executors.newFixedThreadPool(
-	    LOADER_POOL_SIZE, new LoaderThreadFactory());
+    private static ExecutorService LOADER_POOL;
 
     /**
      * Checks if loader {@link ExecutorService} is null or is shut down or is
