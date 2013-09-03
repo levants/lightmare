@@ -174,7 +174,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		    return valid;
 		}
 	    };
-	    LOG.info(String.format("Scanning URL %s ", url));
+	    LOG.info(StringUtils.concat("Scanning URL ", url));
 
 	    StreamIterator it = IteratorFactory.create(url, filter);
 
@@ -183,7 +183,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		scanClass(stream, url);
 	    }
 
-	    LOG.info(String.format("Finished URL %s scanning", url));
+	    LOG.info(String.format("Finished URL scanning ", url));
 	}
 
 	LOG.info("Finished scanning for archives on @Stateless annotation");
