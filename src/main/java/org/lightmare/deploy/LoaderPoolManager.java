@@ -122,6 +122,12 @@ public class LoaderPoolManager {
     private static ExecutorService LOADER_POOL = Executors.newFixedThreadPool(
 	    LOADER_POOL_SIZE, new LoaderThreadFactory());
 
+    /**
+     * Checks if loader {@link ExecutorService} is null or is shut down or is
+     * terminated
+     * 
+     * @return <code>boolean</code>
+     */
     private static boolean invalid() {
 
 	return LOADER_POOL == null || LOADER_POOL.isShutdown()
