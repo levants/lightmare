@@ -559,6 +559,7 @@ public class MetaCreator {
      * @throws IOException
      */
     public static void closeAllConnections() throws IOException {
+
 	ConnectionContainer.closeConnections();
     }
 
