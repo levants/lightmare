@@ -95,6 +95,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private Object invokeMethod(Method method, Object... arguments)
 	    throws IOException {
+
 	return MetaUtils.invoke(method, bean, arguments);
     }
 
