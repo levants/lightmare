@@ -94,6 +94,7 @@ public class FileParsers {
 	NodeList textList = element.getChildNodes();
 	Node firstNode = getFirst(textList);
 	String data = firstNode.getNodeValue().trim();
+
 	return data;
     }
 
