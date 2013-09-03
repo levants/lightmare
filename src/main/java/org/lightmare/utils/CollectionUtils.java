@@ -33,6 +33,12 @@ public class CollectionUtils {
 	return set;
     }
 
+    /**
+     * Creates new {@link List} from passed {@link Collection} instance
+     * 
+     * @param collection
+     * @return {@link List}<code><T></code>
+     */
     public static <T> List<T> translateToList(Collection<T> collection) {
 
 	List<T> list;
