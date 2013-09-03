@@ -46,13 +46,15 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     private static final char FILE_SEPARATOR_CHAR = '/';
 
+    private static final int NOT_EXISTING_INDEX = -1;
+
     private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
 
     private String getFileName(URL url) {
 
 	String fileName = url.getFile();
 	int lastIndex = fileName.lastIndexOf(AbstractIOUtils.FILE_SEPARATOR);
-	if (lastIndex > -1) {
+	if (lastIndex > NOT_EXISTING_INDEX) {
 	    ++lastIndex;
 	    fileName = fileName.substring(lastIndex);
 	}
