@@ -14,6 +14,20 @@ public class StringUtils {
 
     public static final int NOT_EXISTING_INDEX = -1;
 
+    private static void append(Object[] tockens, StringBuilder builder) {
+
+	if (ObjectUtils.available(tockens)) {
+
+	    for (Object tocken : tockens) {
+		if (tocken instanceof Object[]) {
+		    append((Object[]) tocken, builder);
+		} else {
+		    builder.append(tocken);
+		}
+	    }
+	}
+    }
+
     /**
      * Concatenates passed {@link Object}s in one {@link String} instance
      * 
