@@ -17,6 +17,7 @@ import org.glassfish.jersey.server.model.ResourceMethod;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.rest.providers.RestInflector;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
 
@@ -38,7 +39,7 @@ public class ResourceBuilder {
     private static MetaData getMetaData(Resource resource) throws IOException {
 
 	Collection<Class<?>> handlers = resource.getHandlerClasses();
-	Class<?> beanClass = ObjectUtils.getFirst(handlers);
+	Class<?> beanClass = CollectionUtils.getFirst(handlers);
 	String beanEjbName = BeanUtils.beanName(beanClass);
 
 	MetaData metaData = MetaContainer.getSyncMetaData(beanEjbName);
@@ -65,7 +66,7 @@ public class ResourceBuilder {
 	// Defines media type
 	MediaType type;
 	if (ObjectUtils.available(consumedTypes)) {
-	    type = ObjectUtils.getFirst(consumedTypes);
+	    type = CollectionUtils.getFirst(consumedTypes);
 	} else {
 	    type = null;
 	}

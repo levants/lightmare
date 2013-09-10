@@ -12,6 +12,7 @@ import java.util.jar.JarFile;
 
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
@@ -153,7 +154,7 @@ public class DirUtils extends AbstractIOUtils {
     protected void scanArchive(Object... args) throws IOException {
 
 	if (ObjectUtils.available(args)) {
-	    xmlFromJar = (Boolean) ObjectUtils.getFirst(args);
+	    xmlFromJar = (Boolean) CollectionUtils.getFirst(args);
 	}
 
 	getEjbLibs();

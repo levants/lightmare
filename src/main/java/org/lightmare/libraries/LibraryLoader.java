@@ -18,6 +18,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 import org.lightmare.libraries.loaders.EjbClassLoader;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.FileUtils;
 import org.lightmare.utils.reflect.MetaUtils;
@@ -109,7 +110,7 @@ public class LibraryLoader {
 	if (loader instanceof URLClassLoader) {
 	    urls = ((URLClassLoader) loader).getURLs();
 	} else {
-	    urls = ObjectUtils.emptyArray(URL.class);
+	    urls = CollectionUtils.emptyArray(URL.class);
 	}
 
 	return urls;
@@ -202,7 +203,7 @@ public class LibraryLoader {
 	    throws IOException {
 
 	FileUtils.getSubfiles(file, urls);
-	URL[] paths = ObjectUtils.toArray(urls, URL.class);
+	URL[] paths = CollectionUtils.toArray(urls, URL.class);
 	ClassLoader parent = getContextClassLoader();
 	ClassLoader enrichedLoader = getEnrichedLoader(paths, parent);
 
@@ -313,7 +314,7 @@ public class LibraryLoader {
 	    Set<URL> urls = new HashSet<URL>();
 	    FileUtils.getSubfiles(file, urls);
 
-	    URL[] paths = ObjectUtils.toArray(urls, URL.class);
+	    URL[] paths = CollectionUtils.toArray(urls, URL.class);
 	    ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
 	    if (systemLoader instanceof URLClassLoader) {
 		URLClassLoader urlLoader = (URLClassLoader) systemLoader;

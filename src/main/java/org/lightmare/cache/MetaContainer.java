@@ -19,6 +19,7 @@ import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.WatchUtils;
 
@@ -100,7 +101,7 @@ public class MetaContainer {
     public static Configuration getConfig(URL[] archives) {
 
 	Configuration config;
-	URL archive = ObjectUtils.getFirst(archives);
+	URL archive = CollectionUtils.getFirst(archives);
 	if (ObjectUtils.notNull(archive)) {
 	    String path = WatchUtils.clearPath(archive.getFile());
 	    config = CONFIGS.get(path);

@@ -304,7 +304,7 @@ public class MetaCreator {
 	    fillArchiveURLs(archive, modifiedArchives);
 	}
 
-	return ObjectUtils.toArray(modifiedArchives, URL.class);
+	return CollectionUtils.toArray(modifiedArchives, URL.class);
     }
 
     /**
@@ -501,7 +501,7 @@ public class MetaCreator {
 	    url = file.toURI().toURL();
 	    urlList.add(url);
 	}
-	URL[] archives = ObjectUtils.toArray(urlList, URL.class);
+	URL[] archives = CollectionUtils.toArray(urlList, URL.class);
 	scanForBeans(archives);
     }
 
@@ -530,7 +530,7 @@ public class MetaCreator {
 		    }
 		}
 	    }
-	    paths = ObjectUtils.toArray(pathList, String.class);
+	    paths = CollectionUtils.toArray(pathList, String.class);
 	}
 	List<URL> urlList = new ArrayList<URL>();
 	List<URL> archive;
@@ -538,7 +538,7 @@ public class MetaCreator {
 	    archive = FileUtils.toURLWithClasspath(path);
 	    urlList.addAll(archive);
 	}
-	URL[] archives = ObjectUtils.toArray(urlList, URL.class);
+	URL[] archives = CollectionUtils.toArray(urlList, URL.class);
 	scanForBeans(archives);
     }
 
