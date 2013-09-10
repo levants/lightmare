@@ -11,8 +11,10 @@ public class StringUtils {
     public static final String EMPTY_STRING = "";
 
     public static final char SPACE = ' ';
-    
+
     public static final String TAB = "\t";
+
+    public static final String NEWLINE = "\n";
 
     public static final int NOT_EXISTING_INDEX = -1;
 
