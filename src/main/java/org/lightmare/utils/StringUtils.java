@@ -14,6 +14,14 @@ public class StringUtils {
 
     public static final int NOT_EXISTING_INDEX = -1;
 
+    /**
+     * Appends contents of passed array to passed {@link StringBuilder} and for
+     * each content if it is instance of array then append its content
+     * recursively
+     * 
+     * @param tockens
+     * @param builder
+     */
     private static void append(Object[] tockens, StringBuilder builder) {
 
 	if (ObjectUtils.available(tockens)) {
