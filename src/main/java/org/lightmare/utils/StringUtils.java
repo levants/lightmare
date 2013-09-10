@@ -67,6 +67,7 @@ public class StringUtils {
     public static String concat(Object... parts) {
 
 	String resultText;
+
 	if (ObjectUtils.available(parts)) {
 
 	    StringBuilder resultBuider = new StringBuilder();
