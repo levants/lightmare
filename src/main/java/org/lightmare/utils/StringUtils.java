@@ -26,9 +26,11 @@ public class StringUtils {
 
 	if (ObjectUtils.available(tockens)) {
 
+	    Object[] subTockens;
 	    for (Object tocken : tockens) {
 		if (tocken instanceof Object[]) {
-		    append((Object[]) tocken, builder);
+		    subTockens = (Object[]) tocken;
+		    append(subTockens, builder);
 		} else {
 		    builder.append(tocken);
 		}
