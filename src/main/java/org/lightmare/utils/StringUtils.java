@@ -36,7 +36,13 @@ public class StringUtils {
 	}
     }
 
-
+    /**
+     * Creates concatenates passed objects in one text and if one of them is
+     * array then concatenates contents of this array recursively
+     * 
+     * @param tockens
+     * @return {@link String}
+     */
     public static String concatRecursively(Object... tockens) {
 
 	String concat;
