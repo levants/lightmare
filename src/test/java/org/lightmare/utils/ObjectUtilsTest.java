@@ -21,7 +21,7 @@ public class ObjectUtilsTest {
 
 	    String[] strings1 = new String[list.size()];
 	    strings1 = list.toArray(strings1);
-	    String[] strings2 = ObjectUtils.toArray(list, String.class);
+	    String[] strings2 = CollectionUtils.toArray(list, String.class);
 
 	    Assert.assertArrayEquals("Arrays do not match", strings1, strings2);
 
@@ -33,7 +33,7 @@ public class ObjectUtilsTest {
 
 	    URL[] urls1 = new URL[urlList.size()];
 	    urls1 = urlList.toArray(urls1);
-	    URL[] urls2 = ObjectUtils.toArray(urlList, URL.class);
+	    URL[] urls2 = CollectionUtils.toArray(urlList, URL.class);
 
 	    Assert.assertArrayEquals("Arrays do not match", urls1, urls2);
 

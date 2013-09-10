@@ -23,16 +23,16 @@ public class ArraysTest {
     @Test
     public void emptyArrayTest() {
 
-	String[] strings = ObjectUtils.emptyArray(String.class);
+	String[] strings = CollectionUtils.emptyArray(String.class);
 	print(strings);
 
-	Integer[] integers = ObjectUtils.emptyArray(Integer.class);
+	Integer[] integers = CollectionUtils.emptyArray(Integer.class);
 	print(integers);
 
-	Long[] longs = ObjectUtils.emptyArray(Long.class);
+	Long[] longs = CollectionUtils.emptyArray(Long.class);
 	print(longs);
 
-	URL[] urls = ObjectUtils.emptyArray(URL.class);
+	URL[] urls = CollectionUtils.emptyArray(URL.class);
 	print(urls);
     }
 }
