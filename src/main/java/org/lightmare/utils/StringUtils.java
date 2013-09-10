@@ -36,6 +36,22 @@ public class StringUtils {
 	}
     }
 
+
+    public static String concatRecursively(Object... tockens) {
+
+	String concat;
+
+	if (ObjectUtils.available(tockens)) {
+	    StringBuilder builder = new StringBuilder();
+	    append(tockens, builder);
+	    concat = builder.toString();
+	} else {
+	    concat = null;
+	}
+
+	return concat;
+    }
+
     /**
      * Concatenates passed {@link Object}s in one {@link String} instance
      * 
