@@ -52,7 +52,7 @@ public class Configuration implements Cloneable {
 
     public static final String DATA_SOURCE_PATH_KEY = "dataSourcePath";
 
-    // runtime to get avaliable processors
+    // runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
     /**
