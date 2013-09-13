@@ -322,8 +322,7 @@ public class ConnectionContainer {
 	POOL_CONFIG_TYPES.put(jndiName, type);
     }
 
-    public static PoolConfig.PoolProviderType getAndRemovePoolProviderType(
-	    String jndiName) {
+    public static PoolProviderType getAndRemovePoolProviderType(String jndiName) {
 
 	PoolConfig.PoolProviderType type = POOL_CONFIG_TYPES.get(jndiName);
 	if (type == null) {
