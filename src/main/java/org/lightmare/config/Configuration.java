@@ -855,7 +855,11 @@ public class Configuration implements Cloneable {
 		persistenceProperties);
     }
 
-    // Pool configuration
+    /**
+     * Pool configuration
+     * 
+     * @return {@link PoolConfig}
+     */
     public static PoolConfig getPoolConfig() {
 
 	return POOL_CONFIG;
