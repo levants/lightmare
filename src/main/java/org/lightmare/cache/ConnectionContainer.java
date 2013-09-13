@@ -12,6 +12,7 @@ import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig;
+import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 
@@ -316,7 +317,7 @@ public class ConnectionContainer {
     }
 
     public static void setPollProviderType(String jndiName,
-	    PoolConfig.PoolProviderType type) {
+	    PoolProviderType type) {
 
 	POOL_CONFIG_TYPES.put(jndiName, type);
     }
