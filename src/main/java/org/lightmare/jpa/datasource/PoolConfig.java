@@ -24,6 +24,33 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class PoolConfig {
 
+    protected static enum DefaultConfig {
+
+	// Data source name property
+	DATA_SOURCE_NAME("dataSourceName"),
+
+	// ===========================================//
+	// ====== Data Source properties =============//
+	// ===========================================//
+
+	// Class loader properties
+	CONTEXT_CLASS_LOADER_SOURCE("contextClassLoaderSource", "library"),
+	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", "true");
+
+	public String key;
+
+	public String value;
+
+	private DefaultConfig(String key) {
+	    this.key = key;
+	}
+
+	private DefaultConfig(String key, String value) {
+	    this(key);
+	    this.value = value;
+	}
+    }
+
     // Data source name property
     public static final String DATA_SOURCE_NAME = "dataSourceName";
 
