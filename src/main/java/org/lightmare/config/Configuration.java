@@ -33,10 +33,7 @@ public class Configuration implements Cloneable {
     // Path where stored administrative users
     public static final String ADMIN_USERS_PATH_KEY = "adminUsersPath";
 
-    /**
-     * <a href="netty.io">Netty</a> server / client configuration properties for
-     * RPC calls
-     */
+    // Netty server / client configuration properties for RPC calls
     public static final String IP_ADDRESS_KEY = "listeningIp";
 
     public static final String PORT_KEY = "listeningPort";
