@@ -52,6 +52,7 @@ public class DriverConfig {
 	// Database names
 	public String name;
 
+	// Driver class names
 	public String driver;
 
 	private Drivers(String name, String driver) {
