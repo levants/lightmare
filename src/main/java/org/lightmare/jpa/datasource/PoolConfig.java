@@ -54,7 +54,7 @@ public class PoolConfig {
 	
 	// Transaction properties
 	AUTOCOMMIT("autoCommit", "false"),
-	AUTOCOMMIT_ON_CLOSE_NAME("autoCommitOnClose", "false"),
+	AUTOCOMMIT_ON_CLOSE("autoCommitOnClose", "false"),
 	URESOLVED_TRANSACTIONS_NAME("forceIgnoreUnresolvedTransactions", "true"),
 	
         // Connection recovery properties
