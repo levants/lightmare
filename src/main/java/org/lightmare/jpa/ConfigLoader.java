@@ -73,11 +73,13 @@ public class ConfigLoader {
 	    throw new IOException(
 		    String.format("path is not provided %s", path));
 	}
+
 	File file = new File(path);
 	if (!file.exists()) {
 	    throw new IOException(String.format(
 		    "could not find persistence.xml file at path %s", path));
 	}
+
 	shortPath = file.getName();
 	final URL url = file.toURI().toURL();
 	Enumeration<URL> xmls = readURL(url);
