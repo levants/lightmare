@@ -44,6 +44,11 @@ public class DataSourceInitializer {
     public static final String JNDI_NAME_PROPERTY = "jndiname";
     public static final String NAME_PROPERTY = "name";
 
+    // Connection properties
+    public static enum ConnectionProperties {
+
+    }
+
     private DataSourceInitializer() {
     }
 
