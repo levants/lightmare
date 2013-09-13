@@ -78,6 +78,7 @@ public abstract class InitDataSource {
 
 	String jndiName = Initializer.getJndiName(properties);
 	LogUtils.info(LOG, InitMessages.INITIALIZING_MESSAGE, jndiName);
+
 	try {
 	    DataSource dataSource = initializeDataSource();
 	    boolean valid = checkInstance(dataSource);
