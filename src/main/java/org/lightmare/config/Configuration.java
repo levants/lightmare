@@ -810,6 +810,7 @@ public class Configuration implements Cloneable {
     }
 
     public String getPersXmlPath() {
+
 	return getPersistenceConfigValue(PERSISTENCE_XML_PATH_KEY);
     }
 
