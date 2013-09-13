@@ -30,7 +30,7 @@ public class Configuration implements Cloneable {
     // cache for all configuration passed programmatically or read from file
     private final Map<Object, Object> config = new HashMap<Object, Object>();
 
-    // path where stored adminitrator users
+    // path where stored administrative users
     public static final String ADMIN_USERS_PATH_KEY = "adminUsersPath";
 
     /**
