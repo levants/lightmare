@@ -71,9 +71,13 @@ public class PoolConfig {
 	    this.key = key;
 	}
 
-	private DefaultConfig(String key, String value) {
+	private DefaultConfig(String key, Object value) {
 	    this(key);
-	    this.value = value;
+	    if(value instanceof String){
+		this.value = (String)value;
+	    }else{
+		this.value = String.valueOf(value);
+	    }
 	}
     }
 
