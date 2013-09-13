@@ -21,9 +21,22 @@ import org.lightmare.utils.StringUtils;
  */
 public class InitDataSourceTomcat extends InitDataSource {
 
-    private static final String JDBC_INTERCEPTOR_KEY = "org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;";
+    // Tomcat default configurations
+    protected static enum TomcatConfig {
 
-    private static final String JDBC_INTERCEPTOR_VALUE = "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer";
+	JDBC_INTERCEPTOR(
+		"org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;",
+		"org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
+
+	public String key;
+
+	public String value;
+
+	private TomcatConfig(String key, String value) {
+	    this.key = key;
+	    this.value = value;
+	}
+    }
 
     private static final String TEST_SQL = "SELECT 1";
 
