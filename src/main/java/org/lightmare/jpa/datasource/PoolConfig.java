@@ -24,7 +24,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class PoolConfig {
 
-    protected static enum DefaultConfig {
+    public static enum DefaultConfig {
 
 	// Data source name property
 	DATA_SOURCE_NAME("dataSourceName"),
