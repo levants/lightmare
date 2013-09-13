@@ -44,21 +44,25 @@ public class DriverConfig {
      */
     public static String getDriverName(String name) {
 
+	String driverName;
+
 	if (Drivers.ORACLE.name.equals(name)) {
-	    return Drivers.ORACLE.driver;
+	    driverName = Drivers.ORACLE.driver;
 	} else if (Drivers.MYSQL.name.equals(name)) {
-	    return Drivers.MYSQL.driver;
+	    driverName = Drivers.MYSQL.driver;
 	} else if (Drivers.DB2.name.equals(name)) {
-	    return Drivers.DB2.driver;
+	    driverName = Drivers.DB2.driver;
 	} else if (Drivers.MSSQL.name.equals(name)) {
-	    return Drivers.MSSQL.driver;
+	    driverName = Drivers.MSSQL.driver;
 	} else if (Drivers.H2.name.equals(name)) {
-	    return Drivers.H2.driver;
+	    driverName = Drivers.H2.driver;
 	} else if (Drivers.DERBY.name.equals(name)) {
-	    return Drivers.DERBY.driver;
+	    driverName = Drivers.DERBY.driver;
 	} else {
-	    return null;
+	    driverName = null;
 	}
+
+	return driverName;
     }
 
     public static boolean isOracle(String name) {
