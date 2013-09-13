@@ -44,7 +44,8 @@ public class DriverConfig {
 
 	ORACLE("oracle", "oracle.jdbc.OracleDriver"), MYSQL("mysql",
 		"com.mysql.jdbc.Driver"), MSSQL("mssql",
-		"com.microsoft.sqlserver.jdbc.SQLServerDriver"), DB2, H2, DERBY;
+		"com.microsoft.sqlserver.jdbc.SQLServerDriver"), DB2("db2",
+		"com.ibm.db2.jcc.DB2Driver"), H2, DERBY;
 
 	public String name;
 
