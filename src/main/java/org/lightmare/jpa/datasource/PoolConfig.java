@@ -140,7 +140,7 @@ public class PoolConfig {
 	ConnectionConfig[] usdKeys = ConnectionConfig.values();
 	String key;
 	for (ConnectionConfig usdKey : usdKeys) {
-	    key = usdKey.property;
+	    key = usdKey.name;
 	    if (ObjectUtils.available(key)) {
 		keys.add(key);
 	    }
@@ -177,7 +177,7 @@ public class PoolConfig {
 	String dataSourceName = null;
 	String property;
 	for (Object key : keys) {
-	    property = ConnectionConfig.NAME_PROPERTY.property;
+	    property = ConnectionConfig.NAME_PROPERTY.name;
 	    if (key.equals(property)) {
 		dataSourceName = (String) propertiesMap.get(property);
 	    }
@@ -218,7 +218,7 @@ public class PoolConfig {
      * Gets property as <code>int</int> value
      * 
      * @param properties
-     * @param key
+     * @param name
      * @return <code>int</code>
      */
     public static Integer asInt(Map<Object, Object> properties, Defaults config) {

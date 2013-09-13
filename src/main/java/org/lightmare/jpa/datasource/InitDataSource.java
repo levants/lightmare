@@ -38,13 +38,13 @@ public abstract class InitDataSource {
 	    this.properties = properties;
 	    this.poolConfig = Configuration.getPoolConfig();
 	    driver = properties.getProperty(
-		    ConnectionConfig.DRIVER_PROPERTY.property).trim();
+		    ConnectionConfig.DRIVER_PROPERTY.name).trim();
 	    url = properties.getProperty(
-		    ConnectionConfig.URL_PROPERTY.property).trim();
+		    ConnectionConfig.URL_PROPERTY.name).trim();
 	    user = properties.getProperty(
-		    ConnectionConfig.USER_PROPERTY.property).trim();
+		    ConnectionConfig.USER_PROPERTY.name).trim();
 	    password = properties.getProperty(
-		    ConnectionConfig.PASSWORD_PROPERTY.property).trim();
+		    ConnectionConfig.PASSWORD_PROPERTY.name).trim();
 	}
     }
 

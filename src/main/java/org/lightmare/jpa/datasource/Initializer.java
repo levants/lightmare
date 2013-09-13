@@ -48,10 +48,10 @@ public class Initializer {
 	JNDI_NAME_PROPERTY("jndiname"), // JNDI name
 	NAME_PROPERTY("name");// name
 
-	public String property;
+	public String name;
 
-	private ConnectionConfig(String property) {
-	    this.property = property;
+	private ConnectionConfig(String name) {
+	    this.name = name;
 	}
     }
 
@@ -68,7 +68,7 @@ public class Initializer {
     public static String getJndiName(Properties properties) {
 
 	String jndiName = properties
-		.getProperty(Initializer.ConnectionConfig.JNDI_NAME_PROPERTY.property);
+		.getProperty(Initializer.ConnectionConfig.JNDI_NAME_PROPERTY.name);
 
 	return jndiName;
     }

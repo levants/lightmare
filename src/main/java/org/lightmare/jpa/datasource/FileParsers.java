@@ -139,7 +139,7 @@ public class FileParsers {
 	Element thisElement = (Element) getFirst(nodeList);
 	String name = getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
-	properties.setProperty(ConnectionConfig.DRIVER_PROPERTY.property,
+	properties.setProperty(ConnectionConfig.DRIVER_PROPERTY.name,
 		driverName);
     }
 
@@ -162,7 +162,7 @@ public class FileParsers {
 	    Element userElement = (Element) getFirst(userList);
 	    String user = getContext(userElement);
 
-	    properties.setProperty(ConnectionConfig.USER_PROPERTY.property,
+	    properties.setProperty(ConnectionConfig.USER_PROPERTY.name,
 		    user);
 
 	    NodeList passList = thisElement.getElementsByTagName(PASSWORD_TAG);
@@ -173,7 +173,7 @@ public class FileParsers {
 	    Element passElement = (Element) getFirst(passList);
 	    String password = getContext(passElement);
 
-	    properties.setProperty(ConnectionConfig.PASSWORD_PROPERTY.property,
+	    properties.setProperty(ConnectionConfig.PASSWORD_PROPERTY.name,
 		    password);
 	}
     }
@@ -244,9 +244,9 @@ public class FileParsers {
 	    Properties props = new Properties();
 	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
 	    clearName = NamingUtils.clearDataSourceName(jndiName);
-	    props.setProperty(ConnectionConfig.JNDI_NAME_PROPERTY.property,
+	    props.setProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name,
 		    jndiName);
-	    props.setProperty(ConnectionConfig.NAME_PROPERTY.property,
+	    props.setProperty(ConnectionConfig.NAME_PROPERTY.name,
 		    clearName);
 	    NodeList urlList = thisElement
 		    .getElementsByTagName(CONNECTION_URL_TAG);
@@ -256,7 +256,7 @@ public class FileParsers {
 	    }
 	    Element urlElement = (Element) getFirst(urlList);
 	    String url = getContext(urlElement);
-	    props.setProperty(ConnectionConfig.URL_PROPERTY.property, url);
+	    props.setProperty(ConnectionConfig.URL_PROPERTY.name, url);
 	    NodeList securityList = thisElement
 		    .getElementsByTagName(SECURITY_TAG);
 	    setDataFromJBossSecurity(securityList, props);
