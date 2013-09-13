@@ -8,32 +8,6 @@ package org.lightmare.jpa.datasource;
  */
 public class DriverConfig {
 
-    // Driver class names
-    private static final String ORACLE_DRIVER = "oracle.jdbc.OracleDriver";
-
-    private static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
-
-    private static final String MSSQL_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-
-    private static final String DB2_DRIVER = "com.ibm.db2.jcc.DB2Driver";
-
-    private static final String H2_DRIVER = "org.h2.Driver";
-
-    private static final String DERBY_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-
-    // Database names
-    private static final String ORACLE_NAME = "oracle";
-
-    private static final String MYSQL_NAME = "mysql";
-
-    private static final String DB2_NAME = "db2";
-
-    private static final String MSSQL_NAME = "mssql";
-
-    private static final String H2_NAME = "h2";
-
-    private static final String DERBY_NAME = "derby";
-
     /**
      * Caches database driver names and classes
      * 
@@ -69,18 +43,18 @@ public class DriverConfig {
      */
     public static String getDriverName(String name) {
 
-	if (ORACLE_NAME.equals(name)) {
-	    return ORACLE_DRIVER;
-	} else if (MYSQL_NAME.equals(name)) {
-	    return MYSQL_DRIVER;
-	} else if (DB2_NAME.equals(name)) {
-	    return DB2_DRIVER;
-	} else if (MSSQL_NAME.equals(name)) {
-	    return MSSQL_DRIVER;
-	} else if (H2_NAME.equals(name)) {
-	    return H2_DRIVER;
-	} else if (DERBY_NAME.equals(name)) {
-	    return DERBY_DRIVER;
+	if (Drivers.ORACLE.name.equals(name)) {
+	    return Drivers.ORACLE.driver;
+	} else if (Drivers.MYSQL.name.equals(name)) {
+	    return Drivers.MYSQL.driver;
+	} else if (Drivers.DB2.name.equals(name)) {
+	    return Drivers.DB2.driver;
+	} else if (Drivers.MSSQL.name.equals(name)) {
+	    return Drivers.MSSQL.driver;
+	} else if (Drivers.H2.name.equals(name)) {
+	    return Drivers.H2.driver;
+	} else if (Drivers.DERBY.name.equals(name)) {
+	    return Drivers.DERBY.driver;
 	} else {
 	    return null;
 	}
