@@ -50,7 +50,7 @@ public class DataSourceInitializer {
 	DRIVER_PROPERTY("driver"), //driver
 	USER_PROPERTY("user"), //user
 	PASSWORD_PROPERTY("password"), //password
-	URL_PROPERTY("url"), //
+	URL_PROPERTY("url"), //URL
 	JNDI_NAME_PROPERTY("jndiname"), //
 	NAME_PROPERTY("name");//
 
