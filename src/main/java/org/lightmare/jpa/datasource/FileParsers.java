@@ -138,10 +138,8 @@ public class FileParsers {
 	Element thisElement = (Element) getFirst(nodeList);
 	String name = getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
-	properties
-		.setProperty(
-			DataSourceInitializer.ConnectionProperties.DRIVER_PROPERTY.property,
-			driverName);
+	properties.setProperty(ConnectionProperties.DRIVER_PROPERTY.property,
+		driverName);
     }
 
     /**
