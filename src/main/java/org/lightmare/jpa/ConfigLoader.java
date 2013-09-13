@@ -68,6 +68,7 @@ public class ConfigLoader {
      * @throws IOException
      */
     public Enumeration<URL> readFile(String path) throws IOException {
+
 	if (path == null || path.isEmpty()) {
 	    throw new IOException(
 		    String.format("path is not provided %s", path));
