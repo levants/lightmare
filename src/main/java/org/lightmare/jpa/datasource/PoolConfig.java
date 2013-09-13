@@ -264,9 +264,7 @@ public class PoolConfig {
 		properties = null;
 	    }
 	} finally {
-	    if (ObjectUtils.notNull(stream)) {
-		stream.close();
-	    }
+	    ObjectUtils.close(stream);
 	}
 
 	return properties;
