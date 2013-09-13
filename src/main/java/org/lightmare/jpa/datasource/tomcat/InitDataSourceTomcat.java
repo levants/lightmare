@@ -73,7 +73,8 @@ public class InitDataSourceTomcat extends InitDataSource {
 	poolProperties.setLogAbandoned(Boolean.TRUE);
 	poolProperties.setRemoveAbandoned(Boolean.TRUE);
 	poolProperties.setJdbcInterceptors(StringUtils.concat(
-		JDBC_INTERCEPTOR_KEY, JDBC_INTERCEPTOR_VALUE));
+		TomcatConfig.JDBC_INTERCEPTOR.key,
+		TomcatConfig.JDBC_INTERCEPTOR.value));
 	dataSource = new DataSource();
 	dataSource.setPoolProperties(poolProperties);
 
