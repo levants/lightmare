@@ -34,8 +34,8 @@ public class PoolConfig {
 	// ===========================================//
 
 	// Class loader properties
-	CONTEXT_CLASS_LOADER_SOURCE("contextClassLoaderSource", "library"),
-	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", "true"),
+	CONTEXT_CLASS_LOADER_SOURCE("contextClassLoaderSource", "library"),//
+	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", "true"),//
 	
 	// Pool properties
 	MAX_POOL_SIZE("maxPoolSize", "15"),
