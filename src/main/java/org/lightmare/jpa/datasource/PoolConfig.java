@@ -184,7 +184,7 @@ public class PoolConfig {
 	Set<Object> keys = unsopportedKeys();
 	Object dataSourceName = null;
 	for (Object key : keys) {
-	    if (key.equals(DataSourceInitializer.NAME_PROPERTY)) {
+	    if (key.equals(DataSourceInitializer.ConnectionProperties.NAME_PROPERTY.property)) {
 		dataSourceName = propertiesMap
 			.get(DataSourceInitializer.NAME_PROPERTY);
 	    }
