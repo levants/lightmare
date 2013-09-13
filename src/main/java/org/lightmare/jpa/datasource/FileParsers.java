@@ -249,7 +249,8 @@ public class FileParsers {
 	    Properties props = new Properties();
 	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
 	    clearName = NamingUtils.clearDataSourceName(jndiName);
-	    props.setProperty(DataSourceInitializer.JNDI_NAME_PROPERTY,
+	    props.setProperty(
+		    DataSourceInitializer.ConnectionProperties.JNDI_NAME_PROPERTY.property,
 		    jndiName);
 	    props.setProperty(DataSourceInitializer.NAME_PROPERTY, clearName);
 	    NodeList urlList = thisElement
