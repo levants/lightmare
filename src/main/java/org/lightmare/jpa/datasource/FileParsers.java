@@ -252,7 +252,9 @@ public class FileParsers {
 	    props.setProperty(
 		    DataSourceInitializer.ConnectionProperties.JNDI_NAME_PROPERTY.property,
 		    jndiName);
-	    props.setProperty(DataSourceInitializer.NAME_PROPERTY, clearName);
+	    props.setProperty(
+		    DataSourceInitializer.ConnectionProperties.NAME_PROPERTY.property,
+		    clearName);
 	    NodeList urlList = thisElement
 		    .getElementsByTagName(CONNECTION_URL_TAG);
 	    int urlElementLength = urlList.getLength();
