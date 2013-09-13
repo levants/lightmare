@@ -50,6 +50,7 @@ public class ConfigLoader {
 		return url;
 	    }
 	};
+
 	shortPath = StringUtils.concat(AbstractIOUtils.ARCHIVE_URL_DELIM,
 		XML_PATH);
 
