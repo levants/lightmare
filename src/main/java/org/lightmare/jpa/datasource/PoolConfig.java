@@ -243,6 +243,7 @@ public class PoolConfig {
      */
     public Map<Object, Object> load() throws IOException {
 
+	Map<Object, Object> properties;
 	InputStream stream;
 	if (ObjectUtils.notAvailable(poolPath)) {
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
@@ -252,7 +253,6 @@ public class PoolConfig {
 	    stream = new FileInputStream(file);
 	}
 	try {
-	    Map<Object, Object> properties;
 	    Properties propertiesToLoad;
 	    if (ObjectUtils.notNull(stream)) {
 		propertiesToLoad = new Properties();
@@ -262,13 +262,13 @@ public class PoolConfig {
 	    } else {
 		properties = null;
 	    }
-
-	    return properties;
 	} finally {
 	    if (ObjectUtils.notNull(stream)) {
 		stream.close();
 	    }
 	}
+
+	return properties;
     }
 
     /**
