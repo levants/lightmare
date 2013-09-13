@@ -63,9 +63,9 @@ public class InitDataSourceTomcat extends InitDataSource {
 	poolProperties.setValidationInterval(30000);
 	poolProperties.setTimeBetweenEvictionRunsMillis(30000);
 	poolProperties.setMaxActive(PoolConfig.asInt(configMap,
-		PoolConfig.DefaultConfig.MAX_POOL_SIZE));
+		PoolConfig.Defaults.MAX_POOL_SIZE));
 	poolProperties.setInitialSize(PoolConfig.asInt(configMap,
-		PoolConfig.DefaultConfig.INITIAL_POOL_SIZE));
+		PoolConfig.Defaults.INITIAL_POOL_SIZE));
 	poolProperties.setMaxWait(10000);
 	poolProperties.setRemoveAbandonedTimeout(60);
 	poolProperties.setMinEvictableIdleTimeMillis(30000);

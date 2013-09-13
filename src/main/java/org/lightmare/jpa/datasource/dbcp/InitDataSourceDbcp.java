@@ -50,13 +50,13 @@ public class InitDataSourceDbcp extends InitDataSource {
 	dataSource
 		.setDefaultTransactionIsolation(DEFAULT_TRANSACTION_ISOLATION);
 	dataSource.setLoginTimeout(PoolConfig.asInt(properties,
-		PoolConfig.DefaultConfig.MAX_IDLE_TIMEOUT));
+		PoolConfig.Defaults.MAX_IDLE_TIMEOUT));
 	dataSource.setMaxActive(PoolConfig.asInt(properties,
-		PoolConfig.DefaultConfig.MAX_POOL_SIZE));
+		PoolConfig.Defaults.MAX_POOL_SIZE));
 	dataSource.setMaxIdle(PoolConfig.asInt(properties,
-		PoolConfig.DefaultConfig.MAX_IDLE_TIMEOUT));
+		PoolConfig.Defaults.MAX_IDLE_TIMEOUT));
 	dataSource.setMaxWait(PoolConfig.asInt(properties,
-		PoolConfig.DefaultConfig.MAX_IDLE_TIMEOUT));
+		PoolConfig.Defaults.MAX_IDLE_TIMEOUT));
 
 	return dataSource;
     }

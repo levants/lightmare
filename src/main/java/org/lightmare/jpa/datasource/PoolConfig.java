@@ -23,7 +23,7 @@ import org.lightmare.utils.ObjectUtils;
 public class PoolConfig {
 
     // Container for default configuration keys and values
-    public static enum DefaultConfig {
+    public static enum Defaults {
 
 	// Data source name property
 	DATA_SOURCE_NAME("dataSourceName"),
@@ -66,11 +66,11 @@ public class PoolConfig {
 
 	public String value;
 
-	private DefaultConfig(String key) {
+	private Defaults(String key) {
 	    this.key = key;
 	}
 
-	private DefaultConfig(String key, Object value) {
+	private Defaults(String key, Object value) {
 	    this(key);
 	    if (value instanceof String) {
 		this.value = (String) value;
@@ -114,11 +114,11 @@ public class PoolConfig {
     public Map<Object, Object> getDefaultPooling() {
 	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
 
-	DefaultConfig[] defaults = DefaultConfig.values();
+	Defaults[] defaults = Defaults.values();
 
 	String key;
 	String value;
-	for (DefaultConfig config : defaults) {
+	for (Defaults config : defaults) {
 	    key = config.key;
 	    value = config.value;
 	    if (ObjectUtils.available(key) && ObjectUtils.available(value)) {
@@ -217,7 +217,7 @@ public class PoolConfig {
      * @return <code>int</code>
      */
     public static Integer asInt(Map<Object, Object> properties,
-	    DefaultConfig config) {
+	    Defaults config) {
 
 	String key = config.key;
 	Integer propertyInt = asInt(properties, key);
