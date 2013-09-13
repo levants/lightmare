@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
+import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
@@ -16,8 +17,6 @@ import org.lightmare.utils.StringUtils;
 public class ConfigLoader {
 
     public static final String XML_PATH = "META-INF/persistence.xml";
-
-    private static final String JAR_URL_DELIM = "!";
 
     private String shortPath;
 
@@ -50,7 +49,8 @@ public class ConfigLoader {
 		return url;
 	    }
 	};
-	shortPath = StringUtils.concat(JAR_URL_DELIM, XML_PATH);
+	shortPath = StringUtils.concat(AbstractIOUtils.ARCHIVE_URL_DELIM,
+		XML_PATH);
 
 	return xmls;
     }
