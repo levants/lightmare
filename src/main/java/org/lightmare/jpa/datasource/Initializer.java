@@ -68,7 +68,7 @@ public class Initializer {
     public static String getJndiName(Properties properties) {
 
 	String jndiName = properties
-		.getProperty(Initializer.ConnectionConfig.JNDI_NAME_PROPERTY.name);
+		.getProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name);
 
 	return jndiName;
     }
