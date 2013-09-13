@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.lightmare.jpa.datasource.DataSourceInitializer.ConnectionProperties;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
@@ -142,14 +143,12 @@ public class PoolConfig {
     private Set<Object> unsopportedKeys() throws IOException {
 
 	Set<Object> keys = new HashSet<Object>();
-	Field[] fields = DataSourceInitializer.class.getDeclaredFields();
-	Object key;
-	String apprEnd = "_PROPERTY";
-	String name;
-	for (Field field : fields) {
-	    name = field.getName();
-	    if (checkModifiers(field) && name.endsWith(apprEnd)) {
-		key = MetaUtils.getFieldValue(field);
+	DataSourceInitializer.ConnectionProperties[] ussKeys = DataSourceInitializer.ConnectionProperties
+		.values();
+	String key;
+	for (DataSourceInitializer.ConnectionProperties ussKey : ussKeys) {
+	    key = ussKey.property;
+	    if (ObjectUtils.available(key)) {
 		keys.add(key);
 	    }
 	}
