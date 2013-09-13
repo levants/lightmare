@@ -219,17 +219,7 @@ public class PoolConfig {
 	    DefaultConfig config) {
 
 	String key = config.key;
-	Object property = properties.get(key);
-	Integer propertyInt;
-	if (property == null) {
-	    propertyInt = null;
-	} else if (property instanceof Integer) {
-	    propertyInt = (Integer) property;
-	} else if (property instanceof String) {
-	    propertyInt = Integer.valueOf((String) property);
-	} else {
-	    propertyInt = null;
-	}
+	Integer propertyInt = asInt(properties, key);
 
 	return propertyInt;
     }
