@@ -22,6 +22,7 @@ public class TmpResources {
 	for (File file : files) {
 	    file.deleteOnExit();
 	}
+
 	tmpFiles.add(files);
     }
 
