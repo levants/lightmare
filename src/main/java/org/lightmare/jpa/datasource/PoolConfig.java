@@ -53,7 +53,7 @@ public class PoolConfig {
 	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads", "1"),
 	
 	// Transaction properties
-	AUTOCOMMIT_NAME("autoCommit", "false"),
+	AUTOCOMMIT("autoCommit", "false"),
 	AUTOCOMMIT_ON_CLOSE_NAME("autoCommitOnClose", "false"),
 	URESOLVED_TRANSACTIONS_NAME("forceIgnoreUnresolvedTransactions", "true"),
 	
