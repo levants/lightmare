@@ -33,9 +33,6 @@ public class DataSourceInitializer {
     private static final Set<String> INITIALIZED_NAMES = Collections
 	    .synchronizedSet(new HashSet<String>());
 
-    public static final Logger LOG = Logger
-	    .getLogger(DataSourceInitializer.class);
-
     // Connection properties
     public static enum ConnectionProperties {
 
@@ -52,6 +49,9 @@ public class DataSourceInitializer {
 	    this.property = property;
 	}
     }
+
+    public static final Logger LOG = Logger
+	    .getLogger(DataSourceInitializer.class);
 
     private DataSourceInitializer() {
     }
