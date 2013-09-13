@@ -53,9 +53,9 @@ public class PoolConfig {
 	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads", "1"),
 	
 	// Transaction properties
-	AUTOCOMMIT("autoCommit", "false"),
-	AUTOCOMMIT_ON_CLOSE("autoCommitOnClose", "false"),
-	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions", "true"),
+	AUTOCOMMIT("autoCommit", "false"),//
+	AUTOCOMMIT_ON_CLOSE("autoCommitOnClose", "false"),//
+	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions", "true"),//
 	
         // Connection recovery properties
 	ACQUIRE_RETRY_ATTEMPTS( "acquireRetryAttempts", "0"),
