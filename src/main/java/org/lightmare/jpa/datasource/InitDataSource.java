@@ -36,8 +36,10 @@ public abstract class InitDataSource {
 	if (ObjectUtils.available(properties)) {
 	    this.properties = properties;
 	    this.poolConfig = Configuration.getPoolConfig();
-	    driver = properties.getProperty(
-		    DataSourceInitializer.DRIVER_PROPERTY).trim();
+	    driver = properties
+		    .getProperty(
+			    DataSourceInitializer.ConnectionProperties.DRIVER_PROPERTY.property)
+		    .trim();
 	    url = properties.getProperty(DataSourceInitializer.URL_PROPERTY)
 		    .trim();
 	    user = properties.getProperty(DataSourceInitializer.USER_PROPERTY)
