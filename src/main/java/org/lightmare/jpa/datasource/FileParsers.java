@@ -51,6 +51,7 @@ public class FileParsers {
     private static final String CONNECTION_URL_TAG = "connection-url";
     private static final String SECURITY_TAG = "security";
     private static final String POOL_TAG = "pool";
+    // End of tag names
 
     private static final Logger LOG = Logger.getLogger(FileParsers.class);
 
