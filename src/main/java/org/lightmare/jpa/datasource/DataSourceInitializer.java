@@ -47,11 +47,11 @@ public class DataSourceInitializer {
     // Connection properties
     public static enum ConnectionProperties {
 
-	DRIVER_PROPERTY("driver"), //driver
-	USER_PROPERTY("user"), //user
-	PASSWORD_PROPERTY("password"), //password
-	URL_PROPERTY("url"), //URL
-	JNDI_NAME_PROPERTY("jndiname"), //JNDI name
+	DRIVER_PROPERTY("driver"), // driver
+	USER_PROPERTY("user"), // user
+	PASSWORD_PROPERTY("password"), // password
+	URL_PROPERTY("url"), // URL
+	JNDI_NAME_PROPERTY("jndiname"), // JNDI name
 	NAME_PROPERTY("name");// name
 
 	public String property;
