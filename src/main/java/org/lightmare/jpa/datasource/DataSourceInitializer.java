@@ -37,14 +37,6 @@ public class DataSourceInitializer {
 	    .getLogger(DataSourceInitializer.class);
 
     // Connection properties
-    public static final String DRIVER_PROPERTY = "driver";
-    public static final String USER_PROPERTY = "user";
-    public static final String PASSWORD_PROPERTY = "password";
-    public static final String URL_PROPERTY = "url";
-    public static final String JNDI_NAME_PROPERTY = "jndiname";
-    public static final String NAME_PROPERTY = "name";
-
-    // Connection properties
     public static enum ConnectionProperties {
 
 	DRIVER_PROPERTY("driver"), // driver
@@ -72,7 +64,7 @@ public class DataSourceInitializer {
     public static String getJndiName(Properties properties) {
 
 	String jndiName = properties
-		.getProperty(DataSourceInitializer.JNDI_NAME_PROPERTY);
+		.getProperty(DataSourceInitializer.ConnectionProperties.JNDI_NAME_PROPERTY.property);
 
 	return jndiName;
     }
