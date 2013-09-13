@@ -9,7 +9,7 @@ import java.util.Properties;
 import javax.naming.Context;
 import javax.sql.DataSource;
 
-import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.InitDataSource;
 import org.lightmare.jpa.datasource.InitMessages;
 
@@ -50,7 +50,7 @@ public class InitDataSourceC3p0 extends InitDataSource {
 		comboPooledDataSource.setPassword(password);
 		dataSource = comboPooledDataSource;
 	    } else {
-		DataSourceInitializer.initializeDriver(driver);
+		Initializer.initializeDriver(driver);
 		dataSource = DataSources
 			.unpooledDataSource(url, user, password);
 	    }

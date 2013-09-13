@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.lightmare.jpa.datasource.DataSourceInitializer.ConnectionProperties;
+import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 

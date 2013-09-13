@@ -18,7 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
-import org.lightmare.jpa.datasource.DataSourceInitializer.ConnectionProperties;
+import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.w3c.dom.Document;
@@ -357,6 +357,6 @@ public class FileParsers {
 	    throw new IOException(ex);
 	}
 
-	DataSourceInitializer.setDsAsInitialized(dataSourcePath);
+	Initializer.setDsAsInitialized(dataSourcePath);
     }
 }

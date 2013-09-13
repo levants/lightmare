@@ -23,7 +23,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * @author levan
  * 
  */
-public class DataSourceInitializer {
+public class Initializer {
 
     // Caches already initialized data source file paths
     private static final Set<String> INITIALIZED_SOURCES = Collections
@@ -51,9 +51,9 @@ public class DataSourceInitializer {
     }
 
     public static final Logger LOG = Logger
-	    .getLogger(DataSourceInitializer.class);
+	    .getLogger(Initializer.class);
 
-    private DataSourceInitializer() {
+    private Initializer() {
     }
 
     private static boolean checkForDataSource(String path) {
@@ -64,7 +64,7 @@ public class DataSourceInitializer {
     public static String getJndiName(Properties properties) {
 
 	String jndiName = properties
-		.getProperty(DataSourceInitializer.ConnectionProperties.JNDI_NAME_PROPERTY.property);
+		.getProperty(Initializer.ConnectionProperties.JNDI_NAME_PROPERTY.property);
 
 	return jndiName;
     }
@@ -87,7 +87,7 @@ public class DataSourceInitializer {
     public static void initializeDataSource(String path) throws IOException {
 
 	boolean valid = checkForDataSource(path)
-		&& ObjectUtils.notTrue(DataSourceInitializer.checkDSPath(path));
+		&& ObjectUtils.notTrue(Initializer.checkDSPath(path));
 	if (valid) {
 	    FileParsers parsers = new FileParsers();
 	    parsers.parseStandaloneXml(path);

@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
-import org.lightmare.jpa.datasource.DataSourceInitializer.ConnectionProperties;
+import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -21,7 +21,7 @@ import org.lightmare.utils.ObjectUtils;
 public abstract class InitDataSource {
 
     protected static final Logger LOG = Logger
-	    .getLogger(DataSourceInitializer.class);
+	    .getLogger(Initializer.class);
 
     protected Properties properties;
 
@@ -75,7 +75,7 @@ public abstract class InitDataSource {
      * @throws IOException
      */
     public void create() throws IOException {
-	String jndiName = DataSourceInitializer.getJndiName(properties);
+	String jndiName = Initializer.getJndiName(properties);
 	LOG.info(String.format(InitMessages.INITIALIZING_MESSAGE, jndiName));
 	try {
 	    DataSource dataSource = initializeDataSource();

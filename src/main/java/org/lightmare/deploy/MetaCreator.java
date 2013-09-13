@@ -34,7 +34,7 @@ import org.lightmare.cache.TmpResources;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.jpa.JPAManager;
-import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;
@@ -470,7 +470,7 @@ public class MetaCreator {
 	    Set<String> beanNames = annotationDB.getAnnotationIndex().get(
 		    Stateless.class.getName());
 	    classOwnersURL = annotationDB.getClassOwnersURLs();
-	    DataSourceInitializer.initializeDataSources(configuration);
+	    Initializer.initializeDataSources(configuration);
 	    if (ObjectUtils.available(beanNames)) {
 		deployBeans(beanNames);
 	    }

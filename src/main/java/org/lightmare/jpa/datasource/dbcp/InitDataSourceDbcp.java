@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
 import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
-import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.InitDataSource;
 import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.PoolConfig;
@@ -30,7 +30,7 @@ public class InitDataSourceDbcp extends InitDataSource {
     @Override
     public DataSource initializeDataSource() throws IOException {
 
-	String jndiName = DataSourceInitializer.getJndiName(properties);
+	String jndiName = Initializer.getJndiName(properties);
 
 	DriverAdapterCPDS dacp = new DriverAdapterCPDS();
 
