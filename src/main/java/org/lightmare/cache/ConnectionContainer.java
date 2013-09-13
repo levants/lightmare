@@ -234,9 +234,8 @@ public class ConnectionContainer {
 		    jndiManager.unbind(fullJndiName);
 		}
 	    } catch (IOException ex) {
-		LOG.error(String.format(
-			"Could not unbind jndi name %s cause %s", jndiName,
-			ex.getMessage()), ex);
+		LOG.error(String.format(NamingUtils.COULD_UNBIND_NAME,
+			jndiName, ex.getMessage()), ex);
 	    }
 	}
     }

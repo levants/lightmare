@@ -28,6 +28,9 @@ public class NamingUtils {
 
     private static final int BEAN_INDEX = 1;
 
+    // Error messages
+    public static final String COULD_UNBIND_NAME = "Could not unbind jndi name %s cause %s";
+
     /**
      * Descriptor class which contains EJB bean class name and its interface
      * class name
