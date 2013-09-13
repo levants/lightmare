@@ -139,8 +139,7 @@ public class MetaContainer {
 
 	MetaData tmpMeta = addMetaData(beanName, metaData);
 	if (ObjectUtils.notNull(tmpMeta)) {
-	    throw new BeanInUseException(String.format(
-		    "bean %s is alredy in use", beanName));
+	    throw BeanInUseException.get("bean %s is alredy in use", beanName);
 	}
     }
 
