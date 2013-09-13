@@ -194,7 +194,8 @@ public class FileParsers {
 	    Element minPoolSizeElement = (Element) getFirst(minPoolSizeList);
 	    String minPoolSize = getContext(minPoolSizeElement);
 
-	    properties.setProperty(PoolConfig.MIN_POOL_SIZE, minPoolSize);
+	    properties.setProperty(PoolConfig.DefaultConfig.MIN_POOL_SIZE.key,
+		    minPoolSize);
 
 	    NodeList maxPoolSizeList = thisElement
 		    .getElementsByTagName(MAX_POOL_TAG);
@@ -205,7 +206,8 @@ public class FileParsers {
 	    Element maxPoolSizeElement = (Element) getFirst(maxPoolSizeList);
 	    String maxPoolSize = getContext(maxPoolSizeElement);
 
-	    properties.setProperty(PoolConfig.MAX_POOL_SIZE, maxPoolSize);
+	    properties.setProperty(PoolConfig.DefaultConfig.MAX_POOL_SIZE.key,
+		    maxPoolSize);
 
 	    NodeList initPoolSizeList = thisElement
 		    .getElementsByTagName(INITIAL_POOL_TAG);
@@ -216,7 +218,8 @@ public class FileParsers {
 	    Element initPoolSizeElement = (Element) getFirst(initPoolSizeList);
 	    String prefill = getContext(initPoolSizeElement);
 	    if (Boolean.valueOf(prefill)) {
-		properties.setProperty(PoolConfig.INITIAL_POOL_SIZE,
+		properties.setProperty(
+			PoolConfig.DefaultConfig.INITIAL_POOL_SIZE.key,
 			minPoolSize);
 	    }
 	}

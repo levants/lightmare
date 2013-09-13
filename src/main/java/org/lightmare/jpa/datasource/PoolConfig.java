@@ -34,34 +34,34 @@ public class PoolConfig {
 	// ===========================================//
 
 	// Class loader properties
-	CONTEXT_CLASS_LOADER_SOURCE("contextClassLoaderSource", "library"),//
-	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", "true"),//
-	
+	CONTEXT_CLASS_LOADER_SOURCE("contextClassLoaderSource", "library"), //
+	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", "true"), //
+
 	// Pool properties
-	MAX_POOL_SIZE("maxPoolSize", "15"),//
-	INITIAL_POOL_SIZE( "initialPoolSize", "5"),//
-	MIN_POOL_SIZE ( "minPoolSize", "5"),//
-	MAX_STATEMENTS ( "maxStatements", "50"),//
-	AQUIRE_INCREMENT ( "acquireIncrement", "5"),//
-	
+	MAX_POOL_SIZE("maxPoolSize", "15"), //
+	INITIAL_POOL_SIZE("initialPoolSize", "5"), //
+	MIN_POOL_SIZE("minPoolSize", "5"), //
+	MAX_STATEMENTS("maxStatements", "50"), //
+	AQUIRE_INCREMENT("acquireIncrement", "5"), //
+
 	// Pool timeout properties
-	MAX_IDLE_TIMEOUT("maxIdleTime","10000"),//
-	MAX_IDLE_TIME_EXCESS_CONN("maxIdleTimeExcessConnections", "0"),//
-	CHECK_OUT_TIMEOUT("checkoutTimeout","1800"),//
-	
+	MAX_IDLE_TIMEOUT("maxIdleTime", "10000"), //
+	MAX_IDLE_TIME_EXCESS_CONN("maxIdleTimeExcessConnections", "0"), //
+	CHECK_OUT_TIMEOUT("checkoutTimeout", "1800"), //
+
 	// Controller properties
-	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads", "1"),
-	
+	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads",
+		"1"),
+
 	// Transaction properties
-	AUTOCOMMIT("autoCommit", "false"),//
-	AUTOCOMMIT_ON_CLOSE("autoCommitOnClose", "false"),//
-	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions", "true"),//
-	
-        // Connection recovery properties
-	ACQUIRE_RETRY_ATTEMPTS( "acquireRetryAttempts", "0"),//
-	ACQUIRE_RETRY_DELAY("acquireRetryDelay", "1000"),//
+	AUTOCOMMIT("autoCommit", "false"), //
+	AUTOCOMMIT_ON_CLOSE("autoCommitOnClose", "false"), //
+	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions", "true"), //
+
+	// Connection recovery properties
+	ACQUIRE_RETRY_ATTEMPTS("acquireRetryAttempts", "0"), //
+	ACQUIRE_RETRY_DELAY("acquireRetryDelay", "1000"), //
 	BREACK_AFTER_ACQUIRE_FAILURE("breakAfterAcquireFailure", "false");//
-	
 
 	public String key;
 
@@ -73,9 +73,9 @@ public class PoolConfig {
 
 	private DefaultConfig(String key, Object value) {
 	    this(key);
-	    if(value instanceof String){
-		this.value = (String)value;
-	    }else{
+	    if (value instanceof String) {
+		this.value = (String) value;
+	    } else {
 		this.value = String.valueOf(value);
 	    }
 	}
@@ -116,13 +116,13 @@ public class PoolConfig {
 	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
 
 	DefaultConfig[] defaults = DefaultConfig.values();
-	
+
 	String key;
 	String value;
-	for(DefaultConfig config : defaults){
+	for (DefaultConfig config : defaults) {
 	    key = config.key;
 	    value = config.value;
-	    if(ObjectUtils.available(key) && ObjectUtils.available(value)){
+	    if (ObjectUtils.available(key) && ObjectUtils.available(value)) {
 		c3p0Properties.put(key, value);
 	    }
 	}
@@ -220,7 +220,7 @@ public class PoolConfig {
 
 	return propertyInt;
     }
-    
+
     /**
      * Gets property as <code>int</int> value
      * 
@@ -228,7 +228,8 @@ public class PoolConfig {
      * @param key
      * @return <code>int</code>
      */
-    public static Integer asInt(Map<Object, Object> properties, DefaultConfig config) {
+    public static Integer asInt(Map<Object, Object> properties,
+	    DefaultConfig config) {
 
 	String key = config.key;
 	Object property = properties.get(key);
