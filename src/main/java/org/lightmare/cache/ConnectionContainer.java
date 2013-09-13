@@ -298,6 +298,7 @@ public class ConnectionContainer {
     public static void removeConnection(String unitName) {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
+
 	if (ObjectUtils.notNull(semaphore)) {
 	    awaitConnection(semaphore);
 	    closeConnection(semaphore);
