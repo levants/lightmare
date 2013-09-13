@@ -18,6 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
+import org.lightmare.jpa.datasource.DataSourceInitializer.ConnectionProperties;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.w3c.dom.Document;
@@ -175,10 +176,8 @@ public class FileParsers {
 	    Element passElement = (Element) getFirst(passList);
 	    String password = getContext(passElement);
 
-	    properties
-		    .setProperty(
-			    DataSourceInitializer.ConnectionProperties.PASSWORD_PROPERTY.property,
-			    password);
+	    properties.setProperty(
+		    ConnectionProperties.PASSWORD_PROPERTY.property, password);
 	}
     }
 
