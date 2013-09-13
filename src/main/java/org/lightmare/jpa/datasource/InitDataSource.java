@@ -35,6 +35,7 @@ public abstract class InitDataSource {
     public InitDataSource(Properties properties) {
 
 	if (ObjectUtils.available(properties)) {
+
 	    this.properties = properties;
 	    this.poolConfig = Configuration.getPoolConfig();
 	    driver = properties.getProperty(
