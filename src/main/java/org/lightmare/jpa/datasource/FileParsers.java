@@ -85,7 +85,7 @@ public class FileParsers {
     }
 
     /**
-     * To get text from tag depended on jre installation
+     * To get text from tag depended on JRE installation
      * 
      * @param element
      * @return {@link String}
