@@ -80,6 +80,7 @@ public abstract class InitDataSource {
 	LogUtils.info(LOG, InitMessages.INITIALIZING_MESSAGE, jndiName);
 
 	try {
+
 	    DataSource dataSource = initializeDataSource();
 	    boolean valid = checkInstance(dataSource);
 	    if (valid) {
