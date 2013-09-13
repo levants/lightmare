@@ -41,10 +41,8 @@ public abstract class InitDataSource {
 		    ConnectionProperties.DRIVER_PROPERTY.property).trim();
 	    url = properties.getProperty(
 		    ConnectionProperties.URL_PROPERTY.property).trim();
-	    user = properties
-		    .getProperty(
-			    DataSourceInitializer.ConnectionProperties.USER_PROPERTY.property)
-		    .trim();
+	    user = properties.getProperty(
+		    ConnectionProperties.USER_PROPERTY.property).trim();
 	    password = properties
 		    .getProperty(
 			    DataSourceInitializer.ConnectionProperties.PASSWORD_PROPERTY.property)
