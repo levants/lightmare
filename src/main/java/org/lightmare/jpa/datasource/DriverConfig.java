@@ -16,6 +16,7 @@ public class DriverConfig {
      */
     public static enum Drivers {
 
+	// Database name and driver descriptors
 	ORACLE("oracle", "oracle.jdbc.OracleDriver"), // Oracle
 	MYSQL("mysql", "com.mysql.jdbc.Driver"), // MYSQL
 	MSSQL("mssql", "com.microsoft.sqlserver.jdbc.SQLServerDriver"), // MSSQL
