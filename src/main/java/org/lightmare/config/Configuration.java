@@ -759,7 +759,7 @@ public class Configuration implements Cloneable {
     }
 
     public String[] getLibraryPaths() {
-	
+
 	return getConfigValue(LIBRARY_PATH_KEY);
     }
 
@@ -768,7 +768,7 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isHotDeployment() {
-	
+
 	return getConfigValue(HOT_DEPLOYMENT_KEY, Boolean.FALSE);
     }
 
@@ -777,7 +777,7 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isWatchStatus() {
-	
+
 	return getConfigValue(WATCH_STATUS_KEY, Boolean.FALSE);
     }
 
@@ -791,7 +791,7 @@ public class Configuration implements Cloneable {
      * @return <code>boolean</code>
      */
     public boolean isScanForEntities() {
-	
+
 	return getPersistenceConfigValue(SCAN_FOR_ENTITIES_KEY, Boolean.FALSE);
     }
 
@@ -801,6 +801,7 @@ public class Configuration implements Cloneable {
     }
 
     public String getAnnotatedUnitName() {
+
 	return getPersistenceConfigValue(ANNOTATED_UNIT_NAME_KEY);
     }
 
