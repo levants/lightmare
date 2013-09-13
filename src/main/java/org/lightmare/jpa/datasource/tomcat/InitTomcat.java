@@ -19,7 +19,7 @@ import org.lightmare.utils.StringUtils;
  * @author levan
  * 
  */
-public class InitDataSourceTomcat extends InitDataSource {
+public class InitTomcat extends InitDataSource {
 
     /**
      * Container for Tomcat default configurations
@@ -45,7 +45,7 @@ public class InitDataSourceTomcat extends InitDataSource {
 
     private static final String TEST_SQL = "SELECT 1";
 
-    public InitDataSourceTomcat(Properties properties) {
+    public InitTomcat(Properties properties) {
 	super(properties);
     }
 

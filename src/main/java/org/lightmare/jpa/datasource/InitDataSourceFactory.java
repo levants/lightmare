@@ -8,7 +8,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.jpa.datasource.c3p0.InitC3p0;
 import org.lightmare.jpa.datasource.dbcp.InitDBCP;
-import org.lightmare.jpa.datasource.tomcat.InitDataSourceTomcat;
+import org.lightmare.jpa.datasource.tomcat.InitTomcat;
 
 /**
  * Factory class to get {@link InitDataSource} instance
@@ -33,7 +33,7 @@ public class InitDataSourceFactory {
 	    initDataSource = new InitC3p0(properties);
 	} else if (poolConfig.getPoolProviderType().equals(
 		PoolProviderType.TOMCAT)) {
-	    initDataSource = new InitDataSourceTomcat(properties);
+	    initDataSource = new InitTomcat(properties);
 	} else if (poolConfig.getPoolProviderType().equals(
 		PoolProviderType.DBCP)) {
 	    initDataSource = new InitDBCP(properties);
