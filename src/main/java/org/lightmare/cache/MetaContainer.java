@@ -20,6 +20,7 @@ import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.WatchUtils;
 
@@ -338,8 +339,8 @@ public class MetaContainer {
 	try {
 	    metaData = getSyncMetaData(beanName);
 	} catch (IOException ex) {
-	    LOG.error(String.format("Could not get bean resources %s cause %s",
-		    beanName, ex.getMessage()), ex);
+	    LogUtils.error(LOG, ex, "Could not get bean resources %s cause %s",
+		    beanName, ex.getMessage());
 	}
 	// Removes MetaData from cache
 	removeMeta(beanName);
