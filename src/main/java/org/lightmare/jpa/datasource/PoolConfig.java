@@ -244,6 +244,7 @@ public class PoolConfig {
     public Map<Object, Object> load() throws IOException {
 
 	Map<Object, Object> properties;
+
 	InputStream stream;
 	if (ObjectUtils.notAvailable(poolPath)) {
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
