@@ -169,10 +169,11 @@ public class PoolConfig {
 	fillDefaults(propertiesMap, initial);
 	Set<Object> keys = unsopportedKeys();
 	Object dataSourceName = null;
+	String property;
 	for (Object key : keys) {
-	    if (key.equals(DataSourceInitializer.ConnectionProperties.NAME_PROPERTY.property)) {
-		dataSourceName = propertiesMap
-			.get(DataSourceInitializer.ConnectionProperties.NAME_PROPERTY.property);
+	    property = DataSourceInitializer.ConnectionProperties.NAME_PROPERTY.property;
+	    if (key.equals(property)) {
+		dataSourceName = propertiesMap.get(property);
 	    }
 	    propertiesMap.remove(key);
 	}
