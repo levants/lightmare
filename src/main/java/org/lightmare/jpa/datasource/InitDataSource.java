@@ -43,10 +43,8 @@ public abstract class InitDataSource {
 		    ConnectionProperties.URL_PROPERTY.property).trim();
 	    user = properties.getProperty(
 		    ConnectionProperties.USER_PROPERTY.property).trim();
-	    password = properties
-		    .getProperty(
-			    DataSourceInitializer.ConnectionProperties.PASSWORD_PROPERTY.property)
-		    .trim();
+	    password = properties.getProperty(
+		    ConnectionProperties.PASSWORD_PROPERTY.property).trim();
 	}
     }
 
