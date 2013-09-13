@@ -34,6 +34,7 @@ public class ConfigLoader {
      * @throws IOException
      */
     public Enumeration<URL> readURL(final URL url) {
+
 	Enumeration<URL> xmls = new Enumeration<URL>() {
 
 	    private boolean nextElement = Boolean.TRUE;
