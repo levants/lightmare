@@ -150,12 +150,13 @@ public class Configuration implements Cloneable {
     public Configuration() {
     }
 
-    @SuppressWarnings("unchecked")
     private <K, V> Map<K, V> getAsMap(Object key, Map<Object, Object> from) {
 
 	if (from == null) {
 	    from = config;
 	}
+
+	@SuppressWarnings("unchecked")
 	Map<K, V> value = (Map<K, V>) ObjectUtils.getAsMap(key, from);
 
 	return value;
