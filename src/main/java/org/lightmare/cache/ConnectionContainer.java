@@ -235,7 +235,7 @@ public class ConnectionContainer {
 		    jndiManager.unbind(fullJndiName);
 		}
 	    } catch (IOException ex) {
-		LogUtils.error(LOG, ex, NamingUtils.COULD_UNBIND_NAME,
+		LogUtils.error(LOG, ex, NamingUtils.COULD_NOT_UNBIND_NAME,
 			jndiName, ex.getMessage());
 	    }
 	}
