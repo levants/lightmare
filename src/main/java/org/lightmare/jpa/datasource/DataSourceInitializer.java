@@ -51,7 +51,7 @@ public class DataSourceInitializer {
 	USER_PROPERTY("user"), //user
 	PASSWORD_PROPERTY("password"), //password
 	URL_PROPERTY("url"), //URL
-	JNDI_NAME_PROPERTY("jndiname"), //
+	JNDI_NAME_PROPERTY("jndiname"), //JNDI name
 	NAME_PROPERTY("name");//
 
 	public String property;
