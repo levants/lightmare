@@ -30,7 +30,7 @@ public class ConfigLoader {
      * @see Ejb3ConfigurationImpl#configure(String, java.util.Map)
      * 
      * @param path
-     * @return Enumeration<{@link URL} >
+     * @return Enumeration<{@link URL}>
      * @throws IOException
      */
     public Enumeration<URL> readURL(final URL url) {
