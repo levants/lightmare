@@ -21,6 +21,7 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class PoolConfig {
 
+    // Container for default configuration keys and values
     public static enum DefaultConfig {
 
 	// Data source name property
