@@ -510,17 +510,20 @@ public class Configuration implements Cloneable {
      * 
      * @param configuration
      */
-    @SuppressWarnings("unchecked")
     public void configure(String path) throws IOException {
 
 	File yamlFile = new File(path);
 	if (yamlFile.exists()) {
+
 	    InputStream stream = new FileInputStream(yamlFile);
 	    try {
 		Yaml yaml = new Yaml();
 		Object configuration = yaml.load(stream);
+
 		if (configuration instanceof Map) {
-		    configure((Map<Object, Object>) configuration);
+		    @SuppressWarnings("unchecked")
+		    Map<Object, Object> innerConfig = (Map<Object, Object>) configuration;
+		    configure(innerConfig);
 		}
 	    } finally {
 		ObjectUtils.close(stream);
