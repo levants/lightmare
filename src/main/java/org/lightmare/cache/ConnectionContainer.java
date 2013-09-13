@@ -317,6 +317,7 @@ public class ConnectionContainer {
 	if (type == null) {
 	    type = new PoolConfig().getPoolProviderType();
 	}
+
 	POOL_CONFIG_TYPES.remove(jndiName);
 
 	return type;
