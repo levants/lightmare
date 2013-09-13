@@ -782,7 +782,11 @@ public class Configuration implements Cloneable {
 	setConfigValue(WATCH_STATUS_KEY, watchStatus);
     }
 
-    // Persistence configuration
+    /**
+     * Persistence configuration
+     * 
+     * @return <code>boolean</code>
+     */
     public boolean isScanForEntities() {
 	return getPersistenceConfigValue(SCAN_FOR_ENTITIES_KEY, Boolean.FALSE);
     }
