@@ -759,6 +759,7 @@ public class Configuration implements Cloneable {
     }
 
     public String[] getLibraryPaths() {
+	
 	return getConfigValue(LIBRARY_PATH_KEY);
     }
 
