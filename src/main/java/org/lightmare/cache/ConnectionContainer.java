@@ -83,9 +83,11 @@ public class ConnectionContainer {
 	    semaphore.setCached(Boolean.TRUE);
 	    current = CONNECTIONS.putIfAbsent(unitName, semaphore);
 	}
+
 	if (current == null) {
 	    current = semaphore;
 	}
+
 	current.incrementUser();
 
 	return current;
