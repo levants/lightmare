@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
+import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -20,7 +21,7 @@ import org.lightmare.utils.ObjectUtils;
 public abstract class InitDataSource {
 
     protected static final Logger LOG = Logger
-	    .getLogger(DataSourceInitializer.class);
+	    .getLogger(Initializer.class);
 
     protected Properties properties;
 
@@ -37,13 +38,13 @@ public abstract class InitDataSource {
 	    this.properties = properties;
 	    this.poolConfig = Configuration.getPoolConfig();
 	    driver = properties.getProperty(
-		    DataSourceInitializer.DRIVER_PROPERTY).trim();
-	    url = properties.getProperty(DataSourceInitializer.URL_PROPERTY)
-		    .trim();
-	    user = properties.getProperty(DataSourceInitializer.USER_PROPERTY)
-		    .trim();
+		    ConnectionProperties.DRIVER_PROPERTY.property).trim();
+	    url = properties.getProperty(
+		    ConnectionProperties.URL_PROPERTY.property).trim();
+	    user = properties.getProperty(
+		    ConnectionProperties.USER_PROPERTY.property).trim();
 	    password = properties.getProperty(
-		    DataSourceInitializer.PASSWORD_PROPERTY).trim();
+		    ConnectionProperties.PASSWORD_PROPERTY.property).trim();
 	}
     }
 
@@ -74,7 +75,7 @@ public abstract class InitDataSource {
      * @throws IOException
      */
     public void create() throws IOException {
-	String jndiName = DataSourceInitializer.getJndiName(properties);
+	String jndiName = Initializer.getJndiName(properties);
 	LOG.info(String.format(InitMessages.INITIALIZING_MESSAGE, jndiName));
 	try {
 	    DataSource dataSource = initializeDataSource();

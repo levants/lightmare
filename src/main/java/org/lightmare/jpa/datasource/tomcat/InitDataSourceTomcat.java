@@ -21,9 +21,22 @@ import org.lightmare.utils.StringUtils;
  */
 public class InitDataSourceTomcat extends InitDataSource {
 
-    private static final String JDBC_INTERCEPTOR_KEY = "org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;";
+    // Tomcat default configurations
+    protected static enum TomcatConfig {
 
-    private static final String JDBC_INTERCEPTOR_VALUE = "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer";
+	JDBC_INTERCEPTOR(
+		"org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;",
+		"org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
+
+	public String key;
+
+	public String value;
+
+	private TomcatConfig(String key, String value) {
+	    this.key = key;
+	    this.value = value;
+	}
+    }
 
     private static final String TEST_SQL = "SELECT 1";
 
@@ -50,9 +63,9 @@ public class InitDataSourceTomcat extends InitDataSource {
 	poolProperties.setValidationInterval(30000);
 	poolProperties.setTimeBetweenEvictionRunsMillis(30000);
 	poolProperties.setMaxActive(PoolConfig.asInt(configMap,
-		PoolConfig.MAX_POOL_SIZE));
+		PoolConfig.DefaultConfig.MAX_POOL_SIZE));
 	poolProperties.setInitialSize(PoolConfig.asInt(configMap,
-		PoolConfig.INITIAL_POOL_SIZE));
+		PoolConfig.DefaultConfig.INITIAL_POOL_SIZE));
 	poolProperties.setMaxWait(10000);
 	poolProperties.setRemoveAbandonedTimeout(60);
 	poolProperties.setMinEvictableIdleTimeMillis(30000);
@@ -60,7 +73,8 @@ public class InitDataSourceTomcat extends InitDataSource {
 	poolProperties.setLogAbandoned(Boolean.TRUE);
 	poolProperties.setRemoveAbandoned(Boolean.TRUE);
 	poolProperties.setJdbcInterceptors(StringUtils.concat(
-		JDBC_INTERCEPTOR_KEY, JDBC_INTERCEPTOR_VALUE));
+		TomcatConfig.JDBC_INTERCEPTOR.key,
+		TomcatConfig.JDBC_INTERCEPTOR.value));
 	dataSource = new DataSource();
 	dataSource.setPoolProperties(poolProperties);
 

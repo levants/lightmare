@@ -30,7 +30,7 @@ public class Configuration implements Cloneable {
     // cache for all configuration passed programmatically or read from file
     private final Map<Object, Object> config = new HashMap<Object, Object>();
 
-    // path where stored adminitrator users
+    // path where stored administrative users
     public static final String ADMIN_USERS_PATH_KEY = "adminUsersPath";
 
     /**
@@ -47,12 +47,12 @@ public class Configuration implements Cloneable {
 
     public static final String CONNECTION_TIMEOUT_KEY = "timeout";
 
-    // properties for datasource path and deployment path
+    // properties for data source path and deployment path
     public static final String DEMPLOYMENT_PATH_KEY = "deploymentPath";
 
     public static final String DATA_SOURCE_PATH_KEY = "dataSourcePath";
 
-    // runtime to get avaliable processors
+    // runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
     /**

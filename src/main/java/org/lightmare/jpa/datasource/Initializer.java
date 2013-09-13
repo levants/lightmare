@@ -23,7 +23,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * @author levan
  * 
  */
-public class DataSourceInitializer {
+public class Initializer {
 
     // Caches already initialized data source file paths
     private static final Set<String> INITIALIZED_SOURCES = Collections
@@ -33,18 +33,28 @@ public class DataSourceInitializer {
     private static final Set<String> INITIALIZED_NAMES = Collections
 	    .synchronizedSet(new HashSet<String>());
 
-    public static final Logger LOG = Logger
-	    .getLogger(DataSourceInitializer.class);
-
     // Connection properties
-    public static final String DRIVER_PROPERTY = "driver";
-    public static final String USER_PROPERTY = "user";
-    public static final String PASSWORD_PROPERTY = "password";
-    public static final String URL_PROPERTY = "url";
-    public static final String JNDI_NAME_PROPERTY = "jndiname";
-    public static final String NAME_PROPERTY = "name";
+    public static enum ConnectionProperties {
 
-    private DataSourceInitializer() {
+	DRIVER_PROPERTY("driver"), // driver
+	USER_PROPERTY("user"), // user
+	PASSWORD_PROPERTY("password"), // password
+	URL_PROPERTY("url"), // URL
+	JNDI_NAME_PROPERTY("jndiname"), // JNDI name
+	NAME_PROPERTY("name");// name
+
+	public String property;
+
+	private ConnectionProperties(String property) {
+	    this.property = property;
+	}
+    }
+
+    public static final String INITIALIZING_ERROR = "Could not initialize datasource";
+
+    public static final Logger LOG = Logger.getLogger(Initializer.class);
+
+    private Initializer() {
     }
 
     private static boolean checkForDataSource(String path) {
@@ -55,7 +65,7 @@ public class DataSourceInitializer {
     public static String getJndiName(Properties properties) {
 
 	String jndiName = properties
-		.getProperty(DataSourceInitializer.JNDI_NAME_PROPERTY);
+		.getProperty(Initializer.ConnectionProperties.JNDI_NAME_PROPERTY.property);
 
 	return jndiName;
     }
@@ -78,7 +88,7 @@ public class DataSourceInitializer {
     public static void initializeDataSource(String path) throws IOException {
 
 	boolean valid = checkForDataSource(path)
-		&& ObjectUtils.notTrue(DataSourceInitializer.checkDSPath(path));
+		&& ObjectUtils.notTrue(Initializer.checkDSPath(path));
 	if (valid) {
 	    FileParsers parsers = new FileParsers();
 	    parsers.parseStandaloneXml(path);

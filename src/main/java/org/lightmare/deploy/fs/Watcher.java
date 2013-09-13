@@ -28,7 +28,7 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.RestContainer;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
-import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.rest.providers.RestProvider;
 import org.lightmare.utils.ObjectUtils;
@@ -273,7 +273,7 @@ public class Watcher implements Runnable {
 
 	WatchFileType type = checkType(fileName);
 	if (type.equals(WatchFileType.DATA_SOURCE)) {
-	    DataSourceInitializer.undeploy(fileName);
+	    Initializer.undeploy(fileName);
 	} else if (type.equals(WatchFileType.DEPLOYMENT)) {
 	    URL url = getAppropriateURL(fileName);
 	    undeployFile(url);

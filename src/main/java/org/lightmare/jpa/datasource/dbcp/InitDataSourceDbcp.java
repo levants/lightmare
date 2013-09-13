@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
 import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
-import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.InitDataSource;
 import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.PoolConfig;
@@ -30,7 +30,7 @@ public class InitDataSourceDbcp extends InitDataSource {
     @Override
     public DataSource initializeDataSource() throws IOException {
 
-	String jndiName = DataSourceInitializer.getJndiName(properties);
+	String jndiName = Initializer.getJndiName(properties);
 
 	DriverAdapterCPDS dacp = new DriverAdapterCPDS();
 
@@ -50,20 +50,19 @@ public class InitDataSourceDbcp extends InitDataSource {
 	dataSource
 		.setDefaultTransactionIsolation(DEFAULT_TRANSACTION_ISOLATION);
 	dataSource.setLoginTimeout(PoolConfig.asInt(properties,
-		PoolConfig.MAX_IDLE_TIMEOUT));
+		PoolConfig.DefaultConfig.MAX_IDLE_TIMEOUT));
 	dataSource.setMaxActive(PoolConfig.asInt(properties,
-		PoolConfig.MAX_POOL_SIZE));
+		PoolConfig.DefaultConfig.MAX_POOL_SIZE));
 	dataSource.setMaxIdle(PoolConfig.asInt(properties,
-		PoolConfig.MAX_IDLE_TIMEOUT));
+		PoolConfig.DefaultConfig.MAX_IDLE_TIMEOUT));
 	dataSource.setMaxWait(PoolConfig.asInt(properties,
-		PoolConfig.MAX_IDLE_TIMEOUT));
+		PoolConfig.DefaultConfig.MAX_IDLE_TIMEOUT));
 
 	return dataSource;
     }
 
     @Override
-    protected boolean checkInstance(DataSource dataSource)
-	    throws IOException {
+    protected boolean checkInstance(DataSource dataSource) throws IOException {
 
 	boolean valid = (dataSource instanceof DataSource);
 

@@ -10,7 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import org.apache.log4j.Logger;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.JPAManager;
-import org.lightmare.jpa.datasource.DataSourceInitializer;
+import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -261,7 +261,7 @@ public class ConnectionContainer {
     public static void closeConnections() throws IOException {
 
 	ConnectionContainer.closeEntityManagerFactories();
-	DataSourceInitializer.closeAll();
+	Initializer.closeAll();
     }
 
     /**

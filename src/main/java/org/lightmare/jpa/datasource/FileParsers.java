@@ -18,6 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
+import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.w3c.dom.Document;
@@ -137,7 +138,7 @@ public class FileParsers {
 	Element thisElement = (Element) getFirst(nodeList);
 	String name = getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
-	properties.setProperty(DataSourceInitializer.DRIVER_PROPERTY,
+	properties.setProperty(ConnectionProperties.DRIVER_PROPERTY.property,
 		driverName);
     }
 
@@ -160,7 +161,8 @@ public class FileParsers {
 	    Element userElement = (Element) getFirst(userList);
 	    String user = getContext(userElement);
 
-	    properties.setProperty(DataSourceInitializer.USER_PROPERTY, user);
+	    properties.setProperty(ConnectionProperties.USER_PROPERTY.property,
+		    user);
 
 	    NodeList passList = thisElement.getElementsByTagName(PASSWORD_TAG);
 	    elementLength = passList.getLength();
@@ -170,8 +172,8 @@ public class FileParsers {
 	    Element passElement = (Element) getFirst(passList);
 	    String password = getContext(passElement);
 
-	    properties.setProperty(DataSourceInitializer.PASSWORD_PROPERTY,
-		    password);
+	    properties.setProperty(
+		    ConnectionProperties.PASSWORD_PROPERTY.property, password);
 	}
     }
 
@@ -194,7 +196,8 @@ public class FileParsers {
 	    Element minPoolSizeElement = (Element) getFirst(minPoolSizeList);
 	    String minPoolSize = getContext(minPoolSizeElement);
 
-	    properties.setProperty(PoolConfig.MIN_POOL_SIZE, minPoolSize);
+	    properties.setProperty(PoolConfig.DefaultConfig.MIN_POOL_SIZE.key,
+		    minPoolSize);
 
 	    NodeList maxPoolSizeList = thisElement
 		    .getElementsByTagName(MAX_POOL_TAG);
@@ -205,7 +208,8 @@ public class FileParsers {
 	    Element maxPoolSizeElement = (Element) getFirst(maxPoolSizeList);
 	    String maxPoolSize = getContext(maxPoolSizeElement);
 
-	    properties.setProperty(PoolConfig.MAX_POOL_SIZE, maxPoolSize);
+	    properties.setProperty(PoolConfig.DefaultConfig.MAX_POOL_SIZE.key,
+		    maxPoolSize);
 
 	    NodeList initPoolSizeList = thisElement
 		    .getElementsByTagName(INITIAL_POOL_TAG);
@@ -216,7 +220,8 @@ public class FileParsers {
 	    Element initPoolSizeElement = (Element) getFirst(initPoolSizeList);
 	    String prefill = getContext(initPoolSizeElement);
 	    if (Boolean.valueOf(prefill)) {
-		properties.setProperty(PoolConfig.INITIAL_POOL_SIZE,
+		properties.setProperty(
+			PoolConfig.DefaultConfig.INITIAL_POOL_SIZE.key,
 			minPoolSize);
 	    }
 	}
@@ -239,9 +244,10 @@ public class FileParsers {
 	    Properties props = new Properties();
 	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
 	    clearName = NamingUtils.clearDataSourceName(jndiName);
-	    props.setProperty(DataSourceInitializer.JNDI_NAME_PROPERTY,
+	    props.setProperty(ConnectionProperties.JNDI_NAME_PROPERTY.property,
 		    jndiName);
-	    props.setProperty(DataSourceInitializer.NAME_PROPERTY, clearName);
+	    props.setProperty(ConnectionProperties.NAME_PROPERTY.property,
+		    clearName);
 	    NodeList urlList = thisElement
 		    .getElementsByTagName(CONNECTION_URL_TAG);
 	    int urlElementLength = urlList.getLength();
@@ -250,7 +256,7 @@ public class FileParsers {
 	    }
 	    Element urlElement = (Element) getFirst(urlList);
 	    String url = getContext(urlElement);
-	    props.setProperty(DataSourceInitializer.URL_PROPERTY, url);
+	    props.setProperty(ConnectionProperties.URL_PROPERTY.property, url);
 	    NodeList securityList = thisElement
 		    .getElementsByTagName(SECURITY_TAG);
 	    setDataFromJBossSecurity(securityList, props);
@@ -341,7 +347,7 @@ public class FileParsers {
 		BeanLoader.initializeDatasource(parameters);
 
 	    } catch (IOException ex) {
-		LOG.error("Could not initialize datasource", ex);
+		LOG.error(Initializer.INITIALIZING_ERROR, ex);
 	    }
 	}
 
@@ -351,6 +357,6 @@ public class FileParsers {
 	    throw new IOException(ex);
 	}
 
-	DataSourceInitializer.setDsAsInitialized(dataSourcePath);
+	Initializer.setDsAsInitialized(dataSourcePath);
     }
 }

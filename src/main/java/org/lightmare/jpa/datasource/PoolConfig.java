@@ -4,17 +4,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.reflect.MetaUtils;
 
 /**
  * Configuration with default parameters for c3p0 connection pooling
@@ -24,78 +22,66 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class PoolConfig {
 
+    // Container for default configuration keys and values
+    public static enum DefaultConfig {
+
+	// Data source name property
+	DATA_SOURCE_NAME("dataSourceName"),
+
+	// ===========================================//
+	// ====== Data Source properties =============//
+	// ===========================================//
+
+	// Class loader properties
+	CONTEXT_CLASS_LOADER_SOURCE("contextClassLoaderSource", "library"), // loader
+	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", "true"), // threads
+
+	// Pool properties
+	MAX_POOL_SIZE("maxPoolSize", "15"), // max pool size
+	INITIAL_POOL_SIZE("initialPoolSize", "5"), // initial
+	MIN_POOL_SIZE("minPoolSize", "5"), // min pool size
+	MAX_STATEMENTS("maxStatements", "50"), // statements
+	AQUIRE_INCREMENT("acquireIncrement", "5"), // increment
+
+	// Pool timeout properties
+	MAX_IDLE_TIMEOUT("maxIdleTime", "10000"), // idle
+	MAX_IDLE_TIME_EXCESS_CONN("maxIdleTimeExcessConnections", "0"), // excess
+	CHECK_OUT_TIMEOUT("checkoutTimeout", "1800"), // checkout
+
+	// Controller properties
+	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads",
+		"1"),
+
+	// Transaction properties
+	AUTOCOMMIT("autoCommit", "false"), // auto commit
+	AUTOCOMMIT_ON_CLOSE("autoCommitOnClose", "false"), // on close
+	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions", "true"), // ignore
+
+	// Connection recovery properties
+	ACQUIRE_RETRY_ATTEMPTS("acquireRetryAttempts", "0"), // retry
+	ACQUIRE_RETRY_DELAY("acquireRetryDelay", "1000"), // delay
+	BREACK_AFTER_ACQUIRE_FAILURE("breakAfterAcquireFailure", "false");// break
+
+	public String key;
+
+	public String value;
+
+	private DefaultConfig(String key) {
+	    this.key = key;
+	}
+
+	private DefaultConfig(String key, Object value) {
+	    this(key);
+	    if (value instanceof String) {
+		this.value = (String) value;
+	    } else {
+		this.value = String.valueOf(value);
+	    }
+	}
+    }
+
     // Data source name property
     public static final String DATA_SOURCE_NAME = "dataSourceName";
-
-    // ===========================================//
-    // ====== Data Source properties keys ========//
-    // ===========================================//
-
-    // Class loader properties
-    public static final String CONTEXT_CLASS_LOADER_SOURCE = "contextClassLoaderSource";
-    public static final String PRIVILEGED_SPAWNED_THREADS = "privilegeSpawnedThreads";
-
-    // Pool properties
-    public static final String MAX_POOL_SIZE = "maxPoolSize";
-    public static final String INITIAL_POOL_SIZE = "initialPoolSize";
-    public static final String MIN_POOL_SIZE = "minPoolSize";
-    public static final String MAX_STATEMENTS = "maxStatements";
-    public static final String AQUIRE_INCREMENT = "acquireIncrement";
-
-    // Pool timeout properties
-    public static final String MAX_IDLE_TIMEOUT = "maxIdleTime";
-    public static final String MAX_IDLE_TIME_EXCESS_CONN = "maxIdleTimeExcessConnections";
-    public static final String CHECK_OUT_TIMEOUT_NAME = "checkoutTimeout";
-
-    // Controller properties
-    public static final String STAT_CACHE_NUM_DEFF_THREADS = "statementCacheNumDeferredCloseThreads";
-
-    // Transaction properties
-    public static final String AUTOCOMMIT_NAME = "autoCommit";
-    public static final String AUTOCOMMIT_ON_CLOSE_NAME = "autoCommitOnClose";
-    public static final String URESOLVED_TRANSACTIONS_NAME = "forceIgnoreUnresolvedTransactions";
-
-    // Connection recovery properties
-    public static final String ACQUIRE_RETRY_ATTEMPTS = "acquireRetryAttempts";
-    public static final String ACQUIRE_RETRY_DELAY = "acquireRetryDelay";
-    public static final String BREACK_AFTER_ACQUIRE_FAILURE = "breakAfterAcquireFailure";
-
-    // ===========================================//
-    // ================ Default Values ===========//
-    // ===========================================//
-
-    // Class loader properties
-    public static final String CONTEXT_CLASS_LOADER_SOURCE_DEF = "library";
-    public static final String PRIVILEGED_SPAWNED_THREADS_DEF = "true";
-
-    // Pool properties default values
-    public static final String MAX_POOL_SIZE_DEF_VALUE = "15";
-    public static final String INITIAL_POOL_SIZE_DEF_VALUE = "5";
-    public static final String MIN_POOL_SIZE_DEF_VALUE = "5";
-    public static final String MAX_STATEMENTS_DEF_VALUE = "50";
-    public static final String AQUIRE_INCREMENT_DEF_VALUE = "5";
-
-    // Pool timeout properties default values
-    public static final String MAX_IDLE_TIMEOUT_DEF_VALUE = "10000";
-    public static final String MAX_IDLE_TIME_EXCESS_CONN_DEF_VALUE = "0";
-    public static final String CHECK_OUT_TIMEOUT_DEF_VALUE = "1800";
-
-    // Controller properties default values
-    public static final String STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE = "1";
-
-    // Transaction properties default values
-    public static final String AUTOCOMMIT_DEF_VALUE = "false";
-    public static final String AUTOCOMMIT_ON_CLOSE_DEF_VALUE = "false";
-    public static final String URESOLVED_TRANSACTIONS_DEF_VALUE = "true";
-
-    // Connection recovery properties default values
-    public static final String ACQUIRE_RETRY_ATTEMPTS_DEF_VALUE = "0";
-    public static final String ACQUIRE_RETRY_DELAY_DEF_VALUE = "1000";
-    public static final String BREACK_AFTER_ACQUIRE_FAILURE_DEF_VALUE = "false";
-
-    // ===========================================//
-    // ===========End of default Values ===========//
-    // ===========================================//
 
     // Default value for data source properties file
     private static final String POOL_PATH_DEF_VALUE = "META-INF/pool.properties";
@@ -128,72 +114,29 @@ public class PoolConfig {
     public Map<Object, Object> getDefaultPooling() {
 	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
 
-	// Add class loader properties
-	c3p0Properties.put(PoolConfig.CONTEXT_CLASS_LOADER_SOURCE,
-		PoolConfig.CONTEXT_CLASS_LOADER_SOURCE_DEF);
-	c3p0Properties.put(PoolConfig.PRIVILEGED_SPAWNED_THREADS,
-		PoolConfig.PRIVILEGED_SPAWNED_THREADS);
+	DefaultConfig[] defaults = DefaultConfig.values();
 
-	// Added pool properties
-	c3p0Properties.put(PoolConfig.MAX_POOL_SIZE,
-		PoolConfig.MAX_POOL_SIZE_DEF_VALUE);
-	c3p0Properties.put(PoolConfig.INITIAL_POOL_SIZE,
-		PoolConfig.INITIAL_POOL_SIZE_DEF_VALUE);
-	c3p0Properties.put(PoolConfig.MIN_POOL_SIZE,
-		PoolConfig.MIN_POOL_SIZE_DEF_VALUE);
-	c3p0Properties.put(PoolConfig.MAX_STATEMENTS,
-		PoolConfig.MAX_STATEMENTS_DEF_VALUE);
-	c3p0Properties.put(PoolConfig.AQUIRE_INCREMENT,
-		PoolConfig.AQUIRE_INCREMENT_DEF_VALUE);
-
-	// Added pool timeout properties
-	c3p0Properties.put(PoolConfig.MAX_IDLE_TIMEOUT,
-		PoolConfig.MAX_IDLE_TIMEOUT_DEF_VALUE);
-	c3p0Properties.put(MAX_IDLE_TIME_EXCESS_CONN,
-		MAX_IDLE_TIME_EXCESS_CONN_DEF_VALUE);
-	c3p0Properties.put(CHECK_OUT_TIMEOUT_NAME, CHECK_OUT_TIMEOUT_DEF_VALUE);
-
-	// Added controller properties
-	c3p0Properties.put(STAT_CACHE_NUM_DEFF_THREADS,
-		STAT_CACHE_NUM_DEFF_THREADS_DEF_VALUE);
-
-	// Added transaction properties
-	c3p0Properties.put(AUTOCOMMIT_NAME, AUTOCOMMIT_DEF_VALUE);
-	c3p0Properties.put(URESOLVED_TRANSACTIONS_NAME,
-		URESOLVED_TRANSACTIONS_DEF_VALUE);
-	c3p0Properties.put(AUTOCOMMIT_ON_CLOSE_NAME,
-		AUTOCOMMIT_ON_CLOSE_DEF_VALUE);
-
-	// Added Connection recovery properties
-	c3p0Properties.put(ACQUIRE_RETRY_ATTEMPTS,
-		ACQUIRE_RETRY_ATTEMPTS_DEF_VALUE);
-	c3p0Properties.put(ACQUIRE_RETRY_DELAY, ACQUIRE_RETRY_DELAY_DEF_VALUE);
-	c3p0Properties.put(BREACK_AFTER_ACQUIRE_FAILURE,
-		BREACK_AFTER_ACQUIRE_FAILURE_DEF_VALUE);
+	String key;
+	String value;
+	for (DefaultConfig config : defaults) {
+	    key = config.key;
+	    value = config.value;
+	    if (ObjectUtils.available(key) && ObjectUtils.available(value)) {
+		c3p0Properties.put(key, value);
+	    }
+	}
 
 	return c3p0Properties;
-    }
-
-    private boolean checkModifiers(Field field) {
-
-	int modifiers = MetaUtils.getModifiers(field);
-	Class<?> fieldType = MetaUtils.getType(field);
-
-	return Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers)
-		&& String.class.equals(fieldType);
     }
 
     private Set<Object> unsopportedKeys() throws IOException {
 
 	Set<Object> keys = new HashSet<Object>();
-	Field[] fields = DataSourceInitializer.class.getDeclaredFields();
-	Object key;
-	String apprEnd = "_PROPERTY";
-	String name;
-	for (Field field : fields) {
-	    name = field.getName();
-	    if (checkModifiers(field) && name.endsWith(apprEnd)) {
-		key = MetaUtils.getFieldValue(field);
+	ConnectionProperties[] usdKeys = ConnectionProperties.values();
+	String key;
+	for (ConnectionProperties usdKey : usdKeys) {
+	    key = usdKey.property;
+	    if (ObjectUtils.available(key)) {
 		keys.add(key);
 	    }
 	}
@@ -226,15 +169,16 @@ public class PoolConfig {
 	Map<Object, Object> propertiesMap = getDefaultPooling();
 	fillDefaults(propertiesMap, initial);
 	Set<Object> keys = unsopportedKeys();
-	Object dataSourceName = null;
+	String dataSourceName = null;
+	String property;
 	for (Object key : keys) {
-	    if (key.equals(DataSourceInitializer.NAME_PROPERTY)) {
-		dataSourceName = propertiesMap
-			.get(DataSourceInitializer.NAME_PROPERTY);
+	    property = ConnectionProperties.NAME_PROPERTY.property;
+	    if (key.equals(property)) {
+		dataSourceName = (String) propertiesMap.get(property);
 	    }
 	    propertiesMap.remove(key);
 	}
-	if (ObjectUtils.notNull(dataSourceName)) {
+	if (ObjectUtils.available(dataSourceName)) {
 	    propertiesMap.put(DATA_SOURCE_NAME, dataSourceName);
 	}
 
@@ -266,6 +210,22 @@ public class PoolConfig {
     }
 
     /**
+     * Gets property as <code>int</int> value
+     * 
+     * @param properties
+     * @param key
+     * @return <code>int</code>
+     */
+    public static Integer asInt(Map<Object, Object> properties,
+	    DefaultConfig config) {
+
+	String key = config.key;
+	Integer propertyInt = asInt(properties, key);
+
+	return propertyInt;
+    }
+
+    /**
      * Loads {@link Properties} from specific path
      * 
      * @param path
@@ -273,6 +233,8 @@ public class PoolConfig {
      * @throws IOException
      */
     public Map<Object, Object> load() throws IOException {
+
+	Map<Object, Object> properties;
 
 	InputStream stream;
 	if (ObjectUtils.notAvailable(poolPath)) {
@@ -283,7 +245,6 @@ public class PoolConfig {
 	    stream = new FileInputStream(file);
 	}
 	try {
-	    Map<Object, Object> properties;
 	    Properties propertiesToLoad;
 	    if (ObjectUtils.notNull(stream)) {
 		propertiesToLoad = new Properties();
@@ -293,13 +254,11 @@ public class PoolConfig {
 	    } else {
 		properties = null;
 	    }
-
-	    return properties;
 	} finally {
-	    if (ObjectUtils.notNull(stream)) {
-		stream.close();
-	    }
+	    ObjectUtils.close(stream);
 	}
+
+	return properties;
     }
 
     /**
