@@ -34,7 +34,7 @@ public class Initializer {
 	    .synchronizedSet(new HashSet<String>());
 
     /**
-     * Connection properties
+     * Container for connection configuration properties
      * 
      * @author levan
      * 
