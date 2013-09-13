@@ -791,6 +791,7 @@ public class Configuration implements Cloneable {
      * @return <code>boolean</code>
      */
     public boolean isScanForEntities() {
+	
 	return getPersistenceConfigValue(SCAN_FOR_ENTITIES_KEY, Boolean.FALSE);
     }
 
