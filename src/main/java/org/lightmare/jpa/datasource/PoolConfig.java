@@ -134,7 +134,7 @@ public class PoolConfig {
 	Set<Object> keys = new HashSet<Object>();
 	ConnectionProperties[] usdKeys = ConnectionProperties.values();
 	String key;
-	for (DataSourceInitializer.ConnectionProperties usdKey : usdKeys) {
+	for (ConnectionProperties usdKey : usdKeys) {
 	    key = usdKey.property;
 	    if (ObjectUtils.available(key)) {
 		keys.add(key);
