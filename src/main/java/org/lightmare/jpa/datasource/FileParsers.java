@@ -297,7 +297,7 @@ public class FileParsers {
     }
 
     /**
-     * Retrieves data source jndi names from passed file
+     * Retrieves data source JNDI names from passed file
      * 
      * @param dataSourcePath
      * @return
