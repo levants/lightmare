@@ -189,6 +189,7 @@ public class FileParsers {
     public void setDataFromJBossPool(NodeList nodeList, Properties properties) {
 
 	for (int i = 0; i < nodeList.getLength(); i++) {
+
 	    Element thisElement = (Element) nodeList.item(i);
 	    NodeList minPoolSizeList = thisElement
 		    .getElementsByTagName(MIN_POOL_TAG);
