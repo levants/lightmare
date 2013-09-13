@@ -74,7 +74,7 @@ public class FileParsers {
     }
 
     /**
-     * Gets item with index 0 from passed {@link NodeList} instance
+     * Gets item with first index from passed {@link NodeList} instance
      * 
      * @param list
      * @return {@link Node}
