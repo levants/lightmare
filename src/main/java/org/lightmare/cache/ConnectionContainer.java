@@ -28,7 +28,7 @@ public class ConnectionContainer {
     private static final ConcurrentMap<String, ConnectionSemaphore> CONNECTIONS = new ConcurrentHashMap<String, ConnectionSemaphore>();
 
     // Keeps unique PoolConfigs builded by unit names
-    private static final ConcurrentMap<String, PoolConfig.PoolProviderType> POOL_CONFIG_TYPES = new ConcurrentHashMap<String, PoolConfig.PoolProviderType>();
+    private static final ConcurrentMap<String, PoolProviderType> POOL_CONFIG_TYPES = new ConcurrentHashMap<String, PoolProviderType>();
 
     private static final Logger LOG = Logger
 	    .getLogger(ConnectionContainer.class);
