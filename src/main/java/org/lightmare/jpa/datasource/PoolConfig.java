@@ -131,15 +131,6 @@ public class PoolConfig {
 	return c3p0Properties;
     }
 
-    private boolean checkModifiers(Field field) {
-
-	int modifiers = MetaUtils.getModifiers(field);
-	Class<?> fieldType = MetaUtils.getType(field);
-
-	return Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers)
-		&& String.class.equals(fieldType);
-    }
-
     private Set<Object> unsopportedKeys() throws IOException {
 
 	Set<Object> keys = new HashSet<Object>();
