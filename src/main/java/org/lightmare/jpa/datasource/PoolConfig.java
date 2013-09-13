@@ -22,7 +22,12 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class PoolConfig {
 
-    // Container for default configuration keys and values
+    /**
+     * Container for default configuration keys and values
+     * 
+     * @author levan
+     * 
+     */
     public static enum Defaults {
 
 	// Data source name property
@@ -216,8 +221,7 @@ public class PoolConfig {
      * @param key
      * @return <code>int</code>
      */
-    public static Integer asInt(Map<Object, Object> properties,
-	    Defaults config) {
+    public static Integer asInt(Map<Object, Object> properties, Defaults config) {
 
 	String key = config.key;
 	Integer propertyInt = asInt(properties, key);
