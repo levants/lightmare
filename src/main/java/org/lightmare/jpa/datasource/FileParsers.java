@@ -320,7 +320,7 @@ public class FileParsers {
 
     /**
      * Parses standalone.xml file and initializes {@link javax.sql.DataSource}s
-     * and binds them to jndi context
+     * and binds them to JNDI context
      * 
      * @param dataSourcePath
      * @throws IOException
