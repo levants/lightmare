@@ -273,13 +273,18 @@ public class ConnectionContainer {
     private static void closeConnection(ConnectionSemaphore semaphore) {
 
 	int users = semaphore.decrementUser();
+
 	if (users < ConnectionSemaphore.MINIMAL_USERS) {
+
 	    EntityManagerFactory emf = semaphore.getEmf();
 	    JPAManager.closeEntityManagerFactory(emf);
 	    unbindConnection(semaphore);
+
 	    synchronized (CONNECTIONS) {
+
 		CONNECTIONS.remove(semaphore.getUnitName());
 		String jndiName = semaphore.getJndiName();
+
 		if (ObjectUtils.available(jndiName)) {
 		    CONNECTIONS.remove(jndiName);
 		    semaphore.setBound(Boolean.FALSE);
