@@ -45,9 +45,9 @@ public class PoolConfig {
 	AQUIRE_INCREMENT ( "acquireIncrement", "5"),//
 	
 	// Pool timeout properties
-	MAX_IDLE_TIMEOUT("maxIdleTime","10000"),
-	MAX_IDLE_TIME_EXCESS_CONN("maxIdleTimeExcessConnections", "0"),
-	CHECK_OUT_TIMEOUT("checkoutTimeout","1800"),
+	MAX_IDLE_TIMEOUT("maxIdleTime","10000"),//
+	MAX_IDLE_TIME_EXCESS_CONN("maxIdleTimeExcessConnections", "0"),//
+	CHECK_OUT_TIMEOUT("checkoutTimeout","1800"),//
 	
 	// Controller properties
 	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads", "1"),
