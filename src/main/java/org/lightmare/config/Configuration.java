@@ -47,7 +47,7 @@ public class Configuration implements Cloneable {
 
     public static final String CONNECTION_TIMEOUT_KEY = "timeout";
 
-    // properties for data source path and deployment path
+    // Properties for data source path and deployment path
     public static final String DEMPLOYMENT_PATH_KEY = "deploymentPath";
 
     public static final String DATA_SOURCE_PATH_KEY = "dataSourcePath";
