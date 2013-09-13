@@ -133,8 +133,8 @@ public class PoolConfig {
 	DataSourceInitializer.ConnectionProperties[] usdKeys = DataSourceInitializer.ConnectionProperties
 		.values();
 	String key;
-	for (DataSourceInitializer.ConnectionProperties ussKey : usdKeys) {
-	    key = ussKey.property;
+	for (DataSourceInitializer.ConnectionProperties usdKey : usdKeys) {
+	    key = usdKey.property;
 	    if (ObjectUtils.available(key)) {
 		keys.add(key);
 	    }
