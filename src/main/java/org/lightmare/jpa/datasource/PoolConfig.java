@@ -4,18 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.lightmare.jpa.datasource.DataSourceInitializer.ConnectionProperties;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.reflect.MetaUtils;
 
 /**
  * Configuration with default parameters for c3p0 connection pooling
