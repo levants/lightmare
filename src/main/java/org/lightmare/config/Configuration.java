@@ -92,7 +92,7 @@ public class Configuration implements Cloneable {
 
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
-    // String prefixes for jndi names
+    // String prefixes for JNDI names
     public static final String JPA_NAME = "java:comp/env/";
 
     public static final String EJB_NAME = "ejb:";
