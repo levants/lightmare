@@ -65,6 +65,7 @@ public class FileParsers {
 
 	URLConnection connection = url.openConnection();
 	InputStream stream = connection.getInputStream();
+
 	try {
 	    document = parse(stream);
 	} finally {
@@ -162,8 +163,7 @@ public class FileParsers {
 	    Element userElement = (Element) getFirst(userList);
 	    String user = getContext(userElement);
 
-	    properties.setProperty(ConnectionConfig.USER_PROPERTY.name,
-		    user);
+	    properties.setProperty(ConnectionConfig.USER_PROPERTY.name, user);
 
 	    NodeList passList = thisElement.getElementsByTagName(PASSWORD_TAG);
 	    elementLength = passList.getLength();
@@ -246,8 +246,7 @@ public class FileParsers {
 	    clearName = NamingUtils.clearDataSourceName(jndiName);
 	    props.setProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name,
 		    jndiName);
-	    props.setProperty(ConnectionConfig.NAME_PROPERTY.name,
-		    clearName);
+	    props.setProperty(ConnectionConfig.NAME_PROPERTY.name, clearName);
 	    NodeList urlList = thisElement
 		    .getElementsByTagName(CONNECTION_URL_TAG);
 	    int urlElementLength = urlList.getLength();
