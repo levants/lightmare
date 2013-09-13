@@ -172,7 +172,7 @@ public class PoolConfig {
 	String dataSourceName = null;
 	String property;
 	for (Object key : keys) {
-	    property = DataSourceInitializer.ConnectionProperties.NAME_PROPERTY.property;
+	    property = ConnectionProperties.NAME_PROPERTY.property;
 	    if (key.equals(property)) {
 		dataSourceName = (String) propertiesMap.get(property);
 	    }
