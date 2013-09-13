@@ -38,11 +38,11 @@ public class PoolConfig {
 	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", "true"),//
 	
 	// Pool properties
-	MAX_POOL_SIZE("maxPoolSize", "15"),
-	INITIAL_POOL_SIZE( "initialPoolSize", "5"),
-	MIN_POOL_SIZE ( "minPoolSize", "5"),
-	MAX_STATEMENTS ( "maxStatements", "50"),
-	AQUIRE_INCREMENT ( "acquireIncrement", "5"),
+	MAX_POOL_SIZE("maxPoolSize", "15"),//
+	INITIAL_POOL_SIZE( "initialPoolSize", "5"),//
+	MIN_POOL_SIZE ( "minPoolSize", "5"),//
+	MAX_STATEMENTS ( "maxStatements", "50"),//
+	AQUIRE_INCREMENT ( "acquireIncrement", "5"),//
 	
 	// Pool timeout properties
 	MAX_IDLE_TIMEOUT("maxIdleTime","10000"),
