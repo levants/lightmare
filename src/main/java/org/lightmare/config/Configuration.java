@@ -53,7 +53,6 @@ public class Configuration implements Cloneable {
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
     // Default properties
-
     public static final String ADMIN_USERS_PATH_DEF = "./config/admin/users.properties";
 
     public static final String IP_ADDRESS_DEF = "0.0.0.0";
