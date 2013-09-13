@@ -114,6 +114,7 @@ public class FileParsers {
 	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder builder;
 	Document document;
+
 	try {
 	    builder = factory.newDocumentBuilder();
 	    document = builder.parse(stream);
