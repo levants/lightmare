@@ -35,6 +35,17 @@ public class DriverConfig {
     private static final String DERBY_NAME = "derby";
 
     /**
+     * Caches database driver names and classes
+     * 
+     * @author levan
+     * 
+     */
+    public static enum Drivers {
+
+	ORACLE, MYSQL, MSSQL, DB2, H2, DERBY;
+    }
+
+    /**
      * Resolves appropriate jdbc driver class name by database name
      * 
      * @param name
