@@ -58,9 +58,9 @@ public class PoolConfig {
 	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions", "true"),//
 	
         // Connection recovery properties
-	ACQUIRE_RETRY_ATTEMPTS( "acquireRetryAttempts", "0"),
-	ACQUIRE_RETRY_DELAY("acquireRetryDelay", "1000"),
-	BREACK_AFTER_ACQUIRE_FAILURE("breakAfterAcquireFailure", "false");
+	ACQUIRE_RETRY_ATTEMPTS( "acquireRetryAttempts", "0"),//
+	ACQUIRE_RETRY_DELAY("acquireRetryDelay", "1000"),//
+	BREACK_AFTER_ACQUIRE_FAILURE("breakAfterAcquireFailure", "false");//
 	
 
 	public String key;
