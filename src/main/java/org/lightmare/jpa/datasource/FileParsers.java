@@ -347,7 +347,7 @@ public class FileParsers {
 		BeanLoader.initializeDatasource(parameters);
 
 	    } catch (IOException ex) {
-		LOG.error("Could not initialize datasource", ex);
+		LOG.error(Initializer.INITIALIZING_ERROR, ex);
 	    }
 	}
 
