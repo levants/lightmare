@@ -46,8 +46,8 @@ public class DriverConfig {
 	MYSQL("mysql", "com.mysql.jdbc.Driver"), // MYSQL
 	MSSQL("mssql", "com.microsoft.sqlserver.jdbc.SQLServerDriver"), // MSSQL
 	DB2("db2", "com.ibm.db2.jcc.DB2Driver"), // DB2
-	H2("h2", "org.h2.Driver"), DERBY("derby",
-		"org.apache.derby.jdbc.EmbeddedDriver");
+	H2("h2", "org.h2.Driver"), // H2
+	DERBY("derby", "org.apache.derby.jdbc.EmbeddedDriver");
 
 	public String name;
 
