@@ -13,6 +13,7 @@ import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
+import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 
@@ -234,8 +235,8 @@ public class ConnectionContainer {
 		    jndiManager.unbind(fullJndiName);
 		}
 	    } catch (IOException ex) {
-		LOG.error(String.format(NamingUtils.COULD_UNBIND_NAME,
-			jndiName, ex.getMessage()), ex);
+		LogUtils.error(LOG, ex, NamingUtils.COULD_UNBIND_NAME,
+			jndiName, ex.getMessage());
 	    }
 	}
     }
