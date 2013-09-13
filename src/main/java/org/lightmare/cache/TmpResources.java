@@ -15,6 +15,7 @@ import org.lightmare.deploy.BeanLoader;
  */
 public class TmpResources {
 
+    // Cache of all temporal files
     private Set<List<File>> tmpFiles = new HashSet<List<File>>();
 
     /**
