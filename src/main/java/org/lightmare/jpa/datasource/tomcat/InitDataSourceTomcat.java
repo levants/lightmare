@@ -21,7 +21,12 @@ import org.lightmare.utils.StringUtils;
  */
 public class InitDataSourceTomcat extends InitDataSource {
 
-    // Tomcat default configurations
+    /**
+     * Container for Tomcat default configurations
+     * 
+     * @author levan
+     * 
+     */
     protected static enum TomcatConfig {
 
 	JDBC_INTERCEPTOR(
