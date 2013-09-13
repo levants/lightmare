@@ -15,6 +15,8 @@ public class InitMessages {
 
     public static final String COULD_NOT_CLOSE_ERROR = "Could not close DataSource %s";
 
+    public static final String INITIALIZING_ERROR = "Could not initialize datasource";
+
     // Info Messages
     public static final String INITIALIZING_MESSAGE = "Initializing data source %s";
 

@@ -172,8 +172,8 @@ public class FileParsers {
 	    Element passElement = (Element) getFirst(passList);
 	    String password = getContext(passElement);
 
-	    properties.setProperty(
-		    ConnectionConfig.PASSWORD_PROPERTY.property, password);
+	    properties.setProperty(ConnectionConfig.PASSWORD_PROPERTY.property,
+		    password);
 	}
     }
 
@@ -221,8 +221,7 @@ public class FileParsers {
 	    String prefill = getContext(initPoolSizeElement);
 	    if (Boolean.valueOf(prefill)) {
 		properties.setProperty(
-			PoolConfig.Defaults.INITIAL_POOL_SIZE.key,
-			minPoolSize);
+			PoolConfig.Defaults.INITIAL_POOL_SIZE.key, minPoolSize);
 	    }
 	}
     }
@@ -347,7 +346,7 @@ public class FileParsers {
 		BeanLoader.initializeDatasource(parameters);
 
 	    } catch (IOException ex) {
-		LOG.error(Initializer.INITIALIZING_ERROR, ex);
+		LOG.error(InitMessages.INITIALIZING_ERROR, ex);
 	    }
 	}
 

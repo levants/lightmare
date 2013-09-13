@@ -55,8 +55,6 @@ public class Initializer {
 	}
     }
 
-    public static final String INITIALIZING_ERROR = "Could not initialize datasource";
-
     public static final Logger LOG = Logger.getLogger(Initializer.class);
 
     private Initializer() {
