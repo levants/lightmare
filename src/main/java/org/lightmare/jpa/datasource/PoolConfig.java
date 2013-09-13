@@ -130,10 +130,10 @@ public class PoolConfig {
     private Set<Object> unsopportedKeys() throws IOException {
 
 	Set<Object> keys = new HashSet<Object>();
-	DataSourceInitializer.ConnectionProperties[] ussKeys = DataSourceInitializer.ConnectionProperties
+	DataSourceInitializer.ConnectionProperties[] usdKeys = DataSourceInitializer.ConnectionProperties
 		.values();
 	String key;
-	for (DataSourceInitializer.ConnectionProperties ussKey : ussKeys) {
+	for (DataSourceInitializer.ConnectionProperties ussKey : usdKeys) {
 	    key = ussKey.property;
 	    if (ObjectUtils.available(key)) {
 		keys.add(key);
