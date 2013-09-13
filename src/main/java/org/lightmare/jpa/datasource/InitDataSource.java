@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
+import org.lightmare.jpa.datasource.DataSourceInitializer.ConnectionProperties;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -36,10 +37,8 @@ public abstract class InitDataSource {
 	if (ObjectUtils.available(properties)) {
 	    this.properties = properties;
 	    this.poolConfig = Configuration.getPoolConfig();
-	    driver = properties
-		    .getProperty(
-			    DataSourceInitializer.ConnectionProperties.DRIVER_PROPERTY.property)
-		    .trim();
+	    driver = properties.getProperty(
+		    ConnectionProperties.DRIVER_PROPERTY.property).trim();
 	    url = properties
 		    .getProperty(
 			    DataSourceInitializer.ConnectionProperties.URL_PROPERTY.property)
