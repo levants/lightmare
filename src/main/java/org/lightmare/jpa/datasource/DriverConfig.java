@@ -43,7 +43,8 @@ public class DriverConfig {
     public static enum Drivers {
 
 	ORACLE("oracle", "oracle.jdbc.OracleDriver"), MYSQL("mysql",
-		"com.mysql.jdbc.Driver"), MSSQL, DB2, H2, DERBY;
+		"com.mysql.jdbc.Driver"), MSSQL("mssql",
+		"com.microsoft.sqlserver.jdbc.SQLServerDriver"), DB2, H2, DERBY;
 
 	public String name;
 
