@@ -2,6 +2,8 @@ package org.lightmare.ejb.exceptions;
 
 import java.io.IOException;
 
+import org.lightmare.utils.LogUtils;
+
 /**
  * {@link Exception} which is thrown at bean deploy time if bean already is
  * deployed
@@ -30,5 +32,12 @@ public class BeanInUseException extends IOException {
 
     public BeanInUseException(String message, Throwable thr) {
 	super(message, thr);
+    }
+
+    public static BeanInUseException get(String message, Object... formats) {
+
+	String errorMessage = LogUtils.logMessage(message, formats);
+
+	return new BeanInUseException(errorMessage);
     }
 }
