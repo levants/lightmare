@@ -76,6 +76,7 @@ public class ConnectionContainer {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 	ConnectionSemaphore current = null;
+
 	if (semaphore == null) {
 	    semaphore = new ConnectionSemaphore();
 	    semaphore.setUnitName(unitName);
