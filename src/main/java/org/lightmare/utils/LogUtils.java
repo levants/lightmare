@@ -49,9 +49,9 @@ public class LogUtils {
 	}
     }
 
-    public static void fatal(Logger log, String message, Object... formats) {
+    public static void error(Logger log, String message, Object... formats) {
 
-	fatal(log, null, message, formats);
+	error(log, null, message, formats);
     }
 
     public static void debug(Logger log, Throwable ex, String message,
@@ -65,9 +65,9 @@ public class LogUtils {
 	}
     }
 
-    public static void fatal(Logger log, String message, Object... formats) {
+    public static void debug(Logger log, String message, Object... formats) {
 
-	fatal(log, null, message, formats);
+	debug(log, null, message, formats);
     }
 
     public static void info(Logger log, Throwable ex, String message,
@@ -81,8 +81,8 @@ public class LogUtils {
 	}
     }
 
-    public static void fatal(Logger log, String message, Object... formats) {
+    public static void info(Logger log, String message, Object... formats) {
 
-	fatal(log, null, message, formats);
+	info(log, null, message, formats);
     }
 }
