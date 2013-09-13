@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 import org.lightmare.config.Configuration;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.jpa.datasource.c3p0.InitC3p0;
-import org.lightmare.jpa.datasource.dbcp.InitDataSourceDbcp;
+import org.lightmare.jpa.datasource.dbcp.InitDBCP;
 import org.lightmare.jpa.datasource.tomcat.InitDataSourceTomcat;
 
 /**
@@ -36,7 +36,7 @@ public class InitDataSourceFactory {
 	    initDataSource = new InitDataSourceTomcat(properties);
 	} else if (poolConfig.getPoolProviderType().equals(
 		PoolProviderType.DBCP)) {
-	    initDataSource = new InitDataSourceDbcp(properties);
+	    initDataSource = new InitDBCP(properties);
 	} else {
 	    initDataSource = null;
 	}

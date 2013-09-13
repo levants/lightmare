@@ -19,11 +19,11 @@ import org.lightmare.jpa.datasource.PoolConfig;
  * @author levan
  * 
  */
-public class InitDataSourceDbcp extends InitDataSource {
+public class InitDBCP extends InitDataSource {
 
     private static final int DEFAULT_TRANSACTION_ISOLATION = 1;
 
-    public InitDataSourceDbcp(Properties properties) {
+    public InitDBCP(Properties properties) {
 	super(properties);
     }
 
