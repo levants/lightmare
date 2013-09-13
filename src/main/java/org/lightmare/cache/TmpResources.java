@@ -26,6 +26,9 @@ public class TmpResources {
 	tmpFiles.add(files);
     }
 
+    /**
+     * Deletes all temporal files for deployment
+     */
     public void removeTempFiles() {
 
 	for (List<File> files : tmpFiles) {
