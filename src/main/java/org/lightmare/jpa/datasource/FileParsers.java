@@ -18,7 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
-import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
+import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.w3c.dom.Document;
@@ -138,7 +138,7 @@ public class FileParsers {
 	Element thisElement = (Element) getFirst(nodeList);
 	String name = getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
-	properties.setProperty(ConnectionProperties.DRIVER_PROPERTY.property,
+	properties.setProperty(ConnectionConfig.DRIVER_PROPERTY.property,
 		driverName);
     }
 
@@ -161,7 +161,7 @@ public class FileParsers {
 	    Element userElement = (Element) getFirst(userList);
 	    String user = getContext(userElement);
 
-	    properties.setProperty(ConnectionProperties.USER_PROPERTY.property,
+	    properties.setProperty(ConnectionConfig.USER_PROPERTY.property,
 		    user);
 
 	    NodeList passList = thisElement.getElementsByTagName(PASSWORD_TAG);
@@ -173,7 +173,7 @@ public class FileParsers {
 	    String password = getContext(passElement);
 
 	    properties.setProperty(
-		    ConnectionProperties.PASSWORD_PROPERTY.property, password);
+		    ConnectionConfig.PASSWORD_PROPERTY.property, password);
 	}
     }
 
@@ -244,9 +244,9 @@ public class FileParsers {
 	    Properties props = new Properties();
 	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
 	    clearName = NamingUtils.clearDataSourceName(jndiName);
-	    props.setProperty(ConnectionProperties.JNDI_NAME_PROPERTY.property,
+	    props.setProperty(ConnectionConfig.JNDI_NAME_PROPERTY.property,
 		    jndiName);
-	    props.setProperty(ConnectionProperties.NAME_PROPERTY.property,
+	    props.setProperty(ConnectionConfig.NAME_PROPERTY.property,
 		    clearName);
 	    NodeList urlList = thisElement
 		    .getElementsByTagName(CONNECTION_URL_TAG);
@@ -256,7 +256,7 @@ public class FileParsers {
 	    }
 	    Element urlElement = (Element) getFirst(urlList);
 	    String url = getContext(urlElement);
-	    props.setProperty(ConnectionProperties.URL_PROPERTY.property, url);
+	    props.setProperty(ConnectionConfig.URL_PROPERTY.property, url);
 	    NodeList securityList = thisElement
 		    .getElementsByTagName(SECURITY_TAG);
 	    setDataFromJBossSecurity(securityList, props);

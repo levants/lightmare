@@ -39,7 +39,7 @@ public class Initializer {
      * @author levan
      * 
      */
-    public static enum ConnectionProperties {
+    public static enum ConnectionConfig {
 
 	DRIVER_PROPERTY("driver"), // driver
 	USER_PROPERTY("user"), // user
@@ -50,7 +50,7 @@ public class Initializer {
 
 	public String property;
 
-	private ConnectionProperties(String property) {
+	private ConnectionConfig(String property) {
 	    this.property = property;
 	}
     }
@@ -70,7 +70,7 @@ public class Initializer {
     public static String getJndiName(Properties properties) {
 
 	String jndiName = properties
-		.getProperty(Initializer.ConnectionProperties.JNDI_NAME_PROPERTY.property);
+		.getProperty(Initializer.ConnectionConfig.JNDI_NAME_PROPERTY.property);
 
 	return jndiName;
     }

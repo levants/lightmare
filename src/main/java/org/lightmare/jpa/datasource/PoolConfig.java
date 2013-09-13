@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
+import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 
@@ -137,9 +137,9 @@ public class PoolConfig {
     private Set<Object> unsopportedKeys() throws IOException {
 
 	Set<Object> keys = new HashSet<Object>();
-	ConnectionProperties[] usdKeys = ConnectionProperties.values();
+	ConnectionConfig[] usdKeys = ConnectionConfig.values();
 	String key;
-	for (ConnectionProperties usdKey : usdKeys) {
+	for (ConnectionConfig usdKey : usdKeys) {
 	    key = usdKey.property;
 	    if (ObjectUtils.available(key)) {
 		keys.add(key);
@@ -177,7 +177,7 @@ public class PoolConfig {
 	String dataSourceName = null;
 	String property;
 	for (Object key : keys) {
-	    property = ConnectionProperties.NAME_PROPERTY.property;
+	    property = ConnectionConfig.NAME_PROPERTY.property;
 	    if (key.equals(property)) {
 		dataSourceName = (String) propertiesMap.get(property);
 	    }
