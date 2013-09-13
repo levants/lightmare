@@ -263,7 +263,9 @@ public class FileParsers {
 	    }
 	    Element urlElement = (Element) getFirst(urlList);
 	    String url = getContext(urlElement);
-	    props.setProperty(DataSourceInitializer.URL_PROPERTY, url);
+	    props.setProperty(
+		    DataSourceInitializer.ConnectionProperties.URL_PROPERTY.property,
+		    url);
 	    NodeList securityList = thisElement
 		    .getElementsByTagName(SECURITY_TAG);
 	    setDataFromJBossSecurity(securityList, props);
