@@ -33,7 +33,12 @@ public class Initializer {
     private static final Set<String> INITIALIZED_NAMES = Collections
 	    .synchronizedSet(new HashSet<String>());
 
-    // Connection properties
+    /**
+     * Connection properties
+     * 
+     * @author levan
+     * 
+     */
     public static enum ConnectionProperties {
 
 	DRIVER_PROPERTY("driver"), // driver
