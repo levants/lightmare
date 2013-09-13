@@ -162,7 +162,10 @@ public class FileParsers {
 	    Element userElement = (Element) getFirst(userList);
 	    String user = getContext(userElement);
 
-	    properties.setProperty(DataSourceInitializer.USER_PROPERTY, user);
+	    properties
+		    .setProperty(
+			    DataSourceInitializer.ConnectionProperties.USER_PROPERTY.property,
+			    user);
 
 	    NodeList passList = thisElement.getElementsByTagName(PASSWORD_TAG);
 	    elementLength = passList.getLength();
@@ -172,8 +175,10 @@ public class FileParsers {
 	    Element passElement = (Element) getFirst(passList);
 	    String password = getContext(passElement);
 
-	    properties.setProperty(DataSourceInitializer.PASSWORD_PROPERTY,
-		    password);
+	    properties
+		    .setProperty(
+			    DataSourceInitializer.ConnectionProperties.PASSWORD_PROPERTY.property,
+			    password);
 	}
     }
 
