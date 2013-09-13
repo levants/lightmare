@@ -168,16 +168,16 @@ public class PoolConfig {
 	Map<Object, Object> propertiesMap = getDefaultPooling();
 	fillDefaults(propertiesMap, initial);
 	Set<Object> keys = unsopportedKeys();
-	Object dataSourceName = null;
+	String dataSourceName = null;
 	String property;
 	for (Object key : keys) {
 	    property = DataSourceInitializer.ConnectionProperties.NAME_PROPERTY.property;
 	    if (key.equals(property)) {
-		dataSourceName = propertiesMap.get(property);
+		dataSourceName = (String) propertiesMap.get(property);
 	    }
 	    propertiesMap.remove(key);
 	}
-	if (ObjectUtils.notNull(dataSourceName)) {
+	if (ObjectUtils.available(dataSourceName)) {
 	    propertiesMap.put(DATA_SOURCE_NAME, dataSourceName);
 	}
 
