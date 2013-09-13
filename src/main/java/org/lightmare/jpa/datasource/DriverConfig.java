@@ -43,6 +43,15 @@ public class DriverConfig {
     public static enum Drivers {
 
 	ORACLE, MYSQL, MSSQL, DB2, H2, DERBY;
+
+	public String name;
+
+	public String driver;
+
+	private Drivers(String name, String driver) {
+	    this.name = name;
+	    this.driver = driver;
+	}
     }
 
     /**
