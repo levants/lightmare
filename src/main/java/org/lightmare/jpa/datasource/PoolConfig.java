@@ -55,7 +55,12 @@ public class PoolConfig {
 	// Transaction properties
 	AUTOCOMMIT_NAME("autoCommit", "false"),
 	AUTOCOMMIT_ON_CLOSE_NAME("autoCommitOnClose", "false"),
-	URESOLVED_TRANSACTIONS_NAME("forceIgnoreUnresolvedTransactions", "true");
+	URESOLVED_TRANSACTIONS_NAME("forceIgnoreUnresolvedTransactions", "true"),
+	
+        // Connection recovery properties
+	ACQUIRE_RETRY_ATTEMPTS( "acquireRetryAttempts", "0"),
+	ACQUIRE_RETRY_DELAY("acquireRetryDelay", "1000"),
+	BREACK_AFTER_ACQUIRE_FAILURE("breakAfterAcquireFailure", "false");
 	
 
 	public String key;
