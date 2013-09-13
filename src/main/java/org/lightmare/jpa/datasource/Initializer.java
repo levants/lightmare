@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.naming.Context;
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.utils.ObjectUtils;
@@ -54,8 +53,6 @@ public class Initializer {
 	    this.name = name;
 	}
     }
-
-    public static final Logger LOG = Logger.getLogger(Initializer.class);
 
     private Initializer() {
     }
