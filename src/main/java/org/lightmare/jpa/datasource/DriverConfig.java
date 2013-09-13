@@ -49,6 +49,7 @@ public class DriverConfig {
 	H2("h2", "org.h2.Driver"), // H2
 	DERBY("derby", "org.apache.derby.jdbc.EmbeddedDriver"); // DERBY
 
+	// Database names
 	public String name;
 
 	public String driver;
