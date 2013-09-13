@@ -37,6 +37,7 @@ import org.xml.sax.SAXException;
  */
 public class FileParsers {
 
+    // Tag names for file parser
     public static final String JBOSS_TAG_NAME = "urn:jboss:domain:datasources:1.0";
 
     private static final String DATA_SURCE_TAG = "datasource";
