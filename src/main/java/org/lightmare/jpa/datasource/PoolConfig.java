@@ -47,7 +47,15 @@ public class PoolConfig {
 	// Pool timeout properties
 	MAX_IDLE_TIMEOUT("maxIdleTime","10000"),
 	MAX_IDLE_TIME_EXCESS_CONN("maxIdleTimeExcessConnections", "0"),
-	CHECK_OUT_TIMEOUT_NAME("checkoutTimeout","1800");
+	CHECK_OUT_TIMEOUT_NAME("checkoutTimeout","1800"),
+	
+	// Controller properties
+	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads", "1"),
+	
+	// Transaction properties
+	AUTOCOMMIT_NAME("autoCommit", "false"),
+	AUTOCOMMIT_ON_CLOSE_NAME("autoCommitOnClose", "false"),
+	URESOLVED_TRANSACTIONS_NAME("forceIgnoreUnresolvedTransactions", "true");
 	
 
 	public String key;
