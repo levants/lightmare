@@ -46,15 +46,19 @@ public class DataSourceInitializer {
 
     // Connection properties
     public static enum ConnectionProperties {
-	
-	    DRIVER_PROPERTY ("driver"),
-	    USER_PROPERTY ("user"),
-	    PASSWORD_PROPERTY ("password"),
-	    URL_PROPERTY ("url"),
-	    JNDI_NAME_PROPERTY ("jndiname"),
-	    NAME_PROPERTY ("name");
-	    
-	    
+
+	DRIVER_PROPERTY("driver"), //
+	USER_PROPERTY("user"), //
+	PASSWORD_PROPERTY("password"), //
+	URL_PROPERTY("url"), //
+	JNDI_NAME_PROPERTY("jndiname"), //
+	NAME_PROPERTY("name");//
+
+	public String property;
+
+	private ConnectionProperties(String property) {
+	    this.property = property;
+	}
     }
 
     private DataSourceInitializer() {
