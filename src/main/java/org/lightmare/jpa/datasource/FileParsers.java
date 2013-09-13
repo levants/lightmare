@@ -100,7 +100,7 @@ public class FileParsers {
     }
 
     /**
-     * Parses xml document to initialize {@link javax.sql.DataSource}s
+     * Parses XML document to initialize {@link javax.sql.DataSource}s
      * configuration properties
      * 
      * @param stream
