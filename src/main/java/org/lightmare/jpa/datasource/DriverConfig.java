@@ -62,31 +62,31 @@ public class DriverConfig {
 
     public static boolean isOracle(String name) {
 
-	return ORACLE_DRIVER.equals(name);
+	return Drivers.ORACLE.driver.equals(name);
     }
 
     public static boolean isMySQL(String name) {
 
-	return MYSQL_DRIVER.equals(name);
+	return Drivers.MYSQL.driver.equals(name);
     }
 
     public static boolean isDB2(String name) {
 
-	return DB2_DRIVER.equals(name);
+	return Drivers.DB2.driver.equals(name);
     }
 
     public static boolean isMsSQL(String name) {
 
-	return MSSQL_DRIVER.equals(name);
+	return Drivers.MSSQL.driver.equals(name);
     }
 
     public static boolean isH2(String name) {
 
-	return H2_DRIVER.equals(name);
+	return Drivers.H2.driver.equals(name);
     }
 
     public static boolean isDerby(String name) {
 
-	return DERBY_DRIVER.equals(name);
+	return Drivers.DERBY.driver.equals(name);
     }
 }
