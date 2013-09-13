@@ -27,7 +27,7 @@ import org.yaml.snakeyaml.Yaml;
  */
 public class Configuration implements Cloneable {
 
-    // cache for all configuration passed programmatically or read from file
+    // Cache for all configuration passed programmatically or read from file
     private final Map<Object, Object> config = new HashMap<Object, Object>();
 
     // path where stored administrative users
