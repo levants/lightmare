@@ -186,7 +186,7 @@ public class PoolConfig {
 	for (Object key : keys) {
 	    if (key.equals(DataSourceInitializer.ConnectionProperties.NAME_PROPERTY.property)) {
 		dataSourceName = propertiesMap
-			.get(DataSourceInitializer.NAME_PROPERTY);
+			.get(DataSourceInitializer.ConnectionProperties.NAME_PROPERTY.property);
 	    }
 	    propertiesMap.remove(key);
 	}
