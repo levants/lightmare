@@ -42,7 +42,7 @@ public class PoolConfig {
 	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", "true"), // threads
 
 	// Pool properties
-	MAX_POOL_SIZE("maxPoolSize", "15"), // max pool size
+	MAX_POOL_SIZE("maxPoolSize", 15), // max pool size
 	INITIAL_POOL_SIZE("initialPoolSize", "5"), // initial
 	MIN_POOL_SIZE("minPoolSize", "5"), // min pool size
 	MAX_STATEMENTS("maxStatements", "50"), // statements
