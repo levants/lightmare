@@ -40,8 +40,6 @@ public class Configuration implements Cloneable {
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
     // Persistence provider property keys
-    private static final String POOLED_DATA_SOURCE_KEY = "pooledDataSource";
-
     private static final String PERSISTENCE_PROPERTIES_KEY = "persistenceProperties";
 
     // Connection pool provider property keys
