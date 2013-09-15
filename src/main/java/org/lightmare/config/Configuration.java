@@ -137,6 +137,7 @@ public class Configuration implements Cloneable {
 
     private static final String META_INF_PATH = "META-INF/";
 
+    // Error messages
     private static final String COULD_NOT_LOAD_CONFIG_ERROR = "Could not load configuration";
 
     private static final String COULD_NOT_OPEN_FILE_ERROR = "Could not open config file";
