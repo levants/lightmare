@@ -50,7 +50,7 @@ public enum Config {
 
     ADMIN_USER_PATH("adminPath"); // Admin user path
 
-    private static final String HOT_DEPLOYMENT_KEY = "hotDeployment";
+    HOT_DEPLOYMENT("hotDeployment"); //Hot deployment
 
     private static final String WATCH_STATUS_KEY = "watchStatus";
 
