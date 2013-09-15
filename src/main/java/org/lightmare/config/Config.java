@@ -85,7 +85,10 @@ public enum Config {
 
     POOL_PROVIDER_TYPE("poolProviderType"), // Pool provider type
 
-    POOL_PROPERTIES("poolProperties"); // Pool properties
+    POOL_PROPERTIES("poolProperties"), // Pool properties
+
+    // Default configuration file location
+    CONFIG_FILE("configFile", "./config/configuration.yaml");
 
     public String key;
 

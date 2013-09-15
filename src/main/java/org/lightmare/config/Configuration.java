@@ -33,7 +33,6 @@ public class Configuration implements Cloneable {
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
     // Default location for configuration YAML file
-    private static final String CONFIG_FILE = "./config/configuration.yaml";
 
     // Instance of pool configuration
     private static final PoolConfig POOL_CONFIG = new PoolConfig();
