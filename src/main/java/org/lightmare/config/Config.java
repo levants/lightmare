@@ -61,9 +61,9 @@ public enum Config {
 
     SCAN_FOR_ENTITIES("scanForEntities"), // Scan for entities
 
-    ANNOTATED_UNIT_NAME("annotatedUnitName"); // Annotated unit
+    ANNOTATED_UNIT_NAME("annotatedUnitName"), // Annotated unit
 
-    private static final String PERSISTENCE_XML_PATH_KEY = "persistanceXmlPath";
+    PERSISTENCE_XML_PATH("persistanceXmlPath"); // Persistence XML
 
     private static final String PERSISTENCE_XML_FROM_JAR_KEY = "persistenceXmlFromJar";
 
