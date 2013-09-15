@@ -18,7 +18,7 @@ public enum Config {
     ADMIN_USERS_PATH("adminUsersPath", "./config/admin/users.properties"),
 
     // Netty server / client configuration properties for RPC calls
-    IP_ADDRESS("listeningIp"), // ip
+    IP_ADDRESS("listeningIp", "0.0.0.0"), // ip
 
     PORT("listeningPort"), // port
 
@@ -34,9 +34,6 @@ public enum Config {
     DATA_SOURCE_PATH("dataSourcePath"); // data source path
 
     // Default properties
-
-    public static final String IP_ADDRESS_DEF = "0.0.0.0";
-
     public static final String PORT_DEF = "1199";
 
     public static final String BOSS_POOL_DEF = "1";
