@@ -352,7 +352,7 @@ public abstract class AbstractIOUtils {
 
 	File parentFile;
 	if (ObjectUtils.available(files)) {
-	    parentFile = ObjectUtils.getFirst(files);
+	    parentFile = CollectionUtils.getFirst(files);
 	} else {
 	    parentFile = realFile;
 	}
@@ -389,7 +389,7 @@ public abstract class AbstractIOUtils {
 	if (libURLs == null) {
 	    urls = null;
 	} else {
-	    urls = ObjectUtils.toArray(libURLs, URL.class);
+	    urls = CollectionUtils.toArray(libURLs, URL.class);
 	}
 
 	return urls;
@@ -401,7 +401,7 @@ public abstract class AbstractIOUtils {
 	if (ejbURLs == null) {
 	    urls = null;
 	} else {
-	    urls = ObjectUtils.toArray(ejbURLs, URL.class);
+	    urls = CollectionUtils.toArray(ejbURLs, URL.class);
 	}
 
 	return urls;
@@ -419,7 +419,7 @@ public abstract class AbstractIOUtils {
 	    fullURLs.addAll(libURLs);
 	}
 
-	urls = ObjectUtils.toArray(fullURLs, URL.class);
+	urls = CollectionUtils.toArray(fullURLs, URL.class);
 
 	return urls;
     }

@@ -19,11 +19,11 @@ import org.lightmare.jpa.datasource.PoolConfig;
  * @author levan
  * 
  */
-public class InitDataSourceDbcp extends InitDataSource {
+public class InitDBCP extends InitDataSource {
 
     private static final int DEFAULT_TRANSACTION_ISOLATION = 1;
 
-    public InitDataSourceDbcp(Properties properties) {
+    public InitDBCP(Properties properties) {
 	super(properties);
     }
 
@@ -50,13 +50,13 @@ public class InitDataSourceDbcp extends InitDataSource {
 	dataSource
 		.setDefaultTransactionIsolation(DEFAULT_TRANSACTION_ISOLATION);
 	dataSource.setLoginTimeout(PoolConfig.asInt(properties,
-		PoolConfig.DefaultConfig.MAX_IDLE_TIMEOUT));
+		PoolConfig.Defaults.MAX_IDLE_TIMEOUT));
 	dataSource.setMaxActive(PoolConfig.asInt(properties,
-		PoolConfig.DefaultConfig.MAX_POOL_SIZE));
+		PoolConfig.Defaults.MAX_POOL_SIZE));
 	dataSource.setMaxIdle(PoolConfig.asInt(properties,
-		PoolConfig.DefaultConfig.MAX_IDLE_TIMEOUT));
+		PoolConfig.Defaults.MAX_IDLE_TIMEOUT));
 	dataSource.setMaxWait(PoolConfig.asInt(properties,
-		PoolConfig.DefaultConfig.MAX_IDLE_TIMEOUT));
+		PoolConfig.Defaults.MAX_IDLE_TIMEOUT));
 
 	return dataSource;
     }

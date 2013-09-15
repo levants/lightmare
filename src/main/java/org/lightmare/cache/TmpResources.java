@@ -15,16 +15,26 @@ import org.lightmare.deploy.BeanLoader;
  */
 public class TmpResources {
 
+    // Cache of all temporal files
     private Set<List<File>> tmpFiles = new HashSet<List<File>>();
 
+    /**
+     * Caches passed collection of temporal files
+     * 
+     * @param files
+     */
     public void addFile(List<File> files) {
 
 	for (File file : files) {
 	    file.deleteOnExit();
 	}
+
 	tmpFiles.add(files);
     }
 
+    /**
+     * Deletes all temporal files for deployment
+     */
     public void removeTempFiles() {
 
 	for (List<File> files : tmpFiles) {

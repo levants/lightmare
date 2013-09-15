@@ -12,7 +12,57 @@ public class StringUtils {
 
     public static final char SPACE = ' ';
 
+    public static final String TAB = "\t";
+
+    public static final String NEWLINE = "\n";
+
     public static final int NOT_EXISTING_INDEX = -1;
+
+    /**
+     * Appends contents of passed array to passed {@link StringBuilder} and for
+     * each content if it is instance of array then append its content
+     * recursively
+     * 
+     * @param tockens
+     * @param builder
+     */
+    private static void append(Object[] tockens, StringBuilder builder) {
+
+	if (ObjectUtils.available(tockens)) {
+
+	    Object[] subTockens;
+	    for (Object tocken : tockens) {
+		if (tocken instanceof Object[]) {
+		    subTockens = (Object[]) tocken;
+		    append(subTockens, builder);
+		} else {
+		    builder.append(tocken);
+		}
+	    }
+	}
+    }
+
+    /**
+     * Creates concatenates passed objects in one text and if one of them is
+     * array then concatenates contents of this array recursively
+     * 
+     * @param tockens
+     * @return {@link String}
+     */
+    public static String concatRecursively(Object... tockens) {
+
+	String concat;
+
+	if (ObjectUtils.available(tockens)) {
+	    StringBuilder builder = new StringBuilder();
+	    append(tockens, builder);
+	    concat = builder.toString();
+	} else {
+	    concat = null;
+	}
+
+	return concat;
+    }
 
     /**
      * Concatenates passed {@link Object}s in one {@link String} instance
@@ -23,6 +73,7 @@ public class StringUtils {
     public static String concat(Object... parts) {
 
 	String resultText;
+
 	if (ObjectUtils.available(parts)) {
 
 	    StringBuilder resultBuider = new StringBuilder();

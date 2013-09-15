@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
+import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 
@@ -22,8 +22,13 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class PoolConfig {
 
-    // Container for default configuration keys and values
-    public static enum DefaultConfig {
+    /**
+     * Container for default configuration keys and values
+     * 
+     * @author levan
+     * 
+     */
+    public static enum Defaults {
 
 	// Data source name property
 	DATA_SOURCE_NAME("dataSourceName"),
@@ -66,11 +71,11 @@ public class PoolConfig {
 
 	public String value;
 
-	private DefaultConfig(String key) {
+	private Defaults(String key) {
 	    this.key = key;
 	}
 
-	private DefaultConfig(String key, Object value) {
+	private Defaults(String key, Object value) {
 	    this(key);
 	    if (value instanceof String) {
 		this.value = (String) value;
@@ -114,11 +119,11 @@ public class PoolConfig {
     public Map<Object, Object> getDefaultPooling() {
 	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
 
-	DefaultConfig[] defaults = DefaultConfig.values();
+	Defaults[] defaults = Defaults.values();
 
 	String key;
 	String value;
-	for (DefaultConfig config : defaults) {
+	for (Defaults config : defaults) {
 	    key = config.key;
 	    value = config.value;
 	    if (ObjectUtils.available(key) && ObjectUtils.available(value)) {
@@ -132,10 +137,10 @@ public class PoolConfig {
     private Set<Object> unsopportedKeys() throws IOException {
 
 	Set<Object> keys = new HashSet<Object>();
-	ConnectionProperties[] usdKeys = ConnectionProperties.values();
+	ConnectionConfig[] usdKeys = ConnectionConfig.values();
 	String key;
-	for (ConnectionProperties usdKey : usdKeys) {
-	    key = usdKey.property;
+	for (ConnectionConfig usdKey : usdKeys) {
+	    key = usdKey.name;
 	    if (ObjectUtils.available(key)) {
 		keys.add(key);
 	    }
@@ -172,7 +177,7 @@ public class PoolConfig {
 	String dataSourceName = null;
 	String property;
 	for (Object key : keys) {
-	    property = ConnectionProperties.NAME_PROPERTY.property;
+	    property = ConnectionConfig.NAME_PROPERTY.name;
 	    if (key.equals(property)) {
 		dataSourceName = (String) propertiesMap.get(property);
 	    }
@@ -213,11 +218,10 @@ public class PoolConfig {
      * Gets property as <code>int</int> value
      * 
      * @param properties
-     * @param key
+     * @param name
      * @return <code>int</code>
      */
-    public static Integer asInt(Map<Object, Object> properties,
-	    DefaultConfig config) {
+    public static Integer asInt(Map<Object, Object> properties, Defaults config) {
 
 	String key = config.key;
 	Integer propertyInt = asInt(properties, key);

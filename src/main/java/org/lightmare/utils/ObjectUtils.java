@@ -2,10 +2,7 @@ package org.lightmare.utils;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -205,103 +202,6 @@ public class ObjectUtils {
 	}
 
 	return avaliable;
-    }
-
-    /**
-     * Converts passed {@link Collection} to array of appropriated {@link Class}
-     * type
-     * 
-     * @param collection
-     * @param type
-     * @return <code>T[]</code>
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T[] toArray(Collection<T> collection, Class<T> type) {
-
-	T[] array;
-	if (notNull(collection)) {
-	    array = (T[]) Array.newInstance(type, collection.size());
-	    array = collection.toArray(array);
-	} else {
-	    array = null;
-	}
-
-	return array;
-    }
-
-    /**
-     * Creates empty array of passed type
-     * 
-     * @param type
-     * @return <code>T[]</code>
-     */
-    public static <T> T[] emptyArray(Class<T> type) {
-
-	@SuppressWarnings("unchecked")
-	T[] empty = (T[]) Array.newInstance(type, EMPTY_ARRAY_LENGTH);
-
-	return empty;
-    }
-
-    /**
-     * Peaks first element from list
-     * 
-     * @param list
-     * @return T
-     */
-    private static <T> T getFirstFromList(List<T> list) {
-
-	T value;
-	if (available(list)) {
-	    value = list.get(FIRST_INDEX);
-	} else {
-	    value = null;
-	}
-
-	return value;
-    }
-
-    /**
-     * Peaks first element from collection
-     * 
-     * @param collection
-     * @return T
-     */
-    public static <T> T getFirst(Collection<T> collection) {
-
-	T value;
-	if (available(collection)) {
-
-	    if (collection instanceof List) {
-		value = getFirstFromList(((List<T>) collection));
-	    } else {
-		Iterator<T> iterator = collection.iterator();
-		value = iterator.next();
-	    }
-
-	} else {
-	    value = null;
-	}
-
-	return value;
-    }
-
-    /**
-     * Peaks first element from array
-     * 
-     * @param collection
-     * @return T
-     */
-    public static <T> T getFirst(T[] values) {
-
-	T value;
-	if (available(values)) {
-	    value = values[FIRST_INDEX];
-	} else {
-	    value = null;
-	}
-
-	return value;
     }
 
     /**

@@ -19,9 +19,14 @@ import org.lightmare.utils.StringUtils;
  * @author levan
  * 
  */
-public class InitDataSourceTomcat extends InitDataSource {
+public class InitTomcat extends InitDataSource {
 
-    // Tomcat default configurations
+    /**
+     * Container for Tomcat default configurations
+     * 
+     * @author levan
+     * 
+     */
     protected static enum TomcatConfig {
 
 	JDBC_INTERCEPTOR(
@@ -40,7 +45,7 @@ public class InitDataSourceTomcat extends InitDataSource {
 
     private static final String TEST_SQL = "SELECT 1";
 
-    public InitDataSourceTomcat(Properties properties) {
+    public InitTomcat(Properties properties) {
 	super(properties);
     }
 
@@ -63,9 +68,9 @@ public class InitDataSourceTomcat extends InitDataSource {
 	poolProperties.setValidationInterval(30000);
 	poolProperties.setTimeBetweenEvictionRunsMillis(30000);
 	poolProperties.setMaxActive(PoolConfig.asInt(configMap,
-		PoolConfig.DefaultConfig.MAX_POOL_SIZE));
+		PoolConfig.Defaults.MAX_POOL_SIZE));
 	poolProperties.setInitialSize(PoolConfig.asInt(configMap,
-		PoolConfig.DefaultConfig.INITIAL_POOL_SIZE));
+		PoolConfig.Defaults.INITIAL_POOL_SIZE));
 	poolProperties.setMaxWait(10000);
 	poolProperties.setRemoveAbandonedTimeout(60);
 	poolProperties.setMinEvictableIdleTimeMillis(30000);

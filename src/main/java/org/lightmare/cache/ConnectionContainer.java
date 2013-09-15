@@ -12,6 +12,8 @@ import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.JPAManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig;
+import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
+import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 
@@ -27,7 +29,7 @@ public class ConnectionContainer {
     private static final ConcurrentMap<String, ConnectionSemaphore> CONNECTIONS = new ConcurrentHashMap<String, ConnectionSemaphore>();
 
     // Keeps unique PoolConfigs builded by unit names
-    private static final ConcurrentMap<String, PoolConfig.PoolProviderType> POOL_CONFIG_TYPES = new ConcurrentHashMap<String, PoolConfig.PoolProviderType>();
+    private static final ConcurrentMap<String, PoolProviderType> POOL_CONFIG_TYPES = new ConcurrentHashMap<String, PoolProviderType>();
 
     private static final Logger LOG = Logger
 	    .getLogger(ConnectionContainer.class);
@@ -76,6 +78,7 @@ public class ConnectionContainer {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 	ConnectionSemaphore current = null;
+
 	if (semaphore == null) {
 	    semaphore = new ConnectionSemaphore();
 	    semaphore.setUnitName(unitName);
@@ -83,9 +86,11 @@ public class ConnectionContainer {
 	    semaphore.setCached(Boolean.TRUE);
 	    current = CONNECTIONS.putIfAbsent(unitName, semaphore);
 	}
+
 	if (current == null) {
 	    current = semaphore;
 	}
+
 	current.incrementUser();
 
 	return current;
@@ -107,8 +112,10 @@ public class ConnectionContainer {
 
 	    semaphore = createSemaphore(unitName);
 	    if (ObjectUtils.available(jndiName)) {
+
 		ConnectionSemaphore existent = CONNECTIONS.putIfAbsent(
 			jndiName, semaphore);
+
 		if (existent == null) {
 		    semaphore.setJndiName(jndiName);
 		}
@@ -228,9 +235,8 @@ public class ConnectionContainer {
 		    jndiManager.unbind(fullJndiName);
 		}
 	    } catch (IOException ex) {
-		LOG.error(String.format(
-			"Could not unbind jndi name %s cause %s", jndiName,
-			ex.getMessage()), ex);
+		LogUtils.error(LOG, ex, NamingUtils.COULD_NOT_UNBIND_NAME,
+			jndiName, ex.getMessage());
 	    }
 	}
     }
@@ -273,13 +279,18 @@ public class ConnectionContainer {
     private static void closeConnection(ConnectionSemaphore semaphore) {
 
 	int users = semaphore.decrementUser();
+
 	if (users < ConnectionSemaphore.MINIMAL_USERS) {
+
 	    EntityManagerFactory emf = semaphore.getEmf();
 	    JPAManager.closeEntityManagerFactory(emf);
 	    unbindConnection(semaphore);
+
 	    synchronized (CONNECTIONS) {
+
 		CONNECTIONS.remove(semaphore.getUnitName());
 		String jndiName = semaphore.getJndiName();
+
 		if (ObjectUtils.available(jndiName)) {
 		    CONNECTIONS.remove(jndiName);
 		    semaphore.setBound(Boolean.FALSE);
@@ -298,6 +309,7 @@ public class ConnectionContainer {
     public static void removeConnection(String unitName) {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
+
 	if (ObjectUtils.notNull(semaphore)) {
 	    awaitConnection(semaphore);
 	    closeConnection(semaphore);
@@ -305,18 +317,18 @@ public class ConnectionContainer {
     }
 
     public static void setPollProviderType(String jndiName,
-	    PoolConfig.PoolProviderType type) {
+	    PoolProviderType type) {
 
 	POOL_CONFIG_TYPES.put(jndiName, type);
     }
 
-    public static PoolConfig.PoolProviderType getAndRemovePoolProviderType(
-	    String jndiName) {
+    public static PoolProviderType getAndRemovePoolProviderType(String jndiName) {
 
-	PoolConfig.PoolProviderType type = POOL_CONFIG_TYPES.get(jndiName);
+	PoolProviderType type = POOL_CONFIG_TYPES.get(jndiName);
 	if (type == null) {
 	    type = new PoolConfig().getPoolProviderType();
 	}
+
 	POOL_CONFIG_TYPES.remove(jndiName);
 
 	return type;

@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentMap;
 import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.rest.RestConfig;
 import org.lightmare.rest.providers.RestInflector;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -26,7 +27,7 @@ public class RestContainer {
     private static RestConfig restConfig;
 
     public static void putResource(Class<?> handlerClass, Resource resource) {
-	
+
 	REST_RESOURCES.putIfAbsent(handlerClass, resource);
     }
 
@@ -70,7 +71,7 @@ public class RestContainer {
 	Class<?> handlerClass;
 	Set<Class<?>> handlerClasses = resource.getHandlerClasses();
 	if (ObjectUtils.available(handlerClasses)) {
-	    handlerClass = ObjectUtils.getFirst(handlerClasses);
+	    handlerClass = CollectionUtils.getFirst(handlerClasses);
 	} else {
 	    handlerClass = getFromHandlerInstance(resource);
 	}

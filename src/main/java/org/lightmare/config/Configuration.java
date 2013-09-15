@@ -27,16 +27,13 @@ import org.yaml.snakeyaml.Yaml;
  */
 public class Configuration implements Cloneable {
 
-    // cache for all configuration passed programmatically or read from file
+    // Cache for all configuration passed programmatically or read from file
     private final Map<Object, Object> config = new HashMap<Object, Object>();
 
-    // path where stored administrative users
+    // Path where stored administrative users
     public static final String ADMIN_USERS_PATH_KEY = "adminUsersPath";
 
-    /**
-     * <a href="netty.io">Netty</a> server / client configuration properties for
-     * RPC calls
-     */
+    // Netty server / client configuration properties for RPC calls
     public static final String IP_ADDRESS_KEY = "listeningIp";
 
     public static final String PORT_KEY = "listeningPort";
@@ -47,17 +44,15 @@ public class Configuration implements Cloneable {
 
     public static final String CONNECTION_TIMEOUT_KEY = "timeout";
 
-    // properties for data source path and deployment path
+    // Properties for data source path and deployment path
     public static final String DEMPLOYMENT_PATH_KEY = "deploymentPath";
 
     public static final String DATA_SOURCE_PATH_KEY = "dataSourcePath";
 
-    // runtime to get available processors
+    // Runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
-    /**
-     * Default properties
-     */
+    // Default properties
     public static final String ADMIN_USERS_PATH_DEF = "./config/admin/users.properties";
 
     public static final String IP_ADDRESS_DEF = "0.0.0.0";
@@ -74,10 +69,9 @@ public class Configuration implements Cloneable {
 
     public static final String DATA_SOURCE_PATH_DEF = "./ds";
 
-    /**
-     * Properties which version of server is running remote it requires server
-     * client RPC infrastructure or local (embeddable mode)
-     */
+    // Properties which version of server is running remote it requires server
+    // client RPC infrastructure or local (embeddable mode)
+
     private static final String REMOTE_KEY = "remote";
 
     private static final String SERVER_KEY = "server";
@@ -149,12 +143,13 @@ public class Configuration implements Cloneable {
     public Configuration() {
     }
 
-    @SuppressWarnings("unchecked")
     private <K, V> Map<K, V> getAsMap(Object key, Map<Object, Object> from) {
 
 	if (from == null) {
 	    from = config;
 	}
+
+	@SuppressWarnings("unchecked")
 	Map<K, V> value = (Map<K, V>) ObjectUtils.getAsMap(key, from);
 
 	return value;
@@ -508,17 +503,20 @@ public class Configuration implements Cloneable {
      * 
      * @param configuration
      */
-    @SuppressWarnings("unchecked")
     public void configure(String path) throws IOException {
 
 	File yamlFile = new File(path);
 	if (yamlFile.exists()) {
+
 	    InputStream stream = new FileInputStream(yamlFile);
 	    try {
 		Yaml yaml = new Yaml();
 		Object configuration = yaml.load(stream);
+
 		if (configuration instanceof Map) {
-		    configure((Map<Object, Object>) configuration);
+		    @SuppressWarnings("unchecked")
+		    Map<Object, Object> innerConfig = (Map<Object, Object>) configuration;
+		    configure(innerConfig);
 		}
 	    } finally {
 		ObjectUtils.close(stream);
@@ -759,6 +757,7 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isHotDeployment() {
+
 	return getConfigValue(HOT_DEPLOYMENT_KEY, Boolean.FALSE);
     }
 
@@ -767,6 +766,7 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isWatchStatus() {
+
 	return getConfigValue(WATCH_STATUS_KEY, Boolean.FALSE);
     }
 
@@ -780,6 +780,7 @@ public class Configuration implements Cloneable {
      * @return <code>boolean</code>
      */
     public boolean isScanForEntities() {
+
 	return getPersistenceConfigValue(SCAN_FOR_ENTITIES_KEY, Boolean.FALSE);
     }
 
@@ -789,6 +790,7 @@ public class Configuration implements Cloneable {
     }
 
     public String getAnnotatedUnitName() {
+
 	return getPersistenceConfigValue(ANNOTATED_UNIT_NAME_KEY);
     }
 
@@ -797,6 +799,7 @@ public class Configuration implements Cloneable {
     }
 
     public String getPersXmlPath() {
+
 	return getPersistenceConfigValue(PERSISTENCE_XML_PATH_KEY);
     }
 
@@ -805,6 +808,7 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isPersXmlFromJar() {
+
 	return getPersistenceConfigValue(PERSISTENCE_XML_FROM_JAR_KEY,
 		Boolean.FALSE);
     }

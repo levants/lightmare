@@ -3,7 +3,7 @@ package org.lightmare.config;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.CollectionUtils;
 
 public class ConfigurationClonningTest {
 
@@ -26,9 +26,9 @@ public class ConfigurationClonningTest {
 	    Assert.assertTrue("clonning is not returns the same class",
 		    cloneObject.getClass().equals(Configuration.class));
 	    Configuration cloneConfig = (Configuration) cloneObject;
-	    System.out.println(ObjectUtils.getFirst(cloneConfig
+	    System.out.println(CollectionUtils.getFirst(cloneConfig
 		    .getDataSourcePath()));
-	    System.out.println(ObjectUtils.getFirst(cloneConfig
+	    System.out.println(CollectionUtils.getFirst(cloneConfig
 		    .getDeploymentPath()));
 	} catch (Exception ex) {
 	    ex.printStackTrace();

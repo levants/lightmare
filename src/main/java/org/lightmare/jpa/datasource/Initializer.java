@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.naming.Context;
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.utils.ObjectUtils;
@@ -33,8 +32,13 @@ public class Initializer {
     private static final Set<String> INITIALIZED_NAMES = Collections
 	    .synchronizedSet(new HashSet<String>());
 
-    // Connection properties
-    public static enum ConnectionProperties {
+    /**
+     * Container for connection configuration properties
+     * 
+     * @author levan
+     * 
+     */
+    public static enum ConnectionConfig {
 
 	DRIVER_PROPERTY("driver"), // driver
 	USER_PROPERTY("user"), // user
@@ -43,16 +47,12 @@ public class Initializer {
 	JNDI_NAME_PROPERTY("jndiname"), // JNDI name
 	NAME_PROPERTY("name");// name
 
-	public String property;
+	public String name;
 
-	private ConnectionProperties(String property) {
-	    this.property = property;
+	private ConnectionConfig(String name) {
+	    this.name = name;
 	}
     }
-
-    public static final String INITIALIZING_ERROR = "Could not initialize datasource";
-
-    public static final Logger LOG = Logger.getLogger(Initializer.class);
 
     private Initializer() {
     }
@@ -65,7 +65,7 @@ public class Initializer {
     public static String getJndiName(Properties properties) {
 
 	String jndiName = properties
-		.getProperty(Initializer.ConnectionProperties.JNDI_NAME_PROPERTY.property);
+		.getProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name);
 
 	return jndiName;
     }

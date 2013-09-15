@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
+import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
@@ -16,8 +17,6 @@ import org.lightmare.utils.StringUtils;
 public class ConfigLoader {
 
     public static final String XML_PATH = "META-INF/persistence.xml";
-
-    private static final String JAR_URL_DELIM = "!";
 
     private String shortPath;
 
@@ -31,10 +30,11 @@ public class ConfigLoader {
      * @see Ejb3ConfigurationImpl#configure(String, java.util.Map)
      * 
      * @param path
-     * @return Enumeration<{@link URL} >
+     * @return Enumeration<{@link URL}>
      * @throws IOException
      */
     public Enumeration<URL> readURL(final URL url) {
+
 	Enumeration<URL> xmls = new Enumeration<URL>() {
 
 	    private boolean nextElement = Boolean.TRUE;
@@ -50,7 +50,9 @@ public class ConfigLoader {
 		return url;
 	    }
 	};
-	shortPath = StringUtils.concat(JAR_URL_DELIM, XML_PATH);
+
+	shortPath = StringUtils.concat(AbstractIOUtils.ARCHIVE_URL_DELIM,
+		XML_PATH);
 
 	return xmls;
     }
@@ -66,15 +68,18 @@ public class ConfigLoader {
      * @throws IOException
      */
     public Enumeration<URL> readFile(String path) throws IOException {
+
 	if (path == null || path.isEmpty()) {
 	    throw new IOException(
 		    String.format("path is not provided %s", path));
 	}
+
 	File file = new File(path);
 	if (!file.exists()) {
 	    throw new IOException(String.format(
 		    "could not find persistence.xml file at path %s", path));
 	}
+
 	shortPath = file.getName();
 	final URL url = file.toURI().toURL();
 	Enumeration<URL> xmls = readURL(url);

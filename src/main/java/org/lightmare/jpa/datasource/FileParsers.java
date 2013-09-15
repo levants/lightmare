@@ -18,7 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
-import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
+import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.w3c.dom.Document;
@@ -37,6 +37,7 @@ import org.xml.sax.SAXException;
  */
 public class FileParsers {
 
+    // Tag names for XML file parser
     public static final String JBOSS_TAG_NAME = "urn:jboss:domain:datasources:1.0";
 
     private static final String DATA_SURCE_TAG = "datasource";
@@ -64,6 +65,7 @@ public class FileParsers {
 
 	URLConnection connection = url.openConnection();
 	InputStream stream = connection.getInputStream();
+
 	try {
 	    document = parse(stream);
 	} finally {
@@ -74,7 +76,7 @@ public class FileParsers {
     }
 
     /**
-     * Gets item with index 0 from passed {@link NodeList} instance
+     * Gets item with first index from passed {@link NodeList} instance
      * 
      * @param list
      * @return {@link Node}
@@ -85,7 +87,7 @@ public class FileParsers {
     }
 
     /**
-     * To get text from tag depended on jre installation
+     * To get text from tag depended on JRE installation
      * 
      * @param element
      * @return {@link String}
@@ -100,7 +102,7 @@ public class FileParsers {
     }
 
     /**
-     * Parses xml document to initialize {@link javax.sql.DataSource}s
+     * Parses XML document to initialize {@link javax.sql.DataSource}s
      * configuration properties
      * 
      * @param stream
@@ -112,6 +114,7 @@ public class FileParsers {
 	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder builder;
 	Document document;
+
 	try {
 	    builder = factory.newDocumentBuilder();
 	    document = builder.parse(stream);
@@ -138,7 +141,7 @@ public class FileParsers {
 	Element thisElement = (Element) getFirst(nodeList);
 	String name = getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
-	properties.setProperty(ConnectionProperties.DRIVER_PROPERTY.property,
+	properties.setProperty(ConnectionConfig.DRIVER_PROPERTY.name,
 		driverName);
     }
 
@@ -152,6 +155,7 @@ public class FileParsers {
 	    Properties properties) {
 
 	for (int i = 0; i < nodeList.getLength(); i++) {
+
 	    Element thisElement = (Element) nodeList.item(i);
 	    NodeList userList = thisElement.getElementsByTagName(USER_TAG);
 	    int elementLength = userList.getLength();
@@ -161,8 +165,7 @@ public class FileParsers {
 	    Element userElement = (Element) getFirst(userList);
 	    String user = getContext(userElement);
 
-	    properties.setProperty(ConnectionProperties.USER_PROPERTY.property,
-		    user);
+	    properties.setProperty(ConnectionConfig.USER_PROPERTY.name, user);
 
 	    NodeList passList = thisElement.getElementsByTagName(PASSWORD_TAG);
 	    elementLength = passList.getLength();
@@ -172,8 +175,8 @@ public class FileParsers {
 	    Element passElement = (Element) getFirst(passList);
 	    String password = getContext(passElement);
 
-	    properties.setProperty(
-		    ConnectionProperties.PASSWORD_PROPERTY.property, password);
+	    properties.setProperty(ConnectionConfig.PASSWORD_PROPERTY.name,
+		    password);
 	}
     }
 
@@ -186,6 +189,7 @@ public class FileParsers {
     public void setDataFromJBossPool(NodeList nodeList, Properties properties) {
 
 	for (int i = 0; i < nodeList.getLength(); i++) {
+
 	    Element thisElement = (Element) nodeList.item(i);
 	    NodeList minPoolSizeList = thisElement
 		    .getElementsByTagName(MIN_POOL_TAG);
@@ -196,7 +200,7 @@ public class FileParsers {
 	    Element minPoolSizeElement = (Element) getFirst(minPoolSizeList);
 	    String minPoolSize = getContext(minPoolSizeElement);
 
-	    properties.setProperty(PoolConfig.DefaultConfig.MIN_POOL_SIZE.key,
+	    properties.setProperty(PoolConfig.Defaults.MIN_POOL_SIZE.key,
 		    minPoolSize);
 
 	    NodeList maxPoolSizeList = thisElement
@@ -208,7 +212,7 @@ public class FileParsers {
 	    Element maxPoolSizeElement = (Element) getFirst(maxPoolSizeList);
 	    String maxPoolSize = getContext(maxPoolSizeElement);
 
-	    properties.setProperty(PoolConfig.DefaultConfig.MAX_POOL_SIZE.key,
+	    properties.setProperty(PoolConfig.Defaults.MAX_POOL_SIZE.key,
 		    maxPoolSize);
 
 	    NodeList initPoolSizeList = thisElement
@@ -221,8 +225,7 @@ public class FileParsers {
 	    String prefill = getContext(initPoolSizeElement);
 	    if (Boolean.valueOf(prefill)) {
 		properties.setProperty(
-			PoolConfig.DefaultConfig.INITIAL_POOL_SIZE.key,
-			minPoolSize);
+			PoolConfig.Defaults.INITIAL_POOL_SIZE.key, minPoolSize);
 	    }
 	}
     }
@@ -240,14 +243,14 @@ public class FileParsers {
 	String jndiName;
 	String clearName;
 	for (int i = 0; i < nodeList.getLength(); i++) {
+
 	    Element thisElement = (Element) nodeList.item(i);
 	    Properties props = new Properties();
 	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
 	    clearName = NamingUtils.clearDataSourceName(jndiName);
-	    props.setProperty(ConnectionProperties.JNDI_NAME_PROPERTY.property,
+	    props.setProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name,
 		    jndiName);
-	    props.setProperty(ConnectionProperties.NAME_PROPERTY.property,
-		    clearName);
+	    props.setProperty(ConnectionConfig.NAME_PROPERTY.name, clearName);
 	    NodeList urlList = thisElement
 		    .getElementsByTagName(CONNECTION_URL_TAG);
 	    int urlElementLength = urlList.getLength();
@@ -256,7 +259,7 @@ public class FileParsers {
 	    }
 	    Element urlElement = (Element) getFirst(urlList);
 	    String url = getContext(urlElement);
-	    props.setProperty(ConnectionProperties.URL_PROPERTY.property, url);
+	    props.setProperty(ConnectionConfig.URL_PROPERTY.name, url);
 	    NodeList securityList = thisElement
 		    .getElementsByTagName(SECURITY_TAG);
 	    setDataFromJBossSecurity(securityList, props);
@@ -298,7 +301,7 @@ public class FileParsers {
     }
 
     /**
-     * Retrieves data source jndi names from passed file
+     * Retrieves data source JNDI names from passed file
      * 
      * @param dataSourcePath
      * @return
@@ -321,7 +324,7 @@ public class FileParsers {
 
     /**
      * Parses standalone.xml file and initializes {@link javax.sql.DataSource}s
-     * and binds them to jndi context
+     * and binds them to JNDI context
      * 
      * @param dataSourcePath
      * @throws IOException
@@ -347,7 +350,7 @@ public class FileParsers {
 		BeanLoader.initializeDatasource(parameters);
 
 	    } catch (IOException ex) {
-		LOG.error(Initializer.INITIALIZING_ERROR, ex);
+		LOG.error(InitMessages.INITIALIZING_ERROR, ex);
 	    }
 	}
 

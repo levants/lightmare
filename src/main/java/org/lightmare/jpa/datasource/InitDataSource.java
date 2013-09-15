@@ -9,7 +9,8 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
-import org.lightmare.jpa.datasource.Initializer.ConnectionProperties;
+import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
+import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -20,9 +21,6 @@ import org.lightmare.utils.ObjectUtils;
  */
 public abstract class InitDataSource {
 
-    protected static final Logger LOG = Logger
-	    .getLogger(Initializer.class);
-
     protected Properties properties;
 
     protected PoolConfig poolConfig;
@@ -32,19 +30,22 @@ public abstract class InitDataSource {
     protected String user;
     protected String password;
 
+    protected static final Logger LOG = Logger.getLogger(Initializer.class);
+
     public InitDataSource(Properties properties) {
 
 	if (ObjectUtils.available(properties)) {
+
 	    this.properties = properties;
 	    this.poolConfig = Configuration.getPoolConfig();
 	    driver = properties.getProperty(
-		    ConnectionProperties.DRIVER_PROPERTY.property).trim();
-	    url = properties.getProperty(
-		    ConnectionProperties.URL_PROPERTY.property).trim();
-	    user = properties.getProperty(
-		    ConnectionProperties.USER_PROPERTY.property).trim();
+		    ConnectionConfig.DRIVER_PROPERTY.name).trim();
+	    url = properties.getProperty(ConnectionConfig.URL_PROPERTY.name)
+		    .trim();
+	    user = properties.getProperty(ConnectionConfig.USER_PROPERTY.name)
+		    .trim();
 	    password = properties.getProperty(
-		    ConnectionProperties.PASSWORD_PROPERTY.property).trim();
+		    ConnectionConfig.PASSWORD_PROPERTY.name).trim();
 	}
     }
 
@@ -75,9 +76,12 @@ public abstract class InitDataSource {
      * @throws IOException
      */
     public void create() throws IOException {
+
 	String jndiName = Initializer.getJndiName(properties);
-	LOG.info(String.format(InitMessages.INITIALIZING_MESSAGE, jndiName));
+	LogUtils.info(LOG, InitMessages.INITIALIZING_MESSAGE, jndiName);
+
 	try {
+
 	    DataSource dataSource = initializeDataSource();
 	    boolean valid = checkInstance(dataSource);
 	    if (valid) {
@@ -87,15 +91,12 @@ public abstract class InitDataSource {
 		throw new IOException(String.format(
 			InitMessages.NOT_APPR_INSTANCE_ERROR, jndiName));
 	    }
-	    LOG.info(String.format(InitMessages.INITIALIZED_MESSAGE, jndiName));
+
+	    LogUtils.info(LOG, InitMessages.INITIALIZED_MESSAGE, jndiName);
 	} catch (IOException ex) {
-	    LOG.error(
-		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
-		    ex);
+	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR, jndiName);
 	} catch (Exception ex) {
-	    LOG.error(
-		    String.format(InitMessages.COULD_NOT_INIT_ERROR, jndiName),
-		    ex);
+	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR, jndiName);
 	}
     }
 

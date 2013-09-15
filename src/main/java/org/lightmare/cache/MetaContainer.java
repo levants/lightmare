@@ -19,6 +19,8 @@ import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
+import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.WatchUtils;
 
@@ -100,7 +102,7 @@ public class MetaContainer {
     public static Configuration getConfig(URL[] archives) {
 
 	Configuration config;
-	URL archive = ObjectUtils.getFirst(archives);
+	URL archive = CollectionUtils.getFirst(archives);
 	if (ObjectUtils.notNull(archive)) {
 	    String path = WatchUtils.clearPath(archive.getFile());
 	    config = CONFIGS.get(path);
@@ -137,8 +139,7 @@ public class MetaContainer {
 
 	MetaData tmpMeta = addMetaData(beanName, metaData);
 	if (ObjectUtils.notNull(tmpMeta)) {
-	    throw new BeanInUseException(String.format(
-		    "bean %s is alredy in use", beanName));
+	    throw BeanInUseException.get("bean %s is alredy in use", beanName);
 	}
     }
 
@@ -337,8 +338,8 @@ public class MetaContainer {
 	try {
 	    metaData = getSyncMetaData(beanName);
 	} catch (IOException ex) {
-	    LOG.error(String.format("Could not get bean resources %s cause %s",
-		    beanName, ex.getMessage()), ex);
+	    LogUtils.error(LOG, ex, "Could not get bean resources %s cause %s",
+		    beanName, ex.getMessage());
 	}
 	// Removes MetaData from cache
 	removeMeta(beanName);

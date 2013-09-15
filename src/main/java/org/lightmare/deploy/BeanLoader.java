@@ -42,6 +42,7 @@ import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
@@ -506,7 +507,8 @@ public class BeanLoader {
 		interceptorClass = interceptorClasses[i];
 		interceptorMethods = MetaUtils.getAnnotatedMethods(beanClass,
 			AroundInvoke.class);
-		interceptorMethod = ObjectUtils.getFirst(interceptorMethods);
+		interceptorMethod = CollectionUtils
+			.getFirst(interceptorMethods);
 		InterceptorData data = new InterceptorData();
 		data.setBeanClass(beanClass);
 		data.setBeanMethod(beanMethod);
@@ -522,7 +524,7 @@ public class BeanLoader {
 
 	    Class<?>[] interceptorClasses = interceptors.value();
 	    if (ObjectUtils.available(interceptorClasses)) {
-		Method beanMethod = ObjectUtils.getFirst(beanMethods);
+		Method beanMethod = CollectionUtils.getFirst(beanMethods);
 		cacheInterceptors(beanClass, interceptorClasses, beanMethod);
 	    }
 	}
