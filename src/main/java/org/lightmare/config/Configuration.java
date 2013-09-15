@@ -35,9 +35,6 @@ public class Configuration implements Cloneable {
     // Default location for configuration YAML file
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
-    // Configuration properties for deployment
-    private static String ADMIN_USERS_PATH;
-
     // Is configuration server or client (default is server)
     private static boolean server = (Boolean) Config.SERVER.value;
 
@@ -583,11 +580,11 @@ public class Configuration implements Cloneable {
     }
 
     public static String getAdminUsersPath() {
-	return ADMIN_USERS_PATH;
+	return (String) Config.ADMIN_USER_PATH.value;
     }
 
-    public static void setAdminUsersPath(String aDMIN_USERS_PATH) {
-	ADMIN_USERS_PATH = aDMIN_USERS_PATH;
+    public static void setAdminUsersPath(String adminUserPath) {
+	Config.ADMIN_USERS_PATH.value = adminUserPath;
     }
 
     public boolean isRemote() {
