@@ -72,9 +72,9 @@ public enum Config {
 
     SCAN_ARCHIVES("scanArchives"), // Scan archives
 
-    POOLED_DATA_SOURCE("pooledDataSource"); // Pooled data source
+    POOLED_DATA_SOURCE("pooledDataSource"), // Pooled data source
 
-    private static final String PERSISTENCE_PROPERTIES_KEY = "persistenceProperties";
+    PERSISTENCE_PROPERTIES("persistenceProperties"); // Persistence properties
 
     // Connection pool provider property keys
     private static final String POOL_CONFIG_KEY = "poolConfig";
