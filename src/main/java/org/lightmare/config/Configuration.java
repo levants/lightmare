@@ -649,7 +649,6 @@ public class Configuration implements Cloneable {
      */
     public void loadFromStream(InputStream propertiesStream) throws IOException {
 
-	String errorMessage = "Could not load configuration";
 	try {
 	    Properties props = new Properties();
 	    props.load(propertiesStream);
@@ -659,7 +658,7 @@ public class Configuration implements Cloneable {
 	    }
 
 	} catch (IOException ex) {
-	    LOG.error(errorMessage, ex);
+	    LOG.error("Could not load configuration", ex);
 	} finally {
 	    ObjectUtils.close(propertiesStream);
 	}
