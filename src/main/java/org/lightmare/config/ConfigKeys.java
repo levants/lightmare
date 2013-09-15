@@ -11,7 +11,7 @@ import org.lightmare.cache.DeploymentDirectory;
  * @author Levan
  * 
  */
-public enum Config {
+public enum ConfigKeys {
 
     // Default properties
     // Path where stored administrative users
@@ -94,11 +94,11 @@ public enum Config {
 
     public Object value;
 
-    private Config(String key) {
+    private ConfigKeys(String key) {
 	this.key = key;
     }
 
-    private Config(String key, Object value) {
+    private ConfigKeys(String key, Object value) {
 	this(key);
 	this.value = value;
     }
