@@ -934,8 +934,7 @@ public class MetaCreator {
 	 */
 	public Builder setMasterThreads(String property) {
 
-	    creator.configuration.putValue(Configuration.BOSS_POOL_KEY,
-		    property);
+	    creator.configuration.putValue(Config.BOSS_POOL.key, property);
 
 	    return this;
 	}
