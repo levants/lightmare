@@ -384,7 +384,7 @@ public class Configuration implements Cloneable {
 	    watchStatus = Boolean.FALSE;
 	}
 
-	setConfigValue(WATCH_STATUS_KEY, watchStatus);
+	setConfigValue(Config.WATCH_STATUS.key, watchStatus);
 
 	// Sets deployments directories
 	Set<DeploymentDirectory> deploymentPaths = getConfigValue(Config.DEMPLOYMENT_PATH.key);
