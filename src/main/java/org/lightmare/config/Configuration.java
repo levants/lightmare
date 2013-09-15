@@ -748,7 +748,8 @@ public class Configuration implements Cloneable {
     }
 
     public void setAnnotatedUnitName(String annotatedUnitName) {
-	setPersistenceConfigValue(ANNOTATED_UNIT_NAME_KEY, annotatedUnitName);
+	setPersistenceConfigValue(Config.ANNOTATED_UNIT_NAME.key,
+		annotatedUnitName);
     }
 
     public String getPersXmlPath() {
