@@ -137,9 +137,9 @@ public class Configuration implements Cloneable {
 
     private static final String META_INF_PATH = "META-INF/";
 
-    private static final String COULD_NOT_LOAD_CONFIG = "Could not load configuration";
+    private static final String COULD_NOT_LOAD_CONFIG_ERROR = "Could not load configuration";
 
-    private static final String COULD_NOT_FIND_FILE_ERROR = "Could not open config file";
+    private static final String COULD_NOT_OPEN_FILE_ERROR = "Could not open config file";
 
     private static final String RESOURCE_NOT_EXISTS_ERROR = "Configuration resource doesn't exist";
 
@@ -608,7 +608,7 @@ public class Configuration implements Cloneable {
 	    }
 
 	} catch (IOException ex) {
-	    LOG.error(COULD_NOT_LOAD_CONFIG, ex);
+	    LOG.error(COULD_NOT_LOAD_CONFIG_ERROR, ex);
 	} finally {
 	    ObjectUtils.close(propertiesStream);
 	}
@@ -631,7 +631,7 @@ public class Configuration implements Cloneable {
 		configFile.mkdirs();
 	    }
 	} catch (IOException ex) {
-	    LOG.error(COULD_NOT_FIND_FILE_ERROR, ex);
+	    LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
 	}
     }
 
@@ -648,7 +648,7 @@ public class Configuration implements Cloneable {
 	    propertiesStream = new FileInputStream(new File(configFilename));
 	    loadFromStream(propertiesStream);
 	} catch (IOException ex) {
-	    LOG.error(COULD_NOT_FIND_FILE_ERROR, ex);
+	    LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
 	}
     }
 
