@@ -367,9 +367,10 @@ public class Configuration implements Cloneable {
 	    setConfigValue(Config.WORKER_POOL_KEY.key, workerProperty);
 	}
 
-	contains = containsConfigKey(CONNECTION_TIMEOUT_KEY);
+	contains = containsConfigKey(Config.CONNECTION_TIMEOUT.key);
 	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(CONNECTION_TIMEOUT_KEY, CONNECTION_TIMEOUT_DEF);
+	    setConfigValue(Config.CONNECTION_TIMEOUT.key,
+		    Config.CONNECTION_TIMEOUT.value);
 	}
 
 	// Sets default values is application on server or client mode
