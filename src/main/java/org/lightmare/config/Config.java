@@ -2,7 +2,6 @@ package org.lightmare.config;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
 
 import org.lightmare.cache.DeploymentDirectory;
 
@@ -44,15 +43,10 @@ public enum Config {
 
     REMOTE("remote", Boolean.FALSE),
 
-    CLIENT_KEY("client", Boolean.FALSE);
-
-    public static final Set<DeploymentDirectory> DEPLOYMENT_PATHS_DEF = new HashSet<DeploymentDirectory>(
-	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)));
-
-    private static final String CONFIG_FILE = "./config/configuration.yaml";
+    CLIENT_KEY("client", Boolean.FALSE),
 
     // Configuration keys properties for deployment
-    private static final String DEPLOY_CONFIG_KEY = "deployConfiguration";
+    DEPLOY_CONFIG("deployConfiguration"); // Deploy config
 
     private static final String ADMIN_USER_PATH_KEY = "adminPath";
 
