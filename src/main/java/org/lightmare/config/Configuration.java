@@ -320,7 +320,7 @@ public class Configuration implements Cloneable {
 	// Sets deployments directories
 	Set<DeploymentDirectory> deploymentPaths = getConfigValue(Config.DEMPLOYMENT_PATH.key);
 	if (deploymentPaths == null) {
-	    deploymentPaths = (Set<DeploymentDirectory>) Config.DEMPLOYMENT_PATH.value;
+	    deploymentPaths = Config.DEMPLOYMENT_PATH.getValue();
 	    setConfigValue(Config.DEMPLOYMENT_PATH.key, deploymentPaths);
 	}
     }
