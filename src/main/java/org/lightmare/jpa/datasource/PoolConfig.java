@@ -49,7 +49,7 @@ public class PoolConfig {
 	AQUIRE_INCREMENT("acquireIncrement", 5), // increment
 
 	// Pool timeout properties
-	MAX_IDLE_TIMEOUT("maxIdleTime", "10000"), // idle
+	MAX_IDLE_TIMEOUT("maxIdleTime", 10000), // idle
 	MAX_IDLE_TIME_EXCESS_CONN("maxIdleTimeExcessConnections", "0"), // excess
 	CHECK_OUT_TIMEOUT("checkoutTimeout", "1800"), // checkout
 
