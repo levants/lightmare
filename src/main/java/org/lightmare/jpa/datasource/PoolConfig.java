@@ -39,7 +39,7 @@ public class PoolConfig {
 
 	// Class loader properties
 	CONTEXT_CLASS_LOADER_SOURCE("contextClassLoaderSource", "library"), // loader
-	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", "true"), // threads
+	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", Boolean.TRUE), // threads
 
 	// Pool properties
 	MAX_POOL_SIZE("maxPoolSize", 15), // max pool size
