@@ -52,9 +52,6 @@ public class Configuration implements Cloneable {
 
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
-    private static final String REMOTE_KEY = "remote";
-
-    private static final String SERVER_KEY = "server";
 
     private static final String CLIENT_KEY = "client";
 
@@ -420,10 +417,10 @@ public class Configuration implements Cloneable {
 	setConfigValue(WATCH_STATUS_KEY, watchStatus);
 
 	// Sets deployments directories
-	Set<DeploymentDirectory> deploymentPaths = getConfigValue(DEMPLOYMENT_PATH_KEY);
+	Set<DeploymentDirectory> deploymentPaths = getConfigValue(Config.DEMPLOYMENT_PATH.key);
 	if (deploymentPaths == null) {
 	    deploymentPaths = DEPLOYMENT_PATHS_DEF;
-	    setConfigValue(DEMPLOYMENT_PATH_KEY, deploymentPaths);
+	    setConfigValue(Config.DEMPLOYMENT_PATH.key, deploymentPaths);
 	}
     }
 
