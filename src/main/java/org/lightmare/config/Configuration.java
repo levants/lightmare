@@ -38,8 +38,6 @@ public class Configuration implements Cloneable {
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
 
-    private static final String CLIENT_KEY = "client";
-
     public static final Set<DeploymentDirectory> DEPLOYMENT_PATHS_DEF = new HashSet<DeploymentDirectory>(
 	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)));
 
@@ -659,11 +657,11 @@ public class Configuration implements Cloneable {
 
     public boolean isClient() {
 
-	return getConfigValue(CLIENT_KEY, Boolean.FALSE);
+	return getConfigValue(Config.CLIENT_KEY.key, Boolean.FALSE);
     }
 
     public void setClient(boolean client) {
-	setConfigValue(CLIENT_KEY, client);
+	setConfigValue(Config.CLIENT_KEY.key, client);
     }
 
     /**
