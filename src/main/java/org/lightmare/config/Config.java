@@ -81,7 +81,7 @@ public enum Config {
 
     POOL_PROPERTIES_PATH("poolPropertiesPath"), // Pool properties path
 
-    POOL_PROVIDER_TYPE("poolProviderType"), // Pool rovider type
+    POOL_PROVIDER_TYPE("poolProviderType"), // Pool provider type
 
     POOL_PROPERTIES("poolProperties"); // Pool properties
 
