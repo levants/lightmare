@@ -34,7 +34,6 @@ public class Configuration implements Cloneable {
 
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
-
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
     // Configuration properties for deployment
