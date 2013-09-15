@@ -39,7 +39,6 @@ public class Configuration implements Cloneable {
 
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
-    // Persistence provider property keys
     // Configuration properties for deployment
     private static String ADMIN_USERS_PATH;
 
