@@ -32,7 +32,10 @@ public enum Config {
     DEMPLOYMENT_PATH("deploymentPath", new HashSet<DeploymentDirectory>(
 	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
 
-    DATA_SOURCE_PATH("dataSourcePath"); // data source path
+    DATA_SOURCE_PATH("dataSourcePath", new HashSet<DeploymentDirectory>(
+	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))); // data
+										// source
+										// path
 
     // Default properties
     public static final boolean SERVER_DEF = Boolean.TRUE;
