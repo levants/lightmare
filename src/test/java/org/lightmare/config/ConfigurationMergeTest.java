@@ -24,7 +24,7 @@ public class ConfigurationMergeTest {
 	config = new HashMap<Object, Object>();
 
 	Map<Object, Object> subConfig1 = new HashMap<Object, Object>();
-	subConfig1.put(Configuration.DATA_SOURCE_PATH_KEY, "path1");
+	subConfig1.put(Config.DATA_SOURCE_PATH.key, "path1");
 	subConfig1.put(Configuration.DEMPLOYMENT_PATH_KEY, "deployment1");
 	Map<Object, Object> subSubConfig1 = new HashMap<Object, Object>();
 	subSubConfig1.put(Configuration.PORT_KEY, "port_key1");
