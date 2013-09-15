@@ -37,7 +37,7 @@ public class ConfigurationMergeTest {
 	defaults = new HashMap<Object, Object>();
 
 	Map<Object, Object> subConfig2 = new HashMap<Object, Object>();
-	subConfig2.put(Configuration.DATA_SOURCE_PATH_KEY, "path2");
+	subConfig2.put(Config.DATA_SOURCE_PATH.key, "path2");
 	Map<Object, Object> subSubConfig2 = new HashMap<Object, Object>();
 	subSubConfig2.put("port_false_key2", "port_key2");
 	subConfig2.put(subSubConfigKey, subSubConfig2);
