@@ -705,7 +705,7 @@ public class Configuration implements Cloneable {
     }
 
     public void setLibraryPaths(String[] libraryPaths) {
-	setConfigValue(LIBRARY_PATH_KEY, libraryPaths);
+	setConfigValue(Config.LIBRARY_PATH.key, libraryPaths);
     }
 
     public boolean isHotDeployment() {
