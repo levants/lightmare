@@ -719,7 +719,7 @@ public class Configuration implements Cloneable {
 
     public boolean isWatchStatus() {
 
-	return getConfigValue(WATCH_STATUS_KEY, Boolean.FALSE);
+	return getConfigValue(Config.WATCH_STATUS.key, Boolean.FALSE);
     }
 
     public void setWatchStatus(boolean watchStatus) {
