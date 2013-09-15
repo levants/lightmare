@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.lightmare.config.Config;
 import org.lightmare.config.Configuration;
 import org.lightmare.utils.ObjectUtils;
 
@@ -38,7 +39,7 @@ public class Security {
 
 	String path = Configuration.getAdminUsersPath();
 	if (ObjectUtils.notAvailable(path)) {
-	    path = Configuration.ADMIN_USERS_PATH_DEF;
+	    path = (String) Config.ADMIN_USERS_PATH.value;
 	}
 
 	File file = new File(path);

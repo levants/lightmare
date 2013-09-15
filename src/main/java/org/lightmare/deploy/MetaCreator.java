@@ -31,6 +31,7 @@ import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.RestContainer;
 import org.lightmare.cache.TmpResources;
+import org.lightmare.config.Config;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.jpa.JPAManager;
@@ -906,8 +907,7 @@ public class MetaCreator {
 	 */
 	public Builder setIpAddress(String property) {
 
-	    creator.configuration.putValue(Configuration.IP_ADDRESS_KEY,
-		    property);
+	    creator.configuration.putValue(Config.IP_ADDRESS.key, property);
 
 	    return this;
 	}
@@ -920,7 +920,7 @@ public class MetaCreator {
 	 */
 	public Builder setPort(String property) {
 
-	    creator.configuration.putValue(Configuration.PORT_KEY, property);
+	    creator.configuration.putValue(Config.PORT.key, property);
 
 	    return this;
 	}
