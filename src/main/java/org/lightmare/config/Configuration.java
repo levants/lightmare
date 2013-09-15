@@ -646,7 +646,7 @@ public class Configuration implements Cloneable {
 	    propertiesStream = new FileInputStream(new File(configFilename));
 	    loadFromStream(propertiesStream);
 	} catch (IOException ex) {
-	    LOG.error("Could not open config file", ex);
+	    LOG.error(COULD_NOT_FIND_FILE_ERROR, ex);
 	}
     }
 
