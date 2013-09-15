@@ -107,7 +107,7 @@ public class Configuration implements Cloneable {
 
     private <K> boolean containsConfigKey(K key) {
 
-	return containsSubConfigKey(Config.DEPLOY_CONFIG.key, key);
+	return containsSubConfigKey(ConfigKeys.DEPLOY_CONFIG.key, key);
     }
 
     private <K, V> V getSubConfigValue(Object key, K subKey) {
@@ -117,17 +117,17 @@ public class Configuration implements Cloneable {
 
     private <K, V> void setConfigValue(K subKey, V value) {
 
-	setSubConfigValue(Config.DEPLOY_CONFIG.key, subKey, value);
+	setSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey, value);
     }
 
     private <K, V> V getConfigValue(K subKey, V defaultValue) {
 
-	return getSubConfigValue(Config.DEPLOY_CONFIG.key, subKey, defaultValue);
+	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey, defaultValue);
     }
 
     private <K, V> V getConfigValue(K subKey) {
 
-	return getSubConfigValue(Config.DEPLOY_CONFIG.key, subKey);
+	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey);
     }
 
     private <K, V> Map<K, V> getWithInitialization(Object key) {
@@ -157,8 +157,8 @@ public class Configuration implements Cloneable {
      */
     public <V> V getPersistenceConfigValue(Object key, V defaultValue) {
 
-	V value = ObjectUtils.getSubValue(config, Config.DEPLOY_CONFIG.key,
-		Config.PERSISTENCE_CONFIG.key, key);
+	V value = ObjectUtils.getSubValue(config, ConfigKeys.DEPLOY_CONFIG.key,
+		ConfigKeys.PERSISTENCE_CONFIG.key, key);
 	if (value == null) {
 	    value = defaultValue;
 	}
@@ -187,7 +187,7 @@ public class Configuration implements Cloneable {
      */
     public void setPersistenceConfigValue(Object key, Object value) {
 
-	setWithInitialization(Config.PERSISTENCE_CONFIG.key, key, value);
+	setWithInitialization(ConfigKeys.PERSISTENCE_CONFIG.key, key, value);
     }
 
     /**
@@ -200,8 +200,8 @@ public class Configuration implements Cloneable {
      */
     public <V> V getPoolConfigValue(Object key, V defaultValue) {
 
-	V value = ObjectUtils.getSubValue(config, Config.DEPLOY_CONFIG.key,
-		Config.POOL_CONFIG.key, key);
+	V value = ObjectUtils.getSubValue(config, ConfigKeys.DEPLOY_CONFIG.key,
+		ConfigKeys.POOL_CONFIG.key, key);
 	if (value == null) {
 	    value = defaultValue;
 	}
@@ -232,7 +232,7 @@ public class Configuration implements Cloneable {
      */
     public void setPoolConfigValue(Object key, Object value) {
 
-	setWithInitialization(Config.POOL_CONFIG.key, key, value);
+	setWithInitialization(ConfigKeys.POOL_CONFIG.key, key, value);
     }
 
     /**
@@ -240,18 +240,18 @@ public class Configuration implements Cloneable {
      */
     private void configurePool() {
 
-	Map<Object, Object> poolProperties = getPoolConfigValue(Config.POOL_PROPERTIES.key);
+	Map<Object, Object> poolProperties = getPoolConfigValue(ConfigKeys.POOL_PROPERTIES.key);
 	if (ObjectUtils.available(poolProperties)) {
 
 	    setPoolProperties(poolProperties);
 	}
 
-	String type = getPoolConfigValue(Config.POOL_PROVIDER_TYPE.key);
+	String type = getPoolConfigValue(ConfigKeys.POOL_PROVIDER_TYPE.key);
 	if (ObjectUtils.available(type)) {
 	    getPoolConfig().setPoolProviderType(type);
 	}
 
-	String path = getPoolConfigValue(Config.POOL_PROPERTIES_PATH.key);
+	String path = getPoolConfigValue(ConfigKeys.POOL_PROPERTIES_PATH.key);
 	if (ObjectUtils.available(path)) {
 	    setPoolPropertiesPath(path);
 	}
@@ -263,34 +263,34 @@ public class Configuration implements Cloneable {
     private void configureServer() {
 
 	// Sets default values to remote server configuration
-	boolean contains = containsConfigKey(Config.IP_ADDRESS.key);
+	boolean contains = containsConfigKey(ConfigKeys.IP_ADDRESS.key);
 	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(Config.IP_ADDRESS.key, Config.IP_ADDRESS.value);
+	    setConfigValue(ConfigKeys.IP_ADDRESS.key, ConfigKeys.IP_ADDRESS.value);
 	}
 
-	contains = containsConfigKey(Config.PORT.key);
+	contains = containsConfigKey(ConfigKeys.PORT.key);
 	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(Config.PORT.key, Config.PORT.value);
+	    setConfigValue(ConfigKeys.PORT.key, ConfigKeys.PORT.value);
 	}
 
-	contains = containsConfigKey(Config.BOSS_POOL.key);
+	contains = containsConfigKey(ConfigKeys.BOSS_POOL.key);
 	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(Config.BOSS_POOL.key, Config.BOSS_POOL.value);
+	    setConfigValue(ConfigKeys.BOSS_POOL.key, ConfigKeys.BOSS_POOL.value);
 	}
 
-	contains = containsConfigKey(Config.WORKER_POOL.key);
+	contains = containsConfigKey(ConfigKeys.WORKER_POOL.key);
 	if (ObjectUtils.notTrue(contains)) {
 
-	    int defaultWorkers = Config.WORKER_POOL.getValue();
+	    int defaultWorkers = ConfigKeys.WORKER_POOL.getValue();
 	    int workers = RUNTIME.availableProcessors() * defaultWorkers;
 	    String workerProperty = String.valueOf(workers);
-	    setConfigValue(Config.WORKER_POOL.key, workerProperty);
+	    setConfigValue(ConfigKeys.WORKER_POOL.key, workerProperty);
 	}
 
-	contains = containsConfigKey(Config.CONNECTION_TIMEOUT.key);
+	contains = containsConfigKey(ConfigKeys.CONNECTION_TIMEOUT.key);
 	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(Config.CONNECTION_TIMEOUT.key,
-		    Config.CONNECTION_TIMEOUT.value);
+	    setConfigValue(ConfigKeys.CONNECTION_TIMEOUT.key,
+		    ConfigKeys.CONNECTION_TIMEOUT.value);
 	}
     }
 
@@ -300,10 +300,10 @@ public class Configuration implements Cloneable {
     public void configureDeployments() {
 
 	// Checks if application run in hot deployment mode
-	Boolean hotDeployment = getConfigValue(Config.HOT_DEPLOYMENT.key);
+	Boolean hotDeployment = getConfigValue(ConfigKeys.HOT_DEPLOYMENT.key);
 	if (hotDeployment == null) {
-	    setConfigValue(Config.HOT_DEPLOYMENT.key, Boolean.FALSE);
-	    hotDeployment = getConfigValue(Config.HOT_DEPLOYMENT.key);
+	    setConfigValue(ConfigKeys.HOT_DEPLOYMENT.key, Boolean.FALSE);
+	    hotDeployment = getConfigValue(ConfigKeys.HOT_DEPLOYMENT.key);
 	}
 
 	// Check if application needs directory watch service
@@ -314,13 +314,13 @@ public class Configuration implements Cloneable {
 	    watchStatus = Boolean.FALSE;
 	}
 
-	setConfigValue(Config.WATCH_STATUS.key, watchStatus);
+	setConfigValue(ConfigKeys.WATCH_STATUS.key, watchStatus);
 
 	// Sets deployments directories
-	Set<DeploymentDirectory> deploymentPaths = getConfigValue(Config.DEMPLOYMENT_PATH.key);
+	Set<DeploymentDirectory> deploymentPaths = getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
 	if (deploymentPaths == null) {
-	    deploymentPaths = Config.DEMPLOYMENT_PATH.getValue();
-	    setConfigValue(Config.DEMPLOYMENT_PATH.key, deploymentPaths);
+	    deploymentPaths = ConfigKeys.DEMPLOYMENT_PATH.getValue();
+	    setConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key, deploymentPaths);
 	}
     }
 
@@ -503,7 +503,7 @@ public class Configuration implements Cloneable {
     public void loadFromFile() throws IOException {
 
 	InputStream propertiesStream = null;
-	String configFilePath = Config.CONFIG_FILE.getValue();
+	String configFilePath = ConfigKeys.CONFIG_FILE.getValue();
 	try {
 	    File configFile = new File(configFilePath);
 	    if (configFile.exists()) {
@@ -553,39 +553,39 @@ public class Configuration implements Cloneable {
     }
 
     public static String getAdminUsersPath() {
-	return Config.ADMIN_USER_PATH.getValue();
+	return ConfigKeys.ADMIN_USER_PATH.getValue();
     }
 
     public static void setAdminUsersPath(String adminUserPath) {
-	Config.ADMIN_USERS_PATH.value = adminUserPath;
+	ConfigKeys.ADMIN_USERS_PATH.value = adminUserPath;
     }
 
     public boolean isRemote() {
 
-	return Config.REMOTE.getValue();
+	return ConfigKeys.REMOTE.getValue();
     }
 
     public void setRemote(boolean remote) {
-	Config.REMOTE.value = remote;
+	ConfigKeys.REMOTE.value = remote;
     }
 
     public static boolean isServer() {
 
-	return Config.SERVER.getValue();
+	return ConfigKeys.SERVER.getValue();
     }
 
     public static void setServer(boolean server) {
 
-	Config.SERVER.value = server;
+	ConfigKeys.SERVER.value = server;
     }
 
     public boolean isClient() {
 
-	return getConfigValue(Config.CLIENT.key, Boolean.FALSE);
+	return getConfigValue(ConfigKeys.CLIENT.key, Boolean.FALSE);
     }
 
     public void setClient(boolean client) {
-	setConfigValue(Config.CLIENT.key, client);
+	setConfigValue(ConfigKeys.CLIENT.key, client);
     }
 
     /**
@@ -596,10 +596,10 @@ public class Configuration implements Cloneable {
      */
     public void addDeploymentPath(String path, boolean scan) {
 
-	Set<DeploymentDirectory> deploymentPaths = getConfigValue(Config.DEMPLOYMENT_PATH.key);
+	Set<DeploymentDirectory> deploymentPaths = getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
 	if (deploymentPaths == null) {
 	    deploymentPaths = new HashSet<DeploymentDirectory>();
-	    setConfigValue(Config.DEMPLOYMENT_PATH.key, deploymentPaths);
+	    setConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key, deploymentPaths);
 	}
 
 	deploymentPaths.add(new DeploymentDirectory(path, scan));
@@ -612,10 +612,10 @@ public class Configuration implements Cloneable {
      */
     public void addDataSourcePath(String path) {
 
-	Set<String> dataSourcePaths = getConfigValue(Config.DATA_SOURCE_PATH.key);
+	Set<String> dataSourcePaths = getConfigValue(ConfigKeys.DATA_SOURCE_PATH.key);
 	if (dataSourcePaths == null) {
 	    dataSourcePaths = new HashSet<String>();
-	    setConfigValue(Config.DATA_SOURCE_PATH.key, dataSourcePaths);
+	    setConfigValue(ConfigKeys.DATA_SOURCE_PATH.key, dataSourcePaths);
 	}
 
 	dataSourcePaths.add(path);
@@ -623,38 +623,38 @@ public class Configuration implements Cloneable {
 
     public Set<DeploymentDirectory> getDeploymentPath() {
 
-	return getConfigValue(Config.DEMPLOYMENT_PATH.key);
+	return getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
     }
 
     public Set<String> getDataSourcePath() {
 
-	return getConfigValue(Config.DATA_SOURCE_PATH.key);
+	return getConfigValue(ConfigKeys.DATA_SOURCE_PATH.key);
     }
 
     public String[] getLibraryPaths() {
-	return getConfigValue(Config.LIBRARY_PATH.key);
+	return getConfigValue(ConfigKeys.LIBRARY_PATH.key);
     }
 
     public void setLibraryPaths(String[] libraryPaths) {
-	setConfigValue(Config.LIBRARY_PATH.key, libraryPaths);
+	setConfigValue(ConfigKeys.LIBRARY_PATH.key, libraryPaths);
     }
 
     public boolean isHotDeployment() {
 
-	return getConfigValue(Config.HOT_DEPLOYMENT.key, Boolean.FALSE);
+	return getConfigValue(ConfigKeys.HOT_DEPLOYMENT.key, Boolean.FALSE);
     }
 
     public void setHotDeployment(boolean hotDeployment) {
-	setConfigValue(Config.HOT_DEPLOYMENT.key, hotDeployment);
+	setConfigValue(ConfigKeys.HOT_DEPLOYMENT.key, hotDeployment);
     }
 
     public boolean isWatchStatus() {
 
-	return getConfigValue(Config.WATCH_STATUS.key, Boolean.FALSE);
+	return getConfigValue(ConfigKeys.WATCH_STATUS.key, Boolean.FALSE);
     }
 
     public void setWatchStatus(boolean watchStatus) {
-	setConfigValue(Config.WATCH_STATUS.key, watchStatus);
+	setConfigValue(ConfigKeys.WATCH_STATUS.key, watchStatus);
     }
 
     /**
@@ -664,80 +664,80 @@ public class Configuration implements Cloneable {
      */
     public boolean isScanForEntities() {
 
-	return getPersistenceConfigValue(Config.SCAN_FOR_ENTITIES.key,
+	return getPersistenceConfigValue(ConfigKeys.SCAN_FOR_ENTITIES.key,
 		Boolean.FALSE);
     }
 
     public void setScanForEntities(boolean scanForEntities) {
 
-	setPersistenceConfigValue(Config.SCAN_FOR_ENTITIES.key, scanForEntities);
+	setPersistenceConfigValue(ConfigKeys.SCAN_FOR_ENTITIES.key, scanForEntities);
     }
 
     public String getAnnotatedUnitName() {
 
-	return getPersistenceConfigValue(Config.ANNOTATED_UNIT_NAME.key);
+	return getPersistenceConfigValue(ConfigKeys.ANNOTATED_UNIT_NAME.key);
     }
 
     public void setAnnotatedUnitName(String annotatedUnitName) {
-	setPersistenceConfigValue(Config.ANNOTATED_UNIT_NAME.key,
+	setPersistenceConfigValue(ConfigKeys.ANNOTATED_UNIT_NAME.key,
 		annotatedUnitName);
     }
 
     public String getPersXmlPath() {
 
-	return getPersistenceConfigValue(Config.PERSISTENCE_XML_PATH.key);
+	return getPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_PATH.key);
     }
 
     public void setPersXmlPath(String persXmlPath) {
-	setPersistenceConfigValue(Config.PERSISTENCE_XML_PATH.key, persXmlPath);
+	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_PATH.key, persXmlPath);
     }
 
     public boolean isPersXmlFromJar() {
 
-	return getPersistenceConfigValue(Config.PERSISTENCE_XML_FROM_JAR.key,
+	return getPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_FROM_JAR.key,
 		Boolean.FALSE);
     }
 
     public void setPersXmlFromJar(boolean persXmlFromJar) {
-	setPersistenceConfigValue(Config.PERSISTENCE_XML_FROM_JAR.key,
+	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_FROM_JAR.key,
 		persXmlFromJar);
     }
 
     public boolean isSwapDataSource() {
-	return getPersistenceConfigValue(Config.SWAP_DATASOURCE.key,
+	return getPersistenceConfigValue(ConfigKeys.SWAP_DATASOURCE.key,
 		Boolean.FALSE);
     }
 
     public void setSwapDataSource(boolean swapDataSource) {
-	setPersistenceConfigValue(Config.SWAP_DATASOURCE.key, swapDataSource);
+	setPersistenceConfigValue(ConfigKeys.SWAP_DATASOURCE.key, swapDataSource);
     }
 
     public boolean isScanArchives() {
-	return getPersistenceConfigValue(Config.SCAN_ARCHIVES.key,
+	return getPersistenceConfigValue(ConfigKeys.SCAN_ARCHIVES.key,
 		Boolean.FALSE);
     }
 
     public void setScanArchives(boolean scanArchives) {
-	setPersistenceConfigValue(Config.SCAN_ARCHIVES.key, scanArchives);
+	setPersistenceConfigValue(ConfigKeys.SCAN_ARCHIVES.key, scanArchives);
     }
 
     public boolean isPooledDataSource() {
-	return getPersistenceConfigValue(Config.POOLED_DATA_SOURCE.key,
+	return getPersistenceConfigValue(ConfigKeys.POOLED_DATA_SOURCE.key,
 		Boolean.FALSE);
     }
 
     public void setPooledDataSource(boolean pooledDataSource) {
-	setPersistenceConfigValue(Config.POOLED_DATA_SOURCE.key,
+	setPersistenceConfigValue(ConfigKeys.POOLED_DATA_SOURCE.key,
 		pooledDataSource);
     }
 
     public Map<Object, Object> getPersistenceProperties() {
-	return getPersistenceConfigValue(Config.PERSISTENCE_PROPERTIES.key);
+	return getPersistenceConfigValue(ConfigKeys.PERSISTENCE_PROPERTIES.key);
     }
 
     public void setPersistenceProperties(
 	    Map<Object, Object> persistenceProperties) {
-	setPersistenceConfigValue(Config.PERSISTENCE_PROPERTIES.key,
+	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_PROPERTIES.key,
 		persistenceProperties);
     }
 
