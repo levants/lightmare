@@ -40,9 +40,9 @@ public enum Config {
 
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
-    REMOTE("remote", Boolean.FALSE),
-
     SERVER("server", Boolean.TRUE),
+
+    REMOTE("remote", Boolean.FALSE),
 
     CLIENT_KEY("client", Boolean.FALSE);
 
