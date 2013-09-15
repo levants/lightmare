@@ -32,8 +32,7 @@ public class Configuration implements Cloneable {
     // Runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
-    // Properties which version of server is running remote it requires server
-    // client RPC infrastructure or local (embedded mode)
+    // Default location for configuration file
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
     // Configuration properties for deployment
