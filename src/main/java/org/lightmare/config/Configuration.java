@@ -787,7 +787,7 @@ public class Configuration implements Cloneable {
     }
 
     public void setScanArchives(boolean scanArchives) {
-	setPersistenceConfigValue(SCAN_ARCHIVES_KEY, scanArchives);
+	setPersistenceConfigValue(Config.SCAN_ARCHIVES.key, scanArchives);
     }
 
     public boolean isPooledDataSource() {
