@@ -796,7 +796,8 @@ public class Configuration implements Cloneable {
     }
 
     public void setPooledDataSource(boolean pooledDataSource) {
-	setPersistenceConfigValue(POOLED_DATA_SOURCE_KEY, pooledDataSource);
+	setPersistenceConfigValue(Config.POOLED_DATA_SOURCE.key,
+		pooledDataSource);
     }
 
     public Map<Object, Object> getPersistenceProperties() {
