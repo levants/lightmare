@@ -54,10 +54,10 @@ public enum Config {
 
     WATCH_STATUS("watchStatus"), // Watch status
 
-    LIBRARY_PATH("libraryPaths"); // Library path
+    LIBRARY_PATH("libraryPaths"), // Library path
 
     // Persistence provider property keys
-    private static final String PERSISTENCE_CONFIG_KEY = "persistenceConfig";
+    PERSISTENCE_CONFIG("persistenceConfig"); // Persistence config
 
     private static final String SCAN_FOR_ENTITIES_KEY = "scanForEntities";
 
