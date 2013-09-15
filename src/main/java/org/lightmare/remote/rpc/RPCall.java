@@ -62,7 +62,7 @@ public class RPCall {
 
 	    bossPoolSize = config.getIntValue(Config.BOSS_POOL.key);
 
-	    workerPoolSize = config.getIntValue(Configuration.WORKER_POOL_KEY);
+	    workerPoolSize = config.getIntValue(Config.WORKER_POOL_KEY.key);
 
 	    timeout = config.getLongValue(Configuration.CONNECTION_TIMEOUT_KEY);
 
