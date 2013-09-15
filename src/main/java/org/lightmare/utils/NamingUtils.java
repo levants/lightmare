@@ -20,7 +20,7 @@ public class NamingUtils {
     private static final String EJB_NAME_DELIM = "\\";
 
     private static final String EJB_APP_DELIM = "!";
-    
+
     // Digital values for naming utilities
     public static final int EJB_NAME_LENGTH = 4;
 
@@ -74,7 +74,7 @@ public class NamingUtils {
      */
     public static String createJpaJndiName(String jndiName) {
 
-	return String.format("%s%s", JPA_NAME_PREF, jndiName);
+	return StringUtils.concat(JPA_NAME_PREF, jndiName);
     }
 
     /**
