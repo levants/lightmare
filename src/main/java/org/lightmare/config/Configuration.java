@@ -604,10 +604,7 @@ public class Configuration implements Cloneable {
 	    }
 	} catch (IOException ex) {
 	    LOG.error("Could not open config file", ex);
-	} finally {
-	    ObjectUtils.close(propertiesStream);
 	}
-
     }
 
     /**
