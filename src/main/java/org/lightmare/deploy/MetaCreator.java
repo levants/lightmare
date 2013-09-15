@@ -949,7 +949,7 @@ public class MetaCreator {
 	public Builder setWorkerThreads(String property) {
 
 	    creator.configuration
-		    .putValue(Config.WORKER_POOL_KEY.key, property);
+		    .putValue(Config.WORKER_POOL.key, property);
 
 	    return this;
 	}

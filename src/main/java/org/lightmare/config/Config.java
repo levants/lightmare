@@ -24,7 +24,7 @@ public enum Config {
 
     BOSS_POOL("bossPoolSize", 1), // boss pool
 
-    WORKER_POOL_KEY("workerPoolSize", 3), // Worker pool
+    WORKER_POOL("workerPoolSize", 3), // Worker pool
 
     CONNECTION_TIMEOUT("timeout", 1000), // Connection timeout
 
