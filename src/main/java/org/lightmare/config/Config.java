@@ -72,7 +72,7 @@ public enum Config {
 
     SCAN_ARCHIVES("scanArchives"), // Scan archives
 
-    POOLED_DATA_SOURCE("pooledDataSource"), // Pooled data source
+    POOLED_DATA_SOURCE("pooledDataSource", Boolean.TRUE), // Pooled data source
 
     PERSISTENCE_PROPERTIES("persistenceProperties"); // Persistence properties
 
