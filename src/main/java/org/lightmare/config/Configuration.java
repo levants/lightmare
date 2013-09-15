@@ -40,8 +40,6 @@ public class Configuration implements Cloneable {
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
     // Persistence provider property keys
-    private static final String PERSISTENCE_XML_FROM_JAR_KEY = "persistenceXmlFromJar";
-
     private static final String SWAP_DATASOURCE_KEY = "swapDataSource";
 
     private static final String SCAN_ARCHIVES_KEY = "scanArchives";
