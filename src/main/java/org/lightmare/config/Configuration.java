@@ -723,7 +723,7 @@ public class Configuration implements Cloneable {
     }
 
     public void setWatchStatus(boolean watchStatus) {
-	setConfigValue(WATCH_STATUS_KEY, watchStatus);
+	setConfigValue(Config.WATCH_STATUS.key, watchStatus);
     }
 
     /**
