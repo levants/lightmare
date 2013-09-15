@@ -17,7 +17,7 @@ import org.jboss.netty.channel.socket.nio.NioWorker;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.jboss.netty.channel.socket.nio.WorkerPool;
 import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
-import org.lightmare.config.Config;
+import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.remote.rcp.RcpHandler;
 import org.lightmare.remote.rcp.decoders.RcpDecoder;
@@ -60,11 +60,11 @@ public class RPCall {
 
 	if (boss == null || worker == null) {
 
-	    bossPoolSize = config.getIntValue(Config.BOSS_POOL.key);
+	    bossPoolSize = config.getIntValue(ConfigKeys.BOSS_POOL.key);
 
-	    workerPoolSize = config.getIntValue(Config.WORKER_POOL.key);
+	    workerPoolSize = config.getIntValue(ConfigKeys.WORKER_POOL.key);
 
-	    timeout = config.getLongValue(Config.CONNECTION_TIMEOUT.key);
+	    timeout = config.getLongValue(ConfigKeys.CONNECTION_TIMEOUT.key);
 
 	    boss = new OrderedMemoryAwareThreadPoolExecutor(bossPoolSize,
 		    400000000, 2000000000, 60, TimeUnit.SECONDS,
