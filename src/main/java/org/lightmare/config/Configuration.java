@@ -137,6 +137,8 @@ public class Configuration implements Cloneable {
 
     private static final String META_INF_PATH = "META-INF/";
 
+    private static final String COULD_NOT_LOAD_CONFIG = "Could not load configuration";
+
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
     public Configuration() {
@@ -602,7 +604,7 @@ public class Configuration implements Cloneable {
 	    }
 
 	} catch (IOException ex) {
-	    LOG.error("Could not load configuration", ex);
+	    LOG.error(COULD_NOT_LOAD_CONFIG, ex);
 	} finally {
 	    ObjectUtils.close(propertiesStream);
 	}
