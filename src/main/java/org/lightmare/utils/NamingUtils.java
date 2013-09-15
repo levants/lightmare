@@ -1,7 +1,5 @@
 package org.lightmare.utils;
 
-import org.lightmare.config.Configuration;
-
 /**
  * Utility class for JNDI names
  * 
@@ -12,6 +10,7 @@ public class NamingUtils {
 
     public static final String USER_TRANSACTION_NAME = "java:comp/UserTransaction";
 
+    // String prefixes for jndi names
     public static final String CONNECTION_NAME_PREF = "java:comp/env/";
 
     public static final String EJB_NAME_PREF = "ejb:";
@@ -21,6 +20,8 @@ public class NamingUtils {
     private static final String EJB_NAME_DELIM = "\\";
 
     private static final String EJB_APP_DELIM = "!";
+
+    public static final int EJB_NAME_LENGTH = 4;
 
     private static final int BEAN_NAMES_INDEX = 1;
 
@@ -72,7 +73,7 @@ public class NamingUtils {
      */
     public static String createJpaJndiName(String jndiName) {
 
-	return String.format("%s%s", Configuration.JPA_NAME, jndiName);
+	return String.format("%s%s", CONNECTION_NAME_PREF, jndiName);
     }
 
     /**
@@ -83,7 +84,7 @@ public class NamingUtils {
      */
     public static String formatJpaJndiName(String jndiName) {
 
-	String name = jndiName.replace(Configuration.JPA_NAME,
+	String name = jndiName.replace(CONNECTION_NAME_PREF,
 		StringUtils.EMPTY_STRING);
 
 	return name;
@@ -97,7 +98,7 @@ public class NamingUtils {
      */
     public static String createEjbJndiName(String jndiName) {
 
-	return String.format("%s%s", Configuration.EJB_NAME, jndiName);
+	return String.format("%s%s", EJB_NAME_PREF, jndiName);
     }
 
     /**
@@ -108,8 +109,7 @@ public class NamingUtils {
      */
     public static String formatEjbJndiName(String jndiName) {
 
-	String name = jndiName.replace(Configuration.EJB_NAME,
-		StringUtils.EMPTY_STRING);
+	String name = jndiName.replace(EJB_NAME_PREF, StringUtils.EMPTY_STRING);
 
 	return name;
     }
@@ -161,7 +161,7 @@ public class NamingUtils {
      */
     public static BeanDescriptor parseEjbJndiName(String jndiName) {
 
-	String pureName = jndiName.substring(Configuration.EJB_NAME_LENGTH);
+	String pureName = jndiName.substring(EJB_NAME_LENGTH);
 	String[] formatedNames = pureName.split(EJB_NAME_DELIM);
 	String beanNames = formatedNames[BEAN_NAMES_INDEX];
 	String[] beanDescriptors = beanNames.split(EJB_APP_DELIM);

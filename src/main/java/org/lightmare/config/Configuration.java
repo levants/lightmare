@@ -92,13 +92,6 @@ public class Configuration implements Cloneable {
 
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
-    // String prefixes for jndi names
-    public static final String JPA_NAME = "java:comp/env/";
-
-    public static final String EJB_NAME = "ejb:";
-
-    public static final int EJB_NAME_LENGTH = 4;
-
     // Configuration keys properties for deployment
     private static final String DEPLOY_CONFIG_KEY = "deployConfiguration";
 
