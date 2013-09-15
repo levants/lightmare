@@ -41,7 +41,6 @@ public class Configuration implements Cloneable {
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
     // Configuration keys properties for deployment
-    private static final String DEPLOY_CONFIG_KEY = "deployConfiguration";
 
     private static final String HOT_DEPLOYMENT_KEY = "hotDeployment";
 
@@ -159,7 +158,7 @@ public class Configuration implements Cloneable {
 
     private <K> boolean containsConfigKey(K key) {
 
-	return containsSubConfigKey(DEPLOY_CONFIG_KEY, key);
+	return containsSubConfigKey(Config.DEPLOY_CONFIG.key, key);
     }
 
     private <K, V> V getSubConfigValue(Object key, K subKey) {
@@ -169,7 +168,7 @@ public class Configuration implements Cloneable {
 
     private <K, V> void setConfigValue(K subKey, V value) {
 
-	setSubConfigValue(DEPLOY_CONFIG_KEY, subKey, value);
+	setSubConfigValue(Config.DEPLOY_CONFIG.key, subKey, value);
     }
 
     private <K, V> V getConfigValue(K subKey, V defaultValue) {
