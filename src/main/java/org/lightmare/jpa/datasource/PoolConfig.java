@@ -46,7 +46,7 @@ public class PoolConfig {
 	INITIAL_POOL_SIZE("initialPoolSize", 5), // initial
 	MIN_POOL_SIZE("minPoolSize", 5), // min pool size
 	MAX_STATEMENTS("maxStatements", 50), // statements
-	AQUIRE_INCREMENT("acquireIncrement", "5"), // increment
+	AQUIRE_INCREMENT("acquireIncrement", 5), // increment
 
 	// Pool timeout properties
 	MAX_IDLE_TIMEOUT("maxIdleTime", "10000"), // idle
