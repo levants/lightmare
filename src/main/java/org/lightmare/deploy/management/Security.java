@@ -39,7 +39,7 @@ public class Security {
 
 	String path = Configuration.getAdminUsersPath();
 	if (ObjectUtils.notAvailable(path)) {
-	    path = (String) Config.ADMIN_USERS_PATH.value;
+	    path = Config.ADMIN_USERS_PATH.getValue();
 	}
 
 	File file = new File(path);
