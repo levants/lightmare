@@ -35,7 +35,7 @@ public class Configuration implements Cloneable {
     // Runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
-    // Resource path
+    // Resource path (META-INF)
     private static final String META_INF_PATH = "META-INF/";
 
     // Error messages
