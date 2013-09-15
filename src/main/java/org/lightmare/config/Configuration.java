@@ -578,9 +578,9 @@ public class Configuration implements Cloneable {
 	return (Boolean) Config.SERVER.value;
     }
 
-    public static void setServer(boolean serverValue) {
+    public static void setServer(boolean server) {
 
-	server = serverValue;
+	Config.SERVER.value = server;
     }
 
     public boolean isClient() {
