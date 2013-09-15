@@ -22,7 +22,7 @@ public enum Config {
 
     PORT("listeningPort", "1199"), // port
 
-    BOSS_POOL("bossPoolSize"), // boss pool
+    BOSS_POOL("bossPoolSize", 1), // boss pool
 
     WORKER_POOL_KEY("workerPoolSize"), // Worker pool
 
@@ -34,8 +34,6 @@ public enum Config {
     DATA_SOURCE_PATH("dataSourcePath"); // data source path
 
     // Default properties
-    public static final String BOSS_POOL_DEF = "1";
-
     public static final int WORKER_POOL_DEF = 3;
 
     public static final String CONNECTION_TIMEOUT_DEF = "1000";
