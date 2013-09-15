@@ -296,16 +296,6 @@ public class Configuration implements Cloneable {
 	    setConfigValue(Config.CONNECTION_TIMEOUT.key,
 		    Config.CONNECTION_TIMEOUT.value);
 	}
-
-	// Sets default values is application on server or client mode
-	Object serverValue = getConfigValue(Config.SERVER.key);
-	if (ObjectUtils.notNull(serverValue)) {
-	    if (serverValue instanceof Boolean) {
-		server = (Boolean) serverValue;
-	    } else {
-		server = Boolean.valueOf(serverValue.toString());
-	    }
-	}
     }
 
     /**
