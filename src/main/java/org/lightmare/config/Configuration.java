@@ -290,7 +290,7 @@ public class Configuration implements Cloneable {
      */
     private void configurePool() {
 
-	Map<Object, Object> poolProperties = getPoolConfigValue(POOL_PROPERTIES_KEY);
+	Map<Object, Object> poolProperties = getPoolConfigValue(Config.POOL_PROPERTIES.key);
 	if (ObjectUtils.available(poolProperties)) {
 
 	    setPoolProperties(poolProperties);
