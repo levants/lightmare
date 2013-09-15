@@ -74,10 +74,10 @@ public enum Config {
 
     POOLED_DATA_SOURCE("pooledDataSource", Boolean.TRUE), // Pooled data source
 
-    PERSISTENCE_PROPERTIES("persistenceProperties"); // Persistence properties
+    PERSISTENCE_PROPERTIES("persistenceProperties"), // Persistence properties
 
     // Connection pool provider property keys
-    private static final String POOL_CONFIG_KEY = "poolConfig";
+    POOL_CONFIG("poolConfig"); // Pool Config
 
     private static final String POOL_PROPERTIES_PATH_KEY = "poolPropertiesPath";
 
