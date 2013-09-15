@@ -43,7 +43,7 @@ public enum Config {
 
     REMOTE("remote", Boolean.FALSE),
 
-    CLIENT_KEY("client", Boolean.FALSE),
+    CLIENT("client", Boolean.FALSE),
 
     // Configuration keys properties for deployment
     DEPLOY_CONFIG("deployConfiguration"), // Deploy CONFIG

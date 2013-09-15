@@ -657,11 +657,11 @@ public class Configuration implements Cloneable {
 
     public boolean isClient() {
 
-	return getConfigValue(Config.CLIENT_KEY.key, Boolean.FALSE);
+	return getConfigValue(Config.CLIENT.key, Boolean.FALSE);
     }
 
     public void setClient(boolean client) {
-	setConfigValue(Config.CLIENT_KEY.key, client);
+	setConfigValue(Config.CLIENT.key, client);
     }
 
     /**
