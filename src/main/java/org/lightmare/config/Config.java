@@ -33,7 +33,7 @@ public enum Config {
 	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
 
     DATA_SOURCE_PATH("dataSourcePath", new HashSet<DeploymentDirectory>(
-	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))); // data
+	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))), // data
 										// source
 										// path
 
@@ -44,7 +44,7 @@ public enum Config {
 
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
-    private static final String REMOTE_KEY = "remote";
+    REMOTE("remote", Boolean.FALSE);
 
     private static final String SERVER_KEY = "server";
 
