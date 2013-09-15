@@ -38,12 +38,6 @@ public class Configuration implements Cloneable {
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
 
-    public static final Set<DeploymentDirectory> DEPLOYMENT_PATHS_DEF = new HashSet<DeploymentDirectory>(
-	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)));
-
-    public static final Set<String> DATA_SOURCES_PATHS_DEF = new HashSet<String>(
-	    Arrays.asList("./ds"));
-
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
     // Configuration keys properties for deployment
@@ -374,6 +368,7 @@ public class Configuration implements Cloneable {
     /**
      * Merges configuration with default properties
      */
+    @SuppressWarnings("unchecked")
     public void configureDeployments() {
 
 	// Checks if application run in hot deployment mode
@@ -396,7 +391,7 @@ public class Configuration implements Cloneable {
 	// Sets deployments directories
 	Set<DeploymentDirectory> deploymentPaths = getConfigValue(Config.DEMPLOYMENT_PATH.key);
 	if (deploymentPaths == null) {
-	    deploymentPaths = DEPLOYMENT_PATHS_DEF;
+	    deploymentPaths = (Set<DeploymentDirectory>) Config.DEMPLOYMENT_PATH.value;
 	    setConfigValue(Config.DEMPLOYMENT_PATH.key, deploymentPaths);
 	}
     }
