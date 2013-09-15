@@ -26,10 +26,10 @@ public enum Config {
 
     WORKER_POOL_KEY("workerPoolSize"), // Worker pool
 
-    CONNECTION_TIMEOUT("timeout"); // Connection timeout
+    CONNECTION_TIMEOUT("timeout"), // Connection timeout
 
     // Properties for data source path and deployment path
-    public static final String DEMPLOYMENT_PATH_KEY = "deploymentPath";
+    DEMPLOYMENT_PATH("deploymentPath");
 
     public static final String DATA_SOURCE_PATH_KEY = "dataSourcePath";
 
