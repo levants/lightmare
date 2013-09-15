@@ -572,7 +572,7 @@ public class Configuration implements Cloneable {
 
     public static boolean isServer() {
 
-	return (Boolean) Config.SERVER.value;
+	return Config.SERVER.getValue();
     }
 
     public static void setServer(boolean server) {
