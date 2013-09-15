@@ -374,7 +374,7 @@ public class Configuration implements Cloneable {
 	}
 
 	// Sets default values is application on server or client mode
-	Object serverValue = getConfigValue(SERVER_KEY);
+	Object serverValue = getConfigValue(Config.SERVER.key);
 	if (ObjectUtils.notNull(serverValue)) {
 	    if (serverValue instanceof Boolean) {
 		server = (Boolean) serverValue;
