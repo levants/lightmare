@@ -47,6 +47,7 @@ public class Configuration implements Cloneable {
     // Instance of pool configuration
     private static final PoolConfig POOL_CONFIG = new PoolConfig();
 
+    // Resource path
     private static final String META_INF_PATH = "META-INF/";
 
     // Error messages
