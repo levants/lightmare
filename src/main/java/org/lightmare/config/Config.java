@@ -102,4 +102,12 @@ public enum Config {
 	this(key);
 	this.value = value;
     }
+
+    public <T> T getValue() {
+
+	@SuppressWarnings("unchecked")
+	T typedValue = (T) value;
+
+	return typedValue;
+    }
 }
