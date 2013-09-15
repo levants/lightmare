@@ -778,7 +778,7 @@ public class Configuration implements Cloneable {
     }
 
     public void setSwapDataSource(boolean swapDataSource) {
-	setPersistenceConfigValue(SWAP_DATASOURCE_KEY, swapDataSource);
+	setPersistenceConfigValue(Config.SWAP_DATASOURCE.key, swapDataSource);
     }
 
     public boolean isScanArchives() {
