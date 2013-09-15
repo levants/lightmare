@@ -992,8 +992,8 @@ public class MetaCreator {
 	 */
 	public Builder setTimeout(String property) {
 
-	    creator.configuration.putValue(
-		    Configuration.CONNECTION_TIMEOUT_KEY, property);
+	    creator.configuration.putValue(Config.CONNECTION_TIMEOUT.key,
+		    property);
 
 	    return this;
 	}
