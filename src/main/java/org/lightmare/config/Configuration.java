@@ -40,8 +40,6 @@ public class Configuration implements Cloneable {
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
     // Persistence provider property keys
-    private static final String PERSISTENCE_CONFIG_KEY = "persistenceConfig";
-
     private static final String SCAN_FOR_ENTITIES_KEY = "scanForEntities";
 
     private static final String ANNOTATED_UNIT_NAME_KEY = "annotatedUnitName";
