@@ -10,7 +10,7 @@ public class NamingUtils {
 
     public static final String USER_TRANSACTION_NAME = "java:comp/UserTransaction";
 
-    // String prefixes for jndi names
+    // String prefixes for JNDI names
     public static final String JPA_NAME_PREF = "java:comp/env/";
 
     public static final String EJB_NAME_PREF = "ejb:";
@@ -84,8 +84,7 @@ public class NamingUtils {
      */
     public static String formatJpaJndiName(String jndiName) {
 
-	String name = jndiName.replace(JPA_NAME_PREF,
-		StringUtils.EMPTY_STRING);
+	String name = jndiName.replace(JPA_NAME_PREF, StringUtils.EMPTY_STRING);
 
 	return name;
     }
