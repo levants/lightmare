@@ -103,6 +103,11 @@ public enum Config {
 	this.value = value;
     }
 
+    public String key() {
+
+	return key;
+    }
+
     public <T> T getValue() {
 
 	@SuppressWarnings("unchecked")
