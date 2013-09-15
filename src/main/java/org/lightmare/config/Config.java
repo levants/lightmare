@@ -33,9 +33,10 @@ public enum Config {
     DEMPLOYMENT_PATH("deploymentPath", new HashSet<DeploymentDirectory>(
 	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
 
-    DATA_SOURCE_PATH("dataSourcePath", "./ds"), // data
-						// source
-						// path
+    DATA_SOURCE_PATH("dataSourcePath", new HashSet<String>(
+	    Arrays.asList("./ds"))), // data
+				     // source
+				     // path
 
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
@@ -47,9 +48,6 @@ public enum Config {
 
     public static final Set<DeploymentDirectory> DEPLOYMENT_PATHS_DEF = new HashSet<DeploymentDirectory>(
 	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)));
-
-    public static final Set<String> DATA_SOURCES_PATHS_DEF = new HashSet<String>(
-	    Arrays.asList("./ds"));
 
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
@@ -91,9 +89,6 @@ public enum Config {
     private static final String POOL_PROVIDER_TYPE_KEY = "poolProviderType";
 
     private static final String POOL_PROPERTIES_KEY = "poolProperties";
-
-    // Is configuration server or client (default is server)
-    private static boolean server = SERVER_DEF;
 
     public String key;
 
