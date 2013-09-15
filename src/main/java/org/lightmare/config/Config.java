@@ -29,7 +29,8 @@ public enum Config {
     CONNECTION_TIMEOUT("timeout", 1000), // Connection timeout
 
     // Properties for data source path and deployment path
-    DEMPLOYMENT_PATH("deploymentPath"),
+    DEMPLOYMENT_PATH("deploymentPath", new HashSet<DeploymentDirectory>(
+	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
 
     DATA_SOURCE_PATH("dataSourcePath"); // data source path
 
