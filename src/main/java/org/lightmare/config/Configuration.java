@@ -178,7 +178,7 @@ public class Configuration implements Cloneable {
 
     private <K, V> V getConfigValue(K subKey) {
 
-	return getSubConfigValue(DEPLOY_CONFIG_KEY, subKey);
+	return getSubConfigValue(Config.DEPLOY_CONFIG.key, subKey);
     }
 
     private <K, V> Map<K, V> getWithInitialization(Object key) {
