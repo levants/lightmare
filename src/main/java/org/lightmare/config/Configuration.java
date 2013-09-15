@@ -711,10 +711,10 @@ public class Configuration implements Cloneable {
      */
     public void addDataSourcePath(String path) {
 
-	Set<String> dataSourcePaths = getConfigValue(DATA_SOURCE_PATH_KEY);
+	Set<String> dataSourcePaths = getConfigValue(Config.DATA_SOURCE_PATH.key);
 	if (dataSourcePaths == null) {
 	    dataSourcePaths = new HashSet<String>();
-	    setConfigValue(DATA_SOURCE_PATH_KEY, dataSourcePaths);
+	    setConfigValue(Config.DATA_SOURCE_PATH.key, dataSourcePaths);
 	}
 
 	dataSourcePaths.add(path);
