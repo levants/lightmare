@@ -48,9 +48,9 @@ public enum Config {
     // Configuration keys properties for deployment
     DEPLOY_CONFIG("deployConfiguration"), // Deploy config
 
-    ADMIN_USER_PATH("adminPath"); // Admin user path
+    ADMIN_USER_PATH("adminPath"), // Admin user path
 
-    HOT_DEPLOYMENT("hotDeployment"); //Hot deployment
+    HOT_DEPLOYMENT("hotDeployment"); // Hot deployment
 
     private static final String WATCH_STATUS_KEY = "watchStatus";
 
