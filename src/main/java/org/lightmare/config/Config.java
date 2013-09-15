@@ -20,7 +20,7 @@ public enum Config {
     // Netty server / client configuration properties for RPC calls
     IP_ADDRESS("listeningIp", "0.0.0.0"), // ip
 
-    PORT("listeningPort"), // port
+    PORT("listeningPort", "1199"), // port
 
     BOSS_POOL("bossPoolSize"), // boss pool
 
@@ -34,8 +34,6 @@ public enum Config {
     DATA_SOURCE_PATH("dataSourcePath"); // data source path
 
     // Default properties
-    public static final String PORT_DEF = "1199";
-
     public static final String BOSS_POOL_DEF = "1";
 
     public static final int WORKER_POOL_DEF = 3;
