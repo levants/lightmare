@@ -70,9 +70,9 @@ public enum Config {
 
     SWAP_DATASOURCE("swapDataSource"), // Swap data source
 
-    SCAN_ARCHIVES("scanArchives"); // Scan archives
+    SCAN_ARCHIVES("scanArchives"), // Scan archives
 
-    private static final String POOLED_DATA_SOURCE_KEY = "pooledDataSource";
+    POOLED_DATA_SOURCE("pooledDataSource"); // Pooled data source
 
     private static final String PERSISTENCE_PROPERTIES_KEY = "persistenceProperties";
 
