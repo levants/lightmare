@@ -627,10 +627,7 @@ public class Configuration implements Cloneable {
 	    loadFromStream(propertiesStream);
 	} catch (IOException ex) {
 	    LOG.error("Could not open config file", ex);
-	} finally {
-	    ObjectUtils.close(propertiesStream);
 	}
-
     }
 
     /**
@@ -639,19 +636,15 @@ public class Configuration implements Cloneable {
      * @param resourceName
      * @param loader
      */
-    public void loadFromResource(String resourceName, ClassLoader loader) {
+    public void loadFromResource(String resourceName, ClassLoader loader)
+	    throws IOException {
 
 	InputStream resourceStream = loader.getResourceAsStream(StringUtils
 		.concat(META_INF_PATH, resourceName));
 	if (resourceStream == null) {
 	    LOG.error("Configuration resource doesn't exist");
-	    return;
-	}
-	loadFromStream(resourceStream);
-	try {
-	    ObjectUtils.close(resourceStream);
-	} catch (IOException ex) {
-	    LOG.error("Could not load resource", ex);
+	} else {
+	    loadFromStream(resourceStream);
 	}
     }
 
@@ -660,7 +653,7 @@ public class Configuration implements Cloneable {
      * 
      * @throws IOException
      */
-    public void loadFromStream(InputStream propertiesStream) {
+    public void loadFromStream(InputStream propertiesStream) throws IOException {
 
 	String errorMessage = "Could not load configuration";
 	try {
@@ -674,11 +667,7 @@ public class Configuration implements Cloneable {
 	} catch (IOException ex) {
 	    LOG.error(errorMessage, ex);
 	} finally {
-	    try {
-		ObjectUtils.close(propertiesStream);
-	    } catch (IOException ex) {
-		LOG.error(errorMessage, ex);
-	    }
+	    ObjectUtils.close(propertiesStream);
 	}
     }
 
