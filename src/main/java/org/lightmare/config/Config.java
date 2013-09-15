@@ -68,9 +68,9 @@ public enum Config {
     PERSISTENCE_XML_FROM_JAR("persistenceXmlFromJar"), // Persistence XML from
 						       // jar
 
-    SWAP_DATASOURCE("swapDataSource"); // Swap data source
+    SWAP_DATASOURCE("swapDataSource"), // Swap data source
 
-    private static final String SCAN_ARCHIVES_KEY = "scanArchives";
+    SCAN_ARCHIVES("scanArchives"); // Scan archives
 
     private static final String POOLED_DATA_SOURCE_KEY = "pooledDataSource";
 
