@@ -46,7 +46,7 @@ public enum Config {
     CLIENT_KEY("client", Boolean.FALSE),
 
     // Configuration keys properties for deployment
-    DEPLOY_CONFIG("deployConfiguration"), // Deploy config
+    DEPLOY_CONFIG("deployConfiguration"), // Deploy CONFIG
 
     ADMIN_USER_PATH("adminPath"), // ADMIN user path
 
