@@ -739,7 +739,7 @@ public class Configuration implements Cloneable {
 
     public void setScanForEntities(boolean scanForEntities) {
 
-	setPersistenceConfigValue(SCAN_FOR_ENTITIES_KEY, scanForEntities);
+	setPersistenceConfigValue(Config.SCAN_FOR_ENTITIES.key, scanForEntities);
     }
 
     public String getAnnotatedUnitName() {
