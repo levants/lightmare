@@ -459,7 +459,7 @@ public class Configuration implements Cloneable {
      * 
      * @param map1
      * @param map2
-     * @return {@link Map}<Object, Object>
+     * @return <code>{@link Map}<Object, Object></code>
      */
     @SuppressWarnings("unchecked")
     protected Map<Object, Object> deepMerge(Map<Object, Object> map1,
