@@ -36,8 +36,6 @@ public class Configuration implements Cloneable {
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
     // Is configuration server or client (default is server)
-    private static boolean server = (Boolean) Config.SERVER.value;
-
     // Instance of pool configuration
     private static final PoolConfig POOL_CONFIG = new PoolConfig();
 
