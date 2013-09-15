@@ -37,7 +37,7 @@ public class LightmareContext extends MemoryContext {
 	    UserTransaction transaction = TransactionContainer.getTransaction();
 	    value = transaction;
 
-	} else if (jndiName.startsWith(NamingUtils.CONNECTION_NAME_PREF)) {
+	} else if (jndiName.startsWith(NamingUtils.JPA_NAME_PREF)) {
 	    // Checks if it is request for entity manager
 	    name = NamingUtils.formatJpaJndiName(jndiName);
 
