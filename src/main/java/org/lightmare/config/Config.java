@@ -81,9 +81,9 @@ public enum Config {
 
     POOL_PROPERTIES_PATH("poolPropertiesPath"), // Pool properties path
 
-    POOL_PROVIDER_TYPE("poolProviderType"); // Pool rovider type
+    POOL_PROVIDER_TYPE("poolProviderType"), // Pool rovider type
 
-    private static final String POOL_PROPERTIES_KEY = "poolProperties";
+    POOL_PROPERTIES("poolProperties"); // Pool properties
 
     public String key;
 
