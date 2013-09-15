@@ -695,10 +695,10 @@ public class Configuration implements Cloneable {
      */
     public void addDeploymentPath(String path, boolean scan) {
 
-	Set<DeploymentDirectory> deploymentPaths = getConfigValue(DEMPLOYMENT_PATH_KEY);
+	Set<DeploymentDirectory> deploymentPaths = getConfigValue(Config.DEMPLOYMENT_PATH.key);
 	if (deploymentPaths == null) {
 	    deploymentPaths = new HashSet<DeploymentDirectory>();
-	    setConfigValue(DEMPLOYMENT_PATH_KEY, deploymentPaths);
+	    setConfigValue(Config.DEMPLOYMENT_PATH.key, deploymentPaths);
 	}
 
 	deploymentPaths.add(new DeploymentDirectory(path, scan));
