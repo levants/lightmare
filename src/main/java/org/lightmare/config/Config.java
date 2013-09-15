@@ -77,9 +77,9 @@ public enum Config {
     PERSISTENCE_PROPERTIES("persistenceProperties"), // Persistence properties
 
     // Connection pool provider property keys
-    POOL_CONFIG("poolConfig"); // Pool Config
+    POOL_CONFIG("poolConfig"), // Pool Config
 
-    private static final String POOL_PROPERTIES_PATH_KEY = "poolPropertiesPath";
+    POOL_PROPERTIES_PATH("poolPropertiesPath"); // Pool properties path
 
     private static final String POOL_PROVIDER_TYPE_KEY = "poolProviderType";
 
