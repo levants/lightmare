@@ -98,7 +98,7 @@ public class NamingUtils {
      */
     public static String createEjbJndiName(String jndiName) {
 
-	return String.format("%s%s", EJB_NAME_PREF, jndiName);
+	return StringUtils.concat(EJB_NAME_PREF, jndiName);
     }
 
     /**
