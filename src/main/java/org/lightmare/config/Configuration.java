@@ -41,8 +41,6 @@ public class Configuration implements Cloneable {
 
     // Configuration keys properties for deployment
 
-    private static final String WATCH_STATUS_KEY = "watchStatus";
-
     private static final String LIBRARY_PATH_KEY = "libraryPaths";
 
     // Persistence provider property keys
