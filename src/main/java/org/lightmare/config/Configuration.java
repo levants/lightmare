@@ -51,8 +51,6 @@ public class Configuration implements Cloneable {
     // Configuration keys properties for deployment
     private static final String DEPLOY_CONFIG_KEY = "deployConfiguration";
 
-    private static final String ADMIN_USER_PATH_KEY = "adminPath";
-
     private static final String HOT_DEPLOYMENT_KEY = "hotDeployment";
 
     private static final String WATCH_STATUS_KEY = "watchStatus";
