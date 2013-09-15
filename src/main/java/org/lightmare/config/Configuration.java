@@ -139,6 +139,8 @@ public class Configuration implements Cloneable {
 
     private static final String COULD_NOT_LOAD_CONFIG = "Could not load configuration";
 
+    private static final String COULD_NOT_FIND_FILE_ERROR = "Could not open config file";
+
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
     public Configuration() {
@@ -627,7 +629,7 @@ public class Configuration implements Cloneable {
 		configFile.mkdirs();
 	    }
 	} catch (IOException ex) {
-	    LOG.error("Could not open config file", ex);
+	    LOG.error(COULD_NOT_FIND_FILE_ERROR, ex);
 	}
     }
 
