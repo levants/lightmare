@@ -29,11 +29,11 @@ public class Configuration implements Cloneable {
     // Cache for all configuration passed from API or read from file
     private final Map<Object, Object> config = new HashMap<Object, Object>();
 
-    // Runtime to get available processors
-    private static final Runtime RUNTIME = Runtime.getRuntime();
-
     // Instance of pool configuration
     private static final PoolConfig POOL_CONFIG = new PoolConfig();
+
+    // Runtime to get available processors
+    private static final Runtime RUNTIME = Runtime.getRuntime();
 
     // Resource path
     private static final String META_INF_PATH = "META-INF/";
