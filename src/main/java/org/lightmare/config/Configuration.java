@@ -297,7 +297,6 @@ public class Configuration implements Cloneable {
     /**
      * Merges configuration with default properties
      */
-    @SuppressWarnings("unchecked")
     public void configureDeployments() {
 
 	// Checks if application run in hot deployment mode
