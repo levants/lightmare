@@ -26,7 +26,7 @@ import org.yaml.snakeyaml.Yaml;
  */
 public class Configuration implements Cloneable {
 
-    // Cache for all configuration passed programmatically or read from file
+    // Cache for all configuration passed from API or read from file
     private final Map<Object, Object> config = new HashMap<Object, Object>();
 
     // Runtime to get available processors
