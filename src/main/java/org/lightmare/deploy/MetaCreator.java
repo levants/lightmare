@@ -31,7 +31,7 @@ import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.RestContainer;
 import org.lightmare.cache.TmpResources;
-import org.lightmare.config.Config;
+import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.jpa.JPAManager;
@@ -907,7 +907,7 @@ public class MetaCreator {
 	 */
 	public Builder setIpAddress(String property) {
 
-	    creator.configuration.putValue(Config.IP_ADDRESS.key, property);
+	    creator.configuration.putValue(ConfigKeys.IP_ADDRESS.key, property);
 
 	    return this;
 	}
@@ -920,7 +920,7 @@ public class MetaCreator {
 	 */
 	public Builder setPort(String property) {
 
-	    creator.configuration.putValue(Config.PORT.key, property);
+	    creator.configuration.putValue(ConfigKeys.PORT.key, property);
 
 	    return this;
 	}
@@ -934,7 +934,7 @@ public class MetaCreator {
 	 */
 	public Builder setMasterThreads(String property) {
 
-	    creator.configuration.putValue(Config.BOSS_POOL.key, property);
+	    creator.configuration.putValue(ConfigKeys.BOSS_POOL.key, property);
 
 	    return this;
 	}
@@ -949,7 +949,7 @@ public class MetaCreator {
 	public Builder setWorkerThreads(String property) {
 
 	    creator.configuration
-		    .putValue(Config.WORKER_POOL.key, property);
+		    .putValue(ConfigKeys.WORKER_POOL.key, property);
 
 	    return this;
 	}
@@ -992,7 +992,7 @@ public class MetaCreator {
 	 */
 	public Builder setTimeout(String property) {
 
-	    creator.configuration.putValue(Config.CONNECTION_TIMEOUT.key,
+	    creator.configuration.putValue(ConfigKeys.CONNECTION_TIMEOUT.key,
 		    property);
 
 	    return this;
