@@ -381,10 +381,10 @@ public class Configuration implements Cloneable {
     public void configureDeployments() {
 
 	// Checks if application run in hot deployment mode
-	Boolean hotDeployment = getConfigValue(HOT_DEPLOYMENT_KEY);
+	Boolean hotDeployment = getConfigValue(Config.HOT_DEPLOYMENT.key);
 	if (hotDeployment == null) {
-	    setConfigValue(HOT_DEPLOYMENT_KEY, Boolean.FALSE);
-	    hotDeployment = getConfigValue(HOT_DEPLOYMENT_KEY);
+	    setConfigValue(Config.HOT_DEPLOYMENT.key, Boolean.FALSE);
+	    hotDeployment = getConfigValue(Config.HOT_DEPLOYMENT.key);
 	}
 
 	// Check if application needs directory watch service
