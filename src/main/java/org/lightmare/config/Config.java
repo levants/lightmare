@@ -22,7 +22,7 @@ public enum Config {
 
     PORT("listeningPort", "1199"), // Port
 
-    BOSS_POOL("bossPoolSize", 1), // boss pool
+    BOSS_POOL("bossPoolSize", 1), // Boss pool
 
     WORKER_POOL("workerPoolSize", 3), // Worker pool
 
