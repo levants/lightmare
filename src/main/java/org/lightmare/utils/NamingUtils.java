@@ -20,7 +20,8 @@ public class NamingUtils {
     private static final String EJB_NAME_DELIM = "\\";
 
     private static final String EJB_APP_DELIM = "!";
-
+    
+    // Digital values for naming utilities
     public static final int EJB_NAME_LENGTH = 4;
 
     private static final int BEAN_NAMES_INDEX = 1;
