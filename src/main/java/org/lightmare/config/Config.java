@@ -14,6 +14,7 @@ import org.lightmare.cache.DeploymentDirectory;
  */
 public enum Config {
 
+    // Default properties
     // Path where stored administrative users
     ADMIN_USERS_PATH("adminUsersPath", "./config/admin/users.properties"),
 
@@ -35,8 +36,6 @@ public enum Config {
     DATA_SOURCE_PATH("dataSourcePath", "./ds"), // data
 						// source
 						// path
-
-    // Default properties
 
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
