@@ -48,7 +48,9 @@ public enum Config {
     // Configuration keys properties for deployment
     DEPLOY_CONFIG("deployConfiguration"), // Deploy CONFIG
 
-    ADMIN_USER_PATH("adminPath"), // ADMIN user path
+    ADMIN_USER_PATH("adminPath", "./config/admin/users.properties"), // ADMIN
+								     // user
+								     // path
 
     HOT_DEPLOYMENT("hotDeployment"), // Hot deployment
 

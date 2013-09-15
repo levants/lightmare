@@ -380,10 +380,6 @@ public class Configuration implements Cloneable {
      */
     public void configureDeployments() {
 
-	// Sets administrator user configuration file path
-	ADMIN_USERS_PATH = getConfigValue(ADMIN_USER_PATH_KEY,
-		ADMIN_USERS_PATH_DEF);
-
 	// Checks if application run in hot deployment mode
 	Boolean hotDeployment = getConfigValue(HOT_DEPLOYMENT_KEY);
 	if (hotDeployment == null) {
