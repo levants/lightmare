@@ -29,12 +29,9 @@ public enum Config {
     CONNECTION_TIMEOUT("timeout"), // Connection timeout
 
     // Properties for data source path and deployment path
-    DEMPLOYMENT_PATH("deploymentPath");
+    DEMPLOYMENT_PATH("deploymentPath"),
 
-    public static final String DATA_SOURCE_PATH_KEY = "dataSourcePath";
-
-    // Runtime to get available processors
-    private static final Runtime RUNTIME = Runtime.getRuntime();
+    DATA_SOURCE_PATH("dataSourcePath"); // data source path
 
     // Default properties
     public static final String ADMIN_USERS_PATH_DEF = "./config/admin/users.properties";
