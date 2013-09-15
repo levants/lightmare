@@ -722,7 +722,7 @@ public class Configuration implements Cloneable {
 
     public Set<DeploymentDirectory> getDeploymentPath() {
 
-	return getConfigValue(DEMPLOYMENT_PATH_KEY);
+	return getConfigValue(Config.DEMPLOYMENT_PATH.key);
     }
 
     public Set<String> getDataSourcePath() {
