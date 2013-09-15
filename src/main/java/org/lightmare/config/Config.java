@@ -26,7 +26,7 @@ public enum Config {
 
     WORKER_POOL_KEY("workerPoolSize", 3), // Worker pool
 
-    CONNECTION_TIMEOUT("timeout"), // Connection timeout
+    CONNECTION_TIMEOUT("timeout", 1000), // Connection timeout
 
     // Properties for data source path and deployment path
     DEMPLOYMENT_PATH("deploymentPath"),
@@ -34,8 +34,6 @@ public enum Config {
     DATA_SOURCE_PATH("dataSourcePath"); // data source path
 
     // Default properties
-    public static final String CONNECTION_TIMEOUT_DEF = "1000";
-
     public static final boolean SERVER_DEF = Boolean.TRUE;
 
     public static final String DATA_SOURCE_PATH_DEF = "./ds";
