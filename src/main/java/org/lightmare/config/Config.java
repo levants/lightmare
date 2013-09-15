@@ -52,9 +52,9 @@ public enum Config {
 
     HOT_DEPLOYMENT("hotDeployment"), // Hot deployment
 
-    WATCH_STATUS("watchStatus"); // Watch status
+    WATCH_STATUS("watchStatus"), // Watch status
 
-    private static final String LIBRARY_PATH_KEY = "libraryPaths";
+    LIBRARY_PATH("libraryPaths"); // Library path
 
     // Persistence provider property keys
     private static final String PERSISTENCE_CONFIG_KEY = "persistenceConfig";
