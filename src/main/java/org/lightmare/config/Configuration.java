@@ -714,7 +714,7 @@ public class Configuration implements Cloneable {
     }
 
     public void setHotDeployment(boolean hotDeployment) {
-	setConfigValue(HOT_DEPLOYMENT_KEY, hotDeployment);
+	setConfigValue(Config.HOT_DEPLOYMENT.key, hotDeployment);
     }
 
     public boolean isWatchStatus() {
