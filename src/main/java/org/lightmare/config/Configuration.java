@@ -358,12 +358,13 @@ public class Configuration implements Cloneable {
 	    setConfigValue(Config.BOSS_POOL.key, Config.BOSS_POOL.value);
 	}
 
-	contains = containsConfigKey(WORKER_POOL_KEY);
+	contains = containsConfigKey(Config.WORKER_POOL_KEY.key);
 	if (ObjectUtils.notTrue(contains)) {
 
-	    int workers = RUNTIME.availableProcessors() * WORKER_POOL_DEF;
+	    int workers = RUNTIME.availableProcessors()
+		    * (Integer) Config.WORKER_POOL_KEY.value;
 	    String workerProperty = String.valueOf(workers);
-	    setConfigValue(WORKER_POOL_KEY, workerProperty);
+	    setConfigValue(Config.WORKER_POOL_KEY.key, workerProperty);
 	}
 
 	contains = containsConfigKey(CONNECTION_TIMEOUT_KEY);
