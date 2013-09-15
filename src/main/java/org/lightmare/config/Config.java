@@ -46,9 +46,9 @@ public enum Config {
     CLIENT_KEY("client", Boolean.FALSE),
 
     // Configuration keys properties for deployment
-    DEPLOY_CONFIG("deployConfiguration"); // Deploy config
+    DEPLOY_CONFIG("deployConfiguration"), // Deploy config
 
-    private static final String ADMIN_USER_PATH_KEY = "adminPath";
+    ADMIN_USER_PATH("adminPath"); // Admin user path
 
     private static final String HOT_DEPLOYMENT_KEY = "hotDeployment";
 
