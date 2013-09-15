@@ -41,8 +41,6 @@ public class Configuration implements Cloneable {
 
     // Persistence provider property keys
     // Connection pool provider property keys
-    private static final String POOL_PROPERTIES_KEY = "poolProperties";
-
     // Configuration properties for deployment
     private static String ADMIN_USERS_PATH;
 
