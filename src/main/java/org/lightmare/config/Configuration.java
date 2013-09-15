@@ -30,25 +30,6 @@ public class Configuration implements Cloneable {
     // Cache for all configuration passed programmatically or read from file
     private final Map<Object, Object> config = new HashMap<Object, Object>();
 
-    // Path where stored administrative users
-    public static final String ADMIN_USERS_PATH_KEY = "adminUsersPath";
-
-    // Netty server / client configuration properties for RPC calls
-    public static final String IP_ADDRESS_KEY = "listeningIp";
-
-    public static final String PORT_KEY = "listeningPort";
-
-    public static final String BOSS_POOL_KEY = "bossPoolSize";
-
-    public static final String WORKER_POOL_KEY = "workerPoolSize";
-
-    public static final String CONNECTION_TIMEOUT_KEY = "timeout";
-
-    // Properties for data source path and deployment path
-    public static final String DEMPLOYMENT_PATH_KEY = "deploymentPath";
-
-    public static final String DATA_SOURCE_PATH_KEY = "dataSourcePath";
-
     // Runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
@@ -362,14 +343,14 @@ public class Configuration implements Cloneable {
     private void configureServer() {
 
 	// Sets default values to remote server configuration
-	boolean contains = containsConfigKey(IP_ADDRESS_KEY);
+	boolean contains = containsConfigKey(Config.IP_ADDRESS.key);
 	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(IP_ADDRESS_KEY, IP_ADDRESS_DEF);
+	    setConfigValue(Config.IP_ADDRESS.key, Config.IP_ADDRESS.value);
 	}
 
-	contains = containsConfigKey(PORT_KEY);
+	contains = containsConfigKey(Config.PORT.key);
 	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(PORT_KEY, PORT_DEF);
+	    setConfigValue(Config.PORT.key, Config.PORT.value);
 	}
 
 	contains = containsConfigKey(BOSS_POOL_KEY);
