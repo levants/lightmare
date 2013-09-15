@@ -32,8 +32,6 @@ public class Configuration implements Cloneable {
     // Runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
-    // Default location for configuration YAML file
-
     // Instance of pool configuration
     private static final PoolConfig POOL_CONFIG = new PoolConfig();
 
