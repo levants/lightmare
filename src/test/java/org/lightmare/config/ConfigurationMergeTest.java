@@ -24,11 +24,11 @@ public class ConfigurationMergeTest {
 	config = new HashMap<Object, Object>();
 
 	Map<Object, Object> subConfig1 = new HashMap<Object, Object>();
-	subConfig1.put(Config.DATA_SOURCE_PATH.key, "path1");
-	subConfig1.put(Config.DEMPLOYMENT_PATH.key, "deployment1");
+	subConfig1.put(ConfigKeys.DATA_SOURCE_PATH.key, "path1");
+	subConfig1.put(ConfigKeys.DEMPLOYMENT_PATH.key, "deployment1");
 	Map<Object, Object> subSubConfig1 = new HashMap<Object, Object>();
-	subSubConfig1.put(Config.PORT.key, "port_key1");
-	subSubConfig1.put(Config.BOSS_POOL.key, "boss_pool_key1");
+	subSubConfig1.put(ConfigKeys.PORT.key, "port_key1");
+	subSubConfig1.put(ConfigKeys.BOSS_POOL.key, "boss_pool_key1");
 	subConfig1.put(subSubConfigKey, subSubConfig1);
 	config.put(subConfigKey, subConfig1);
 	config.put("falseOneConfig1", "falseOneConfigValue1");
@@ -37,7 +37,7 @@ public class ConfigurationMergeTest {
 	defaults = new HashMap<Object, Object>();
 
 	Map<Object, Object> subConfig2 = new HashMap<Object, Object>();
-	subConfig2.put(Config.DATA_SOURCE_PATH.key, "path2");
+	subConfig2.put(ConfigKeys.DATA_SOURCE_PATH.key, "path2");
 	Map<Object, Object> subSubConfig2 = new HashMap<Object, Object>();
 	subSubConfig2.put("port_false_key2", "port_key2");
 	subConfig2.put(subSubConfigKey, subSubConfig2);
