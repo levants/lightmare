@@ -77,7 +77,7 @@ public enum Config {
     PERSISTENCE_PROPERTIES("persistenceProperties"), // Persistence properties
 
     // Connection pool provider property keys
-    POOL_CONFIG("poolConfig"), // Pool Config
+    POOL_CONFIG("poolConfig"), // Pool CONFIG
 
     POOL_PROPERTIES_PATH("poolPropertiesPath"), // Pool properties path
 
