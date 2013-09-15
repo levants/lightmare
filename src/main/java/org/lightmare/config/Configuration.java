@@ -777,7 +777,11 @@ public class Configuration implements Cloneable {
 	setConfigValue(WATCH_STATUS_KEY, watchStatus);
     }
 
-    // Persistence configuration
+    /**
+     * Property for persistence configuration
+     * 
+     * @return <code>boolean</code>
+     */
     public boolean isScanForEntities() {
 	return getPersistenceConfigValue(SCAN_FOR_ENTITIES_KEY, Boolean.FALSE);
     }
@@ -846,7 +850,11 @@ public class Configuration implements Cloneable {
 		persistenceProperties);
     }
 
-    // Pool configuration
+    /**
+     * Property for connection pool configuration
+     * 
+     * @return {@link PoolConfig}
+     */
     public static PoolConfig getPoolConfig() {
 
 	return POOL_CONFIG;
