@@ -33,7 +33,7 @@ public enum Config {
 	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
 
     DATA_SOURCE_PATH("dataSourcePath", new HashSet<String>(
-	    Arrays.asList("./ds"))), // data
+	    Arrays.asList("./ds"))), // Data
 				     // source
 				     // path
 
