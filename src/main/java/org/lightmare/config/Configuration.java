@@ -758,7 +758,7 @@ public class Configuration implements Cloneable {
     }
 
     public void setPersXmlPath(String persXmlPath) {
-	setPersistenceConfigValue(PERSISTENCE_XML_PATH_KEY, persXmlPath);
+	setPersistenceConfigValue(Config.PERSISTENCE_XML_PATH.key, persXmlPath);
     }
 
     public boolean isPersXmlFromJar() {
