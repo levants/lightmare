@@ -662,15 +662,23 @@ public class Configuration implements Cloneable {
      */
     public void loadFromStream(InputStream propertiesStream) {
 
+	String errorMessage = "Could not load configuration";
 	try {
 	    Properties props = new Properties();
 	    props.load(propertiesStream);
+
 	    for (String propertyName : props.stringPropertyNames()) {
 		config.put(propertyName, props.getProperty(propertyName));
 	    }
-	    ObjectUtils.close(propertiesStream);
+
 	} catch (IOException ex) {
-	    LOG.error("Could not load configuration", ex);
+	    LOG.error(errorMessage, ex);
+	} finally {
+	    try {
+		ObjectUtils.close(propertiesStream);
+	    } catch (IOException ex) {
+		LOG.error(errorMessage, ex);
+	    }
 	}
     }
 
