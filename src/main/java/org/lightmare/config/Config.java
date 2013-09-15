@@ -15,7 +15,7 @@ import org.lightmare.cache.DeploymentDirectory;
 public enum Config {
 
     // Path where stored administrative users
-    ADMIN_USERS_PATH("adminUsersPath"),
+    ADMIN_USERS_PATH("adminUsersPath", "./config/admin/users.properties"),
 
     // Netty server / client configuration properties for RPC calls
     IP_ADDRESS("listeningIp"), // ip
@@ -34,7 +34,6 @@ public enum Config {
     DATA_SOURCE_PATH("dataSourcePath"); // data source path
 
     // Default properties
-    public static final String ADMIN_USERS_PATH_DEF = "./config/admin/users.properties";
 
     public static final String IP_ADDRESS_DEF = "0.0.0.0";
 
