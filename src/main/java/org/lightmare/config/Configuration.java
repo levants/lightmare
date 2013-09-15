@@ -141,6 +141,8 @@ public class Configuration implements Cloneable {
 
     private static final String COULD_NOT_FIND_FILE_ERROR = "Could not open config file";
 
+    private static final String RESOURCE_NOT_EXISTS_ERROR = "Configuration resource doesn't exist";
+
     private static final Logger LOG = Logger.getLogger(Configuration.class);
 
     public Configuration() {
@@ -662,7 +664,7 @@ public class Configuration implements Cloneable {
 	InputStream resourceStream = loader.getResourceAsStream(StringUtils
 		.concat(META_INF_PATH, resourceName));
 	if (resourceStream == null) {
-	    LOG.error("Configuration resource doesn't exist");
+	    LOG.error(RESOURCE_NOT_EXISTS_ERROR);
 	} else {
 	    loadFromStream(resourceStream);
 	}
