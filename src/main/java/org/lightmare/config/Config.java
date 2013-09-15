@@ -59,9 +59,9 @@ public enum Config {
     // Persistence provider property keys
     PERSISTENCE_CONFIG("persistenceConfig"), // Persistence config
 
-    SCAN_FOR_ENTITIES("scanForEntities"); // Scan for entities
+    SCAN_FOR_ENTITIES("scanForEntities"), // Scan for entities
 
-    private static final String ANNOTATED_UNIT_NAME_KEY = "annotatedUnitName";
+    ANNOTATED_UNIT_NAME("annotatedUnitName"); // Annotated unit
 
     private static final String PERSISTENCE_XML_PATH_KEY = "persistanceXmlPath";
 
