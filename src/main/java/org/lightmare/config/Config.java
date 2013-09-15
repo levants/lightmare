@@ -24,7 +24,7 @@ public enum Config {
 
     BOSS_POOL("bossPoolSize", 1), // boss pool
 
-    WORKER_POOL_KEY("workerPoolSize"), // Worker pool
+    WORKER_POOL_KEY("workerPoolSize", 3), // Worker pool
 
     CONNECTION_TIMEOUT("timeout"), // Connection timeout
 
@@ -34,8 +34,6 @@ public enum Config {
     DATA_SOURCE_PATH("dataSourcePath"); // data source path
 
     // Default properties
-    public static final int WORKER_POOL_DEF = 3;
-
     public static final String CONNECTION_TIMEOUT_DEF = "1000";
 
     public static final boolean SERVER_DEF = Boolean.TRUE;
