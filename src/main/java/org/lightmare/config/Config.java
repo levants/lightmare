@@ -63,11 +63,12 @@ public enum Config {
 
     ANNOTATED_UNIT_NAME("annotatedUnitName"), // Annotated unit
 
-    PERSISTENCE_XML_PATH("persistanceXmlPath"); // Persistence XML
+    PERSISTENCE_XML_PATH("persistanceXmlPath"), // Persistence XML
 
-    private static final String PERSISTENCE_XML_FROM_JAR_KEY = "persistenceXmlFromJar";
+    PERSISTENCE_XML_FROM_JAR("persistenceXmlFromJar"), // Persistence XML from
+						       // jar
 
-    private static final String SWAP_DATASOURCE_KEY = "swapDataSource";
+    SWAP_DATASOURCE("swapDataSource"); // Swap data source
 
     private static final String SCAN_ARCHIVES_KEY = "scanArchives";
 
