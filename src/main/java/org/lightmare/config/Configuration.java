@@ -32,8 +32,6 @@ public class Configuration implements Cloneable {
     // Runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
-    public static final String DATA_SOURCE_PATH_DEF = "./ds";
-
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
 
