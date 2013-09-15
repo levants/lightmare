@@ -258,7 +258,7 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Configures server from properties
+     * Configures server from properties and default values
      */
     private void configureServer() {
 
