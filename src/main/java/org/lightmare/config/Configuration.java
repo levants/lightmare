@@ -33,21 +33,6 @@ public class Configuration implements Cloneable {
     // Runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
-    // Default properties
-    public static final String ADMIN_USERS_PATH_DEF = "./config/admin/users.properties";
-
-    public static final String IP_ADDRESS_DEF = "0.0.0.0";
-
-    public static final String PORT_DEF = "1199";
-
-    public static final String BOSS_POOL_DEF = "1";
-
-    public static final int WORKER_POOL_DEF = 3;
-
-    public static final String CONNECTION_TIMEOUT_DEF = "1000";
-
-    public static final boolean SERVER_DEF = Boolean.TRUE;
-
     public static final String DATA_SOURCE_PATH_DEF = "./ds";
 
     // Properties which version of server is running remote it requires server
@@ -106,7 +91,7 @@ public class Configuration implements Cloneable {
     private static String ADMIN_USERS_PATH;
 
     // Is configuration server or client (default is server)
-    private static boolean server = SERVER_DEF;
+    private static boolean server = (Boolean) Config.SERVER.value;
 
     private static boolean remote;
 
