@@ -581,8 +581,8 @@ public class Configuration implements Cloneable {
 	return (Boolean) Config.REMOTE.value;
     }
 
-    public void setRemote(boolean remoteValue) {
-	remote = remoteValue;
+    public void setRemote(boolean remote) {
+	Config.REMOTE.value = remote;
     }
 
     public static boolean isServer() {
