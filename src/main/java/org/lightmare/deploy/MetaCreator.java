@@ -913,7 +913,7 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Sets specific port in case when applicatin is in remore server mode
+	 * Sets specific port in case when application is in remore server mode
 	 * 
 	 * @param property
 	 * @return {@link Builder}
