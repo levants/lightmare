@@ -35,7 +35,6 @@ public class Configuration implements Cloneable {
     // Default location for configuration YAML file
     private static final String CONFIG_FILE = "./config/configuration.yaml";
 
-    // Is configuration server or client (default is server)
     // Instance of pool configuration
     private static final PoolConfig POOL_CONFIG = new PoolConfig();
 
