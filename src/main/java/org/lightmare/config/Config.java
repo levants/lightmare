@@ -15,18 +15,18 @@ import org.lightmare.cache.DeploymentDirectory;
 public enum Config {
 
     // Path where stored administrative users
-    ADMIN_USERS_PATH_KEY("adminUsersPath");
+    ADMIN_USERS_PATH("adminUsersPath"),
 
     // Netty server / client configuration properties for RPC calls
-    public static final String IP_ADDRESS_KEY = "listeningIp";
+    IP_ADDRESS("listeningIp"), // ip
 
-    public static final String PORT_KEY = "listeningPort";
+    PORT("listeningPort"), // port
 
-    public static final String BOSS_POOL_KEY = "bossPoolSize";
+    BOSS_POOL("bossPoolSize"), // boss pool
 
-    public static final String WORKER_POOL_KEY = "workerPoolSize";
+    WORKER_POOL_KEY("workerPoolSize"), // Worker pool
 
-    public static final String CONNECTION_TIMEOUT_KEY = "timeout";
+    CONNECTION_TIMEOUT("timeout"); // Connection timeout
 
     // Properties for data source path and deployment path
     public static final String DEMPLOYMENT_PATH_KEY = "deploymentPath";
@@ -108,13 +108,8 @@ public enum Config {
 
     private static final String POOL_PROPERTIES_KEY = "poolProperties";
 
-    // Configuration properties for deployment
-    private static String ADMIN_USERS_PATH;
-
     // Is configuration server or client (default is server)
     private static boolean server = SERVER_DEF;
-
-    private static boolean remote;
 
     public String key;
 
