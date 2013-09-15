@@ -50,9 +50,9 @@ public enum Config {
 
     ADMIN_USER_PATH("adminPath"), // Admin user path
 
-    HOT_DEPLOYMENT("hotDeployment"); // Hot deployment
+    HOT_DEPLOYMENT("hotDeployment"), // Hot deployment
 
-    private static final String WATCH_STATUS_KEY = "watchStatus";
+    WATCH_STATUS("watchStatus"); // Watch status
 
     private static final String LIBRARY_PATH_KEY = "libraryPaths";
 
