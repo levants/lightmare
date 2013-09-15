@@ -208,7 +208,7 @@ public class Configuration implements Cloneable {
      */
     public <V> V getPersistenceConfigValue(Object key, V defaultValue) {
 
-	V value = ObjectUtils.getSubValue(config, DEPLOY_CONFIG_KEY,
+	V value = ObjectUtils.getSubValue(config, Config.DEPLOY_CONFIG.key,
 		PERSISTENCE_CONFIG_KEY, key);
 	if (value == null) {
 	    value = defaultValue;
