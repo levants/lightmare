@@ -57,9 +57,9 @@ public enum Config {
     LIBRARY_PATH("libraryPaths"), // Library path
 
     // Persistence provider property keys
-    PERSISTENCE_CONFIG("persistenceConfig"); // Persistence config
+    PERSISTENCE_CONFIG("persistenceConfig"), // Persistence config
 
-    private static final String SCAN_FOR_ENTITIES_KEY = "scanForEntities";
+    SCAN_FOR_ENTITIES("scanForEntities"); // Scan for entities
 
     private static final String ANNOTATED_UNIT_NAME_KEY = "annotatedUnitName";
 
