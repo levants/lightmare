@@ -70,8 +70,7 @@ public class Configuration implements Cloneable {
     public static final String DATA_SOURCE_PATH_DEF = "./ds";
 
     // Properties which version of server is running remote it requires server
-    // client RPC infrastructure or local (embeddable mode)
-
+    // client RPC infrastructure or local (embedded mode)
     private static final String REMOTE_KEY = "remote";
 
     private static final String SERVER_KEY = "server";
