@@ -744,7 +744,7 @@ public class Configuration implements Cloneable {
 
     public String getAnnotatedUnitName() {
 
-	return getPersistenceConfigValue(ANNOTATED_UNIT_NAME_KEY);
+	return getPersistenceConfigValue(Config.ANNOTATED_UNIT_NAME.key);
     }
 
     public void setAnnotatedUnitName(String annotatedUnitName) {
