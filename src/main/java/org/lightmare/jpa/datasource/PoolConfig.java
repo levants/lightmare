@@ -54,8 +54,7 @@ public class PoolConfig {
 	CHECK_OUT_TIMEOUT("checkoutTimeout", 1800), // checkout
 
 	// Controller properties
-	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads",
-		"1"),
+	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads", 1),
 
 	// Transaction properties
 	AUTOCOMMIT("autoCommit", "false"), // auto commit
