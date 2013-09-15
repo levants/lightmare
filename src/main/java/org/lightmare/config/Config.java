@@ -33,21 +33,18 @@ public enum Config {
 	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
 
     DATA_SOURCE_PATH("dataSourcePath", "./ds"), // data
-										// source
-										// path
+						// source
+						// path
 
     // Default properties
-    public static final boolean SERVER_DEF = Boolean.TRUE;
-
-    public static final String DATA_SOURCE_PATH_DEF = "./ds";
 
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
     REMOTE("remote", Boolean.FALSE),
 
-    SERVER("server", Boolean.TRUE);
+    SERVER("server", Boolean.TRUE),
 
-    private static final String CLIENT_KEY = "client";
+    CLIENT_KEY("client", Boolean.FALSE);
 
     public static final Set<DeploymentDirectory> DEPLOYMENT_PATHS_DEF = new HashSet<DeploymentDirectory>(
 	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)));
