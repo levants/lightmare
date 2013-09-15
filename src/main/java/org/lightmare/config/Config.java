@@ -79,9 +79,9 @@ public enum Config {
     // Connection pool provider property keys
     POOL_CONFIG("poolConfig"), // Pool Config
 
-    POOL_PROPERTIES_PATH("poolPropertiesPath"); // Pool properties path
+    POOL_PROPERTIES_PATH("poolPropertiesPath"), // Pool properties path
 
-    private static final String POOL_PROVIDER_TYPE_KEY = "poolProviderType";
+    POOL_PROVIDER_TYPE("poolProviderType"); // Pool rovider type
 
     private static final String POOL_PROPERTIES_KEY = "poolProperties";
 
