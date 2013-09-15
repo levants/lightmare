@@ -59,7 +59,8 @@ public class PoolConfig {
 	// Transaction properties
 	AUTOCOMMIT("autoCommit", Boolean.FALSE), // auto commit
 	AUTOCOMMIT_ON_CLOSE("autoCommitOnClose", Boolean.FALSE), // on close
-	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions", "true"), // ignore
+	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions",
+		Boolean.TRUE), // ignore
 
 	// Connection recovery properties
 	ACQUIRE_RETRY_ATTEMPTS("acquireRetryAttempts", 0), // retry
