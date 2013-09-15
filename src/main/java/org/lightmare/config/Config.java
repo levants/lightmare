@@ -20,7 +20,7 @@ public enum Config {
     // Netty server / client configuration properties for RPC calls
     IP_ADDRESS("listeningIp", "0.0.0.0"), // IP
 
-    PORT("listeningPort", "1199"), // port
+    PORT("listeningPort", "1199"), // Port
 
     BOSS_POOL("bossPoolSize", 1), // boss pool
 
