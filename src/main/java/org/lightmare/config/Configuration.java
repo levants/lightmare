@@ -45,6 +45,8 @@ public class Configuration implements Cloneable {
     // Is configuration server or client (default is server)
     private static boolean server = (Boolean) Config.SERVER.value;
 
+    private static boolean remote = (Boolean) Config.REMOTE.value;
+
     // Instance of pool configuration
     private static final PoolConfig POOL_CONFIG = new PoolConfig();
 
@@ -593,7 +595,7 @@ public class Configuration implements Cloneable {
 
     public boolean isRemote() {
 
-	return (boolean) Config.REMOTE.value;
+	return remote;
     }
 
     public void setRemote(boolean remoteValue) {
