@@ -506,7 +506,7 @@ public class Configuration implements Cloneable {
     public void loadFromFile() throws IOException {
 
 	InputStream propertiesStream = null;
-	String filePath = (String) Config.CONFIG_FILE.value;
+	String configFilePath = (String) Config.CONFIG_FILE.value;
 	try {
 	    File configFile = new File(configFilePath);
 	    if (configFile.exists()) {
