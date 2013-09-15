@@ -45,7 +45,7 @@ public class PoolConfig {
 	MAX_POOL_SIZE("maxPoolSize", 15), // max pool size
 	INITIAL_POOL_SIZE("initialPoolSize", 5), // initial
 	MIN_POOL_SIZE("minPoolSize", 5), // min pool size
-	MAX_STATEMENTS("maxStatements", "50"), // statements
+	MAX_STATEMENTS("maxStatements", 50), // statements
 	AQUIRE_INCREMENT("acquireIncrement", "5"), // increment
 
 	// Pool timeout properties
