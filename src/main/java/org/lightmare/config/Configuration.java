@@ -383,7 +383,7 @@ public class Configuration implements Cloneable {
 	    }
 	}
 
-	Object remoteValue = getConfigValue(REMOTE_KEY);
+	Object remoteValue = getConfigValue(Config.REMOTE.key);
 	if (ObjectUtils.notNull(remoteValue)) {
 	    if (remoteValue instanceof Boolean) {
 		remote = (Boolean) remoteValue;
