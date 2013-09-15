@@ -587,6 +587,28 @@ public class Configuration implements Cloneable {
     }
 
     /**
+     * Load {@link Configuration} in memory as {@link Map} of parameters
+     * 
+     * @throws IOException
+     */
+    public void loadFromStream(InputStream propertiesStream) throws IOException {
+
+	try {
+	    Properties props = new Properties();
+	    props.load(propertiesStream);
+
+	    for (String propertyName : props.stringPropertyNames()) {
+		config.put(propertyName, props.getProperty(propertyName));
+	    }
+
+	} catch (IOException ex) {
+	    LOG.error("Could not load configuration", ex);
+	} finally {
+	    ObjectUtils.close(propertiesStream);
+	}
+    }
+
+    /**
      * Loads configuration form file
      * 
      * @throws IOException
@@ -639,28 +661,6 @@ public class Configuration implements Cloneable {
 	    LOG.error("Configuration resource doesn't exist");
 	} else {
 	    loadFromStream(resourceStream);
-	}
-    }
-
-    /**
-     * Load {@link Configuration} in memory as {@link Map} of parameters
-     * 
-     * @throws IOException
-     */
-    public void loadFromStream(InputStream propertiesStream) throws IOException {
-
-	try {
-	    Properties props = new Properties();
-	    props.load(propertiesStream);
-
-	    for (String propertyName : props.stringPropertyNames()) {
-		config.put(propertyName, props.getProperty(propertyName));
-	    }
-
-	} catch (IOException ex) {
-	    LOG.error("Could not load configuration", ex);
-	} finally {
-	    ObjectUtils.close(propertiesStream);
 	}
     }
 
