@@ -161,6 +161,7 @@ public class Watcher implements Runnable {
 	Set<String> dss = getDataSourcePaths();
 
 	if (ObjectUtils.available(apps)) {
+
 	    String deploymantPath;
 	    Iterator<DeploymentDirectory> iterator = apps.iterator();
 	    boolean notDeployment = Boolean.TRUE;
@@ -171,7 +172,7 @@ public class Watcher implements Runnable {
 		notDeployment = ObjectUtils.notEquals(deploymantPath,
 			parentPath);
 	    }
-	    
+
 	    if (notDeployment) {
 		type = WatchFileType.NONE;
 	    } else {
