@@ -212,15 +212,14 @@ public class EjbConnector {
      * @return <code>T</code> implementation of bean interface
      * @throws IOException
      */
-    @SuppressWarnings("unchecked")
     public <T> T connectToBean(MetaData metaData) throws IOException {
 
 	InvocationHandler handler = getBeanHandler(metaData);
 	Class<?>[] interfaces = setInterfaces(metaData);
+	Class<T> typedInterfaces = ObjectUtils.cast(interfaces);
 	ClassLoader loader = metaData.getLoader();
 
-	T beanInstance = instatiateBean((Class<T>[]) interfaces, handler,
-		loader);
+	T beanInstance = instatiateBean(typedInterfaces, handler, loader);
 
 	return beanInstance;
     }
