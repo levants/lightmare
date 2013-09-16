@@ -101,9 +101,8 @@ public class EjbConnector {
      */
     private <T> T getBeanInstance(MetaData metaData) throws IOException {
 
-	@SuppressWarnings("unchecked")
-	Class<? extends T> beanClass = (Class<? extends T>) metaData
-		.getBeanClass();
+	Class<? extends T> beanClass = ObjectUtils
+		.cast(metaData.getBeanClass());
 
 	T beanInstance = MetaUtils.instantiate(beanClass);
 
@@ -276,9 +275,9 @@ public class EjbConnector {
 	MetaData metaData = getMeta(beanName);
 	ClassLoader loader = metaData.getLoader();
 
-	@SuppressWarnings("unchecked")
-	Class<T> interfaceClass = (Class<T>) MetaUtils.classForName(
-		interfaceName, Boolean.FALSE, loader);
+	Class<?> classForName = MetaUtils.classForName(interfaceName,
+		Boolean.FALSE, loader);
+	Class<T> interfaceClass = ObjectUtils.cast(classForName);
 
 	T beanInstance = (T) connectToBean(beanName, interfaceClass, rpcArgs);
 
