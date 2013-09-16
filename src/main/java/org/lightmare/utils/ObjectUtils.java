@@ -280,6 +280,14 @@ public class ObjectUtils {
 	return value;
     }
 
+    public static <T> T cast(Object data) {
+
+	@SuppressWarnings("unchecked")
+	T value = (T) data;
+
+	return value;
+    }
+
     /**
      * Checks if passed {@link Closeable} instance is not null and if not calls
      * {@link Closeable#close()} method
