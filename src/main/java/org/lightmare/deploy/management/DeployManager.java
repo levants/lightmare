@@ -109,6 +109,7 @@ public class DeployManager extends HttpServlet {
 
     private static final String DEPLOY_PASS_KEY = "deploy_manager_pass";
 
+    // Security for deploy management
     private Security security;
 
     /**
