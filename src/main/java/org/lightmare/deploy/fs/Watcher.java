@@ -309,7 +309,7 @@ public class Watcher implements Runnable {
 	    LogUtils.info(LOG, "Modify: %s, count: %s\n", fileName, count);
 	    redeployFile(fileName);
 	} else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
-	    LOG.info(String.format("Delete: %s, count: %s\n", fileName, count));
+	    LogUtils.info(LOG, "Delete: %s, count: %s\n", fileName, count);
 	    undeployFile(fileName);
 	} else if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
 	    LOG.info(String.format("Create: %s, count: %s\n", fileName, count));
