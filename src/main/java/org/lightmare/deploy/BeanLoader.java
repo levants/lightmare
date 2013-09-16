@@ -409,7 +409,7 @@ public class BeanLoader {
 	    PersistenceContext context;
 	    Resource resource;
 	    EJB ejbAnnot;
-	    if (fields == null || fields.length == 0) {
+	    if (ObjectUtils.notAvailable(fields)) {
 		releaseBlocker();
 	    }
 	    for (Field field : fields) {
