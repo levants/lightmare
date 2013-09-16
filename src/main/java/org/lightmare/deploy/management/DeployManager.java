@@ -88,7 +88,7 @@ public class DeployManager extends HttpServlet {
 
     private static final String DATA_SOURCES = "datasources";
 
-    // http parameters
+    // HTTP parameters
     private static final String REDEPLOY_PARAM_NAME = "file";
 
     private static final String TYPE_PARAM_NAME = "type";
