@@ -681,6 +681,7 @@ public class Configuration implements Cloneable {
     }
 
     public void setAnnotatedUnitName(String annotatedUnitName) {
+
 	setPersistenceConfigValue(ConfigKeys.ANNOTATED_UNIT_NAME.key,
 		annotatedUnitName);
     }
