@@ -38,6 +38,7 @@ public class ThreadFactoryUtil implements ThreadFactory {
 	String threadName = StringUtils.concat(name, THREAD_NAME_DELIM,
 		thread.getId());
 	thread.setName(threadName);
+
 	return thread;
     }
 
