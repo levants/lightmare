@@ -41,16 +41,19 @@ public class LightmareInitialContextFactoryBuilder implements
 
     private InitialContextFactory simulateBuilderLessNamingManager(
 	    String requestedFactory) throws NoInitialContextException {
-	try {
-	    Class<?> requestedClass = MetaUtils
-		    .initClassForName(requestedFactory);
 
-	    return (InitialContextFactory) requestedClass.newInstance();
+	InitialContextFactory factory;
+	Class<?> requestedClass;
+	try {
+	    requestedClass = MetaUtils.initClassForName(requestedFactory);
+	    factory = ObjectUtils.cast(requestedClass.newInstance());
 	} catch (Exception ex) {
 	    NoInitialContextException ne = new NoInitialContextException(
 		    "Could not find initial cotext");
 	    ne.setRootCause(ex);
 	    throw ne;
 	}
+
+	return factory;
     }
 }
