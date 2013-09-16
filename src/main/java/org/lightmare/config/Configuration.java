@@ -401,8 +401,8 @@ public class Configuration implements Cloneable {
 		Object configuration = yaml.load(stream);
 
 		if (configuration instanceof Map) {
-		    @SuppressWarnings("unchecked")
-		    Map<Object, Object> innerConfig = (Map<Object, Object>) configuration;
+		    Map<Object, Object> innerConfig = ObjectUtils
+			    .cast(configuration);
 		    configure(innerConfig);
 		}
 	    } finally {
