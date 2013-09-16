@@ -95,15 +95,18 @@ public class JndiManager {
      */
     public <T> T lookup(String name) throws IOException {
 
-	try {
-	    @SuppressWarnings("unchecked")
-	    T value = (T) getContext().lookup(name);
+	T value;
 
-	    return value;
+	try {
+
+	    Object data = getContext().lookup(name);
+	    value = ObjectUtils.cast(data);
 
 	} catch (NamingException ex) {
 	    throw new IOException(ex);
 	}
+
+	return value;
     }
 
     /**
