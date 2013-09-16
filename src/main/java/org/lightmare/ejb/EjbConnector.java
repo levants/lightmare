@@ -278,7 +278,7 @@ public class EjbConnector {
 		Boolean.FALSE, loader);
 	Class<T> interfaceClass = ObjectUtils.cast(classForName);
 
-	T beanInstance = (T) connectToBean(beanName, interfaceClass, rpcArgs);
+	T beanInstance = connectToBean(beanName, interfaceClass, rpcArgs);
 
 	return beanInstance;
     }
