@@ -710,6 +710,7 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isSwapDataSource() {
+
 	return getPersistenceConfigValue(ConfigKeys.SWAP_DATASOURCE.key,
 		Boolean.FALSE);
     }
