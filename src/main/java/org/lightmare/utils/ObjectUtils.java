@@ -211,14 +211,13 @@ public class ObjectUtils {
      * @param from
      * @return {@link Map}<K,V>
      */
-    @SuppressWarnings("unchecked")
     public static <K, V> Map<K, V> getAsMap(Object key, Map<?, ?> from) {
 
 	Map<K, V> result;
 	if (ObjectUtils.available(from)) {
 	    Object objectValue = from.get(key);
 	    if (objectValue instanceof Map) {
-		result = (Map<K, V>) objectValue;
+		result = cast(objectValue);
 	    } else {
 		result = null;
 	    }
