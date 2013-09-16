@@ -3,6 +3,7 @@ package org.lightmare.utils.concurrent;
 import java.util.concurrent.ThreadFactory;
 
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Implementation of {@link ThreadFactory} for
@@ -32,6 +33,7 @@ public class ThreadFactoryUtil implements ThreadFactory {
 	if (ObjectUtils.notNull(priority)) {
 	    thread.setPriority(priority);
 	}
+	String threadName = StringUtils.concat(name, thread.getId());
 	thread.setName(String.format("%s - %s", name, thread.getId()));
 	return thread;
     }
