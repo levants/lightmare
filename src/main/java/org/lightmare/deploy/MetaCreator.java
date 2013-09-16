@@ -414,7 +414,8 @@ public class MetaCreator {
 	    try {
 		deployBean(beanName);
 	    } catch (IOException ex) {
-		LogUtils.error(LOG, ex, "Could not deploy bean %s", beanName);
+		LogUtils.error(LOG, ex, "Could not deploy bean %s cause",
+			beanName, ex.getMessage());
 	    }
 	}
 	awaitDeployments();
