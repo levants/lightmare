@@ -297,8 +297,7 @@ public class EjbConnector {
 
 	BeanHandler handler = getBeanHandler(metaData);
 
-	@SuppressWarnings("unchecked")
-	Class<T> beanClass = (Class<T>) metaData.getBeanClass();
+	Class<T> beanClass = ObjectUtils.cast(metaData.getBeanClass());
 
 	T beanInstance = MetaUtils.instantiate(beanClass);
 
