@@ -2,6 +2,8 @@ package org.lightmare.utils.concurrent;
 
 import java.util.concurrent.ThreadFactory;
 
+import org.lightmare.utils.ObjectUtils;
+
 /**
  * Implementation of {@link ThreadFactory} for
  * {@link java.util.concurrent.ExecutorService} thread pooling
@@ -27,7 +29,7 @@ public class ThreadFactoryUtil implements ThreadFactory {
     @Override
     public Thread newThread(Runnable runnable) {
 	Thread thread = new Thread(runnable);
-	if (priority != null) {
+	if (ObjectUtils.notNull(priority)) {
 	    thread.setPriority(priority);
 	}
 	thread.setName(String.format("%s - %s", name, thread.getId()));
