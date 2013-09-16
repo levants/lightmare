@@ -68,16 +68,17 @@ public class DeployManager extends HttpServlet {
 
     private static final String END_PAGE = "</body></table>\n </html>";
 
-    private static final String LOGIN_PAGE = "<html>\n"
-	    + "\t\t<head>\n"
-	    + "\t\t\t<title>Login</title>\n"
-	    + "\t\t</head>\n"
-	    + "\t\t<body>\n"
-	    + "\t\t\t\t\t\t<br><form name = \"ManagementLogin\" method=\"post\">"
-	    + "\t\t\t\t\t\t\t<br><input type=\"user\" name=\"user\"></br>"
-	    + "\t\t\t\t\t\t\t<br><input type=\"password\" name=\"password\"></br>"
-	    + "\t\t\t\t\t\t\t<br><input type=\"submit\" value=\"Submit\"></br>"
-	    + "\t\t\t\t\t\t</form></br>\n";
+    private static final String LOGIN_PAGE = StringUtils
+	    .concat("<html>\n",
+		    "\t\t<head>\n",
+		    "\t\t\t<title>Login</title>\n",
+		    "\t\t</head>\n",
+		    "\t\t<body>\n",
+		    "\t\t\t\t\t\t<br><form name = \"ManagementLogin\" method=\"post\">",
+		    "\t\t\t\t\t\t\t<br><input type=\"user\" name=\"user\"></br>",
+		    "\t\t\t\t\t\t\t<br><input type=\"password\" name=\"password\"></br>",
+		    "\t\t\t\t\t\t\t<br><input type=\"submit\" value=\"Submit\"></br>",
+		    "\t\t\t\t\t\t</form></br>\n");
 
     private static final String INCORRECT_MESSAGE = "<br><b>invalid user name / passowd</b></br>";
 
