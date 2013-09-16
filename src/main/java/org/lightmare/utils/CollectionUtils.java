@@ -82,12 +82,12 @@ public class CollectionUtils {
      * @param type
      * @return <code>T[]</code>
      */
-    @SuppressWarnings("unchecked")
     public static <T> T[] toArray(Collection<T> collection, Class<T> type) {
 
 	T[] array;
 	if (ObjectUtils.notNull(collection)) {
-	    array = (T[]) Array.newInstance(type, collection.size());
+	    Object arrayObject = Array.newInstance(type, collection.size());
+	    array = ObjectUtils.cast(arrayObject);
 	    array = collection.toArray(array);
 	} else {
 	    array = null;
