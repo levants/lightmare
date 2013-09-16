@@ -169,8 +169,8 @@ public class BeanLoader {
 
 	    for (File tmpFile : tmpFiles) {
 		FileUtils.deleteFile(tmpFile);
-		LOG.info(String.format("Cleaning temporal resource %s done",
-			tmpFile.getName()));
+		LogUtils.info(LOG, "Cleaning temporal resource %s done",
+			tmpFile.getName());
 	    }
 	}
 
