@@ -18,6 +18,8 @@ public class ThreadFactoryUtil implements ThreadFactory {
 
     private Integer priority;
 
+    private static final char THREAD_NAME_DELIM = '-';
+
     public ThreadFactoryUtil(String name) {
 	this.name = name;
     }
@@ -33,8 +35,9 @@ public class ThreadFactoryUtil implements ThreadFactory {
 	if (ObjectUtils.notNull(priority)) {
 	    thread.setPriority(priority);
 	}
-	String threadName = StringUtils.concat(name, thread.getId());
-	thread.setName(String.format("%s - %s", name, thread.getId()));
+	String threadName = StringUtils.concat(name, THREAD_NAME_DELIM,
+		thread.getId());
+	thread.setName(threadName);
 	return thread;
     }
 
