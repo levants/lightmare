@@ -722,6 +722,7 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isScanArchives() {
+
 	return getPersistenceConfigValue(ConfigKeys.SCAN_ARCHIVES.key,
 		Boolean.FALSE);
     }
