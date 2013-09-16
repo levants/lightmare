@@ -63,6 +63,7 @@ public class Watcher implements Runnable {
     private static final Logger LOG = Logger.getLogger(Watcher.class);
 
     private static enum WatchFileType {
+
 	DATA_SOURCE, DEPLOYMENT, NONE;
     }
 
