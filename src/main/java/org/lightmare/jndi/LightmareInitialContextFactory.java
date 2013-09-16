@@ -34,6 +34,7 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
 	if (notContainsKey) {
 	    sharingEnv.put(SHARE_DATA_PROPERTY, SHARE_DATA_PROPERTY_VALUE);
 	}
+
 	Context lightmareContext = new LightmareContext(sharingEnv);
 
 	return lightmareContext;
