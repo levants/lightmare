@@ -258,7 +258,6 @@ public class ObjectUtils {
      * @param keys
      * @return <code>V</code>
      */
-    @SuppressWarnings("unchecked")
     public static <V> V getSubValue(Map<?, ?> from, Object... keys) {
 
 	V value;
@@ -271,7 +270,7 @@ public class ObjectUtils {
 
 	Map<?, ?> result = getAsMap(from, subKeys);
 	if (ObjectUtils.available(result)) {
-	    value = (V) result.get(key);
+	    value = cast(result.get(key));
 	} else {
 	    value = null;
 	}
