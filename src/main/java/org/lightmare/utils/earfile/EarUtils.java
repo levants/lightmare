@@ -140,6 +140,7 @@ public class EarUtils extends AbstractIOUtils {
 	URL jarURL;
 	boolean checkOnOrm;
 	for (String jarName : jarNames) {
+
 	    checkOnOrm = checkOnOrm(jarName);
 	    jarPath = StringUtils.concat(earPath, ARCHIVE_URL_DELIM,
 		    FILE_SEPARATOR, jarName);
