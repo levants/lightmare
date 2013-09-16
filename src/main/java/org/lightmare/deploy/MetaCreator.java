@@ -44,6 +44,7 @@ import org.lightmare.rest.providers.RestProvider;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.FileUtils;
 import org.lightmare.utils.fs.WatchUtils;
@@ -317,8 +318,8 @@ public class MetaCreator {
 	if (await) {
 	    try {
 		String nameFromFuture = future.get();
-		LOG.info(String.format("Deploy processing of %s finished",
-			nameFromFuture));
+		LogUtils.info(LOG, "Deploy processing of %s finished",
+			nameFromFuture);
 	    } catch (InterruptedException ex) {
 		LOG.error(ex.getMessage(), ex);
 	    } catch (ExecutionException ex) {
