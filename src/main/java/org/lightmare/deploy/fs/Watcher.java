@@ -62,6 +62,12 @@ public class Watcher implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(Watcher.class);
 
+    /**
+     * Defines file types for watch service
+     * 
+     * @author Levan
+     * 
+     */
     private static enum WatchFileType {
 
 	DATA_SOURCE, DEPLOYMENT, NONE;
