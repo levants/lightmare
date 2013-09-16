@@ -364,6 +364,16 @@ public class Watcher implements Runnable {
 	runService(watch);
     }
 
+    private void registerPaths(File[] files, FileSystem fs, WatchService watch)
+	    throws IOException {
+
+	String path;
+	for (File file : files) {
+	    path = file.getPath();
+	    registerPath(fs, path, watch);
+	}
+    }
+
     private void registerPaths(Collection<DeploymentDirectory> deploymentDirss,
 	    FileSystem fs, WatchService watch) throws IOException {
 
@@ -378,10 +388,7 @@ public class Watcher implements Runnable {
 		directory = new File(path);
 		files = directory.listFiles();
 		if (ObjectUtils.available(files)) {
-		    for (File file : files) {
-			path = file.getPath();
-			registerPath(fs, path, watch);
-		    }
+		    registerPaths(files, fs, watch);
 		}
 	    } else {
 		registerPath(fs, path, watch);
