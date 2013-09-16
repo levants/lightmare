@@ -20,7 +20,7 @@ import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.earfile.DirUtils;
 import org.lightmare.utils.earfile.ExtUtils;
 import org.lightmare.utils.earfile.JarUtils;
-import org.lightmare.utils.earfile.SimplUtils;
+import org.lightmare.utils.earfile.SimpleUtils;
 import org.lightmare.utils.fs.FileType;
 import org.lightmare.utils.fs.FileUtils;
 import org.w3c.dom.Document;
@@ -224,7 +224,7 @@ public abstract class AbstractIOUtils {
 	} else if (typToCheck.equals(FileType.JAR)) {
 	    ioUtils = new JarUtils(appFile);
 	} else if (typToCheck.equals(FileType.DIR)) {
-	    ioUtils = new SimplUtils(appFile);
+	    ioUtils = new SimpleUtils(appFile);
 	}
 
 	return ioUtils;

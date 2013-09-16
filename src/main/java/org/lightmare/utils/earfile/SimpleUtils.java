@@ -14,11 +14,11 @@ import org.lightmare.utils.fs.FileType;
  * @author levan
  * 
  */
-public class SimplUtils extends AbstractIOUtils {
+public class SimpleUtils extends AbstractIOUtils {
 
     public static final FileType type = FileType.DIR;
 
-    public SimplUtils(File file) {
+    public SimpleUtils(File file) {
 	super(file);
     }
 
