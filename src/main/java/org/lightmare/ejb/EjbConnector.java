@@ -253,7 +253,7 @@ public class EjbConnector {
 	    }
 	}
 
-	T beanInstance = (T) instatiateBean(interfaceClass, handler, loader);
+	T beanInstance = instatiateBean(interfaceClass, handler, loader);
 
 	return beanInstance;
     }
