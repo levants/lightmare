@@ -212,9 +212,10 @@ public class Watcher implements Runnable {
 	List<File> list = new ArrayList<File>();
 	if (ObjectUtils.available(deploymetDirss)) {
 	    String path;
+	    DeployFiletr filter = new DeployFiletr();
 	    for (DeploymentDirectory deployment : deploymetDirss) {
 		path = deployment.getPath();
-		files = new File(path).listFiles(new DeployFiletr());
+		files = new File(path).listFiles(filter);
 		fillFileList(files, list);
 	    }
 	}
