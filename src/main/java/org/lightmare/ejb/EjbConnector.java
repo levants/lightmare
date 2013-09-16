@@ -148,7 +148,6 @@ public class EjbConnector {
 	    LibraryLoader.loadCurrentLibraries(loader);
 	}
 
-	@SuppressWarnings("unchecked")
 	Object instance = Proxy.newProxyInstance(loader, interfaces, handler);
 	T beanInstance = ObjectUtils.cast(instance);
 
