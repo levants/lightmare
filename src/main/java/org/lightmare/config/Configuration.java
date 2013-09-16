@@ -745,6 +745,7 @@ public class Configuration implements Cloneable {
     }
 
     public Map<Object, Object> getPersistenceProperties() {
+
 	return getPersistenceConfigValue(ConfigKeys.PERSISTENCE_PROPERTIES.key);
     }
 
