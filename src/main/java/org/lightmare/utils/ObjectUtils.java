@@ -33,7 +33,7 @@ public class ObjectUtils {
     }
 
     /**
-     * Chanks if passed boolean value is false
+     * Checks if passed boolean value is false
      * 
      * @param data
      * @return <code>boolean</code>
