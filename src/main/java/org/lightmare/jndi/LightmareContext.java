@@ -12,6 +12,7 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.TransactionContainer;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.utils.NamingUtils;
+import org.lightmare.utils.ObjectUtils;
 import org.osjava.sj.memory.MemoryContext;
 
 /**
@@ -49,7 +50,7 @@ public class LightmareContext extends MemoryContext {
 	    if (candidate == null) {
 		value = candidate;
 	    } else if (candidate instanceof EntityManagerFactory) {
-		EntityManagerFactory emf = (EntityManagerFactory) (candidate);
+		EntityManagerFactory emf = ObjectUtils.cast(candidate);
 		EntityManager em = emf.createEntityManager();
 		value = em;
 	    } else {

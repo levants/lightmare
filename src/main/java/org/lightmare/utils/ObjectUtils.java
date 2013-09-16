@@ -280,6 +280,12 @@ public class ObjectUtils {
 	return value;
     }
 
+    /**
+     * Cats passed {@link Object} to generic parameter
+     * 
+     * @param data
+     * @return <code>T</code>
+     */
     public static <T> T cast(Object data) {
 
 	@SuppressWarnings("unchecked")
