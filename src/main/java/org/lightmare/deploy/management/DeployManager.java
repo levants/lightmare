@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * {@link Servlet} to manage deployed applications
@@ -49,16 +50,17 @@ public class DeployManager extends HttpServlet {
 
     private static final String REDEPLOY_END_TAG = "</a></td>";
 
-    private static final String BEGIN_PAGE = "<html>\n"
-	    + "\t<head><script type=\"text/javascript\">\n"
-	    + "/* <![CDATA[ */\n"
-	    + "\t\tfunction sendRequest(redeploy, type, fileType){\n "
-	    + "\t\t\tvar xmlhttp = new XMLHttpRequest();\n "
-	    + "\t\t\tvar reqUrl = \"DeployManager?file=\" + redeploy + \"&type=\" + type + \"&fileType=\" + fileType;\n"
-	    + "\t\t\txmlhttp.open(\"GET\", reqUrl, true);\n"
-	    + "\t\t\txmlhttp.send();\n" + "}\n" + "/* ]]> */\n" + "</script>\n"
-	    + "\t<title>Deployment management</title>" + "</head>\n"
-	    + "\t<body>\n" + "\t<table>\n";
+    private static final String BEGIN_PAGE = StringUtils
+	    .concat("<html>\n",
+		    "\t<head><script type=\"text/javascript\">\n",
+		    "/* <![CDATA[ */\n",
+		    "\t\tfunction sendRequest(redeploy, type, fileType){\n ",
+		    "\t\t\tvar xmlhttp = new XMLHttpRequest();\n ",
+		    "\t\t\tvar reqUrl = \"DeployManager?file=\" + redeploy + \"&type=\" + type + \"&fileType=\" + fileType;\n",
+		    "\t\t\txmlhttp.open(\"GET\", reqUrl, true);\n",
+		    "\t\t\txmlhttp.send();\n", "}\n", "/* ]]> */\n",
+		    "</script>\n", "\t<title>Deployment management</title>",
+		    "</head>\n", "\t<body>\n", "\t<table>\n");
 
     private static final String TYPE_TAG = "\t\t<tr><td><br><b>";
 
