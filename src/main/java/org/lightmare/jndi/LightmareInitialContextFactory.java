@@ -6,6 +6,8 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
+import org.lightmare.utils.ObjectUtils;
+
 /**
  * Extension of factory class {@link InitialContextFactory}
  * 
@@ -24,9 +26,8 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
 	    throws NamingException {
 
 	// clone the environment
-	@SuppressWarnings("unchecked")
-	Hashtable<Object, Object> sharingEnv = (Hashtable<Object, Object>) properties
-		.clone();
+	Hashtable<Object, Object> sharingEnv = ObjectUtils.cast(properties
+		.clone());
 
 	// all instances will share stored data
 	boolean notContainsKey = !sharingEnv.containsKey(SHARE_DATA_PROPERTY);
