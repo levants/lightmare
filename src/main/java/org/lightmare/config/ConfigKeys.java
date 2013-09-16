@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import org.lightmare.cache.DeploymentDirectory;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Keeps keys and default values for configuration
@@ -110,8 +111,7 @@ public enum ConfigKeys {
 
     public <T> T getValue() {
 
-	@SuppressWarnings("unchecked")
-	T typedValue = (T) value;
+	T typedValue = ObjectUtils.cast(value);
 
 	return typedValue;
     }
