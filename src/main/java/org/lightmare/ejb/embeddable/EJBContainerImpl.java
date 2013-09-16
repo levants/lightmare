@@ -40,8 +40,8 @@ public class EJBContainerImpl extends EJBContainer {
 
 	    MetaCreator.Builder builder;
 	    if (ObjectUtils.available(properties)) {
-		@SuppressWarnings("unchecked")
-		Map<Object, Object> configuration = (Map<Object, Object>) properties;
+		Map<Object, Object> configuration = ObjectUtils
+			.cast(properties);
 		builder = new MetaCreator.Builder(configuration);
 	    } else {
 		builder = new MetaCreator.Builder();
