@@ -409,9 +409,11 @@ public class BeanLoader {
 	    PersistenceContext context;
 	    Resource resource;
 	    EJB ejbAnnot;
+
 	    if (ObjectUtils.notAvailable(fields)) {
 		releaseBlocker();
 	    }
+
 	    for (Field field : fields) {
 		context = field.getAnnotation(PersistenceContext.class);
 		resource = field.getAnnotation(Resource.class);
