@@ -44,6 +44,7 @@ import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
@@ -652,7 +653,7 @@ public class BeanLoader {
 		    url = WatchUtils.clearURL(url);
 		    MetaContainer.addBeanName(url, deployed);
 		}
-		LOG.info(String.format("bean %s deployed", beanName));
+		LogUtils.info(LOG, "bean %s deployed", beanName);
 	    } catch (IOException ex) {
 		LOG.error(String.format("Could not deploy bean %s cause %s",
 			beanName, ex.getMessage()), ex);
