@@ -113,7 +113,8 @@ public class DeployManager extends HttpServlet {
     private Security security;
 
     /**
-     * Class to cache authenticated users for {@link DeployManager} servlet page
+     * Class to cache authenticated users for {@link DeployManager} java
+     * {@link javax.servlet.http.HttpServlet} page
      * 
      * @author levan
      * 
