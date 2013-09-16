@@ -118,6 +118,7 @@ public class EarUtils extends AbstractIOUtils {
 	InputStream stream = zipFile.getInputStream(jarEntry);
 	ZipInputStream zipStream = new ZipInputStream(stream);
 	ZipEntry xmlEntry = zipStream.getNextEntry();
+
 	boolean check = Boolean.FALSE;
 	while (ObjectUtils.notNull(xmlEntry) && ObjectUtils.notTrue(check)) {
 	    check = xmlEntry.getName().equals(ConfigLoader.XML_PATH);
