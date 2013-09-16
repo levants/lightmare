@@ -69,7 +69,7 @@ public class RestConfig extends ResourceConfig {
     public void cache() {
 
 	RestConfig config = RestContainer.getRestConfig();
-	if (ObjectUtils.notTrue(this.equals(config))) {
+	if (ObjectUtils.notEquals(this, config)) {
 	    RestContainer.setRestConfig(this);
 	}
     }
