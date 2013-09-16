@@ -74,7 +74,7 @@ public class CollectionUtils {
 	return list;
     }
 
-    private <T> T[] toArray(Class<T> type, int size) {
+    private static <T> T[] toArray(Class<T> type, int size) {
 
 	Object arrayObject = Array.newInstance(type, size);
 	T[] array = ObjectUtils.cast(arrayObject);
@@ -94,8 +94,7 @@ public class CollectionUtils {
 
 	T[] array;
 	if (ObjectUtils.notNull(collection)) {
-	    Object arrayObject = Array.newInstance(type, collection.size());
-	    array = ObjectUtils.cast(arrayObject);
+	    array = toArray(type, collection.size());
 	    array = collection.toArray(array);
 	} else {
 	    array = null;
