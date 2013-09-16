@@ -104,9 +104,9 @@ public class CollectionUtils {
      */
     public static <T> T[] emptyArray(Class<T> type) {
 
-	@SuppressWarnings("unchecked")
-	T[] empty = (T[]) Array.newInstance(type,
+	Object arrayObject = Array.newInstance(type,
 		ObjectUtils.EMPTY_ARRAY_LENGTH);
+	T[] empty = ObjectUtils.cast(arrayObject);
 
 	return empty;
     }
