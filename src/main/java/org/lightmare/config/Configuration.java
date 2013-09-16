@@ -751,6 +751,7 @@ public class Configuration implements Cloneable {
 
     public void setPersistenceProperties(
 	    Map<Object, Object> persistenceProperties) {
+
 	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_PROPERTIES.key,
 		persistenceProperties);
     }
