@@ -300,9 +300,8 @@ public class ParamBuilder {
 	    entityStream = (InputStream) stream;
 	    readFromStream(entityStream, parameter);
 	} else if (stream instanceof List) {
-	    @SuppressWarnings("unchecked")
-	    Iterator<InputStream> streams = ((List<InputStream>) stream)
-		    .iterator();
+	    List<InputStream> streamsList = ObjectUtils.cast(stream);
+	    Iterator<InputStream> streams = streamsList.iterator();
 	    while (streams.hasNext()) {
 		entityStream = streams.next();
 		readFromStream(entityStream, parameter);
