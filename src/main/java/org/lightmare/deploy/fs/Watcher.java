@@ -168,8 +168,10 @@ public class Watcher implements Runnable {
 	    while (iterator.hasNext() && notDeployment) {
 		deployment = iterator.next();
 		deploymantPath = deployment.getPath();
-		notDeployment = !deploymantPath.equals(parentPath);
+		notDeployment = ObjectUtils.notEquals(deploymantPath,
+			parentPath);
 	    }
+	    
 	    if (notDeployment) {
 		type = WatchFileType.NONE;
 	    } else {
