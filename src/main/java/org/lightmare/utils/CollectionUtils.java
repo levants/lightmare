@@ -111,9 +111,7 @@ public class CollectionUtils {
      */
     public static <T> T[] emptyArray(Class<T> type) {
 
-	Object arrayObject = Array.newInstance(type,
-		ObjectUtils.EMPTY_ARRAY_LENGTH);
-	T[] empty = ObjectUtils.cast(arrayObject);
+	T[] empty = toArray(type, ObjectUtils.EMPTY_ARRAY_LENGTH);
 
 	return empty;
     }
