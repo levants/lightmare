@@ -655,8 +655,8 @@ public class BeanLoader {
 		}
 		LogUtils.info(LOG, "bean %s deployed", beanName);
 	    } catch (IOException ex) {
-		LOG.error(String.format("Could not deploy bean %s cause %s",
-			beanName, ex.getMessage()), ex);
+		LogUtils.error(LOG, ex, "Could not deploy bean %s cause %s",
+			beanName, ex.getMessage());
 	    } finally {
 		LibraryLoader.loadCurrentLibraries(currentLoader);
 	    }
