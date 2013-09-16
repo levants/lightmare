@@ -39,6 +39,7 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.config.Configuration;
 import org.lightmare.ejb.exceptions.BeanInUseException;
+import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
@@ -130,7 +131,7 @@ public class BeanLoader {
 		result = Boolean.TRUE;
 	    } catch (IOException ex) {
 		result = Boolean.FALSE;
-		LOG.error("Could not initialize datasource", ex);
+		LOG.error(InitMessages.INITIALIZING_ERROR, ex);
 	    } finally {
 		releaseBlocker();
 		LibraryLoader.loadCurrentLibraries(loader);
