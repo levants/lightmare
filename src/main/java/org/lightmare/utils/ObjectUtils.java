@@ -73,6 +73,11 @@ public class ObjectUtils {
 	return valid;
     }
 
+    public static boolean notEquals(Object data1, Object data2) {
+
+	return !data1.equals(data2);
+    }
+
     /**
      * Checks if passed {@link Collection} instance is not empty
      * 
