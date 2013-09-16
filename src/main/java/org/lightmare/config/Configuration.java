@@ -56,8 +56,7 @@ public class Configuration implements Cloneable {
 	    from = config;
 	}
 
-	@SuppressWarnings("unchecked")
-	Map<K, V> value = (Map<K, V>) ObjectUtils.getAsMap(key, from);
+	Map<K, V> value = ObjectUtils.cast(ObjectUtils.getAsMap(key, from));
 
 	return value;
     }
@@ -122,7 +121,8 @@ public class Configuration implements Cloneable {
 
     private <K, V> V getConfigValue(K subKey, V defaultValue) {
 
-	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey, defaultValue);
+	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey,
+		defaultValue);
     }
 
     private <K, V> V getConfigValue(K subKey) {
@@ -265,7 +265,8 @@ public class Configuration implements Cloneable {
 	// Sets default values to remote server configuration
 	boolean contains = containsConfigKey(ConfigKeys.IP_ADDRESS.key);
 	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(ConfigKeys.IP_ADDRESS.key, ConfigKeys.IP_ADDRESS.value);
+	    setConfigValue(ConfigKeys.IP_ADDRESS.key,
+		    ConfigKeys.IP_ADDRESS.value);
 	}
 
 	contains = containsConfigKey(ConfigKeys.PORT.key);
@@ -342,7 +343,6 @@ public class Configuration implements Cloneable {
      * @param map2
      * @return <code>{@link Map}<Object, Object></code>
      */
-    @SuppressWarnings("unchecked")
     protected Map<Object, Object> deepMerge(Map<Object, Object> map1,
 	    Map<Object, Object> map2) {
 
@@ -353,14 +353,15 @@ public class Configuration implements Cloneable {
 	    Object key;
 	    Map<Object, Object> value1;
 	    Object value2;
+	    Map<Object, Object> mapValue2;
 	    Object mergedValue;
 	    for (Map.Entry<Object, Object> entry2 : entries2) {
 		key = entry2.getKey();
 		value2 = entry2.getValue();
 		if (value2 instanceof Map) {
 		    value1 = ObjectUtils.getAsMap(key, map1);
-		    mergedValue = deepMerge(value1,
-			    (Map<Object, Object>) value2);
+		    mapValue2 = ObjectUtils.cast(value2);
+		    mergedValue = deepMerge(value1, mapValue2);
 		} else {
 		    mergedValue = value2;
 		}
@@ -670,7 +671,8 @@ public class Configuration implements Cloneable {
 
     public void setScanForEntities(boolean scanForEntities) {
 
-	setPersistenceConfigValue(ConfigKeys.SCAN_FOR_ENTITIES.key, scanForEntities);
+	setPersistenceConfigValue(ConfigKeys.SCAN_FOR_ENTITIES.key,
+		scanForEntities);
     }
 
     public String getAnnotatedUnitName() {
@@ -689,13 +691,14 @@ public class Configuration implements Cloneable {
     }
 
     public void setPersXmlPath(String persXmlPath) {
-	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_PATH.key, persXmlPath);
+	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_PATH.key,
+		persXmlPath);
     }
 
     public boolean isPersXmlFromJar() {
 
-	return getPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_FROM_JAR.key,
-		Boolean.FALSE);
+	return getPersistenceConfigValue(
+		ConfigKeys.PERSISTENCE_XML_FROM_JAR.key, Boolean.FALSE);
     }
 
     public void setPersXmlFromJar(boolean persXmlFromJar) {
@@ -709,7 +712,8 @@ public class Configuration implements Cloneable {
     }
 
     public void setSwapDataSource(boolean swapDataSource) {
-	setPersistenceConfigValue(ConfigKeys.SWAP_DATASOURCE.key, swapDataSource);
+	setPersistenceConfigValue(ConfigKeys.SWAP_DATASOURCE.key,
+		swapDataSource);
     }
 
     public boolean isScanArchives() {
