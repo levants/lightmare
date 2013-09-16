@@ -149,8 +149,8 @@ public class EjbConnector {
 	}
 
 	@SuppressWarnings("unchecked")
-	T beanInstance = (T) Proxy
-		.newProxyInstance(loader, interfaces, handler);
+	Object instance = Proxy.newProxyInstance(loader, interfaces, handler);
+	T beanInstance = ObjectUtils.cast(instance);
 
 	return beanInstance;
     }
@@ -165,8 +165,8 @@ public class EjbConnector {
     private <T> T instatiateBean(Class<T> interfaceClass,
 	    InvocationHandler handler, ClassLoader loader) {
 
-	@SuppressWarnings("unchecked")
-	Class<T>[] interfaceArray = (Class<T>[]) new Class<?>[] { interfaceClass };
+	Class<T>[] interfaceArray = ObjectUtils
+		.cast(new Class<?>[] { interfaceClass });
 
 	T beanInstance = instatiateBean(interfaceArray, handler, loader);
 
@@ -220,7 +220,7 @@ public class EjbConnector {
 	Class<?>[] interfaces = setInterfaces(metaData);
 	ClassLoader loader = metaData.getLoader();
 
-	T beanInstance = (T) instatiateBean((Class<T>[]) interfaces, handler,
+	T beanInstance = instatiateBean((Class<T>[]) interfaces, handler,
 		loader);
 
 	return beanInstance;
