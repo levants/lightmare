@@ -50,6 +50,7 @@ public class SimplUtils extends AbstractIOUtils {
 
     @Override
     protected void scanArchive(Object... args) throws IOException {
+
 	getEjbURLs().add(realFile.toURI().toURL());
     }
 }
