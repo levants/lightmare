@@ -34,6 +34,7 @@ public class ThreadFactoryUtil implements ThreadFactory {
 	if (ObjectUtils.notNull(priority)) {
 	    thread.setPriority(priority);
 	}
+
 	String threadName = StringUtils.concat(name, StringUtils.HYPHEN,
 		thread.getId());
 	thread.setName(threadName);
