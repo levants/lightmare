@@ -181,11 +181,13 @@ public class LoaderPoolManager {
     public static void reload() {
 
 	synchronized (LoaderPoolManager.class) {
+
 	    if (ObjectUtils.notNull(LOADER_POOL)) {
 		LOADER_POOL.shutdown();
 		LOADER_POOL = null;
 	    }
 	}
+
 	getLoaderPool();
     }
 }
