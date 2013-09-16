@@ -160,9 +160,8 @@ public class MetaCreator {
 	String fileNameForEntity;
 	for (String entityName : classSet) {
 	    fileNameForEntity = classOwnersFiles.get(entityName);
-	    if (ObjectUtils.notNullAll(fileNameForEntity, fileNameForBean)
-		    && ObjectUtils
-			    .notEquals(fileNameForEntity, fileNameForBean)) {
+	    if (ObjectUtils
+		    .notNullNotEquals(fileNameForEntity, fileNameForBean)) {
 		classSet.remove(entityName);
 	    }
 	}

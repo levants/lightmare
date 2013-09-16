@@ -85,6 +85,11 @@ public class ObjectUtils {
 	return !data1.equals(data2);
     }
 
+    public static boolean notNullNotEquals(Object data1, Object data2) {
+
+	return notNullAll(data1, data2) && notEquals(data1, data2);
+    }
+
     /**
      * Checks if passed {@link Collection} instance is not empty
      * 
