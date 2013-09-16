@@ -66,7 +66,7 @@ public class DeployManager extends HttpServlet {
 
     private static final String END_TYPE_TAG = "</b></br></td></tr>\n";
 
-    private static final String END_PAGE = "</body></table>\n" + "</html>";
+    private static final String END_PAGE = "</body></table>\n </html>";
 
     private static final String LOGIN_PAGE = "<html>\n"
 	    + "\t\t<head>\n"
