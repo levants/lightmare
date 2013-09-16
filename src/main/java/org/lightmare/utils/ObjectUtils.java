@@ -73,6 +73,13 @@ public class ObjectUtils {
 	return valid;
     }
 
+    /**
+     * Checks if parameters not equals
+     * 
+     * @param data1
+     * @param data2
+     * @return <code>boolean</code>
+     */
     public static boolean notEquals(Object data1, Object data2) {
 
 	return !data1.equals(data2);
