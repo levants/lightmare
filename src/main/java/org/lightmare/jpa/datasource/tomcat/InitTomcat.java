@@ -10,6 +10,7 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.lightmare.jpa.datasource.InitDataSource;
 import org.lightmare.jpa.datasource.PoolConfig;
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
@@ -98,8 +99,10 @@ public class InitTomcat extends InitDataSource {
     @Override
     public void cleanUp(javax.sql.DataSource dataSource) {
 
+	DataSource pooledDataSource;
 	if (dataSource instanceof DataSource) {
-	    ((DataSource) dataSource).close();
+	    pooledDataSource = ObjectUtils.cast(dataSource);
+	    pooledDataSource.close();
 	}
     }
 }
