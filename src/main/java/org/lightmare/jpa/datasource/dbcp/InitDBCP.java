@@ -12,6 +12,7 @@ import org.lightmare.jpa.datasource.InitDataSource;
 import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Initializes and bind to {@link Context} c3p0 pooled {@link DataSource} object
@@ -72,7 +73,9 @@ public class InitDBCP extends InitDataSource {
     @Override
     public void cleanUp(javax.sql.DataSource dataSource) {
 
-	if (dataSource instanceof DataSource) {
+	SharedPoolDataSource toClose;
+	if (dataSource instanceof SharedPoolDataSource) {
+	    toClose = ObjectUtils.cast(dataSource);
 	    try {
 		((SharedPoolDataSource) dataSource).close();
 	    } catch (Exception ex) {
