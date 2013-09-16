@@ -216,7 +216,7 @@ public class EjbConnector {
 
 	InvocationHandler handler = getBeanHandler(metaData);
 	Class<?>[] interfaces = setInterfaces(metaData);
-	Class<T> typedInterfaces = ObjectUtils.cast(interfaces);
+	Class<T>[] typedInterfaces = ObjectUtils.cast(interfaces);
 	ClassLoader loader = metaData.getLoader();
 
 	T beanInstance = instatiateBean(typedInterfaces, handler, loader);
