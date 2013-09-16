@@ -41,4 +41,15 @@ public class ObjectUtilsTest {
 	    ex.printStackTrace();
 	}
     }
+
+    @Test
+    public void castTest() {
+
+	String line = null;
+	Object toCast = line;
+	String utilCasted = ObjectUtils.cast(toCast);
+	String directCasted = (String) toCast;
+
+	System.out.format("%s %s", utilCasted, directCasted);
+    }
 }
