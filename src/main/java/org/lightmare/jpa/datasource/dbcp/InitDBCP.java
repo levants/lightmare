@@ -73,11 +73,11 @@ public class InitDBCP extends InitDataSource {
     @Override
     public void cleanUp(javax.sql.DataSource dataSource) {
 
-	SharedPoolDataSource toClose;
+	SharedPoolDataSource pooledDataSource;
 	if (dataSource instanceof SharedPoolDataSource) {
-	    toClose = ObjectUtils.cast(dataSource);
 	    try {
-		((SharedPoolDataSource) dataSource).close();
+		pooledDataSource = ObjectUtils.cast(dataSource);
+		pooledDataSource.close();
 	    } catch (Exception ex) {
 		LOG.error(InitMessages.COULD_NOT_CLOSE_ERROR, ex);
 	    }
