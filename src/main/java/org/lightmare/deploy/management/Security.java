@@ -20,6 +20,8 @@ public class Security {
 
     private Properties cache;
 
+    public static final String DEPLOY_PASS_KEY = "deploy_manager_pass";
+
     public Security() throws IOException {
 	cacheUsers();
     }

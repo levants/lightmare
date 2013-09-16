@@ -107,8 +107,6 @@ public class DeployManager extends HttpServlet {
 
     private static final String PASS_PARAMETER_NAME = "password";
 
-    private static final String DEPLOY_PASS_KEY = "deploy_manager_pass";
-
     // Security for deploy management
     private Security security;
 
@@ -211,7 +209,7 @@ public class DeployManager extends HttpServlet {
 	if (valid) {
 	    DeployPass pass = new DeployPass();
 	    pass.userName = userName;
-	    session.setAttribute(DEPLOY_PASS_KEY, pass);
+	    session.setAttribute(Security.DEPLOY_PASS_KEY, pass);
 	}
 
 	return valid;
@@ -222,7 +220,7 @@ public class DeployManager extends HttpServlet {
 
 	boolean valid = ObjectUtils.notNull(session);
 	if (valid) {
-	    Object pass = session.getAttribute(DEPLOY_PASS_KEY);
+	    Object pass = session.getAttribute(Security.DEPLOY_PASS_KEY);
 	    valid = ObjectUtils.notNull(pass);
 	    if (valid) {
 		valid = (pass instanceof DeployPass)
