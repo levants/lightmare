@@ -31,6 +31,7 @@ import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.rest.providers.RestProvider;
+import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 import org.lightmare.utils.fs.WatchUtils;
@@ -305,7 +306,7 @@ public class Watcher implements Runnable {
 	int count = currentEvent.count();
 	Kind<?> kind = currentEvent.kind();
 	if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-	    LOG.info(String.format("Modify: %s, count: %s\n", fileName, count));
+	    LogUtils.info(LOG, "Modify: %s, count: %s\n", fileName, count);
 	    redeployFile(fileName);
 	} else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
 	    LOG.info(String.format("Delete: %s, count: %s\n", fileName, count));
