@@ -42,7 +42,6 @@ public class WatchTest {
 	}
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void watchTest() {
 
@@ -72,6 +71,7 @@ public class WatchTest {
 		Path dir = (Path) key.watchable();
 		List<WatchEvent<?>> events = key.pollEvents();
 		WatchEvent<?> currentEvent = null;
+		WatchEvent<Path> typedCurrentEvent;
 		int times = 0;
 		for (WatchEvent<?> event : events) {
 		    if (event.kind() == StandardWatchEventKinds.OVERFLOW) {
@@ -85,7 +85,8 @@ public class WatchTest {
 		    if (!valid || !key.isValid()) {
 			break;
 		    }
-		    Path prePath = ((WatchEvent<Path>) currentEvent).context();
+		    typedCurrentEvent = ObjectUtils.cast(currentEvent);
+		    Path prePath = typedCurrentEvent.context();
 		    Path path = dir.resolve(prePath);
 		    System.out.println(path.toString());
 		}
