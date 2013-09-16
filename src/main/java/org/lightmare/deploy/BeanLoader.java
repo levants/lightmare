@@ -262,8 +262,8 @@ public class BeanLoader {
 	}
 
 	/**
-	 * Increases {@link CountDownLatch} conn if it is first time in current
-	 * thread
+	 * Increases {@link CountDownLatch} blocker if it is first time in
+	 * current thread
 	 */
 	private void releaseBlocker() {
 
