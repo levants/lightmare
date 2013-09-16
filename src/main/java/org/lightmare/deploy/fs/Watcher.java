@@ -308,7 +308,6 @@ public class Watcher implements Runnable {
 	}
     }
 
-    @SuppressWarnings("unchecked")
     private void runService(WatchService watch) throws IOException {
 
 	Path dir;
@@ -320,6 +319,7 @@ public class Watcher implements Runnable {
 		key = watch.take();
 		List<WatchEvent<?>> events = key.pollEvents();
 		WatchEvent<?> currentEvent = null;
+		WatchEvent<Path> typedCurrentEvent;
 		int times = 0;
 		dir = (Path) key.watchable();
 		for (WatchEvent<?> event : events) {
@@ -334,7 +334,8 @@ public class Watcher implements Runnable {
 		    toRun = valid && key.isValid();
 		    if (toRun) {
 			Thread.sleep(SLEEP_TIME);
-			handleEvent(dir, (WatchEvent<Path>) currentEvent);
+			typedCurrentEvent = ObjectUtils.cast(currentEvent);
+			handleEvent(dir, typedCurrentEvent);
 		    }
 		}
 	    } catch (InterruptedException ex) {
