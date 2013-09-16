@@ -74,6 +74,14 @@ public class CollectionUtils {
 	return list;
     }
 
+    private <T> T[] toArray(Class<T> type, int size) {
+
+	Object arrayObject = Array.newInstance(type, size);
+	T[] array = ObjectUtils.cast(arrayObject);
+
+	return array;
+    }
+
     /**
      * Converts passed {@link Collection} to array of appropriated {@link Class}
      * type
