@@ -189,7 +189,7 @@ public class ObjectUtils {
 
     public static boolean available(Object[] array) {
 
-	return array != null && array.length > 0;
+	return array != null && array.length > EMPTY_ARRAY_LENGTH;
     }
 
     public static boolean notAvailable(Object[] array) {
