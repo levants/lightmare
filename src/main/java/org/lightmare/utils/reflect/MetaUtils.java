@@ -482,16 +482,20 @@ public class MetaUtils {
     public static Object invokePrivate(Method method, Object data,
 	    Object... arguments) throws IOException {
 
+	Object value;
+
 	boolean accessible = method.isAccessible();
 	try {
 	    if (ObjectUtils.notTrue(accessible)) {
 		method.setAccessible(Boolean.TRUE);
 	    }
 
-	    return invoke(method, data, arguments);
+	    value = invoke(method, data, arguments);
 	} finally {
 	    method.setAccessible(accessible);
 	}
+
+	return value;
     }
 
     /**
