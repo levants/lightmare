@@ -1,5 +1,6 @@
 package org.lightmare.utils;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -42,12 +43,17 @@ public class CollectionUtilsTest {
 	try {
 
 	    boolean[] bools = new boolean[2];
-	    bools[0] = false;
-	    bools[1] = true;
+	    bools[0] = Boolean.FALSE;
+	    bools[1] = Boolean.TRUE;
 
 	    boolean[] casted = ObjectUtils.cast(bools, boolean[].class);
 
 	    System.out.println(Arrays.toString(casted));
+
+	    Object wrapperCasted = ObjectUtils.cast(bools, boolean[].class);
+
+	    System.out.println(Array.getBoolean(wrapperCasted, 0));
+	    System.out.println(Array.getBoolean(wrapperCasted, 1));
 
 	} catch (Exception ex) {
 	    ex.printStackTrace();
