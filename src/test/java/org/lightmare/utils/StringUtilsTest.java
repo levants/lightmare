@@ -44,4 +44,40 @@ public class StringUtilsTest {
 	Assert.assertTrue(String.format("Array %s is not instanceof Object[]",
 		CharSequence.class.getSimpleName()), !instance);
     }
+
+    @Test
+    public void concatTest() {
+
+	int[] intArray = new int[3];
+	intArray[0] = 7;
+	intArray[1] = 8;
+	intArray[2] = 9;
+
+	long[] longArray = new long[3];
+	longArray[0] = 10;
+	longArray[1] = 11;
+	longArray[2] = 12;
+
+	char[] charArray = new char[3];
+	charArray[0] = 13;
+	charArray[1] = 14;
+	charArray[2] = 15;
+
+	String[] stringArray = new String[4];
+	stringArray[0] = String.valueOf(16);
+	stringArray[1] = String.valueOf(17);
+	stringArray[2] = String.valueOf(18);
+	stringArray[3] = String.valueOf(19);
+
+	ConfigKeys[] enumArray = ConfigKeys.values();
+
+	try {
+	    String text = StringUtils.concatRecursively("1, 2, 3", ", 4, 5, 6",
+		    intArray, longArray, charArray, stringArray, enumArray);
+
+	    System.out.println(text);
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	}
+    }
 }
