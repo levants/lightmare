@@ -546,6 +546,7 @@ public class MetaUtils {
 	    throws IOException {
 
 	Object value;
+
 	boolean accessible = field.isAccessible();
 	try {
 	    if (ObjectUtils.notTrue(accessible)) {
