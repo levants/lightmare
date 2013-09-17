@@ -32,7 +32,12 @@ public class StringUtils {
      */
     private static void append(Object tocken, StringBuilder builder) {
 
-	if (CollectionUtils.isArray(tocken)) {
+	if (CollectionUtils.isObjectArray(tocken)) {
+	    Object[] tockens = ObjectUtils.cast(tocken);
+	    for (Object subTocken : tockens) {
+		append(subTocken, builder);
+	    }
+	} else if (CollectionUtils.isPrimitiveArray(tocken)) {
 	    int length = Array.getLength(tocken);
 	    Object subTocken;
 	    for (int i = 0; i < length; i++) {
