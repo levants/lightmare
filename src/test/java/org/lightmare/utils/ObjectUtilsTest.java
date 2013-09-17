@@ -64,7 +64,7 @@ public class ObjectUtilsTest {
 
 	    System.out.format("%s %s\n", utilICasted, directIcasted);
 
-	    utilICasted = ObjectUtils.cast(toICast, int.class);
+	    utilICasted = ObjectUtils.cast(toICast, Integer.class);
 
 	    System.out.format("%s %s\n", utilICasted, directIcasted);
 	} catch (Exception ex) {
