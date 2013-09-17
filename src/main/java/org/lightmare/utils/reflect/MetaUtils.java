@@ -604,9 +604,9 @@ public class MetaUtils {
 	    throw new IOException(ex);
 	} catch (IllegalAccessException ex) {
 	    throw new IOException(ex);
+	} finally {
+	    field.setAccessible(accessible);
 	}
-
-	field.setAccessible(accessible);
 
 	return value;
     }
