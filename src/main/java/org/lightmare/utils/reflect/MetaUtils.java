@@ -55,9 +55,11 @@ public class MetaUtils {
 
 	boolean accessible = constructor.isAccessible();
 	try {
+
 	    if (ObjectUtils.notTrue(accessible)) {
 		constructor.setAccessible(Boolean.TRUE);
 	    }
+
 	    instance = constructor.newInstance(parameters);
 
 	} catch (InstantiationException ex) {
