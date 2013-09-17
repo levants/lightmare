@@ -15,6 +15,7 @@ public class ObjectUtilsTest {
     public void toArrayTest() {
 
 	try {
+
 	    String[] strings = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
 		    "10" };
 	    List<String> list = new ArrayList<String>(Arrays.asList(strings));
