@@ -355,8 +355,9 @@ public class MetaUtils {
     public static boolean hasMethod(Class<?> clazz, String methodName,
 	    int... modifiers) throws IOException {
 
-	Class<?> superClass = clazz;
 	boolean found = Boolean.FALSE;
+
+	Class<?> superClass = clazz;
 	while (ObjectUtils.notNull(superClass) && ObjectUtils.notTrue(found)) {
 	    found = MetaUtils.classHasMethod(superClass, methodName, modifiers);
 	    if (ObjectUtils.notTrue(found)) {
