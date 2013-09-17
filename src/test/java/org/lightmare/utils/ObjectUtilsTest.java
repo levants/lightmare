@@ -68,11 +68,12 @@ public class ObjectUtilsTest {
 
 	    int toITypedCast = 100;
 	    int utilITypedCasted = ObjectUtils
-		    .cast(toITypedCast, Integer.class);
+		    .cast(toITypedCast, int.class);
 
 	    System.out.format("%s %s\n", utilITypedCasted, directIcasted);
 
 	    System.out.format("%s %s\n", int.class, Integer.class);
+	    
 
 	} catch (Exception ex) {
 	    ex.printStackTrace();
