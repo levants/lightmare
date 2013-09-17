@@ -298,6 +298,7 @@ public class MetaUtils {
     private static int calculateModifier(int[] modifiers) {
 
 	int modifier = 0;
+
 	if (ObjectUtils.notNull(modifiers)) {
 	    int length = modifiers.length;
 	    int modifierValue;
