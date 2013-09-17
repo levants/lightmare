@@ -316,6 +316,19 @@ public class ObjectUtils {
     }
 
     /**
+     * Cats passed {@link Object} to generic parameter
+     * 
+     * @param data
+     * @return <code>T</code>
+     */
+    public static <T> T cast(Object data, Class<T> castClass) {
+
+	T value = castClass.cast(data);
+
+	return value;
+    }
+
+    /**
      * Checks if passed {@link Closeable} instance is not null and if not calls
      * {@link Closeable#close()} method
      * 
