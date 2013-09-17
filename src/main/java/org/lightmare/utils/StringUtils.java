@@ -28,11 +28,11 @@ public class StringUtils {
      * @param tockens
      * @param builder
      */
-    private static void append(Object[] tockens, StringBuilder builder) {
+    private static <T> void append(Object[] tockens, StringBuilder builder) {
 
 	if (ObjectUtils.available(tockens)) {
 
-	    Object[] subTockens;
+	    T[] subTockens;
 	    for (Object tocken : tockens) {
 		if (CollectionUtils.isArray(tocken)) {
 		    subTockens = ObjectUtils.cast(tocken);
