@@ -206,6 +206,7 @@ public class MetaUtils {
 	    throws IOException {
 
 	Class<?> clazz;
+
 	try {
 
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
