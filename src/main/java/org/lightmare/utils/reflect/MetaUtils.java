@@ -631,34 +631,34 @@ public class MetaUtils {
      */
     public static <T> Class<T> getWrapper(Class<?> type) {
 
-	Class<T> wrapperClass;
+	Class<T> wrapper;
 
 	if (type.isPrimitive()) {
 
 	    if (type.equals(byte.class)) {
-		wrapperClass = ObjectUtils.cast(Byte.class);
+		wrapper = ObjectUtils.cast(Byte.class);
 	    } else if (type.equals(boolean.class)) {
-		wrapperClass = ObjectUtils.cast(Boolean.class);
+		wrapper = ObjectUtils.cast(Boolean.class);
 	    } else if (type.equals(char.class)) {
-		wrapperClass = ObjectUtils.cast(Character.class);
+		wrapper = ObjectUtils.cast(Character.class);
 	    } else if (type.equals(short.class)) {
-		wrapperClass = ObjectUtils.cast(Short.class);
+		wrapper = ObjectUtils.cast(Short.class);
 	    } else if (type.equals(int.class)) {
-		wrapperClass = ObjectUtils.cast(Integer.class);
+		wrapper = ObjectUtils.cast(Integer.class);
 	    } else if (type.equals(long.class)) {
-		wrapperClass = ObjectUtils.cast(Long.class);
+		wrapper = ObjectUtils.cast(Long.class);
 	    } else if (type.equals(float.class)) {
-		wrapperClass = ObjectUtils.cast(Float.class);
+		wrapper = ObjectUtils.cast(Float.class);
 	    } else if (type.equals(double.class)) {
-		wrapperClass = ObjectUtils.cast(Double.class);
+		wrapper = ObjectUtils.cast(Double.class);
 	    } else {
-		wrapperClass = ObjectUtils.cast(type);
+		wrapper = ObjectUtils.cast(type);
 	    }
 	} else {
-	    wrapperClass = ObjectUtils.cast(type);
+	    wrapper = ObjectUtils.cast(type);
 	}
 
-	return wrapperClass;
+	return wrapper;
     }
 
     /**
