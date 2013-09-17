@@ -353,6 +353,7 @@ public class MetaCreator {
 	if (archiveData == null) {
 	    archiveData = new ArchiveData();
 	}
+
 	AbstractIOUtils ioUtils = archiveData.getIoUtils();
 	if (ioUtils == null) {
 	    ioUtils = AbstractIOUtils.getAppropriatedType(currentURL);
