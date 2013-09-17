@@ -623,6 +623,38 @@ public class MetaUtils {
 	return fields;
     }
 
+    public static <T> Class<T> getWrapper(Class<?> primitive) {
+
+	Class<T> wrapperClass;
+
+	if (primitive.isPrimitive()) {
+
+	    if (primitive.equals(byte.class)) {
+		wrapperClass = ObjectUtils.cast(Byte.class);
+	    } else if (primitive.equals(boolean.class)) {
+		wrapperClass = ObjectUtils.cast(Boolean.class);
+	    } else if (primitive.equals(char.class)) {
+		wrapperClass = ObjectUtils.cast(Character.class);
+	    } else if (primitive.equals(short.class)) {
+		wrapperClass = ObjectUtils.cast(Short.class);
+	    } else if (primitive.equals(int.class)) {
+		wrapperClass = ObjectUtils.cast(Integer.class);
+	    } else if (primitive.equals(long.class)) {
+		wrapperClass = ObjectUtils.cast(Long.class);
+	    } else if (primitive.equals(float.class)) {
+		wrapperClass = ObjectUtils.cast(Float.class);
+	    } else if (primitive.equals(double.class)) {
+		wrapperClass = ObjectUtils.cast(Double.class);
+	    } else {
+		wrapperClass = ObjectUtils.cast(primitive);
+	    }
+	} else {
+	    wrapperClass = ObjectUtils.cast(primitive);
+	}
+
+	return wrapperClass;
+    }
+
     /**
      * Returns default values if passed class is primitive else returns null
      * 

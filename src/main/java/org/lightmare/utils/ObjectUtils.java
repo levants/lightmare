@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
+import org.lightmare.utils.reflect.MetaUtils;
+
 /**
  * Utility class to help with general object checks
  * 
@@ -324,7 +326,9 @@ public class ObjectUtils {
      */
     public static <T> T cast(Object data, Class<T> castClass) {
 
-	T value = castClass.cast(data);
+	Class<T> wrapper = MetaUtils.getWrapper(castClass);
+
+	T value = wrapper.cast(data);
 
 	return value;
     }
