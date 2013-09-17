@@ -67,8 +67,10 @@ public class ObjectUtils {
 	boolean valid = notNull(datas);
 	if (valid) {
 	    int length = datas.length;
+	    Object data;
 	    for (int i = 0; i < length && valid; i++) {
-		valid = notNull(datas[i]);
+		data = datas[i];
+		valid = notNull(data);
 	    }
 	}
 
