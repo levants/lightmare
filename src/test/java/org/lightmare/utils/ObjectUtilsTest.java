@@ -50,6 +50,12 @@ public class ObjectUtilsTest {
 	String utilCasted = ObjectUtils.cast(toCast);
 	String directCasted = (String) toCast;
 
-	System.out.format("%s %s", utilCasted, directCasted);
+	System.out.format("%s %s\n", utilCasted, directCasted);
+
+	int toICast = 100;
+	int utilICasted = ObjectUtils.cast(toICast);
+	int directIcasted = (int) toICast;
+
+	System.out.format("%s %s\n", utilICasted, directIcasted);
     }
 }
