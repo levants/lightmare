@@ -596,10 +596,12 @@ public class MetaUtils {
 
 	boolean accessible = field.isAccessible();
 	try {
+
 	    if (ObjectUtils.notTrue(accessible)) {
 		field.setAccessible(Boolean.TRUE);
 	    }
 	    value = field.get(data);
+
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
 	} catch (IllegalAccessException ex) {
