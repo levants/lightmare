@@ -455,8 +455,10 @@ public class MetaUtils {
     public static Object invoke(Method method, Object data, Object... arguments)
 	    throws IOException {
 
+	Object value;
+
 	try {
-	    return method.invoke(data, arguments);
+	    value = method.invoke(data, arguments);
 	} catch (IllegalAccessException ex) {
 	    throw new IOException(ex);
 	} catch (IllegalArgumentException ex) {
@@ -464,6 +466,8 @@ public class MetaUtils {
 	} catch (InvocationTargetException ex) {
 	    throw new IOException(ex);
 	}
+
+	return value;
     }
 
     /**
