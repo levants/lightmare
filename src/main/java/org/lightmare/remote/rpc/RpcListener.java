@@ -55,7 +55,6 @@ public class RpcListener {
 	    "info-channels");
     private static Channel channel;
     private static ServerSocketChannelFactory factory;
-    private static final Runtime RUNTIME = Runtime.getRuntime();
     private static final Logger LOG = Logger.getLogger(RpcListener.class);
 
     /**
@@ -67,16 +66,17 @@ public class RpcListener {
 	if (bossCount == null) {
 	    bossCount = ConfigKeys.BOSS_POOL.getValue();
 	}
-	Integer workerCount;
-	boss = new OrderedMemoryAwareThreadPoolExecutor(
-		(bossCount = config.getIntValue(ConfigKeys.BOSS_POOL.key)) != null ? bossCount
-			: 1, 400000000, 2000000000, 60, TimeUnit.SECONDS,
-		new ThreadFactoryUtil("netty-boss-thread", Thread.MAX_PRIORITY));
-	worker = new OrderedMemoryAwareThreadPoolExecutor(
-		(workerCount = config.getIntValue("worker_pool_size")) != null ? workerCount
-			: RUNTIME.availableProcessors() * 3, 400000000,
+	Integer workerCount = config.getIntValue(ConfigKeys.WORKER_POOL.key);
+	if (workerCount == null) {
+	    workerCount = ConfigKeys.WORKER_POOL.getValue();
+	}
+	boss = new OrderedMemoryAwareThreadPoolExecutor(bossCount, 400000000,
 		2000000000, 60, TimeUnit.SECONDS, new ThreadFactoryUtil(
-			"netty-worker-thread", (Thread.MAX_PRIORITY - 1)));
+			"netty-boss-thread", Thread.MAX_PRIORITY));
+	worker = new OrderedMemoryAwareThreadPoolExecutor(workerCount,
+		400000000, 2000000000, 60, TimeUnit.SECONDS,
+		new ThreadFactoryUtil("netty-worker-thread",
+			(Thread.MAX_PRIORITY - 1)));
 	workerPool = new NioWorkerPool(worker, workerCount);
     }
 
