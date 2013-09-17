@@ -623,6 +623,12 @@ public class MetaUtils {
 	return fields;
     }
 
+    /**
+     * Gets wrapper class if passed class is primitive type
+     * 
+     * @param primitive
+     * @return {@link Class}<T>
+     */
     public static <T> Class<T> getWrapper(Class<?> primitive) {
 
 	Class<T> wrapperClass;
