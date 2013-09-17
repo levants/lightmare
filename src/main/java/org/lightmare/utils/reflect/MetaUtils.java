@@ -150,11 +150,11 @@ public class MetaUtils {
 		clazz = Class.forName(className, Boolean.TRUE, loader);
 	    }
 
-	    return clazz;
-
 	} catch (ClassNotFoundException ex) {
 	    throw new IOException(ex);
 	}
+
+	return clazz;
     }
 
     /**
