@@ -17,6 +17,7 @@ public class CollectionUtilsTest {
 	    boolean[] casted = ObjectUtils.cast(bools, boolean[].class);
 
 	    System.out.println(Arrays.toString(casted));
+
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
