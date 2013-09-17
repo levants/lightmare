@@ -45,17 +45,30 @@ public class ObjectUtilsTest {
     @Test
     public void castTest() {
 
-	String line = null;
-	Object toCast = line;
-	String utilCasted = ObjectUtils.cast(toCast);
-	String directCasted = (String) toCast;
+	try {
+	    String line = null;
+	    Object toCast = line;
+	    String utilCasted = ObjectUtils.cast(toCast);
+	    String directCasted = (String) toCast;
 
-	System.out.format("%s %s\n", utilCasted, directCasted);
+	    System.out.format("%s %s\n", utilCasted, directCasted);
 
-	int toICast = 100;
-	int utilICasted = ObjectUtils.cast(toICast);
-	int directIcasted = (int) toICast;
+	    toCast = line;
+	    String utilTypedCasted = ObjectUtils.cast(toCast, String.class);
 
-	System.out.format("%s %s\n", utilICasted, directIcasted);
+	    System.out.format("%s %s\n", utilTypedCasted, directCasted);
+
+	    int toICast = 100;
+	    int utilICasted = ObjectUtils.cast(toICast);
+	    int directIcasted = (int) toICast;
+
+	    System.out.format("%s %s\n", utilICasted, directIcasted);
+
+	    utilICasted = ObjectUtils.cast(toICast, int.class);
+
+	    System.out.format("%s %s\n", utilICasted, directIcasted);
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	}
     }
 }
