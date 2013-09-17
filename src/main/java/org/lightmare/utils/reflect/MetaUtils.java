@@ -86,9 +86,7 @@ public class MetaUtils {
 	Constructor<T> constructor;
 
 	try {
-
 	    constructor = type.getDeclaredConstructor(parameterTypes);
-
 	} catch (NoSuchMethodException ex) {
 	    throw new IOException(ex);
 	} catch (SecurityException ex) {
