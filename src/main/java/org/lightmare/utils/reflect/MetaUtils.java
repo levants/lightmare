@@ -278,12 +278,15 @@ public class MetaUtils {
     public static Method[] getDeclaredMethods(Class<?> clazz)
 	    throws IOException {
 
-	try {
+	Method[] methods;
 
-	    return clazz.getDeclaredMethods();
+	try {
+	    methods = clazz.getDeclaredMethods();
 	} catch (SecurityException ex) {
 	    throw new IOException(ex);
 	}
+
+	return methods;
     }
 
     /**
