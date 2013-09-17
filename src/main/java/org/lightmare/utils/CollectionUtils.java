@@ -82,6 +82,12 @@ public class CollectionUtils {
 	return array;
     }
 
+    /**
+     * Checks if passed {@link Object} is array
+     * 
+     * @param data
+     * @return <code>boolean</code>
+     */
     public static boolean isArray(final Object data) {
 
 	boolean valid = data instanceof Object[] || data instanceof boolean[]
