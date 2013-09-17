@@ -100,6 +100,19 @@ public class CollectionUtils {
     }
 
     /**
+     * Checks if passed {@link Object} is {@link Object} array
+     * 
+     * @param data
+     * @return <code>boolean</code>
+     */
+    public static boolean isObjectArray(final Object data) {
+
+	boolean valid = data instanceof Object[];
+
+	return valid;
+    }
+
+    /**
      * Converts passed {@link Collection} to array of appropriated {@link Class}
      * type
      * 
