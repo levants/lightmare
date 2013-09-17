@@ -46,7 +46,8 @@ public class LightmareInitialContextFactoryBuilder implements
 	Class<?> requestedClass;
 	try {
 	    requestedClass = MetaUtils.initClassForName(requestedFactory);
-	    factory = ObjectUtils.cast(requestedClass.newInstance());
+	    factory = ObjectUtils.cast(requestedClass.newInstance(),
+		    InitialContextFactory.class);
 	} catch (Exception ex) {
 	    NoInitialContextException ne = new NoInitialContextException(
 		    "Could not find initial cotext");
