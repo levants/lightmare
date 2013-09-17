@@ -76,7 +76,8 @@ public class InitDBCP extends InitDataSource {
 	SharedPoolDataSource pooledDataSource;
 	if (dataSource instanceof SharedPoolDataSource) {
 	    try {
-		pooledDataSource = ObjectUtils.cast(dataSource);
+		pooledDataSource = ObjectUtils.cast(dataSource,
+			SharedPoolDataSource.class);
 		pooledDataSource.close();
 	    } catch (Exception ex) {
 		LOG.error(InitMessages.COULD_NOT_CLOSE_ERROR, ex);
