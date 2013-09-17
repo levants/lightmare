@@ -10,6 +10,7 @@ public class CollectionUtilsTest {
     public void arrayCastTest() {
 
 	try {
+
 	    boolean[] bools = new boolean[2];
 	    bools[0] = false;
 	    bools[1] = true;
