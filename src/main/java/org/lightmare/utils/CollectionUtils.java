@@ -100,7 +100,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Checks if passed {@link Object} is {@link Object} array
+     * Checks if passed {@link Object} is {@link Object} types array
      * 
      * @param data
      * @return <code>boolean</code>
