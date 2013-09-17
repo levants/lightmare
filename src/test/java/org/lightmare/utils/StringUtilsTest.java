@@ -45,5 +45,10 @@ public class StringUtilsTest {
 	instance = instanceofTest(enumArray);
 	Assert.assertTrue(String.format("Array %s is not instanceof Object[]",
 		ConfigKeys.class.getSimpleName()), instance);
+	
+	CharSequence sequence =  new StringBuilder();
+	instance = instanceofTest(sequence);
+	Assert.assertTrue(String.format("Array %s is not instanceof Object[]",
+		CharSequence.class.getSimpleName()), !instance);
     }
 }
