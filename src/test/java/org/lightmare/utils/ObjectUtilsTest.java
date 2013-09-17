@@ -64,9 +64,13 @@ public class ObjectUtilsTest {
 
 	    System.out.format("%s %s\n", utilICasted, directIcasted);
 
-	    utilICasted = ObjectUtils.cast(toICast, Integer.class);
+	    int toITypedCast = 100;
+	    int utilITypedCasted = ObjectUtils
+		    .cast(toITypedCast, Integer.class);
 
-	    System.out.format("%s %s\n", utilICasted, directIcasted);
+	    System.out.format("%s %s\n", utilITypedCasted, directIcasted);
+
+	    System.out.format("%s %s\n", int.class, Integer.class);
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
