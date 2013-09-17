@@ -85,6 +85,11 @@ public class ObjectUtils {
 	return !data1.equals(data2);
     }
 
+    public static boolean notEquals(int x, int y) {
+
+	return x != y;
+    }
+
     public static boolean notNullNotEquals(Object data1, Object data2) {
 
 	return notNullAll(data1, data2) && notEquals(data1, data2);

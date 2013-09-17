@@ -327,7 +327,7 @@ public abstract class AbstractIOUtils {
 	try {
 	    byte[] buffer = new byte[BUFFER_SIZE];
 	    int len = in.read(buffer);
-	    while (len != -1) {
+	    while (ObjectUtils.notEquals(len, StringUtils.NOT_EXISTING_INDEX)) {
 		out.write(buffer, ZERO_OFFSET, len);
 		len = in.read(buffer);
 	    }
