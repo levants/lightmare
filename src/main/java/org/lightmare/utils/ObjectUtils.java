@@ -21,6 +21,8 @@ public class ObjectUtils {
 
     public static final int SECOND_INDEX = 1;
 
+    public static final int NOT_EXISTING_INDEX = -1;
+
     /**
      * Checks if passed boolean value is not true
      * 
