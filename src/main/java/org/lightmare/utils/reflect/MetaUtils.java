@@ -39,6 +39,7 @@ public class MetaUtils {
 
     private static double doubleDef;
 
+    // default value for modifier
     private static final int DEFAULT_MODIFIER = 0;
 
     /**
