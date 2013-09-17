@@ -396,13 +396,17 @@ public class MetaUtils {
     public static Field getDeclaredField(Class<?> clazz, String name)
 	    throws IOException {
 
+	Field field;
+
 	try {
-	    return clazz.getDeclaredField(name);
+	    field = clazz.getDeclaredField(name);
 	} catch (NoSuchFieldException ex) {
 	    throw new IOException(ex);
 	} catch (SecurityException ex) {
 	    throw new IOException(ex);
 	}
+
+	return field;
     }
 
     /**
