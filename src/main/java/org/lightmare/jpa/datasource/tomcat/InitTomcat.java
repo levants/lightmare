@@ -101,7 +101,7 @@ public class InitTomcat extends InitDataSource {
 
 	DataSource pooledDataSource;
 	if (dataSource instanceof DataSource) {
-	    pooledDataSource = ObjectUtils.cast(dataSource);
+	    pooledDataSource = ObjectUtils.cast(dataSource, DataSource.class);
 	    pooledDataSource.close();
 	}
     }
