@@ -143,6 +143,7 @@ public class MetaUtils {
 	    throws IOException {
 
 	Class<?> clazz;
+
 	try {
 	    if (loader == null) {
 		clazz = Class.forName(className);
@@ -171,7 +172,7 @@ public class MetaUtils {
 	    ClassLoader loader) throws IOException {
 
 	Class<?> clazz;
-	
+
 	try {
 
 	    if (loader == null) {
