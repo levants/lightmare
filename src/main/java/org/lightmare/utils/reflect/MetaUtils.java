@@ -536,16 +536,21 @@ public class MetaUtils {
     public static Object invokePrivateStatic(Method method, Object... arguments)
 	    throws IOException {
 
+	Object value;
+
 	boolean accessible = method.isAccessible();
 	try {
 	    if (ObjectUtils.notTrue(accessible)) {
 		method.setAccessible(Boolean.TRUE);
 	    }
 
-	    return invokeStatic(method, arguments);
+	    value = invokeStatic(method, arguments);
+
 	} finally {
 	    method.setAccessible(accessible);
 	}
+
+	return value;
     }
 
     /**
