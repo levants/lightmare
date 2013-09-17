@@ -199,7 +199,7 @@ public class ObjectUtils {
 
     public static boolean available(CharSequence chars) {
 
-	return chars != null && chars.length() > 0;
+	return chars != null && chars.length() > EMPTY_ARRAY_LENGTH;
     }
 
     public static boolean notAvailable(CharSequence chars) {
