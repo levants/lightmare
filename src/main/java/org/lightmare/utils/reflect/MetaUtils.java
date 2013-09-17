@@ -227,14 +227,18 @@ public class MetaUtils {
      */
     public static <T> T instantiate(Class<T> clazz) throws IOException {
 
+	T value;
+
 	try {
 
-	    return clazz.newInstance();
+	    value = clazz.newInstance();
 	} catch (InstantiationException ex) {
 	    throw new IOException(ex);
 	} catch (IllegalAccessException ex) {
 	    throw new IOException(ex);
 	}
+
+	return value;
     }
 
     /**
