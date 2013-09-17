@@ -134,7 +134,7 @@ public class JPAManager {
 
 	cfg = builder.build();
 
-	if (ObjectUtils.isFalse(swapDataSource)) {
+	if (ObjectUtils.notTrue(swapDataSource)) {
 	    addTransactionManager();
 	}
 
@@ -316,7 +316,7 @@ public class JPAManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setSwapDataSource(boolean swapDataSource) {
-	    
+
 	    manager.swapDataSource = swapDataSource;
 	    return this;
 	}
