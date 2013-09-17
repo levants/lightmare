@@ -626,36 +626,36 @@ public class MetaUtils {
     /**
      * Gets wrapper class if passed class is primitive type
      * 
-     * @param primitive
+     * @param type
      * @return {@link Class}<T>
      */
-    public static <T> Class<T> getWrapper(Class<?> primitive) {
+    public static <T> Class<T> getWrapper(Class<?> type) {
 
 	Class<T> wrapperClass;
 
-	if (primitive.isPrimitive()) {
+	if (type.isPrimitive()) {
 
-	    if (primitive.equals(byte.class)) {
+	    if (type.equals(byte.class)) {
 		wrapperClass = ObjectUtils.cast(Byte.class);
-	    } else if (primitive.equals(boolean.class)) {
+	    } else if (type.equals(boolean.class)) {
 		wrapperClass = ObjectUtils.cast(Boolean.class);
-	    } else if (primitive.equals(char.class)) {
+	    } else if (type.equals(char.class)) {
 		wrapperClass = ObjectUtils.cast(Character.class);
-	    } else if (primitive.equals(short.class)) {
+	    } else if (type.equals(short.class)) {
 		wrapperClass = ObjectUtils.cast(Short.class);
-	    } else if (primitive.equals(int.class)) {
+	    } else if (type.equals(int.class)) {
 		wrapperClass = ObjectUtils.cast(Integer.class);
-	    } else if (primitive.equals(long.class)) {
+	    } else if (type.equals(long.class)) {
 		wrapperClass = ObjectUtils.cast(Long.class);
-	    } else if (primitive.equals(float.class)) {
+	    } else if (type.equals(float.class)) {
 		wrapperClass = ObjectUtils.cast(Float.class);
-	    } else if (primitive.equals(double.class)) {
+	    } else if (type.equals(double.class)) {
 		wrapperClass = ObjectUtils.cast(Double.class);
 	    } else {
-		wrapperClass = ObjectUtils.cast(primitive);
+		wrapperClass = ObjectUtils.cast(type);
 	    }
 	} else {
-	    wrapperClass = ObjectUtils.cast(primitive);
+	    wrapperClass = ObjectUtils.cast(type);
 	}
 
 	return wrapperClass;
