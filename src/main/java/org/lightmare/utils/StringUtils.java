@@ -1,5 +1,7 @@
 package org.lightmare.utils;
 
+import java.lang.reflect.Array;
+
 /**
  * Utility class for {@link String} operations
  * 
@@ -28,19 +30,17 @@ public class StringUtils {
      * @param tockens
      * @param builder
      */
-    private static <T> void append(Object[] tockens, StringBuilder builder) {
+    private static void append(Object tocken, StringBuilder builder) {
 
-	if (ObjectUtils.available(tockens)) {
-
-	    T[] subTockens;
-	    for (Object tocken : tockens) {
-		if (CollectionUtils.isArray(tocken)) {
-		    subTockens = ObjectUtils.cast(tocken);
-		    append(subTockens, builder);
-		} else {
-		    builder.append(tocken);
-		}
+	if (CollectionUtils.isArray(tocken)) {
+	    int length = Array.getLength(tocken);
+	    Object subTocken;
+	    for (int i = 0; i < length; i++) {
+		subTocken = Array.get(tocken, i);
+		append(subTocken, builder);
 	    }
+	} else {
+	    builder.append(tocken);
 	}
     }
 
