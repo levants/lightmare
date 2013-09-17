@@ -51,14 +51,15 @@ public class MetaUtils {
     public static <T> T newInstance(Constructor<T> constructor,
 	    Object... parameters) throws IOException {
 
+	T instance;
+
 	boolean accessible = constructor.isAccessible();
 	try {
 	    if (ObjectUtils.notTrue(accessible)) {
 		constructor.setAccessible(Boolean.TRUE);
 	    }
-	    T instance = constructor.newInstance(parameters);
+	    instance = constructor.newInstance(parameters);
 
-	    return instance;
 	} catch (InstantiationException ex) {
 	    throw new IOException(ex);
 	} catch (IllegalAccessException ex) {
@@ -70,6 +71,8 @@ public class MetaUtils {
 	} finally {
 	    constructor.setAccessible(accessible);
 	}
+
+	return instance;
     }
 
     /**
