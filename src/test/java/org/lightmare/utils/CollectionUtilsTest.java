@@ -14,7 +14,7 @@ public class CollectionUtilsTest {
 	    bools[0] = false;
 	    bools[1] = true;
 
-	    Boolean[] casted = ObjectUtils.cast(bools);
+	    boolean[] casted = ObjectUtils.cast(bools, boolean[].class);
 
 	    System.out.println(Arrays.toString(casted));
 	} catch (Exception ex) {
