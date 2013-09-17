@@ -39,6 +39,8 @@ public class MetaUtils {
 
     private static double doubleDef;
 
+    private static final int DEFAULT_MODIFIER = 0;
+
     /**
      * Makes accessible passed {@link Constructor}'s and invokes
      * {@link Constructor#newInstance(Object...)} method
@@ -297,7 +299,7 @@ public class MetaUtils {
      */
     private static int calculateModifier(int[] modifiers) {
 
-	int modifier = 0;
+	int modifier = DEFAULT_MODIFIER;
 
 	if (ObjectUtils.notNull(modifiers)) {
 	    int length = modifiers.length;
@@ -332,8 +334,8 @@ public class MetaUtils {
 	for (int i = 0; i < length && ObjectUtils.notTrue(found); i++) {
 	    method = methods[i];
 	    found = method.getName().equals(methodName);
-	    if (found && ObjectUtils.notTrue(modifier == 0)) {
-		found = ((method.getModifiers() & modifier) > 0);
+	    if (found && ObjectUtils.notTrue(modifier == DEFAULT_MODIFIER)) {
+		found = ((method.getModifiers() & modifier) > DEFAULT_MODIFIER);
 	    }
 	}
 
