@@ -63,10 +63,13 @@ public class RpcListener {
      */
     private static void setNettyPools(Configuration config) {
 
-	Integer bossCount;
+	Integer bossCount = config.getIntValue(ConfigKeys.BOSS_POOL.key);
+	if (bossCount == null) {
+	    bossCount = ConfigKeys.BOSS_POOL.getValue();
+	}
 	Integer workerCount;
 	boss = new OrderedMemoryAwareThreadPoolExecutor(
-		(bossCount = config.getIntValue("boss_pool_size")) != null ? bossCount
+		(bossCount = config.getIntValue(ConfigKeys.BOSS_POOL.key)) != null ? bossCount
 			: 1, 400000000, 2000000000, 60, TimeUnit.SECONDS,
 		new ThreadFactoryUtil("netty-boss-thread", Thread.MAX_PRIORITY));
 	worker = new OrderedMemoryAwareThreadPoolExecutor(
