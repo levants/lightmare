@@ -319,6 +319,7 @@ public class ObjectUtils {
      * Cats passed {@link Object} to generic parameter
      * 
      * @param data
+     * @param castClass
      * @return <code>T</code>
      */
     public static <T> T cast(Object data, Class<T> castClass) {
