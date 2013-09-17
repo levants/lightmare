@@ -6,13 +6,6 @@ import org.lightmare.config.ConfigKeys;
 
 public class StringUtilsTest {
 
-    private boolean instanceofTest(Object data) {
-
-	boolean valid = (data instanceof Object[]);
-
-	return valid;
-    }
-
     @Test
     public void arrayInstanceTest() {
 
@@ -24,30 +17,30 @@ public class StringUtilsTest {
 
 	boolean instance;
 
-	instance = instanceofTest(intArray);
+	instance = CollectionUtils.isArray(intArray);
 	Assert.assertTrue(
 		String.format("Array %s is not instanceof Object[]",
 			int.class.getSimpleName()), instance);
 
-	instance = instanceofTest(longArray);
+	instance = CollectionUtils.isArray(longArray);
 	Assert.assertTrue(
 		String.format("Array %s is not instanceof Object[]",
 			long.class.getSimpleName()), instance);
 
-	instance = instanceofTest(integerArray);
+	instance = CollectionUtils.isArray(integerArray);
 	Assert.assertTrue(String.format("Array %s is not instanceof Object[]",
 		Integer.class.getSimpleName()), instance);
 
-	instance = instanceofTest(stringArray);
+	instance = CollectionUtils.isArray(stringArray);
 	Assert.assertTrue(String.format("Array %s is not instanceof Object[]",
 		String.class.getSimpleName()), instance);
 
-	instance = instanceofTest(enumArray);
+	instance = CollectionUtils.isArray(enumArray);
 	Assert.assertTrue(String.format("Array %s is not instanceof Object[]",
 		ConfigKeys.class.getSimpleName()), instance);
-	
-	CharSequence sequence =  new StringBuilder();
-	instance = instanceofTest(sequence);
+
+	CharSequence sequence = new StringBuilder();
+	instance = CollectionUtils.isArray(sequence);
 	Assert.assertTrue(String.format("Array %s is not instanceof Object[]",
 		CharSequence.class.getSimpleName()), !instance);
     }
