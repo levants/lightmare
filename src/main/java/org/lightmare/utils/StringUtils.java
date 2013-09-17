@@ -34,7 +34,7 @@ public class StringUtils {
 
 	    Object[] subTockens;
 	    for (Object tocken : tockens) {
-		if (tocken instanceof Object[]) {
+		if (CollectionUtils.isArray(tocken)) {
 		    subTockens = ObjectUtils.cast(tocken);
 		    append(subTockens, builder);
 		} else {

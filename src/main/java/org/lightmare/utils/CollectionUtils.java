@@ -82,6 +82,17 @@ public class CollectionUtils {
 	return array;
     }
 
+    public static boolean isArray(final Object data) {
+
+	boolean valid = data instanceof Object[] || data instanceof boolean[]
+		|| data instanceof byte[] || data instanceof short[]
+		|| data instanceof char[] || data instanceof int[]
+		|| data instanceof long[] || data instanceof float[]
+		|| data instanceof double[];
+
+	return valid;
+    }
+
     /**
      * Converts passed {@link Collection} to array of appropriated {@link Class}
      * type
