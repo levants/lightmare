@@ -85,6 +85,13 @@ public class ObjectUtils {
 	return !data1.equals(data2);
     }
 
+    /**
+     * Checks if parameters not equals
+     * 
+     * @param x
+     * @param y
+     * @return <code>boolean</code>
+     */
     public static boolean notEquals(int x, int y) {
 
 	return x != y;
