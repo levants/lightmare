@@ -217,7 +217,8 @@ public class ObjectUtils {
 	boolean avaliable = notNull(arrays);
 	if (avaliable) {
 	    Object[] collection;
-	    for (int i = 0; i < arrays.length && avaliable; i++) {
+	    int length = arrays.length;
+	    for (int i = 0; i < length && avaliable; i++) {
 		collection = arrays[i];
 		avaliable = avaliable && available(collection);
 	    }
