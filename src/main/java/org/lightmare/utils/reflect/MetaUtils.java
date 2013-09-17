@@ -200,14 +200,15 @@ public class MetaUtils {
 
 	Class<?> clazz;
 	try {
+
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    clazz = Class.forName(className, Boolean.TRUE, loader);
-
-	    return clazz;
 
 	} catch (ClassNotFoundException ex) {
 	    throw new IOException(ex);
 	}
+
+	return clazz;
     }
 
     /**
