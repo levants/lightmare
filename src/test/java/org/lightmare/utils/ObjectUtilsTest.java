@@ -46,6 +46,7 @@ public class ObjectUtilsTest {
     public void castTest() {
 
 	try {
+
 	    String line = null;
 	    Object toCast = line;
 	    String utilCasted = ObjectUtils.cast(toCast);
@@ -71,6 +72,7 @@ public class ObjectUtilsTest {
 	    System.out.format("%s %s\n", utilITypedCasted, directIcasted);
 
 	    System.out.format("%s %s\n", int.class, Integer.class);
+
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
