@@ -171,6 +171,7 @@ public class MetaUtils {
 	    ClassLoader loader) throws IOException {
 
 	Class<?> clazz;
+	
 	try {
 
 	    if (loader == null) {
