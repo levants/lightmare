@@ -252,14 +252,18 @@ public class MetaUtils {
     public static Method getDeclaredMethod(Class<?> clazz, String methodName,
 	    Class<?>... parameterTypes) throws IOException {
 
+	Method method;
+
 	try {
 
-	    return clazz.getDeclaredMethod(methodName, parameterTypes);
+	    method = clazz.getDeclaredMethod(methodName, parameterTypes);
 	} catch (NoSuchMethodException ex) {
 	    throw new IOException(ex);
 	} catch (SecurityException ex) {
 	    throw new IOException(ex);
 	}
+
+	return method;
     }
 
     /**
