@@ -107,6 +107,7 @@ public class JndiManager {
      * @throws IOException
      */
     public Context getContext() throws IOException {
+
 	if (context == null) {
 	    LOCK.lock();
 	    try {
