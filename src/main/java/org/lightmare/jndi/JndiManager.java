@@ -108,9 +108,11 @@ public class JndiManager {
      */
     private void setInitialCotext() throws IOException {
 
-	Properties properties = getContextProperties();
-	setFactoryProperties(properties);
-	createContext(properties);
+	if (ObjectUtils.notTrue(isContextFactory) || context == null) {
+	    Properties properties = getContextProperties();
+	    setFactoryProperties(properties);
+	    createContext(properties);
+	}
     }
 
     /**
