@@ -34,6 +34,23 @@ public class JndiManager {
 
     private static final String SHARED_PARAMETER_NAME = "org.osjava.sj.jndi.shared";
 
+    protected enum JNDIParameters {
+
+	FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY, FACTORY_CLASS
+		.getName()), PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES,
+		FACTORY_CLASS.getPackage().getName()), SHARED_PARAMETER(
+		"org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
+
+	public String key;
+
+	public String value;
+
+	private JNDIParameters(String key, String value) {
+	    this.key = key;
+	    this.value = value;
+	}
+    }
+
     private static boolean isContextFactory;
 
     private static Context context;
@@ -48,7 +65,7 @@ public class JndiManager {
     private void setInitialCotext() throws IOException {
 
 	if (ObjectUtils.notTrue(isContextFactory)) {
-	    System.getProperties().put(Context.INITIAL_CONTEXT_FACTORY,
+	    System.getProperties().put(JNDIParameters.FACTORY_CLASS_NAME,
 		    FACTORY_CLASS_NAME);
 	    System.getProperties().put(Context.URL_PKG_PREFIXES,
 		    PACKAGE_PREFIXES);
