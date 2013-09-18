@@ -82,7 +82,9 @@ public class JndiManager {
 	    addSharingParameter();
 	    isContextFactory = Boolean.TRUE;
 	}
+
 	if (context == null) {
+
 	    try {
 		context = new InitialContext(properties);
 	    } catch (NamingException ex) {
