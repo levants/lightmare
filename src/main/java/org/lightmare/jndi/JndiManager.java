@@ -65,10 +65,10 @@ public class JndiManager {
     private void setInitialCotext() throws IOException {
 
 	if (ObjectUtils.notTrue(isContextFactory)) {
-	    System.getProperties().put(JNDIParameters.FACTORY_CLASS_NAME,
-		    FACTORY_CLASS_NAME);
-	    System.getProperties().put(Context.URL_PKG_PREFIXES,
-		    PACKAGE_PREFIXES);
+	    System.getProperties().put(JNDIParameters.FACTORY_CLASS_NAME.key,
+		    JNDIParameters.FACTORY_CLASS_NAME.value);
+	    System.getProperties().put(JNDIParameters.PACKAGE_PREFIXES.key,
+		    JNDIParameters.PACKAGE_PREFIXES);
 	    System.getProperties().put(SHARED_PARAMETER_NAME,
 		    Boolean.TRUE.toString());
 	    isContextFactory = Boolean.TRUE;
