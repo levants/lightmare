@@ -19,7 +19,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.osjava.sj.memory.MemoryContext;
 
 /**
- * Extensions of simple jndi {@link MemoryContext} for {@link EntityManager}
+ * Extensions of simple JNDI {@link MemoryContext} for {@link EntityManager}
  * retrieving
  * 
  * @author levan
