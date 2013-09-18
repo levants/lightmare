@@ -142,7 +142,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
-     * Sets injected ejb bean as values to {@link javax.ejb.EJB} annotated
+     * Sets injected EJB bean as values to {@link javax.ejb.EJB} annotated
      * fields respectively
      * 
      * @throws IOException
