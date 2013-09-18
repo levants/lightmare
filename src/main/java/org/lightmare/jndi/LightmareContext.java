@@ -96,6 +96,6 @@ public class LightmareContext extends MemoryContext {
     @Override
     public void close() throws NamingException {
 	clearResources();
-	// super.close();
+	super.close();
     }
 }
