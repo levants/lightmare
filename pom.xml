@@ -360,6 +360,12 @@
 			<version>1.0.2</version>
 			<classifier>sources</classifier>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.scannotation</groupId>
+			<artifactId>scannotation</artifactId>
+			<version>1.0.2</version>
+			<classifier>javadoc</classifier>
+		</dependency>
 		<!-- end of startup -->
 
 		<!-- jndi -->
