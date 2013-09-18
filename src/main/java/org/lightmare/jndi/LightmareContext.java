@@ -47,6 +47,7 @@ public class LightmareContext extends MemoryContext {
     public Object lookup(String jndiName) throws NamingException {
 
 	Object value;
+
 	String name;
 	if (jndiName.equals(NamingUtils.USER_TRANSACTION_NAME)) {
 
@@ -68,7 +69,6 @@ public class LightmareContext extends MemoryContext {
 		EntityManagerFactory emf = ObjectUtils.cast(candidate,
 			EntityManagerFactory.class);
 		EntityManager em = emf.createEntityManager();
-		ems.add(em);
 		value = em;
 	    } else {
 		value = candidate;
@@ -89,6 +89,8 @@ public class LightmareContext extends MemoryContext {
 	} else {
 	    value = super.lookup(jndiName);
 	}
+
+	cacheResource(value);
 
 	return value;
     }
