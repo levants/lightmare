@@ -80,6 +80,15 @@ public class JndiManager {
 	System.getProperties().putAll(configs);
     }
 
+    private void setFactoryProperties(Properties properties) {
+
+	if (ObjectUtils.notTrue(isContextFactory)) {
+	    addSystemProperties(properties);
+	    addSharingParameter();
+	    isContextFactory = Boolean.TRUE;
+	}
+    }
+
     /**
      * Creates and sets {@link InitialContext}
      * 
