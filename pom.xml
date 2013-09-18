@@ -46,6 +46,9 @@
 		<hibernate.version>4.2.5.Final</hibernate.version>
 		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
+		<!-- simple-jndi -->
+		<simple-jndi.version>0.11.4.1</simple-jndi.version>
+		<!-- end of simple-jndi -->
 		<!-- jackson -->
 		<jackson.version>2.2.0</jackson.version>
 		<!-- end of jackson -->
