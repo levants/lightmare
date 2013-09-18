@@ -3,6 +3,7 @@ package org.lightmare.utils.beans;
 import javax.ejb.Stateless;
 
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Utility class for EJB beans
@@ -27,7 +28,7 @@ public class BeanUtils {
 	String simpleName = name;
 
 	int index = name.lastIndexOf('.');
-	if (index > -1) {
+	if (index > StringUtils.NOT_EXISTING_INDEX) {
 	    index++;
 	    simpleName = name.substring(index);
 	}
