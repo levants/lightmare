@@ -32,6 +32,8 @@ public class JndiManager {
     // Name of InitialContextFactory implementation class
     private static final String FACTORY_CLASS_NAME = FACTORY_CLASS.getName();
 
+    private static final String SHARED_PARAMETER_NAME = "org.osjava.sj.jndi.shared";
+
     private static boolean isContextFactory;
 
     private static Context context;
@@ -50,6 +52,8 @@ public class JndiManager {
 		    FACTORY_CLASS_NAME);
 	    System.getProperties().put(Context.URL_PKG_PREFIXES,
 		    PACKAGE_PREFIXES);
+	    System.getProperties().put(SHARED_PARAMETER_NAME,
+		    Boolean.TRUE.toString());
 	    isContextFactory = Boolean.TRUE;
 	}
 	if (context == null) {
