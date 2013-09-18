@@ -27,7 +27,7 @@ public class BeanUtils {
 
 	String simpleName = name;
 
-	int index = name.lastIndexOf('.');
+	int index = name.lastIndexOf(StringUtils.DOT);
 	if (index > StringUtils.NOT_EXISTING_INDEX) {
 	    index++;
 	    simpleName = name.substring(index);

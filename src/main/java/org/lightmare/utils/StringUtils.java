@@ -16,6 +16,8 @@ public class StringUtils {
 
     public static final char HYPHEN = '-';
 
+    public static final char DOT = '.';
+
     public static final String TAB = "\t";
 
     public static final String NEWLINE = "\n";
