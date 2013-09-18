@@ -303,7 +303,7 @@ public class BeanLoader {
 	}
 
 	/**
-	 * Checks weather connection with passed unit or jndi name already
+	 * Checks weather connection with passed unit or JNDI name already
 	 * exists
 	 * 
 	 * @param unitName
