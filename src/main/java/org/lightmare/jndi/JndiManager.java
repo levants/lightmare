@@ -15,7 +15,7 @@ import org.lightmare.utils.ObjectUtils;
 /**
  * Utility class to initialize and set (
  * {@link System#setProperty(String, String)}) the {@link InitialContextFactory}
- * for simple jndi extensions
+ * for simple JNDI extensions
  * 
  * @author levan
  * 
