@@ -6,7 +6,7 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 /**
- * Implementation of {@link URLClassLoader} class for deployed ejb applications
+ * Implementation of {@link URLClassLoader} class for deployed EJB applications
  * 
  * @author levan
  * 
