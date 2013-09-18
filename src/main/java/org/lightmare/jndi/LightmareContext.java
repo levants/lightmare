@@ -26,6 +26,7 @@ import org.osjava.sj.memory.MemoryContext;
  */
 public class LightmareContext extends MemoryContext {
 
+    // Caches EntityManager instances got from lookup method to clear after
     private Collection<EntityManager> ems = new ArrayList<EntityManager>();
 
     public LightmareContext(Hashtable<?, ?> env) {
