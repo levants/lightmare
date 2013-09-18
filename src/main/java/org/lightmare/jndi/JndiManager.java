@@ -55,6 +55,7 @@ public class JndiManager {
     // Check variable if system property are set
     private static boolean isContextFactory;
 
+    // Cached context variable
     private static Context context;
 
     private static final Lock LOCK = new ReentrantLock();
