@@ -71,12 +71,6 @@ public class JndiManager {
 	return properties;
     }
 
-    private void addSharingParameter() {
-
-	System.getProperties().put(JNDIParameters.SHARED_PARAMETER.key,
-		JNDIParameters.SHARED_PARAMETER.value);
-    }
-
     private void addSystemProperties(Properties configs) {
 
 	System.getProperties().putAll(configs);
@@ -86,7 +80,6 @@ public class JndiManager {
 
 	if (ObjectUtils.notTrue(isContextFactory)) {
 	    addSystemProperties(properties);
-	    addSharingParameter();
 	    isContextFactory = Boolean.TRUE;
 	}
     }
