@@ -84,7 +84,7 @@ public class EarUtils extends AbstractIOUtils {
     }
 
     /**
-     * Writes ejb jar {@link File} to temporal file to keep {@link URL} from
+     * Writes EJB jar {@link File} to temporal file to keep {@link URL} from
      * persistence.xml
      * 
      * @param entry
