@@ -366,6 +366,7 @@
 			<artifactId>scannotation</artifactId>
 			<version>1.0.2</version>
 			<classifier>javadoc</classifier>
+			<scope>provided</scope>
 		</dependency>
 		<!-- end of startup -->
 
