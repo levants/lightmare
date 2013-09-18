@@ -42,6 +42,8 @@ public class JndiManager {
 	// Additional parameter to share JNDI cache
 	SHARED_PARAMETER("org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
 
+	private static final Properties CONFIG = new Properties();
+
 	public String key;
 
 	public String value;
@@ -49,6 +51,20 @@ public class JndiManager {
 	private JNDIParameters(String key, String value) {
 	    this.key = key;
 	    this.value = value;
+	}
+
+	protected static Properties getContextProperties() {
+
+	    if (ObjectUtils.notAvailable(CONFIG)) {
+
+		JNDIParameters[] parameters = JNDIParameters.values();
+
+		for (JNDIParameters parameter : parameters) {
+		    CONFIG.put(parameter.key, parameter.value);
+		}
+	    }
+
+	    return CONFIG;
 	}
     }
 
@@ -59,19 +75,6 @@ public class JndiManager {
     private static Context context;
 
     private static final Lock LOCK = new ReentrantLock();
-
-    private Properties getContextProperties() {
-
-	Properties properties = new Properties();
-
-	JNDIParameters[] parameters = JNDIParameters.values();
-
-	for (JNDIParameters parameter : parameters) {
-	    properties.put(parameter.key, parameter.value);
-	}
-
-	return properties;
-    }
 
     private void addSystemProperties(Properties configs) {
 
