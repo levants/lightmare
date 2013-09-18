@@ -89,6 +89,18 @@ public class JndiManager {
 	}
     }
 
+    private void createContext(Properties properties) throws IOException {
+
+	if (context == null) {
+
+	    try {
+		context = new InitialContext(properties);
+	    } catch (NamingException ex) {
+		throw new IOException(ex);
+	    }
+	}
+    }
+
     /**
      * Creates and sets {@link InitialContext}
      * 
@@ -97,11 +109,7 @@ public class JndiManager {
     private void setInitialCotext() throws IOException {
 
 	Properties properties = getContextProperties();
-	if (ObjectUtils.notTrue(isContextFactory)) {
-	    addSystemProperties(properties);
-	    addSharingParameter();
-	    isContextFactory = Boolean.TRUE;
-	}
+	setFactoryProperties(properties);
 
 	if (context == null) {
 
