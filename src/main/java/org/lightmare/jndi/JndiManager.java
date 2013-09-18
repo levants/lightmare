@@ -68,7 +68,7 @@ public class JndiManager {
 	    System.getProperties().put(JNDIParameters.FACTORY_CLASS_NAME.key,
 		    JNDIParameters.FACTORY_CLASS_NAME.value);
 	    System.getProperties().put(JNDIParameters.PACKAGE_PREFIXES.key,
-		    JNDIParameters.PACKAGE_PREFIXES);
+		    JNDIParameters.PACKAGE_PREFIXES.value);
 	    System.getProperties().put(SHARED_PARAMETER_NAME,
 		    Boolean.TRUE.toString());
 	    isContextFactory = Boolean.TRUE;
