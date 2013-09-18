@@ -5,7 +5,7 @@ import javax.ejb.Stateless;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Utility class for ejb beans
+ * Utility class for EJB beans
  * 
  * @author levan
  * 
