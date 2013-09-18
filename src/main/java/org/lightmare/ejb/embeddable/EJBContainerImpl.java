@@ -13,7 +13,7 @@ import org.lightmare.utils.ObjectUtils;
 
 /**
  * Implementation for {@link javax.ejb.embeddable.EJBContainer} class for
- * lightmare EJB container
+ * "Lightmare" EJB container
  * 
  * @author levan
  * 
