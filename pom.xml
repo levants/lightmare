@@ -359,6 +359,7 @@
 			<artifactId>scannotation</artifactId>
 			<version>1.0.2</version>
 			<classifier>sources</classifier>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.scannotation</groupId>
