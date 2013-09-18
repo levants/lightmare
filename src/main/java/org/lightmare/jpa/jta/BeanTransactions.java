@@ -518,7 +518,7 @@ public class BeanTransactions {
 
     /**
      * Removes {@link UserTransaction} attribute from cache if passed
-     * {@link BeanHandler} is first in ejb injection method chain
+     * {@link BeanHandler} is first in EJB injection method chain
      * 
      * @param handler
      * @param type
