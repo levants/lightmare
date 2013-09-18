@@ -21,7 +21,7 @@ import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Creates and caches {@link EntityManagerFactory} for each ejb bean
+ * Creates and caches {@link EntityManagerFactory} for each EJB bean
  * {@link Class}'s appropriate field (annotated by @PersistenceContext)
  * 
  * @author Levan
