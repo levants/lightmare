@@ -78,7 +78,8 @@ public class JndiManager {
 		Properties properties = new Properties();
 		properties.put(JNDIParameters.FACTORY_CLASS_NAME.key,
 			JNDIParameters.FACTORY_CLASS_NAME.value);
-		properties.put(Context.URL_PKG_PREFIXES, PACKAGE_PREFIXES);
+		properties.put(JNDIParameters.PACKAGE_PREFIXES.key,
+			JNDIParameters.PACKAGE_PREFIXES.value);
 		context = new InitialContext(properties);
 	    } catch (NamingException ex) {
 		throw new IOException(ex);
