@@ -75,7 +75,7 @@ public class JndiManager {
 		JNDIParameters.SHARED_PARAMETER.value);
     }
 
-    public void addSystemProperties(Properties configs) {
+    private void addSystemProperties(Properties configs) {
 
 	System.getProperties().putAll(configs);
     }
