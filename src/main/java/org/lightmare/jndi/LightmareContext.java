@@ -2,8 +2,8 @@ package org.lightmare.jndi;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
-import java.util.List;
 
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
@@ -26,7 +26,7 @@ import org.osjava.sj.memory.MemoryContext;
  */
 public class LightmareContext extends MemoryContext {
 
-    private List<EntityManager> ems = new ArrayList<EntityManager>();
+    private Collection<EntityManager> ems = new ArrayList<EntityManager>();
 
     public LightmareContext(Hashtable<?, ?> env) {
 	super(env);
