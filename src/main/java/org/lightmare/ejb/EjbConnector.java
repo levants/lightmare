@@ -28,7 +28,7 @@ import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
- * Connector class for get EJB beans or call remote procedure in ejb bean (RPC)
+ * Connector class for get EJB beans or call remote procedure in this bean (RPC)
  * by interface class
  * 
  * @author Levan
