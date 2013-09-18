@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -238,6 +239,13 @@ public class JPAManager {
 
 	if (ObjectUtils.notNull(emf) && emf.isOpen()) {
 	    emf.close();
+	}
+    }
+
+    public static void closeEntityManager(EntityManager em) {
+
+	if (ObjectUtils.notNull(em) && em.isOpen()) {
+	    em.close();
 	}
     }
 

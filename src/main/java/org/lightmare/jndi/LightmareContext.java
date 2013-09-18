@@ -13,6 +13,7 @@ import javax.transaction.UserTransaction;
 import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.TransactionContainer;
 import org.lightmare.ejb.EjbConnector;
+import org.lightmare.jpa.JPAManager;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.osjava.sj.memory.MemoryContext;
@@ -83,18 +84,11 @@ public class LightmareContext extends MemoryContext {
 	return value;
     }
 
-    private static void closeResource(EntityManager em) {
-
-	if (ObjectUtils.notNull(em) && em.isOpen()) {
-	    em.close();
-	}
-    }
-
     private void clearResources() {
 
 	if (ObjectUtils.available(ems)) {
 	    for (EntityManager em : ems) {
-		closeResource(em);
+		JPAManager.closeEntityManager(em);
 	    }
 	}
     }

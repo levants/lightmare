@@ -15,6 +15,7 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import org.lightmare.ejb.handlers.BeanHandler;
+import org.lightmare.jpa.JPAManager;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -274,9 +275,7 @@ public class UserTransactionImpl implements UserTransaction {
 
 	if (checkNewEms()) {
 	    EntityManager em = getNewEms().pop();
-	    if (em.isOpen()) {
-		em.close();
-	    }
+	    JPAManager.closeEntityManager(em);
 	}
     }
 
@@ -334,9 +333,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     private void closeEntityManager(EntityManager em) {
 
-	if (em.isOpen()) {
-	    em.close();
-	}
+	JPAManager.closeEntityManager(em);
     }
 
     private void closeAllEntityManagers() {
