@@ -53,7 +53,7 @@ public class JndiManager {
 	    this.value = value;
 	}
 
-	protected static Properties getContextProperties() {
+	protected static Properties getConfig() {
 
 	    if (ObjectUtils.notAvailable(CONFIG)) {
 
@@ -109,7 +109,7 @@ public class JndiManager {
     private void setInitialCotext() throws IOException {
 
 	if (ObjectUtils.notTrue(isContextFactory) || context == null) {
-	    Properties properties = JNDIParameters.getContextProperties();
+	    Properties properties = JNDIParameters.getConfig();
 	    setFactoryProperties(properties);
 	    createContext(properties);
 	}
