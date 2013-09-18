@@ -61,8 +61,8 @@ public class JndiManager {
     private Properties getContextProperties() {
 
 	Properties properties = new Properties();
-	JNDIParameters[] parameters = JNDIParameters.values();
 
+	JNDIParameters[] parameters = JNDIParameters.values();
 	for (JNDIParameters parameter : parameters) {
 	    properties.put(parameter.key, parameter.value);
 	}
