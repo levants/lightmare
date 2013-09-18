@@ -36,7 +36,7 @@ public class LightmareContext extends MemoryContext {
 
     private void cacheResource(Object resource) {
 
-	if (resource instanceof EntityManager) {
+	if (ObjectUtils.notNull(resource) && resource instanceof EntityManager) {
 
 	    EntityManager em = ObjectUtils.cast(resource, EntityManager.class);
 	    ems.add(em);
