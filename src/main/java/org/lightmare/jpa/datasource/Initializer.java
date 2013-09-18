@@ -112,7 +112,7 @@ public class Initializer {
     }
 
     /**
-     * Initializes and registers {@link DataSource} object in jndi by
+     * Initializes and registers {@link DataSource} object in JNDI by
      * {@link Properties} {@link Context}
      * 
      * @param poolingProperties
