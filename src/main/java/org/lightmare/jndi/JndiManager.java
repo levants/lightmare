@@ -53,6 +53,9 @@ public class JndiManager {
 	    this.value = value;
 	}
 
+	/**
+	 * Gets {@link Properties} of all key value pairs of this enumeration
+	 */
 	protected static Properties getConfig() {
 
 	    if (ObjectUtils.notAvailable(CONFIG)) {
