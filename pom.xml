@@ -368,6 +368,12 @@
 			<classifier>sources</classifier>
 			<version>${simple-jndi.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>simple-jndi</groupId>
+			<artifactId>simple-jndi</artifactId>
+			<classifier>javadoc</classifier>
+			<version>${simple-jndi.version}</version>
+		</dependency>
 		<!-- end of jndi -->
 
 		<!-- netty -->
