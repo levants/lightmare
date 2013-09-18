@@ -15,7 +15,7 @@ public class BeanUtils {
 
     private static final String REMOTE_IDENT = "Remote";
 
-    private static final String LOCAL_IDENT = "Remote";
+    private static final String LOCAL_IDENT = "Local";
 
     /**
      * Retrieves bean name from class name
