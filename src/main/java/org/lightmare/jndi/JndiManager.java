@@ -25,21 +25,16 @@ public class JndiManager {
     // Value of InitialContextFactory implementation class
     private static final Class<LightmareInitialContextFactory> FACTORY_CLASS = LightmareInitialContextFactory.class;
 
-    // Name of InitialContextFactory implementation class package
-    private static final String PACKAGE_PREFIXES = FACTORY_CLASS.getPackage()
-	    .getName();
+    protected static enum JNDIParameters {
 
-    // Name of InitialContextFactory implementation class
-    private static final String FACTORY_CLASS_NAME = FACTORY_CLASS.getName();
-
-    private static final String SHARED_PARAMETER_NAME = "org.osjava.sj.jndi.shared";
-
-    protected enum JNDIParameters {
-
+	// Name of InitialContextFactory implementation class
 	FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY, FACTORY_CLASS
-		.getName()), PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES,
-		FACTORY_CLASS.getPackage().getName()), SHARED_PARAMETER(
-		"org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
+		.getName()),
+	// Name of InitialContextFactory implementation class package
+	PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES, FACTORY_CLASS.getPackage()
+		.getName()),
+	// Additional parameter to share JNDI cache
+	SHARED_PARAMETER("org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
 
 	public String key;
 
