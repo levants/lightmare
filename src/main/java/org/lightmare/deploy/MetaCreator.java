@@ -52,7 +52,7 @@ import org.lightmare.utils.reflect.MetaUtils;
 import org.lightmare.utils.shutdown.ShutDown;
 
 /**
- * Determines and saves in cache ejb beans {@link org.lightmare.cache.MetaData}
+ * Determines and saves in cache EJB beans {@link org.lightmare.cache.MetaData}
  * on startup
  * 
  * @author Levan
