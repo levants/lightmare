@@ -42,6 +42,7 @@ public class JndiManager {
 	// Additional parameter to share JNDI cache
 	SHARED_PARAMETER("org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
 
+	// Cache of JNDI configuration key value pairs
 	private static final Properties CONFIG = new Properties();
 
 	public String key;
