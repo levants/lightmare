@@ -25,6 +25,12 @@ public class JndiManager {
     // Value of InitialContextFactory implementation class
     private static final Class<LightmareInitialContextFactory> FACTORY_CLASS = LightmareInitialContextFactory.class;
 
+    /**
+     * Caches JNDI system parameters for initializing {@link Context} instance
+     * 
+     * @author levan
+     * 
+     */
     protected static enum JNDIParameters {
 
 	// Name of InitialContextFactory implementation class
