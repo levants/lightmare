@@ -53,7 +53,7 @@ public class BeanUtils {
 	    beanName = interfaceName.substring(ObjectUtils.FIRST_INDEX, start);
 	} else if (interfaceName.endsWith(LOCAL_IDENT)) {
 	    start = interfaceName.lastIndexOf(LOCAL_IDENT);
-	    beanName = interfaceName.substring(0, start);
+	    beanName = interfaceName.substring(ObjectUtils.FIRST_INDEX, start);
 	} else {
 	    beanName = interfaceName;
 	}
