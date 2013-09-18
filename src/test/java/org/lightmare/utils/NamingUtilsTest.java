@@ -1,9 +1,13 @@
 package org.lightmare.utils;
 
+import java.io.IOException;
+
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.junit.Test;
+import org.lightmare.jndi.JndiManager;
 
 public class NamingUtilsTest {
 
@@ -15,16 +19,18 @@ public class NamingUtilsTest {
 
 	try {
 
-	    InitialContext contextBind = new InitialContext();
+	    Context contextBind = new JndiManager().getContext();
 	    contextBind.bind(name, value);
 	    contextBind.close();
 
-	    InitialContext contextGet = new InitialContext();
+	    Context contextGet = new InitialContext();
 	    Object gotten = contextGet.lookup(name);
 
 	    System.out.println(gotten);
 
 	} catch (NamingException ex) {
+	    ex.printStackTrace();
+	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}
 
