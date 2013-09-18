@@ -34,6 +34,15 @@ public class LightmareContext extends MemoryContext {
 	super(env);
     }
 
+    private void cacheResource(Object resource) {
+
+	if (resource instanceof EntityManager) {
+
+	    EntityManager em = ObjectUtils.cast(resource, EntityManager.class);
+	    ems.add(em);
+	}
+    }
+
     @Override
     public Object lookup(String jndiName) throws NamingException {
 
