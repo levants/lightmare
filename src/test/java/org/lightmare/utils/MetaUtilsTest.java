@@ -1,5 +1,6 @@
 package org.lightmare.utils;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import org.junit.Assert;
@@ -40,5 +41,58 @@ public class MetaUtilsTest {
 	Assert.assertTrue("modifiers not match", Modifier.isPublic(modifier));
 	Assert.assertTrue("modifiers not match", Modifier.isStatic(modifier));
 	Assert.assertTrue("modifiers not match", Modifier.isFinal(modifier));
+    }
+
+    private void method4() {
+
+	Class<?> thisClass = this.getClass();
+	String name = thisClass.getName();
+	String callerName = null;
+	String methodName = null;
+	boolean last = Boolean.FALSE;
+	StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+	int length = elements.length;
+	int trace = 0;
+	StackTraceElement element;
+	for (int i = 0; i < length && trace < 2; i++) {
+
+	    element = elements[i];
+	    callerName = element.getClassName();
+	    last = name.equals(callerName);
+
+	    if (last) {
+		methodName = element.getMethodName();
+		trace++;
+	    }
+
+	    System.out.println(StringUtils.concat(element.getClassName(),
+		    StringUtils.SPACE, element.getMethodName(),
+		    StringUtils.SPACE, element.getLineNumber(),
+		    StringUtils.SPACE, element.getFileName()));
+	}
+
+	System.out.println(callerName);
+	System.out.println(methodName);
+
+	Method method = this.getClass().getEnclosingMethod();
+	System.out.println(StringUtils.concat(method));
+    }
+
+    private void method3() {
+	method4();
+    }
+
+    private void method2() {
+	method3();
+    }
+
+    private void method1() {
+	method2();
+    }
+
+    @Test
+    public void callerMethodTest() {
+
+	method1();
     }
 }
