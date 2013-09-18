@@ -59,8 +59,8 @@ public class LightmareContext extends MemoryContext {
 		EntityManagerFactory emf = ObjectUtils.cast(candidate,
 			EntityManagerFactory.class);
 		EntityManager em = emf.createEntityManager();
-		value = em;
 		ems.add(em);
+		value = em;
 	    } else {
 		value = candidate;
 	    }
