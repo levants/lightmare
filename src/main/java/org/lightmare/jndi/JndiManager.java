@@ -89,7 +89,7 @@ public class JndiManager {
 
 	Properties properties = getContextProperties();
 	if (ObjectUtils.notTrue(isContextFactory)) {
-	    System.getProperties().putAll(properties);
+	    addSystemProperties(properties);
 	    addSharingParameter();
 	    isContextFactory = Boolean.TRUE;
 	}
