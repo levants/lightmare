@@ -52,6 +52,17 @@ public class JndiManager {
 
     private static final Lock LOCK = new ReentrantLock();
 
+    private Properties getContextProperties() {
+
+	Properties properties = new Properties();
+	properties.put(JNDIParameters.FACTORY_CLASS_NAME.key,
+		JNDIParameters.FACTORY_CLASS_NAME.value);
+	properties.put(JNDIParameters.PACKAGE_PREFIXES.key,
+		JNDIParameters.PACKAGE_PREFIXES.value);
+
+	return properties;
+    }
+
     /**
      * Creates and sets {@link InitialContext}
      * 
