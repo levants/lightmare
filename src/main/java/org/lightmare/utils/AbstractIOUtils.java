@@ -315,7 +315,7 @@ public abstract class AbstractIOUtils {
     }
 
     /**
-     * Gets {@link URL}s in {@link List} for ejb library files from ear
+     * Gets {@link URL}s in {@link List} for EJB library files from ear
      * {@link File}
      * 
      * @throws IOException
