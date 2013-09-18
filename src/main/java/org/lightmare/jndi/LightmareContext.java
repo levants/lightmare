@@ -90,6 +90,7 @@ public class LightmareContext extends MemoryContext {
 	    value = super.lookup(jndiName);
 	}
 
+	// Saves value to clear after close method is called
 	cacheResource(value);
 
 	return value;
