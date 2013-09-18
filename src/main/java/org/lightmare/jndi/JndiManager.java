@@ -76,8 +76,8 @@ public class JndiManager {
 	if (context == null) {
 	    try {
 		Properties properties = new Properties();
-		properties.put(Context.INITIAL_CONTEXT_FACTORY,
-			FACTORY_CLASS_NAME);
+		properties.put(JNDIParameters.FACTORY_CLASS_NAME.key,
+			JNDIParameters.FACTORY_CLASS_NAME.value);
 		properties.put(Context.URL_PKG_PREFIXES, PACKAGE_PREFIXES);
 		context = new InitialContext(properties);
 	    } catch (NamingException ex) {
