@@ -385,7 +385,7 @@ public class MetaCreator {
 	    deployData = null;
 	}
 	// Initializes and fills BeanLoader.BeanParameters class to deploy
-	// stateless ejb bean
+	// stateless EJB bean
 	BeanLoader.BeanParameters parameters = new BeanLoader.BeanParameters();
 	parameters.creator = this;
 	parameters.className = beanName;
