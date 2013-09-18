@@ -61,10 +61,11 @@ public class JndiManager {
     private Properties getContextProperties() {
 
 	Properties properties = new Properties();
-	properties.put(JNDIParameters.FACTORY_CLASS_NAME.key,
-		JNDIParameters.FACTORY_CLASS_NAME.value);
-	properties.put(JNDIParameters.PACKAGE_PREFIXES.key,
-		JNDIParameters.PACKAGE_PREFIXES.value);
+	JNDIParameters[] parameters = JNDIParameters.values();
+
+	for (JNDIParameters parameter : parameters) {
+	    properties.put(parameter.key, parameter.value);
+	}
 
 	return properties;
     }
