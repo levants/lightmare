@@ -20,7 +20,7 @@ import org.lightmare.ejb.handlers.RestHandler;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Implementation of {@link Inflector} for ejb beans appropriate {@link Method}
+ * Implementation of {@link Inflector} for EJB beans appropriate {@link Method}
  * invocation for REST service
  * 
  * @author Levan
