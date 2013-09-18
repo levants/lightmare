@@ -63,6 +63,12 @@ public class JndiManager {
 	return properties;
     }
 
+    private void addSharingParameter() {
+
+	System.getProperties().put(JNDIParameters.SHARED_PARAMETER.key,
+		JNDIParameters.SHARED_PARAMETER.value);
+    }
+
     /**
      * Creates and sets {@link InitialContext}
      * 
@@ -70,22 +76,14 @@ public class JndiManager {
      */
     private void setInitialCotext() throws IOException {
 
+	Properties properties = getContextProperties();
 	if (ObjectUtils.notTrue(isContextFactory)) {
-	    System.getProperties().put(JNDIParameters.FACTORY_CLASS_NAME.key,
-		    JNDIParameters.FACTORY_CLASS_NAME.value);
-	    System.getProperties().put(JNDIParameters.PACKAGE_PREFIXES.key,
-		    JNDIParameters.PACKAGE_PREFIXES.value);
-	    System.getProperties().put(JNDIParameters.SHARED_PARAMETER.key,
-		    JNDIParameters.SHARED_PARAMETER.value);
+	    System.getProperties().putAll(properties);
+	    addSharingParameter();
 	    isContextFactory = Boolean.TRUE;
 	}
 	if (context == null) {
 	    try {
-		Properties properties = new Properties();
-		properties.put(JNDIParameters.FACTORY_CLASS_NAME.key,
-			JNDIParameters.FACTORY_CLASS_NAME.value);
-		properties.put(JNDIParameters.PACKAGE_PREFIXES.key,
-			JNDIParameters.PACKAGE_PREFIXES.value);
 		context = new InitialContext(properties);
 	    } catch (NamingException ex) {
 		throw new IOException(ex);
