@@ -19,7 +19,7 @@ import org.lightmare.jpa.JpaManager;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * {@link UserTransaction} implementation for jndi and ejb beans
+ * {@link UserTransaction} implementation for JNDI and ejb beans
  * 
  * @author levan
  * 
