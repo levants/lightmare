@@ -1,7 +1,9 @@
 package org.lightmare.jndi;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
@@ -24,6 +26,8 @@ import org.osjava.sj.memory.MemoryContext;
  * 
  */
 public class LightmareContext extends MemoryContext {
+
+    private List<EntityManager> ems = new ArrayList<EntityManager>();
 
     protected static class EMCloser implements Runnable {
 
@@ -83,6 +87,7 @@ public class LightmareContext extends MemoryContext {
 			EntityManagerFactory.class);
 		EntityManager em = emf.createEntityManager();
 		value = em;
+		ems.add(em);
 		Thread thread = new Thread(new EMCloser(em));
 		thread.setName(StringUtils.concat(thread.getId(),
 			StringUtils.HYPHEN, "em-closer-thread"));
@@ -110,8 +115,25 @@ public class LightmareContext extends MemoryContext {
 	return value;
     }
 
+    private static void closeResource(EntityManager em) {
+
+	if (ObjectUtils.notNull(em) && em.isOpen()) {
+	    em.close();
+	}
+    }
+
+    private void clearResources() {
+
+	if (ObjectUtils.available(ems)) {
+	    for (EntityManager em : ems) {
+		closeResource(em);
+	    }
+	}
+    }
+
     @Override
     public void close() throws NamingException {
+	clearResources();
 	// super.close();
     }
 }
