@@ -360,13 +360,13 @@
 		<dependency>
 			<groupId>simple-jndi</groupId>
 			<artifactId>simple-jndi</artifactId>
-			<version>0.11.4.1</version>
+			<version>${simple-jndi.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>simple-jndi</groupId>
 			<artifactId>simple-jndi</artifactId>
 			<classifier>sources</classifier>
-			<version>0.11.4.1</version>
+			<version>${simple-jndi.version}</version>
 		</dependency>
 		<!-- end of jndi -->
 
