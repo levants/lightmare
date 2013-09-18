@@ -63,6 +63,7 @@ public class JndiManager {
 	Properties properties = new Properties();
 
 	JNDIParameters[] parameters = JNDIParameters.values();
+
 	for (JNDIParameters parameter : parameters) {
 	    properties.put(parameter.key, parameter.value);
 	}
