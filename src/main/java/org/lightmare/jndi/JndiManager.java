@@ -110,15 +110,7 @@ public class JndiManager {
 
 	Properties properties = getContextProperties();
 	setFactoryProperties(properties);
-
-	if (context == null) {
-
-	    try {
-		context = new InitialContext(properties);
-	    } catch (NamingException ex) {
-		throw new IOException(ex);
-	    }
-	}
+	createContext(properties);
     }
 
     /**
