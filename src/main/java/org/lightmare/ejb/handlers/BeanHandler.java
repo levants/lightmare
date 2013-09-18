@@ -114,7 +114,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
-     * Sets each injected ejb bean as value to annotated field respectively for
+     * Sets each injected EJB bean as value to annotated field respectively for
      * passed {@link InjectionData} object
      */
     private void configureInjection(InjectionData injectionData)
