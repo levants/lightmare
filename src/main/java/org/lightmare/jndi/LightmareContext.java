@@ -13,6 +13,7 @@ import org.lightmare.cache.TransactionContainer;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 import org.osjava.sj.memory.MemoryContext;
 
 /**
@@ -23,6 +24,34 @@ import org.osjava.sj.memory.MemoryContext;
  * 
  */
 public class LightmareContext extends MemoryContext {
+
+    protected static class EMCloser implements Runnable {
+
+	private EntityManager em;
+
+	public EMCloser(EntityManager em) {
+	    this.em = em;
+	}
+
+	private void close() {
+	    if (ObjectUtils.notNull(em) && em.isOpen()) {
+		em.close();
+	    }
+	}
+
+	@Override
+	public void run() {
+
+	    try {
+		Thread.currentThread().join();
+	    } catch (InterruptedException ex) {
+		ex.printStackTrace();
+	    } finally {
+		close();
+	    }
+	}
+
+    }
 
     public LightmareContext(Hashtable<?, ?> env) {
 	super(env);
@@ -54,6 +83,10 @@ public class LightmareContext extends MemoryContext {
 			EntityManagerFactory.class);
 		EntityManager em = emf.createEntityManager();
 		value = em;
+		Thread thread = new Thread(new EMCloser(em));
+		thread.setName(StringUtils.concat(thread.getId(),
+			StringUtils.HYPHEN, "em-closer-thread"));
+		thread.start();
 	    } else {
 		value = candidate;
 	    }

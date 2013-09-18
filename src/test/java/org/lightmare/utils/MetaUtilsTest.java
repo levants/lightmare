@@ -45,37 +45,45 @@ public class MetaUtilsTest {
 
     private void method4() {
 
-	Class<?> thisClass = this.getClass();
-	String name = thisClass.getName();
-	String callerName = null;
-	String methodName = null;
-	boolean last = Boolean.FALSE;
-	StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-	int length = elements.length;
-	int trace = 0;
-	StackTraceElement element;
-	for (int i = 0; i < length && trace < 2; i++) {
+	try {
+	    Class<?> thisClass = this.getClass();
+	    String name = thisClass.getName();
+	    String callerName = null;
+	    String methodName = null;
+	    boolean last = Boolean.FALSE;
+	    StackTraceElement[] elements = Thread.currentThread()
+		    .getStackTrace();
+	    if (ObjectUtils.available(elements)) {
+		int length = elements.length;
+		int trace = 0;
+		StackTraceElement element;
+		for (int i = 0; i < length && trace < 2; i++) {
 
-	    element = elements[i];
-	    callerName = element.getClassName();
-	    last = name.equals(callerName);
+		    element = elements[i];
+		    callerName = element.getClassName();
+		    last = name.equals(callerName);
 
-	    if (last) {
-		methodName = element.getMethodName();
-		trace++;
+		    if (last) {
+			methodName = element.getMethodName();
+			trace++;
+		    }
+
+		    System.out.println(StringUtils.concat(
+			    element.getClassName(), StringUtils.SPACE,
+			    element.getMethodName(), StringUtils.SPACE,
+			    element.getLineNumber(), StringUtils.SPACE,
+			    element.getFileName()));
+		}
+
+		System.out.println(callerName);
+		System.out.println(methodName);
+
+		Method method = this.getClass().getEnclosingMethod();
+		System.out.println(StringUtils.concat(method));
 	    }
-
-	    System.out.println(StringUtils.concat(element.getClassName(),
-		    StringUtils.SPACE, element.getMethodName(),
-		    StringUtils.SPACE, element.getLineNumber(),
-		    StringUtils.SPACE, element.getFileName()));
+	} catch (Exception ex) {
+	    ex.printStackTrace();
 	}
-
-	System.out.println(callerName);
-	System.out.println(methodName);
-
-	Method method = this.getClass().getEnclosingMethod();
-	System.out.println(StringUtils.concat(method));
     }
 
     private void method3() {
