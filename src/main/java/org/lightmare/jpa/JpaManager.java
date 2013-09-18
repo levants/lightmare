@@ -27,7 +27,7 @@ import org.lightmare.utils.ObjectUtils;
  * @author Levan
  * 
  */
-public class JPAManager {
+public class JpaManager {
 
     private List<String> classes;
 
@@ -43,9 +43,9 @@ public class JPAManager {
 
     private ClassLoader loader;
 
-    private static final Logger LOG = Logger.getLogger(JPAManager.class);
+    private static final Logger LOG = Logger.getLogger(JpaManager.class);
 
-    private JPAManager() {
+    private JpaManager() {
     }
 
     /**
@@ -250,17 +250,17 @@ public class JPAManager {
     }
 
     /**
-     * Builder class to create {@link JPAManager} class object
+     * Builder class to create {@link JpaManager} class object
      * 
      * @author Levan
      * 
      */
     public static class Builder {
 
-	private JPAManager manager;
+	private JpaManager manager;
 
 	public Builder() {
-	    manager = new JPAManager();
+	    manager = new JpaManager();
 	    manager.scanArchives = Boolean.TRUE;
 	}
 
@@ -353,7 +353,7 @@ public class JPAManager {
 	    return this;
 	}
 
-	public JPAManager build() {
+	public JpaManager build() {
 	    return manager;
 	}
     }

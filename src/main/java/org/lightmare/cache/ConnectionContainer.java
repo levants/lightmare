@@ -9,7 +9,7 @@ import javax.persistence.EntityManagerFactory;
 
 import org.apache.log4j.Logger;
 import org.lightmare.jndi.JndiManager;
-import org.lightmare.jpa.JPAManager;
+import org.lightmare.jpa.JpaManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
@@ -250,7 +250,7 @@ public class ConnectionContainer {
 	EntityManagerFactory emf;
 	for (ConnectionSemaphore semaphore : semaphores) {
 	    emf = semaphore.getEmf();
-	    JPAManager.closeEntityManagerFactory(emf);
+	    JpaManager.closeEntityManagerFactory(emf);
 	}
 
 	synchronized (CONNECTIONS) {
@@ -283,7 +283,7 @@ public class ConnectionContainer {
 	if (users < ConnectionSemaphore.MINIMAL_USERS) {
 
 	    EntityManagerFactory emf = semaphore.getEmf();
-	    JPAManager.closeEntityManagerFactory(emf);
+	    JpaManager.closeEntityManagerFactory(emf);
 	    unbindConnection(semaphore);
 
 	    synchronized (CONNECTIONS) {

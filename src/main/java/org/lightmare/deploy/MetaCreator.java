@@ -34,7 +34,7 @@ import org.lightmare.cache.TmpResources;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.fs.Watcher;
-import org.lightmare.jpa.JPAManager;
+import org.lightmare.jpa.JpaManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.libraries.LibraryLoader;
@@ -205,7 +205,7 @@ public class MetaCreator {
     protected void configureConnection(String unitName, String beanName,
 	    ClassLoader loader, Configuration configClone) throws IOException {
 
-	JPAManager.Builder builder = new JPAManager.Builder();
+	JpaManager.Builder builder = new JpaManager.Builder();
 	Map<String, String> classOwnersFiles = annotationDB
 		.getClassOwnersFiles();
 	AbstractIOUtils ioUtils = aggregateds.get(beanName);
