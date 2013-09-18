@@ -13,7 +13,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
- * Implementation of {@link InvocationContext} for lightmare ejb interceptors
+ * Implementation of {@link InvocationContext} for lightmare EJB interceptors
  * 
  * @author Levan
  * 
