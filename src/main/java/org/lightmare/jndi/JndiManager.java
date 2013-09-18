@@ -109,7 +109,7 @@ public class JndiManager {
     private void setInitialCotext() throws IOException {
 
 	if (ObjectUtils.notTrue(isContextFactory) || context == null) {
-	    Properties properties = getContextProperties();
+	    Properties properties = JNDIParameters.getContextProperties();
 	    setFactoryProperties(properties);
 	    createContext(properties);
 	}
