@@ -8,7 +8,7 @@ import javax.ejb.spi.EJBContainerProvider;
 
 /**
  * Implementation for {@link javax.ejb.spi.EJBContainerProvider} interface for
- * Lightmare EJB container
+ * "Lightmare" EJB container
  * 
  * @author levan
  * 
