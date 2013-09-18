@@ -384,6 +384,7 @@
 			<artifactId>simple-jndi</artifactId>
 			<classifier>sources</classifier>
 			<version>${simple-jndi.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>simple-jndi</groupId>
