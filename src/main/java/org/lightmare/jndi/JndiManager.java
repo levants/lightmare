@@ -52,6 +52,7 @@ public class JndiManager {
 	}
     }
 
+    // Check variable if system propery are set
     private static boolean isContextFactory;
 
     private static Context context;
