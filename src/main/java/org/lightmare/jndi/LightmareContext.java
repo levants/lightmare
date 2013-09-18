@@ -84,6 +84,9 @@ public class LightmareContext extends MemoryContext {
 	return value;
     }
 
+    /**
+     * Clears and closes all cached resources
+     */
     private void clearResources() {
 
 	if (ObjectUtils.available(ems)) {
