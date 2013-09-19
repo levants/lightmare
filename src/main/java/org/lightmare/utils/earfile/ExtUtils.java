@@ -85,6 +85,7 @@ public class ExtUtils extends DirUtils {
 
 	    OutputStream out = new FileOutputStream(file);
 	    write(extStream, out);
+
 	} else {
 	    file.mkdir();
 	}
