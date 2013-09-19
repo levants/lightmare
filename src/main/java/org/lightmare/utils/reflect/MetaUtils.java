@@ -258,7 +258,6 @@ public class MetaUtils {
 	Method method;
 
 	try {
-
 	    method = clazz.getDeclaredMethod(methodName, parameterTypes);
 	} catch (NoSuchMethodException ex) {
 	    throw new IOException(ex);
