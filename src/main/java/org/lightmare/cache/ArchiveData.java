@@ -1,13 +1,11 @@
 package org.lightmare.cache;
 
-import java.net.URL;
-
 import org.lightmare.utils.AbstractIOUtils;
 
 /**
  * Container class for {@link org.lightmare.utils.AbstractIOUtils} and
- * {@link ClassLoader} for each {@link URL} to cache to avoid duplicates at
- * deploy time
+ * {@link ClassLoader} for each {@link java.net.URL} to cache to avoid
+ * duplicates at deploy time
  * 
  * @author levan
  * 
