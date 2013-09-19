@@ -116,6 +116,7 @@ public class LightmareContext extends MemoryContext {
     public void close() throws NamingException {
 
 	clearResources();
+	// TODO: Must check is needed super.close() method call
 	// super.close();
     }
 }
