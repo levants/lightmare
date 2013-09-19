@@ -6,8 +6,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.persistence.EntityManagerFactory;
 
 /**
- * Container class for {@link EntityManagerFactory} with checking if connection
- * configuration in progress
+ * Container class for {@link EntityManagerFactory} with check if connection
+ * configuration is in progress
  * 
  * @author Levan
  * 
@@ -26,6 +26,7 @@ public class ConnectionSemaphore {
 
     private EntityManagerFactory emf;
 
+    // Number of user using the same connection
     private final AtomicInteger users = new AtomicInteger();
 
     // Check if needs configure EntityManagerFactory

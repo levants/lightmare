@@ -8,7 +8,7 @@ import org.lightmare.utils.ObjectUtils;
 
 /**
  * Container class to cache connection in {@link org.lightmare.cache.MetaData}
- * for trn
+ * for each EJB bean
  * 
  * @author levan
  * 

@@ -117,6 +117,7 @@ public class PoolConfig {
      * @return
      */
     public Map<Object, Object> getDefaultPooling() {
+
 	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
 
 	Defaults[] defaults = Defaults.values();

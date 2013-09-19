@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.naming.Context;
 import javax.sql.DataSource;
@@ -31,6 +33,9 @@ public class Initializer {
     // Caches already initialized data source JNDI names
     private static final Set<String> INITIALIZED_NAMES = Collections
 	    .synchronizedSet(new HashSet<String>());
+
+    // Locks friver initialization to avoid thread blocking
+    private static final Lock DRIVER_LOCK = new ReentrantLock();
 
     /**
      * Container for connection configuration properties
@@ -77,7 +82,12 @@ public class Initializer {
      */
     public static void initializeDriver(String driver) throws IOException {
 
-	MetaUtils.initClassForName(driver);
+	DRIVER_LOCK.lock();
+	try {
+	    MetaUtils.initClassForName(driver);
+	} finally {
+	    DRIVER_LOCK.unlock();
+	}
     }
 
     /**

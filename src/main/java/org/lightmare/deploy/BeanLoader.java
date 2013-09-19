@@ -103,7 +103,7 @@ public class BeanLoader {
 
 	private Properties properties;
 
-	private CountDownLatch blocker;
+	private final CountDownLatch blocker;
 
 	private boolean countedDown;
 
@@ -214,7 +214,7 @@ public class BeanLoader {
 
 	private MetaData metaData;
 
-	private CountDownLatch blocker;
+	private final CountDownLatch blocker;
 
 	private boolean countedDown;
 
