@@ -1,5 +1,6 @@
 package org.lightmare.jndi;
 
+import java.io.IOException;
 import java.util.Hashtable;
 
 import javax.naming.Context;
@@ -32,7 +33,7 @@ public class LightmareInitialContextFactoryBuilder implements
 	    requestedClass = MetaUtils.initClassForName(requestedFactory);
 	    Object instance = MetaUtils.instantiate(requestedClass);
 	    factory = ObjectUtils.cast(instance, InitialContextFactory.class);
-	} catch (Exception ex) {
+	} catch (IOException ex) {
 	    NoInitialContextException ne = new NoInitialContextException(
 		    COULD_NOT_FIND_ERROR);
 	    ne.setRootCause(ex);
