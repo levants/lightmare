@@ -1,7 +1,7 @@
 package org.lightmare.jpa.jta;
 
 /**
- * Properties to use for hibernate
+ * Properties to use for Hibernate configuration
  * 
  * @author levan
  * 
