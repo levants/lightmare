@@ -54,6 +54,7 @@ public class JpaManager {
      * @return boolean
      */
     private boolean checkForURL() {
+
 	return ObjectUtils.notNull(url)
 		&& ObjectUtils.available(url.toString());
     }
