@@ -41,6 +41,7 @@ public class InitC3p0 extends InitDataSource {
 
 	DataSource dataSource;
 	DataSource namedDataSource;
+
 	try {
 	    if (poolConfig.isPooledDataSource()) {
 		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
@@ -69,8 +70,7 @@ public class InitC3p0 extends InitDataSource {
     }
 
     @Override
-    protected boolean checkInstance(DataSource dataSource)
-	    throws IOException {
+    protected boolean checkInstance(DataSource dataSource) throws IOException {
 
 	boolean valid = (dataSource instanceof PooledDataSource);
 
