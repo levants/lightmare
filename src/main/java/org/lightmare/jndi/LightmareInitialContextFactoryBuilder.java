@@ -13,6 +13,7 @@ import org.lightmare.utils.reflect.MetaUtils;
 
 /**
  * Implementation of {@link InitialContextFactoryBuilder} factory builder class
+ * for instantiate {@link InitialContextFactory} implementation
  * 
  * @author levan
  * 
