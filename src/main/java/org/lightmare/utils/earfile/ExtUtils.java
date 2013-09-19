@@ -76,7 +76,10 @@ public class ExtUtils extends DirUtils {
 	    parrent.mkdirs();
 	    addTmpFile(parrent);
 	}
+
+	// Caches temporal files
 	addTmpFile(file);
+
 	if (ObjectUtils.notTrue(entry.isDirectory())) {
 
 	    if (ObjectUtils.notTrue(file.exists())) {
