@@ -44,6 +44,7 @@ public class InitC3p0 extends InitDataSource {
 	DataSource dataSource;
 
 	try {
+
 	    if (poolConfig.isPooledDataSource()) {
 		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
 		comboPooledDataSource.setDriverClass(driver);
