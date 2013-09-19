@@ -181,6 +181,7 @@ public class MetaCreator {
 	    Configuration configClone) throws IOException {
 
 	List<String> classes;
+
 	if (configClone.getAnnotatedUnitName() == null) {
 	    classes = CollectionUtils.translateToList(classSet);
 	} else {
