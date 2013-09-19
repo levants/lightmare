@@ -39,8 +39,9 @@ public class InitC3p0 extends InitDataSource {
     @Override
     public DataSource initializeDataSource() throws IOException {
 
-	DataSource dataSource;
 	DataSource namedDataSource;
+
+	DataSource dataSource;
 
 	try {
 	    if (poolConfig.isPooledDataSource()) {
