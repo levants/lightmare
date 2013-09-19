@@ -137,6 +137,7 @@ public class MetaCreator {
 	    throws IOException {
 
 	boolean isValid = Boolean.FALSE;
+
 	Class<?> entityClass;
 	entityClass = MetaUtils.initClassForName(className);
 	UnitName annotation = entityClass.getAnnotation(UnitName.class);
