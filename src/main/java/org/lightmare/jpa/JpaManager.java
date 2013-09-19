@@ -80,10 +80,10 @@ public class JpaManager {
 	    properties = new HashMap<Object, Object>();
 	}
 
-	properties.put(HibernateConfig.FACTORY.key,
-		HibernateConfig.FACTORY.value);
-	properties.put(HibernateConfig.PLATFORM.key,
-		HibernateConfig.PLATFORM.value);
+	HibernateConfig[] hibernateConfigs = HibernateConfig.values();
+	for (HibernateConfig hibernateConfig : hibernateConfigs) {
+	    properties.put(hibernateConfig.key, hibernateConfig.value);
+	}
     }
 
     /**
