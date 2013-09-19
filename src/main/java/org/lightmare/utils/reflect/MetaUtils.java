@@ -150,19 +150,7 @@ public class MetaUtils {
     public static Class<?> classForName(String className, ClassLoader loader)
 	    throws IOException {
 
-	Class<?> clazz;
-
-	try {
-
-	    if (loader == null) {
-		clazz = Class.forName(className);
-	    } else {
-		clazz = Class.forName(className, Boolean.TRUE, loader);
-	    }
-
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	}
+	Class<?> clazz = classForName(className, Boolean.TRUE, loader);
 
 	return clazz;
     }
