@@ -5,8 +5,9 @@ import java.net.URL;
 import org.lightmare.utils.AbstractIOUtils;
 
 /**
- * Container class for {@link AbstractIOUtils} and {@link ClassLoader} for each
- * {@link URL} to cache to avoid duplicates at deploy time
+ * Container class for {@link org.lightmare.utils.AbstractIOUtils} and
+ * {@link ClassLoader} for each {@link URL} to cache to avoid duplicates at
+ * deploy time
  * 
  * @author levan
  * 
