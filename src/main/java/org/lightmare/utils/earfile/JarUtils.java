@@ -46,6 +46,7 @@ public class JarUtils extends AbstractIOUtils {
 
     @Override
     public InputStream earReader() throws IOException {
+
 	return null;
     }
 
