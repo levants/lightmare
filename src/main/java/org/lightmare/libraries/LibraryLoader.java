@@ -44,7 +44,7 @@ public class LibraryLoader {
     private static final Logger LOG = Logger.getLogger(LibraryLoader.class);
 
     /**
-     * {@link Callable}<ClassLoader> implementation to initialize
+     * implementation of {@link Callable}<ClassLoader> interface to initialize
      * {@link ClassLoader} in separate thread
      * 
      * @author levan
