@@ -66,6 +66,7 @@ public class JpaManager {
      * @return boolean
      */
     private boolean checkForBuild() {
+
 	return ObjectUtils.available(classes) || ObjectUtils.available(path)
 		|| checkForURL() || swapDataSource || scanArchives;
     }
