@@ -34,10 +34,10 @@ public class LightmareInitialContextFactoryBuilder implements
 	    Object instance = MetaUtils.instantiate(requestedClass);
 	    factory = ObjectUtils.cast(instance, InitialContextFactory.class);
 	} catch (IOException ex) {
-	    NoInitialContextException ne = new NoInitialContextException(
+	    NoInitialContextException nex = new NoInitialContextException(
 		    COULD_NOT_FIND_ERROR);
-	    ne.setRootCause(ex);
-	    throw ne;
+	    nex.setRootCause(ex);
+	    throw nex;
 	}
 
 	return factory;
