@@ -75,9 +75,11 @@ public class JpaManager {
      * Added transaction properties for JTA data sources
      */
     private void addTransactionManager() {
+
 	if (properties == null) {
 	    properties = new HashMap<Object, Object>();
 	}
+
 	properties.put(HibernateConfig.FACTORY_KEY,
 		HibernateConfig.FACTORY_VALUE);
 	properties.put(HibernateConfig.PLATFORM_KEY,
