@@ -214,7 +214,7 @@ public class BeanLoader {
 
 	private MetaData metaData;
 
-	private CountDownLatch blocker;
+	private final CountDownLatch blocker;
 
 	private boolean countedDown;
 
