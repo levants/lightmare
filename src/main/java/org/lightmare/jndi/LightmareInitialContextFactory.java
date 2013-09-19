@@ -9,7 +9,8 @@ import javax.naming.spi.InitialContextFactory;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Extension of factory class {@link InitialContextFactory}
+ * Implementation of {@link InitialContextFactory} factory class to register and
+ * instantiate JNDI {@link Context} instance
  * 
  * @author levan
  * 
