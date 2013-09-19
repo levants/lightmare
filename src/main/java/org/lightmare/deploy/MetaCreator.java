@@ -147,8 +147,8 @@ public class MetaCreator {
     }
 
     /**
-     * Defines belonginess of {@link javax.persistence.Entity} annotated classes
-     * to jar file
+     * Defines belongs or not of {@link javax.persistence.Entity} annotated
+     * classes to jar file
      * 
      * @param classSet
      * @return {@link List}<String>
