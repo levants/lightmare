@@ -13,6 +13,7 @@ import org.lightmare.utils.StringUtils;
  */
 public class BeanUtils {
 
+    // Suffixes of local and remote interface names
     private static final String REMOTE_IDENT = "Remote";
 
     private static final String LOCAL_IDENT = "Local";
