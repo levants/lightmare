@@ -26,6 +26,7 @@ public class ConnectionSemaphore {
 
     private EntityManagerFactory emf;
 
+    // Number of user using the same connection
     private final AtomicInteger users = new AtomicInteger();
 
     // Check if needs configure EntityManagerFactory
