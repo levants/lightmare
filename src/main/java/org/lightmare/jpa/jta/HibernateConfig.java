@@ -6,7 +6,9 @@ package org.lightmare.jpa.jta;
  * @author levan
  * 
  */
-public class HibernateConfig {
+public enum HibernateConfig {
+
+    PLATFORM, FACTORY;
 
     public static final String PLATFORM_KEY = "hibernate.transaction.jta.platform";
 
