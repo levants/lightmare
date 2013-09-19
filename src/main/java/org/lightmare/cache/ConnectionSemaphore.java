@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.persistence.EntityManagerFactory;
 
 /**
- * Container class for {@link EntityManagerFactory} with checking if connection
+ * Container class for {@link EntityManagerFactory} with check if connection
  * configuration is in progress
  * 
  * @author Levan
