@@ -62,6 +62,7 @@ public class MetaCreator {
 
     private static AnnotationDB annotationDB;
 
+    // Cached temporal resources for clean after deployment
     private TmpResources tmpResources;
 
     private boolean await;
