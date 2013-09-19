@@ -17,4 +17,13 @@ public enum HibernateConfig {
     public static final String FACTORY_KEY = "hibernate.transaction.factory_class";
 
     public static final String FACTORY_VALUE = "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory";
+
+    public String key;
+
+    public String value;
+
+    private HibernateConfig(String key, String value) {
+	this.key = key;
+	this.value = value;
+    }
 }
