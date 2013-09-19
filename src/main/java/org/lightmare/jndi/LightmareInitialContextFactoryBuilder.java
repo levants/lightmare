@@ -21,6 +21,27 @@ import org.lightmare.utils.reflect.MetaUtils;
 public class LightmareInitialContextFactoryBuilder implements
 	InitialContextFactoryBuilder {
 
+    private static final String COULD_NOT_FIND_ERROR = "Could not find initial cotext";
+
+    private InitialContextFactory simulateBuilderLessNamingManager(
+	    String requestedFactory) throws NoInitialContextException {
+
+	InitialContextFactory factory;
+	Class<?> requestedClass;
+	try {
+	    requestedClass = MetaUtils.initClassForName(requestedFactory);
+	    factory = ObjectUtils.cast(requestedClass.newInstance(),
+		    InitialContextFactory.class);
+	} catch (Exception ex) {
+	    NoInitialContextException ne = new NoInitialContextException(
+		    COULD_NOT_FIND_ERROR);
+	    ne.setRootCause(ex);
+	    throw ne;
+	}
+
+	return factory;
+    }
+
     @Override
     public InitialContextFactory createInitialContextFactory(Hashtable<?, ?> env)
 	    throws NamingException {
@@ -38,24 +59,5 @@ public class LightmareInitialContextFactoryBuilder implements
 	}
 
 	return initialContextFactory;
-    }
-
-    private InitialContextFactory simulateBuilderLessNamingManager(
-	    String requestedFactory) throws NoInitialContextException {
-
-	InitialContextFactory factory;
-	Class<?> requestedClass;
-	try {
-	    requestedClass = MetaUtils.initClassForName(requestedFactory);
-	    factory = ObjectUtils.cast(requestedClass.newInstance(),
-		    InitialContextFactory.class);
-	} catch (Exception ex) {
-	    NoInitialContextException ne = new NoInitialContextException(
-		    "Could not find initial cotext");
-	    ne.setRootCause(ex);
-	    throw ne;
-	}
-
-	return factory;
     }
 }
