@@ -99,6 +99,7 @@ public class MetaCreator {
     private static MetaCreator get() {
 
 	MetaCreator creator = MetaContainer.getCreator();
+
 	if (creator == null) {
 	    LOCK.lock();
 	    try {
