@@ -19,8 +19,8 @@ import org.lightmare.utils.ObjectUtils;
 import org.osjava.sj.memory.MemoryContext;
 
 /**
- * Extensions of simple JNDI {@link MemoryContext} for {@link EntityManager}
- * retrieving
+ * Extension of simple JNDI {@link MemoryContext} for EJB bean interface,
+ * {@link UserTransaction} and {@link EntityManager} caching and retrieving
  * 
  * @author levan
  * 
