@@ -8,7 +8,7 @@ package org.lightmare.jpa.jta;
  */
 public enum HibernateConfig {
 
-    // JTA configuration for Hibernate
+    // JTA configuration for Hibernate deployment
     PLATFORM("hibernate.transaction.jta.platform",
 	    "org.hibernate.service.jta.platform.internal.BitronixJtaPlatform"), // JTA
 										// platform
