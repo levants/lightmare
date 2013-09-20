@@ -8,6 +8,7 @@ package org.lightmare.utils;
  */
 public class NamingUtils {
 
+    // User transaction JNDI name
     public static final String USER_TRANSACTION_NAME = "java:comp/UserTransaction";
 
     // String prefixes for JNDI names
