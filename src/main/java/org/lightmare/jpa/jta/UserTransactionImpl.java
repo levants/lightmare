@@ -139,7 +139,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    SystemException {
 
 	try {
-	    if (ObjectUtils.available(transactions)) {
+	    if (CollectionUtils.available(transactions)) {
 		rollbackAll();
 	    }
 	} finally {
