@@ -132,7 +132,7 @@ public class CollectionUtils {
 	return !valid(chars);
     }
 
-    public static boolean availableAll(Collection<?>... collections) {
+    public static boolean validAll(Collection<?>... collections) {
 
 	boolean avaliable = ObjectUtils.notNull(collections);
 	if (avaliable) {

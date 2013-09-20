@@ -129,7 +129,7 @@ public class MetaData {
      */
     public void addUnitFields(Collection<Field> unitFields) {
 
-	if (CollectionUtils.availableAll(connections, unitFields)) {
+	if (CollectionUtils.validAll(connections, unitFields)) {
 	    String unitName;
 	    for (Field unitField : unitFields) {
 		unitName = unitField.getAnnotation(PersistenceUnit.class)
