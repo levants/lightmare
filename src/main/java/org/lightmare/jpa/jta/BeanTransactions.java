@@ -197,7 +197,7 @@ public class BeanTransactions {
 	    Collection<EntityManager> ems) {
 
 	Collection<TransactionData> entityTransactions = null;
-	if (ObjectUtils.available(ems)) {
+	if (CollectionUtils.available(ems)) {
 	    entityTransactions = new ArrayList<TransactionData>();
 	    for (EntityManager em : ems) {
 		EntityTransaction entityTransaction = getEntityTransaction(em);
