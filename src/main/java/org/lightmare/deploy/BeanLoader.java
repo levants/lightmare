@@ -253,7 +253,7 @@ public class BeanLoader {
 	    synchronized (semaphore) {
 		if (ObjectUtils.notTrue(semaphore.isCheck())) {
 		    try {
-			OrmCreator orm = OrmCreator.get(creator);
+			ORMCreator orm = ORMCreator.get(creator);
 			orm.configureConnection(unitName, beanName, loader,
 				configuration);
 		    } finally {

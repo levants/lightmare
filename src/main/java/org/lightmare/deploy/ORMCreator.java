@@ -18,13 +18,13 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
-public class OrmCreator {
+public class ORMCreator {
 
     private MetaCreator creator;
 
     private AnnotationDB annotationDB;
 
-    private OrmCreator(MetaCreator creator) {
+    private ORMCreator(MetaCreator creator) {
 
 	this.creator = creator;
 	this.annotationDB = creator.getAnnotationDB();
@@ -152,8 +152,8 @@ public class OrmCreator {
 		.create(unitName);
     }
 
-    protected static OrmCreator get(MetaCreator creator) {
+    protected static ORMCreator get(MetaCreator creator) {
 
-	return new OrmCreator(creator);
+	return new ORMCreator(creator);
     }
 }
