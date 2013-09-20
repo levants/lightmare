@@ -180,6 +180,7 @@ public class LibraryLoader {
     public static ClassLoader getEnrichedLoader(URL[] urls, ClassLoader parent) {
 
 	ClassLoader enrichedLoader = null;
+	
 	if (CollectionUtils.available(urls)) {
 	    if (parent == null) {
 		parent = getContextClassLoader();
