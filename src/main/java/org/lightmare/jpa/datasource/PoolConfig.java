@@ -12,7 +12,6 @@ import java.util.Set;
 
 import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.libraries.LibraryLoader;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
