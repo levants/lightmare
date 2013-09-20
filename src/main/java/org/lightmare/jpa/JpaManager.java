@@ -120,7 +120,7 @@ public class JpaManager {
 	    loader = LibraryLoader.getContextClassLoader();
 	}
 
-	if (ObjectUtils.available(classes)) {
+	if (CollectionUtils.available(classes)) {
 
 	    builder.setClasses(classes);
 	    // Loads entity classes to current ClassLoader instance
