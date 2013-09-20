@@ -71,7 +71,7 @@ public class JpaManager {
      */
     private boolean checkForBuild() {
 
-	return CollectionUtils.valid(classes) || CollectionUtils.valid(path)
+	return CollectionUtils.valid(classes) || StringUtils.valid(path)
 		|| checkForURL() || swapDataSource || scanArchives;
     }
 
