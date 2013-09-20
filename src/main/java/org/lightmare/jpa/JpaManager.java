@@ -111,7 +111,7 @@ public class JpaManager {
 
 	Ejb3ConfigurationImpl cfg;
 
-	boolean pathCheck = ObjectUtils.available(path);
+	boolean pathCheck = CollectionUtils.available(path);
 	boolean urlCheck = checkForURL();
 
 	Ejb3ConfigurationImpl.Builder builder = new Ejb3ConfigurationImpl.Builder();
