@@ -217,7 +217,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private boolean checkNewEms() {
 
-	boolean notEmpty = ObjectUtils.available(requareNewEms);
+	boolean notEmpty = CollectionUtils.available(requareNewEms);
 
 	return notEmpty;
     }
