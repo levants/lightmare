@@ -144,7 +144,7 @@ public class PoolConfig {
 	String key;
 	for (ConnectionConfig usdKey : usdKeys) {
 	    key = usdKey.name;
-	    if (ObjectUtils.available(key)) {
+	    if (CollectionUtils.available(key)) {
 		keys.add(key);
 	    }
 	}
