@@ -167,6 +167,7 @@ public class JpaManager {
      */
     private EntityManagerFactory createEntityManagerFactory(String unitName)
 	    throws IOException {
+
 	EntityManagerFactory emf;
 	if (checkForBuild()) {
 	    emf = buildEntityManagerFactory(unitName);
