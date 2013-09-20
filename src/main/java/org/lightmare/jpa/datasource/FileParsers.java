@@ -219,7 +219,7 @@ public class FileParsers {
 	    NodeList initPoolSizeList = thisElement
 		    .getElementsByTagName(INITIAL_POOL_TAG);
 	    elementLength = initPoolSizeList.getLength();
-	    if (elementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
+	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
 	    Element initPoolSizeElement = (Element) getFirst(initPoolSizeList);
