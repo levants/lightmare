@@ -164,7 +164,7 @@ public class ParamBuilder {
 	exts = uriInfo.getQueryParameters(decode);
 	addAll(exts, params);
 	Map<String, Cookie> cookies = request.getCookies();
-	if (ObjectUtils.available(cookies)) {
+	if (CollectionUtils.available(cookies)) {
 	    for (Map.Entry<String, Cookie> entry : cookies.entrySet()) {
 		params.putSingle(entry.getKey(), entry.getValue().toString());
 	    }
