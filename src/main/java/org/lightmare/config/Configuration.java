@@ -82,7 +82,7 @@ public class Configuration implements Cloneable {
 
 	V def;
 	Map<K, V> subConfig = getAsMap(key);
-	if (ObjectUtils.available(subConfig)) {
+	if (CollectionUtils.available(subConfig)) {
 	    def = subConfig.get(subKey);
 	    if (def == null) {
 		def = defaultValue;
