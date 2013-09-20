@@ -204,7 +204,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private boolean checkNews() {
 
-	boolean notEmpty = ObjectUtils.available(requareNews);
+	boolean notEmpty = CollectionUtils.available(requareNews);
 
 	return notEmpty;
     }
