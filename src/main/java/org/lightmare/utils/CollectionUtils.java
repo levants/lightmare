@@ -176,6 +176,7 @@ public class CollectionUtils {
     private static <T> T getFirstFromList(List<T> list) {
 
 	T value;
+
 	if (ObjectUtils.available(list)) {
 	    value = list.get(FIRST_INDEX);
 	} else {
