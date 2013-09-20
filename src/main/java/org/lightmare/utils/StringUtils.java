@@ -98,7 +98,7 @@ public class StringUtils {
 	return resultText;
     }
 
-    public static boolean notContains(String text, String item) {
+    public static boolean notContains(String text, CharSequence item) {
 
 	boolean contains = text.contains(item);
 
