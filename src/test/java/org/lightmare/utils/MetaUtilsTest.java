@@ -53,7 +53,7 @@ public class MetaUtilsTest {
 	    boolean last = Boolean.FALSE;
 	    StackTraceElement[] elements = Thread.currentThread()
 		    .getStackTrace();
-	    if (CollectionUtils.available(elements)) {
+	    if (CollectionUtils.valid(elements)) {
 		int length = elements.length;
 		int trace = 0;
 		StackTraceElement element;

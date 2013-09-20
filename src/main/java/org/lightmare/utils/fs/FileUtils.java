@@ -75,7 +75,7 @@ public class FileUtils {
 
 	if (file.isDirectory()) {
 	    File[] subFiles = listJavaFiles(file);
-	    if (CollectionUtils.available(subFiles)) {
+	    if (CollectionUtils.valid(subFiles)) {
 		addSubDirectory(subFiles, urls);
 	    }
 	} else {
@@ -128,7 +128,7 @@ public class FileUtils {
 	boolean isEarDir = file.isDirectory();
 	if (isEarDir) {
 	    File[] files = file.listFiles();
-	    isEarDir = CollectionUtils.available(files);
+	    isEarDir = CollectionUtils.valid(files);
 	    if (isEarDir) {
 		String path = file.getPath();
 		String delim;
@@ -158,7 +158,7 @@ public class FileUtils {
 
 	if (file.isDirectory()) {
 	    File[] subFiles = file.listFiles();
-	    if (CollectionUtils.available(subFiles)) {
+	    if (CollectionUtils.valid(subFiles)) {
 		for (File subFile : subFiles) {
 		    deleteFile(subFile);
 		}

@@ -13,7 +13,7 @@ public class LogUtils {
     public static String logMessage(String message, Object... formats) {
 
 	String logMessage;
-	if (CollectionUtils.available(formats)) {
+	if (CollectionUtils.valid(formats)) {
 	    logMessage = String.format(message, formats);
 	} else {
 	    logMessage = message;

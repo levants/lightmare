@@ -112,7 +112,7 @@ public class MetaCreator {
 
     private void configure(URL[] archives) {
 
-	if (configuration == null && CollectionUtils.available(archives)) {
+	if (configuration == null && CollectionUtils.valid(archives)) {
 	    configuration = MetaContainer.getConfig(archives);
 	}
     }
@@ -344,7 +344,7 @@ public class MetaCreator {
 	    // Gets and caches class loader
 	    current = LibraryLoader.getContextClassLoader();
 	    archivesURLs = new HashMap<URL, ArchiveData>();
-	    if (CollectionUtils.available(archives)) {
+	    if (CollectionUtils.valid(archives)) {
 		realURL = new HashMap<URL, DeployData>();
 	    }
 	    URL[] fullArchives = getFullArchives(archives);
@@ -412,7 +412,7 @@ public class MetaCreator {
 		deployFile = new File(deployment.getPath());
 		if (deployment.isScan()) {
 		    String[] subDeployments = deployFile.list();
-		    if (CollectionUtils.available(subDeployments)) {
+		    if (CollectionUtils.valid(subDeployments)) {
 			pathList.addAll(Arrays.asList(subDeployments));
 		    }
 		}

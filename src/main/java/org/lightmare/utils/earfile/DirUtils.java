@@ -76,7 +76,7 @@ public class DirUtils extends AbstractIOUtils {
 
 	String jarPath;
 	URL jarURL;
-	if (CollectionUtils.available(libJars)) {
+	if (CollectionUtils.valid(libJars)) {
 
 	    for (File libFile : libJars) {
 		URL url = libFile.toURI().toURL();
@@ -101,7 +101,7 @@ public class DirUtils extends AbstractIOUtils {
 	    }
 	});
 
-	if (CollectionUtils.available(files)) {
+	if (CollectionUtils.valid(files)) {
 	    for (File libDirectory : files) {
 		fillLibs(libDirectory);
 	    }
@@ -155,7 +155,7 @@ public class DirUtils extends AbstractIOUtils {
     @Override
     protected void scanArchive(Object... args) throws IOException {
 
-	if (CollectionUtils.available(args)) {
+	if (CollectionUtils.valid(args)) {
 	    xmlFromJar = (Boolean) CollectionUtils.getFirst(args);
 	}
 

@@ -80,7 +80,7 @@ public class BeanTransactions {
 
 	// If entityTransactions array is available then adds it to
 	// UserTransaction object
-	if (CollectionUtils.available(entityTransactions)) {
+	if (CollectionUtils.valid(entityTransactions)) {
 
 	    UserTransactionImpl userTransactionImpl = ObjectUtils.cast(
 		    transaction, UserTransactionImpl.class);

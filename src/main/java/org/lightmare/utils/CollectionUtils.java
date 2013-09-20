@@ -95,7 +95,7 @@ public class CollectionUtils {
      */
     public static boolean invalidAll(Collection<?>... collections) {
 
-	return !available(collections);
+	return !valid(collections);
     }
 
     public static boolean validAll(Map<?, ?>... maps) {
@@ -112,14 +112,14 @@ public class CollectionUtils {
 	return avaliable;
     }
 
-    public static boolean available(Object[] array) {
+    public static boolean valid(Object[] array) {
 
 	return array != null && array.length > EMPTY_ARRAY_LENGTH;
     }
 
     public static boolean notAvailable(Object[] array) {
 
-	return !available(array);
+	return !valid(array);
     }
 
     public static boolean available(CharSequence chars) {
@@ -154,7 +154,7 @@ public class CollectionUtils {
 	    int length = arrays.length;
 	    for (int i = 0; i < length && avaliable; i++) {
 		collection = arrays[i];
-		avaliable = avaliable && available(collection);
+		avaliable = avaliable && valid(collection);
 	    }
 	}
 
@@ -264,7 +264,7 @@ public class CollectionUtils {
 
 	List<T> collection;
 
-	if (available(array)) {
+	if (valid(array)) {
 	    collection = Arrays.asList(array);
 	} else {
 	    collection = null;
@@ -436,7 +436,7 @@ public class CollectionUtils {
 
 	T value;
 
-	if (available(values)) {
+	if (valid(values)) {
 	    value = values[FIRST_INDEX];
 	} else {
 	    value = null;

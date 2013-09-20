@@ -41,7 +41,7 @@ public class UserTransactionImpl implements UserTransaction {
 
 	this.transactions = new Stack<EntityTransaction>();
 
-	if (CollectionUtils.available(transactions)) {
+	if (CollectionUtils.valid(transactions)) {
 	    addTransactions(transactions);
 	}
     }

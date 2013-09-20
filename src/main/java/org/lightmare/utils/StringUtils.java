@@ -62,7 +62,7 @@ public class StringUtils {
 
 	String concat;
 
-	if (CollectionUtils.available(tockens)) {
+	if (CollectionUtils.valid(tockens)) {
 	    StringBuilder builder = new StringBuilder();
 	    append(tockens, builder);
 	    concat = builder.toString();
@@ -83,7 +83,7 @@ public class StringUtils {
 
 	String resultText;
 
-	if (CollectionUtils.available(parts)) {
+	if (CollectionUtils.valid(parts)) {
 
 	    StringBuilder resultBuider = new StringBuilder();
 	    for (Object part : parts) {

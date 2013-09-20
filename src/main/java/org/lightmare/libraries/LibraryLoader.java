@@ -181,7 +181,7 @@ public class LibraryLoader {
 
 	ClassLoader enrichedLoader;
 
-	if (CollectionUtils.available(urls)) {
+	if (CollectionUtils.valid(urls)) {
 	    if (parent == null) {
 		parent = getContextClassLoader();
 	    }
@@ -339,7 +339,7 @@ public class LibraryLoader {
      */
     public static void loadLibraries(String... libraryPaths) throws IOException {
 
-	if (CollectionUtils.available(libraryPaths)) {
+	if (CollectionUtils.valid(libraryPaths)) {
 	    for (String libraryPath : libraryPaths) {
 		loadLibraryFromPath(libraryPath);
 	    }

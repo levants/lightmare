@@ -191,7 +191,7 @@ public class Watcher implements Runnable {
 
     private static void fillFileList(File[] files, List<File> list) {
 
-	if (CollectionUtils.available(files)) {
+	if (CollectionUtils.valid(files)) {
 	    for (File file : files) {
 		list.add(file);
 	    }
@@ -393,7 +393,7 @@ public class Watcher implements Runnable {
 	    if (scan) {
 		directory = new File(path);
 		files = directory.listFiles();
-		if (CollectionUtils.available(files)) {
+		if (CollectionUtils.valid(files)) {
 		    registerPaths(files, fs, watch);
 		}
 	    } else {

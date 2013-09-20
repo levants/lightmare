@@ -130,7 +130,7 @@ public class ObjectUtils {
      */
     public static void closeAll(Closeable... closeables) throws IOException {
 
-	if (CollectionUtils.available(closeables)) {
+	if (CollectionUtils.valid(closeables)) {
 	    for (Closeable closeable : closeables) {
 		close(closeable);
 	    }
