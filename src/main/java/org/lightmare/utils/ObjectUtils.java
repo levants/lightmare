@@ -67,13 +67,7 @@ public class ObjectUtils {
      */
     public static <X, Y> boolean notEquals(X x, Y y) {
 
-	boolean valid;
-
-	if (x.getClass().isPrimitive() || y.getClass().isPrimitive()) {
-	    valid = x != y;
-	} else {
-	    valid = !x.equals(y);
-	}
+	boolean valid = !x.equals(y);
 
 	return valid;
     }
