@@ -201,7 +201,7 @@ public class Initializer {
 
 	Collection<String> jndiNames = FileParsers
 		.dataSourceNames(dataSourcePath);
-	if (ObjectUtils.available(dataSourcePath)) {
+	if (CollectionUtils.available(dataSourcePath)) {
 
 	    for (String jndiName : jndiNames) {
 		close(jndiName);
