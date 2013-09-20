@@ -413,7 +413,7 @@ public class BeanLoader {
 	    Resource resource;
 	    EJB ejbAnnot;
 
-	    if (CollectionUtils.notAvailable(fields)) {
+	    if (CollectionUtils.invalid(fields)) {
 		releaseBlocker();
 	    }
 
@@ -602,8 +602,8 @@ public class BeanLoader {
 			.toArray(new Class<?>[interfacesList.size()]);
 	    }
 
-	    if (CollectionUtils.notAvailable(localInterface)
-		    && CollectionUtils.notAvailable(remoteInterface)) {
+	    if (CollectionUtils.invalid(localInterface)
+		    && CollectionUtils.invalid(remoteInterface)) {
 
 		localInterface = interfaces;
 	    }

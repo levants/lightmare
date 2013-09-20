@@ -117,7 +117,7 @@ public class CollectionUtils {
 	return array != null && array.length > EMPTY_ARRAY_LENGTH;
     }
 
-    public static boolean notAvailable(Object[] array) {
+    public static boolean invalid(Object[] array) {
 
 	return !valid(array);
     }
