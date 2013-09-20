@@ -41,7 +41,7 @@ public class Security {
     public void cacheUsers() throws IOException {
 
 	String path = Configuration.getAdminUsersPath();
-	if (CollectionUtils.notAvailable(path)) {
+	if (CollectionUtils.invalid(path)) {
 	    path = ConfigKeys.ADMIN_USERS_PATH.getValue();
 	}
 

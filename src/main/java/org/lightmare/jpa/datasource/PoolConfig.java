@@ -244,7 +244,7 @@ public class PoolConfig {
 	Map<Object, Object> properties;
 
 	InputStream stream;
-	if (CollectionUtils.notAvailable(poolPath)) {
+	if (CollectionUtils.invalid(poolPath)) {
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    stream = loader.getResourceAsStream(POOL_PATH_DEF_VALUE);
 	} else {

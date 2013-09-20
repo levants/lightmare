@@ -127,7 +127,7 @@ public class CollectionUtils {
 	return chars != null && chars.length() > EMPTY_ARRAY_LENGTH;
     }
 
-    public static boolean notAvailable(CharSequence chars) {
+    public static boolean invalid(CharSequence chars) {
 
 	return !valid(chars);
     }
