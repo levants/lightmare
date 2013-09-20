@@ -552,7 +552,7 @@ public class BeanLoader {
 
 	    List<Method> beanMethods = MetaUtils.getAnnotatedMethods(beanClass,
 		    Interceptors.class);
-	    if (ObjectUtils.available(beanMethods)) {
+	    if (CollectionUtils.available(beanMethods)) {
 		for (Method beanMethod : beanMethods) {
 		    interceptors = beanMethod.getAnnotation(Interceptors.class);
 		    cacheInterceptors(interceptors, beanClass, beanMethod);
