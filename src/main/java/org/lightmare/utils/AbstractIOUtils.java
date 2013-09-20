@@ -211,12 +211,15 @@ public abstract class AbstractIOUtils {
 	    throws IOException {
 
 	AbstractIOUtils ioUtils = null;
+
 	File appFile;
+
 	try {
 	    appFile = new File(url.toURI());
 	} catch (URISyntaxException ex) {
 	    throw new IOException(ex);
 	}
+
 	FileType typToCheck = fileType;
 	if (fileType == null) {
 	    typToCheck = getType(appFile);
