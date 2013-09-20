@@ -61,35 +61,21 @@ public class ObjectUtils {
     /**
      * Checks if parameters not equals
      * 
-     * @param data1
-     * @param data2
-     * @return <code>boolean</code>
-     */
-    public static boolean notEquals(Object data1, Object data2) {
-
-	return !data1.equals(data2);
-    }
-
-    public static boolean notEquals(byte x, byte y) {
-
-	return x != y;
-    }
-
-    public static boolean notEquals(short x, short y) {
-
-	return x != y;
-    }
-
-    /**
-     * Checks if parameters not equals
-     * 
      * @param x
      * @param y
      * @return <code>boolean</code>
      */
-    public static boolean notEquals(int x, int y) {
+    public static <T, E> boolean notEquals(T x, E y) {
 
-	return x != y;
+	boolean valid;
+
+	if (x.getClass().isPrimitive() || y.getClass().isPrimitive()) {
+	    valid = x != y;
+	} else {
+	    valid = !x.equals(y);
+	}
+
+	return valid;
     }
 
     public static boolean notNullNotEquals(Object data1, Object data2) {
