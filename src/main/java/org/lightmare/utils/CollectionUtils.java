@@ -221,7 +221,7 @@ public class CollectionUtils {
 	int length = keys.length - 1;
 	Object[] subKeys = new Object[length];
 	Object key = keys[length];
-	for (int i = 0; i < length; i++) {
+	for (int i = FIRST_INDEX; i < length; i++) {
 	    subKeys[i] = keys[i];
 	}
 
