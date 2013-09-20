@@ -137,7 +137,7 @@ public class CollectionUtils {
 	boolean avaliable = ObjectUtils.notNull(collections);
 	if (avaliable) {
 	    Collection<?> collection;
-	    for (int i = 0; i < collections.length && avaliable; i++) {
+	    for (int i = FIRST_INDEX; i < collections.length && avaliable; i++) {
 		collection = collections[i];
 		avaliable = avaliable && valid(collection);
 	    }
