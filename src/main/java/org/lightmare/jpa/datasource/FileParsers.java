@@ -19,6 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
 import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.w3c.dom.Document;
@@ -83,7 +84,7 @@ public class FileParsers {
      */
     private static Node getFirst(NodeList list) {
 
-	return list.item(ObjectUtils.FIRST_INDEX);
+	return list.item(CollectionUtils.FIRST_INDEX);
     }
 
     /**
