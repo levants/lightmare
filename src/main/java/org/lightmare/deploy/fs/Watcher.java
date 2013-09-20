@@ -425,7 +425,7 @@ public class Watcher implements Runnable {
 	    if (CollectionUtils.available(deployments)) {
 		registerPaths(deployments, fs, watch);
 	    }
-	    if (ObjectUtils.available(dataSources)) {
+	    if (CollectionUtils.available(dataSources)) {
 		registerDsPaths(dataSources, fs, watch);
 	    }
 	} catch (IOException ex) {
