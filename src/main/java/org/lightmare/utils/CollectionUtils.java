@@ -428,7 +428,7 @@ public class CollectionUtils {
 
 	T value;
 
-	if (ObjectUtils.available(values)) {
+	if (available(values)) {
 	    value = values[FIRST_INDEX];
 	} else {
 	    value = null;
