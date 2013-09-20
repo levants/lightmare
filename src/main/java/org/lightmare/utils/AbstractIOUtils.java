@@ -428,8 +428,9 @@ public abstract class AbstractIOUtils {
 
     public URL[] getURLs() {
 
-	List<URL> fullURLs = new ArrayList<URL>();
 	URL[] urls;
+
+	List<URL> fullURLs = new ArrayList<URL>();
 
 	if (ObjectUtils.notNull(ejbURLs)) {
 	    fullURLs.addAll(ejbURLs);
