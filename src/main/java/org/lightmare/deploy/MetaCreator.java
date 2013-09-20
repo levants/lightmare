@@ -402,7 +402,7 @@ public class MetaCreator {
     public void scanForBeans(String... paths) throws IOException {
 
 	if (CollectionUtils.notAvailable(paths)
-		&& ObjectUtils.available(configuration.getDeploymentPath())) {
+		&& CollectionUtils.available(configuration.getDeploymentPath())) {
 
 	    Set<DeploymentDirectory> deployments = configuration
 		    .getDeploymentPath();
