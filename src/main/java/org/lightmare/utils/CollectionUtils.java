@@ -198,7 +198,7 @@ public class CollectionUtils {
 	Map<?, ?> result = from;
 	int length = keys.length;
 	Object key;
-	for (int i = 0; i < length && ObjectUtils.notNull(result); i++) {
+	for (int i = FIRST_INDEX; i < length && ObjectUtils.notNull(result); i++) {
 	    key = keys[i];
 	    result = getAsMap(key, result);
 	}
