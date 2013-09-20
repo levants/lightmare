@@ -98,6 +98,7 @@ public class ORMCreator {
 	if (configClone.getAnnotatedUnitName() == null) {
 	    classes = CollectionUtils.translateToList(classSet);
 	} else {
+
 	    Set<String> filtereds = new HashSet<String>();
 	    boolean valid;
 	    for (String className : classSet) {
