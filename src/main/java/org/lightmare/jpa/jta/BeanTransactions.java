@@ -82,8 +82,9 @@ public class BeanTransactions {
 	// UserTransaction object
 	if (CollectionUtils.available(entityTransactions)) {
 
-	    ((UserTransactionImpl) transaction)
-		    .addTransactions(entityTransactions);
+	    UserTransactionImpl userTransactionImpl = ObjectUtils.cast(
+		    transaction, UserTransactionImpl.class);
+	    userTransactionImpl.addTransactions(entityTransactions);
 	}
 
 	return transaction;
