@@ -67,6 +67,7 @@ public class CollectionUtils {
     public static <T> List<T> translateToList(Collection<T> collection) {
 
 	List<T> list;
+
 	if (ObjectUtils.available(collection)) {
 	    list = new ArrayList<T>(collection);
 	} else {
