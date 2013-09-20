@@ -160,7 +160,7 @@ public class FileParsers {
 	    Element thisElement = (Element) nodeList.item(i);
 	    NodeList userList = thisElement.getElementsByTagName(USER_TAG);
 	    int elementLength = userList.getLength();
-	    if (elementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
+	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
 	    Element userElement = (Element) getFirst(userList);
