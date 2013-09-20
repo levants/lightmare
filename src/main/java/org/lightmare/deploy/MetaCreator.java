@@ -357,7 +357,7 @@ public class MetaCreator {
 		    Stateless.class.getName());
 	    classOwnersURL = annotationDB.getClassOwnersURLs();
 	    Initializer.initializeDataSources(configuration);
-	    if (ObjectUtils.available(beanNames)) {
+	    if (CollectionUtils.available(beanNames)) {
 		deployBeans(beanNames);
 	    }
 
