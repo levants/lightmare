@@ -278,7 +278,7 @@ public class MetaContainer {
 
 	synchronized (MetaContainer.class) {
 	    Collection<String> beanNames = EJB_URLS.get(url);
-	    if (ObjectUtils.notAvailable(beanNames)) {
+	    if (CollectionUtils.notAvailable(beanNames)) {
 		beanNames = new HashSet<String>();
 		EJB_URLS.put(url, beanNames);
 	    }
