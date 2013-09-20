@@ -65,7 +65,7 @@ public class ResourceBuilder {
 
 	// Defines media type
 	MediaType type;
-	if (ObjectUtils.available(consumedTypes)) {
+	if (CollectionUtils.available(consumedTypes)) {
 	    type = CollectionUtils.getFirst(consumedTypes);
 	} else {
 	    type = null;
