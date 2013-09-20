@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -127,7 +128,7 @@ public class PoolConfig {
 	for (Defaults config : defaults) {
 	    key = config.key;
 	    value = config.value;
-	    if (ObjectUtils.available(key) && ObjectUtils.available(value)) {
+	    if (CollectionUtils.available(key) && ObjectUtils.available(value)) {
 		c3p0Properties.put(key, value);
 	    }
 	}
