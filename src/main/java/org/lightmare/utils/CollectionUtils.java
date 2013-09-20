@@ -93,7 +93,7 @@ public class CollectionUtils {
      * @param collections
      * @return <code>boolean</code>
      */
-    public static boolean notAvailable(Collection<?>... collections) {
+    public static boolean invalidAll(Collection<?>... collections) {
 
 	return !available(collections);
     }
