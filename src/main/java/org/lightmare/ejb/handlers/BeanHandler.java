@@ -165,6 +165,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     public void configure() throws IOException {
+
 	// TODO Add other configurations
 	configureInjects();
     }
