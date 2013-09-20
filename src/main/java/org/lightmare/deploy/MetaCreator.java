@@ -112,7 +112,7 @@ public class MetaCreator {
 
     private void configure(URL[] archives) {
 
-	if (configuration == null && ObjectUtils.available(archives)) {
+	if (configuration == null && CollectionUtils.available(archives)) {
 	    configuration = MetaContainer.getConfig(archives);
 	}
     }
