@@ -10,6 +10,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -59,7 +60,7 @@ public class JndiManager {
 	 */
 	protected static Properties getConfig() {
 
-	    if (ObjectUtils.notAvailable(CONFIG)) {
+	    if (CollectionUtils.notAvailable(CONFIG)) {
 
 		JNDIParameters[] parameters = JNDIParameters.values();
 
