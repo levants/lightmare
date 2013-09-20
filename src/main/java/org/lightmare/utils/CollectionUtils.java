@@ -103,7 +103,7 @@ public class CollectionUtils {
 	boolean avaliable = ObjectUtils.notNull(maps);
 	if (avaliable) {
 	    Map<?, ?> map;
-	    for (int i = 0; i < maps.length && avaliable; i++) {
+	    for (int i = FIRST_INDEX; i < maps.length && avaliable; i++) {
 		map = maps[i];
 		avaliable = avaliable && valid(map);
 	    }
