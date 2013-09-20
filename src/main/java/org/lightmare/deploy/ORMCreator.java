@@ -26,15 +26,12 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class ORMCreator {
 
-    private MetaCreator creator;
-
     private Map<String, AbstractIOUtils> aggregateds;
 
     private AnnotationDB annotationDB;
 
     private ORMCreator(MetaCreator creator) {
 
-	this.creator = creator;
 	this.aggregateds = creator.getAggregateds();
 	this.annotationDB = creator.getAnnotationDB();
     }
