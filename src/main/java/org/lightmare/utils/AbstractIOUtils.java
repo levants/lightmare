@@ -58,7 +58,7 @@ public abstract class AbstractIOUtils {
 
     protected boolean executed;
 
-    // Cached file types and extentions
+    // Cached file types and extensions
     public static final String JAR = "jar";
 
     public static final String JAR_FILE_EXT = ".jar";
