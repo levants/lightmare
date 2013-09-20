@@ -530,7 +530,7 @@ public class BeanLoader {
 		Class<?> beanClass, Method... beanMethods) throws IOException {
 
 	    Class<?>[] interceptorClasses = interceptors.value();
-	    if (ObjectUtils.available(interceptorClasses)) {
+	    if (CollectionUtils.available(interceptorClasses)) {
 		Method beanMethod = CollectionUtils.getFirst(beanMethods);
 		cacheInterceptors(beanClass, interceptorClasses, beanMethod);
 	    }
