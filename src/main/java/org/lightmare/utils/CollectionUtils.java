@@ -275,7 +275,7 @@ public class CollectionUtils {
 
 	List<T> list;
 
-	if (ObjectUtils.available(collection)) {
+	if (available(collection)) {
 	    list = new ArrayList<T>(collection);
 	} else {
 	    list = Collections.emptyList();
