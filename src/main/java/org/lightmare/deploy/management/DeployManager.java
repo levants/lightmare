@@ -225,8 +225,7 @@ public class DeployManager extends HttpServlet {
 	    valid = ObjectUtils.notNull(pass);
 	    if (valid) {
 		valid = (pass instanceof DeployPass)
-			&& (CollectionUtils
-				.valid(((DeployPass) pass).userName));
+			&& (StringUtils.valid(((DeployPass) pass).userName));
 	    } else {
 		valid = security.check();
 	    }
