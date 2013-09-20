@@ -142,6 +142,7 @@ public class OrmCreator {
 		String fileNameForBean = classOwnersFiles.get(beanName);
 		filterEntitiesForJar(classSet, fileNameForBean);
 	    }
+
 	    List<String> classes = filterEntities(classSet, configClone);
 	    builder.setClasses(classes);
 	}
