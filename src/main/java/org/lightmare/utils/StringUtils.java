@@ -24,6 +24,17 @@ public class StringUtils {
 
     public static final int NOT_EXISTING_INDEX = -1;
 
+    public static boolean valid(CharSequence chars) {
+
+	return chars != null
+		&& chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
+    }
+
+    public static boolean invalid(CharSequence chars) {
+
+	return !valid(chars);
+    }
+
     /**
      * Appends contents of passed array to passed {@link StringBuilder} and for
      * each content if it is instance of array then append its content

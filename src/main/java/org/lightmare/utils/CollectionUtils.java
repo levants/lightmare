@@ -122,16 +122,6 @@ public class CollectionUtils {
 	return !valid(array);
     }
 
-    public static boolean valid(CharSequence chars) {
-
-	return chars != null && chars.length() > EMPTY_ARRAY_LENGTH;
-    }
-
-    public static boolean invalid(CharSequence chars) {
-
-	return !valid(chars);
-    }
-
     public static boolean validAll(Collection<?>... collections) {
 
 	boolean avaliable = ObjectUtils.notNull(collections);
