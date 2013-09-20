@@ -3,7 +3,6 @@ package org.lightmare.utils.beans;
 import javax.ejb.Stateless;
 
 import org.lightmare.utils.CollectionUtils;
-import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
@@ -56,7 +55,8 @@ public class BeanUtils {
 		    start);
 	} else if (interfaceName.endsWith(LOCAL_IDENT)) {
 	    start = interfaceName.lastIndexOf(LOCAL_IDENT);
-	    beanName = interfaceName.substring(CollectionUtils.FIRST_INDEX, start);
+	    beanName = interfaceName.substring(CollectionUtils.FIRST_INDEX,
+		    start);
 	} else {
 	    beanName = interfaceName;
 	}
@@ -68,7 +68,7 @@ public class BeanUtils {
 
 	Stateless annotation = beanClass.getAnnotation(Stateless.class);
 	String beanEjbName = annotation.name();
-	if (ObjectUtils.notAvailable(beanEjbName)) {
+	if (CollectionUtils.notAvailable(beanEjbName)) {
 	    beanEjbName = beanClass.getSimpleName();
 	}
 
