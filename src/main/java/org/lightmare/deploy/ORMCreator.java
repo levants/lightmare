@@ -158,6 +158,12 @@ public class ORMCreator {
 		.create(unitName);
     }
 
+    /**
+     * Instantiates ORMCreator by constructor
+     * 
+     * @param creator
+     * @return {@link ORMCreator}
+     */
     protected static ORMCreator get(MetaCreator creator) {
 
 	return new ORMCreator(creator);
