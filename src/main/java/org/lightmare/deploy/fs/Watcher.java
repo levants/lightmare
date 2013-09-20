@@ -210,7 +210,7 @@ public class Watcher implements Runnable {
 	Set<DeploymentDirectory> deploymetDirssCurrent;
 	for (Configuration config : configs) {
 	    deploymetDirssCurrent = config.getDeploymentPath();
-	    if (ObjectUtils.available(deploymetDirssCurrent)) {
+	    if (CollectionUtils.available(deploymetDirssCurrent)) {
 		deploymetDirss.addAll(deploymetDirssCurrent);
 	    }
 	}
