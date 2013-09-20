@@ -143,6 +143,7 @@ public class CollectionUtils {
     public static <T> T[] toArray(Collection<T> collection, Class<T> type) {
 
 	T[] array;
+
 	if (ObjectUtils.notNull(collection)) {
 	    array = toArray(type, collection.size());
 	    array = collection.toArray(array);
