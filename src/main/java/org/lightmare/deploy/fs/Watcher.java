@@ -422,7 +422,7 @@ public class Watcher implements Runnable {
 		LOG.error(ex.getMessage(), ex);
 		throw ex;
 	    }
-	    if (ObjectUtils.available(deployments)) {
+	    if (CollectionUtils.available(deployments)) {
 		registerPaths(deployments, fs, watch);
 	    }
 	    if (ObjectUtils.available(dataSources)) {
