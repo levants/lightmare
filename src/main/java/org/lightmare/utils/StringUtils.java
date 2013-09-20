@@ -97,4 +97,11 @@ public class StringUtils {
 
 	return resultText;
     }
+
+    public static boolean notContains(String text, String item) {
+
+	boolean contains = text.contains(item);
+
+	return ObjectUtils.notTrue(contains);
+    }
 }
