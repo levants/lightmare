@@ -147,6 +147,7 @@ public class NamingUtils {
     public static String toJndiDataSourceName(String clearName) {
 
 	String jndiName;
+
 	if (ObjectUtils.available(clearName)
 		&& ObjectUtils.notTrue(clearName.contains(DS_JNDI_FREFIX))) {
 	    jndiName = StringUtils.concat(DS_JNDI_FREFIX, clearName);
