@@ -545,7 +545,7 @@ public class MetaCreator {
 	 */
 	public Builder setPersistenceProperties(Map<String, String> properties) {
 
-	    if (ObjectUtils.available(properties)) {
+	    if (CollectionUtils.available(properties)) {
 		Map<Object, Object> persistenceProperties = initPersistenceProperties();
 		persistenceProperties.putAll(properties);
 	    }
