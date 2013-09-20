@@ -29,6 +29,7 @@ public class CollectionUtils {
     public static <T> Set<T> translateToSet(Collection<T> collection) {
 
 	Set<T> set;
+
 	if (ObjectUtils.available(collection)) {
 	    set = new HashSet<T>(collection);
 	} else {
