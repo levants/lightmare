@@ -225,6 +225,7 @@ public abstract class AbstractIOUtils {
 	if (fileType == null) {
 	    typToCheck = getType(appFile);
 	}
+
 	if (typToCheck.equals(FileType.EDIR)) {
 	    ioUtils = new DirUtils(appFile);
 	} else if (typToCheck.equals(FileType.EAR)) {
