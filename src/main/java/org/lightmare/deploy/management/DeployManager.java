@@ -147,7 +147,7 @@ public class DeployManager extends HttpServlet {
 	builder.append(DATA_SOURCES);
 	builder.append(END_TYPE_TAG);
 
-	if (ObjectUtils.available(dss)) {
+	if (CollectionUtils.available(dss)) {
 	    for (File ds : dss) {
 		tag = getTag(ds.getPath(), DTS_DEPLOYMENT_TYPE);
 		builder.append(tag);
