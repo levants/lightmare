@@ -192,6 +192,7 @@ public class JpaManager {
     private void bindJndiName(ConnectionSemaphore semaphore) throws IOException {
 
 	boolean bound = semaphore.isBound();
+
 	if (!bound) {
 	    String jndiName = semaphore.getJndiName();
 	    if (ObjectUtils.available(jndiName)) {
