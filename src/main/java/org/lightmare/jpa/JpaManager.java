@@ -106,6 +106,7 @@ public class JpaManager {
 	    throws IOException {
 
 	EntityManagerFactory emf;
+
 	Ejb3ConfigurationImpl cfg;
 
 	boolean pathCheck = ObjectUtils.available(path);
