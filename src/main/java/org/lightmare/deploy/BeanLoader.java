@@ -603,7 +603,7 @@ public class BeanLoader {
 	    }
 
 	    if (CollectionUtils.notAvailable(localInterface)
-		    && ObjectUtils.notAvailable(remoteInterface)) {
+		    && CollectionUtils.notAvailable(remoteInterface)) {
 
 		localInterface = interfaces;
 	    }
