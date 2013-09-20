@@ -23,6 +23,7 @@ import org.lightmare.ejb.handlers.BeanLocalHandlerFactory;
 import org.lightmare.ejb.handlers.RestHandler;
 import org.lightmare.ejb.handlers.ResthandlerFactory;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.reflect.MetaUtils;
@@ -65,7 +66,7 @@ public class EjbConnector {
 	if (connection.getEmf() == null) {
 	    String unitName = connection.getUnitName();
 
-	    if (ObjectUtils.available(unitName)) {
+	    if (CollectionUtils.available(unitName)) {
 		ConnectionSemaphore semaphore = ConnectionContainer
 			.getConnection(unitName);
 		connection.setConnection(semaphore);
