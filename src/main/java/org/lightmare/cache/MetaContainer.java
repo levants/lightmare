@@ -82,7 +82,7 @@ public class MetaContainer {
      */
     public static void putConfig(URL[] archives, Configuration config) {
 
-	if (ObjectUtils.available(archives)) {
+	if (CollectionUtils.available(archives)) {
 	    for (URL archive : archives) {
 		String path = WatchUtils.clearPath(archive.getFile());
 		if (CONFIGS.containsKey(path)) {
