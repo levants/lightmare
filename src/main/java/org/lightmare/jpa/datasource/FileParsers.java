@@ -207,7 +207,7 @@ public class FileParsers {
 	    NodeList maxPoolSizeList = thisElement
 		    .getElementsByTagName(MAX_POOL_TAG);
 	    elementLength = maxPoolSizeList.getLength();
-	    if (elementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
+	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
 	    Element maxPoolSizeElement = (Element) getFirst(maxPoolSizeList);
