@@ -40,7 +40,7 @@ public class EJBContainerImpl extends EJBContainer {
 	try {
 
 	    MetaCreator.Builder builder;
-	    if (CollectionUtils.available(properties)) {
+	    if (CollectionUtils.valid(properties)) {
 		Map<Object, Object> configuration = ObjectUtils
 			.cast(properties);
 		builder = new MetaCreator.Builder(configuration);

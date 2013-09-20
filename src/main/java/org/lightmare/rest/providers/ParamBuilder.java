@@ -139,7 +139,7 @@ public class ParamBuilder {
     private void addAll(MultivaluedMap<String, String> from,
 	    MultivaluedMap<String, String> to) {
 
-	if (CollectionUtils.available(from)) {
+	if (CollectionUtils.valid(from)) {
 	    copyAll(from, to);
 	}
     }
@@ -164,7 +164,7 @@ public class ParamBuilder {
 	exts = uriInfo.getQueryParameters(decode);
 	addAll(exts, params);
 	Map<String, Cookie> cookies = request.getCookies();
-	if (CollectionUtils.available(cookies)) {
+	if (CollectionUtils.valid(cookies)) {
 	    for (Map.Entry<String, Cookie> entry : cookies.entrySet()) {
 		params.putSingle(entry.getKey(), entry.getValue().toString());
 	    }

@@ -51,7 +51,7 @@ public class RestConfig extends ResourceConfig {
 		// configuration
 		this.addPreResources(config);
 		Map<String, Object> properties = config.getProperties();
-		if (CollectionUtils.available(properties)) {
+		if (CollectionUtils.valid(properties)) {
 		    addProperties(properties);
 		}
 	    }

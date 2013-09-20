@@ -34,7 +34,7 @@ public abstract class InitDataSource {
 
     public InitDataSource(Properties properties) {
 
-	if (CollectionUtils.available(properties)) {
+	if (CollectionUtils.valid(properties)) {
 
 	    this.properties = properties;
 	    this.poolConfig = Configuration.getPoolConfig();

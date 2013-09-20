@@ -262,7 +262,7 @@ public class MetaCreator {
 
 	// Archive file url which contains this bean
 	DeployData deployData;
-	if (CollectionUtils.available(realURL)) {
+	if (CollectionUtils.valid(realURL)) {
 	    deployData = realURL.get(currentURL);
 	} else {
 	    deployData = null;
@@ -447,21 +447,21 @@ public class MetaCreator {
 
 	if (locked) {
 	    try {
-		if (CollectionUtils.available(realURL)) {
+		if (CollectionUtils.valid(realURL)) {
 		    realURL.clear();
 		    realURL = null;
 		}
 
-		if (CollectionUtils.available(aggregateds)) {
+		if (CollectionUtils.valid(aggregateds)) {
 		    aggregateds.clear();
 		}
 
-		if (CollectionUtils.available(archivesURLs)) {
+		if (CollectionUtils.valid(archivesURLs)) {
 		    archivesURLs.clear();
 		    archivesURLs = null;
 		}
 
-		if (CollectionUtils.available(classOwnersURL)) {
+		if (CollectionUtils.valid(classOwnersURL)) {
 		    classOwnersURL.clear();
 		    classOwnersURL = null;
 		}
@@ -545,7 +545,7 @@ public class MetaCreator {
 	 */
 	public Builder setPersistenceProperties(Map<String, String> properties) {
 
-	    if (CollectionUtils.available(properties)) {
+	    if (CollectionUtils.valid(properties)) {
 		Map<Object, Object> persistenceProperties = initPersistenceProperties();
 		persistenceProperties.putAll(properties);
 	    }

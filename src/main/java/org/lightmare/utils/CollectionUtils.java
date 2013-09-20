@@ -59,7 +59,7 @@ public class CollectionUtils {
      * @param map
      * @return <code>boolean</code>
      */
-    public static boolean available(Map<?, ?> map) {
+    public static boolean valid(Map<?, ?> map) {
 
 	return map != null && !map.isEmpty();
     }
@@ -72,7 +72,7 @@ public class CollectionUtils {
      */
     public static boolean notAvailable(Map<?, ?> map) {
 
-	return !available(map);
+	return !valid(map);
     }
 
     /**
@@ -105,7 +105,7 @@ public class CollectionUtils {
 	    Map<?, ?> map;
 	    for (int i = 0; i < maps.length && avaliable; i++) {
 		map = maps[i];
-		avaliable = avaliable && available(map);
+		avaliable = avaliable && valid(map);
 	    }
 	}
 
@@ -171,7 +171,7 @@ public class CollectionUtils {
     public static <K, V> Map<K, V> getAsMap(Object key, Map<?, ?> from) {
 
 	Map<K, V> result;
-	if (available(from)) {
+	if (valid(from)) {
 	    Object objectValue = from.get(key);
 	    if (objectValue instanceof Map) {
 		result = ObjectUtils.cast(objectValue);
@@ -226,7 +226,7 @@ public class CollectionUtils {
 	}
 
 	Map<?, ?> result = getAsMap(from, subKeys);
-	if (available(result)) {
+	if (valid(result)) {
 	    value = ObjectUtils.cast(result.get(key));
 	} else {
 	    value = null;

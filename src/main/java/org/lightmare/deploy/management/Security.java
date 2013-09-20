@@ -60,7 +60,7 @@ public class Security {
 
 	boolean valid;
 
-	if (CollectionUtils.available(cache)) {
+	if (CollectionUtils.valid(cache)) {
 
 	    Object cacheData = cache.get(user);
 	    String cachedPass = ObjectUtils.cast(cacheData, String.class);

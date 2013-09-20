@@ -82,7 +82,7 @@ public class Configuration implements Cloneable {
 
 	V def;
 	Map<K, V> subConfig = getAsMap(key);
-	if (CollectionUtils.available(subConfig)) {
+	if (CollectionUtils.valid(subConfig)) {
 	    def = subConfig.get(subKey);
 	    if (def == null) {
 		def = defaultValue;
@@ -97,7 +97,7 @@ public class Configuration implements Cloneable {
     private <K> boolean containsSubConfigKey(Object key, K subKey) {
 
 	Map<K, ?> subConfig = getAsMap(key);
-	boolean valid = CollectionUtils.available(subConfig);
+	boolean valid = CollectionUtils.valid(subConfig);
 	if (valid) {
 	    valid = subConfig.containsKey(subKey);
 	}
@@ -243,7 +243,7 @@ public class Configuration implements Cloneable {
     private void configurePool() {
 
 	Map<Object, Object> poolProperties = getPoolConfigValue(ConfigKeys.POOL_PROPERTIES.key);
-	if (CollectionUtils.available(poolProperties)) {
+	if (CollectionUtils.valid(poolProperties)) {
 
 	    setPoolProperties(poolProperties);
 	}
