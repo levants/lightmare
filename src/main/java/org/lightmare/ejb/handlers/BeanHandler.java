@@ -335,7 +335,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    throws IOException {
 
 	Object[] intercepteds;
-	if (ObjectUtils.available(interceptorDatas)) {
+	if (CollectionUtils.available(interceptorDatas)) {
 
 	    Iterator<InterceptorData> interceptors = interceptorDatas
 		    .iterator();
