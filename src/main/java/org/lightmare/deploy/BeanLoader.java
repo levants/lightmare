@@ -314,7 +314,7 @@ public class BeanLoader {
 	private boolean checkOnEmf(String unitName, String jndiName) {
 
 	    boolean checkForEmf = ConnectionContainer.checkForEmf(unitName);
-	    if (ObjectUtils.available(jndiName)) {
+	    if (CollectionUtils.available(jndiName)) {
 		jndiName = NamingUtils.createJpaJndiName(jndiName);
 		checkForEmf = checkForEmf
 			&& ConnectionContainer.checkForEmf(jndiName);
