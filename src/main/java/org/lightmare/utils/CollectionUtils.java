@@ -376,7 +376,7 @@ public class CollectionUtils {
      */
     public static <T> T[] emptyArray(Class<T> type) {
 
-	T[] empty = toArray(type, ObjectUtils.EMPTY_ARRAY_LENGTH);
+	T[] empty = toArray(type, EMPTY_ARRAY_LENGTH);
 
 	return empty;
     }
