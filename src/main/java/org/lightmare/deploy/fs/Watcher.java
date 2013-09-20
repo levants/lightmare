@@ -180,7 +180,7 @@ public class Watcher implements Runnable {
 	    } else {
 		type = WatchFileType.DEPLOYMENT;
 	    }
-	} else if (ObjectUtils.available(dss) && dss.contains(filePath)) {
+	} else if (CollectionUtils.available(dss) && dss.contains(filePath)) {
 	    type = WatchFileType.DATA_SOURCE;
 	} else {
 	    type = WatchFileType.NONE;
