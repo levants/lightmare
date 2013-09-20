@@ -253,7 +253,7 @@ public class Configuration implements Cloneable {
 	}
 
 	String path = getPoolConfigValue(ConfigKeys.POOL_PROPERTIES_PATH.key);
-	if (ObjectUtils.available(path)) {
+	if (CollectionUtils.available(path)) {
 	    setPoolPropertiesPath(path);
 	}
     }
