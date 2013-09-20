@@ -461,7 +461,7 @@ public class MetaCreator {
 		    archivesURLs = null;
 		}
 
-		if (ObjectUtils.available(classOwnersURL)) {
+		if (CollectionUtils.available(classOwnersURL)) {
 		    classOwnersURL.clear();
 		    classOwnersURL = null;
 		}
