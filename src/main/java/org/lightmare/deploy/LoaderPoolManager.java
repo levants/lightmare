@@ -201,6 +201,7 @@ public class LoaderPoolManager {
 	    } catch (InterruptedException ex) {
 		LOG.error(ex.getMessage(), ex);
 	    }
+
 	    locked = LOCK.tryLock();
 	}
 
