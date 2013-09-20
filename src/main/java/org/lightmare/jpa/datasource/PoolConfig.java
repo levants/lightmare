@@ -128,8 +128,8 @@ public class PoolConfig {
 	for (Defaults config : defaults) {
 	    key = config.key;
 	    value = config.value;
-	    if (CollectionUtils.available(key)
-		    && CollectionUtils.available(value)) {
+	    if (CollectionUtils.valid(key)
+		    && CollectionUtils.valid(value)) {
 		c3p0Properties.put(key, value);
 	    }
 	}
@@ -144,7 +144,7 @@ public class PoolConfig {
 	String key;
 	for (ConnectionConfig usdKey : usdKeys) {
 	    key = usdKey.name;
-	    if (CollectionUtils.available(key)) {
+	    if (CollectionUtils.valid(key)) {
 		keys.add(key);
 	    }
 	}
@@ -186,7 +186,7 @@ public class PoolConfig {
 	    }
 	    propertiesMap.remove(key);
 	}
-	if (CollectionUtils.available(dataSourceName)) {
+	if (CollectionUtils.valid(dataSourceName)) {
 	    propertiesMap.put(DATA_SOURCE_NAME, dataSourceName);
 	}
 

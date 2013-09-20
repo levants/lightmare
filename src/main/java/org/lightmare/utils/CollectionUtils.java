@@ -122,14 +122,14 @@ public class CollectionUtils {
 	return !valid(array);
     }
 
-    public static boolean available(CharSequence chars) {
+    public static boolean valid(CharSequence chars) {
 
 	return chars != null && chars.length() > EMPTY_ARRAY_LENGTH;
     }
 
     public static boolean notAvailable(CharSequence chars) {
 
-	return !available(chars);
+	return !valid(chars);
     }
 
     public static boolean availableAll(Collection<?>... collections) {

@@ -127,7 +127,7 @@ public class NamingUtils {
     public static String clearDataSourceName(String jndiName) {
 
 	String clearName;
-	if (CollectionUtils.available(jndiName)
+	if (CollectionUtils.valid(jndiName)
 		&& jndiName.startsWith(DS_JNDI_FREFIX)) {
 	    clearName = jndiName.replace(DS_JNDI_FREFIX,
 		    StringUtils.EMPTY_STRING);
@@ -148,7 +148,7 @@ public class NamingUtils {
 
 	String jndiName;
 
-	if (CollectionUtils.available(clearName)
+	if (CollectionUtils.valid(clearName)
 		&& StringUtils.notContains(clearName, DS_JNDI_FREFIX)) {
 	    jndiName = StringUtils.concat(DS_JNDI_FREFIX, clearName);
 	} else {

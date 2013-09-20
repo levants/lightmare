@@ -226,7 +226,7 @@ public class DeployManager extends HttpServlet {
 	    if (valid) {
 		valid = (pass instanceof DeployPass)
 			&& (CollectionUtils
-				.available(((DeployPass) pass).userName));
+				.valid(((DeployPass) pass).userName));
 	    } else {
 		valid = security.check();
 	    }
@@ -257,7 +257,7 @@ public class DeployManager extends HttpServlet {
 
 	    String fileName = request.getParameter(REDEPLOY_PARAM_NAME);
 	    String type = request.getParameter(TYPE_PARAM_NAME);
-	    if (CollectionUtils.available(fileName)) {
+	    if (CollectionUtils.valid(fileName)) {
 		if (type == null || REDEPLOY_TYPE.equals(type)) {
 		    Watcher.redeployFile(fileName);
 		} else if (UNDEPLOY_TYPE.equals(type)) {
@@ -283,8 +283,8 @@ public class DeployManager extends HttpServlet {
 
 	String userName = request.getParameter(USER_PARAMETER_NAME);
 	String password = request.getParameter(PASS_PARAMETER_NAME);
-	boolean valid = CollectionUtils.available(userName)
-		&& CollectionUtils.available(password);
+	boolean valid = CollectionUtils.valid(userName)
+		&& CollectionUtils.valid(password);
 	if (valid) {
 	    valid = authenticate(userName, password,
 		    request.getSession(Boolean.TRUE));

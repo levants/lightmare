@@ -65,7 +65,7 @@ public class Initializer {
 
     private static boolean checkForDataSource(String path) {
 
-	return CollectionUtils.available(path);
+	return CollectionUtils.valid(path);
     }
 
     public static String getJndiName(Properties properties) {
@@ -201,7 +201,7 @@ public class Initializer {
 
 	Collection<String> jndiNames = FileParsers
 		.dataSourceNames(dataSourcePath);
-	if (CollectionUtils.available(dataSourcePath)) {
+	if (CollectionUtils.valid(dataSourcePath)) {
 
 	    for (String jndiName : jndiNames) {
 		close(jndiName);

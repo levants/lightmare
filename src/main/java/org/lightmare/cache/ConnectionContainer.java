@@ -43,7 +43,7 @@ public class ConnectionContainer {
      */
     public static boolean checkForEmf(String unitName) {
 
-	boolean check = CollectionUtils.available(unitName);
+	boolean check = CollectionUtils.valid(unitName);
 
 	if (check) {
 	    check = CONNECTIONS.containsKey(unitName);
@@ -109,10 +109,10 @@ public class ConnectionContainer {
 
 	ConnectionSemaphore semaphore = null;
 
-	if (CollectionUtils.available(unitName)) {
+	if (CollectionUtils.valid(unitName)) {
 
 	    semaphore = createSemaphore(unitName);
-	    if (CollectionUtils.available(jndiName)) {
+	    if (CollectionUtils.valid(jndiName)) {
 
 		ConnectionSemaphore existent = CONNECTIONS.putIfAbsent(
 			jndiName, semaphore);
@@ -293,7 +293,7 @@ public class ConnectionContainer {
 		CONNECTIONS.remove(semaphore.getUnitName());
 		String jndiName = semaphore.getJndiName();
 
-		if (CollectionUtils.available(jndiName)) {
+		if (CollectionUtils.valid(jndiName)) {
 		    CONNECTIONS.remove(jndiName);
 		    semaphore.setBound(Boolean.FALSE);
 		    semaphore.setCached(Boolean.FALSE);

@@ -61,7 +61,7 @@ public class JpaManager {
     private boolean checkForURL() {
 
 	return ObjectUtils.notNull(url)
-		&& CollectionUtils.available(url.toString());
+		&& CollectionUtils.valid(url.toString());
     }
 
     /**
@@ -73,7 +73,7 @@ public class JpaManager {
     private boolean checkForBuild() {
 
 	return CollectionUtils.valid(classes)
-		|| CollectionUtils.available(path) || checkForURL()
+		|| CollectionUtils.valid(path) || checkForURL()
 		|| swapDataSource || scanArchives;
     }
 
@@ -111,7 +111,7 @@ public class JpaManager {
 
 	Ejb3ConfigurationImpl cfg;
 
-	boolean pathCheck = CollectionUtils.available(path);
+	boolean pathCheck = CollectionUtils.valid(path);
 	boolean urlCheck = checkForURL();
 
 	Ejb3ConfigurationImpl.Builder builder = new Ejb3ConfigurationImpl.Builder();
@@ -207,7 +207,7 @@ public class JpaManager {
 	if (ObjectUtils.notTrue(bound)) {
 
 	    String jndiName = semaphore.getJndiName();
-	    if (CollectionUtils.available(jndiName)) {
+	    if (CollectionUtils.valid(jndiName)) {
 		JndiManager jndiManager = new JndiManager();
 		try {
 		    String fullJndiName = NamingUtils

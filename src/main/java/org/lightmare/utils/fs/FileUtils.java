@@ -204,7 +204,7 @@ public class FileUtils {
 
 	List<URL> urls = new ArrayList<URL>();
 	URL url;
-	if (CollectionUtils.available(path)) {
+	if (CollectionUtils.valid(path)) {
 	    url = toURL(path);
 	    urls.add(url);
 	} else if (ObjectUtils.notNull(path) && path.isEmpty()) {
