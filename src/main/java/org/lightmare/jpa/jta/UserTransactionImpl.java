@@ -128,7 +128,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    SystemException {
 
 	EntityTransaction transaction;
-	while (ObjectUtils.notEmpty(transactions)) {
+	while (CollectionUtils.notEmpty(transactions)) {
 	    transaction = transactions.pop();
 	    rollback(transaction);
 	}
