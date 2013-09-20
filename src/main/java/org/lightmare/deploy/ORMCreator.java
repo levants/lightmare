@@ -71,10 +71,12 @@ public class ORMCreator {
 		.getClassOwnersFiles();
 
 	String fileNameForEntity;
+	boolean toBeRemoved;
 	for (String entityName : classSet) {
 	    fileNameForEntity = classOwnersFiles.get(entityName);
-	    if (ObjectUtils
-		    .notNullNotEquals(fileNameForEntity, fileNameForBean)) {
+	    toBeRemoved = ObjectUtils.notNullNotEquals(fileNameForEntity,
+		    fileNameForBean);
+	    if (toBeRemoved) {
 		classSet.remove(entityName);
 	    }
 	}
