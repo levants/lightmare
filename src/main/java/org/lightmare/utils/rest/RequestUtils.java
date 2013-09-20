@@ -11,7 +11,7 @@ import javax.ws.rs.ext.MessageBodyReader;
 
 import org.glassfish.jersey.message.MessageBodyWorkers;
 import org.glassfish.jersey.server.model.Parameter;
-import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.CollectionUtils;
 
 /**
  * Utility class to extract parameters from REST request
@@ -20,7 +20,6 @@ import org.lightmare.utils.ObjectUtils;
  * 
  */
 public class RequestUtils {
-
 
     /**
      * Creates {@link InputStream} from passed {@link String} instance
@@ -43,7 +42,7 @@ public class RequestUtils {
     public static List<InputStream> textsToStreams(Collection<String> params) {
 
 	List<InputStream> streams = new ArrayList<InputStream>();
-	if (ObjectUtils.available(params)) {
+	if (CollectionUtils.available(params)) {
 	    InputStream stream;
 	    for (String param : params) {
 		stream = textToStream(param);
