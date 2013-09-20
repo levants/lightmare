@@ -186,6 +186,7 @@ public class PoolConfig {
 	    }
 	    propertiesMap.remove(key);
 	}
+
 	if (StringUtils.valid(dataSourceName)) {
 	    propertiesMap.put(DATA_SOURCE_NAME, dataSourceName);
 	}
