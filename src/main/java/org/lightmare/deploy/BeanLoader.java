@@ -434,7 +434,7 @@ public class BeanLoader {
 		}
 	    }
 
-	    if (ObjectUtils.available(unitFields)) {
+	    if (CollectionUtils.available(unitFields)) {
 		metaData.addUnitFields(unitFields);
 	    }
 	}
