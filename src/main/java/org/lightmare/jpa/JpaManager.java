@@ -220,6 +220,7 @@ public class JpaManager {
      * @throws IOException
      */
     public void setConnection(String unitName) throws IOException {
+
 	ConnectionSemaphore semaphore = ConnectionContainer
 		.getSemaphore(unitName);
 	if (semaphore.isInProgress()) {
