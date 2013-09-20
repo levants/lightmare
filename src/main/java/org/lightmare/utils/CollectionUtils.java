@@ -126,7 +126,7 @@ public class CollectionUtils {
 
     public static boolean availableAll(Collection<?>... collections) {
 
-	boolean avaliable = notNull(collections);
+	boolean avaliable = ObjectUtils.notNull(collections);
 	if (avaliable) {
 	    Collection<?> collection;
 	    for (int i = 0; i < collections.length && avaliable; i++) {
@@ -140,7 +140,7 @@ public class CollectionUtils {
 
     public static boolean availableAll(Object[]... arrays) {
 
-	boolean avaliable = notNull(arrays);
+	boolean avaliable = ObjectUtils.notNull(arrays);
 	if (avaliable) {
 	    Object[] collection;
 	    int length = arrays.length;
@@ -163,10 +163,10 @@ public class CollectionUtils {
     public static <K, V> Map<K, V> getAsMap(Object key, Map<?, ?> from) {
 
 	Map<K, V> result;
-	if (ObjectUtils.available(from)) {
+	if (available(from)) {
 	    Object objectValue = from.get(key);
 	    if (objectValue instanceof Map) {
-		result = cast(objectValue);
+		result = ObjectUtils.cast(objectValue);
 	    } else {
 		result = null;
 	    }
@@ -218,8 +218,8 @@ public class CollectionUtils {
 	}
 
 	Map<?, ?> result = getAsMap(from, subKeys);
-	if (ObjectUtils.available(result)) {
-	    value = cast(result.get(key));
+	if (available(result)) {
+	    value = ObjectUtils.cast(result.get(key));
 	} else {
 	    value = null;
 	}
