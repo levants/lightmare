@@ -417,7 +417,7 @@ public class MetaCreator {
 
 	blocker = new CountDownLatch(beanNames.size());
 	for (String beanName : beanNames) {
-	    LogUtils.info(LOG, "deploing bean %s", beanName);
+	    LogUtils.info(LOG, "Deploing bean %s", beanName);
 	    try {
 		deployBean(beanName);
 	    } catch (IOException ex) {
