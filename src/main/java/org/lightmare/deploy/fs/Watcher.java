@@ -409,6 +409,7 @@ public class Watcher implements Runnable {
 
     @Override
     public void run() {
+
 	try {
 	    FileSystem fs = FileSystems.getDefault();
 	    WatchService watch = null;
