@@ -14,6 +14,7 @@ import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Configuration with default parameters for c3p0 connection pooling
@@ -128,8 +129,7 @@ public class PoolConfig {
 	for (Defaults config : defaults) {
 	    key = config.key;
 	    value = config.value;
-	    if (CollectionUtils.valid(key)
-		    && CollectionUtils.valid(value)) {
+	    if (StringUtils.valid(key) && CollectionUtils.valid(value)) {
 		c3p0Properties.put(key, value);
 	    }
 	}
