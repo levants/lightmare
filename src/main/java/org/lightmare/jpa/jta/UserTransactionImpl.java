@@ -100,7 +100,7 @@ public class UserTransactionImpl implements UserTransaction {
     public int getStatus() throws SystemException {
 
 	int active = 0;
-	if (ObjectUtils.available(transactions)) {
+	if (CollectionUtils.available(transactions)) {
 	    for (EntityTransaction transaction : transactions) {
 		boolean isActive = transaction.isActive();
 		active += isActive ? 1 : 0;
