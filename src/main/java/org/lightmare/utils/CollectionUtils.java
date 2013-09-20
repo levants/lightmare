@@ -98,7 +98,7 @@ public class CollectionUtils {
 	return !available(collections);
     }
 
-    public static boolean availableAll(Map<?, ?>... maps) {
+    public static boolean validAll(Map<?, ?>... maps) {
 
 	boolean avaliable = ObjectUtils.notNull(maps);
 	if (avaliable) {
