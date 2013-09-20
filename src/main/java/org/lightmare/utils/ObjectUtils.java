@@ -70,6 +70,16 @@ public class ObjectUtils {
 	return !data1.equals(data2);
     }
 
+    public static boolean notEquals(byte x, byte y) {
+
+	return x != y;
+    }
+
+    public static boolean notEquals(short x, short y) {
+
+	return x != y;
+    }
+
     /**
      * Checks if parameters not equals
      * 
