@@ -123,6 +123,7 @@ public class OrmCreator {
 	    URL jarURL = ioUtils.getAppropriatedURL(classOwnersFiles, beanName);
 	    builder.setURL(jarURL);
 	}
+
 	if (configClone.isScanForEntities()) {
 	    Set<String> classSet;
 	    Map<String, Set<String>> annotationIndex = annotationDB
