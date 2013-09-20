@@ -10,6 +10,7 @@ import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Manages and administrator users
@@ -41,7 +42,7 @@ public class Security {
     public void cacheUsers() throws IOException {
 
 	String path = Configuration.getAdminUsersPath();
-	if (CollectionUtils.invalid(path)) {
+	if (StringUtils.invalid(path)) {
 	    path = ConfigKeys.ADMIN_USERS_PATH.getValue();
 	}
 
