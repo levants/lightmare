@@ -402,7 +402,7 @@ public class CollectionUtils {
 
 	T value;
 
-	if (ObjectUtils.available(collection)) {
+	if (available(collection)) {
 
 	    if (collection instanceof List) {
 		value = getFirstFromList(((List<T>) collection));
