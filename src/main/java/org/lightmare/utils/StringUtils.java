@@ -98,6 +98,14 @@ public class StringUtils {
 	return resultText;
     }
 
+    /**
+     * Checks if passed {@link String} instance not contains passed
+     * {@link CharSequence} instance
+     * 
+     * @param text
+     * @param item
+     * @return <code>boolean</code>
+     */
     public static boolean notContains(String text, CharSequence item) {
 
 	boolean contains = text.contains(item);
