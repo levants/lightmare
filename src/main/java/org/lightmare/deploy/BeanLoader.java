@@ -602,7 +602,7 @@ public class BeanLoader {
 			.toArray(new Class<?>[interfacesList.size()]);
 	    }
 
-	    if (ObjectUtils.notAvailable(localInterface)
+	    if (CollectionUtils.notAvailable(localInterface)
 		    && ObjectUtils.notAvailable(remoteInterface)) {
 
 		localInterface = interfaces;
