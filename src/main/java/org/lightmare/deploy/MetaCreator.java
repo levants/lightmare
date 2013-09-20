@@ -456,7 +456,7 @@ public class MetaCreator {
 		    aggregateds.clear();
 		}
 
-		if (ObjectUtils.available(archivesURLs)) {
+		if (CollectionUtils.available(archivesURLs)) {
 		    archivesURLs.clear();
 		    archivesURLs = null;
 		}
