@@ -232,7 +232,7 @@ public class JpaManager {
      * @param unitName
      * @throws IOException
      */
-    public void setConnection(String unitName) throws IOException {
+    public void create(String unitName) throws IOException {
 
 	ConnectionSemaphore semaphore = ConnectionContainer
 		.getSemaphore(unitName);

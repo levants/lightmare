@@ -244,7 +244,7 @@ public class MetaCreator {
 
 	// Builds connection for appropriated persistence unit name
 	builder.configure(configClone).setClassLoader(loader).build()
-		.setConnection(unitName);
+		.create(unitName);
     }
 
     /**
