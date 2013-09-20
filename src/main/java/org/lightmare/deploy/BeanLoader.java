@@ -597,7 +597,7 @@ public class BeanLoader {
 		    interfacesList.add(interfaceClass);
 	    }
 
-	    if (ObjectUtils.available(interfacesList)) {
+	    if (CollectionUtils.available(interfacesList)) {
 		localInterface = interfacesList
 			.toArray(new Class<?>[interfacesList.size()]);
 	    }
