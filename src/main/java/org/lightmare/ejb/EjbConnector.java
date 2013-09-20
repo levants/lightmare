@@ -193,7 +193,7 @@ public class EjbConnector {
 	    }
 
 	    interfaces = metaData.getRemoteInterfaces();
-	    if (ObjectUtils.available(interfaces)) {
+	    if (CollectionUtils.available(interfaces)) {
 		interfacesList.addAll(Arrays.asList(interfaces));
 	    }
 
