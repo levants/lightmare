@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import org.lightmare.annotations.UnitName;
 import org.lightmare.config.Configuration;
 import org.lightmare.jpa.JpaManager;
+import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -21,9 +22,12 @@ public class OrmCreator {
 
     private MetaCreator creator;
 
+    private AnnotationDB annotationDB;
+
     private OrmCreator(MetaCreator creator) {
 
 	this.creator = creator;
+	this.annotationDB = creator.getAnnotationDB();
     }
 
     /**
@@ -57,7 +61,7 @@ public class OrmCreator {
     private void filterEntitiesForJar(Set<String> classSet,
 	    String fileNameForBean) {
 
-	Map<String, String> classOwnersFiles = creator.getAnnotationDB()
+	Map<String, String> classOwnersFiles = annotationDB
 		.getClassOwnersFiles();
 
 	String fileNameForEntity;
@@ -111,7 +115,7 @@ public class OrmCreator {
 	    ClassLoader loader, Configuration configClone) throws IOException {
 
 	JpaManager.Builder builder = new JpaManager.Builder();
-	Map<String, String> classOwnersFiles = creator.getAnnotationDB()
+	Map<String, String> classOwnersFiles = annotationDB
 		.getClassOwnersFiles();
 	AbstractIOUtils ioUtils = creator.getAggregateds().get(beanName);
 
@@ -121,8 +125,8 @@ public class OrmCreator {
 	}
 	if (configClone.isScanForEntities()) {
 	    Set<String> classSet;
-	    Map<String, Set<String>> annotationIndex = creator
-		    .getAnnotationDB().getAnnotationIndex();
+	    Map<String, Set<String>> annotationIndex = annotationDB
+		    .getAnnotationIndex();
 	    classSet = annotationIndex.get(Entity.class.getName());
 	    String annotatedUnitName = configClone.getAnnotatedUnitName();
 	    if (annotatedUnitName == null) {
