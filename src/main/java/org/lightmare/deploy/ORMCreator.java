@@ -18,6 +18,12 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
+/**
+ * Class to initialize and deploy JPA units
+ * 
+ * @author levan
+ * 
+ */
 public class ORMCreator {
 
     private MetaCreator creator;
