@@ -413,7 +413,7 @@ public class BeanLoader {
 	    Resource resource;
 	    EJB ejbAnnot;
 
-	    if (ObjectUtils.notAvailable(fields)) {
+	    if (CollectionUtils.notAvailable(fields)) {
 		releaseBlocker();
 	    }
 
