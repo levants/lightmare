@@ -184,7 +184,7 @@ public class EjbConnector {
 
 	Class<?>[] interfaceClasses = metaData.getInterfaceClasses();
 
-	if (ObjectUtils.notAvailable(interfaceClasses)) {
+	if (CollectionUtils.notAvailable(interfaceClasses)) {
 
 	    List<Class<?>> interfacesList = new ArrayList<Class<?>>();
 	    Class<?>[] interfaces = metaData.getLocalInterfaces();
