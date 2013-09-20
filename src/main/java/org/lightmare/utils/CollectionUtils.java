@@ -80,6 +80,7 @@ public class CollectionUtils {
     private static <T> T[] toArray(Class<T> type, int size) {
 
 	Object arrayObject = Array.newInstance(type, size);
+
 	T[] array = ObjectUtils.cast(arrayObject);
 
 	return array;
