@@ -241,7 +241,7 @@ public class Watcher implements Runnable {
 	Set<String> pathsCurrent;
 	for (Configuration config : configs) {
 	    pathsCurrent = config.getDataSourcePath();
-	    if (ObjectUtils.available(pathsCurrent)) {
+	    if (CollectionUtils.available(pathsCurrent)) {
 		paths.addAll(pathsCurrent);
 	    }
 	}
