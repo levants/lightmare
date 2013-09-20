@@ -196,7 +196,8 @@ public class BeanTransactions {
     private static Collection<TransactionData> getEntityTransactions(
 	    Collection<EntityManager> ems) {
 
-	Collection<TransactionData> entityTransactions = null;
+	Collection<TransactionData> entityTransactions;
+
 	if (CollectionUtils.available(ems)) {
 	    entityTransactions = new ArrayList<TransactionData>();
 	    for (EntityManager em : ems) {
@@ -205,7 +206,10 @@ public class BeanTransactions {
 			entityTransaction, em);
 		entityTransactions.add(transactionData);
 	    }
+	} else {
+	    entityTransactions = null;
 	}
+
 	return entityTransactions;
     }
 
