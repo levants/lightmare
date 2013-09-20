@@ -383,7 +383,7 @@ public class CollectionUtils {
 
 	T value;
 
-	if (ObjectUtils.available(list)) {
+	if (available(list)) {
 	    value = list.get(FIRST_INDEX);
 	} else {
 	    value = null;
