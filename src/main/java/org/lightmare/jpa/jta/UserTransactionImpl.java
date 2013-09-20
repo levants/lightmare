@@ -351,7 +351,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void closeEntityManagers() {
 
-	if (ObjectUtils.available(ems)) {
+	if (CollectionUtils.available(ems)) {
 	    closeAllEntityManagers();
 	}
     }
