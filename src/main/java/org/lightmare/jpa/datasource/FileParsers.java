@@ -195,7 +195,7 @@ public class FileParsers {
 	    NodeList minPoolSizeList = thisElement
 		    .getElementsByTagName(MIN_POOL_TAG);
 	    int elementLength = minPoolSizeList.getLength();
-	    if (elementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
+	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
 	    Element minPoolSizeElement = (Element) getFirst(minPoolSizeList);
