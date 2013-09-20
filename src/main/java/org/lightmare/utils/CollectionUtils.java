@@ -70,7 +70,7 @@ public class CollectionUtils {
      * @param map
      * @return <code>boolean</code>
      */
-    public static boolean notAvailable(Map<?, ?> map) {
+    public static boolean invalid(Map<?, ?> map) {
 
 	return !valid(map);
     }

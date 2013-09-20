@@ -60,7 +60,7 @@ public class JndiManager {
 	 */
 	protected static Properties getConfig() {
 
-	    if (CollectionUtils.notAvailable(CONFIG)) {
+	    if (CollectionUtils.invalid(CONFIG)) {
 
 		JNDIParameters[] parameters = JNDIParameters.values();
 
