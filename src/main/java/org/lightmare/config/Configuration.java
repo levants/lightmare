@@ -249,7 +249,7 @@ public class Configuration implements Cloneable {
 	}
 
 	String type = getPoolConfigValue(ConfigKeys.POOL_PROVIDER_TYPE.key);
-	if (CollectionUtils.valid(type)) {
+	if (StringUtils.valid(type)) {
 	    getPoolConfig().setPoolProviderType(type);
 	}
 
