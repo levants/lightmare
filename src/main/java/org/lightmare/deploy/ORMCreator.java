@@ -28,11 +28,14 @@ public class ORMCreator {
 
     private MetaCreator creator;
 
+    private Map<String, AbstractIOUtils> aggregateds;
+
     private AnnotationDB annotationDB;
 
     private ORMCreator(MetaCreator creator) {
 
 	this.creator = creator;
+	this.aggregateds = creator.getAggregateds();
 	this.annotationDB = creator.getAnnotationDB();
     }
 
@@ -123,7 +126,7 @@ public class ORMCreator {
 	JpaManager.Builder builder = new JpaManager.Builder();
 	Map<String, String> classOwnersFiles = annotationDB
 		.getClassOwnersFiles();
-	AbstractIOUtils ioUtils = creator.getAggregateds().get(beanName);
+	AbstractIOUtils ioUtils = aggregateds.get(beanName);
 
 	if (ObjectUtils.notNull(ioUtils)) {
 	    URL jarURL = ioUtils.getAppropriatedURL(classOwnersFiles, beanName);
