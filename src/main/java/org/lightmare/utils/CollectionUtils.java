@@ -146,7 +146,7 @@ public class CollectionUtils {
 	return avaliable;
     }
 
-    public static boolean availableAll(Object[]... arrays) {
+    public static boolean validAll(Object[]... arrays) {
 
 	boolean avaliable = ObjectUtils.notNull(arrays);
 	if (avaliable) {
