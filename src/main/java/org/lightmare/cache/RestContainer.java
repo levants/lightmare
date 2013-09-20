@@ -89,7 +89,7 @@ public class RestContainer {
 
     public static void putResources(Collection<Resource> resources) {
 
-	if (ObjectUtils.available(resources)) {
+	if (CollectionUtils.available(resources)) {
 	    for (Resource resource : resources) {
 		putResource(resource);
 	    }
