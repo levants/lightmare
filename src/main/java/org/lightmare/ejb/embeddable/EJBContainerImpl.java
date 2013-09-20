@@ -9,6 +9,7 @@ import javax.naming.Context;
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jndi.JndiManager;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -39,7 +40,7 @@ public class EJBContainerImpl extends EJBContainer {
 	try {
 
 	    MetaCreator.Builder builder;
-	    if (ObjectUtils.available(properties)) {
+	    if (CollectionUtils.available(properties)) {
 		Map<Object, Object> configuration = ObjectUtils
 			.cast(properties);
 		builder = new MetaCreator.Builder(configuration);
