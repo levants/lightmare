@@ -56,7 +56,7 @@ public class UserTransactionImpl implements UserTransaction {
     @Override
     public void begin() throws NotSupportedException, SystemException {
 
-	if (ObjectUtils.available(transactions)) {
+	if (CollectionUtils.available(transactions)) {
 	    beginAll();
 	}
     }
