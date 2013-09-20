@@ -209,9 +209,9 @@ public class JpaManager {
 		    }
 		} catch (IOException ex) {
 		    LOG.error(ex.getMessage(), ex);
-		    throw new IOException(
-			    StringUtils.concat(COULD_NOT_BIND_JNDI_ERROR,
-				    semaphore.getUnitName()), ex);
+		    String errorMessage = StringUtils.concat(
+			    COULD_NOT_BIND_JNDI_ERROR, semaphore.getUnitName());
+		    throw new IOException(errorMessage, ex);
 		}
 	    }
 	}
