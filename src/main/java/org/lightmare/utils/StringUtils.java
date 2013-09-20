@@ -62,7 +62,7 @@ public class StringUtils {
 
 	String concat;
 
-	if (ObjectUtils.available(tockens)) {
+	if (CollectionUtils.available(tockens)) {
 	    StringBuilder builder = new StringBuilder();
 	    append(tockens, builder);
 	    concat = builder.toString();
