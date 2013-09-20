@@ -197,14 +197,7 @@ public class MetaContainer {
 	boolean inProgress = metaData.isInProgress();
 	if (inProgress) {
 	    synchronized (metaData) {
-		while (inProgress) {
-		    try {
-			metaData.wait();
-			inProgress = metaData.isInProgress();
-		    } catch (InterruptedException ex) {
-			throw new IOException(ex);
-		    }
-		}
+		awaitProgress(inProgress, metaData);
 	    }
 	}
     }
