@@ -367,7 +367,7 @@ public abstract class AbstractIOUtils {
 
 	File parentFile;
 
-	if (ObjectUtils.available(files)) {
+	if (CollectionUtils.available(files)) {
 	    parentFile = CollectionUtils.getFirst(files);
 	} else {
 	    parentFile = realFile;
