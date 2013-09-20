@@ -149,8 +149,11 @@ public class JpaManager {
 
 	Ejb3ConfigurationImpl configured = cfg.configure(unitName, properties);
 
-	emf = ObjectUtils.notNull(configured) ? configured
-		.buildEntityManagerFactory() : null;
+	if (ObjectUtils.notNull(configured)) {
+	    emf = configured.buildEntityManagerFactory();
+	} else {
+	    emf = null;
+	}
 
 	return emf;
     }
