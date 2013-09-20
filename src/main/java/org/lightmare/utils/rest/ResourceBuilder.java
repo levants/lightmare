@@ -18,7 +18,6 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.rest.providers.RestInflector;
 import org.lightmare.utils.CollectionUtils;
-import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
 
 /**
@@ -97,7 +96,7 @@ public class ResourceBuilder {
 
 	// Registers children resources recursively
 	List<Resource> children = resource.getChildResources();
-	if (ObjectUtils.available(children)) {
+	if (CollectionUtils.available(children)) {
 	    Resource child;
 	    for (Resource preChild : children) {
 		child = rebuildResource(preChild);
