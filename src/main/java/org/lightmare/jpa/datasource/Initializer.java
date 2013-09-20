@@ -78,7 +78,7 @@ public class Initializer {
     }
 
     /**
-     * Loads jdbc driver class
+     * Loads JDBC driver class
      * 
      * @param driver
      */
