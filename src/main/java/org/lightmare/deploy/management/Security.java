@@ -62,7 +62,7 @@ public class Security {
 
 	if (CollectionUtils.available(cache)) {
 
-	    String cachedPass = (String) cache.get(user);
+	    String cachedPass = ObjectUtils.cast(cache.get(user), String.class);
 	    valid = (CollectionUtils.available(cachedPass) && cachedPass
 		    .equals(pass));
 	} else {
