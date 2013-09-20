@@ -170,7 +170,7 @@ public class FileParsers {
 
 	    NodeList passList = thisElement.getElementsByTagName(PASSWORD_TAG);
 	    elementLength = passList.getLength();
-	    if (elementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
+	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
 	    Element passElement = (Element) getFirst(passList);
