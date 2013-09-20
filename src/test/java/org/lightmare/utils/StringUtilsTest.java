@@ -72,8 +72,9 @@ public class StringUtilsTest {
 	ConfigKeys[] enumArray = ConfigKeys.values();
 
 	try {
-	    String text = StringUtils.concatRecursively("1, 2, 3", ", 4, 5, 6",
-		    intArray, longArray, charArray, stringArray, enumArray);
+	    String text = StringUtils.concatRecursively("1, 2, 3\n",
+		    ", 4, 5, 6\n", intArray, longArray, charArray, stringArray,
+		    enumArray);
 
 	    System.out.println(text);
 	} catch (Exception ex) {
