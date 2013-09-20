@@ -325,7 +325,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void addEntityManagers(Collection<EntityManager> ems) {
 
-	if (ObjectUtils.available(ems)) {
+	if (CollectionUtils.available(ems)) {
 	    for (EntityManager em : ems) {
 		addEntityManager(em);
 	    }
