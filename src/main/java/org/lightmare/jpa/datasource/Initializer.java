@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
@@ -64,7 +65,7 @@ public class Initializer {
 
     private static boolean checkForDataSource(String path) {
 
-	return ObjectUtils.available(path);
+	return CollectionUtils.available(path);
     }
 
     public static String getJndiName(Properties properties) {
