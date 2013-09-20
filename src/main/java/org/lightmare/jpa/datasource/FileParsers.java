@@ -255,7 +255,7 @@ public class FileParsers {
 	    NodeList urlList = thisElement
 		    .getElementsByTagName(CONNECTION_URL_TAG);
 	    int urlElementLength = urlList.getLength();
-	    if (urlElementLength == ObjectUtils.EMPTY_ARRAY_LENGTH) {
+	    if (urlElementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
 	    Element urlElement = (Element) getFirst(urlList);
