@@ -16,6 +16,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
@@ -65,7 +66,7 @@ public class Initializer {
 
     private static boolean checkForDataSource(String path) {
 
-	return CollectionUtils.valid(path);
+	return StringUtils.valid(path);
     }
 
     public static String getJndiName(Properties properties) {
