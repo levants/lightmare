@@ -109,7 +109,7 @@ public class JpaManager {
 
 	Ejb3ConfigurationImpl cfg;
 
-	boolean pathCheck = CollectionUtils.valid(path);
+	boolean pathCheck = StringUtils.valid(path);
 	boolean urlCheck = checkForURL();
 
 	Ejb3ConfigurationImpl.Builder builder = new Ejb3ConfigurationImpl.Builder();
