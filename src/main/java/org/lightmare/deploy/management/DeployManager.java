@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.lightmare.deploy.fs.Watcher;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
@@ -134,7 +135,7 @@ public class DeployManager extends HttpServlet {
 	builder.append(DEPLOYMENTS);
 	builder.append(END_TYPE_TAG);
 	String tag;
-	if (ObjectUtils.available(apps)) {
+	if (CollectionUtils.available(apps)) {
 	    for (File app : apps) {
 		tag = getTag(app.getPath(), APP_DEPLOYMENT_TYPE);
 		builder.append(tag);
