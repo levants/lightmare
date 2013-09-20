@@ -193,7 +193,8 @@ public class JpaManager {
 
 	boolean bound = semaphore.isBound();
 
-	if (!bound) {
+	if (ObjectUtils.notTrue(bound)) {
+
 	    String jndiName = semaphore.getJndiName();
 	    if (ObjectUtils.available(jndiName)) {
 		JndiManager jndiManager = new JndiManager();
@@ -203,17 +204,16 @@ public class JpaManager {
 		    if (jndiManager.lookup(fullJndiName) == null) {
 			jndiManager.rebind(fullJndiName, semaphore.getEmf());
 		    }
-		    semaphore.setBound(Boolean.TRUE);
 		} catch (IOException ex) {
 		    LOG.error(ex.getMessage(), ex);
 		    throw new IOException(String.format(
 			    "could not bind connection %s",
 			    semaphore.getUnitName()), ex);
 		}
-	    } else {
-		semaphore.setBound(Boolean.TRUE);
 	    }
 	}
+
+	semaphore.setBound(Boolean.TRUE);
     }
 
     /**
