@@ -600,6 +600,7 @@ public class MetaCreator {
 		}
 
 		configuration = null;
+
 	    } finally {
 		scannerLock.unlock();
 	    }
