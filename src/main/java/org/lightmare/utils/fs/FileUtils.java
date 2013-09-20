@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
@@ -74,7 +75,7 @@ public class FileUtils {
 
 	if (file.isDirectory()) {
 	    File[] subFiles = listJavaFiles(file);
-	    if (ObjectUtils.available(subFiles)) {
+	    if (CollectionUtils.available(subFiles)) {
 		addSubDirectory(subFiles, urls);
 	    }
 	} else {
