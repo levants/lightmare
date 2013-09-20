@@ -111,7 +111,7 @@ public class CollectionUtils {
      */
     public static boolean isObjectArray(final Object data) {
 
-	boolean valid = data instanceof Object[];
+	boolean valid = (data instanceof Object[]);
 
 	return valid;
     }
