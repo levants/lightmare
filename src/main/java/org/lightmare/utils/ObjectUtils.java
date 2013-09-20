@@ -2,8 +2,6 @@ package org.lightmare.utils;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
 
 import org.lightmare.utils.reflect.MetaUtils;
 
@@ -14,14 +12,6 @@ import org.lightmare.utils.reflect.MetaUtils;
  * 
  */
 public class ObjectUtils {
-
-    public static final int EMPTY_ARRAY_LENGTH = 0;
-
-    public static final Object[] EMPTY_ARRAY = {};
-
-    public static final int FIRST_INDEX = 0;
-
-    public static final int SECOND_INDEX = 1;
 
     public static final int NOT_EXISTING_INDEX = -1;
 
