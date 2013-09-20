@@ -283,7 +283,7 @@ public class DeployManager extends HttpServlet {
 	String userName = request.getParameter(USER_PARAMETER_NAME);
 	String password = request.getParameter(PASS_PARAMETER_NAME);
 	boolean valid = StringUtils.valid(userName)
-		&& CollectionUtils.valid(password);
+		&& StringUtils.valid(password);
 	if (valid) {
 	    valid = authenticate(userName, password,
 		    request.getSession(Boolean.TRUE));
