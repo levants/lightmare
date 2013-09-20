@@ -300,6 +300,7 @@ public class Watcher implements Runnable {
 
     private void handleEvent(Path dir, WatchEvent<Path> currentEvent)
 	    throws IOException {
+
 	if (currentEvent == null) {
 	    return;
 	}
