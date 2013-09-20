@@ -18,6 +18,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
@@ -60,7 +61,7 @@ public class JpaManager {
     private boolean checkForURL() {
 
 	return ObjectUtils.notNull(url)
-		&& ObjectUtils.available(url.toString());
+		&& CollectionUtils.available(url.toString());
     }
 
     /**
