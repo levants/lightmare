@@ -128,7 +128,8 @@ public class PoolConfig {
 	for (Defaults config : defaults) {
 	    key = config.key;
 	    value = config.value;
-	    if (CollectionUtils.available(key) && ObjectUtils.available(value)) {
+	    if (CollectionUtils.available(key)
+		    && CollectionUtils.available(value)) {
 		c3p0Properties.put(key, value);
 	    }
 	}
