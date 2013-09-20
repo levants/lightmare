@@ -157,7 +157,7 @@ public class JpaTest {
     @AfterClass
     public static void end() {
 	try {
-	    MetaCreator.closeAllConnections();
+	    ConnectionContainer.closeConnections();
 	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}

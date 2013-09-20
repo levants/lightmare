@@ -25,7 +25,6 @@ import javax.persistence.Entity;
 import org.apache.log4j.Logger;
 import org.lightmare.annotations.UnitName;
 import org.lightmare.cache.ArchiveData;
-import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.DeployData;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.cache.MetaContainer;
@@ -563,10 +562,10 @@ public class MetaCreator {
      * 
      * @throws IOException
      */
-    public static void closeAllConnections() throws IOException {
-
-	ConnectionContainer.closeConnections();
-    }
+    // public static void closeAllConnections() throws IOException {
+    //
+    // ConnectionContainer.closeConnections();
+    // }
 
     /**
      * Clears all locally cached data

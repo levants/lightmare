@@ -23,6 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
+import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.RestContainer;
@@ -428,7 +429,7 @@ public class Watcher implements Runnable {
 	    LOG.fatal(ex.getMessage(), ex);
 	    LOG.fatal("system going to shut down cause of hot deployment");
 	    try {
-		MetaCreator.closeAllConnections();
+		ConnectionContainer.closeConnections();
 	    } catch (IOException iex) {
 		LOG.fatal(iex.getMessage(), iex);
 	    }

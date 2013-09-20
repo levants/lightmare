@@ -10,6 +10,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.bean.LightMareBeanRemote;
 import org.lightmare.bean.LightMareFalseBeanRemote;
+import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.entities.Person;
@@ -130,7 +131,7 @@ public class EjbLocalTest {
     @AfterClass
     public static void end() {
 	try {
-	    MetaCreator.closeAllConnections();
+	    ConnectionContainer.closeConnections();
 	} catch (IOException ex) {
 	    // TODO Auto-generated catch block
 	    ex.printStackTrace();

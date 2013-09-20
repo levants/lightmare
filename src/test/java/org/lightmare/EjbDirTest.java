@@ -12,7 +12,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.bean.LightMareBeanRemote;
 import org.lightmare.bean.LightMareFalseBeanRemote;
-import org.lightmare.deploy.MetaCreator;
+import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.entities.Person;
 import org.lightmare.unitorder.RunOrder;
@@ -146,7 +146,7 @@ public class EjbDirTest {
     @AfterClass
     public static void end() {
 	try {
-	    MetaCreator.closeAllConnections();
+	    ConnectionContainer.closeConnections();
 	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}
