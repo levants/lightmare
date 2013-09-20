@@ -14,6 +14,7 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.TransactionContainer;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.jpa.JpaManager;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.osjava.sj.memory.MemoryContext;
@@ -102,7 +103,7 @@ public class LightmareContext extends MemoryContext {
      */
     private void clearResources() {
 
-	if (ObjectUtils.available(ems)) {
+	if (CollectionUtils.available(ems)) {
 	    try {
 		for (EntityManager em : ems) {
 		    JpaManager.closeEntityManager(em);
