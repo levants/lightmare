@@ -447,7 +447,7 @@ public class MetaCreator {
 
 	if (locked) {
 	    try {
-		if (ObjectUtils.available(realURL)) {
+		if (CollectionUtils.available(realURL)) {
 		    realURL.clear();
 		    realURL = null;
 		}
