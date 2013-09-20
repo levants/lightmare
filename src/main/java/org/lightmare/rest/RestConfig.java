@@ -138,8 +138,8 @@ public class RestConfig extends ResourceConfig {
 
     private void removePreResource(Resource resource) {
 
-	if (CollectionUtils.available(this.preResources)) {
-	    this.preResources.remove(resource);
+	if (CollectionUtils.available(preResources)) {
+	    preResources.remove(resource);
 	}
     }
 
