@@ -98,7 +98,7 @@ public class RestConfig extends ResourceConfig {
 
 	if (ObjectUtils.notNull(oldConfig)) {
 	    Set<Resource> olds = oldConfig.getResources();
-	    if (ObjectUtils.available(olds)) {
+	    if (CollectionUtils.available(olds)) {
 		newResources.addAll(olds);
 	    }
 	}
