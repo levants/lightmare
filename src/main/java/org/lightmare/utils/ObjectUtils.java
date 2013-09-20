@@ -65,7 +65,7 @@ public class ObjectUtils {
      * @param y
      * @return <code>boolean</code>
      */
-    public static <T, E> boolean notEquals(T x, E y) {
+    public static <X, Y> boolean notEquals(X x, Y y) {
 
 	boolean valid;
 
