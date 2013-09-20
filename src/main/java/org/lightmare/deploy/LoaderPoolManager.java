@@ -196,6 +196,7 @@ public class LoaderPoolManager {
 
 	boolean locked = LOCK.tryLock();
 	while (ObjectUtils.notTrue(locked)) {
+
 	    try {
 		Thread.sleep(THREAD_SLEEP_TIME);
 	    } catch (InterruptedException ex) {
