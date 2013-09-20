@@ -262,7 +262,7 @@ public class MetaCreator {
 
 	// Archive file url which contains this bean
 	DeployData deployData;
-	if (ObjectUtils.available(realURL)) {
+	if (CollectionUtils.available(realURL)) {
 	    deployData = realURL.get(currentURL);
 	} else {
 	    deployData = null;
