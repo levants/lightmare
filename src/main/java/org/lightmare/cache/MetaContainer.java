@@ -309,7 +309,7 @@ public class MetaContainer {
 
 	Collection<ConnectionData> connections = metaData.getConnections();
 
-	if (ObjectUtils.available(connections)) {
+	if (CollectionUtils.available(connections)) {
 	    for (ConnectionData connection : connections) {
 		// Gets connection to clear
 		String unitName = connection.getUnitName();
