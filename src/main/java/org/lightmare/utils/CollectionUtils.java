@@ -152,7 +152,7 @@ public class CollectionUtils {
 	if (avaliable) {
 	    Object[] collection;
 	    int length = arrays.length;
-	    for (int i = 0; i < length && avaliable; i++) {
+	    for (int i = FIRST_INDEX; i < length && avaliable; i++) {
 		collection = arrays[i];
 		avaliable = avaliable && valid(collection);
 	    }
