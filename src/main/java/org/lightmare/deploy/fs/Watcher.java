@@ -191,7 +191,7 @@ public class Watcher implements Runnable {
 
     private static void fillFileList(File[] files, List<File> list) {
 
-	if (ObjectUtils.available(files)) {
+	if (CollectionUtils.available(files)) {
 	    for (File file : files) {
 		list.add(file);
 	    }
