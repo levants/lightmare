@@ -76,7 +76,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    IllegalStateException, SystemException {
 
 	EntityTransaction transaction;
-	while (ObjectUtils.notEmpty(transactions)) {
+	while (CollectionUtils.notEmpty(transactions)) {
 	    transaction = transactions.pop();
 	    commit(transaction);
 	}
