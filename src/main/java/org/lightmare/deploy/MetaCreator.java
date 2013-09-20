@@ -449,6 +449,7 @@ public class MetaCreator {
     public void scanForBeans(URL[] archives) throws IOException {
 
 	scannerLock.lock();
+
 	try {
 
 	    configure(archives);
@@ -483,6 +484,7 @@ public class MetaCreator {
 	    if (ObjectUtils.available(beanNames)) {
 		deployBeans(beanNames);
 	    }
+
 	} finally {
 
 	    // Caches configuration
