@@ -227,7 +227,7 @@ public class Configuration implements Cloneable {
 
     /**
      * Sets specific value for appropriated key in connection pool configuration
-     * sub {@link Map} of configuraion
+     * sub {@link Map} of configuration
      * 
      * @param key
      * @param value
