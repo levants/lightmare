@@ -294,7 +294,7 @@ public class ConnectionContainer {
 		CONNECTIONS.remove(semaphore.getUnitName());
 		String jndiName = semaphore.getJndiName();
 
-		if (CollectionUtils.valid(jndiName)) {
+		if (StringUtils.valid(jndiName)) {
 		    CONNECTIONS.remove(jndiName);
 		    semaphore.setBound(Boolean.FALSE);
 		    semaphore.setCached(Boolean.FALSE);
