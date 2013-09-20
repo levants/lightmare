@@ -129,7 +129,7 @@ public class PoolConfig {
 	for (Defaults config : defaults) {
 	    key = config.key;
 	    value = config.value;
-	    if (StringUtils.valid(key) && CollectionUtils.valid(value)) {
+	    if (StringUtils.valid(key) && StringUtils.valid(value)) {
 		c3p0Properties.put(key, value);
 	    }
 	}
