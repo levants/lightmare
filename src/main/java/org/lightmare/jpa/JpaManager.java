@@ -60,8 +60,7 @@ public class JpaManager {
      */
     private boolean checkForURL() {
 
-	return ObjectUtils.notNull(url)
-		&& CollectionUtils.valid(url.toString());
+	return ObjectUtils.notNull(url) && StringUtils.valid(url.toString());
     }
 
     /**
@@ -72,9 +71,8 @@ public class JpaManager {
      */
     private boolean checkForBuild() {
 
-	return CollectionUtils.valid(classes)
-		|| CollectionUtils.valid(path) || checkForURL()
-		|| swapDataSource || scanArchives;
+	return CollectionUtils.valid(classes) || CollectionUtils.valid(path)
+		|| checkForURL() || swapDataSource || scanArchives;
     }
 
     /**
