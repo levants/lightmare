@@ -195,6 +195,7 @@ public class CollectionUtils {
     public static <T> T getFirst(Collection<T> collection) {
 
 	T value;
+
 	if (ObjectUtils.available(collection)) {
 
 	    if (collection instanceof List) {
