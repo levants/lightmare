@@ -412,7 +412,7 @@ public class MetaCreator {
 		deployFile = new File(deployment.getPath());
 		if (deployment.isScan()) {
 		    String[] subDeployments = deployFile.list();
-		    if (ObjectUtils.available(subDeployments)) {
+		    if (CollectionUtils.available(subDeployments)) {
 			pathList.addAll(Arrays.asList(subDeployments));
 		    }
 		}
