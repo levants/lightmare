@@ -2,6 +2,7 @@ package org.lightmare.utils.beans;
 
 import javax.ejb.Stateless;
 
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
@@ -51,7 +52,8 @@ public class BeanUtils {
 	int start;
 	if (interfaceName.endsWith(REMOTE_IDENT)) {
 	    start = interfaceName.lastIndexOf(REMOTE_IDENT);
-	    beanName = interfaceName.substring(ObjectUtils.FIRST_INDEX, start);
+	    beanName = interfaceName.substring(CollectionUtils.FIRST_INDEX,
+		    start);
 	} else if (interfaceName.endsWith(LOCAL_IDENT)) {
 	    start = interfaceName.lastIndexOf(LOCAL_IDENT);
 	    beanName = interfaceName.substring(ObjectUtils.FIRST_INDEX, start);
