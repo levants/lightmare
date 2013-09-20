@@ -125,6 +125,7 @@ public class JpaManager {
 	}
 
 	if (pathCheck || urlCheck) {
+
 	    Enumeration<URL> xmls;
 	    ConfigLoader configLoader = new ConfigLoader();
 	    if (pathCheck) {
