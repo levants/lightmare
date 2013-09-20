@@ -256,7 +256,7 @@ public class CollectionUtils {
 
 	List<T> collection;
 
-	if (ObjectUtils.available(array)) {
+	if (available(array)) {
 	    collection = Arrays.asList(array);
 	} else {
 	    collection = null;
