@@ -280,7 +280,7 @@ public class MetaCreator {
 
 	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);
-	if (ObjectUtils.available(tmpFiles)) {
+	if (CollectionUtils.available(tmpFiles)) {
 	    tmpResources.addFile(tmpFiles);
 	}
     }
