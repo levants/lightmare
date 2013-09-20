@@ -21,6 +21,7 @@ import org.hibernate.cfg.NotYetImplementedException;
 import org.lightmare.cache.MetaData;
 import org.lightmare.cache.TransactionContainer;
 import org.lightmare.ejb.handlers.BeanHandler;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -79,7 +80,7 @@ public class BeanTransactions {
 
 	// If entityTransactions array is available then adds it to
 	// UserTransaction object
-	if (ObjectUtils.available(entityTransactions)) {
+	if (CollectionUtils.available(entityTransactions)) {
 
 	    ((UserTransactionImpl) transaction)
 		    .addTransactions(entityTransactions);
