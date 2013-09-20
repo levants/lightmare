@@ -452,7 +452,7 @@ public class MetaCreator {
 		    realURL = null;
 		}
 
-		if (ObjectUtils.available(aggregateds)) {
+		if (CollectionUtils.available(aggregateds)) {
 		    aggregateds.clear();
 		}
 
