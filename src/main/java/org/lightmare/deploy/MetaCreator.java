@@ -243,11 +243,8 @@ public class MetaCreator {
 	}
 
 	// Builds connection for appropriated persistence unit name
-	builder.setPath(configClone.getPersXmlPath())
-		.setProperties(configClone.getPersistenceProperties())
-		.setSwapDataSource(configClone.isSwapDataSource())
-		.setScanArchives(configClone.isScanArchives())
-		.setClassLoader(loader).build().setConnection(unitName);
+	builder.configure(configClone).setClassLoader(loader).build()
+		.setConnection(unitName);
     }
 
     /**

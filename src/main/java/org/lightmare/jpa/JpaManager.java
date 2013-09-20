@@ -14,6 +14,7 @@ import javax.persistence.Persistence;
 import org.apache.log4j.Logger;
 import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.ConnectionSemaphore;
+import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.libraries.LibraryLoader;
@@ -353,6 +354,16 @@ public class JpaManager {
 	 */
 	public Builder setClassLoader(ClassLoader loader) {
 	    manager.loader = loader;
+
+	    return this;
+	}
+
+	public Builder configure(Configuration configuration) {
+
+	    setPath(configuration.getPersXmlPath())
+		    .setProperties(configuration.getPersistenceProperties())
+		    .setSwapDataSource(configuration.isSwapDataSource())
+		    .setScanArchives(configuration.isScanArchives());
 
 	    return this;
 	}
