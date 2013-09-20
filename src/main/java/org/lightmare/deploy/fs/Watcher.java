@@ -393,7 +393,7 @@ public class Watcher implements Runnable {
 	    if (scan) {
 		directory = new File(path);
 		files = directory.listFiles();
-		if (ObjectUtils.available(files)) {
+		if (CollectionUtils.available(files)) {
 		    registerPaths(files, fs, watch);
 		}
 	    } else {
