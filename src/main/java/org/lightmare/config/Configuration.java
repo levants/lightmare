@@ -201,7 +201,7 @@ public class Configuration implements Cloneable {
      */
     public <V> V getPoolConfigValue(Object key, V defaultValue) {
 
-	V value = ObjectUtils.getSubValue(config, ConfigKeys.DEPLOY_CONFIG.key,
+	V value = CollectionUtils.getSubValue(config, ConfigKeys.DEPLOY_CONFIG.key,
 		ConfigKeys.POOL_CONFIG.key, key);
 	if (value == null) {
 	    value = defaultValue;
