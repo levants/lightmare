@@ -94,11 +94,10 @@ public class CollectionUtils {
      */
     public static boolean isArray(final Object data) {
 
-	boolean valid = data instanceof Object[] || data instanceof boolean[]
+	boolean valid = (data instanceof Object[] || data instanceof boolean[]
 		|| data instanceof byte[] || data instanceof short[]
 		|| data instanceof char[] || data instanceof int[]
-		|| data instanceof long[] || data instanceof float[]
-		|| data instanceof double[];
+		|| data instanceof long[] || data instanceof float[] || data instanceof double[]);
 
 	return valid;
     }
