@@ -558,16 +558,6 @@ public class MetaCreator {
     }
 
     /**
-     * Closes all existing connections
-     * 
-     * @throws IOException
-     */
-    // public static void closeAllConnections() throws IOException {
-    //
-    // ConnectionContainer.closeConnections();
-    // }
-
-    /**
      * Clears all locally cached data
      */
     public void clear() {
