@@ -247,7 +247,7 @@ public class Watcher implements Runnable {
 	}
 	File file;
 	List<File> list = new ArrayList<File>();
-	if (ObjectUtils.available(paths)) {
+	if (CollectionUtils.available(paths)) {
 	    for (String path : paths) {
 		file = new File(path);
 		list.add(file);
