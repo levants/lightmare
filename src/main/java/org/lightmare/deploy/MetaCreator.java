@@ -344,7 +344,7 @@ public class MetaCreator {
 	    // Gets and caches class loader
 	    current = LibraryLoader.getContextClassLoader();
 	    archivesURLs = new HashMap<URL, ArchiveData>();
-	    if (ObjectUtils.available(archives)) {
+	    if (CollectionUtils.available(archives)) {
 		realURL = new HashMap<URL, DeployData>();
 	    }
 	    URL[] fullArchives = getFullArchives(archives);
