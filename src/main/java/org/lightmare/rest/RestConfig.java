@@ -79,7 +79,7 @@ public class RestConfig extends ResourceConfig {
 
 	Set<Resource> resources = getResources();
 
-	if (ObjectUtils.available(resources)) {
+	if (CollectionUtils.available(resources)) {
 	    getResources().clear();
 	}
     }
