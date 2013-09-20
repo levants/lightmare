@@ -221,6 +221,7 @@ public abstract class AbstractIOUtils {
 	}
 
 	FileType typToCheck = fileType;
+
 	if (fileType == null) {
 	    typToCheck = getType(appFile);
 	}
