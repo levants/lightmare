@@ -237,7 +237,7 @@ public class CollectionUtils {
 
 	Set<T> set;
 
-	if (ObjectUtils.available(collection)) {
+	if (available(collection)) {
 	    set = new HashSet<T>(collection);
 	} else {
 	    set = Collections.emptySet();
