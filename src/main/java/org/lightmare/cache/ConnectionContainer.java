@@ -13,6 +13,7 @@ import org.lightmare.jpa.JpaManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -42,7 +43,7 @@ public class ConnectionContainer {
      */
     public static boolean checkForEmf(String unitName) {
 
-	boolean check = ObjectUtils.available(unitName);
+	boolean check = CollectionUtils.available(unitName);
 
 	if (check) {
 	    check = CONNECTIONS.containsKey(unitName);
@@ -235,8 +236,9 @@ public class ConnectionContainer {
 		    jndiManager.unbind(fullJndiName);
 		}
 	    } catch (IOException ex) {
-		LogUtils.error(LOG, ex, NamingUtils.COULD_NOT_UNBIND_NAME_ERROR,
-			jndiName, ex.getMessage());
+		LogUtils.error(LOG, ex,
+			NamingUtils.COULD_NOT_UNBIND_NAME_ERROR, jndiName,
+			ex.getMessage());
 	    }
 	}
     }
