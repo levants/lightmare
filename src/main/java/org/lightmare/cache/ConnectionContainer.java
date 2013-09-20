@@ -17,6 +17,7 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Container class to cache connections
@@ -43,7 +44,7 @@ public class ConnectionContainer {
      */
     public static boolean checkForEmf(String unitName) {
 
-	boolean check = CollectionUtils.valid(unitName);
+	boolean check = StringUtils.valid(unitName);
 
 	if (check) {
 	    check = CONNECTIONS.containsKey(unitName);
