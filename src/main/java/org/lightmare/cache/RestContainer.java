@@ -123,7 +123,7 @@ public class RestContainer {
 
     public static void removeResources(Set<Resource> existingResources) {
 
-	if (ObjectUtils.available(existingResources)) {
+	if (CollectionUtils.available(existingResources)) {
 
 	    for (Resource existingResource : existingResources) {
 		removeResource(existingResource);
