@@ -127,6 +127,11 @@ public class MetaCreator {
 	return annotationDB;
     }
 
+    public Map<String, AbstractIOUtils> getAggregateds() {
+
+	return aggregateds;
+    }
+
     /**
      * Checks weather {@link javax.persistence.Entity} annotated classes is need
      * to be filtered by {@link org.lightmare.annotations.UnitName} value
