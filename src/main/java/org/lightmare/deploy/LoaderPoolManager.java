@@ -190,14 +190,23 @@ public class LoaderPoolManager {
 
 	boolean locked = LOCK.tryLock();
 	while (ObjectUtils.notTrue(locked)) {
+	    try {
+		Thread.sleep(1000);
+	    } catch (InterruptedException ex) {
+		ex.printStackTrace();
+	    }
 	    locked = LOCK.tryLock();
 	}
 
-	if (locked) {
-	    if (ObjectUtils.notNull(LOADER_POOL)) {
-		LOADER_POOL.shutdown();
-		LOADER_POOL = null;
+	try {
+	    if (locked) {
+		if (ObjectUtils.notNull(LOADER_POOL)) {
+		    LOADER_POOL.shutdown();
+		    LOADER_POOL = null;
+		}
 	    }
+	} finally {
+	    LOCK.unlock();
 	}
 
 	getLoaderPool();
