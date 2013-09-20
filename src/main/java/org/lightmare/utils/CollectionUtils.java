@@ -221,6 +221,7 @@ public class CollectionUtils {
     public static <T> T getFirst(T[] values) {
 
 	T value;
+
 	if (ObjectUtils.available(values)) {
 	    value = values[FIRST_INDEX];
 	} else {
