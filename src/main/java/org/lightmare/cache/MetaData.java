@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
 import org.lightmare.ejb.handlers.BeanHandler;
-import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.CollectionUtils;
 
 /**
  * Container class to save bean {@link Field} with annotation
@@ -129,7 +129,7 @@ public class MetaData {
      */
     public void addUnitFields(Collection<Field> unitFields) {
 
-	if (ObjectUtils.availableAll(connections, unitFields)) {
+	if (CollectionUtils.availableAll(connections, unitFields)) {
 	    String unitName;
 	    for (Field unitField : unitFields) {
 		unitName = unitField.getAnnotation(PersistenceUnit.class)
