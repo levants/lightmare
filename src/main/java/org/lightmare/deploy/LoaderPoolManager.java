@@ -5,6 +5,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.libraries.LibraryLoader;
@@ -24,6 +26,9 @@ public class LoaderPoolManager {
 
     // Name prefix of deployment threads
     private static final String LOADER_THREAD_NAME = "Ejb-Loader-Thread-";
+
+    // Lock for pool reopening
+    private static final Lock LOCK = new ReentrantLock();
 
     /**
      * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
@@ -141,11 +146,14 @@ public class LoaderPoolManager {
     protected static ExecutorService getLoaderPool() {
 
 	if (invalid()) {
-	    synchronized (LoaderPoolManager.class) {
+	    LOCK.lock();
+	    try {
 		if (invalid()) {
 		    LOADER_POOL = Executors.newFixedThreadPool(
 			    LOADER_POOL_SIZE, new LoaderThreadFactory());
 		}
+	    } finally {
+		LOCK.unlock();
 	    }
 	}
 
