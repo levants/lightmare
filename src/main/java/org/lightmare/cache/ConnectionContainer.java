@@ -109,7 +109,7 @@ public class ConnectionContainer {
 
 	ConnectionSemaphore semaphore = null;
 
-	if (ObjectUtils.available(unitName)) {
+	if (CollectionUtils.available(unitName)) {
 
 	    semaphore = createSemaphore(unitName);
 	    if (ObjectUtils.available(jndiName)) {
