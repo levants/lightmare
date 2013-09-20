@@ -83,7 +83,7 @@ public class StringUtils {
 
 	String resultText;
 
-	if (ObjectUtils.available(parts)) {
+	if (CollectionUtils.available(parts)) {
 
 	    StringBuilder resultBuider = new StringBuilder();
 	    for (Object part : parts) {
