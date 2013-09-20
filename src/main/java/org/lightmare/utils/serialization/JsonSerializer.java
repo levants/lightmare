@@ -26,6 +26,7 @@ public class JsonSerializer {
 
     private static boolean mapperConfigured;
 
+    // Lock for initializing ObjectMapper instance
     private static final Lock LOCK = new ReentrantLock();
 
     private static void configureMapper() {
