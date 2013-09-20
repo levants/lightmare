@@ -210,7 +210,7 @@ public abstract class AbstractIOUtils {
     public static AbstractIOUtils getAppropriatedType(URL url, FileType fileType)
 	    throws IOException {
 
-	AbstractIOUtils ioUtils = null;
+	AbstractIOUtils ioUtils;
 
 	File appFile;
 
@@ -233,6 +233,8 @@ public abstract class AbstractIOUtils {
 	    ioUtils = new JarUtils(appFile);
 	} else if (typToCheck.equals(FileType.DIR)) {
 	    ioUtils = new SimpleUtils(appFile);
+	} else {
+	    ioUtils = null;
 	}
 
 	return ioUtils;
