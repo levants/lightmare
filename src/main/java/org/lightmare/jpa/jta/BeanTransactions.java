@@ -267,7 +267,7 @@ public class BeanTransactions {
     private static void addReqNewTransactions(UserTransactionImpl transaction,
 	    Collection<TransactionData> entityTransactions) {
 
-	if (ObjectUtils.available(entityTransactions)) {
+	if (CollectionUtils.available(entityTransactions)) {
 	    for (TransactionData transactionData : entityTransactions) {
 		addReqNewTransaction(transaction,
 			transactionData.entityTransaction, transactionData.em);
