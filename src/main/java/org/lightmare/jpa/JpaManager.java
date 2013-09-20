@@ -190,6 +190,7 @@ public class JpaManager {
      * @throws IOException
      */
     private void bindJndiName(ConnectionSemaphore semaphore) throws IOException {
+
 	boolean bound = semaphore.isBound();
 	if (!bound) {
 	    String jndiName = semaphore.getJndiName();
