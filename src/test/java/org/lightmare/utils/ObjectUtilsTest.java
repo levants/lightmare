@@ -67,16 +67,32 @@ public class ObjectUtilsTest {
 	    System.out.format("%s %s\n", utilICasted, directIcasted);
 
 	    int toITypedCast = 100;
-	    int utilITypedCasted = ObjectUtils
-		    .cast(toITypedCast, int.class);
+	    int utilITypedCasted = ObjectUtils.cast(toITypedCast, int.class);
 
 	    System.out.format("%s %s\n", utilITypedCasted, directIcasted);
 
 	    System.out.format("%s %s\n", int.class, Integer.class);
-	    
 
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
+    }
+
+    @Test
+    public void notEqualsTest() {
+
+	int x = 100;
+	int y = 200;
+
+	String line1 = "line1";
+	String line2 = "line2";
+
+	String errorMessage = "ObjectUtils.notEquals(x, Y) method don't works correctly";
+
+	boolean valid = ObjectUtils.notEquals(x, y);
+	Assert.assertTrue(errorMessage, valid);
+
+	valid = ObjectUtils.notEquals(line1, line2);
+	Assert.assertTrue(errorMessage, valid);
     }
 }
