@@ -175,9 +175,10 @@ public class ParamBuilder {
 
     private Object getEntityStream(Parameter parameter) {
 
+	Object stream;
+
 	List<String> paramValues = uriParams.get(parameter.getSourceName());
 	String value;
-	Object stream;
 	if (CollectionUtils.available(paramValues)) {
 	    if (paramValues.size() == PARAM_VALIES_LENGTH) {
 		value = paramValues.get(PARAM_VALUES_INDEX);
