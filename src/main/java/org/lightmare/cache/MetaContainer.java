@@ -173,6 +173,19 @@ public class MetaContainer {
 	return EJBS.containsKey(beanName);
     }
 
+    private static void awaitProgress(boolean inProgress, MetaData metaData)
+	    throws IOException {
+
+	while (inProgress) {
+	    try {
+		metaData.wait();
+		inProgress = metaData.isInProgress();
+	    } catch (InterruptedException ex) {
+		throw new IOException(ex);
+	    }
+	}
+    }
+
     /**
      * Waits while {@link MetaData#isInProgress()} is true
      * 
