@@ -26,6 +26,7 @@ import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
@@ -66,7 +67,7 @@ public class EjbConnector {
 	if (connection.getEmf() == null) {
 	    String unitName = connection.getUnitName();
 
-	    if (CollectionUtils.valid(unitName)) {
+	    if (StringUtils.valid(unitName)) {
 		ConnectionSemaphore semaphore = ConnectionContainer
 			.getConnection(unitName);
 		connection.setConnection(semaphore);
