@@ -158,7 +158,8 @@ public class Configuration implements Cloneable {
      */
     public <V> V getPersistenceConfigValue(Object key, V defaultValue) {
 
-	V value = CollectionUtils.getSubValue(config, ConfigKeys.DEPLOY_CONFIG.key,
+	V value = CollectionUtils.getSubValue(config,
+		ConfigKeys.DEPLOY_CONFIG.key,
 		ConfigKeys.PERSISTENCE_CONFIG.key, key);
 	if (value == null) {
 	    value = defaultValue;
@@ -201,8 +202,8 @@ public class Configuration implements Cloneable {
      */
     public <V> V getPoolConfigValue(Object key, V defaultValue) {
 
-	V value = CollectionUtils.getSubValue(config, ConfigKeys.DEPLOY_CONFIG.key,
-		ConfigKeys.POOL_CONFIG.key, key);
+	V value = CollectionUtils.getSubValue(config,
+		ConfigKeys.DEPLOY_CONFIG.key, ConfigKeys.POOL_CONFIG.key, key);
 	if (value == null) {
 	    value = defaultValue;
 	}
