@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.apache.log4j.Logger;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
@@ -32,6 +33,8 @@ public class LoaderPoolManager {
 
     // Thread sleep time while it's waiting unlock
     private static final long THREAD_SLEEP_TIME = 100L;
+
+    private static final Logger LOG = Logger.getLogger(LoaderPoolManager.class);
 
     /**
      * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
@@ -196,7 +199,7 @@ public class LoaderPoolManager {
 	    try {
 		Thread.sleep(THREAD_SLEEP_TIME);
 	    } catch (InterruptedException ex) {
-		ex.printStackTrace();
+		LOG.error(ex.getMessage(), ex);
 	    }
 	    locked = LOCK.tryLock();
 	}
