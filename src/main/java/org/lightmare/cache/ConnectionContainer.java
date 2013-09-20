@@ -112,7 +112,7 @@ public class ConnectionContainer {
 	if (CollectionUtils.available(unitName)) {
 
 	    semaphore = createSemaphore(unitName);
-	    if (ObjectUtils.available(jndiName)) {
+	    if (CollectionUtils.available(jndiName)) {
 
 		ConnectionSemaphore existent = CONNECTIONS.putIfAbsent(
 			jndiName, semaphore);
