@@ -16,6 +16,7 @@ import javassist.bytecode.annotation.Annotation;
 
 import org.apache.log4j.Logger;
 import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.scannotation.archiveiterator.Filter;
@@ -162,7 +163,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 			if (subFileName
 				.startsWith(AbstractIOUtils.FILE_SEPARATOR)) {
 			    subFileName = subFileName
-				    .substring(ObjectUtils.SECOND_INDEX);
+				    .substring(CollectionUtils.SECOND_INDEX);
 			}
 
 			valid = !ignoreScan(subFileName.replace(
