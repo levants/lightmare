@@ -56,7 +56,7 @@ public class BeanUtils {
 		    start);
 	} else if (interfaceName.endsWith(LOCAL_IDENT)) {
 	    start = interfaceName.lastIndexOf(LOCAL_IDENT);
-	    beanName = interfaceName.substring(ObjectUtils.FIRST_INDEX, start);
+	    beanName = interfaceName.substring(CollectionUtils.FIRST_INDEX, start);
 	} else {
 	    beanName = interfaceName;
 	}
