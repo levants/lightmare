@@ -90,18 +90,21 @@ public abstract class AbstractIOUtils {
     public static final int ZERO_OFFSET = 0;
 
     public AbstractIOUtils(String path) {
+
 	this.path = path;
 	realFile = new File(path);
 	isDirectory = realFile.isDirectory();
     }
 
     public AbstractIOUtils(File file) {
+
 	this.path = file.getPath();
 	realFile = file;
 	isDirectory = realFile.isDirectory();
     }
 
     public AbstractIOUtils(URL url) throws IOException {
+
 	this.path = url.toString();
 	try {
 	    realFile = new File(url.toURI());
