@@ -366,11 +366,13 @@ public abstract class AbstractIOUtils {
     public void scanDirectory(File... files) throws MalformedURLException {
 
 	File parentFile;
+
 	if (ObjectUtils.available(files)) {
 	    parentFile = CollectionUtils.getFirst(files);
 	} else {
 	    parentFile = realFile;
 	}
+
 	File[] subFiles = parentFile.listFiles();
 	String fileName;
 	URL fileURL;
