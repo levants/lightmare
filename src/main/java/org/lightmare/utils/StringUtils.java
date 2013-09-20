@@ -30,6 +30,21 @@ public class StringUtils {
 		&& chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
     }
 
+    public static boolean validAll(CharSequence... lines) {
+
+	boolean valid = CollectionUtils.valid(lines);
+	if (valid) {
+	    int length = lines.length;
+	    CharSequence line;
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length && valid; i++) {
+		line = lines[i];
+		valid = valid && valid(line);
+	    }
+	}
+
+	return valid;
+    }
+
     public static boolean invalid(CharSequence chars) {
 
 	return !valid(chars);
