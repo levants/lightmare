@@ -59,7 +59,7 @@ public class Security {
     public boolean authenticate(String user, String pass) {
 
 	boolean valid;
-	if (ObjectUtils.available(cache)) {
+	if (CollectionUtils.available(cache)) {
 
 	    String cachedPass = (String) cache.get(user);
 	    valid = (ObjectUtils.available(cachedPass) && cachedPass
