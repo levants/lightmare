@@ -366,7 +366,7 @@ public class MetaContainer {
 
 	synchronized (MetaContainer.class) {
 	    Collection<String> beanNames = getBeanNames(url);
-	    boolean valid = ObjectUtils.available(beanNames);
+	    boolean valid = CollectionUtils.available(beanNames);
 	    if (valid) {
 		for (String beanName : beanNames) {
 		    undeployBean(beanName);
