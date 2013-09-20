@@ -257,7 +257,7 @@ public class DeployManager extends HttpServlet {
 
 	    String fileName = request.getParameter(REDEPLOY_PARAM_NAME);
 	    String type = request.getParameter(TYPE_PARAM_NAME);
-	    if (ObjectUtils.available(fileName)) {
+	    if (CollectionUtils.available(fileName)) {
 		if (type == null || REDEPLOY_TYPE.equals(type)) {
 		    Watcher.redeployFile(fileName);
 		} else if (UNDEPLOY_TYPE.equals(type)) {
