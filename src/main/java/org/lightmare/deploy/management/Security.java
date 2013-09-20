@@ -53,7 +53,7 @@ public class Security {
 
     public boolean check() {
 
-	return ObjectUtils.notAvailable(cache);
+	return CollectionUtils.notAvailable(cache);
     }
 
     public boolean authenticate(String user, String pass) {
