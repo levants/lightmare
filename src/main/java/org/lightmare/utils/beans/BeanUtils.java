@@ -68,7 +68,7 @@ public class BeanUtils {
 
 	Stateless annotation = beanClass.getAnnotation(Stateless.class);
 	String beanEjbName = annotation.name();
-	if (CollectionUtils.invalid(beanEjbName)) {
+	if (StringUtils.invalid(beanEjbName)) {
 	    beanEjbName = beanClass.getSimpleName();
 	}
 
