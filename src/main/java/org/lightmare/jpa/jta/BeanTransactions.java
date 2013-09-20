@@ -245,7 +245,7 @@ public class BeanTransactions {
 
     private static void addEntityManagers(UserTransactionImpl transaction,
 	    Collection<EntityManager> ems) {
-	if (ObjectUtils.available(ems)) {
+	if (CollectionUtils.available(ems)) {
 	    for (EntityManager em : ems) {
 		addEntityManager(transaction, em);
 	    }
