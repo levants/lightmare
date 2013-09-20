@@ -30,7 +30,7 @@ public class LoaderPoolManager {
     // Lock for pool reopening
     private static final Lock LOCK = new ReentrantLock();
 
-    // // Thread sleep time while it's waiting unlock
+    // Thread sleep time while it's waiting unlock
     private static final long THREAD_SLEEP_TIME = 100L;
 
     /**
