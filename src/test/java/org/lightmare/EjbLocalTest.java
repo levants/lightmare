@@ -129,10 +129,10 @@ public class EjbLocalTest {
 
     @AfterClass
     public static void end() {
+	
 	try {
 	    ConnectionContainer.closeConnections();
 	} catch (IOException ex) {
-	    // TODO Auto-generated catch block
 	    ex.printStackTrace();
 	}
     }
