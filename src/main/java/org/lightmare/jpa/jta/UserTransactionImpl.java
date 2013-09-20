@@ -340,7 +340,7 @@ public class UserTransactionImpl implements UserTransaction {
     private void closeAllEntityManagers() {
 
 	EntityManager em;
-	while (ObjectUtils.notEmpty(ems)) {
+	while (CollectionUtils.notEmpty(ems)) {
 	    em = ems.pop();
 	    closeEntityManager(em);
 	}
