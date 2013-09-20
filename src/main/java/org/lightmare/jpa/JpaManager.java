@@ -207,7 +207,7 @@ public class JpaManager {
 	if (ObjectUtils.notTrue(bound)) {
 
 	    String jndiName = semaphore.getJndiName();
-	    if (ObjectUtils.available(jndiName)) {
+	    if (CollectionUtils.available(jndiName)) {
 		JndiManager jndiManager = new JndiManager();
 		try {
 		    String fullJndiName = NamingUtils
