@@ -20,6 +20,7 @@ import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Creates and caches {@link EntityManagerFactory} for each EJB bean
@@ -43,6 +44,8 @@ public class JpaManager {
     private boolean scanArchives;
 
     private ClassLoader loader;
+
+    private static final String COULD_NOT_BIND_JNDI_ERROR = "could not bind connection";
 
     private static final Logger LOG = Logger.getLogger(JpaManager.class);
 
@@ -206,9 +209,9 @@ public class JpaManager {
 		    }
 		} catch (IOException ex) {
 		    LOG.error(ex.getMessage(), ex);
-		    throw new IOException(String.format(
-			    "could not bind connection %s",
-			    semaphore.getUnitName()), ex);
+		    throw new IOException(
+			    StringUtils.concat(COULD_NOT_BIND_JNDI_ERROR,
+				    semaphore.getUnitName()), ex);
 		}
 	    }
 	}
