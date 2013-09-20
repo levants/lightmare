@@ -166,7 +166,7 @@ public class EarUtils extends AbstractIOUtils {
     @Override
     protected void scanArchive(Object... args) throws IOException {
 
-	if (ObjectUtils.available(args)) {
+	if (CollectionUtils.available(args)) {
 	    xmlFromJar = (Boolean) CollectionUtils.getFirst(args);
 	}
 
