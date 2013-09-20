@@ -188,8 +188,12 @@ public class LoaderPoolManager {
      */
     public static void reload() {
 
-	synchronized (LoaderPoolManager.class) {
+	boolean locked = LOCK.tryLock();
+	while (ObjectUtils.notTrue(locked)) {
+	    locked = LOCK.tryLock();
+	}
 
+	if (locked) {
 	    if (ObjectUtils.notNull(LOADER_POOL)) {
 		LOADER_POOL.shutdown();
 		LOADER_POOL = null;
