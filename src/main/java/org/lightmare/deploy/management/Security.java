@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -40,7 +41,7 @@ public class Security {
     public void cacheUsers() throws IOException {
 
 	String path = Configuration.getAdminUsersPath();
-	if (ObjectUtils.notAvailable(path)) {
+	if (CollectionUtils.notAvailable(path)) {
 	    path = ConfigKeys.ADMIN_USERS_PATH.getValue();
 	}
 
