@@ -87,7 +87,7 @@ public class ObjectUtilsTest {
 	String line1 = "line1";
 	String line2 = "line2";
 
-	String errorMessage = "ObjectUtils.notEquals(x, Y) method don't works correctly";
+	String errorMessage = "ObjectUtils.notEquals(x, y) method don't works correctly";
 
 	boolean valid = ObjectUtils.notEquals(x, y);
 	Assert.assertTrue(errorMessage, valid);
