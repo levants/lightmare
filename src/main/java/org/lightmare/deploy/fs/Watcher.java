@@ -31,6 +31,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.rest.providers.RestProvider;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
@@ -125,7 +126,7 @@ public class Watcher implements Runnable {
 	for (Configuration config : configs) {
 	    deploymetDirssCurrent = config.getDeploymentPath();
 	    if (config.isWatchStatus()
-		    && ObjectUtils.available(deploymetDirssCurrent)) {
+		    && CollectionUtils.available(deploymetDirssCurrent)) {
 		deploymetDirss.addAll(deploymetDirssCurrent);
 	    }
 	}
