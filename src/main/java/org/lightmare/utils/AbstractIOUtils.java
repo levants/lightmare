@@ -283,7 +283,9 @@ public abstract class AbstractIOUtils {
 
 	Map<String, String> classOwnersFiles = annotationDB
 		.getClassOwnersFiles();
+
 	URL xmlURL = getAppropriatedURL(classOwnersFiles, className);
+
 	return xmlURL;
     }
 
