@@ -179,7 +179,7 @@ public class ParamBuilder {
 
 	List<String> paramValues = uriParams.get(parameter.getSourceName());
 	String value;
-	if (CollectionUtils.available(paramValues)) {
+	if (CollectionUtils.valid(paramValues)) {
 	    if (paramValues.size() == PARAM_VALIES_LENGTH) {
 		value = paramValues.get(PARAM_VALUES_INDEX);
 		stream = RequestUtils.textToStream(value);

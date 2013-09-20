@@ -47,7 +47,7 @@ public class CollectionUtils {
      * @param collection
      * @return <code></code>
      */
-    public static boolean available(Collection<?> collection) {
+    public static boolean valid(Collection<?> collection) {
 
 	return collection != null && !collection.isEmpty();
     }
@@ -83,7 +83,7 @@ public class CollectionUtils {
      */
     public static boolean notAvailable(Collection<?> collection) {
 
-	return !available(collection);
+	return !valid(collection);
     }
 
     /**
@@ -139,7 +139,7 @@ public class CollectionUtils {
 	    Collection<?> collection;
 	    for (int i = 0; i < collections.length && avaliable; i++) {
 		collection = collections[i];
-		avaliable = avaliable && available(collection);
+		avaliable = avaliable && valid(collection);
 	    }
 	}
 
@@ -245,7 +245,7 @@ public class CollectionUtils {
 
 	Set<T> set;
 
-	if (available(collection)) {
+	if (valid(collection)) {
 	    set = new HashSet<T>(collection);
 	} else {
 	    set = Collections.emptySet();
@@ -283,7 +283,7 @@ public class CollectionUtils {
 
 	List<T> list;
 
-	if (available(collection)) {
+	if (valid(collection)) {
 	    list = new ArrayList<T>(collection);
 	} else {
 	    list = Collections.emptyList();
@@ -391,7 +391,7 @@ public class CollectionUtils {
 
 	T value;
 
-	if (available(list)) {
+	if (valid(list)) {
 	    value = list.get(FIRST_INDEX);
 	} else {
 	    value = null;
@@ -410,7 +410,7 @@ public class CollectionUtils {
 
 	T value;
 
-	if (available(collection)) {
+	if (valid(collection)) {
 
 	    if (collection instanceof List) {
 		value = getFirstFromList(((List<T>) collection));

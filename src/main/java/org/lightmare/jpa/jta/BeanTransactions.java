@@ -198,7 +198,7 @@ public class BeanTransactions {
 
 	Collection<TransactionData> entityTransactions;
 
-	if (CollectionUtils.available(ems)) {
+	if (CollectionUtils.valid(ems)) {
 	    entityTransactions = new ArrayList<TransactionData>();
 	    for (EntityManager em : ems) {
 		EntityTransaction entityTransaction = getEntityTransaction(em);
@@ -227,7 +227,7 @@ public class BeanTransactions {
     private static void addEntityTransactions(UserTransactionImpl transaction,
 	    Collection<TransactionData> entityTransactions) {
 
-	if (CollectionUtils.available(entityTransactions)) {
+	if (CollectionUtils.valid(entityTransactions)) {
 	    for (TransactionData transactionData : entityTransactions) {
 		addEntityTransaction(transaction,
 			transactionData.entityTransaction, transactionData.em);
@@ -246,7 +246,7 @@ public class BeanTransactions {
     private static void addEntityManagers(UserTransactionImpl transaction,
 	    Collection<EntityManager> ems) {
 
-	if (CollectionUtils.available(ems)) {
+	if (CollectionUtils.valid(ems)) {
 	    for (EntityManager em : ems) {
 		addEntityManager(transaction, em);
 	    }
@@ -267,7 +267,7 @@ public class BeanTransactions {
     private static void addReqNewTransactions(UserTransactionImpl transaction,
 	    Collection<TransactionData> entityTransactions) {
 
-	if (CollectionUtils.available(entityTransactions)) {
+	if (CollectionUtils.valid(entityTransactions)) {
 	    for (TransactionData transactionData : entityTransactions) {
 		addReqNewTransaction(transaction,
 			transactionData.entityTransaction, transactionData.em);

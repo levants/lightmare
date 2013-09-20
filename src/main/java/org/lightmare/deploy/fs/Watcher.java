@@ -126,7 +126,7 @@ public class Watcher implements Runnable {
 	for (Configuration config : configs) {
 	    deploymetDirssCurrent = config.getDeploymentPath();
 	    if (config.isWatchStatus()
-		    && CollectionUtils.available(deploymetDirssCurrent)) {
+		    && CollectionUtils.valid(deploymetDirssCurrent)) {
 		deploymetDirss.addAll(deploymetDirssCurrent);
 	    }
 	}
@@ -142,7 +142,7 @@ public class Watcher implements Runnable {
 	for (Configuration config : configs) {
 	    pathsCurrent = config.getDataSourcePath();
 	    if (config.isWatchStatus()
-		    && CollectionUtils.available(pathsCurrent)) {
+		    && CollectionUtils.valid(pathsCurrent)) {
 		paths.addAll(pathsCurrent);
 	    }
 	}
@@ -162,7 +162,7 @@ public class Watcher implements Runnable {
 	Set<DeploymentDirectory> apps = getDeployDirectories();
 	Set<String> dss = getDataSourcePaths();
 
-	if (CollectionUtils.available(apps)) {
+	if (CollectionUtils.valid(apps)) {
 
 	    String deploymantPath;
 	    Iterator<DeploymentDirectory> iterator = apps.iterator();
@@ -180,7 +180,7 @@ public class Watcher implements Runnable {
 	    } else {
 		type = WatchFileType.DEPLOYMENT;
 	    }
-	} else if (CollectionUtils.available(dss) && dss.contains(filePath)) {
+	} else if (CollectionUtils.valid(dss) && dss.contains(filePath)) {
 	    type = WatchFileType.DATA_SOURCE;
 	} else {
 	    type = WatchFileType.NONE;
@@ -210,13 +210,13 @@ public class Watcher implements Runnable {
 	Set<DeploymentDirectory> deploymetDirssCurrent;
 	for (Configuration config : configs) {
 	    deploymetDirssCurrent = config.getDeploymentPath();
-	    if (CollectionUtils.available(deploymetDirssCurrent)) {
+	    if (CollectionUtils.valid(deploymetDirssCurrent)) {
 		deploymetDirss.addAll(deploymetDirssCurrent);
 	    }
 	}
 	File[] files;
 	List<File> list = new ArrayList<File>();
-	if (CollectionUtils.available(deploymetDirss)) {
+	if (CollectionUtils.valid(deploymetDirss)) {
 	    String path;
 	    DeployFiletr filter = new DeployFiletr();
 	    for (DeploymentDirectory deployment : deploymetDirss) {
@@ -241,13 +241,13 @@ public class Watcher implements Runnable {
 	Set<String> pathsCurrent;
 	for (Configuration config : configs) {
 	    pathsCurrent = config.getDataSourcePath();
-	    if (CollectionUtils.available(pathsCurrent)) {
+	    if (CollectionUtils.valid(pathsCurrent)) {
 		paths.addAll(pathsCurrent);
 	    }
 	}
 	File file;
 	List<File> list = new ArrayList<File>();
-	if (CollectionUtils.available(paths)) {
+	if (CollectionUtils.valid(paths)) {
 	    for (String path : paths) {
 		file = new File(path);
 		list.add(file);
@@ -422,10 +422,10 @@ public class Watcher implements Runnable {
 		LOG.error(ex.getMessage(), ex);
 		throw ex;
 	    }
-	    if (CollectionUtils.available(deployments)) {
+	    if (CollectionUtils.valid(deployments)) {
 		registerPaths(deployments, fs, watch);
 	    }
-	    if (CollectionUtils.available(dataSources)) {
+	    if (CollectionUtils.valid(dataSources)) {
 		registerDsPaths(dataSources, fs, watch);
 	    }
 	} catch (IOException ex) {

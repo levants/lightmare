@@ -135,7 +135,7 @@ public class DeployManager extends HttpServlet {
 	builder.append(DEPLOYMENTS);
 	builder.append(END_TYPE_TAG);
 	String tag;
-	if (CollectionUtils.available(apps)) {
+	if (CollectionUtils.valid(apps)) {
 	    for (File app : apps) {
 		tag = getTag(app.getPath(), APP_DEPLOYMENT_TYPE);
 		builder.append(tag);
@@ -147,7 +147,7 @@ public class DeployManager extends HttpServlet {
 	builder.append(DATA_SOURCES);
 	builder.append(END_TYPE_TAG);
 
-	if (CollectionUtils.available(dss)) {
+	if (CollectionUtils.valid(dss)) {
 	    for (File ds : dss) {
 		tag = getTag(ds.getPath(), DTS_DEPLOYMENT_TYPE);
 		builder.append(tag);

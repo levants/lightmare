@@ -42,7 +42,7 @@ public class RequestUtils {
     public static List<InputStream> textsToStreams(Collection<String> params) {
 
 	List<InputStream> streams = new ArrayList<InputStream>();
-	if (CollectionUtils.available(params)) {
+	if (CollectionUtils.valid(params)) {
 	    InputStream stream;
 	    for (String param : params) {
 		stream = textToStream(param);

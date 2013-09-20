@@ -79,7 +79,7 @@ public class RestConfig extends ResourceConfig {
 
 	Set<Resource> resources = getResources();
 
-	if (CollectionUtils.available(resources)) {
+	if (CollectionUtils.valid(resources)) {
 	    getResources().clear();
 	}
     }
@@ -98,7 +98,7 @@ public class RestConfig extends ResourceConfig {
 
 	if (ObjectUtils.notNull(oldConfig)) {
 	    Set<Resource> olds = oldConfig.getResources();
-	    if (CollectionUtils.available(olds)) {
+	    if (CollectionUtils.valid(olds)) {
 		newResources.addAll(olds);
 	    }
 	}
@@ -118,7 +118,7 @@ public class RestConfig extends ResourceConfig {
 
     public void addPreResources(Collection<Resource> preResources) {
 
-	if (CollectionUtils.available(preResources)) {
+	if (CollectionUtils.valid(preResources)) {
 	    if (this.preResources == null || this.preResources.isEmpty()) {
 		this.preResources = new HashSet<Resource>();
 	    }
@@ -138,7 +138,7 @@ public class RestConfig extends ResourceConfig {
 
     private void removePreResource(Resource resource) {
 
-	if (CollectionUtils.available(preResources)) {
+	if (CollectionUtils.valid(preResources)) {
 	    preResources.remove(resource);
 	}
     }
@@ -174,7 +174,7 @@ public class RestConfig extends ResourceConfig {
 
     public void registerPreResources() {
 
-	if (CollectionUtils.available(preResources)) {
+	if (CollectionUtils.valid(preResources)) {
 	    RestContainer.putResources(preResources);
 	    registerResources(preResources);
 	}

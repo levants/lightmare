@@ -115,7 +115,7 @@ public class Initializer {
 	    throws IOException {
 
 	Collection<String> paths = config.getDataSourcePath();
-	if (CollectionUtils.available(paths)) {
+	if (CollectionUtils.valid(paths)) {
 	    for (String path : paths) {
 		initializeDataSource(path);
 	    }

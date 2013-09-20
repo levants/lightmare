@@ -323,7 +323,7 @@ public class MetaContainer {
 
 	Collection<ConnectionData> connections = metaData.getConnections();
 
-	if (CollectionUtils.available(connections)) {
+	if (CollectionUtils.valid(connections)) {
 	    for (ConnectionData connection : connections) {
 		// Gets connection to clear
 		String unitName = connection.getUnitName();
@@ -380,7 +380,7 @@ public class MetaContainer {
 
 	synchronized (MetaContainer.class) {
 	    Collection<String> beanNames = getBeanNames(url);
-	    boolean valid = CollectionUtils.available(beanNames);
+	    boolean valid = CollectionUtils.valid(beanNames);
 	    if (valid) {
 		for (String beanName : beanNames) {
 		    undeployBean(beanName);

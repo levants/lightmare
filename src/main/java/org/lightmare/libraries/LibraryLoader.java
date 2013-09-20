@@ -355,7 +355,7 @@ public class LibraryLoader {
     public static void loadClasses(Collection<String> classes,
 	    ClassLoader loader) throws IOException {
 
-	if (CollectionUtils.available(classes) && ObjectUtils.notNull(loader)) {
+	if (CollectionUtils.valid(classes) && ObjectUtils.notNull(loader)) {
 	    for (String className : classes) {
 		try {
 		    loader.loadClass(className);

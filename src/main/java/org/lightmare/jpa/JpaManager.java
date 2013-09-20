@@ -72,7 +72,7 @@ public class JpaManager {
      */
     private boolean checkForBuild() {
 
-	return CollectionUtils.available(classes)
+	return CollectionUtils.valid(classes)
 		|| CollectionUtils.available(path) || checkForURL()
 		|| swapDataSource || scanArchives;
     }
@@ -120,7 +120,7 @@ public class JpaManager {
 	    loader = LibraryLoader.getContextClassLoader();
 	}
 
-	if (CollectionUtils.available(classes)) {
+	if (CollectionUtils.valid(classes)) {
 
 	    builder.setClasses(classes);
 	    // Loads entity classes to current ClassLoader instance

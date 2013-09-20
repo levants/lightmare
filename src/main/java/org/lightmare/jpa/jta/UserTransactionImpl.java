@@ -56,7 +56,7 @@ public class UserTransactionImpl implements UserTransaction {
     @Override
     public void begin() throws NotSupportedException, SystemException {
 
-	if (CollectionUtils.available(transactions)) {
+	if (CollectionUtils.valid(transactions)) {
 	    beginAll();
 	}
     }
@@ -88,7 +88,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    IllegalStateException, SystemException {
 
 	try {
-	    if (CollectionUtils.available(transactions)) {
+	    if (CollectionUtils.valid(transactions)) {
 		commitAll();
 	    }
 	} finally {
@@ -100,14 +100,14 @@ public class UserTransactionImpl implements UserTransaction {
     public int getStatus() throws SystemException {
 
 	int active = 0;
-	if (CollectionUtils.available(transactions)) {
+	if (CollectionUtils.valid(transactions)) {
 	    for (EntityTransaction transaction : transactions) {
 		boolean isActive = transaction.isActive();
 		active += isActive ? 1 : 0;
 	    }
 	}
 
-	if (CollectionUtils.available(requareNews)) {
+	if (CollectionUtils.valid(requareNews)) {
 	    for (EntityTransaction transaction : requareNews) {
 		boolean isActive = transaction.isActive();
 		active += isActive ? 1 : 0;
@@ -139,7 +139,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    SystemException {
 
 	try {
-	    if (CollectionUtils.available(transactions)) {
+	    if (CollectionUtils.valid(transactions)) {
 		rollbackAll();
 	    }
 	} finally {
@@ -166,7 +166,7 @@ public class UserTransactionImpl implements UserTransaction {
     @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
 
-	if (CollectionUtils.available(transactions)) {
+	if (CollectionUtils.valid(transactions)) {
 	    setRollbackOnlyAll();
 	}
     }
@@ -204,7 +204,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private boolean checkNews() {
 
-	boolean notEmpty = CollectionUtils.available(requareNews);
+	boolean notEmpty = CollectionUtils.valid(requareNews);
 
 	return notEmpty;
     }
@@ -217,7 +217,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private boolean checkNewEms() {
 
-	boolean notEmpty = CollectionUtils.available(requareNewEms);
+	boolean notEmpty = CollectionUtils.valid(requareNewEms);
 
 	return notEmpty;
     }
@@ -325,7 +325,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void addEntityManagers(Collection<EntityManager> ems) {
 
-	if (CollectionUtils.available(ems)) {
+	if (CollectionUtils.valid(ems)) {
 	    for (EntityManager em : ems) {
 		addEntityManager(em);
 	    }
@@ -351,7 +351,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void closeEntityManagers() {
 
-	if (CollectionUtils.available(ems)) {
+	if (CollectionUtils.valid(ems)) {
 	    closeAllEntityManagers();
 	}
     }

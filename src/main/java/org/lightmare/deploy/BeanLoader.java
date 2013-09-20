@@ -434,7 +434,7 @@ public class BeanLoader {
 		}
 	    }
 
-	    if (CollectionUtils.available(unitFields)) {
+	    if (CollectionUtils.valid(unitFields)) {
 		metaData.addUnitFields(unitFields);
 	    }
 	}
@@ -552,7 +552,7 @@ public class BeanLoader {
 
 	    List<Method> beanMethods = MetaUtils.getAnnotatedMethods(beanClass,
 		    Interceptors.class);
-	    if (CollectionUtils.available(beanMethods)) {
+	    if (CollectionUtils.valid(beanMethods)) {
 		for (Method beanMethod : beanMethods) {
 		    interceptors = beanMethod.getAnnotation(Interceptors.class);
 		    cacheInterceptors(interceptors, beanClass, beanMethod);
@@ -583,7 +583,7 @@ public class BeanLoader {
 		    interfacesList.add(interfaceClass);
 	    }
 
-	    if (CollectionUtils.available(interfacesList)) {
+	    if (CollectionUtils.valid(interfacesList)) {
 		remoteInterface = interfacesList
 			.toArray(new Class<?>[interfacesList.size()]);
 	    }
@@ -597,7 +597,7 @@ public class BeanLoader {
 		    interfacesList.add(interfaceClass);
 	    }
 
-	    if (CollectionUtils.available(interfacesList)) {
+	    if (CollectionUtils.valid(interfacesList)) {
 		localInterface = interfacesList
 			.toArray(new Class<?>[interfacesList.size()]);
 	    }

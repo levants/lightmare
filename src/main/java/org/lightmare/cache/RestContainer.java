@@ -43,7 +43,7 @@ public class RestContainer {
 	Class<?> handlerClass = null;
 
 	Set<Object> handlers = resource.getHandlerInstances();
-	if (CollectionUtils.available(handlers)) {
+	if (CollectionUtils.valid(handlers)) {
 	    Iterator<Object> iterator = handlers.iterator();
 	    Object handler;
 	    RestInflector inflector;
@@ -70,7 +70,7 @@ public class RestContainer {
 
 	Class<?> handlerClass;
 	Set<Class<?>> handlerClasses = resource.getHandlerClasses();
-	if (CollectionUtils.available(handlerClasses)) {
+	if (CollectionUtils.valid(handlerClasses)) {
 	    handlerClass = CollectionUtils.getFirst(handlerClasses);
 	} else {
 	    handlerClass = getFromHandlerInstance(resource);
@@ -89,7 +89,7 @@ public class RestContainer {
 
     public static void putResources(Collection<Resource> resources) {
 
-	if (CollectionUtils.available(resources)) {
+	if (CollectionUtils.valid(resources)) {
 	    for (Resource resource : resources) {
 		putResource(resource);
 	    }
@@ -123,7 +123,7 @@ public class RestContainer {
 
     public static void removeResources(Set<Resource> existingResources) {
 
-	if (CollectionUtils.available(existingResources)) {
+	if (CollectionUtils.valid(existingResources)) {
 
 	    for (Resource existingResource : existingResources) {
 		removeResource(existingResource);

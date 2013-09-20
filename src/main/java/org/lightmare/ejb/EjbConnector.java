@@ -85,7 +85,7 @@ public class EjbConnector {
 	    throws IOException {
 
 	Collection<ConnectionData> connections = metaData.getConnections();
-	if (CollectionUtils.available(connections)) {
+	if (CollectionUtils.valid(connections)) {
 
 	    for (ConnectionData connection : connections) {
 		setEntityManagerFactory(connection);

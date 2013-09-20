@@ -280,7 +280,7 @@ public class MetaCreator {
 
 	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);
-	if (CollectionUtils.available(tmpFiles)) {
+	if (CollectionUtils.valid(tmpFiles)) {
 	    tmpResources.addFile(tmpFiles);
 	}
     }
@@ -357,7 +357,7 @@ public class MetaCreator {
 		    Stateless.class.getName());
 	    classOwnersURL = annotationDB.getClassOwnersURLs();
 	    Initializer.initializeDataSources(configuration);
-	    if (CollectionUtils.available(beanNames)) {
+	    if (CollectionUtils.valid(beanNames)) {
 		deployBeans(beanNames);
 	    }
 
@@ -402,7 +402,7 @@ public class MetaCreator {
     public void scanForBeans(String... paths) throws IOException {
 
 	if (CollectionUtils.notAvailable(paths)
-		&& CollectionUtils.available(configuration.getDeploymentPath())) {
+		&& CollectionUtils.valid(configuration.getDeploymentPath())) {
 
 	    Set<DeploymentDirectory> deployments = configuration
 		    .getDeploymentPath();

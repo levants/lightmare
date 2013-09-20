@@ -63,7 +63,7 @@ public class ResourceBuilder {
 
 	// Defines media type
 	MediaType type;
-	if (CollectionUtils.available(consumedTypes)) {
+	if (CollectionUtils.valid(consumedTypes)) {
 	    type = CollectionUtils.getFirst(consumedTypes);
 	} else {
 	    type = null;
@@ -95,7 +95,7 @@ public class ResourceBuilder {
 
 	// Registers children resources recursively
 	List<Resource> children = resource.getChildResources();
-	if (CollectionUtils.available(children)) {
+	if (CollectionUtils.valid(children)) {
 	    Resource child;
 	    for (Resource preChild : children) {
 		child = rebuildResource(preChild);

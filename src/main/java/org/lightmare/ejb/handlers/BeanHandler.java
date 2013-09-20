@@ -150,7 +150,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void configureInjects() throws IOException {
 
-	if (CollectionUtils.available(injectionDatas)) {
+	if (CollectionUtils.valid(injectionDatas)) {
 	    for (InjectionData inject : injectionDatas) {
 		configureInjection(inject);
 	    }
@@ -235,7 +235,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     private Collection<EntityManager> createEntityManagers() throws IOException {
 
 	Collection<EntityManager> ems = null;
-	if (CollectionUtils.available(connectionDatas)) {
+	if (CollectionUtils.valid(connectionDatas)) {
 	    ems = new ArrayList<EntityManager>();
 	    for (ConnectionData connection : connectionDatas) {
 		EntityManager em = createEntityManager(connection);
@@ -336,7 +336,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
 	Object[] intercepteds;
 
-	if (CollectionUtils.available(interceptorDatas)) {
+	if (CollectionUtils.valid(interceptorDatas)) {
 
 	    Iterator<InterceptorData> interceptors = interceptorDatas
 		    .iterator();

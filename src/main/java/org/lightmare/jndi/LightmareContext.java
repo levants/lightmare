@@ -103,7 +103,7 @@ public class LightmareContext extends MemoryContext {
      */
     private void clearResources() {
 
-	if (CollectionUtils.available(ems)) {
+	if (CollectionUtils.valid(ems)) {
 	    try {
 		for (EntityManager em : ems) {
 		    JpaManager.closeEntityManager(em);
