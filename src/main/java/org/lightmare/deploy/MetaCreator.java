@@ -574,9 +574,11 @@ public class MetaCreator {
     public void clear() {
 
 	boolean locked = scannerLock.tryLock();
+
 	while (ObjectUtils.notTrue(locked)) {
 	    locked = scannerLock.tryLock();
 	}
+
 	if (locked) {
 	    try {
 		if (ObjectUtils.available(realURL)) {
