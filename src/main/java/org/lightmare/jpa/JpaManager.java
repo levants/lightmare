@@ -236,8 +236,9 @@ public class JpaManager {
 	    semaphore.setInProgress(Boolean.FALSE);
 	    bindJndiName(semaphore);
 	} else if (semaphore.getEmf() == null) {
-	    throw new IOException(String.format(
-		    "Connection %s was not in progress", unitName));
+	    String errorMessage = String.format(
+		    "Connection %s was not in progress", unitName);
+	    throw new IOException(errorMessage);
 	} else {
 	    bindJndiName(semaphore);
 	}
