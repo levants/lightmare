@@ -25,6 +25,7 @@ import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.ejb.interceptors.InvocationContextImpl;
 import org.lightmare.jpa.jta.BeanTransactions;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
@@ -149,7 +150,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void configureInjects() throws IOException {
 
-	if (ObjectUtils.available(injectionDatas)) {
+	if (CollectionUtils.available(injectionDatas)) {
 	    for (InjectionData inject : injectionDatas) {
 		configureInjection(inject);
 	    }
