@@ -367,6 +367,12 @@ public class JpaManager {
 	    return this;
 	}
 
+	/**
+	 * Sets all parameters from passed {@link Configuration} instance
+	 * 
+	 * @param configuration
+	 * @return {@link Builder}
+	 */
 	public Builder configure(Configuration configuration) {
 
 	    setPath(configuration.getPersXmlPath())
