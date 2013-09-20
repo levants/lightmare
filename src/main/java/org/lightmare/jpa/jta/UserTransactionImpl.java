@@ -88,7 +88,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    IllegalStateException, SystemException {
 
 	try {
-	    if (ObjectUtils.available(transactions)) {
+	    if (CollectionUtils.available(transactions)) {
 		commitAll();
 	    }
 	} finally {
