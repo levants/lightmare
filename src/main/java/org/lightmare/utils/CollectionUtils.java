@@ -123,10 +123,10 @@ public class CollectionUtils {
      */
     public static boolean isPrimitiveArray(final Object data) {
 
-	boolean valid = data instanceof boolean[] || data instanceof byte[]
+	boolean valid = (data instanceof boolean[] || data instanceof byte[]
 		|| data instanceof short[] || data instanceof char[]
 		|| data instanceof int[] || data instanceof long[]
-		|| data instanceof float[] || data instanceof double[];
+		|| data instanceof float[] || data instanceof double[]);
 
 	return valid;
     }
