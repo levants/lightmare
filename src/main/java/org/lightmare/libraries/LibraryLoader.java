@@ -339,7 +339,7 @@ public class LibraryLoader {
      */
     public static void loadLibraries(String... libraryPaths) throws IOException {
 
-	if (ObjectUtils.available(libraryPaths)) {
+	if (CollectionUtils.available(libraryPaths)) {
 	    for (String libraryPath : libraryPaths) {
 		loadLibraryFromPath(libraryPath);
 	    }
