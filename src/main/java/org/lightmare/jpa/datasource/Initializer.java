@@ -207,6 +207,7 @@ public class Initializer {
 		close(jndiName);
 	    }
 	}
+
 	removeInitialized(dataSourcePath);
     }
 
