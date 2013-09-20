@@ -1,0 +1,153 @@
+package org.lightmare.deploy;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.persistence.Entity;
+
+import org.lightmare.annotations.UnitName;
+import org.lightmare.config.Configuration;
+import org.lightmare.jpa.JpaManager;
+import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.reflect.MetaUtils;
+
+public class OrmCreator {
+
+    private MetaCreator creator;
+
+    private OrmCreator(MetaCreator creator) {
+
+	this.creator = creator;
+    }
+
+    /**
+     * Checks weather {@link javax.persistence.Entity} annotated classes is need
+     * to be filtered by {@link org.lightmare.annotations.UnitName} value
+     * 
+     * @param className
+     * @return boolean
+     * @throws IOException
+     */
+    private boolean checkForUnitName(String className, Configuration cloneConfig)
+	    throws IOException {
+
+	boolean isValid;
+
+	Class<?> entityClass;
+	entityClass = MetaUtils.initClassForName(className);
+	UnitName annotation = entityClass.getAnnotation(UnitName.class);
+	isValid = annotation.value().equals(cloneConfig.getAnnotatedUnitName());
+
+	return isValid;
+    }
+
+    /**
+     * Defines belongs or not of {@link javax.persistence.Entity} annotated
+     * classes to jar file
+     * 
+     * @param classSet
+     * @return {@link List}<String>
+     */
+    private void filterEntitiesForJar(Set<String> classSet,
+	    String fileNameForBean) {
+
+	Map<String, String> classOwnersFiles = creator.getAnnotationDB()
+		.getClassOwnersFiles();
+
+	String fileNameForEntity;
+	for (String entityName : classSet) {
+	    fileNameForEntity = classOwnersFiles.get(entityName);
+	    if (ObjectUtils
+		    .notNullNotEquals(fileNameForEntity, fileNameForBean)) {
+		classSet.remove(entityName);
+	    }
+	}
+    }
+
+    /**
+     * Filters {@link javax.persistence.Entity} annotated classes by name or by
+     * {@link org.lightmare.annotations.UnitName} by configuration
+     * 
+     * @param classSet
+     * @return {@link List}<String>
+     * @throws IOException
+     */
+    private List<String> filterEntities(Set<String> classSet,
+	    Configuration configClone) throws IOException {
+
+	List<String> classes;
+
+	if (configClone.getAnnotatedUnitName() == null) {
+	    classes = CollectionUtils.translateToList(classSet);
+	} else {
+	    Set<String> filtereds = new HashSet<String>();
+	    boolean valid;
+	    for (String className : classSet) {
+		valid = checkForUnitName(className, configClone);
+		if (valid) {
+		    filtereds.add(className);
+		}
+	    }
+	    classes = CollectionUtils.translateToList(filtereds);
+	}
+
+	return classes;
+    }
+
+    /**
+     * Creates connection associated with unit name if such does not exists
+     * 
+     * @param unitName
+     * @param beanName
+     * @throws IOException
+     */
+    protected void configureConnection(String unitName, String beanName,
+	    ClassLoader loader, Configuration configClone) throws IOException {
+
+	JpaManager.Builder builder = new JpaManager.Builder();
+	Map<String, String> classOwnersFiles = creator.getAnnotationDB()
+		.getClassOwnersFiles();
+	AbstractIOUtils ioUtils = creator.getAggregateds().get(beanName);
+
+	if (ObjectUtils.notNull(ioUtils)) {
+	    URL jarURL = ioUtils.getAppropriatedURL(classOwnersFiles, beanName);
+	    builder.setURL(jarURL);
+	}
+	if (configClone.isScanForEntities()) {
+	    Set<String> classSet;
+	    Map<String, Set<String>> annotationIndex = creator
+		    .getAnnotationDB().getAnnotationIndex();
+	    classSet = annotationIndex.get(Entity.class.getName());
+	    String annotatedUnitName = configClone.getAnnotatedUnitName();
+	    if (annotatedUnitName == null) {
+		classSet = annotationIndex.get(Entity.class.getName());
+	    } else if (annotatedUnitName.equals(unitName)) {
+		Set<String> unitNamedSet = annotationIndex.get(UnitName.class
+			.getName());
+		// Intersects entities with unit name annotated classes
+		classSet.retainAll(unitNamedSet);
+	    }
+	    if (ObjectUtils.notNull(ioUtils)) {
+		String fileNameForBean = classOwnersFiles.get(beanName);
+		filterEntitiesForJar(classSet, fileNameForBean);
+	    }
+	    List<String> classes = filterEntities(classSet, configClone);
+	    builder.setClasses(classes);
+	}
+
+	// Builds connection for appropriated persistence unit name
+	builder.configure(configClone).setClassLoader(loader).build()
+		.create(unitName);
+    }
+
+    protected static OrmCreator get(MetaCreator creator) {
+
+	return new OrmCreator(creator);
+    }
+}
