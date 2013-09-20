@@ -17,6 +17,7 @@ import javax.ws.rs.ext.MessageBodyReader;
 import org.glassfish.jersey.internal.util.collection.MultivaluedStringMap;
 import org.glassfish.jersey.message.MessageBodyWorkers;
 import org.glassfish.jersey.server.model.Parameter;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 import org.lightmare.utils.rest.RequestUtils;
@@ -138,7 +139,7 @@ public class ParamBuilder {
     private void addAll(MultivaluedMap<String, String> from,
 	    MultivaluedMap<String, String> to) {
 
-	if (ObjectUtils.available(from)) {
+	if (CollectionUtils.available(from)) {
 	    copyAll(from, to);
 	}
     }
