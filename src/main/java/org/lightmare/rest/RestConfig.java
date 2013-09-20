@@ -118,7 +118,7 @@ public class RestConfig extends ResourceConfig {
 
     public void addPreResources(Collection<Resource> preResources) {
 
-	if (ObjectUtils.available(preResources)) {
+	if (CollectionUtils.available(preResources)) {
 	    if (this.preResources == null || this.preResources.isEmpty()) {
 		this.preResources = new HashSet<Resource>();
 	    }
