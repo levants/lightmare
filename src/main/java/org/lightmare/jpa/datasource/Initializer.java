@@ -61,7 +61,8 @@ public class Initializer {
 	}
     }
 
-    private Initializer() {
+    private Initializer() throws IOException {
+	throw new IOException();
     }
 
     private static boolean checkForDataSource(String path) {
