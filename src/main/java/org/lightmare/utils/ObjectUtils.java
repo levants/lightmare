@@ -154,7 +154,7 @@ public class ObjectUtils {
      */
     public static boolean tryLock(Lock lock) throws IOException {
 
-	return tryLock(lock, null, null);
+	return lock.tryLock();
     }
 
     /**
