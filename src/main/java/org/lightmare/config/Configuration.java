@@ -429,6 +429,7 @@ public class Configuration implements Cloneable {
 
 	Object value = config.get(key);
 	String textValue;
+
 	if (value == null) {
 	    textValue = null;
 	} else {
