@@ -73,6 +73,7 @@ public class RestContainer {
 
 	Class<?> handlerClass;
 	Set<Class<?>> handlerClasses = resource.getHandlerClasses();
+
 	if (CollectionUtils.valid(handlerClasses)) {
 	    handlerClass = CollectionUtils.getFirst(handlerClasses);
 	} else {
