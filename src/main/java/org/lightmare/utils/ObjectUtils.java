@@ -110,6 +110,11 @@ public class ObjectUtils {
 	return value;
     }
 
+    /**
+     * Simply locks passed {@link Lock} object
+     * 
+     * @param lock
+     */
     public static void lock(Lock lock) {
 	lock.lock();
     }
