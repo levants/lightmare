@@ -229,6 +229,7 @@ public class LoaderPoolManager {
     public static void reload() {
 
 	lock();
+
 	try {
 	    if (ObjectUtils.notNull(LOADER_POOL)) {
 		LOADER_POOL.shutdown();
