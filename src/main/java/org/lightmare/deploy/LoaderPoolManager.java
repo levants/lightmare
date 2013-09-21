@@ -138,6 +138,14 @@ public class LoaderPoolManager {
 		|| LOADER_POOL.isTerminated();
     }
 
+    private static void initLoaderPool() {
+
+	if (invalid()) {
+	    LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE,
+		    new LoaderThreadFactory());
+	}
+    }
+
     /**
      * Checks and if not valid reopens deploy {@link ExecutorService} instance
      * 
@@ -152,10 +160,7 @@ public class LoaderPoolManager {
 	    }
 	    if (locked) {
 		try {
-		    if (invalid()) {
-			LOADER_POOL = Executors.newFixedThreadPool(
-				LOADER_POOL_SIZE, new LoaderThreadFactory());
-		    }
+		    initLoaderPool();
 		} finally {
 		    LOCK.unlock();
 		}
