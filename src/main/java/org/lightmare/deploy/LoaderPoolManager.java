@@ -190,17 +190,25 @@ public class LoaderPoolManager {
      * Checks and if not valid reopens deploy {@link ExecutorService} instance
      * 
      * @return {@link ExecutorService}
+     * @throws IOException
      */
-    protected static ExecutorService getLoaderPool() {
+    protected static ExecutorService getLoaderPool() throws IOException {
 
 	if (invalid()) {
-	    // Locks the Lock object to avoid shut down in parallel
-	    lock();
 
-	    try {
-		initLoaderPool();
-	    } finally {
-		unlock();
+	    boolean locked = Boolean.FALSE;
+	    while (ObjectUtils.notTrue(locked)) {
+		// Locks the Lock object to avoid shut down in parallel
+		locked = ObjectUtils.tryLock(LOCK, LOCK_TIME,
+			TimeUnit.MILLISECONDS);
+
+		if (locked) {
+		    try {
+			initLoaderPool();
+		    } finally {
+			ObjectUtils.unlock(LOCK);
+		    }
+		}
 	    }
 	}
 
@@ -211,8 +219,9 @@ public class LoaderPoolManager {
      * Submit passed {@link Runnable} implementation in loader pool
      * 
      * @param runnable
+     * @throws IOException
      */
-    public static void submit(Runnable runnable) {
+    public static void submit(Runnable runnable) throws IOException {
 
 	ExecutorService pool = getLoaderPool();
 	pool.submit(runnable);
@@ -223,8 +232,9 @@ public class LoaderPoolManager {
      * 
      * @param callable
      * @return {@link Future}<code><T></code>
+     * @throws IOException
      */
-    public static <T> Future<T> submit(Callable<T> callable) {
+    public static <T> Future<T> submit(Callable<T> callable) throws IOException {
 
 	ExecutorService pool = getLoaderPool();
 	Future<T> future = pool.submit(callable);

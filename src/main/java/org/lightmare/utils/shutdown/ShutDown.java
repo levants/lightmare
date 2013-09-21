@@ -43,10 +43,11 @@ public class ShutDown implements Runnable {
     @Override
     public void run() {
 
-	tmpResources.removeTempFiles();
-
 	try {
+
+	    tmpResources.removeTempFiles();
 	    clearAll();
+
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
 	}
