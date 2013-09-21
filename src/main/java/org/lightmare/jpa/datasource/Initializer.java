@@ -87,7 +87,6 @@ public class Initializer {
 	boolean locked = Boolean.FALSE;
 	while (ObjectUtils.notTrue(locked)) {
 	    locked = ObjectUtils.tryLock(DRIVER_LOCK);
-
 	    if (locked) {
 		try {
 		    MetaUtils.initClassForName(driver);
