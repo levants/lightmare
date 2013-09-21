@@ -187,7 +187,7 @@ public class LoaderPoolManager {
     protected static ExecutorService getLoaderPool() {
 
 	if (invalid()) {
-
+	    // Locks the Lock object to avoid shut down in parallel
 	    lock();
 
 	    try {
