@@ -36,7 +36,7 @@ public class Initializer {
     private static final Set<String> INITIALIZED_NAMES = Collections
 	    .synchronizedSet(new HashSet<String>());
 
-    // Locks friver initialization to avoid thread blocking
+    // Locks driver initialization to avoid thread blocking
     private static final Lock DRIVER_LOCK = new ReentrantLock();
 
     /**
