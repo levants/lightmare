@@ -99,6 +99,7 @@ public class Configuration implements Cloneable {
 
 	Map<K, ?> subConfig = getAsMap(key);
 	boolean valid = CollectionUtils.valid(subConfig);
+
 	if (valid) {
 	    valid = subConfig.containsKey(subKey);
 	}
