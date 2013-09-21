@@ -187,12 +187,14 @@ public class LoaderPoolManager {
 
 	if (invalid()) {
 	    // Locks the Lock object to avoid shut down in parallel
-	    lock();
+	    boolean locked = tryLock();
 
-	    try {
-		initLoaderPool();
-	    } finally {
-		unlock();
+	    if (locked) {
+		try {
+		    initLoaderPool();
+		} finally {
+		    unlock();
+		}
 	    }
 	}
 
