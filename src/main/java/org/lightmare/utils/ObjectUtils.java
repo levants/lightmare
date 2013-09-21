@@ -110,6 +110,10 @@ public class ObjectUtils {
 	return value;
     }
 
+    public static void lock(Lock lock) {
+	lock.lock();
+    }
+
     /**
      * Locks passed {@link Lock} object for passed time in appropriate
      * {@link TimeUnit} instance
