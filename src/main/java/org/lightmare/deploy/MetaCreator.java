@@ -326,7 +326,7 @@ public class MetaCreator {
      */
     public void scanForBeans(URL[] archives) throws IOException {
 
-	scannerLock.lock();
+	ObjectUtils.lock(scannerLock);
 
 	try {
 
