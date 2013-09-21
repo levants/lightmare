@@ -405,6 +405,7 @@ public class MetaContainer {
 		    undeployBean(beanName);
 		}
 	    }
+
 	    removeBeanNames(url);
 
 	    return valid;
