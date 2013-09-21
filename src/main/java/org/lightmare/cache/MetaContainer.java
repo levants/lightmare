@@ -374,6 +374,7 @@ public class MetaContainer {
 	removeMeta(beanName);
 
 	if (ObjectUtils.notNull(metaData)) {
+
 	    // Removes appropriated resource class from REST service
 	    if (RestContainer.hasRest()) {
 		RestProvider.remove(metaData.getBeanClass());
