@@ -61,10 +61,6 @@ public abstract class Initializer {
 	}
     }
 
-    private Initializer() throws IOException {
-	throw new IOException("Class Initializer could not be instantiated");
-    }
-
     private static boolean checkForDataSource(String path) {
 
 	return StringUtils.valid(path);
