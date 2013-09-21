@@ -213,6 +213,7 @@ public class ConnectionContainer {
 	    if (inProgress) {
 		awaitConnection(semaphore);
 	    }
+
 	    emf = semaphore.getEmf();
 	} else {
 	    emf = null;
