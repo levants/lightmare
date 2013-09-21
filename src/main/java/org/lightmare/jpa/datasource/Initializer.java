@@ -52,7 +52,7 @@ public class Initializer {
 	PASSWORD_PROPERTY("password"), // password
 	URL_PROPERTY("url"), // URL
 	JNDI_NAME_PROPERTY("jndiname"), // JNDI name
-	NAME_PROPERTY("name");// name
+	NAME_PROPERTY("name");// data source name
 
 	public String name;
 
