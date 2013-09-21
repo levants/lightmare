@@ -16,6 +16,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class ObjectUtils {
 
+    // Index of non read bytes
     public static final int NOT_EXISTING_INDEX = -1;
 
     /**
