@@ -127,7 +127,7 @@ public class ObjectUtils {
 	    locked = Boolean.FALSE;
 	}
 
-	while (ObjectUtils.notTrue(lock.tryLock())) {
+	if (ObjectUtils.notTrue(lock.tryLock())) {
 	    locked = lock.tryLock();
 	}
 
