@@ -21,7 +21,7 @@ import org.lightmare.utils.StringUtils;
  * @author levan
  * 
  */
-public class LoaderPoolManager {
+public abstract class LoaderPoolManager {
 
     // Amount of deployment thread pool
     private static final int LOADER_POOL_SIZE = 5;
