@@ -469,7 +469,7 @@ public class MetaCreator {
 		configuration = null;
 
 		} finally {
-		    scannerLock.unlock();
+		    ObjectUtils.unlock(scannerLock);
 		}
 	    }
 	}
