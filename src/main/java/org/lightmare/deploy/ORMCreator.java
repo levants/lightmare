@@ -140,6 +140,7 @@ public class ORMCreator {
 		    .getAnnotationIndex();
 	    classSet = annotationIndex.get(Entity.class.getName());
 	    String annotatedUnitName = configClone.getAnnotatedUnitName();
+
 	    if (annotatedUnitName == null) {
 		classSet = annotationIndex.get(Entity.class.getName());
 	    } else if (annotatedUnitName.equals(unitName)) {
