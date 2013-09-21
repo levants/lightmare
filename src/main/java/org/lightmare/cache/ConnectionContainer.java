@@ -252,6 +252,7 @@ public class ConnectionContainer {
 
 	Collection<ConnectionSemaphore> semaphores = CONNECTIONS.values();
 	EntityManagerFactory emf;
+
 	for (ConnectionSemaphore semaphore : semaphores) {
 	    emf = semaphore.getEmf();
 	    JpaManager.closeEntityManagerFactory(emf);
