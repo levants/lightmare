@@ -171,7 +171,6 @@ public class LoaderPoolManager {
 		locked = ObjectUtils.tryLock(LOCK, LOCK_TIME,
 			TimeUnit.MILLISECONDS);
 		if (locked) {
-
 		    try {
 			initLoaderPool();
 		    } finally {
