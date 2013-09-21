@@ -31,8 +31,7 @@ public class LoaderPoolManager {
     private static final Lock LOCK = new ReentrantLock();
 
     /**
-     * Tries to lock Lock object if it it not locked else runs loop while Lock
-     * releases and locks it again
+     * Tries to lock Lock object or waits while locks
      * 
      * @return <code>boolean</code>
      */
@@ -151,14 +150,16 @@ public class LoaderPoolManager {
      */
     private static boolean invalid() {
 
-	return (LOADER_POOL == null || LOADER_POOL.isShutdown() || LOADER_POOL
-		.isTerminated());
+	return LOADER_POOL == null || LOADER_POOL.isShutdown()
+		|| LOADER_POOL.isTerminated();
     }
 
     private static void initLoaderPool() {
 
-	LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE,
-		new LoaderThreadFactory());
+	if (invalid()) {
+	    LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE,
+		    new LoaderThreadFactory());
+	}
     }
 
     /**
@@ -168,12 +169,14 @@ public class LoaderPoolManager {
      */
     protected static ExecutorService getLoaderPool() {
 
-	boolean locked = tryLock();
-	if (locked && invalid()) {
-	    try {
-		initLoaderPool();
-	    } finally {
-		LOCK.unlock();
+	if (invalid()) {
+	    boolean locked = tryLock();
+	    if (locked) {
+		try {
+		    initLoaderPool();
+		} finally {
+		    LOCK.unlock();
+		}
 	    }
 	}
 
@@ -212,15 +215,15 @@ public class LoaderPoolManager {
 
 	if (locked) {
 	    try {
-
 		if (ObjectUtils.notNull(LOADER_POOL)) {
 		    LOADER_POOL.shutdown();
 		    LOADER_POOL = null;
 		}
-
 	    } finally {
 		LOCK.unlock();
 	    }
 	}
+
+	getLoaderPool();
     }
 }
