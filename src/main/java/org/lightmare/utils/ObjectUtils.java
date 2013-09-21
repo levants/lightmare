@@ -2,6 +2,7 @@ package org.lightmare.utils;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -114,8 +115,10 @@ public class ObjectUtils {
      * 
      * @param lock
      * @return <code>boolean</code>
+     * @throws InterruptedException
      */
-    public static boolean tryLock(Lock lock) {
+    public static boolean tryLock(Lock lock, Long time, TimeUnit unit)
+	    throws IOException {
 
 	boolean locked;
 
@@ -128,7 +131,15 @@ public class ObjectUtils {
 	}
 
 	if (ObjectUtils.notTrue(lock.tryLock())) {
-	    locked = lock.tryLock();
+	    if (time == null) {
+		locked = lock.tryLock();
+	    } else {
+		try {
+		    locked = lock.tryLock(time, unit);
+		} catch (InterruptedException ex) {
+		    throw new IOException(ex);
+		}
+	    }
 	}
 
 	return locked;
