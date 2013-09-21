@@ -124,7 +124,7 @@ public class ObjectUtils {
 		    ReentrantLock.class);
 	    locked = reentrantLock.isHeldByCurrentThread();
 	} else {
-	    locked = Boolean.TRUE;
+	    locked = Boolean.FALSE;
 	}
 
 	while (ObjectUtils.notTrue(lock.tryLock())) {
