@@ -85,11 +85,16 @@ public class Initializer {
     public static void initializeDriver(String driver) throws IOException {
 
 	boolean locked = Boolean.FALSE;
-	DRIVER_LOCK.lock();
-	try {
-	    MetaUtils.initClassForName(driver);
-	} finally {
-	    DRIVER_LOCK.unlock();
+	while (ObjectUtils.notTrue(locked)) {
+	    locked = ObjectUtils.tryLock(DRIVER_LOCK);
+
+	    if (locked) {
+		try {
+		    MetaUtils.initClassForName(driver);
+		} finally {
+		    DRIVER_LOCK.unlock();
+		}
+	    }
 	}
     }
 
