@@ -223,18 +223,14 @@ public class LoaderPoolManager {
      */
     public static void reload() {
 
-	//boolean locked = tryLock();
-
-	//if (locked) {
-	    LOCK.lock();
-	    try {
-		if (ObjectUtils.notNull(LOADER_POOL)) {
-		    LOADER_POOL.shutdown();
-		    LOADER_POOL = null;
-		}
-	    } finally {
-		unlock();
+	LOCK.lock();
+	try {
+	    if (ObjectUtils.notNull(LOADER_POOL)) {
+		LOADER_POOL.shutdown();
+		LOADER_POOL = null;
 	    }
-	//}
+	} finally {
+	    unlock();
+	}
     }
 }
