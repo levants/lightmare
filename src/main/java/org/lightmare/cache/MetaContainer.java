@@ -83,12 +83,14 @@ public class MetaContainer {
     public static void putConfig(URL[] archives, Configuration config) {
 
 	if (CollectionUtils.valid(archives)) {
+	    boolean containsPath;
 	    for (URL archive : archives) {
 		String path = WatchUtils.clearPath(archive.getFile());
-		if (CONFIGS.containsKey(path)) {
-		    continue;
+		containsPath = CONFIGS.containsKey(path);
+
+		if (ObjectUtils.notTrue(containsPath)) {
+		    CONFIGS.put(path, config);
 		}
-		CONFIGS.put(path, config);
 	    }
 	}
     }
