@@ -32,7 +32,7 @@ public class LoaderPoolManager {
     // Lock for pool reopening
     private static final Lock LOCK = new ReentrantLock();
 
-    private static final long LOCK_TIME = 100;
+    private static final long LOCK_TIME = 10;
 
     /**
      * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
