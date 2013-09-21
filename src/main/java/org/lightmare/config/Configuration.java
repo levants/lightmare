@@ -762,7 +762,7 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Property for connection pool configuration
+     * Gets cached {@link PoolConfig} instance a connection pool configuration
      * 
      * @return {@link PoolConfig}
      */
