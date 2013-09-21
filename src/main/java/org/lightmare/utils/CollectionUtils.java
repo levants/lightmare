@@ -17,7 +17,7 @@ import java.util.Set;
  * @author Levan
  * 
  */
-public class CollectionUtils {
+public abstract class CollectionUtils {
 
     public static final int FIRST_INDEX = 0;
 
