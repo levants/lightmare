@@ -443,7 +443,7 @@ public class MetaCreator {
 
 	while (ObjectUtils.notTrue(locked)) {
 
-	    locked = scannerLock.tryLock();
+	    locked = ObjectUtils.tryLock(scannerLock);
 
 	    if (locked) {
 		try {
