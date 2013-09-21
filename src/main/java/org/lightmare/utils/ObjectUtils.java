@@ -123,23 +123,13 @@ public class ObjectUtils {
 
 	boolean locked;
 
-	if (lock instanceof ReentrantLock) {
-	    ReentrantLock reentrantLock = ObjectUtils.cast(lock,
-		    ReentrantLock.class);
-	    locked = reentrantLock.isHeldByCurrentThread();
+	if (time == null) {
+	    locked = lock.tryLock();
 	} else {
-	    locked = Boolean.FALSE;
-	}
-
-	if (ObjectUtils.notTrue(lock.tryLock())) {
-	    if (time == null) {
-		locked = lock.tryLock();
-	    } else {
-		try {
-		    locked = lock.tryLock(time, unit);
-		} catch (InterruptedException ex) {
-		    throw new IOException(ex);
-		}
+	    try {
+		locked = lock.tryLock(time, unit);
+	    } catch (InterruptedException ex) {
+		throw new IOException(ex);
 	    }
 	}
 

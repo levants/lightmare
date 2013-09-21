@@ -1,10 +1,12 @@
 package org.lightmare.deploy;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -29,6 +31,8 @@ public class LoaderPoolManager {
 
     // Lock for pool reopening
     private static final Lock LOCK = new ReentrantLock();
+
+    private static final long LOCK_TIME = 100;
 
     /**
      * Tries to lock {@link Lock} object or waits while {@link Lock} will be
@@ -230,18 +234,24 @@ public class LoaderPoolManager {
 
     /**
      * Clears existing {@link ExecutorService}s from loader threads
+     * 
+     * @throws IOException
      */
-    public static void reload() {
+    public static void reload() throws IOException {
 
-	boolean locked = tryLock();
-	if (locked) {
-	    try {
-		if (ObjectUtils.notNull(LOADER_POOL)) {
-		    LOADER_POOL.shutdown();
-		    LOADER_POOL = null;
+	boolean locked = Boolean.FALSE;
+	while (ObjectUtils.notTrue(locked)) {
+	    locked = ObjectUtils
+		    .tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
+	    if (locked) {
+		try {
+		    if (ObjectUtils.notNull(LOADER_POOL)) {
+			LOADER_POOL.shutdown();
+			LOADER_POOL = null;
+		    }
+		} finally {
+		    ObjectUtils.unlock(LOCK);
 		}
-	    } finally {
-		unlock();
 	    }
 	}
     }
