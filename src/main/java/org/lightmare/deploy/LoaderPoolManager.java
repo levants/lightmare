@@ -164,13 +164,20 @@ public class LoaderPoolManager {
 
 	if (invalid()) {
 
-	    // Locks the Lock object to avoid shut down in parallel
-	    ObjectUtils.lock(LOCK);
+	    boolean locked = Boolean.FALSE;
+	    while (ObjectUtils.notTrue(locked)) {
+		locked = ObjectUtils.tryLock(LOCK, LOCK_TIME,
+			TimeUnit.MILLISECONDS);
+		if (locked) {
+		    // Locks the Lock object to avoid shut down in parallel
+		    // ObjectUtils.lock(LOCK);
 
-	    try {
-		initLoaderPool();
-	    } finally {
-		ObjectUtils.unlock(LOCK);
+		    try {
+			initLoaderPool();
+		    } finally {
+			ObjectUtils.unlock(LOCK);
+		    }
+		}
 	    }
 	}
 
