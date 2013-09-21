@@ -468,8 +468,8 @@ public class MetaCreator {
 
 		configuration = null;
 
-	    } finally {
-		scannerLock.unlock();
+		} finally {
+		    scannerLock.unlock();
 		}
 	    }
 	}
