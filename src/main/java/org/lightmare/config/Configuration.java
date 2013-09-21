@@ -164,6 +164,7 @@ public class Configuration implements Cloneable {
 	V value = CollectionUtils.getSubValue(config,
 		ConfigKeys.DEPLOY_CONFIG.key,
 		ConfigKeys.PERSISTENCE_CONFIG.key, key);
+
 	if (value == null) {
 	    value = defaultValue;
 	}
