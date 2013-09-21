@@ -335,6 +335,7 @@ public class MetaContainer {
 	if (CollectionUtils.valid(connections)) {
 
 	    for (ConnectionData connection : connections) {
+
 		// Gets connection to clear
 		String unitName = connection.getUnitName();
 		ConnectionSemaphore semaphore = connection.getConnection();
