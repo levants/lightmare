@@ -805,6 +805,7 @@ public class Configuration implements Cloneable {
     @Override
     public Object clone() throws CloneNotSupportedException {
 
+	// Deep clone for configuration
 	Configuration cloneConfig = (Configuration) super.clone();
 	cloneConfig.config.clear();
 	cloneConfig.configure(this.config);

@@ -185,7 +185,7 @@ public class LoaderPoolManager {
     }
 
     /**
-     * Submit passed {@link Runnable} implementation in loader pool
+     * Submit passed {@link Runnable} implementation in loader pool instance
      * 
      * @param runnable
      * @throws IOException
