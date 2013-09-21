@@ -4,7 +4,7 @@ import org.lightmare.utils.AbstractIOUtils;
 
 /**
  * Container class for {@link org.lightmare.utils.AbstractIOUtils} and
- * {@link ClassLoader} for each {@link java.net.URL} to cache to avoid
+ * {@link ClassLoader} for each {@link java.net.URL} to cache and avoid
  * duplicates at deploy time
  * 
  * @author levan
