@@ -443,6 +443,7 @@ public class MetaCreator {
 
 	while (ObjectUtils.notTrue(locked)) {
 
+	    // Tries to lock for avoid concurrent modification
 	    locked = ObjectUtils.tryLock(scannerLock);
 
 	    if (locked) {
