@@ -50,6 +50,7 @@ public class RestContainer {
 	    RestInflector inflector;
 
 	    while (iterator.hasNext() && handlerClass == null) {
+
 		handler = iterator.next();
 		if (handler instanceof RestInflector) {
 		    inflector = ObjectUtils.cast(handler, RestInflector.class);
