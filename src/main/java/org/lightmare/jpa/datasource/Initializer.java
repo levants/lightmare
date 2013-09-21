@@ -92,7 +92,7 @@ public class Initializer {
 		try {
 		    MetaUtils.initClassForName(driver);
 		} finally {
-		    DRIVER_LOCK.unlock();
+		    ObjectUtils.unlock(DRIVER_LOCK);
 		}
 	    }
 	}
