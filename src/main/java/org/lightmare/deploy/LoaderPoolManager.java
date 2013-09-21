@@ -207,8 +207,8 @@ public class LoaderPoolManager {
      */
     public static <T> Future<T> submit(Callable<T> callable) {
 
-	// ExecutorService pool = getLoaderPool();
-	Future<T> future = getLoaderPool().submit(callable);
+	ExecutorService pool = getLoaderPool();
+	Future<T> future = pool.submit(callable);
 
 	return future;
     }
