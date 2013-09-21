@@ -32,6 +32,7 @@ public class LoaderPoolManager {
     // Lock for pool reopening
     private static final Lock LOCK = new ReentrantLock();
 
+    // Time amount (in milliseconds) for trying lock
     private static final long LOCK_TIME = 10;
 
     /**
