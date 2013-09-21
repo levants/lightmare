@@ -369,6 +369,7 @@ public class MetaContainer {
 	    LogUtils.error(LOG, ex, "Could not get bean resources %s cause %s",
 		    beanName, ex.getMessage());
 	}
+
 	// Removes MetaData from cache
 	removeMeta(beanName);
 	if (ObjectUtils.notNull(metaData)) {
