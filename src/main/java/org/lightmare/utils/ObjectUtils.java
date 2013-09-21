@@ -132,14 +132,10 @@ public class ObjectUtils {
 
 	boolean locked;
 
-	if (time == null) {
-	    locked = lock.tryLock();
-	} else {
-	    try {
-		locked = lock.tryLock(time, unit);
-	    } catch (InterruptedException ex) {
-		throw new IOException(ex);
-	    }
+	try {
+	    locked = lock.tryLock(time, unit);
+	} catch (InterruptedException ex) {
+	    throw new IOException(ex);
 	}
 
 	return locked;
