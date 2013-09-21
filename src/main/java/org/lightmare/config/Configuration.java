@@ -512,7 +512,7 @@ public class Configuration implements Cloneable {
      */
     public void loadFromFile() throws IOException {
 
-	InputStream propertiesStream = null;
+	InputStream propertiesStream;
 	String configFilePath = ConfigKeys.CONFIG_FILE.getValue();
 
 	try {
