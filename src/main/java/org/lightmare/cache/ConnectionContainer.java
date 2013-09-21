@@ -208,6 +208,7 @@ public class ConnectionContainer {
 	boolean inProgress = ObjectUtils.notNull(semaphore);
 
 	if (inProgress) {
+
 	    inProgress = checkOnProgress(semaphore);
 	    if (inProgress) {
 		awaitConnection(semaphore);
