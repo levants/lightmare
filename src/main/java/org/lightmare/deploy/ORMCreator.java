@@ -148,6 +148,7 @@ public class ORMCreator {
 		// Intersects entities with unit name annotated classes
 		classSet.retainAll(unitNamedSet);
 	    }
+
 	    if (ObjectUtils.notNull(ioUtils)) {
 		String fileNameForBean = classOwnersFiles.get(beanName);
 		filterEntitiesForJar(classSet, fileNameForBean);
