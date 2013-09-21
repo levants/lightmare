@@ -427,9 +427,9 @@ public class Configuration implements Cloneable {
      */
     public String getStringValue(String key) {
 
-	Object value = config.get(key);
 	String textValue;
 
+	Object value = config.get(key);
 	if (value == null) {
 	    textValue = null;
 	} else {
