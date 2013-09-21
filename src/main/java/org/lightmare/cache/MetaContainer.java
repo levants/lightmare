@@ -244,6 +244,7 @@ public class MetaContainer {
 	    throw new IOException(String.format("Bean %s is not deployed",
 		    beanName));
 	}
+
 	awaitMetaData(metaData);
 
 	return metaData;
