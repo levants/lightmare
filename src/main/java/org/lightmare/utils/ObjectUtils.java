@@ -75,6 +75,13 @@ public class ObjectUtils {
 	return valid;
     }
 
+    /**
+     * Checks if passed objjects are not null and not equals each other
+     * 
+     * @param data1
+     * @param data2
+     * @return
+     */
     public static boolean notNullNotEquals(Object data1, Object data2) {
 
 	return notNullAll(data1, data2) && notEquals(data1, data2);
