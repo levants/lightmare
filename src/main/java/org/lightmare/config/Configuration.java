@@ -535,9 +535,9 @@ public class Configuration implements Cloneable {
      */
     public void loadFromFile(String configFilename) throws IOException {
 
-	InputStream propertiesStream = null;
 	try {
-	    propertiesStream = new FileInputStream(new File(configFilename));
+	    InputStream propertiesStream = new FileInputStream(new File(
+		    configFilename));
 	    loadFromStream(propertiesStream);
 	} catch (IOException ex) {
 	    LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
