@@ -48,6 +48,7 @@ public class RestContainer {
 	    Iterator<Object> iterator = handlers.iterator();
 	    Object handler;
 	    RestInflector inflector;
+
 	    while (iterator.hasNext() && handlerClass == null) {
 		handler = iterator.next();
 		if (handler instanceof RestInflector) {
