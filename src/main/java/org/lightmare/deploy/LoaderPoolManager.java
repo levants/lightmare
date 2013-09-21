@@ -60,7 +60,10 @@ public class LoaderPoolManager {
      */
     private static void unlock() {
 
-	LOCK.unlock();
+	ReentrantLock reentrant = ObjectUtils.cast(LOCK, ReentrantLock.class);
+	if (reentrant.isHeldByCurrentThread()) {
+	    LOCK.unlock();
+	}
     }
 
     /**
