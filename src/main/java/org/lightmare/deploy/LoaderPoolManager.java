@@ -223,7 +223,5 @@ public class LoaderPoolManager {
 		LOCK.unlock();
 	    }
 	}
-
-	getLoaderPool();
     }
 }
