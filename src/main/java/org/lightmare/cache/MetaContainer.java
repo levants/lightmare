@@ -333,6 +333,7 @@ public class MetaContainer {
 	Collection<ConnectionData> connections = metaData.getConnections();
 
 	if (CollectionUtils.valid(connections)) {
+
 	    for (ConnectionData connection : connections) {
 		// Gets connection to clear
 		String unitName = connection.getUnitName();
