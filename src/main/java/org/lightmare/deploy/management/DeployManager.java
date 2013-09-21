@@ -32,7 +32,7 @@ public class DeployManager extends HttpServlet {
 
     public static final String DEPLOY_MANAGER_DEFAULT_NAME = "/DeployManager";
 
-    // html tags
+    // HTML tags
     private static final String BEGIN_TAGS = "<tr><td><a name = \"";
 
     private static final String NAME_OF_TAGS = "\" href=\"#\"\">";

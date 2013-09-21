@@ -171,6 +171,9 @@ public class LoaderPoolManager {
 		|| LOADER_POOL.isTerminated();
     }
 
+    /**
+     * Initializes loader pool ({@link ExecutorService}) if it is not available
+     */
     private static void initLoaderPool() {
 
 	if (invalid()) {
