@@ -251,9 +251,11 @@ public class MetaCreator {
 	if (ObjectUtils.notNull(ioUtils)) {
 
 	    if (loader == null) {
+
 		if (ioUtils.notExecuted()) {
 		    ioUtils.scan(configuration.isPersXmlFromJar());
 		}
+
 		URL[] libURLs = ioUtils.getURLs();
 		loader = LibraryLoader.initializeLoader(libURLs);
 		archiveData.setLoader(loader);
