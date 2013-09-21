@@ -35,39 +35,6 @@ public class LoaderPoolManager {
     private static final long LOCK_TIME = 100;
 
     /**
-     * Tries to lock {@link Lock} object or waits while {@link Lock} will be
-     * available
-     * 
-     * @return <code>boolean</code>
-     */
-    private static boolean tryLock() {
-
-	boolean locked = LOCK.tryLock();
-
-	while (ObjectUtils.notTrue(locked)) {
-	    locked = LOCK.tryLock();
-	}
-
-	return locked;
-    }
-
-    /**
-     * Locks the {@link Lock} object
-     */
-    private static void lock() {
-
-	LOCK.lock();
-    }
-
-    /**
-     * Releases {@link Lock} object
-     */
-    private static void unlock() {
-
-	LOCK.unlock();
-    }
-
-    /**
      * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
      * instance
      * 
