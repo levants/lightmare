@@ -31,7 +31,8 @@ public class LoaderPoolManager {
     private static final Lock LOCK = new ReentrantLock();
 
     /**
-     * Tries to lock Lock object or waits while locks
+     * Tries to lock {@link Lock} object or waits while {@link Lock} will be
+     * available
      * 
      * @return <code>boolean</code>
      */
@@ -47,7 +48,7 @@ public class LoaderPoolManager {
     }
 
     /**
-     * Releases lock object
+     * Releases {@link Lock} object
      */
     private static void unlock() {
 
