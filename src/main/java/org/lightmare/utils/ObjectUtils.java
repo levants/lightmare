@@ -152,7 +152,7 @@ public class ObjectUtils {
      * @return <code>boolean</code>
      * @throws IOException
      */
-    public static boolean tryLock(Lock lock) throws IOException {
+    public static boolean tryLock(Lock lock) {
 
 	return lock.tryLock();
     }
