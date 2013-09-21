@@ -26,7 +26,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * @author levan
  * 
  */
-public class Initializer {
+public abstract class Initializer {
 
     // Caches already initialized data source file paths
     private static final Set<String> INITIALIZED_SOURCES = Collections
@@ -59,10 +59,6 @@ public class Initializer {
 	private ConnectionConfig(String name) {
 	    this.name = name;
 	}
-    }
-
-    private Initializer() throws IOException {
-	throw new IOException();
     }
 
     private static boolean checkForDataSource(String path) {
