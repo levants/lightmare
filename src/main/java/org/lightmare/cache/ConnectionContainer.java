@@ -171,14 +171,8 @@ public class ConnectionContainer {
     public static boolean isInProgress(String jndiName) {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(jndiName);
-	boolean inProgress = ObjectUtils.notNull(semaphore);
 
-	if (inProgress) {
-	    inProgress = checkOnProgress(semaphore);
-	    if (inProgress) {
-		awaitConnection(semaphore);
-	    }
-	}
+	boolean inProgress = isInProgress(semaphore);
 
 	return inProgress;
     }
