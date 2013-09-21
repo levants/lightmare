@@ -16,7 +16,7 @@ import org.lightmare.jpa.datasource.tomcat.InitTomcat;
  * @author Levan
  * 
  */
-public class InitDataSourceFactory {
+public abstract class InitDataSourceFactory {
 
     /**
      * Constructs appropriate {@link InitDataSource} instance
