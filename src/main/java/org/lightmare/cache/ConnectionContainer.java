@@ -134,6 +134,7 @@ public class ConnectionContainer {
     private static void awaitConnection(ConnectionSemaphore semaphore) {
 
 	synchronized (semaphore) {
+
 	    boolean inProgress = checkOnProgress(semaphore);
 	    while (inProgress) {
 		try {
