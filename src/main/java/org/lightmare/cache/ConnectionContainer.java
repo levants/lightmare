@@ -147,6 +147,20 @@ public class ConnectionContainer {
 	}
     }
 
+    private static boolean isInProgress(ConnectionSemaphore semaphore) {
+
+	boolean inProgress = ObjectUtils.notNull(semaphore);
+
+	if (inProgress) {
+	    inProgress = checkOnProgress(semaphore);
+	    if (inProgress) {
+		awaitConnection(semaphore);
+	    }
+	}
+
+	return inProgress;
+    }
+
     /**
      * Checks if {@link ConnectionSemaphore#isInProgress()} for appropriated
      * unit name
