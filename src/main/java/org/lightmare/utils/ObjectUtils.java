@@ -141,8 +141,9 @@ public class ObjectUtils {
     public static void unlock(Lock lock) {
 
 	if (lock instanceof ReentrantLock) {
-	    ReentrantLock rtLock = ObjectUtils.cast(lock, ReentrantLock.class);
-	    if (rtLock.isHeldByCurrentThread()) {
+	    ReentrantLock reentrantLock = ObjectUtils.cast(lock,
+		    ReentrantLock.class);
+	    if (reentrantLock.isHeldByCurrentThread()) {
 		lock.unlock();
 	    }
 	} else {
