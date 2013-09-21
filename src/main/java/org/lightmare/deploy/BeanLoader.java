@@ -128,6 +128,7 @@ public class BeanLoader {
 	    boolean result;
 
 	    ClassLoader loader = LoaderPoolManager.getCurrent();
+
 	    try {
 		Initializer.registerDataSource(properties);
 		result = Boolean.TRUE;
