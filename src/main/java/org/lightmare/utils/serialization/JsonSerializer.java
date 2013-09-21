@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  * @author Levan
  * 
  */
-public class JsonSerializer {
+public abstract class JsonSerializer {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
