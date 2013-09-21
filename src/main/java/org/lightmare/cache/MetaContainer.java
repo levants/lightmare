@@ -106,8 +106,8 @@ public class MetaContainer {
     public static Configuration getConfig(URL[] archives) {
 
 	Configuration config;
-	URL archive = CollectionUtils.getFirst(archives);
 
+	URL archive = CollectionUtils.getFirst(archives);
 	if (ObjectUtils.notNull(archive)) {
 	    String path = WatchUtils.clearPath(archive.getFile());
 	    config = CONFIGS.get(path);
