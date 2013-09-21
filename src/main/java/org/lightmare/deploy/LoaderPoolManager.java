@@ -206,11 +206,7 @@ public class LoaderPoolManager {
      */
     public static void reload() {
 
-	boolean locked = LOCK.tryLock();
-
-	while (ObjectUtils.notTrue(locked)) {
-	    locked = LOCK.tryLock();
-	}
+	boolean locked = tryLock();
 
 	if (locked) {
 	    try {
