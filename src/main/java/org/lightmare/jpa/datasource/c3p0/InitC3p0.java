@@ -53,6 +53,7 @@ public class InitC3p0 extends InitDataSource {
 		comboPooledDataSource.setPassword(password);
 		dataSource = comboPooledDataSource;
 	    } else {
+		// Initializes and loads data base driver class by name
 		Initializer.initializeDriver(driver);
 		dataSource = DataSources
 			.unpooledDataSource(url, user, password);
