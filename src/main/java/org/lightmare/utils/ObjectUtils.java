@@ -109,6 +109,12 @@ public class ObjectUtils {
 	return value;
     }
 
+    /**
+     * Locks passed {@link Lock} object
+     * 
+     * @param lock
+     * @return
+     */
     public static boolean tryLock(Lock lock) {
 
 	boolean locked;
