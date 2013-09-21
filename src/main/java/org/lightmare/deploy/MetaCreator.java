@@ -165,6 +165,7 @@ public class MetaCreator {
 	    DeployData deployData = new DeployData();
 	    deployData.setType(ioUtils.getType());
 	    deployData.setUrl(archive);
+
 	    if (ejbURLs.isEmpty()) {
 		archivesURLs.put(archive, archiveData);
 		realURL.put(archive, deployData);
