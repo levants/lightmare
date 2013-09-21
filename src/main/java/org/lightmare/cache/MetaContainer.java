@@ -362,6 +362,7 @@ public class MetaContainer {
     public static void undeployBean(String beanName) throws IOException {
 
 	MetaData metaData = null;
+
 	try {
 	    metaData = getSyncMetaData(beanName);
 	} catch (IOException ex) {
