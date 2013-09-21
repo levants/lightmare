@@ -13,7 +13,7 @@ import java.io.ObjectOutputStream;
  * @author Levan
  * 
  */
-public class NativeSerializer {
+public abstract class NativeSerializer {
 
     /**
      * Serializes java type ({@link Object}) to byte array with java native
