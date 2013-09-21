@@ -46,6 +46,11 @@ public class LoaderPoolManager {
 	return locked;
     }
 
+    private static void unlock() {
+
+	LOCK.unlock();
+    }
+
     /**
      * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
      * instance
@@ -176,7 +181,7 @@ public class LoaderPoolManager {
 		try {
 		    initLoaderPool();
 		} finally {
-		    LOCK.unlock();
+		    unlock();
 		}
 	    }
 	}
@@ -202,6 +207,7 @@ public class LoaderPoolManager {
      */
     public static <T> Future<T> submit(Callable<T> callable) {
 
+	// ExecutorService pool = getLoaderPool();
 	Future<T> future = getLoaderPool().submit(callable);
 
 	return future;
@@ -221,7 +227,7 @@ public class LoaderPoolManager {
 		    LOADER_POOL = null;
 		}
 	    } finally {
-		LOCK.unlock();
+		unlock();
 	    }
 	}
     }
