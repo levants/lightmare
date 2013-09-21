@@ -38,11 +38,7 @@ public class LoaderPoolManager {
      */
     private static boolean tryLock() {
 
-	boolean locked = LOCK.tryLock();
-
-	while (ObjectUtils.notTrue(locked)) {
-	    locked = LOCK.tryLock();
-	}
+	boolean locked = ObjectUtils.tryLock(LOCK);
 
 	return locked;
     }
@@ -236,7 +232,7 @@ public class LoaderPoolManager {
      */
     public static void reload() {
 
-	boolean locked = ObjectUtils.tryLock(LOCK);
+	boolean locked = tryLock();
 	if (locked) {
 	    try {
 		if (ObjectUtils.notNull(LOADER_POOL)) {
@@ -244,7 +240,7 @@ public class LoaderPoolManager {
 		    LOADER_POOL = null;
 		}
 	    } finally {
-		ObjectUtils.unlock(LOCK);
+		unlock();
 	    }
 	}
     }
