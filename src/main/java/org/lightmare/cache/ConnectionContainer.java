@@ -158,6 +158,7 @@ public class ConnectionContainer {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(jndiName);
 	boolean inProgress = ObjectUtils.notNull(semaphore);
+
 	if (inProgress) {
 	    inProgress = checkOnProgress(semaphore);
 	    if (inProgress) {
