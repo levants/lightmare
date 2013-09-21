@@ -379,6 +379,7 @@ public class MetaContainer {
 	    if (RestContainer.hasRest()) {
 		RestProvider.remove(metaData.getBeanClass());
 	    }
+
 	    clearConnection(metaData);
 	    ClassLoader loader = metaData.getLoader();
 	    LibraryLoader.closeClassLoader(loader);
