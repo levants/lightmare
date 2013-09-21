@@ -133,6 +133,11 @@ public class ObjectUtils {
 	return locked;
     }
 
+    /**
+     * Unlocks passed {@link Lock} instance
+     * 
+     * @param lock
+     */
     public static void unlock(Lock lock) {
 
 	if (lock instanceof ReentrantLock) {
