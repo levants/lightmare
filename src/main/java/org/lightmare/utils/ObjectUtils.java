@@ -76,7 +76,7 @@ public class ObjectUtils {
     }
 
     /**
-     * Checks if passed objjects are not null and not equals each other
+     * Checks if passed objects are not null and not equals each other
      * 
      * @param data1
      * @param data2
