@@ -145,6 +145,11 @@ public class ObjectUtils {
 	return locked;
     }
 
+    public static boolean tryLock(Lock lock) throws IOException {
+
+	return tryLock(lock, null, null);
+    }
+
     /**
      * Unlocks passed {@link Lock} instance
      * 
