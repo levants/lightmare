@@ -170,6 +170,7 @@ public class LoaderPoolManager {
     protected static ExecutorService getLoaderPool() {
 
 	if (invalid()) {
+
 	    boolean locked = tryLock();
 	    if (locked) {
 		try {
