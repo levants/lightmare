@@ -30,6 +30,10 @@ public class LoaderPoolManager {
     // Lock for pool reopening
     private static final Lock LOCK = new ReentrantLock();
 
+    /**
+     * Tries to lock Lock object if it it not locked else runs loop while Lock releases and locks it again
+     * @return <code>boolean</code>
+     */
     private static boolean tryLock() {
 
 	boolean locked = LOCK.tryLock();
