@@ -371,7 +371,7 @@ public class MetaCreator {
 	    clear();
 	    // gets rid from all created temporary files
 	    tmpResources.removeTempFiles();
-	    scannerLock.unlock();
+	    ObjectUtils.unlock(scannerLock);
 	}
     }
 
