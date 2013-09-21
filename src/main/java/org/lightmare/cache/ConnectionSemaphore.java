@@ -7,7 +7,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  * Container class for {@link EntityManagerFactory} with check if connection
- * configuration is in progress
+ * configuration is in progress and user count
  * 
  * @author Levan
  * 
