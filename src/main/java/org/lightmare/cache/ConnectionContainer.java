@@ -19,7 +19,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
- * Container class to cache connections
+ * Container class to cache connections and connection types
  * 
  * @author levan
  * 
