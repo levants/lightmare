@@ -159,6 +159,7 @@ public class MetaContainer {
     public static boolean checkMetaData(String beanName) {
 
 	boolean check;
+
 	MetaData metaData = EJBS.get(beanName);
 	check = metaData == null;
 	if (ObjectUtils.notTrue(check)) {
