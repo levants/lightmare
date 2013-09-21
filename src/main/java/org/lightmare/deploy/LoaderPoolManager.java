@@ -220,6 +220,7 @@ public class LoaderPoolManager {
 
 	boolean locked = Boolean.FALSE;
 	while (ObjectUtils.notTrue(locked)) {
+
 	    // Locks the Lock object to avoid shut down and submit in
 	    // parallel
 	    locked = ObjectUtils
