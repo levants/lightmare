@@ -153,7 +153,7 @@ public class ConnectionContainer {
      * while lock is released
      * 
      * @param semaphore
-     * @return
+     * @return <code>boolean</code>
      */
     private static boolean isInProgress(ConnectionSemaphore semaphore) {
 
