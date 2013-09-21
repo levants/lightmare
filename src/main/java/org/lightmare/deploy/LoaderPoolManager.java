@@ -30,6 +30,17 @@ public class LoaderPoolManager {
     // Lock for pool reopening
     private static final Lock LOCK = new ReentrantLock();
 
+    private static boolean tryLock() {
+
+	boolean locked = LOCK.tryLock();
+
+	while (ObjectUtils.notTrue(locked)) {
+	    locked = LOCK.tryLock();
+	}
+
+	return locked;
+    }
+
     /**
      * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
      * instance
@@ -154,10 +165,7 @@ public class LoaderPoolManager {
     protected static ExecutorService getLoaderPool() {
 
 	if (invalid()) {
-	    boolean locked = LOCK.tryLock();
-	    while (ObjectUtils.notTrue(locked)) {
-		locked = LOCK.tryLock();
-	    }
+	    boolean locked = tryLock();
 	    if (locked) {
 		try {
 		    initLoaderPool();
