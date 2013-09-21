@@ -372,6 +372,7 @@ public class MetaContainer {
 
 	// Removes MetaData from cache
 	removeMeta(beanName);
+
 	if (ObjectUtils.notNull(metaData)) {
 	    // Removes appropriated resource class from REST service
 	    if (RestContainer.hasRest()) {
