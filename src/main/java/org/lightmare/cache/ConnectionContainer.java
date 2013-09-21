@@ -189,14 +189,7 @@ public class ConnectionContainer {
 	    throws IOException {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
-	boolean inProgress = ObjectUtils.notNull(semaphore);
-
-	if (inProgress) {
-	    inProgress = checkOnProgress(semaphore);
-	    if (inProgress) {
-		awaitConnection(semaphore);
-	    }
-	}
+	isInProgress(semaphore);
 
 	return semaphore;
     }
