@@ -44,6 +44,7 @@ public class RestContainer {
 
 	Set<Object> handlers = resource.getHandlerInstances();
 	if (CollectionUtils.valid(handlers)) {
+
 	    Iterator<Object> iterator = handlers.iterator();
 	    Object handler;
 	    RestInflector inflector;
