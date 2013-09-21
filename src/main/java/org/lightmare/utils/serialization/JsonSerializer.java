@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * Reads write java objects from {@link Byte} array or {@link String} with java
- * JSON serialization using Jackson JSON library
+ * JSON serialization vendor specific JSON library
  * 
  * @author Levan
  * 
