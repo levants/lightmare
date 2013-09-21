@@ -47,6 +47,11 @@ public class LoaderPoolManager {
 	return locked;
     }
 
+    private static void lock() {
+
+	LOCK.lock();
+    }
+
     /**
      * Releases {@link Lock} object
      */
