@@ -169,6 +169,8 @@ public class ObjectUtils {
     public static void unlock(Lock lock) {
 
 	if (lock instanceof ReentrantLock) {
+	    // if passed lock instance of ReentrantLock then first defines if
+	    // locked by current thread
 	    ReentrantLock reentrantLock = ObjectUtils.cast(lock,
 		    ReentrantLock.class);
 	    if (reentrantLock.isHeldByCurrentThread()) {
