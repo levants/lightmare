@@ -8,7 +8,7 @@ import java.lang.reflect.Array;
  * @author Levan
  * 
  */
-public class StringUtils {
+public abstract class StringUtils {
 
     public static final String EMPTY_STRING = "";
 
