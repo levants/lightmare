@@ -111,7 +111,8 @@ public class ObjectUtils {
     }
 
     /**
-     * Locks passed {@link Lock} object
+     * Locks passed {@link Lock} object for passed time in appropriate
+     * {@link TimeUnit} instance
      * 
      * @param lock
      * @return <code>boolean</code>
@@ -145,6 +146,13 @@ public class ObjectUtils {
 	return locked;
     }
 
+    /**
+     * Locks passed {@link Lock} object
+     * 
+     * @param lock
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
     public static boolean tryLock(Lock lock) throws IOException {
 
 	return tryLock(lock, null, null);
