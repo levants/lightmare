@@ -120,8 +120,9 @@ public class ObjectUtils {
 	boolean locked;
 
 	if (lock instanceof ReentrantLock) {
-	    ReentrantLock rtLock = ObjectUtils.cast(lock, ReentrantLock.class);
-	    locked = rtLock.isHeldByCurrentThread();
+	    ReentrantLock reentrantLock = ObjectUtils.cast(lock,
+		    ReentrantLock.class);
+	    locked = reentrantLock.isHeldByCurrentThread();
 	} else {
 	    locked = lock.tryLock();
 	}
