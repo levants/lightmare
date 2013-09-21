@@ -47,7 +47,7 @@ public class LoaderPoolManager {
     }
 
     /**
-     * Releases lock
+     * Releases lock object
      */
     private static void unlock() {
 
