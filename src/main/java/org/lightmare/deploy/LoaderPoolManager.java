@@ -244,7 +244,7 @@ public class LoaderPoolManager {
 		    LOADER_POOL = null;
 		}
 	    } finally {
-		unlock();
+		ObjectUtils.unlock(LOCK);
 	    }
 	}
     }

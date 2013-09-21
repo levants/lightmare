@@ -127,6 +127,18 @@ public class ObjectUtils {
 	return locked;
     }
 
+    public static void unlock(Lock lock) {
+
+	if (lock instanceof ReentrantLock) {
+	    ReentrantLock rtLock = ObjectUtils.cast(lock, ReentrantLock.class);
+	    if (rtLock.isHeldByCurrentThread()) {
+		lock.unlock();
+	    }
+	} else {
+	    lock.unlock();
+	}
+    }
+
     /**
      * Checks if passed {@link Closeable} instance is not null and if not calls
      * {@link Closeable#close()} method
