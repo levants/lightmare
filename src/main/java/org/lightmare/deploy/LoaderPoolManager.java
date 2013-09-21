@@ -196,7 +196,8 @@ public class LoaderPoolManager {
      */
     public static void submit(Runnable runnable) {
 
-	getLoaderPool().submit(runnable);
+	ExecutorService pool = getLoaderPool();
+	pool.submit(runnable);
     }
 
     /**
