@@ -444,32 +444,32 @@ public class MetaCreator {
 	while (ObjectUtils.notTrue(locked)) {
 
 	    locked = scannerLock.tryLock();
+	    
+	if (locked) {
+	    try {
+		if (CollectionUtils.valid(realURL)) {
+		    realURL.clear();
+		    realURL = null;
+		}
 
-	    if (locked) {
-		try {
-		    if (CollectionUtils.valid(realURL)) {
-			realURL.clear();
-			realURL = null;
-		    }
+		if (CollectionUtils.valid(aggregateds)) {
+		    aggregateds.clear();
+		}
 
-		    if (CollectionUtils.valid(aggregateds)) {
-			aggregateds.clear();
-		    }
+		if (CollectionUtils.valid(archivesURLs)) {
+		    archivesURLs.clear();
+		    archivesURLs = null;
+		}
 
-		    if (CollectionUtils.valid(archivesURLs)) {
-			archivesURLs.clear();
-			archivesURLs = null;
-		    }
+		if (CollectionUtils.valid(classOwnersURL)) {
+		    classOwnersURL.clear();
+		    classOwnersURL = null;
+		}
 
-		    if (CollectionUtils.valid(classOwnersURL)) {
-			classOwnersURL.clear();
-			classOwnersURL = null;
-		    }
+		configuration = null;
 
-		    configuration = null;
-
-		} finally {
-		    ObjectUtils.unlock(scannerLock);
+	    } finally {
+		scannerLock.unlock();
 		}
 	    }
 	}
