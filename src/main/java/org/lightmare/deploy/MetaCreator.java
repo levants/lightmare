@@ -249,6 +249,7 @@ public class MetaCreator {
 	List<File> tmpFiles = null;
 
 	if (ObjectUtils.notNull(ioUtils)) {
+
 	    if (loader == null) {
 		if (ioUtils.notExecuted()) {
 		    ioUtils.scan(configuration.isPersXmlFromJar());
@@ -257,6 +258,7 @@ public class MetaCreator {
 		loader = LibraryLoader.initializeLoader(libURLs);
 		archiveData.setLoader(loader);
 	    }
+
 	    tmpFiles = ioUtils.getTmpFiles();
 	    aggregateds.put(beanName, ioUtils);
 	}
