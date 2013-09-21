@@ -316,6 +316,7 @@ public class Configuration implements Cloneable {
 
 	// Check if application needs directory watch service
 	boolean watchStatus;
+
 	if (ObjectUtils.notTrue(hotDeployment)) {
 	    watchStatus = Boolean.TRUE;
 	} else {
