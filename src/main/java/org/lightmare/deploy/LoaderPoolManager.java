@@ -170,8 +170,6 @@ public class LoaderPoolManager {
 			TimeUnit.MILLISECONDS);
 		if (locked) {
 		    // Locks the Lock object to avoid shut down in parallel
-		    // ObjectUtils.lock(LOCK);
-
 		    try {
 			initLoaderPool();
 		    } finally {
