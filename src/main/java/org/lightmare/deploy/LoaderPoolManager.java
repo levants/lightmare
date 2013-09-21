@@ -38,7 +38,11 @@ public class LoaderPoolManager {
      */
     private static boolean tryLock() {
 
-	boolean locked = ObjectUtils.tryLock(LOCK);
+	boolean locked = LOCK.tryLock();
+
+	while (ObjectUtils.notTrue(locked)) {
+	    locked = LOCK.tryLock();
+	}
 
 	return locked;
     }
@@ -56,7 +60,7 @@ public class LoaderPoolManager {
      */
     private static void unlock() {
 
-	ObjectUtils.unlock(LOCK);
+	LOCK.unlock();
     }
 
     /**
@@ -187,14 +191,12 @@ public class LoaderPoolManager {
 
 	if (invalid()) {
 	    // Locks the Lock object to avoid shut down in parallel
-	    boolean locked = tryLock();
+	    lock();
 
-	    if (locked) {
-		try {
-		    initLoaderPool();
-		} finally {
-		    unlock();
-		}
+	    try {
+		initLoaderPool();
+	    } finally {
+		unlock();
 	    }
 	}
 
