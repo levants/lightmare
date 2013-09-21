@@ -2,6 +2,8 @@ package org.lightmare.utils;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.lightmare.utils.reflect.MetaUtils;
 
@@ -105,6 +107,24 @@ public class ObjectUtils {
 	T value = wrapper.cast(data);
 
 	return value;
+    }
+
+    public static boolean tryLock(Lock lock) {
+
+	boolean locked;
+
+	if (lock instanceof ReentrantLock) {
+	    ReentrantLock rtLock = ObjectUtils.cast(lock, ReentrantLock.class);
+	    locked = rtLock.isHeldByCurrentThread();
+	} else {
+	    locked = lock.tryLock();
+	}
+
+	while (ObjectUtils.notTrue(lock.tryLock())) {
+	    locked = lock.tryLock();
+	}
+
+	return locked;
     }
 
     /**

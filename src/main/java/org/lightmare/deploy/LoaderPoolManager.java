@@ -236,7 +236,7 @@ public class LoaderPoolManager {
      */
     public static void reload() {
 
-	boolean locked = tryLock();
+	boolean locked = ObjectUtils.tryLock(LOCK);
 	if (locked) {
 	    try {
 		if (ObjectUtils.notNull(LOADER_POOL)) {
