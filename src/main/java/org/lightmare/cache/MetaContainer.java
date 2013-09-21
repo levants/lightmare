@@ -397,6 +397,7 @@ public class MetaContainer {
     public static boolean undeploy(URL url) throws IOException {
 
 	synchronized (MetaContainer.class) {
+
 	    Collection<String> beanNames = getBeanNames(url);
 	    boolean valid = CollectionUtils.valid(beanNames);
 	    if (valid) {
