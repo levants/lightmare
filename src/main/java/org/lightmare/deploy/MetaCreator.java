@@ -103,7 +103,7 @@ public class MetaCreator {
 		    MetaContainer.setCreator(creator);
 		}
 	    } finally {
-		LOCK.unlock();
+		ObjectUtils.unlock(LOCK);
 	    }
 	}
 
