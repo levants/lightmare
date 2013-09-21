@@ -113,7 +113,7 @@ public class ObjectUtils {
      * Locks passed {@link Lock} object
      * 
      * @param lock
-     * @return
+     * @return <code>boolean</code>
      */
     public static boolean tryLock(Lock lock) {
 
