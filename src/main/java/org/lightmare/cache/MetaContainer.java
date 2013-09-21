@@ -339,6 +339,7 @@ public class MetaContainer {
 		// Gets connection to clear
 		String unitName = connection.getUnitName();
 		ConnectionSemaphore semaphore = connection.getConnection();
+
 		if (semaphore == null) {
 		    semaphore = ConnectionContainer.getConnection(unitName);
 		}
