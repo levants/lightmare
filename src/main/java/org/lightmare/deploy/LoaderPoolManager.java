@@ -200,15 +200,15 @@ public class LoaderPoolManager {
 	    locked = LOCK.tryLock();
 	}
 
-	try {
-	    if (locked) {
+	if (locked) {
+	    try {
 		if (ObjectUtils.notNull(LOADER_POOL)) {
 		    LOADER_POOL.shutdown();
 		    LOADER_POOL = null;
 		}
+	    } finally {
+		LOCK.unlock();
 	    }
-	} finally {
-	    LOCK.unlock();
 	}
 
 	getLoaderPool();
