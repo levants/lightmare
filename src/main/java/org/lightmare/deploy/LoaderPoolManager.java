@@ -188,13 +188,12 @@ public class LoaderPoolManager {
 
 	if (invalid()) {
 
-	    boolean locked = tryLock();
-	    if (locked) {
-		try {
-		    initLoaderPool();
-		} finally {
-		    unlock();
-		}
+	    lock();
+
+	    try {
+		initLoaderPool();
+	    } finally {
+		unlock();
 	    }
 	}
 
@@ -231,14 +230,16 @@ public class LoaderPoolManager {
      */
     public static void reload() {
 
-	lock();
-	try {
-	    if (ObjectUtils.notNull(LOADER_POOL)) {
-		LOADER_POOL.shutdown();
-		LOADER_POOL = null;
+	boolean locked = tryLock();
+	if (locked) {
+	    try {
+		if (ObjectUtils.notNull(LOADER_POOL)) {
+		    LOADER_POOL.shutdown();
+		    LOADER_POOL = null;
+		}
+	    } finally {
+		unlock();
 	    }
-	} finally {
-	    unlock();
 	}
     }
 }
