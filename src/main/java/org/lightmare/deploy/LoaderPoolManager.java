@@ -195,14 +195,8 @@ public class LoaderPoolManager {
     public static void reload() {
 
 	boolean locked = LOCK.tryLock();
+
 	while (ObjectUtils.notTrue(locked)) {
-
-//	    try {
-//		Thread.sleep(THREAD_SLEEP_TIME);
-//	    } catch (InterruptedException ex) {
-//		LOG.error(ex.getMessage(), ex);
-//	    }
-
 	    locked = LOCK.tryLock();
 	}
 
