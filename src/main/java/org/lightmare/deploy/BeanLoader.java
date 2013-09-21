@@ -806,12 +806,16 @@ public class BeanLoader {
      * 
      * @param tmpFiles
      */
-    public static void removeResources(List<File> tmpFiles) {
+    public static void removeResources(List<File> tmpFiles) throws IOException {
 
 	ResourceCleaner cleaner = new ResourceCleaner(tmpFiles);
 	Callable<Boolean> privileged = AccessController
 		.doPrivileged(new ContextLoaderAction<Boolean>(cleaner));
 
-	LoaderPoolManager.submit(privileged);
+	try {
+	    LoaderPoolManager.submit(privileged);
+	} catch (IOException ex) {
+	    LOG.error(ex.getMessage(), ex);
+	}
     }
 }

@@ -1,6 +1,7 @@
 package org.lightmare.cache;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,8 +35,10 @@ public class TmpResources {
 
     /**
      * Deletes all temporal files for deployment
+     * 
+     * @throws IOException
      */
-    public void removeTempFiles() {
+    public void removeTempFiles() throws IOException {
 
 	for (List<File> files : tmpFiles) {
 	    BeanLoader.removeResources(files);
