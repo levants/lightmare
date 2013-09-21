@@ -148,6 +148,13 @@ public class ConnectionContainer {
 	}
     }
 
+    /**
+     * Checks if {@link ConnectionSemaphore} is in progress and if it is waits
+     * while lock is released
+     * 
+     * @param semaphore
+     * @return
+     */
     private static boolean isInProgress(ConnectionSemaphore semaphore) {
 
 	boolean inProgress = ObjectUtils.notNull(semaphore);
