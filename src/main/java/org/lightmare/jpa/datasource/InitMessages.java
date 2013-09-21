@@ -6,7 +6,7 @@ package org.lightmare.jpa.datasource;
  * @author Levan
  * 
  */
-public class InitMessages {
+public abstract class InitMessages {
 
     // Error messages
     public static final String NOT_APPR_INSTANCE_ERROR = "Could not initialize data source %s (it is not appropriated DataSource instance)";
