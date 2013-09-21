@@ -98,6 +98,7 @@ public class MetaCreator {
 	if (creator == null) {
 
 	    ObjectUtils.lock(LOCK);
+
 	    try {
 		if (creator == null) {
 		    creator = new MetaCreator();
