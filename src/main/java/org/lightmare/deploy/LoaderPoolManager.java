@@ -197,7 +197,7 @@ public class LoaderPoolManager {
     }
 
     /**
-     * Submits passed {@link Callable} implementation in loader pool
+     * Submits passed {@link Callable} implementation in loader pool instance
      * 
      * @param callable
      * @return {@link Future}<code><T></code>
