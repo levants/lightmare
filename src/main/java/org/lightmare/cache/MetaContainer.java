@@ -469,7 +469,6 @@ public class MetaContainer {
     public static void clear() {
 
 	if (ObjectUtils.notNull(creator)) {
-
 	    synchronized (MetaContainer.class) {
 
 		if (ObjectUtils.notNull(creator)) {
