@@ -142,6 +142,7 @@ public class RestContainer {
     public static boolean hasRest() {
 
 	synchronized (RestContainer.class) {
+
 	    return ObjectUtils.notNull(restConfig);
 	}
     }
