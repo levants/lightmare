@@ -96,6 +96,7 @@ public class MetaCreator {
 	MetaCreator creator = MetaContainer.getCreator();
 
 	if (creator == null) {
+
 	    ObjectUtils.lock(LOCK);
 	    try {
 		if (creator == null) {
