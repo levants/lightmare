@@ -146,14 +146,19 @@ public class LoaderPoolManager {
     protected static ExecutorService getLoaderPool() {
 
 	if (invalid()) {
-	    LOCK.lock();
-	    try {
-		if (invalid()) {
-		    LOADER_POOL = Executors.newFixedThreadPool(
-			    LOADER_POOL_SIZE, new LoaderThreadFactory());
+	    boolean locked = LOCK.tryLock();
+	    while (ObjectUtils.notTrue(locked)) {
+		locked = LOCK.tryLock();
+	    }
+	    if (locked) {
+		try {
+		    if (invalid()) {
+			LOADER_POOL = Executors.newFixedThreadPool(
+				LOADER_POOL_SIZE, new LoaderThreadFactory());
+		    }
+		} finally {
+		    LOCK.unlock();
 		}
-	    } finally {
-		LOCK.unlock();
 	    }
 	}
 
