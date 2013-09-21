@@ -6,7 +6,7 @@ package org.lightmare.jpa.datasource;
  * @author levan
  * 
  */
-public class DriverConfig {
+public abstract class DriverConfig {
 
     /**
      * Caches database driver names and classes
