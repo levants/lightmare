@@ -343,6 +343,7 @@ public class MetaContainer {
 		if (semaphore == null) {
 		    semaphore = ConnectionContainer.getConnection(unitName);
 		}
+
 		if (ObjectUtils.notNull(semaphore)
 			&& semaphore.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS) {
 		    ConnectionContainer.removeConnection(unitName);
