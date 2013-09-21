@@ -80,7 +80,7 @@ public class ObjectUtils {
      * 
      * @param data1
      * @param data2
-     * @return
+     * @return <code>boolean</code>
      */
     public static boolean notNullNotEquals(Object data1, Object data2) {
 
