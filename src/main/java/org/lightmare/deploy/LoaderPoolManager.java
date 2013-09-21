@@ -218,8 +218,6 @@ public class LoaderPoolManager {
 		    LOADER_POOL = null;
 		}
 
-		getLoaderPool();
-
 	    } finally {
 		LOCK.unlock();
 	    }
