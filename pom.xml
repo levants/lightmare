@@ -56,7 +56,7 @@
 		<jackson.version>2.2.0</jackson.version>
 		<!-- end of jackson -->
 		<!-- yaml -->
-		<snakeyaml.version>1.13-SNAPSHOT</snakeyaml.version>
+		<snakeyaml.version>1.13</snakeyaml.version>
 		<!-- end of yaml -->
 		<!-- jetty -->
 		<jetty.version>9.0.4.v20130625</jetty.version>
