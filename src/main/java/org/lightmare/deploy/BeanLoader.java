@@ -584,6 +584,7 @@ public class BeanLoader {
 	    if (ObjectUtils.notNull(remote)) {
 		remoteInterface = remote.value();
 	    }
+
 	    interfacesList = new ArrayList<Class<?>>();
 	    for (Class<?> interfaceClass : interfaces) {
 		if (interfaceClass.isAnnotationPresent(Remote.class))
