@@ -165,7 +165,7 @@ public class ORMCreator {
     }
 
     /**
-     * Instantiates ORMCreator by constructor
+     * Instantiates {@link ORMCreator} by constructor
      * 
      * @param creator
      * @return {@link ORMCreator}

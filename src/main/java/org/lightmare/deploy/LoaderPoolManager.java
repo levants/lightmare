@@ -102,7 +102,7 @@ public abstract class LoaderPoolManager {
 	private void setContextClassLoader(Thread thread) {
 
 	    ClassLoader parent = getCurrent();
-	    thread.setContextClassLoader(parent);
+	    LibraryLoader.loadCurrentLibraries(thread, parent);
 	}
 
 	/**
