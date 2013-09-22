@@ -513,6 +513,7 @@ public class BeanLoader {
 	    Class<?> interceptorClass;
 	    List<Method> interceptorMethods;
 	    Method interceptorMethod;
+
 	    for (int i = 0; i < length; i++) {
 		interceptorClass = interceptorClasses[i];
 		interceptorMethods = MetaUtils.getAnnotatedMethods(beanClass,
