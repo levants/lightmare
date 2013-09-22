@@ -466,6 +466,7 @@
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-multipart</artifactId>
 			<version>${jersey.version}</version>
+			<classifier>sources</classifier>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
