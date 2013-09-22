@@ -557,6 +557,7 @@ public class BeanLoader {
 
 	    List<Method> beanMethods = MetaUtils.getAnnotatedMethods(beanClass,
 		    Interceptors.class);
+
 	    if (CollectionUtils.valid(beanMethods)) {
 		for (Method beanMethod : beanMethods) {
 		    interceptors = beanMethod.getAnnotation(Interceptors.class);
