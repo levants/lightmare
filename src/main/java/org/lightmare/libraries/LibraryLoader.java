@@ -31,6 +31,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class LibraryLoader {
 
+    // Method name to add URL to class loader
     private static final String ADD_URL_METHOD_NAME = "addURL";
 
     private static final String CLOSE_METHOD_NAME = "close";

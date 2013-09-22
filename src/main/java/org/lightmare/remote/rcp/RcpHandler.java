@@ -19,6 +19,7 @@ import org.lightmare.remote.rcp.wrappers.RcpWrapper;
  */
 public class RcpHandler extends SimpleChannelHandler {
 
+    // Responses queue
     private BlockingQueue<RcpWrapper> answer;
 
     /**
