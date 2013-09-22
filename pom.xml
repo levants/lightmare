@@ -485,6 +485,7 @@
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>${jersey.version}</version>
+			<classifier>javadoc</classifier>
 			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
