@@ -580,6 +580,7 @@ public class BeanLoader {
 	    Remote remote = beanClass.getAnnotation(Remote.class);
 	    Local local = beanClass.getAnnotation(Local.class);
 	    interfaces = beanClass.getInterfaces();
+
 	    if (ObjectUtils.notNull(remote)) {
 		remoteInterface = remote.value();
 	    }
