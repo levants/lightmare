@@ -486,6 +486,7 @@ public class BeanLoader {
 
 		transactionAttrType = transactionAttribute.value();
 		transactionManType = TransactionManagementType.CONTAINER;
+
 	    } else {
 
 		transactionAttrType = transactionAttribute.value();
