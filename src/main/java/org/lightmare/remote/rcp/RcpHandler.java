@@ -29,13 +29,13 @@ public class RcpHandler extends SimpleChannelHandler {
      * @author levan
      * 
      */
-    private static class ResponceListener implements ChannelFutureListener {
+    private static class ResponseListener implements ChannelFutureListener {
 
 	private final BlockingQueue<RcpWrapper> answer;
 
 	private final MessageEvent ev;
 
-	public ResponceListener(final BlockingQueue<RcpWrapper> answer,
+	public ResponseListener(final BlockingQueue<RcpWrapper> answer,
 		final MessageEvent ev) {
 
 	    this.answer = answer;
@@ -57,7 +57,7 @@ public class RcpHandler extends SimpleChannelHandler {
     public void messageReceived(ChannelHandlerContext ctx, final MessageEvent ev) {
 
 	ev.getFuture().getChannel().close().awaitUninterruptibly()
-		.addListener(new ResponceListener(answer, ev));
+		.addListener(new ResponseListener(answer, ev));
     }
 
     @Override
