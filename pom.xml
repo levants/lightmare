@@ -478,7 +478,7 @@
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-server</artifactId>
 			<version>${jersey.version}</version>
-			<scope>sources</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
