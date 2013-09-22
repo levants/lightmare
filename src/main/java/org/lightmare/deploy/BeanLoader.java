@@ -599,6 +599,7 @@ public class BeanLoader {
 	    if (ObjectUtils.notNull(local)) {
 		localInterface = local.value();
 	    }
+
 	    interfacesList = new ArrayList<Class<?>>();
 	    for (Class<?> interfaceClass : interfaces) {
 		if (interfaceClass.isAnnotationPresent(Local.class))
