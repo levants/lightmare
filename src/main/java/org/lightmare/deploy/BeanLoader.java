@@ -629,11 +629,12 @@ public class BeanLoader {
 	 */
 	private String createBeanClass() throws IOException {
 
+	    String beanEjbName;
 	    try {
 		Class<?> beanClass = MetaUtils.classForName(className,
 			Boolean.FALSE, loader);
 		checkOnTransactional(beanClass);
-		String beanEjbName = BeanUtils.beanName(beanClass);
+		beanEjbName = BeanUtils.beanName(beanClass);
 		checkAndSetBean(beanEjbName);
 		if (RestCheck.check(beanClass)) {
 		    RestProvider.add(beanClass);
