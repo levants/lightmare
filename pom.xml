@@ -557,7 +557,7 @@
 			<artifactId>jersey-common</artifactId>
 			<version>${jersey.version}</version>
 			<classifier>sources</classifier>
-			<scope>sources</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
