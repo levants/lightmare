@@ -550,6 +550,7 @@ public class BeanLoader {
 
 	    Interceptors interceptors = beanClass
 		    .getAnnotation(Interceptors.class);
+
 	    if (ObjectUtils.notNull(interceptors)) {
 		cacheInterceptors(interceptors, beanClass);
 	    }
