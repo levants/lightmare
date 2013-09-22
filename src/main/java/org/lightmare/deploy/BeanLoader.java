@@ -644,12 +644,12 @@ public class BeanLoader {
 		identifyInterceptors(beanClass);
 		metaData.setInProgress(Boolean.FALSE);
 
-		return beanEjbName;
-
 	    } catch (IOException ex) {
 		releaseBlocker();
 		throw ex;
 	    }
+
+	    return beanEjbName;
 	}
 
 	private String deployFile() {
