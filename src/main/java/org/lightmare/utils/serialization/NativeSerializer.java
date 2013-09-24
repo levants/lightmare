@@ -27,19 +27,21 @@ public abstract class NativeSerializer {
      */
     public static byte[] serialize(Object value) throws IOException {
 
+	byte[] data;
+
 	ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	ObjectOutputStream objectStream = new ObjectOutputStream(stream);
 
 	try {
 
 	    objectStream.writeObject(value);
-	    byte[] data = stream.toByteArray();
-
-	    return data;
+	    data = stream.toByteArray();
 
 	} finally {
 	    IOUtils.closeAll(stream, objectStream);
 	}
+
+	return data;
     }
 
     /**
