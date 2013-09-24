@@ -1,4 +1,4 @@
-package org.lightmare.utils.earfile;
+package org.lightmare.utils.ears;
 
 import java.io.File;
 import java.io.IOException;

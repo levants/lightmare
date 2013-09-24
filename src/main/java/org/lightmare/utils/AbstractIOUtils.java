@@ -17,10 +17,10 @@ import java.util.zip.ZipFile;
 
 import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.scannotation.AnnotationDB;
-import org.lightmare.utils.earfile.DirUtils;
-import org.lightmare.utils.earfile.ExtUtils;
-import org.lightmare.utils.earfile.JarUtils;
-import org.lightmare.utils.earfile.SimpleUtils;
+import org.lightmare.utils.ears.DirUtils;
+import org.lightmare.utils.ears.ExtUtils;
+import org.lightmare.utils.ears.JarUtils;
+import org.lightmare.utils.ears.SimpleUtils;
 import org.lightmare.utils.fs.FileType;
 import org.lightmare.utils.fs.FileUtils;
 import org.w3c.dom.Document;
