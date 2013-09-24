@@ -65,8 +65,7 @@ public abstract class NativeSerializer {
 	    throw new IOException(ex);
 
 	} finally {
-	    stream.close();
-	    objectStream.close();
+	    IOUtils.closeAll(stream, objectStream);
 	}
     }
 }
