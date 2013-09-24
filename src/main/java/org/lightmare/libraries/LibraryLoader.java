@@ -162,6 +162,7 @@ public class LibraryLoader {
 	PrivilegedAction<ClassLoader> action = new PrivilegedAction<ClassLoader>() {
 
 	    public ClassLoader run() {
+
 		Thread currentThread = Thread.currentThread();
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 		return classLoader;
