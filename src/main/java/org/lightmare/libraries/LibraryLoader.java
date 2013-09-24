@@ -111,6 +111,7 @@ public class LibraryLoader {
     private static URL[] getURLs(ClassLoader loader) {
 
 	URL[] urls;
+
 	if (loader instanceof URLClassLoader) {
 	    urls = ((URLClassLoader) loader).getURLs();
 	} else {
