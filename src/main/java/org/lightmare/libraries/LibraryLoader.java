@@ -36,7 +36,7 @@ public class LibraryLoader {
 
     private static final String CLOSE_METHOD_NAME = "close";
 
-    private static Boolean HAS_CLOSE_METHOD;
+    private static Boolean hasCloseMethod;
 
     private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
 
@@ -400,17 +400,17 @@ public class LibraryLoader {
 		// method
 		Class<?> loaderClass = loader.getClass();
 
-		if (HAS_CLOSE_METHOD == null) {
+		if (hasCloseMethod == null) {
 		    synchronized (LibraryLoader.class) {
-			if (HAS_CLOSE_METHOD == null) {
+			if (hasCloseMethod == null) {
 			    boolean hasMethod = MetaUtils.hasPublicMethod(
 				    loaderClass, CLOSE_METHOD_NAME);
-			    HAS_CLOSE_METHOD = hasMethod;
+			    hasCloseMethod = hasMethod;
 			}
 		    }
 		}
 
-		if (HAS_CLOSE_METHOD) {
+		if (hasCloseMethod) {
 		    urlClassLoader.close();
 		}
 	    } catch (Throwable th) {
