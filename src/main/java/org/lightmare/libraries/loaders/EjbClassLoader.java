@@ -40,6 +40,7 @@ public class EjbClassLoader extends URLClassLoader {
 	public EjbClassLoader run() {
 
 	    EjbClassLoader ejbClassLoader;
+
 	    if (parent == null) {
 		ejbClassLoader = new EjbClassLoader(urls);
 	    } else {
