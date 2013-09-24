@@ -16,6 +16,7 @@ import javassist.bytecode.annotation.Annotation;
 
 import org.apache.log4j.Logger;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.ears.AbstractIOUtils;
@@ -142,7 +143,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    }
 
 	} finally {
-	    ObjectUtils.closeAll(dstream, bits);
+	    IOUtils.closeAll(dstream, bits);
 	}
     }
 
