@@ -383,8 +383,11 @@ public class LibraryLoader {
 	loadClasses(classes, loader);
     }
 
-    private void checkOnClose(Class<? extends ClassLoader> loaderClass)
-	    throws IOException {
+    private static void checkOnClose(ClassLoader loader) throws IOException {
+
+	// Finds if loader associated class or superclass has "close"
+	// method
+	Class<? extends ClassLoader> loaderClass = loader.getClass();
 
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
@@ -424,6 +427,7 @@ public class LibraryLoader {
 			}
 		    }
 		}
+		checkOnClose(loader);
 
 		if (hasCloseMethod) {
 		    urlClassLoader.close();
