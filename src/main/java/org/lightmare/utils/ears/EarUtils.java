@@ -14,6 +14,7 @@ import java.util.zip.ZipInputStream;
 
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
@@ -99,7 +100,7 @@ public class EarUtils extends AbstractIOUtils {
 		    JAR_FILE_EXT);
 	    tmpFile.deleteOnExit();
 	    FileOutputStream output = new FileOutputStream(tmpFile);
-	    write(jarStream, output);
+	    IOUtils.write(jarStream, output);
 	    URL jarURL = tmpFile.toURI().toURL();
 	    String jarPath = StringUtils.concat(jarURL.toString(),
 		    ARCHIVE_URL_DELIM, FILE_SEPARATOR, ConfigLoader.XML_PATH);
