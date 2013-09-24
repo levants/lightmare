@@ -36,6 +36,7 @@ public class LibraryLoader {
 
     private static final String CLOSE_METHOD_NAME = "close";
 
+    // Caches if class URLClassLoader has close method
     private static Boolean hasCloseMethod;
 
     private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
