@@ -62,9 +62,7 @@ public abstract class NativeSerializer {
 	try {
 	    value = objectStream.readObject();
 	} catch (ClassNotFoundException ex) {
-
 	    throw new IOException(ex);
-
 	} finally {
 	    IOUtils.closeAll(stream, objectStream);
 	}
