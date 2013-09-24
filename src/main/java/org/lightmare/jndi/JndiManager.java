@@ -99,6 +99,12 @@ public class JndiManager {
 	}
     }
 
+    /**
+     * Initializes {@link Context} if it is null
+     * 
+     * @param properties
+     * @throws IOException
+     */
     private void createContext(Properties properties) throws IOException {
 
 	if (context == null) {
