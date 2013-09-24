@@ -37,11 +37,11 @@ public class LibraryLoader {
 
     private static final String CLOSE_METHOD_NAME = "close";
 
+    private static final AtomicBoolean HAS_CLOSE_METHOD = new AtomicBoolean();
+
     private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
 
     private static Method addURLMethod;
-
-    private static final AtomicBoolean HAS_CLOSE_METHOD = new AtomicBoolean();
 
     private static final Lock LOCK = new ReentrantLock();
 
