@@ -14,6 +14,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -42,7 +43,7 @@ public class LibraryLoader {
 
     private static Method addURLMethod;
 
-    private static final ConcurrentMap<Class<ClassLoader>, Method> CACHED_METHOD = new ConcurrentHashMap<Class<ClassLoader>, Method>();
+    private static final AtomicBoolean HAS_CLOSE_METHOD = new AtomicBoolean();
 
     private static final Lock LOCK = new ReentrantLock();
 
