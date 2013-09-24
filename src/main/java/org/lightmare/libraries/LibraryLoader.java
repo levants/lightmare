@@ -391,14 +391,16 @@ public class LibraryLoader {
 
 	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
 	    try {
-		loader.clearAssertionStatus();
+		URLClassLoader urlClassLoader = ObjectUtils.cast(loader,
+			URLClassLoader.class);
+		urlClassLoader.clearAssertionStatus();
 		// Finds if loader associated class or superclass has "close"
 		// method
 		Class<?> loaderClass = loader.getClass();
 		boolean hasMethod = MetaUtils.hasPublicMethod(loaderClass,
 			CLOSE_METHOD_NAME);
 		if (hasMethod) {
-		    ((URLClassLoader) loader).close();
+		    urlClassLoader.close();
 		}
 	    } catch (Throwable th) {
 		LOG.error(th.getMessage(), th);
