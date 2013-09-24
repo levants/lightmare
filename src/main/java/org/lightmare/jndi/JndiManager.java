@@ -91,6 +91,12 @@ public class JndiManager {
 	System.getProperties().putAll(configs);
     }
 
+    /**
+     * If context is not initialized and {@link Properties} are not registered
+     * then registers system properties and initializes {@link Context} instance
+     * 
+     * @param properties
+     */
     private void setFactoryProperties(Properties properties) {
 
 	if (ObjectUtils.notTrue(isContextFactory)) {
