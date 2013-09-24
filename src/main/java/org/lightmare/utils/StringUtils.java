@@ -33,6 +33,7 @@ public abstract class StringUtils {
     public static boolean validAll(CharSequence... lines) {
 
 	boolean valid = CollectionUtils.valid(lines);
+
 	if (valid) {
 	    int length = lines.length;
 	    CharSequence line;
