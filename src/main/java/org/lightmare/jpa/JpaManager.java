@@ -49,6 +49,7 @@ public class JpaManager {
     // Initialize level class loader
     private ClassLoader loader;
 
+    // Error message for connection binding to JNDI names
     private static final String COULD_NOT_BIND_JNDI_ERROR = "could not bind connection";
 
     private static final Logger LOG = Logger.getLogger(JpaManager.class);
