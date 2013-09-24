@@ -159,8 +159,8 @@ public class JndiManager {
     }
 
     /**
-     * Lookups data with passed name in {@link Context} and casts it in generic
-     * type
+     * Lookups data with passed name in {@link Context} and casts it in
+     * appropriated generic type
      * 
      * @param name
      * @return <code>T</code>
