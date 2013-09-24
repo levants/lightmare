@@ -299,9 +299,12 @@ public abstract class AbstractIOUtils {
 	    Document document = FileParsers.parse(xmlStream);
 	    NodeList nodeList = document.getElementsByTagName(EJB_TAG_NAME);
 	    String ejbName;
+
 	    for (int i = 0; i < nodeList.getLength(); i++) {
+
 		Element ejbElement = (Element) nodeList.item(i);
 		ejbName = FileParsers.getContext(ejbElement);
+
 		if (ObjectUtils.notNull(ejbName)) {
 		    ejbNames.add(ejbName);
 		}
