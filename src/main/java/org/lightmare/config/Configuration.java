@@ -503,7 +503,7 @@ public class Configuration implements Cloneable {
 	} catch (IOException ex) {
 	    LOG.error(COULD_NOT_LOAD_CONFIG_ERROR, ex);
 	} finally {
-	    ObjectUtils.close(propertiesStream);
+	    IOUtils.close(propertiesStream);
 	}
     }
 
