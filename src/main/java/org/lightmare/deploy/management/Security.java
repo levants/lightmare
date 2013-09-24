@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
@@ -35,7 +36,7 @@ public class Security {
 	try {
 	    cache.load(stream);
 	} finally {
-	    ObjectUtils.close(stream);
+	    IOUtils.close(stream);
 	}
     }
 
