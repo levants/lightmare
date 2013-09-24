@@ -20,8 +20,8 @@ import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
 import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.NamingUtils;
-import org.lightmare.utils.ObjectUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -70,7 +70,7 @@ public class FileParsers {
 	try {
 	    document = parse(stream);
 	} finally {
-	    ObjectUtils.close(stream);
+	    IOUtils.close(stream);
 	}
 
 	return document;
