@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
@@ -87,7 +88,7 @@ public class ExtUtils extends DirUtils {
 	    }
 
 	    OutputStream out = new FileOutputStream(file);
-	    write(extStream, out);
+	    IOUtils.write(extStream, out);
 
 	} else {
 	    file.mkdir();
