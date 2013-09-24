@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,7 +18,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.util.internal.ConcurrentHashMap;
 import org.lightmare.libraries.loaders.EjbClassLoader;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
