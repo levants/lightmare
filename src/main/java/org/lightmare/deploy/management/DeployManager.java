@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
@@ -272,7 +273,7 @@ public class DeployManager extends HttpServlet {
 	try {
 	    writer.write(html);
 	} finally {
-	    writer.close();
+	    IOUtils.close(writer);
 	}
     }
 
