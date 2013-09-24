@@ -328,6 +328,7 @@ public class LibraryLoader {
 
 	    URL[] paths = CollectionUtils.toArray(urls, URL.class);
 	    ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
+
 	    if (systemLoader instanceof URLClassLoader) {
 		URLClassLoader urlLoader = (URLClassLoader) systemLoader;
 
