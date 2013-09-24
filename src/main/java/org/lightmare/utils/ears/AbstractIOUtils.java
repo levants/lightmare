@@ -104,11 +104,13 @@ public abstract class AbstractIOUtils {
     public AbstractIOUtils(URL url) throws IOException {
 
 	this.path = url.toString();
+
 	try {
 	    realFile = new File(url.toURI());
 	} catch (URISyntaxException ex) {
 	    throw new IOException(ex);
 	}
+
 	isDirectory = realFile.isDirectory();
     }
 
