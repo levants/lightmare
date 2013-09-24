@@ -411,6 +411,7 @@ public class LibraryLoader {
 
 	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
 	    try {
+
 		URLClassLoader urlClassLoader = ObjectUtils.cast(loader,
 			URLClassLoader.class);
 		urlClassLoader.clearAssertionStatus();
