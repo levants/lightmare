@@ -39,6 +39,7 @@ public class JpaManager {
 
     private URL url;
 
+    // Overriden properties
     private Map<Object, Object> properties;
 
     private boolean swapDataSource;
