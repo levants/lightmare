@@ -54,13 +54,14 @@ public abstract class NativeSerializer {
      */
     public static Object deserialize(byte[] data) throws IOException {
 
+	Object value;
+
 	ByteArrayInputStream stream = new ByteArrayInputStream(data);
 	ObjectInputStream objectStream = new ObjectInputStream(stream);
+
 	try {
 
-	    Object value = objectStream.readObject();
-
-	    return value;
+	    value = objectStream.readObject();
 
 	} catch (ClassNotFoundException ex) {
 
@@ -69,5 +70,7 @@ public abstract class NativeSerializer {
 	} finally {
 	    IOUtils.closeAll(stream, objectStream);
 	}
+
+	return value;
     }
 }
