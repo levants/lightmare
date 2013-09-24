@@ -1,6 +1,5 @@
 package org.lightmare.utils;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -178,36 +177,6 @@ public abstract class ObjectUtils {
 	    }
 	} else {
 	    lock.unlock();
-	}
-    }
-
-    /**
-     * Checks if passed {@link Closeable} instance is not null and if not calls
-     * {@link Closeable#close()} method
-     * 
-     * @param closeable
-     * @throws IOException
-     */
-    public static void close(Closeable closeable) throws IOException {
-
-	if (ObjectUtils.notNull(closeable)) {
-	    closeable.close();
-	}
-    }
-
-    /**
-     * Checks if passed array of {@link Closeable}'s is valid and closes all of
-     * them
-     * 
-     * @param closeables
-     * @throws IOException
-     */
-    public static void closeAll(Closeable... closeables) throws IOException {
-
-	if (CollectionUtils.valid(closeables)) {
-	    for (Closeable closeable : closeables) {
-		close(closeable);
-	    }
 	}
     }
 }
