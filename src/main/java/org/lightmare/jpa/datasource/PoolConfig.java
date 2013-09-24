@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
@@ -262,7 +263,7 @@ public class PoolConfig {
 		properties = null;
 	    }
 	} finally {
-	    ObjectUtils.close(stream);
+	    IOUtils.close(stream);
 	}
 
 	return properties;
