@@ -384,8 +384,8 @@ public class LibraryLoader {
     }
 
     /**
-     * Checks if passed {@link ClassLoader} implementation or it's parent class
-     * has close method
+     * Checks and caches if passed {@link ClassLoader} implementation or it's
+     * parent class has close method
      * 
      * @param loader
      * @throws IOException
