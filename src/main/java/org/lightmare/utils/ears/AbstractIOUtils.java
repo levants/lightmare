@@ -169,6 +169,7 @@ public abstract class AbstractIOUtils {
     }
 
     public List<URL> getEjbURLs() {
+
 	if (ejbURLs == null) {
 	    ejbURLs = new ArrayList<URL>();
 	}
