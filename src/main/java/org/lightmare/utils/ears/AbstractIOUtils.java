@@ -17,6 +17,7 @@ import java.util.zip.ZipFile;
 import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.FileType;
 import org.lightmare.utils.fs.FileUtils;
@@ -304,7 +305,7 @@ public abstract class AbstractIOUtils {
 		}
 	    }
 	} finally {
-	    ObjectUtils.close(xmlStream);
+	    IOUtils.close(xmlStream);
 	}
 
 	return ejbNames;
