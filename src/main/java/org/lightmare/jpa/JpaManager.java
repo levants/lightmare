@@ -375,6 +375,7 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setClassLoader(ClassLoader loader) {
+
 	    manager.loader = loader;
 
 	    return this;
