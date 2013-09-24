@@ -364,6 +364,7 @@ public class JpaManager {
 	public Builder setScanArchives(boolean scanArchives) {
 
 	    manager.scanArchives = scanArchives;
+
 	    return this;
 	}
 
