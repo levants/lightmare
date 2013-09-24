@@ -160,6 +160,7 @@ public abstract class AbstractIOUtils {
     }
 
     public List<URL> getLibURLs() {
+
 	if (libURLs == null) {
 	    libURLs = new ArrayList<URL>();
 	}
