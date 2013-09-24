@@ -32,6 +32,7 @@ import org.lightmare.utils.StringUtils;
  */
 public class JpaManager {
 
+    // Entity classes
     private List<String> classes;
 
     private String path;
