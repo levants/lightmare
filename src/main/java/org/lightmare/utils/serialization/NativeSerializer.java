@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.lightmare.utils.IOUtils;
+
 /**
  * Reads write java objects from {@link Byte} array with java native
  * serialization
@@ -36,8 +38,7 @@ public abstract class NativeSerializer {
 	    return data;
 
 	} finally {
-	    stream.close();
-	    objectStream.close();
+	    IOUtils.closeAll(stream, objectStream);
 	}
     }
 
