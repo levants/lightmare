@@ -35,6 +35,12 @@ public class LightmareContext extends MemoryContext {
 	super(env);
     }
 
+    /**
+     * Caches resources to close them after {@link LightmareContext#close()}
+     * method is called
+     * 
+     * @param resource
+     */
     private void cacheResource(Object resource) {
 
 	if (ObjectUtils.notNull(resource) && resource instanceof EntityManager) {

@@ -114,7 +114,6 @@ public class JndiManager {
     private void createContext(Properties properties) throws IOException {
 
 	if (context == null) {
-
 	    try {
 		context = new InitialContext(properties);
 	    } catch (NamingException ex) {
