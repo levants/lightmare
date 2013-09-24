@@ -416,17 +416,6 @@ public class LibraryLoader {
 		urlClassLoader.clearAssertionStatus();
 		// Finds if loader associated class or superclass has "close"
 		// method
-		Class<?> loaderClass = loader.getClass();
-
-		if (hasCloseMethod == null) {
-		    synchronized (LibraryLoader.class) {
-			if (hasCloseMethod == null) {
-			    boolean hasMethod = MetaUtils.hasPublicMethod(
-				    loaderClass, CLOSE_METHOD_NAME);
-			    hasCloseMethod = hasMethod;
-			}
-		    }
-		}
 		checkOnClose(loader);
 
 		if (hasCloseMethod) {
