@@ -383,6 +383,20 @@ public class LibraryLoader {
 	loadClasses(classes, loader);
     }
 
+    private void checkOnClose(Class<? extends ClassLoader> loaderClass)
+	    throws IOException {
+
+	if (hasCloseMethod == null) {
+	    synchronized (LibraryLoader.class) {
+		if (hasCloseMethod == null) {
+		    boolean hasMethod = MetaUtils.hasPublicMethod(loaderClass,
+			    CLOSE_METHOD_NAME);
+		    hasCloseMethod = hasMethod;
+		}
+	    }
+	}
+    }
+
     /**
      * Closes passed {@link ClassLoader} if it is instance of
      * {@link URLClassLoader} class
