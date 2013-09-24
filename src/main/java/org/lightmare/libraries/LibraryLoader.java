@@ -11,12 +11,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
+import org.jboss.netty.util.internal.ConcurrentHashMap;
 import org.lightmare.libraries.loaders.EjbClassLoader;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -39,6 +41,8 @@ public class LibraryLoader {
     private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
 
     private static Method addURLMethod;
+
+    private static final ConcurrentMap<Class<ClassLoader>, Method> CACHED_METHOD = new ConcurrentHashMap<Class<ClassLoader>, Method>();
 
     private static final Lock LOCK = new ReentrantLock();
 
