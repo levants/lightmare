@@ -415,6 +415,7 @@ public class LibraryLoader {
 		URLClassLoader urlClassLoader = ObjectUtils.cast(loader,
 			URLClassLoader.class);
 		urlClassLoader.clearAssertionStatus();
+
 		// Finds if loader associated class or superclass has "close"
 		// method
 		checkOnClose(loader);
