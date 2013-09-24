@@ -60,9 +60,7 @@ public abstract class NativeSerializer {
 	ObjectInputStream objectStream = new ObjectInputStream(stream);
 
 	try {
-
 	    value = objectStream.readObject();
-
 	} catch (ClassNotFoundException ex) {
 
 	    throw new IOException(ex);
