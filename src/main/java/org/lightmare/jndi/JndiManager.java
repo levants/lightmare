@@ -134,7 +134,7 @@ public class JndiManager {
 	    try {
 		setInitialCotext();
 	    } finally {
-		LOCK.unlock();
+		ObjectUtils.unlock(LOCK);
 	    }
 	}
 
