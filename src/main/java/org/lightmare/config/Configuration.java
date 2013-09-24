@@ -15,6 +15,7 @@ import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.yaml.snakeyaml.Yaml;
@@ -98,7 +99,7 @@ public class Configuration implements Cloneable {
     private <K> boolean containsSubConfigKey(Object key, K subKey) {
 
 	Map<K, ?> subConfig = getAsMap(key);
-	
+
 	boolean valid = CollectionUtils.valid(subConfig);
 
 	if (valid) {
@@ -415,7 +416,7 @@ public class Configuration implements Cloneable {
 		    configure(innerConfig);
 		}
 	    } finally {
-		ObjectUtils.close(stream);
+		IOUtils.close(stream);
 	    }
 	}
     }
