@@ -130,7 +130,7 @@ public class JndiManager {
     public Context getContext() throws IOException {
 
 	if (context == null) {
-	    LOCK.lock();
+	    ObjectUtils.lock(LOCK);
 	    try {
 		setInitialCotext();
 	    } finally {
