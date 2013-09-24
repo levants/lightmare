@@ -31,8 +31,8 @@ public class Security {
 
     private void loadUsers(File file) throws IOException {
 
-	InputStream stream = new FileInputStream(file);
 	cache = new Properties();
+	InputStream stream = new FileInputStream(file);
 	try {
 	    cache.load(stream);
 	} finally {
