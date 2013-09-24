@@ -84,7 +84,7 @@ public class LibraryLoader {
 
 	if (addURLMethod == null) {
 
-	    LOCK.lock();
+	    ObjectUtils.lock(LOCK);
 	    try {
 		if (addURLMethod == null
 			&& MetaUtils.hasMethod(URLClassLoader.class,
