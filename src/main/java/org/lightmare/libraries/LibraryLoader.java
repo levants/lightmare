@@ -83,7 +83,6 @@ public class LibraryLoader {
     private static Method getURLMethod() throws IOException {
 
 	if (addURLMethod == null) {
-
 	    ObjectUtils.lock(LOCK);
 	    try {
 		if (addURLMethod == null
@@ -94,7 +93,7 @@ public class LibraryLoader {
 			    URL.class);
 		}
 	    } finally {
-		LOCK.unlock();
+		ObjectUtils.unlock(LOCK);
 	    }
 	}
 
