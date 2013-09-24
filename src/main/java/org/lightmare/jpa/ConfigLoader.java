@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
-import org.lightmare.utils.AbstractIOUtils;
 import org.lightmare.utils.StringUtils;
+import org.lightmare.utils.ears.AbstractIOUtils;
 
 /**
  * For getting resources from persistence.xml path

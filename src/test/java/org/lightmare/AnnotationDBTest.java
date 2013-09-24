@@ -8,7 +8,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 import org.lightmare.scannotation.AnnotationDB;
-import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.ears.AbstractIOUtils;
 
 public class AnnotationDBTest {
 

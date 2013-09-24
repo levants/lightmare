@@ -1,9 +1,9 @@
 package org.lightmare.cache;
 
-import org.lightmare.utils.AbstractIOUtils;
+import org.lightmare.utils.ears.AbstractIOUtils;
 
 /**
- * Container class for {@link org.lightmare.utils.AbstractIOUtils} and
+ * Container class for {@link org.lightmare.utils.ears.AbstractIOUtils} and
  * {@link ClassLoader} for each {@link java.net.URL} to cache and avoid
  * duplicates at deploy time
  * 
