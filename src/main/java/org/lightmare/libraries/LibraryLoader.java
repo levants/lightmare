@@ -167,6 +167,7 @@ public class LibraryLoader {
 		return classLoader;
 	    }
 	};
+
 	ClassLoader loader = AccessController.doPrivileged(action);
 
 	return loader;
