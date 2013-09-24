@@ -30,7 +30,7 @@ public class JndiManager {
      * Caches JNDI system parameters for initializing {@link Context} instance
      * 
      * @author levan
-     * 
+     * @since 0.80-SNAPSHOT
      */
     protected static enum JNDIParameters {
 
