@@ -46,6 +46,7 @@ public class JpaManager {
 
     private boolean scanArchives;
 
+    // Initialize level class loader
     private ClassLoader loader;
 
     private static final String COULD_NOT_BIND_JNDI_ERROR = "could not bind connection";
