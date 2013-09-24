@@ -131,6 +131,8 @@ public class LibraryLoader {
     public static ClassLoader initializeLoader(final URL[] urls)
 	    throws IOException {
 
+	ClassLoader ejbLoader;
+
 	ClassLoader parent = getContextClassLoader();
 
 	LibraryLoaderInit initializer = new LibraryLoaderInit(urls, parent);
@@ -140,7 +142,6 @@ public class LibraryLoader {
 	thread.setPriority(Thread.MAX_PRIORITY);
 	thread.start();
 
-	ClassLoader ejbLoader;
 	try {
 	    ejbLoader = task.get();
 	} catch (InterruptedException ex) {
