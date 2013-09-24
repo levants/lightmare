@@ -350,6 +350,7 @@ public class JpaManager {
 	public Builder setSwapDataSource(boolean swapDataSource) {
 
 	    manager.swapDataSource = swapDataSource;
+
 	    return this;
 	}
 
