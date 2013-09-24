@@ -385,6 +385,7 @@ public class JpaManager {
 	 */
 	public Builder configure(Configuration configuration) {
 
+	    // Sets all parameters from Configuration class
 	    setPath(configuration.getPersXmlPath())
 		    .setProperties(configuration.getPersistenceProperties())
 		    .setSwapDataSource(configuration.isSwapDataSource())
