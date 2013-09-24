@@ -298,7 +298,7 @@ public class DeployManager extends HttpServlet {
 	    try {
 		writer.write(html);
 	    } finally {
-		writer.close();
+		IOUtils.close(writer);
 	    }
 	}
     }
