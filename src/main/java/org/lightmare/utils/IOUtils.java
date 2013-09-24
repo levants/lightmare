@@ -12,6 +12,11 @@ import java.io.OutputStream;
  */
 public class IOUtils {
 
+    // IO bytes size
+    public static final int BUFFER_SIZE = 1024;
+
+    public static final int ZERO_OFFSET = 0;
+
     public static void write(InputStream in, OutputStream out)
 	    throws IOException {
 
