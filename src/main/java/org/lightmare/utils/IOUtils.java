@@ -59,7 +59,7 @@ public class IOUtils {
 		len = in.read(buffer);
 	    }
 	} finally {
-	    ObjectUtils.closeAll(in, out);
+	    closeAll(in, out);
 	}
     }
 }
