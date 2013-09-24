@@ -154,10 +154,8 @@ public class JndiManager {
 	T value;
 
 	try {
-
 	    Object data = getContext().lookup(name);
 	    value = ObjectUtils.cast(data);
-
 	} catch (NamingException ex) {
 	    throw new IOException(ex);
 	}
