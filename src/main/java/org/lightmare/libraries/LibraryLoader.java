@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -37,7 +36,7 @@ public class LibraryLoader {
 
     private static final String CLOSE_METHOD_NAME = "close";
 
-    private static final AtomicBoolean HAS_CLOSE_METHOD = new AtomicBoolean();
+    private static Boolean HAS_CLOSE_METHOD;
 
     private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
 
@@ -400,9 +399,18 @@ public class LibraryLoader {
 		// Finds if loader associated class or superclass has "close"
 		// method
 		Class<?> loaderClass = loader.getClass();
-		boolean hasMethod = MetaUtils.hasPublicMethod(loaderClass,
-			CLOSE_METHOD_NAME);
-		if (hasMethod) {
+
+		if (HAS_CLOSE_METHOD == null) {
+		    synchronized (LibraryLoader.class) {
+			if (HAS_CLOSE_METHOD == null) {
+			    boolean hasMethod = MetaUtils.hasPublicMethod(
+				    loaderClass, CLOSE_METHOD_NAME);
+			    HAS_CLOSE_METHOD = hasMethod;
+			}
+		    }
+		}
+
+		if (HAS_CLOSE_METHOD) {
 		    urlClassLoader.close();
 		}
 	    } catch (Throwable th) {
