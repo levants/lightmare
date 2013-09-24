@@ -33,10 +33,8 @@ public abstract class NativeSerializer {
 	ObjectOutputStream objectStream = new ObjectOutputStream(stream);
 
 	try {
-
 	    objectStream.writeObject(value);
 	    data = stream.toByteArray();
-
 	} finally {
 	    IOUtils.closeAll(stream, objectStream);
 	}
