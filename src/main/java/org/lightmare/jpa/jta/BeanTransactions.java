@@ -78,11 +78,12 @@ public class BeanTransactions {
 	if (transaction == null) {
 	    transaction = UserTransactionFactory.get(entityTransactions);
 	    TransactionHolder.setTransaction(transaction);
-	}
+	} else {
 
-	// If entityTransactions array is available then adds it to
-	// UserTransaction object
-	UserTransactionFactory.join(transaction, entityTransactions);
+	    // If entityTransactions array is available then adds it to
+	    // UserTransaction object
+	    UserTransactionFactory.join(transaction, entityTransactions);
+	}
 
 	return transaction;
     }
