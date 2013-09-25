@@ -330,6 +330,9 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Closes all cached immediate {@link EntityManager} instances
+     */
     private void closeReqNew() {
 
 	if (checkNewEms()) {
