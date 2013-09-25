@@ -74,6 +74,7 @@ public class BeanTransactions {
 	    EntityTransaction... entityTransactions) {
 
 	UserTransaction transaction = TransactionHolder.getTransaction();
+
 	if (transaction == null) {
 	    transaction = new UserTransactionImpl(entityTransactions);
 	    TransactionHolder.setTransaction(transaction);
