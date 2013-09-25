@@ -93,6 +93,16 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Commits all {@link UserTransaction} cache
+     * 
+     * @throws RollbackException
+     * @throws HeuristicMixedException
+     * @throws HeuristicRollbackException
+     * @throws SecurityException
+     * @throws IllegalStateException
+     * @throws SystemException
+     */
     private void commitAll() throws RollbackException, HeuristicMixedException,
 	    HeuristicRollbackException, SecurityException,
 	    IllegalStateException, SystemException {
