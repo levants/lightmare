@@ -451,6 +451,20 @@ public class BeanTransactions {
 	}
     }
 
+    private static void rollbackReqNew(UserTransactionImpl transaction)
+	    throws IOException {
+
+	try {
+	    transaction.rollback();
+	} catch (IllegalStateException ex) {
+	    throw new IOException(ex);
+	} catch (SecurityException ex) {
+	    throw new IOException(ex);
+	} catch (SystemException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
     public static void rollbackTransaction(TransactionAttributeType type,
 	    Method method) throws IOException {
 
