@@ -165,7 +165,7 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
-    private void rollbackReqNews() {
+    public void rollbackReqNews() {
 
 	try {
 	    if (checkNews()) {
