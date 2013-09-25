@@ -493,8 +493,8 @@ public class BeanTransactions {
     }
 
     /**
-     * Decides whether rollback or not {@link UserTransaction} by
-     * {@link TransactionAttribute} annotation
+     * Decides which rollback method to call of {@link UserTransaction}
+     * implementation by {@link TransactionAttribute} annotation
      * 
      * @param handler
      * @param method
