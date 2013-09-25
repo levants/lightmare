@@ -439,6 +439,7 @@ public class BeanTransactions {
      */
     private static void rollback(UserTransaction transaction)
 	    throws IOException {
+
 	try {
 	    transaction.rollback();
 	} catch (IllegalStateException ex) {
