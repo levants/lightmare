@@ -369,6 +369,7 @@ public class BeanTransactions {
 	MetaData metaData = handler.getMetaData();
 	type = getTransactionType(metaData, method);
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
+
 	if (ObjectUtils.notNull(type)) {
 	    addTransaction(handler, type, transaction, ems);
 	} else {
