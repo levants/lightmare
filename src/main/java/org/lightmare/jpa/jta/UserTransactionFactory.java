@@ -3,6 +3,9 @@ package org.lightmare.jpa.jta;
 import javax.persistence.EntityTransaction;
 import javax.transaction.UserTransaction;
 
+import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.ObjectUtils;
+
 /**
  * Factory class to initialize and create {@link UserTransaction} instance
  * 
@@ -19,5 +22,12 @@ public abstract class UserTransactionFactory {
     protected static void join(UserTransaction transaction,
 	    EntityTransaction... entityTransactions) {
 
+	if (transaction instanceof UserTransactionImpl
+		&& CollectionUtils.valid(entityTransactions)) {
+
+	    UserTransactionImpl userTransactionImpl = ObjectUtils.cast(
+		    transaction, UserTransactionImpl.class);
+	    userTransactionImpl.addTransactions(entityTransactions);
+	}
     }
 }
