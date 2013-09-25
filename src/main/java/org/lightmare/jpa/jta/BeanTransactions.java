@@ -465,7 +465,9 @@ public class BeanTransactions {
 
 	TransactionAttributeType type = getTransactionType(
 		handler.getMetaData(), method);
-	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
+	UserTransaction userTransaction = getTransaction();
+	UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		UserTransactionImpl.class);
 
 	try {
 	    if (ObjectUtils.notNull(type)) {
