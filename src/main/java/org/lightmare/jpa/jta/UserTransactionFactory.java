@@ -20,7 +20,9 @@ public abstract class UserTransactionFactory {
     }
 
     /**
-     * Joins passed {@link EntityTransaction} array to assotiated {@link UserTransaction} instance
+     * Joins passed {@link EntityTransaction} array to associated
+     * {@link UserTransaction} instance
+     * 
      * @param transaction
      * @param entityTransactions
      */
