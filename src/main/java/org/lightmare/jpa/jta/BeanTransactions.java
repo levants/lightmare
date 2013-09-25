@@ -139,6 +139,7 @@ public class BeanTransactions {
 		} else {
 		    type = attr.value();
 		}
+
 	    } else {
 		type = null;
 	    }
