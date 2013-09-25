@@ -15,7 +15,7 @@ import org.lightmare.utils.ObjectUtils;
 public abstract class UserTransactionFactory {
 
     private UserTransactionFactory() {
-	// TODO Auto-generated constructor stub
+	throw new InstantiationError();
     }
 
     public static UserTransaction get(EntityTransaction... transactions) {
