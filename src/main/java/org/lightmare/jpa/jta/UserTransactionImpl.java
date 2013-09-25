@@ -37,6 +37,10 @@ public class UserTransactionImpl implements UserTransaction {
 
     private Object caller;
 
+    private static int ACTIVE = 1;
+
+    private static int INACTIVE = 0;
+
     public UserTransactionImpl(EntityTransaction... transactions) {
 
 	this.transactions = new Stack<EntityTransaction>();
