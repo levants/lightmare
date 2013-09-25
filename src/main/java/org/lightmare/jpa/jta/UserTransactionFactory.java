@@ -15,4 +15,9 @@ public abstract class UserTransactionFactory {
 
 	return new UserTransactionImpl(transactions);
     }
+
+    protected static void join(UserTransaction transaction,
+	    EntityTransaction... entityTransactions) {
+
+    }
 }
