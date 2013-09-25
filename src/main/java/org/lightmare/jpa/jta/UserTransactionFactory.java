@@ -14,6 +14,8 @@ import org.lightmare.utils.ObjectUtils;
  */
 public abstract class UserTransactionFactory {
 
+    private static final String ISNANTIATING_ERROR = "Class UserTransactionFactory can not be instntiate";
+
     private UserTransactionFactory() {
 	throw new InstantiationError();
     }

@@ -10,12 +10,17 @@ public enum HibernateConfig {
 
     // JTA configuration for Hibernate deployment
     PLATFORM("hibernate.transaction.jta.platform",
-	    "org.hibernate.service.jta.platform.internal.BitronixJtaPlatform"), // JTA
-										// platform
+	    "org.hibernate.service.jta.platform.internal.BitronixJtaPlatform"), /*
+										 * JTA
+										 * platform
+										 */
+
     FACTORY("hibernate.transaction.factory_class",
-	    "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory"); // JTA
-										    // factory
-										    // class
+	    "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory"); /*
+										     * JTA
+										     * factory
+										     * class
+										     */
 
     public String key;
 
