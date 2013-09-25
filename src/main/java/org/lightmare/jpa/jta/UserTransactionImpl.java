@@ -192,6 +192,13 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Sets passed {@link EntityTransaction} in rollbackOnly mode
+     * 
+     * @param transaction
+     * @throws IllegalStateException
+     * @throws SystemException
+     */
     private void setRollbackOnly(EntityTransaction transaction)
 	    throws IllegalStateException, SystemException {
 
