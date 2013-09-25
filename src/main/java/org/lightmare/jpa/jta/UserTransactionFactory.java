@@ -18,7 +18,7 @@ public abstract class UserTransactionFactory {
     private static final String ISNANTIATING_ERROR = "Class UserTransactionFactory can not be instntiate";
 
     private UserTransactionFactory() {
-	throw new InstantiationError();
+	throw new InstantiationError(ISNANTIATING_ERROR);
     }
 
     public static UserTransaction get(EntityTransaction... transactions) {
