@@ -484,16 +484,10 @@ public class BeanTransactions {
 
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
 
-	if (type.equals(TransactionAttributeType.REQUIRED)) {
-
-	    boolean check = transaction.checkCaller(handler);
-	    if (check) {
-		rollback(transaction);
-	    }
-	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
+	if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    rollbackReqNew(transaction);
 	} else {
-	    transaction.closeEntityManagers();
+	    rollback(transaction);
 	}
     }
 
