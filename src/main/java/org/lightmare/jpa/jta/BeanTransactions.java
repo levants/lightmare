@@ -57,6 +57,7 @@ public class BeanTransactions {
 	    EntityTransaction entityTransaction, EntityManager em) {
 
 	TransactionData transactionData = new TransactionData();
+
 	transactionData.em = em;
 	transactionData.entityTransaction = entityTransaction;
 

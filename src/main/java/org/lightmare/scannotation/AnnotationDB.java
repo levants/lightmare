@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import javassist.bytecode.AnnotationsAttribute;
 import javassist.bytecode.ClassFile;
@@ -39,7 +40,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     private static final long serialVersionUID = 1L;
 
     // To store which class in which URL is found
-    protected Map<String, URL> classOwnersURLs = new HashMap<String, URL>();
+    protected Map<String, URL> classOwnersURLs = new WeakHashMap<String, URL>();
 
     // To store which class in which File is found
     protected Map<String, String> classOwnersFiles = new HashMap<String, String>();
