@@ -103,7 +103,8 @@ public class UserTransactionImpl implements UserTransaction {
     @Override
     public int getStatus() throws SystemException {
 
-	int active = 0;
+	int active = INACTIVE;
+
 	if (CollectionUtils.valid(transactions)) {
 	    for (EntityTransaction transaction : transactions) {
 		boolean isActive = transaction.isActive();
