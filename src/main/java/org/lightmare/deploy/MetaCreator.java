@@ -66,7 +66,7 @@ public class MetaCreator {
     private CountDownLatch blocker;
 
     // Data for cache at deploy time
-    private Map<String, AbstractIOUtils> aggregateds = new HashMap<String, AbstractIOUtils>();
+    private Map<String, AbstractIOUtils> aggregateds = new WeakHashMap<String, AbstractIOUtils>();
 
     private Map<URL, ArchiveData> archivesURLs;
 
