@@ -48,6 +48,8 @@ public class UserTransactionImpl implements UserTransaction {
     // Denotes inactive transaction
     private static int INACTIVE = 0;
 
+    private static final String TIMEOUT_NOT_SUPPORTED_ERROR = "Timeouts are not supported yet";
+
     public UserTransactionImpl(EntityTransaction... transactions) {
 
 	this.transactions = new Stack<EntityTransaction>();
@@ -232,8 +234,7 @@ public class UserTransactionImpl implements UserTransaction {
     @Override
     public void setTransactionTimeout(int time) throws SystemException {
 
-	throw new UnsupportedOperationException(
-		"Timeouts are not supported yet");
+	throw new UnsupportedOperationException(TIMEOUT_NOT_SUPPORTED_ERROR);
     }
 
     private Stack<EntityTransaction> getNews() {
