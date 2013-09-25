@@ -165,6 +165,18 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    private void rollbackReqNews() {
+
+	try {
+	    if (checkNews()) {
+		EntityTransaction entityTransaction = getNews().pop();
+		rollback(entityTransaction);
+	    }
+	} finally {
+	    closeReqNew();
+	}
+    }
+
     /**
      * Rollbacks all cached {@link EntityTransaction} instances
      * 
