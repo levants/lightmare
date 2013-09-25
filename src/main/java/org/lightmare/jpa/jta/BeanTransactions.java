@@ -473,7 +473,7 @@ public class BeanTransactions {
     }
 
     public static void rollbackTransaction(TransactionAttributeType type,
-	    Method method) throws IOException {
+	    BeanHandler handler) throws IOException {
 
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
 
