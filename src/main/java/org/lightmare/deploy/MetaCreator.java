@@ -356,7 +356,7 @@ public class MetaCreator {
 	    }
 	    // Gets and caches class loader
 	    current = LibraryLoader.getContextClassLoader();
-	    archivesURLs = new HashMap<URL, ArchiveData>();
+	    archivesURLs = new WeakHashMap<URL, ArchiveData>();
 	    if (CollectionUtils.valid(archives)) {
 		realURL = new WeakHashMap<URL, DeployData>();
 	    }
