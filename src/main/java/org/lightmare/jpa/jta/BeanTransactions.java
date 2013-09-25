@@ -121,6 +121,7 @@ public class BeanTransactions {
      */
     public static TransactionAttributeType getTransactionType(
 	    MetaData metaData, Method method) {
+
 	TransactionAttributeType type;
 	if (method == null) {
 	    type = null;
