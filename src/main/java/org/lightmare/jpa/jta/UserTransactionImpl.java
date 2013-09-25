@@ -207,6 +207,12 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Sets all cached {@link EntityTransaction} instances in rollbackOnly mode
+     * 
+     * @throws IllegalStateException
+     * @throws SystemException
+     */
     private void setRollbackOnlyAll() throws IllegalStateException,
 	    SystemException {
 
