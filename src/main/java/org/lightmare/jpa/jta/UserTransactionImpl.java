@@ -50,7 +50,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     private static final String TIMEOUT_NOT_SUPPORTED_ERROR = "Timeouts are not supported yet";
 
-    public UserTransactionImpl(EntityTransaction... transactions) {
+    protected UserTransactionImpl(EntityTransaction... transactions) {
 
 	this.transactions = new Stack<EntityTransaction>();
 
