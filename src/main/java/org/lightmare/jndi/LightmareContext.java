@@ -89,6 +89,7 @@ public class LightmareContext extends MemoryContext {
 	    NamingUtils.BeanDescriptor descriptor = NamingUtils
 		    .parseEjbJndiName(jndiName);
 	    EjbConnector ejbConnection = new EjbConnector();
+
 	    try {
 		String beanName = descriptor.getBeanName();
 		String interfaceName = descriptor.getInterfaceName();
