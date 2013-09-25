@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -357,7 +358,7 @@ public class MetaCreator {
 	    current = LibraryLoader.getContextClassLoader();
 	    archivesURLs = new HashMap<URL, ArchiveData>();
 	    if (CollectionUtils.valid(archives)) {
-		realURL = new HashMap<URL, DeployData>();
+		realURL = new WeakHashMap<URL, DeployData>();
 	    }
 	    URL[] fullArchives = getFullArchives(archives);
 	    annotationDB = new AnnotationDB();
