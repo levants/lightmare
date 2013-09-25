@@ -162,6 +162,7 @@ public class BeanTransactions {
 	    throws IOException {
 
 	int status;
+
 	try {
 	    status = transaction.getStatus();
 	} catch (SystemException ex) {
