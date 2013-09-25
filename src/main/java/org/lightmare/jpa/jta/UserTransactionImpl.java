@@ -393,6 +393,11 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Closes passed {@link EntityManager} instance
+     * 
+     * @param em
+     */
     private void closeEntityManager(EntityManager em) {
 
 	JpaManager.closeEntityManager(em);
