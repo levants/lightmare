@@ -82,12 +82,7 @@ public class BeanTransactions {
 
 	// If entityTransactions array is available then adds it to
 	// UserTransaction object
-	if (CollectionUtils.valid(entityTransactions)) {
-
-	    UserTransactionImpl userTransactionImpl = ObjectUtils.cast(
-		    transaction, UserTransactionImpl.class);
-	    userTransactionImpl.addTransactions(entityTransactions);
-	}
+	UserTransactionFactory.join(transaction, entityTransactions);
 
 	return transaction;
     }
