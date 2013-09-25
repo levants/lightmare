@@ -1,5 +1,6 @@
 package org.lightmare.jpa.jta;
 
+import javax.persistence.EntityTransaction;
 import javax.transaction.UserTransaction;
 
 /**
@@ -10,4 +11,8 @@ import javax.transaction.UserTransaction;
  */
 public class UserTransactionFactory {
 
+    public static UserTransaction get(EntityTransaction... transactions) {
+
+	return new UserTransactionImpl(transactions);
+    }
 }
