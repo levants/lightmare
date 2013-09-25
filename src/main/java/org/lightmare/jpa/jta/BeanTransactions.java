@@ -455,7 +455,7 @@ public class BeanTransactions {
 	    throws IOException {
 
 	try {
-	    transaction.rollback();
+	    transaction.rollbackReqNews();
 	} catch (IllegalStateException ex) {
 	    throw new IOException(ex);
 	} catch (SecurityException ex) {

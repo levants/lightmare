@@ -165,7 +165,13 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
-    public void rollbackReqNews() {
+    /**
+     * Rollbacks new {@link EntityTransaction} at the end of
+     * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
+     * methods
+     */
+    public void rollbackReqNews() throws IllegalStateException,
+	    SecurityException, SystemException {
 
 	try {
 	    if (checkNews()) {
