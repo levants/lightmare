@@ -525,7 +525,7 @@ public class BeanTransactions {
      * @param handler
      * @throws IOException
      */
-    public static void commitTransaction(TransactionAttributeType type,
+    private static void commitTransaction(TransactionAttributeType type,
 	    BeanHandler handler) throws IOException {
 
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
