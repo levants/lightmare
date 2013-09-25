@@ -115,7 +115,7 @@ public class UserTransactionImpl implements UserTransaction {
 	if (CollectionUtils.valid(requareNews)) {
 	    for (EntityTransaction transaction : requareNews) {
 		boolean isActive = transaction.isActive();
-		active += isActive ? 1 : 0;
+		active += isActive ? ACTIVE : INACTIVE;
 	    }
 	}
 
