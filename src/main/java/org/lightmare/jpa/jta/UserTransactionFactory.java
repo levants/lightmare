@@ -19,6 +19,11 @@ public abstract class UserTransactionFactory {
 	return new UserTransactionImpl(transactions);
     }
 
+    /**
+     * Joins passed {@link EntityTransaction} array to assotiated {@link UserTransaction} instance
+     * @param transaction
+     * @param entityTransactions
+     */
     protected static void join(UserTransaction transaction,
 	    EntityTransaction... entityTransactions) {
 
