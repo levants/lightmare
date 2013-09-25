@@ -13,8 +13,8 @@ import org.lightmare.utils.ObjectUtils;
  * 
  */
 public abstract class UserTransactionFactory {
-    
-    public UserTransactionFactory() {
+
+    private UserTransactionFactory() {
 	// TODO Auto-generated constructor stub
     }
 
