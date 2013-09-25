@@ -72,6 +72,17 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Commits if passed transaction is active
+     * 
+     * @param transaction
+     * @throws RollbackException
+     * @throws HeuristicMixedException
+     * @throws HeuristicRollbackException
+     * @throws SecurityException
+     * @throws IllegalStateException
+     * @throws SystemException
+     */
     private void commit(EntityTransaction transaction)
 	    throws RollbackException, HeuristicMixedException,
 	    HeuristicRollbackException, SecurityException,
