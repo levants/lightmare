@@ -99,6 +99,7 @@ public class BeanTransactions {
     public static UserTransaction getTransaction(Collection<EntityManager> ems) {
 
 	UserTransaction transaction = TransactionHolder.getTransaction();
+
 	if (transaction == null) {
 	    transaction = new UserTransactionImpl();
 	    TransactionHolder.setTransaction(transaction);
