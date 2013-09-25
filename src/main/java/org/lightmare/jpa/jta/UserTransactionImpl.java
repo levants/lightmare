@@ -32,7 +32,7 @@ public class UserTransactionImpl implements UserTransaction {
     // Caches EntityManager instances for clear up
     private Stack<EntityManager> ems;
 
-    // Caches EntityTransaction instances
+    // Caches EntityTransaction instances for immediate commit
     private Stack<EntityTransaction> requareNews;
 
     private Stack<EntityManager> requareNewEms;
