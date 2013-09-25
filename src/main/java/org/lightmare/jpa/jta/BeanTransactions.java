@@ -103,7 +103,7 @@ public class BeanTransactions {
 	UserTransaction transaction = TransactionHolder.getTransaction();
 
 	if (transaction == null) {
-	    transaction = new UserTransactionImpl();
+	    transaction = UserTransactionFactory.get();
 	    TransactionHolder.setTransaction(transaction);
 	}
 
