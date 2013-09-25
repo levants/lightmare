@@ -500,22 +500,19 @@ public class BeanTransactions {
      */
     public static void rollbackTransaction(BeanHandler handler, Method method)
 	    throws IOException {
+	
+	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
 
-	TransactionAttributeType type = getTransactionType(
-		handler.getMetaData(), method);
-	UserTransaction userTransaction = getTransaction();
-	UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
-		UserTransactionImpl.class);
+	if (type.equals(TransactionAttributeType.REQUIRED)) {
 
-	try {
-	    if (ObjectUtils.notNull(type)) {
-		rollback(transaction);
-	    } else {
-		transaction.closeEntityManagers();
+	    boolean check = transaction.checkCaller(handler);
+	    if (check) {
+		commit(transaction);
 	    }
-	} catch (IOException ex) {
+	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
+	    commitReqNew(transaction);
+	} else {
 	    transaction.closeEntityManagers();
-	    throw ex;
 	}
     }
 
