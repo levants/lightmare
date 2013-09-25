@@ -451,6 +451,13 @@ public class BeanTransactions {
 	}
     }
 
+    /**
+     * Calls {@link UserTransactionImpl#rollbackReqNews()} method of passed
+     * {@link UserTransaction} with {@link IOException} throw
+     * 
+     * @param transaction
+     * @throws IOException
+     */
     private static void rollbackReqNew(UserTransactionImpl transaction)
 	    throws IOException {
 
