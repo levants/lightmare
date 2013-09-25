@@ -1,6 +1,7 @@
 package org.lightmare.jndi;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
@@ -29,7 +30,7 @@ import org.osjava.sj.memory.MemoryContext;
 public class LightmareContext extends MemoryContext {
 
     // Caches EntityManager instances got from lookup method to clear after
-    private Collection<EntityManager> ems = new ArrayList<EntityManager>();
+    private Collection<WeakReference<EntityManager>> ems = new ArrayList<WeakReference<EntityManager>>();
 
     public LightmareContext(Hashtable<?, ?> env) {
 	super(env);
@@ -46,7 +47,9 @@ public class LightmareContext extends MemoryContext {
 	if (ObjectUtils.notNull(resource) && resource instanceof EntityManager) {
 
 	    EntityManager em = ObjectUtils.cast(resource, EntityManager.class);
-	    ems.add(em);
+	    WeakReference<EntityManager> ref = new WeakReference<EntityManager>(
+		    em);
+	    ems.add(ref);
 	}
     }
 
@@ -111,7 +114,9 @@ public class LightmareContext extends MemoryContext {
 
 	if (CollectionUtils.valid(ems)) {
 	    try {
-		for (EntityManager em : ems) {
+		EntityManager em;
+		for (WeakReference<EntityManager> ref : ems) {
+		    em = ref.get();
 		    JpaManager.closeEntityManager(em);
 		}
 	    } finally {
