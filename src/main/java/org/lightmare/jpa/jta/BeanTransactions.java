@@ -144,6 +144,7 @@ public class BeanTransactions {
 		type = null;
 	    }
 	}
+
 	return type;
     }
 
