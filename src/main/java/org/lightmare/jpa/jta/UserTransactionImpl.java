@@ -349,7 +349,7 @@ public class UserTransactionImpl implements UserTransaction {
      * @param transaction
      */
     public void addTransaction(EntityTransaction transaction) {
-	
+
 	transactions.add(transaction);
     }
 
@@ -360,6 +360,7 @@ public class UserTransactionImpl implements UserTransaction {
      * @param transactions
      */
     public void addTransactions(EntityTransaction... transactions) {
+
 	Collections.addAll(this.transactions, transactions);
     }
 
