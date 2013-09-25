@@ -107,7 +107,7 @@ public class UserTransactionImpl implements UserTransaction {
 	if (CollectionUtils.valid(transactions)) {
 	    for (EntityTransaction transaction : transactions) {
 		boolean isActive = transaction.isActive();
-		active += isActive ? 1 : 0;
+		active += isActive ? ACTIVE : INACTIVE;
 	    }
 	}
 
