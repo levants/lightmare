@@ -202,6 +202,9 @@ public class UserTransactionImpl implements UserTransaction {
 	    if (CollectionUtils.valid(transactions)) {
 		rollbackAll();
 	    }
+
+	    rollbackReqNews();
+
 	} finally {
 	    closeEntityManagers();
 	}
