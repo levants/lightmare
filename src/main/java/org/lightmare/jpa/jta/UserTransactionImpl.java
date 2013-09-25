@@ -403,6 +403,9 @@ public class UserTransactionImpl implements UserTransaction {
 	JpaManager.closeEntityManager(em);
     }
 
+    /**
+     * Closes all cached {@link EntityManager} instances
+     */
     private void closeAllEntityManagers() {
 
 	EntityManager em;
