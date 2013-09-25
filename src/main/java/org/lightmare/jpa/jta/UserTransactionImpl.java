@@ -27,6 +27,8 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class UserTransactionImpl implements UserTransaction {
 
+    // Caches EntityTransaction instances for immediate commit or join with
+    // other transactions
     private Stack<EntityTransaction> transactions;
 
     // Caches EntityManager instances for clear up
