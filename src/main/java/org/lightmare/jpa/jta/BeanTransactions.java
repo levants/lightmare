@@ -188,6 +188,7 @@ public class BeanTransactions {
     private static EntityTransaction getEntityTransaction(EntityManager em) {
 
 	EntityTransaction entityTransaction;
+
 	if (em == null) {
 	    entityTransaction = null;
 	} else {
