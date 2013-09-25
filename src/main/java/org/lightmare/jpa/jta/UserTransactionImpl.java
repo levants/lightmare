@@ -20,7 +20,7 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * {@link UserTransaction} implementation for JNDI and EJB beans
+ * Implementation of {@link UserTransaction} interface for JNDI and EJB beans
  * 
  * @author levan
  * 
