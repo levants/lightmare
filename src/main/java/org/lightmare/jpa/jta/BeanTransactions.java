@@ -474,8 +474,9 @@ public class BeanTransactions {
 
     /**
      * Rollbacks passed {@link UserTransaction} by
-     * {@link TransactionAttributeType} for
-     * {@link TransactionAttributeType#REQUIRES_NEW} or all other
+     * {@link TransactionAttributeType} distinguishes only
+     * {@link TransactionAttributeType#REQUIRES_NEW} case or uses standard
+     * rollback for all other
      * 
      * @param type
      * @param handler
