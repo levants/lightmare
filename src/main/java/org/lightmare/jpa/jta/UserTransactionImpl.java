@@ -40,6 +40,7 @@ public class UserTransactionImpl implements UserTransaction {
     // Denotes active transaction
     private static int ACTIVE = 1;
 
+    // Denotes inactive transaction
     private static int INACTIVE = 0;
 
     public UserTransactionImpl(EntityTransaction... transactions) {
