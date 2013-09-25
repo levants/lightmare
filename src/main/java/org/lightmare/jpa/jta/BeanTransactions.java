@@ -472,7 +472,14 @@ public class BeanTransactions {
 	}
     }
 
-    public static void rollbackTransaction(TransactionAttributeType type,
+    /**
+     * Rollbacks passed {@link UserTransaction} by type
+     * 
+     * @param type
+     * @param handler
+     * @throws IOException
+     */
+    private static void rollbackTransaction(TransactionAttributeType type,
 	    BeanHandler handler) throws IOException {
 
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
