@@ -364,8 +364,10 @@ public class BeanTransactions {
     public static TransactionAttributeType addTransaction(BeanHandler handler,
 	    Method method, Collection<EntityManager> ems) throws IOException {
 
+	TransactionAttributeType type;
+
 	MetaData metaData = handler.getMetaData();
-	TransactionAttributeType type = getTransactionType(metaData, method);
+	type = getTransactionType(metaData, method);
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
 	if (ObjectUtils.notNull(type)) {
 	    addTransaction(handler, type, transaction, ems);
