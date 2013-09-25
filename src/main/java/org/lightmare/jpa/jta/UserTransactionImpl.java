@@ -40,7 +40,7 @@ public class UserTransactionImpl implements UserTransaction {
     // Caches EntityManager instances for immediate clean up
     private Stack<EntityManager> requareNewEms;
 
-    // Object which called instance
+    // Object which first called this (UserTransaction) instance
     private Object caller;
 
     // Denotes active transaction
