@@ -465,6 +465,7 @@ public class BeanTransactions {
 	TransactionAttributeType type = getTransactionType(
 		handler.getMetaData(), method);
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
+
 	try {
 	    if (ObjectUtils.notNull(type)) {
 		rollback(transaction);
