@@ -349,6 +349,7 @@ public class UserTransactionImpl implements UserTransaction {
      * @param transaction
      */
     public void addTransaction(EntityTransaction transaction) {
+	
 	transactions.add(transaction);
     }
 
