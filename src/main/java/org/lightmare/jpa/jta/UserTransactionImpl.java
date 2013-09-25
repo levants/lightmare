@@ -424,6 +424,7 @@ public class UserTransactionImpl implements UserTransaction {
     public boolean checkCaller(BeanHandler handler) {
 
 	boolean check = ObjectUtils.notNull(caller);
+
 	if (check) {
 	    check = caller.equals(handler.getBean());
 	}
