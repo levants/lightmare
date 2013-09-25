@@ -9,7 +9,7 @@ import javax.transaction.UserTransaction;
  * @author levan
  * 
  */
-public class TransactionContainer {
+public class TransactionHolder {
 
     // Caches UserTransaction instance per thread
     private static final ThreadLocal<UserTransaction> TRANSACTION_HOLDER = new ThreadLocal<UserTransaction>();
