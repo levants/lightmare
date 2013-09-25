@@ -451,6 +451,11 @@ public class BeanTransactions {
 	}
     }
 
+    public static void rollbackTransaction(TransactionAttributeType type,
+	    Method method) throws IOException {
+
+    }
+
     /**
      * Decides whether rollback or not {@link UserTransaction} by
      * {@link TransactionAttribute} annotation
