@@ -43,7 +43,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     protected Map<String, URL> classOwnersURLs = new WeakHashMap<String, URL>();
 
     // To store which class in which File is found
-    protected Map<String, String> classOwnersFiles = new HashMap<String, String>();
+    protected Map<String, String> classOwnersFiles = new WeakHashMap<String, String>();
 
     // File separator and extension characters
     private static final char FILE_EXTEWNTION_SELIM = '.';
