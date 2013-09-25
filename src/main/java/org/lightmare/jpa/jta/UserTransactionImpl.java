@@ -37,6 +37,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     private Object caller;
 
+    // Denotes active transaction
     private static int ACTIVE = 1;
 
     private static int INACTIVE = 0;
