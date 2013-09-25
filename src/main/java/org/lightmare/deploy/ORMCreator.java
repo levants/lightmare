@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import javax.persistence.Entity;
 
@@ -32,7 +33,8 @@ public class ORMCreator {
 
     private ORMCreator(MetaCreator creator) {
 
-	this.aggregateds = creator.getAggregateds();
+	this.aggregateds = new WeakHashMap<String, AbstractIOUtils>(
+		creator.getAggregateds());
 	this.annotationDB = creator.getAnnotationDB();
     }
 
