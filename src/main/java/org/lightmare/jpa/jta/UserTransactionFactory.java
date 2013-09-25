@@ -9,7 +9,7 @@ import javax.transaction.UserTransaction;
  * @author levan
  * 
  */
-public class UserTransactionFactory {
+public abstract class UserTransactionFactory {
 
     public static UserTransaction get(EntityTransaction... transactions) {
 
