@@ -343,27 +343,6 @@ public class BeanTransactions {
     }
 
     /**
-     * Calls {@link UserTransactionImpl#rollbackReqNews()} method of passed
-     * {@link UserTransaction} with {@link IOException} throw
-     * 
-     * @param transaction
-     * @throws IOException
-     */
-    private static void rollbackReqNew(UserTransactionImpl transaction)
-	    throws IOException {
-
-	try {
-	    transaction.rollbackReqNews();
-	} catch (IllegalStateException ex) {
-	    throw new IOException(ex);
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	} catch (SystemException ex) {
-	    throw new IOException(ex);
-	}
-    }
-
-    /**
      * Rollbacks passed {@link UserTransaction} by
      * {@link TransactionAttributeType} distinguishes only
      * {@link TransactionAttributeType#REQUIRES_NEW} case or uses standard
@@ -379,7 +358,7 @@ public class BeanTransactions {
 	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
 
 	if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
-	    rollbackReqNew(transaction);
+	    TransactionManager.rollbackReqNew(transaction);
 	} else {
 	    rollback(transaction);
 	}
