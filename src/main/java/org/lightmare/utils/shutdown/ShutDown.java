@@ -82,7 +82,6 @@ public class ShutDown implements Runnable {
     public void run() {
 
 	try {
-
 	    synchronized (this) {
 
 		if (CollectionUtils.valid(resources)) {
