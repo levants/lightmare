@@ -255,7 +255,7 @@ public class BeanTransactions {
 	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
 
 	    entityTransactions = getEntityTransactions(ems);
-	    addEntityTransactions(transaction, entityTransactions);
+	    TransactionManager.addEntityTransactions(transaction, entityTransactions);
 
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 
