@@ -132,8 +132,8 @@ public abstract class UserTransactionFactory {
     private static void addReqNewTransactions(UserTransaction userTransaction,
 	    Collection<BeanTransactions.TransactionData> entityTransactions) {
 
-	if (CollectionUtils.valid(entityTransactions)
-		&& userTransaction instanceof UserTransactionImpl) {
+	if (userTransaction instanceof UserTransactionImpl
+		&& CollectionUtils.valid(entityTransactions)) {
 
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
