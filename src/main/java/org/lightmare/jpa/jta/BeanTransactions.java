@@ -206,6 +206,8 @@ public class BeanTransactions {
     }
 
     /**
+     * Gets {@link EntityTransaction} for each {@link EntityManager} and begins
+     * it
      * 
      * @param ems
      * @return {@link Collection}<EntityTransaction>
