@@ -148,9 +148,16 @@ public abstract class UserTransactionFactory {
     private static void addCaller(UserTransaction userTransaction,
 	    BeanHandler handler) {
 
-	Object caller = transaction.getCaller();
-	if (caller == null) {
-	    transaction.setCaller(handler);
+	if (userTransaction instanceof UserTransactionImpl) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+
+	    Object caller = transaction.getCaller();
+	    if (caller == null) {
+		transaction.setCaller(handler);
+	    }
+
 	}
     }
 }
