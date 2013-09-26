@@ -91,6 +91,8 @@ public class ShutDown implements Runnable {
 			// instance
 			tmpResources.removeTempFiles();
 		    }
+
+		    resources.clear();
 		}
 
 		// Clears all cached data
