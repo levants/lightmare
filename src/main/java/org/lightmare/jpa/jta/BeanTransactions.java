@@ -325,31 +325,6 @@ public class BeanTransactions {
     }
 
     /**
-     * Commits passed {@link UserTransaction} with {@link IOException} throw
-     * 
-     * @param transaction
-     * @throws IOException
-     */
-    private static void commit(UserTransaction transaction) throws IOException {
-
-	try {
-	    transaction.commit();
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	} catch (IllegalStateException ex) {
-	    throw new IOException(ex);
-	} catch (RollbackException ex) {
-	    throw new IOException(ex);
-	} catch (HeuristicMixedException ex) {
-	    throw new IOException(ex);
-	} catch (HeuristicRollbackException ex) {
-	    throw new IOException(ex);
-	} catch (SystemException ex) {
-	    throw new IOException(ex);
-	}
-    }
-
-    /**
      * Commits all {@link TransactionAttributeType.REQUIRES_NEW} transactions
      * for passed {@link UserTransactionImpl} with {@link IOException} throw
      * 

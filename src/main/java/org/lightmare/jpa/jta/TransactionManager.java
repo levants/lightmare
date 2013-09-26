@@ -1,9 +1,14 @@
 package org.lightmare.jpa.jta;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import org.lightmare.ejb.handlers.BeanHandler;
@@ -184,6 +189,32 @@ public class TransactionManager {
 	    if (caller == null) {
 		transaction.setCaller(handler);
 	    }
+	}
+    }
+
+    /**
+     * Commits passed {@link UserTransaction} with {@link IOException} throw
+     * 
+     * @param transaction
+     * @throws IOException
+     */
+    protected static void commit(UserTransaction transaction)
+	    throws IOException {
+
+	try {
+	    transaction.commit();
+	} catch (SecurityException ex) {
+	    throw new IOException(ex);
+	} catch (IllegalStateException ex) {
+	    throw new IOException(ex);
+	} catch (RollbackException ex) {
+	    throw new IOException(ex);
+	} catch (HeuristicMixedException ex) {
+	    throw new IOException(ex);
+	} catch (HeuristicRollbackException ex) {
+	    throw new IOException(ex);
+	} catch (SystemException ex) {
+	    throw new IOException(ex);
 	}
     }
 }
