@@ -66,9 +66,11 @@ public class ShutDown implements Runnable {
      */
     public static void setHook(TmpResources tmpResources) {
 
-	ShutDown shutDown = new ShutDown(tmpResources);
-	Thread shutDownThread = new Thread(shutDown);
-	Runtime runtime = Runtime.getRuntime();
-	runtime.addShutdownHook(shutDownThread);
+	if (HOOK_SET.getAndSet(Boolean.TRUE)) {
+	    ShutDown shutDown = new ShutDown(tmpResources);
+	    Thread shutDownThread = new Thread(shutDown);
+	    Runtime runtime = Runtime.getRuntime();
+	    runtime.addShutdownHook(shutDownThread);
+	}
     }
 }
