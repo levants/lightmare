@@ -48,6 +48,11 @@ public class ShutDown implements Runnable {
 	return resources;
     }
 
+    /**
+     * Adds {@link TmpResources} to cache
+     * 
+     * @param tmpResources
+     */
     private void addTmpResources(TmpResources tmpResources) {
 	getResources().add(tmpResources);
     }
