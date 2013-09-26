@@ -1,6 +1,14 @@
 package org.lightmare.jpa.jta;
 
+import java.util.Collection;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.transaction.UserTransaction;
+
+import org.lightmare.ejb.handlers.BeanHandler;
+import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Class to manager {@link UserTransaction} creation and closure
@@ -10,7 +18,6 @@ import javax.transaction.UserTransaction;
  */
 public class TransactionManager {
 
-    
     protected static void addEntityTransaction(UserTransaction userTransaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
