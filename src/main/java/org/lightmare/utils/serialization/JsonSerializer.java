@@ -77,6 +77,8 @@ public abstract class JsonSerializer {
 	} catch (IOException ex) {
 	    throw new IOException(ex);
 	}
+
+	return data;
     }
 
     /**
