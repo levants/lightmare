@@ -420,7 +420,8 @@ public class BeanTransactions {
 
 	if (type.equals(TransactionAttributeType.REQUIRED)) {
 
-	    boolean check = transaction.checkCaller(handler);
+	    boolean check = TransactionManager
+		    .checkCaller(transaction, handler);
 	    if (check) {
 		TransactionManager.commit(transaction);
 	    }

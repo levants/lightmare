@@ -259,7 +259,7 @@ public class TransactionManager {
      * @param handler
      * @return <code>boolean</code>
      */
-    protected boolean checkCaller(UserTransaction userTransaction,
+    protected boolean static checkCaller(UserTransaction userTransaction,
 	    BeanHandler handler) {
 
 	boolean check = (userTransaction instanceof UserTransactionImpl);
