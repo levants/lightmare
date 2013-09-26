@@ -1,6 +1,7 @@
 package org.lightmare.utils.shutdown;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Logger;
 import org.lightmare.cache.ConnectionContainer;
@@ -20,6 +21,9 @@ public class ShutDown implements Runnable {
     private TmpResources tmpResources;
 
     private static final String SHUTDOWN_MESSAGE = "Lightmare server is going to shut down";
+
+    private static final AtomicBoolean HOOK_SET = new AtomicBoolean(
+	    Boolean.FALSE);
 
     private static final Logger LOG = Logger.getLogger(ShutDown.class);
 
