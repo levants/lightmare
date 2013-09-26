@@ -76,6 +76,12 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * Adds {@link EntityManager} to passed {@link UserTransaction} instance
+     * 
+     * @param userTransaction
+     * @param em
+     */
     protected static void addEntityManager(UserTransaction userTransaction,
 	    EntityManager em) {
 
@@ -88,6 +94,13 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * Adds each {@link EntityManager} from {@link Collection} to passed
+     * {@link UserTransaction} instance
+     * 
+     * @param userTransaction
+     * @param ems
+     */
     protected static void addEntityManagers(UserTransaction userTransaction,
 	    Collection<EntityManager> ems) {
 
