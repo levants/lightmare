@@ -40,7 +40,7 @@ public class RestConfig extends ResourceConfig {
 	RestConfig config = RestContainer.getRestConfig();
 	register(ObjectMapperProvider.class);
 	register(JacksonFXmlFeature.class);
-	LOCK.lock();
+	ObjectUtils.lock(LOCK);
 	try {
 	    if (reloader == null) {
 		reloader = new RestReloader();
