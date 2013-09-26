@@ -322,27 +322,6 @@ public class BeanTransactions {
     }
 
     /**
-     * Calls {@link UserTransaction#rollback()} method of passed
-     * {@link UserTransaction} with {@link IOException} throw
-     * 
-     * @param transaction
-     * @throws IOException
-     */
-    private static void rollback(UserTransaction transaction)
-	    throws IOException {
-
-	try {
-	    transaction.rollback();
-	} catch (IllegalStateException ex) {
-	    throw new IOException(ex);
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	} catch (SystemException ex) {
-	    throw new IOException(ex);
-	}
-    }
-
-    /**
      * Rollbacks passed {@link UserTransaction} by
      * {@link TransactionAttributeType} distinguishes only
      * {@link TransactionAttributeType#REQUIRES_NEW} case or uses standard
