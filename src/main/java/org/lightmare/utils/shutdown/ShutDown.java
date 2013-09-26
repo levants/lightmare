@@ -138,6 +138,7 @@ public class ShutDown implements Runnable {
 	    while (ObjectUtils.notTrue(hookIsSet)) {
 		HOOK_NOT_SET.getAndSet(Boolean.TRUE);
 	    }
+
 	    // Nulls cached ShutDown instance for PermGen sake
 	    shutDown = null;
 	}
