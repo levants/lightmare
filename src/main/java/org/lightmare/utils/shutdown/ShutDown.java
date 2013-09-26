@@ -88,6 +88,7 @@ public class ShutDown implements Runnable {
 		    }
 		}
 		clearAll();
+		clear();
 	    }
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
