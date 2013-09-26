@@ -315,7 +315,7 @@ public class BeanTransactions {
 	if (ObjectUtils.notNull(type)) {
 	    addTransaction(handler, type, transaction, ems);
 	} else {
-	    addEntityManagers(transaction, ems);
+	    TransactionManager.addEntityManagers(transaction, ems);
 	}
 
 	return type;
