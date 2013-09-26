@@ -23,7 +23,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * Class to initialize and deploy JPA units
  * 
  * @author levan
- * 
+ * @since 0.0.80-SNAPSHOT
  */
 public class ORMCreator {
 
