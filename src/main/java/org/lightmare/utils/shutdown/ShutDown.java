@@ -84,6 +84,10 @@ public class ShutDown implements Runnable {
 	    synchronized (this) {
 		if (CollectionUtils.valid(resources)) {
 		    for (TmpResources tmpResources : resources) {
+
+			// Clears all temporal resources held in this
+			// TmpResources
+			// instance
 			tmpResources.removeTempFiles();
 		    }
 		}
