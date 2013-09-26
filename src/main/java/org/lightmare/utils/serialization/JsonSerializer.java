@@ -83,7 +83,7 @@ public abstract class JsonSerializer {
     }
 
     /**
-     * Deserializes JSON {@link String} to {@link Object} with <a
+     * De-serializes JSON {@link String} to {@link Object} with <a
      * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
      * 
      * @param data
