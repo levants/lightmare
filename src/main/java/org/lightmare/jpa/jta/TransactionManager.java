@@ -250,6 +250,27 @@ public class TransactionManager {
 	    }
 	}
     }
+    
+    /**
+     * Calls {@link UserTransaction#rollback()} method of passed
+     * {@link UserTransaction} with {@link IOException} throw
+     * 
+     * @param transaction
+     * @throws IOException
+     */
+    private static void rollback(UserTransaction transaction)
+	    throws IOException {
+
+	try {
+	    transaction.rollback();
+	} catch (IllegalStateException ex) {
+	    throw new IOException(ex);
+	} catch (SecurityException ex) {
+	    throw new IOException(ex);
+	} catch (SystemException ex) {
+	    throw new IOException(ex);
+	}
+    }
 
     /**
      * Calls {@link UserTransactionImpl#rollbackReqNews()} method of passed
