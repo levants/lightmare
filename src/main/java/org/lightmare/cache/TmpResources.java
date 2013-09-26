@@ -43,6 +43,8 @@ public class TmpResources {
 	for (List<File> files : tmpFiles) {
 	    BeanLoader.removeResources(files);
 	}
+
+	tmpFiles.clear();
     }
 
     public int size() {
