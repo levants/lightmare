@@ -88,7 +88,7 @@ public class ShutDown implements Runnable {
 		    }
 		}
 
-		// Clears all temporal resources and cached data
+		// Clears all cached data
 		clearAll();
 		clearHook();
 	    }
