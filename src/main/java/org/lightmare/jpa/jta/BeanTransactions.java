@@ -339,7 +339,7 @@ public class BeanTransactions {
 	if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    TransactionManager.rollbackReqNew(transaction);
 	} else {
-	    rollback(transaction);
+	    TransactionManager.rollback(transaction);
 	}
     }
 
