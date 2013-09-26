@@ -184,6 +184,13 @@ public class BeanTransactions {
 	}
     }
 
+    /**
+     * Gets {@link EntityTransaction} from passed {@link EntityManager} and
+     * begints it
+     * 
+     * @param em
+     * @return {@link EntityTransaction}
+     */
     private static EntityTransaction getEntityTransaction(EntityManager em) {
 
 	EntityTransaction entityTransaction;
@@ -198,6 +205,11 @@ public class BeanTransactions {
 	return entityTransaction;
     }
 
+    /**
+     * 
+     * @param ems
+     * @return {@link Collection}<EntityTransaction>
+     */
     private static Collection<TransactionData> getEntityTransactions(
 	    Collection<EntityManager> ems) {
 
