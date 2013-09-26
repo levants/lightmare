@@ -73,7 +73,7 @@ public class TransactionManager {
 	}
     }
 
-    private static void addEntityManagers(UserTransaction userTransaction,
+    protected static void addEntityManagers(UserTransaction userTransaction,
 	    Collection<EntityManager> ems) {
 
 	if (userTransaction instanceof UserTransactionImpl
