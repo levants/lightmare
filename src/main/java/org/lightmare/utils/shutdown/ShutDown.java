@@ -110,4 +110,11 @@ public class ShutDown implements Runnable {
 	    shutDown.addTmpResources(tmpResources);
 	}
     }
+
+    private static void clear() {
+
+	synchronized (ShutDown.class) {
+	    shutDown = null;
+	}
+    }
 }
