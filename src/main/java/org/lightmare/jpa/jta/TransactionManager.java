@@ -252,8 +252,9 @@ public class TransactionManager {
     }
 
     /**
+     * Closes cached {@link EntityManager}s after method calll
+     * 
      * @param userTransaction
-     *            Closes cached {@link EntityManager}s after method calll
      */
     public static void closeEntityManagers(UserTransaction userTransaction) {
 
