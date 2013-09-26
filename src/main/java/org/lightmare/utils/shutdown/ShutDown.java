@@ -31,10 +31,17 @@ public class ShutDown implements Runnable {
     private static final Logger LOG = Logger.getLogger(ShutDown.class);
 
     public ShutDown(TmpResources tmpResources) {
+	
+	this.resources.add(tmpResources);
+    }
+
+    private List<TmpResources> getResources() {
+
 	if (resources == null) {
 	    resources = new ArrayList<TmpResources>();
 	}
-	this.resources.add(tmpResources);
+
+	return resources;
     }
 
     private void setTmpResources(TmpResources tmpResources) {
