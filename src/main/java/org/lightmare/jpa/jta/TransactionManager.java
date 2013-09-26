@@ -115,6 +115,14 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * Adds {@link EntityTransaction} to requires new stack in passed
+     * {@link UserTransaction} instance
+     * 
+     * @param userTransaction
+     * @param entityTransaction
+     * @param em
+     */
     private static void addReqNewTransaction(UserTransaction userTransaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
