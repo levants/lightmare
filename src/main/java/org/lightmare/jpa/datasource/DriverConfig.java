@@ -37,7 +37,7 @@ public abstract class DriverConfig {
     }
 
     /**
-     * Resolves appropriate jdbc driver class name by database name
+     * Resolves appropriate JDBC driver class name by database name
      * 
      * @param name
      * @return {@link String}
