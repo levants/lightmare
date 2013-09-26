@@ -1,6 +1,8 @@
 package org.lightmare.utils.shutdown;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Logger;
@@ -18,7 +20,7 @@ import org.lightmare.deploy.LoaderPoolManager;
  */
 public class ShutDown implements Runnable {
 
-    private TmpResources tmpResources;
+    private List<TmpResources> resources;
 
     private static final String SHUTDOWN_MESSAGE = "Lightmare server is going to shut down";
 
@@ -29,11 +31,14 @@ public class ShutDown implements Runnable {
     private static final Logger LOG = Logger.getLogger(ShutDown.class);
 
     public ShutDown(TmpResources tmpResources) {
-	this.tmpResources = tmpResources;
+	if (resources == null) {
+	    resources = new ArrayList<TmpResources>();
+	}
+	this.resources.add(tmpResources);
     }
 
     private void setTmpResources(TmpResources tmpResources) {
-	this.tmpResources = tmpResources;
+	this.resources = tmpResources;
     }
 
     /**
@@ -54,7 +59,7 @@ public class ShutDown implements Runnable {
 
 	try {
 
-	    tmpResources.removeTempFiles();
+	    resources.removeTempFiles();
 	    clearAll();
 
 	} catch (IOException ex) {
