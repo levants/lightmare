@@ -24,7 +24,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * objects
  * 
  * @author levan
- * 
+ * @since 0.0.80-SNAPSHOT
  */
 public abstract class Initializer {
 
