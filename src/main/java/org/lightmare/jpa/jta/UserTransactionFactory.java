@@ -14,7 +14,7 @@ import org.lightmare.utils.ObjectUtils;
  */
 public abstract class UserTransactionFactory {
 
-    // Inacrive state of user transaction
+    // Inactive state of user transaction
     public static final int INSACTIVE_TRANSACTION_STATUS = 0;
 
     // Error messages
