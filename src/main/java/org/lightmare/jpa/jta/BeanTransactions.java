@@ -30,6 +30,8 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class BeanTransactions {
 
+    private static final int INSACTIVE_TRANSACTION_STATUS = 0;
+
     // Error messages for inappropriate use of user transactions
     private static final String MANDATORY_ERROR = "TransactionAttributeType.MANDATORY must always be called within transaction";
 
