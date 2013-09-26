@@ -243,7 +243,7 @@ public class BeanTransactions {
      * @throws IOException
      */
     private static void addTransaction(BeanHandler handler,
-	    TransactionAttributeType type, UserTransactionImpl transaction,
+	    TransactionAttributeType type, UserTransaction transaction,
 	    Collection<EntityManager> ems) throws IOException {
 
 	Collection<TransactionData> entityTransactions;
