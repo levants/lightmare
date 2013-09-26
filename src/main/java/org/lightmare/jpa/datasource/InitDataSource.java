@@ -21,7 +21,7 @@ import org.lightmare.utils.LogUtils;
  */
 public abstract class InitDataSource {
 
-    // Additional data source properties
+    // Additional data source / connection pooling properties
     protected Properties properties;
 
     protected PoolConfig poolConfig;
