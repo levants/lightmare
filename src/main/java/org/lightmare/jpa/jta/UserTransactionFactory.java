@@ -1,5 +1,6 @@
 package org.lightmare.jpa.jta;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.transaction.UserTransaction;
 
@@ -42,6 +43,28 @@ public abstract class UserTransactionFactory {
 	    UserTransactionImpl userTransactionImpl = ObjectUtils.cast(
 		    transaction, UserTransactionImpl.class);
 	    userTransactionImpl.addTransactions(entityTransactions);
+	}
+    }
+
+    protected static void addEntityTransaction(UserTransaction transaction,
+	    EntityTransaction entityTransaction, EntityManager em) {
+
+	if (ObjectUtils.notNull(entityTransaction)) {
+	    transaction.addTransaction(entityTransaction);
+	}
+	if (ObjectUtils.notNull(em)) {
+	    transaction.addEntityManager(em);
+	}
+    }
+
+    protected static void addEntityTransactions(UserTransaction transaction,
+	    Collection<TransactionData> entityTransactions) {
+
+	if (CollectionUtils.valid(entityTransactions)) {
+	    for (TransactionData transactionData : entityTransactions) {
+		addEntityTransaction(transaction,
+			transactionData.entityTransaction, transactionData.em);
+	    }
 	}
     }
 }
