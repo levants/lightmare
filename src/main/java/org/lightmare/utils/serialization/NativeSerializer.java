@@ -19,7 +19,7 @@ public abstract class NativeSerializer {
 
     /**
      * Serializes java type ({@link Object}) to byte array with java native
-     * serialization api
+     * serialization API
      * 
      * @param value
      * @return byte[]
