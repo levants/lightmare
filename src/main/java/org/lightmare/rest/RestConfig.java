@@ -59,7 +59,7 @@ public class RestConfig extends ResourceConfig {
 		RestContainer.setRestConfig(this);
 	    }
 	} finally {
-	    LOCK.unlock();
+	    ObjectUtils.unlock(LOCK);
 	}
     }
 
