@@ -82,13 +82,11 @@ public class ShutDown implements Runnable {
 
 	try {
 	    synchronized (this) {
-
 		if (CollectionUtils.valid(resources)) {
 		    for (TmpResources tmpResources : resources) {
 			tmpResources.removeTempFiles();
 		    }
 		}
-
 		clearAll();
 	    }
 	} catch (IOException ex) {
