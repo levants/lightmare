@@ -260,7 +260,7 @@ public class BeanTransactions {
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 
 	    entityTransactions = getEntityTransactions(ems);
-	    addReqNewTransactions(transaction, entityTransactions);
+	    TransactionManager.addReqNewTransactions(transaction, entityTransactions);
 
 	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
 
