@@ -25,6 +25,7 @@ public abstract class InitDataSource {
 
     protected PoolConfig poolConfig;
 
+    // Initial properties for data source initialization
     protected String driver;
     protected String url;
     protected String user;
