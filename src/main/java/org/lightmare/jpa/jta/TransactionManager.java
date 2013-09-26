@@ -3,7 +3,6 @@ package org.lightmare.jpa.jta;
 import java.io.IOException;
 import java.util.Collection;
 
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.transaction.HeuristicMixedException;
@@ -220,9 +219,9 @@ public class TransactionManager {
     }
 
     /**
-     * Commits all {@link TransactionAttributeType.REQUIRES_NEW} transactions
-     * from requires new stack in passed {@link UserTransaction} with
-     * {@link IOException} throw
+     * Commits all {@link javax.ejb.TransactionAttributeType.REQUIRES_NEW}
+     * transactions from requires new stack in passed {@link UserTransaction}
+     * with {@link IOException} throw
      * 
      * @param transaction
      * @throws IOException
