@@ -334,7 +334,7 @@ public class BeanTransactions {
     private static void rollbackTransaction(TransactionAttributeType type,
 	    BeanHandler handler) throws IOException {
 
-	UserTransaction transaction = (UserTransactionImpl) getTransaction();
+	UserTransaction transaction = getTransaction();
 
 	if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    TransactionManager.rollbackReqNew(transaction);
