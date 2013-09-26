@@ -30,6 +30,7 @@ public class ShutDown implements Runnable {
     private static final AtomicBoolean HOOK_SET = new AtomicBoolean(
 	    Boolean.FALSE);
 
+    // Keeps instance of ShutDown to add temporal resources
     private static ShutDown shutDown;
 
     private static final Logger LOG = Logger.getLogger(ShutDown.class);
