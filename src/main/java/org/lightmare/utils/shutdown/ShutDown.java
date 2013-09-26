@@ -45,7 +45,8 @@ public class ShutDown implements Runnable {
     }
 
     private void setTmpResources(TmpResources tmpResources) {
-	this.resources = tmpResources;
+
+	getResources().add(tmpResources);
     }
 
     /**
