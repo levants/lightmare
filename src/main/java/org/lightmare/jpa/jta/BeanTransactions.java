@@ -452,7 +452,7 @@ public class BeanTransactions {
 
 	    boolean check = transaction.checkCaller(handler);
 	    if (check) {
-		commit(transaction);
+		TransactionManager.commit(transaction);
 	    }
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    commitReqNew(transaction);
