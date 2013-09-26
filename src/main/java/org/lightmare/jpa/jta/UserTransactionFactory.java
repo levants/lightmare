@@ -145,7 +145,7 @@ public abstract class UserTransactionFactory {
 	}
     }
 
-    private static void addCaller(UserTransactionImpl transaction,
+    private static void addCaller(UserTransaction userTransaction,
 	    BeanHandler handler) {
 
 	Object caller = transaction.getCaller();
