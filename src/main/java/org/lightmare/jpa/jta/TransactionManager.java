@@ -221,7 +221,8 @@ public class TransactionManager {
 
     /**
      * Commits all {@link TransactionAttributeType.REQUIRES_NEW} transactions
-     * for passed {@link UserTransaction} with {@link IOException} throw
+     * from requires new stack in passed {@link UserTransaction} with
+     * {@link IOException} throw
      * 
      * @param transaction
      * @throws IOException
