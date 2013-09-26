@@ -12,7 +12,6 @@ import org.lightmare.cache.RestContainer;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.deploy.LoaderPoolManager;
 import org.lightmare.utils.CollectionUtils;
-import org.lightmare.utils.ObjectUtils;
 
 /**
  * Runnable class for shut down hook
@@ -67,11 +66,13 @@ public class ShutDown implements Runnable {
     public void run() {
 
 	try {
+
 	    if (CollectionUtils.valid(resources)) {
 		for (TmpResources tmpResources : resources) {
 		    tmpResources.removeTempFiles();
 		}
 	    }
+
 	    clearAll();
 
 	} catch (IOException ex) {
