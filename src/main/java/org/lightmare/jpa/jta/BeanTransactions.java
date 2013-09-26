@@ -52,7 +52,7 @@ public class BeanTransactions {
     }
 
     /**
-     * Creates {@link TransactionData} instance with passed
+     * Creates new {@link TransactionData} object with passed
      * {@link EntityTransaction} and {@link EntityManager} instances
      * 
      * @param entityTransaction
