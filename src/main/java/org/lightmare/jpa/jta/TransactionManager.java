@@ -51,6 +51,14 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * Adds {@link EntityTransaction} for each
+     * {@link BeanTransactions.TransactionData} to passed
+     * {@link UserTransaction} instance
+     * 
+     * @param userTransaction
+     * @param entityTransactions
+     */
     protected static void addEntityTransactions(
 	    UserTransaction userTransaction,
 	    Collection<BeanTransactions.TransactionData> entityTransactions) {
