@@ -18,6 +18,9 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class TransactionManager {
 
+    // Error messages
+    private static final String ISNANTIATING_ERROR = "Class UserTransactionFactory can not be instntiate";
+
     protected static void addEntityTransaction(UserTransaction userTransaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
