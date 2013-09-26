@@ -6,7 +6,7 @@ import java.lang.reflect.Array;
  * Utility class for {@link String} operations
  * 
  * @author Levan
- * 
+ * @since 0.0.80-SNAPSHOT
  */
 public abstract class StringUtils {
 
