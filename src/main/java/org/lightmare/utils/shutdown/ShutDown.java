@@ -136,7 +136,7 @@ public class ShutDown implements Runnable {
 	    // Prevents null pointer exception for SutDown instance
 	    boolean hookIsSet = Boolean.FALSE;
 	    while (ObjectUtils.notTrue(hookIsSet)) {
-		HOOK_NOT_SET.getAndSet(Boolean.TRUE);
+		hookIsSet = HOOK_NOT_SET.getAndSet(Boolean.TRUE);
 	    }
 
 	    // Nulls cached ShutDown instance for PermGen sake
