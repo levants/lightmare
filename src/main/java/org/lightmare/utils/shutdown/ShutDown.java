@@ -87,6 +87,8 @@ public class ShutDown implements Runnable {
 			tmpResources.removeTempFiles();
 		    }
 		}
+
+		// Clears all cached data
 		clearAll();
 		clearHook();
 	    }
