@@ -128,6 +128,7 @@ public class ShutDown implements Runnable {
 
 	synchronized (ShutDown.class) {
 
+	    // Prevents null pointer exception for SutDown instance
 	    HOOK_NOT_SET.set(Boolean.TRUE);
 	    // Nulls cached ShutDown instance for PermGen sake
 	    shutDown = null;
