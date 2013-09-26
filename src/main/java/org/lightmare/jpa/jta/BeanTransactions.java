@@ -247,7 +247,7 @@ public class BeanTransactions {
 	    Collection<EntityManager> ems) throws IOException {
 
 	Collection<TransactionData> entityTransactions;
-	addCaller(transaction, handler);
+	TransactionManager.addCaller(transaction, handler);
 
 	if (type.equals(TransactionAttributeType.NOT_SUPPORTED)) {
 
