@@ -225,23 +225,28 @@ public class TransactionManager {
      * @param transaction
      * @throws IOException
      */
-    protected static void commitReqNew(UserTransactionImpl transaction)
+    protected static void commitReqNew(UserTransaction userTransaction)
 	    throws IOException {
 
-	try {
-	    transaction.commitReqNew();
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	} catch (IllegalStateException ex) {
-	    throw new IOException(ex);
-	} catch (RollbackException ex) {
-	    throw new IOException(ex);
-	} catch (HeuristicMixedException ex) {
-	    throw new IOException(ex);
-	} catch (HeuristicRollbackException ex) {
-	    throw new IOException(ex);
-	} catch (SystemException ex) {
-	    throw new IOException(ex);
+	if (userTransaction instanceof UserTransactionImpl) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+	    try {
+		transaction.commitReqNew();
+	    } catch (SecurityException ex) {
+		throw new IOException(ex);
+	    } catch (IllegalStateException ex) {
+		throw new IOException(ex);
+	    } catch (RollbackException ex) {
+		throw new IOException(ex);
+	    } catch (HeuristicMixedException ex) {
+		throw new IOException(ex);
+	    } catch (HeuristicRollbackException ex) {
+		throw new IOException(ex);
+	    } catch (SystemException ex) {
+		throw new IOException(ex);
+	    }
 	}
     }
 }
