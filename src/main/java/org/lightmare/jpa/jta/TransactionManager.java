@@ -258,17 +258,23 @@ public class TransactionManager {
      * @param transaction
      * @throws IOException
      */
-    protected static void rollbackReqNew(UserTransactionImpl transaction)
+    protected static void rollbackReqNew(UserTransaction userTransaction)
 	    throws IOException {
 
-	try {
-	    transaction.rollbackReqNews();
-	} catch (IllegalStateException ex) {
-	    throw new IOException(ex);
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	} catch (SystemException ex) {
-	    throw new IOException(ex);
+	if (userTransaction instanceof UserTransactionImpl) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+
+	    try {
+		transaction.rollbackReqNews();
+	    } catch (IllegalStateException ex) {
+		throw new IOException(ex);
+	    } catch (SecurityException ex) {
+		throw new IOException(ex);
+	    } catch (SystemException ex) {
+		throw new IOException(ex);
+	    }
 	}
     }
 
