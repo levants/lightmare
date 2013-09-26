@@ -325,33 +325,6 @@ public class BeanTransactions {
     }
 
     /**
-     * Commits all {@link TransactionAttributeType.REQUIRES_NEW} transactions
-     * for passed {@link UserTransactionImpl} with {@link IOException} throw
-     * 
-     * @param transaction
-     * @throws IOException
-     */
-    private static void commitReqNew(UserTransactionImpl transaction)
-	    throws IOException {
-
-	try {
-	    transaction.commitReqNew();
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	} catch (IllegalStateException ex) {
-	    throw new IOException(ex);
-	} catch (RollbackException ex) {
-	    throw new IOException(ex);
-	} catch (HeuristicMixedException ex) {
-	    throw new IOException(ex);
-	} catch (HeuristicRollbackException ex) {
-	    throw new IOException(ex);
-	} catch (SystemException ex) {
-	    throw new IOException(ex);
-	}
-    }
-
-    /**
      * Calls {@link UserTransaction#rollback()} method of passed
      * {@link UserTransaction} with {@link IOException} throw
      * 
@@ -455,7 +428,7 @@ public class BeanTransactions {
 		TransactionManager.commit(transaction);
 	    }
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
-	    commitReqNew(transaction);
+	    TransactionManager.commitReqNew(transaction);
 	} else {
 	    transaction.closeEntityManagers();
 	}
