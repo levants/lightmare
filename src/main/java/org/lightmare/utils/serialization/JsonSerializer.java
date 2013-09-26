@@ -31,7 +31,7 @@ public abstract class JsonSerializer {
 
     private static void configureMapper() {
 
-	LOCK.lock();
+	ObjectUtils.lock(LOCK);
 	try {
 	    if (ObjectUtils.notTrue(mapperConfigured)) {
 		MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
