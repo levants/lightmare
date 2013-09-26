@@ -100,8 +100,8 @@ public abstract class UserTransactionFactory {
     private static void addEntityManagers(UserTransaction userTransaction,
 	    Collection<EntityManager> ems) {
 
-	if (CollectionUtils.valid(ems)
-		&& userTransaction instanceof UserTransactionImpl) {
+	if (userTransaction instanceof UserTransactionImpl
+		&& CollectionUtils.valid(ems)) {
 
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
