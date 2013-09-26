@@ -280,7 +280,7 @@ public class BeanTransactions {
 		    throw new EJBException(NEVER_ERROR);
 		}
 	    } finally {
-		addEntityManagers(transaction, ems);
+		TransactionManager.addEntityManagers(transaction, ems);
 	    }
 
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
