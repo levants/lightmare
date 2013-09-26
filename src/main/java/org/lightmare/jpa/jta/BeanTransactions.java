@@ -104,7 +104,7 @@ public class BeanTransactions {
 	}
 
 	Collection<TransactionData> entityTransactions = getEntityTransactions(ems);
-	addEntityTransactions((UserTransactionImpl) transaction,
+	TransactionManager.addEntityTransactions((UserTransactionImpl) transaction,
 		entityTransactions);
 
 	return transaction;
