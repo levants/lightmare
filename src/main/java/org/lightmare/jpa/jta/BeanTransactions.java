@@ -427,7 +427,7 @@ public class BeanTransactions {
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    TransactionManager.commitReqNew(transaction);
 	} else {
-	    transaction.closeEntityManagers();
+	    TransactionManager.closeEntityManagers(transaction);
 	}
     }
 
