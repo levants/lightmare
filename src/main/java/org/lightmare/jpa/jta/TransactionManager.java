@@ -251,6 +251,12 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * 
+     * @param userTransaction
+     * @param handler
+     * @return <code>boolean</code>
+     */
     protected boolean checkCaller(UserTransaction userTransaction,
 	    BeanHandler handler) {
 
