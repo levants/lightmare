@@ -1,7 +1,6 @@
 package org.lightmare.utils.shutdown;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -49,7 +48,7 @@ public class ShutDown implements Runnable {
 	return resources;
     }
 
-    private void setTmpResources(TmpResources tmpResources) {
+    private void addTmpResources(TmpResources tmpResources) {
 	getResources().add(tmpResources);
     }
 
@@ -100,7 +99,7 @@ public class ShutDown implements Runnable {
 	    Runtime runtime = Runtime.getRuntime();
 	    runtime.addShutdownHook(shutDownThread);
 	} else {
-	    shutDown.setTmpResources(tmpResources);
+	    shutDown.addTmpResources(tmpResources);
 	}
     }
 }
