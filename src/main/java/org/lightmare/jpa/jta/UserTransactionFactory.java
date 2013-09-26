@@ -109,4 +109,22 @@ public abstract class UserTransactionFactory {
 	    }
 	}
     }
+
+    private static void addReqNewTransaction(UserTransaction userTransaction,
+	    EntityTransaction entityTransaction, EntityManager em) {
+
+	if (userTransaction instanceof UserTransactionImpl) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+
+	    if (ObjectUtils.notNull(entityTransaction)) {
+		transaction.pushReqNew(entityTransaction);
+	    }
+
+	    if (ObjectUtils.notNull(em)) {
+		transaction.pushReqNewEm(em);
+	    }
+	}
+    }
 }
