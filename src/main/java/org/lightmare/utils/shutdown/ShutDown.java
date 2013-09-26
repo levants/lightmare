@@ -26,7 +26,7 @@ public class ShutDown implements Runnable {
     private static final String SHUTDOWN_MESSAGE = "Lightmare server is going to shut down";
 
     // Boolean check if shutdown hook is set
-    private static final AtomicBoolean HOOK_SET = new AtomicBoolean(
+    private static final AtomicBoolean HOOK_NOT_SET = new AtomicBoolean(
 	    Boolean.TRUE);
 
     // Keeps instance of ShutDown to add temporal resources
@@ -100,7 +100,7 @@ public class ShutDown implements Runnable {
     public static void setHook(TmpResources tmpResources) {
 
 	// Checks if shutdown hook is set
-	if (HOOK_SET.getAndSet(Boolean.FALSE)) {
+	if (HOOK_NOT_SET.getAndSet(Boolean.FALSE)) {
 	    shutDown = new ShutDown(tmpResources);
 	    Thread shutDownThread = new Thread(shutDown);
 	    Runtime runtime = Runtime.getRuntime();
