@@ -67,6 +67,9 @@ public class RestConfig extends ResourceConfig {
 	this(Boolean.TRUE);
     }
 
+    /**
+     * Caches this instance of {@link RestConfig} in {@link RestContainer} cache
+     */
     public void cache() {
 
 	RestConfig config = RestContainer.getRestConfig();
