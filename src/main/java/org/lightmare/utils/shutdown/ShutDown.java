@@ -118,7 +118,7 @@ public class ShutDown implements Runnable {
     /**
      * Clears cached resources from {@link ShutDown} class
      */
-    private static void clearCache() {
+    private static void clearHook() {
 
 	synchronized (ShutDown.class) {
 	    shutDown = null;
