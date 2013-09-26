@@ -127,6 +127,8 @@ public class ShutDown implements Runnable {
     private static void clearHook() {
 
 	synchronized (ShutDown.class) {
+
+	    HOOK_NOT_SET.set(Boolean.TRUE);
 	    // Nulls cached ShutDown instance for PermGen sake
 	    shutDown = null;
 	}
