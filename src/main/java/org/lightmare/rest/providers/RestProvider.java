@@ -39,11 +39,11 @@ public class RestProvider {
     private static RestConfig get() {
 
 	if (newConfig == null) {
-	    LOCK.lock();
+	    ObjectUtils.lock(LOCK);
 	    try {
 		getConfig();
 	    } finally {
-		LOCK.unlock();
+		ObjectUtils.unlock(LOCK);
 	    }
 	}
 
