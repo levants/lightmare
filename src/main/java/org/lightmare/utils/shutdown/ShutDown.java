@@ -27,7 +27,7 @@ public class ShutDown implements Runnable {
 
     // Boolean check if shutdown hook is set
     private static final AtomicBoolean HOOK_SET = new AtomicBoolean(
-	    Boolean.FALSE);
+	    Boolean.TRUE);
 
     // Keeps instance of ShutDown to add temporal resources
     private static ShutDown shutDown;
