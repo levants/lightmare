@@ -39,6 +39,7 @@ public abstract class InitDataSource {
 
 	    this.properties = properties;
 	    this.poolConfig = Configuration.getPoolConfig();
+
 	    driver = properties.getProperty(
 		    ConnectionConfig.DRIVER_PROPERTY.name).trim();
 	    url = properties.getProperty(ConnectionConfig.URL_PROPERTY.name)
