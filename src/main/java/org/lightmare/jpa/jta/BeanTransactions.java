@@ -11,9 +11,6 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
@@ -459,8 +456,8 @@ public class BeanTransactions {
      */
     public static void closeEntityManagers() {
 
-	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
-	transaction.closeEntityManagers();
+	UserTransaction transaction = getTransaction();
+	TransactionManager.closeEntityManagers(transaction);
     }
 
     /**
