@@ -416,7 +416,7 @@ public class BeanTransactions {
     private static void commitTransaction(TransactionAttributeType type,
 	    BeanHandler handler) throws IOException {
 
-	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
+	UserTransaction transaction = getTransaction();
 
 	if (type.equals(TransactionAttributeType.REQUIRED)) {
 
