@@ -68,6 +68,7 @@ public abstract class JsonSerializer {
     public static String write(Object value) throws IOException {
 
 	String data;
+
 	try {
 	    data = getMapper().writeValueAsString(value);
 	} catch (JsonGenerationException ex) {
