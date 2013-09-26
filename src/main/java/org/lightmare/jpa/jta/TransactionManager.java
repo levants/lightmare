@@ -122,7 +122,7 @@ public class TransactionManager {
 	}
     }
 
-    private static void addCaller(UserTransaction userTransaction,
+    protected static void addCaller(UserTransaction userTransaction,
 	    BeanHandler handler) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
