@@ -88,8 +88,8 @@ public abstract class UserTransactionFactory {
     protected static void addEntityManager(UserTransaction userTransaction,
 	    EntityManager em) {
 
-	if (ObjectUtils.notNull(em)
-		&& userTransaction instanceof UserTransactionImpl) {
+	if (userTransaction instanceof UserTransactionImpl
+		&& ObjectUtils.notNull(em)) {
 
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
