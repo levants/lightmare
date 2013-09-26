@@ -266,7 +266,7 @@ public class BeanTransactions {
 
 	    int status = getStatus(transaction);
 	    if (status == 0) {
-		addEntityManagers(transaction, ems);
+		TransactionManager.addEntityManagers(transaction, ems);
 		throw new EJBException(MANDATORY_ERROR);
 	    } else {
 		entityTransactions = getEntityTransactions(ems);
