@@ -32,6 +32,10 @@ public class ShutDown implements Runnable {
 	this.tmpResources = tmpResources;
     }
 
+    private void setTmpResources(TmpResources tmpResources) {
+	this.tmpResources = tmpResources;
+    }
+
     /**
      * Clears cache and closes all resources
      * 

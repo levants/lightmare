@@ -55,6 +55,7 @@ import org.lightmare.utils.shutdown.ShutDown;
  */
 public class MetaCreator {
 
+    // Annotation scanner implementation for scanning at atartup
     private static AnnotationDB annotationDB;
 
     // Cached temporal resources for clean after deployment
