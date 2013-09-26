@@ -68,6 +68,7 @@ public class ShutDown implements Runnable {
 	MetaContainer.clear();
 	RestContainer.clear();
 	LoaderPoolManager.reload();
+	ShutDown.clear();
     }
 
     @Override
