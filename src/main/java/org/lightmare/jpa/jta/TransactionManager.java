@@ -219,7 +219,7 @@ public class TransactionManager {
     }
 
     /**
-     * Commits all {@link javax.ejb.TransactionAttributeType.REQUIRES_NEW}
+     * Commits all {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW}
      * transactions from requires new stack in passed {@link UserTransaction}
      * with {@link IOException} throw
      * 
