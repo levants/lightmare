@@ -25,6 +25,13 @@ public class TransactionManager {
 	throw new InstantiationError(ISNANTIATING_ERROR);
     }
 
+    /**
+     * Adds {@link EntityTransaction} to passed {@link UserTransaction} instance
+     * 
+     * @param userTransaction
+     * @param entityTransaction
+     * @param em
+     */
     protected static void addEntityTransaction(UserTransaction userTransaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
