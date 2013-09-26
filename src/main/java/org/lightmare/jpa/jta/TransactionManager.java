@@ -141,6 +141,14 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * Adds {@link EntityTransaction} for each
+     * {@link BeanTransactions.TransactionData} to requires new stack in passed
+     * {@link UserTransaction} instance
+     * 
+     * @param userTransaction
+     * @param entityTransactions
+     */
     protected static void addReqNewTransactions(
 	    UserTransaction userTransaction,
 	    Collection<BeanTransactions.TransactionData> entityTransactions) {
