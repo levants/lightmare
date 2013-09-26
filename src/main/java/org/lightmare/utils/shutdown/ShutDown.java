@@ -100,7 +100,7 @@ public class ShutDown implements Runnable {
     public static void setHook(TmpResources tmpResources) {
 
 	// Checks if shutdown hook is set
-	if (HOOK_SET.getAndSet(Boolean.TRUE)) {
+	if (HOOK_SET.getAndSet(Boolean.FALSE)) {
 	    shutDown = new ShutDown(tmpResources);
 	    Thread shutDownThread = new Thread(shutDown);
 	    Runtime runtime = Runtime.getRuntime();
