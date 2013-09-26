@@ -22,6 +22,7 @@ public class ShutDown implements Runnable {
 
     private static final String SHUTDOWN_MESSAGE = "Lightmare server is going to shut down";
 
+    // Boolean check if shutdown hook is set
     private static final AtomicBoolean HOOK_SET = new AtomicBoolean(
 	    Boolean.FALSE);
 
