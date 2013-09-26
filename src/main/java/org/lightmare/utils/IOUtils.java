@@ -13,7 +13,7 @@ import java.io.OutputStream;
  */
 public class IOUtils {
 
-    // IO bytes size
+    // IO bytes buffer size
     public static final int BUFFER_SIZE = 1024;
 
     public static final int ZERO_OFFSET = 0;
