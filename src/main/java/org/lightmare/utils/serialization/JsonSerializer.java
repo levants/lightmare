@@ -66,6 +66,7 @@ public abstract class JsonSerializer {
      * @throws IOException
      */
     public static String write(Object value) throws IOException {
+
 	String data;
 	try {
 	    data = getMapper().writeValueAsString(value);
