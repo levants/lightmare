@@ -31,8 +31,8 @@ public class ShutDown implements Runnable {
     private static final Logger LOG = Logger.getLogger(ShutDown.class);
 
     public ShutDown(TmpResources tmpResources) {
-	
-	this.resources.add(tmpResources);
+
+	getResources().add(tmpResources);
     }
 
     private List<TmpResources> getResources() {
