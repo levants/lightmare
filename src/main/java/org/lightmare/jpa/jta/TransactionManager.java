@@ -3,6 +3,7 @@ package org.lightmare.jpa.jta;
 import java.io.IOException;
 import java.util.Collection;
 
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.transaction.HeuristicMixedException;
@@ -247,6 +248,20 @@ public class TransactionManager {
 	    } catch (SystemException ex) {
 		throw new IOException(ex);
 	    }
+	}
+    }
+
+    /**
+     * @param userTransaction
+     *            Closes cached {@link EntityManager}s after method calll
+     */
+    public static void closeEntityManagers(UserTransaction userTransaction) {
+
+	if (userTransaction instanceof UserTransactionImpl) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+	    transaction.closeEntityManagers();
 	}
     }
 }
