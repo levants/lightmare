@@ -252,6 +252,27 @@ public class TransactionManager {
     }
 
     /**
+     * Calls {@link UserTransactionImpl#rollbackReqNews()} method of passed
+     * {@link UserTransaction} with {@link IOException} throw
+     * 
+     * @param transaction
+     * @throws IOException
+     */
+    protected static void rollbackReqNew(UserTransactionImpl transaction)
+	    throws IOException {
+
+	try {
+	    transaction.rollbackReqNews();
+	} catch (IllegalStateException ex) {
+	    throw new IOException(ex);
+	} catch (SecurityException ex) {
+	    throw new IOException(ex);
+	} catch (SystemException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
      * Checks if passed {@link BeanHandler} is first caller / beginner of passed
      * {@link UserTransaction} instance
      * 
