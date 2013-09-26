@@ -9,6 +9,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spi.Container;
 import org.glassfish.jersey.server.spi.ContainerLifecycleListener;
 import org.lightmare.rest.RestConfig;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Reloads {@link RestConfig} (implementation of {@link ResourceConfig}) at
@@ -26,7 +27,7 @@ public class RestReloader implements ContainerLifecycleListener {
 
     public RestReloader() {
 
-	LOCK.lock();
+	ObjectUtils.lock(LOCK);
 	try {
 	    reloader = this;
 	} finally {
