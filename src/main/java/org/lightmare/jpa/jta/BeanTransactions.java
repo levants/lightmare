@@ -248,7 +248,6 @@ public class BeanTransactions {
 	TransactionManager.addCaller(transaction, handler);
 
 	if (type.equals(TransactionAttributeType.NOT_SUPPORTED)) {
-
 	    TransactionManager.addEntityManagers(transaction, ems);
 	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
 
