@@ -252,8 +252,7 @@ public class TransactionManager {
     }
 
     /**
-     * Calls {@link UserTransaction#rollback()} method of passed
-     * {@link UserTransaction} with {@link IOException} throw
+     * Rollbacks passed {@link UserTransaction} with {@link IOException} throw
      * 
      * @param transaction
      * @throws IOException
