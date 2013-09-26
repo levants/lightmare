@@ -166,6 +166,12 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * Adds caller to passed {@link UserTransaction} instance
+     * 
+     * @param userTransaction
+     * @param handler
+     */
     protected static void addCaller(UserTransaction userTransaction,
 	    BeanHandler handler) {
 
