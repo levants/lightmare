@@ -152,7 +152,7 @@ public class BeanLoader {
      */
     private static class ResourceCleaner implements Callable<Boolean> {
 
-	List<File> tmpFiles;
+	private List<File> tmpFiles;
 
 	public ResourceCleaner(List<File> tmpFiles) {
 	    this.tmpFiles = tmpFiles;
