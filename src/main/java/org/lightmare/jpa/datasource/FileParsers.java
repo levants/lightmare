@@ -41,7 +41,7 @@ public class FileParsers {
     // Tag names for XML file parser
     public static final String JBOSS_TAG_NAME = "urn:jboss:domain:datasources:1.0";
 
-    // Tag names for data source initialization
+    // Tag names for data source properties initialization
     private static final String DATA_SURCE_TAG = "datasource";
     private static final String USER_TAG = "user-name";
     private static final String PASSWORD_TAG = "password";
