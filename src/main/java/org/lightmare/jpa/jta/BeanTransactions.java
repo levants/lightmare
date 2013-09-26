@@ -104,8 +104,8 @@ public class BeanTransactions {
 	}
 
 	Collection<TransactionData> entityTransactions = getEntityTransactions(ems);
-	TransactionManager.addEntityTransactions((UserTransactionImpl) transaction,
-		entityTransactions);
+	TransactionManager.addEntityTransactions(
+		(UserTransactionImpl) transaction, entityTransactions);
 
 	return transaction;
     }
@@ -255,12 +255,14 @@ public class BeanTransactions {
 	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
 
 	    entityTransactions = getEntityTransactions(ems);
-	    TransactionManager.addEntityTransactions(transaction, entityTransactions);
+	    TransactionManager.addEntityTransactions(transaction,
+		    entityTransactions);
 
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 
 	    entityTransactions = getEntityTransactions(ems);
-	    TransactionManager.addReqNewTransactions(transaction, entityTransactions);
+	    TransactionManager.addReqNewTransactions(transaction,
+		    entityTransactions);
 
 	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
 
@@ -270,7 +272,8 @@ public class BeanTransactions {
 		throw new EJBException(MANDATORY_ERROR);
 	    } else {
 		entityTransactions = getEntityTransactions(ems);
-		TransactionManager.addEntityTransactions(transaction, entityTransactions);
+		TransactionManager.addEntityTransactions(transaction,
+			entityTransactions);
 	    }
 	} else if (type.equals(TransactionAttributeType.NEVER)) {
 
