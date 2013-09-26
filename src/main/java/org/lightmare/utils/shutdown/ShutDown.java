@@ -39,6 +39,11 @@ public class ShutDown implements Runnable {
 	getResources().add(tmpResources);
     }
 
+    /**
+     * Initializes (if null) and gets {@link TmpResources} collection
+     * 
+     * @return
+     */
     private List<TmpResources> getResources() {
 
 	if (resources == null) {
