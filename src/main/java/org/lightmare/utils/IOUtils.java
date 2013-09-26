@@ -49,6 +49,14 @@ public class IOUtils {
 	}
     }
 
+    /**
+     * Writes passed {@link InputStream} to associated {@link OutputStream}
+     * instance
+     * 
+     * @param in
+     * @param out
+     * @throws IOException
+     */
     public static void write(InputStream in, OutputStream out)
 	    throws IOException {
 
