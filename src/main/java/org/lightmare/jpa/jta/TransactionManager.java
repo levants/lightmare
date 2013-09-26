@@ -322,7 +322,7 @@ public class TransactionManager {
     }
 
     /**
-     * Closes cached {@link EntityManager}s after method call
+     * Closes all cached {@link EntityManager}s after method call
      * 
      * @param userTransaction
      */
