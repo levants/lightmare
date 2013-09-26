@@ -1,6 +1,7 @@
 package org.lightmare.utils.shutdown;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,6 +29,8 @@ public class ShutDown implements Runnable {
     // Boolean check if shutdown hook is set
     private static final AtomicBoolean HOOK_SET = new AtomicBoolean(
 	    Boolean.FALSE);
+
+    private static ShutDown shutDown;
 
     private static final Logger LOG = Logger.getLogger(ShutDown.class);
 
@@ -91,10 +94,12 @@ public class ShutDown implements Runnable {
 
 	// Checks if shutdown hook is set
 	if (HOOK_SET.getAndSet(Boolean.TRUE)) {
-	    ShutDown shutDown = new ShutDown(tmpResources);
+	    shutDown = new ShutDown(tmpResources);
 	    Thread shutDownThread = new Thread(shutDown);
 	    Runtime runtime = Runtime.getRuntime();
 	    runtime.addShutdownHook(shutDownThread);
+	} else {
+	    shutDown.setTmpResources(tmpResources);
 	}
     }
 }
