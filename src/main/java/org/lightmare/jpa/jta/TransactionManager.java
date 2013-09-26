@@ -105,7 +105,8 @@ public class TransactionManager {
 	}
     }
 
-    private static void addReqNewTransactions(UserTransaction userTransaction,
+    protected static void addReqNewTransactions(
+	    UserTransaction userTransaction,
 	    Collection<BeanTransactions.TransactionData> entityTransactions) {
 
 	if (userTransaction instanceof UserTransactionImpl
