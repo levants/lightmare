@@ -56,7 +56,7 @@ public class ShutDown implements Runnable {
     }
 
     /**
-     * Adds {@link TmpResources} to cache for cleaning when shut down hook takes
+     * Adds {@link TmpResources} to cache for cleaning when shutdown hook takes
      * place
      * 
      * @param tmpResources
