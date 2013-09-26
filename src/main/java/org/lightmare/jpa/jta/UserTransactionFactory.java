@@ -46,14 +46,22 @@ public abstract class UserTransactionFactory {
 	}
     }
 
-    protected static void addEntityTransaction(UserTransaction transaction,
+    protected static void addEntityTransaction(UserTransaction userTransaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
-	if (ObjectUtils.notNull(entityTransaction)) {
-	    transaction.addTransaction(entityTransaction);
-	}
-	if (ObjectUtils.notNull(em)) {
-	    transaction.addEntityManager(em);
+	if (userTransaction instanceof UserTransactionImpl) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+
+	    if (ObjectUtils.notNull(entityTransaction)) {
+		transaction.addTransaction(entityTransaction);
+	    }
+
+	    if (ObjectUtils.notNull(em)) {
+		transaction.addEntityManager(em);
+	    }
+
 	}
     }
 
