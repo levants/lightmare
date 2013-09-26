@@ -46,7 +46,7 @@ public class BeanTransactions {
      * @author levan
      * 
      */
-    private static class TransactionData {
+    protected static class TransactionData {
 
 	EntityManager em;
 
