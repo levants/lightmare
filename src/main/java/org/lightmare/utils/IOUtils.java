@@ -16,6 +16,7 @@ public class IOUtils {
     // IO bytes buffer size
     public static final int BUFFER_SIZE = 1024;
 
+    // Zero bytes offset value
     public static final int ZERO_OFFSET = 0;
 
     /**
