@@ -95,4 +95,18 @@ public abstract class UserTransactionFactory {
 	    transaction.addEntityManager(em);
 	}
     }
+
+    private static void addEntityManagers(UserTransaction userTransaction,
+	    Collection<EntityManager> ems) {
+
+	if (CollectionUtils.valid(ems)
+		&& userTransaction instanceof UserTransactionImpl) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+	    for (EntityManager em : ems) {
+		addEntityManager(transaction, em);
+	    }
+	}
+    }
 }
