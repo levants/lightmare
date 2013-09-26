@@ -251,6 +251,20 @@ public class TransactionManager {
 	}
     }
 
+    protected boolean checkCaller(UserTransaction userTransaction,
+	    BeanHandler handler) {
+
+	boolean check = (userTransaction instanceof UserTransactionImpl);
+
+	if (check) {
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+	    check = transaction.checkCaller(handler);
+	}
+
+	return check;
+    }
+
     /**
      * Closes cached {@link EntityManager}s after method call
      * 
