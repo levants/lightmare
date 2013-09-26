@@ -157,7 +157,6 @@ public abstract class UserTransactionFactory {
 	    if (caller == null) {
 		transaction.setCaller(handler);
 	    }
-
 	}
     }
 }
