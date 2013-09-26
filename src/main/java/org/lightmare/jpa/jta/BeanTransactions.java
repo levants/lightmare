@@ -471,9 +471,9 @@ public class BeanTransactions {
     private static void remove(BeanHandler handler,
 	    TransactionAttributeType type) {
 
-	UserTransactionImpl transaction = (UserTransactionImpl) getTransaction();
+	UserTransaction transaction = getTransaction();
 
-	boolean check = transaction.checkCaller(handler);
+	boolean check = TransactionManager.checkCaller(transaction, handler);
 	if (check) {
 	    TransactionHolder.removeTransaction();
 	}
