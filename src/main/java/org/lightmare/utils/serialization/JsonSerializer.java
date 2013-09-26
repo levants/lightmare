@@ -38,7 +38,7 @@ public abstract class JsonSerializer {
 		mapperConfigured = Boolean.TRUE;
 	    }
 	} finally {
-	    LOCK.unlock();
+	    ObjectUtils.unlock(LOCK);
 	}
     }
 
