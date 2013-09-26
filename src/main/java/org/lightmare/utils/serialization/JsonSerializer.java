@@ -90,6 +90,7 @@ public abstract class JsonSerializer {
      */
     public static <T> T read(String data, Class<T> valueClass)
 	    throws IOException {
+
 	T value;
 	try {
 	    value = getMapper().readValue(data, valueClass);
