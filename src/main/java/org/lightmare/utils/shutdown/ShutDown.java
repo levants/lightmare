@@ -66,7 +66,7 @@ public class ShutDown implements Runnable {
     }
 
     /**
-     * Clears cache and closes all resources
+     * Clears and / or closes all cached resources
      * 
      * @throws IOException
      */
