@@ -272,7 +272,8 @@ public class TransactionManager {
     }
 
     /**
-     * Rollbacks all transactions from requires new stack in method of passed
+     * Rollbacks all {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW}
+     * transactions from requires new stack in method of passed
      * {@link UserTransaction} with {@link IOException} throw
      * 
      * @param transaction
