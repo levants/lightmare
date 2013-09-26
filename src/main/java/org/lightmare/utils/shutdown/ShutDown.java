@@ -117,6 +117,7 @@ public class ShutDown implements Runnable {
 	    Runtime runtime = Runtime.getRuntime();
 	    runtime.addShutdownHook(shutDownThread);
 	} else {
+	    // Adds passed TmpResources instances to existing ShutDown instance
 	    shutDown.addTmpResources(tmpResources);
 	}
     }
