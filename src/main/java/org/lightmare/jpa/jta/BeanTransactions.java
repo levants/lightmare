@@ -452,7 +452,7 @@ public class BeanTransactions {
     }
 
     /**
-     * Closes cached {@link EntityManager}s after method calll
+     * Closes cached {@link EntityManager}s after method call
      */
     public static void closeEntityManagers() {
 
