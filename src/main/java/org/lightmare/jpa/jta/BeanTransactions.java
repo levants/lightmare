@@ -277,7 +277,7 @@ public class BeanTransactions {
 
 	    try {
 		int status = getStatus(transaction);
-		if (status > 0) {
+		if (status > UserTransactionFactory.INSACTIVE_TRANSACTION_STATE) {
 		    throw new EJBException(NEVER_ERROR);
 		}
 	    } finally {
