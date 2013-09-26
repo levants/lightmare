@@ -186,7 +186,7 @@ public class BeanTransactions {
 
     /**
      * Gets {@link EntityTransaction} from passed {@link EntityManager} and
-     * begints it
+     * begins it
      * 
      * @param em
      * @return {@link EntityTransaction}
