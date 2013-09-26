@@ -172,7 +172,7 @@ public class BeanTransactions {
     }
 
     /**
-     * Checks if transaction is active and if it is not vegins transaction
+     * Checks if transaction is active and if it is not begins transaction
      * 
      * @param entityTransaction
      */
