@@ -92,6 +92,7 @@ public abstract class JsonSerializer {
 	    throws IOException {
 
 	T value;
+
 	try {
 	    value = getMapper().readValue(data, valueClass);
 	} catch (JsonGenerationException ex) {
