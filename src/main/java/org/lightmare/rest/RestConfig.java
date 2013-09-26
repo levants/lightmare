@@ -175,6 +175,10 @@ public class RestConfig extends ResourceConfig {
 	removePreResource(resource);
     }
 
+    /**
+     * Registers all cached {@link org.glassfish.jersey.server.model.Resource}
+     * instances
+     */
     public void registerPreResources() {
 
 	if (CollectionUtils.valid(preResources)) {
