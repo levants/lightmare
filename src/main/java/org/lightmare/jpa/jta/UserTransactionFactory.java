@@ -127,4 +127,15 @@ public abstract class UserTransactionFactory {
 	    }
 	}
     }
+
+    private static void addReqNewTransactions(UserTransactionImpl transaction,
+	    Collection<BeanTransactions.TransactionData> entityTransactions) {
+
+	if (CollectionUtils.valid(entityTransactions)) {
+	    for (BeanTransactions.TransactionData transactionData : entityTransactions) {
+		addReqNewTransaction(transaction,
+			transactionData.entityTransaction, transactionData.em);
+	    }
+	}
+    }
 }
