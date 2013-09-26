@@ -51,6 +51,14 @@ public class BeanTransactions {
 	EntityTransaction entityTransaction;
     }
 
+    /**
+     * Creates {@link TransactionData} instance with passed
+     * {@link EntityTransaction} and {@link EntityManager} instances
+     * 
+     * @param entityTransaction
+     * @param em
+     * @return {@link TransactionData}
+     */
     private static TransactionData createTransactionData(
 	    EntityTransaction entityTransaction, EntityManager em) {
 
