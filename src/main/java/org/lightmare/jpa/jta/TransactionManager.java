@@ -272,7 +272,7 @@ public class TransactionManager {
     }
 
     /**
-     * Calls {@link UserTransactionImpl#rollbackReqNews()} method of passed
+     * Rollbacks all transactions from requires new stack in method of passed
      * {@link UserTransaction} with {@link IOException} throw
      * 
      * @param transaction
