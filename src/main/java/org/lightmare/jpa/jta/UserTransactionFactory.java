@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.transaction.UserTransaction;
 
+import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
@@ -141,6 +142,15 @@ public abstract class UserTransactionFactory {
 		addReqNewTransaction(transaction,
 			transactionData.entityTransaction, transactionData.em);
 	    }
+	}
+    }
+
+    private static void addCaller(UserTransactionImpl transaction,
+	    BeanHandler handler) {
+
+	Object caller = transaction.getCaller();
+	if (caller == null) {
+	    transaction.setCaller(handler);
 	}
     }
 }
