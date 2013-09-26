@@ -288,7 +288,7 @@ public class BeanTransactions {
 	    try {
 		throw new NotYetImplementedException(SUPPORTS_ERROR);
 	    } finally {
-		addEntityManagers(transaction, ems);
+		TransactionManager.addEntityManagers(transaction, ems);
 	    }
 	}
     }
