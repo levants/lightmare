@@ -37,15 +37,15 @@ public abstract class UserTransactionFactory {
      * @param transaction
      * @param entityTransactions
      */
-    protected static void join(UserTransaction transaction,
+    protected static void join(UserTransaction userTransaction,
 	    EntityTransaction... entityTransactions) {
 
-	if (transaction instanceof UserTransactionImpl
+	if (userTransaction instanceof UserTransactionImpl
 		&& CollectionUtils.valid(entityTransactions)) {
 
-	    UserTransactionImpl userTransactionImpl = ObjectUtils.cast(
-		    transaction, UserTransactionImpl.class);
-	    userTransactionImpl.addTransactions(entityTransactions);
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+	    transaction.addTransactions(entityTransactions);
 	}
     }
 
