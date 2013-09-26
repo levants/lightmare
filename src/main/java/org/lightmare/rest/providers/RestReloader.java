@@ -31,7 +31,7 @@ public class RestReloader implements ContainerLifecycleListener {
 	try {
 	    reloader = this;
 	} finally {
-	    LOCK.unlock();
+	    ObjectUtils.unlock(LOCK);
 	}
     }
 
