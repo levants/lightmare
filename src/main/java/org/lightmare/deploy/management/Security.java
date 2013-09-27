@@ -29,6 +29,10 @@ public class Security {
 
     private static final String PROXY_HEADER = "x-forwarded-for";
 
+    private static final String LOCALHOST = "localhost";
+
+    private static final String LOCALHOST_PREFIX = "127.0.0.";
+
     public Security() throws IOException {
 	cacheUsers();
     }
