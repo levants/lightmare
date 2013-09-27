@@ -565,7 +565,7 @@ public class Configuration implements Cloneable {
     }
 
     public static String getAdminUsersPath() {
-	return ConfigKeys.ADMIN_USER_PATH.getValue();
+	return ConfigKeys.ADMIN_USERS_PATH.getValue();
     }
 
     public static void setAdminUsersPath(String adminUserPath) {

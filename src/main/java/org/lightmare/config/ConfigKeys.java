@@ -49,10 +49,6 @@ public enum ConfigKeys {
     // Configuration keys properties for deployment
     DEPLOY_CONFIG("deployConfiguration"), // Deploy CONFIG
 
-    ADMIN_USER_PATH("adminPath", "./config/admin/users.properties"), // ADMIN
-								     // user
-								     // path
-
     HOT_DEPLOYMENT("hotDeployment"), // Hot deployment
 
     WATCH_STATUS("watchStatus"), // Watch status
