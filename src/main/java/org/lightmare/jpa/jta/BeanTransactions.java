@@ -272,7 +272,7 @@ public class BeanTransactions {
 	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
 
 	    int status = getStatus(transaction);
-	    if (status == UserTransactionFactory.INSACTIVE_TRANSACTION_STATE) {
+	    if (status == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
 		TransactionManager.addEntityManagers(transaction, ems);
 		throw new EJBException(MANDATORY_ERROR);
 	    } else {
@@ -284,7 +284,7 @@ public class BeanTransactions {
 
 	    try {
 		int status = getStatus(transaction);
-		if (status > UserTransactionFactory.INSACTIVE_TRANSACTION_STATE) {
+		if (status > UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
 		    throw new EJBException(NEVER_ERROR);
 		}
 	    } finally {
