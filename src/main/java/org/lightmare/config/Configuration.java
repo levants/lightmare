@@ -568,8 +568,8 @@ public class Configuration implements Cloneable {
 	return ConfigKeys.ADMIN_USERS_PATH.getValue();
     }
 
-    public static void setAdminUsersPath(String adminUserPath) {
-	ConfigKeys.ADMIN_USERS_PATH.value = adminUserPath;
+    public static void setAdminUsersPath(String adminUsersPath) {
+	ConfigKeys.ADMIN_USERS_PATH.value = adminUsersPath;
     }
 
     public boolean isRemote() {
