@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.utils.CollectionUtils;
@@ -56,6 +58,19 @@ public class Security {
     public boolean check() {
 
 	return CollectionUtils.invalid(cache);
+    }
+
+    public boolean controlAllowed(HttpServletRequest request) {
+
+	boolean valid = Configuration.getRemoteControl();
+
+	if (ObjectUtils.notTrue(valid)) {
+	    String host = request.getRemoteAddr();
+	    valid = StringUtils.valid(host)
+		    && (host.equals("localhost") || host.startsWith("127.0.0."));
+	}
+
+	return valid;
     }
 
     public boolean authenticate(String user, String pass) {
