@@ -352,6 +352,11 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * Removes transaction from {@link Thread} cache
+     * 
+     * @param transaction
+     */
     public static void remove(UserTransaction transaction) {
 
 	try {

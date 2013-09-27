@@ -440,15 +440,13 @@ public class BeanTransactions {
 	UserTransaction transaction = getTransaction();
 
 	if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
-	    TransactionManager.close(transaction);
-	    TransactionHolder.removeTransaction();
+	    TransactionManager.remove(transaction);
 	} else {
 
 	    boolean check = TransactionManager
 		    .checkCaller(transaction, handler);
 	    if (check) {
-		TransactionManager.close(transaction);
-		TransactionHolder.removeTransaction();
+		TransactionManager.remove(transaction);
 	    }
 	}
     }
