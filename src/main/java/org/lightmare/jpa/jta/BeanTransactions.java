@@ -423,8 +423,10 @@ public class BeanTransactions {
      */
     public static void closeEntityManagers() {
 
-	UserTransaction transaction = getTransaction();
-	TransactionManager.closeEntityManagers(transaction);
+	UserTransaction transaction = TransactionHolder.getTransaction();
+	if (ObjectUtils.notNull(transaction)) {
+	    TransactionManager.close(transaction);
+	}
     }
 
     /**
