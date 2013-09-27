@@ -31,7 +31,9 @@ public class DeployManager extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String DEPLOY_MANAGER_DEFAULT_NAME = "/DeployManager";
+    public static final String DEPLOY_MANAGER_DEFAULT_NAME = CollectionUtils
+	    .getFirst(DeployManager.class.getAnnotation(WebServlet.class)
+		    .value());
 
     // HTML tags
     private static final String BEGIN_TAGS = "<tr><td><a name = \"";
@@ -291,7 +293,8 @@ public class DeployManager extends HttpServlet {
 	    valid = authenticate(userName, password, request);
 	}
 	if (valid) {
-	    response.sendRedirect("DeployManager");
+	    response.sendRedirect(DeployManager.class.getAnnotation(
+		    WebServlet.class).value());
 	} else {
 
 	    String html = toLoginPage(Boolean.TRUE);
