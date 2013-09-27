@@ -32,7 +32,7 @@ public class LoggConnectionCustomizer extends AbstractConnectionCustomizer {
      * 
      * @param maxPoolSize
      */
-    public static void setMaxPoolSize(int maxPoolSize) {
+    public static void initialPoolSize(int maxPoolSize) {
 	POOLED_CONNECTIONS.set(maxPoolSize);
     }
 
