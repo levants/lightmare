@@ -52,7 +52,6 @@ public class TransactionManager {
 	    if (ObjectUtils.notNull(em)) {
 		transaction.addEntityManager(em);
 	    }
-
 	}
     }
 
