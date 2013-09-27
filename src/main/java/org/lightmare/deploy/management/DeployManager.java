@@ -204,13 +204,15 @@ public class DeployManager extends HttpServlet {
     }
 
     private boolean authenticate(String userName, String password,
-	    HttpSession session) {
+	    HttpServletRequest request) {
 
-	boolean valid = security.authenticate(userName, password);
+	boolean valid = security.controlAllowed(request)
+		&& security.authenticate(userName, password);
 
 	if (valid) {
 	    DeployPass pass = new DeployPass();
 	    pass.userName = userName;
+	    HttpSession session = request.getSession(Boolean.FALSE);
 	    session.setAttribute(Security.DEPLOY_PASS_KEY, pass);
 	}
 
@@ -286,8 +288,7 @@ public class DeployManager extends HttpServlet {
 	boolean valid = StringUtils.valid(userName)
 		&& StringUtils.valid(password);
 	if (valid) {
-	    valid = authenticate(userName, password,
-		    request.getSession(Boolean.TRUE));
+	    valid = authenticate(userName, password, request);
 	}
 	if (valid) {
 	    response.sendRedirect("DeployManager");
