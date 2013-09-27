@@ -175,8 +175,10 @@ public class UserTransactionImpl implements UserTransaction {
 
 	try {
 	    if (checkNews()) {
-		EntityTransaction entityTransaction = getNews().pop();
-		rollback(entityTransaction);
+		while (CollectionUtils.notEmpty(requareNews)) {
+		    EntityTransaction entityTransaction = requareNews.pop();
+		    rollback(entityTransaction);
+		}
 	    }
 	} finally {
 	    closeReqNew();
