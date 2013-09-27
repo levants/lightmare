@@ -468,4 +468,10 @@ public class UserTransactionImpl implements UserTransaction {
 
 	return caller;
     }
+
+    public void close() {
+
+	closeEntityManagers();
+	closeReqNew();
+    }
 }
