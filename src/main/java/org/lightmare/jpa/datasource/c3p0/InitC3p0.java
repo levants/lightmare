@@ -25,8 +25,6 @@ import com.mchange.v2.c3p0.PooledDataSource;
  */
 public class InitC3p0 extends InitDataSource {
 
-    public static int initSize;
-
     public InitC3p0(Properties properties) {
 	super(properties);
     }

@@ -30,10 +30,10 @@ public class LoggConnectionCustomizer extends AbstractConnectionCustomizer {
      * Sets initial size of pool for pooled connection counter after
      * instantiation
      * 
-     * @param maxPoolSize
+     * @param initialPoolSize
      */
-    public static void initialPoolSize(int maxPoolSize) {
-	POOLED_CONNECTIONS.set(maxPoolSize);
+    public static void initialPoolSize(int initialPoolSize) {
+	POOLED_CONNECTIONS.set(initialPoolSize);
     }
 
     @Override
