@@ -17,6 +17,7 @@ import com.mchange.v2.c3p0.AbstractConnectionCustomizer;
  */
 public class LoggConnectionCustomizer extends AbstractConnectionCustomizer {
 
+    // Keeps count of active connections
     private static final AtomicInteger ACTIVE_CONNECTIONS = new AtomicInteger();
 
     private static final AtomicInteger POOLED_CONNECTIONS = new AtomicInteger();
