@@ -85,7 +85,7 @@ public class DeployManager extends HttpServlet {
 		    "\t\t\t\t\t\t</form></br>\n");
 
     private static final String INCORRECT_MESSAGE = "<br><b>invalid user name / passowd</b></br>";
-    
+
     private static final String CONTROLL_NOT_ALLOWED_MESSAGE = "<br><b>server does not allows remote control</b></br>";
 
     private static final String END_LOGIN_PAGE = "</html>";
@@ -288,23 +288,31 @@ public class DeployManager extends HttpServlet {
     protected void doPost(HttpServletRequest request,
 	    HttpServletResponse response) throws ServletException, IOException {
 
-	String userName = request.getParameter(USER_PARAMETER_NAME);
-	String password = request.getParameter(PASS_PARAMETER_NAME);
-	boolean valid = StringUtils.valid(userName)
-		&& StringUtils.valid(password);
-	if (valid) {
-	    valid = authenticate(userName, password, request);
-	}
-	if (valid) {
-	    response.sendRedirect(DEPLOY_MANAGER_DEFAULT_NAME);
+	boolean remoteAllowed = security.controlAllowed(request);
+
+	if (ObjectUtils.notTrue(remoteAllowed)) {
+	    response.sendError(HttpServletResponse.SC_FORBIDDEN,
+		    CONTROLL_NOT_ALLOWED_MESSAGE);
 	} else {
 
-	    String html = toLoginPage(Boolean.TRUE);
-	    Writer writer = response.getWriter();
-	    try {
-		writer.write(html);
-	    } finally {
-		IOUtils.close(writer);
+	    String userName = request.getParameter(USER_PARAMETER_NAME);
+	    String password = request.getParameter(PASS_PARAMETER_NAME);
+	    boolean valid = StringUtils.valid(userName)
+		    && StringUtils.valid(password);
+	    if (valid) {
+		valid = authenticate(userName, password, request);
+	    }
+	    if (valid) {
+		response.sendRedirect(DEPLOY_MANAGER_DEFAULT_NAME);
+	    } else {
+
+		String html = toLoginPage(Boolean.TRUE);
+		Writer writer = response.getWriter();
+		try {
+		    writer.write(html);
+		} finally {
+		    IOUtils.close(writer);
+		}
 	    }
 	}
     }
