@@ -11,6 +11,7 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
+import org.lightmare.cache.TransactionHolder;
 import org.lightmare.ejb.handlers.BeanHandler;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -348,6 +349,15 @@ public class TransactionManager {
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    transaction.close();
+	}
+    }
+
+    public static void remove(UserTransaction transaction) {
+
+	try {
+	    close(transaction);
+	} finally {
+	    TransactionHolder.removeTransaction();
 	}
     }
 }
