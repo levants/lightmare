@@ -336,4 +336,14 @@ public class TransactionManager {
 	    transaction.closeEntityManagers();
 	}
     }
+
+    public static void close(UserTransaction userTransaction) {
+
+	if (userTransaction instanceof UserTransactionImpl) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+	    transaction.close();
+	}
+    }
 }
