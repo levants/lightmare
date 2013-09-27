@@ -255,7 +255,8 @@ public class DeployManager extends HttpServlet {
     protected void doGet(HttpServletRequest request,
 	    HttpServletResponse response) throws ServletException, IOException {
 
-	boolean check = check(request.getSession(Boolean.FALSE));
+	boolean check = security.controlAllowed(request)
+		&& check(request.getSession(Boolean.FALSE));
 	String html;
 	if (check) {
 
