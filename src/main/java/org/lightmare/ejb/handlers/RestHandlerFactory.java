@@ -6,7 +6,7 @@ package org.lightmare.ejb.handlers;
  * @author levan
  * 
  */
-public class ResthandlerFactory {
+public class RestHandlerFactory {
 
     /**
      * Creates {@link RestHandler} instance
