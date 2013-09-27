@@ -26,7 +26,11 @@ public class LoggConnectionCustomizer extends AbstractConnectionCustomizer {
     private static final Logger LOG = Logger
 	    .getLogger(LoggConnectionCustomizer.class);
 
-    // Sets max number of pool for startup time
+    /**
+     * Sets max number of pool for startup time
+     * 
+     * @param maxPoolSize
+     */
     public static void setMaxPoolSize(int maxPoolSize) {
 	POOLED_CONNECTIONS.set(maxPoolSize);
     }
