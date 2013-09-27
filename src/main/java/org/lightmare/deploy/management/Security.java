@@ -26,6 +26,8 @@ public class Security {
     private Properties cache;
 
     public static final String DEPLOY_PASS_KEY = "deploy_manager_pass";
+    
+    private static final String PROXY_HEADER = "x-forwarded-for";
 
     public Security() throws IOException {
 	cacheUsers();

@@ -35,8 +35,6 @@ public class DeployManager extends HttpServlet {
 	    .getFirst(DeployManager.class.getAnnotation(WebServlet.class)
 		    .value());
 
-    private static final String PROXY_HEADER = "x-forwarded-for";
-
     // HTML tags
     private static final String BEGIN_TAGS = "<tr><td><a name = \"";
 
