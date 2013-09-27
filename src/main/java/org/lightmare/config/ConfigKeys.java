@@ -18,7 +18,7 @@ public enum ConfigKeys {
     // Path where stored administrative users
     ADMIN_USERS_PATH("adminUsersPath", "./config/admin/users.properties"),
 
-    REMOTE_CONTROL("remoteControl", Boolean.FALSE),
+    REMOTE_CONTROL("remoteControl", Boolean.FALSE), // Disables remote control
 
     // Netty server / client configuration properties for RPC calls
     IP_ADDRESS("listeningIp", "0.0.0.0"), // IP
