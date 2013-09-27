@@ -572,6 +572,10 @@ public class Configuration implements Cloneable {
 	ConfigKeys.ADMIN_USERS_PATH.value = adminUsersPath;
     }
 
+    public static void setRemoteContron(boolean remoteControl) {
+	ConfigKeys.REMOTE_CONTROL.value = remoteControl;
+    }
+
     public boolean isRemote() {
 
 	return ConfigKeys.REMOTE.getValue();
