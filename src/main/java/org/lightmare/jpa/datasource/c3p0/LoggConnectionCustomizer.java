@@ -10,7 +10,7 @@ import org.lightmare.utils.StringUtils;
 import com.mchange.v2.c3p0.AbstractConnectionCustomizer;
 
 /**
- * Test class for customize oracle connections
+ * Logger class for customize pooled connections
  * 
  * @author levan
  * 
