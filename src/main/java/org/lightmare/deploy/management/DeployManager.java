@@ -293,8 +293,7 @@ public class DeployManager extends HttpServlet {
 	    valid = authenticate(userName, password, request);
 	}
 	if (valid) {
-	    response.sendRedirect(DeployManager.class.getAnnotation(
-		    WebServlet.class).value());
+	    response.sendRedirect(DEPLOY_MANAGER_DEFAULT_NAME);
 	} else {
 
 	    String html = toLoginPage(Boolean.TRUE);
