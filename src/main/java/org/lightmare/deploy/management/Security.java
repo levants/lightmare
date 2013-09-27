@@ -26,7 +26,7 @@ public class Security {
     private Properties cache;
 
     public static final String DEPLOY_PASS_KEY = "deploy_manager_pass";
-    
+
     private static final String PROXY_HEADER = "x-forwarded-for";
 
     public Security() throws IOException {
@@ -67,6 +67,14 @@ public class Security {
 	boolean valid = Configuration.getRemoteControl();
 
 	if (ObjectUtils.notTrue(valid)) {
+
+	    String header = request.getHeader(PROXY_HEADER);
+	    valid = (header == null);
+	    if (valid) {
+		header = request.getHeader(PROXY_HEADER.toUpperCase());
+		valid = (header == null);
+	    }
+
 	    String host = request.getRemoteAddr();
 	    valid = StringUtils.valid(host)
 		    && (host.equals("localhost") || host.startsWith("127.0.0."));
