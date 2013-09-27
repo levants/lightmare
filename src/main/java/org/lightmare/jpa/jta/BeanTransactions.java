@@ -468,7 +468,12 @@ public class BeanTransactions {
 	if (ObjectUtils.notNull(type)) {
 	    remove(handler, type);
 	} else {
-	    TransactionHolder.removeTransaction();
+	    UserTransaction transaction = TransactionHolder.getTransaction();
+	    if (ObjectUtils.notNull(transaction)) {
+		TransactionManager.remove(transaction);
+	    } else {
+		TransactionHolder.removeTransaction();
+	    }
 	}
     }
 }
