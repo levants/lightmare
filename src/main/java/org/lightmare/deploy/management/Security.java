@@ -75,9 +75,12 @@ public class Security {
 		valid = (header == null);
 	    }
 
-	    String host = request.getRemoteAddr();
-	    valid = StringUtils.valid(host)
-		    && (host.equals("localhost") || host.startsWith("127.0.0."));
+	    if (valid) {
+		String host = request.getRemoteAddr();
+		valid = StringUtils.valid(host)
+			&& (host.equals("localhost") || host
+				.startsWith("127.0.0."));
+	    }
 	}
 
 	return valid;
