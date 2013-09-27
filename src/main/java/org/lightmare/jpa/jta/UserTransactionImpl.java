@@ -358,8 +358,10 @@ public class UserTransactionImpl implements UserTransaction {
     private void closeReqNew() {
 
 	if (checkNewEms()) {
-	    EntityManager em = getNewEms().pop();
-	    JpaManager.closeEntityManager(em);
+	    while (CollectionUtils.notEmpty(requareNewEms)) {
+		EntityManager em = requareNewEms.pop();
+		JpaManager.closeEntityManager(em);
+	    }
 	}
     }
 
