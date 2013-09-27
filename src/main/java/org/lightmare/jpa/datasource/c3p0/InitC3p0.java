@@ -9,7 +9,7 @@ import java.util.Properties;
 import javax.naming.Context;
 import javax.sql.DataSource;
 
-import org.lightmare.jpa.datasource.DriverConfig;
+import org.lightmare.config.Configuration;
 import org.lightmare.jpa.datasource.InitDataSource;
 import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.Initializer;
@@ -59,10 +59,10 @@ public class InitC3p0 extends InitDataSource {
 		Initializer.initializeDriver(driver);
 		dataSource = DataSources
 			.unpooledDataSource(url, user, password);
-		if (DriverConfig.isOracle(driver)) {
+		if (Configuration.isConnectionPoolDebuggMode()) {
 		    properties.setProperty(
 			    PoolConfig.Defaults.CONNECTION_CUSTOMIZER.key,
-			    OracleConnectionCustomizer.class.getName());
+			    LoggConnectionCustomizer.class.getName());
 		}
 	    }
 

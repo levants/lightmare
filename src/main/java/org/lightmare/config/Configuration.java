@@ -819,6 +819,16 @@ public class Configuration implements Cloneable {
 	poolConfig.setPoolProviderType(poolProviderType);
     }
 
+    public static void setPoolDebugMode(boolean poolDebugMode) {
+
+	ConfigKeys.POOL_DEBUG_MODE.value = poolDebugMode;
+    }
+
+    public static boolean isConnectionPoolDebuggMode() {
+
+	return ConfigKeys.POOL_DEBUG_MODE.getValue();
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
 

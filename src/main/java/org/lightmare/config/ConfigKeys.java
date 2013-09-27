@@ -87,7 +87,10 @@ public enum ConfigKeys {
     POOL_PROPERTIES("poolProperties"), // Pool properties
 
     // Default configuration file location
-    CONFIG_FILE("configFile", "./config/configuration.yaml");
+    CONFIG_FILE("configFile", "./config/configuration.yaml"),
+
+    // Debug mode for connection pooling
+    POOL_DEBUG_MODE("poolDebugMode", Boolean.FALSE);
 
     public String key;
 
