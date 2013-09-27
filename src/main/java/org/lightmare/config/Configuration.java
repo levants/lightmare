@@ -576,6 +576,10 @@ public class Configuration implements Cloneable {
 	ConfigKeys.REMOTE_CONTROL.value = remoteControl;
     }
 
+    public static boolean getRemoteControl() {
+	return ConfigKeys.REMOTE_CONTROL.getValue();
+    }
+
     public boolean isRemote() {
 
 	return ConfigKeys.REMOTE.getValue();
