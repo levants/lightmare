@@ -67,10 +67,7 @@ public class PoolConfig {
 	// Connection recovery properties
 	ACQUIRE_RETRY_ATTEMPTS("acquireRetryAttempts", 0), // retry
 	ACQUIRE_RETRY_DELAY("acquireRetryDelay", 1000), // delay
-	BREACK_AFTER_ACQUIRE_FAILURE("breakAfterAcquireFailure", Boolean.FALSE), // break
-
-	// Connection customizer property
-	CONNECTION_CUSTOMIZER("connectionCustomizerClassName", null);
+	BREACK_AFTER_ACQUIRE_FAILURE("breakAfterAcquireFailure", Boolean.FALSE); // break
 
 	public String key;
 
