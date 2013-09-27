@@ -20,6 +20,7 @@ public class LoggConnectionCustomizer extends AbstractConnectionCustomizer {
     // Keeps count of active connections
     private static final AtomicInteger ACTIVE_CONNECTIONS = new AtomicInteger();
 
+    // Keeps count of connections in pool
     private static final AtomicInteger POOLED_CONNECTIONS = new AtomicInteger();
 
     private static final Logger LOG = Logger
