@@ -337,6 +337,11 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * Closes all cached {@link EntityManager} instances
+     * 
+     * @param userTransaction
+     */
     public static void close(UserTransaction userTransaction) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
