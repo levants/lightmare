@@ -257,30 +257,37 @@ public class DeployManager extends HttpServlet {
     protected void doGet(HttpServletRequest request,
 	    HttpServletResponse response) throws ServletException, IOException {
 
-	boolean check = security.controlAllowed(request)
-		&& check(request.getSession(Boolean.FALSE));
-	String html;
-	if (check) {
+	boolean controllAllowed = security.controlAllowed(request);
 
-	    String fileName = request.getParameter(REDEPLOY_PARAM_NAME);
-	    String type = request.getParameter(TYPE_PARAM_NAME);
-	    if (StringUtils.valid(fileName)) {
-		if (type == null || REDEPLOY_TYPE.equals(type)) {
-		    Watcher.redeployFile(fileName);
-		} else if (UNDEPLOY_TYPE.equals(type)) {
-		    Watcher.undeployFile(fileName);
-		}
-	    }
-	    html = getApplications();
+	if (ObjectUtils.notTrue(controllAllowed)) {
+	    response.sendError(HttpServletResponse.SC_FORBIDDEN,
+		    CONTROLL_NOT_ALLOWED_MESSAGE);
 	} else {
-	    html = toLoginPage(Boolean.FALSE);
-	}
 
-	Writer writer = response.getWriter();
-	try {
-	    writer.write(html);
-	} finally {
-	    IOUtils.close(writer);
+	    boolean check = check(request.getSession(Boolean.FALSE));
+	    String html;
+	    if (check) {
+
+		String fileName = request.getParameter(REDEPLOY_PARAM_NAME);
+		String type = request.getParameter(TYPE_PARAM_NAME);
+		if (StringUtils.valid(fileName)) {
+		    if (type == null || REDEPLOY_TYPE.equals(type)) {
+			Watcher.redeployFile(fileName);
+		    } else if (UNDEPLOY_TYPE.equals(type)) {
+			Watcher.undeployFile(fileName);
+		    }
+		}
+		html = getApplications();
+	    } else {
+		html = toLoginPage(Boolean.FALSE);
+	    }
+
+	    Writer writer = response.getWriter();
+	    try {
+		writer.write(html);
+	    } finally {
+		IOUtils.close(writer);
+	    }
 	}
     }
 
