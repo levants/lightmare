@@ -437,17 +437,19 @@ public class BeanTransactions {
     private static void remove(BeanHandler handler,
 	    TransactionAttributeType type) {
 
-	UserTransaction transaction = getTransaction();
+	UserTransaction transaction = TransactionHolder.getTransaction();
 
 	if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    TransactionManager.remove(transaction);
-	} else {
+	} else if (ObjectUtils.notNull(transaction)) {
 
 	    boolean check = TransactionManager
 		    .checkCaller(transaction, handler);
 	    if (check) {
 		TransactionManager.remove(transaction);
 	    }
+	} else {
+	    TransactionHolder.removeTransaction();
 	}
     }
 
