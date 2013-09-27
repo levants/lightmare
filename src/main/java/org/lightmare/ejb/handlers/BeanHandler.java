@@ -278,8 +278,13 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void rollback(Method method) throws IOException {
 
-	if (ObjectUtils.notNull(method)) {
-	    BeanTransactions.rollbackTransaction(this, method);
+	try {
+	    if (ObjectUtils.notNull(method)) {
+		BeanTransactions.rollbackTransaction(this, method);
+	    }
+	} catch (Throwable th) {
+	    close(method);
+	    throw new IOException(th);
 	}
     }
 
