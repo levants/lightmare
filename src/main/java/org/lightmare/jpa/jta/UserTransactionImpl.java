@@ -151,6 +151,11 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Rollbacks each of {@link EntityTransaction}s {@link Stack}
+     * 
+     * @param entityTransactions
+     */
     private void rollback(Stack<EntityTransaction> entityTransactions) {
 
 	if (CollectionUtils.valid(entityTransactions)) {
