@@ -493,5 +493,6 @@ public class UserTransactionImpl implements UserTransaction {
 
 	closeEntityManagers();
 	closeReqNew();
+	closeNotTransactionals();
     }
 }
