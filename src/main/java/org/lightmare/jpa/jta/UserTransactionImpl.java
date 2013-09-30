@@ -141,6 +141,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void pushReqNew(EntityTransaction entityTransaction) {
 
+	entityTransaction.begin();
 	getNews().push(entityTransaction);
     }
 
