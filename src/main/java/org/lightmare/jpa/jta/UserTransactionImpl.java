@@ -113,7 +113,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 	}
     }
-    
+
     /**
      * Adds new {@link EntityTransaction} for
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
@@ -393,8 +393,6 @@ public class UserTransactionImpl implements UserTransaction {
 
 	return requareNewEms;
     }
-
-
 
     /**
      * Commits new {@link EntityTransaction} at the end of
