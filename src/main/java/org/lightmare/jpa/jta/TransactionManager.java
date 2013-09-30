@@ -45,6 +45,13 @@ public class TransactionManager {
 		|| type.equals(TransactionAttributeType.SUPPORTS);
     }
 
+    /**
+     * Checks if passed {@link TransactionAttributeType} is out of transaction
+     * scope
+     * 
+     * @param type
+     * @return <code>boolean</code>
+     */
     protected static boolean isFreeType(TransactionAttributeType type) {
 
 	return type.equals(TransactionAttributeType.NOT_SUPPORTED)
