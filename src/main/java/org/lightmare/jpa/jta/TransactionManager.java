@@ -176,21 +176,15 @@ public class TransactionManager {
      * @param entityTransaction
      * @param em
      */
-    private static void addReqNewTransaction(UserTransactionImpl userTransaction,
+    private static void addReqNewTransaction(UserTransactionImpl transaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
-	if (userTransaction instanceof UserTransactionImpl) {
+	if (ObjectUtils.notNull(entityTransaction)) {
+	    transaction.pushReqNew(entityTransaction);
+	}
 
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
-		    UserTransactionImpl.class);
-
-	    if (ObjectUtils.notNull(entityTransaction)) {
-		transaction.pushReqNew(entityTransaction);
-	    }
-
-	    if (ObjectUtils.notNull(em)) {
-		transaction.pushReqNewEm(em);
-	    }
+	if (ObjectUtils.notNull(em)) {
+	    transaction.pushReqNewEm(em);
 	}
     }
 
