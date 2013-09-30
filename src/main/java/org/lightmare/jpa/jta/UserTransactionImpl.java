@@ -312,6 +312,13 @@ public class UserTransactionImpl implements UserTransaction {
 	close(ems);
     }
 
+    public void beginReqNews() throws NotSupportedException, SystemException {
+
+	if (CollectionUtils.valid(requareNews)) {
+	    begin(requareNews);
+	}
+    }
+
     @Override
     public void begin() throws NotSupportedException, SystemException {
 
