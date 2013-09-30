@@ -320,6 +320,29 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Commits new {@link EntityTransaction} at the end of
+     * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
+     * methods
+     * 
+     * @throws SystemException
+     * @throws HeuristicRollbackException
+     * @throws HeuristicMixedException
+     * @throws RollbackException
+     * @throws IllegalStateException
+     * @throws SecurityException
+     */
+    public void commitReqNew() throws SecurityException, IllegalStateException,
+	    RollbackException, HeuristicMixedException,
+	    HeuristicRollbackException, SystemException {
+
+	try {
+	    commit(requareNews);
+	} finally {
+	    closeReqNew();
+	}
+    }
+
     @Override
     public void commit() throws RollbackException, HeuristicMixedException,
 	    HeuristicRollbackException, SecurityException,
