@@ -293,8 +293,6 @@ public class PoolConfig {
 	    fillDefaults(configMap, poolProperties);
 	}
 
-	poolProperties = configMap;
-
 	return configMap;
     }
 
