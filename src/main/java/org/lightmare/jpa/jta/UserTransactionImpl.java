@@ -134,7 +134,7 @@ public class UserTransactionImpl implements UserTransaction {
 	return requareNewEms;
     }
 
-    private Stack<EntityManager> getNotSupportedEms() {
+    private Stack<EntityManager> getNotTransactionalEms() {
 
 	if (notTransactionalEms == null) {
 	    notTransactionalEms = new Stack<EntityManager>();
