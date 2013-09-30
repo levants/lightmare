@@ -126,6 +126,18 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 	}
     }
+    
+    /**
+     * Rollbacks passed {@link EntityTransaction} if it is active
+     * 
+     * @param transaction
+     */
+    private void rollback(EntityTransaction transaction) {
+
+	if (transaction.isActive()) {
+	    transaction.rollback();
+	}
+    }
 
     private void beginAll() throws NotSupportedException, SystemException {
 
@@ -176,18 +188,6 @@ public class UserTransactionImpl implements UserTransaction {
 	}
 
 	return active;
-    }
-
-    /**
-     * Rollbacks passed {@link EntityTransaction} if it is active
-     * 
-     * @param transaction
-     */
-    private void rollback(EntityTransaction transaction) {
-
-	if (transaction.isActive()) {
-	    transaction.rollback();
-	}
     }
 
     /**
