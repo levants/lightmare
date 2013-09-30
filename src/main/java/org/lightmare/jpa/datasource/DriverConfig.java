@@ -51,6 +51,8 @@ public abstract class DriverConfig {
 	    driverName = Drivers.ORACLE.driver;
 	} else if (Drivers.MYSQL.name.equals(name)) {
 	    driverName = Drivers.MYSQL.driver;
+	} else if (Drivers.POSTGRE.name.equals(name)) {
+	    driverName = Drivers.POSTGRE.driver;
 	} else if (Drivers.DB2.name.equals(name)) {
 	    driverName = Drivers.DB2.driver;
 	} else if (Drivers.MSSQL.name.equals(name)) {
