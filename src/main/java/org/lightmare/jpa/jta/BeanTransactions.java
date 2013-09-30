@@ -14,7 +14,6 @@ import javax.persistence.EntityTransaction;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
-import org.hibernate.cfg.NotYetImplementedException;
 import org.lightmare.cache.MetaData;
 import org.lightmare.cache.TransactionHolder;
 import org.lightmare.ejb.handlers.BeanHandler;
@@ -292,11 +291,9 @@ public class BeanTransactions {
 	    }
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
 
-	    try {
-		throw new NotYetImplementedException(SUPPORTS_ERROR);
-	    } finally {
-		TransactionManager.addEntityManagers(transaction, ems);
-	    }
+	    entityTransactions = getEntityTransactions(ems);
+	    TransactionManager.addEntityTransactions(transaction,
+		    entityTransactions);
 	}
     }
 
