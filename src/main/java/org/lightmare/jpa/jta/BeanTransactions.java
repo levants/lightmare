@@ -388,11 +388,11 @@ public class BeanTransactions {
 		TransactionManager.remove(transaction);
 	    } else {
 		TransactionManager.remove(transaction);
-		throw new EJBException(MANDATORY_SUPPORTS_ERROR);
+		throw new EJBException(SUPPORTS_ERROR);
 	    }
 	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
 	    TransactionManager.remove(transaction);
-	    throw new EJBException(MANDATORY_SUPPORTS_ERROR);
+	    throw new EJBException(MANDATORY_ERROR);
 	}
     }
 
