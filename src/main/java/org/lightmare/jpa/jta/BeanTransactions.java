@@ -382,6 +382,7 @@ public class BeanTransactions {
 	if (type.equals(TransactionAttributeType.REQUIRED)) {
 	    TransactionManager.commit(transaction);
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
+
 	    int status = getStatus(transaction);
 	    if (status == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
 		TransactionManager.remove(transaction);
