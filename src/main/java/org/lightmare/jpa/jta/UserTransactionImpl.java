@@ -403,15 +403,6 @@ public class UserTransactionImpl implements UserTransaction {
 	return requareNews;
     }
 
-    private Stack<EntityManager> getNewEms() {
-
-	if (requareNewEms == null) {
-	    requareNewEms = new Stack<EntityManager>();
-	}
-
-	return requareNewEms;
-    }
-
     /**
      * Commits new {@link EntityTransaction} at the end of
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
