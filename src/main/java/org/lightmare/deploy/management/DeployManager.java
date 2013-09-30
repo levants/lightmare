@@ -24,7 +24,7 @@ import org.lightmare.utils.StringUtils;
  * {@link Servlet} to manage deployed applications
  * 
  * @author levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 @WebServlet("/DeployManager")
 public class DeployManager extends HttpServlet {
