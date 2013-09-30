@@ -410,17 +410,6 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     /**
-     * Adds {@link EntityTransaction} to transactions {@link List} for further
-     * processing
-     * 
-     * @param transaction
-     */
-    public void addTransaction(EntityTransaction transaction) {
-
-	transactions.add(transaction);
-    }
-
-    /**
      * Closes all contained {@link EntityManager}s
      */
     public void closeEntityManagers() {
