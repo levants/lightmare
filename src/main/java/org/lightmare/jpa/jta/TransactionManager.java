@@ -58,6 +58,10 @@ public class TransactionManager {
 		|| type.equals(TransactionAttributeType.NEVER);
     }
 
+    protected static boolean isSupportsCommitable(UserTransaction transaction) {
+
+    }
+
     /**
      * Adds {@link EntityTransaction} to passed {@link UserTransaction} instance
      * 

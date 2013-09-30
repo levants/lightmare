@@ -369,6 +369,23 @@ public class BeanTransactions {
 	}
     }
 
+    private static void commitTransactionScoped(TransactionAttributeType type,
+	    UserTransaction transaction) throws IOException {
+
+	if (type.equals(TransactionAttributeType.REQUIRED)) {
+	    TransactionManager.commit(transaction);
+	} else if (type.equals(TransactionAttributeType.SUPPORTS)
+		&& getStatus(transaction) == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
+	    TransactionManager.remove(transaction);
+	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
+	    TransactionManager.remove(transaction);
+	    throw new EJBException(MANDATORY_SUPPORTS_ERROR);
+	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
+	    TransactionManager.remove(transaction);
+	    throw new EJBException(MANDATORY_SUPPORTS_ERROR);
+	}
+    }
+
     /**
      * Decides whether commit or not {@link UserTransaction} by
      * {@link TransactionAttribute} annotation
@@ -389,8 +406,12 @@ public class BeanTransactions {
 	    if (check) {
 		if (type.equals(TransactionAttributeType.REQUIRED)) {
 		    TransactionManager.commit(transaction);
+		} else if (type.equals(TransactionAttributeType.SUPPORTS)
+			&& getStatus(transaction) == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
+		    TransactionManager.remove(transaction);
 		} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
 		    TransactionManager.remove(transaction);
+		    throw new EJBException(MANDATORY_SUPPORTS_ERROR);
 		} else if (type.equals(TransactionAttributeType.MANDATORY)) {
 		    TransactionManager.remove(transaction);
 		    throw new EJBException(MANDATORY_SUPPORTS_ERROR);
