@@ -60,6 +60,18 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    private void closeEms(Stack<EntityManager> entityManagers) {
+
+	if (CollectionUtils.valid(entityManagers)) {
+
+	    EntityManager em;
+	    while (CollectionUtils.notEmpty(entityManagers)) {
+		em = entityManagers.pop();
+		JpaManager.closeEntityManager(em);
+	    }
+	}
+    }
+
     private void beginAll() throws NotSupportedException, SystemException {
 
 	for (EntityTransaction transaction : transactions) {
