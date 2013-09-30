@@ -287,9 +287,7 @@ public class UserTransactionImpl implements UserTransaction {
     @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
 
-	if (CollectionUtils.valid(transactions)) {
-	    setRollbackOnlyAll();
-	}
+	setRollbackOnly(transactions);
     }
 
     @Override
