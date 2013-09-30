@@ -71,6 +71,27 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 	}
     }
+    
+    /**
+     * Commits if passed transaction is active
+     * 
+     * @param transaction
+     * @throws RollbackException
+     * @throws HeuristicMixedException
+     * @throws HeuristicRollbackException
+     * @throws SecurityException
+     * @throws IllegalStateException
+     * @throws SystemException
+     */
+    private void commit(EntityTransaction transaction)
+	    throws RollbackException, HeuristicMixedException,
+	    HeuristicRollbackException, SecurityException,
+	    IllegalStateException, SystemException {
+
+	if (transaction.isActive()) {
+	    transaction.commit();
+	}
+    }
 
     private void commit(Stack<EntityTransaction> entityTransactions)
 	    throws SecurityException, IllegalStateException, RollbackException,
@@ -99,27 +120,6 @@ public class UserTransactionImpl implements UserTransaction {
 
 	if (CollectionUtils.valid(transactions)) {
 	    beginAll();
-	}
-    }
-
-    /**
-     * Commits if passed transaction is active
-     * 
-     * @param transaction
-     * @throws RollbackException
-     * @throws HeuristicMixedException
-     * @throws HeuristicRollbackException
-     * @throws SecurityException
-     * @throws IllegalStateException
-     * @throws SystemException
-     */
-    private void commit(EntityTransaction transaction)
-	    throws RollbackException, HeuristicMixedException,
-	    HeuristicRollbackException, SecurityException,
-	    IllegalStateException, SystemException {
-
-	if (transaction.isActive()) {
-	    transaction.commit();
 	}
     }
 
