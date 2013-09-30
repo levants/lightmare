@@ -374,12 +374,14 @@ public class BeanTransactions {
 
 	if (type.equals(TransactionAttributeType.REQUIRED)) {
 	    TransactionManager.commit(transaction);
-	} else if (type.equals(TransactionAttributeType.SUPPORTS)
-		&& getStatus(transaction) == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
-	    TransactionManager.remove(transaction);
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
-	    TransactionManager.remove(transaction);
-	    throw new EJBException(MANDATORY_SUPPORTS_ERROR);
+	    int status = getStatus(transaction);
+	    if (status == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
+		TransactionManager.remove(transaction);
+	    } else {
+		TransactionManager.remove(transaction);
+		throw new EJBException(MANDATORY_SUPPORTS_ERROR);
+	    }
 	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
 	    TransactionManager.remove(transaction);
 	    throw new EJBException(MANDATORY_SUPPORTS_ERROR);
