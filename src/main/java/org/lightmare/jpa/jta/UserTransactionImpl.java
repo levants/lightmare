@@ -432,23 +432,6 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     /**
-     * Adds {@link EntityManager} to collection to close after transactions
-     * processing
-     * 
-     * @param em
-     */
-    public void addEntityManager(EntityManager em) {
-
-	if (ObjectUtils.notNull(em)) {
-	    if (ems == null) {
-		ems = new Stack<EntityManager>();
-	    }
-
-	    ems.push(em);
-	}
-    }
-
-    /**
      * Closes all contained {@link EntityManager}s
      */
     public void closeEntityManagers() {
