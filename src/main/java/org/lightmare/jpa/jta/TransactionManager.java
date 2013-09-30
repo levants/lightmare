@@ -126,7 +126,7 @@ public class TransactionManager {
      * @param userTransaction
      * @param ems
      */
-    protected static void addNotTransactionalEntityManager(
+    protected static void addNotTransactionalEntityManagers(
 	    UserTransaction userTransaction, Collection<EntityManager> ems) {
 
 	if (userTransaction instanceof UserTransactionImpl
