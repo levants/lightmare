@@ -78,6 +78,21 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     /**
+     * Sets passed {@link EntityTransaction} in rollbackOnly mode
+     * 
+     * @param transaction
+     * @throws IllegalStateException
+     * @throws SystemException
+     */
+    private void setRollbackOnly(EntityTransaction transaction)
+	    throws IllegalStateException, SystemException {
+
+	if (transaction.isActive()) {
+	    transaction.setRollbackOnly();
+	}
+    }
+
+    /**
      * Begins each of passed {@link EntityTransaction}s {@link Collection}
      * 
      * @param entityTransactions
@@ -234,21 +249,6 @@ public class UserTransactionImpl implements UserTransaction {
 	    rollback(transactions);
 	} finally {
 	    closeEntityManagers();
-	}
-    }
-
-    /**
-     * Sets passed {@link EntityTransaction} in rollbackOnly mode
-     * 
-     * @param transaction
-     * @throws IllegalStateException
-     * @throws SystemException
-     */
-    private void setRollbackOnly(EntityTransaction transaction)
-	    throws IllegalStateException, SystemException {
-
-	if (transaction.isActive()) {
-	    transaction.setRollbackOnly();
 	}
     }
 
