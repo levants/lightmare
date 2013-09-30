@@ -239,6 +239,28 @@ public class TransactionManager {
 	    }
 	}
     }
+    
+    /**
+     * Checks if passed {@link BeanHandler} is first caller / beginner of passed
+     * {@link UserTransaction} instance
+     * 
+     * @param userTransaction
+     * @param handler
+     * @return <code>boolean</code>
+     */
+    protected static boolean checkCaller(UserTransaction userTransaction,
+	    BeanHandler handler) {
+
+	boolean check = (userTransaction instanceof UserTransactionImpl);
+
+	if (check) {
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+	    check = transaction.checkCaller(handler);
+	}
+
+	return check;
+    }
 
     /**
      * Commits passed {@link UserTransaction} with {@link IOException} throw
