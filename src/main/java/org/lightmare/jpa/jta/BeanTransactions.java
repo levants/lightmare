@@ -390,7 +390,8 @@ public class BeanTransactions {
 	UserTransaction transaction = getTransaction();
 
 	if (type.equals(TransactionAttributeType.REQUIRED)
-		|| type.equals(TransactionAttributeType.MANDATORY)) {
+		|| type.equals(TransactionAttributeType.MANDATORY)
+		|| type.equals(TransactionAttributeType.SUPPORTS)) {
 
 	    boolean check = TransactionManager
 		    .checkCaller(transaction, handler);
@@ -399,6 +400,9 @@ public class BeanTransactions {
 	    }
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    TransactionManager.commitReqNew(transaction);
+	} else if (type.equals(TransactionAttributeType.NOT_SUPPORTED)
+		|| type.equals(TransactionAttributeType.NEVER)) {
+	    TransactionManager.closeNotTransactionalEntityManagers(transaction);
 	} else {
 	    TransactionManager.closeEntityManagers(transaction);
 	}
