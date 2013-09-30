@@ -290,7 +290,7 @@ public class PoolConfig {
 	if (ObjectUtils.notNull(poolProperties)) {
 	    fillDefaults(poolProperties, configMap);
 	} else {
-
+	    poolProperties = configMap;
 	}
 
 	return configMap;
