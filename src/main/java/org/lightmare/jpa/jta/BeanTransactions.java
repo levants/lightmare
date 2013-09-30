@@ -34,7 +34,7 @@ public class BeanTransactions {
 
     private static final String NEVER_ERROR = "TransactionAttributeType.NEVER is called within transaction";
 
-    private static final String SUPPORTS_ERROR = "TransactionAttributeType.SUPPORTS must always be called within other transaction";
+    private static final String SUPPORTS_ERROR = "TransactionAttributeType.SUPPORTS can not be initiator of bean transaction";
 
     /**
      * Inner class to cache {@link EntityTransaction}s and {@link EntityManager}
