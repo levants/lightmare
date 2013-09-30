@@ -406,18 +406,7 @@ public class BeanTransactions {
 	    boolean check = TransactionManager
 		    .checkCaller(transaction, handler);
 	    if (check) {
-		if (type.equals(TransactionAttributeType.REQUIRED)) {
-		    TransactionManager.commit(transaction);
-		} else if (type.equals(TransactionAttributeType.SUPPORTS)
-			&& getStatus(transaction) == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
-		    TransactionManager.remove(transaction);
-		} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
-		    TransactionManager.remove(transaction);
-		    throw new EJBException(MANDATORY_SUPPORTS_ERROR);
-		} else if (type.equals(TransactionAttributeType.MANDATORY)) {
-		    TransactionManager.remove(transaction);
-		    throw new EJBException(MANDATORY_SUPPORTS_ERROR);
-		}
+		commitTransactionScoped(type, transaction);
 	    }
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    TransactionManager.commitReqNew(transaction);

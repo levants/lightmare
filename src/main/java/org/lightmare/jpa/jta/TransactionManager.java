@@ -58,7 +58,6 @@ public class TransactionManager {
 		|| type.equals(TransactionAttributeType.NEVER);
     }
 
-
     /**
      * Adds {@link EntityTransaction} to passed {@link UserTransaction} instance
      * 
