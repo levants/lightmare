@@ -139,7 +139,8 @@ public class PoolConfig {
     }
 
     /**
-     * Caches keys which are not supported for pool configuration to remove them
+     * Caches keys which are not supported directly for pool configuration to
+     * remove them
      * 
      * @return {@link Set}<code><Object></code>
      * @throws IOException
