@@ -170,6 +170,14 @@ public class DeployManager extends HttpServlet {
 	return builder.toString();
     }
 
+    /**
+     * Gets types of deployment
+     * 
+     * @param builder
+     * @param app
+     * @param type
+     * @param fileType
+     */
     private void fillDeployType(StringBuilder builder, String app, String type,
 	    String fileType) {
 
