@@ -32,6 +32,12 @@ public class TransactionManager {
 	throw new InstantiationError(ISNANTIATING_ERROR);
     }
 
+    /**
+     * Checks if passed {@link TransactionAttributeType} is transaction scoped
+     * 
+     * @param type
+     * @return <code>boolean</code>
+     */
     protected static boolean isTransactionalType(TransactionAttributeType type) {
 
 	return type.equals(TransactionAttributeType.REQUIRED)
