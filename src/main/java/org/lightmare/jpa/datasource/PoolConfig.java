@@ -17,7 +17,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
- * Configuration with default parameters for c3p0 connection pooling
+ * Configuration with default and set parameters for c3p0 connection pooling
  * 
  * @author levan
  * 
