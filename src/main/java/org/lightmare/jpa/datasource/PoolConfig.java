@@ -332,7 +332,7 @@ public class PoolConfig {
     }
 
     public void setPoolProviderType(PoolProviderType poolProviderType) {
-	
+
 	if (ObjectUtils.notNull(poolProviderType)) {
 	    this.poolProviderType = poolProviderType;
 	}
