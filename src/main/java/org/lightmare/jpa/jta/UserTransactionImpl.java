@@ -113,6 +113,24 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 	}
     }
+    
+    private Stack<EntityTransaction> getNews() {
+
+	if (requareNews == null) {
+	    requareNews = new Stack<EntityTransaction>();
+	}
+
+	return requareNews;
+    }
+
+    private Stack<EntityManager> getNewEms() {
+
+	if (requareNewEms == null) {
+	    requareNewEms = new Stack<EntityManager>();
+	}
+
+	return requareNewEms;
+    }
 
     /**
      * Adds new {@link EntityTransaction} for
