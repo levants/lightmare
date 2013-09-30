@@ -377,19 +377,6 @@ public class TransactionManager {
      * @param handler
      * @return <code>boolean</code>
      */
-    protected static boolean checkCaller(UserTransaction userTransaction,
-	    BeanHandler handler) {
-
-	boolean check = (userTransaction instanceof UserTransactionImpl);
-
-	if (check) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
-		    UserTransactionImpl.class);
-	    check = transaction.checkCaller(handler);
-	}
-
-	return check;
-    }
 
     /**
      * Closes all cached {@link EntityManager}s from stack in passed
