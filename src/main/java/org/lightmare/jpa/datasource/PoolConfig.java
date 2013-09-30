@@ -20,7 +20,7 @@ import org.lightmare.utils.StringUtils;
  * Configuration with default and set parameters for c3p0 connection pooling
  * 
  * @author levan
- * 
+ * @since 0.0.26-SNAPSHOT
  */
 public class PoolConfig {
 
