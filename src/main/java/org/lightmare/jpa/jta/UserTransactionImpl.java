@@ -253,6 +253,22 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 	}
     }
+    
+    /**
+     * Closes all cached immediate {@link EntityManager} instances
+     */
+    private void closeReqNew() {
+
+	close(requareNewEms);
+    }
+
+    /**
+     * Closes all contained {@link EntityManager}s
+     */
+    public void closeEntityManagers() {
+
+	close(ems);
+    }
 
     @Override
     public void begin() throws NotSupportedException, SystemException {
@@ -407,14 +423,6 @@ public class UserTransactionImpl implements UserTransaction {
     private void closeReqNew() {
 
 	close(requareNewEms);
-    }
-
-    /**
-     * Closes all contained {@link EntityManager}s
-     */
-    public void closeEntityManagers() {
-
-	close(ems);
     }
 
     /**
