@@ -71,7 +71,16 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 	}
     }
-    
+
+    private void begin(Stack<EntityTransaction> entityTransactions)
+	    throws NotSupportedException, SystemException {
+
+	if (CollectionUtils.valid(entityTransactions))
+	    for (EntityTransaction transaction : entityTransactions) {
+		transaction.begin();
+	    }
+    }
+
     /**
      * Commits if passed transaction is active
      * 
