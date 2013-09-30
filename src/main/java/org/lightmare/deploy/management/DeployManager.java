@@ -216,6 +216,12 @@ public class DeployManager extends HttpServlet {
 	return builder.toString();
     }
 
+    /**
+     * Redirects page to login page with error message
+     * 
+     * @param incorrect
+     * @return {@link String}
+     */
     private String toLoginPage(boolean incorrect) {
 
 	StringBuilder builder = new StringBuilder();
