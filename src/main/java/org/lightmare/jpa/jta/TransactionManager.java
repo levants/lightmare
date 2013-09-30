@@ -41,6 +41,8 @@ public class TransactionManager {
 
     protected static boolean isFreeType(TransactionAttributeType type) {
 
+	return type.equals(TransactionAttributeType.NOT_SUPPORTED)
+		|| type.equals(TransactionAttributeType.NEVER);
     }
 
     /**
