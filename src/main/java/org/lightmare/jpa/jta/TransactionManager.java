@@ -239,7 +239,7 @@ public class TransactionManager {
 	    }
 	}
     }
-    
+
     /**
      * Checks if passed {@link BeanHandler} is first caller / beginner of passed
      * {@link UserTransaction} instance
