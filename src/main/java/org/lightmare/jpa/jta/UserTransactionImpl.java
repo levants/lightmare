@@ -443,6 +443,9 @@ public class UserTransactionImpl implements UserTransaction {
 	return caller;
     }
 
+    /**
+     * Closses all cached {@link EntityManager} isntances
+     */
     public void close() {
 
 	closeEntityManagers();
