@@ -65,7 +65,7 @@ public class UserTransactionImpl implements UserTransaction {
      * 
      * @param entityManagers
      */
-    private void closeEms(Stack<EntityManager> entityManagers) {
+    private void close(Stack<EntityManager> entityManagers) {
 
 	if (CollectionUtils.valid(entityManagers)) {
 
@@ -400,12 +400,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private void closeReqNew() {
 
-	if (checkNewEms()) {
-	    while (CollectionUtils.notEmpty(requareNewEms)) {
-		EntityManager em = requareNewEms.pop();
-		JpaManager.closeEntityManager(em);
-	    }
-	}
+	close(requareNewEms);
     }
 
     /**
