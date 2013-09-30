@@ -86,7 +86,7 @@ public class DeployManager extends HttpServlet {
 
     private static final String INCORRECT_MESSAGE = "<br><b>invalid user name / passowd</b></br>";
 
-    private static final String CONTROLL_NOT_ALLOWED_MESSAGE = "server does not allows remote control";
+    private static final String CONTROLL_NOT_ALLOWED_MESSAGE = "Server does not allows remote control";
 
     private static final String END_LOGIN_PAGE = "</html>";
 
