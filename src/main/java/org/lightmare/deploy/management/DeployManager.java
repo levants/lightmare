@@ -21,7 +21,8 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
- * {@link Servlet} to manage deployed applications
+ * Administrative {@link Servlet} to manage deployed applications and data
+ * sources
  * 
  * @author levan
  * @since 0.0.45-SNAPSHOT
