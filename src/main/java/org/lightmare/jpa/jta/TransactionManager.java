@@ -176,7 +176,7 @@ public class TransactionManager {
      * @param entityTransaction
      * @param em
      */
-    private static void addReqNewTransaction(UserTransaction userTransaction,
+    private static void addReqNewTransaction(UserTransactionImpl userTransaction,
 	    EntityTransaction entityTransaction, EntityManager em) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
