@@ -371,7 +371,7 @@ public class TransactionManager {
 
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
-	    transaction.closeNotTransactionals();
+	    transaction.closeFreeEntityManagers();
 	}
     }
 

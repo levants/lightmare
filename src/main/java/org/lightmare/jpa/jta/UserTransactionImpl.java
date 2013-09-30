@@ -337,7 +337,7 @@ public class UserTransactionImpl implements UserTransaction {
     /**
      * Closes all not in transaction {@link EntityManager} instances
      */
-    public void closeNotTransactionals() {
+    public void closeFreeEntityManagers() {
 
 	close(notTransactionalEms);
     }
@@ -493,6 +493,6 @@ public class UserTransactionImpl implements UserTransaction {
 
 	closeEntityManagers();
 	closeReqNew();
-	closeNotTransactionals();
+	closeFreeEntityManagers();
     }
 }
