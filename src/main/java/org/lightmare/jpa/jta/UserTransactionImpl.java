@@ -442,9 +442,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void closeEntityManagers() {
 
-	if (CollectionUtils.valid(ems)) {
-	    closeAllEntityManagers();
-	}
+	close(ems);
     }
 
     /**
