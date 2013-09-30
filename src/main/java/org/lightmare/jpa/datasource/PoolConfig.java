@@ -28,7 +28,7 @@ public class PoolConfig {
      * Container for default configuration keys and values
      * 
      * @author levan
-     * 
+     * @since 0.0.81-SNAPSHOT
      */
     public static enum Defaults {
 
