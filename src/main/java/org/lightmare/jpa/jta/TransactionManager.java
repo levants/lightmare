@@ -369,7 +369,7 @@ public class TransactionManager {
      * 
      * @param userTransaction
      */
-    public static void closeEntityManagers(UserTransaction userTransaction) {
+    protected static void closeEntityManagers(UserTransaction userTransaction) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
 
