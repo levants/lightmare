@@ -231,31 +231,12 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
-    /**
-     * Rollbacks all cached {@link EntityTransaction} instances
-     * 
-     * @throws IllegalStateException
-     * @throws SecurityException
-     * @throws SystemException
-     */
-    private void rollbackAll() throws IllegalStateException, SecurityException,
-	    SystemException {
-
-	EntityTransaction transaction;
-	while (CollectionUtils.notEmpty(transactions)) {
-	    transaction = transactions.pop();
-	    rollback(transaction);
-	}
-    }
-
     @Override
     public void rollback() throws IllegalStateException, SecurityException,
 	    SystemException {
 
 	try {
-	    if (CollectionUtils.valid(transactions)) {
-		rollbackAll();
-	    }
+	    rollback(transactions);
 	} finally {
 	    closeEntityManagers();
 	}
