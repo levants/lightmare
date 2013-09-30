@@ -72,6 +72,13 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Begins each of passed {@link EntityTransaction}s collection
+     * 
+     * @param entityTransactions
+     * @throws NotSupportedException
+     * @throws SystemException
+     */
     private void begin(Stack<EntityTransaction> entityTransactions)
 	    throws NotSupportedException, SystemException {
 
