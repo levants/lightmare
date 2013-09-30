@@ -117,7 +117,7 @@ public class PoolConfig {
     /**
      * Sets default connection pooling properties
      * 
-     * @return
+     * @return {@link Map}<code><Object, Object></code>
      */
     public Map<Object, Object> getDefaultPooling() {
 
