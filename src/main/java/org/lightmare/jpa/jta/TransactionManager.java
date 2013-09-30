@@ -120,6 +120,21 @@ public class TransactionManager {
 	}
     }
 
+    protected static void addNotTransactionalEntityManager(
+	    UserTransaction userTransaction, Collection<EntityManager> ems) {
+
+	if (userTransaction instanceof UserTransactionImpl
+		&& CollectionUtils.valid(ems)) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+	    for (EntityManager em : ems) {
+		transaction.pushNotTransactionalEm(em);
+	    }
+	}
+
+    }
+
     /**
      * Adds {@link EntityTransaction} to requires new stack in passed
      * {@link UserTransaction} instance
