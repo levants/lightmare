@@ -153,7 +153,7 @@ public class TransactionManager {
      * @param userTransaction
      * @param ems
      */
-    protected static void addNotTransactionalEntityManagers(
+    protected static void addFreeEntityManagers(
 	    UserTransaction userTransaction, Collection<EntityManager> ems) {
 
 	if (userTransaction instanceof UserTransactionImpl

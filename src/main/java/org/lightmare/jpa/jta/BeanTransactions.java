@@ -256,7 +256,7 @@ public class BeanTransactions {
 	TransactionManager.addCaller(transaction, handler);
 
 	if (type.equals(TransactionAttributeType.NOT_SUPPORTED)) {
-	    TransactionManager.addNotTransactionalEntityManagers(transaction,
+	    TransactionManager.addFreeEntityManagers(transaction,
 		    ems);
 	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
 
@@ -289,7 +289,7 @@ public class BeanTransactions {
 		    throw new EJBException(NEVER_ERROR);
 		}
 	    } finally {
-		TransactionManager.addNotTransactionalEntityManagers(
+		TransactionManager.addFreeEntityManagers(
 			transaction, ems);
 	    }
 
