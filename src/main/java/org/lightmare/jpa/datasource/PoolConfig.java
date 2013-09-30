@@ -253,6 +253,7 @@ public class PoolConfig {
 	    File file = new File(poolPath);
 	    stream = new FileInputStream(file);
 	}
+
 	try {
 	    Properties propertiesToLoad;
 	    if (ObjectUtils.notNull(stream)) {
