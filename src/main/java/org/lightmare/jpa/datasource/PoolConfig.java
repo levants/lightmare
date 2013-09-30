@@ -336,6 +336,16 @@ public class PoolConfig {
     }
 
     public void setPoolProviderType(String poolProviderTypeName) {
-	this.poolProviderType = PoolProviderType.valueOf(poolProviderTypeName);
+
+	boolean typeNotSet = Boolean.TRUE;
+	PoolProviderType type;
+	for (int i = 0; i < PoolProviderType.values().length && typeNotSet; i++) {
+
+	    type = PoolProviderType.values()[i];
+	    if (type.toString().equalsIgnoreCase(poolProviderTypeName)) {
+		this.poolProviderType = type;
+		typeNotSet = Boolean.FALSE;
+	    }
+	}
     }
 }
