@@ -34,8 +34,6 @@ public class BeanTransactions {
 
     private static final String NEVER_ERROR = "TransactionAttributeType.NEVER is called within transaction";
 
-    private static final String SUPPORTS_ERROR = "TransactionAttributeType.SUPPORTS is not yet implemented";
-
     /**
      * Inner class to cache {@link EntityTransaction}s and {@link EntityManager}
      * s in one {@link Collection} for {@link UserTransaction} implementation
