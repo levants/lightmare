@@ -334,28 +334,6 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
-    @Override
-    public int getStatus() throws SystemException {
-
-	int active = INACTIVE;
-
-	if (CollectionUtils.valid(transactions)) {
-	    for (EntityTransaction transaction : transactions) {
-		boolean isActive = transaction.isActive();
-		active += isActive ? ACTIVE : INACTIVE;
-	    }
-	}
-
-	if (CollectionUtils.valid(requareNews)) {
-	    for (EntityTransaction transaction : requareNews) {
-		boolean isActive = transaction.isActive();
-		active += isActive ? ACTIVE : INACTIVE;
-	    }
-	}
-
-	return active;
-    }
-
     /**
      * Rollbacks new {@link EntityTransaction} at the end of
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
