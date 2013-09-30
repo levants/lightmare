@@ -150,18 +150,11 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
-    private void beginAll() throws NotSupportedException, SystemException {
-
-	for (EntityTransaction transaction : transactions) {
-	    transaction.begin();
-	}
-    }
-
     @Override
     public void begin() throws NotSupportedException, SystemException {
 
 	if (CollectionUtils.valid(transactions)) {
-	    beginAll();
+	    begin(transactions);
 	}
     }
 
