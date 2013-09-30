@@ -385,7 +385,8 @@ public class TransactionManager {
      * 
      * @param userTransaction
      */
-    public static void closeFreeEntityManagers(UserTransaction userTransaction) {
+    protected static void closeFreeEntityManagers(
+	    UserTransaction userTransaction) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
 
