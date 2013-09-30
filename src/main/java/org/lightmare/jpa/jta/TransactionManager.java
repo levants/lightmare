@@ -358,6 +358,17 @@ public class TransactionManager {
 	}
     }
 
+    public static void closeNotTransactionalEntityManagers(
+	    UserTransaction userTransaction) {
+
+	if (userTransaction instanceof UserTransactionImpl) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+	    transaction.closeNotTransactionals();
+	}
+    }
+
     /**
      * Closes all cached {@link EntityManager} instances
      * 
