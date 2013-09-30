@@ -19,8 +19,8 @@ public abstract class DriverConfig {
 	// Database name and driver descriptors
 	ORACLE("oracle", "oracle.jdbc.OracleDriver"), // Oracle
 	MYSQL("mysql", "com.mysql.jdbc.Driver"), // MYSQL
-	POSTGRE("postgre", "org.postgresql.Driver"), 
-	MSSQL("mssql", "com.microsoft.sqlserver.jdbc.SQLServerDriver"), // MSSQL
+	POSTGRE("postgre", "org.postgresql.Driver"), MSSQL("mssql",
+		"com.microsoft.sqlserver.jdbc.SQLServerDriver"), // MSSQL
 	DB2("db2", "com.ibm.db2.jcc.DB2Driver"), // DB2
 	H2("h2", "org.h2.Driver"), // H2
 	DERBY("derby", "org.apache.derby.jdbc.EmbeddedDriver"); // DERBY
