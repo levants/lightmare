@@ -173,7 +173,7 @@ public class UserTransactionImpl implements UserTransaction {
      * 
      * @param em
      */
-    public void pushNotTransactionalEm(EntityManager em) {
+    public void pushFreeEntityManager(EntityManager em) {
 
 	getNotTransactionalEms().push(em);
     }

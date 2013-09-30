@@ -135,7 +135,7 @@ public class TransactionManager {
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    for (EntityManager em : ems) {
-		transaction.pushNotTransactionalEm(em);
+		transaction.pushFreeEntityManager(em);
 	    }
 	}
 
