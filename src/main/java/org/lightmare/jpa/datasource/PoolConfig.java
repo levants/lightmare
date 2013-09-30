@@ -104,7 +104,7 @@ public class PoolConfig {
      * Enumeration to choose which type connection pool should be in use
      * 
      * @author levan
-     * 
+     * @since 0.0.80-SNAPSHOT
      */
     public static enum PoolProviderType {
 
