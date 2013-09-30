@@ -394,17 +394,7 @@ public class UserTransactionImpl implements UserTransaction {
 	return requareNewEms;
     }
 
-    /**
-     * Adds new {@link EntityTransaction} for
-     * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
-     * methods
-     * 
-     * @param entityTransaction
-     */
-    public void pushReqNew(EntityTransaction entityTransaction) {
 
-	getNews().push(entityTransaction);
-    }
 
     /**
      * Commits new {@link EntityTransaction} at the end of
