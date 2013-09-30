@@ -78,6 +78,11 @@ public abstract class DriverConfig {
 	return Drivers.MYSQL.driver.equals(name);
     }
 
+    public static boolean isPostgre(String name) {
+
+	return Drivers.POSTGRE.driver.equals(name);
+    }
+
     public static boolean isDB2(String name) {
 
 	return Drivers.DB2.driver.equals(name);
