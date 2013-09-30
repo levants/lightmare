@@ -59,7 +59,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    addTransactions(transactions);
 	}
     }
-    
+
     /**
      * Adds {@link EntityTransaction} to transactions {@link List} for further
      * processing
@@ -253,7 +253,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 	}
     }
-    
+
     /**
      * Closes all cached immediate {@link EntityManager} instances
      */
@@ -415,14 +415,6 @@ public class UserTransactionImpl implements UserTransaction {
 	} finally {
 	    closeReqNew();
 	}
-    }
-
-    /**
-     * Closes all cached immediate {@link EntityManager} instances
-     */
-    private void closeReqNew() {
-
-	close(requareNewEms);
     }
 
     /**
