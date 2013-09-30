@@ -15,7 +15,7 @@ import com.mchange.v2.c3p0.AbstractConnectionCustomizer;
  * @author levan
  * @since 0.0.82-SNAPSHOT
  */
-public class LoggConnectionCustomizer extends AbstractConnectionCustomizer {
+public class LogConnectionCustomizer extends AbstractConnectionCustomizer {
 
     // Keeps count of active connections
     private static final AtomicInteger ACTIVE_CONNECTIONS = new AtomicInteger();
@@ -24,7 +24,7 @@ public class LoggConnectionCustomizer extends AbstractConnectionCustomizer {
     private static final AtomicInteger POOLED_CONNECTIONS = new AtomicInteger();
 
     private static final Logger LOG = Logger
-	    .getLogger(LoggConnectionCustomizer.class);
+	    .getLogger(LogConnectionCustomizer.class);
 
     /**
      * Sets initial size of pool for pooled connection counter after
