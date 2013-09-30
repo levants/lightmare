@@ -131,6 +131,11 @@ public class DeployManager extends HttpServlet {
 	private String userName;
     }
 
+    /**
+     * Lists deployed applications
+     * 
+     * @return {@link String}
+     */
     private String getApplications() {
 
 	List<File> apps = Watcher.listDeployments();
