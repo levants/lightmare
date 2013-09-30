@@ -288,7 +288,9 @@ public class PoolConfig {
 	}
 
 	if (ObjectUtils.notNull(poolProperties)) {
-	    fillDefaults(configMap, poolProperties);
+	    fillDefaults(poolProperties, configMap);
+	} else {
+
 	}
 
 	return configMap;
