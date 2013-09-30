@@ -259,6 +259,12 @@ public class DeployManager extends HttpServlet {
 
     }
 
+    /**
+     * Checks is user session is valid
+     * 
+     * @param session
+     * @return <code>boolean</code>
+     */
     private boolean check(HttpSession session) {
 
 	boolean valid = ObjectUtils.notNull(session);
