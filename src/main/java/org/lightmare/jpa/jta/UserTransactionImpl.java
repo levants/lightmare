@@ -134,7 +134,7 @@ public class UserTransactionImpl implements UserTransaction {
 	return requareNewEms;
     }
 
-    private Stack<EntityManager> getNotTransactionalEms() {
+    private Stack<EntityManager> getFreeEntityManagers() {
 
 	if (notTransactionalEms == null) {
 	    notTransactionalEms = new Stack<EntityManager>();
@@ -175,7 +175,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void pushFreeEntityManager(EntityManager em) {
 
-	getNotTransactionalEms().push(em);
+	getFreeEntityManagers().push(em);
     }
 
     /**
