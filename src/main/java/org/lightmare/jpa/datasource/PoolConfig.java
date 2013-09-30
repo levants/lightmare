@@ -335,6 +335,7 @@ public class PoolConfig {
 	this.poolProviderType = poolProviderType;
     }
 
+    // Sets appropriate connection pool provider
     public void setPoolProviderType(String poolProviderTypeName) {
 
 	PoolProviderType[] types = PoolProviderType.values();
