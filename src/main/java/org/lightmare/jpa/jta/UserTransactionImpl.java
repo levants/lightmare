@@ -40,7 +40,7 @@ public class UserTransactionImpl implements UserTransaction {
     // Caches EntityManager instances for immediate clean up
     private Stack<EntityManager> requareNewEms;
 
-    private Stack<EntityManager> notTransactionalEms;
+    private Stack<EntityManager> freeEms;
 
     // Object which first called this (UserTransaction) instance
     private Object caller;
@@ -136,11 +136,11 @@ public class UserTransactionImpl implements UserTransaction {
 
     private Stack<EntityManager> getFreeEntityManagers() {
 
-	if (notTransactionalEms == null) {
-	    notTransactionalEms = new Stack<EntityManager>();
+	if (freeEms == null) {
+	    freeEms = new Stack<EntityManager>();
 	}
 
-	return notTransactionalEms;
+	return freeEms;
     }
 
     /**
@@ -339,7 +339,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void closeFreeEntityManagers() {
 
-	close(notTransactionalEms);
+	close(freeEms);
     }
 
     /**
