@@ -34,6 +34,8 @@ public class BeanTransactions {
 
     private static final String NEVER_ERROR = "TransactionAttributeType.NEVER is called within transaction";
 
+    private static final String MANDATORY_SUPPORTS_ERROR = "TransactionAttributeType.MANDATORY or TransactionAttributeType.SUPPORTS must always be called within other transaction";
+
     /**
      * Inner class to cache {@link EntityTransaction}s and {@link EntityManager}
      * s in one {@link Collection} for {@link UserTransaction} implementation
@@ -384,8 +386,13 @@ public class BeanTransactions {
 
 	    boolean check = TransactionManager
 		    .checkCaller(transaction, handler);
-	    if (check) {
+	    if (check && type.equals(TransactionAttributeType.REQUIRED)) {
 		TransactionManager.commit(transaction);
+	    } else if (check && type.equals(TransactionAttributeType.SUPPORTS)) {
+		TransactionManager.closeEntityManagers(transaction);
+	    } else if (check && type.equals(TransactionAttributeType.MANDATORY)) {
+		TransactionManager.remove(transaction);
+		throw new EJBException(MANDATORY_SUPPORTS_ERROR);
 	    }
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    TransactionManager.commitReqNew(transaction);
