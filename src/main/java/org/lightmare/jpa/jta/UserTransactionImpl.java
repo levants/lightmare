@@ -387,6 +387,28 @@ public class UserTransactionImpl implements UserTransaction {
 
 	setRollbackOnly(transactions);
     }
+    
+    @Override
+    public int getStatus() throws SystemException {
+
+	int active = INACTIVE;
+
+	if (CollectionUtils.valid(transactions)) {
+	    for (EntityTransaction transaction : transactions) {
+		boolean isActive = transaction.isActive();
+		active += isActive ? ACTIVE : INACTIVE;
+	    }
+	}
+
+	if (CollectionUtils.valid(requareNews)) {
+	    for (EntityTransaction transaction : requareNews) {
+		boolean isActive = transaction.isActive();
+		active += isActive ? ACTIVE : INACTIVE;
+	    }
+	}
+
+	return active;
+    }
 
     @Override
     public void setTransactionTimeout(int time) throws SystemException {
