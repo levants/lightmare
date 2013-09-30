@@ -72,6 +72,21 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    private void commit(Stack<EntityTransaction> entityTransactions)
+	    throws SecurityException, IllegalStateException, RollbackException,
+	    HeuristicMixedException, HeuristicRollbackException,
+	    SystemException {
+
+	if (CollectionUtils.valid(entityTransactions)) {
+
+	    EntityTransaction entityTransaction;
+	    while (CollectionUtils.notEmpty(entityTransactions)) {
+		entityTransaction = entityTransactions.pop();
+		commit(entityTransaction);
+	    }
+	}
+    }
+
     private void beginAll() throws NotSupportedException, SystemException {
 
 	for (EntityTransaction transaction : transactions) {
