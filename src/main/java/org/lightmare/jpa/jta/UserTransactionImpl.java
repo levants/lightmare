@@ -389,12 +389,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    HeuristicRollbackException, SystemException {
 
 	try {
-	    if (checkNews()) {
-		while (CollectionUtils.notEmpty(requareNews)) {
-		    EntityTransaction entityTransaction = requareNews.pop();
-		    commit(entityTransaction);
-		}
-	    }
+	    commit(requareNews);
 	} finally {
 	    closeReqNew();
 	}
