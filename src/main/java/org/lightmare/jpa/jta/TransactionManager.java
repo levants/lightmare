@@ -370,15 +370,6 @@ public class TransactionManager {
     }
 
     /**
-     * Checks if passed {@link BeanHandler} is first caller / beginner of passed
-     * {@link UserTransaction} instance
-     * 
-     * @param userTransaction
-     * @param handler
-     * @return <code>boolean</code>
-     */
-
-    /**
      * Closes all cached {@link EntityManager}s from stack in passed
      * {@link UserTransaction} instance
      * 
