@@ -79,7 +79,7 @@ public class UserTransactionImpl implements UserTransaction {
      * @throws NotSupportedException
      * @throws SystemException
      */
-    private void begin(Stack<EntityTransaction> entityTransactions)
+    private void begin(Collection<EntityTransaction> entityTransactions)
 	    throws NotSupportedException, SystemException {
 
 	if (CollectionUtils.valid(entityTransactions))
