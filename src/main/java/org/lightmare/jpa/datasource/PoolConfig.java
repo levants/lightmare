@@ -331,6 +331,11 @@ public class PoolConfig {
 	return poolProviderType;
     }
 
+    /**
+     * Sets appropriate connection pool provider
+     * 
+     * @param poolProviderType
+     */
     public void setPoolProviderType(PoolProviderType poolProviderType) {
 
 	if (ObjectUtils.notNull(poolProviderType)) {
