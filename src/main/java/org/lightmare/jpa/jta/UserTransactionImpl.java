@@ -168,6 +168,18 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     /**
+     * Adds {@link EntityManager} to collection of not supported declarative
+     * transactions
+     * 
+     * @param em
+     */
+    
+    public void pushNotSupportedEm(EntityManager em) {
+
+	getNotSupportedEms().push(em);
+    }
+
+    /**
      * Closes each of passed {@link EntityManager}s {@link Stack}
      * 
      * @param entityManagers
