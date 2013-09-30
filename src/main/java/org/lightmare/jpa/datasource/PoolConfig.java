@@ -138,6 +138,12 @@ public class PoolConfig {
 	return c3p0Properties;
     }
 
+    /**
+     * Caches keys which are not supported for pool configuration to remove them
+     * 
+     * @return {@link Set}<code><Object></code>
+     * @throws IOException
+     */
     private Set<Object> unsopportedKeys() throws IOException {
 
 	Set<Object> keys = new HashSet<Object>();
