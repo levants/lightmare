@@ -126,7 +126,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 	}
     }
-    
+
     /**
      * Rollbacks passed {@link EntityTransaction} if it is active
      * 
@@ -136,6 +136,17 @@ public class UserTransactionImpl implements UserTransaction {
 
 	if (transaction.isActive()) {
 	    transaction.rollback();
+	}
+    }
+
+    private void rollback(Stack<EntityTransaction> entityTransactions) {
+
+	if (CollectionUtils.valid(entityTransactions)) {
+	    EntityTransaction entityTransaction;
+	    while (CollectionUtils.notEmpty(entityTransactions)) {
+		entityTransaction = entityTransactions.pop();
+		rollback(entityTransaction);
+	    }
 	}
     }
 
