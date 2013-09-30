@@ -113,6 +113,30 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 	}
     }
+    
+    /**
+     * Adds new {@link EntityTransaction} for
+     * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
+     * methods
+     * 
+     * @param entityTransaction
+     */
+    public void pushReqNew(EntityTransaction entityTransaction) {
+
+	getNews().push(entityTransaction);
+    }
+
+    /**
+     * Adds {@link EntityManager} to collection to close after
+     * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} type transactions
+     * processing
+     * 
+     * @param em
+     */
+    public void pushReqNewEm(EntityManager em) {
+
+	getNewEms().push(em);
+    }
 
     /**
      * Closes each of passed {@link EntityManager}s {@link Stack}
