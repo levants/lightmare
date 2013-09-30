@@ -350,7 +350,7 @@ public class BeanTransactions {
 	    TransactionManager.rollbackReqNew(transaction);
 	} else if (type.equals(TransactionAttributeType.NOT_SUPPORTED)
 		|| type.equals(TransactionAttributeType.NEVER)) {
-	    TransactionManager.closeNotTransactionalEntityManagers(transaction);
+	    TransactionManager.closeFreeEntityManagers(transaction);
 	} else {
 	    TransactionManager.rollback(transaction);
 	}
@@ -402,7 +402,7 @@ public class BeanTransactions {
 	    TransactionManager.commitReqNew(transaction);
 	} else if (type.equals(TransactionAttributeType.NOT_SUPPORTED)
 		|| type.equals(TransactionAttributeType.NEVER)) {
-	    TransactionManager.closeNotTransactionalEntityManagers(transaction);
+	    TransactionManager.closeFreeEntityManagers(transaction);
 	} else {
 	    TransactionManager.closeEntityManagers(transaction);
 	}
