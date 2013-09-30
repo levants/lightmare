@@ -60,6 +60,11 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Closes each of passed {@link EntityManager}s {@link Stack}
+     * 
+     * @param entityManagers
+     */
     private void closeEms(Stack<EntityManager> entityManagers) {
 
 	if (CollectionUtils.valid(entityManagers)) {
@@ -73,7 +78,7 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     /**
-     * Begins each of passed {@link EntityTransaction}s collection
+     * Begins each of passed {@link EntityTransaction}s {@link Collection}
      * 
      * @param entityTransactions
      * @throws NotSupportedException
