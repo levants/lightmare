@@ -256,8 +256,7 @@ public class BeanTransactions {
 	TransactionManager.addCaller(transaction, handler);
 
 	if (type.equals(TransactionAttributeType.NOT_SUPPORTED)) {
-	    TransactionManager.addFreeEntityManagers(transaction,
-		    ems);
+	    TransactionManager.addFreeEntityManagers(transaction, ems);
 	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
 
 	    entityTransactions = getEntityTransactions(ems);
@@ -289,10 +288,8 @@ public class BeanTransactions {
 		    throw new EJBException(NEVER_ERROR);
 		}
 	    } finally {
-		TransactionManager.addFreeEntityManagers(
-			transaction, ems);
+		TransactionManager.addFreeEntityManagers(transaction, ems);
 	    }
-
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
 
 	    try {
