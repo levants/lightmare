@@ -348,6 +348,9 @@ public class BeanTransactions {
 
 	if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    TransactionManager.rollbackReqNew(transaction);
+	} else if (type.equals(TransactionAttributeType.NOT_SUPPORTED)
+		|| type.equals(TransactionAttributeType.NEVER)) {
+	    TransactionManager.closeNotTransactionalEntityManagers(transaction);
 	} else {
 	    TransactionManager.rollback(transaction);
 	}
