@@ -394,15 +394,6 @@ public class UserTransactionImpl implements UserTransaction {
 	throw new UnsupportedOperationException(TIMEOUT_NOT_SUPPORTED_ERROR);
     }
 
-    private Stack<EntityTransaction> getNews() {
-
-	if (requareNews == null) {
-	    requareNews = new Stack<EntityTransaction>();
-	}
-
-	return requareNews;
-    }
-
     /**
      * Commits new {@link EntityTransaction} at the end of
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
