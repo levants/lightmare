@@ -133,27 +133,6 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
-    /**
-     * Commits all {@link UserTransaction} cache
-     * 
-     * @throws RollbackException
-     * @throws HeuristicMixedException
-     * @throws HeuristicRollbackException
-     * @throws SecurityException
-     * @throws IllegalStateException
-     * @throws SystemException
-     */
-    private void commitAll() throws RollbackException, HeuristicMixedException,
-	    HeuristicRollbackException, SecurityException,
-	    IllegalStateException, SystemException {
-
-	EntityTransaction transaction;
-	while (CollectionUtils.notEmpty(transactions)) {
-	    transaction = transactions.pop();
-	    commit(transaction);
-	}
-    }
-
     @Override
     public void commit() throws RollbackException, HeuristicMixedException,
 	    HeuristicRollbackException, SecurityException,
@@ -161,7 +140,7 @@ public class UserTransactionImpl implements UserTransaction {
 
 	try {
 	    if (CollectionUtils.valid(transactions)) {
-		commitAll();
+		commit(transactions);
 	    }
 	} finally {
 	    closeEntityManagers();
