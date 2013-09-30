@@ -401,7 +401,7 @@ public class TransactionManager {
      * 
      * @param userTransaction
      */
-    public static void close(UserTransaction userTransaction) {
+    protected static void close(UserTransaction userTransaction) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
 
