@@ -389,9 +389,7 @@ public class BeanTransactions {
 
 	UserTransaction transaction = getTransaction();
 
-	if (type.equals(TransactionAttributeType.REQUIRED)
-		|| type.equals(TransactionAttributeType.MANDATORY)
-		|| type.equals(TransactionAttributeType.SUPPORTS)) {
+	if (TransactionManager.isTransactionalType(type)) {
 
 	    boolean check = TransactionManager
 		    .checkCaller(transaction, handler);
