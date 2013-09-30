@@ -196,7 +196,7 @@ public class PoolConfig {
     }
 
     /**
-     * Gets property as <code>int</int> value
+     * Gets property as <code>int</code> value
      * 
      * @param properties
      * @param key
