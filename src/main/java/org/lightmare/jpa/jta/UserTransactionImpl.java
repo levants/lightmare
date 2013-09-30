@@ -220,12 +220,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    SecurityException, SystemException {
 
 	try {
-	    if (checkNews()) {
-		while (CollectionUtils.notEmpty(requareNews)) {
-		    EntityTransaction entityTransaction = requareNews.pop();
-		    rollback(entityTransaction);
-		}
-	    }
+	    rollback(requareNews);
 	} finally {
 	    closeReqNew();
 	}
