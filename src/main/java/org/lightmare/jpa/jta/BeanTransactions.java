@@ -376,7 +376,7 @@ public class BeanTransactions {
      * @param transaction
      * @throws IOException
      */
-    private static void commitTransactionScoped(TransactionAttributeType type,
+    private static void commitScoped(TransactionAttributeType type,
 	    UserTransaction transaction) throws IOException {
 
 	if (type.equals(TransactionAttributeType.REQUIRED)) {
@@ -414,7 +414,7 @@ public class BeanTransactions {
 	    boolean check = TransactionManager
 		    .checkCaller(transaction, handler);
 	    if (check) {
-		commitTransactionScoped(type, transaction);
+		commitScoped(type, transaction);
 	    }
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    TransactionManager.commitReqNew(transaction);
