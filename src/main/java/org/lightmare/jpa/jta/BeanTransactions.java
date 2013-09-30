@@ -369,6 +369,13 @@ public class BeanTransactions {
 	}
     }
 
+    /**
+     * Commits transactions which should be in scope
+     * 
+     * @param type
+     * @param transaction
+     * @throws IOException
+     */
     private static void commitTransactionScoped(TransactionAttributeType type,
 	    UserTransaction transaction) throws IOException {
 
