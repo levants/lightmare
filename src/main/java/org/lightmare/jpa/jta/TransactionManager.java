@@ -3,6 +3,7 @@ package org.lightmare.jpa.jta;
 import java.io.IOException;
 import java.util.Collection;
 
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.transaction.HeuristicMixedException;
@@ -30,10 +31,12 @@ public class TransactionManager {
     private TransactionManager() {
 	throw new InstantiationError(ISNANTIATING_ERROR);
     }
-    
-    protected static boolean isTransactionalType(TransactionAttributeType type){
-	
-	return 
+
+    protected static boolean isTransactionalType(TransactionAttributeType type) {
+
+	return type.equals(TransactionAttributeType.REQUIRED)
+		|| type.equals(TransactionAttributeType.MANDATORY)
+		|| type.equals(TransactionAttributeType.SUPPORTS);
     }
 
     protected static boolean isFreeType(TransactionAttributeType type) {
