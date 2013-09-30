@@ -59,6 +59,60 @@ public class UserTransactionImpl implements UserTransaction {
 	    addTransactions(transactions);
 	}
     }
+    
+    /**
+     * Adds {@link EntityTransaction} to transactions {@link List} for further
+     * processing
+     * 
+     * @param transaction
+     */
+    public void addTransaction(EntityTransaction transaction) {
+
+	transactions.add(transaction);
+    }
+
+    /**
+     * Adds {@link EntityTransaction}s to transactions {@link List} for further
+     * processing
+     * 
+     * @param transactions
+     */
+    public void addTransactions(EntityTransaction... transactions) {
+
+	Collections.addAll(this.transactions, transactions);
+    }
+
+    /**
+     * Adds {@link EntityManager} to collection to close after transactions
+     * processing
+     * 
+     * @param em
+     */
+    public void addEntityManager(EntityManager em) {
+
+	if (ObjectUtils.notNull(em)) {
+	    if (ems == null) {
+		ems = new Stack<EntityManager>();
+	    }
+
+	    ems.push(em);
+	}
+    }
+
+    /**
+     * Adds {@link EntityManager}'s to collection to close after transactions
+     * processing
+     * 
+     * @param em
+     */
+    public void addEntityManagers(Collection<EntityManager> ems) {
+
+	if (CollectionUtils.valid(ems)) {
+	    for (EntityManager em : ems) {
+		addEntityManager(em);
+	    }
+	}
+    }
 
     /**
      * Closes each of passed {@link EntityManager}s {@link Stack}
@@ -391,21 +445,6 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 
 	    ems.push(em);
-	}
-    }
-
-    /**
-     * Adds {@link EntityManager}'s to collection to close after transactions
-     * processing
-     * 
-     * @param em
-     */
-    public void addEntityManagers(Collection<EntityManager> ems) {
-
-	if (CollectionUtils.valid(ems)) {
-	    for (EntityManager em : ems) {
-		addEntityManager(em);
-	    }
 	}
     }
 
