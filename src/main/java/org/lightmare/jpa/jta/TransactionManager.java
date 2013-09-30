@@ -358,6 +358,12 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * Closes all cached {@link EntityManager}s which are not in transaction
+     * scope
+     * 
+     * @param userTransaction
+     */
     public static void closeNotTransactionalEntityManagers(
 	    UserTransaction userTransaction) {
 
