@@ -97,6 +97,7 @@ public class PoolConfig {
 
     private Map<Object, Object> poolProperties = new HashMap<Object, Object>();
 
+    // Check is data source pooled or not
     private boolean pooledDataSource;
 
     /**
