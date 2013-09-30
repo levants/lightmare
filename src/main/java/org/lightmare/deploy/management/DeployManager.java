@@ -234,6 +234,14 @@ public class DeployManager extends HttpServlet {
 	return builder.toString();
     }
 
+    /**
+     * Authenticates connected user
+     * 
+     * @param userName
+     * @param password
+     * @param request
+     * @return <code>boolean</code>
+     */
     private boolean authenticate(String userName, String password,
 	    HttpServletRequest request) {
 
