@@ -53,7 +53,7 @@ public class PoolConfig {
 	// Pool timeout properties
 	MAX_IDLE_TIMEOUT("maxIdleTime", 1200), // idle
 	MAX_IDLE_TIME_EXCESS_CONN("maxIdleTimeExcessConnections", 60), // excess
-	CHECK_OUT_TIMEOUT("checkoutTimeout", 1800), // checkout
+	CHECK_OUT_TIMEOUT("checkoutTimeout", 5000), // checkout
 
 	// Controller properties
 	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads", 1),
