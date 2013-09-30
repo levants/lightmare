@@ -113,7 +113,7 @@ public class UserTransactionImpl implements UserTransaction {
 	    }
 	}
     }
-    
+
     private Stack<EntityTransaction> getNews() {
 
 	if (requareNews == null) {
@@ -365,7 +365,7 @@ public class UserTransactionImpl implements UserTransaction {
 
 	setRollbackOnly(transactions);
     }
-    
+
     @Override
     public int getStatus() throws SystemException {
 
