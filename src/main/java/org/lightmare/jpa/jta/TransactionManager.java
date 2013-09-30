@@ -416,7 +416,7 @@ public class TransactionManager {
      * 
      * @param transaction
      */
-    public static void remove(UserTransaction transaction) {
+    protected static void remove(UserTransaction transaction) {
 
 	try {
 	    close(transaction);
