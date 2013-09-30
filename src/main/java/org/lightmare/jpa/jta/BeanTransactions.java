@@ -398,8 +398,7 @@ public class BeanTransactions {
 	    }
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    TransactionManager.commitReqNew(transaction);
-	} else if (type.equals(TransactionAttributeType.NOT_SUPPORTED)
-		|| type.equals(TransactionAttributeType.NEVER)) {
+	} else if (TransactionManager.isFreeType(type)) {
 	    TransactionManager.closeFreeEntityManagers(transaction);
 	} else {
 	    TransactionManager.closeEntityManagers(transaction);
