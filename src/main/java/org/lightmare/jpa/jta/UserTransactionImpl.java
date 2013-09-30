@@ -92,6 +92,13 @@ public class UserTransactionImpl implements UserTransaction {
 	}
     }
 
+    /**
+     * Sets each {@link EntityTransaction}'s from passed {@link Collection} in
+     * rollbackOnly mode
+     * 
+     * @throws IllegalStateException
+     * @throws SystemException
+     */
     private void setRollbackOnly(
 	    Collection<EntityTransaction> entityTransactions)
 	    throws IllegalStateException, SystemException {
