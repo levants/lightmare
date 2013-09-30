@@ -334,6 +334,12 @@ public class UserTransactionImpl implements UserTransaction {
 	close(ems);
     }
 
+    
+    public void closeNotTransactionals() {
+
+	close(notTransactionalEms);
+    }
+
     /**
      * Begins all require new transactions
      * 
