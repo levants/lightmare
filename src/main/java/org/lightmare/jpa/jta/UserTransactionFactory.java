@@ -10,7 +10,7 @@ import org.lightmare.utils.ObjectUtils;
  * Factory class to initialize and create {@link UserTransaction} instance
  * 
  * @author levan
- * 
+ * @since 0.0.82-SNAPSHOT
  */
 public abstract class UserTransactionFactory {
 
