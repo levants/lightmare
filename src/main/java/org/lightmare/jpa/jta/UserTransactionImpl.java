@@ -175,7 +175,7 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void pushNotTransactionalEm(EntityManager em) {
 
-	getNotSupportedEms().push(em);
+	getNotTransactionalEms().push(em);
     }
 
     /**
