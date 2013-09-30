@@ -289,7 +289,8 @@ public class BeanTransactions {
 		    throw new EJBException(NEVER_ERROR);
 		}
 	    } finally {
-		TransactionManager.addEntityManagers(transaction, ems);
+		TransactionManager.addNotTransactionalEntityManagers(
+			transaction, ems);
 	    }
 
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
