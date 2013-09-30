@@ -335,7 +335,7 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     /**
-     * Closes all not transactional {@link EntityManager} instances
+     * Closes all not in transaction {@link EntityManager} instances
      */
     public void closeNotTransactionals() {
 
