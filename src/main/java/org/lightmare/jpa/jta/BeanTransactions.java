@@ -472,6 +472,8 @@ public class BeanTransactions {
 
 	    if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 		TransactionManager.closeReqNewEntityManagers(transaction);
+	    } else if (TransactionManager.isFreeType(type)) {
+		TransactionManager.closeFreeEntityManagers(transaction);
 	    }
 
 	    boolean check = TransactionManager
