@@ -317,19 +317,6 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     /**
-     * Check if {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} type
-     * transactions referenced {@link EntityManager} stack is empty
-     * 
-     * @return <code>boolean</code>
-     */
-    private boolean checkNewEms() {
-
-	boolean notEmpty = CollectionUtils.valid(requareNewEms);
-
-	return notEmpty;
-    }
-
-    /**
      * Adds new {@link EntityTransaction} for
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
      * methods
