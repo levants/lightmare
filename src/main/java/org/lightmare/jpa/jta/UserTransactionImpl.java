@@ -134,6 +134,15 @@ public class UserTransactionImpl implements UserTransaction {
 	return requareNewEms;
     }
 
+    private Stack<EntityManager> getNotSupportedEms() {
+
+	if (notSupportedEms == null) {
+	    notSupportedEms = new Stack<EntityManager>();
+	}
+
+	return notSupportedEms;
+    }
+
     /**
      * Adds new {@link EntityTransaction} for
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
