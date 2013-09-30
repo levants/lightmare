@@ -192,6 +192,13 @@ public class DeployManager extends HttpServlet {
 	builder.append(REDEPLOY_END_TAG);
     }
 
+    /**
+     * Gets tag of deployed application
+     * 
+     * @param app
+     * @param fileType
+     * @return {@link String}
+     */
     private String getTag(String app, String fileType) {
 
 	StringBuilder builder = new StringBuilder();
