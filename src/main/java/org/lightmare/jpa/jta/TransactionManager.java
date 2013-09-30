@@ -30,6 +30,15 @@ public class TransactionManager {
     private TransactionManager() {
 	throw new InstantiationError(ISNANTIATING_ERROR);
     }
+    
+    protected static boolean isTransactionalType(TransactionAttributeType type){
+	
+	return 
+    }
+
+    protected static boolean isFreeType(TransactionAttributeType type) {
+
+    }
 
     /**
      * Adds {@link EntityTransaction} to passed {@link UserTransaction} instance
@@ -364,8 +373,7 @@ public class TransactionManager {
      * 
      * @param userTransaction
      */
-    public static void closeFreeEntityManagers(
-	    UserTransaction userTransaction) {
+    public static void closeFreeEntityManagers(UserTransaction userTransaction) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
 
