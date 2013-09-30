@@ -363,6 +363,17 @@ public class TransactionManager {
 	}
     }
 
+    protected static void closeReqNewEntityManagers(
+	    UserTransaction userTransaction) {
+
+	if (userTransaction instanceof UserTransactionImpl) {
+
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
+		    UserTransactionImpl.class);
+	    transaction.closeReqNew();
+	}
+    }
+
     /**
      * Closes all cached {@link EntityManager}s from stack in passed
      * {@link UserTransaction} instance
