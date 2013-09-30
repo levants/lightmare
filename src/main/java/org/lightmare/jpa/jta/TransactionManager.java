@@ -120,6 +120,12 @@ public class TransactionManager {
 	}
     }
 
+    /**
+     * Adds {@link EntityManager}s without transaction scope
+     * 
+     * @param userTransaction
+     * @param ems
+     */
     protected static void addNotTransactionalEntityManager(
 	    UserTransaction userTransaction, Collection<EntityManager> ems) {
 
