@@ -457,9 +457,12 @@ public class BeanLoader {
 		metaData.addUnitFields(unitFields);
 	    }
 
+	    // Sets fields for injection (PersistenceContext, PersistenceUnit,
+	    // Resource, EJB) as accessible
 	    if (CollectionUtils.valid(accessibleFields)) {
 		AccessibleObject[] accessibleObjects = CollectionUtils.toArray(
 			accessibleFields, AccessibleObject.class);
+		AccessibleObject.setAccessible(accessibleObjects, Boolean.TRUE);
 	    }
 	}
 
