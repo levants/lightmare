@@ -45,7 +45,7 @@ public class MetaUtils {
 
     /**
      * Sets passed {@link AccessibleObject}'s accessible flag as passed
-     * accessible boolean value
+     * accessible boolean value if the last one is false
      * 
      * @param accessibleObject
      * @param accessible
