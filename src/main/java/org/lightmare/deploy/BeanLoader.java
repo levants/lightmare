@@ -2,6 +2,7 @@ package org.lightmare.deploy;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -226,6 +227,8 @@ public class BeanLoader {
 	private DeployData deployData;
 
 	private boolean chekcWatch;
+
+	private List<AccessibleObject> accesibleFields;
 
 	private Configuration configuration;
 
