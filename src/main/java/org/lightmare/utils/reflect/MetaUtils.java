@@ -53,6 +53,12 @@ public class MetaUtils {
 	return ObjectUtils.notTrue(accessibleObject.isAccessible());
     }
 
+    /**
+     * Modifies passed {@link AccessibleObject} as accessible
+     * 
+     * @param accessibleObject
+     * @return <code>boolean</code>
+     */
     private static boolean makeAccessible(AccessibleObject accessibleObject) {
 
 	boolean locked = ObjectUtils.tryLock(ACCESSOR_LOCK);
