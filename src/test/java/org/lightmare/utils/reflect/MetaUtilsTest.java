@@ -13,5 +13,6 @@ public class MetaUtilsTest {
 	System.out.println(MetaUtils.getDefault(short.class));
 	System.out.println(MetaUtils.getDefault(int.class));
 	System.out.println(MetaUtils.getDefault(long.class));
+	System.out.println(MetaUtils.getDefault(float.class));
     }
 }
