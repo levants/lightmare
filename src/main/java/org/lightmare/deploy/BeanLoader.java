@@ -246,13 +246,13 @@ public class BeanLoader {
 	    this.configuration = parameters.configuration;
 	}
 
-	private List<AccessibleObject> getAccessibleFields() {
+	private void addAccessibleField(AccessibleObject accessibleObject) {
 
 	    if (accessibleFields == null) {
 		accessibleFields = new ArrayList<AccessibleObject>();
 	    }
 
-	    return accessibleFields;
+	    accessibleFields.add(accessibleObject);
 	}
 
 	/**
