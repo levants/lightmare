@@ -35,7 +35,7 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
 	boolean notContainsKey = !sharingEnv
 		.containsKey(JNDIParameters.SHARED_PARAMETER.key);
 	if (notContainsKey) {
-	    sharingEnv.put(JndiManager.JNDIParameters.SHARED_PARAMETER.key,
+	    sharingEnv.put(JNDIParameters.SHARED_PARAMETER.key,
 		    JndiManager.JNDIParameters.SHARED_PARAMETER.value);
 	}
 
