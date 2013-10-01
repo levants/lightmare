@@ -34,7 +34,7 @@ public class MetaUtils {
 
     private static int intDef = 0;
 
-    private static long longDef;
+    private static long longDef = 0L;
 
     private static float floatDef;
 
