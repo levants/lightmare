@@ -54,6 +54,14 @@ public class MetaUtils {
 	return accessible;
     }
 
+    private static void set(AccessibleObject accessibleObject,
+	    boolean accessible) {
+
+	if (ObjectUtils.notTrue(accessible)) {
+	    accessibleObject.setAccessible(accessible);
+	}
+    }
+
     /**
      * Makes accessible passed {@link Constructor}'s and invokes
      * {@link Constructor#newInstance(Object...)} method
