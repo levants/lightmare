@@ -59,7 +59,6 @@ public class MetaUtils {
 	return ObjectUtils.notTrue(accessibleObject.isAccessible());
     }
 
-
     /**
      * Sets object accessible flag as true if it is not
      * 
