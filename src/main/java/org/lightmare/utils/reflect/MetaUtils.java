@@ -607,7 +607,6 @@ public class MetaUtils {
 	try {
 
 		setAccessible(field,accessible);
-
 	    value = field.get(data);
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
