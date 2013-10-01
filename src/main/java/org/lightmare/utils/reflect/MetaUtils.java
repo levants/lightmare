@@ -38,7 +38,7 @@ public class MetaUtils {
 
     private static final float FLOAT_DEF = 0F;
 
-    private static final double doubleDef = 0D;
+    private static final double DOUBLE_DEF = 0D;
 
     // default value for modifier
     private static final int DEFAULT_MODIFIER = 0;
@@ -746,7 +746,7 @@ public class MetaUtils {
 	    } else if (clazz.equals(float.class)) {
 		value = FLOAT_DEF;
 	    } else if (clazz.equals(double.class)) {
-		value = doubleDef;
+		value = DOUBLE_DEF;
 	    } else {
 		value = null;
 	    }
