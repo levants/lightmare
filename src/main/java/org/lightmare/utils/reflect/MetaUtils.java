@@ -135,7 +135,7 @@ public class MetaUtils {
 	    try {
 		ObjectUtils.lock(ACCESSOR_LOCK);
 		if (accessibleObject.isAccessible()) {
-		    accessibleObject.setAccessible(Boolean.FALSE);
+		    accessibleObject.setAccessible(accessible);
 		}
 	    } finally {
 		ObjectUtils.unlock(ACCESSOR_LOCK);
