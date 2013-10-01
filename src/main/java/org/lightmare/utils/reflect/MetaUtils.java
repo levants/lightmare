@@ -96,11 +96,8 @@ public class MetaUtils {
 
 	boolean accessible = constructor.isAccessible();
 	try {
-
 	    setAccessible(constructor, accessible);
-
 	    instance = constructor.newInstance(parameters);
-
 	} catch (InstantiationException ex) {
 	    throw new IOException(ex);
 	} catch (IllegalAccessException ex) {
