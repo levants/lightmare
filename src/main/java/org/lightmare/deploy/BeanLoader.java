@@ -246,6 +246,11 @@ public class BeanLoader {
 	    this.configuration = parameters.configuration;
 	}
 
+	/**
+	 * Adds {@link AccessibleObject} to cache to set accessible after
+	 * 
+	 * @param accessibleObject
+	 */
 	private void addAccessibleField(AccessibleObject accessibleObject) {
 
 	    if (accessibleFields == null) {
