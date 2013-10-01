@@ -103,13 +103,6 @@ public class MetaUtils {
     }
 
     /**
-     * Modifies passed {@link AccessibleObject} as not accessible
-     * 
-     * @param accessibleObject
-     * @return <code>boolean</code>
-     */
-
-    /**
      * Sets passed {@link AccessibleObject}'s accessible flag as passed
      * accessible boolean value if the last one is false
      * 
