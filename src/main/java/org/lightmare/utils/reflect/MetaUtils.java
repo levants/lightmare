@@ -51,13 +51,6 @@ public class MetaUtils {
      * @param accessible
      * @return <code>boolean</code>
      */
-    private static void change(AccessibleObject accessibleObject,
-	    boolean accessible) {
-
-	if (ObjectUtils.notTrue(accessible)) {
-	    accessibleObject.setAccessible(Boolean.TRUE);
-	}
-    }
 
     /**
      * Sets passed {@link AccessibleObject}'s accessible flag as passed
