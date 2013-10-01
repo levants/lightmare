@@ -505,12 +505,8 @@ public class MetaUtils {
 
 	boolean accessible = method.isAccessible();
 	try {
-
-	    if (ObjectUtils.notTrue(accessible)) {
-		method.setAccessible(Boolean.TRUE);
-	    }
+	    setAccessible(method, accessible);
 	    value = invoke(method, data, arguments);
-
 	} finally {
 	    resetAccessible(method, accessible);
 	}
