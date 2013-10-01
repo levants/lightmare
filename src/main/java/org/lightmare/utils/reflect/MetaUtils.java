@@ -551,7 +551,6 @@ public class MetaUtils {
 	Object value;
 
 	try {
-
 	    value = method.invoke(null, arguments);
 	} catch (IllegalAccessException ex) {
 	    throw new IOException(ex);
