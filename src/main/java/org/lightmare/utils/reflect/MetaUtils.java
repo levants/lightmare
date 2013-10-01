@@ -10,6 +10,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
@@ -42,6 +44,8 @@ public class MetaUtils {
 
     // default value for modifier
     private static final int DEFAULT_MODIFIER = 0;
+
+    private static final Lock ACCESSOR_LOCK = new ReentrantLock();
 
     /**
      * Sets object accessible flag as true if it is not
