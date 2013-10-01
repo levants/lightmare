@@ -664,6 +664,7 @@ public class MetaUtils {
 	    Class<? extends Annotation> annotationClass) throws IOException {
 
 	List<Field> fields = new ArrayList<Field>();
+
 	Field[] allFields = clazz.getDeclaredFields();
 	for (Field field : allFields) {
 	    if (field.isAnnotationPresent(annotationClass)) {
