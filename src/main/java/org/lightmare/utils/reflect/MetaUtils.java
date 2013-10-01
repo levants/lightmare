@@ -526,6 +526,7 @@ public class MetaUtils {
 	Object value;
 
 	boolean accessible = method.isAccessible();
+
 	try {
 	    setAccessible(method, accessible);
 	    value = invoke(method, data, arguments);
