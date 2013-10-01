@@ -28,7 +28,7 @@ public class MetaUtils {
 
     private static final boolean BOOLEAN_DEF = Boolean.FALSE;
 
-    private static final char charDef = '\u0000';
+    private static final char CHAR_DEF = '\u0000';
 
     private static final short shortDef = 0;
 
@@ -736,7 +736,7 @@ public class MetaUtils {
 	    } else if (clazz.equals(boolean.class)) {
 		value = BOOLEAN_DEF;
 	    } else if (clazz.equals(char.class)) {
-		value = charDef;
+		value = CHAR_DEF;
 	    } else if (clazz.equals(short.class)) {
 		value = shortDef;
 	    } else if (clazz.equals(int.class)) {
