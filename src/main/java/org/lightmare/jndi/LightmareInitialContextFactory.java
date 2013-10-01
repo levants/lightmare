@@ -18,6 +18,20 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class LightmareInitialContextFactory implements InitialContextFactory {
 
+    private void put(JNDIParameters parameter,
+	    Hashtable<Object, Object> sharingEnv) {
+
+	String key = parameter.key;
+	String value = parameter.value;
+
+	boolean notContainsKey = !sharingEnv.containsKey(key);
+
+	if (notContainsKey) {
+	    sharingEnv.put(JNDIParameters.SHARED_PARAMETER.key,
+		    JNDIParameters.SHARED_PARAMETER.value);
+	}
+    }
+
     @Override
     public Context getInitialContext(Hashtable<?, ?> properties)
 	    throws NamingException {
