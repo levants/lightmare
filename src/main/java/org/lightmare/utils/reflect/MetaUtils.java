@@ -30,7 +30,7 @@ public class MetaUtils {
 
     private static final char charDef = '\u0000';
 
-    private static short shortDef = 0;
+    private static final short shortDef = 0;
 
     private static int intDef = 0;
 
