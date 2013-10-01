@@ -43,6 +43,12 @@ public class MetaUtils {
     // default value for modifier
     private static final int DEFAULT_MODIFIER = 0;
 
+    /**
+     * Sets object accessible flag as true
+     * 
+     * @param accessibleObject
+     * @param accessible
+     */
     private static void setAccessible(AccessibleObject accessibleObject,
 	    boolean accessible) {
 
