@@ -2,6 +2,7 @@ package org.lightmare.utils.reflect;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -41,6 +42,17 @@ public class MetaUtils {
 
     // default value for modifier
     private static final int DEFAULT_MODIFIER = 0;
+
+    private static boolean setAndGet(AccessibleObject accessibleObject) {
+
+	boolean accessible = accessibleObject.isAccessible();
+
+	if (ObjectUtils.notTrue(accessible)) {
+	    accessibleObject.setAccessible(Boolean.TRUE);
+	}
+
+	return accessible;
+    }
 
     /**
      * Makes accessible passed {@link Constructor}'s and invokes
