@@ -154,8 +154,10 @@ public class MetaUtils {
     public static <T> T callConstructor(Class<T> type,
 	    Class<?>[] parameterTypes, Object... parameters) throws IOException {
 
+	T instance;
+
 	Constructor<T> constructor = getConstructor(type, parameterTypes);
-	T instance = newInstance(constructor, parameters);
+	instance = newInstance(constructor, parameters);
 
 	return instance;
     }
