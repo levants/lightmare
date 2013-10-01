@@ -94,7 +94,7 @@ public class MetaUtils {
 	} catch (InvocationTargetException ex) {
 	    throw new IOException(ex);
 	} finally {
-	    setAccessible(constructor, accessible);
+	    resetAccessible(constructor, accessible);
 	}
 
 	return instance;
