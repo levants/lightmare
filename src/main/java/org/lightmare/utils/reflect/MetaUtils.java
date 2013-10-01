@@ -571,8 +571,8 @@ public class MetaUtils {
 	    if (ObjectUtils.notTrue(accessible)) {
 		field.setAccessible(Boolean.TRUE);
 	    }
-	    field.set(data, value);
 
+	    field.set(data, value);
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
 	} catch (IllegalAccessException ex) {
