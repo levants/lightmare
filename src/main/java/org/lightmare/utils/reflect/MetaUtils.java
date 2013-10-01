@@ -26,7 +26,7 @@ public class MetaUtils {
     // default values for primitives
     private static final byte byteDef = 0;
 
-    private static boolean booleanDef = Boolean.FALSE;
+    private static final boolean booleanDef = Boolean.FALSE;
 
     private static char charDef = '\u0000';
 
