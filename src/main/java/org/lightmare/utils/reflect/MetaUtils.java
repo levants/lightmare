@@ -32,7 +32,7 @@ public class MetaUtils {
 
     private static short shortDef = 0;
 
-    private static int intDef;
+    private static int intDef = 0;
 
     private static long longDef;
 
