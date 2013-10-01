@@ -24,7 +24,7 @@ import org.lightmare.utils.ObjectUtils;
 public class MetaUtils {
 
     // default values for primitives
-    private static byte byteDef = 0;
+    private static final byte byteDef = 0;
 
     private static boolean booleanDef = Boolean.FALSE;
 
