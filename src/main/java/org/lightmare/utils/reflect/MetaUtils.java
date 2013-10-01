@@ -626,6 +626,7 @@ public class MetaUtils {
 	Object value;
 
 	boolean accessible = field.isAccessible();
+
 	try {
 	    setAccessible(field, accessible);
 	    value = field.get(data);
