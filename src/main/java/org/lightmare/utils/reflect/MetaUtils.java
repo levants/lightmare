@@ -48,17 +48,15 @@ public class MetaUtils {
      * returns previous flag
      * 
      * @param accessibleObject
+     * @param accessible
      * @return <code>boolean</code>
      */
-    private static boolean setAndGet(AccessibleObject accessibleObject) {
-
-	boolean accessible = accessibleObject.isAccessible();
+    private static void change(AccessibleObject accessibleObject,
+	    boolean accessible) {
 
 	if (ObjectUtils.notTrue(accessible)) {
 	    accessibleObject.setAccessible(Boolean.TRUE);
 	}
-
-	return accessible;
     }
 
     /**
