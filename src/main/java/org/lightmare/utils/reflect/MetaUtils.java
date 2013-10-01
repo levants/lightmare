@@ -45,6 +45,7 @@ public class MetaUtils {
     // default value for modifier
     private static final int DEFAULT_MODIFIER = 0;
 
+    // Lock to modifie accessible mode of AccessibleObject instances
     private static final Lock ACCESSOR_LOCK = new ReentrantLock();
 
     /**
