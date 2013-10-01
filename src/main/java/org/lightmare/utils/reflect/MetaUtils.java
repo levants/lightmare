@@ -59,12 +59,6 @@ public class MetaUtils {
 	return ObjectUtils.notTrue(accessibleObject.isAccessible());
     }
 
-    /**
-     * Modifies passed {@link AccessibleObject} as accessible
-     * 
-     * @param accessibleObject
-     * @return <code>boolean</code>
-     */
 
     /**
      * Sets object accessible flag as true if it is not
