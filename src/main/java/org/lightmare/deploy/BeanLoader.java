@@ -439,13 +439,17 @@ public class BeanLoader {
 		ejbAnnot = field.getAnnotation(EJB.class);
 		if (ObjectUtils.notNull(context)) {
 		    identifyConnections(context, field);
+		    getAccessibleFields().add(field);
 		} else if (ObjectUtils.notNull(resource)) {
 		    metaData.setTransactionField(field);
+		    getAccessibleFields().add(field);
 		} else if (ObjectUtils.notNull(unit)) {
 		    addUnitField(field);
+		    getAccessibleFields().add(field);
 		} else if (ObjectUtils.notNull(ejbAnnot)) {
 		    // caches EJB annotated fields
 		    cacheInjectFields(field);
+		    getAccessibleFields().add(field);
 		}
 	    }
 
