@@ -26,7 +26,7 @@ public class MetaUtils {
     // default values for primitives
     private static final byte BYTE_DEF = 0;
 
-    private static final boolean booleanDef = Boolean.FALSE;
+    private static final boolean BOOLEAN_DEF = Boolean.FALSE;
 
     private static final char charDef = '\u0000';
 
@@ -734,7 +734,7 @@ public class MetaUtils {
 	    if (clazz.equals(byte.class)) {
 		value = BYTE_DEF;
 	    } else if (clazz.equals(boolean.class)) {
-		value = booleanDef;
+		value = BOOLEAN_DEF;
 	    } else if (clazz.equals(char.class)) {
 		value = charDef;
 	    } else if (clazz.equals(short.class)) {
