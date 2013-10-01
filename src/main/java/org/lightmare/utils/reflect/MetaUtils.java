@@ -371,7 +371,8 @@ public class MetaUtils {
 	int length = methods.length;
 	int modifier = calculateModifier(modifiers);
 	Method method;
-	for (int i = 0; i < length && ObjectUtils.notTrue(found); i++) {
+	for (int i = CollectionUtils.FIRST_INDEX; i < length
+		&& ObjectUtils.notTrue(found); i++) {
 	    method = methods[i];
 	    found = method.getName().equals(methodName);
 	    if (found && ObjectUtils.notEquals(modifier, DEFAULT_MODIFIER)) {
