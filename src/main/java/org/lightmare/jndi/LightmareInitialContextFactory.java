@@ -18,6 +18,12 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class LightmareInitialContextFactory implements InitialContextFactory {
 
+    /**
+     * Puts if absent shared parameter to JNDI properties before initialization
+     * 
+     * @param sharingEnv
+     * @param parameter
+     */
     private void putToEnv(Hashtable<Object, Object> sharingEnv,
 	    JNDIParameters parameter) {
 
