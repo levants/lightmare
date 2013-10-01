@@ -565,7 +565,7 @@ public class MetaUtils {
 	    value = invokeStatic(method, arguments);
 
 	} finally {
-	    method.setAccessible(accessible);
+	    set(method,accessible);
 	}
 
 	return value;
