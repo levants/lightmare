@@ -641,6 +641,7 @@ public class MetaUtils {
 	    Class<? extends Annotation> annotationClass) throws IOException {
 
 	List<Method> methods = new ArrayList<Method>();
+
 	Method[] allMethods = getDeclaredMethods(clazz);
 	for (Method method : allMethods) {
 	    if (method.isAnnotationPresent(annotationClass)) {
