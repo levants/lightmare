@@ -228,7 +228,7 @@ public class BeanLoader {
 
 	private boolean chekcWatch;
 
-	private List<AccessibleObject> accesibleFields;
+	private List<AccessibleObject> accessibleFields;
 
 	private Configuration configuration;
 
@@ -243,6 +243,15 @@ public class BeanLoader {
 	    this.blocker = parameters.blocker;
 	    this.deployData = parameters.deployData;
 	    this.configuration = parameters.configuration;
+	}
+
+	private List<AccessibleObject> getAccessibleFields() {
+
+	    if (accessibleFields == null) {
+		accessibleFields = new ArrayList<AccessibleObject>();
+	    }
+
+	    return accessibleFields;
 	}
 
 	/**
