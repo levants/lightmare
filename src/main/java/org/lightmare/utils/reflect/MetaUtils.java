@@ -28,7 +28,7 @@ public class MetaUtils {
 
     private static final boolean booleanDef = Boolean.FALSE;
 
-    private static char charDef = '\u0000';
+    private static final char charDef = '\u0000';
 
     private static short shortDef = 0;
 
