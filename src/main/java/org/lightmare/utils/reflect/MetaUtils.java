@@ -492,7 +492,7 @@ public class MetaUtils {
 	    value = invoke(method, data, arguments);
 
 	} finally {
-	    set(method, accessible);
+	    setAccessible(method, accessible);
 	}
 
 	return value;
