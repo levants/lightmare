@@ -91,9 +91,7 @@ public class MetaUtils {
 	boolean accessible = constructor.isAccessible();
 	try {
 
-	    if (ObjectUtils.notTrue(accessible)) {
-		constructor.setAccessible(Boolean.TRUE);
-	    }
+		change(constructor, accessible);
 
 	    instance = constructor.newInstance(parameters);
 
