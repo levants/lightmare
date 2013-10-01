@@ -54,7 +54,9 @@ public class MetaUtils {
 	    boolean accessible) {
 
 	if (ObjectUtils.notTrue(accessible)) {
-	    accessibleObject.setAccessible(accessible);
+	    synchronized (accessibleObject) {
+		accessibleObject.setAccessible(accessible);
+	    }
 	}
     }
 
