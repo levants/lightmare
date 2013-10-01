@@ -345,8 +345,9 @@ public class MetaUtils {
     private static boolean classHasMethod(Class<?> clazz, String methodName,
 	    int... modifiers) throws IOException {
 
-	Method[] methods = getDeclaredMethods(clazz);
 	boolean found = Boolean.FALSE;
+
+	Method[] methods = getDeclaredMethods(clazz);
 	int length = methods.length;
 	int modifier = calculateModifier(modifiers);
 	Method method;
