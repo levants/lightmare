@@ -703,7 +703,7 @@ public class MetaUtils {
     }
 
     /**
-     * Gets wrapper class if passed class is primitive type
+     * Gets wrapper class if passed class is a primitive type
      * 
      * @param type
      * @return {@link Class}<T>
