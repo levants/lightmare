@@ -43,6 +43,18 @@ public class MetaUtils {
     // default value for modifier
     private static final int DEFAULT_MODIFIER = 0;
 
+    private static void setAccessible(AccessibleObject accessibleObject,
+	    boolean accessible) {
+
+	if (ObjectUtils.notTrue(accessible)) {
+	    synchronized (accessibleObject) {
+		if (ObjectUtils.notTrue(accessibleObject.isAccessible())) {
+		    accessibleObject.setAccessible(Boolean.TRUE);
+		}
+	    }
+	}
+    }
+
     /**
      * Sets passed {@link AccessibleObject}'s accessible flag as passed
      * accessible boolean value if the last one is false
