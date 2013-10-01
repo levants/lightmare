@@ -135,7 +135,6 @@ public class MetaUtils {
 	    boolean accessible) {
 
 	if (ObjectUtils.notTrue(accessible)) {
-
 	    try {
 		ObjectUtils.lock(ACCESSOR_LOCK);
 		if (accessibleObject.isAccessible()) {
