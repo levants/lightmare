@@ -36,7 +36,7 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
 		.containsKey(JNDIParameters.SHARED_PARAMETER.key);
 	if (notContainsKey) {
 	    sharingEnv.put(JNDIParameters.SHARED_PARAMETER.key,
-		    JndiManager.JNDIParameters.SHARED_PARAMETER.value);
+		    JNDIParameters.SHARED_PARAMETER.value);
 	}
 
 	Context lightmareContext = new LightmareContext(sharingEnv);
