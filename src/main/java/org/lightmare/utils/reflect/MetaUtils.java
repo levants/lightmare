@@ -606,9 +606,7 @@ public class MetaUtils {
 	boolean accessible = field.isAccessible();
 	try {
 
-	    if (ObjectUtils.notTrue(accessible)) {
 		setAccessible(field,accessible);
-	    }
 
 	    value = field.get(data);
 	} catch (IllegalArgumentException ex) {
