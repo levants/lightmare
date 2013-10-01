@@ -44,15 +44,6 @@ public class MetaUtils {
     private static final int DEFAULT_MODIFIER = 0;
 
     /**
-     * Sets passed {@link AccessibleObject}'s accessible flag as true if it is
-     * not
-     * 
-     * @param accessibleObject
-     * @param accessible
-     * @return <code>boolean</code>
-     */
-
-    /**
      * Sets passed {@link AccessibleObject}'s accessible flag as passed
      * accessible boolean value
      * 
