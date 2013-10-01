@@ -557,9 +557,7 @@ public class MetaUtils {
 	boolean accessible = method.isAccessible();
 	try {
 		setAccessible(method,accessible);
-
 	    value = invokeStatic(method, arguments);
-
 	} finally {
 	    resetAccessible(method, accessible);
 	}
