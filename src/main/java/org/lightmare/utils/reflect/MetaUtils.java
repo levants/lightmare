@@ -116,16 +116,7 @@ public class MetaUtils {
 	    boolean locked = Boolean.FALSE;
 	    while (ObjectUtils.notTrue(locked)
 		    && accessibleObject.isAccessible()) {
-		locked = ObjectUtils.tryLock(ACCESSOR_LOCK);
-		if (locked) {
-		    try {
-			if (accessibleObject.isAccessible()) {
-			    accessibleObject.setAccessible(accessible);
-			}
-		    } finally {
-			ObjectUtils.unlock(ACCESSOR_LOCK);
-		    }
-		}
+		locked = makeInaccessible(accessibleObject);
 	    }
 	}
     }
