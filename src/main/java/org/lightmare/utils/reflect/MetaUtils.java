@@ -38,7 +38,7 @@ public class MetaUtils {
 
     private static final float floatDef = 0F;
 
-    private static double doubleDef = 0D;
+    private static final double doubleDef = 0D;
 
     // default value for modifier
     private static final int DEFAULT_MODIFIER = 0;
