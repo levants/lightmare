@@ -18,8 +18,8 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class LightmareInitialContextFactory implements InitialContextFactory {
 
-    private void put(JNDIParameters parameter,
-	    Hashtable<Object, Object> sharingEnv) {
+    private void put(Hashtable<Object, Object> sharingEnv,
+	    JNDIParameters parameter) {
 
 	String key = parameter.key;
 	String value = parameter.value;
