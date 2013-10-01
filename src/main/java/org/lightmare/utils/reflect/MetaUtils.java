@@ -43,6 +43,13 @@ public class MetaUtils {
     // default value for modifier
     private static final int DEFAULT_MODIFIER = 0;
 
+    /**
+     * Sets passed {@link AccessibleObject}'s accessible flag as true and
+     * returns previous flag
+     * 
+     * @param accessibleObject
+     * @return <code>boolean</code>
+     */
     private static boolean setAndGet(AccessibleObject accessibleObject) {
 
 	boolean accessible = accessibleObject.isAccessible();
@@ -54,6 +61,13 @@ public class MetaUtils {
 	return accessible;
     }
 
+    /**
+     * Sets passed {@link AccessibleObject}'s accessible flag as passed
+     * accessible boolean value
+     * 
+     * @param accessibleObject
+     * @param accessible
+     */
     private static void set(AccessibleObject accessibleObject,
 	    boolean accessible) {
 
@@ -94,7 +108,7 @@ public class MetaUtils {
 	} catch (InvocationTargetException ex) {
 	    throw new IOException(ex);
 	} finally {
-	    constructor.setAccessible(accessible);
+	    set(constructor, accessible);
 	}
 
 	return instance;
