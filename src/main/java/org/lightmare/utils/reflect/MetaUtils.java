@@ -50,7 +50,7 @@ public class MetaUtils {
      * @param accessibleObject
      * @param accessible
      */
-    private static void setAccessible(AccessibleObject accessibleObject,
+    private static void resetAccessible(AccessibleObject accessibleObject,
 	    boolean accessible) {
 
 	if (ObjectUtils.notTrue(accessible)) {
