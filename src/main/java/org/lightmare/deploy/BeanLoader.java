@@ -228,6 +228,7 @@ public class BeanLoader {
 
 	private boolean chekcWatch;
 
+	// Injection fields which should be accessible
 	private List<AccessibleObject> accessibleFields;
 
 	private Configuration configuration;
