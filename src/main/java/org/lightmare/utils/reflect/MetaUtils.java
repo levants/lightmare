@@ -581,7 +581,7 @@ public class MetaUtils {
 	try {
 
 	    if (ObjectUtils.notTrue(accessible)) {
-		field.setAccessible(Boolean.TRUE);
+		setAccessible(field, accessible);
 	    }
 
 	    field.set(data, value);
