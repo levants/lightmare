@@ -24,6 +24,7 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
 	String key = parameter.key;
 	String value = parameter.value;
 
+	// all instances will share stored data
 	boolean notContainsKey = !sharingEnv.containsKey(key);
 
 	if (notContainsKey) {
