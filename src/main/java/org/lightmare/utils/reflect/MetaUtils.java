@@ -596,9 +596,7 @@ public class MetaUtils {
 	} catch (IllegalAccessException ex) {
 	    throw new IOException(ex);
 	} finally {
-	    if (ObjectUtils.notTrue(accessible)) {
-		field.setAccessible(accessible);
-	    }
+		set(field,accessible);
 	}
     }
 
