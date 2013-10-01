@@ -48,6 +48,12 @@ public class MetaUtils {
     // Lock to modify accessible mode of AccessibleObject instances
     private static final Lock ACCESSOR_LOCK = new ReentrantLock();
 
+    /**
+     * Checks if passed {@link AccessibleObject} instance is not accessible
+     * 
+     * @param accessibleObject
+     * @return <code>boolean</code>
+     */
     private static boolean notAccessible(AccessibleObject accessibleObject) {
 
 	return ObjectUtils.notTrue(accessibleObject.isAccessible());
