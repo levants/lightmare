@@ -30,7 +30,7 @@ public class MetaUtils {
 
     private static final char CHAR_DEF = '\u0000';
 
-    private static final short shortDef = 0;
+    private static final short SHORT_DEF = 0;
 
     private static final int intDef = 0;
 
@@ -738,7 +738,7 @@ public class MetaUtils {
 	    } else if (clazz.equals(char.class)) {
 		value = CHAR_DEF;
 	    } else if (clazz.equals(short.class)) {
-		value = shortDef;
+		value = SHORT_DEF;
 	    } else if (clazz.equals(int.class)) {
 		value = intDef;
 	    } else if (clazz.equals(long.class)) {
