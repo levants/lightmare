@@ -11,5 +11,6 @@ public class MetaUtilsTest {
 	System.out.println(MetaUtils.getDefault(boolean.class));
 	System.out.println(MetaUtils.getDefault(char.class));
 	System.out.println(MetaUtils.getDefault(short.class));
+	System.out.println(MetaUtils.getDefault(int.class));
     }
 }
