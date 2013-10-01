@@ -84,7 +84,7 @@ public class MetaUtils {
     private static void setAccessible(AccessibleObject accessibleObject,
 	    boolean accessible) {
 
-	if (ObjectUtils.notTrue(accessible) && notAccessible(accessibleObject)) {
+	if (ObjectUtils.notTrue(accessible)) {
 	    boolean locked = Boolean.FALSE;
 	    while (ObjectUtils.notTrue(locked)) {
 		locked = makeAccessible(accessibleObject);
