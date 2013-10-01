@@ -140,11 +140,6 @@ public class MetaUtils {
 	    } finally {
 		ObjectUtils.unlock(ACCESSOR_LOCK);
 	    }
-
-	    boolean locked = Boolean.FALSE;
-	    while (ObjectUtils.notTrue(locked)) {
-		locked = makeInaccessible(accessibleObject);
-	    }
 	}
     }
 
