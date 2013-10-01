@@ -14,6 +14,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.lightmare.libraries.LibraryLoader;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -342,7 +343,7 @@ public class MetaUtils {
 	if (ObjectUtils.notNull(modifiers)) {
 	    int length = modifiers.length;
 	    int modifierValue;
-	    for (int i = 0; i < length; i++) {
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
 		modifierValue = modifiers[i];
 		modifier = modifier | modifierValue;
 	    }
