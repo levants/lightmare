@@ -24,7 +24,7 @@ import org.lightmare.utils.ObjectUtils;
 public class MetaUtils {
 
     // default values for primitives
-    private static final byte byteDef = 0;
+    private static final byte BYTE_DEF = 0;
 
     private static final boolean booleanDef = Boolean.FALSE;
 
@@ -732,7 +732,7 @@ public class MetaUtils {
 	if (clazz.isPrimitive()) {
 
 	    if (clazz.equals(byte.class)) {
-		value = byteDef;
+		value = BYTE_DEF;
 	    } else if (clazz.equals(boolean.class)) {
 		value = booleanDef;
 	    } else if (clazz.equals(char.class)) {
