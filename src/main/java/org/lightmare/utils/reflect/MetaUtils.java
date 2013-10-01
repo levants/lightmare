@@ -44,7 +44,7 @@ public class MetaUtils {
     private static final int DEFAULT_MODIFIER = 0;
 
     /**
-     * Sets object accessible flag as true
+     * Sets object accessible flag as true if it is not
      * 
      * @param accessibleObject
      * @param accessible
