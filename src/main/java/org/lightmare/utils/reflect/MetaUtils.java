@@ -722,6 +722,7 @@ public class MetaUtils {
     public static Object getDefault(Class<?> clazz) {
 
 	Object value;
+
 	if (clazz.isPrimitive()) {
 
 	    if (clazz.equals(byte.class)) {
