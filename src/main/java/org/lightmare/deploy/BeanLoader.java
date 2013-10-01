@@ -247,7 +247,7 @@ public class BeanLoader {
 	}
 
 	/**
-	 * Adds {@link AccessibleObject} to cache to set accessible after
+	 * Adds {@link AccessibleObject} to cache to set as accessible after
 	 * 
 	 * @param accessibleObject
 	 */
