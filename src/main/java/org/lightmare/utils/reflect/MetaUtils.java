@@ -36,7 +36,7 @@ public class MetaUtils {
 
     private static final long LONG_DEF = 0L;
 
-    private static final float floatDef = 0F;
+    private static final float FLOAT_DEF = 0F;
 
     private static final double doubleDef = 0D;
 
@@ -744,7 +744,7 @@ public class MetaUtils {
 	    } else if (clazz.equals(long.class)) {
 		value = LONG_DEF;
 	    } else if (clazz.equals(float.class)) {
-		value = floatDef;
+		value = FLOAT_DEF;
 	    } else if (clazz.equals(double.class)) {
 		value = doubleDef;
 	    } else {
