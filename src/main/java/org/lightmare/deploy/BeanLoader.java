@@ -456,6 +456,11 @@ public class BeanLoader {
 	    if (CollectionUtils.valid(unitFields)) {
 		metaData.addUnitFields(unitFields);
 	    }
+
+	    if (CollectionUtils.valid(accessibleFields)) {
+		AccessibleObject[] accessibleObjects = CollectionUtils.toArray(
+			accessibleFields, AccessibleObject.class);
+	    }
 	}
 
 	/**
