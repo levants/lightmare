@@ -510,7 +510,7 @@ public class MetaUtils {
 	    value = invoke(method, data, arguments);
 
 	} finally {
-	    method.setAccessible(accessible);
+	    set(method, accessible);
 	}
 
 	return value;
