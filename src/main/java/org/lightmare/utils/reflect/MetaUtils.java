@@ -582,7 +582,7 @@ public class MetaUtils {
 	} catch (IllegalAccessException ex) {
 	    throw new IOException(ex);
 	} finally {
-	    setAccessible(field, accessible);
+	    resetAccessible(field, accessible);
 	}
     }
 
