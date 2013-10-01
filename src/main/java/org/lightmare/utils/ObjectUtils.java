@@ -52,7 +52,7 @@ public abstract class ObjectUtils {
 	if (valid) {
 	    int length = datas.length;
 	    Object data;
-	    for (int i = 0; i < length && valid; i++) {
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length && valid; i++) {
 		data = datas[i];
 		valid = notNull(data);
 	    }
