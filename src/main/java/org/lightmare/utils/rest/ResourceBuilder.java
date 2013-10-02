@@ -24,7 +24,7 @@ import org.lightmare.utils.beans.BeanUtils;
  * Class to build and {@link Resource} for REST services
  * 
  * @author Levan
- * 
+ * @since 0.0.74-SNAPSHOT
  */
 public class ResourceBuilder {
 
