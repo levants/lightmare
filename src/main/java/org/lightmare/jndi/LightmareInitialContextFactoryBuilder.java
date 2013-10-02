@@ -51,10 +51,12 @@ public class LightmareInitialContextFactoryBuilder implements
 
 	InitialContextFactory initialContextFactory;
 
-	String requestedFactory = null;
+	String requestedFactory;
 	if (ObjectUtils.notNull(env)) {
 	    Object factory = env.get(Context.INITIAL_CONTEXT_FACTORY);
 	    requestedFactory = ObjectUtils.cast(factory, String.class);
+	} else {
+	    requestedFactory = null;
 	}
 
 	if (ObjectUtils.notNull(requestedFactory)) {
