@@ -17,7 +17,7 @@ import org.lightmare.utils.ObjectUtils;
  * {@link org.glassfish.jersey.server.model.Resource} classes
  * 
  * @author levan
- * 
+ * @since >0.0.74-SNAPSHOT
  */
 public class RestCheck {
 
