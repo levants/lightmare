@@ -28,6 +28,7 @@ public class LightmareInitialContextFactoryBuilder implements
 	    String requestedFactory) throws NoInitialContextException {
 
 	InitialContextFactory factory;
+
 	Class<?> requestedClass;
 	try {
 	    requestedClass = MetaUtils.initClassForName(requestedFactory);
