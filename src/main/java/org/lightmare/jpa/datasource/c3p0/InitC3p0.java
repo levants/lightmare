@@ -21,7 +21,7 @@ import com.mchange.v2.c3p0.PooledDataSource;
  * Initializes and bind to {@link Context} c3p0 pooled {@link DataSource} object
  * 
  * @author levan
- * 
+ * @since 0.0.79-SNAPSHOT
  */
 public class InitC3p0 extends InitDataSource {
 
