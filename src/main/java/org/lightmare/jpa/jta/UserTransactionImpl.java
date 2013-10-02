@@ -23,7 +23,7 @@ import org.lightmare.utils.ObjectUtils;
  * Implementation of {@link UserTransaction} interface for JNDI and EJB beans
  * 
  * @author levan
- * 
+ * @since 0.0.28-SNAPSHOT
  */
 public class UserTransactionImpl implements UserTransaction {
 
