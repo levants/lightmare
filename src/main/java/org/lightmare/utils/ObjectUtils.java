@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
- * Utility class to help with general object checks
+ * Utility class to help with general object checks / lock / modification
  * 
  * @author levan
  * 
