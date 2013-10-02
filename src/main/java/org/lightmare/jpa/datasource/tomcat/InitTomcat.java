@@ -77,7 +77,7 @@ public class InitTomcat extends InitDataSource {
 		PoolConfig.Defaults.INITIAL_POOL_SIZE));
 	poolProperties.setMaxWait(10000);
 	poolProperties.setRemoveAbandonedTimeout(60);
-	poolProperties.setMinEvictableIdleTimeMillis(30000);
+	poolProperties.setMinEvictableIdleTimeMillis(checkOutTimeout);
 	poolProperties.setMinIdle(10);
 	poolProperties.setLogAbandoned(Boolean.TRUE);
 	poolProperties.setRemoveAbandoned(Boolean.TRUE);
