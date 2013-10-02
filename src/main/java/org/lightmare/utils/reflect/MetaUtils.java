@@ -22,7 +22,7 @@ import org.lightmare.utils.ObjectUtils;
  * sets
  * 
  * @author levan
- * 
+ * @since 0.0.26-SNAPSHOT
  */
 public class MetaUtils {
 
