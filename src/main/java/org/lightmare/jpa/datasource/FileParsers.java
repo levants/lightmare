@@ -34,7 +34,7 @@ import org.xml.sax.SAXException;
  * {@link javax.naming.Context} by name
  * 
  * @author levan
- * 
+ * @since 0.0.15-SNAPSHOT
  */
 public class FileParsers {
 
