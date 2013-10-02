@@ -34,7 +34,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * by interface class
  * 
  * @author Levan
- * 
+ * @since 0.0.15-SNAPSHOT
  */
 public class EjbConnector {
 
