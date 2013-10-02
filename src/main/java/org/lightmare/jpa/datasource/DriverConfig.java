@@ -4,7 +4,7 @@ package org.lightmare.jpa.datasource;
  * Configuration of JDBC driver classes and database names
  * 
  * @author levan
- * 
+ * @since 0.0.15-SNAPSHOT
  */
 public abstract class DriverConfig {
 
