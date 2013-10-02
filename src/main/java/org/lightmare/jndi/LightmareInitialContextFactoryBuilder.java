@@ -22,6 +22,7 @@ import org.lightmare.utils.reflect.MetaUtils;
 public class LightmareInitialContextFactoryBuilder implements
 	InitialContextFactoryBuilder {
 
+    // Error message
     private static final String COULD_NOT_FIND_ERROR = "Could not find initial cotext";
 
     private InitialContextFactory simulateBuilderLessNamingManager(
