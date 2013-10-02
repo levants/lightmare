@@ -57,6 +57,8 @@ public class InitTomcat extends InitDataSource {
 
 	int checkOutTimeout = PoolConfig.asInt(configMap,
 		PoolConfig.Defaults.CHECK_OUT_TIMEOUT);
+	int exeededTimeout = PoolConfig.asInt(configMap,
+		PoolConfig.Defaults.MAX_IDLE_TIME_EXCESS_CONN);
 
 	DataSource dataSource;
 	PoolProperties poolProperties = new PoolProperties();
