@@ -19,7 +19,7 @@ import org.lightmare.utils.ObjectUtils;
  * for simple JNDI extensions
  * 
  * @author levan
- * 
+ * @since 0.0.60-SNAPSHOT
  */
 public class JndiManager {
 
