@@ -57,7 +57,7 @@ public class InitDBCP extends InitDataSource {
 	dataSource.setMaxIdle(PoolConfig.asInt(properties,
 		PoolConfig.Defaults.MAX_IDLE_TIMEOUT));
 	dataSource.setMaxWait(PoolConfig.asInt(properties,
-		PoolConfig.Defaults.MAX_IDLE_TIMEOUT));
+		PoolConfig.Defaults.CHECK_OUT_TIMEOUT));
 
 	return dataSource;
     }
