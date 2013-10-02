@@ -28,7 +28,7 @@ import org.lightmare.utils.StringUtils;
  * {@link Class}'s appropriate field (annotated by @PersistenceContext)
  * 
  * @author Levan
- * 
+ * @since 0.0.79-SNAPSHOT
  */
 public class JpaManager {
 
