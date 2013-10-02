@@ -108,6 +108,5 @@ public abstract class InitDataSource {
      * 
      * @param dataSource
      */
-
     public abstract void cleanUp(DataSource dataSource);
 }

@@ -62,7 +62,6 @@ public class InitC3p0 extends InitDataSource {
 	    Map<Object, Object> configMap = poolConfig.merge(properties);
 	    namedDataSource = DataSources.pooledDataSource(dataSource,
 		    configMap);
-
 	} catch (SQLException ex) {
 	    throw new IOException(ex);
 	} catch (PropertyVetoException ex) {
