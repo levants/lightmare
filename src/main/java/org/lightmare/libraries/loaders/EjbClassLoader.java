@@ -18,7 +18,7 @@ public class EjbClassLoader extends URLClassLoader {
      * {@link EjbClassLoader} class
      * 
      * @author levan
-     * 
+     * @since 0.0.45-SNAPSHOT
      */
     protected static class EjbLoaderAction implements
 	    PrivilegedAction<EjbClassLoader> {
