@@ -3,7 +3,7 @@ package org.lightmare.utils;
 import java.lang.reflect.Array;
 
 /**
- * Utility class for {@link String} operations
+ * Utility class for {@link String} and {@link CharSequence} operations
  * 
  * @author Levan
  * @since 0.0.80-SNAPSHOT
