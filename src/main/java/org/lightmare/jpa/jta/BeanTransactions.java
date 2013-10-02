@@ -25,7 +25,7 @@ import org.lightmare.utils.ObjectUtils;
  * {@link javax.ejb.Stateless} bean {@link java.lang.reflect.Proxy} calls
  * 
  * @author levan
- * 
+ * @since 0.0.28-SNAPSHOT
  */
 public class BeanTransactions {
 
