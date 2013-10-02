@@ -4,7 +4,7 @@ package org.lightmare.utils;
  * Utility class for JNDI names
  * 
  * @author levan
- * 
+ * @since 0.0.60-SNAPSHOT
  */
 public class NamingUtils {
 
