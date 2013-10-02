@@ -25,7 +25,7 @@ import org.osjava.sj.memory.MemoryContext;
  * {@link UserTransaction} and {@link EntityManager} caching and retrieving
  * 
  * @author levan
- * 
+ * @since 0.0.60-SNAPSHOT
  */
 public class LightmareContext extends MemoryContext {
 
