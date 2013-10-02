@@ -49,6 +49,7 @@ public class LightmareInitialContextFactoryBuilder implements
 	    throws NamingException {
 
 	InitialContextFactory initialContextFactory;
+
 	String requestedFactory = null;
 	if (ObjectUtils.notNull(env)) {
 	    requestedFactory = (String) env
