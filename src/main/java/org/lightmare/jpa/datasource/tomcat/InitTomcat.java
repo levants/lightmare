@@ -54,8 +54,8 @@ public class InitTomcat extends InitDataSource {
     public DataSource initializeDataSource() throws IOException {
 
 	Map<Object, Object> configMap = poolConfig.merge(properties);
-	
-	int checkOutTimeout =  PoolConfig.asInt(configMap,
+
+	int checkOutTimeout = PoolConfig.asInt(configMap,
 		PoolConfig.Defaults.CHECK_OUT_TIMEOUT);
 
 	DataSource dataSource;
@@ -69,8 +69,7 @@ public class InitTomcat extends InitDataSource {
 	poolProperties.setTestOnBorrow(Boolean.TRUE);
 	poolProperties.setValidationQuery(TEST_SQL);
 	poolProperties.setTestOnReturn(Boolean.FALSE);
-	poolProperties.setValidationInterval(PoolConfig.asInt(configMap,
-		PoolConfig.Defaults.CHECK_OUT_TIMEOUT));
+	poolProperties.setValidationInterval(checkOutTimeout);
 	poolProperties.setTimeBetweenEvictionRunsMillis(PoolConfig.asInt(
 		configMap, PoolConfig.Defaults.CHECK_OUT_TIMEOUT));
 	poolProperties.setMaxActive(PoolConfig.asInt(configMap,
