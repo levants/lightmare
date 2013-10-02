@@ -16,7 +16,7 @@ public abstract class DriverConfig {
      */
     public static enum Drivers {
 
-	// Database name and driver descriptors
+	// Database name and driver class names
 	ORACLE("oracle", "oracle.jdbc.OracleDriver"), // Oracle
 	MYSQL("mysql", "com.mysql.jdbc.Driver"), // MYSQL
 	POSTGRE("postgre", "org.postgresql.Driver"), // PostgreSQL
