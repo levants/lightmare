@@ -34,6 +34,11 @@ public abstract class InitDataSource {
 
     protected static final Logger LOG = Logger.getLogger(Initializer.class);
 
+    /**
+     * Constructor with configuration {@link Properties} instance
+     * 
+     * @param properties
+     */
     public InitDataSource(Properties properties) {
 
 	if (CollectionUtils.valid(properties)) {
