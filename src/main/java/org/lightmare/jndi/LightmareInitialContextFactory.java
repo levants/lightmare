@@ -14,7 +14,7 @@ import org.lightmare.utils.ObjectUtils;
  * instantiate JNDI {@link Context} instance
  * 
  * @author levan
- * 
+ * @since 0.0.60-SNAPSHOT<
  */
 public class LightmareInitialContextFactory implements InitialContextFactory {
 
