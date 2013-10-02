@@ -4,7 +4,7 @@ package org.lightmare.jpa.jta;
  * Properties to use JTA in Hibernate environment
  * 
  * @author levan
- * 
+ * @since 0.0.34-SNAPSHOT
  */
 public enum HibernateConfig {
 
