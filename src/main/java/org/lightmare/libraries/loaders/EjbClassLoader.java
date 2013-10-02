@@ -9,7 +9,7 @@ import java.security.PrivilegedAction;
  * Implementation of {@link URLClassLoader} class for deployed EJB applications
  * 
  * @author levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class EjbClassLoader extends URLClassLoader {
 
