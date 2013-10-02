@@ -18,7 +18,7 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Class to use reflection {@link Method}, {@link Constructor} or any
+ * Utility class to use reflection {@link Method}, {@link Constructor} or any
  * {@link AccessibleObject} calls and get / set / modify {@link Field} value
  * 
  * @author levan
