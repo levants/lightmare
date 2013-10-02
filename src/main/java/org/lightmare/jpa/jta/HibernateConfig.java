@@ -16,11 +16,8 @@ public enum HibernateConfig {
 										 */
 
     FACTORY("hibernate.transaction.factory_class",
-	    "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory"); /*
-										     * JTA
-										     * factory
-										     * class
-										     */
+	    "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory"); // factory
+										    // class
 
     public String key;
 
