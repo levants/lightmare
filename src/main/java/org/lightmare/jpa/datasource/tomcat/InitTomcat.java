@@ -70,8 +70,7 @@ public class InitTomcat extends InitDataSource {
 	poolProperties.setValidationQuery(TEST_SQL);
 	poolProperties.setTestOnReturn(Boolean.FALSE);
 	poolProperties.setValidationInterval(checkOutTimeout);
-	poolProperties.setTimeBetweenEvictionRunsMillis(PoolConfig.asInt(
-		configMap, PoolConfig.Defaults.CHECK_OUT_TIMEOUT));
+	poolProperties.setTimeBetweenEvictionRunsMillis(checkOutTimeout);
 	poolProperties.setMaxActive(PoolConfig.asInt(configMap,
 		PoolConfig.Defaults.MAX_POOL_SIZE));
 	poolProperties.setInitialSize(PoolConfig.asInt(configMap,
