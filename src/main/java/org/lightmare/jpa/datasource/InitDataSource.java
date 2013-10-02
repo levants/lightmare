@@ -24,6 +24,7 @@ public abstract class InitDataSource {
     // Additional data source / connection pooling properties
     protected Properties properties;
 
+    // Pool configuration with defaults
     protected PoolConfig poolConfig;
 
     // Initial properties for data source initialization
