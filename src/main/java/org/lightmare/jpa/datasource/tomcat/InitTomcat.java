@@ -54,6 +54,9 @@ public class InitTomcat extends InitDataSource {
     public DataSource initializeDataSource() throws IOException {
 
 	Map<Object, Object> configMap = poolConfig.merge(properties);
+	
+	int checkOutTimeout =  PoolConfig.asInt(configMap,
+		PoolConfig.Defaults.CHECK_OUT_TIMEOUT);
 
 	DataSource dataSource;
 	PoolProperties poolProperties = new PoolProperties();
