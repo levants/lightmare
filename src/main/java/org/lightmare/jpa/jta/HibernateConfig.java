@@ -1,7 +1,7 @@
 package org.lightmare.jpa.jta;
 
 /**
- * Properties to use JTA for Hibernate configuration
+ * Properties to use JTA in Hibernate environment
  * 
  * @author levan
  * 
