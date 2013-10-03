@@ -62,6 +62,7 @@ public abstract class DriverConfig {
 
 	    driver = drivers[i];
 	    match = driver.name.equals(name);
+
 	    if (match) {
 		driverName = driver.driver;
 	    }
