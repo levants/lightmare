@@ -53,18 +53,18 @@ public abstract class DriverConfig {
 
 	Drivers[] drivers = Drivers.values();
 
-	    Drivers driver;
-	    int length = drivers.length;
-	    boolean match = Boolean.FALSE;
+	Drivers driver;
+	int length = drivers.length;
+	boolean match = Boolean.FALSE;
 
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length
-		    && ObjectUtils.notTrue(match); i++) {
-		driver = drivers[i];
-		match = driver.name.equals(name);
-		if (match) {
-		    driverName = driver.driver;
-		}
+	for (int i = CollectionUtils.FIRST_INDEX; i < length
+		&& ObjectUtils.notTrue(match); i++) {
+	    driver = drivers[i];
+	    match = driver.name.equals(name);
+	    if (match) {
+		driverName = driver.driver;
 	    }
+	}
 
 	return driverName;
     }
