@@ -49,7 +49,7 @@ public abstract class DriverConfig {
      */
     public static String getDriverName(String name) {
 
-	String driverName;
+	String driverName = null;
 
 	Drivers[] drivers = Drivers.values();
 
