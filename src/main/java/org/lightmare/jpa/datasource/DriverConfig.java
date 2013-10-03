@@ -59,6 +59,7 @@ public abstract class DriverConfig {
 
 	for (int i = CollectionUtils.FIRST_INDEX; i < length
 		&& ObjectUtils.notTrue(match); i++) {
+
 	    driver = drivers[i];
 	    match = driver.name.equals(name);
 	    if (match) {
