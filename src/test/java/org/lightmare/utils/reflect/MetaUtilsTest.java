@@ -6,7 +6,6 @@ import java.lang.reflect.AccessibleObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.lightmare.bean.LightMareBean;
-import org.lightmare.deploy.MetaCreator;
 
 public class MetaUtilsTest {
 
