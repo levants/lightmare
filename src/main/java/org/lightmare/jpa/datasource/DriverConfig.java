@@ -73,38 +73,4 @@ public abstract class DriverConfig {
 	return driverName;
     }
 
-/*    public static boolean isOracle(String name) {
-
-	return Drivers.ORACLE.driver.equals(name);
-    }
-
-    public static boolean isMySQL(String name) {
-
-	return Drivers.MYSQL.driver.equals(name);
-    }
-
-    public static boolean isPostgre(String name) {
-
-	return Drivers.POSTGRE.driver.equals(name);
-    }
-
-    public static boolean isDB2(String name) {
-
-	return Drivers.DB2.driver.equals(name);
-    }
-
-    public static boolean isMsSQL(String name) {
-
-	return Drivers.MSSQL.driver.equals(name);
-    }
-
-    public static boolean isH2(String name) {
-
-	return Drivers.H2.driver.equals(name);
-    }
-
-    public static boolean isDerby(String name) {
-
-	return Drivers.DERBY.driver.equals(name);
-    }*/
 }
