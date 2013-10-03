@@ -61,7 +61,7 @@ public abstract class DriverConfig {
 	} else if (Drivers.H2.name.equals(name)) {
 	    driverName = Drivers.H2.driver;
 	} else if (Drivers.HYPERSONIC.name.equals(name)) {
-	    driverName = Drivers.H.driver;
+	    driverName = Drivers.HYPERSONIC.driver;
 	} else if (Drivers.DERBY.name.equals(name)) {
 	    driverName = Drivers.DERBY.driver;
 	} else {
