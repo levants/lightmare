@@ -1,5 +1,6 @@
 package org.lightmare.jpa.datasource;
 
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -53,7 +54,8 @@ public abstract class DriverConfig {
 	Drivers[] drivers = Drivers.values();
 	Drivers driver;
 	boolean match = Boolean.FALSE;
-	for (int i = 0; i < drivers.length && ObjectUtils.notTrue(match); i++) {
+	for (int i = CollectionUtils.FIRST_INDEX; i < drivers.length
+		&& ObjectUtils.notTrue(match); i++) {
 	    driver = drivers[i];
 	    match = driver.name.equals(name);
 	    if (match) {
