@@ -73,7 +73,7 @@ public abstract class DriverConfig {
 	return driverName;
     }
 
-    public static boolean isOracle(String name) {
+/*    public static boolean isOracle(String name) {
 
 	return Drivers.ORACLE.driver.equals(name);
     }
@@ -106,5 +106,5 @@ public abstract class DriverConfig {
     public static boolean isDerby(String name) {
 
 	return Drivers.DERBY.driver.equals(name);
-    }
+    }*/
 }
