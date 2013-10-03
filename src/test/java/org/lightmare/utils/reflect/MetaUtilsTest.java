@@ -22,6 +22,7 @@ public class MetaUtilsTest {
 	System.out.println(MetaUtils.getDefault(double.class));
     }
 
+    @Test
     public void testAccessibleObjectInstances() {
 
 	try {
