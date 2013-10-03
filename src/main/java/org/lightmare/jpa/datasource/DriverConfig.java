@@ -51,11 +51,13 @@ public abstract class DriverConfig {
 	String driverName;
 
 	Drivers[] drivers = Drivers.values();
+	Drivers driver;
 	boolean match = Boolean.FALSE;
 	for (int i = 0; i < drivers.length && ObjectUtils.notTrue(match); i++) {
-	    match = drivers[i].name.equals(name);
+	    driver = drivers[i];
+	    match = driver.name.equals(name);
 	    if (match) {
-		driverName = drivers[i].driver;
+		driverName = driver.driver;
 	    }
 	}
 
