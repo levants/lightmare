@@ -64,10 +64,6 @@ public abstract class DriverConfig {
 	    }
 	}
 
-	if (length == 0 || ObjectUtils.notTrue(match)) {
-	    driverName = null;
-	}
-
 	return driverName;
     }
 
