@@ -53,8 +53,6 @@ public abstract class DriverConfig {
 
 	Drivers[] drivers = Drivers.values();
 
-	if (CollectionUtils.valid(drivers)) {
-
 	    Drivers driver;
 	    int length = drivers.length;
 	    boolean match = Boolean.FALSE;
@@ -67,9 +65,6 @@ public abstract class DriverConfig {
 		    driverName = driver.driver;
 		}
 	    }
-	} else {
-	    driverName = null;
-	}
 
 	return driverName;
     }
