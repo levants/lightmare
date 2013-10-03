@@ -71,6 +71,7 @@ public class MetaUtils {
 
 	if (ObjectUtils.notTrue(accessible)) {
 	    try {
+		// Or should I use synchronized(accessibleObject) block
 		ObjectUtils.lock(ACCESSOR_LOCK);
 		if (notAccessible(accessibleObject)) {
 		    accessibleObject.setAccessible(Boolean.TRUE);

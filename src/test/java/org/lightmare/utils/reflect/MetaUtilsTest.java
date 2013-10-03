@@ -42,7 +42,8 @@ public class MetaUtilsTest {
 	    Assert.assertTrue("AccessibleObject instances are not the same",
 		    acc1.equals(acc2));
 	    System.out.format("%s %s", acc1, acc2);
-	    Assert.assertTrue("AccessibleObject instances are not the same",
+	    Assert.assertTrue(
+		    "AccessibleObject instances should not be the same",
 		    ObjectUtils.notEquals(acc1, acc3));
 	    System.out.format("%s %s", acc1, acc3);
 
