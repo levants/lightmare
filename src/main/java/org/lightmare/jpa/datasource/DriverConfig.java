@@ -54,10 +54,11 @@ public abstract class DriverConfig {
 	Drivers[] drivers = Drivers.values();
 
 	if (CollectionUtils.valid(drivers)) {
-	    
+
 	    Drivers driver;
 	    int length = drivers.length;
 	    boolean match = Boolean.FALSE;
+
 	    for (int i = CollectionUtils.FIRST_INDEX; i < length
 		    && ObjectUtils.notTrue(match); i++) {
 		driver = drivers[i];
