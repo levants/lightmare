@@ -23,6 +23,7 @@ public abstract class DriverConfig {
 	MSSQL("mssql", "com.microsoft.sqlserver.jdbc.SQLServerDriver"), // MSSQL
 	DB2("db2", "com.ibm.db2.jcc.DB2Driver"), // DB2
 	H2("h2", "org.h2.Driver"), // H2
+	HYPERSONIC("hypersonic", "org.hsql.jdbcDriver"), // Hypersonic
 	DERBY("derby", "org.apache.derby.jdbc.EmbeddedDriver"); // DERBY
 
 	// Database names
@@ -59,6 +60,8 @@ public abstract class DriverConfig {
 	    driverName = Drivers.MSSQL.driver;
 	} else if (Drivers.H2.name.equals(name)) {
 	    driverName = Drivers.H2.driver;
+	} else if (Drivers.HYPERSONIC.name.equals(name)) {
+	    driverName = Drivers.H.driver;
 	} else if (Drivers.DERBY.name.equals(name)) {
 	    driverName = Drivers.DERBY.driver;
 	} else {
