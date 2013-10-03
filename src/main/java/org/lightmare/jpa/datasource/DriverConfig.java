@@ -1,5 +1,7 @@
 package org.lightmare.jpa.datasource;
 
+import org.lightmare.utils.ObjectUtils;
+
 /**
  * Configuration of JDBC driver classes and database names
  * 
@@ -47,6 +49,19 @@ public abstract class DriverConfig {
     public static String getDriverName(String name) {
 
 	String driverName;
+
+	Drivers[] drivers = Drivers.values();
+	boolean match = Boolean.FALSE;
+	for (int i = 0; i < drivers.length && ObjectUtils.notTrue(match); i++) {
+	    match = drivers[i].name.equals(name);
+	    if (match) {
+		driverName = drivers[i].driver;
+	    }
+	}
+
+	if (ObjectUtils.notTrue(match)) {
+	    driverName = null;
+	}
 
 	if (Drivers.ORACLE.name.equals(name)) {
 	    driverName = Drivers.ORACLE.driver;
