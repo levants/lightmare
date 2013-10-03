@@ -27,7 +27,7 @@ public abstract class DriverConfig {
 	DB2("db2", "com.ibm.db2.jcc.DB2Driver"), // DB2
 	H2("h2", "org.h2.Driver"), // H2
 	HYPERSONIC("hypersonic", "org.hsql.jdbcDriver"), // Hypersonic
-	INTERBASE("interbase", "interbase.interclient.Driver"), 
+	INTERBASE("interbase", "interbase.interclient.Driver"), //Interbase 
 	DERBY("derby", "org.apache.derby.jdbc.EmbeddedDriver"); // DERBY
 
 	// Database names
