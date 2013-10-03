@@ -46,7 +46,6 @@ public class MetaUtilsTest {
 		    "AccessibleObject instances should not be the same",
 		    ObjectUtils.notEquals(acc1, acc3));
 	    System.out.format("%s %s", acc1, acc3);
-
 	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}
