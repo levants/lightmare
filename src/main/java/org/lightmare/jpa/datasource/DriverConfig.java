@@ -68,25 +68,7 @@ public abstract class DriverConfig {
 	    driverName = null;
 	}
 
-	if (Drivers.ORACLE.name.equals(name)) {
-	    driverName = Drivers.ORACLE.driver;
-	} else if (Drivers.MYSQL.name.equals(name)) {
-	    driverName = Drivers.MYSQL.driver;
-	} else if (Drivers.POSTGRE.name.equals(name)) {
-	    driverName = Drivers.POSTGRE.driver;
-	} else if (Drivers.DB2.name.equals(name)) {
-	    driverName = Drivers.DB2.driver;
-	} else if (Drivers.MSSQL.name.equals(name)) {
-	    driverName = Drivers.MSSQL.driver;
-	} else if (Drivers.H2.name.equals(name)) {
-	    driverName = Drivers.H2.driver;
-	} else if (Drivers.HYPERSONIC.name.equals(name)) {
-	    driverName = Drivers.HYPERSONIC.driver;
-	} else if (Drivers.DERBY.name.equals(name)) {
-	    driverName = Drivers.DERBY.driver;
-	} else {
-	    driverName = null;
-	}
+
 
 	return driverName;
     }
