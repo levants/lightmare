@@ -11,7 +11,7 @@ import org.lightmare.rest.RestConfig;
 public enum ApplicationInit {
 
     // Default parameters
-    APPLICATION_INIT("javax.ws.rs.Application", RestConfig.class.getName()), // Initializer
+    INIT_PARAM("javax.ws.rs.Application", RestConfig.class.getName()), // Initializer
 
     REST_DEFAULT_URI("/rest"); // URL path
 
