@@ -241,7 +241,7 @@ public class ParamBuilder {
 		    httpHeaders, entityStream);
 
 	} finally {
-		close(entityStream);
+	    close(entityStream);
 	}
 
 	return param;
