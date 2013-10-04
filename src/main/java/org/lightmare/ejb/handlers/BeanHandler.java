@@ -414,7 +414,9 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     @Override
     public Object invoke(Object proxy, Method method, Object[] arguments)
 	    throws Throwable {
+
 	Object value;
+
 	Collection<EntityManager> ems = createEntityManagers();
 	Method realMethod = null;
 
