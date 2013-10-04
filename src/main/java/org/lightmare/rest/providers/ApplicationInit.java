@@ -8,7 +8,9 @@ import org.lightmare.rest.RestConfig;
  * @author levan
  * 
  */
-public class ApplicationInit {
+public enum ApplicationInit {
+    
+    APPLICATION_INIT(),
 
     public static final String REST_DEFAULT_URI = "/rest";
 
