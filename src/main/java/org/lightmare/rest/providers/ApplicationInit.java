@@ -22,4 +22,8 @@ public enum ApplicationInit {
     public String key;
     
     public String value;
+    
+    private ApplicationInit(String key, String value){
+	
+    }
 }
