@@ -199,6 +199,12 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	return transaction;
     }
 
+    /**
+     * Sets transaction {@link Field}'s value
+     * 
+     * @param ems
+     * @throws IOException
+     */
     private void setTransactionField(Collection<EntityManager> ems)
 	    throws IOException {
 
