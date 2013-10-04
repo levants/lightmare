@@ -120,7 +120,7 @@ public class EjbConnector {
      */
     private <T> BeanHandler getBeanHandler(MetaData metaData)
 	    throws IOException {
-
+BeanHandler handler;
 	T beanInstance = getBeanInstance(metaData);
 
 	// Caches EnriryManagerFactory instances in MetaData if they are not
@@ -129,7 +129,7 @@ public class EjbConnector {
 
 	// Initializes BeanHandler instance and caches it in MetaData if it was
 	// not cached yet
-	BeanHandler handler = BeanHandlerFactory.get(metaData, beanInstance);
+	 handler= BeanHandlerFactory.get(metaData, beanInstance);
 
 	return handler;
     }
