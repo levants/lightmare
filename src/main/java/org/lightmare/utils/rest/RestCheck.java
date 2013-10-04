@@ -6,6 +6,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
 
 import org.lightmare.cache.RestContainer;
 import org.lightmare.rest.providers.RestProvider;
@@ -54,7 +55,8 @@ public class RestCheck {
      */
     public static boolean check(Class<?> resourceClass) {
 
-	boolean valid = Boolean.FALSE;
+	boolean valid = ObjectUtils.notNull(resourceClass)
+		&& resourceClass.isAnnotationPresent(Path.class);
 
 	Method[] methods = resourceClass.getDeclaredMethods();
 	int length = methods.length;
