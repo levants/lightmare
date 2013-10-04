@@ -257,7 +257,7 @@ InvocationHandler handler;
 	    }
 	}
 
-	 beanInstance= instatiateBean(interfaceClass, handler, loader);
+	 beanInstance = instatiateBean(interfaceClass, handler, loader);
 
 	return beanInstance;
     }
