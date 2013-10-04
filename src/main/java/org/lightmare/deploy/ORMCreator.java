@@ -116,7 +116,8 @@ public class ORMCreator {
     }
 
     /**
-     * Creates connection associated with unit name if such does not exists
+     * Creates connection associated with unit name if such connection does not
+     * exists yet
      * 
      * @param unitName
      * @param beanName
