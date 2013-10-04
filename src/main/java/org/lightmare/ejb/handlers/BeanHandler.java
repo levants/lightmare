@@ -414,9 +414,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @param method
      * @param arguments
      * @return Object
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
-     * @throws InvocationTargetException
+     * @throws IOException
      */
     private Object invokeBeanMethod(final Collection<EntityManager> ems,
 	    final Method method, Object[] arguments) throws IOException {
