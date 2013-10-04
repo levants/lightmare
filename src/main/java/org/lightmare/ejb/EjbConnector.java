@@ -143,7 +143,7 @@ public class EjbConnector {
      */
     private <T> T instatiateBean(Class<T>[] interfaces,
 	    InvocationHandler handler, ClassLoader loader) {
-
+T beanInstance;
 	if (loader == null) {
 	    loader = LibraryLoader.getContextClassLoader();
 	} else {
@@ -151,7 +151,7 @@ public class EjbConnector {
 	}
 
 	Object instance = Proxy.newProxyInstance(loader, interfaces, handler);
-	T beanInstance = ObjectUtils.cast(instance);
+	 beanInstance= ObjectUtils.cast(instance);
 
 	return beanInstance;
     }
