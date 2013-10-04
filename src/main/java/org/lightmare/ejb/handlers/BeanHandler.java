@@ -231,8 +231,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * not null
      * 
      * @return {@link EntityManager}
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
+     * @throws IOException
      */
     private EntityManager createEntityManager(ConnectionData connection)
 	    throws IOException {
