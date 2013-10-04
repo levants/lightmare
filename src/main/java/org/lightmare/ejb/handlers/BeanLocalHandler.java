@@ -7,7 +7,7 @@ import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.utils.RpcUtils;
 
 /**
- * Local handler class for remote call
+ * Local handler class for remote client call
  * 
  * @author levan
  * 
