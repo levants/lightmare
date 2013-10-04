@@ -19,6 +19,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
  */
 public class JacksonFXmlFeature implements Feature {
 
+    // Key prefix to disable MOXy JSON library
     private static final String DISABLE_JSON_KEY = "jersey.config.disableMoxyJson.";
 
     @Override
