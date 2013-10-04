@@ -198,7 +198,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
-     * Creates and caches {@link UserTransaction} per thread
+     * Creates and caches {@link UserTransaction} per calling thread
      * 
      * @param em
      * @return {@link UserTransaction}
