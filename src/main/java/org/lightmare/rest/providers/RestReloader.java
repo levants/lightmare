@@ -16,7 +16,7 @@ import org.lightmare.utils.ObjectUtils;
  * runtime
  * 
  * @author levan
- * 
+ * @since 0.0.50-SNAPSHOT
  */
 @Provider
 public class RestReloader implements ContainerLifecycleListener {
@@ -67,5 +67,4 @@ public class RestReloader implements ContainerLifecycleListener {
     public void onShutdown(Container container) {
 
     }
-
 }
