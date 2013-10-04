@@ -151,7 +151,7 @@ T beanInstance;
 	}
 
 	Object instance = Proxy.newProxyInstance(loader, interfaces, handler);
-	 beanInstance= ObjectUtils.cast(instance);
+	 beanInstance = ObjectUtils.cast(instance);
 
 	return beanInstance;
     }
