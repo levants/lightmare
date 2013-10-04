@@ -23,6 +23,7 @@ public class InvocationContextImpl implements InvocationContext {
     // Caches methods in order for proceed calls
     private Queue<Method> methods = new LinkedList<Method>();
 
+    // Parameters for intercepted method
     private Object[] parameters;
 
     // Caches object in order to proceed method calls in chain
