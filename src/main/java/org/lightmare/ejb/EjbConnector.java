@@ -143,6 +143,7 @@ public class EjbConnector {
      */
     private <T> T instatiateBean(Class<T>[] interfaces,
 	    InvocationHandler handler, ClassLoader loader) {
+	
 T beanInstance;
 	if (loader == null) {
 	    loader = LibraryLoader.getContextClassLoader();
