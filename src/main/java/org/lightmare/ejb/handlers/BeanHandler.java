@@ -69,6 +69,11 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	return bean;
     }
 
+    /**
+     * Sets bean instance to handler, should be called only after clonning
+     * 
+     * @param bean
+     */
     protected void setBean(final Object bean) {
 	this.bean = bean;
     }
