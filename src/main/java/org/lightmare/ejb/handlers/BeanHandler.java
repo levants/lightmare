@@ -86,7 +86,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
-     * Sets passed value to beans {@link Field}
+     * Sets passed {@link Object} as beans {@link Field} value
      * 
      * @param field
      * @param value
