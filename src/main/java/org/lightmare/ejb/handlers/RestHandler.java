@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
  */
 public class RestHandler<T> {
 
+    // Appropriated bean's handler
     private final BeanHandler handler;
 
     private final T bean;
