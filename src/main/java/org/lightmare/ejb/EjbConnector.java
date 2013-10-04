@@ -216,6 +216,7 @@ public class EjbConnector {
      * @throws IOException
      */
     public <T> T connectToBean(MetaData metaData) throws IOException {
+	
 T beanInstance;
 	InvocationHandler handler = getBeanHandler(metaData);
 	Class<?>[] interfaces = setInterfaces(metaData);
