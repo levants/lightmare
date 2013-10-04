@@ -55,6 +55,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     // Interceptors for given bean instance
     private final Collection<InterceptorData> interceptorDatas;
 
+    // EJB meta data for given bean instance
     private final MetaData metaData;
 
     protected BeanHandler(final MetaData metaData) {
