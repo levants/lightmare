@@ -12,7 +12,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 /**
  * Class to register new JSON <a
  * href="https://github.com/FasterXML/jackson-databind">jackson</a> provider
- * instead of old
+ * instead of old for REST services
  * 
  * @author Levan
  * 
