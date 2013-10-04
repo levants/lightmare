@@ -129,7 +129,7 @@ BeanHandler handler;
 
 	// Initializes BeanHandler instance and caches it in MetaData if it was
 	// not cached yet
-	 handler= BeanHandlerFactory.get(metaData, beanInstance);
+	 handler = BeanHandlerFactory.get(metaData, beanInstance);
 
 	return handler;
     }
