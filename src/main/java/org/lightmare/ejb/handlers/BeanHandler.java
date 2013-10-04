@@ -414,7 +414,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     @Override
     public Object invoke(Object proxy, Method method, Object[] arguments)
 	    throws Throwable {
-
+	Object value;
 	Collection<EntityManager> ems = createEntityManagers();
 	Method realMethod = null;
 
@@ -426,11 +426,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    realMethod = MetaUtils.getDeclaredMethod(beanClass, methodName,
 		    parameterTypes);
 
-	    Object value;
-
 	    value = invokeBeanMethod(ems, realMethod, arguments);
-
-	    return value;
 
 	} catch (Throwable th) {
 	    rollback(realMethod);
@@ -438,6 +434,8 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	} finally {
 	    close(realMethod);
 	}
+
+	return value;
     }
 
     @Override
