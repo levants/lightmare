@@ -77,7 +77,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
-     * Sets bean instance to handler, should be called only after clonning
+     * Sets bean instance to handler, should be called only after cloning
      * 
      * @param bean
      */
