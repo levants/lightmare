@@ -239,8 +239,8 @@ public class EjbConnector {
 	    Object... rpcArgs) throws IOException {
 
 	T beanInstance;
-	
-InvocationHandler handler;
+
+	InvocationHandler handler;
 	ClassLoader loader;
 
 	if (Configuration.isServer()) {
@@ -257,7 +257,7 @@ InvocationHandler handler;
 	    }
 	}
 
-	 beanInstance = instatiateBean(interfaceClass, handler, loader);
+	beanInstance = instatiateBean(interfaceClass, handler, loader);
 
 	return beanInstance;
     }
