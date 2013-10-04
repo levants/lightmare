@@ -23,7 +23,7 @@ import org.lightmare.utils.ObjectUtils;
  * class to add and remove {@link Resource}'s and reload at runtime
  * 
  * @author levan
- * 
+ * @since 0.0.50-SNAPSHOT
  */
 public class RestConfig extends ResourceConfig {
 
