@@ -237,7 +237,7 @@ public class EjbConnector {
      */
     public <T> T connectToBean(String beanName, Class<T> interfaceClass,
 	    Object... rpcArgs) throws IOException {
-
+T beanInstance;
 	InvocationHandler handler;
 	ClassLoader loader;
 
@@ -255,7 +255,7 @@ public class EjbConnector {
 	    }
 	}
 
-	T beanInstance = instatiateBean(interfaceClass, handler, loader);
+	 beanInstance= instatiateBean(interfaceClass, handler, loader);
 
 	return beanInstance;
     }
