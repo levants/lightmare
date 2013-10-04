@@ -21,7 +21,7 @@ import org.lightmare.utils.serialization.JsonSerializer;
  * Utility class for REST resources
  * 
  * @author levan
- * 
+ * @since 0.0.75-SNAPSHOT
  */
 public class RestProvider {
 
