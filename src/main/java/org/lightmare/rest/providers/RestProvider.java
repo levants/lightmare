@@ -144,6 +144,7 @@ public class RestProvider {
 		    && ObjectUtils.notNull(newLoader)) {
 		commonLoader = LibraryLoader.createCommon(newLoader, oldLoader);
 	    }
+
 	    oldLoader = newLoader;
 	}
 
