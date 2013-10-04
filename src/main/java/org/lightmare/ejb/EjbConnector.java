@@ -120,6 +120,7 @@ public class EjbConnector {
      */
     private <T> BeanHandler getBeanHandler(MetaData metaData)
 	    throws IOException {
+	
 BeanHandler handler;
 	T beanInstance = getBeanInstance(metaData);
 
