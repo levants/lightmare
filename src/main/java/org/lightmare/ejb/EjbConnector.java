@@ -297,7 +297,8 @@ public class EjbConnector {
 	    throws IOException {
 	
 RestHandler<T> restHandler;
-	BeanHandler handler = getBeanHandler(metaData);
+	
+BeanHandler handler = getBeanHandler(metaData);
 
 	Class<T> beanClass = ObjectUtils.cast(metaData.getBeanClass());
 
