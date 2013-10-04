@@ -6,7 +6,7 @@ import org.lightmare.rest.RestConfig;
  * Default values for REST service application initialization
  * 
  * @author levan
- * 
+ * @since 0.0.56-SNAPSHOT
  */
 public enum ApplicationInit {
 
