@@ -46,6 +46,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     // Bean's field with Resource annotation
     private final Field transactionField;
 
+    // Connections for EJB bean instance
     private final Collection<ConnectionData> connectionDatas;
 
     private final Collection<InjectionData> injectionDatas;
