@@ -62,12 +62,10 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     public MetaData getMetaData() {
-
 	return metaData;
     }
 
     public Object getBean() {
-
 	return bean;
     }
 
