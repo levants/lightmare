@@ -15,7 +15,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
  * instead of old for REST services
  * 
  * @author Levan
- * 
+ * @since 0.0.52-SNAPSHOT
  */
 public class JacksonFXmlFeature implements Feature {
 
