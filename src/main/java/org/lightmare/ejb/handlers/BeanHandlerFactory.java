@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.lightmare.cache.MetaData;
 
 /**
- * Factory class to initialize {@link BeanHandler} instance
+ * Factory class to initialize / clone {@link BeanHandler} instance
  * 
  * @author Levan
  * 
