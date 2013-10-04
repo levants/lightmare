@@ -27,7 +27,7 @@ import org.lightmare.utils.rest.RequestUtils;
  * Translates REST request parameters to java objects
  * 
  * @author levan
- * 
+ * @since 0.0.75-SNAPSHOT
  */
 public class ParamBuilder {
 
