@@ -54,9 +54,10 @@ public class RestCheck {
      */
     public static boolean check(Class<?> resourceClass) {
 
+	boolean valid = Boolean.FALSE;
+
 	Method[] methods = resourceClass.getDeclaredMethods();
 	int length = methods.length;
-	boolean valid = Boolean.FALSE;
 	Method method;
 	for (int i = 0; i < length && ObjectUtils.notTrue(valid); i++) {
 	    method = methods[i];
