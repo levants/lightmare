@@ -130,6 +130,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    } else {
 		beanName = injectionData.getMappedName();
 	    }
+
 	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
 	    injectMetaData.setInterfaceClasses(injectionData
 		    .getInterfaceClasses());
