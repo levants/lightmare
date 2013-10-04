@@ -222,13 +222,15 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	EntityManagerFactory emf = connection.getEmf();
 	Field connectionField = connection.getConnectionField();
 	Field unitField = connection.getUnitField();
-	EntityManager em = null;
+	EntityManager em;
 	if (ObjectUtils.notNull(emf)) {
 	    em = emf.createEntityManager();
 	    if (ObjectUtils.notNull(unitField)) {
 		setFieldValue(unitField, emf);
 	    }
 	    setConnection(connectionField, em);
+	} else {
+	    em = null;
 	}
 
 	return em;
