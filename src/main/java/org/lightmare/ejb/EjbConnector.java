@@ -299,7 +299,6 @@ public class EjbConnector {
 RestHandler<T> restHandler;
 	
 BeanHandler handler = getBeanHandler(metaData);
-
 	Class<T> beanClass = ObjectUtils.cast(metaData.getBeanClass());
 	T beanInstance = MetaUtils.instantiate(beanClass);
 
