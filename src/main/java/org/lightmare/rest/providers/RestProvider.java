@@ -175,6 +175,7 @@ public class RestProvider {
 		if (ObjectUtils.notNull(commonLoader)) {
 		    conf.setClassLoader(commonLoader);
 		}
+
 		conf.registerPreResources();
 		reloader.reload(conf);
 		conf.cache();
