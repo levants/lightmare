@@ -170,6 +170,7 @@ public class RestProvider {
 			    .getResources();
 		    RestContainer.removeResources(existingResources);
 		}
+
 		ClassLoader commonLoader = getCommonLoader();
 		if (ObjectUtils.notNull(commonLoader)) {
 		    conf.setClassLoader(commonLoader);
