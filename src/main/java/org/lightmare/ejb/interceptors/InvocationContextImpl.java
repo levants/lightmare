@@ -25,6 +25,7 @@ public class InvocationContextImpl implements InvocationContext {
 
     private Object[] parameters;
 
+    // Caches object in order to proceed method calls in chain
     private Queue<Object> targets = new LinkedList<Object>();
 
     private Map<String, Object> contextData = new HashMap<String, Object>();
