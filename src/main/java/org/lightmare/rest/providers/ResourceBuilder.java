@@ -96,6 +96,7 @@ public class ResourceBuilder {
 	// Registers children resources recursively
 	List<Resource> children = resource.getChildResources();
 	if (CollectionUtils.valid(children)) {
+
 	    Resource child;
 	    for (Resource preChild : children) {
 		child = rebuildResource(preChild);
