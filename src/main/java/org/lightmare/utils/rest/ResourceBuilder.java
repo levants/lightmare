@@ -37,11 +37,13 @@ public class ResourceBuilder {
      */
     private static MetaData getMetaData(Resource resource) throws IOException {
 
+	MetaData metaData;
+
 	Collection<Class<?>> handlers = resource.getHandlerClasses();
 	Class<?> beanClass = CollectionUtils.getFirst(handlers);
 	String beanEjbName = BeanUtils.beanName(beanClass);
 
-	MetaData metaData = MetaContainer.getSyncMetaData(beanEjbName);
+	metaData = MetaContainer.getSyncMetaData(beanEjbName);
 
 	return metaData;
     }
