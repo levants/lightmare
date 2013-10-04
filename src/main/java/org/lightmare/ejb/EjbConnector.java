@@ -283,7 +283,6 @@ public class EjbConnector {
 
 	MetaData metaData = getMeta(beanName);
 	ClassLoader loader = metaData.getLoader();
-
 	Class<?> classForName = MetaUtils.classForName(interfaceName,
 		Boolean.FALSE, loader);
 	Class<T> interfaceClass = ObjectUtils.cast(classForName);
