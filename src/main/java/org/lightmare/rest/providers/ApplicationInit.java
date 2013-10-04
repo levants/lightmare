@@ -23,6 +23,10 @@ public enum ApplicationInit {
     
     public String value;
     
+    private ApplicationInit(String key){
+	this.key = key;
+    }
+    
     private ApplicationInit(String key, String value){
 	
     }
