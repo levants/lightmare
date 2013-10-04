@@ -37,6 +37,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class BeanHandler implements InvocationHandler, Cloneable {
 
+    // EJB bean instance
     private Object bean;
 
     private final Class<?> beanClass;
