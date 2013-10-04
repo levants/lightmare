@@ -213,6 +213,13 @@ public class ParamBuilder {
 			mediaType);
     }
 
+    private void close(InputStream entityStream) throws IOException {
+
+	if (check) {
+	    IOUtils.close(entityStream);
+	}
+    }
+
     /**
      * Extracts parameter from passed {@link InputStream} (writes appropriate
      * value to {@link Object} instance)
