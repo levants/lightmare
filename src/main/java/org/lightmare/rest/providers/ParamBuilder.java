@@ -122,7 +122,7 @@ public class ParamBuilder {
     private boolean check() throws IOException {
 
 	return ObjectUtils.notTrue(request.hasEntity())
-		&& request.getEntityStream().available() == IOUtils.ZERO_AVAILABLE_STREAM;
+		&& IOUtils.notAvailable(request.getEntityStream());
     }
 
     private void copyAll(MultivaluedMap<String, String> from,
