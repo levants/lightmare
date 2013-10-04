@@ -72,6 +72,7 @@ public class RestInflector implements
     private MediaType getMediaType(ContainerRequestContext request) {
 
 	MediaType mediaType = request.getMediaType();
+
 	if (mediaType == null && type == null) {
 	    mediaType = MediaType.APPLICATION_OCTET_STREAM_TYPE;
 	} else if (mediaType == null && ObjectUtils.notNull(type)) {
