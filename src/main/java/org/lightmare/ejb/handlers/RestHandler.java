@@ -3,7 +3,7 @@ package org.lightmare.ejb.handlers;
 import java.lang.reflect.Method;
 
 /**
- * Handler class to call bean methods for REST services
+ * Handler class to call EJB bean methods for REST services
  * 
  * @author levan
  * 
