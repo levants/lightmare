@@ -136,6 +136,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
 	    injectionData.setMetaData(injectMetaData);
 	}
+
 	EjbConnector ejbConnector = new EjbConnector();
 	Object injectBean = ejbConnector.connectToBean(injectMetaData);
 
