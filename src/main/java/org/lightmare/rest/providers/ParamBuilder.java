@@ -126,7 +126,6 @@ public class ParamBuilder {
 	    MultivaluedMap<String, String> to) {
 
 	for (Map.Entry<String, List<String>> entry : from.entrySet()) {
-
 	    to.addAll(entry.getKey(), entry.getValue());
 	}
     }
