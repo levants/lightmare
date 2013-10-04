@@ -37,6 +37,7 @@ public class BeanHandlerFactory {
 	    throws IOException {
 
 	BeanHandler cloneHandler;
+
 	try {
 	    cloneHandler = (BeanHandler) handler.clone();
 	} catch (CloneNotSupportedException ex) {
