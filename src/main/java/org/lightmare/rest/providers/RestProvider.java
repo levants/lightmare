@@ -97,7 +97,6 @@ public class RestProvider {
 
 	boolean valid = isAcceptable(beanClass);
 	if (valid) {
-
 	    RestReloader reloader = RestReloader.get();
 	    if (ObjectUtils.notNull(reloader)) {
 		RestConfig conf = get();
