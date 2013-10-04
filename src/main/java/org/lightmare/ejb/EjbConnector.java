@@ -122,7 +122,8 @@ public class EjbConnector {
 	    throws IOException {
 	
 BeanHandler handler;
-	T beanInstance = getBeanInstance(metaData);
+	
+T beanInstance = getBeanInstance(metaData);
 
 	// Caches EnriryManagerFactory instances in MetaData if they are not
 	// cached yet
