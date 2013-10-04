@@ -72,6 +72,8 @@ public class ParamBuilder {
      */
     private String errorOnBuild() throws IOException {
 
+	String errorMessage;
+
 	String errorPrefix = "Could not initialize ";
 	String errorClass = this.getClass().getName();
 	String errorReasonPrefix = " caouse";
@@ -90,7 +92,7 @@ public class ParamBuilder {
 	    throw new IOException("Could not find null value");
 	}
 
-	String errorMessage = new StringBuilder().append(errorPrefix)
+	errorMessage = new StringBuilder().append(errorPrefix)
 		.append(errorClass).append(errorReasonPrefix)
 		.append(errorMessageBody).append(errorReasonSuffix).toString();
 
