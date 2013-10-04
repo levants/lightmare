@@ -49,9 +49,6 @@ public class ParamBuilder {
 
     private List<Object> paramsList;
 
-    // Default index for parameters (used for MultivaluedMap)
-    private static final int PARAM_VALUES_INDEX = 0;
-
     // Default length of parameters list (used for MultivaluedMap)
     private static final int PARAM_VALIES_LENGTH = 1;
 
