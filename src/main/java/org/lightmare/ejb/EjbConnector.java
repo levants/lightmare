@@ -165,6 +165,7 @@ public class EjbConnector {
      */
     private <T> T instatiateBean(Class<T> interfaceClass,
 	    InvocationHandler handler, ClassLoader loader) {
+	
 T beanInstance;
 
 	Class<T>[] interfaceArray = ObjectUtils
