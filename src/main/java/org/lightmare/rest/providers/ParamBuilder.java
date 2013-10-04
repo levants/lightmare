@@ -234,7 +234,6 @@ public class ParamBuilder {
 		    httpHeaders, entityStream);
 
 	} finally {
-
 	    if (check) {
 		IOUtils.close(entityStream);
 	    }
