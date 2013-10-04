@@ -12,7 +12,7 @@ public enum ApplicationInit {
 
     APPLICATION_INIT("javax.ws.rs.Application", RestConfig.class.getName()), // Initializer
 
-    REST_DEFAULT_URI("/rest"); //
+    REST_DEFAULT_URI("/rest"); // URL path
 
     public String key;
 
