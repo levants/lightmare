@@ -13,6 +13,7 @@ public class RestHandler<T> {
     // Appropriated bean's handler
     private final BeanHandler handler;
 
+    //EJB bean instance
     private final T bean;
 
     public RestHandler(BeanHandler handler, T bean) {
