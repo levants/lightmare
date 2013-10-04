@@ -195,6 +195,7 @@ public class ParamBuilder {
 	    Parameter parameter) {
 
 	Object entityStream;
+
 	if (check) {
 	    entityStream = getEntityStream(parameter);
 	} else {
