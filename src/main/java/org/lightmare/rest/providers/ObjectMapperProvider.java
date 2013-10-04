@@ -13,12 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * library
  * 
  * @author levan
- * 
+ * @since 0.0.50-SNAPSHOT
  */
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
-    //Default JSON object mapper
+    // Default JSON object mapper
     private final ObjectMapper defaultObjectMapper;
 
     public ObjectMapperProvider() {
