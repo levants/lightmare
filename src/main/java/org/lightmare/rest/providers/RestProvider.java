@@ -138,6 +138,7 @@ public class RestProvider {
 	ClassLoader newLoader;
 	ClassLoader oldLoader = null;
 	while (iterator.hasNext()) {
+
 	    metaData = iterator.next();
 	    newLoader = metaData.getLoader();
 	    if (ObjectUtils.notNull(oldLoader)
