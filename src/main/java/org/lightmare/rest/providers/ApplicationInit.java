@@ -28,6 +28,7 @@ public enum ApplicationInit {
     }
     
     private ApplicationInit(String key, String value){
-	
+	this(key);
+	this.value = value;
     }
 }
