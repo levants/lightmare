@@ -18,4 +18,8 @@ public enum ApplicationInit {
 
     public static final String APPLICATION_INIT_PARAM = RestConfig.class
 	    .getName();
+    
+    public String key;
+    
+    public String value;
 }
