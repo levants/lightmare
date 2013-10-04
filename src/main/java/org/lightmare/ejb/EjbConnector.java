@@ -165,11 +165,11 @@ public class EjbConnector {
      */
     private <T> T instatiateBean(Class<T> interfaceClass,
 	    InvocationHandler handler, ClassLoader loader) {
-
+T beanInstance; 
 	Class<T>[] interfaceArray = ObjectUtils
 		.cast(new Class<?>[] { interfaceClass });
 
-	T beanInstance = instatiateBean(interfaceArray, handler, loader);
+	beanInstance= instatiateBean(interfaceArray, handler, loader);
 
 	return beanInstance;
     }
