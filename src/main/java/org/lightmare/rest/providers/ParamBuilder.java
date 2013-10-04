@@ -113,6 +113,7 @@ public class ParamBuilder {
 	    String errorMessage = errorOnBuild();
 	    throw new IOException(errorMessage);
 	}
+
 	return valid;
     }
 
