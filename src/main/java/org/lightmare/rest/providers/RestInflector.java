@@ -60,6 +60,7 @@ public class RestInflector implements
     public Class<?> getBeanClass() {
 
 	Class<?> beanClass;
+
 	if (metaData == null) {
 	    beanClass = null;
 	} else {
