@@ -104,6 +104,7 @@ public class EjbConnector {
     private <T> T getBeanInstance(MetaData metaData) throws IOException {
 	
 T beanInstance;
+
 	Class<? extends T> beanClass = ObjectUtils
 		.cast(metaData.getBeanClass());
 	 beanInstance= MetaUtils.instantiate(beanClass);
