@@ -98,7 +98,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
-     * Invokes passed bean {@link Method}
+     * Invokes passed bean {@link Method} for handlers EJB bean instance
      * 
      * @param method
      * @param arguments
