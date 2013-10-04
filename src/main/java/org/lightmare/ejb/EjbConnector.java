@@ -238,7 +238,8 @@ public class EjbConnector {
     public <T> T connectToBean(String beanName, Class<T> interfaceClass,
 	    Object... rpcArgs) throws IOException {
 T beanInstance;
-	InvocationHandler handler;
+	
+InvocationHandler handler;
 	ClassLoader loader;
 
 	if (Configuration.isServer()) {
