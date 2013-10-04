@@ -98,6 +98,7 @@ public class RestInflector implements
 	    throws IOException {
 
 	Object[] params;
+
 	if (CollectionUtils.valid(parameters)) {
 	    params = extraxtParameters(request);
 	} else {
