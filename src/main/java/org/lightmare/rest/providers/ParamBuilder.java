@@ -268,6 +268,7 @@ public class ParamBuilder {
 	} else {
 	    nullParam = null;
 	}
+	
 	paramsList.add(nullParam);
     }
 
