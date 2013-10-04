@@ -49,8 +49,7 @@ public class ParamBuilder {
 
     private List<Object> paramsList;
 
-    // Value of not available InputStream check
-    private static final int ZERO_AVAILABLE_STREAM = 0;
+
 
     // Default index for parameters (used for MultivaluedMap)
     private static final int PARAM_VALUES_INDEX = 0;
@@ -125,7 +124,7 @@ public class ParamBuilder {
     private boolean check() throws IOException {
 
 	return ObjectUtils.notTrue(request.hasEntity())
-		&& request.getEntityStream().available() == ZERO_AVAILABLE_STREAM;
+		&& request.getEntityStream().available() == IOUtils.ZERO_AVAILABLE_STREAM;
     }
 
     private void copyAll(MultivaluedMap<String, String> from,

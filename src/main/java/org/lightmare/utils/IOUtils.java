@@ -19,6 +19,9 @@ public class IOUtils {
     // Zero bytes offset value
     public static final int ZERO_OFFSET = 0;
 
+    // Value of not available InputStream check
+    public static final int ZERO_AVAILABLE_STREAM = 0;
+
     /**
      * Checks if passed {@link Closeable} instance is not null and if not calls
      * {@link Closeable#close()} method
