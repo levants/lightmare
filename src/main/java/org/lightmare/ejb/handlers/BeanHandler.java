@@ -238,6 +238,13 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	return em;
     }
 
+    /**
+     * Creates {@link EntityManager}s to set as bean's appropriate {@link Field}
+     * values
+     * 
+     * @return
+     * @throws IOException
+     */
     private Collection<EntityManager> createEntityManagers() throws IOException {
 
 	Collection<EntityManager> ems;
