@@ -115,8 +115,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * {@link Field} value
      * 
      * @param em
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
+     * @throws IOException
      */
     private void setConnection(Field connectionField, EntityManager em)
 	    throws IOException {
