@@ -172,7 +172,6 @@ public class EjbConnector {
 
 	Class<T>[] interfaceArray = ObjectUtils
 		.cast(new Class<?>[] { interfaceClass });
-
 	beanInstance = instatiateBean(interfaceArray, handler, loader);
 
 	return beanInstance;
