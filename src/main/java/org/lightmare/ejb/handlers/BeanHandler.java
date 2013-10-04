@@ -419,7 +419,6 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
 	Collection<EntityManager> ems = createEntityManagers();
 	Method realMethod = null;
-
 	try {
 	    String methodName = method.getName();
 	    Class<?>[] parameterTypes = method.getParameterTypes();
@@ -427,9 +426,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    // Gets real method of bean class
 	    realMethod = MetaUtils.getDeclaredMethod(beanClass, methodName,
 		    parameterTypes);
-
 	    value = invokeBeanMethod(ems, realMethod, arguments);
-
 	} catch (Throwable th) {
 	    rollback(realMethod);
 	    throw new Throwable(th);
