@@ -112,7 +112,8 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
-     * Sets {@link EntityManager} at beans's annotated field
+     * Sets {@link EntityManager} as handlers EJB beans's annotated
+     * {@link Field} value
      * 
      * @param em
      * @throws IllegalArgumentException
