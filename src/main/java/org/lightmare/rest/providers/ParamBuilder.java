@@ -227,6 +227,7 @@ public class ParamBuilder {
 	    throws IOException {
 
 	Object param;
+
 	try {
 	    param = reader.readFrom((Class) parameter.getRawType(),
 		    parameter.getType(), parameter.getAnnotations(), mediaType,
