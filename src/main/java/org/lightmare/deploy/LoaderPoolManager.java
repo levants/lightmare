@@ -16,7 +16,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
- * Manager class for application deployment
+ * Manager class for application deployment in parallel mode
  * 
  * @author levan
  * 
