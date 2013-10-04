@@ -149,6 +149,7 @@ public class ParamBuilder {
 	    ContainerRequestContext request) {
 
 	MultivaluedMap<String, String> params = new MultivaluedStringMap();
+
 	MultivaluedMap<String, String> exts;
 	boolean decode = Boolean.TRUE;
 	UriInfo uriInfo = request.getUriInfo();
