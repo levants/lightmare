@@ -165,8 +165,8 @@ public class EjbConnector {
      */
     private <T> T instatiateBean(Class<T> interfaceClass,
 	    InvocationHandler handler, ClassLoader loader) {
-	
-T beanInstance;
+
+	T beanInstance;
 
 	Class<T>[] interfaceArray = ObjectUtils
 		.cast(new Class<?>[] { interfaceClass });
