@@ -131,11 +131,12 @@ public class RestProvider {
      */
     public static ClassLoader getCommonLoader() {
 
+	ClassLoader commonLoader = null;
+
 	Iterator<MetaData> iterator = MetaContainer.getBeanClasses();
 	MetaData metaData;
 	ClassLoader newLoader;
 	ClassLoader oldLoader = null;
-	ClassLoader commonLoader = null;
 	while (iterator.hasNext()) {
 	    metaData = iterator.next();
 	    newLoader = metaData.getLoader();
@@ -159,7 +160,7 @@ public class RestProvider {
 	    RestReloader reloader = RestReloader.get();
 	    RestConfig conf = get();
 	    if (ObjectUtils.notNull(conf) && ObjectUtils.notNull(reloader)) {
-		
+
 		if (RestContainer.hasRest()) {
 		    RestConfig existingConfig = RestContainer.getRestConfig();
 		    Set<Resource> existingResources = existingConfig
