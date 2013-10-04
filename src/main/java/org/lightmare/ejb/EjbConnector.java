@@ -295,14 +295,15 @@ public class EjbConnector {
      */
     public <T> RestHandler<T> createRestHandler(MetaData metaData)
 	    throws IOException {
-
+	
+RestHandler<T> restHandler;
 	BeanHandler handler = getBeanHandler(metaData);
 
 	Class<T> beanClass = ObjectUtils.cast(metaData.getBeanClass());
 
 	T beanInstance = MetaUtils.instantiate(beanClass);
 
-	RestHandler<T> restHandler = RestHandlerFactory.get(handler,
+	restHandler = RestHandlerFactory.get(handler,
 		beanInstance);
 
 	return restHandler;
