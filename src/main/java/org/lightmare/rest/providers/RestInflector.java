@@ -84,12 +84,14 @@ public class RestInflector implements
     private Object[] extraxtParameters(ContainerRequestContext request)
 	    throws IOException {
 
+	Object[] params;
+
 	MediaType mediaType = getMediaType(request);
 	ParamBuilder builder = new ParamBuilder.Builder()
 		.setMediaType(mediaType).setParameters(parameters)
 		.setWorkers(workers).setRequest(request).build();
 	List<Object> paramsList = builder.extractParams();
-	Object[] params = paramsList.toArray();
+	params = paramsList.toArray();
 
 	return params;
     }
