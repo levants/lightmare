@@ -114,6 +114,7 @@ public class RestInflector implements
     public Response apply(ContainerRequestContext data) {
 
 	Response response;
+
 	try {
 	    EjbConnector connector = new EjbConnector();
 	    RestHandler<?> handler = connector.createRestHandler(metaData);
