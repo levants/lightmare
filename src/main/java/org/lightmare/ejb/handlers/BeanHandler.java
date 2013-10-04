@@ -285,6 +285,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * 
      * @param transaction
      * @param em
+     * @throws IOException
      */
     private void close(Method method) throws IOException {
 
