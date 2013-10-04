@@ -29,7 +29,8 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
- * Handler class to intercept bean method calls to provide database transactions
+ * Implementation of {@link InvocationHandler} interface to intercept bean
+ * method calls to provide database transactions
  * 
  * @author Levan
  * 
