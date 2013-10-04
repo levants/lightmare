@@ -279,7 +279,6 @@ public class ParamBuilder {
 	boolean valid = available(entityStream, parameter);
 	if (valid) {
 	    Object param = extractParam(parameter, entityStream);
-
 	    addParam(param);
 	}
     }
