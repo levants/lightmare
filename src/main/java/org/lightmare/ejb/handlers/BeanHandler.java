@@ -52,6 +52,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     // Injections from EJB bean instance
     private final Collection<InjectionData> injectionDatas;
 
+    // Interceptors for given bean instance
     private final Collection<InterceptorData> interceptorDatas;
 
     private final MetaData metaData;
