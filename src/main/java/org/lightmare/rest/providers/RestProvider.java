@@ -50,6 +50,14 @@ public class RestProvider {
 	return newConfig;
     }
 
+    /**
+     * Converts passed data from JSON to generic instance
+     * 
+     * @param json
+     * @param valueClass
+     * @return <code>T</code>
+     * @throws IOException
+     */
     public static <T> T convert(String json, Class<T> valueClass)
 	    throws IOException {
 

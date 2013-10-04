@@ -37,10 +37,16 @@ public class RestReloader implements ContainerLifecycleListener {
 
     public static RestReloader get() {
 
-	synchronized (RestReloader.class) {
+	RestReloader restReloader;
 
-	    return reloader;
+	ObjectUtils.lock(LOCK);
+	try {
+	    restReloader = reloader;
+	} finally {
+	    ObjectUtils.unlock(LOCK);
 	}
+
+	return restReloader;
     }
 
     private Container container;
