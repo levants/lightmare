@@ -238,13 +238,15 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
     private Collection<EntityManager> createEntityManagers() throws IOException {
 
-	Collection<EntityManager> ems = null;
+	Collection<EntityManager> ems;
 	if (CollectionUtils.valid(connectionDatas)) {
 	    ems = new ArrayList<EntityManager>();
 	    for (ConnectionData connection : connectionDatas) {
 		EntityManager em = createEntityManager(connection);
 		ems.add(em);
 	    }
+	} else {
+	    ems = null;
 	}
 
 	return ems;
