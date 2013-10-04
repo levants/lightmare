@@ -52,6 +52,13 @@ public class IOUtils {
 	}
     }
 
+    /**
+     * Checks if passed {@link java.io.InputStream} is null or not available
+     * 
+     * @param stream
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
     public static boolean notAvailable(InputStream stream) throws IOException {
 
 	return ((stream == null) || (stream.available() == ZERO_AVAILABLE_STREAM));
