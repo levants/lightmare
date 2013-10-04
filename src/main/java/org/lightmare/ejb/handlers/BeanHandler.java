@@ -211,7 +211,8 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
-     * Sets transaction {@link Field}'s value
+     * Sets transaction as handlers EJB bean's {@link javax.annotation.Resource}
+     * annotated {@link Field}'s value
      * 
      * @param ems
      * @throws IOException
