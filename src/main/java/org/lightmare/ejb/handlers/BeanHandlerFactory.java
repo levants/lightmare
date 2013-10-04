@@ -57,8 +57,10 @@ public class BeanHandlerFactory {
      */
     public static BeanHandler get(MetaData metaData, Object bean)
 	    throws IOException {
+	
 BeanHandler cloneHandler;
-	BeanHandler handler = metaData.getHandler();
+	
+BeanHandler handler = metaData.getHandler();
 	if (handler == null) {
 	    handler = new BeanHandler(metaData);
 	    metaData.setHandler(handler);
