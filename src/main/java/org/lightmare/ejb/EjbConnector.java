@@ -66,7 +66,6 @@ public class EjbConnector {
 
 	if (connection.getEmf() == null) {
 	    String unitName = connection.getUnitName();
-
 	    if (StringUtils.valid(unitName)) {
 		ConnectionSemaphore semaphore = ConnectionContainer
 			.getConnection(unitName);
