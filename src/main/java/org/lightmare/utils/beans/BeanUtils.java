@@ -64,6 +64,12 @@ public class BeanUtils {
 	return beanName;
     }
 
+    /**
+     * Gets bean name from passed {@link Class} instance
+     * 
+     * @param beanClass
+     * @return {@link String}
+     */
     public static String beanName(Class<?> beanClass) {
 
 	Stateless annotation = beanClass.getAnnotation(Stateless.class);
