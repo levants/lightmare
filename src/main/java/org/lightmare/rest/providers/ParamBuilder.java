@@ -318,6 +318,7 @@ public class ParamBuilder {
     public List<Object> extractParams() throws IOException {
 
 	paramsList = new ArrayList<Object>();
+
 	check = check();
 	httpHeaders = request.getHeaders();
 	uriParams = extractParameters(request);
