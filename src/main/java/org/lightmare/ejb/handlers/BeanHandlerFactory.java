@@ -57,14 +57,14 @@ public class BeanHandlerFactory {
      */
     public static BeanHandler get(MetaData metaData, Object bean)
 	    throws IOException {
-
+BeanHandler cloneHandler;
 	BeanHandler handler = metaData.getHandler();
 	if (handler == null) {
 	    handler = new BeanHandler(metaData);
 	    metaData.setHandler(handler);
 	}
 
-	BeanHandler cloneHandler = cloneHandler(handler);
+	 cloneHandler = cloneHandler(handler);
 	configure(cloneHandler, bean);
 
 	return cloneHandler;
