@@ -216,13 +216,13 @@ public class EjbConnector {
      * @throws IOException
      */
     public <T> T connectToBean(MetaData metaData) throws IOException {
-
+T beanInstance;
 	InvocationHandler handler = getBeanHandler(metaData);
 	Class<?>[] interfaces = setInterfaces(metaData);
 	Class<T>[] typedInterfaces = ObjectUtils.cast(interfaces);
 	ClassLoader loader = metaData.getLoader();
 
-	T beanInstance = instatiateBean(typedInterfaces, handler, loader);
+	 beanInstance= instatiateBean(typedInterfaces, handler, loader);
 
 	return beanInstance;
     }
