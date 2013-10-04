@@ -272,8 +272,10 @@ public class EjbConnector {
      */
     public <T> T connectToBean(String beanName, String interfaceName,
 	    Object... rpcArgs) throws IOException {
+	
 T beanInstance;
-	MetaData metaData = getMeta(beanName);
+	
+MetaData metaData = getMeta(beanName);
 	ClassLoader loader = metaData.getLoader();
 
 	Class<?> classForName = MetaUtils.classForName(interfaceName,
