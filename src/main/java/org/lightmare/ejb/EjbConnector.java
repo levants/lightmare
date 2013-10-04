@@ -102,12 +102,12 @@ public class EjbConnector {
      * @throws IOException
      */
     private <T> T getBeanInstance(MetaData metaData) throws IOException {
-	
-T beanInstance;
+
+	T beanInstance;
 
 	Class<? extends T> beanClass = ObjectUtils
 		.cast(metaData.getBeanClass());
-	 beanInstance= MetaUtils.instantiate(beanClass);
+	beanInstance = MetaUtils.instantiate(beanClass);
 
 	return beanInstance;
     }
