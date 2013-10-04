@@ -145,7 +145,8 @@ public class EjbConnector {
 	    InvocationHandler handler, ClassLoader loader) {
 	
 T beanInstance;
-	if (loader == null) {
+	
+if (loader == null) {
 	    loader = LibraryLoader.getContextClassLoader();
 	} else {
 	    LibraryLoader.loadCurrentLibraries(loader);
