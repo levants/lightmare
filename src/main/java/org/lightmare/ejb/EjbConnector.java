@@ -171,7 +171,7 @@ T beanInstance;
 	Class<T>[] interfaceArray = ObjectUtils
 		.cast(new Class<?>[] { interfaceClass });
 
-	beanInstance= instatiateBean(interfaceArray, handler, loader);
+	beanInstance = instatiateBean(interfaceArray, handler, loader);
 
 	return beanInstance;
     }
