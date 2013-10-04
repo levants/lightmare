@@ -224,7 +224,7 @@ T beanInstance;
 	Class<T>[] typedInterfaces = ObjectUtils.cast(interfaces);
 	ClassLoader loader = metaData.getLoader();
 
-	 beanInstance= instatiateBean(typedInterfaces, handler, loader);
+	 beanInstance = instatiateBean(typedInterfaces, handler, loader);
 
 	return beanInstance;
     }
