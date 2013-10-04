@@ -51,7 +51,7 @@ public class RestProvider {
     }
 
     /**
-     * Converts passed data from JSON to generic class instance
+     * Converts passed data from JSON to passed generic {@link Class} instance
      * 
      * @param json
      * @param valueClass
