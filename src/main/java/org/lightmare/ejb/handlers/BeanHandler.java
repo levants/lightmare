@@ -327,6 +327,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     private boolean checkInterceptor(InterceptorData interceptor, Method method) {
 
 	boolean valid;
+
 	Method beanMethod = interceptor.getBeanMethod();
 	if (ObjectUtils.notNull(beanMethod)) {
 	    valid = beanMethod.equals(method);
