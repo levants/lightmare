@@ -106,6 +106,7 @@ public abstract class CollectionUtils {
     public static boolean validAll(Map<?, ?>... maps) {
 
 	boolean avaliable = ObjectUtils.notNull(maps);
+
 	if (avaliable) {
 	    Map<?, ?> map;
 	    for (int i = FIRST_INDEX; i < maps.length && avaliable; i++) {
