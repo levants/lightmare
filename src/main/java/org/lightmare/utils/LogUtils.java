@@ -30,7 +30,7 @@ public class LogUtils {
     }
 
     /**
-     * Generated fatal logging
+     * Generated fatal log
      * 
      * @param log
      * @param ex
