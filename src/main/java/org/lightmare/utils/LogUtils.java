@@ -143,6 +143,7 @@ public class LogUtils {
 
     /**
      * Generates info logs
+     * 
      * @param log
      * @param message
      * @param formats
