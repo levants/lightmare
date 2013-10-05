@@ -124,6 +124,7 @@ public class LogUtils {
 
     /**
      * Generates info logs
+     * 
      * @param log
      * @param ex
      * @param message
