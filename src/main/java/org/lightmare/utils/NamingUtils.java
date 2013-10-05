@@ -164,7 +164,7 @@ public class NamingUtils {
      * @return {@link BeanDescriptor}
      */
     public static BeanDescriptor parseEjbJndiName(String jndiName) {
-
+BeanDescriptor descriptor;
 	String pureName = jndiName.substring(EJB_NAME_LENGTH);
 	String[] formatedNames = pureName.split(EJB_NAME_DELIM);
 	String beanNames = formatedNames[BEAN_NAMES_INDEX];
@@ -173,7 +173,7 @@ public class NamingUtils {
 	String interfaceName = beanDescriptors[INTERFACE_IDEX];
 	String beanName = beanDescriptors[BEAN_INDEX];
 
-	BeanDescriptor descriptor = new BeanDescriptor(beanName, interfaceName);
+	descriptor = new BeanDescriptor(beanName, interfaceName);
 
 	return descriptor;
     }
