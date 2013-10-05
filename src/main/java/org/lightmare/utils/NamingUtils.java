@@ -164,6 +164,7 @@ public class NamingUtils {
      * @return {@link BeanDescriptor}
      */
     public static BeanDescriptor parseEjbJndiName(String jndiName) {
+	
 BeanDescriptor descriptor;
 	String pureName = jndiName.substring(EJB_NAME_LENGTH);
 	String[] formatedNames = pureName.split(EJB_NAME_DELIM);
