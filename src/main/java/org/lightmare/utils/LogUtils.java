@@ -79,6 +79,12 @@ public class LogUtils {
 	}
     }
 
+    /**
+     * Generates error logs
+     * @param log
+     * @param message
+     * @param formats
+     */
     public static void error(Logger log, String message, Object... formats) {
 
 	error(log, null, message, formats);
