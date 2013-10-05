@@ -127,6 +127,7 @@ public class NamingUtils {
     public static String clearDataSourceName(String jndiName) {
 
 	String clearName;
+	
 	if (StringUtils.valid(jndiName) && jndiName.startsWith(DS_JNDI_FREFIX)) {
 	    clearName = jndiName.replace(DS_JNDI_FREFIX,
 		    StringUtils.EMPTY_STRING);
