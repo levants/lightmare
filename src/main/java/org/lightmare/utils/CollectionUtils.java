@@ -146,6 +146,7 @@ public abstract class CollectionUtils {
     public static boolean validAll(Object[]... arrays) {
 
 	boolean avaliable = ObjectUtils.notNull(arrays);
+
 	if (avaliable) {
 	    Object[] collection;
 	    int length = arrays.length;
