@@ -29,6 +29,14 @@ public class LogUtils {
 	return logMessage;
     }
 
+    /**
+     * Generated fatal logging
+     * 
+     * @param log
+     * @param ex
+     * @param message
+     * @param formats
+     */
     public static void fatal(Logger log, Throwable ex, String message,
 	    Object... formats) {
 
