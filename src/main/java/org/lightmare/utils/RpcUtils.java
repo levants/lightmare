@@ -74,7 +74,7 @@ Object value;
 	Class<?> beanClass = bean.getClass();
 	Method beanMethod = MetaUtils.getDeclaredMethod(beanClass, methodName,
 		paramTypes);
-	 value= MetaUtils.invoke(beanMethod, bean, params);
+	 value = MetaUtils.invoke(beanMethod, bean, params);
 
 	return value;
     }
