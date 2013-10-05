@@ -10,6 +10,13 @@ import org.apache.log4j.Logger;
  */
 public class LogUtils {
 
+    /**
+     * Generates logging messages
+     * 
+     * @param message
+     * @param formats
+     * @return {@link String}
+     */
     public static String logMessage(String message, Object... formats) {
 
 	String logMessage;
