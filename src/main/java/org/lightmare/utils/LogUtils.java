@@ -122,6 +122,13 @@ public class LogUtils {
 	debug(log, null, message, formats);
     }
 
+    /**
+     * Generates info logs
+     * @param log
+     * @param ex
+     * @param message
+     * @param formats
+     */
     public static void info(Logger log, Throwable ex, String message,
 	    Object... formats) {
 
