@@ -31,6 +31,7 @@ public abstract class CollectionUtils {
     // Length of empty array
     public static final int EMPTY_ARRAY_LENGTH = 0;
 
+    // Empty array of objects
     public static final Object[] EMPTY_ARRAY = {};
 
     /**
