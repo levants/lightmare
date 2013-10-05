@@ -60,6 +60,13 @@ public class LogUtils {
 	fatal(log, null, message, formats);
     }
 
+    /**
+     * Generates error log
+     * @param log
+     * @param ex
+     * @param message
+     * @param formats
+     */
     public static void error(Logger log, Throwable ex, String message,
 	    Object... formats) {
 
