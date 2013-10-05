@@ -91,6 +91,13 @@ public class LogUtils {
 	error(log, null, message, formats);
     }
 
+    /**
+     * Generates debug logs
+     * @param log
+     * @param ex
+     * @param message
+     * @param formats
+     */
     public static void debug(Logger log, Throwable ex, String message,
 	    Object... formats) {
 
