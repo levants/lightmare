@@ -19,6 +19,7 @@ import java.util.Set;
  */
 public abstract class CollectionUtils {
 
+    // First index of array
     public static final int FIRST_INDEX = 0;
 
     public static final int SECOND_INDEX = 1;
