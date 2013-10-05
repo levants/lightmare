@@ -28,6 +28,7 @@ public abstract class CollectionUtils {
     // Index of not existing data in collection
     public static final int NOT_EXISTING_INDEX = -1;
 
+    // Length of empty array
     public static final int EMPTY_ARRAY_LENGTH = 0;
 
     public static final Object[] EMPTY_ARRAY = {};
