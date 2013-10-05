@@ -81,6 +81,7 @@ public class LogUtils {
 
     /**
      * Generates error logs
+     * 
      * @param log
      * @param message
      * @param formats
