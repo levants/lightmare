@@ -60,8 +60,8 @@ public class RpcUtils {
      * @throws IOException
      */
     public static Object callBeanMethod(RpcWrapper wrapper) throws IOException {
-	
-Object value;
+
+	Object value;
 
 	String beanName = wrapper.getBeanName();
 	String methodName = wrapper.getMethodName();
@@ -74,7 +74,7 @@ Object value;
 	Class<?> beanClass = bean.getClass();
 	Method beanMethod = MetaUtils.getDeclaredMethod(beanClass, methodName,
 		paramTypes);
-	 value = MetaUtils.invoke(beanMethod, bean, params);
+	value = MetaUtils.invoke(beanMethod, bean, params);
 
 	return value;
     }
