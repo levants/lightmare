@@ -60,6 +60,7 @@ public class RpcUtils {
      * @throws IOException
      */
     public static Object callBeanMethod(RpcWrapper wrapper) throws IOException {
+	
 Object value;
 	String beanName = wrapper.getBeanName();
 	String methodName = wrapper.getMethodName();
