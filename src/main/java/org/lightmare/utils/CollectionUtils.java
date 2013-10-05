@@ -169,6 +169,7 @@ public abstract class CollectionUtils {
     public static <K, V> Map<K, V> getAsMap(Object key, Map<?, ?> from) {
 
 	Map<K, V> result;
+
 	if (valid(from)) {
 	    Object objectValue = from.get(key);
 	    if (objectValue instanceof Map) {
