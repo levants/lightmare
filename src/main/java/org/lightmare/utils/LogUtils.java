@@ -141,6 +141,12 @@ public class LogUtils {
 	}
     }
 
+    /**
+     * Generates info logs
+     * @param log
+     * @param message
+     * @param formats
+     */
     public static void info(Logger log, String message, Object... formats) {
 
 	info(log, null, message, formats);
