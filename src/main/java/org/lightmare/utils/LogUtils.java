@@ -48,6 +48,13 @@ public class LogUtils {
 	}
     }
 
+    /**
+     * Generates fatal logs
+     * 
+     * @param log
+     * @param message
+     * @param formats
+     */
     public static void fatal(Logger log, String message, Object... formats) {
 
 	fatal(log, null, message, formats);
