@@ -131,6 +131,7 @@ public abstract class CollectionUtils {
     public static boolean validAll(Collection<?>... collections) {
 
 	boolean avaliable = ObjectUtils.notNull(collections);
+
 	if (avaliable) {
 	    Collection<?> collection;
 	    for (int i = FIRST_INDEX; i < collections.length && avaliable; i++) {
