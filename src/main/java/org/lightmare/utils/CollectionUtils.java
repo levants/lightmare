@@ -195,6 +195,7 @@ public abstract class CollectionUtils {
     public static Map<?, ?> getAsMap(Map<?, ?> from, Object... keys) {
 
 	Map<?, ?> result = from;
+
 	int length = keys.length;
 	Object key;
 	for (int i = FIRST_INDEX; i < length && ObjectUtils.notNull(result); i++) {
