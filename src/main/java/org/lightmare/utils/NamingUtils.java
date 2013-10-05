@@ -11,7 +11,7 @@ public class NamingUtils {
     // User transaction JNDI name
     public static final String USER_TRANSACTION_NAME = "java:comp/UserTransaction";
 
-    // String prefixes for JNDI names
+    // String prefixes for EJB JNDI names
     public static final String JPA_NAME_PREF = "java:comp/env/";
 
     public static final String EJB_NAME_PREF = "ejb:";
