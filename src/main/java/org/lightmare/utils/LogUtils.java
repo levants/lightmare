@@ -110,6 +110,12 @@ public class LogUtils {
 	}
     }
 
+    /**
+     * Generates debug logs
+     * @param log
+     * @param message
+     * @param formats
+     */
     public static void debug(Logger log, String message, Object... formats) {
 
 	debug(log, null, message, formats);
