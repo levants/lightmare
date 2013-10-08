@@ -19,7 +19,7 @@ import org.lightmare.utils.StringUtils;
  * Manager class for application deployment in parallel mode
  * 
  * @author levan
- * 
+ * @since 0.0.77-SNAPSHOT
  */
 public abstract class LoaderPoolManager {
 
