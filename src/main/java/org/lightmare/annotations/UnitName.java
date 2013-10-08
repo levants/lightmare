@@ -11,7 +11,7 @@ import org.lightmare.utils.StringUtils;
  * To define unit name of {@link javax.persistence.Entity} class
  * 
  * @author Levan
- * 
+ * @since 0.0.16-SNAPSHOT
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
