@@ -13,7 +13,7 @@ import org.lightmare.utils.IOUtils;
  * serialization
  * 
  * @author Levan
- * 
+ * @since 0.0.62-SNAPSHO
  */
 public abstract class NativeSerializer {
 
