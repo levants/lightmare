@@ -51,7 +51,7 @@ import org.lightmare.utils.shutdown.ShutDown;
  * on startup
  * 
  * @author Levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class MetaCreator {
 
