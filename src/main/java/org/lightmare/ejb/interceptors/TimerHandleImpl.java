@@ -9,7 +9,7 @@ import javax.ejb.TimerHandle;
  * Implementation of {@link TimerHandle} interface
  * 
  * @author levan
- * 
+ * @since 0.0.65-SNAPSHOT
  */
 public class TimerHandleImpl implements TimerHandle {
 

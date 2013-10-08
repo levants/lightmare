@@ -16,7 +16,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * Implementation of {@link InvocationContext} for EJB intercepter
  * 
  * @author Levan
- * 
+ * @since 0.0.65-SNAPSHOT
  */
 public class InvocationContextImpl implements InvocationContext {
 
