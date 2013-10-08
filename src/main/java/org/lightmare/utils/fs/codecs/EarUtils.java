@@ -25,7 +25,7 @@ import org.lightmare.utils.fs.FileType;
  * @author levan
  * 
  */
-public class EarUtils extends AbstractIOUtils {
+public class EarUtils extends ArchiveUtils {
 
     public EarUtils(String path) {
 	super(path);

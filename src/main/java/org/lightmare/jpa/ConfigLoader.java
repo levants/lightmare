@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.Enumeration;
 
 import org.lightmare.utils.StringUtils;
-import org.lightmare.utils.fs.codecs.AbstractIOUtils;
+import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
 /**
  * For getting resources from persistence.xml path
@@ -51,7 +51,7 @@ public class ConfigLoader {
 	    }
 	};
 
-	shortPath = StringUtils.concat(AbstractIOUtils.ARCHIVE_URL_DELIM,
+	shortPath = StringUtils.concat(ArchiveUtils.ARCHIVE_URL_DELIM,
 		XML_PATH);
 
 	return xmls;

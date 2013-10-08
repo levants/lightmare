@@ -32,7 +32,7 @@ import org.w3c.dom.NodeList;
  * @author levan
  * 
  */
-public abstract class AbstractIOUtils {
+public abstract class ArchiveUtils {
 
     protected Map<URL, URL> xmlURLs;
 
@@ -82,21 +82,21 @@ public abstract class AbstractIOUtils {
     // Application descriptor XML file tags
     public static final String EJB_TAG_NAME = "ejb";
 
-    public AbstractIOUtils(String path) {
+    public ArchiveUtils(String path) {
 
 	this.path = path;
 	realFile = new File(path);
 	isDirectory = realFile.isDirectory();
     }
 
-    public AbstractIOUtils(File file) {
+    public ArchiveUtils(File file) {
 
 	this.path = file.getPath();
 	realFile = file;
 	isDirectory = realFile.isDirectory();
     }
 
-    public AbstractIOUtils(URL url) throws IOException {
+    public ArchiveUtils(URL url) throws IOException {
 
 	this.path = url.toString();
 
@@ -204,10 +204,10 @@ public abstract class AbstractIOUtils {
 	return fileType;
     }
 
-    public static AbstractIOUtils getAppropriatedType(URL url, FileType fileType)
+    public static ArchiveUtils getAppropriatedType(URL url, FileType fileType)
 	    throws IOException {
 
-	AbstractIOUtils ioUtils;
+	ArchiveUtils ioUtils;
 
 	File appFile;
 
@@ -238,10 +238,10 @@ public abstract class AbstractIOUtils {
 	return ioUtils;
     }
 
-    public static AbstractIOUtils getAppropriatedType(URL url)
+    public static ArchiveUtils getAppropriatedType(URL url)
 	    throws IOException {
 
-	AbstractIOUtils ioUtils = getAppropriatedType(url, null);
+	ArchiveUtils ioUtils = getAppropriatedType(url, null);
 
 	return ioUtils;
     }

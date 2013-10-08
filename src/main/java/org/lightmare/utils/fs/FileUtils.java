@@ -16,7 +16,7 @@ import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
-import org.lightmare.utils.fs.codecs.AbstractIOUtils;
+import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
 /**
  * Utility for removing {@link File}s recursively from file system
@@ -33,8 +33,8 @@ public class FileUtils {
 	    @Override
 	    public boolean accept(File file, String name) {
 
-		return name.endsWith(AbstractIOUtils.JAR_FILE_EXT)
-			|| name.endsWith(AbstractIOUtils.CLASS_FILE_EXT)
+		return name.endsWith(ArchiveUtils.JAR_FILE_EXT)
+			|| name.endsWith(ArchiveUtils.CLASS_FILE_EXT)
 			|| file.isDirectory();
 	    }
 	});
@@ -132,13 +132,13 @@ public class FileUtils {
 	    if (isEarDir) {
 		String path = file.getPath();
 		String delim;
-		if (path.endsWith(AbstractIOUtils.FILE_SEPARATOR)) {
+		if (path.endsWith(ArchiveUtils.FILE_SEPARATOR)) {
 		    delim = StringUtils.EMPTY_STRING;
 		} else {
-		    delim = AbstractIOUtils.FILE_SEPARATOR;
+		    delim = ArchiveUtils.FILE_SEPARATOR;
 		}
 		String appxmlPath = StringUtils.concat(path, delim,
-			AbstractIOUtils.APPLICATION_XML_PATH);
+			ArchiveUtils.APPLICATION_XML_PATH);
 		File appXmlFile = new File(appxmlPath);
 		isEarDir = appXmlFile.exists();
 	    }

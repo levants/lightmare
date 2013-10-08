@@ -17,12 +17,12 @@ import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
 
 /**
- * Implementation of {@link AbstractIOUtils} for ear directories
+ * Implementation of {@link ArchiveUtils} for ear directories
  * 
  * @author levan
  * 
  */
-public class DirUtils extends AbstractIOUtils {
+public class DirUtils extends ArchiveUtils {
 
     public static final FileType type = FileType.EDIR;
 

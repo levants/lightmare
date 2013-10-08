@@ -16,12 +16,12 @@ import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
 
 /**
- * Implementation of {@link AbstractIOUtils} for jar files
+ * Implementation of {@link ArchiveUtils} for jar files
  * 
  * @author levan
  * 
  */
-public class JarUtils extends AbstractIOUtils {
+public class JarUtils extends ArchiveUtils {
 
     public static final FileType type = FileType.JAR;
 

@@ -10,7 +10,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 import org.lightmare.scannotation.AnnotationDB;
-import org.lightmare.utils.fs.codecs.AbstractIOUtils;
+import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
 public class IOUtilsTest {
 
@@ -21,7 +21,7 @@ public class IOUtilsTest {
     @Test
     public void scanTest() {
 	try {
-	    AbstractIOUtils ioUtils = AbstractIOUtils
+	    ArchiveUtils ioUtils = ArchiveUtils
 		    .getAppropriatedType(new File(EAR_PATH).toURI().toURL());
 	    ioUtils.scan(true);
 

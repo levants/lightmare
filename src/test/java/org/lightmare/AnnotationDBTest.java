@@ -8,7 +8,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 import org.lightmare.scannotation.AnnotationDB;
-import org.lightmare.utils.fs.codecs.AbstractIOUtils;
+import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
 public class AnnotationDBTest {
 
@@ -20,7 +20,7 @@ public class AnnotationDBTest {
     public void getOwnershipFilesTest() {
 
 	try {
-	    AbstractIOUtils ioUtils = AbstractIOUtils
+	    ArchiveUtils ioUtils = ArchiveUtils
 		    .getAppropriatedType(new File(EAR_PATH).toURI().toURL());
 	    ioUtils.setXmlFromJar(true);
 	    ioUtils.scan(true);

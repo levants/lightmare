@@ -19,7 +19,7 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
-import org.lightmare.utils.fs.codecs.AbstractIOUtils;
+import org.lightmare.utils.fs.codecs.ArchiveUtils;
 import org.scannotation.archiveiterator.Filter;
 import org.scannotation.archiveiterator.IteratorFactory;
 import org.scannotation.archiveiterator.StreamIterator;
@@ -54,7 +54,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     private String getFileName(URL url) {
 
 	String fileName = url.getFile();
-	int lastIndex = fileName.lastIndexOf(AbstractIOUtils.FILE_SEPARATOR);
+	int lastIndex = fileName.lastIndexOf(ArchiveUtils.FILE_SEPARATOR);
 	if (lastIndex > StringUtils.NOT_EXISTING_INDEX) {
 	    ++lastIndex;
 	    fileName = fileName.substring(lastIndex);
@@ -159,10 +159,10 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 		    boolean valid;
 
-		    if (subFileName.endsWith(AbstractIOUtils.CLASS_FILE_EXT)) {
+		    if (subFileName.endsWith(ArchiveUtils.CLASS_FILE_EXT)) {
 
 			if (subFileName
-				.startsWith(AbstractIOUtils.FILE_SEPARATOR)) {
+				.startsWith(ArchiveUtils.FILE_SEPARATOR)) {
 			    subFileName = subFileName
 				    .substring(CollectionUtils.SECOND_INDEX);
 			}

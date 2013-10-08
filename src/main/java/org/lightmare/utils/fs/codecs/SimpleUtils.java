@@ -8,12 +8,12 @@ import java.util.Set;
 import org.lightmare.utils.fs.FileType;
 
 /**
- * Implementation of {@link AbstractIOUtils} for directories
+ * Implementation of {@link ArchiveUtils} for directories
  * 
  * @author levan
  * 
  */
-public class SimpleUtils extends AbstractIOUtils {
+public class SimpleUtils extends ArchiveUtils {
 
     public static final FileType type = FileType.DIR;
 

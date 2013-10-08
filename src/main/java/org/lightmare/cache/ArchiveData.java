@@ -1,9 +1,9 @@
 package org.lightmare.cache;
 
-import org.lightmare.utils.fs.codecs.AbstractIOUtils;
+import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
 /**
- * Container class for {@link org.lightmare.utils.fs.codecs.AbstractIOUtils} and
+ * Container class for {@link org.lightmare.utils.fs.codecs.ArchiveUtils} and
  * {@link ClassLoader} for each {@link java.net.URL} to cache and avoid
  * duplicates at deploy time
  * 
@@ -12,15 +12,15 @@ import org.lightmare.utils.fs.codecs.AbstractIOUtils;
  */
 public class ArchiveData {
 
-    private AbstractIOUtils ioUtils;
+    private ArchiveUtils ioUtils;
 
     private ClassLoader loader;
 
-    public AbstractIOUtils getIoUtils() {
+    public ArchiveUtils getIoUtils() {
 	return ioUtils;
     }
 
-    public void setIoUtils(AbstractIOUtils ioUtils) {
+    public void setIoUtils(ArchiveUtils ioUtils) {
 	this.ioUtils = ioUtils;
     }
 

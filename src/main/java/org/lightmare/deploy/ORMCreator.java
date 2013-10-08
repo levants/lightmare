@@ -16,7 +16,7 @@ import org.lightmare.jpa.JpaManager;
 import org.lightmare.scannotation.AnnotationDB;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.fs.codecs.AbstractIOUtils;
+import org.lightmare.utils.fs.codecs.ArchiveUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
 /**
@@ -27,13 +27,13 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public class ORMCreator {
 
-    private Map<String, AbstractIOUtils> aggregateds;
+    private Map<String, ArchiveUtils> aggregateds;
 
     private AnnotationDB annotationDB;
 
     private ORMCreator(MetaCreator creator) {
 
-	this.aggregateds = new WeakHashMap<String, AbstractIOUtils>(
+	this.aggregateds = new WeakHashMap<String, ArchiveUtils>(
 		creator.getAggregateds());
 	this.annotationDB = creator.getAnnotationDB();
     }
@@ -129,7 +129,7 @@ public class ORMCreator {
 	JpaManager.Builder builder = new JpaManager.Builder();
 	Map<String, String> classOwnersFiles = annotationDB
 		.getClassOwnersFiles();
-	AbstractIOUtils ioUtils = aggregateds.get(beanName);
+	ArchiveUtils ioUtils = aggregateds.get(beanName);
 
 	if (ObjectUtils.notNull(ioUtils)) {
 	    URL jarURL = ioUtils.getAppropriatedURL(classOwnersFiles, beanName);

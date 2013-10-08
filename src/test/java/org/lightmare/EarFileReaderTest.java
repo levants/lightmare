@@ -26,7 +26,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.fs.FileUtils;
-import org.lightmare.utils.fs.codecs.AbstractIOUtils;
+import org.lightmare.utils.fs.codecs.ArchiveUtils;
 import org.lightmare.utils.fs.codecs.EarUtils;
 import org.lightmare.utils.fs.codecs.ExtUtils;
 
@@ -211,7 +211,7 @@ public class EarFileReaderTest {
 
     @Test
     public void appXmlParseTest() {
-	AbstractIOUtils ioUtils = new EarUtils(EAR_PATH);
+	ArchiveUtils ioUtils = new EarUtils(EAR_PATH);
 	try {
 	    InputStream stream = ioUtils.earReader();
 	    Set<String> apps = ioUtils.appXmlParser(stream);
@@ -227,7 +227,7 @@ public class EarFileReaderTest {
 
     @Test
     public void getEjbLibsTest() {
-	AbstractIOUtils ioUtils = new EarUtils(EAR_PATH);
+	ArchiveUtils ioUtils = new EarUtils(EAR_PATH);
 	try {
 	    ioUtils.getEjbLibs();
 	    URL[] urls = ioUtils.getLibs();
@@ -245,7 +245,7 @@ public class EarFileReaderTest {
     public void extractEjbJarTest() {
 
 	try {
-	    AbstractIOUtils ioUtils = AbstractIOUtils
+	    ArchiveUtils ioUtils = ArchiveUtils
 		    .getAppropriatedType(new File(EAR_PATH).toURI().toURL());
 	    ioUtils.setXmlFromJar(true);
 	    ioUtils.scan();
@@ -288,7 +288,7 @@ public class EarFileReaderTest {
     @Test
     public void getAppropriateTypeTest() {
 	try {
-	    AbstractIOUtils ioUtils = AbstractIOUtils
+	    ArchiveUtils ioUtils = ArchiveUtils
 		    .getAppropriatedType(new File(EAR_PATH).toURI().toURL());
 	    Assert.assertTrue("Could not get appropriate type",
 		    ioUtils instanceof ExtUtils);

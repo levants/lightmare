@@ -43,7 +43,7 @@ import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.FileUtils;
 import org.lightmare.utils.fs.WatchUtils;
-import org.lightmare.utils.fs.codecs.AbstractIOUtils;
+import org.lightmare.utils.fs.codecs.ArchiveUtils;
 import org.lightmare.utils.shutdown.ShutDown;
 
 /**
@@ -67,7 +67,7 @@ public class MetaCreator {
     private CountDownLatch blocker;
 
     // Data for cache at deploy time
-    private Map<String, AbstractIOUtils> aggregateds = new WeakHashMap<String, AbstractIOUtils>();
+    private Map<String, ArchiveUtils> aggregateds = new WeakHashMap<String, ArchiveUtils>();
 
     private Map<URL, ArchiveData> archivesURLs;
 
@@ -125,7 +125,7 @@ public class MetaCreator {
 	return annotationDB;
     }
 
-    public Map<String, AbstractIOUtils> getAggregateds() {
+    public Map<String, ArchiveUtils> getAggregateds() {
 
 	return aggregateds;
     }
@@ -157,7 +157,7 @@ public class MetaCreator {
     private void fillArchiveURLs(URL archive, List<URL> modifiedArchives)
 	    throws IOException {
 
-	AbstractIOUtils ioUtils = AbstractIOUtils.getAppropriatedType(archive);
+	ArchiveUtils ioUtils = ArchiveUtils.getAppropriatedType(archive);
 	if (ObjectUtils.notNull(ioUtils)) {
 	    ioUtils.scan(configuration.isPersXmlFromJar());
 	    List<URL> ejbURLs = ioUtils.getEjbURLs();
@@ -241,9 +241,9 @@ public class MetaCreator {
 	    archiveData = new ArchiveData();
 	}
 
-	AbstractIOUtils ioUtils = archiveData.getIoUtils();
+	ArchiveUtils ioUtils = archiveData.getIoUtils();
 	if (ioUtils == null) {
-	    ioUtils = AbstractIOUtils.getAppropriatedType(currentURL);
+	    ioUtils = ArchiveUtils.getAppropriatedType(currentURL);
 	    archiveData.setIoUtils(ioUtils);
 	}
 	ClassLoader loader = archiveData.getLoader();
