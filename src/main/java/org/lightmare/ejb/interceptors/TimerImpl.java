@@ -14,7 +14,7 @@ import javax.ejb.TimerHandle;
  * Implementation of {@link Timer} of intercept timer task
  * 
  * @author levan
- * 
+ * @since 0.0.65-SNAPSHOT
  */
 // TODO: Need proper implementation of Timer interface
 public class TimerImpl implements Timer {
