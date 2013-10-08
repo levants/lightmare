@@ -30,7 +30,7 @@ import org.w3c.dom.NodeList;
  * from application server deployments (jboss) read contents and etc.
  * 
  * @author levan
- * 
+ * @since 0.0.83-SNAPSHOT
  */
 public abstract class ArchiveUtils {
 
@@ -238,8 +238,7 @@ public abstract class ArchiveUtils {
 	return ioUtils;
     }
 
-    public static ArchiveUtils getAppropriatedType(URL url)
-	    throws IOException {
+    public static ArchiveUtils getAppropriatedType(URL url) throws IOException {
 
 	ArchiveUtils ioUtils = getAppropriatedType(url, null);
 
