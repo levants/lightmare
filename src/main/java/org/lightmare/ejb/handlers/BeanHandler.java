@@ -33,7 +33,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * method calls to provide database transactions
  * 
  * @author Levan
- * 
+ * @since 0.0.16-SNAPSHOT
  */
 public class BeanHandler implements InvocationHandler, Cloneable {
 
