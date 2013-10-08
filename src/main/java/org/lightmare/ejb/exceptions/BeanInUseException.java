@@ -9,7 +9,7 @@ import org.lightmare.utils.LogUtils;
  * deployed
  * 
  * @author levan
- * 
+ * @since 0.0.16-SNAPSHOT
  */
 public class BeanInUseException extends IOException {
 
