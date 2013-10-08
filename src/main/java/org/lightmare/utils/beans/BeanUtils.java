@@ -9,7 +9,7 @@ import org.lightmare.utils.StringUtils;
  * Utility class for EJB beans
  * 
  * @author levan
- * 
+ * @since 0.0.26-SNAPSHOT
  */
 public class BeanUtils {
 
