@@ -19,7 +19,7 @@ import org.lightmare.utils.fs.FileType;
  * Implementation of {@link ArchiveUtils} for jar files
  * 
  * @author levan
- * 
+ * @since 0.0.81-SNAPSHOT
  */
 public class JarUtils extends ArchiveUtils {
 
