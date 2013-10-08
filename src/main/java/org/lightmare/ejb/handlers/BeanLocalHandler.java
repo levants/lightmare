@@ -10,7 +10,7 @@ import org.lightmare.utils.RpcUtils;
  * Local handler class for remote client call
  * 
  * @author levan
- * 
+ * @since 0.0.26-SNAPSHOT
  */
 public class BeanLocalHandler implements InvocationHandler {
 
