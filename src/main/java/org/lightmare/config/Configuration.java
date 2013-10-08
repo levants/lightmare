@@ -24,7 +24,7 @@ import org.yaml.snakeyaml.Yaml;
  * Easy way to retrieve configuration properties from configuration file
  * 
  * @author levan
- * 
+ * @since 0.0.21-SNAPSHOT
  */
 public class Configuration implements Cloneable {
 
