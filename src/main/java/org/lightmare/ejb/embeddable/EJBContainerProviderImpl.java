@@ -11,7 +11,7 @@ import javax.ejb.spi.EJBContainerProvider;
  * "Lightmare" EJB container
  * 
  * @author levan
- * 
+ * @since 0.0.48-SNAPSHOT
  */
 public class EJBContainerProviderImpl implements EJBContainerProvider {
 

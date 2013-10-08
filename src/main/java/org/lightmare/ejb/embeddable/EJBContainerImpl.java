@@ -17,7 +17,7 @@ import org.lightmare.utils.ObjectUtils;
  * "Lightmare" EJB container
  * 
  * @author levan
- * 
+ * @since 0.0.48-SNAPSHOT
  */
 public class EJBContainerImpl extends EJBContainer {
 
