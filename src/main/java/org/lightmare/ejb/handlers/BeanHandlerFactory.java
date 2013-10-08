@@ -8,7 +8,7 @@ import org.lightmare.cache.MetaData;
  * Factory class to initialize / clone {@link BeanHandler} instance
  * 
  * @author Levan
- * 
+ * @since 0.0.66-SNAPSHOT
  */
 public class BeanHandlerFactory {
 
