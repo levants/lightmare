@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
  * Handler class to call EJB bean methods for REST services
  * 
  * @author levan
- * 
+ * @since 0.0.69-SNAPSHOT
  */
 public class RestHandler<T> {
 
