@@ -22,7 +22,7 @@ import org.lightmare.utils.ears.AbstractIOUtils;
  * Utility for removing {@link File}s recursively from file system
  * 
  * @author Levan
- * 
+ * @since 0.0.20-SNAPSHOT
  */
 public class FileUtils {
 
