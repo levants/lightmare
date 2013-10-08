@@ -11,7 +11,7 @@ import org.lightmare.utils.fs.FileType;
  * Implementation of {@link ArchiveUtils} for directories
  * 
  * @author levan
- * 
+ * @since 0.0.81-SNAPSHOT
  */
 public class SimpleUtils extends ArchiveUtils {
 
