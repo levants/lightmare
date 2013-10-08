@@ -1,4 +1,4 @@
-package org.lightmare.utils.ears;
+package org.lightmare.utils.fs.codecs;
 
 import java.io.File;
 import java.io.FileFilter;

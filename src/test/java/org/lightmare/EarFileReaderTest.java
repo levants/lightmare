@@ -25,10 +25,10 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.jpa.ConfigLoader;
-import org.lightmare.utils.ears.AbstractIOUtils;
-import org.lightmare.utils.ears.EarUtils;
-import org.lightmare.utils.ears.ExtUtils;
 import org.lightmare.utils.fs.FileUtils;
+import org.lightmare.utils.fs.codecs.AbstractIOUtils;
+import org.lightmare.utils.fs.codecs.EarUtils;
+import org.lightmare.utils.fs.codecs.ExtUtils;
 
 public class EarFileReaderTest {
 
