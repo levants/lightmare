@@ -23,7 +23,7 @@ import org.lightmare.utils.fs.FileType;
  * Utility class for checking jar, ear and zip files read contents and etc.
  * 
  * @author levan
- * 
+ * @since 0.0.81-SNAPSHOT
  */
 public class EarUtils extends ArchiveUtils {
 
