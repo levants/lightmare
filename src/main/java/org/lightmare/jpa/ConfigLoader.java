@@ -12,7 +12,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  * For getting resources from persistence.xml path
  * 
  * @author Levan
- * 
+ * @since 0.0.16-SNAPSHOT
  */
 public class ConfigLoader {
 
@@ -51,8 +51,8 @@ public class ConfigLoader {
 	    }
 	};
 
-	shortPath = StringUtils.concat(ArchiveUtils.ARCHIVE_URL_DELIM,
-		XML_PATH);
+	shortPath = StringUtils
+		.concat(ArchiveUtils.ARCHIVE_URL_DELIM, XML_PATH);
 
 	return xmls;
     }
