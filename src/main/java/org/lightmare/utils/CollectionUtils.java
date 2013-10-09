@@ -126,7 +126,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if passed array of {@link Object}'s instances is null or is empty
+     * Checks if passed array of {@link Object}'s instances is not null and is
+     * not empty
      * 
      * @param array
      * @return <code>boolean</code>
