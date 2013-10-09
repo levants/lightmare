@@ -319,7 +319,7 @@ public class Configuration implements Cloneable {
 
 	contains = containsConfigKey(ConfigKeys.CONNECTION_TIMEOUT.key);
 	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(ConfigKeys.CONNECTION_TIMEOUT.key,
+	    setIfContains(ConfigKeys.CONNECTION_TIMEOUT.key,
 		    ConfigKeys.CONNECTION_TIMEOUT.value);
 	}
     }
