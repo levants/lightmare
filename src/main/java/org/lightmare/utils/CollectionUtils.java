@@ -103,6 +103,12 @@ public abstract class CollectionUtils {
 	return !valid(collections);
     }
 
+    /**
+     * Checks if each of passed {@link Map} is valid
+     * 
+     * @param maps
+     * @return <code>boolean</code>
+     */
     public static boolean validAll(Map<?, ?>... maps) {
 
 	boolean avaliable = ObjectUtils.notNull(maps);
