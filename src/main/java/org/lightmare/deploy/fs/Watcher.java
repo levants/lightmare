@@ -465,6 +465,9 @@ public class Watcher implements Runnable {
 	}
     }
 
+    /**
+     * Starts watch service for application and data source files
+     */
     public static void startWatch() {
 
 	Watcher watcher = new Watcher();
