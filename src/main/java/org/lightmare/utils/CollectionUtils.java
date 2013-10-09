@@ -104,7 +104,7 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if each of passed {@link Map} is valid
+     * Checks if each of passed {@link Map} is null or is empty
      * 
      * @param maps
      * @return <code>boolean</code>
