@@ -461,6 +461,7 @@ public class Watcher implements Runnable {
 	boolean scan;
 	File directory;
 	File[] files;
+	
 	for (DeploymentDirectory deployment : deploymentDirss) {
 	    path = deployment.getPath();
 	    scan = deployment.isScan();
