@@ -103,8 +103,8 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Gets value of sub {@link Map} on passed sub key contained in cached configuration on passed
-     * key
+     * Gets value of sub {@link Map} on passed sub key contained in cached
+     * configuration on passed key
      * 
      * @param key
      * @param subKey
