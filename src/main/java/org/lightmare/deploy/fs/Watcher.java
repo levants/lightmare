@@ -507,6 +507,7 @@ public class Watcher implements Runnable {
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
 	    LOG.fatal("system going to shut down cause of hot deployment");
+	    
 	    try {
 		ConnectionContainer.closeConnections();
 	    } catch (IOException iex) {
