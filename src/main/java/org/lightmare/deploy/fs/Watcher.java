@@ -71,6 +71,7 @@ public class Watcher implements Runnable {
     // Zero / default status for watch service
     private static final int ZERO_WATCH_STATUS = 0;
 
+    //Error code for system exit
     private static final int ERROR_EXIT = -1;
 
     private static final Logger LOG = Logger.getLogger(Watcher.class);
