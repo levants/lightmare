@@ -154,7 +154,6 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		}
 		implementsIndex.put(cf.getName(), intfs);
 	    }
-
 	} finally {
 	    IOUtils.closeAll(dstream, bits);
 	}
