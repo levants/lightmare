@@ -413,6 +413,7 @@ public class Watcher implements Runnable {
 		    if (event.kind() == StandardWatchEventKinds.OVERFLOW) {
 			continue;
 		    }
+		    
 		    if (times == 0 || event.count() > currentEvent.count()) {
 			currentEvent = event;
 		    }
