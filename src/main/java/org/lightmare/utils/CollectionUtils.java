@@ -235,9 +235,11 @@ public abstract class CollectionUtils {
 
 	return value;
     }
-    
+
     /**
-     * Puts passed value to passed {@link Map} instance on passed key of such does not contained
+     * Puts passed value to passed {@link Map} instance on passed key of such
+     * does not contained
+     * 
      * @param map
      * @param key
      * @param value
