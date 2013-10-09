@@ -169,6 +169,12 @@ public abstract class CollectionUtils {
 	return avaliable;
     }
 
+    /**
+     * * Checks if each of passed {@link Object} array instances is not null and is not
+     * empty
+     * @param arrays
+     * @return <code>boolean</code>
+     */
     public static boolean validAll(Object[]... arrays) {
 
 	boolean avaliable = ObjectUtils.notNull(arrays);
