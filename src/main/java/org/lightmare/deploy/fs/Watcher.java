@@ -147,6 +147,11 @@ public class Watcher implements Runnable {
 	return deploymetDirss;
     }
 
+    /**
+     * Gets {@link Set} of data source paths from configuration
+     * 
+     * @return {@link Set}<code><String></code>
+     */
     private static Set<String> getDataSourcePaths() {
 
 	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
