@@ -444,6 +444,13 @@ public class Watcher implements Runnable {
 	runService(watch);
     }
 
+    /**
+     * 
+     * @param files
+     * @param fs
+     * @param watch
+     * @throws IOException
+     */
     private void registerPaths(File[] files, FileSystem fs, WatchService watch)
 	    throws IOException {
 
