@@ -137,6 +137,11 @@ public abstract class CollectionUtils {
 	return array != null && array.length > EMPTY_ARRAY_LENGTH;
     }
 
+    /**
+     * Checks if passed array of {@link Object}s is null or is empty
+     * @param array
+     * @return <code>boolean</code>
+     */
     public static boolean invalid(Object[] array) {
 
 	return !valid(array);
