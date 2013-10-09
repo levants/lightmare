@@ -350,6 +350,7 @@ public class DeployManager extends HttpServlet {
 	    if (valid) {
 		valid = authenticate(userName, password, request);
 	    }
+	    
 	    if (valid) {
 		response.sendRedirect(DEPLOY_MANAGER_DEFAULT_NAME);
 	    } else {
