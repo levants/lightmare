@@ -416,6 +416,7 @@ public class Watcher implements Runnable {
 		    if (times == 0 || event.count() > currentEvent.count()) {
 			currentEvent = event;
 		    }
+		    
 		    times++;
 		    valid = key.reset();
 		    toRun = valid && key.isValid();
