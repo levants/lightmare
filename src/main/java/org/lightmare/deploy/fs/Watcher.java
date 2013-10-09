@@ -356,6 +356,12 @@ public class Watcher implements Runnable {
 	deployFile(fileName);
     }
 
+    /**
+     * Handles file change event
+     * @param dir
+     * @param currentEvent
+     * @throws IOException
+     */
     private void handleEvent(Path dir, WatchEvent<Path> currentEvent)
 	    throws IOException {
 
