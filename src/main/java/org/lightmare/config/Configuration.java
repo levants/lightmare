@@ -311,11 +311,8 @@ public class Configuration implements Cloneable {
 	    setConfigValue(ConfigKeys.WORKER_POOL.key, workerProperty);
 	}
 
-	contains = containsConfigKey(ConfigKeys.CONNECTION_TIMEOUT.key);
-	if (ObjectUtils.notTrue(contains)) {
 	    setIfContains(ConfigKeys.CONNECTION_TIMEOUT.key,
 		    ConfigKeys.CONNECTION_TIMEOUT.value);
-	}
     }
 
     /**
