@@ -492,6 +492,7 @@ public class Watcher implements Runnable {
 	try {
 	    FileSystem fs = FileSystems.getDefault();
 	    WatchService watch = null;
+	    
 	    try {
 		watch = fs.newWatchService();
 	    } catch (IOException ex) {
