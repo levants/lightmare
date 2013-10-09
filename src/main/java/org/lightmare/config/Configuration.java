@@ -281,6 +281,14 @@ public class Configuration implements Cloneable {
 	}
     }
 
+    private <K, V> void setIfContains(K key, V value) {
+
+	boolean contains = containsConfigKey(key);
+	if (ObjectUtils.notTrue(contains)) {
+	    setConfigValue(key, value);
+	}
+    }
+
     /**
      * Configures server from properties and default values
      */
