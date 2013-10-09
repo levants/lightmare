@@ -125,12 +125,12 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		    classes = new HashSet<String>();
 		    annotationIndex.put(ann.getTypeName(), classes);
 		}
-		
+
 		classes.add(className);
 		if (!classOwnersURLs.containsKey(className)) {
 		    classOwnersURLs.put(className, url);
 		}
-		
+
 		if (!classOwnersFiles.containsKey(className)) {
 		    fileName = getFileName(url);
 		    classOwnersFiles.put(className, fileName);
@@ -207,9 +207,10 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 	    StreamIterator it = IteratorFactory.create(url, filter);
 
-	    InputStream stream;
-	    while (ObjectUtils.notNull((stream = it.next()))) {
+	    InputStream stream = it.next();
+	    while (ObjectUtils.notNull(stream)) {
 		scanClass(stream, url);
+		stream = it.next();
 	    }
 
 	    LOG.info(StringUtils.concat("Finished URL scanning ", url));
