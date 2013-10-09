@@ -68,7 +68,7 @@ public class Watcher implements Runnable {
     // Sets of data source descriptor file paths
     private Set<String> dataSources;
 
-    //Zero / default status for watch service
+    // Zero / default status for watch service
     private static final int ZERO_WATCH_STATUS = 0;
 
     private static final int ERROR_EXIT = -1;
