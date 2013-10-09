@@ -373,6 +373,7 @@ public class Watcher implements Runnable {
 	    String fileName = path.toString();
 	    int count = currentEvent.count();
 	    Kind<?> kind = currentEvent.kind();
+	    
 	    if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
 		LogUtils.info(LOG, "Modify: %s, count: %s\n", fileName, count);
 		redeployFile(fileName);
