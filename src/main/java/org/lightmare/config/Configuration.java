@@ -128,6 +128,14 @@ public class Configuration implements Cloneable {
 	return def;
     }
 
+    /**
+     * Check if sub {@link Map} contains passed sub key contained in cached
+     * configuration on passed key
+     * 
+     * @param key
+     * @param subKey
+     * @return <code>boolean</code>
+     */
     private <K> boolean containsSubConfigKey(Object key, K subKey) {
 
 	Map<K, ?> subConfig = getAsMap(key);
