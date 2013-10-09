@@ -198,6 +198,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 	    Filter filter = new Filter() {
 
+		@Override
 		public boolean accepts(String subFileName) {
 
 		    boolean valid;
