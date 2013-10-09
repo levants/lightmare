@@ -779,11 +779,13 @@ public class MetaCreator {
 
 	    return this;
 	}
-/**
- * To add remote control check
- * @param remoteControl
- * @return {@link Builder}
- */
+
+	/**
+	 * To add remote control check
+	 * 
+	 * @param remoteControl
+	 * @return {@link Builder}
+	 */
 	public Builder setRemoteControl(boolean remoteControl) {
 
 	    Configuration.setRemoteControl(remoteControl);
