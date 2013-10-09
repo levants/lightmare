@@ -117,6 +117,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	if (ObjectUtils.notNull(visible)) {
 	    populate(visible.getAnnotations(), className, url);
 	}
+
 	if (ObjectUtils.notNull(invisible)) {
 	    populate(invisible.getAnnotations(), className, url);
 	}
