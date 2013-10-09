@@ -505,7 +505,7 @@ public class MetaCreator {
      * initialize {@link MetaCreator} instance
      * 
      * @author levan
-     * 
+     *  @since 0.0.45-SNAPSHOT
      */
     public static class Builder {
 
