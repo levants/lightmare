@@ -366,9 +366,6 @@ public class Watcher implements Runnable {
     private void handleEvent(Path dir, WatchEvent<Path> currentEvent)
 	    throws IOException {
 
-	if (currentEvent == null) {
-	    return;
-	}
 	if(ObjectUtils.notNull(currentEvent)){
 	Path prePath = currentEvent.context();
 	Path path = dir.resolve(prePath);
