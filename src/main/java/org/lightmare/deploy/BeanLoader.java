@@ -61,7 +61,7 @@ import org.lightmare.utils.rest.RestCheck;
  * session beans and cache them and clean resources after deployments
  * 
  * @author levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class BeanLoader {
 
