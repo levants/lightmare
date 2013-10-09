@@ -782,7 +782,7 @@ public class MetaCreator {
 
 	public Builder setRemoteControl(boolean remoteControl) {
 
-	    Configuration.setRemoteContron(remoteControl);
+	    Configuration.setRemoteControl(remoteControl);
 
 	    return this;
 	}
