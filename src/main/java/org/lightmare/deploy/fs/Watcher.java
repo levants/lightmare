@@ -369,7 +369,7 @@ public class Watcher implements Runnable {
 	if (currentEvent == null) {
 	    return;
 	}
-
+	if(ObjectUtils.notNull(currentEvent)){
 	Path prePath = currentEvent.context();
 	Path path = dir.resolve(prePath);
 	String fileName = path.toString();
@@ -384,6 +384,7 @@ public class Watcher implements Runnable {
 	} else if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
 	    LogUtils.info(LOG, "Create: %s, count: %s\n", fileName, count);
 	    redeployFile(fileName);
+	}
 	}
     }
 
