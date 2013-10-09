@@ -369,6 +369,7 @@ public class Watcher implements Runnable {
 	if (currentEvent == null) {
 	    return;
 	}
+
 	Path prePath = currentEvent.context();
 	Path path = dir.resolve(prePath);
 	String fileName = path.toString();
