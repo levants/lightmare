@@ -48,7 +48,7 @@ import org.lightmare.utils.fs.WatchUtils;
  */
 public class Watcher implements Runnable {
 
-    //Name of deployment watch service thread
+    // Name of deployment watch service thread
     private static final String DEPLOY_THREAD_NAME = "watch_thread";
 
     private static final int DEPLOY_POOL_PRIORITY = Thread.MAX_PRIORITY - 5;
