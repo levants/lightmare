@@ -235,6 +235,14 @@ public abstract class CollectionUtils {
 
 	return value;
     }
+    
+    private <K, V> void putIfAbscent(Map<K, V> map, K key, V value) {
+
+	boolean contained = map.containsKey(key);
+	if (ObjectUtils.notTrue(contained)) {
+	    map.put(key, value);
+	}
+    }
 
     /**
      * Creates new {@link Set} from passed {@link Collection} instance
