@@ -171,6 +171,12 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	}
     }
 
+    /**
+     * Scans passed {@link ClassFile} instance for specific annotations
+     * 
+     * @param cf
+     * @param url
+     */
     protected void scanClass(ClassFile cf, URL url) {
 
 	String className = cf.getName();
