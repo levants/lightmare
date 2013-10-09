@@ -465,6 +465,7 @@ public class Watcher implements Runnable {
 	for (DeploymentDirectory deployment : deploymentDirss) {
 	    path = deployment.getPath();
 	    scan = deployment.isScan();
+	    
 	    if (scan) {
 		directory = new File(path);
 		files = directory.listFiles();
