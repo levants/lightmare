@@ -503,6 +503,7 @@ public class Watcher implements Runnable {
 	    if (CollectionUtils.valid(deployments)) {
 		registerPaths(deployments, fs, watch);
 	    }
+	    
 	    if (CollectionUtils.valid(dataSources)) {
 		registerDsPaths(dataSources, fs, watch);
 	    }
