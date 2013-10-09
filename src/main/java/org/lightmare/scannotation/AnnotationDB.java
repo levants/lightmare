@@ -197,6 +197,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     /**
      * Scans passed {@link InputStream} instance for specific annotations
+     * 
      * @param bits
      * @param url
      * @throws IOException
