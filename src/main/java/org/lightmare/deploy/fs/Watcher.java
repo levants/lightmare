@@ -109,6 +109,13 @@ public class Watcher implements Runnable {
 	dataSources = getDataSourcePaths();
     }
 
+    /**
+     * Clears and gets {@link URL} from file name
+     * 
+     * @param fileName
+     * @return {@link URL}
+     * @throws IOException
+     */
     private static URL getAppropriateURL(String fileName) throws IOException {
 
 	File file = new File(fileName);
