@@ -305,7 +305,7 @@ public class Configuration implements Cloneable {
 
 	contains = containsConfigKey(ConfigKeys.BOSS_POOL.key);
 	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(ConfigKeys.BOSS_POOL.key, ConfigKeys.BOSS_POOL.value);
+	    setIfContains(ConfigKeys.BOSS_POOL.key, ConfigKeys.BOSS_POOL.value);
 	}
 
 	contains = containsConfigKey(ConfigKeys.WORKER_POOL.key);
