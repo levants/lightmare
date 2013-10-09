@@ -386,6 +386,11 @@ public class Watcher implements Runnable {
 	}
     }
 
+    /**
+     * Runs file watch service
+     * @param watch
+     * @throws IOException
+     */
     private void runService(WatchService watch) throws IOException {
 
 	Path dir;
