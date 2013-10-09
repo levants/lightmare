@@ -125,6 +125,12 @@ public class Watcher implements Runnable {
 	return url;
     }
 
+    /**
+     * Gets {@link Set} of {@link DeploymentDirectory} instances from
+     * configuration
+     * 
+     * @return {@link Set}<code><DeploymentDirectory></code>
+     */
     private static Set<DeploymentDirectory> getDeployDirectories() {
 
 	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
