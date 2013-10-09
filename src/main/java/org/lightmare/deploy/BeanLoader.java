@@ -100,7 +100,7 @@ public class BeanLoader {
      * {@link javax.sql.DataSource}
      * 
      * @author levan
-     *  @since 0.0.45-SNAPSHOT
+     * @since 0.0.45-SNAPSHOT
      */
     private static class ConnectionDeployer implements Callable<Boolean> {
 
