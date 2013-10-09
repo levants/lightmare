@@ -29,7 +29,7 @@ import org.scannotation.archiveiterator.StreamIterator;
  * {@link String}, {@link URL}> of class name and {@link URL} for its archive
  * 
  * @author levan
- * 
+ * @since 0.0.18-SNAPSHOT
  */
 public class AnnotationDB extends org.scannotation.AnnotationDB {
 
