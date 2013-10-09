@@ -358,6 +358,7 @@ public class Watcher implements Runnable {
 
     /**
      * Handles file change event
+     * 
      * @param dir
      * @param currentEvent
      * @throws IOException
