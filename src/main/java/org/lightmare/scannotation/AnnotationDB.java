@@ -141,6 +141,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    if (scanMethodAnnotations || scanParameterAnnotations) {
 		scanMethods(cf);
 	    }
+
 	    if (scanFieldAnnotations) {
 		scanFields(cf);
 	    }
