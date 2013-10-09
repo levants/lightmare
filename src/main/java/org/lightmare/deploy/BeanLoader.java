@@ -203,7 +203,7 @@ public class BeanLoader {
      * session beans and cache {@link MetaData} keyed by bean name
      * 
      * @author levan
-     *  @since 0.0.45-SNAPSHOT
+     * @since 0.0.45-SNAPSHOT
      */
     private static class BeanDeployer implements Callable<String> {
 
