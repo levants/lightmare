@@ -132,6 +132,12 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	return valid;
     }
 
+    /**
+     * caches scanned file information
+     * @param annotations
+     * @param className
+     * @param url
+     */
     protected void populate(Annotation[] annotations, String className, URL url) {
 
 	if (ObjectUtils.notNull(annotations)) {
