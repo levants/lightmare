@@ -787,7 +787,7 @@ public class BeanLoader {
      * Contains parameters for data source deploy classes
      * 
      * @author levan
-     *  @since 0.0.45-SNAPSHOT
+     * @since 0.0.45-SNAPSHOT
      */
     public static class DataSourceParameters {
 
