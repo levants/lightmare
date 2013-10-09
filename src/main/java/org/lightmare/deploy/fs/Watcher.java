@@ -434,7 +434,7 @@ public class Watcher implements Runnable {
     }
 
     /**
-     * 
+     * Registers path to watch service
      * @param fs
      * @param path
      * @param watch
