@@ -75,6 +75,7 @@ public class BeanLoader {
      * @author levan
      * 
      * @param <T>
+     *  @since 0.0.45-SNAPSHOT
      */
     private static class ContextLoaderAction<T> implements
 	    PrivilegedAction<Callable<T>> {
