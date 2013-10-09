@@ -333,6 +333,11 @@ public class Configuration implements Cloneable {
 	    deploymentPaths = ConfigKeys.DEMPLOYMENT_PATH.getValue();
 	    setConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key, deploymentPaths);
 	}
+
+	Boolean remoteControl = getConfigValue(ConfigKeys.REMOTE_CONTROL.key);
+	if (ObjectUtils.notNull(remoteControl)) {
+	    setRemoteControl(remoteControl);
+	}
     }
 
     /**
