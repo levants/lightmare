@@ -129,6 +129,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	DataInputStream dstream = new DataInputStream(new BufferedInputStream(
 		bits));
 	ClassFile cf = null;
+
 	try {
 	    cf = new ClassFile(dstream);
 	    classIndex.put(cf.getName(), new HashSet<String>());
