@@ -83,6 +83,14 @@ public class Configuration implements Cloneable {
 	return getAsMap(key, null);
     }
 
+    /**
+     * Sets value of sub {@link Map} contained in cached configuration on passed
+     * key
+     * 
+     * @param key
+     * @param subKey
+     * @param value
+     */
     private <K, V> void setSubConfigValue(Object key, K subKey, V value) {
 
 	Map<K, V> subConfig = getAsMap(key);
