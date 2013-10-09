@@ -65,6 +65,7 @@ public class Watcher implements Runnable {
     // Sets of directories of application deployments
     private Set<DeploymentDirectory> deployments;
 
+    //Sets of data source descriptor file paths
     private Set<String> dataSources;
 
     private static final Logger LOG = Logger.getLogger(Watcher.class);
