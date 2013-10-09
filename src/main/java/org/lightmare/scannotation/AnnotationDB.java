@@ -198,31 +198,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	LOG.info("Started scanning for archives on @Stateless annotation");
 	for (URL url : urls) {
 
-	    Filter filter = new Filter() {
-
-		@Override
-		public boolean accepts(String subFileName) {
-
-		    boolean valid;
-
-		    if (subFileName.endsWith(ArchiveUtils.CLASS_FILE_EXT)) {
-
-			if (subFileName.startsWith(ArchiveUtils.FILE_SEPARATOR)) {
-			    subFileName = subFileName
-				    .substring(CollectionUtils.SECOND_INDEX);
-			}
-
-			String fileNameForCheck = subFileName.replace(
-				FILE_SEPARATOR_CHAR, FILE_EXTEWNTION_SELIM);
-			valid = !ignoreScan(fileNameForCheck);
-		    } else {
-
-			valid = Boolean.FALSE;
-		    }
-
-		    return valid;
-		}
-	    };
+	    Filter filter = new ArchiveFilter();
 	    LOG.info(StringUtils.concat("Scanning URL ", url));
 
 	    StreamIterator it = IteratorFactory.create(url, filter);
