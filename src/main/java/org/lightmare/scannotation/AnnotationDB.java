@@ -212,8 +212,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    LOG.info(StringUtils.concat(SCANNING_URL_MESSAGE, url));
 
 	    StreamIterator it = IteratorFactory.create(url, filter);
-
 	    InputStream stream = it.next();
+
 	    while (ObjectUtils.notNull(stream)) {
 		scanClass(stream, url);
 		stream = it.next();
