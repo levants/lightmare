@@ -108,7 +108,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     }
 
     /**
-     * Checks fiule name should be or not ignored from scanning file list
+     * Checks file name should be or not ignored from scanning file list
      * 
      * @param intf
      * @return <code>boolean</code>
