@@ -57,7 +57,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
      * @author levan
      * @since 0.0.84-SNAPSHOT
      */
-    protected class ArchiveFilter {
+    protected class ArchiveFilter implements Filter{
 
 	public boolean accepts(String subFileName) {
 
