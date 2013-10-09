@@ -16,7 +16,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
- * Manages and administrator users
+ * Manages administrator users of deployment service
  * 
  * @author Levan
  * @since 0.0.45-SNAPSHOT
