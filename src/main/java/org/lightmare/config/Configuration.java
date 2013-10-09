@@ -305,7 +305,7 @@ public class Configuration implements Cloneable {
 	if (ObjectUtils.notTrue(contains)) {
 
 	    int defaultWorkers = ConfigKeys.WORKER_POOL.getValue();
-	    int workers = RUNTIME.availableProcessors() * defaultWorkers;
+	    int workers = (RUNTIME.availableProcessors() * defaultWorkers);
 	    String workerProperty = String.valueOf(workers);
 	    setConfigValue(ConfigKeys.WORKER_POOL.key, workerProperty);
 	}
