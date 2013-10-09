@@ -90,6 +90,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     /**
      * Gets file name from passed {@link URL} instance
+     * 
      * @param url
      * @return {@link String}
      */
@@ -106,6 +107,12 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	return fileName;
     }
 
+    /**
+     * Checks fiule name should be or not ignored from scanning file list
+     * 
+     * @param intf
+     * @return <code>boolean</code>
+     */
     private boolean ignoreScan(String intf) {
 
 	boolean valid = Boolean.FALSE;
