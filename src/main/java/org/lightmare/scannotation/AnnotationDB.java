@@ -51,6 +51,16 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
 
+    /**
+     * Filters java archive files
+     * 
+     * @author levan
+     * @since
+     */
+    protected static class ArchiveFilter {
+
+    }
+
     private String getFileName(URL url) {
 
 	String fileName = url.getFile();
@@ -152,7 +162,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		for (String intf : cf.getInterfaces()) {
 		    intfs.add(intf);
 		}
-		
+
 		implementsIndex.put(cf.getName(), intfs);
 	    }
 	} finally {
