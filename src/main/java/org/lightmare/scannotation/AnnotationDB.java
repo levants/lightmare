@@ -59,6 +59,26 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
      */
     protected static class ArchiveFilter {
 
+	public boolean accepts(String subFileName) {
+
+	    boolean valid;
+
+	    if (subFileName.endsWith(ArchiveUtils.CLASS_FILE_EXT)) {
+
+		if (subFileName.startsWith(ArchiveUtils.FILE_SEPARATOR)) {
+		    subFileName = subFileName
+			    .substring(CollectionUtils.SECOND_INDEX);
+		}
+
+		valid = !ignoreScan(subFileName.replace(FILE_SEPARATOR_CHAR,
+			FILE_EXTEWNTION_SELIM));
+	    } else {
+
+		valid = Boolean.FALSE;
+	    }
+
+	    return valid;
+	}
     }
 
     private String getFileName(URL url) {
@@ -199,6 +219,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		    return valid;
 		}
 	    };
+
 	    LOG.info(StringUtils.concat("Scanning URL ", url));
 
 	    StreamIterator it = IteratorFactory.create(url, filter);
