@@ -326,8 +326,9 @@ public class Watcher implements Runnable {
     }
 
     /**
-     *Removes from deployments application or data source file by passed
-     * file name
+     * Removes from deployments application or data source file by passed file
+     * name
+     * 
      * @param fileName
      * @throws IOException
      */
