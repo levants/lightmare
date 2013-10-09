@@ -51,6 +51,7 @@ public class Watcher implements Runnable {
     // Name of deployment watch service thread
     private static final String DEPLOY_THREAD_NAME = "watch_thread";
 
+    //Priority of deployment watch service thread
     private static final int DEPLOY_POOL_PRIORITY = Thread.MAX_PRIORITY - 5;
 
     private static final long SLEEP_TIME = 5500L;
