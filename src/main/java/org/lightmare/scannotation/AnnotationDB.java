@@ -134,6 +134,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     /**
      * caches scanned file information
+     * 
      * @param annotations
      * @param className
      * @param url
