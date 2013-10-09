@@ -220,7 +220,6 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		    return valid;
 		}
 	    };
-
 	    LOG.info(StringUtils.concat("Scanning URL ", url));
 
 	    StreamIterator it = IteratorFactory.create(url, filter);
