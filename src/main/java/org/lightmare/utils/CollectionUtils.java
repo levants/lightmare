@@ -149,8 +149,9 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if each of passed {@link Collection} instances is not null and is not
-     * empty
+     * Checks if each of passed {@link Collection} instances is not null and is
+     * not empty
+     * 
      * @param collections
      * @return <code>boolean</code>
      */
@@ -170,8 +171,9 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * * Checks if each of passed {@link Object} array instances is not null and is not
-     * empty
+     * * Checks if each of passed {@link Object} array instances is not null and
+     * is not empty
+     * 
      * @param arrays
      * @return <code>boolean</code>
      */
