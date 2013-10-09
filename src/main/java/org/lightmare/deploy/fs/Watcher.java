@@ -388,6 +388,7 @@ public class Watcher implements Runnable {
 
     /**
      * Runs file watch service
+     * 
      * @param watch
      * @throws IOException
      */
