@@ -88,6 +88,11 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	}
     }
 
+    /**
+     * Gets file name from passed {@link URL} instance
+     * @param url
+     * @return {@link String}
+     */
     private String getFileName(URL url) {
 
 	String fileName = url.getFile();
