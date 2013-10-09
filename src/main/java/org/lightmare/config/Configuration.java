@@ -102,6 +102,15 @@ public class Configuration implements Cloneable {
 	subConfig.put(subKey, value);
     }
 
+    /**
+     * Gets value of sub {@link Map} on passed sub key contained in cached configuration on passed
+     * key
+     * 
+     * @param key
+     * @param subKey
+     * @param defaultValue
+     * @return V
+     */
     private <K, V> V getSubConfigValue(Object key, K subKey, V defaultValue) {
 
 	V def;
