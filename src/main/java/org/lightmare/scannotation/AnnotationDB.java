@@ -55,6 +55,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     private static final String SCANNING_URL_MESSAGE = "Scanning URL ";
 
+    private static final String FINISHED_URL_MESSAGE = "Finished URL scanning ";
+
     private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
 
     /**
@@ -219,7 +221,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		stream = it.next();
 	    }
 
-	    LOG.info(StringUtils.concat("Finished URL scanning ", url));
+	    LOG.info(StringUtils.concat(FINISHED_URL_MESSAGE, url));
 	}
 
 	LOG.info(SCANNING_FINISHED_MESSAGE);
