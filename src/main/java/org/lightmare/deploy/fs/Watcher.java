@@ -557,7 +557,7 @@ public class Watcher implements Runnable {
 	    } catch (IOException iex) {
 		LOG.fatal(iex.getMessage(), iex);
 	    }
-	    System.exit(-1);
+	    System.exit(ERROR_EXIT);
 	} finally {
 	    DEPLOY_POOL.shutdown();
 	}
