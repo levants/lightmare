@@ -479,6 +479,13 @@ public class Watcher implements Runnable {
 	}
     }
 
+    /**
+     * Registers data source path to watch service
+     * @param paths
+     * @param fs
+     * @param watch
+     * @throws IOException
+     */
     private void registerDsPaths(Collection<String> paths, FileSystem fs,
 	    WatchService watch) throws IOException {
 
