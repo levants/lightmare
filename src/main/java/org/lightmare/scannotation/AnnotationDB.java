@@ -167,10 +167,6 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		putIfAbscent(classOwnersURLs, className, url);
 
 		putIfAbscent(classOwnersFiles,className, url);
-		if (ObjectUtils.notTrue(contained)) {
-		    fileName = getFileName(url);
-		    classOwnersFiles.put(className, fileName);
-		}
 
 		classAnnotations.add(ann.getTypeName());
 	    }
