@@ -152,6 +152,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		for (String intf : cf.getInterfaces()) {
 		    intfs.add(intf);
 		}
+		
 		implementsIndex.put(cf.getName(), intfs);
 	    }
 	} finally {
