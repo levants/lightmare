@@ -54,7 +54,7 @@ public class Watcher implements Runnable {
     // Priority of deployment watch service thread
     private static final int DEPLOY_POOL_PRIORITY = Thread.MAX_PRIORITY - 5;
 
-    //Sleep time of thread between watch service scans
+    //Sleep time of thread between watch service status scans
     private static final long SLEEP_TIME = 5500L;
 
     private static final ExecutorService DEPLOY_POOL = Executors
