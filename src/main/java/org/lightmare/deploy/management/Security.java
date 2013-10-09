@@ -16,7 +16,8 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
- * Manages administrator users of deployment service
+ * Manages container administrator users for
+ * {@link org.lightmare.deploy.management.DeployManager} service
  * 
  * @author Levan
  * @since 0.0.45-SNAPSHOT
