@@ -109,6 +109,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     protected void scanClass(ClassFile cf, URL url) {
 
 	String className = cf.getName();
+
 	AnnotationsAttribute visible = (AnnotationsAttribute) cf
 		.getAttribute(AnnotationsAttribute.visibleTag);
 	AnnotationsAttribute invisible = (AnnotationsAttribute) cf
