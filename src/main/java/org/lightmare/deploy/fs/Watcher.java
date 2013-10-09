@@ -298,6 +298,11 @@ public class Watcher implements Runnable {
 	}
     }
 
+    /**
+     * Deploys application or data source file by passed file name 
+     * @param url
+     * @throws IOException
+     */
     public static void deployFile(URL url) throws IOException {
 
 	URL[] archives = { url };
