@@ -164,7 +164,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 		classes.add(className);
 
-		contained = classOwnersURLs.containsKey(className);
+		putIfAbscent(classOwnersURLs, className, url);
 		if (ObjectUtils.notTrue(contained)) {
 		    classOwnersURLs.put(className, url);
 		}
