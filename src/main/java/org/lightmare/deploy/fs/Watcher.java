@@ -280,6 +280,12 @@ public class Watcher implements Runnable {
 	return list;
     }
 
+    /**
+     * Deploys application or data source file by passed file name
+     * 
+     * @param fileName
+     * @throws IOException
+     */
     public static void deployFile(String fileName) throws IOException {
 
 	WatchFileType type = checkType(fileName);
