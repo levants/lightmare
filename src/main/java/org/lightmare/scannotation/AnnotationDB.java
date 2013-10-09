@@ -132,6 +132,14 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	return valid;
     }
 
+    private <K, V> void putIfAbscent(Map<K, V> map, K key, V value) {
+
+	boolean contained = map.containsKey(key);
+	if (ObjectUtils.notTrue(contained)) {
+	    map.put(key, value);
+	}
+    }
+
     /**
      * caches scanned file information
      * 
