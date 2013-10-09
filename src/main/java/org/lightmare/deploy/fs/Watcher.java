@@ -110,7 +110,7 @@ public class Watcher implements Runnable {
     }
 
     /**
-     * Clears and gets {@link URL} from file name
+     * Clears and gets file {@link URL} by file name
      * 
      * @param fileName
      * @return {@link URL}
