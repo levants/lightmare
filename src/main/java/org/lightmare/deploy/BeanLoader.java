@@ -150,7 +150,7 @@ public class BeanLoader {
      * {@link Runnable} implementation for temporal resources removal
      * 
      * @author levan
-     *  @since 0.0.45-SNAPSHOT
+     * @since 0.0.45-SNAPSHOT
      */
     private static class ResourceCleaner implements Callable<Boolean> {
 
