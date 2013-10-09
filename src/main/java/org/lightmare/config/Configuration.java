@@ -21,7 +21,8 @@ import org.lightmare.utils.StringUtils;
 import org.yaml.snakeyaml.Yaml;
 
 /**
- * Easy way to retrieve configuration properties from configuration file
+ * Retrieves and caches configuration properties from configuration file or from
+ * {@link org.lightmare.deploy.MetaCreator.Builder} instance
  * 
  * @author levan
  * @since 0.0.21-SNAPSHOT
