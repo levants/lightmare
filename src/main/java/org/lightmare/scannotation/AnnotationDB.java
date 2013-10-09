@@ -144,6 +144,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	if (ObjectUtils.notNull(annotations)) {
 	    Set<String> classAnnotations = classIndex.get(className);
 	    String fileName;
+	    boolean contained;
 	    for (Annotation ann : annotations) {
 		Set<String> classes = annotationIndex.get(ann.getTypeName());
 		if (classes == null) {
@@ -153,7 +154,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 		classes.add(className);
 
-		boolean contained = classOwnersURLs.containsKey(className);
+		contained = classOwnersURLs.containsKey(className);
 		if (ObjectUtils.notTrue(contained)) {
 		    classOwnersURLs.put(className, url);
 		}
