@@ -19,7 +19,7 @@ import org.lightmare.utils.StringUtils;
  * Manages and administrator users
  * 
  * @author Levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class Security {
 
