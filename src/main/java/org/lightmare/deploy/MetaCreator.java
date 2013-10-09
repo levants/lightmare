@@ -780,6 +780,13 @@ public class MetaCreator {
 	    return this;
 	}
 
+	public Builder setRemoteControl(boolean remoteControl) {
+
+	    Configuration.setRemoteContron(remoteControl);
+
+	    return this;
+	}
+
 	/**
 	 * File path for administrator user name and password
 	 * 
