@@ -65,14 +65,21 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     private boolean ignoreScan(String intf) {
 
+	boolean valid = Boolean.FALSE;
+
 	String value;
-	for (String ignored : ignoredPackages) {
+	String ignored;
+	int length = ignoredPackages.length;
+	for (int i = CollectionUtils.FIRST_INDEX; ObjectUtils.notTrue(valid)
+		&& i < length; i++) {
+	    ignored = ignoredPackages[i];
 	    value = StringUtils.concat(ignored, FILE_EXTEWNTION_SELIM);
 	    if (intf.startsWith(value)) {
-		return Boolean.TRUE;
+		valid = Boolean.TRUE;
 	    }
 	}
-	return Boolean.FALSE;
+
+	return valid;
     }
 
     protected void populate(Annotation[] annotations, String className, URL url) {
@@ -161,8 +168,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 		    if (subFileName.endsWith(ArchiveUtils.CLASS_FILE_EXT)) {
 
-			if (subFileName
-				.startsWith(ArchiveUtils.FILE_SEPARATOR)) {
+			if (subFileName.startsWith(ArchiveUtils.FILE_SEPARATOR)) {
 			    subFileName = subFileName
 				    .substring(CollectionUtils.SECOND_INDEX);
 			}
