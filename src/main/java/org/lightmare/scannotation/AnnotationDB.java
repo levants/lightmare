@@ -179,9 +179,10 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    }
 
 	    // create an index of interfaces the class implements
-	    if (ObjectUtils.notNull(cf.getInterfaces())) {
+	    String[] interfaces = cf.getInterfaces();
+	    if (ObjectUtils.notNull(interfaces)) {
 		Set<String> intfs = new HashSet<String>();
-		for (String intf : cf.getInterfaces()) {
+		for (String intf : interfaces) {
 		    intfs.add(intf);
 		}
 
