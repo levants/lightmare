@@ -71,6 +71,13 @@ public class Configuration implements Cloneable {
 	return value;
     }
 
+    /**
+     * Gets value on passed generic key K of cached configuration as {@link Map}
+     * of generic key values
+     * 
+     * @param key
+     * @return {@link Map}<code><K, V></code>
+     */
     private <K, V> Map<K, V> getAsMap(Object key) {
 
 	return getAsMap(key, null);
