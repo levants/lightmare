@@ -57,6 +57,7 @@ public class Watcher implements Runnable {
     //Sleep time of thread between watch service status scans
     private static final long SLEEP_TIME = 5500L;
 
+    //Thread pool for watch service threads
     private static final ExecutorService DEPLOY_POOL = Executors
 	    .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME,
 		    DEPLOY_POOL_PRIORITY));
