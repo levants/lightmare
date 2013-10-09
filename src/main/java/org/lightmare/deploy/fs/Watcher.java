@@ -310,6 +310,11 @@ public class Watcher implements Runnable {
 	MetaContainer.getCreator().scanForBeans(archives);
     }
 
+    /**
+     *  Undeploys application or data source file by passed {@link URL} instance
+     * @param url
+     * @throws IOException
+     */
     public static void undeployFile(URL url) throws IOException {
 
 	boolean valid = MetaContainer.undeploy(url);
