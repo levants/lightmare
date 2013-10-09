@@ -446,6 +446,7 @@ public class Watcher implements Runnable {
 
     /**
      * Registers passed {@link File} array to watch service
+     * 
      * @param files
      * @param fs
      * @param watch
