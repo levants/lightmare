@@ -164,7 +164,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
 	try {
 	    cf = new ClassFile(dstream);
-	    classIndex.put(cf.getName(), new HashSet<String>());
+	    String classFileName = cf.getName();
+	    classIndex.put(classFileName, new HashSet<String>());
 
 	    if (scanClassAnnotations) {
 		scanClass(cf, url);
@@ -186,7 +187,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		    intfs.add(intf);
 		}
 
-		implementsIndex.put(cf.getName(), intfs);
+		implementsIndex.put(classFileName, intfs);
 	    }
 	} finally {
 	    IOUtils.closeAll(dstream, bits);
