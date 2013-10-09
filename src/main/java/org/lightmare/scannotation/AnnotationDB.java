@@ -133,6 +133,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	try {
 	    cf = new ClassFile(dstream);
 	    classIndex.put(cf.getName(), new HashSet<String>());
+	    
 	    if (scanClassAnnotations) {
 		scanClass(cf, url);
 	    }
