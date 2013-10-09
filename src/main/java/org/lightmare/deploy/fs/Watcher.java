@@ -167,6 +167,12 @@ public class Watcher implements Runnable {
 	return paths;
     }
 
+    /**
+     * Checks {@link WatchFileType} by passed file name
+     * 
+     * @param fileName
+     * @return {@link WatchFileType}
+     */
     private static WatchFileType checkType(String fileName) {
 
 	WatchFileType type;
