@@ -54,7 +54,7 @@ public class Configuration implements Cloneable {
 
     /**
      * Gets value on passed generic key K of passed {@link Map} as {@link Map}
-     * of generic types
+     * of generic key values
      * 
      * @param key
      * @param from
