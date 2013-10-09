@@ -343,6 +343,12 @@ public class Watcher implements Runnable {
 	}
     }
 
+    /**
+     *Removes from deployments and deployes again application or data source file by passed file
+     * name 
+     * @param fileName
+     * @throws IOException
+     */
     public static void redeployFile(String fileName) throws IOException {
 
 	undeployFile(fileName);
