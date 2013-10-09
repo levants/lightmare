@@ -68,6 +68,8 @@ public class Watcher implements Runnable {
     // Sets of data source descriptor file paths
     private Set<String> dataSources;
     
+    private static final int ZERO_WATCH_STATUS = 0;
+    
     private static final int ERROR_EXIT = -1;
 
     private static final Logger LOG = Logger.getLogger(Watcher.class);
