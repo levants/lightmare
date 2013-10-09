@@ -366,22 +366,22 @@ public class Watcher implements Runnable {
     private void handleEvent(Path dir, WatchEvent<Path> currentEvent)
 	    throws IOException {
 
-	if(ObjectUtils.notNull(currentEvent)){
-	Path prePath = currentEvent.context();
-	Path path = dir.resolve(prePath);
-	String fileName = path.toString();
-	int count = currentEvent.count();
-	Kind<?> kind = currentEvent.kind();
-	if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-	    LogUtils.info(LOG, "Modify: %s, count: %s\n", fileName, count);
-	    redeployFile(fileName);
-	} else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
-	    LogUtils.info(LOG, "Delete: %s, count: %s\n", fileName, count);
-	    undeployFile(fileName);
-	} else if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
-	    LogUtils.info(LOG, "Create: %s, count: %s\n", fileName, count);
-	    redeployFile(fileName);
-	}
+	if (ObjectUtils.notNull(currentEvent)) {
+	    Path prePath = currentEvent.context();
+	    Path path = dir.resolve(prePath);
+	    String fileName = path.toString();
+	    int count = currentEvent.count();
+	    Kind<?> kind = currentEvent.kind();
+	    if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
+		LogUtils.info(LOG, "Modify: %s, count: %s\n", fileName, count);
+		redeployFile(fileName);
+	    } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
+		LogUtils.info(LOG, "Delete: %s, count: %s\n", fileName, count);
+		undeployFile(fileName);
+	    } else if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+		LogUtils.info(LOG, "Create: %s, count: %s\n", fileName, count);
+		redeployFile(fileName);
+	    }
 	}
     }
 
