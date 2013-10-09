@@ -81,7 +81,6 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 			FILE_SEPARATOR_CHAR, FILE_EXTEWNTION_SELIM);
 		valid = !ignoreScan(fileNameForCheck);
 	    } else {
-
 		valid = Boolean.FALSE;
 	    }
 
