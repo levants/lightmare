@@ -407,6 +407,7 @@ public class Watcher implements Runnable {
 		WatchEvent<Path> typedCurrentEvent;
 		int times = 0;
 		dir = (Path) key.watchable();
+		
 		for (WatchEvent<?> event : events) {
 		    if (event.kind() == StandardWatchEventKinds.OVERFLOW) {
 			continue;
