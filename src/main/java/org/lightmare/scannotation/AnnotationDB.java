@@ -209,8 +209,9 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 				    .substring(CollectionUtils.SECOND_INDEX);
 			}
 
-			valid = !ignoreScan(subFileName.replace(
-				FILE_SEPARATOR_CHAR, FILE_EXTEWNTION_SELIM));
+			String fileNameForCheck = subFileName.replace(
+				FILE_SEPARATOR_CHAR, FILE_EXTEWNTION_SELIM);
+			valid = !ignoreScan(fileNameForCheck);
 		    } else {
 
 			valid = Boolean.FALSE;
