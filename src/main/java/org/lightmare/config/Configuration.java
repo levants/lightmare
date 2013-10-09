@@ -295,11 +295,8 @@ public class Configuration implements Cloneable {
     private void configureServer() {
 
 	// Sets default values to remote server configuration
-	boolean contains = containsConfigKey(ConfigKeys.IP_ADDRESS.key);
-	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(ConfigKeys.IP_ADDRESS.key,
-		    ConfigKeys.IP_ADDRESS.value);
-	}
+	boolean contains;
+	setIfContains(ConfigKeys.IP_ADDRESS.key, ConfigKeys.IP_ADDRESS.value);
 
 	contains = containsConfigKey(ConfigKeys.PORT.key);
 	if (ObjectUtils.notTrue(contains)) {
