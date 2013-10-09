@@ -125,6 +125,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		    classes = new HashSet<String>();
 		    annotationIndex.put(ann.getTypeName(), classes);
 		}
+		
 		classes.add(className);
 		if (!classOwnersURLs.containsKey(className)) {
 		    classOwnersURLs.put(className, url);
