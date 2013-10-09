@@ -62,7 +62,7 @@ public class Watcher implements Runnable {
 	    .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME,
 		    DEPLOY_POOL_PRIORITY));
 
-    //Sets of directories of application deployments
+    // Sets of directories of application deployments
     private Set<DeploymentDirectory> deployments;
 
     private Set<String> dataSources;
