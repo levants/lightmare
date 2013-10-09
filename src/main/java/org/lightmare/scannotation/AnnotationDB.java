@@ -91,6 +91,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     private String getFileName(URL url) {
 
 	String fileName = url.getFile();
+
 	int lastIndex = fileName.lastIndexOf(ArchiveUtils.FILE_SEPARATOR);
 	if (lastIndex > StringUtils.NOT_EXISTING_INDEX) {
 	    ++lastIndex;
