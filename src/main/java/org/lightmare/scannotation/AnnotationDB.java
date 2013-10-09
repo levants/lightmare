@@ -222,7 +222,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    LOG.info(StringUtils.concat("Finished URL scanning ", url));
 	}
 
-	LOG.info("Finished scanning for archives on @Stateless annotation");
+	LOG.info(SCANNING_FINISHED_MESSAGE);
     }
 
     public Map<String, URL> getClassOwnersURLs() {
