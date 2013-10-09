@@ -168,7 +168,7 @@ public class Watcher implements Runnable {
     }
 
     /**
-     * Checks and gets {@link WatchFileType} by passed file name
+     * Checks and gets appropriated {@link WatchFileType} by passed file name
      * 
      * @param fileName
      * @return {@link WatchFileType}
