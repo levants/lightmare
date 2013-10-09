@@ -67,9 +67,9 @@ public class Watcher implements Runnable {
 
     // Sets of data source descriptor file paths
     private Set<String> dataSources;
-    
+
     private static final int ZERO_WATCH_STATUS = 0;
-    
+
     private static final int ERROR_EXIT = -1;
 
     private static final Logger LOG = Logger.getLogger(Watcher.class);
@@ -416,7 +416,7 @@ public class Watcher implements Runnable {
 		List<WatchEvent<?>> events = key.pollEvents();
 		WatchEvent<?> currentEvent = null;
 		WatchEvent<Path> typedCurrentEvent;
-		int times = 0;
+		int times = ZERO_WATCH_STATUS;
 		dir = (Path) key.watchable();
 
 		for (WatchEvent<?> event : events) {
@@ -424,7 +424,8 @@ public class Watcher implements Runnable {
 			continue;
 		    }
 
-		    if (times == ZERO_WATCH_STATUS || event.count() > currentEvent.count()) {
+		    if (times == ZERO_WATCH_STATUS
+			    || event.count() > currentEvent.count()) {
 			currentEvent = event;
 		    }
 
