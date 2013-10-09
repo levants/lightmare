@@ -424,7 +424,7 @@ public class Watcher implements Runnable {
 			continue;
 		    }
 
-		    if (times == 0 || event.count() > currentEvent.count()) {
+		    if (times == ZERO_WATCH_STATUS || event.count() > currentEvent.count()) {
 			currentEvent = event;
 		    }
 
