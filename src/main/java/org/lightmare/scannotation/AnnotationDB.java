@@ -49,6 +49,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     private static final char FILE_SEPARATOR_CHAR = '/';
 
+    // Log messages
     private static String SCANNING_STARTED_MESSAGE = "Started scanning for archives on @Stateless annotation";
 
     private static String SCANNING_FINISHED_MESSAGE = "Finished scanning for archives on @Stateless annotation";
