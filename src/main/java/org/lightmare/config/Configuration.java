@@ -52,6 +52,14 @@ public class Configuration implements Cloneable {
     public Configuration() {
     }
 
+    /**
+     * Gets value on passed generic key K of passed {@link Map} as {@link Map}
+     * of generic types
+     * 
+     * @param key
+     * @param from
+     * @return {@link Map}<code><K, V></code>
+     */
     private <K, V> Map<K, V> getAsMap(Object key, Map<Object, Object> from) {
 
 	if (from == null) {
