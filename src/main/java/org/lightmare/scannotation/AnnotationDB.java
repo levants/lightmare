@@ -152,6 +152,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		}
 
 		classes.add(className);
+
 		if (!classOwnersURLs.containsKey(className)) {
 		    classOwnersURLs.put(className, url);
 		}
