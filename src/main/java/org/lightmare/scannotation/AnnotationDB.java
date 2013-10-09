@@ -209,7 +209,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	for (URL url : urls) {
 
 	    Filter filter = new ArchiveFilter();
-	    LOG.info(StringUtils.concat("Scanning URL ", url));
+	    LOG.info(StringUtils.concat(SCANNING_URL_MESSAGE, url));
 
 	    StreamIterator it = IteratorFactory.create(url, filter);
 
