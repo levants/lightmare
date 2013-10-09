@@ -104,7 +104,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if each of passed {@link Map} instances is null or is empty
+     * Checks if each of passed {@link Map} instances is not null and is not
+     * empty
      * 
      * @param maps
      * @return <code>boolean</code>
@@ -124,6 +125,12 @@ public abstract class CollectionUtils {
 	return avaliable;
     }
 
+    /**
+     * Checks if passed array of {@link Object}'s instances is null or is empty
+     * 
+     * @param array
+     * @return <code>boolean</code>
+     */
     public static boolean valid(Object[] array) {
 
 	return array != null && array.length > EMPTY_ARRAY_LENGTH;
