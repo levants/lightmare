@@ -53,6 +53,8 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 
     private static String SCANNING_FINISHED_MESSAGE = "Finished scanning for archives on @Stateless annotation";
 
+    private static final String SCANNING_URL_MESSAGE = "Scanning URL ";
+
     private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
 
     /**
