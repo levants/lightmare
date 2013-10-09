@@ -367,13 +367,13 @@ public class Watcher implements Runnable {
 	    throws IOException {
 
 	if (ObjectUtils.notNull(currentEvent)) {
-	    
+
 	    Path prePath = currentEvent.context();
 	    Path path = dir.resolve(prePath);
 	    String fileName = path.toString();
 	    int count = currentEvent.count();
 	    Kind<?> kind = currentEvent.kind();
-	    
+
 	    if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
 		LogUtils.info(LOG, "Modify: %s, count: %s\n", fileName, count);
 		redeployFile(fileName);
@@ -400,7 +400,7 @@ public class Watcher implements Runnable {
 	boolean valid;
 	while (toRun) {
 	    try {
-		
+
 		WatchKey key;
 		key = watch.take();
 		List<WatchEvent<?>> events = key.pollEvents();
@@ -408,16 +408,16 @@ public class Watcher implements Runnable {
 		WatchEvent<Path> typedCurrentEvent;
 		int times = 0;
 		dir = (Path) key.watchable();
-		
+
 		for (WatchEvent<?> event : events) {
 		    if (event.kind() == StandardWatchEventKinds.OVERFLOW) {
 			continue;
 		    }
-		    
+
 		    if (times == 0 || event.count() > currentEvent.count()) {
 			currentEvent = event;
 		    }
-		    
+
 		    times++;
 		    valid = key.reset();
 		    toRun = valid && key.isValid();
@@ -461,15 +461,15 @@ public class Watcher implements Runnable {
 	boolean scan;
 	File directory;
 	File[] files;
-	
+
 	for (DeploymentDirectory deployment : deploymentDirss) {
 	    path = deployment.getPath();
 	    scan = deployment.isScan();
-	    
+
 	    if (scan) {
 		directory = new File(path);
 		files = directory.listFiles();
-		
+
 		if (CollectionUtils.valid(files)) {
 		    registerPaths(files, fs, watch);
 		}
@@ -481,6 +481,7 @@ public class Watcher implements Runnable {
 
     /**
      * Registers data source path to watch service
+     * 
      * @param paths
      * @param fs
      * @param watch
@@ -500,25 +501,25 @@ public class Watcher implements Runnable {
 	try {
 	    FileSystem fs = FileSystems.getDefault();
 	    WatchService watch = null;
-	    
+
 	    try {
 		watch = fs.newWatchService();
 	    } catch (IOException ex) {
 		LOG.error(ex.getMessage(), ex);
 		throw ex;
 	    }
-	    
+
 	    if (CollectionUtils.valid(deployments)) {
 		registerPaths(deployments, fs, watch);
 	    }
-	    
+
 	    if (CollectionUtils.valid(dataSources)) {
 		registerDsPaths(dataSources, fs, watch);
 	    }
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
 	    LOG.fatal("system going to shut down cause of hot deployment");
-	    
+
 	    try {
 		ConnectionContainer.closeConnections();
 	    } catch (IOException iex) {
