@@ -400,6 +400,7 @@ public class Watcher implements Runnable {
 	boolean valid;
 	while (toRun) {
 	    try {
+		
 		WatchKey key;
 		key = watch.take();
 		List<WatchEvent<?>> events = key.pollEvents();
