@@ -325,6 +325,12 @@ public class Watcher implements Runnable {
 	}
     }
 
+    /**
+     *Removes from deployments application or data source file by passed
+     * {@link URL} instance 
+     * @param fileName
+     * @throws IOException
+     */
     public static void undeployFile(String fileName) throws IOException {
 
 	WatchFileType type = checkType(fileName);
