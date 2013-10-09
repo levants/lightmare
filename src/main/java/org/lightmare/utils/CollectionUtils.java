@@ -236,6 +236,12 @@ public abstract class CollectionUtils {
 	return value;
     }
     
+    /**
+     * Puts passed value to passed {@link Map} instance on passed key of such does not contained
+     * @param map
+     * @param key
+     * @param value
+     */
     public static <K, V> void putIfAbscent(Map<K, V> map, K key, V value) {
 
 	boolean contained = map.containsKey(key);
