@@ -298,7 +298,7 @@ public class Configuration implements Cloneable {
 	boolean contains;
 	setIfContains(ConfigKeys.IP_ADDRESS.key, ConfigKeys.IP_ADDRESS.value);
 
-	    setIfContains(ConfigKeys.PORT.key, ConfigKeys.PORT.value);
+	setIfContains(ConfigKeys.PORT.key, ConfigKeys.PORT.value);
 
 	contains = containsConfigKey(ConfigKeys.BOSS_POOL.key);
 	if (ObjectUtils.notTrue(contains)) {
