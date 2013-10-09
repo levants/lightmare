@@ -44,7 +44,7 @@ import org.lightmare.utils.fs.WatchUtils;
  * 1.7 or above
  * 
  * @author levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class Watcher implements Runnable {
 
@@ -141,8 +141,7 @@ public class Watcher implements Runnable {
 	Set<String> pathsCurrent;
 	for (Configuration config : configs) {
 	    pathsCurrent = config.getDataSourcePath();
-	    if (config.isWatchStatus()
-		    && CollectionUtils.valid(pathsCurrent)) {
+	    if (config.isWatchStatus() && CollectionUtils.valid(pathsCurrent)) {
 		paths.addAll(pathsCurrent);
 	    }
 	}

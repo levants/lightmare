@@ -148,6 +148,12 @@ public abstract class CollectionUtils {
 	return !valid(array);
     }
 
+    /**
+     * Checks if each of passed {@link Collection} instances is not null and is not
+     * empty
+     * @param collections
+     * @return <code>boolean</code>
+     */
     public static boolean validAll(Collection<?>... collections) {
 
 	boolean avaliable = ObjectUtils.notNull(collections);
