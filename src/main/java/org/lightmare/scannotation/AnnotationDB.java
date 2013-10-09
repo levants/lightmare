@@ -130,6 +130,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		if (!classOwnersURLs.containsKey(className)) {
 		    classOwnersURLs.put(className, url);
 		}
+		
 		if (!classOwnersFiles.containsKey(className)) {
 		    fileName = getFileName(url);
 		    classOwnersFiles.put(className, fileName);
