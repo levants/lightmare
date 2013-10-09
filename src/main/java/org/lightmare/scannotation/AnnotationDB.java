@@ -195,6 +195,12 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	}
     }
 
+    /**
+     * Scans passed {@link InputStream} instance for specific annotations
+     * @param bits
+     * @param url
+     * @throws IOException
+     */
     public void scanClass(InputStream bits, URL url) throws IOException {
 
 	DataInputStream dstream = new DataInputStream(new BufferedInputStream(
