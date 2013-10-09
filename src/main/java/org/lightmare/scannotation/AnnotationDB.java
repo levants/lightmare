@@ -221,5 +221,4 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     public Map<String, String> getClassOwnersFiles() {
 	return classOwnersFiles;
     }
-
 }
