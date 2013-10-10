@@ -91,6 +91,10 @@ public class RestContainer {
 	}
     }
 
+    /**
+     * Caches {@link Collection} of REST {@link Resource} instances associated to their {@link Class} instance
+     * @param resources
+     */
     public static void putResources(Collection<Resource> resources) {
 
 	if (CollectionUtils.valid(resources)) {
