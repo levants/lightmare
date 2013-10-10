@@ -418,14 +418,15 @@ public class LibraryLoader {
      */
     private static void checkOnClose(ClassLoader loader) throws IOException {
 
-	// Finds if loader associated class or superclass has "close"
-	// method
-	Class<? extends ClassLoader> loaderClass = loader.getClass();
+	
 
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
 
 		if (hasCloseMethod == null) {
+		 // Finds if loader associated class or superclass has "close"
+			// method
+			Class<? extends ClassLoader> loaderClass = loader.getClass();
 		    boolean hasMethod = MetaUtils.hasPublicMethod(loaderClass,
 			    CLOSE_METHOD_NAME);
 		    hasCloseMethod = hasMethod;
