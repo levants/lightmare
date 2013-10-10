@@ -142,6 +142,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    Set<String> classAnnotations = classIndex.get(className);
 	    String fileName;
 	    boolean contained;
+
 	    for (Annotation ann : annotations) {
 
 		Set<String> classes = annotationIndex.get(ann.getTypeName());
