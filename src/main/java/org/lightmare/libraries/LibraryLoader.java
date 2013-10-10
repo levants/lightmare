@@ -229,11 +229,11 @@ public class LibraryLoader {
 	    throws IOException {
 
 	ClassLoader enrichedLoader;
-	
+
 	FileUtils.getSubfiles(file, urls);
 	URL[] paths = CollectionUtils.toArray(urls, URL.class);
 	ClassLoader parent = getContextClassLoader();
-	 enrichedLoader = getEnrichedLoader(paths, parent);
+	enrichedLoader = getEnrichedLoader(paths, parent);
 
 	return enrichedLoader;
     }
@@ -418,15 +418,15 @@ public class LibraryLoader {
      */
     private static void checkOnClose(ClassLoader loader) throws IOException {
 
-	
-
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
 
 		if (hasCloseMethod == null) {
-		 // Finds if loader associated class or superclass has "close"
-			// method
-			Class<? extends ClassLoader> loaderClass = loader.getClass();
+		    // Finds if loader associated class or superclass has
+		    // "close"
+		    // method
+		    Class<? extends ClassLoader> loaderClass = loader
+			    .getClass();
 		    boolean hasMethod = MetaUtils.hasPublicMethod(loaderClass,
 			    CLOSE_METHOD_NAME);
 		    hasCloseMethod = hasMethod;
