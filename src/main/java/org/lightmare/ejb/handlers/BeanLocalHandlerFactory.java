@@ -13,7 +13,7 @@ public class BeanLocalHandlerFactory {
     private static RPCall createRPCall(Object... rpcArgs) {
 
 	RPCall call;
-	
+
 	String host = (String) rpcArgs[0];
 	int port = (Integer) rpcArgs[1];
 	call = new RPCall(host, port);
