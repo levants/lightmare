@@ -23,6 +23,7 @@ public class EjbClassLoader extends URLClassLoader {
     protected static class EjbLoaderAction implements
 	    PrivilegedAction<EjbClassLoader> {
 
+	//Classes URL array 
 	private URL[] urls;
 
 	private ClassLoader parent;
