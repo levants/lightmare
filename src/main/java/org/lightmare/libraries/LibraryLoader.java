@@ -416,7 +416,8 @@ public class LibraryLoader {
      * @param loader
      * @throws IOException
      */
-    private static void hasCloseMethod(Class<URLClassLoader> loaderClass) throws IOException {
+    private static void hasCloseMethod(Class<URLClassLoader> loaderClass)
+	    throws IOException {
 
 	if (hasCloseMethod == null) {
 	    // Finds if loader associated class or superclass has
@@ -435,7 +436,8 @@ public class LibraryLoader {
      * @param loader
      * @throws IOException
      */
-    private static void checkOnClose(Class<URLClassLoader> loaderClass) throws IOException {
+    private static void checkOnClose(Class<URLClassLoader> loaderClass)
+	    throws IOException {
 
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
