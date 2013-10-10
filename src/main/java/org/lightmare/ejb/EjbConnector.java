@@ -191,6 +191,7 @@ public class EjbConnector {
 
 	    List<Class<?>> interfacesList = new ArrayList<Class<?>>();
 	    Class<?>[] interfaces = metaData.getLocalInterfaces();
+	    
 	    if (CollectionUtils.valid(interfaces)) {
 		interfacesList.addAll(Arrays.asList(interfaces));
 	    }
