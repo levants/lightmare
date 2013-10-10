@@ -125,6 +125,10 @@ public class RestContainer {
 	return REST_RESOURCES.size();
     }
 
+    /**
+     * Removes passed set of {@link Resource} instances from REST service
+     * @param existingResources
+     */
     public static void removeResources(Set<Resource> existingResources) {
 
 	if (CollectionUtils.valid(existingResources)) {
