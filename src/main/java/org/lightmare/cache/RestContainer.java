@@ -156,7 +156,9 @@ public class RestContainer {
 
     public static RestConfig getRestConfig() {
 
-	return restConfig;
+	synchronized (RestContainer.class) {
+	    return restConfig;
+	}
     }
 
     /**
