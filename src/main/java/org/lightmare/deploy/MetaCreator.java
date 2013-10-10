@@ -552,7 +552,7 @@ public class MetaCreator {
 	}
 
 	/**
-	 * Initializes cache of persistence properties
+	 * Configures persistence properties
 	 * @return {@link Map}<code><Object, Object></code>
 	 */
 	private Map<Object, Object> initPersistenceProperties() {
