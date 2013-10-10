@@ -118,6 +118,12 @@ public class MetaCreator {
 	return creator;
     }
 
+    /**
+     * Gets {@link Configuration} instance for passed {@link URL} array of 
+     * archives
+     * 
+     * @param archives
+     */
     private void configure(URL[] archives) {
 
 	if (configuration == null && CollectionUtils.valid(archives)) {
