@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.lightmare.utils.LogUtils;
 
 /**
- * Extention of {@link Exception} class which is thrown at bean deploy time
+ * Extension of {@link Exception} class which is thrown at bean deploy time
  * if bean already is deployed
  * 
  * @author levan
