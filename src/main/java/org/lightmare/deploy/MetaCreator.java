@@ -73,7 +73,7 @@ public class MetaCreator {
     // Caches archive by URL for deployment
     private Map<URL, ArchiveData> archivesURLs;
 
-    //Caches class file URLs by class names
+    // Caches class file URLs by class names
     private Map<String, URL> classOwnersURL;
 
     private Map<URL, DeployData> realURL;
