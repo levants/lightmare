@@ -36,7 +36,10 @@ public class InvocationContextImpl implements InvocationContext {
     private Timer timer;
 
     /**
-     * Constructor with {@link Queue} of called {@link Method}s, {@link Queue} of EJB target {@link Object}s and {@link Object} array of called {@link Method}s parameters
+     * Constructor with {@link Queue} of called {@link Method}s, {@link Queue}
+     * of EJB target {@link Object}s and {@link Object} array of called
+     * {@link Method}s parameters
+     * 
      * @param methods
      * @param targets
      * @param parameters
