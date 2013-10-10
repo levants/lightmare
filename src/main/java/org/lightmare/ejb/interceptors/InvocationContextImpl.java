@@ -53,8 +53,9 @@ public class InvocationContextImpl implements InvocationContext {
 
     /**
      * Constructor with {@link Queue} of called {@link Method}s, {@link Queue}
-     * of EJB target {@link Object}s,  {@link Object} array of called
+     * of EJB target {@link Object}s, {@link Object} array of called
      * {@link Method}s parameters and {@link Timer} instance
+     * 
      * @param methods
      * @param targets
      * @param parameters
