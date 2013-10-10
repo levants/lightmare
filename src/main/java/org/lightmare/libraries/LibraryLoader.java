@@ -277,8 +277,10 @@ public class LibraryLoader {
     public static ClassLoader createCommon(ClassLoader newLoader,
 	    ClassLoader oldLoader) {
 
+	ClassLoader commonLoader;
+	
 	URL[] urls = getURLs(oldLoader);
-	ClassLoader commonLoader = URLClassLoader.newInstance(urls, oldLoader);
+	 commonLoader = URLClassLoader.newInstance(urls, oldLoader);
 	urls = getURLs(newLoader);
 	commonLoader = getEnrichedLoader(urls, newLoader);
 
