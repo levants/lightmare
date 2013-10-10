@@ -347,6 +347,11 @@ public class ConnectionContainer {
 	POOL_CONFIG_TYPES.put(jndiName, type);
     }
 
+    /**
+     * Gets configured {@link PoolProviderType} for data source deployments
+     * @param jndiName
+     * @return {@link PoolProviderType}
+     */
     public static PoolProviderType getAndRemovePoolProviderType(String jndiName) {
 
 	PoolProviderType type = POOL_CONFIG_TYPES.get(jndiName);
