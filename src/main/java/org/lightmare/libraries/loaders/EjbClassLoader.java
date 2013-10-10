@@ -73,7 +73,7 @@ public class EjbClassLoader extends URLClassLoader {
     public static EjbClassLoader newInstance(final URL[] urls) {
 
 	EjbClassLoader loader;
-	
+
 	PrivilegedAction<EjbClassLoader> action = new EjbLoaderAction(urls);
 	loader = AccessController.doPrivileged(action);
 
