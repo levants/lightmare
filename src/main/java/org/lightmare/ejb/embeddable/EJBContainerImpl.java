@@ -14,7 +14,7 @@ import org.lightmare.utils.ObjectUtils;
 
 /**
  * Implementation for {@link javax.ejb.embeddable.EJBContainer} class for
- * "Lightmare" EJB container
+ * "Lightmare" EJB container (runs only for java 7 and upper)
  * 
  * @author levan
  * @since 0.0.48-SNAPSHOT

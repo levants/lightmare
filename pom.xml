@@ -97,7 +97,7 @@
 				</executions>
 				<configuration>
 					<source>1.7</source>
-					<target>1.6</target>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
