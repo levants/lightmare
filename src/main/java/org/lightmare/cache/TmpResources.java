@@ -34,7 +34,7 @@ public class TmpResources {
     }
 
     /**
-     * Deletes all temporal files for deployment
+     * Deletes all temporal files used for deployment
      * 
      * @throws IOException
      */
