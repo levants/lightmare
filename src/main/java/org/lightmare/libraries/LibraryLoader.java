@@ -433,12 +433,12 @@ public class LibraryLoader {
 
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
-		    // Finds if loader associated class or superclass has
-		    // "close"
-		    // method
-		    hasCloseMethod(loader);
-		}
+		// Finds if loader associated class or superclass has
+		// "close"
+		// method
+		hasCloseMethod(loader);
 	    }
+	}
     }
 
     /**
