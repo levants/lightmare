@@ -100,13 +100,7 @@ public class LibraryLoader {
 	if (addURLMethod == null) {
 	    ObjectUtils.lock(LOCK);
 	    try {
-		if (addURLMethod == null
-			&& MetaUtils.hasMethod(URLClassLoader.class,
-				ADD_URL_METHOD_NAME)) {
-		    addURLMethod = MetaUtils.getDeclaredMethod(
-			    URLClassLoader.class, ADD_URL_METHOD_NAME,
-			    URL.class);
-		}
+		initURLMethod();
 	    } finally {
 		ObjectUtils.unlock(LOCK);
 	    }
