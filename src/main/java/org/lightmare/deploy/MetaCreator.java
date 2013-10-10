@@ -369,7 +369,6 @@ public class MetaCreator {
 	ObjectUtils.lock(scannerLock);
 
 	try {
-
 	    configure(archives);
 
 	    // starts RPC server if configured as remote and server
