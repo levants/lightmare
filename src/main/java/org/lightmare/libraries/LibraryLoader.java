@@ -62,6 +62,7 @@ public class LibraryLoader {
 	// Classes URL array
 	private URL[] urls;
 
+	//Parrent class loader
 	private ClassLoader parent;
 
 	public LibraryLoaderInit(final URL[] urls, final ClassLoader parent) {
