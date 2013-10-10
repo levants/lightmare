@@ -76,6 +76,7 @@ public class RcpHandler extends SimpleChannelHandler {
     public RcpWrapper getWrapper() {
 
 	RcpWrapper responce;
+
 	boolean interrupted = Boolean.TRUE;
 	for (;;) {
 	    try {
