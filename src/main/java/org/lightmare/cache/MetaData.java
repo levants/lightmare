@@ -106,6 +106,7 @@ public class MetaData {
 
     /**
      * Caches passed connection information
+     * 
      * @param connection
      */
     public void addConnection(ConnectionData connection) {
