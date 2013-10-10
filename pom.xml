@@ -73,6 +73,8 @@
 		<log4j.version>1.2.17</log4j.version>
 		<!-- end of log4j -->
 		<!-- test -->
+		<!-- junit -->
+		<!-- end of junit -->
 		<!-- end of test -->
 	</properties>
 
