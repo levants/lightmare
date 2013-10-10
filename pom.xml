@@ -636,7 +636,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- test depencies -->
+		<!-- test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
