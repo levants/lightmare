@@ -201,7 +201,7 @@ public class MetaData {
     }
 
     /**
-     * Offers {@link InterceptorData} to {@link Stack} to process request by porder
+     * Offers {@link InterceptorData} to {@link Stack} to process request by order
      * 
      * @param interceptor
      */
