@@ -306,7 +306,6 @@ public class ConnectionContainer {
 	    unbindConnection(semaphore);
 
 	    synchronized (CONNECTIONS) {
-
 		CONNECTIONS.remove(semaphore.getUnitName());
 		String jndiName = semaphore.getJndiName();
 
