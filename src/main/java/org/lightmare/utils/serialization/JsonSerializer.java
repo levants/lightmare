@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  * JSON serialization vendor specific JSON library
  * 
  * @author Levan
- * 
+ * @since 0.0.62-SNAPSHOT
  */
 public abstract class JsonSerializer {
 
