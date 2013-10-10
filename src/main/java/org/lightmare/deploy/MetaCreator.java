@@ -119,7 +119,7 @@ public class MetaCreator {
     }
 
     /**
-     * Gets {@link Configuration} instance for passed {@link URL} array of 
+     * Gets {@link Configuration} instance for passed {@link URL} array of
      * archives
      * 
      * @param archives
@@ -551,6 +551,10 @@ public class MetaCreator {
 	    creator.configuration.configure(path);
 	}
 
+	/**
+	 * Initializes cache of persistence properties
+	 * @return {@link Map}<code><Object, Object></code>
+	 */
 	private Map<Object, Object> initPersistenceProperties() {
 
 	    Map<Object, Object> persistenceProperties = creator.configuration
