@@ -74,6 +74,7 @@
 		<!-- end of log4j -->
 		<!-- test -->
 		<!-- junit -->
+		<junit.version>4.11</junit.version>
 		<!-- end of junit -->
 		<!-- end of test -->
 	</properties>
