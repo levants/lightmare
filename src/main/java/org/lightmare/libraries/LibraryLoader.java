@@ -78,6 +78,17 @@ public class LibraryLoader {
 	    return loader;
 	}
     }
+    
+    private static void initURLMethod() throws IOException{
+	if (addURLMethod == null
+		&& MetaUtils.hasMethod(URLClassLoader.class,
+			ADD_URL_METHOD_NAME)) {
+	    addURLMethod = MetaUtils.getDeclaredMethod(
+		    URLClassLoader.class, ADD_URL_METHOD_NAME,
+		    URL.class);
+	}
+    }
+    
 
     /**
      * Gets {@link URLClassLoader} class addURL method
