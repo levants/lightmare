@@ -120,6 +120,10 @@ public class RestContainer {
 	}
     }
 
+    /**
+     * Gets size of cached {@link Resource} instances
+     * @return <code>int</code>
+     */
     public static int size() {
 
 	return REST_RESOURCES.size();
