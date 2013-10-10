@@ -30,7 +30,7 @@ public class EjbClassLoader extends URLClassLoader {
 	private ClassLoader parent;
 
 	/**
-	 * Constructor woth classes {@link URL} array
+	 * Constructor with classes {@link URL} array
 	 * @param urls
 	 */
 	public EjbLoaderAction(URL[] urls) {
