@@ -149,7 +149,6 @@ public class LibraryLoader {
 	ClassLoader ejbLoader;
 
 	ClassLoader parent = getContextClassLoader();
-
 	LibraryLoaderInit initializer = new LibraryLoaderInit(urls, parent);
 	FutureTask<ClassLoader> task = new FutureTask<ClassLoader>(initializer);
 	Thread thread = new Thread(task);
