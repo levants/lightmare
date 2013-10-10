@@ -335,6 +335,11 @@ public class ConnectionContainer {
 	}
     }
 
+    /**
+     * Caches {@link PoolProviderType} to use for data source deployment
+     * @param jndiName
+     * @param type
+     */
     public static void setPollProviderType(String jndiName,
 	    PoolProviderType type) {
 
