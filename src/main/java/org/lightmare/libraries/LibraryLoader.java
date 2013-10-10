@@ -45,7 +45,7 @@ public class LibraryLoader {
     // Inaccessible method to add URL to existing class loader
     private static Method addURLMethod;
 
-    //Lock to synchronize class loading
+    // Lock to synchronize class loading
     private static final Lock LOCK = new ReentrantLock();
 
     private static final Logger LOG = Logger.getLogger(LibraryLoader.class);
