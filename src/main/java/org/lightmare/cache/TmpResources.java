@@ -12,7 +12,7 @@ import org.lightmare.deploy.BeanLoader;
  * Caches all temporal {@link File} instances and deletes them after processing
  * 
  * @author levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class TmpResources {
 
