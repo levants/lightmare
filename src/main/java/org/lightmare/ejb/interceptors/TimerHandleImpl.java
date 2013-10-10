@@ -15,6 +15,7 @@ public class TimerHandleImpl implements TimerHandle {
 
     private static final long serialVersionUID = 1L;
 
+    //Appropriated Timer instance
     private Timer timer;
 
     /**
