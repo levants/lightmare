@@ -47,7 +47,7 @@
 		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
 		<!-- scannotation -->
-		<scannotation.version>1.0.2</scannotation.version>
+		<scannotation.version>1.0.3</scannotation.version>
 		<!-- end of scannotation -->
 		<!-- simple-jndi -->
 		<simple-jndi.version>0.11.4.1</simple-jndi.version>
@@ -361,19 +361,19 @@
 
 		<!-- startup -->
 		<dependency>
-			<groupId>net.sf.scannotation</groupId>
+			<groupId>org.scannotation</groupId>
 			<artifactId>scannotation</artifactId>
 			<version>${scannotation.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.scannotation</groupId>
+			<groupId>org.scannotation</groupId>
 			<artifactId>scannotation</artifactId>
 			<version>${scannotation.version}</version>
 			<classifier>sources</classifier>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.scannotation</groupId>
+			<groupId>org.scannotation</groupId>
 			<artifactId>scannotation</artifactId>
 			<version>${scannotation.version}</version>
 			<classifier>javadoc</classifier>
