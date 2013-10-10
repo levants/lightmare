@@ -10,6 +10,7 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
+import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 
 /**
  * Handler @see {@link SimpleChannelHandler} for RPC response
@@ -67,6 +68,10 @@ public class RcpHandler extends SimpleChannelHandler {
 	ev.getChannel().close().awaitUninterruptibly();
     }
 
+    /**
+     * Gets {@link RpcWrapper} after waiting
+     * @return {@link RpcWrapper}
+     */
     public RcpWrapper getWrapper() {
 
 	RcpWrapper responce;
