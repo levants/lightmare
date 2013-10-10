@@ -114,6 +114,7 @@ public class RestContainer {
 
     /**
      * Removes passed {@link Resource} from cache
+     * 
      * @param resource
      */
     public static void removeResource(Resource resource) {
