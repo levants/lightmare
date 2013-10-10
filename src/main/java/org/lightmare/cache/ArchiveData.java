@@ -8,7 +8,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  * duplicates at deploy time
  * 
  * @author levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class ArchiveData {
 
