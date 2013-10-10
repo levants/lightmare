@@ -93,6 +93,11 @@ public class MetaCreator {
 	ShutDown.setHook(tmpResources);
     }
 
+    /**
+     * Gets cached {@link MetaCreator} instance if such not exists creates new
+     * 
+     * @return {@link MetaCreator}
+     */
     private static MetaCreator get() {
 
 	MetaCreator creator = MetaContainer.getCreator();
