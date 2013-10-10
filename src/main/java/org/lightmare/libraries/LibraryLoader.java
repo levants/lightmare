@@ -420,7 +420,6 @@ public class LibraryLoader {
 
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
-
 		if (hasCloseMethod == null) {
 		    // Finds if loader associated class or superclass has
 		    // "close"
