@@ -643,7 +643,7 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- end of test framework -->
+		<!-- end of test dependencies -->
 
 	</dependencies>
 
