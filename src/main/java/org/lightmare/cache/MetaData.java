@@ -193,6 +193,7 @@ public class MetaData {
 	if (injects == null) {
 	    injects = new ArrayList<InjectionData>();
 	}
+
 	injects.add(inject);
     }
 
@@ -201,7 +202,8 @@ public class MetaData {
     }
 
     /**
-     * Offers {@link InterceptorData} to {@link Stack} to process request by order
+     * Offers {@link InterceptorData} to {@link Stack} to process request by
+     * order
      * 
      * @param interceptor
      */
