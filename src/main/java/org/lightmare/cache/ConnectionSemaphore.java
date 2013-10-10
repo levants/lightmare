@@ -10,7 +10,7 @@ import javax.persistence.EntityManagerFactory;
  * configuration is in progress and user count
  * 
  * @author Levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class ConnectionSemaphore {
 
