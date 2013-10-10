@@ -39,7 +39,9 @@ public class EjbClassLoader extends URLClassLoader {
 	}
 
 	/**
-	 * Constructor with classes {@link URL} array and parent {@link ClassLoader} instance
+	 * Constructor with classes {@link URL} array and parent
+	 * {@link ClassLoader} instance
+	 * 
 	 * @param urls
 	 * @param parent
 	 */
