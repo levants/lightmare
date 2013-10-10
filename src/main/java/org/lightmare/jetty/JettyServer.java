@@ -12,7 +12,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
  * Jetty embeddable server to listen rest requests
  * 
  * @author Levan
- * 
+ * @since 0.0.21-SNAPSHOT
  */
 public class JettyServer implements Runnable {
 
