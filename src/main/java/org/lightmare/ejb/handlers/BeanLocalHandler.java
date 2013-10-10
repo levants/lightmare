@@ -23,6 +23,7 @@ public class BeanLocalHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args)
 	    throws Throwable {
+	
 	Object value = RpcUtils.callRemoteMethod(proxy, method, args, rpCall);
 	return value;
     }
