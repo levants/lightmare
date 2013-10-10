@@ -66,10 +66,10 @@ public class EjbClassLoader extends URLClassLoader {
     }
 
     /**
-	 * Constructor with classes {@link URL} array
-	 * 
-	 * @param urls
-	 */
+     * Constructor with classes {@link URL} array
+     * 
+     * @param urls
+     */
     public EjbClassLoader(final URL[] urls) {
 	super(urls);
     }
