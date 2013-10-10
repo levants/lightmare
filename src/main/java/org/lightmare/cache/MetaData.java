@@ -113,6 +113,13 @@ public class MetaData {
 	connections.add(connection);
     }
 
+    /**
+     * Caches {@link javax.persistence.PersistenceUnit} annotated field and unit
+     * name to cache
+     * 
+     * @param unitName
+     * @param unitField
+     */
     private void addUnitField(String unitName, Field unitField) {
 
 	for (ConnectionData connection : connections) {
