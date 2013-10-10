@@ -151,7 +151,6 @@ public class MetaCreator {
     }
 
     public AnnotationDB getAnnotationDB() {
-
 	return annotationDB;
     }
 
