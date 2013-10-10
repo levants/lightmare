@@ -102,6 +102,7 @@ public class RestContainer {
 
     /**
      * Gets REST {@link Resource} appropriate to passed {@link Class} instance
+     * 
      * @param resourceClass
      * @return {@link Resource}
      */
