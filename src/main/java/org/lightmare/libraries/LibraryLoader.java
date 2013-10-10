@@ -423,9 +423,8 @@ public class LibraryLoader {
 	    // Finds if loader associated class or superclass has
 	    // "close"
 	    // method
-	    boolean hasMethod = MetaUtils.hasPublicMethod(loaderClass,
+	    hasCloseMethod = MetaUtils.hasPublicMethod(loaderClass,
 		    CLOSE_METHOD_NAME);
-	    hasCloseMethod = hasMethod;
 	}
     }
 
