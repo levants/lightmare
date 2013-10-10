@@ -71,7 +71,7 @@ public class InvocationContextImpl implements InvocationContext {
     public Object getTarget() {
 
 	Object target = targets.peek();
-	
+
 	return target;
     }
 
