@@ -109,9 +109,10 @@ public class InvocationContextImpl implements InvocationContext {
     @Override
     public Object proceed() throws Exception {
 
+	Object value;
+	
 	Method method = methods.poll();
 	Object target = targets.poll();
-	Object value;
 	if (ObjectUtils.notNull(method) && ObjectUtils.notNull(target)) {
 	    value = MetaUtils.invokePrivate(method, target, this);
 	} else {
