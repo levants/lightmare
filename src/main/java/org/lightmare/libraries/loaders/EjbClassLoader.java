@@ -26,6 +26,7 @@ public class EjbClassLoader extends URLClassLoader {
 	// Classes URL array
 	private URL[] urls;
 
+	//Parent class loader
 	private ClassLoader parent;
 
 	public EjbLoaderAction(URL[] urls) {
