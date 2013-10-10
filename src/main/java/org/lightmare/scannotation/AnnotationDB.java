@@ -144,7 +144,6 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	    boolean contained;
 
 	    for (Annotation ann : annotations) {
-
 		Set<String> classes = annotationIndex.get(ann.getTypeName());
 		if (classes == null) {
 		    classes = new HashSet<String>();
