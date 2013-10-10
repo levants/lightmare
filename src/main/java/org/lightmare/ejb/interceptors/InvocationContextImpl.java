@@ -110,7 +110,7 @@ public class InvocationContextImpl implements InvocationContext {
     public Object proceed() throws Exception {
 
 	Object value;
-	
+
 	Method method = methods.poll();
 	Object target = targets.poll();
 	if (ObjectUtils.notNull(method) && ObjectUtils.notNull(target)) {
