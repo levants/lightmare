@@ -32,7 +32,7 @@ public class InvocationContextImpl implements InvocationContext {
     // Cached context data
     private Map<String, Object> contextData = new HashMap<String, Object>();
 
-    //Timer instance
+    // Timer instance
     private Timer timer;
 
     public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets,
