@@ -118,7 +118,7 @@ public class MetaCreator {
 	    // Locks to provide singularity of MetaCreator instance
 	    ObjectUtils.lock(LOCK);
 	    try {
-		initCreator();
+		creator = initCreator();
 	    } finally {
 		ObjectUtils.unlock(LOCK);
 	    }
