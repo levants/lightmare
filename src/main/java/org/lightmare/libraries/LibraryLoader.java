@@ -416,13 +416,12 @@ public class LibraryLoader {
      * @param loader
      * @throws IOException
      */
-    private static void hasCloseMethod(ClassLoader loader) throws IOException {
+    private static void hasCloseMethod(Class<URLClassLoader> loaderClass) throws IOException {
 
 	if (hasCloseMethod == null) {
 	    // Finds if loader associated class or superclass has
 	    // "close"
 	    // method
-	    Class<? extends ClassLoader> loaderClass = loader.getClass();
 	    boolean hasMethod = MetaUtils.hasPublicMethod(loaderClass,
 		    CLOSE_METHOD_NAME);
 	    hasCloseMethod = hasMethod;
@@ -436,14 +435,14 @@ public class LibraryLoader {
      * @param loader
      * @throws IOException
      */
-    private static void checkOnClose(ClassLoader loader) throws IOException {
+    private static void checkOnClose(Class<URLClassLoader> loaderClass) throws IOException {
 
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
 		// Finds if loader associated class or superclass has
 		// "close"
 		// method
-		hasCloseMethod(loader);
+		hasCloseMethod(loaderClass);
 	    }
 	}
     }
@@ -465,7 +464,7 @@ public class LibraryLoader {
 
 		// Finds if loader associated class or superclass has "close"
 		// method
-		checkOnClose(loader);
+		checkOnClose(URLClassLoader.class);
 
 		if (hasCloseMethod) {
 		    urlClassLoader.close();
