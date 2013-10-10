@@ -58,9 +58,6 @@
 		<!-- yaml -->
 		<snakeyaml.version>1.13</snakeyaml.version>
 		<!-- end of yaml -->
-		<!-- jetty -->
-		<jetty.version>9.0.5.v20130815</jetty.version>
-		<!-- end of jetty -->
 		<!-- jersey -->
 		<jersey.version>2.3.1</jersey.version>
 		<!-- end of jersey -->
