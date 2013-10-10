@@ -178,9 +178,10 @@ public class ConnectionContainer {
      */
     public static boolean isInProgress(String jndiName) {
 
+	boolean inProgress;
+	
 	ConnectionSemaphore semaphore = CONNECTIONS.get(jndiName);
-
-	boolean inProgress = isInProgress(semaphore);
+	inProgress = isInProgress(semaphore);
 
 	return inProgress;
     }
