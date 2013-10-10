@@ -76,7 +76,7 @@ public class MetaCreator {
     // Caches class file URLs by class names
     private Map<String, URL> classOwnersURL;
 
-    //Caches deployment data meta information for file URL instance
+    // Caches deployment data meta information for file URL instance
     private Map<URL, DeployData> realURL;
 
     // Class loader for each deployment
