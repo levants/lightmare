@@ -9,7 +9,7 @@ import org.lightmare.utils.fs.FileType;
  * hot deployment processing
  * 
  * @author levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class DeployData {
 
