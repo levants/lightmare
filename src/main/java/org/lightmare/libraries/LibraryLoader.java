@@ -409,6 +409,12 @@ public class LibraryLoader {
 	loadClasses(classes, loader);
     }
 
+    /**
+     * Checks and caches if passed {@link ClassLoader} implementation or it's
+     * parent class has close method
+     * @param loader
+     * @throws IOException
+     */
     private static void hasCloseMethod(ClassLoader loader) throws IOException {
 
 	if (hasCloseMethod == null) {
