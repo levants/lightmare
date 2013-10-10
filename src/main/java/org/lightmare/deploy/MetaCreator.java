@@ -70,6 +70,7 @@ public class MetaCreator {
     // Data for cache at deploy time
     private Map<String, ArchiveUtils> aggregateds = new WeakHashMap<String, ArchiveUtils>();
 
+    //Caches archive by URL for deployment
     private Map<URL, ArchiveData> archivesURLs;
 
     private Map<String, URL> classOwnersURL;
