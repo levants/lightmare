@@ -410,6 +410,7 @@ public class LibraryLoader {
     }
     
     private static void hasCloseMethod(ClassLoader loader) throws IOException{
+	
 	if (hasCloseMethod == null) {
 	    // Finds if loader associated class or superclass has
 	    // "close"
