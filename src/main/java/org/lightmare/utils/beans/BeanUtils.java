@@ -45,8 +45,9 @@ public class BeanUtils {
      */
     public static String nameFromInterface(Class<?> interfaceClass) {
 
-	String interfaceName = interfaceClass.getSimpleName();
 	String beanName;
+	
+	String interfaceName = interfaceClass.getSimpleName();
 
 	int start;
 	if (interfaceName.endsWith(REMOTE_IDENT)) {
