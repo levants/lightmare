@@ -127,6 +127,7 @@ public class RestContainer {
 
     /**
      * Removes passed set of {@link Resource} instances from REST service
+     * 
      * @param existingResources
      */
     public static void removeResources(Set<Resource> existingResources) {
