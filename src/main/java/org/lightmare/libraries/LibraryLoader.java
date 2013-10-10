@@ -42,7 +42,7 @@ public class LibraryLoader {
     // Name of class loader using thread
     private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
 
-    //Inaccessible method to add URL to existing class loader
+    // Inaccessible method to add URL to existing class loader
     private static Method addURLMethod;
 
     private static final Lock LOCK = new ReentrantLock();
