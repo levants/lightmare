@@ -33,9 +33,6 @@ import org.scannotation.archiveiterator.StreamIterator;
  */
 public class AnnotationDB extends org.scannotation.AnnotationDB {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = 1L;
 
     // To store which class in which URL is found

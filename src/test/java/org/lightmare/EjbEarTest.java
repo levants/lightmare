@@ -186,7 +186,7 @@ public class EjbEarTest {
 	int i = 0;
 	while (i < 2) {
 	    try {
-		Thread.sleep(1000);
+		Thread.sleep(5);
 	    } catch (InterruptedException ex) {
 		ex.printStackTrace();
 	    }
