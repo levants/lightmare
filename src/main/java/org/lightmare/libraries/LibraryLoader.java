@@ -247,7 +247,7 @@ public class LibraryLoader {
 	    ClassLoader parent) throws IOException {
 
 	ClassLoader clone;
-	
+
 	URLClassLoader loader = (URLClassLoader) getEnrichedLoader(urls, parent);
 	try {
 	    // get all resources for cloning
@@ -263,7 +263,7 @@ public class LibraryLoader {
 	    // dereference cloned class loader instance
 	    loader = null;
 	}
-	
+
 	return clone;
     }
 
@@ -440,7 +440,6 @@ public class LibraryLoader {
 
 	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
 	    try {
-
 		URLClassLoader urlClassLoader = ObjectUtils.cast(loader,
 			URLClassLoader.class);
 		urlClassLoader.clearAssertionStatus();
