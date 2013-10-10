@@ -112,6 +112,10 @@ public class RestContainer {
 	REST_RESOURCES.remove(resourceClass);
     }
 
+    /**
+     * Removes passed {@link Resource} from cache
+     * @param resource
+     */
     public static void removeResource(Resource resource) {
 
 	Class<?> handlerClass = getHandlerClass(resource);
