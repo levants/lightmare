@@ -71,7 +71,7 @@
 		<!-- end of data sources and connection pooling -->
 		<!-- log4j -->
 		<log4j.version>1.2.17</log4j.version>
-		<!-- log4j -->
+		<!-- end of log4j -->
 	</properties>
 
 	<build>
