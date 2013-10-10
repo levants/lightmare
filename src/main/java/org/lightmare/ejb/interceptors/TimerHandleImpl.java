@@ -17,6 +17,10 @@ public class TimerHandleImpl implements TimerHandle {
 
     private Timer timer;
 
+    /**
+     * Constructor with {@link Timer} instance
+     * @param timer
+     */
     public TimerHandleImpl(Timer timer) {
 
 	this.timer = timer;
