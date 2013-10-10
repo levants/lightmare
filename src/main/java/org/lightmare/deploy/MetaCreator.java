@@ -76,6 +76,7 @@ public class MetaCreator {
 
     private Map<URL, DeployData> realURL;
 
+    //Class loader for concret deployment
     private ClassLoader current;
 
     // Configuration for appropriate archives URLs
