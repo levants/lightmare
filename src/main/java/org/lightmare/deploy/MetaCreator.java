@@ -96,11 +96,12 @@ public class MetaCreator {
     private static MetaCreator initCreator() {
 
 	MetaCreator creator = MetaContainer.getCreator();
+
 	if (creator == null) {
 	    creator = new MetaCreator();
 	    MetaContainer.setCreator(creator);
 	}
-	
+
 	return creator;
     }
 
