@@ -47,6 +47,10 @@ public class TmpResources {
 	tmpFiles.clear();
     }
 
+    /**
+     * Gets size of cached temporal files
+     * @return <code>int</code>
+     */
     public int size() {
 	return tmpFiles.size();
     }
