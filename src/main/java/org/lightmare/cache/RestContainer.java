@@ -84,7 +84,9 @@ public class RestContainer {
     }
 
     /**
-     * Caches passed REST {@link Resource} associated to it's {@link Class} instance
+     * Caches passed REST {@link Resource} associated to it's {@link Class}
+     * instance
+     * 
      * @param resource
      */
     public static void putResource(Resource resource) {
