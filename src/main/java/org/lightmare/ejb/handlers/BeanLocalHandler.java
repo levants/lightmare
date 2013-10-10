@@ -14,7 +14,7 @@ import org.lightmare.utils.RpcUtils;
  */
 public class BeanLocalHandler implements InvocationHandler {
 
-    //Instance of RPC caller
+    // Instance of RPC caller
     private RPCall rpCall;
 
     protected BeanLocalHandler(RPCall rpCall) {
