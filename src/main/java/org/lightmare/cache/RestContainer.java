@@ -100,6 +100,11 @@ public class RestContainer {
 	}
     }
 
+    /**
+     * Gets REST {@link Resource} appropriate to passed {@link Class} instance
+     * @param resourceClass
+     * @return {@link Resource}
+     */
     public static Resource getResource(Class<?> resourceClass) {
 
 	Resource resource = REST_RESOURCES.get(resourceClass);
