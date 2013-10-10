@@ -21,7 +21,7 @@ import org.lightmare.utils.CollectionUtils;
  * {@link PersistenceContext} and bean class
  * 
  * @author Levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class MetaData {
 

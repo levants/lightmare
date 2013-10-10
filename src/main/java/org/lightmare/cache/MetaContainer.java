@@ -29,7 +29,7 @@ import org.lightmare.utils.fs.WatchUtils;
  * connections ({@link EntityManagerFactory}) for unit names
  * 
  * @author Levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class MetaContainer {
 
