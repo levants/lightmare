@@ -76,6 +76,8 @@
 		<!-- junit -->
 		<junit.version>4.11</junit.version>
 		<!-- end of junit -->
+		<!-- h2 -->
+		<!-- end of h2 -->
 		<!-- end of test -->
 	</properties>
 
