@@ -204,6 +204,7 @@ public class MetaData {
 	if (interceptors == null) {
 	    interceptors = new LinkedList<InterceptorData>();
 	}
+	
 	interceptors.offer(interceptor);
     }
 
