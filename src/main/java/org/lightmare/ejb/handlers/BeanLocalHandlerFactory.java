@@ -27,8 +27,10 @@ public class BeanLocalHandlerFactory {
      */
     public static BeanLocalHandler get(Object... rpcArgs) {
 
+	BeanLocalHandler handler;
+	
 	RPCall call = createRPCall(rpcArgs);
-	BeanLocalHandler handler = new BeanLocalHandler(call);
+	handler = new BeanLocalHandler(call);
 
 	return handler;
     }
