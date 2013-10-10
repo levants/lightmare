@@ -421,6 +421,7 @@ public class LibraryLoader {
 
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
+
 		if (hasCloseMethod == null) {
 		    boolean hasMethod = MetaUtils.hasPublicMethod(loaderClass,
 			    CLOSE_METHOD_NAME);
