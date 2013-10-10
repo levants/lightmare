@@ -29,6 +29,10 @@ public class EjbClassLoader extends URLClassLoader {
 	// Parent class loader
 	private ClassLoader parent;
 
+	/**
+	 * Constructor woth classes {@link URL} array
+	 * @param urls
+	 */
 	public EjbLoaderAction(URL[] urls) {
 	    this.urls = urls;
 	}

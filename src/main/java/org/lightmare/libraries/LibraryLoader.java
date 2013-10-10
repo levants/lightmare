@@ -228,10 +228,12 @@ public class LibraryLoader {
     public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
 	    throws IOException {
 
+	ClassLoader enrichedLoader;
+	
 	FileUtils.getSubfiles(file, urls);
 	URL[] paths = CollectionUtils.toArray(urls, URL.class);
 	ClassLoader parent = getContextClassLoader();
-	ClassLoader enrichedLoader = getEnrichedLoader(paths, parent);
+	 enrichedLoader = getEnrichedLoader(paths, parent);
 
 	return enrichedLoader;
     }
