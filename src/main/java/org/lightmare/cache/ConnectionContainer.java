@@ -337,6 +337,7 @@ public class ConnectionContainer {
 
     /**
      * Caches {@link PoolProviderType} to use for data source deployment
+     * 
      * @param jndiName
      * @param type
      */
