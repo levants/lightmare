@@ -628,9 +628,6 @@
 		</dependency>
 		<!-- end of loggers -->
 
-
-
-
 		<!-- test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
