@@ -108,7 +108,7 @@ public class RestContainer {
     }
 
     /**
-     * Removes resource referenced of passed {@link Class} instance
+     * Removes resource appropriate to passed {@link Class} instance
      * @param resourceClass
      */
     public static void removeResource(Class<?> resourceClass) {
