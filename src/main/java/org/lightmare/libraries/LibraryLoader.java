@@ -55,7 +55,7 @@ public class LibraryLoader {
      * {@link ClassLoader} in separate thread
      * 
      * @author levan
-     *  @since 0.0.15-SNAPSHOT
+     * @since 0.0.15-SNAPSHOT
      */
     private static class LibraryLoaderInit implements Callable<ClassLoader> {
 
