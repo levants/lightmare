@@ -366,7 +366,7 @@
 			<version>${scannotation.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.scannotation</groupId>
+			<groupId>com.sf..scannotation</groupId>
 			<artifactId>scannotation</artifactId>
 			<version>${scannotation.version}</version>
 			<classifier>sources</classifier>
