@@ -72,6 +72,8 @@
 		<!-- log4j -->
 		<log4j.version>1.2.17</log4j.version>
 		<!-- end of log4j -->
+		<!-- test -->
+		<!-- end of test -->
 	</properties>
 
 	<build>
