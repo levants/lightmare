@@ -373,7 +373,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.sf.scannotation</groupId>
+			<groupId>]org.scannotation</groupId>
 			<artifactId>scannotation</artifactId>
 			<version>${scannotation.version}</version>
 			<classifier>javadoc</classifier>
