@@ -16,7 +16,7 @@ import org.lightmare.utils.ObjectUtils;
  * Container class to cache REST resource classes
  * 
  * @author levan
- * 
+ * @since 0.0.65-SNAPSHOT
  */
 public class RestContainer {
 

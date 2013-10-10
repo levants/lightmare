@@ -7,7 +7,7 @@ import javax.transaction.UserTransaction;
  * {@link ThreadLocal} cache
  * 
  * @author levan
- * 
+ * @since 0.0.81-SNAPSHOT
  */
 public class TransactionHolder {
 
