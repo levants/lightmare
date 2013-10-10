@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
  * defined data
  * 
  * @author Levan
- * 
+ * @since >0.0.57-SNAPSHOT
  */
 public class InterceptorData {
 
