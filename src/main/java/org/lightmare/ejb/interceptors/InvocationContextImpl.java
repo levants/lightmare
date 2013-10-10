@@ -51,6 +51,15 @@ public class InvocationContextImpl implements InvocationContext {
 	this.parameters = parameters;
     }
 
+    /**
+     * Constructor with {@link Queue} of called {@link Method}s, {@link Queue}
+     * of EJB target {@link Object}s,  {@link Object} array of called
+     * {@link Method}s parameters and {@link Timer} instance
+     * @param methods
+     * @param targets
+     * @param parameters
+     * @param timer
+     */
     public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets,
 	    Object[] parameters, Timer timer) {
 	this(methods, targets, parameters);
