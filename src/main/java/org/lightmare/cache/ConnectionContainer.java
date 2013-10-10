@@ -349,6 +349,7 @@ public class ConnectionContainer {
 
     /**
      * Gets configured {@link PoolProviderType} for data sources deployment
+     * 
      * @param jndiName
      * @return {@link PoolProviderType}
      */
