@@ -155,7 +155,6 @@ public class MetaCreator {
     }
 
     public Map<String, ArchiveUtils> getAggregateds() {
-
 	return aggregateds;
     }
 
