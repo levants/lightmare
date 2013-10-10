@@ -93,13 +93,15 @@ public class MetaCreator {
 	ShutDown.setHook(tmpResources);
     }
 
-    private static void initCreator() {
+    private static MetaCreator initCreator() {
 
 	MetaCreator creator = MetaContainer.getCreator();
 	if (creator == null) {
 	    creator = new MetaCreator();
 	    MetaContainer.setCreator(creator);
 	}
+	
+	return creator;
     }
 
     /**
@@ -115,10 +117,7 @@ public class MetaCreator {
 	    // Locks to provide singularity of MetaCreator instance
 	    ObjectUtils.lock(LOCK);
 	    try {
-		if (creator == null) {
-		    creator = new MetaCreator();
-		    MetaContainer.setCreator(creator);
-		}
+		initCreator();
 	    } finally {
 		ObjectUtils.unlock(LOCK);
 	    }
