@@ -12,9 +12,11 @@ public class BeanLocalHandlerFactory {
 
     private static RPCall createRPCall(Object... rpcArgs) {
 
+	RPCall call;
+	
 	String host = (String) rpcArgs[0];
 	int port = (Integer) rpcArgs[1];
-	RPCall call = new RPCall(host, port);
+	call = new RPCall(host, port);
 
 	return call;
     }
