@@ -104,6 +104,10 @@ public class MetaData {
 	this.connections = connections;
     }
 
+    /**
+     * Caches passed connection information
+     * @param connection
+     */
     public void addConnection(ConnectionData connection) {
 
 	if (connections == null) {
