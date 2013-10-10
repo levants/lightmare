@@ -4,7 +4,7 @@ package org.lightmare.cache;
  * Container class to cache deployment directory information
  * 
  * @author levan
- * 
+ * @since 0.0.46-SNAPSHOT
  */
 public class DeploymentDirectory {
 
