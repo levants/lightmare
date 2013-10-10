@@ -11,7 +11,7 @@ import org.lightmare.utils.ObjectUtils;
  * for each EJB bean
  * 
  * @author levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class ConnectionData {
 
