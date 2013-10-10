@@ -83,6 +83,10 @@ public class RestContainer {
 	return handlerClass;
     }
 
+    /**
+     * Caches passed REST {@link Resource} associated to it's {@link Class} instance
+     * @param resource
+     */
     public static void putResource(Resource resource) {
 
 	Class<?> handlerClass = getHandlerClass(resource);
