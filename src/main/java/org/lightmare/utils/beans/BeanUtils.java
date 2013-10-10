@@ -48,7 +48,6 @@ public class BeanUtils {
 	String beanName;
 	
 	String interfaceName = interfaceClass.getSimpleName();
-
 	int start;
 	if (interfaceName.endsWith(REMOTE_IDENT)) {
 	    start = interfaceName.lastIndexOf(REMOTE_IDENT);
