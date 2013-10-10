@@ -190,6 +190,7 @@ public class MetaData {
 
     /**
      * Adds passed {@link InjectionData} to cache
+     * 
      * @param inject
      */
     public void addInject(InjectionData inject) {
