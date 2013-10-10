@@ -70,6 +70,7 @@ public class RcpHandler extends SimpleChannelHandler {
 
     /**
      * Gets {@link RpcWrapper} after waiting
+     * 
      * @return {@link RpcWrapper}
      */
     public RcpWrapper getWrapper() {
