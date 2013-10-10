@@ -107,6 +107,10 @@ public class RestContainer {
 	return resource;
     }
 
+    /**
+     * Removes resource referenced of passed {@link Class} instance
+     * @param resourceClass
+     */
     public static void removeResource(Class<?> resourceClass) {
 
 	REST_RESOURCES.remove(resourceClass);
