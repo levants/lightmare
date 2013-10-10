@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.ejb.TransactionAttributeType;
@@ -199,6 +200,10 @@ public class MetaData {
 	return this.unitFields;
     }
 
+    /**
+     * Offers {@link InterceptorData} to {@link Stack} to process request
+     * @param interceptor
+     */
     public void addInterceptor(InterceptorData interceptor) {
 
 	if (interceptors == null) {
