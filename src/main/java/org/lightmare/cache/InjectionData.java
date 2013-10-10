@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
  * Container class to cache bean injections
  * 
  * @author Levan
- * 
+ * @since 0.0.45-SNAPSHOT
  */
 public class InjectionData {
 
