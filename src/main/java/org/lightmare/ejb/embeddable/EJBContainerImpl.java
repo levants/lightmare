@@ -13,8 +13,8 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Implementation for {@link javax.ejb.embeddable.EJBContainer} class for
- * "Lightmare" EJB container (runs only for java 7 and upper)
+ * Implementation for {@link javax.ejb.embeddable.EJBContainer} class for given
+ * EJB container (runs only for java 7 and upper)
  * 
  * @author levan
  * @since 0.0.48-SNAPSHOT
