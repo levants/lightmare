@@ -148,23 +148,20 @@ public class LibraryLoader {
 
 	ClassLoader ejbLoader;
 
-	synchronized (LibraryLoader.class) {
-	    ClassLoader parent = getContextClassLoader();
-	    LibraryLoaderInit initializer = new LibraryLoaderInit(urls, parent);
-	    FutureTask<ClassLoader> task = new FutureTask<ClassLoader>(
-		    initializer);
-	    Thread thread = new Thread(task);
-	    thread.setName(LOADER_THREAD_NAME);
-	    thread.setPriority(Thread.MAX_PRIORITY);
-	    thread.start();
+	ClassLoader parent = getContextClassLoader();
+	LibraryLoaderInit initializer = new LibraryLoaderInit(urls, parent);
+	FutureTask<ClassLoader> task = new FutureTask<ClassLoader>(initializer);
+	Thread thread = new Thread(task);
+	thread.setName(LOADER_THREAD_NAME);
+	thread.setPriority(Thread.MAX_PRIORITY);
+	thread.start();
 
-	    try {
-		ejbLoader = task.get();
-	    } catch (InterruptedException ex) {
-		throw new IOException(ex);
-	    } catch (ExecutionException ex) {
-		throw new IOException(ex);
-	    }
+	try {
+	    ejbLoader = task.get();
+	} catch (InterruptedException ex) {
+	    throw new IOException(ex);
+	} catch (ExecutionException ex) {
+	    throw new IOException(ex);
 	}
 
 	return ejbLoader;
