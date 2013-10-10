@@ -59,7 +59,7 @@ public class LibraryLoader {
      */
     private static class LibraryLoaderInit implements Callable<ClassLoader> {
 
-	//Classes URL array
+	// Classes URL array
 	private URL[] urls;
 
 	private ClassLoader parent;
