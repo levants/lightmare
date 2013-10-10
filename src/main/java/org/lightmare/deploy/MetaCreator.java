@@ -61,7 +61,7 @@ public class MetaCreator {
     // Cached temporal resources for clean after deployment
     private TmpResources tmpResources;
 
-    //Checks if needed await for EJB deployments
+    // Checks if needed await for EJB deployments
     private boolean await;
 
     // Blocker for deployments connections or beans
