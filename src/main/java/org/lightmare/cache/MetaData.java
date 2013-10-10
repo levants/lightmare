@@ -202,6 +202,7 @@ public class MetaData {
 
     /**
      * Offers {@link InterceptorData} to {@link Stack} to process request
+     * 
      * @param interceptor
      */
     public void addInterceptor(InterceptorData interceptor) {
@@ -209,7 +210,7 @@ public class MetaData {
 	if (interceptors == null) {
 	    interceptors = new LinkedList<InterceptorData>();
 	}
-	
+
 	interceptors.offer(interceptor);
     }
 
