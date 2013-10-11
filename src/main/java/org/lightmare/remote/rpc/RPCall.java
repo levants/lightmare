@@ -60,8 +60,7 @@ public class RPCall {
 	    boss = Executors.newFixedThreadPool(bossPoolSize,
 		    new ThreadFactoryUtil("netty-boss-thread",
 			    Thread.MAX_PRIORITY));
-	    worker = new OrderedMemoryAwareThreadPoolExecutor(workerPoolSize,
-		    400000000, 2000000000, 60, TimeUnit.SECONDS,
+	    worker = Executors.newFixedThreadPool(workerPoolSize,
 		    new ThreadFactoryUtil("netty-worker-thread",
 			    (Thread.MAX_PRIORITY - 1)));
 	}
