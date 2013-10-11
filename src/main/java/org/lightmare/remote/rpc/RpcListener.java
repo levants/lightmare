@@ -92,6 +92,8 @@ public class RpcListener {
 
 	} catch (UnknownHostException ex) {
 	    LOG.error(ex.getMessage(), ex);
+	} catch (InterruptedException ex) {
+	    LOG.error(ex.getMessage(), ex);
 	}
     }
 }
