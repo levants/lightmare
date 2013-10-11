@@ -1,16 +1,17 @@
 package org.lightmare.remote.rcp;
 
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelFutureListener;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.ExceptionEvent;
-import org.jboss.netty.channel.MessageEvent;
-import org.jboss.netty.channel.SimpleChannelHandler;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
+
+import antlr.debug.MessageEvent;
 
 /**
  * Handler @see {@link SimpleChannelHandler} for RPC response
@@ -18,7 +19,7 @@ import org.lightmare.remote.rpc.wrappers.RpcWrapper;
  * @author levan
  * @since 0.0.21-SNAPSHOT
  */
-public class RcpHandler extends SimpleChannelHandler {
+public class RcpHandler extends ChannelInboundHandlerAdapter {
 
     // Responses queue
     private BlockingQueue<RcpWrapper> answer;
@@ -62,10 +63,10 @@ public class RcpHandler extends SimpleChannelHandler {
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent ev) {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 
-	ev.getCause().printStackTrace();
-	ev.getChannel().close().awaitUninterruptibly();
+	cause.printStackTrace();
+	ctx.close();
     }
 
     /**
