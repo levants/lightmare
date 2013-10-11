@@ -32,7 +32,7 @@ public class RcpHandler extends ChannelInboundHandlerAdapter {
      * @author levan
      * 
      */
-    private static class ResponseListener implements ChannelFutureListener {
+    protected static class ResponseListener implements ChannelFutureListener {
 
 	private final BlockingQueue<RcpWrapper> answer;
 
@@ -47,7 +47,7 @@ public class RcpHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void operationComplete(ChannelFuture future) throws Exception {
-	    boolean offered = answer.offer((RcpWrapper) ev.getMessage());
+	    boolean offered = answer.offer((RcpWrapper) ev.getSource());
 	    assert offered;
 	}
     }
