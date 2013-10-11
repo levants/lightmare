@@ -30,6 +30,26 @@ public class RcpEncoder extends ChannelOutboundHandlerAdapter {
      */
     protected static enum BooleanNumber {
 
+	TRUE(1), FALSE(0);
+
+	private final int value;
+
+	private BooleanNumber(int value) {
+	    this.value = value;
+	}
+
+	public static int getValue(boolean key) {
+
+	    int num;
+
+	    if (key) {
+		num = TRUE.value;
+	    } else {
+		num = FALSE.value;
+	    }
+
+	    return num;
+	}
     }
 
     @Override
