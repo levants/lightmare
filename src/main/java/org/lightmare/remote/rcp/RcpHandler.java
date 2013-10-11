@@ -16,7 +16,7 @@ import org.lightmare.remote.rpc.wrappers.RpcWrapper;
  * Handler @see {@link SimpleChannelHandler} for RPC response
  * 
  * @author levan
- * 
+ * @since 0.0.21-SNAPSHOT
  */
 public class RcpHandler extends SimpleChannelHandler {
 
