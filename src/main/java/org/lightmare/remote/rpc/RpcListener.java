@@ -1,13 +1,18 @@
 package org.lightmare.remote.rpc;
 
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.lightmare.config.ConfigKeys;
@@ -61,27 +66,30 @@ public class RpcListener {
     public static void startServer(Configuration config) {
 
 	setNettyPools(config);
-	factory = new NioServerSocketChannelFactory(boss, workerPool);
-	ServerBootstrap bootstrap = new ServerBootstrap(factory);
-	bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
 
-	    @Override
-	    public ChannelPipeline getPipeline() throws Exception {
-		return Channels.pipeline(new RcpEncoder(), new RpcDecoder(),
-			new RpcHandler());
-	    }
-	});
-	bootstrap.setOption("tcpNoDelay", Boolean.TRUE);
-	bootstrap.setOption("child.keepAlive", Boolean.TRUE);
-	bootstrap.setOption("backlog", 500);
-	bootstrap.setOption("connectTimeoutMillis",
-		config.getIntValue(ConfigKeys.CONNECTION_TIMEOUT.key));
 	try {
-	    channel = bootstrap.bind(new InetSocketAddress(Inet4Address
-		    .getByName(config.getStringValue("listening_ip")), config
-		    .getIntValue("listening_port")));
-	    channelGroup.add(channel);
-	    LOG.info(channel.getLocalAddress());
+	    ServerBootstrap bootstrap = new ServerBootstrap();
+	    bootstrap.group(boss, worker).channel(NioServerSocketChannel.class)
+		    .childHandler(new ChannelInitializer<SocketChannel>() {
+			@Override
+			public void initChannel(SocketChannel ch)
+				throws Exception {
+			    ch.pipeline().addLast(new RcpEncoder(),
+				    new RpcDecoder(), new RpcHandler());
+			}
+		    });
+
+	    bootstrap.option(ChannelOption.SO_BACKLOG, 500);
+	    bootstrap.childOption(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
+	    bootstrap.childOption(ChannelOption.SO_TIMEOUT,
+		    config.getIntValue(ConfigKeys.CONNECTION_TIMEOUT.key));
+
+	    InetSocketAddress address = new InetSocketAddress(
+		    Inet4Address.getByName(config
+			    .getStringValue("listening_ip")),
+		    config.getIntValue("listening_port"));
+	    ChannelFuture future = bootstrap.bind(address).sync();
+
 	} catch (UnknownHostException ex) {
 	    LOG.error(ex.getMessage(), ex);
 	}
