@@ -1,5 +1,6 @@
 package org.lightmare.remote.rcp.decoders;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
@@ -37,7 +38,7 @@ public class RcpEncoder extends ChannelOutboundHandlerAdapter {
 
 	int protSize = RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE + valueSize;
 
-	ChannelBuffer buffer = ChannelBuffers.buffer(protSize);
+	ByteBuf buffer = ctx.alloc().buffer(protSize);
 
 	buffer.writeInt(valueSize);
 	buffer.writeByte(valid ? 1 : 0);
