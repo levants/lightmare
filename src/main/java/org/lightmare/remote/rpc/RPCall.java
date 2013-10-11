@@ -31,6 +31,8 @@ public class RPCall {
 
     private RcpHandler handler;
 
+    private static int timeout;
+
     private static int workerPoolSize;
 
     private static EventLoopGroup worker;
@@ -46,6 +48,8 @@ public class RPCall {
 
 	    workerPoolSize = config.getIntValue(ConfigKeys.WORKER_POOL.key);
 
+	    timeout = config.getIntValue(ConfigKeys.CONNECTION_TIMEOUT.key);
+
 	    worker = new NioEventLoopGroup(workerPoolSize,
 		    new ThreadFactoryUtil("netty-worker-thread",
 			    (Thread.MAX_PRIORITY - 1)));
@@ -58,6 +62,10 @@ public class RPCall {
 	bootstrap.group(worker);
 	bootstrap.channel(NioSocketChannel.class);
 	bootstrap.option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
+
+	if (timeout > 0) {
+	    bootstrap.option(ChannelOption.SO_TIMEOUT, timeout);
+	}
 
 	handler = new RcpHandler();
 
