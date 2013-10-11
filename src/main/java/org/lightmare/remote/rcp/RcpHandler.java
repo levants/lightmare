@@ -66,7 +66,6 @@ public class RcpHandler extends ChannelInboundHandlerAdapter {
 	} finally {
 	    ctx.close();
 	}
-
     }
 
     @Override
