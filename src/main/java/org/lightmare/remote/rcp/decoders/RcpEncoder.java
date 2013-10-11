@@ -58,6 +58,7 @@ public class RcpEncoder extends ChannelOutboundHandlerAdapter {
 
 	RcpWrapper wrapper = ObjectUtils.cast(msg, RcpWrapper.class);
 	boolean valid = wrapper.isValid();
+	int validNum = BooleanNumber.getValue(valid);
 
 	Object value = wrapper.getValue();
 
@@ -69,7 +70,7 @@ public class RcpEncoder extends ChannelOutboundHandlerAdapter {
 	ByteBuf buffer = ctx.alloc().buffer(protSize);
 
 	buffer.writeInt(valueSize);
-	buffer.writeByte(valid ? 1 : 0);
+	buffer.writeByte(validNum);
 	buffer.writeBytes(valueBt);
 
 	ctx.write(buffer);
