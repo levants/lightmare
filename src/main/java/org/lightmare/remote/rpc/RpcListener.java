@@ -30,7 +30,7 @@ import org.lightmare.utils.concurrent.ThreadFactoryUtil;
  * Registers and starts RPC server @see <a href="netty.io"/>netty.io</a>
  * 
  * @author levan
- * 
+ * @since 0.0.22-SNAPSHOT
  */
 public class RpcListener {
 
