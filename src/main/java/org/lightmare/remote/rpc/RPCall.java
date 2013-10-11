@@ -14,6 +14,8 @@ import java.io.IOException;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.remote.rcp.RcpHandler;
+import org.lightmare.remote.rcp.decoders.RcpDecoder;
+import org.lightmare.remote.rpc.decoders.RpcEncoder;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 
@@ -72,7 +74,8 @@ public class RPCall {
 	bootstrap.handler(new ChannelInitializer<SocketChannel>() {
 	    @Override
 	    public void initChannel(SocketChannel ch) throws Exception {
-		ch.pipeline().addLast(handler);
+		ch.pipeline().addLast(new RpcEncoder(), new RcpDecoder(),
+			handler);
 	    }
 	});
 
