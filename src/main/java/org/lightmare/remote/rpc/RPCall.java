@@ -72,6 +72,7 @@ public class RPCall {
 	handler = new RcpHandler();
 
 	bootstrap.handler(new ChannelInitializer<SocketChannel>() {
+
 	    @Override
 	    public void initChannel(SocketChannel ch) throws Exception {
 		ch.pipeline().addLast(new RpcEncoder(), new RcpDecoder(),
