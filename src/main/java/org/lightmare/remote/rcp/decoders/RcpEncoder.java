@@ -65,7 +65,7 @@ public class RcpEncoder extends ChannelOutboundHandlerAdapter {
 	byte[] valueBt = NativeSerializer.serialize(value);
 	int valueSize = valueBt.length;
 
-	int protSize = RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE + valueSize;
+	int protSize = (RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE + valueSize);
 
 	ByteBuf buffer = ctx.alloc().buffer(protSize);
 
