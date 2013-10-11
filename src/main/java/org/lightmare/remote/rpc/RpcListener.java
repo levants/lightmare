@@ -10,7 +10,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
@@ -89,6 +88,7 @@ public class RpcListener {
 			    .getStringValue("listening_ip")),
 		    config.getIntValue("listening_port"));
 	    ChannelFuture future = bootstrap.bind(address).sync();
+	    LOG.info(future);
 
 	} catch (UnknownHostException ex) {
 	    LOG.error(ex.getMessage(), ex);
