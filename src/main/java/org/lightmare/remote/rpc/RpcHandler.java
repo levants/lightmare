@@ -1,5 +1,7 @@
 package org.lightmare.remote.rpc;
 
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -23,11 +25,10 @@ public class RpcHandler extends ChannelInboundHandlerAdapter {
     private static final Logger LOG = Logger.getLogger(RpcHandler.class);
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg)
+    public void channelRead(final ChannelHandlerContext ctx, Object msg)
 	    throws IOException {
 
 	RpcWrapper wrapper = ObjectUtils.cast(msg, RpcWrapper.class);
-	SocketAddress address = ev.getRemoteAddress();
 
 	RcpWrapper rcp = new RcpWrapper();
 	Object value;
@@ -40,11 +41,19 @@ public class RpcHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	rcp.setValue(value);
-	ev.getChannel().write(rcp, address);
-	try {
-	    super.messageReceived(ctx, ev);
-	} catch (Exception ex) {
-	    throw new IOException(ex);
-	}
+
+	final ChannelFuture future = ctx.writeAndFlush(rcp);
+
+	future.addListener(new ChannelFutureListener() {
+	    @Override
+	    public void operationComplete(ChannelFuture lisFuture) {
+
+		try {
+		    assert (future == lisFuture);
+		} finally {
+		    ctx.close();
+		}
+	    }
+	});
     }
 }
