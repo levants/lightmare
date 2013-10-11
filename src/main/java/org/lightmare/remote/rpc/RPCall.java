@@ -1,6 +1,8 @@
 package org.lightmare.remote.rpc;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -84,7 +86,7 @@ public class RPCall {
     public Object call(RpcWrapper wrapper) throws IOException {
 
 	Object value;
-	
+
 	Bootstrap bootstrap = new Bootstrap();
 	try {
 	    bootstrap.group(worker);
@@ -98,8 +100,15 @@ public class RPCall {
 		}
 	    });
 
+	    try {
+		ChannelFuture future = bootstrap.connect(host, port).sync();
+		future.channel().closeFuture().sync();
+	    } catch (InterruptedException ex) {
+		throw new IOException(ex);
+	    }
+
 	} finally {
-	    bootstrap.releaseExternalResources();
+	    worker.shutdownGracefully();
 	}
 
 	return value;
