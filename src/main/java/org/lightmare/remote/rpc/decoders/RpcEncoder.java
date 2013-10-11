@@ -1,5 +1,6 @@
 package org.lightmare.remote.rpc.decoders;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
@@ -42,7 +43,7 @@ public class RpcEncoder extends ChannelOutboundHandlerAdapter {
 		+ beanMethodBt.length + paramTypesBt.length
 		+ interfaceClassBt.length + paramBt.length;
 
-	ChannelBuffer buffer = ChannelBuffers.buffer(paramsSize);
+	ByteBuf buffer = ctx.alloc().buffer(paramsSize);
 
 	buffer.writeInt(beanNameBt.length);
 	buffer.writeInt(beanMethodBt.length);
