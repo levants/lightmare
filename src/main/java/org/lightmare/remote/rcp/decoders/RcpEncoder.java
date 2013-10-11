@@ -1,13 +1,11 @@
 package org.lightmare.remote.rcp.decoders;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
 
 import java.io.IOException;
-import java.nio.channels.Channels;
 
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.utils.ObjectUtils;
@@ -23,6 +21,16 @@ import org.lightmare.utils.serialization.NativeSerializer;
  * @since 0.0.21-SNAPSHOT
  */
 public class RcpEncoder extends ChannelOutboundHandlerAdapter {
+
+    /**
+     * Translates boolean to numeric value
+     * 
+     * @author levan
+     * 
+     */
+    protected static enum BooleanNumber {
+
+    }
 
     @Override
     public void write(ChannelHandlerContext ctx, Object msg,
