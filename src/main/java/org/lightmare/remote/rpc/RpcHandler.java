@@ -1,14 +1,15 @@
 package org.lightmare.remote.rpc;
 
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+
 import java.io.IOException;
 import java.net.SocketAddress;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.MessageEvent;
-import org.jboss.netty.channel.SimpleChannelHandler;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
 
 /**
@@ -17,15 +18,15 @@ import org.lightmare.utils.RpcUtils;
  * @author levan
  * @since 0.0.21-SNAPSHOT
  */
-public class RpcHandler extends SimpleChannelHandler {
+public class RpcHandler extends ChannelInboundHandlerAdapter {
 
     private static final Logger LOG = Logger.getLogger(RpcHandler.class);
 
     @Override
-    public void messageReceived(ChannelHandlerContext ctx, MessageEvent ev)
+    public void channelRead(ChannelHandlerContext ctx, Object msg)
 	    throws IOException {
-	
-	RpcWrapper wrapper = (RpcWrapper) ev.getMessage();
+
+	RpcWrapper wrapper = ObjectUtils.cast(msg, RpcWrapper.class);
 	SocketAddress address = ev.getRemoteAddress();
 
 	RcpWrapper rcp = new RcpWrapper();
