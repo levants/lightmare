@@ -14,8 +14,6 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
-import org.lightmare.remote.rcp.decoders.RcpDecoder;
-import org.lightmare.remote.rpc.decoders.RpcEncoder;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 
@@ -66,20 +64,20 @@ public class RPCall {
 	}
     }
 
-    private ClientBootstrap getBootstrap(SimpleChannelHandler handler) {
+    private Bootstrap getBootstrap() {
 
-	WorkerPool<NioWorker> pool = new NioWorkerPool(worker, 1);
-	ClientSocketChannelFactory factory = new NioClientSocketChannelFactory(
-		boss, 1, pool);
-	ClientBootstrap bootstrap = new ClientBootstrap(factory);
-	bootstrap.getPipeline().addLast("encoder", new RpcEncoder());
-	bootstrap.getPipeline().addLast("decoder", new RcpDecoder());
-	bootstrap.getPipeline().addLast("handler", handler);
-	bootstrap.setOption("tcpNoDelay", Boolean.TRUE);
-	bootstrap.setOption("keepAlive", Boolean.TRUE);
-	if (timeout > 0) {
-	    bootstrap.setOption("connectTimeoutMillis", timeout);
-	}
+	Bootstrap bootstrap = new Bootstrap();
+	bootstrap.group(worker);
+	bootstrap.channel(NioSocketChannel.class);
+	bootstrap.option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
+
+	bootstrap.handler(new ChannelInitializer<SocketChannel>() {
+	    @Override
+	    public void initChannel(SocketChannel ch) throws Exception {
+		ch.pipeline().addLast(new RpcHandler());
+	    }
+	});
+
 	return bootstrap;
     }
 
@@ -87,19 +85,8 @@ public class RPCall {
 
 	Object value;
 
-	Bootstrap bootstrap = new Bootstrap();
 	try {
-	    bootstrap.group(worker);
-	    bootstrap.channel(NioSocketChannel.class);
-	    bootstrap.option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
-
-	    bootstrap.handler(new ChannelInitializer<SocketChannel>() {
-		@Override
-		public void initChannel(SocketChannel ch) throws Exception {
-		    ch.pipeline().addLast(new RpcHandler());
-		}
-	    });
-
+	    Bootstrap bootstrap = getBootstrap();
 	    try {
 		ChannelFuture future = bootstrap.connect(host, port).sync();
 		future.channel().closeFuture().sync();
