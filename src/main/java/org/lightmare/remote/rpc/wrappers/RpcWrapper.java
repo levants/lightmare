@@ -4,7 +4,7 @@ package org.lightmare.remote.rpc.wrappers;
  * RPC request wrapper class for serialization
  * 
  * @author levan
- * 
+ * @since 0.0.21-SNAPSHOT
  */
 public class RpcWrapper {
 
