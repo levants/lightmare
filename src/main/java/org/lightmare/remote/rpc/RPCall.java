@@ -1,8 +1,10 @@
 package org.lightmare.remote.rpc;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.io.IOException;
@@ -82,11 +84,20 @@ public class RPCall {
     public Object call(RpcWrapper wrapper) throws IOException {
 
 	Object value;
-
+	
+	Bootstrap bootstrap = new Bootstrap();
 	try {
-	    Bootstrap bootstrap = new Bootstrap();
 	    bootstrap.group(worker);
 	    bootstrap.channel(NioSocketChannel.class);
+	    bootstrap.option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
+
+	    bootstrap.handler(new ChannelInitializer<SocketChannel>() {
+		@Override
+		public void initChannel(SocketChannel ch) throws Exception {
+		    ch.pipeline().addLast(new RpcHandler());
+		}
+	    });
+
 	} finally {
 	    bootstrap.releaseExternalResources();
 	}
