@@ -62,7 +62,7 @@
 		<jersey.version>2.3.1</jersey.version>
 		<!-- end of jersey -->
 		<!-- netty -->
-		<netty.version>3.6.2.Final</netty.version>
+		<netty.version>4.0.10.Final</netty.version>
 		<!-- end of netty -->
 		<!-- data sources on connection pooling -->
 		<tomcat-jdbc.version>7.0.42</tomcat-jdbc.version>
@@ -406,13 +406,13 @@
 		<!-- netty -->
 		<dependency>
 			<groupId>io.netty</groupId>
-			<artifactId>netty</artifactId>
+			<artifactId>netty-all</artifactId>
 			<version>${netty.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.netty</groupId>
-			<artifactId>netty</artifactId>
+			<artifactId>netty-all</artifactId>
 			<version>${netty.version}</version>
 			<classifier>sources</classifier>
 			<scope>provided</scope>

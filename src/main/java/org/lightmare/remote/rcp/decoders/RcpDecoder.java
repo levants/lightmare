@@ -1,11 +1,12 @@
 package org.lightmare.remote.rcp.decoders;
 
-import java.io.IOException;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageDecoder;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.handler.codec.frame.FrameDecoder;
+import java.io.IOException;
+import java.util.List;
+
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.serialization.NativeSerializer;
@@ -18,15 +19,15 @@ import org.lightmare.utils.serialization.NativeSerializer;
  * @author levan
  * @since 0.0.21-SNAPSHOT
  */
-public class RcpDecoder extends FrameDecoder {
+public class RcpDecoder extends ByteToMessageDecoder {
 
     @Override
-    protected RcpWrapper decode(ChannelHandlerContext context, Channel channel,
-	    ChannelBuffer buffer) throws IOException {
+    protected void decode(ChannelHandlerContext context, ByteBuf buffer,
+	    List<Object> out) throws IOException {
 
 	if (buffer.readableBytes() < RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE) {
 	    buffer.resetReaderIndex();
-	    return null;
+	    return;
 	}
 
 	boolean valid = buffer.readByte() > 0;
@@ -34,7 +35,7 @@ public class RcpDecoder extends FrameDecoder {
 
 	if (buffer.readableBytes() < dataSize) {
 	    buffer.resetReaderIndex();
-	    return null;
+	    return;
 	}
 
 	byte[] data = new byte[dataSize];
@@ -43,6 +44,6 @@ public class RcpDecoder extends FrameDecoder {
 	rcp.setValid(valid);
 	rcp.setValue(value);
 
-	return rcp;
+	out.add(rcp);
     }
 }
