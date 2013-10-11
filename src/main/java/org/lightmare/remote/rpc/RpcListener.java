@@ -1,5 +1,8 @@
 package org.lightmare.remote.rpc;
 
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -7,19 +10,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.bootstrap.ServerBootstrap;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelPipeline;
-import org.jboss.netty.channel.ChannelPipelineFactory;
-import org.jboss.netty.channel.Channels;
-import org.jboss.netty.channel.group.ChannelGroup;
-import org.jboss.netty.channel.group.DefaultChannelGroup;
-import org.jboss.netty.channel.socket.ServerSocketChannelFactory;
-import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
-import org.jboss.netty.channel.socket.nio.NioWorker;
-import org.jboss.netty.channel.socket.nio.NioWorkerPool;
-import org.jboss.netty.channel.socket.nio.WorkerPool;
-import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.remote.rcp.decoders.RcpEncoder;
@@ -37,24 +27,12 @@ public class RpcListener {
     /**
      * Boss pool for Netty network
      */
-    private static ExecutorService boss;
+    private static EventLoopGroup boss;
     /**
      * Worker pool for Netty server
      */
-    private static ExecutorService worker;
+    private static EventLoopGroup worker;
 
-    /**
-     * {@link NioWorkerPool} for Netty server
-     */
-    private static WorkerPool<NioWorker> workerPool;
-
-    /**
-     * {@link ChannelGroup} "info-channels" for only info requests
-     */
-    public static ChannelGroup channelGroup = new DefaultChannelGroup(
-	    "info-channels");
-    private static Channel channel;
-    private static ServerSocketChannelFactory factory;
     private static final Logger LOG = Logger.getLogger(RpcListener.class);
 
     /**
@@ -70,14 +48,10 @@ public class RpcListener {
 	if (workerCount == null) {
 	    workerCount = ConfigKeys.WORKER_POOL.getValue();
 	}
-	boss = new OrderedMemoryAwareThreadPoolExecutor(bossCount, 400000000,
-		2000000000, 60, TimeUnit.SECONDS, new ThreadFactoryUtil(
-			"netty-boss-thread", Thread.MAX_PRIORITY));
-	worker = new OrderedMemoryAwareThreadPoolExecutor(workerCount,
-		400000000, 2000000000, 60, TimeUnit.SECONDS,
-		new ThreadFactoryUtil("netty-worker-thread",
-			(Thread.MAX_PRIORITY - 1)));
-	workerPool = new NioWorkerPool(worker, workerCount);
+	boss = new NioEventLoopGroup(bossCount, new ThreadFactoryUtil(
+		"netty-boss-thread", Thread.MAX_PRIORITY));
+	worker = new NioEventLoopGroup(workerCount, new ThreadFactoryUtil(
+		"netty-worker-thread", (Thread.MAX_PRIORITY - 1)));
     }
 
     /**
