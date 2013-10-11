@@ -95,7 +95,6 @@ public class RPCall {
 	    } catch (InterruptedException ex) {
 		throw new IOException(ex);
 	    }
-
 	    value = handler.getWrapper();
 	} finally {
 	    worker.shutdownGracefully();
