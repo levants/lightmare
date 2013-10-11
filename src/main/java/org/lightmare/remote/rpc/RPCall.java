@@ -29,17 +29,9 @@ public class RPCall {
 
     private int port;
 
-    private static long timeout;
-
-    private static int bossPoolSize;
-
     private static int workerPoolSize;
 
-    private static EventLoopGroup boss;
-
     private static EventLoopGroup worker;
-
-    private static final Logger LOG = Logger.getLogger(RPCall.class);
 
     public RPCall(String host, int port) {
 	this.host = host;
@@ -48,16 +40,10 @@ public class RPCall {
 
     public static void configure(Configuration config) {
 
-	if (boss == null || worker == null) {
-
-	    bossPoolSize = config.getIntValue(ConfigKeys.BOSS_POOL.key);
+	if (worker == null) {
 
 	    workerPoolSize = config.getIntValue(ConfigKeys.WORKER_POOL.key);
 
-	    timeout = config.getLongValue(ConfigKeys.CONNECTION_TIMEOUT.key);
-
-	    boss = new NioEventLoopGroup(bossPoolSize, new ThreadFactoryUtil(
-		    "netty-boss-thread", Thread.MAX_PRIORITY));
 	    worker = new NioEventLoopGroup(workerPoolSize,
 		    new ThreadFactoryUtil("netty-worker-thread",
 			    (Thread.MAX_PRIORITY - 1)));
