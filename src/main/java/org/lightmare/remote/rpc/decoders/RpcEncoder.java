@@ -57,7 +57,6 @@ public class RpcEncoder extends ChannelOutboundHandlerAdapter {
 	buffer.writeBytes(interfaceClassBt);
 	buffer.writeBytes(paramBt);
 
-	ChannelFuture future = ev.getFuture();
-	Channels.write(ctx, future, buffer);
+	ctx.write(buffer);
     }
 }
