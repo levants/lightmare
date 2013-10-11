@@ -19,7 +19,7 @@ import org.lightmare.utils.serialization.NativeSerializer;
  * {@link RcpWrapper} <a href="io.netty"/>netty></a> RPC server response
  * 
  * @author levan
- * 
+ * @since 0.0.21-SNAPSHOT
  */
 public class RcpEncoder extends SimpleChannelHandler {
 
