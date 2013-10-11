@@ -1,24 +1,18 @@
 package org.lightmare.remote.rpc;
 
+import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
-import org.lightmare.remote.rcp.RcpHandler;
 import org.lightmare.remote.rcp.decoders.RcpDecoder;
-import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.decoders.RpcEncoder;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
-import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 
 /**
@@ -89,9 +83,10 @@ public class RPCall {
 
 	Object value;
 
-	EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
-	EventLoopGroup workerGroup = new NioEventLoopGroup();
 	try {
+	    Bootstrap bootstrap = new Bootstrap();
+	    bootstrap.group(worker);
+	    bootstrap.channel(NioSocketChannel.class);
 	} finally {
 	    bootstrap.releaseExternalResources();
 	}
