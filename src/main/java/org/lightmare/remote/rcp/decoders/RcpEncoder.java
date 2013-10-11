@@ -44,7 +44,6 @@ public class RcpEncoder extends ChannelOutboundHandlerAdapter {
 	buffer.writeByte(valid ? 1 : 0);
 	buffer.writeBytes(valueBt);
 
-	ChannelFuture future = ev.getFuture();
-	Channels.write(ctx, future, buffer);
+	ctx.write(buffer);
     }
 }
