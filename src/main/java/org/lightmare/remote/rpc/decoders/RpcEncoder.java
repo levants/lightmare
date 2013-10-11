@@ -1,15 +1,14 @@
 package org.lightmare.remote.rpc.decoders;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
 
 import java.io.IOException;
-import java.nio.channels.Channels;
 
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.serialization.NativeSerializer;
 
@@ -25,7 +24,7 @@ public class RpcEncoder extends ChannelOutboundHandlerAdapter {
     public void write(ChannelHandlerContext ctx, Object msg,
 	    ChannelPromise promise) throws IOException {
 
-	RpcWrapper wrapper = (RpcWrapper) ev.getMessage();
+	RpcWrapper wrapper = ObjectUtils.cast(msg, RpcWrapper.class);
 
 	String beanName = wrapper.getBeanName();
 	String methodName = wrapper.getMethodName();
