@@ -16,7 +16,7 @@ import org.lightmare.utils.serialization.NativeSerializer;
  * href="io.netty"/>netty></a> RCP returns {@link RcpWrapper}
  * 
  * @author levan
- * 
+ * @since 0.0.21-SNAPSHOT
  */
 public class RcpDecoder extends FrameDecoder {
 
