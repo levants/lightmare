@@ -10,6 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
+import org.lightmare.utils.ObjectUtils;
 
 import antlr.debug.MessageEvent;
 
@@ -56,10 +57,16 @@ public class RcpHandler extends ChannelInboundHandlerAdapter {
     }
 
     @Override
-    public void messageReceived(ChannelHandlerContext ctx, final MessageEvent ev) {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
 
-	ev.getFuture().getChannel().close().awaitUninterruptibly()
-		.addListener(new ResponseListener(answer, ev));
+	try {
+	    RcpWrapper wrapper = ObjectUtils.cast(msg, RcpWrapper.class);
+	    boolean offered = answer.offer(wrapper);
+	    assert offered;
+	} finally {
+	    ctx.close();
+	}
+
     }
 
     @Override
