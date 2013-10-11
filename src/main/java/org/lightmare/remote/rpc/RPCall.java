@@ -97,7 +97,6 @@ public class RPCall {
 	    }
 
 	    value = handler.getWrapper();
-
 	} finally {
 	    worker.shutdownGracefully();
 	}
