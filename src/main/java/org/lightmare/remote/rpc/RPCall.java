@@ -1,5 +1,8 @@
 package org.lightmare.remote.rpc;
 
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -36,9 +39,9 @@ public class RPCall {
 
     private static int workerPoolSize;
 
-    private static ExecutorService boss;
+    private static EventLoopGroup boss;
 
-    private static ExecutorService worker;
+    private static EventLoopGroup worker;
 
     private static final Logger LOG = Logger.getLogger(RPCall.class);
 
@@ -57,10 +60,9 @@ public class RPCall {
 
 	    timeout = config.getLongValue(ConfigKeys.CONNECTION_TIMEOUT.key);
 
-	    boss = Executors.newFixedThreadPool(bossPoolSize,
-		    new ThreadFactoryUtil("netty-boss-thread",
-			    Thread.MAX_PRIORITY));
-	    worker = Executors.newFixedThreadPool(workerPoolSize,
+	    boss = new NioEventLoopGroup(bossPoolSize, new ThreadFactoryUtil(
+		    "netty-boss-thread", Thread.MAX_PRIORITY));
+	    worker = new NioEventLoopGroup(workerPoolSize,
 		    new ThreadFactoryUtil("netty-worker-thread",
 			    (Thread.MAX_PRIORITY - 1)));
 	}
@@ -87,47 +89,13 @@ public class RPCall {
 
 	Object value;
 
-	RcpHandler handler = new RcpHandler();
-	ClientBootstrap bootstrap = getBootstrap(handler);
-	SocketAddress address = new InetSocketAddress(host, port);
-	final ChannelFuture future = bootstrap.connect(address);
-
+	EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
+	EventLoopGroup workerGroup = new NioEventLoopGroup();
 	try {
-	    if (ObjectUtils.notTrue(future
-		    .await(timeout, TimeUnit.MILLISECONDS))) {
-		LOG.info("Trying to read data from server");
-		future.awaitUninterruptibly();
-	    }
-	} catch (InterruptedException ex) {
-	    throw new IOException(ex);
-	}
-
-	final Channel channel = future.awaitUninterruptibly().getChannel();
-
-	try {
-	    if (ObjectUtils.notTrue(future.isSuccess())) {
-		future.getCause().printStackTrace();
-		bootstrap.releaseExternalResources();
-		value = null;
-	    } else {
-
-		ChannelFuture lastWriteFuture = channel.write(wrapper);
-		lastWriteFuture.awaitUninterruptibly();
-		RcpHandler handlerCl = (RcpHandler) lastWriteFuture
-			.awaitUninterruptibly().getChannel().getPipeline()
-			.getLast();
-		RcpWrapper response = handlerCl.getWrapper();
-		value = response.getValue();
-
-		if (ObjectUtils.notTrue(response.isValid())
-			&& ObjectUtils.notNull(value)) {
-		    throw new IOException((Exception) value);
-		}
-	    }
-
-	    return value;
 	} finally {
 	    bootstrap.releaseExternalResources();
 	}
+
+	return value;
     }
 }
