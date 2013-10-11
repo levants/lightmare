@@ -11,9 +11,9 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
+import org.lightmare.remote.rcp.RcpHandler;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 
@@ -28,6 +28,8 @@ public class RPCall {
     private String host;
 
     private int port;
+
+    private RcpHandler handler;
 
     private static int workerPoolSize;
 
@@ -57,10 +59,12 @@ public class RPCall {
 	bootstrap.channel(NioSocketChannel.class);
 	bootstrap.option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
 
+	handler = new RcpHandler();
+
 	bootstrap.handler(new ChannelInitializer<SocketChannel>() {
 	    @Override
 	    public void initChannel(SocketChannel ch) throws Exception {
-		ch.pipeline().addLast(new RpcHandler());
+		ch.pipeline().addLast(handler);
 	    }
 	});
 
@@ -79,6 +83,8 @@ public class RPCall {
 	    } catch (InterruptedException ex) {
 		throw new IOException(ex);
 	    }
+
+	    value = handler.getWrapper();
 
 	} finally {
 	    worker.shutdownGracefully();
