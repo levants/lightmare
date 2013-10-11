@@ -4,19 +4,10 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.bootstrap.ClientBootstrap;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.SimpleChannelHandler;
-import org.jboss.netty.channel.socket.ClientSocketChannelFactory;
-import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
-import org.jboss.netty.channel.socket.nio.NioWorker;
-import org.jboss.netty.channel.socket.nio.NioWorkerPool;
-import org.jboss.netty.channel.socket.nio.WorkerPool;
-import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.remote.rcp.RcpHandler;
@@ -66,8 +57,7 @@ public class RPCall {
 
 	    timeout = config.getLongValue(ConfigKeys.CONNECTION_TIMEOUT.key);
 
-	    boss = new OrderedMemoryAwareThreadPoolExecutor(bossPoolSize,
-		    400000000, 2000000000, 60, TimeUnit.SECONDS,
+	    boss = Executors.newFixedThreadPool(bossPoolSize,
 		    new ThreadFactoryUtil("netty-boss-thread",
 			    Thread.MAX_PRIORITY));
 	    worker = new OrderedMemoryAwareThreadPoolExecutor(workerPoolSize,
