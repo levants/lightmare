@@ -1,11 +1,12 @@
 package org.lightmare.remote.rpc.decoders;
 
-import java.io.IOException;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageDecoder;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.handler.codec.frame.FrameDecoder;
+import java.io.IOException;
+import java.util.List;
+
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.serialization.NativeSerializer;
@@ -16,15 +17,15 @@ import org.lightmare.utils.serialization.NativeSerializer;
  * @author levan
  * @since 0.0.21-SNAPSHOT
  */
-public class RpcDecoder extends FrameDecoder {
+public class RpcDecoder extends ByteToMessageDecoder {
 
     @Override
-    protected Object decode(ChannelHandlerContext context, Channel channel,
-	    ChannelBuffer buffer) throws IOException {
+    protected void decode(ChannelHandlerContext context, ByteBuf buffer,
+	    List<Object> out) throws IOException {
 
 	if (buffer.readableBytes() < RpcUtils.PROTOCOL_SIZE) {
 	    buffer.resetReaderIndex();
-	    return null;
+	    return;
 	}
 
 	int beanNameSize = buffer.readInt();
@@ -37,7 +38,7 @@ public class RpcDecoder extends FrameDecoder {
 
 	if (buffer.readableBytes() < paramsSize) {
 	    buffer.resetReaderIndex();
-	    return null;
+	    return;
 	}
 
 	byte[] beanNameBt = new byte[beanNameSize];
@@ -71,6 +72,6 @@ public class RpcDecoder extends FrameDecoder {
 	wrapper.setInterfaceClass(interfaceClass);
 	wrapper.setParams(params);
 
-	return wrapper;
+	out.add(wrapper);
     }
 }
