@@ -1,14 +1,13 @@
 package org.lightmare.remote.rpc.decoders;
 
-import java.io.IOException;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelOutboundHandlerAdapter;
+import io.netty.channel.ChannelPromise;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.Channels;
-import org.jboss.netty.channel.MessageEvent;
-import org.jboss.netty.channel.SimpleChannelHandler;
+import java.io.IOException;
+import java.nio.channels.Channels;
+
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.serialization.NativeSerializer;
@@ -19,11 +18,11 @@ import org.lightmare.utils.serialization.NativeSerializer;
  * @author levan
  * @since 0.0.21-SNAPSHOT
  */
-public class RpcEncoder extends SimpleChannelHandler {
+public class RpcEncoder extends ChannelOutboundHandlerAdapter {
 
     @Override
-    public void writeRequested(ChannelHandlerContext ctx, MessageEvent ev)
-	    throws IOException {
+    public void write(ChannelHandlerContext ctx, Object msg,
+	    ChannelPromise promise) throws IOException {
 
 	RpcWrapper wrapper = (RpcWrapper) ev.getMessage();
 
