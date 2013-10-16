@@ -100,7 +100,6 @@ public class NamingUtils {
      * @return {@link String}
      */
     public static String createEjbJndiName(String jndiName) {
-
 	return StringUtils.concat(EJB_NAME_PREF, jndiName);
     }
 
