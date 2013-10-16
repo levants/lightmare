@@ -458,7 +458,6 @@ public class MetaUtils {
      * @return <code>int</code>
      */
     public static int getModifiers(Field field) {
-
 	return field.getModifiers();
     }
 
