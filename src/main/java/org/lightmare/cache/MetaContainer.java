@@ -176,7 +176,6 @@ public class MetaContainer {
      * @return boolean
      */
     public boolean checkBean(String beanName) {
-
 	return EJBS.containsKey(beanName);
     }
 
