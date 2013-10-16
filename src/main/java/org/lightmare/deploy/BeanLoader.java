@@ -406,6 +406,7 @@ public class BeanLoader {
 	    if (name == null || name.isEmpty()) {
 		name = BeanUtils.nameFromInterface(interfaceClass);
 	    }
+	    
 	    String description = ejb.description();
 	    String mappedName = ejb.mappedName();
 	    Class<?>[] interfaceClasses = { interfaceClass };
