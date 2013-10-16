@@ -103,7 +103,6 @@ public enum ConfigKeys {
     }
 
     public String getKey() {
-
 	return key;
     }
 
