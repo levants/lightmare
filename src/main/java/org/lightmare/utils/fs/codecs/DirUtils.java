@@ -47,7 +47,7 @@ public class DirUtils extends ArchiveUtils {
     public InputStream earReader() throws IOException {
 
 	InputStream stream;
-	
+
 	String appXmlPath;
 	if (path.endsWith(FILE_SEPARATOR)) {
 	    appXmlPath = StringUtils.concat(path, APPLICATION_XML_PATH);
