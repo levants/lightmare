@@ -44,7 +44,6 @@ public class JarUtils extends ArchiveUtils {
 
     @Override
     public InputStream earReader() throws IOException {
-
 	return null;
     }
 
