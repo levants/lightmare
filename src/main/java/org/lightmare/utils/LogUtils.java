@@ -58,7 +58,6 @@ public class LogUtils {
      * @param formats
      */
     public static void fatal(Logger log, String message, Object... formats) {
-
 	fatal(log, null, message, formats);
     }
 
