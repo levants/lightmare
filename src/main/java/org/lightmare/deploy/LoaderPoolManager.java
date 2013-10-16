@@ -138,7 +138,6 @@ public abstract class LoaderPoolManager {
      * @return <code>boolean</code>
      */
     private static boolean invalid() {
-
 	return LOADER_POOL == null || LOADER_POOL.isShutdown()
 		|| LOADER_POOL.isTerminated();
     }
