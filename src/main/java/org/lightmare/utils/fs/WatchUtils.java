@@ -33,6 +33,7 @@ public class WatchUtils {
     public static URL clearURL(URL url) throws IOException {
 
 	URL normURL;
+
 	String path = url.toString();
 	if (path.endsWith(File.separator)) {
 	    int from = 0;
