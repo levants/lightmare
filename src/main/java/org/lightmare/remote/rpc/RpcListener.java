@@ -36,6 +36,19 @@ public class RpcListener {
 
     private static final Logger LOG = Logger.getLogger(RpcListener.class);
 
+    protected static class ChannelInitializerImpl extends
+	    ChannelInitializer<SocketChannel> {
+
+	@Override
+	public void initChannel(SocketChannel ch) throws Exception {
+
+	    RcpEncoder rcpEncoder = new RcpEncoder();
+	    RpcDecoder rpcDecoder = new RpcDecoder();
+	    RpcHandler rpcHandler = new RpcHandler();
+	    ch.pipeline().addLast(rcpEncoder, rpcDecoder, rpcHandler);
+	}
+    }
+
     /**
      * Set boss and worker thread pools size from configuration
      */
@@ -49,7 +62,7 @@ public class RpcListener {
 	if (workerCount == null) {
 	    workerCount = ConfigKeys.WORKER_POOL.getValue();
 	}
-	
+
 	boss = new NioEventLoopGroup(bossCount, new ThreadFactoryUtil(
 		"netty-boss-thread", Thread.MAX_PRIORITY));
 	worker = new NioEventLoopGroup(workerCount, new ThreadFactoryUtil(
@@ -67,18 +80,7 @@ public class RpcListener {
 	try {
 	    ServerBootstrap bootstrap = new ServerBootstrap();
 	    bootstrap.group(boss, worker).channel(NioServerSocketChannel.class)
-		    .childHandler(new ChannelInitializer<SocketChannel>() {
-			@Override
-			public void initChannel(SocketChannel ch)
-				throws Exception {
-			    
-			    RcpEncoder rcpEncoder = new RcpEncoder();
-			    RpcDecoder rpcDecoder = new RpcDecoder();
-			    RpcHandler rpcHandler = new RpcHandler();
-			    ch.pipeline().addLast(rcpEncoder,
-				    rpcDecoder, rpcHandler);
-			}
-		    });
+		    .childHandler(new ChannelInitializerImpl());
 
 	    bootstrap.option(ChannelOption.SO_BACKLOG, 500);
 	    bootstrap.childOption(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
