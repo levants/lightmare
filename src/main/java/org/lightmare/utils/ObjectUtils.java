@@ -25,7 +25,6 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static boolean notTrue(boolean statement) {
-
 	return !statement;
     }
 
