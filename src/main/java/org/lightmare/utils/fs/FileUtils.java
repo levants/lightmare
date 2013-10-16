@@ -115,7 +115,7 @@ public class FileUtils {
     public static boolean checkOnEarDir(URL url) throws IOException {
 
 	boolean isEarDir;
-	
+
 	File file;
 	try {
 	    file = new File(url.toURI());
@@ -123,7 +123,7 @@ public class FileUtils {
 	} catch (URISyntaxException ex) {
 	    throw new IOException(ex);
 	}
-	
+
 	return isEarDir;
     }
 
