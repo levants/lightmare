@@ -40,7 +40,6 @@ public class DirUtils extends ArchiveUtils {
 
     @Override
     public FileType getType() {
-
 	return type;
     }
 
