@@ -19,6 +19,8 @@ public class ConfigLoader {
     // Path for ORM configuration file
     public static final String XML_PATH = "META-INF/persistence.xml";
 
+    private static final String PATH_NOT_PROVIDED_ERROR = "Path is not provided";
+
     private String shortPath;
 
     public String getShortPath() {
