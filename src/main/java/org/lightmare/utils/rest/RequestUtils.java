@@ -28,7 +28,6 @@ public class RequestUtils {
      * @return {@link InputStream}
      */
     public static InputStream textToStream(String text) {
-
 	return new ByteArrayInputStream(text.getBytes());
     }
 
