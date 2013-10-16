@@ -110,6 +110,7 @@ public class Security {
 
     /**
      * Authenticates passed user name and password
+     * 
      * @param user
      * @param pass
      * @return <code>boolean</code>
