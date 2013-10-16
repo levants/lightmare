@@ -113,6 +113,7 @@ public class RPCall {
 
     /**
      * Calls RPC service for passed {@link RcpWrapper} instance
+     * 
      * @param wrapper
      * @return {@link Object}
      * @throws IOException
