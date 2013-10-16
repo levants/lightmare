@@ -213,7 +213,8 @@ public class PoolConfig {
      */
     public static Integer asInt(Map<Object, Object> properties, Object key) {
 Integer propertyInt;
-	Object property = properties.get(key);
+	
+Object property = properties.get(key);
 	
 	if (property == null) {
 	    propertyInt = null;
