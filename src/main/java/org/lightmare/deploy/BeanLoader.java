@@ -685,7 +685,7 @@ public class BeanLoader {
 	}
 
 	/**
-	 * Deploys bean from file
+	 * Deploys EJB application from file
 	 * @return {@link String}
 	 */
 	private String deployFile() {
