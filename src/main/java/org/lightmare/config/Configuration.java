@@ -80,7 +80,6 @@ public class Configuration implements Cloneable {
      * @return {@link Map}<code><K, V></code>
      */
     private <K, V> Map<K, V> getAsMap(Object key) {
-
 	return getAsMap(key, null);
     }
 

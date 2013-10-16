@@ -99,6 +99,7 @@ public class Watcher implements Runnable {
 	public boolean accept(File file) {
 
 	    boolean accept;
+
 	    try {
 		URL url = file.toURI().toURL();
 		url = WatchUtils.clearURL(url);
