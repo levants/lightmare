@@ -313,7 +313,6 @@ public class Configuration implements Cloneable {
 	// Sets default values to remote server configuration
 	setIfContains(ConfigKeys.IP_ADDRESS.key, ConfigKeys.IP_ADDRESS.value);
 	setIfContains(ConfigKeys.PORT.key, ConfigKeys.PORT.value);
-
 	setIfContains(ConfigKeys.BOSS_POOL.key, ConfigKeys.BOSS_POOL.value);
 
 	boolean contains = containsConfigKey(ConfigKeys.WORKER_POOL.key);
