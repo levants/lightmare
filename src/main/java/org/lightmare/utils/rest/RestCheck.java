@@ -22,6 +22,9 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class RestCheck {
 
+    /**
+     * Reloads REST service
+     */
     public static void reload() {
 
 	if (RestContainer.hasRest()) {
