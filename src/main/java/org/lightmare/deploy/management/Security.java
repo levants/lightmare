@@ -51,6 +51,10 @@ public class Security {
 	}
     }
 
+    /**
+     * Caches administrator users
+     * @throws IOException
+     */
     public void cacheUsers() throws IOException {
 
 	String path = Configuration.getAdminUsersPath();

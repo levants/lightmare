@@ -268,6 +268,7 @@ public class DeployManager extends HttpServlet {
     private boolean check(HttpSession session) {
 
 	boolean valid = ObjectUtils.notNull(session);
+	
 	if (valid) {
 	    Object pass = session.getAttribute(Security.DEPLOY_PASS_KEY);
 	    valid = ObjectUtils.notNull(pass);
