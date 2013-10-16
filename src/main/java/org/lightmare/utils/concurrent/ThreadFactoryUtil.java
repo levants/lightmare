@@ -14,7 +14,7 @@ import org.lightmare.utils.StringUtils;
  */
 public class ThreadFactoryUtil implements ThreadFactory {
 
-    //Threads name
+    // Threads name
     private String name;
 
     private Integer priority;
