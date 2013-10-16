@@ -48,6 +48,10 @@ public class BeanInUseException extends IOException {
 	return new BeanInUseException(errorMessage);
     }
 
+    /**Initializes {@link BeanInUseException} with existing error message format and passed bean name
+     * @param bean
+     * @return {@link BeanInUseException}
+     */
     public static BeanInUseException get(Object bean) {
 
 	return get(ERROR_MESSAGE_FORMAT, bean);
