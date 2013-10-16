@@ -271,10 +271,12 @@ public abstract class ArchiveUtils {
      */
     public URL getAppropriatedURL(AnnotationDB annotationDB, String className) {
 
+	URL xmlURL;
+	
 	Map<String, String> classOwnersFiles = annotationDB
 		.getClassOwnersFiles();
 
-	URL xmlURL = getAppropriatedURL(classOwnersFiles, className);
+	xmlURL = getAppropriatedURL(classOwnersFiles, className);
 
 	return xmlURL;
     }
