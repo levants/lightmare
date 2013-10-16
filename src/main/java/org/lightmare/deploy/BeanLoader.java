@@ -515,7 +515,6 @@ public class BeanLoader {
 		transactionAttrType = TransactionAttributeType.REQUIRED;
 		transactionManType = TransactionManagementType.CONTAINER;
 	    } else if (transactionManagement == null) {
-
 		transactionAttrType = transactionAttribute.value();
 		transactionManType = TransactionManagementType.CONTAINER;
 	    } else {
