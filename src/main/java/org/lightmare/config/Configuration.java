@@ -526,7 +526,6 @@ public class Configuration implements Cloneable {
 	    for (String propertyName : props.stringPropertyNames()) {
 		config.put(propertyName, props.getProperty(propertyName));
 	    }
-
 	} catch (IOException ex) {
 	    LOG.error(COULD_NOT_LOAD_CONFIG_ERROR, ex);
 	} finally {
