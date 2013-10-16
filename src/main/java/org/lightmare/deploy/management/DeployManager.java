@@ -342,7 +342,6 @@ public class DeployManager extends HttpServlet {
 	    response.sendError(HttpServletResponse.SC_FORBIDDEN,
 		    CONTROLL_NOT_ALLOWED_MESSAGE);
 	} else {
-
 	    String userName = request.getParameter(USER_PARAMETER_NAME);
 	    String password = request.getParameter(PASS_PARAMETER_NAME);
 	    boolean valid = StringUtils.valid(userName)
