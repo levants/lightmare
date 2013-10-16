@@ -74,7 +74,6 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(Map<?, ?> map) {
-
 	return !valid(map);
     }
 
