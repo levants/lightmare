@@ -564,7 +564,9 @@ public class BeanLoader {
 	}
 
 	/**
-	 * Caches {@link Interceptor}, bean {@link Class} and {@link Method}s parameters
+	 * Caches {@link Interceptor}, bean {@link Class} and {@link Method}s
+	 * parameters
+	 * 
 	 * @param interceptors
 	 * @param beanClass
 	 * @param beanMethods
