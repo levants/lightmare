@@ -32,7 +32,6 @@ public class TransactionHolder {
      * @param transaction
      */
     public static void setTransaction(UserTransaction transaction) {
-
 	TRANSACTION_HOLDER.set(transaction);
     }
 
