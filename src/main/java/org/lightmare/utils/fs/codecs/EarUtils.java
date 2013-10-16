@@ -106,6 +106,8 @@ public class EarUtils extends ArchiveUtils {
 	    String jarPath = StringUtils.concat(jarURL.toString(),
 		    ARCHIVE_URL_DELIM, FILE_SEPARATOR, ConfigLoader.XML_PATH);
 	    url = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
+	}else{
+	    url = null;
 	}
 
 	return url;
