@@ -121,7 +121,6 @@ public class LogUtils {
      * @param formats
      */
     public static void debug(Logger log, String message, Object... formats) {
-
 	debug(log, null, message, formats);
     }
 
