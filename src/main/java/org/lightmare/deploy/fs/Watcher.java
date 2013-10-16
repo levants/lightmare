@@ -151,7 +151,6 @@ public class Watcher implements Runnable {
 	Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
 	
 	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
-	
 	Set<DeploymentDirectory> deploymetDirssCurrent;
 	for (Configuration config : configs) {
 	    deploymetDirssCurrent = config.getDeploymentPath();
