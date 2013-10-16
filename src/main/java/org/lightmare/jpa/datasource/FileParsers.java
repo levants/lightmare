@@ -303,8 +303,10 @@ public class FileParsers {
     private static NodeList getDataSourceTags(String dataSourcePath)
 	    throws IOException {
 
+	NodeList nodeList;
+	
 	File file = new File(dataSourcePath);
-	NodeList nodeList = getDataSourceTags(file);
+	nodeList = getDataSourceTags(file);
 
 	return nodeList;
     }
