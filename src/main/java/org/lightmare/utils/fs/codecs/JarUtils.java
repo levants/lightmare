@@ -39,7 +39,6 @@ public class JarUtils extends ArchiveUtils {
 
     @Override
     public FileType getType() {
-
 	return type;
     }
 
