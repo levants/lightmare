@@ -56,6 +56,12 @@ public class FileParsers {
 
     private static final Logger LOG = Logger.getLogger(FileParsers.class);
 
+    /**
+     * Reads passed {@link File} as {@link Document} instance
+     * @param file
+     * @return {@link Document}
+     * @throws IOException
+     */
     public static Document document(File file) throws IOException {
 	return document(file.toURI().toURL());
     }
