@@ -244,7 +244,7 @@ public class Watcher implements Runnable {
      * @return {@link List}<File>
      */
     public static List<File> listDeployments() {
-	
+
 	List<File> list = new ArrayList<File>();
 
 	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
@@ -256,7 +256,7 @@ public class Watcher implements Runnable {
 		deploymetDirss.addAll(deploymetDirssCurrent);
 	    }
 	}
-	
+
 	File[] files;
 	if (CollectionUtils.valid(deploymetDirss)) {
 	    String path;
@@ -277,9 +277,9 @@ public class Watcher implements Runnable {
      * @return {@link List}<File>
      */
     public static List<File> listDataSources() {
-List<File> list = new ArrayList<File>();
-	
-Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+	List<File> list = new ArrayList<File>();
+
+	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
 	Set<String> paths = new HashSet<String>();
 	Set<String> pathsCurrent;
 	for (Configuration config : configs) {
@@ -289,7 +289,7 @@ Collection<Configuration> configs = MetaContainer.CONFIGS.values();
 	    }
 	}
 	File file;
-	
+
 	if (CollectionUtils.valid(paths)) {
 	    for (String path : paths) {
 		file = new File(path);
