@@ -16,6 +16,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  */
 public class ConfigLoader {
 
+    //Path for ORM configuration file
     public static final String XML_PATH = "META-INF/persistence.xml";
 
     private String shortPath;
