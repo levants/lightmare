@@ -61,6 +61,7 @@ public class WatchUtils {
 
     /**
      * Checks passed {@link DeployData} on watch service
+     * 
      * @param deployData
      * @return <code>boolean</code>
      */
