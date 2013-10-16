@@ -49,7 +49,9 @@ public class FileUtils {
     }
 
     /**
-     * Adds passed {@link File}'s {@link URL} to passed {@link Collection} of {@link URL} objects
+     * Adds passed {@link File}'s {@link URL} to passed {@link Collection} of
+     * {@link URL} objects
+     * 
      * @param urls
      * @param file
      * @throws IOException
