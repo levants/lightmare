@@ -277,7 +277,7 @@ public class Watcher implements Runnable {
      * @return {@link List}<File>
      */
     public static List<File> listDataSources() {
-
+List<File> list = new ArrayList<File>();
 	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
 	Set<String> paths = new HashSet<String>();
 	Set<String> pathsCurrent;
@@ -288,7 +288,7 @@ public class Watcher implements Runnable {
 	    }
 	}
 	File file;
-	List<File> list = new ArrayList<File>();
+	
 	if (CollectionUtils.valid(paths)) {
 	    for (String path : paths) {
 		file = new File(path);
