@@ -82,7 +82,6 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static boolean notNullNotEquals(Object data1, Object data2) {
-
 	return notNullAll(data1, data2) && notEquals(data1, data2);
     }
 
