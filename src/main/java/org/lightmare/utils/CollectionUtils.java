@@ -64,7 +64,6 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(Map<?, ?> map) {
-
 	return map != null && !map.isEmpty();
     }
 
