@@ -107,7 +107,6 @@ public class DirUtils extends ArchiveUtils {
     }
 
     private JarFile extracted(String jarName) throws IOException {
-
 	return new JarFile(jarName);
     }
 
