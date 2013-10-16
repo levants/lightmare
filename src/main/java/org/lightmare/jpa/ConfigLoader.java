@@ -20,6 +20,8 @@ public class ConfigLoader {
     public static final String XML_PATH = "META-INF/persistence.xml";
 
     private static final String PATH_NOT_PROVIDED_ERROR = "Path is not provided";
+    
+    private static final String COULD_NOT_FIND_ERROR = "Could not find persistence.xml file on path ";
 
     private String shortPath;
 
