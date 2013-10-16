@@ -206,7 +206,6 @@ public abstract class ArchiveUtils {
 	ArchiveUtils ioUtils;
 
 	File appFile;
-
 	try {
 	    appFile = new File(url.toURI());
 	} catch (URISyntaxException ex) {
