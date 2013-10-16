@@ -38,6 +38,8 @@ public class RPCall {
     private static int workerPoolSize;
 
     private static EventLoopGroup worker;
+    
+    private static final int ZERO_TIMEOUT = 0;
 
     public RPCall(String host, int port) {
 	this.host = host;
@@ -65,7 +67,7 @@ public class RPCall {
 	bootstrap.channel(NioSocketChannel.class);
 	bootstrap.option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
 
-	if (timeout > 0) {
+	if (timeout > ZERO_TIMEOUT) {
 	    bootstrap.option(ChannelOption.SO_TIMEOUT, timeout);
 	}
 
