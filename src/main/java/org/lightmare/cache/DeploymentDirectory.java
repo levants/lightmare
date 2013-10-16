@@ -18,7 +18,6 @@ public class DeploymentDirectory {
     }
 
     public DeploymentDirectory(String path, boolean scan) {
-
 	this(path);
 	this.scan = scan;
     }
