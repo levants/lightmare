@@ -124,7 +124,6 @@ public class EarUtils extends ArchiveUtils {
 	ZipInputStream zipStream = new ZipInputStream(stream);
 	ZipEntry xmlEntry = zipStream.getNextEntry();
 
-	check = Boolean.FALSE;
 	while (ObjectUtils.notNull(xmlEntry) && ObjectUtils.notTrue(check)) {
 	    check = xmlEntry.getName().equals(ConfigLoader.XML_PATH);
 	    if (ObjectUtils.notTrue(check)) {
