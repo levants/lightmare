@@ -401,6 +401,7 @@ public class BeanLoader {
 	    if (interfaceClass == null || interfaceClass.equals(Object.class)) {
 		interfaceClass = field.getType();
 	    }
+	    
 	    String name = ejb.beanName();
 	    if (name == null || name.isEmpty()) {
 		name = BeanUtils.nameFromInterface(interfaceClass);
