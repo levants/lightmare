@@ -402,7 +402,6 @@ public class MetaCreator {
 		deployBeans(beanNames);
 	    }
 	} finally {
-
 	    // Caches configuration
 	    MetaContainer.putConfig(archives, configuration);
 	    // clears cached resources
