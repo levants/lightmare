@@ -62,7 +62,6 @@ public class JndiManager {
 
 	    if (CollectionUtils.invalid(CONFIG)) {
 		JNDIParameters[] parameters = JNDIParameters.values();
-
 		for (JNDIParameters parameter : parameters) {
 		    CONFIG.put(parameter.key, parameter.value);
 		}
