@@ -256,6 +256,7 @@ public class Watcher implements Runnable {
 		deploymetDirss.addAll(deploymetDirssCurrent);
 	    }
 	}
+	
 	File[] files;
 	if (CollectionUtils.valid(deploymetDirss)) {
 	    String path;
