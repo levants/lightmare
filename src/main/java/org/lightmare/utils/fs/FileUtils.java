@@ -67,7 +67,9 @@ public class FileUtils {
     }
 
     /**
-     * Adds sub files of passed {@link File} array to passed {@link List} of {@link URL} objects
+     * Adds sub files of passed {@link File} array to passed {@link List} of
+     * {@link URL} objects
+     * 
      * @param files
      * @param urls
      * @throws IOException
