@@ -193,6 +193,7 @@ public class RestContainer {
     public static RestConfig getRestConfig() {
 
 	synchronized (RestContainer.class) {
+	    
 	    return restConfig;
 	}
     }
