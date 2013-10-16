@@ -175,6 +175,7 @@ public class FileParsers {
 	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
+	    
 	    Element passElement = (Element) getFirst(passList);
 	    String password = getContext(passElement);
 
