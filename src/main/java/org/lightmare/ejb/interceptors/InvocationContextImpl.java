@@ -82,7 +82,6 @@ public class InvocationContextImpl implements InvocationContext {
 
     @Override
     public Object[] getParameters() {
-
 	return parameters;
     }
 
