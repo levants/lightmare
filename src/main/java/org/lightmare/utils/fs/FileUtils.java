@@ -48,6 +48,12 @@ public class FileUtils {
 	return subFiles;
     }
 
+    /**
+     * Adds passed {@link File}'s {@link URL} to passed {@link Collection} of {@link URL} objects
+     * @param urls
+     * @param file
+     * @throws IOException
+     */
     private static void addURL(Collection<URL> urls, File file)
 	    throws IOException {
 
