@@ -249,7 +249,6 @@ public class FileParsers {
 	String jndiName;
 	String clearName;
 	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
-
 	    Element thisElement = (Element) nodeList.item(i);
 	    Properties props = new Properties();
 	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
