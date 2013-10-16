@@ -83,7 +83,6 @@ public abstract class ArchiveUtils {
     public static final String EJB_TAG_NAME = "ejb";
 
     public ArchiveUtils(String path) {
-
 	this.path = path;
 	realFile = new File(path);
 	isDirectory = realFile.isDirectory();
