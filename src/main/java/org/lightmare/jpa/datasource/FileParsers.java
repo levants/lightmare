@@ -246,6 +246,7 @@ public class FileParsers {
     public List<Properties> getDataFromJBoss(NodeList nodeList) {
 
 	List<Properties> properties = new ArrayList<Properties>();
+	
 	String jndiName;
 	String clearName;
 	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
