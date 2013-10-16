@@ -296,6 +296,7 @@ public class PoolConfig {
 	    throws IOException {
 
 	Map<Object, Object> configMap = configProperties(properties);
+
 	Map<Object, Object> loaded = load();
 	if (ObjectUtils.notNull(loaded)) {
 	    fillDefaults(configMap, loaded);
