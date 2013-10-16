@@ -735,7 +735,6 @@ public class Configuration implements Cloneable {
     }
 
     public void setPersXmlFromJar(boolean persXmlFromJar) {
-
 	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_FROM_JAR.key,
 		persXmlFromJar);
     }
