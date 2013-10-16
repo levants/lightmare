@@ -95,7 +95,6 @@ public class DirUtils extends ArchiveUtils {
 
 	    @Override
 	    public boolean accept(File file) {
-
 		return file.getName().endsWith(LIB) && file.isDirectory();
 	    }
 	});
