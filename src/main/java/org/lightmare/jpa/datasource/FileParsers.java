@@ -83,7 +83,6 @@ public class FileParsers {
      * @return {@link Node}
      */
     private static Node getFirst(NodeList list) {
-
 	return list.item(CollectionUtils.FIRST_INDEX);
     }
 
