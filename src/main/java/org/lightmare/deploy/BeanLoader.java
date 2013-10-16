@@ -514,7 +514,6 @@ public class BeanLoader {
 		transactional = Boolean.TRUE;
 		transactionAttrType = TransactionAttributeType.REQUIRED;
 		transactionManType = TransactionManagementType.CONTAINER;
-
 	    } else if (transactionManagement == null) {
 
 		transactionAttrType = transactionAttribute.value();
