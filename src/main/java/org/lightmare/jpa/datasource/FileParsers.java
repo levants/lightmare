@@ -292,8 +292,10 @@ public class FileParsers {
 
     private static NodeList getDataSourceTags(File file) throws IOException {
 
+	NodeList nodeList;
+	
 	Document document = document(file);
-	NodeList nodeList = getDataSourceTags(document);
+	nodeList = getDataSourceTags(document);
 
 	return nodeList;
     }
