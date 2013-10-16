@@ -273,7 +273,6 @@ public class Configuration implements Cloneable {
      * @param value
      */
     public void setPoolConfigValue(Object key, Object value) {
-
 	setWithInitialization(ConfigKeys.POOL_CONFIG.key, key, value);
     }
 
