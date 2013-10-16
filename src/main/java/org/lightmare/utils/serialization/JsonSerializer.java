@@ -25,7 +25,7 @@ public abstract class JsonSerializer {
     // Converter class
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    //
+    //Check for configuration of mapper object
     private static boolean mapperConfigured;
 
     // Lock for initializing ObjectMapper instance
