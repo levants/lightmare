@@ -479,7 +479,6 @@ public class MetaUtils {
      * @return {@link Class}<?>
      */
     public static Class<?> getType(Field field) {
-
 	return field.getType();
     }
 
