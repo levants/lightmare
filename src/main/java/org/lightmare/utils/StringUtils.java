@@ -65,7 +65,6 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(CharSequence chars) {
-
 	return !valid(chars);
     }
 
