@@ -18,7 +18,6 @@ public class EJBContainerProviderImpl implements EJBContainerProvider {
     @Override
     public EJBContainer createEJBContainer(Map<?, ?> properties)
 	    throws EJBException {
-
 	return new EJBContainerImpl(properties);
     }
 }
