@@ -69,6 +69,7 @@ public class FileParsers {
 
     /**
      * Reads passed {@link URL} as {@link Document} object
+     * 
      * @param url
      * @return Document
      * @throws IOException
