@@ -759,7 +759,6 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isPooledDataSource() {
-
 	return getPersistenceConfigValue(ConfigKeys.POOLED_DATA_SOURCE.key,
 		Boolean.FALSE);
     }
