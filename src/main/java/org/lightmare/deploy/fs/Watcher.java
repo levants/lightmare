@@ -229,6 +229,11 @@ public class Watcher implements Runnable {
 	return type;
     }
 
+    /**
+     * Fills passed {@link List} of {@link File}s by passed {@link File} array
+     * @param files
+     * @param list
+     */
     private static void fillFileList(File[] files, List<File> list) {
 
 	if (CollectionUtils.valid(files)) {
