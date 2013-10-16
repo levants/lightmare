@@ -107,6 +107,10 @@ public abstract class ArchiveUtils {
 	isDirectory = realFile.isDirectory();
     }
 
+    /**
+     * Gets files type
+     * @return
+     */
     public abstract FileType getType();
 
     /**
