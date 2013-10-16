@@ -20,6 +20,7 @@ public class ConfigLoader {
     // Path for ORM configuration file
     public static final String XML_PATH = "META-INF/persistence.xml";
 
+    //Error messages
     private static final String PATH_NOT_PROVIDED_ERROR = "Path is not provided";
 
     private static final String COULD_NOT_FIND_ERROR = "Could not find persistence.xml file on path ";
