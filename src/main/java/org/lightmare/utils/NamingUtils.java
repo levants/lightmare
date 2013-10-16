@@ -76,7 +76,6 @@ public class NamingUtils {
      * @return
      */
     public static String createJpaJndiName(String jndiName) {
-
 	return StringUtils.concat(JPA_NAME_PREF, jndiName);
     }
 
