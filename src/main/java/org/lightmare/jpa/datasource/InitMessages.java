@@ -21,5 +21,4 @@ public abstract class InitMessages {
     public static final String INITIALIZING_MESSAGE = "Initializing data source %s";
 
     public static final String INITIALIZED_MESSAGE = "Data source %s initialized";
-
 }

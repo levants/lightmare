@@ -62,7 +62,6 @@ public abstract class Initializer {
     }
 
     private static boolean checkForDataSource(String path) {
-
 	return StringUtils.valid(path);
     }
 
