@@ -95,7 +95,6 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalidAll(Collection<?>... collections) {
-
 	return !valid(collections);
     }
 
