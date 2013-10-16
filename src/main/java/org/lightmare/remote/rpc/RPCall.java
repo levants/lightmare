@@ -87,6 +87,10 @@ public class RPCall {
 	}
     }
 
+    /**
+     * Prepares {@link Bootstrap} for RPC service client connection
+     * @return {@link Bootstrap}
+     */
     private Bootstrap getBootstrap() {
 
 	Bootstrap bootstrap = new Bootstrap();
