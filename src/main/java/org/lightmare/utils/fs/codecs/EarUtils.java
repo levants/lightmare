@@ -94,6 +94,7 @@ public class EarUtils extends ArchiveUtils {
     public URL extractEjbJar(ZipEntry entry) throws IOException {
 
 	URL url = null;
+	
 	InputStream jarStream = getEarFile().getInputStream(entry);
 	if (ObjectUtils.notNull(jarStream)) {
 	    File tmpFile = File.createTempFile(UUID.randomUUID().toString(),
