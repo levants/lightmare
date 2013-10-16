@@ -327,6 +327,12 @@ public class FileParsers {
 	return nodeList;
     }
 
+    /**
+     * 
+     * @param dataSourcePath
+     * @return {@link NodeList}
+     * @throws IOException
+     */
     private static NodeList getDataSourceTags(String dataSourcePath)
 	    throws IOException {
 
