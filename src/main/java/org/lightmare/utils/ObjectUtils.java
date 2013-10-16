@@ -111,7 +111,6 @@ public abstract class ObjectUtils {
 	T value;
 	
 	Class<T> wrapper = MetaUtils.getWrapper(castClass);
-
 	value = wrapper.cast(data);
 
 	return value;
