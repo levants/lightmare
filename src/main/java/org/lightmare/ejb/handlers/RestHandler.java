@@ -17,7 +17,6 @@ public class RestHandler<T> {
     private final T bean;
 
     public RestHandler(BeanHandler handler, T bean) {
-
 	this.handler = handler;
 	this.bean = bean;
     }
