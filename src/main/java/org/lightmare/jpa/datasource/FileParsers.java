@@ -58,6 +58,7 @@ public class FileParsers {
 
     /**
      * Reads passed {@link File} as {@link Document} object
+     * 
      * @param file
      * @return {@link Document}
      * @throws IOException
@@ -252,7 +253,7 @@ public class FileParsers {
     public List<Properties> getDataFromJBoss(NodeList nodeList) {
 
 	List<Properties> properties = new ArrayList<Properties>();
-	
+
 	String jndiName;
 	String clearName;
 	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
@@ -269,7 +270,7 @@ public class FileParsers {
 	    if (urlElementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    
+
 	    Element urlElement = (Element) getFirst(urlList);
 	    String url = getContext(urlElement);
 	    props.setProperty(ConnectionConfig.URL_PROPERTY.name, url);
@@ -299,7 +300,7 @@ public class FileParsers {
     private static NodeList getDataSourceTags(File file) throws IOException {
 
 	NodeList nodeList;
-	
+
 	Document document = document(file);
 	nodeList = getDataSourceTags(document);
 
@@ -310,7 +311,7 @@ public class FileParsers {
 	    throws IOException {
 
 	NodeList nodeList;
-	
+
 	File file = new File(dataSourcePath);
 	nodeList = getDataSourceTags(file);
 
@@ -328,7 +329,7 @@ public class FileParsers {
 	    throws IOException {
 
 	Collection<String> jndiNames = new HashSet<String>();
-	
+
 	NodeList nodeList = getDataSourceTags(dataSourcePath);
 	String jndiName;
 	for (int i = 0; i < nodeList.getLength(); i++) {
