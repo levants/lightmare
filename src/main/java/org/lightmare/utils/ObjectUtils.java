@@ -155,7 +155,6 @@ public abstract class ObjectUtils {
      * @throws IOException
      */
     public static boolean tryLock(Lock lock) {
-
 	return lock.tryLock();
     }
 
