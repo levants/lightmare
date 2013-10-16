@@ -89,7 +89,6 @@ public abstract class ArchiveUtils {
     }
 
     public ArchiveUtils(File file) {
-
 	this.path = file.getPath();
 	realFile = file;
 	isDirectory = realFile.isDirectory();
