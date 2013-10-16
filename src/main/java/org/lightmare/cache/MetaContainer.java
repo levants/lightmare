@@ -223,7 +223,6 @@ public class MetaContainer {
      * @return {@link MetaData}
      */
     public static MetaData getMetaData(String beanName) {
-
 	return EJBS.get(beanName);
     }
 
