@@ -38,7 +38,7 @@ public class RPCall {
     private static int workerPoolSize;
 
     private static EventLoopGroup worker;
-    
+
     private static final int ZERO_TIMEOUT = 0;
 
     public RPCall(String host, int port) {
