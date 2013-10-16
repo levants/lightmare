@@ -150,7 +150,6 @@ public class Configuration implements Cloneable {
     }
 
     private <K> boolean containsConfigKey(K key) {
-
 	return containsSubConfigKey(ConfigKeys.DEPLOY_CONFIG.key, key);
     }
 
