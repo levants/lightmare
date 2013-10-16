@@ -75,6 +75,9 @@ public class RPCall {
 
 	    @Override
 	    public void initChannel(SocketChannel ch) throws Exception {
+		
+		
+		
 		ch.pipeline().addLast(new RpcEncoder(), new RcpDecoder(),
 			handler);
 	    }
