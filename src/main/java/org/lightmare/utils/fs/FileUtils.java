@@ -211,6 +211,7 @@ public class FileUtils {
 
     /**
      * Creates {@link URL} from passed path
+     * 
      * @param path
      * @return {@link URL}
      * @throws IOException
