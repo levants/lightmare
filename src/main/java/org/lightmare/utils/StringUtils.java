@@ -37,7 +37,7 @@ public abstract class StringUtils {
     }
 
     /**
-     * Checks if each of passed {@link CharSequence}s is not null or is not
+     * Checks if each of passed {@link CharSequence}s is not null and is not
      * empty
      * 
      * @param lines
