@@ -262,6 +262,7 @@ public class FileParsers {
 	    if (urlElementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
+	    
 	    Element urlElement = (Element) getFirst(urlList);
 	    String url = getContext(urlElement);
 	    props.setProperty(ConnectionConfig.URL_PROPERTY.name, url);
