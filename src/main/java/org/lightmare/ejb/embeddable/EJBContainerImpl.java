@@ -60,7 +60,7 @@ public class EJBContainerImpl extends EJBContainer {
     @Override
     public Context getContext() {
 
-	Context context = null;
+	Context context;
 
 	try {
 	    JndiManager utils = new JndiManager();
