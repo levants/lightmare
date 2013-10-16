@@ -139,7 +139,7 @@ public class Configuration implements Cloneable {
     private <K> boolean containsSubConfigKey(Object key, K subKey) {
 
 	boolean valid;
-	
+
 	Map<K, ?> subConfig = getAsMap(key);
 	valid = CollectionUtils.valid(subConfig);
 	if (valid) {
