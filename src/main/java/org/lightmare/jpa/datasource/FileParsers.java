@@ -67,6 +67,12 @@ public class FileParsers {
 	return document(file.toURI().toURL());
     }
 
+    /**
+     * 
+     * @param url
+     * @return Document
+     * @throws IOException
+     */
     public static Document document(URL url) throws IOException {
 
 	Document document;
