@@ -70,7 +70,6 @@ public class ConnectionContainer {
      * @return <code>boolean</code>
      */
     private static boolean checkOnProgress(ConnectionSemaphore semaphore) {
-
 	return semaphore.isInProgress()
 		&& ObjectUtils.notTrue(semaphore.isBound());
     }
