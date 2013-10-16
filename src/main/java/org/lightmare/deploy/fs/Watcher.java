@@ -231,6 +231,7 @@ public class Watcher implements Runnable {
 
     /**
      * Fills passed {@link List} of {@link File}s by passed {@link File} array
+     * 
      * @param files
      * @param list
      */
