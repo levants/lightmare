@@ -47,6 +47,7 @@ public abstract class ObjectUtils {
     public static boolean notNullAll(Object... datas) {
 
 	boolean valid = notNull(datas);
+	
 	if (valid) {
 	    int length = datas.length;
 	    Object data;
