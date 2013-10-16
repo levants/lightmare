@@ -68,6 +68,7 @@ public class WatchUtils {
     public static boolean checkForWatch(DeployData deployData) {
 
 	boolean check = ObjectUtils.notNull(deployData);
+
 	if (check) {
 
 	    URL url = deployData.getUrl();
