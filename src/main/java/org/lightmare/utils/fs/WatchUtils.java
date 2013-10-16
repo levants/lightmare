@@ -38,7 +38,7 @@ public class WatchUtils {
 	String path = url.toString();
 	if (path.endsWith(File.separator)) {
 	    int from = CollectionUtils.FIRST_INDEX;
-	    int to = path.length() - 1;
+	    int to = path.length() - CollectionUtils.SECOND_INDEX;
 	    path = path.substring(from, to);
 	}
 	normURL = new URL(path);
