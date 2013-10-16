@@ -305,7 +305,6 @@ public class DeployManager extends HttpServlet {
 	    response.sendError(HttpServletResponse.SC_FORBIDDEN,
 		    CONTROLL_NOT_ALLOWED_MESSAGE);
 	} else {
-
 	    boolean check = check(request.getSession(Boolean.FALSE));
 	    String html;
 	    if (check) {
