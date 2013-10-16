@@ -249,7 +249,6 @@ public class ConnectionContainer {
 
 	String jndiName = semaphore.getJndiName();
 	if (ObjectUtils.notNull(jndiName) && semaphore.isBound()) {
-
 	    JndiManager jndiManager = new JndiManager();
 	    try {
 		String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
