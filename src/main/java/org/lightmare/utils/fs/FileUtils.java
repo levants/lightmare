@@ -207,6 +207,7 @@ public class FileUtils {
 
     /**
      * Converts passed file to {@link URL} instance
+     * 
      * @param file
      * @return {@link URL}
      * @throws IOException
