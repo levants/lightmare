@@ -60,7 +60,6 @@ public class IOUtils {
      * @throws IOException
      */
     public static boolean notAvailable(InputStream stream) throws IOException {
-
 	return ((stream == null) || (stream.available() == ZERO_AVAILABLE_STREAM));
     }
 
