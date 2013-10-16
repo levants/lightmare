@@ -39,6 +39,7 @@ public class WatchUtils {
 
     /**
      * Clears path in passed {@link URL} instance
+     * 
      * @param url
      * @return {@link URL}
      * @throws IOException
