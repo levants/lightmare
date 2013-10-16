@@ -21,7 +21,7 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class EJBContainerImpl extends EJBContainer {
 
-    //Initializes EJB container
+    // Initializes EJB container
     private MetaCreator creator;
 
     private static final Logger LOG = Logger.getLogger(EJBContainerImpl.class);
