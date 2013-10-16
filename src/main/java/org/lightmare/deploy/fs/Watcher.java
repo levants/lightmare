@@ -244,7 +244,7 @@ public class Watcher implements Runnable {
      * @return {@link List}<File>
      */
     public static List<File> listDeployments() {
-
+List<File> list = new ArrayList<File>();
 	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
 	Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
 	Set<DeploymentDirectory> deploymetDirssCurrent;
@@ -255,7 +255,7 @@ public class Watcher implements Runnable {
 	    }
 	}
 	File[] files;
-	List<File> list = new ArrayList<File>();
+	
 	if (CollectionUtils.valid(deploymetDirss)) {
 	    String path;
 	    DeployFiletr filter = new DeployFiletr();
