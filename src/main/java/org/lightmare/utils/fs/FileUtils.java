@@ -206,7 +206,6 @@ public class FileUtils {
     }
 
     public static URL toURL(File file) throws IOException {
-
 	return file.toURI().toURL();
     }
 
