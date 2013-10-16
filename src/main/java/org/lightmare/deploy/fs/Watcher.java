@@ -169,7 +169,7 @@ public class Watcher implements Runnable {
      * @return {@link Set}<code><String></code>
      */
     private static Set<String> getDataSourcePaths() {
-	
+
 	Set<String> paths = new HashSet<String>();
 
 	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
@@ -193,7 +193,7 @@ public class Watcher implements Runnable {
     private static WatchFileType checkType(String fileName) {
 
 	WatchFileType type;
-	
+
 	File file = new File(fileName);
 	String path = file.getPath();
 	String filePath = WatchUtils.clearPath(path);
@@ -244,9 +244,9 @@ public class Watcher implements Runnable {
      * @return {@link List}<File>
      */
     public static List<File> listDeployments() {
-List<File> list = new ArrayList<File>();
-	
-Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+	List<File> list = new ArrayList<File>();
+
+	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
 	Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
 	Set<DeploymentDirectory> deploymetDirssCurrent;
 	for (Configuration config : configs) {
