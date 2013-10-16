@@ -338,9 +338,11 @@ public abstract class CollectionUtils {
 
     private static <T> T[] toArray(Class<T> type, int size) {
 
+	T[] array;
+	
 	Object arrayObject = Array.newInstance(type, size);
 
-	T[] array = ObjectUtils.cast(arrayObject);
+	array = ObjectUtils.cast(arrayObject);
 
 	return array;
     }
