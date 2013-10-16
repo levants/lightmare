@@ -63,6 +63,12 @@ public class ConnectionContainer {
 	return CONNECTIONS.get(unitName);
     }
 
+    /**
+     * Checks if deployed {@link ConnectionSemaphore} componnents
+     * 
+     * @param semaphore
+     * @return <code>boolean</code>
+     */
     private static boolean checkOnProgress(ConnectionSemaphore semaphore) {
 
 	return semaphore.isInProgress()
@@ -107,7 +113,7 @@ public class ConnectionContainer {
     public static ConnectionSemaphore cacheSemaphore(String unitName,
 	    String jndiName) {
 
-	ConnectionSemaphore semaphore = null;
+	ConnectionSemaphore semaphore;
 
 	if (StringUtils.valid(unitName)) {
 
@@ -121,6 +127,8 @@ public class ConnectionContainer {
 		    semaphore.setJndiName(jndiName);
 		}
 	    }
+	} else {
+	    semaphore = null;
 	}
 
 	return semaphore;
@@ -178,7 +186,7 @@ public class ConnectionContainer {
     public static boolean isInProgress(String jndiName) {
 
 	boolean inProgress;
-	
+
 	ConnectionSemaphore semaphore = CONNECTIONS.get(jndiName);
 	inProgress = isInProgress(semaphore);
 
