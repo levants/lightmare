@@ -17,6 +17,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  */
 public class ConfigLoader {
     
+    //Short path for ORM configuration file
     private String shortPath;
 
     // Path for ORM configuration file
