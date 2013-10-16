@@ -116,13 +116,15 @@ public class EarUtils extends ArchiveUtils {
     @Override
     public boolean checkOnOrm(String jarName) throws IOException {
 
+	boolean check;
+	
 	ZipFile zipFile = getEarFile();
 	ZipEntry jarEntry = zipFile.getEntry(jarName);
 	InputStream stream = zipFile.getInputStream(jarEntry);
 	ZipInputStream zipStream = new ZipInputStream(stream);
 	ZipEntry xmlEntry = zipStream.getNextEntry();
 
-	boolean check = Boolean.FALSE;
+	check = Boolean.FALSE;
 	while (ObjectUtils.notNull(xmlEntry) && ObjectUtils.notTrue(check)) {
 	    check = xmlEntry.getName().equals(ConfigLoader.XML_PATH);
 	    if (ObjectUtils.notTrue(check)) {
