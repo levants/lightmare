@@ -51,7 +51,6 @@ public class EJBContainerImpl extends EJBContainer {
 
 	    this.creator = builder.build();
 	    this.creator.scanForBeans();
-
 	} catch (IOException ex) {
 	    LOG.error("Could not initialize EJBContainer", ex);
 	}
