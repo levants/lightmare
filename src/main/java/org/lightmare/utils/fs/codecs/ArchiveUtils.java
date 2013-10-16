@@ -358,6 +358,7 @@ public abstract class ArchiveUtils {
 
     /**
      * Reads application EAR file
+     * 
      * @return {@link InputStream}
      * @throws IOException
      */
