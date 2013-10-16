@@ -392,10 +392,12 @@ public class MetaContainer {
      */
     public static boolean undeploy(URL url) throws IOException {
 
+	boolean valid;
+
 	synchronized (MetaContainer.class) {
 
 	    Collection<String> beanNames = getBeanNames(url);
-	    boolean valid = CollectionUtils.valid(beanNames);
+	    valid = CollectionUtils.valid(beanNames);
 	    if (valid) {
 		for (String beanName : beanNames) {
 		    undeployBean(beanName);
@@ -403,9 +405,9 @@ public class MetaContainer {
 	    }
 
 	    removeBeanNames(url);
-
-	    return valid;
 	}
+
+	return valid;
     }
 
     /**
