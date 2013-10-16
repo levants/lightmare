@@ -84,7 +84,6 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(Collection<?> collection) {
-
 	return !valid(collection);
     }
 
