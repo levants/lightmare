@@ -725,8 +725,9 @@ public class BeanLoader {
 
 	private String deploy() {
 
+	    String deployed;
+	    
 	    synchronized (metaData) {
-		String deployed;
 		try {
 		    if (ObjectUtils.notNull(tmpFiles)) {
 			deployed = deployExtracted();
