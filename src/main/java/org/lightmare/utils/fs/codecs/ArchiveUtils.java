@@ -392,6 +392,7 @@ public abstract class ArchiveUtils {
 
     /**
      * Checks if passed file name contains ORM module configuration files
+     * 
      * @param jarName
      * @return <code>boolean</code>
      * @throws IOException
