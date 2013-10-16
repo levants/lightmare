@@ -148,6 +148,7 @@ public class PoolConfig {
     private Set<Object> unsopportedKeys() throws IOException {
 
 	Set<Object> keys = new HashSet<Object>();
+
 	ConnectionConfig[] usdKeys = ConnectionConfig.values();
 	String key;
 	for (ConnectionConfig usdKey : usdKeys) {
