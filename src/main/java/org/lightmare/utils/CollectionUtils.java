@@ -128,7 +128,6 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(Object[] array) {
-
 	return array != null && array.length > EMPTY_ARRAY_LENGTH;
     }
 
