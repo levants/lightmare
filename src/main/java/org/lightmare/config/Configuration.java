@@ -167,7 +167,6 @@ public class Configuration implements Cloneable {
     }
 
     private <K, V> V getConfigValue(K subKey) {
-
 	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey);
     }
 
