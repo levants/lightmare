@@ -62,7 +62,6 @@ public class TimerImpl implements Timer {
     @Override
     public boolean isPersistent() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-
 	return persistent;
     }
 
