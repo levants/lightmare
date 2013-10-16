@@ -356,6 +356,11 @@ public abstract class ArchiveUtils {
 	return jarNames;
     }
 
+    /**
+     * Reads application EAR file
+     * @return {@link InputStream}
+     * @throws IOException
+     */
     public abstract InputStream earReader() throws IOException;
 
     public void readEntries() throws IOException {
