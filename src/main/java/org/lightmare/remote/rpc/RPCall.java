@@ -41,6 +41,20 @@ public class RPCall {
 
     private static final int ZERO_TIMEOUT = 0;
 
+    protected static class ChannelInitializerImpl extends
+	    ChannelInitializer<SocketChannel> {
+	
+	private RcpHandler handler;
+
+	@Override
+	public void initChannel(SocketChannel ch) throws Exception {
+
+	    RpcEncoder rpcEncoder = new RpcEncoder();
+	    RcpDecoder rcpDecoder = new RcpDecoder();
+	    ch.pipeline().addLast(rpcEncoder, rcpDecoder, handler);
+	}
+    }
+
     public RPCall(String host, int port) {
 	this.host = host;
 	this.port = port;
@@ -71,16 +85,7 @@ public class RPCall {
 
 	handler = new RcpHandler();
 
-	bootstrap.handler(new ChannelInitializer<SocketChannel>() {
-
-	    @Override
-	    public void initChannel(SocketChannel ch) throws Exception {
-
-		RpcEncoder rpcEncoder = new RpcEncoder();
-		RcpDecoder rcpDecoder = new RcpDecoder();
-		ch.pipeline().addLast(rpcEncoder, rcpDecoder, handler);
-	    }
-	});
+	bootstrap.handler();
 
 	return bootstrap;
     }
