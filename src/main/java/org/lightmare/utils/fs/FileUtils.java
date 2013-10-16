@@ -133,8 +133,10 @@ public class FileUtils {
      */
     public static boolean checkOnEarDir(String path) {
 
+	boolean isEarDir;
+	
 	File file = new File(path);
-	boolean isEarDir = checkOnEarDir(file);
+	isEarDir = checkOnEarDir(file);
 
 	return isEarDir;
     }
