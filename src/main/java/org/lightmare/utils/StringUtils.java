@@ -31,7 +31,6 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(CharSequence chars) {
-
 	return chars != null
 		&& chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
     }
