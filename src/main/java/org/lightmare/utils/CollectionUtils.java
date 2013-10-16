@@ -52,7 +52,6 @@ public abstract class CollectionUtils {
      * @return <code></code>
      */
     public static boolean valid(Collection<?> collection) {
-
 	return collection != null && !collection.isEmpty();
     }
 
