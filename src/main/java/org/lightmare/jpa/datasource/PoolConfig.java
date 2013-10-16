@@ -216,7 +216,6 @@ public class PoolConfig {
 	Integer propertyInt;
 
 	Object property = properties.get(key);
-
 	if (property == null) {
 	    propertyInt = null;
 	} else if (property instanceof Integer) {
