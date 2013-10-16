@@ -245,7 +245,8 @@ public class Watcher implements Runnable {
      */
     public static List<File> listDeployments() {
 List<File> list = new ArrayList<File>();
-	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+	
+Collection<Configuration> configs = MetaContainer.CONFIGS.values();
 	Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
 	Set<DeploymentDirectory> deploymetDirssCurrent;
 	for (Configuration config : configs) {
