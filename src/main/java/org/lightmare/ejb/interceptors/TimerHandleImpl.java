@@ -31,7 +31,6 @@ public class TimerHandleImpl implements TimerHandle {
     @Override
     public Timer getTimer() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-
 	return timer;
     }
 
