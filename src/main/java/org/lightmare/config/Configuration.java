@@ -664,7 +664,6 @@ public class Configuration implements Cloneable {
     }
 
     public Set<DeploymentDirectory> getDeploymentPath() {
-
 	return getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
     }
 
