@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
+import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
@@ -81,7 +82,7 @@ public class ConfigLoader {
 	}
 
 	File file = new File(path);
-	if (!file.exists()) {
+	if (ObjectUtils.notTrue(file.exists())) {
 	    throw new IOException(
 		    StringUtils.concat(COULD_NOT_FIND_ERROR, path));
 	}
