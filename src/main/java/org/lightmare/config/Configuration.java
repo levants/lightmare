@@ -619,7 +619,6 @@ public class Configuration implements Cloneable {
     }
 
     public static void setServer(boolean server) {
-
 	ConfigKeys.SERVER.value = server;
     }
 
