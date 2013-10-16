@@ -146,7 +146,6 @@ public abstract class Initializer {
     }
 
     public static void setDsAsInitialized(String datasourcePath) {
-
 	INITIALIZED_SOURCES.add(datasourcePath);
     }
 
