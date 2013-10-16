@@ -420,7 +420,6 @@ public class Configuration implements Cloneable {
      * @param configuration
      */
     public void configure(Map<Object, Object> configuration) {
-
 	deepMerge(config, configuration);
     }
 
