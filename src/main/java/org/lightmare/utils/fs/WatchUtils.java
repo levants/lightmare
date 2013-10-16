@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.lightmare.cache.DeployData;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -20,7 +21,7 @@ public class WatchUtils {
 	String cleanPath;
 
 	if (path.endsWith(File.separator)) {
-	    int from = 0;
+	    int from = CollectionUtils.FIRST_INDEX;
 	    int to = path.length() - 1;
 	    cleanPath = path.substring(from, to);
 	} else {
