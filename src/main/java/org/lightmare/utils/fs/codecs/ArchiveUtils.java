@@ -109,7 +109,7 @@ public abstract class ArchiveUtils {
 
     /**
      * Gets files type
-     * @return
+     * @return {@link FileType}
      */
     public abstract FileType getType();
 
