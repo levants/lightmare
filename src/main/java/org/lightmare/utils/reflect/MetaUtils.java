@@ -56,7 +56,6 @@ public class MetaUtils {
      * @return <code>boolean</code>
      */
     private static boolean notAccessible(AccessibleObject accessibleObject) {
-
 	return ObjectUtils.notTrue(accessibleObject.isAccessible());
     }
 
