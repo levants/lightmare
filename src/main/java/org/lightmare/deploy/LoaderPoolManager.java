@@ -162,7 +162,6 @@ public abstract class LoaderPoolManager {
     protected static ExecutorService getLoaderPool() throws IOException {
 
 	if (invalid()) {
-
 	    boolean locked = Boolean.FALSE;
 	    while (ObjectUtils.notTrue(locked)) {
 
