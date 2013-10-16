@@ -684,6 +684,10 @@ public class BeanLoader {
 	    return beanEjbName;
 	}
 
+	/**
+	 * Deploys bean from file
+	 * @return {@link String}
+	 */
 	private String deployFile() {
 
 	    String deployed = beanName;
