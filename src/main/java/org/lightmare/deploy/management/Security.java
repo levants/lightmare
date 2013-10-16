@@ -34,6 +34,11 @@ public class Security {
 	cacheUsers();
     }
 
+    /**
+     * Loads administrator user information from passed {@link File} parameter
+     * @param file
+     * @throws IOException
+     */
     private void loadUsers(File file) throws IOException {
 
 	cache = new Properties();
