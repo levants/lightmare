@@ -615,7 +615,6 @@ public class Configuration implements Cloneable {
     }
 
     public static boolean isServer() {
-
 	return ConfigKeys.SERVER.getValue();
     }
 
