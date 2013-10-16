@@ -27,7 +27,6 @@ public class RestContainer {
     private static RestConfig restConfig;
 
     public static void putResource(Class<?> handlerClass, Resource resource) {
-
 	REST_RESOURCES.putIfAbsent(handlerClass, resource);
     }
 
