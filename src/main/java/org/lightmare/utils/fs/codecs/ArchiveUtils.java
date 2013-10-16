@@ -182,6 +182,11 @@ public abstract class ArchiveUtils {
 	return earFile;
     }
 
+    /**
+     * Gets appropriated {@link FileType} for passed {@link File} instance
+     * @param appFile
+     * @return {@link FileType}
+     */
     private static FileType getType(File appFile) {
 
 	FileType fileType;
