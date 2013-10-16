@@ -432,7 +432,6 @@ public class Configuration implements Cloneable {
 
 	File yamlFile = new File(path);
 	if (yamlFile.exists()) {
-
 	    InputStream stream = new FileInputStream(yamlFile);
 	    try {
 		Yaml yaml = new Yaml();
