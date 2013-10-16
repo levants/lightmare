@@ -15,7 +15,7 @@ public class BeanInUseException extends IOException {
 
     private static final long serialVersionUID = 1L;
 
-    //Error message for BeanInUseException class
+    // Error message for BeanInUseException class
     private static final String ERROR_MESSAGE_FORMAT = "bean %s is alredy in use";
 
     public BeanInUseException() {
