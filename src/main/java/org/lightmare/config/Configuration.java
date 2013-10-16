@@ -216,7 +216,6 @@ public class Configuration implements Cloneable {
      * @return <code>V</code>
      */
     public <V> V getPersistenceConfigValue(Object key) {
-
 	return getPersistenceConfigValue(key, null);
     }
 
