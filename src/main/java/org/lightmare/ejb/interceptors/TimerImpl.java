@@ -80,7 +80,6 @@ public class TimerImpl implements Timer {
     @Override
     public TimerHandle getHandle() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-
 	return handle;
     }
 }
