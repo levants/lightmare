@@ -71,6 +71,10 @@ public class RPCall {
 	this.port = port;
     }
 
+    /**
+     * Configures RPC service client
+     * @param config
+     */
     public static void configure(Configuration config) {
 
 	if (worker == null) {
