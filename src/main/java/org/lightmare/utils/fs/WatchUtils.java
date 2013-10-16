@@ -16,6 +16,11 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class WatchUtils {
 
+    /**
+     * Clears {@link URL} path
+     * @param path
+     * @return {@link String}
+     */
     public static String clearPath(String path) {
 
 	String cleanPath;
