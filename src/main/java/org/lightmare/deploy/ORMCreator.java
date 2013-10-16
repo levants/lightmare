@@ -32,7 +32,6 @@ public class ORMCreator {
     private AnnotationDB annotationDB;
 
     private ORMCreator(MetaCreator creator) {
-
 	this.aggregateds = new WeakHashMap<String, ArchiveUtils>(
 		creator.getAggregateds());
 	this.annotationDB = creator.getAnnotationDB();
