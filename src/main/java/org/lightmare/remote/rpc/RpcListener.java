@@ -32,7 +32,6 @@ public class RpcListener {
     private static EventLoopGroup boss;
     
      //Worker pool for Netty server
-     
     private static EventLoopGroup worker;
 
     private static final Logger LOG = Logger.getLogger(RpcListener.class);
