@@ -450,7 +450,6 @@ public class MetaContainer {
      * @param beanName
      */
     public static void removeMeta(String beanName) {
-
 	EJBS.remove(beanName);
     }
 
