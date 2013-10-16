@@ -784,7 +784,6 @@ public class Configuration implements Cloneable {
      * @return {@link PoolConfig}
      */
     public static PoolConfig getPoolConfig() {
-
 	return POOL_CONFIG;
     }
 
