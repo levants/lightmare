@@ -17,7 +17,7 @@ import org.lightmare.utils.ObjectUtils;
 public class WatchUtils {
 
     /**
-     * Clears {@link URL} path
+     * Clears passed path
      * 
      * @param path
      * @return {@link String}
@@ -37,6 +37,7 @@ public class WatchUtils {
 	return cleanPath;
     }
 
+    
     public static URL clearURL(URL url) throws IOException {
 
 	URL normURL;
