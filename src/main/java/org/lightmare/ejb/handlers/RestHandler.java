@@ -30,7 +30,6 @@ public class RestHandler<T> {
      * @throws Throwable
      */
     public Object invoke(Method method, Object[] args) throws Throwable {
-
 	return handler.invoke(bean, method, args);
     }
 
