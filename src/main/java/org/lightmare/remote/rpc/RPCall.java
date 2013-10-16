@@ -79,6 +79,7 @@ public class RPCall {
     private Bootstrap getBootstrap() {
 
 	Bootstrap bootstrap = new Bootstrap();
+
 	bootstrap.group(worker);
 	bootstrap.channel(NioSocketChannel.class);
 	bootstrap.option(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
