@@ -227,7 +227,6 @@ public class Configuration implements Cloneable {
      * @param value
      */
     public void setPersistenceConfigValue(Object key, Object value) {
-
 	setWithInitialization(ConfigKeys.PERSISTENCE_CONFIG.key, key, value);
     }
 
