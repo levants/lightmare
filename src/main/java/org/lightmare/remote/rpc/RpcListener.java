@@ -87,7 +87,6 @@ public class RpcListener {
 		    config.getIntValue("listening_port"));
 	    ChannelFuture future = bootstrap.bind(address).sync();
 	    LOG.info(future);
-
 	} catch (UnknownHostException ex) {
 	    LOG.error(ex.getMessage(), ex);
 	} catch (InterruptedException ex) {
