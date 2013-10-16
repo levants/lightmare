@@ -82,7 +82,6 @@ public class LightmareContext extends MemoryContext {
 		value = candidate;
 	    }
 	} else if (jndiName.startsWith(NamingUtils.EJB_NAME_PREF)) {
-
 	    NamingUtils.BeanDescriptor descriptor = NamingUtils
 		    .parseEjbJndiName(jndiName);
 	    EjbConnector ejbConnection = new EjbConnector();
