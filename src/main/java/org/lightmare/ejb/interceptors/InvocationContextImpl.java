@@ -92,7 +92,6 @@ public class InvocationContextImpl implements InvocationContext {
 
     @Override
     public Map<String, Object> getContextData() {
-
 	return contextData;
     }
 
