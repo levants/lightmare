@@ -120,11 +120,11 @@ public class FileUtils {
 	try {
 	    file = new File(url.toURI());
 	    isEarDir = checkOnEarDir(file);
-
-	    return isEarDir;
 	} catch (URISyntaxException ex) {
 	    throw new IOException(ex);
 	}
+	
+	return isEarDir;
     }
 
     /**
