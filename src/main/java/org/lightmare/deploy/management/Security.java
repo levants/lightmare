@@ -68,6 +68,10 @@ public class Security {
 	}
     }
 
+    /**
+     * Checks if administrator users cache is valid
+     * @return <code>boolean</code>
+     */
     public boolean check() {
 	return CollectionUtils.invalid(cache);
     }
