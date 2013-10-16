@@ -131,8 +131,10 @@ public class Watcher implements Runnable {
      */
     private static URL getAppropriateURL(String fileName) throws IOException {
 
+	URL url;
+	
 	File file = new File(fileName);
-	URL url = file.toURI().toURL();
+	url = file.toURI().toURL();
 	url = WatchUtils.clearURL(url);
 
 	return url;
