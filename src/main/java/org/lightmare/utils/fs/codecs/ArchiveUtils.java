@@ -381,7 +381,9 @@ public abstract class ArchiveUtils {
     public abstract void getEjbLibs() throws IOException;
 
     /**
-     * Extracts EJB application JAR files from EAR or extracted application deployment
+     * Extracts EJB application JAR files from EAR or extracted application
+     * deployment
+     * 
      * @param jarNames
      * @throws IOException
      */
