@@ -74,7 +74,6 @@ public class RPCall {
     public static void configure(Configuration config) {
 
 	if (worker == null) {
-
 	    workerPoolSize = config.getIntValue(ConfigKeys.WORKER_POOL.key);
 	    timeout = config.getIntValue(ConfigKeys.CONNECTION_TIMEOUT.key);
 	    worker = new NioEventLoopGroup(workerPoolSize,
