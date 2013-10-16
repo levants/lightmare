@@ -153,7 +153,6 @@ public class RestContainer {
      * @return <code>int</code>
      */
     public static int size() {
-
 	return REST_RESOURCES.size();
     }
 
