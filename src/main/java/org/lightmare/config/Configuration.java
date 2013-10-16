@@ -185,7 +185,6 @@ public class Configuration implements Cloneable {
     private <K, V> void setWithInitialization(Object key, K subKey, V value) {
 
 	Map<K, V> result = getWithInitialization(key);
-
 	result.put(subKey, value);
     }
 
