@@ -61,6 +61,7 @@ public class EJBContainerImpl extends EJBContainer {
     public Context getContext() {
 
 	Context context = null;
+
 	try {
 	    JndiManager utils = new JndiManager();
 	    context = utils.getContext();
