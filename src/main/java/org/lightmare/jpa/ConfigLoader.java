@@ -16,8 +16,8 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  * @since 0.0.16-SNAPSHOT
  */
 public class ConfigLoader {
-    
-    //Short path for ORM configuration file
+
+    // Short path for ORM configuration file
     private String shortPath;
 
     // Path for ORM configuration file
@@ -79,7 +79,7 @@ public class ConfigLoader {
     public Enumeration<URL> readFile(String path) throws IOException {
 
 	Enumeration<URL> xmls;
-	
+
 	if (path == null || path.isEmpty()) {
 	    throw new IOException(PATH_NOT_PROVIDED_ERROR);
 	}
