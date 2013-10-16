@@ -41,7 +41,6 @@ public class EarUtils extends ArchiveUtils {
 
     @Override
     public FileType getType() {
-
 	return FileType.EAR;
     }
 
