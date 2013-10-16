@@ -97,7 +97,6 @@ public class InvocationContextImpl implements InvocationContext {
 
     @Override
     public Object getTimer() {
-
 	// TODO find out usage of this method and write implementation
 	return timer;
     }
