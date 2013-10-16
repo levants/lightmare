@@ -138,7 +138,6 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(Object[] array) {
-
 	return !valid(array);
     }
 
