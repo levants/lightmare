@@ -68,7 +68,6 @@ public class DirUtils extends ArchiveUtils {
 
 	    @Override
 	    public boolean accept(File jarFile) {
-
 		return jarFile.getName().endsWith(JAR_FILE_EXT)
 			&& ObjectUtils.notTrue(jarFile.isDirectory());
 	    }
