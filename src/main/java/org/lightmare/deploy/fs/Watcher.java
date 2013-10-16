@@ -193,6 +193,7 @@ public class Watcher implements Runnable {
     private static WatchFileType checkType(String fileName) {
 
 	WatchFileType type;
+	
 	File file = new File(fileName);
 	String path = file.getPath();
 	String filePath = WatchUtils.clearPath(path);
