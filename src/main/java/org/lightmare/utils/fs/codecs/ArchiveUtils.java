@@ -443,6 +443,11 @@ public abstract class ArchiveUtils {
      */
     protected abstract void scanArchive(Object... args) throws IOException;
 
+    /**
+     * Scans passed files
+     * @param args
+     * @throws IOException
+     */
     public void scan(Object... args) throws IOException {
 
 	scanArchive(args);
