@@ -18,6 +18,7 @@ public class WatchUtils {
 
     /**
      * Clears {@link URL} path
+     * 
      * @param path
      * @return {@link String}
      */
