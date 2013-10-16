@@ -35,7 +35,6 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static boolean notNull(Object data) {
-
 	return (data != null);
     }
 
