@@ -382,7 +382,6 @@ public class BeanLoader {
 		if (ObjectUtils.notNull(semaphore)) {
 		    lockSemaphore(semaphore, unitName, jndiName);
 		}
-
 	    }
 
 	    metaData.addConnection(connection);
