@@ -83,6 +83,7 @@ public class JarUtils extends ArchiveUtils {
 	if (CollectionUtils.valid(args)) {
 	    xmlFromJar = (Boolean) CollectionUtils.getFirst(args);
 	}
+	
 	extractEjbJars(Collections.<String> emptySet());
     }
 }
