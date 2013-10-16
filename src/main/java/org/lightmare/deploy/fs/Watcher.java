@@ -277,7 +277,7 @@ public class Watcher implements Runnable {
      * @return {@link List}<File>
      */
     public static List<File> listDataSources() {
-	
+
 	List<File> list = new ArrayList<File>();
 
 	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
@@ -289,7 +289,7 @@ public class Watcher implements Runnable {
 		paths.addAll(pathsCurrent);
 	    }
 	}
-	
+
 	File file;
 	if (CollectionUtils.valid(paths)) {
 	    for (String path : paths) {
