@@ -59,7 +59,6 @@ public class ConnectionContainer {
      * @return {@link ConnectionSemaphore}
      */
     public static ConnectionSemaphore getSemaphore(String unitName) {
-
 	return CONNECTIONS.get(unitName);
     }
 
