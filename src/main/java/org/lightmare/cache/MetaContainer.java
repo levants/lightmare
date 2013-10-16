@@ -419,8 +419,10 @@ public class MetaContainer {
      */
     public static boolean undeploy(File file) throws IOException {
 
+	boolean valid;
+
 	URL url = file.toURI().toURL();
-	boolean valid = undeploy(url);
+	valid = undeploy(url);
 
 	return valid;
     }
