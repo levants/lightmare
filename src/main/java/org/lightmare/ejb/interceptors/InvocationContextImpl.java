@@ -77,7 +77,6 @@ public class InvocationContextImpl implements InvocationContext {
 
     @Override
     public Method getMethod() {
-
 	return methods.peek();
     }
 
