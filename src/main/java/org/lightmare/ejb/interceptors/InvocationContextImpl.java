@@ -87,7 +87,6 @@ public class InvocationContextImpl implements InvocationContext {
 
     @Override
     public void setParameters(Object[] parameters) {
-
 	this.parameters = parameters;
     }
 
