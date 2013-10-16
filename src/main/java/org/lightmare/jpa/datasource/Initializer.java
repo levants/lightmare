@@ -204,7 +204,6 @@ public abstract class Initializer {
 	Collection<String> jndiNames = FileParsers
 		.dataSourceNames(dataSourcePath);
 	if (StringUtils.valid(dataSourcePath)) {
-
 	    for (String jndiName : jndiNames) {
 		close(jndiName);
 	    }
