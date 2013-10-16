@@ -132,7 +132,7 @@ public class Watcher implements Runnable {
     private static URL getAppropriateURL(String fileName) throws IOException {
 
 	URL url;
-	
+
 	File file = new File(fileName);
 	url = file.toURI().toURL();
 	url = WatchUtils.clearURL(url);
@@ -149,7 +149,7 @@ public class Watcher implements Runnable {
     private static Set<DeploymentDirectory> getDeployDirectories() {
 
 	Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
-	
+
 	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
 	Set<DeploymentDirectory> deploymetDirssCurrent;
 	for (Configuration config : configs) {
@@ -169,10 +169,10 @@ public class Watcher implements Runnable {
      * @return {@link Set}<code><String></code>
      */
     private static Set<String> getDataSourcePaths() {
-Set<String> paths = new HashSet<String>();
-	
-Collection<Configuration> configs = MetaContainer.CONFIGS.values();
-	
+	Set<String> paths = new HashSet<String>();
+
+	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+
 	Set<String> pathsCurrent;
 	for (Configuration config : configs) {
 	    pathsCurrent = config.getDataSourcePath();
