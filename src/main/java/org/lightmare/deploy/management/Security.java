@@ -108,6 +108,12 @@ public class Security {
 	return valid;
     }
 
+    /**
+     * Authenticates passed user name and password
+     * @param user
+     * @param pass
+     * @return <code>boolean</code>
+     */
     public boolean authenticate(String user, String pass) {
 
 	boolean valid;
