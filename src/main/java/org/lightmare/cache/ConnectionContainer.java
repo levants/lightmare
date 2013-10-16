@@ -201,6 +201,7 @@ public class ConnectionContainer {
 	    throws IOException {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
+
 	isInProgress(semaphore);
 
 	return semaphore;
