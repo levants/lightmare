@@ -126,7 +126,6 @@ public class MetaContainer {
      * @return
      */
     public static MetaData addMetaData(String beanName, MetaData metaData) {
-
 	return EJBS.putIfAbsent(beanName, metaData);
     }
 
