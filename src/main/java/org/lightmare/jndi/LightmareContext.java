@@ -45,7 +45,6 @@ public class LightmareContext extends MemoryContext {
     private void cacheResource(Object resource) {
 
 	if (ObjectUtils.notNull(resource) && resource instanceof EntityManager) {
-
 	    EntityManager em = ObjectUtils.cast(resource, EntityManager.class);
 	    WeakReference<EntityManager> ref = new WeakReference<EntityManager>(
 		    em);
