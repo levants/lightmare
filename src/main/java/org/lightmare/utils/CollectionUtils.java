@@ -41,7 +41,6 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean notEmpty(Collection<?> collection) {
-
 	return !collection.isEmpty();
     }
 
