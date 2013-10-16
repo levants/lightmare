@@ -172,7 +172,6 @@ public class Watcher implements Runnable {
 	Set<String> paths = new HashSet<String>();
 
 	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
-
 	Set<String> pathsCurrent;
 	for (Configuration config : configs) {
 	    pathsCurrent = config.getDataSourcePath();
