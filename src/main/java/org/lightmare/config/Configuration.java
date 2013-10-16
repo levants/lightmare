@@ -623,7 +623,6 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isClient() {
-
 	return getConfigValue(ConfigKeys.CLIENT.key, Boolean.FALSE);
     }
 
