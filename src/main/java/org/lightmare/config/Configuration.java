@@ -680,7 +680,6 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isHotDeployment() {
-
 	return getConfigValue(ConfigKeys.HOT_DEPLOYMENT.key, Boolean.FALSE);
     }
 
