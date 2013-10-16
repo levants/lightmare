@@ -204,7 +204,6 @@ public class Watcher implements Runnable {
 	Set<String> dss = getDataSourcePaths();
 
 	if (CollectionUtils.valid(apps)) {
-
 	    String deploymantPath;
 	    Iterator<DeploymentDirectory> iterator = apps.iterator();
 	    boolean notDeployment = Boolean.TRUE;
