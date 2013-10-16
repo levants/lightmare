@@ -317,6 +317,7 @@ public class FileParsers {
 	    throws IOException {
 
 	Collection<String> jndiNames = new HashSet<String>();
+	
 	NodeList nodeList = getDataSourceTags(dataSourcePath);
 	String jndiName;
 	for (int i = 0; i < nodeList.getLength(); i++) {
