@@ -8,7 +8,8 @@ import java.lang.annotation.Target;
 import org.lightmare.utils.StringUtils;
 
 /**
- * To define unit name of {@link javax.persistence.Entity} class
+ * Defines unit name of {@link javax.persistence.Entity} class for scanning on
+ * start time
  * 
  * @author Levan
  * @since 0.0.16-SNAPSHOT
