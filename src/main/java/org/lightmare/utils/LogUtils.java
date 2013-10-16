@@ -74,6 +74,7 @@ public class LogUtils {
 	    Object... formats) {
 
 	String logMessage = logMessage(message, formats);
+
 	if (ex == null) {
 	    log.error(logMessage);
 	} else {
