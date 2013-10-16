@@ -25,6 +25,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.interceptor.AroundInvoke;
+import javax.interceptor.Interceptor;
 import javax.interceptor.Interceptors;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
@@ -562,6 +563,13 @@ public class BeanLoader {
 	    }
 	}
 
+	/**
+	 * Caches {@link Interceptor}, bean {@link Class} and {@link Method}s parameters
+	 * @param interceptors
+	 * @param beanClass
+	 * @param beanMethods
+	 * @throws IOException
+	 */
 	private void cacheInterceptors(Interceptors interceptors,
 		Class<?> beanClass, Method... beanMethods) throws IOException {
 
@@ -686,6 +694,7 @@ public class BeanLoader {
 
 	/**
 	 * Deploys EJB application from file
+	 * 
 	 * @return {@link String}
 	 */
 	private String deployFile() {
