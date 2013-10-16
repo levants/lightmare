@@ -390,6 +390,12 @@ public abstract class ArchiveUtils {
     public abstract void extractEjbJars(Set<String> jarNames)
 	    throws IOException;
 
+    /**
+     * Checks if passed file name contains ORM module configuration files
+     * @param jarName
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
     public abstract boolean checkOnOrm(String jarName) throws IOException;
 
     /**
