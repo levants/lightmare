@@ -253,7 +253,6 @@ public abstract class ArchiveUtils {
 	URL xmlURL;
 
 	String jarName = classOwnersFiles.get(className);
-
 	if (jarName == null || jarName.isEmpty()) {
 	    xmlURL = null;
 	} else {
