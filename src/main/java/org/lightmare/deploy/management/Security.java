@@ -80,6 +80,7 @@ public class Security {
 
     /**
      * Checks if container allows remote control
+     * 
      * @param request
      * @return <code>boolean</code>
      */
