@@ -175,7 +175,7 @@ public class FileParsers {
 	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    
+
 	    Element passElement = (Element) getFirst(passList);
 	    String password = getContext(passElement);
 
@@ -192,7 +192,7 @@ public class FileParsers {
      */
     public void setDataFromJBossPool(NodeList nodeList, Properties properties) {
 
-	for (int i = 0; i < nodeList.getLength(); i++) {
+	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
 
 	    Element thisElement = (Element) nodeList.item(i);
 	    NodeList minPoolSizeList = thisElement
