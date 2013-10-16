@@ -43,10 +43,10 @@ public class RPCall {
 
     protected static class ChannelInitializerImpl extends
 	    ChannelInitializer<SocketChannel> {
-	
+
 	private RcpHandler handler;
-	
-	public ChannelInitializerImpl(RcpHandler handler){
+
+	public ChannelInitializerImpl(RcpHandler handler) {
 	    this.handler = handler;
 	}
 
