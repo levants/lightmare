@@ -232,6 +232,7 @@ public class BeanLoader {
 	// Injection fields which should be accessible
 	private List<AccessibleObject> accessibleFields;
 
+	//Configuration instance for deployment
 	private Configuration configuration;
 
 	public BeanDeployer(BeanParameters parameters) {
