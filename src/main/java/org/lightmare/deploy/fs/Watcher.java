@@ -256,7 +256,6 @@ Collection<Configuration> configs = MetaContainer.CONFIGS.values();
 	    }
 	}
 	File[] files;
-	
 	if (CollectionUtils.valid(deploymetDirss)) {
 	    String path;
 	    DeployFiletr filter = new DeployFiletr();
