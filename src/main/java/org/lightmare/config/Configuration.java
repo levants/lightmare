@@ -141,7 +141,6 @@ public class Configuration implements Cloneable {
 	boolean valid;
 	
 	Map<K, ?> subConfig = getAsMap(key);
-
 	valid = CollectionUtils.valid(subConfig);
 	if (valid) {
 	    valid = subConfig.containsKey(subKey);
