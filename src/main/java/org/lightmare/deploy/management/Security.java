@@ -59,7 +59,6 @@ public class Security {
     }
 
     public boolean check() {
-
 	return CollectionUtils.invalid(cache);
     }
 
