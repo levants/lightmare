@@ -59,6 +59,11 @@ public class WatchUtils {
 	return normURL;
     }
 
+    /**
+     * Checks passed {@link DeployData} on watch service
+     * @param deployData
+     * @return <code>boolean</code>
+     */
     public static boolean checkForWatch(DeployData deployData) {
 
 	boolean check = ObjectUtils.notNull(deployData);
