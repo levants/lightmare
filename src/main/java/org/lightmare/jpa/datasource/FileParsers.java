@@ -158,7 +158,6 @@ public class FileParsers {
 	    Properties properties) {
 
 	for (int i = 0; i < nodeList.getLength(); i++) {
-
 	    Element thisElement = (Element) nodeList.item(i);
 	    NodeList userList = thisElement.getElementsByTagName(USER_TAG);
 	    int elementLength = userList.getLength();
