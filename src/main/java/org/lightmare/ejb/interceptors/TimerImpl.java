@@ -68,7 +68,6 @@ public class TimerImpl implements Timer {
     @Override
     public boolean isCalendarTimer() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-
 	return calendarTimer;
     }
 
