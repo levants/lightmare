@@ -764,7 +764,6 @@ public class Configuration implements Cloneable {
     }
 
     public void setPooledDataSource(boolean pooledDataSource) {
-
 	setPersistenceConfigValue(ConfigKeys.POOLED_DATA_SOURCE.key,
 		pooledDataSource);
     }
