@@ -200,7 +200,6 @@ public class RestContainer {
      * Clears cached rest resources
      */
     public static void clear() {
-
 	REST_RESOURCES.clear();
     }
 }
