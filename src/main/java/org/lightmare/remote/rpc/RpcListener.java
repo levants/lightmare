@@ -30,9 +30,9 @@ public class RpcListener {
 
     // Boss pool for Netty network
     private static EventLoopGroup boss;
-    /**
-     * Worker pool for Netty server
-     */
+    
+     //Worker pool for Netty server
+     
     private static EventLoopGroup worker;
 
     private static final Logger LOG = Logger.getLogger(RpcListener.class);
