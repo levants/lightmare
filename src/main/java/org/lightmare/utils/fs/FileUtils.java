@@ -38,7 +38,6 @@ public class FileUtils {
 
 	    @Override
 	    public boolean accept(File file, String name) {
-
 		return name.endsWith(ArchiveUtils.JAR_FILE_EXT)
 			|| name.endsWith(ArchiveUtils.CLASS_FILE_EXT)
 			|| file.isDirectory();
