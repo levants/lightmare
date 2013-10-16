@@ -57,7 +57,6 @@ public class FileParsers {
     private static final Logger LOG = Logger.getLogger(FileParsers.class);
 
     public static Document document(File file) throws IOException {
-
 	return document(file.toURI().toURL());
     }
 
