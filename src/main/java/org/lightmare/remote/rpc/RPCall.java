@@ -88,7 +88,6 @@ public class RPCall {
 	}
 
 	handler = new RcpHandler();
-
 	bootstrap.handler(new ChannelInitializerImpl(handler));
 
 	return bootstrap;
