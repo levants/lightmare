@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  */
 public abstract class JsonSerializer {
 
-    // Jackson serializing Mapper class
+    // Converter class
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     //
