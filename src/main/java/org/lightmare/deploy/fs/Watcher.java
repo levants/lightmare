@@ -290,7 +290,6 @@ public class Watcher implements Runnable {
 	    }
 	}
 	File file;
-
 	if (CollectionUtils.valid(paths)) {
 	    for (String path : paths) {
 		file = new File(path);
