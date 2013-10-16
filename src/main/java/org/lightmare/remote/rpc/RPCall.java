@@ -78,7 +78,6 @@ public class RPCall {
 
 		RpcEncoder rpcEncoder = new RpcEncoder();
 		RcpDecoder rcpDecoder = new RcpDecoder();
-
 		ch.pipeline().addLast(rpcEncoder, rcpDecoder, handler);
 	    }
 	});
