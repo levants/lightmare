@@ -687,6 +687,7 @@ public class BeanLoader {
 	private String deployFile() {
 
 	    String deployed = beanName;
+
 	    ClassLoader currentLoader = LoaderPoolManager.getCurrent();
 	    try {
 		LibraryLoader.loadCurrentLibraries(loader);
@@ -711,7 +712,7 @@ public class BeanLoader {
 	private String deployExtracted() {
 
 	    String deployed;
-	    
+
 	    synchronized (tmpFiles) {
 		try {
 		    deployed = deployFile();
@@ -726,7 +727,7 @@ public class BeanLoader {
 	private String deploy() {
 
 	    String deployed;
-	    
+
 	    synchronized (metaData) {
 		try {
 		    if (ObjectUtils.notNull(tmpFiles)) {
