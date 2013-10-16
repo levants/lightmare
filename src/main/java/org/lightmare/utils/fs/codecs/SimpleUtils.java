@@ -23,7 +23,6 @@ public class SimpleUtils extends ArchiveUtils {
 
     @Override
     public FileType getType() {
-
 	return type;
     }
 
