@@ -75,11 +75,11 @@ public class RPCall {
 
 	    @Override
 	    public void initChannel(SocketChannel ch) throws Exception {
-		
-		
-		
-		ch.pipeline().addLast(new RpcEncoder(), new RcpDecoder(),
-			handler);
+
+		RpcEncoder rpcEncoder = new RpcEncoder();
+		RcpDecoder rcpDecoder = new RcpDecoder();
+
+		ch.pipeline().addLast(rpcEncoder, rcpDecoder, handler);
 	    }
 	});
 
