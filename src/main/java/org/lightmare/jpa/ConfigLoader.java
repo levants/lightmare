@@ -47,7 +47,9 @@ public class ConfigLoader {
 
 	    @Override
 	    public URL nextElement() {
+
 		nextElement = Boolean.FALSE;
+
 		return url;
 	    }
 	};
