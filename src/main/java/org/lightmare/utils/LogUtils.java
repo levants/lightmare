@@ -152,7 +152,6 @@ public class LogUtils {
      * @param formats
      */
     public static void info(Logger log, String message, Object... formats) {
-
 	info(log, null, message, formats);
     }
 }
