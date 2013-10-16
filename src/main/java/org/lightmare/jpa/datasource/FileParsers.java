@@ -299,6 +299,7 @@ public class FileParsers {
 
     /**
      * Gets data source descriptor tags from {@link Document} parameter
+     * 
      * @param document
      * @return {@link NodeList}
      */
