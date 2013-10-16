@@ -31,7 +31,7 @@ public class ThreadFactoryUtil implements ThreadFactory {
     public Thread newThread(Runnable runnable) {
 
 	Thread thread = new Thread(runnable);
-	
+
 	if (ObjectUtils.notNull(priority)) {
 	    thread.setPriority(priority);
 	}
