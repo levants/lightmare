@@ -340,6 +340,11 @@ public abstract class ArchiveUtils {
 	return ejbNames;
     }
 
+    /**
+     * Parses XML file {@link InputStream} from application root
+     * @return {@link Set}<code><String></code>
+     * @throws IOException
+     */
     public Set<String> appXmlParser() throws IOException {
 
 	Set<String> jarNames;
