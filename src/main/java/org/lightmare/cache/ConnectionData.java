@@ -7,8 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Container class to cache connection and with descriptors in {@link org.lightmare.cache.MetaData}
- * for each EJB bean
+ * Container class to cache connection and with descriptors in
+ * {@link org.lightmare.cache.MetaData} for each EJB bean
  * 
  * @author levan
  * @since 0.0.45-SNAPSHOT
