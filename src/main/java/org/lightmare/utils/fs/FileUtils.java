@@ -225,7 +225,7 @@ public class FileUtils {
     public static List<URL> toURLWithClasspath(String path) throws IOException {
 
 	List<URL> urls = new ArrayList<URL>();
-	
+
 	URL url;
 	if (StringUtils.valid(path)) {
 	    url = toURL(path);
