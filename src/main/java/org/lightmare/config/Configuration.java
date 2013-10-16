@@ -154,7 +154,6 @@ public class Configuration implements Cloneable {
     }
 
     private <K, V> V getSubConfigValue(Object key, K subKey) {
-
 	return getSubConfigValue(key, subKey, null);
     }
 
