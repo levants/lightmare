@@ -16,6 +16,8 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  * @since 0.0.16-SNAPSHOT
  */
 public class ConfigLoader {
+    
+    private String shortPath;
 
     // Path for ORM configuration file
     public static final String XML_PATH = "META-INF/persistence.xml";
@@ -23,8 +25,6 @@ public class ConfigLoader {
     // Error messages
     private static final String PATH_NOT_PROVIDED_ERROR = "Path is not provided";
     private static final String COULD_NOT_FIND_ERROR = "Could not find persistence.xml file on path ";
-
-    private String shortPath;
 
     public String getShortPath() {
 	return shortPath;
