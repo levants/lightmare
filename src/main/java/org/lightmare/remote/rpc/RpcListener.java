@@ -71,8 +71,12 @@ public class RpcListener {
 			@Override
 			public void initChannel(SocketChannel ch)
 				throws Exception {
-			    ch.pipeline().addLast(new RcpEncoder(),
-				    new RpcDecoder(), new RpcHandler());
+			    
+			    RcpEncoder rcpEncoder = new RcpEncoder();
+			    RpcDecoder rpcDecoder = new RpcDecoder();
+			    RpcHandler rpcHandler = new RpcHandler();
+			    ch.pipeline().addLast(rcpEncoder,
+				    rpcDecoder, rpcHandler);
 			}
 		    });
 
