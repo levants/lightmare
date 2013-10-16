@@ -78,6 +78,11 @@ public class Security {
 	return CollectionUtils.invalid(cache);
     }
 
+    /**
+     * Checks if container allows remote control
+     * @param request
+     * @return <code>boolean</code>
+     */
     public boolean controlAllowed(HttpServletRequest request) {
 
 	boolean valid = Configuration.getRemoteControl();
