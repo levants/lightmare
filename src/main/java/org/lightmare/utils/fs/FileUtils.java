@@ -205,6 +205,12 @@ public class FileUtils {
 	}
     }
 
+    /**
+     * Converts passed file to {@link URL} instance
+     * @param file
+     * @return {@link URL}
+     * @throws IOException
+     */
     public static URL toURL(File file) throws IOException {
 	return file.toURI().toURL();
     }
