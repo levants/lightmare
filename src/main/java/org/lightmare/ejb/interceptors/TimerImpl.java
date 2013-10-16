@@ -74,7 +74,6 @@ public class TimerImpl implements Timer {
     @Override
     public Serializable getInfo() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-
 	return info;
     }
 
