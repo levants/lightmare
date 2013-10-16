@@ -112,7 +112,7 @@ public class FileParsers {
      * @throws IOException
      */
     public static Document parse(InputStream stream) throws IOException {
-	
+
 	Document document;
 
 	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -157,14 +157,14 @@ public class FileParsers {
     public void setDataFromJBossSecurity(NodeList nodeList,
 	    Properties properties) {
 
-	for (int i = 0; i < nodeList.getLength(); i++) {
+	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
 	    Element thisElement = (Element) nodeList.item(i);
 	    NodeList userList = thisElement.getElementsByTagName(USER_TAG);
 	    int elementLength = userList.getLength();
 	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    
+
 	    Element userElement = (Element) getFirst(userList);
 	    String user = getContext(userElement);
 
