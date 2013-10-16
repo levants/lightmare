@@ -212,7 +212,7 @@ public class PoolConfig {
      * @return <code>int</code>
      */
     public static Integer asInt(Map<Object, Object> properties, Object key) {
-	
+
 	Integer propertyInt;
 
 	Object property = properties.get(key);
@@ -238,8 +238,10 @@ public class PoolConfig {
      */
     public static Integer asInt(Map<Object, Object> properties, Defaults config) {
 
+	Integer propertyInt;
+
 	String key = config.key;
-	Integer propertyInt = asInt(properties, key);
+	propertyInt = asInt(properties, key);
 
 	return propertyInt;
     }
