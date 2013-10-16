@@ -41,6 +41,11 @@ public class RPCall {
 
     private static final int ZERO_TIMEOUT = 0;
 
+    /**
+     * Implementation of {@link ChannelInitializer} on {@link SocketChannel} for RPC client caller
+     * @author Levan
+     *
+     */
     protected static class ChannelInitializerImpl extends
 	    ChannelInitializer<SocketChannel> {
 
