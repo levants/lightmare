@@ -56,7 +56,6 @@ public class BeanInUseException extends IOException {
      * @return {@link BeanInUseException}
      */
     public static BeanInUseException get(Object bean) {
-
 	return get(ERROR_MESSAGE_FORMAT, bean);
     }
 }
