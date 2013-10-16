@@ -116,7 +116,7 @@ public class EarUtils extends ArchiveUtils {
     @Override
     public boolean checkOnOrm(String jarName) throws IOException {
 
-	boolean check;
+	boolean check = Boolean.FALSE;
 	
 	ZipFile zipFile = getEarFile();
 	ZipEntry jarEntry = zipFile.getEntry(jarName);
