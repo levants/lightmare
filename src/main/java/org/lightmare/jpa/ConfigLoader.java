@@ -77,6 +77,8 @@ public class ConfigLoader {
      */
     public Enumeration<URL> readFile(String path) throws IOException {
 
+	Enumeration<URL> xmls;
+	
 	if (path == null || path.isEmpty()) {
 	    throw new IOException(PATH_NOT_PROVIDED_ERROR);
 	}
@@ -89,7 +91,7 @@ public class ConfigLoader {
 
 	shortPath = file.getName();
 	final URL url = file.toURI().toURL();
-	Enumeration<URL> xmls = readURL(url);
+	xmls = readURL(url);
 
 	return xmls;
     }
