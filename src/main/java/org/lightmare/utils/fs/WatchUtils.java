@@ -18,6 +18,7 @@ public class WatchUtils {
     public static String clearPath(String path) {
 
 	String cleanPath;
+
 	if (path.endsWith(File.separator)) {
 	    int from = 0;
 	    int to = path.length() - 1;
