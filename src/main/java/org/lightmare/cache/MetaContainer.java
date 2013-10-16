@@ -436,8 +436,10 @@ public class MetaContainer {
      */
     public static boolean undeploy(String path) throws IOException {
 
+	boolean valid;
+
 	File file = new File(path);
-	boolean valid = undeploy(file);
+	valid = undeploy(file);
 
 	return valid;
     }
