@@ -226,6 +226,7 @@ public class FileParsers {
 	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
+	    
 	    Element initPoolSizeElement = (Element) getFirst(initPoolSizeList);
 	    String prefill = getContext(initPoolSizeElement);
 	    if (Boolean.valueOf(prefill)) {
