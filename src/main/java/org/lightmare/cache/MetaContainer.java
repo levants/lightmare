@@ -457,7 +457,6 @@ public class MetaContainer {
      * @return {@link java.util.Iterator}<MetaData>
      */
     public static Iterator<MetaData> getBeanClasses() {
-
 	return EJBS.values().iterator();
     }
 
