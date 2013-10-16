@@ -40,7 +40,6 @@ public class TransactionHolder {
      * thread
      */
     public static void removeTransaction() {
-
 	TRANSACTION_HOLDER.remove();
     }
 }
