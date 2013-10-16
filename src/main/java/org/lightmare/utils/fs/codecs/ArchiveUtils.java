@@ -308,7 +308,7 @@ public abstract class ArchiveUtils {
     public Set<String> appXmlParser() throws IOException {
 
 	Set<String> jarNames;
-	
+
 	InputStream stream = earReader();
 	jarNames = appXmlParser(stream);
 
@@ -447,7 +447,6 @@ public abstract class ArchiveUtils {
     }
 
     public List<File> getTmpFiles() {
-
 	return tmpFiles;
     }
 }
