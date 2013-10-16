@@ -76,7 +76,7 @@ public class RpcListener {
     }
 
     /**
-     * Starts server
+     * Starts RPC server
      * 
      */
     public static void startServer(Configuration config) {
