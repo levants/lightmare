@@ -57,7 +57,7 @@ public class FileParsers {
     private static final Logger LOG = Logger.getLogger(FileParsers.class);
 
     /**
-     * Reads passed {@link File} as {@link Document} instance
+     * Reads passed {@link File} as {@link Document} object
      * @param file
      * @return {@link Document}
      * @throws IOException
