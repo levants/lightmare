@@ -36,6 +36,7 @@ public class Security {
 
     /**
      * Loads administrator user information from passed {@link File} parameter
+     * 
      * @param file
      * @throws IOException
      */
