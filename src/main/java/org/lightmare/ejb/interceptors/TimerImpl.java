@@ -56,7 +56,6 @@ public class TimerImpl implements Timer {
     @Override
     public ScheduleExpression getSchedule() throws IllegalStateException,
 	    NoSuchObjectLocalException, EJBException {
-
 	return schedule;
     }
 
