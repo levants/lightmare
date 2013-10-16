@@ -26,6 +26,7 @@ public abstract class StringUtils {
 
     /**
      * Checks if passed {@link CharSequence} is not null or is not empty
+     * 
      * @param chars
      * @return <code>boolean</code>
      */
