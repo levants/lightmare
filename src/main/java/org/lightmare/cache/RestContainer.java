@@ -129,7 +129,6 @@ public class RestContainer {
      * @param resourceClass
      */
     public static void removeResource(Class<?> resourceClass) {
-
 	REST_RESOURCES.remove(resourceClass);
     }
 
