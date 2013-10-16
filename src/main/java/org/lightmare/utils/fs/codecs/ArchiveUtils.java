@@ -435,6 +435,11 @@ public abstract class ArchiveUtils {
 	}
     }
 
+    /**
+     * Scans passed archive files
+     * @param args
+     * @throws IOException
+     */
     protected abstract void scanArchive(Object... args) throws IOException;
 
     public void scan(Object... args) throws IOException {
