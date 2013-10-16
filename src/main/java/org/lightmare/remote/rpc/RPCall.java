@@ -15,6 +15,7 @@ import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.remote.rcp.RcpHandler;
 import org.lightmare.remote.rcp.decoders.RcpDecoder;
+import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.decoders.RpcEncoder;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
@@ -110,6 +111,12 @@ public class RPCall {
 	return bootstrap;
     }
 
+    /**
+     * Calls RPC service for passed {@link RcpWrapper} instance
+     * @param wrapper
+     * @return {@link Object}
+     * @throws IOException
+     */
     public Object call(RpcWrapper wrapper) throws IOException {
 
 	Object value;
