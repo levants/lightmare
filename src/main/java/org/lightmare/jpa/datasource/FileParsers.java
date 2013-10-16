@@ -95,7 +95,7 @@ public class FileParsers {
     public static String getContext(Element element) {
 
 	String data;
-	
+
 	NodeList textList = element.getChildNodes();
 	Node firstNode = getFirst(textList);
 	data = firstNode.getNodeValue().trim();
@@ -112,11 +112,10 @@ public class FileParsers {
      * @throws IOException
      */
     public static Document parse(InputStream stream) throws IOException {
-Document document;
-	
-DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	Document document;
+
+	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder builder;
-	
 
 	try {
 	    builder = factory.newDocumentBuilder();
