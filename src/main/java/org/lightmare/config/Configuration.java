@@ -668,7 +668,6 @@ public class Configuration implements Cloneable {
     }
 
     public Set<String> getDataSourcePath() {
-
 	return getConfigValue(ConfigKeys.DATA_SOURCE_PATH.key);
     }
 
