@@ -184,6 +184,7 @@ public abstract class ArchiveUtils {
 
     /**
      * Gets appropriated {@link FileType} for passed {@link File} instance
+     * 
      * @param appFile
      * @return {@link FileType}
      */
@@ -210,6 +211,13 @@ public abstract class ArchiveUtils {
 	return fileType;
     }
 
+    /**
+     * Gets appropriated {@link ArchiveUtils} implementation class instance for passed {@link URL} and {@link FileType} parameters
+     * @param url
+     * @param fileType
+     * @return {@link ArchiveUtils}
+     * @throws IOException
+     */
     public static ArchiveUtils getAppropriatedType(URL url, FileType fileType)
 	    throws IOException {
 
