@@ -17,7 +17,7 @@ public class ThreadFactoryUtil implements ThreadFactory {
     // Thread name
     private String name;
 
-    //Thread priority
+    // Thread priority
     private Integer priority;
 
     public ThreadFactoryUtil(String name) {
