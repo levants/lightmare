@@ -218,7 +218,6 @@ public abstract class Initializer {
      * @param dataSource
      */
     public static void cleanUp(DataSource dataSource) {
-
 	InitDataSourceFactory.destroy(dataSource);
     }
 }
