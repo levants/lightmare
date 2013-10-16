@@ -184,6 +184,7 @@ public class PoolConfig {
 	    throws IOException {
 
 	Map<Object, Object> propertiesMap = getDefaultPooling();
+
 	fillDefaults(propertiesMap, initial);
 	Set<Object> keys = unsopportedKeys();
 	String dataSourceName = null;
