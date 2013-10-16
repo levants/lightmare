@@ -734,7 +734,6 @@ public class BeanLoader {
 		    } else {
 			deployed = deployFile();
 		    }
-
 		} catch (Exception ex) {
 		    LOG.error(ex.getMessage(), ex);
 		    deployed = null;
