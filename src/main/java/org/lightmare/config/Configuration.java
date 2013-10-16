@@ -745,7 +745,6 @@ public class Configuration implements Cloneable {
     }
 
     public void setSwapDataSource(boolean swapDataSource) {
-
 	setPersistenceConfigValue(ConfigKeys.SWAP_DATASOURCE.key,
 		swapDataSource);
     }
