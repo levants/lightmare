@@ -26,6 +26,11 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  */
 public class FileUtils {
 
+    /**
+     * Lists java archive class files in passed file
+     * @param file
+     * @return {@link File}[]
+     */
     private static File[] listJavaFiles(File file) {
 
 	File[] subFiles = file.listFiles(new FilenameFilter() {
