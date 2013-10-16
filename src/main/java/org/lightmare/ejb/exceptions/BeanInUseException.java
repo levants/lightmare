@@ -36,6 +36,7 @@ public class BeanInUseException extends IOException {
 
     /**
      * Initializes {@link BeanInUseException} with passed error message format
+     * 
      * @param message
      * @param formats
      * @return {@link BeanInUseException}
