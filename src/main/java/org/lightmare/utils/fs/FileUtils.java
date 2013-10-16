@@ -148,6 +148,7 @@ public class FileUtils {
     public static boolean checkOnEarDir(File file) {
 
 	boolean isEarDir = file.isDirectory();
+
 	if (isEarDir) {
 	    File[] files = file.listFiles();
 	    isEarDir = CollectionUtils.valid(files);
