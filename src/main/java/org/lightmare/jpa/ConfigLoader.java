@@ -82,7 +82,7 @@ public class ConfigLoader {
 
 	File file = new File(path);
 	if (!file.exists()) {
-	    throw new IOException(String.format(
+	    throw new IOException(StringUtils.concat(
 		    "could not find persistence.xml file at path %s", path));
 	}
 
