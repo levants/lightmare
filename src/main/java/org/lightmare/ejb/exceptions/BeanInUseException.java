@@ -15,6 +15,8 @@ public class BeanInUseException extends IOException {
 
     private static final long serialVersionUID = 1L;
 
+    private static final String ERROR_MESSAGE_FORMAT = "bean %s is alredy in use";
+
     public BeanInUseException() {
 	super();
     }
@@ -36,5 +38,10 @@ public class BeanInUseException extends IOException {
 	String errorMessage = LogUtils.logMessage(message, formats);
 
 	return new BeanInUseException(errorMessage);
+    }
+
+    public static BeanInUseException get(Object bean) {
+
+	return get(ERROR_MESSAGE_FORMAT, bean);
     }
 }
