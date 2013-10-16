@@ -25,7 +25,7 @@ public abstract class StringUtils {
     public static final int NOT_EXISTING_INDEX = -1;
 
     /**
-     * Checks if passed {@link CharSequence} is not null or is not empty
+     * Checks if passed {@link CharSequence} is not null and is not empty
      * 
      * @param chars
      * @return <code>boolean</code>
