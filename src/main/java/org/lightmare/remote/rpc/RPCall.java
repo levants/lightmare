@@ -73,6 +73,7 @@ public class RPCall {
 
     /**
      * Configures RPC service client
+     * 
      * @param config
      */
     public static void configure(Configuration config) {
