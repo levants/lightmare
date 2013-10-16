@@ -212,8 +212,8 @@ public abstract class ArchiveUtils {
     }
 
     /**
-     * Gets appropriated {@link ArchiveUtils} implementation for
-     * passed {@link URL} and {@link FileType} parameters
+     * Gets appropriated {@link ArchiveUtils} implementation for passed
+     * {@link URL} and {@link FileType} parameters
      * 
      * @param url
      * @param fileType
@@ -308,6 +308,12 @@ public abstract class ArchiveUtils {
 	return xmlURL;
     }
 
+    /**
+     * Parses application configuration XML file {@link InputStream} instance
+     * @param xmlStream
+     * @return {@link Set}<code><String></code>
+     * @throws IOException
+     */
     public Set<String> appXmlParser(InputStream xmlStream) throws IOException {
 
 	Set<String> ejbNames = new HashSet<String>();
