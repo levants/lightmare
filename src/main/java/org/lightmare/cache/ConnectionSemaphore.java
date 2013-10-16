@@ -14,6 +14,7 @@ import javax.persistence.EntityManagerFactory;
  */
 public class ConnectionSemaphore {
 
+    //Flag if connection initialization is in progress
     private AtomicBoolean inProgress = new AtomicBoolean();
 
     private String unitName;
