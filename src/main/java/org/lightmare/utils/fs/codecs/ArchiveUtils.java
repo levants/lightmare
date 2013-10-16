@@ -253,6 +253,12 @@ public abstract class ArchiveUtils {
 	return ioUtils;
     }
 
+    /**
+     * Gets appropriated {@link ArchiveUtils} implementation for passed {@link URL} parameter
+     * @param url
+     * @return {@link ArchiveUtils}
+     * @throws IOException
+     */
     public static ArchiveUtils getAppropriatedType(URL url) throws IOException {
 
 	ArchiveUtils ioUtils = getAppropriatedType(url, null);
