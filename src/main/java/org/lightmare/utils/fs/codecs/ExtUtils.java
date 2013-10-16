@@ -41,7 +41,6 @@ public class ExtUtils extends DirUtils {
 
     @Override
     public FileType getType() {
-
 	return type;
     }
 
