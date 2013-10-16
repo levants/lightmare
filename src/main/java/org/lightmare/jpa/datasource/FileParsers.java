@@ -297,6 +297,11 @@ public class FileParsers {
 	return properties;
     }
 
+    /**
+     * Gets data source descriptor tags from {@link Document} parameter
+     * @param document
+     * @return {@link NodeList}
+     */
     private static NodeList getDataSourceTags(Document document) {
 
 	NodeList nodeList = document.getElementsByTagName(DATA_SURCE_TAG);
