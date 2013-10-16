@@ -28,7 +28,7 @@ import org.lightmare.utils.concurrent.ThreadFactoryUtil;
  */
 public class RpcListener {
 
-     //Boss pool for Netty network
+    // Boss pool for Netty network
     private static EventLoopGroup boss;
     /**
      * Worker pool for Netty server
