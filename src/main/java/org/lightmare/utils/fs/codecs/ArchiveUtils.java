@@ -275,7 +275,6 @@ public abstract class ArchiveUtils {
 	
 	Map<String, String> classOwnersFiles = annotationDB
 		.getClassOwnersFiles();
-
 	xmlURL = getAppropriatedURL(classOwnersFiles, className);
 
 	return xmlURL;
