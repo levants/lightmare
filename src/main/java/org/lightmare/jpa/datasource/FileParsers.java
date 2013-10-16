@@ -164,6 +164,7 @@ public class FileParsers {
 	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
+	    
 	    Element userElement = (Element) getFirst(userList);
 	    String user = getContext(userElement);
 
