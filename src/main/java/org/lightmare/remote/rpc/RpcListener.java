@@ -49,6 +49,7 @@ public class RpcListener {
 	if (workerCount == null) {
 	    workerCount = ConfigKeys.WORKER_POOL.getValue();
 	}
+	
 	boss = new NioEventLoopGroup(bossCount, new ThreadFactoryUtil(
 		"netty-boss-thread", Thread.MAX_PRIORITY));
 	worker = new NioEventLoopGroup(workerCount, new ThreadFactoryUtil(
