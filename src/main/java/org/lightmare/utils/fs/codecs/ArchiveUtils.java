@@ -445,6 +445,7 @@ public abstract class ArchiveUtils {
 
     /**
      * Scans passed files
+     * 
      * @param args
      * @throws IOException
      */
