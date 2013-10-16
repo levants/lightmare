@@ -83,7 +83,6 @@ public class MetaContainer {
     public static void putConfig(URL[] archives, Configuration config) {
 
 	if (CollectionUtils.valid(archives)) {
-
 	    boolean containsPath;
 	    for (URL archive : archives) {
 
