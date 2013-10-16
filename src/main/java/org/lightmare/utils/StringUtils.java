@@ -36,6 +36,11 @@ public abstract class StringUtils {
 		&& chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
     }
 
+    /**
+     * Checks if each of passed {@link CharSequence}s is not null or is not empty
+     * @param lines
+     * @return <code>boolean</code>
+     */
     public static boolean validAll(CharSequence... lines) {
 
 	boolean valid = CollectionUtils.valid(lines);
