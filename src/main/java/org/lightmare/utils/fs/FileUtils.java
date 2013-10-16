@@ -209,6 +209,12 @@ public class FileUtils {
 	return file.toURI().toURL();
     }
 
+    /**
+     * Creates {@link URL} from passed path
+     * @param path
+     * @return {@link URL}
+     * @throws IOException
+     */
     public static URL toURL(String path) throws IOException {
 
 	File file = new File(path);
