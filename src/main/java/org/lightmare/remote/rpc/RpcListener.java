@@ -36,6 +36,11 @@ public class RpcListener {
 
     private static final Logger LOG = Logger.getLogger(RpcListener.class);
 
+    /**
+     * Implementation of {@link ChannelInitializer} for RPC service
+     * @author Levan
+     *
+     */
     protected static class ChannelInitializerImpl extends
 	    ChannelInitializer<SocketChannel> {
 
