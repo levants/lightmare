@@ -254,7 +254,9 @@ public abstract class ArchiveUtils {
     }
 
     /**
-     * Gets appropriated {@link ArchiveUtils} implementation for passed {@link URL} parameter
+     * Gets appropriated {@link ArchiveUtils} implementation for passed
+     * {@link URL} parameter
+     * 
      * @param url
      * @return {@link ArchiveUtils}
      * @throws IOException
