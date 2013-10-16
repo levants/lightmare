@@ -63,6 +63,7 @@ public class ShutDown implements Runnable {
      * @param tmpResources
      */
     private void addTmpResources(TmpResources tmpResources) {
+
 	getResources().add(tmpResources);
     }
 
