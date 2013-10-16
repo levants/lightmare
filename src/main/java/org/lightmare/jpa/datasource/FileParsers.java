@@ -112,10 +112,10 @@ public class FileParsers {
      * @throws IOException
      */
     public static Document parse(InputStream stream) throws IOException {
-
+Document document;
 	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder builder;
-	Document document;
+	
 
 	try {
 	    builder = factory.newDocumentBuilder();
