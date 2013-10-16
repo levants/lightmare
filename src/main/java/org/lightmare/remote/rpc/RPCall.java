@@ -89,7 +89,7 @@ public class RPCall {
 
 	handler = new RcpHandler();
 
-	bootstrap.handler();
+	bootstrap.handler(new ChannelInitializerImpl(handler));
 
 	return bootstrap;
     }
