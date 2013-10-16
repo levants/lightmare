@@ -34,6 +34,12 @@ public class BeanInUseException extends IOException {
 	super(message, thr);
     }
 
+    /**
+     * Initializes {@link BeanInUseException} with error message
+     * @param message
+     * @param formats
+     * @return {@link BeanInUseException}
+     */
     public static BeanInUseException get(String message, Object... formats) {
 
 	String errorMessage = LogUtils.logMessage(message, formats);
