@@ -401,7 +401,6 @@ public class MetaCreator {
 	    if (CollectionUtils.valid(beanNames)) {
 		deployBeans(beanNames);
 	    }
-
 	} finally {
 
 	    // Caches configuration
