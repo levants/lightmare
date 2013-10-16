@@ -45,6 +45,10 @@ public class RPCall {
 	    ChannelInitializer<SocketChannel> {
 	
 	private RcpHandler handler;
+	
+	public ChannelInitializerImpl(RcpHandler handler){
+	    this.handler = handler;
+	}
 
 	@Override
 	public void initChannel(SocketChannel ch) throws Exception {
