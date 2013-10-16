@@ -200,7 +200,7 @@ public class FileParsers {
 	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    
+
 	    Element minPoolSizeElement = (Element) getFirst(minPoolSizeList);
 	    String minPoolSize = getContext(minPoolSizeElement);
 
@@ -213,7 +213,7 @@ public class FileParsers {
 	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    
+
 	    Element maxPoolSizeElement = (Element) getFirst(maxPoolSizeList);
 	    String maxPoolSize = getContext(maxPoolSizeElement);
 
@@ -226,7 +226,7 @@ public class FileParsers {
 	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
 		continue;
 	    }
-	    
+
 	    Element initPoolSizeElement = (Element) getFirst(initPoolSizeList);
 	    String prefill = getContext(initPoolSizeElement);
 	    if (Boolean.valueOf(prefill)) {
@@ -248,7 +248,7 @@ public class FileParsers {
 	List<Properties> properties = new ArrayList<Properties>();
 	String jndiName;
 	String clearName;
-	for (int i = 0; i < nodeList.getLength(); i++) {
+	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
 
 	    Element thisElement = (Element) nodeList.item(i);
 	    Properties props = new Properties();
