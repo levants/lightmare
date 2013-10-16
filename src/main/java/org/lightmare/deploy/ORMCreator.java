@@ -173,7 +173,6 @@ public class ORMCreator {
      * @return {@link ORMCreator}
      */
     protected static ORMCreator get(MetaCreator creator) {
-
 	return new ORMCreator(creator);
     }
 }
