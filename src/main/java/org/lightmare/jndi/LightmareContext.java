@@ -93,7 +93,6 @@ public class LightmareContext extends MemoryContext {
 	    } catch (IOException ex) {
 		throw new NamingException(ex.getMessage());
 	    }
-
 	} else {
 	    value = super.lookup(jndiName);
 	}
