@@ -212,7 +212,7 @@ public abstract class ArchiveUtils {
     }
 
     /**
-     * Gets appropriated {@link ArchiveUtils} implementation class instance for
+     * Gets appropriated {@link ArchiveUtils} implementation for
      * passed {@link URL} and {@link FileType} parameters
      * 
      * @param url
