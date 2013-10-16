@@ -151,7 +151,6 @@ public abstract class Initializer {
     }
 
     public static void removeInitialized(String datasourcePath) {
-
 	INITIALIZED_SOURCES.remove(datasourcePath);
     }
 
