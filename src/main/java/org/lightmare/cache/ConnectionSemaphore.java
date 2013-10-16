@@ -30,7 +30,7 @@ public class ConnectionSemaphore {
     private final AtomicInteger users = new AtomicInteger();
 
     // Check if needs configure EntityManagerFactory
-    private AtomicBoolean check = new AtomicBoolean();
+    private final AtomicBoolean check = new AtomicBoolean();
 
     // Default semaphore capacity
     public static final int MINIMAL_USERS = 1;
