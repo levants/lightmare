@@ -469,7 +469,6 @@ public class MetaCreator {
     }
 
     public ClassLoader getCurrent() {
-
 	return current;
     }
 
