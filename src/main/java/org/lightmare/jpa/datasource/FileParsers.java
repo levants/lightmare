@@ -310,6 +310,12 @@ public class FileParsers {
 	return nodeList;
     }
 
+    /**
+     * Gets data source descriptor tags from passed {@link File} parameter
+     * @param file
+     * @return {@link NodeList}
+     * @throws IOException
+     */
     private static NodeList getDataSourceTags(File file) throws IOException {
 
 	NodeList nodeList;
