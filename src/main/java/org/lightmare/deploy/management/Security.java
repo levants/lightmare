@@ -53,6 +53,7 @@ public class Security {
 
     /**
      * Caches administrator users
+     * 
      * @throws IOException
      */
     public void cacheUsers() throws IOException {
@@ -70,6 +71,7 @@ public class Security {
 
     /**
      * Checks if administrator users cache is valid
+     * 
      * @return <code>boolean</code>
      */
     public boolean check() {
