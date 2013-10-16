@@ -212,10 +212,10 @@ public class PoolConfig {
      * @return <code>int</code>
      */
     public static Integer asInt(Map<Object, Object> properties, Object key) {
-Integer propertyInt;
-	
-Object property = properties.get(key);
-	
+	Integer propertyInt;
+
+	Object property = properties.get(key);
+
 	if (property == null) {
 	    propertyInt = null;
 	} else if (property instanceof Integer) {
