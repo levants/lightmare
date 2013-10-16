@@ -37,7 +37,12 @@ public class WatchUtils {
 	return cleanPath;
     }
 
-    
+    /**
+     * Clears path in passed {@link URL} instance
+     * @param url
+     * @return {@link URL}
+     * @throws IOException
+     */
     public static URL clearURL(URL url) throws IOException {
 
 	URL normURL;
