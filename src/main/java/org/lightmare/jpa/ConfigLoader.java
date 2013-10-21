@@ -12,7 +12,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
 /**
  * For getting resources from persistence.xml path
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.16-SNAPSHOT
  */
 public class ConfigLoader {
