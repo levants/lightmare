@@ -268,7 +268,7 @@ public class ParamBuilder {
 	} else {
 	    nullParam = null;
 	}
-	
+
 	paramsList.add(nullParam);
     }
 
@@ -344,6 +344,12 @@ public class ParamBuilder {
 	return paramsList;
     }
 
+    /**
+     * Builder class to configure and initialize {@link ParamBuilder} instance
+     * 
+     * @author Levan
+     * 
+     */
     public static final class Builder {
 
 	private ParamBuilder target;
