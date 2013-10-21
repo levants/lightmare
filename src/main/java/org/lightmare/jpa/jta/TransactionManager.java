@@ -20,7 +20,7 @@ import org.lightmare.utils.ObjectUtils;
 /**
  * Class to manager {@link UserTransaction} creation and closure
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.82-SNAPSHOT
  */
 public class TransactionManager {
