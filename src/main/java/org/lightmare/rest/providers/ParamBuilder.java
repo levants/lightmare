@@ -418,6 +418,7 @@ public class ParamBuilder {
 	 * @return {@link Builder}
 	 */
 	public ParamBuilder.Builder setRequest(ContainerRequestContext request) {
+	    
 	    target.request = request;
 
 	    return this;
