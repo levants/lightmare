@@ -12,7 +12,7 @@ import org.lightmare.utils.IOUtils;
  * Reads write java objects from {@link Byte} array with java native
  * serialization
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.62-SNAPSHO
  */
 public abstract class NativeSerializer {
