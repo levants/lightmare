@@ -17,7 +17,7 @@ import antlr.debug.MessageEvent;
 /**
  * Handler @see {@link ChannelInboundHandlerAdapter} for RPC response
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
 public class RcpHandler extends ChannelInboundHandlerAdapter {
