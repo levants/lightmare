@@ -13,7 +13,7 @@ import org.lightmare.utils.ObjectUtils;
  * Implementation of {@link InitialContextFactory} factory class to register and
  * instantiate JNDI {@link Context} instance
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.60-SNAPSHOT
  */
 public class LightmareInitialContextFactory implements InitialContextFactory {
