@@ -17,7 +17,7 @@ import org.lightmare.utils.StringUtils;
  * Initializes and bind to {@link Context} tomcat pooled {@link DataSource}
  * object
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.79-SNAPSHOT
  */
 public class InitTomcat extends InitDataSource {
