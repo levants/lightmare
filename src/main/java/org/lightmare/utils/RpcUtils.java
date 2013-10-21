@@ -13,7 +13,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * Listener class for serialization and de-serialization (both java and json) of
  * objects and call bean {@link Method}s connection to bean remotely
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
 public class RpcUtils {
