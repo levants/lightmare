@@ -13,7 +13,7 @@ import org.lightmare.jpa.datasource.tomcat.InitTomcat;
 /**
  * Factory class to get {@link InitDataSource} instance
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
 public class InitDataSourceFactory {
