@@ -32,7 +32,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * Implementation of {@link InvocationHandler} interface to intercept bean
  * method calls to provide database transactions
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.16-SNAPSHOT
  */
 public class BeanHandler implements InvocationHandler, Cloneable {
