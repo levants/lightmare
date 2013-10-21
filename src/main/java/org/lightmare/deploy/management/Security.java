@@ -19,7 +19,7 @@ import org.lightmare.utils.StringUtils;
  * Manages container administrator users for
  * {@link org.lightmare.deploy.management.DeployManager} service
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class Security {
