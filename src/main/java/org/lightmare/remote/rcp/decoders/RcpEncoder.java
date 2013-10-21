@@ -17,7 +17,7 @@ import org.lightmare.utils.serialization.NativeSerializer;
  * href="http://static.netty.io/3.6/guide/">io.netty</a> for serialize
  * {@link RcpWrapper} <a href="io.netty"/>netty></a> RPC server response
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
 public class RcpEncoder extends ChannelOutboundHandlerAdapter {
