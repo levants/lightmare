@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * Utility class to work with {@link Collection} instances
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
  */
 public abstract class CollectionUtils {
