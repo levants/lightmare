@@ -171,6 +171,11 @@ public class ParamBuilder {
 	return params;
     }
 
+    /**
+     * Converts {@link Parameter} to {@link InputStream} or {@link List} of {@link InputStream} by {@link Parameter} nature
+     * @param parameter
+     * @return {@link Object}
+     */
     private Object getEntityStream(Parameter parameter) {
 
 	Object stream;
