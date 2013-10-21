@@ -26,7 +26,7 @@ import org.lightmare.utils.reflect.MetaUtils;
 /**
  * Class for load jar or class files from specified path
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.15-SNAPSHOT
  */
 public class LibraryLoader {
