@@ -24,7 +24,7 @@ import org.lightmare.utils.ObjectUtils;
  * Class to manage {@link javax.transaction.UserTransaction} for
  * {@link javax.ejb.Stateless} bean {@link java.lang.reflect.Proxy} calls
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.28-SNAPSHOT
  */
 public class BeanTransactions {
