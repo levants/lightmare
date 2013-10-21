@@ -16,7 +16,7 @@ import org.lightmare.utils.serialization.NativeSerializer;
  * href="http://static.netty.io/3.6/guide/">io.netty</a> for response on <a
  * href="io.netty"/>netty></a> RCP returns {@link RcpWrapper}
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
 public class RcpDecoder extends ByteToMessageDecoder {
