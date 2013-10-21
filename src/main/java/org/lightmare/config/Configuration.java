@@ -24,7 +24,7 @@ import org.yaml.snakeyaml.Yaml;
  * Retrieves and caches configuration properties from configuration file or from
  * {@link org.lightmare.deploy.MetaCreator.Builder} instance
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
 public class Configuration implements Cloneable {

@@ -9,7 +9,7 @@ import org.lightmare.utils.ObjectUtils;
 /**
  * Keeps keys and default values for configuration
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
 public enum ConfigKeys {
