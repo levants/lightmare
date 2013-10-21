@@ -33,7 +33,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * Connector class for get EJB beans or call remote procedure in this bean (RPC)
  * by interface class
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.15-SNAPSHOT
  */
 public class EjbConnector {
@@ -191,7 +191,7 @@ public class EjbConnector {
 
 	    List<Class<?>> interfacesList = new ArrayList<Class<?>>();
 	    Class<?>[] interfaces = metaData.getLocalInterfaces();
-	    
+
 	    if (CollectionUtils.valid(interfaces)) {
 		interfacesList.addAll(Arrays.asList(interfaces));
 	    }
