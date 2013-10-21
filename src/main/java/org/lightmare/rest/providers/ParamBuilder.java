@@ -172,7 +172,9 @@ public class ParamBuilder {
     }
 
     /**
-     * Converts {@link Parameter} to {@link InputStream} or {@link List} of {@link InputStream} by {@link Parameter} nature
+     * Converts {@link Parameter} to {@link InputStream} or {@link List} of
+     * {@link InputStream} by {@link Parameter} nature
+     * 
      * @param parameter
      * @return {@link Object}
      */
