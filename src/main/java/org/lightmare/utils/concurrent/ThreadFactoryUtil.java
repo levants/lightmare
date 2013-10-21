@@ -9,7 +9,7 @@ import org.lightmare.utils.StringUtils;
  * Implementation of {@link ThreadFactory} for
  * {@link java.util.concurrent.ExecutorService} thread pooling
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
 public class ThreadFactoryUtil implements ThreadFactory {
