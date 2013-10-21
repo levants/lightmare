@@ -238,6 +238,7 @@ public class ParamBuilder {
 
     /**
      * Closes passed entity {@link InputStream} if reading is finished
+     * 
      * @param entityStream
      * @throws IOException
      */
