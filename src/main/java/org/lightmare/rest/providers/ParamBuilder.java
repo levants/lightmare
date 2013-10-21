@@ -405,6 +405,7 @@ public class ParamBuilder {
 	 * @return {@link Builder}
 	 */
 	public ParamBuilder.Builder setWorkers(MessageBodyWorkers workers) {
+	    
 	    target.workers = workers;
 
 	    return this;
