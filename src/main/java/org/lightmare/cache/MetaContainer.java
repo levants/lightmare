@@ -28,7 +28,7 @@ import org.lightmare.utils.fs.WatchUtils;
  * Container class to save {@link MetaData} for bean interface {@link Class} and
  * connections ({@link EntityManagerFactory}) for unit names
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class MetaContainer {
