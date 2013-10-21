@@ -192,7 +192,9 @@ public class ParamBuilder {
     }
 
     /**
-     * Reads {@link InputStream} from passed {@link ContainerRequestContext} for associated {@link Parameter} instance
+     * Reads {@link InputStream} from passed {@link ContainerRequestContext} for
+     * associated {@link Parameter} instance
+     * 
      * @param request
      * @param parameter
      * @return {@link Object}
