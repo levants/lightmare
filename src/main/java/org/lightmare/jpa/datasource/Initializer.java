@@ -23,7 +23,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * Parses XML and property files to initialize and cache {@link DataSource}
  * objects
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
 public abstract class Initializer {
