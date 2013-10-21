@@ -72,6 +72,7 @@ public class RestInflector implements
 
     /**
      * Gets {@link MediaType} for {@link ContainerRequestContext} instance
+     * 
      * @param request
      * @return {@link MediaType}
      */
