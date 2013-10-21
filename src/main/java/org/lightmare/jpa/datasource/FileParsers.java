@@ -33,7 +33,7 @@ import org.xml.sax.SAXException;
  * <a href="http://www.oracle.com/technetwork/java/jndi/index.html">jndi</a>
  * {@link javax.naming.Context} by name
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.15-SNAPSHOT
  */
 public class FileParsers {
