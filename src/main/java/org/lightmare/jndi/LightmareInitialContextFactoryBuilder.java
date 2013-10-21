@@ -16,7 +16,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * Implementation of {@link InitialContextFactoryBuilder} factory builder class
  * for instantiate {@link InitialContextFactory} implementation
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.60-SNAPSHOT
  */
 public class LightmareInitialContextFactoryBuilder implements
