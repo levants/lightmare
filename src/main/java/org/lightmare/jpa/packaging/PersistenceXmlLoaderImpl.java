@@ -40,7 +40,7 @@ import org.xml.sax.SAXParseException;
  * Implementation and bug fixes for
  * {@link org.hibernate.ejb.packaging.PersistenceXmlLoader} class
  * 
- * @author levan
+ * @author Levan Tsinadze
  * 
  */
 public final class PersistenceXmlLoaderImpl {
