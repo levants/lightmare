@@ -18,7 +18,7 @@ import org.lightmare.utils.fs.FileType;
 /**
  * Implementation of {@link ArchiveUtils} for jar files
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
  */
 public class JarUtils extends ArchiveUtils {
@@ -83,7 +83,7 @@ public class JarUtils extends ArchiveUtils {
 	if (CollectionUtils.valid(args)) {
 	    xmlFromJar = (Boolean) CollectionUtils.getFirst(args);
 	}
-	
+
 	extractEjbJars(Collections.<String> emptySet());
     }
 }
