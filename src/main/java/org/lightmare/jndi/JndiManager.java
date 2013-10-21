@@ -18,7 +18,7 @@ import org.lightmare.utils.ObjectUtils;
  * {@link System#setProperty(String, String)}) the {@link InitialContextFactory}
  * for simple JNDI extensions
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.60-SNAPSHOT
  */
 public class JndiManager {
