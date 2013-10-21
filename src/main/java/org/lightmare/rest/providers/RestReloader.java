@@ -15,7 +15,7 @@ import org.lightmare.utils.ObjectUtils;
  * Reloads {@link RestConfig} (implementation of {@link ResourceConfig}) at
  * runtime
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.50-SNAPSHOT
  */
 @Provider
