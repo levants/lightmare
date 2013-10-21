@@ -17,7 +17,7 @@ import org.lightmare.utils.ObjectUtils;
 /**
  * Initializes and bind to {@link Context} c3p0 pooled {@link DataSource} object
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.79-SNAPSHOT
  */
 public class InitDBCP extends InitDataSource {
