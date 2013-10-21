@@ -44,7 +44,9 @@ public class RestInflector implements
     private static final Logger LOG = Logger.getLogger(RestInflector.class);
 
     /**
-     * Constructor with {@link Method}, {@link MetaData}, {@link MediaType} and {@link List} of {@link Parameter}s for concret REST method call
+     * Constructor with {@link Method}, {@link MetaData}, {@link MediaType} and
+     * {@link List} of {@link Parameter}s for concret REST method call
+     * 
      * @param method
      * @param metaData
      * @param type
