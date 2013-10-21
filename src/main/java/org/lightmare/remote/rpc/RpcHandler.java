@@ -14,7 +14,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
 
 /**
- * Handler @see {@link SimpleChannelHandler} for RPC request
+ * Handler @see {@link ChannelInboundHandlerAdapter} for RPC request
  * 
  * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
