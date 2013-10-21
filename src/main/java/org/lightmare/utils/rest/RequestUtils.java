@@ -16,7 +16,7 @@ import org.lightmare.utils.CollectionUtils;
 /**
  * Utility class to extract parameters from REST request
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.74-SNAPSHOT
  */
 public class RequestUtils {
