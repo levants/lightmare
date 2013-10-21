@@ -10,7 +10,7 @@ import javax.ejb.spi.EJBContainerProvider;
  * Implementation for {@link javax.ejb.spi.EJBContainerProvider} interface for
  * "Lightmare" EJB container
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.48-SNAPSHOT
  */
 public class EJBContainerProviderImpl implements EJBContainerProvider {
