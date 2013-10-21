@@ -61,7 +61,7 @@ import org.lightmare.utils.rest.RestCheck;
  * {@link javax.sql.DataSource}s load libraries and {@link javax.ejb.Stateless}
  * session beans and cache them and clean resources after deployments
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class BeanLoader {
@@ -400,12 +400,12 @@ public class BeanLoader {
 	    if (interfaceClass == null || interfaceClass.equals(Object.class)) {
 		interfaceClass = field.getType();
 	    }
-	    
+
 	    String name = ejb.beanName();
 	    if (name == null || name.isEmpty()) {
 		name = BeanUtils.nameFromInterface(interfaceClass);
 	    }
-	    
+
 	    String description = ejb.description();
 	    String mappedName = ejb.mappedName();
 	    Class<?>[] interfaceClasses = { interfaceClass };
