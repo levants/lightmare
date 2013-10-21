@@ -3,7 +3,7 @@ package org.lightmare.remote.rcp.wrappers;
 /**
  * RPC response wrapper class for serialization
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.16-SNAPSHOT
  */
 public class RcpWrapper {
