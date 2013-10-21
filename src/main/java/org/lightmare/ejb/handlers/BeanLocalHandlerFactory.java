@@ -5,7 +5,7 @@ import org.lightmare.remote.rpc.RPCall;
 /**
  * Factory class to initialize {@link BeanLocalHandler} class instance
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.66-SNAPSHOT
  */
 public class BeanLocalHandlerFactory {
