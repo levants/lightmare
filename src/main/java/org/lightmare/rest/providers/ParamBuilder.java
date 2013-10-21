@@ -367,7 +367,7 @@ public class ParamBuilder {
      */
     public static final class Builder {
 
-	//Instance of initialized ParamBuilder class for configuration
+	// Instance of initialized ParamBuilder class for configuration
 	private ParamBuilder target;
 
 	public Builder() {
