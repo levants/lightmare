@@ -8,7 +8,7 @@ import java.io.OutputStream;
 /**
  * Utility class to work with streams and other IO operations
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.81-SNAPSHOT
  */
 public class IOUtils {
