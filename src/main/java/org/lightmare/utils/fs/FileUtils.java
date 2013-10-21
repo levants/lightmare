@@ -21,7 +21,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
 /**
  * Utility for removing {@link File}s recursively from file system
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.20-SNAPSHOT
  */
 public class FileUtils {
