@@ -191,6 +191,12 @@ public class ParamBuilder {
 	return stream;
     }
 
+    /**
+     * Reads {@link InputStream} from passed {@link ContainerRequestContext} for associated {@link Parameter} instance
+     * @param request
+     * @param parameter
+     * @return {@link Object}
+     */
     private Object getEntityStream(ContainerRequestContext request,
 	    Parameter parameter) {
 
