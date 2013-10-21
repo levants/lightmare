@@ -220,6 +220,12 @@ public class ParamBuilder {
 	return entityStream;
     }
 
+    /**
+     * Checks availability of passed request {@link InputStream} and {@link Parameter} instances
+     * @param entityStream
+     * @param parameter
+     * @return <code>boolean</code>
+     */
     private boolean available(InputStream entityStream, Parameter parameter) {
 
 	return ObjectUtils.notNullAll(reader, entityStream)
