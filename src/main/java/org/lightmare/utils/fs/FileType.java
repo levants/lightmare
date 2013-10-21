@@ -3,7 +3,7 @@ package org.lightmare.utils.fs;
 /**
  * Enumeration of application file types
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.20-SNAPSHOT
  */
 public enum FileType {
