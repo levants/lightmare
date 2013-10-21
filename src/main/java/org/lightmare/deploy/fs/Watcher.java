@@ -43,7 +43,7 @@ import org.lightmare.utils.fs.WatchUtils;
  * {@link File} modification event handler for deployments if java version is
  * 1.7 or above
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class Watcher implements Runnable {
