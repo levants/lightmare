@@ -12,7 +12,7 @@ import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.serialization.NativeSerializer;
 
 /**
- * Decoder (extends {@link FrameDecoder}) class @see <a
+ * Decoder (extends {@link ByteToMessageDecoder}) class @see <a
  * href="http://static.netty.io/3.6/guide/">io.netty</a> for response on <a
  * href="io.netty"/>netty></a> RCP returns {@link RcpWrapper}
  * 
