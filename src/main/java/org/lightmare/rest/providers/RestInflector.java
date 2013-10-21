@@ -99,7 +99,9 @@ public class RestInflector implements
     }
 
     /**
-     * Gets parameters as array of {@link Object} from passed {@link ContainerRequestContext} to call real java method
+     * Gets parameters as array of {@link Object} from passed
+     * {@link ContainerRequestContext} to call real java method
+     * 
      * @param request
      * @return {@link Object}[]
      * @throws IOException
