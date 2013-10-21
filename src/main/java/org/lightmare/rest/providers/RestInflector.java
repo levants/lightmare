@@ -70,6 +70,11 @@ public class RestInflector implements
 	return beanClass;
     }
 
+    /**
+     * Gets {@link MediaType} for {@link ContainerRequestContext} instance
+     * @param request
+     * @return {@link MediaType}
+     */
     private MediaType getMediaType(ContainerRequestContext request) {
 
 	MediaType mediaType = request.getMediaType();
