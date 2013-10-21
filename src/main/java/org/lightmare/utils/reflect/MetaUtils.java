@@ -21,7 +21,7 @@ import org.lightmare.utils.ObjectUtils;
  * Utility class to use reflection {@link Method}, {@link Constructor} or any
  * {@link AccessibleObject} calls and get / set / modify {@link Field} value
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.26-SNAPSHOT
  */
 public class MetaUtils {
