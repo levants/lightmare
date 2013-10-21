@@ -9,7 +9,7 @@ import javax.persistence.EntityManagerFactory;
  * Container class for {@link EntityManagerFactory} with check if connection
  * configuration is in progress and user count
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class ConnectionSemaphore {
