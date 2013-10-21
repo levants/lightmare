@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
  * Container class to cache {@link javax.interceptor.Interceptors} annotation
  * defined data
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.57-SNAPSHOT
  */
 public class InterceptorData {
