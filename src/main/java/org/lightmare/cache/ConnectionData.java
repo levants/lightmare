@@ -10,7 +10,7 @@ import org.lightmare.utils.ObjectUtils;
  * Container class to cache connection and with descriptors in
  * {@link org.lightmare.cache.MetaData} for each EJB bean
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class ConnectionData {
