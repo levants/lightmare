@@ -13,7 +13,7 @@ import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.serialization.NativeSerializer;
 
 /**
- * Encoder class for netty remote procedure call
+ * Encoder class for Netty remote procedure call
  * 
  * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
