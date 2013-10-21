@@ -119,6 +119,11 @@ public class ParamBuilder {
 	return valid;
     }
 
+    /**
+     * Checks if {@link ContainerRequestContext} has not entity and has not available {@link InputStream} (entity stream )
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
     private boolean check() throws IOException {
 
 	return ObjectUtils.notTrue(request.hasEntity())
