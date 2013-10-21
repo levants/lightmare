@@ -22,7 +22,7 @@ import org.lightmare.utils.beans.BeanUtils;
 /**
  * Class to build and {@link Resource} for REST services
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.75-SNAPSHOT
  */
 public class ResourceBuilder {
