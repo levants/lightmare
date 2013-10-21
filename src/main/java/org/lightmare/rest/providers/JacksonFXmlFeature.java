@@ -14,7 +14,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
  * href="https://github.com/FasterXML/jackson-databind">Jackson</a> provider
  * instead of old for REST services
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.52-SNAPSHOT
  */
 public class JacksonFXmlFeature implements Feature {
