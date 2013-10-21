@@ -21,7 +21,7 @@ import org.lightmare.utils.CollectionUtils;
  * Container class to save bean {@link Field} with annotation
  * {@link PersistenceContext} and bean class
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class MetaData {
