@@ -221,7 +221,9 @@ public class ParamBuilder {
     }
 
     /**
-     * Checks availability of passed request {@link InputStream} and {@link Parameter} instances
+     * Checks availability of passed request {@link InputStream} and
+     * {@link Parameter} instances
+     * 
      * @param entityStream
      * @param parameter
      * @return <code>boolean</code>
