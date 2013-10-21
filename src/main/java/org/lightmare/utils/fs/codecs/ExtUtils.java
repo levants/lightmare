@@ -18,7 +18,7 @@ import org.lightmare.utils.fs.FileType;
 /**
  * Implementation of {@link DirUtils} for ear files
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
  */
 public class ExtUtils extends DirUtils {
