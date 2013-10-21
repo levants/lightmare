@@ -21,7 +21,7 @@ import org.lightmare.utils.StringUtils;
 /**
  * Container class to cache connections and connection types
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.65-SNAPSHOT
  */
 public class ConnectionContainer {
