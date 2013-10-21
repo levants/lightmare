@@ -12,7 +12,7 @@ import com.mchange.v2.c3p0.AbstractConnectionCustomizer;
 /**
  * Logger class for customize pooled connections
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.82-SNAPSHOT
  */
 public class LogConnectionCustomizer extends AbstractConnectionCustomizer {
