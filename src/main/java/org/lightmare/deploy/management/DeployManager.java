@@ -24,7 +24,7 @@ import org.lightmare.utils.StringUtils;
  * Administrative {@link Servlet} to manage deployed applications and data
  * sources
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 @WebServlet("/DeployManager")
@@ -268,7 +268,7 @@ public class DeployManager extends HttpServlet {
     private boolean check(HttpSession session) {
 
 	boolean valid = ObjectUtils.notNull(session);
-	
+
 	if (valid) {
 	    Object pass = session.getAttribute(Security.DEPLOY_PASS_KEY);
 	    valid = ObjectUtils.notNull(pass);
@@ -349,7 +349,7 @@ public class DeployManager extends HttpServlet {
 	    if (valid) {
 		valid = authenticate(userName, password, request);
 	    }
-	    
+
 	    if (valid) {
 		response.sendRedirect(DEPLOY_MANAGER_DEFAULT_NAME);
 	    } else {
