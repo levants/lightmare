@@ -11,7 +11,7 @@ import org.lightmare.utils.ObjectUtils;
 /**
  * Utility class for directory watch service
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class WatchUtils {
