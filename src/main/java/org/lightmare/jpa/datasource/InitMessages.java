@@ -3,7 +3,7 @@ package org.lightmare.jpa.datasource;
 /**
  * Contains error messages for data source initializations
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
 public abstract class InitMessages {
