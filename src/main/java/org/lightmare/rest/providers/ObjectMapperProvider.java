@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * href="https://github.com/FasterXML/jackson-core">jackson-jaxrs-providers</a>
  * library
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.50-SNAPSHOT
  */
 @Provider
