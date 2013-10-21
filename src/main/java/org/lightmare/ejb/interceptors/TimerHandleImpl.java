@@ -8,7 +8,7 @@ import javax.ejb.TimerHandle;
 /**
  * Implementation of {@link TimerHandle} interface
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.65-SNAPSHOT
  */
 public class TimerHandleImpl implements TimerHandle {
