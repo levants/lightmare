@@ -27,7 +27,7 @@ import org.lightmare.utils.StringUtils;
  * Creates and caches {@link EntityManagerFactory} for each EJB bean
  * {@link Class}'s appropriate field (annotated by @PersistenceContext)
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.79-SNAPSHOT
  */
 public class JpaManager {
