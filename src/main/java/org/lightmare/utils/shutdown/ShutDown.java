@@ -17,7 +17,7 @@ import org.lightmare.utils.ObjectUtils;
 /**
  * Runnable class for shut down hook
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since o.o.26-SNAPSHOT
  */
 public class ShutDown implements Runnable {
