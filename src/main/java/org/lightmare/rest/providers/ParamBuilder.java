@@ -132,6 +132,11 @@ public class ParamBuilder {
 		&& IOUtils.notAvailable(request.getEntityStream());
     }
 
+    /**
+     * Copies passed {@link MultivaluedMap} "from" to the {@link MultivaluedMap} "to"
+     * @param from
+     * @param to
+     */
     private void copyAll(MultivaluedMap<String, String> from,
 	    MultivaluedMap<String, String> to) {
 
