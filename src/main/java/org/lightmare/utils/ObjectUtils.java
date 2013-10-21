@@ -10,7 +10,7 @@ import org.lightmare.utils.reflect.MetaUtils;
 /**
  * Utility class to help with general object checks / lock / modification
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.34-SNAPSHOT
  */
 public abstract class ObjectUtils {
