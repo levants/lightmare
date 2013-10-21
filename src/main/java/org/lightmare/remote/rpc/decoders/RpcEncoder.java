@@ -15,7 +15,7 @@ import org.lightmare.utils.serialization.NativeSerializer;
 /**
  * Encoder class for netty remote procedure call
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
 public class RpcEncoder extends ChannelOutboundHandlerAdapter {
