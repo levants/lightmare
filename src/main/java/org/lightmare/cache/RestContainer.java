@@ -15,7 +15,7 @@ import org.lightmare.utils.ObjectUtils;
 /**
  * Container class to cache REST resource classes
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.65-SNAPSHOT
  */
 public class RestContainer {
@@ -191,7 +191,7 @@ public class RestContainer {
     public static RestConfig getRestConfig() {
 
 	synchronized (RestContainer.class) {
-	    
+
 	    return restConfig;
 	}
     }
