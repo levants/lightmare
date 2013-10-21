@@ -3,7 +3,7 @@ package org.lightmare.ejb.handlers;
 /**
  * Factory class to create a {@link RestHandler} instance for REST services
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
  */
 public class RestHandlerFactory {
