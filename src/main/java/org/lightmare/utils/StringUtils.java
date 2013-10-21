@@ -5,7 +5,7 @@ import java.lang.reflect.Array;
 /**
  * Utility class for {@link String} and {@link CharSequence} operations
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
 public abstract class StringUtils {

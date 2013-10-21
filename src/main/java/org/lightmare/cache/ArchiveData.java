@@ -7,7 +7,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  * {@link ClassLoader} for each {@link java.net.URL} to cache and avoid
  * duplicates at deploy time
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class ArchiveData {
