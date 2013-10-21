@@ -78,6 +78,9 @@ public class RestConfig extends ResourceConfig {
 	}
     }
 
+    /**
+     * Clears deployed REST {@link Resource}s for deploy ervices
+     */
     private void clearResources() {
 
 	Set<Resource> resources = getResources();
