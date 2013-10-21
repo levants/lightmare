@@ -8,7 +8,7 @@ import org.lightmare.utils.fs.FileType;
  * Caches information about deployed file {@link URL} and {@link FileType} for
  * hot deployment processing
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class DeployData {
