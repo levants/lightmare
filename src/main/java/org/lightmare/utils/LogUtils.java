@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 /**
  * Utility class for logging
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
  */
 public class LogUtils {
