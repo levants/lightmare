@@ -120,7 +120,7 @@ public class ParamBuilder {
     }
 
     /**
-     * Checks if {@link ContainerRequestContext} has not entity and has not available {@link InputStream} (entity stream )
+     * Checks if {@link ContainerRequestContext} has not entity and has not available {@link InputStream} (entity stream)
      * @return <code>boolean</code>
      * @throws IOException
      */
