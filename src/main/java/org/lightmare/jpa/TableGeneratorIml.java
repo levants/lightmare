@@ -26,7 +26,7 @@ import org.jboss.logging.Logger;
 /**
  * To generate primary keys from table and bypass existing keys
  * 
- * @author levan
+ * @author Levan Tsinadze
  * 
  */
 public class TableGeneratorIml extends TableGenerator {
