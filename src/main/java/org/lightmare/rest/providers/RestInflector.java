@@ -83,6 +83,12 @@ public class RestInflector implements
 	return mediaType;
     }
 
+    /**
+     * Extracts parameters as array of {@link Object}s from {@link ContainerRequestContext} for java method
+     * @param request
+     * @return {@link Object}[]
+     * @throws IOException
+     */
     private Object[] extraxtParameters(ContainerRequestContext request)
 	    throws IOException {
 
