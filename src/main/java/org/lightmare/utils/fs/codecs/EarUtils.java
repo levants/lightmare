@@ -22,7 +22,7 @@ import org.lightmare.utils.fs.FileType;
 /**
  * Utility class for checking jar, ear and zip files read contents and etc.
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
  */
 public class EarUtils extends ArchiveUtils {
@@ -48,7 +48,7 @@ public class EarUtils extends ArchiveUtils {
     public InputStream earReader() throws IOException {
 
 	InputStream xmlStream;
-	
+
 	ZipFile zipFile = getEarFile();
 	ZipEntry entry = zipFile.getEntry(APPLICATION_XML_PATH);
 	if (entry == null) {
@@ -94,7 +94,7 @@ public class EarUtils extends ArchiveUtils {
     public URL extractEjbJar(ZipEntry entry) throws IOException {
 
 	URL url;
-	
+
 	InputStream jarStream = getEarFile().getInputStream(entry);
 	if (ObjectUtils.notNull(jarStream)) {
 	    File tmpFile = File.createTempFile(UUID.randomUUID().toString(),
@@ -106,7 +106,7 @@ public class EarUtils extends ArchiveUtils {
 	    String jarPath = StringUtils.concat(jarURL.toString(),
 		    ARCHIVE_URL_DELIM, FILE_SEPARATOR, ConfigLoader.XML_PATH);
 	    url = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
-	}else{
+	} else {
 	    url = null;
 	}
 
@@ -117,7 +117,7 @@ public class EarUtils extends ArchiveUtils {
     public boolean checkOnOrm(String jarName) throws IOException {
 
 	boolean check = Boolean.FALSE;
-	
+
 	ZipFile zipFile = getEarFile();
 	ZipEntry jarEntry = zipFile.getEntry(jarName);
 	InputStream stream = zipFile.getInputStream(jarEntry);
