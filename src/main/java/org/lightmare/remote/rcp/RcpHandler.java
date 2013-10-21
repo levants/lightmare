@@ -15,7 +15,7 @@ import org.lightmare.utils.ObjectUtils;
 import antlr.debug.MessageEvent;
 
 /**
- * Handler @see {@link SimpleChannelHandler} for RPC response
+ * Handler @see {@link ChannelInboundHandlerAdapter} for RPC response
  * 
  * @author levan
  * @since 0.0.21-SNAPSHOT
