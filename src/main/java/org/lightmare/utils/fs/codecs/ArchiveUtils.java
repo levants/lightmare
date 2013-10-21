@@ -29,7 +29,7 @@ import org.w3c.dom.NodeList;
  * Utility class for checking jar, ear and zip files or ear and jar directories
  * from application server deployments (jboss) read contents and etc.
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.83-SNAPSHOT
  */
 public abstract class ArchiveUtils {
