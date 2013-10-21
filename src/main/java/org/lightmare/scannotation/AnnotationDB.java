@@ -28,7 +28,7 @@ import org.scannotation.archiveiterator.StreamIterator;
  * Extension of {@link org.scannotation.AnnotationDB} for saving Map<
  * {@link String}, {@link URL}> of class name and {@link URL} for its archive
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.18-SNAPSHOT
  */
 public class AnnotationDB extends org.scannotation.AnnotationDB {
