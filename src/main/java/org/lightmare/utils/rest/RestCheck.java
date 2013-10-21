@@ -17,7 +17,7 @@ import org.lightmare.utils.ObjectUtils;
  * annotations and valid to create
  * {@link org.glassfish.jersey.server.model.Resource} classes
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.74-SNAPSHOT
  */
 public class RestCheck {
