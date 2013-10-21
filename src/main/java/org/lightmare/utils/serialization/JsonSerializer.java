@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  * Reads write java objects from {@link Byte} array or {@link String} with java
  * JSON serialization vendor specific JSON library
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.62-SNAPSHOT
  */
 public abstract class JsonSerializer {
