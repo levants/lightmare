@@ -147,6 +147,11 @@ public class ParamBuilder {
 	}
     }
 
+    /**
+     * Adds all elements from passed {@link MultivaluedMap} "from" to {@link MultivaluedMap} "to"
+     * @param from
+     * @param to
+     */
     private void addAll(MultivaluedMap<String, String> from,
 	    MultivaluedMap<String, String> to) {
 
