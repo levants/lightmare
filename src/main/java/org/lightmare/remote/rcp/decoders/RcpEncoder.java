@@ -13,7 +13,7 @@ import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.serialization.NativeSerializer;
 
 /**
- * Encoder (extends {@link SimpleChannelHandler}) class @see <a
+ * Encoder (extends {@link ChannelOutboundHandlerAdapter}) class @see <a
  * href="http://static.netty.io/3.6/guide/">io.netty</a> for serialize
  * {@link RcpWrapper} <a href="io.netty"/>netty></a> RPC server response
  * 
