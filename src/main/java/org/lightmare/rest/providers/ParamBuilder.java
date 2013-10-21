@@ -148,7 +148,9 @@ public class ParamBuilder {
     }
 
     /**
-     * Adds all elements from passed {@link MultivaluedMap} "from" to {@link MultivaluedMap} "to"
+     * Adds all elements from passed {@link MultivaluedMap} "from" to
+     * {@link MultivaluedMap} "to"
+     * 
      * @param from
      * @param to
      */
