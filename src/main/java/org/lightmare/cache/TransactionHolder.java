@@ -6,7 +6,7 @@ import javax.transaction.UserTransaction;
  * Caches {@link javax.transaction.Transaction} objects for each method call in
  * {@link ThreadLocal} cache
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
  */
 public class TransactionHolder {
