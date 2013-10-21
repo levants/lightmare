@@ -236,6 +236,11 @@ public class ParamBuilder {
 			mediaType);
     }
 
+    /**
+     * Closes passed entity {@link InputStream} if reading is finished
+     * @param entityStream
+     * @throws IOException
+     */
     private void close(InputStream entityStream) throws IOException {
 
 	if (check) {
