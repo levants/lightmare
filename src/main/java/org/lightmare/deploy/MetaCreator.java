@@ -50,7 +50,7 @@ import org.lightmare.utils.shutdown.ShutDown;
  * Determines and saves in cache EJB beans {@link org.lightmare.cache.MetaData}
  * on startup
  * 
- * @author Levan
+ * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
 public class MetaCreator {
