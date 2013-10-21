@@ -14,7 +14,7 @@ import org.lightmare.utils.serialization.NativeSerializer;
 /**
  * Decoder class for Netty remote procedure call
  * 
- * @author levan
+ * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
 public class RpcDecoder extends ByteToMessageDecoder {
