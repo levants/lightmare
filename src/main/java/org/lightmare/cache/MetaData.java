@@ -26,7 +26,7 @@ import org.lightmare.utils.CollectionUtils;
  * @see org.lightmare.deploy.BeanLoader#loadBean(org.lightmare.deploy.BeanLoader.BeanParameters)
  * @see org.lightmare.ejb.EjbConnector#connectToBean(MetaData)
  * @see org.lightmare.ejb.EjbConnector#createRestHandler(MetaData)
- * --@see org.lightmare.ejb.handlers.BeanHandler
+ * @see org.lightmare.ejb.handlers.BeanHandler
  */
 public class MetaData {
 
