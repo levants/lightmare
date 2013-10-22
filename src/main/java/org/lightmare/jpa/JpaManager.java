@@ -266,6 +266,10 @@ public class JpaManager {
 	}
     }
 
+    /**
+     * Closes passed {@link EntityManager} instance if it is not null and it is open
+     * @param em
+     */
     public static void closeEntityManager(EntityManager em) {
 
 	if (ObjectUtils.notNull(em) && em.isOpen()) {
