@@ -79,7 +79,7 @@ public class Watcher implements Runnable {
     /**
      * Defines file types for watch service
      * 
-     * @author Levan
+     * @author Levan Tsinadze
      * @since 0.0.45-SNAPSHOT
      */
     private static enum WatchFileType {
