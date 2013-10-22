@@ -42,7 +42,7 @@ public abstract class Initializer {
     /**
      * Container for connection configuration properties
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * 
      */
     public static enum ConnectionConfig {
