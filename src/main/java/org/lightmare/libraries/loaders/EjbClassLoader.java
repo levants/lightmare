@@ -17,7 +17,7 @@ public class EjbClassLoader extends URLClassLoader {
      * Implementation of {@link PrivilegedAction} for initialization of
      * {@link EjbClassLoader} class
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * @since 0.0.45-SNAPSHOT
      */
     protected static class EjbLoaderAction implements
