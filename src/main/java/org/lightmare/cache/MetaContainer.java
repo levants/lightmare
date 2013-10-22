@@ -264,7 +264,7 @@ public class MetaContainer {
      * checks containing archive {@link URL} address
      * 
      * @param url
-     * @return
+     * @return <code>boolean</code>
      */
     public static boolean chackDeployment(URL url) {
 
