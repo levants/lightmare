@@ -29,5 +29,4 @@ public class BeanLocalHandler implements InvocationHandler {
 
 	return value;
     }
-
 }
