@@ -32,7 +32,7 @@ public class InitTomcat extends InitDataSource {
 
 	JDBC_INTERCEPTOR(
 		"org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;",
-		"org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
+		"org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"); //Intercepts JDBC statement
 
 	public String key;
 
