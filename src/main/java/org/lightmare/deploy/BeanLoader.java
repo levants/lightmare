@@ -770,7 +770,7 @@ public class BeanLoader {
     /**
      * Contains parameters for bean deploy classes
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * @since 0.0.45-SNAPSHOT
      */
     public static class BeanParameters {
