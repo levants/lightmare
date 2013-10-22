@@ -13,6 +13,7 @@ import org.lightmare.deploy.BeanLoader;
  * 
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
+ * @see org.lightmare.deploy.BeanLoader#removeResources(List)
  */
 public class TmpResources {
 
