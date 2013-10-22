@@ -61,6 +61,11 @@ public abstract class Initializer {
 	}
     }
 
+    /**
+     * Checks if passed file path is valid data source file path
+     * @param path
+     * @return <code>boolean</code>
+     */
     private static boolean checkForDataSource(String path) {
 	return StringUtils.valid(path);
     }
