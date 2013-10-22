@@ -203,7 +203,7 @@ public class BeanLoader {
      * {@link Callable} implementation for deploying {@link javax.ejb.Stateless}
      * session beans and cache {@link MetaData} keyed by bean name
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * @since 0.0.45-SNAPSHOT
      */
     private static class BeanDeployer implements Callable<String> {
