@@ -72,7 +72,9 @@ public abstract class Initializer {
     }
 
     /**
-     * Gets JNDI name from passed data source configuration {@link Properties} instance
+     * Gets JNDI name from passed data source configuration {@link Properties}
+     * instance
+     * 
      * @param properties
      * @return {@link String}
      */
