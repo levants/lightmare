@@ -23,6 +23,7 @@ import org.lightmare.utils.StringUtils;
  * 
  * @author Levan Tsinadze
  * @since 0.0.65-SNAPSHOT
+ * @see org.lightmare.deploy.BeanLoader
  */
 public class ConnectionContainer {
 
