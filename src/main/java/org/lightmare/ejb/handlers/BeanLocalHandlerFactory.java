@@ -12,6 +12,7 @@ public class BeanLocalHandlerFactory {
 
     /**
      * Initializes {@link RPCall} class instance by passed RPC arguments
+     * 
      * @param rpcArgs
      * @return {@link RPCall}
      */
