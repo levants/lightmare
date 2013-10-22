@@ -23,7 +23,7 @@ import org.lightmare.utils.StringUtils;
  * 
  * @author Levan Tsinadze
  * @since 0.0.65-SNAPSHOT
- * @see org.lightmare.deploy.BeanLoader 
+ * @see org.lightmare.deploy.BeanLoader#initializeDatasource(org.lightmare.deploy.BeanLoader.DataSourceParameters) 
  * @see org.lightmare.ejb.EjbConnector
  */
 public class ConnectionContainer {
