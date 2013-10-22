@@ -10,6 +10,11 @@ import org.lightmare.remote.rpc.RPCall;
  */
 public class BeanLocalHandlerFactory {
 
+    /**
+     * Initializes {@link RPCall} class instance by passed RPC arguments
+     * @param rpcArgs
+     * @return {@link RPCall}
+     */
     private static RPCall createRPCall(Object... rpcArgs) {
 
 	RPCall call;
