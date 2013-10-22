@@ -23,6 +23,7 @@ import org.lightmare.utils.CollectionUtils;
  * 
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
+ * @see org.lightmare.deploy.BeanLoader#loadBean(org.lightmare.deploy.BeanLoader.BeanParameters)
  */
 public class MetaData {
 
