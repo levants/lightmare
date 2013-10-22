@@ -14,7 +14,7 @@ public abstract class DriverConfig {
     /**
      * Caches database driver names and classes
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * @since 0.0.81-SNAPSHOT
      */
     public static enum Drivers {
