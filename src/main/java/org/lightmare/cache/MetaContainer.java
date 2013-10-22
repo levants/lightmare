@@ -250,7 +250,7 @@ public class MetaContainer {
      * Gets bean name by containing archive {@link URL} address
      * 
      * @param url
-     * @return
+     * @return {@link Collection}<code><String></code>
      */
     public static Collection<String> getBeanNames(URL url) {
 
