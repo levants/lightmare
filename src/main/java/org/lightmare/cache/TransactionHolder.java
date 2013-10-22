@@ -11,7 +11,8 @@ import javax.transaction.UserTransaction;
  * @see org.lightmare.jpa.jta.UserTransactionImpl
  * @see org.lightmare.jpa.jta.BeanTransactions#getTransaction(java.util.Collection)
  * @see org.lightmare.jpa.jta.BeanTransactions#getTransaction(javax.persistence.EntityTransaction...)
- * @see org.lightmare.jpa.jta.BeanTransactions#remove(org.lightmare.ejb.handlers.BeanHandler, java.lang.reflect.Method)
+ * @see org.lightmare.jpa.jta.BeanTransactions#remove(org.lightmare.ejb.handlers.BeanHandler,
+ *      java.lang.reflect.Method)
  */
 public class TransactionHolder {
 
