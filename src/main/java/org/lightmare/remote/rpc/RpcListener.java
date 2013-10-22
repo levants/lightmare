@@ -40,7 +40,7 @@ public class RpcListener {
      * Implementation of {@link ChannelInitializer} on {@link SocketChannel} for
      * RPC service
      * 
-     * @author Levan
+     * @author Levan Tsinadze
      * 
      */
     protected static class ChannelInitializerImpl extends
