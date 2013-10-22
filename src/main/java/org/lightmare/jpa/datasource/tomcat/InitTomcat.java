@@ -25,7 +25,7 @@ public class InitTomcat extends InitDataSource {
     /**
      * Container for Tomcat default configurations
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * @since 0.0.81-SNAPSHOT
      */
     protected static enum TomcatConfig {
