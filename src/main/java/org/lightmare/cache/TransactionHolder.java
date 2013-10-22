@@ -9,6 +9,7 @@ import javax.transaction.UserTransaction;
  * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
  * @see org.lightmare.jpa.jta.UserTransactionImpl
+ * @see org.lightmare.jpa.jta.BeanTransactions#getTransaction(java.util.Collection)
  */
 public class TransactionHolder {
 
