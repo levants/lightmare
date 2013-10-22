@@ -25,7 +25,7 @@ public class RcpEncoder extends ChannelOutboundHandlerAdapter {
     /**
      * Translates boolean to numeric value
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * @since 0.0.84-SNAPSHOT
      */
     protected static enum BooleanNumber {
