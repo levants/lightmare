@@ -40,7 +40,7 @@ public class BeanTransactions {
      * Inner class to cache {@link EntityTransaction}s and {@link EntityManager}
      * s in one {@link Collection} for {@link UserTransaction} implementation
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * 
      */
     protected static class TransactionData {
