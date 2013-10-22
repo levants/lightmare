@@ -132,7 +132,7 @@ import org.xml.sax.InputSource;
  * Putting the configuration in the JNDI is an expensive operation that requires
  * a partial serialization
  * 
- * @author Emmanuel Bernard
+ * @author Emmanuel Bernard, Levan Tsinadze
  * 
  * @deprecated Direct usage of this class has never been supported. Instead, the
  *             application should obtain reference to the
