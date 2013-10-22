@@ -73,7 +73,7 @@ public class BeanLoader {
      * {@link Executors#privilegedCallableUsingCurrentClassLoader()} passed
      * {@link Callable} class
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * 
      * @param <T>
      * @since 0.0.45-SNAPSHOT
