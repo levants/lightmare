@@ -17,6 +17,7 @@ import org.lightmare.utils.ObjectUtils;
  * 
  * @author Levan Tsinadze
  * @since 0.0.50-SNAPSHOT
+ * @see ResourceConfig
  */
 @Provider
 public class RestReloader implements ContainerLifecycleListener {

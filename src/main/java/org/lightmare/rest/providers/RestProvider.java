@@ -22,6 +22,7 @@ import org.lightmare.utils.serialization.JsonSerializer;
  * 
  * @author Levan Tsinadze
  * @since 0.0.75-SNAPSHOT
+ * @see RestConfig
  */
 public class RestProvider {
 
