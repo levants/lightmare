@@ -67,7 +67,7 @@ public abstract class LoaderPoolManager {
     /**
      * Implementation of {@link ThreadFactory} interface for application loading
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * @since 0.0.77-SNAPSHOT
      */
     private static final class LoaderThreadFactory implements ThreadFactory {
