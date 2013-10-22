@@ -40,7 +40,7 @@ public class RestInflector implements
     // Media type for REST service
     private MediaType type;
 
-    //Parameters of REST service to be translated java Method parameters
+    // Parameters of REST service to be translated java Method parameters
     private List<Parameter> parameters;
 
     @Context
