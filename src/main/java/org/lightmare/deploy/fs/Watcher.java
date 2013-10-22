@@ -90,7 +90,7 @@ public class Watcher implements Runnable {
     /**
      * To filter only deployed sub files from directory
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * @since 0.0.45-SNAPSHOT
      */
     private static class DeployFiletr implements FileFilter {
