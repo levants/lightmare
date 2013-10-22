@@ -121,7 +121,7 @@ public class DeployManager extends HttpServlet {
      * Class to cache authenticated users for {@link DeployManager} java
      * {@link javax.servlet.http.HttpServlet} page
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * 
      */
     private static class DeployPass implements Serializable {
