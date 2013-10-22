@@ -31,6 +31,7 @@ import org.lightmare.utils.ObjectUtils;
 public class RestInflector implements
 	Inflector<ContainerRequestContext, Response> {
 
+    //Appropriated java Method for REST service
     private Method method;
 
     private MetaData metaData;
