@@ -71,6 +71,11 @@ public abstract class Initializer {
 	return StringUtils.valid(path);
     }
 
+    /**
+     * Gets JNDI name from passed data source configuration {@link Properties} instance
+     * @param properties
+     * @return {@link String}
+     */
     public static String getJndiName(Properties properties) {
 
 	String jndiName = properties
