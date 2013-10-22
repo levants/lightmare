@@ -34,7 +34,7 @@ public class RestInflector implements
     // Appropriated java Method for REST service
     private Method method;
 
-    //Instance of MetaData to call EJB bean method
+    // Instance of MetaData to call EJB bean method
     private MetaData metaData;
 
     //Media type for REST service
