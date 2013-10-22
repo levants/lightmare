@@ -2,12 +2,15 @@ package org.lightmare.cache;
 
 import javax.transaction.UserTransaction;
 
+import org.lightmare.jpa.jta.UserTransactionImpl;
+
 /**
  * Caches {@link javax.transaction.Transaction} objects for each method call in
  * {@link ThreadLocal} cache
  * 
  * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
+ * @see org.lightmare.jpa.jta.UserTransactionImpl
  */
 public class TransactionHolder {
 
