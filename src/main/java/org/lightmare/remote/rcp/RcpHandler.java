@@ -29,7 +29,7 @@ public class RcpHandler extends ChannelInboundHandlerAdapter {
      * Implementation for {@link ChannelFutureListener} for remote procedure
      * call
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * 
      */
     protected static class ResponseListener implements ChannelFutureListener {
