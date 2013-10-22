@@ -54,7 +54,7 @@ public class LibraryLoader {
      * implementation of {@link Callable}<ClassLoader> interface to initialize
      * {@link ClassLoader} in separate thread
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * @since 0.0.15-SNAPSHOT
      */
     private static class LibraryLoaderInit implements Callable<ClassLoader> {
