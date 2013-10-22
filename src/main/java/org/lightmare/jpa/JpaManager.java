@@ -276,7 +276,7 @@ public class JpaManager {
     /**
      * Builder class to create {@link JpaManager} class object
      * 
-     * @author Levan
+     * @author Levan Tsinadze
      * @since 0.0.79-SNAPSHOT
      */
     public static class Builder {
