@@ -26,6 +26,7 @@ import org.lightmare.utils.ObjectUtils;
  * 
  * @author Levan Tsinadze
  * @since 0.0.50-SNAPSHOT
+ * @see Inflector
  */
 public class RestInflector implements
 	Inflector<ContainerRequestContext, Response> {
