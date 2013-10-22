@@ -52,7 +52,7 @@ public class MetaContainer {
     /**
      * Gets cached {@link MetaCreator} object
      * 
-     * @return
+     * @return {@link MetaCreator}
      */
     public static MetaCreator getCreator() {
 
