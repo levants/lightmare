@@ -15,6 +15,7 @@ import javax.persistence.EntityManagerFactory;
  * @see org.lightmare.cache.ConnectionContainer#cacheSemaphore(String, String)
  * @see org.lightmare.cache.ConnectionContainer#getConnection(String)
  * @see org.lightmare.cache.ConnectionContainer#getEntityManagerFactory(String)
+ * @see org.lightmare.cache.ConnectionContainer#getSemaphore(String)
  */
 public class ConnectionSemaphore {
 
