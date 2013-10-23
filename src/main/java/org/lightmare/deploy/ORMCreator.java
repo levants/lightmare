@@ -24,6 +24,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * 
  * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
+ * @see org.lightmare.jpa.JpaManager
  */
 public class ORMCreator {
 
