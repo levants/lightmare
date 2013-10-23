@@ -11,6 +11,9 @@ import javax.persistence.EntityManagerFactory;
  * 
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
+ * @see org.lightmare.deploy.BeanLoader#loadBean(org.lightmare.deploy.BeanLoader.BeanParameters)
+ * @see org.lightmare.cache.ConnectionContainer#cacheSemaphore(String, String)
+ * 
  */
 public class ConnectionSemaphore {
 
