@@ -13,7 +13,7 @@ import javax.persistence.EntityManagerFactory;
  * @since 0.0.45-SNAPSHOT
  * @see org.lightmare.deploy.BeanLoader#loadBean(org.lightmare.deploy.BeanLoader.BeanParameters)
  * @see org.lightmare.cache.ConnectionContainer#cacheSemaphore(String, String)
- * 
+ * @see org.lightmare.cache.ConnectionContainer#getConnection(String)
  */
 public class ConnectionSemaphore {
 
