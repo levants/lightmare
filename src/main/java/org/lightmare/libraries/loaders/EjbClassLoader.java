@@ -10,6 +10,7 @@ import java.security.PrivilegedAction;
  * 
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
+ * @see URLClassLoader
  */
 public class EjbClassLoader extends URLClassLoader {
 
