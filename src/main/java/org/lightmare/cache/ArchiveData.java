@@ -9,6 +9,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  * 
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
+ * @see org.lightmare.deploy.MetaCreator
  */
 public class ArchiveData {
 
