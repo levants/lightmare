@@ -470,7 +470,6 @@ public abstract class CollectionUtils {
 		Iterator<T> iterator = collection.iterator();
 		value = iterator.next();
 	    }
-
 	} else {
 	    value = null;
 	}
