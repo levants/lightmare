@@ -38,7 +38,7 @@ public class NamingUtils {
      * Descriptor class which contains EJB bean class name and its interface
      * class name
      * 
-     * @author levan
+     * @author Levan Tsinadze
      * 
      */
     public static class BeanDescriptor {
