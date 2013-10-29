@@ -399,7 +399,7 @@ public abstract class CollectionUtils {
 
     /**
      * Converts passed {@link Collection} to array of appropriated {@link Class}
-     * type
+     * types
      * 
      * @param collection
      * @param type
