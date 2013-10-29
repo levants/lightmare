@@ -196,7 +196,8 @@ public abstract class CollectionUtils {
 
 	Map<K, V> result;
 
-	if (valid(from)) {
+	boolean valid = valid(from);
+	if (valid) {
 	    Object objectValue = from.get(key);
 	    if (objectValue instanceof Map) {
 		result = ObjectUtils.cast(objectValue);
