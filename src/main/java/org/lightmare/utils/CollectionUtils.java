@@ -463,7 +463,6 @@ public abstract class CollectionUtils {
 	T value;
 
 	if (valid(collection)) {
-
 	    if (collection instanceof List) {
 		value = getFirstFromList(((List<T>) collection));
 	    } else {

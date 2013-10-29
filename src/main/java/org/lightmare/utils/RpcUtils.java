@@ -21,6 +21,7 @@ public class RpcUtils {
     // Remote arguments length for client mode
     public static final int RPC_ARGS_LENGTH = 2;
 
+    //Error message
     public static final String RPC_ARGS_ERROR = "Could not resolve host and port arguments";
 
     public static final int PROTOCOL_SIZE = 20;
