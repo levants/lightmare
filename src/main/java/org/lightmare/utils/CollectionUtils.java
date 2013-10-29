@@ -335,6 +335,12 @@ public abstract class CollectionUtils {
 	return list;
     }
 
+    /**
+     * Creates array of generic type  <code>T</code> of specific size
+     * @param type
+     * @param size
+     * @return <code>T[]</code>
+     */
     private static <T> T[] toArray(Class<T> type, int size) {
 
 	T[] array;
