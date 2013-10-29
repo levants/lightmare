@@ -382,7 +382,7 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if passed {@link Object} is primitive types array
+     * Checks if passed {@link Object} is array of primitives
      * 
      * @param data
      * @return <code>boolean</code>
