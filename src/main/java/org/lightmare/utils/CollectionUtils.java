@@ -336,7 +336,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Creates array of generic type  <code>T</code> of specific size
+     * Creates array of generic type <code>T</code> of specific size
+     * 
      * @param type
      * @param size
      * @return <code>T[]</code>
