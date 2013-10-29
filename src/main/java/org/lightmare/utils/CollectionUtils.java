@@ -245,7 +245,7 @@ public abstract class CollectionUtils {
 
 	V value;
 
-	int length = keys.length - 1;
+	int length = keys.length - SECOND_INDEX;
 	Object[] subKeys = new Object[length];
 	Object key = keys[length];
 	for (int i = FIRST_INDEX; i < length; i++) {
