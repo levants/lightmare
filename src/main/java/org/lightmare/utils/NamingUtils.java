@@ -39,7 +39,7 @@ public class NamingUtils {
      * class name
      * 
      * @author Levan Tsinadze
-     * 
+     * @since 0.0.60-SNAPSHOT
      */
     public static class BeanDescriptor {
 
