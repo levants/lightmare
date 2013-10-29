@@ -24,7 +24,7 @@ public class RpcUtils {
     // Error message
     public static final String RPC_ARGS_ERROR = "Could not resolve host and port arguments";
 
-    // /Size checks for protocol
+    // Size checks for protocol
     public static final int PROTOCOL_SIZE = 20;
 
     public static final int INT_SIZE = 4;
