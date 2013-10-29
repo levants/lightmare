@@ -30,6 +30,7 @@ public class RpcUtils {
     // Integer data type size
     public static final int INT_SIZE = 4;
 
+    //Byte data type size
     public static final int BYTE_SIZE = 1;
 
     /**
