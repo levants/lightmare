@@ -27,6 +27,7 @@ public class RpcUtils {
     // Size checks for protocol
     public static final int PROTOCOL_SIZE = 20;
 
+    //Int data type size
     public static final int INT_SIZE = 4;
 
     public static final int BYTE_SIZE = 1;
