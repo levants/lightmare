@@ -38,7 +38,7 @@ public class Email {
 	return emailId;
     }
 
-    public Integer gerPersonId() {
+    public Integer getPersonId() {
 	return personId;
     }
 
