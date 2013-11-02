@@ -77,6 +77,7 @@ public class MetaUtilsTest {
 	}
     }
 
+    @Test
     public void setterFinderTest() {
 
 	try {
