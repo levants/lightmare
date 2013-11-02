@@ -1,13 +1,17 @@
 package org.lightmare.utils.reflect;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.AccessibleObject;
 
 import javax.persistence.EntityManager;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.bean.LightMareBean;
+import org.lightmare.entities.Email;
 import org.lightmare.utils.ObjectUtils;
 
 public class MetaUtilsTest {
@@ -47,6 +51,28 @@ public class MetaUtilsTest {
 		    ObjectUtils.notEquals(acc1, acc3));
 	    System.out.format("%s %s", acc1, acc3);
 	} catch (IOException ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @Ignore
+    @Test
+    public void getterFinderTest() {
+
+	try {
+	    Email email = new Email();
+	    email.setEmailId(100);
+	    email.setPersonId(1000);
+	    email.setEmailAddress("mail@mail.com");
+	    MethodHandle handle = MethodHandles.lookup().findGetter(
+		    Email.class, "personId", Integer.class);
+	    Integer personId = (Integer) handle.invoke(email);
+	    System.out.format("%s - %s", "personId", personId);
+	} catch (NoSuchFieldException ex) {
+	    ex.printStackTrace();
+	} catch (IllegalAccessException ex) {
+	    ex.printStackTrace();
+	} catch (Throwable ex) {
 	    ex.printStackTrace();
 	}
     }
