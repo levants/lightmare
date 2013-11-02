@@ -55,7 +55,6 @@ public class MetaUtilsTest {
 	}
     }
 
-    // @Ignore
     @Test
     public void getterFinderTest() {
 
