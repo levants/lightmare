@@ -67,7 +67,7 @@ public class MetaUtilsTest {
 	    MethodHandle handle = MethodHandles.publicLookup().findVirtual(
 		    Email.class, "getPersonId", type);
 	    Integer personId = (Integer) handle.invoke(email);
-	    System.out.format("%s - %s", "personId", personId);
+	    System.out.format("%s - %s\n", "personId", personId);
 	} catch (NoSuchFieldException ex) {
 	    ex.printStackTrace();
 	} catch (IllegalAccessException ex) {
@@ -95,7 +95,7 @@ public class MetaUtilsTest {
 	    MethodHandle getterHandle = MethodHandles.publicLookup()
 		    .findVirtual(Email.class, "getPersonId", getterType);
 	    Integer personId = (Integer) getterHandle.invoke(email);
-	    System.out.format("%s - %s", "personId", personId);
+	    System.out.format("%s - %s\n", "personId", personId);
 	} catch (NoSuchFieldException ex) {
 	    ex.printStackTrace();
 	} catch (IllegalAccessException ex) {
