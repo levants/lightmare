@@ -772,7 +772,6 @@ public class MetaUtils {
 	    } else {
 		value = null;
 	    }
-
 	} else {
 	    value = null;
 	}
