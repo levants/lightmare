@@ -9,7 +9,6 @@ import java.lang.reflect.AccessibleObject;
 import javax.persistence.EntityManager;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.bean.LightMareBean;
 import org.lightmare.entities.Email;
