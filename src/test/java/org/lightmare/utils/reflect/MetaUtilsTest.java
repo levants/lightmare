@@ -3,6 +3,7 @@ package org.lightmare.utils.reflect;
 import java.io.IOException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.AccessibleObject;
 
 import javax.persistence.EntityManager;
@@ -55,7 +56,7 @@ public class MetaUtilsTest {
 	}
     }
 
-    @Ignore
+    // @Ignore
     @Test
     public void getterFinderTest() {
 
@@ -64,8 +65,9 @@ public class MetaUtilsTest {
 	    email.setEmailId(100);
 	    email.setPersonId(1000);
 	    email.setEmailAddress("mail@mail.com");
-	    MethodHandle handle = MethodHandles.lookup().findGetter(
-		    Email.class, "personId", Integer.class);
+	    MethodType type = MethodType.methodType(Integer.class);
+	    MethodHandle handle = MethodHandles.publicLookup().findVirtual(
+		    Email.class, "getPersonId", type);
 	    Integer personId = (Integer) handle.invoke(email);
 	    System.out.format("%s - %s", "personId", personId);
 	} catch (NoSuchFieldException ex) {
