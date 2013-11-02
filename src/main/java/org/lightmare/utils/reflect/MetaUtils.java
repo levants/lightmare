@@ -733,7 +733,6 @@ public class MetaUtils {
 	    } else {
 		wrapper = ObjectUtils.cast(type);
 	    }
-
 	} else {
 	    wrapper = ObjectUtils.cast(type);
 	}
