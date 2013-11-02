@@ -76,4 +76,31 @@ public class MetaUtilsTest {
 	    ex.printStackTrace();
 	}
     }
+
+    public void setterFinderTest() {
+
+	try {
+	    Email email = new Email();
+	    email.setEmailId(100);
+	    email.setPersonId(1000);
+	    email.setEmailAddress("mail@mail.com");
+	    MethodType setterType = MethodType.methodType(void.class,
+		    Integer.class);
+	    MethodHandle setterHandle = MethodHandles.publicLookup()
+		    .findVirtual(Email.class, "setPersonId", setterType);
+	    setterHandle.invoke(email, 1500);
+
+	    MethodType getterType = MethodType.methodType(Integer.class);
+	    MethodHandle getterHandle = MethodHandles.publicLookup()
+		    .findVirtual(Email.class, "getPersonId", getterType);
+	    Integer personId = (Integer) getterHandle.invoke(email);
+	    System.out.format("%s - %s", "personId", personId);
+	} catch (NoSuchFieldException ex) {
+	    ex.printStackTrace();
+	} catch (IllegalAccessException ex) {
+	    ex.printStackTrace();
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
 }
