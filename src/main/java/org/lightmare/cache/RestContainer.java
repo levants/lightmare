@@ -28,8 +28,8 @@ public class RestContainer {
     private static RestConfig restConfig;
 
     /**
-     * Caches passed REST {@link Resource} for appropriated EJB bean (as
-     * resource handler) {@link Class} key
+     * Caches passed REST {@link Resource} for appropriated {@link Class} of EJB bean (as
+     * resource handler)
      * 
      * @param handlerClass
      * @param resource
