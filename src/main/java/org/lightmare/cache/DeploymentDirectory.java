@@ -1,7 +1,7 @@
 package org.lightmare.cache;
 
 /**
- * Container class to cache deployment directory information
+ * Container class to cache deployment directory information, Lightmare EJB container can use many deployment directories and each of them can be configured separately
  * 
  * @author Levan Tsinadze
  * @since 0.0.46-SNAPSHOT
