@@ -148,8 +148,8 @@ public class MetaContainer {
     }
 
     /**
-     * Checks if bean with associated name deployed and if it is, then checks if deployment is
-     * in progress
+     * Checks if bean with associated name deployed and if it is, then checks if
+     * deployment is in progress
      * 
      * @param beanName
      * @return boolean
