@@ -40,7 +40,7 @@ public class RestContainer {
 
     /**
      * Finds if {@link Resource} has handler instances and if they are instance
-     * of {@link RestInflector} and gets appropriate bean class
+     * of {@link RestInflector} and gets appropriate EJB bean class
      * 
      * @param resource
      * @return {@link Class}
