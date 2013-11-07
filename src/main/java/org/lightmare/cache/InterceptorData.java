@@ -20,7 +20,7 @@ public class InterceptorData {
     // Interceptor implementation class
     private Class<?> interceptorClass;
 
-    // Interceptor method
+    // Method which should be called at interception time
     private Method interceptorMethod;
 
     public Class<?> getBeanClass() {
