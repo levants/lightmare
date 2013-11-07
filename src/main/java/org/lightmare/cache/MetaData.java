@@ -63,7 +63,7 @@ public class MetaData {
     private TransactionAttributeType transactionAttrType;
 
     // TransactionManagementType annotation or defaulr value for appropriated
-    // EJB bean
+    // EJB bean class
     private TransactionManagementType transactionManType;
 
     private List<InjectionData> injects;
