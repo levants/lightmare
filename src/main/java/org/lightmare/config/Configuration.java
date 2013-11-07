@@ -196,6 +196,14 @@ public class Configuration implements Cloneable {
 		defaultValue);
     }
 
+    /**
+     * Gets value from sub configuration for passed sub key contained in
+     * configuration for default configuration key
+     * 
+     * @param subKey
+     * @param defaultValue
+     * @return <coder>V</code>
+     */
     private <K, V> V getConfigValue(K subKey) {
 	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey);
     }
