@@ -36,6 +36,7 @@ public class MetaData {
     //EJB bean implementation interfaces
     private Class<?>[] interfaceClasses;
 
+    //All EJB local interfaces
     private Class<?>[] localInterfaces;
 
     private Class<?>[] remoteInterfaces;
