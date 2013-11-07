@@ -445,7 +445,7 @@ public class MetaContainer {
     }
 
     /**
-     * Removed {@link MetaData} from cache
+     * Removed {@link MetaData} from cache by EJB bean name
      * 
      * @param beanName
      */
