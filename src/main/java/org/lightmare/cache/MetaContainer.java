@@ -455,7 +455,7 @@ public class MetaContainer {
 
     /**
      * Gets {@link java.util.Iterator}<MetaData> over all cached
-     * {@link org.lightmare.cache.MetaData} instances
+     * {@link org.lightmare.cache.MetaData} objects
      * 
      * @return {@link java.util.Iterator}<MetaData>
      */
