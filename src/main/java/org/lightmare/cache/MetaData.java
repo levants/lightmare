@@ -54,7 +54,8 @@ public class MetaData {
     // Check if appropriated EJB bean is in deployment progress
     private AtomicBoolean inProgress = new AtomicBoolean();
 
-    // Check if appropriated EJB bean has bean managed or container managed transactions
+    // Check if appropriated EJB bean has bean managed or container managed
+    // transactions
     private boolean transactional;
 
     private TransactionAttributeType transactionAttrType;
