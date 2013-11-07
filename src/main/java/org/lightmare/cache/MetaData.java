@@ -30,9 +30,10 @@ import org.lightmare.utils.CollectionUtils;
  */
 public class MetaData {
 
-    //EJB bean class
+    // EJB bean class
     private Class<?> beanClass;
 
+    //EJB bean implementation interfaces
     private Class<?>[] interfaceClasses;
 
     private Class<?>[] localInterfaces;
