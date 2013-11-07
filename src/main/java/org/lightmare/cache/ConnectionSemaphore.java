@@ -32,6 +32,7 @@ public class ConnectionSemaphore {
     // Checks if connection is already cached
     private boolean cached;
 
+    //Check if connection is already bound to JNDI lookup
     private boolean bound;
 
     private EntityManagerFactory emf;
