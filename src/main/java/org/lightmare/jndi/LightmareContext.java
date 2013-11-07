@@ -62,6 +62,7 @@ public class LightmareContext extends MemoryContext {
 	Object value;
 
 	String name;
+	//Retrives UserTransaction object from thread cache
 	if (jndiName.equals(NamingUtils.USER_TRANSACTION_NAME)) {
 	    UserTransaction transaction = TransactionHolder.getTransaction();
 	    value = transaction;
