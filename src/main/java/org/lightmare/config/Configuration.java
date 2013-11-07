@@ -159,6 +159,12 @@ public class Configuration implements Cloneable {
 	return containsSubConfigKey(ConfigKeys.DEPLOY_CONFIG.key, key);
     }
 
+    /**
+     * Gets value from sub configuration for passed sub key contained in configuration for passed key
+     * @param key
+     * @param subKey
+     * @return <coder>V</code>
+     */
     private <K, V> V getSubConfigValue(Object key, K subKey) {
 	return getSubConfigValue(key, subKey, null);
     }
