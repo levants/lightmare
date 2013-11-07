@@ -20,7 +20,7 @@ public class TransactionHolder {
     private static final ThreadLocal<UserTransaction> TRANSACTION_HOLDER = new ThreadLocal<UserTransaction>();
 
     /**
-     * Gets {@link UserTransaction} object from {@link ThreadLocal} per thread
+     * Gets {@link UserTransaction} object from {@link ThreadLocal} cache
      * 
      * @return {@link UserTransaction}
      */
