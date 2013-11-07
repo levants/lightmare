@@ -66,6 +66,7 @@ public class MetaData {
     // EJB bean class
     private TransactionManagementType transactionManType;
 
+    //Injection for appropriated EJB bean
     private List<InjectionData> injects;
 
     private Collection<Field> unitFields;
