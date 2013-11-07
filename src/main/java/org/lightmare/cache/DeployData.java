@@ -13,7 +13,7 @@ import org.lightmare.utils.fs.FileType;
  */
 public class DeployData {
 
-    //Deployed file type (jar, ear, directory and etc)
+    // Deployed file type (jar, ear, directory and etc)
     private FileType type;
 
     private URL url;
