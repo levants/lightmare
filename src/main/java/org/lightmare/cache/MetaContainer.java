@@ -349,7 +349,7 @@ public class MetaContainer {
     }
 
     /**
-     * Removes bean (removes it's {@link MetaData} from cache) by bean class
+     * Removes EJB bean (removes it's {@link MetaData} from cache) by bean class
      * name
      * 
      * @param beanName
