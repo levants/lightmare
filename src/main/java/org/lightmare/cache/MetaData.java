@@ -75,6 +75,7 @@ public class MetaData {
     // Interceptors for appropriated EJB bean
     private Queue<InterceptorData> interceptors;
 
+    //BeanHandler cache to be cloned at invoketion time
     private BeanHandler handler;
 
     public Class<?> getBeanClass() {
