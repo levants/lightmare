@@ -69,8 +69,8 @@ public class RestContainer {
     }
 
     /**
-     * Gets handler EJB bean class directly from {@link Resource} or from handler
-     * instances
+     * Gets handler EJB bean class directly from {@link Resource} or from
+     * handler instances
      * 
      * @param resource
      * @return {@link Class}
