@@ -208,6 +208,11 @@ public class Configuration implements Cloneable {
 	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey);
     }
 
+    /**
+     * Gets {@link Map} value from configuration with passed key and if such does not exists creates and puts new instance
+     * @param key
+     * @return {@link Map}<code><K, V></code>
+     */
     private <K, V> Map<K, V> getWithInitialization(Object key) {
 
 	Map<K, V> result = getConfigValue(key);
