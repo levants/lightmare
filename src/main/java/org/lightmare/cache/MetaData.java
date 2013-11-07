@@ -48,6 +48,7 @@ public class MetaData {
     // All connections for appropriated EJB bean
     private Collection<ConnectionData> connections;
 
+    //Appropriated ClassLoader with loaded EJB bean class
     private ClassLoader loader;
 
     private AtomicBoolean inProgress = new AtomicBoolean();
