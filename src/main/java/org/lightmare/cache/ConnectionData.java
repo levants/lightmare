@@ -27,7 +27,7 @@ public class ConnectionData {
     // EntityManagerFactory instance for appropriated persistence unit
     private EntityManagerFactory emf;
 
-    //Persistence unit name
+    // Persistence unit name
     private String unitName;
 
     private String jndiName;
