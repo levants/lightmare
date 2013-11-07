@@ -171,6 +171,11 @@ public class Configuration implements Cloneable {
 	return getSubConfigValue(key, subKey, null);
     }
 
+    /**
+     * Sets sub configuration configuration value for passed sub key
+     * @param subKey
+     * @param value
+     */
     private <K, V> void setConfigValue(K subKey, V value) {
 	setSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey, value);
     }
