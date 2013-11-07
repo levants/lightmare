@@ -35,6 +35,7 @@ public class ConnectionSemaphore {
     // Check if connection is already bound to JNDI lookup
     private boolean bound;
 
+    //EntityManagerFactory instance for persistence unit
     private EntityManagerFactory emf;
 
     // Number of user using the same connection
