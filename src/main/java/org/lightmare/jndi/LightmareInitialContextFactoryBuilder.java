@@ -26,7 +26,9 @@ public class LightmareInitialContextFactoryBuilder implements
     private static final String COULD_NOT_FIND_ERROR = "Could not find initial cotext";
 
     /**
-     * Builds {@link InitialContextFactory} from passed requested ({@link String}) class name
+     * Builds {@link InitialContextFactory} from passed requested (
+     * {@link String}) class name
+     * 
      * @param requestedFactory
      * @return {@link InitialContextFactory}
      * @throws NoInitialContextException
