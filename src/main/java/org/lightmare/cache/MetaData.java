@@ -69,7 +69,7 @@ public class MetaData {
     // Injection for appropriated EJB bean
     private List<InjectionData> injects;
 
-    //Fields with PersistenceUnit annotation
+    // Fields with PersistenceUnit annotation
     private Collection<Field> unitFields;
 
     private Queue<InterceptorData> interceptors;
