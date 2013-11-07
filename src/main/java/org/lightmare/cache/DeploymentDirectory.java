@@ -8,10 +8,10 @@ package org.lightmare.cache;
  */
 public class DeploymentDirectory {
 
-    //Path to deployment directory
+    // Path to deployment directory
     private String path;
 
-    //Check if this directory should be scan for changes (for hot deployment)
+    // Check if this directory should be scan for changes (for hot deployment)
     private boolean scan;
 
     public DeploymentDirectory(String path) {
