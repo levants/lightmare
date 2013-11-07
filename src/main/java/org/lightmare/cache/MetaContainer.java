@@ -319,7 +319,7 @@ public class MetaContainer {
     }
 
     /**
-     * Clears connection from cache
+     * Clears connection from cache for passed {@link MetaData} instance
      * 
      * @param metaData
      * @throws IOException
