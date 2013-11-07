@@ -26,7 +26,7 @@ public class ConnectionSemaphore {
     // Persistence unit name
     private String unitName;
 
-    //JNDI name
+    // JNDI name
     private String jndiName;
 
     private boolean cached;
