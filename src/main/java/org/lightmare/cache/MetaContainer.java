@@ -168,7 +168,7 @@ public class MetaContainer {
     }
 
     /**
-     * Checks if bean with associated name deployed
+     * Checks if bean with associated name is deployed
      * 
      * @param beanName
      * @return boolean
