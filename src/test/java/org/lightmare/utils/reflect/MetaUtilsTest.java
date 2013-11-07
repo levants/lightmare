@@ -1,6 +1,9 @@
 package org.lightmare.utils.reflect;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.AccessibleObject;
 
 import javax.persistence.EntityManager;
@@ -8,6 +11,7 @@ import javax.persistence.EntityManager;
 import org.junit.Assert;
 import org.junit.Test;
 import org.lightmare.bean.LightMareBean;
+import org.lightmare.entities.Email;
 import org.lightmare.utils.ObjectUtils;
 
 public class MetaUtilsTest {
@@ -47,6 +51,56 @@ public class MetaUtilsTest {
 		    ObjectUtils.notEquals(acc1, acc3));
 	    System.out.format("%s %s", acc1, acc3);
 	} catch (IOException ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @Test
+    public void getterFinderTest() {
+
+	try {
+	    Email email = new Email();
+	    email.setEmailId(100);
+	    email.setPersonId(1000);
+	    email.setEmailAddress("mail@mail.com");
+	    MethodType type = MethodType.methodType(Integer.class);
+	    MethodHandle handle = MethodHandles.publicLookup().findVirtual(
+		    Email.class, "getPersonId", type);
+	    Integer personId = (Integer) handle.invoke(email);
+	    System.out.format("%s - %s\n", "personId", personId);
+	} catch (NoSuchFieldException ex) {
+	    ex.printStackTrace();
+	} catch (IllegalAccessException ex) {
+	    ex.printStackTrace();
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @Test
+    public void setterFinderTest() {
+
+	try {
+	    Email email = new Email();
+	    email.setEmailId(100);
+	    email.setPersonId(1000);
+	    email.setEmailAddress("mail@mail.com");
+	    MethodType setterType = MethodType.methodType(void.class,
+		    Integer.class);
+	    MethodHandle setterHandle = MethodHandles.publicLookup()
+		    .findVirtual(Email.class, "setPersonId", setterType);
+	    setterHandle.invoke(email, 1500);
+
+	    MethodType getterType = MethodType.methodType(Integer.class);
+	    MethodHandle getterHandle = MethodHandles.publicLookup()
+		    .findVirtual(Email.class, "getPersonId", getterType);
+	    Integer personId = (Integer) getterHandle.invoke(email);
+	    System.out.format("%s - %s\n", "personId", personId);
+	} catch (NoSuchFieldException ex) {
+	    ex.printStackTrace();
+	} catch (IllegalAccessException ex) {
+	    ex.printStackTrace();
+	} catch (Throwable ex) {
 	    ex.printStackTrace();
 	}
     }

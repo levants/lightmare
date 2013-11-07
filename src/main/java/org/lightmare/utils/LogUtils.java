@@ -89,7 +89,6 @@ public class LogUtils {
      * @param formats
      */
     public static void error(Logger log, String message, Object... formats) {
-
 	error(log, null, message, formats);
     }
 

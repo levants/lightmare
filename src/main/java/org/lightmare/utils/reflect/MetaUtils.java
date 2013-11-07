@@ -733,7 +733,6 @@ public class MetaUtils {
 	    } else {
 		wrapper = ObjectUtils.cast(type);
 	    }
-
 	} else {
 	    wrapper = ObjectUtils.cast(type);
 	}
@@ -772,7 +771,6 @@ public class MetaUtils {
 	    } else {
 		value = null;
 	    }
-
 	} else {
 	    value = null;
 	}
