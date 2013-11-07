@@ -229,7 +229,8 @@ public class Configuration implements Cloneable {
 
     /**
      * Sets sub configuration configuration value for passed sub key for passed
-     * configuration key (if sub configuration does not exists creates and puts new instance)
+     * configuration key (if sub configuration does not exists creates and puts
+     * new instance)
      * 
      * @param subKey
      * @param value
