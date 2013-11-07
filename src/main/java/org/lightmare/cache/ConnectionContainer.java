@@ -329,8 +329,8 @@ public class ConnectionContainer {
     }
 
     /**
-     * Removes {@link ConnectionSemaphore} from cache and removes bindings of JNDI name from
-     * {@link javax.naming.Context} lookups
+     * Removes {@link ConnectionSemaphore} from cache and removes bindings of
+     * JNDI name from {@link javax.naming.Context} lookups
      * 
      * @param unitName
      */
