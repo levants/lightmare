@@ -8,6 +8,7 @@ package org.lightmare.cache;
  */
 public class DeploymentDirectory {
 
+    //Path to deployment directory
     private String path;
 
     private boolean scan;
