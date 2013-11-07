@@ -18,7 +18,7 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class ConnectionData {
 
-    //EJB beans's field to set connection
+    // EJB beans's field to set connection
     private Field connectionField;
 
     private Field unitField;
