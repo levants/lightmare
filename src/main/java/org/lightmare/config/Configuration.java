@@ -209,7 +209,9 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Gets {@link Map} value from configuration with passed key and if such does not exists creates and puts new instance
+     * Gets {@link Map} value from configuration with passed key and if such
+     * does not exists creates and puts new instance
+     * 
      * @param key
      * @return {@link Map}<code><K, V></code>
      */
