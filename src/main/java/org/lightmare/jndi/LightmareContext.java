@@ -34,6 +34,7 @@ public class LightmareContext extends MemoryContext {
 
     /**
      * Constructor with {@link Hashtable} to cache lookups in memory
+     * 
      * @param env
      */
     public LightmareContext(Hashtable<?, ?> env) {
@@ -62,7 +63,7 @@ public class LightmareContext extends MemoryContext {
 	Object value;
 
 	String name;
-	//Retrives UserTransaction object from thread cache
+	// Retrives UserTransaction object from thread cache
 	if (jndiName.equals(NamingUtils.USER_TRANSACTION_NAME)) {
 	    UserTransaction transaction = TransactionHolder.getTransaction();
 	    value = transaction;
