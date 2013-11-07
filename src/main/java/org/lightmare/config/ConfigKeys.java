@@ -109,6 +109,10 @@ public enum ConfigKeys {
 	return key;
     }
 
+    /**
+     * Returns value as generic type
+     * @return <code>T</code>
+     */
     public <T> T getValue() {
 
 	T typedValue = ObjectUtils.cast(value);
