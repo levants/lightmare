@@ -33,7 +33,8 @@ public class ConnectionData {
     // JNDI name
     private String jndiName;
 
-    //ConnectionSemaphore instance for appropriated EntityManagerFactory instance
+    // ConnectionSemaphore instance for appropriated EntityManagerFactory
+    // instance
     private ConnectionSemaphore connection;
 
     public Field getConnectionField() {
