@@ -198,7 +198,7 @@ public class MetaContainer {
     }
 
     /**
-     * Waits while {@link MetaData#isInProgress()} is true
+     * Waits while {@link MetaData#isInProgress()} is true (and if it is calls {@link MetaContainer#awaitProgress(boolean, MetaData)} method)
      * 
      * @param metaData
      * @throws IOException
