@@ -21,7 +21,7 @@ public class ConnectionData {
     // EJB beans's field to set connection
     private Field connectionField;
 
-    //EJB bean's field to set EntityManagerFactory instance
+    // EJB bean's field to set EntityManagerFactory instance
     private Field unitField;
 
     private EntityManagerFactory emf;
