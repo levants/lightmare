@@ -90,6 +90,7 @@ public enum ConfigKeys {
     // Default configuration file location
     CONFIG_FILE("configFile", "./config/configuration.yaml");
 
+    //Key for configuration property
     public String key;
 
     public Object value;
