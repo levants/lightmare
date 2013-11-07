@@ -27,6 +27,11 @@ public class RestContainer {
     // Cached running instance of RestConfig class
     private static RestConfig restConfig;
 
+    /**
+     * Caches passed REST {@link Resource} for bean handler {@link Class} key
+     * @param handlerClass
+     * @param resource
+     */
     public static void putResource(Class<?> handlerClass, Resource resource) {
 	REST_RESOURCES.putIfAbsent(handlerClass, resource);
     }
