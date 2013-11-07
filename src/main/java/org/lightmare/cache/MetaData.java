@@ -51,6 +51,7 @@ public class MetaData {
     // Appropriated ClassLoader with loaded EJB bean class
     private ClassLoader loader;
 
+    //Check if this object is in deployment
     private AtomicBoolean inProgress = new AtomicBoolean();
 
     private boolean transactional;
