@@ -276,7 +276,7 @@ public class MetaContainer {
     }
 
     /**
-     * Removes cached bean names {@link Collection} by containing file
+     * Removes cached EJB bean names {@link Collection} by containing file
      * {@link URL} as key
      * 
      * @param url
