@@ -116,7 +116,8 @@ public class ConnectionContainer {
 
 	ConnectionSemaphore semaphore;
 
-	//Creates and caches ConnectionSemaphore instance for passed unit and JNDI names
+	// Creates and caches ConnectionSemaphore instance for passed unit and
+	// JNDI names
 	if (StringUtils.valid(unitName)) {
 	    semaphore = createSemaphore(unitName);
 	    if (StringUtils.valid(jndiName)) {
