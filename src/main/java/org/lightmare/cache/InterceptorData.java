@@ -14,7 +14,7 @@ public class InterceptorData {
     // Annotated EJB bean class
     private Class<?> BeanClass;
 
-    //Annotated EJB bean method
+    // Annotated EJB bean method
     private Method beanMethod;
 
     private Class<?> interceptorClass;
