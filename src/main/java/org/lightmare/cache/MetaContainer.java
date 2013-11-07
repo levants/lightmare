@@ -384,8 +384,8 @@ public class MetaContainer {
     }
 
     /**
-     * Removes EJB bean (removes it's {@link MetaData} from cache) by {@link URL} of
-     * archive file
+     * Removes EJB bean (removes it's {@link MetaData} from cache) by
+     * {@link URL} of archive file
      * 
      * @param url
      * @throws IOException
