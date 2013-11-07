@@ -33,10 +33,10 @@ public class MetaData {
     // EJB bean class
     private Class<?> beanClass;
 
-    //EJB bean implementation interfaces
+    // EJB bean implementation interfaces
     private Class<?>[] interfaceClasses;
 
-    //All EJB local interfaces
+    // All EJB local interfaces
     private Class<?>[] localInterfaces;
 
     private Class<?>[] remoteInterfaces;
