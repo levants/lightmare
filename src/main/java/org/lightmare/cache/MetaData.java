@@ -58,7 +58,7 @@ public class MetaData {
     // transactions
     private boolean transactional;
 
-    // Transaction attribute type annotation or default value for appropriated
+    // TransactionAttributeType annotation or default value for appropriated
     // EJB bean
     private TransactionAttributeType transactionAttrType;
 
