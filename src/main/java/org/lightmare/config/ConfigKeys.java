@@ -93,6 +93,7 @@ public enum ConfigKeys {
     // Key for configuration property
     public String key;
 
+    //Configuration default value
     public Object value;
 
     private ConfigKeys(String key) {
