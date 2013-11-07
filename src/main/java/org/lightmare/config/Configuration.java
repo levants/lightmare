@@ -227,6 +227,13 @@ public class Configuration implements Cloneable {
 	return result;
     }
 
+    /**
+     * Sets sub configuration configuration value for passed sub key for passed
+     * configuration key (if sub configuration does not exists creates and puts new instance)
+     * 
+     * @param subKey
+     * @param value
+     */
     private <K, V> void setWithInitialization(Object key, K subKey, V value) {
 
 	Map<K, V> result = getWithInitialization(key);
