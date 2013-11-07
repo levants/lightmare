@@ -149,6 +149,11 @@ public class Configuration implements Cloneable {
 	return valid;
     }
 
+    /**
+     * Checks if configuration contains passed key
+     * @param key
+     * @return <code>boolean</code>
+     */
     private <K> boolean containsConfigKey(K key) {
 	return containsSubConfigKey(ConfigKeys.DEPLOY_CONFIG.key, key);
     }
