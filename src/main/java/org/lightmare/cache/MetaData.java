@@ -45,6 +45,7 @@ public class MetaData {
     // EJB bean's Field to set JTA UserTransaction instance
     private Field transactionField;
 
+    //All connections for appropriated EJB bean
     private Collection<ConnectionData> connections;
 
     private ClassLoader loader;
