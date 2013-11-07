@@ -32,7 +32,7 @@ public class TransactionHolder {
     }
 
     /**
-     * Caches {@link UserTransaction} object in {@link ThreadLocal} per thread
+     * Caches {@link UserTransaction} object in {@link ThreadLocal} cache
      * 
      * @param transaction
      */
