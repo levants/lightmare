@@ -29,6 +29,7 @@ public class RestContainer {
 
     /**
      * Caches passed REST {@link Resource} for bean handler {@link Class} key
+     * 
      * @param handlerClass
      * @param resource
      */
