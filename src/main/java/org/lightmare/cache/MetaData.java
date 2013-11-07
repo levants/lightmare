@@ -39,7 +39,7 @@ public class MetaData {
     // All EJB local interfaces
     private Class<?>[] localInterfaces;
 
-    //All EJB remote interfaces
+    // All EJB remote interfaces
     private Class<?>[] remoteInterfaces;
 
     private Field transactionField;
