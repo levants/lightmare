@@ -23,6 +23,7 @@ public class ConnectionSemaphore {
     // Flag if connection initialization is in progress
     private final AtomicBoolean inProgress = new AtomicBoolean();
 
+    //Persistence unit name
     private String unitName;
 
     private String jndiName;
