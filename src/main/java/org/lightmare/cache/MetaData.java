@@ -72,7 +72,7 @@ public class MetaData {
     // Fields with PersistenceUnit annotation
     private Collection<Field> unitFields;
 
-    //Interceptors for appropriated EJB bean
+    // Interceptors for appropriated EJB bean
     private Queue<InterceptorData> interceptors;
 
     private BeanHandler handler;
