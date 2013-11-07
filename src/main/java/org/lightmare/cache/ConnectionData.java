@@ -24,6 +24,7 @@ public class ConnectionData {
     // EJB bean's field to set EntityManagerFactory instance
     private Field unitField;
 
+    //EntityManagerFactory instance for appropriated persistence unit
     private EntityManagerFactory emf;
 
     private String unitName;
