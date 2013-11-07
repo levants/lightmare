@@ -111,6 +111,7 @@ public enum ConfigKeys {
 
     /**
      * Returns value as generic type
+     * 
      * @return <code>T</code>
      */
     public <T> T getValue() {
