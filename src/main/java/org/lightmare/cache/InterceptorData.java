@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
  */
 public class InterceptorData {
 
-    //Injection bean class
+    // Injection bean class
     private Class<?> BeanClass;
 
     private Method beanMethod;
