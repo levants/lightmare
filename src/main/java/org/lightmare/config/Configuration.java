@@ -151,6 +151,7 @@ public class Configuration implements Cloneable {
 
     /**
      * Checks if configuration contains passed key
+     * 
      * @param key
      * @return <code>boolean</code>
      */
