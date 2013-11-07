@@ -289,7 +289,7 @@ public class MetaContainer {
     }
 
     /**
-     * Caches bean name by {@link URL} of jar ear or any file
+     * Caches EJB bean name by {@link URL} of jar ear or any file
      * 
      * @param beanName
      */
