@@ -262,7 +262,7 @@ public class MetaContainer {
     }
 
     /**
-     * checks containing archive {@link URL} address
+     * Checks containing archive {@link URL} address
      * 
      * @param url
      * @return <code>boolean</code>
