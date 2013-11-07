@@ -330,7 +330,7 @@ public class ConnectionContainer {
 
     /**
      * Removes {@link ConnectionSemaphore} from cache and unbinds name from
-     * {@link javax.naming.Context}
+     * {@link javax.naming.Context} cache
      * 
      * @param unitName
      */
