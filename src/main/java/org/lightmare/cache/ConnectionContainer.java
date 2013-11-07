@@ -307,7 +307,8 @@ public class ConnectionContainer {
 
 	int users = semaphore.decrementUser();
 
-	//Checks if users (EJB beans) for appropriated ConnectionSemaphore is less or equals minimal amount to close appropriated connection
+	// Checks if users (EJB beans) for appropriated ConnectionSemaphore is
+	// less or equals minimal amount to close appropriated connection
 	if (users < ConnectionSemaphore.MINIMAL_USERS) {
 
 	    EntityManagerFactory emf = semaphore.getEmf();
