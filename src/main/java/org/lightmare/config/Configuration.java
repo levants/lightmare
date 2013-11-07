@@ -183,8 +183,9 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * * Gets value from sub configuration for passed sub key contained in
+     * Gets value from sub configuration for passed sub key contained in
      * configuration for default configuration key
+     * 
      * @param subKey
      * @param defaultValue
      * @return <coder>V</code>
