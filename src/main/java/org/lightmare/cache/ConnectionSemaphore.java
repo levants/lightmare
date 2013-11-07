@@ -29,7 +29,7 @@ public class ConnectionSemaphore {
     // JNDI name
     private String jndiName;
 
-    //Checks if connection is already cached
+    // Checks if connection is already cached
     private boolean cached;
 
     private boolean bound;
