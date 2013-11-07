@@ -16,6 +16,7 @@ public class DeployData {
     // Deployed file type (jar, ear, directory and etc)
     private FileType type;
 
+    //URL to appropriated deployed file
     private URL url;
 
     public FileType getType() {
