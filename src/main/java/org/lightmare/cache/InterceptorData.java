@@ -20,7 +20,7 @@ public class InterceptorData {
     // Interceptor implementation class
     private Class<?> interceptorClass;
 
-    //Interceptor method
+    // Interceptor method
     private Method interceptorMethod;
 
     public Class<?> getBeanClass() {
