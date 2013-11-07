@@ -32,6 +32,10 @@ public class LightmareContext extends MemoryContext {
     // Caches EntityManager instances got from lookup method to clear after
     private Collection<WeakReference<EntityManager>> ems = new ArrayList<WeakReference<EntityManager>>();
 
+    /**
+     * Constructor with {@link Hashtable} to cache lookups in memory
+     * @param env
+     */
     public LightmareContext(Hashtable<?, ?> env) {
 	super(env);
     }
