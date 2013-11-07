@@ -296,7 +296,6 @@ public class MetaContainer {
     public static void addBeanName(URL url, String beanName) {
 
 	synchronized (MetaContainer.class) {
-
 	    Collection<String> beanNames = EJB_URLS.get(url);
 	    if (CollectionUtils.invalid(beanNames)) {
 		beanNames = new HashSet<String>();
