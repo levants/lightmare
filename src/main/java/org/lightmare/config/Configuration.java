@@ -172,7 +172,7 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Sets sub configuration configuration value for passed sub key
+     * Sets sub configuration configuration value for passed sub key for default configuration key
      * @param subKey
      * @param value
      */
