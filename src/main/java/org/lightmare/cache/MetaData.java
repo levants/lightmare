@@ -42,7 +42,7 @@ public class MetaData {
     // All EJB remote interfaces
     private Class<?>[] remoteInterfaces;
 
-    //EJB bean's Field to set JTA UserTransaction instance
+    // EJB bean's Field to set JTA UserTransaction instance
     private Field transactionField;
 
     private Collection<ConnectionData> connections;
