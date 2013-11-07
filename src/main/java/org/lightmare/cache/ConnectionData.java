@@ -30,6 +30,7 @@ public class ConnectionData {
     // Persistence unit name
     private String unitName;
 
+    //JNDI name
     private String jndiName;
 
     private ConnectionSemaphore connection;
