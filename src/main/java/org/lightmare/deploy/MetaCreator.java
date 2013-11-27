@@ -56,7 +56,7 @@ import org.lightmare.utils.shutdown.ShutDown;
 public class MetaCreator {
 
     // Annotation scanner implementation for scanning at atartup
-    private static AnnotationFinder annotationDB;
+    private static AnnotationFinder annotationFinder;
 
     // Cached temporal resources for clean after deployment
     private TmpResources tmpResources;
@@ -151,7 +151,7 @@ public class MetaCreator {
     }
 
     public AnnotationFinder getAnnotationDB() {
-	return annotationDB;
+	return annotationFinder;
     }
 
     public Map<String, ArchiveUtils> getAggregateds() {
@@ -389,14 +389,14 @@ public class MetaCreator {
 		realURL = new WeakHashMap<URL, DeployData>();
 	    }
 	    URL[] fullArchives = getFullArchives(archives);
-	    annotationDB = new AnnotationFinder();
-	    annotationDB.setScanFieldAnnotations(Boolean.FALSE);
-	    annotationDB.setScanParameterAnnotations(Boolean.FALSE);
-	    annotationDB.setScanMethodAnnotations(Boolean.FALSE);
-	    annotationDB.scanArchives(fullArchives);
-	    Set<String> beanNames = annotationDB.getAnnotationIndex().get(
+	    annotationFinder = new AnnotationFinder();
+	    annotationFinder.setScanFieldAnnotations(Boolean.FALSE);
+	    annotationFinder.setScanParameterAnnotations(Boolean.FALSE);
+	    annotationFinder.setScanMethodAnnotations(Boolean.FALSE);
+	    annotationFinder.scanArchives(fullArchives);
+	    Set<String> beanNames = annotationFinder.getAnnotationIndex().get(
 		    Stateless.class.getName());
-	    classOwnersURL = annotationDB.getClassOwnersURLs();
+	    classOwnersURL = annotationFinder.getClassOwnersURLs();
 	    Initializer.initializeDataSources(configuration);
 	    if (CollectionUtils.valid(beanNames)) {
 		deployBeans(beanNames);
