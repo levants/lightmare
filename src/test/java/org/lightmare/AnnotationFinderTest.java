@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.lightmare.scannotation.AnnotationFinder;
 import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
-public class AnnotationDBTest {
+public class AnnotationFinderTest {
 
     private static final String EAR_PATH = "./lib/loader-tester.ear";
 
