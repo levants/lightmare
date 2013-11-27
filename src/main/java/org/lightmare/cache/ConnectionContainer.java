@@ -313,15 +313,13 @@ public class ConnectionContainer {
 	    JpaManager.closeEntityManagerFactory(emf);
 	    unbindConnection(semaphore);
 
-	    synchronized (CONNECTIONS) {
-		CONNECTIONS.remove(semaphore.getUnitName());
-		String jndiName = semaphore.getJndiName();
+	    CONNECTIONS.remove(semaphore.getUnitName());
+	    String jndiName = semaphore.getJndiName();
 
-		if (StringUtils.valid(jndiName)) {
-		    CONNECTIONS.remove(jndiName);
-		    semaphore.setBound(Boolean.FALSE);
-		    semaphore.setCached(Boolean.FALSE);
-		}
+	    if (StringUtils.valid(jndiName)) {
+		CONNECTIONS.remove(jndiName);
+		semaphore.setBound(Boolean.FALSE);
+		semaphore.setCached(Boolean.FALSE);
 	    }
 	}
     }
