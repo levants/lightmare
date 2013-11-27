@@ -14,7 +14,7 @@ public class AnnotationDBTest {
 
     private static final String EAR_PATH = "./lib/loader-tester.ear";
 
-    private static AnnotationFinder annotationDB = new AnnotationFinder();
+    private static AnnotationFinder annotationFinder = new AnnotationFinder();
 
     @Test
     public void getOwnershipFilesTest() {
@@ -29,8 +29,8 @@ public class AnnotationDBTest {
 		    xmlURLs.size() > 0);
 	    Set<URL> urlSet = xmlURLs.keySet();
 	    URL[] urls = urlSet.toArray(new URL[urlSet.size()]);
-	    annotationDB.scanArchives(urls);
-	    Map<String, String> classOwnershipFiles = annotationDB
+	    annotationFinder.scanArchives(urls);
+	    Map<String, String> classOwnershipFiles = annotationFinder
 		    .getClassOwnersFiles();
 	    Assert.assertTrue("Could not find class ownership files",
 		    classOwnershipFiles.size() > 0);
