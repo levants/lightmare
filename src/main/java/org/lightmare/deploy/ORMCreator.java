@@ -54,15 +54,14 @@ public class ORMCreator {
      * @return boolean
      * @throws IOException
      */
-    private boolean checkForUnitName(String className, Configuration cloneConfig)
-	    throws IOException {
+    private boolean checkForUnitName(String className) throws IOException {
 
 	boolean isValid;
 
 	Class<?> entityClass;
 	entityClass = MetaUtils.initClassForName(className);
 	UnitName annotation = entityClass.getAnnotation(UnitName.class);
-	isValid = annotation.value().equals(cloneConfig.getAnnotatedUnitName());
+	isValid = annotation.value().equals(configClone.getAnnotatedUnitName());
 
 	return isValid;
     }
@@ -100,8 +99,8 @@ public class ORMCreator {
      * @return {@link List}<String>
      * @throws IOException
      */
-    private List<String> filterEntities(Set<String> classSet,
-	    Configuration configClone) throws IOException {
+    private List<String> filterEntities(Set<String> classSet)
+	    throws IOException {
 
 	List<String> classes;
 
@@ -112,7 +111,7 @@ public class ORMCreator {
 	    Set<String> filtereds = new HashSet<String>();
 	    boolean valid;
 	    for (String className : classSet) {
-		valid = checkForUnitName(className, configClone);
+		valid = checkForUnitName(className);
 		if (valid) {
 		    filtereds.add(className);
 		}
@@ -165,7 +164,7 @@ public class ORMCreator {
 		filterEntitiesForJar(classSet, fileNameForBean);
 	    }
 
-	    List<String> classes = filterEntities(classSet, configClone);
+	    List<String> classes = filterEntities(classSet);
 	    builder.setClasses(classes);
 	}
 
