@@ -20,6 +20,7 @@ import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.codecs.ArchiveUtils;
+import org.scannotation.AnnotationDB;
 import org.scannotation.archiveiterator.Filter;
 import org.scannotation.archiveiterator.IteratorFactory;
 import org.scannotation.archiveiterator.StreamIterator;
@@ -31,7 +32,7 @@ import org.scannotation.archiveiterator.StreamIterator;
  * @author Levan Tsinadze
  * @since 0.0.18-SNAPSHOT
  */
-public class AnnotationFinder extends org.scannotation.AnnotationDB {
+public class AnnotationFinder extends AnnotationDB {
 
     private static final long serialVersionUID = 1L;
 
