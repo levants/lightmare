@@ -270,15 +270,15 @@ public class BeanLoader {
 	 * @param jndiName
 	 * @throws IOException
 	 */
-	private void lockSemaphore(ConnectionSemaphore semaphore,
-		String unitName, String jndiName) throws IOException {
+	private void lockSemaphore(ConnectionSemaphore semaphore)
+		throws IOException {
 
 	    synchronized (semaphore) {
 		if (ObjectUtils.notTrue(semaphore.isCheck())) {
 		    try {
 			ORMCreator orm = ORMCreator.get(creator);
-			orm.configureConnection(unitName, beanName, loader,
-				configuration);
+			orm.configureConnection(semaphore.getUnitName(),
+				beanName, loader, configuration);
 		    } finally {
 			semaphore.notifyAll();
 		    }
@@ -380,7 +380,7 @@ public class BeanLoader {
 		connection.setConnection(semaphore);
 		releaseBlocker();
 		if (ObjectUtils.notNull(semaphore)) {
-		    lockSemaphore(semaphore, unitName, jndiName);
+		    lockSemaphore(semaphore);
 		}
 	    }
 
