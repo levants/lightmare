@@ -32,6 +32,14 @@ public class ORMCreator {
 
     private AnnotationFinder annotationFinder;
 
+    private String unitName;
+
+    private String beanName;
+
+    private ClassLoader loader;
+
+    private Configuration configClone;
+
     private ORMCreator(MetaCreator creator) {
 	this.aggregateds = new WeakHashMap<String, ArchiveUtils>(
 		creator.getAggregateds());
@@ -123,8 +131,7 @@ public class ORMCreator {
      * @param beanName
      * @throws IOException
      */
-    protected void configureConnection(String unitName, String beanName,
-	    ClassLoader loader, Configuration configClone) throws IOException {
+    protected void configureConnection() throws IOException {
 
 	JpaManager.Builder builder = new JpaManager.Builder();
 	Map<String, String> classOwnersFiles = annotationFinder
@@ -173,7 +180,44 @@ public class ORMCreator {
      * @param creator
      * @return {@link ORMCreator}
      */
-    protected static ORMCreator get(MetaCreator creator) {
-	return new ORMCreator(creator);
+    protected static class Builder {
+
+	private ORMCreator ormCreator;
+
+	protected Builder(MetaCreator creator) {
+	    this.ormCreator = new ORMCreator(creator);
+	}
+
+	protected Builder setUnitName(String unitName) {
+
+	    ormCreator.unitName = unitName;
+
+	    return this;
+	}
+
+	protected Builder setBeanName(String beanName) {
+
+	    ormCreator.beanName = beanName;
+
+	    return this;
+	}
+
+	protected Builder setClassLoader(ClassLoader loader) {
+
+	    ormCreator.loader = loader;
+
+	    return this;
+	}
+
+	protected Builder setConfiguration(Configuration configClone) {
+
+	    ormCreator.configClone = configClone;
+
+	    return this;
+	}
+
+	public ORMCreator build() {
+	    return this.ormCreator;
+	}
     }
 }
