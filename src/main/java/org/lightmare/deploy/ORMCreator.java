@@ -30,12 +30,12 @@ public class ORMCreator {
 
     private Map<String, ArchiveUtils> aggregateds;
 
-    private AnnotationFinder annotationDB;
+    private AnnotationFinder annotationFinder;
 
     private ORMCreator(MetaCreator creator) {
 	this.aggregateds = new WeakHashMap<String, ArchiveUtils>(
 		creator.getAggregateds());
-	this.annotationDB = creator.getAnnotationFinder();
+	this.annotationFinder = creator.getAnnotationFinder();
     }
 
     /**
@@ -69,7 +69,7 @@ public class ORMCreator {
     private void filterEntitiesForJar(Set<String> classSet,
 	    String fileNameForBean) {
 
-	Map<String, String> classOwnersFiles = annotationDB
+	Map<String, String> classOwnersFiles = annotationFinder
 		.getClassOwnersFiles();
 
 	String fileNameForEntity;
@@ -127,7 +127,7 @@ public class ORMCreator {
 	    ClassLoader loader, Configuration configClone) throws IOException {
 
 	JpaManager.Builder builder = new JpaManager.Builder();
-	Map<String, String> classOwnersFiles = annotationDB
+	Map<String, String> classOwnersFiles = annotationFinder
 		.getClassOwnersFiles();
 	ArchiveUtils ioUtils = aggregateds.get(beanName);
 
@@ -139,7 +139,7 @@ public class ORMCreator {
 	if (configClone.isScanForEntities()) {
 
 	    Set<String> classSet;
-	    Map<String, Set<String>> annotationIndex = annotationDB
+	    Map<String, Set<String>> annotationIndex = annotationFinder
 		    .getAnnotationIndex();
 	    classSet = annotationIndex.get(Entity.class.getName());
 	    String annotatedUnitName = configClone.getAnnotatedUnitName();
