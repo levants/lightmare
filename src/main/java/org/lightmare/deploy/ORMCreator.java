@@ -176,25 +176,30 @@ public class ORMCreator {
     /**
      * Instantiates {@link ORMCreator} with parameters
      * 
-     * @param creator
-     * @return {@link ORMCreator}
-     */
-
-    /**
-     * Instantiates {@link ORMCreator} with parameters
-     * 
      * @author Levan Tsinadze
      * @since 0.0.85-SNAPSHOT
      * 
      */
     protected static class Builder {
 
+	// ORMCreator instance to initialize
 	private ORMCreator ormCreator;
 
+	/**
+	 * Constructor with necessary {@link MetaCreator} instance
+	 * 
+	 * @param creator
+	 */
 	protected Builder(MetaCreator creator) {
 	    this.ormCreator = new ORMCreator(creator);
 	}
 
+	/**
+	 * Sets unit name for connection
+	 * 
+	 * @param unitName
+	 * @return {@link Builder}
+	 */
 	protected Builder setUnitName(String unitName) {
 
 	    ormCreator.unitName = unitName;
@@ -202,6 +207,12 @@ public class ORMCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets EJB bean name
+	 * 
+	 * @param beanName
+	 * @return {@link Builder}
+	 */
 	protected Builder setBeanName(String beanName) {
 
 	    ormCreator.beanName = beanName;
@@ -209,6 +220,12 @@ public class ORMCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets {@link ClassLoader} for this bean initialization and use
+	 * 
+	 * @param loader
+	 * @return {@link Builder}
+	 */
 	protected Builder setClassLoader(ClassLoader loader) {
 
 	    ormCreator.loader = loader;
@@ -216,6 +233,12 @@ public class ORMCreator {
 	    return this;
 	}
 
+	/**
+	 * Sets clone for {@link Configuration} instance
+	 * 
+	 * @param configClone
+	 * @return {@link Builder}
+	 */
 	protected Builder setConfiguration(Configuration configClone) {
 
 	    ormCreator.configClone = configClone;
@@ -223,6 +246,11 @@ public class ORMCreator {
 	    return this;
 	}
 
+	/**
+	 * Returns initialized instance of {@link ORMCreator} class
+	 * 
+	 * @return
+	 */
 	public ORMCreator build() {
 	    return this.ormCreator;
 	}
