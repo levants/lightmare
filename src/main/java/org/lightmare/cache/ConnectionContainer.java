@@ -280,9 +280,7 @@ public class ConnectionContainer {
 	    JpaManager.closeEntityManagerFactory(emf);
 	}
 
-	synchronized (CONNECTIONS) {
-	    CONNECTIONS.clear();
-	}
+	CONNECTIONS.clear();
     }
 
     /**
