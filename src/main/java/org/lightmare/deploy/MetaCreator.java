@@ -150,7 +150,7 @@ public class MetaCreator {
 	}
     }
 
-    public AnnotationFinder getAnnotationDB() {
+    public AnnotationFinder getAnnotationFinder() {
 	return annotationFinder;
     }
 
