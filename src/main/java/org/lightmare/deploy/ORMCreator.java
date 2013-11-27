@@ -174,10 +174,18 @@ public class ORMCreator {
     }
 
     /**
-     * Instantiates {@link ORMCreator} by constructor
+     * Instantiates {@link ORMCreator} with parameters
      * 
      * @param creator
      * @return {@link ORMCreator}
+     */
+
+    /**
+     * Instantiates {@link ORMCreator} with parameters
+     * 
+     * @author Levan Tsinadze
+     * @since 0.0.85-SNAPSHOT
+     * 
      */
     protected static class Builder {
 
