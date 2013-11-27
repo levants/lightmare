@@ -42,7 +42,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     protected Map<String, String> classOwnersFiles = new WeakHashMap<String, String>();
 
     // File separator and extension characters
-    private static final char FILE_EXTEWNTION_SELIM = '.';
+    private static final char FILE_EXTENTION_DELIM = '.';
 
     private static final char FILE_SEPARATOR_CHAR = '/';
 
@@ -75,7 +75,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 		}
 
 		String fileNameForCheck = subFileName.replace(
-			FILE_SEPARATOR_CHAR, FILE_EXTEWNTION_SELIM);
+			FILE_SEPARATOR_CHAR, FILE_EXTENTION_DELIM);
 		valid = !ignoreScan(fileNameForCheck);
 	    } else {
 		valid = Boolean.FALSE;
@@ -120,7 +120,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
 	for (int i = CollectionUtils.FIRST_INDEX; ObjectUtils.notTrue(valid)
 		&& i < length; i++) {
 	    ignored = ignoredPackages[i];
-	    value = StringUtils.concat(ignored, FILE_EXTEWNTION_SELIM);
+	    value = StringUtils.concat(ignored, FILE_EXTENTION_DELIM);
 	    if (intf.startsWith(value)) {
 		valid = Boolean.TRUE;
 	    }
