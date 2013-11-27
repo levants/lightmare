@@ -31,7 +31,7 @@ import org.scannotation.archiveiterator.StreamIterator;
  * @author Levan Tsinadze
  * @since 0.0.18-SNAPSHOT
  */
-public class AnnotationDB extends org.scannotation.AnnotationDB {
+public class AnnotationFinder extends org.scannotation.AnnotationDB {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,7 +52,7 @@ public class AnnotationDB extends org.scannotation.AnnotationDB {
     private static final String SCANNING_URL_MESSAGE = "Scanning URL ";
     private static final String FINISHED_URL_MESSAGE = "Finished URL scanning ";
 
-    private static final Logger LOG = Logger.getLogger(AnnotationDB.class);
+    private static final Logger LOG = Logger.getLogger(AnnotationFinder.class);
 
     /**
      * Filters java archive files

@@ -37,7 +37,7 @@ import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.remote.rpc.RpcListener;
 import org.lightmare.rest.providers.RestProvider;
-import org.lightmare.scannotation.AnnotationDB;
+import org.lightmare.scannotation.AnnotationFinder;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -56,7 +56,7 @@ import org.lightmare.utils.shutdown.ShutDown;
 public class MetaCreator {
 
     // Annotation scanner implementation for scanning at atartup
-    private static AnnotationDB annotationDB;
+    private static AnnotationFinder annotationDB;
 
     // Cached temporal resources for clean after deployment
     private TmpResources tmpResources;
@@ -150,7 +150,7 @@ public class MetaCreator {
 	}
     }
 
-    public AnnotationDB getAnnotationDB() {
+    public AnnotationFinder getAnnotationDB() {
 	return annotationDB;
     }
 
@@ -389,7 +389,7 @@ public class MetaCreator {
 		realURL = new WeakHashMap<URL, DeployData>();
 	    }
 	    URL[] fullArchives = getFullArchives(archives);
-	    annotationDB = new AnnotationDB();
+	    annotationDB = new AnnotationFinder();
 	    annotationDB.setScanFieldAnnotations(Boolean.FALSE);
 	    annotationDB.setScanParameterAnnotations(Boolean.FALSE);
 	    annotationDB.setScanMethodAnnotations(Boolean.FALSE);

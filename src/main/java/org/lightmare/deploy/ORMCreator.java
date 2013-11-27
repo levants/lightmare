@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 import org.lightmare.annotations.UnitName;
 import org.lightmare.config.Configuration;
 import org.lightmare.jpa.JpaManager;
-import org.lightmare.scannotation.AnnotationDB;
+import org.lightmare.scannotation.AnnotationFinder;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.codecs.ArchiveUtils;
@@ -30,7 +30,7 @@ public class ORMCreator {
 
     private Map<String, ArchiveUtils> aggregateds;
 
-    private AnnotationDB annotationDB;
+    private AnnotationFinder annotationDB;
 
     private ORMCreator(MetaCreator creator) {
 	this.aggregateds = new WeakHashMap<String, ArchiveUtils>(

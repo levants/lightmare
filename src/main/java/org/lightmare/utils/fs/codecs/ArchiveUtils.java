@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.zip.ZipFile;
 
 import org.lightmare.jpa.datasource.FileParsers;
-import org.lightmare.scannotation.AnnotationDB;
+import org.lightmare.scannotation.AnnotationFinder;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -297,7 +297,7 @@ public abstract class ArchiveUtils {
      * @param className
      * @return {@link URL}
      */
-    public URL getAppropriatedURL(AnnotationDB annotationDB, String className) {
+    public URL getAppropriatedURL(AnnotationFinder annotationDB, String className) {
 
 	URL xmlURL;
 

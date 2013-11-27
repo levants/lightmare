@@ -9,14 +9,14 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.lightmare.scannotation.AnnotationDB;
+import org.lightmare.scannotation.AnnotationFinder;
 import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
 public class IOUtilsTest {
 
     private static final String EAR_PATH = "./lib/loader-tester.ear";
 
-    private static AnnotationDB annotationDB = new AnnotationDB();
+    private static AnnotationFinder annotationDB = new AnnotationFinder();
 
     @Test
     public void scanTest() {
