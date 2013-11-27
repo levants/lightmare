@@ -293,15 +293,15 @@ public abstract class ArchiveUtils {
     /**
      * Finds persistence.xml {@link URL} by class name
      * 
-     * @param annotationDB
+     * @param annotationFinder
      * @param className
      * @return {@link URL}
      */
-    public URL getAppropriatedURL(AnnotationFinder annotationDB, String className) {
+    public URL getAppropriatedURL(AnnotationFinder annotationFinder, String className) {
 
 	URL xmlURL;
 
-	Map<String, String> classOwnersFiles = annotationDB
+	Map<String, String> classOwnersFiles = annotationFinder
 		.getClassOwnersFiles();
 	xmlURL = getAppropriatedURL(classOwnersFiles, className);
 
