@@ -18,18 +18,12 @@ public class NamingUtils {
 
     private static final String DS_JNDI_FREFIX = "java:/";
 
-    private static final String EJB_NAME_DELIM = "\\";
+    private static final String EJB_NAME_DELIM = "\\//";
 
     private static final String EJB_APP_DELIM = "!";
 
     // Digital values for naming utilities
     public static final int EJB_NAME_LENGTH = 4;
-
-    private static final int BEAN_NAMES_INDEX = 1;
-
-    private static final int INTERFACE_IDEX = 0;
-
-    private static final int BEAN_INDEX = 1;
 
     // Error messages
     public static final String COULD_NOT_UNBIND_NAME_ERROR = "Could not unbind jndi name %s cause %s";
@@ -167,11 +161,11 @@ public class NamingUtils {
 
 	String pureName = jndiName.substring(EJB_NAME_LENGTH);
 	String[] formatedNames = pureName.split(EJB_NAME_DELIM);
-	String beanNames = formatedNames[BEAN_NAMES_INDEX];
+	String beanNames = formatedNames[CollectionUtils.SECOND_INDEX];
 	String[] beanDescriptors = beanNames.split(EJB_APP_DELIM);
 
-	String interfaceName = beanDescriptors[INTERFACE_IDEX];
-	String beanName = beanDescriptors[BEAN_INDEX];
+	String beanName = CollectionUtils.getFirst(beanDescriptors);
+	String interfaceName = beanDescriptors[CollectionUtils.SECOND_INDEX];
 
 	descriptor = new BeanDescriptor(beanName, interfaceName);
 

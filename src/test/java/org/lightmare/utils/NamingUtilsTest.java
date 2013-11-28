@@ -9,10 +9,11 @@ import javax.naming.NamingException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.jndi.JndiManager;
+import org.lightmare.utils.NamingUtils.BeanDescriptor;
 
-@Ignore
 public class NamingUtilsTest {
 
+    @Ignore
     @Test
     public void contextCloseTest() {
 
@@ -35,6 +36,18 @@ public class NamingUtilsTest {
 	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}
+    }
 
+    @Test
+    public void parseEjbNameTest() {
+
+	try {
+	    String jndiName = "ejb:lightmare//LightmareBean!org.lightmare.beans.LightmareBeanRemote";
+	    BeanDescriptor descriptor = NamingUtils.parseEjbJndiName(jndiName);
+	    System.out.println(descriptor.getBeanName());
+	    System.out.println(descriptor.getInterfaceName());
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	}
     }
 }
