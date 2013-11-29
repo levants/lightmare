@@ -335,8 +335,8 @@ public class BeanTransactions {
      * @param handler
      * @throws IOException
      */
-    private static void rollbackTransaction(TransactionAttributeType type,
-	    BeanHandler handler) throws IOException {
+    private static void rollbackTransaction(TransactionAttributeType type)
+	    throws IOException {
 
 	UserTransaction transaction = getTransaction();
 
@@ -363,7 +363,7 @@ public class BeanTransactions {
 	TransactionAttributeType type = getTransactionType(
 		handler.getMetaData(), method);
 	if (ObjectUtils.notNull(type)) {
-	    rollbackTransaction(type, handler);
+	    rollbackTransaction(type);
 	} else {
 	    closeEntityManagers();
 	}

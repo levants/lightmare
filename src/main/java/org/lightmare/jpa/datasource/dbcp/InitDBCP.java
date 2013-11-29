@@ -71,7 +71,7 @@ public class InitDBCP extends InitDataSource {
     }
 
     @Override
-    public void cleanUp(javax.sql.DataSource dataSource) {
+    public void cleanUp(DataSource dataSource) {
 
 	SharedPoolDataSource pooledDataSource;
 	if (dataSource instanceof SharedPoolDataSource) {
