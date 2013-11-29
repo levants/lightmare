@@ -7,7 +7,7 @@ import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Keeps keys and default values for configuration
+ * Keeps keys and default values for configuration.
  * 
  * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
@@ -110,7 +110,7 @@ public enum ConfigKeys {
     }
 
     /**
-     * Returns value as generic type
+     * Returns value as generic type.
      * 
      * @return <code>T</code>
      */
