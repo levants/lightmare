@@ -19,7 +19,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
 /**
- * Container class to cache connections and connection types
+ * Container class to cache connections and connection types.
  * 
  * @author Levan Tsinadze
  * @since 0.0.65-SNAPSHOT
@@ -39,7 +39,7 @@ public class ConnectionContainer {
 	    .getLogger(ConnectionContainer.class);
 
     /**
-     * Checks if connection with passed unit name is cached
+     * Checks if connection with passed unit name is cached.
      * 
      * @param unitName
      * @return <code>boolean</code>

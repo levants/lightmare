@@ -9,7 +9,7 @@ import org.lightmare.utils.StringUtils;
 
 /**
  * Defines unit name of {@link javax.persistence.Entity} class for scanning at
- * start time
+ * start time.
  * 
  * @author Levan Tsinadze
  * @since 0.0.16-SNAPSHOT
