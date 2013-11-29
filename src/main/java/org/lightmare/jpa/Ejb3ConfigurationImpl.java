@@ -299,7 +299,7 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 		this.setProperty(Environment.PASS, pass);
 	    }
 	}
-	defineTransactionType(metadata.getTransactionType(), workingVars);
+	defineTransactionType(metadata.getTransactionType());
 	if (metadata.getClasses().size() > 0) {
 	    workingVars.put(AvailableSettings.CLASS_NAMES,
 		    metadata.getClasses());
@@ -863,7 +863,7 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 		    transactionType = PersistenceUnitTransactionType.JTA;
 		}
 	    }
-	    defineTransactionType(transactionType, workingVars);
+	    defineTransactionType(transactionType);
 	    configure(properties, workingVars);
 	} finally {
 	    // After EMF, set the CCL back
@@ -967,7 +967,7 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 	xmlFiles.clear();
     }
 
-    private void defineTransactionType(Object overridenTxType, Map workingVars) {
+    private void defineTransactionType(Object overridenTxType) {
 	if (overridenTxType == null) {
 	    // if ( transactionType == null ) {
 	    // transactionType = PersistenceUnitTransactionType.JTA; //this is
@@ -1485,10 +1485,8 @@ public class Ejb3ConfigurationImpl extends org.hibernate.ejb.Ejb3Configuration
 	    // if it has not been set, the user use a programmatic way
 	    transactionType = PersistenceUnitTransactionType.RESOURCE_LOCAL;
 	}
-	defineTransactionType(
-		preparedProperties
-			.getProperty(AvailableSettings.TRANSACTION_TYPE),
-		workingVars);
+	defineTransactionType(preparedProperties
+		.getProperty(AvailableSettings.TRANSACTION_TYPE));
 	boolean hasTxStrategy = StringHelper.isNotEmpty(preparedProperties
 		.getProperty(Environment.TRANSACTION_STRATEGY));
 	if (!hasTxStrategy
