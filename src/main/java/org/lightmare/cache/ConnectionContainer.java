@@ -56,7 +56,7 @@ public class ConnectionContainer {
     }
 
     /**
-     * Gets {@link ConnectionSemaphore} from cache without waiting for lock
+     * Gets {@link ConnectionSemaphore} from cache without waiting for lock.
      * 
      * @param unitName
      * @return {@link ConnectionSemaphore}
@@ -66,7 +66,7 @@ public class ConnectionContainer {
     }
 
     /**
-     * Checks if deployed {@link ConnectionSemaphore} componnents
+     * Checks if deployed {@link ConnectionSemaphore} components.
      * 
      * @param semaphore
      * @return <code>boolean</code>
@@ -77,7 +77,7 @@ public class ConnectionContainer {
     }
 
     /**
-     * Creates and locks {@link ConnectionSemaphore} instance
+     * Creates and locks {@link ConnectionSemaphore} instance.
      * 
      * @param unitName
      * @return {@link ConnectionSemaphore}
@@ -105,7 +105,7 @@ public class ConnectionContainer {
     }
 
     /**
-     * Caches {@link ConnectionSemaphore} with lock
+     * Caches {@link ConnectionSemaphore} with lock.
      * 
      * @param unitName
      * @param jndiName
@@ -136,7 +136,7 @@ public class ConnectionContainer {
     }
 
     /**
-     * Waits until {@link ConnectionSemaphore} is in progress (locked)
+     * Waits until {@link ConnectionSemaphore} is in progress (locked).
      * 
      * @param semaphore
      */
@@ -158,7 +158,7 @@ public class ConnectionContainer {
 
     /**
      * Checks if {@link ConnectionSemaphore} is in progress and if it is waits
-     * while lock is released
+     * while lock is released.
      * 
      * @param semaphore
      * @return <code>boolean</code>
@@ -179,7 +179,7 @@ public class ConnectionContainer {
 
     /**
      * Checks if {@link ConnectionSemaphore#isInProgress()} for appropriated
-     * unit name
+     * unit name.
      * 
      * @param jndiName
      * @return <code>boolean</code>
@@ -196,7 +196,7 @@ public class ConnectionContainer {
 
     /**
      * Gets {@link ConnectionSemaphore} from cache, awaits if connection
-     * instantiation is in progress
+     * instantiation is in progress.
      * 
      * @param unitName
      * @return {@link ConnectionSemaphore}
@@ -214,7 +214,7 @@ public class ConnectionContainer {
 
     /**
      * Gets {@link EntityManagerFactory} from {@link ConnectionSemaphore},
-     * awaits if connection
+     * awaits if connection.
      * 
      * @param unitName
      * @return {@link EntityManagerFactory}
@@ -243,7 +243,7 @@ public class ConnectionContainer {
     }
 
     /**
-     * Removes connection from {@link javax.naming.Context} cache
+     * Removes connection from {@link javax.naming.Context} cache.
      * 
      * @param semaphore
      */
@@ -268,7 +268,7 @@ public class ConnectionContainer {
     }
 
     /**
-     * Closes all existing {@link EntityManagerFactory} instances kept in cache
+     * Closes all existing {@link EntityManagerFactory} instances kept in cache.
      */
     public static void closeEntityManagerFactories() {
 
@@ -285,7 +285,7 @@ public class ConnectionContainer {
 
     /**
      * Closes all {@link javax.persistence.EntityManagerFactory} cached
-     * instances
+     * instances.
      * 
      * @throws IOException
      */
@@ -297,7 +297,7 @@ public class ConnectionContainer {
 
     /**
      * Closes connection ({@link EntityManagerFactory}) in passed
-     * {@link ConnectionSemaphore}
+     * {@link ConnectionSemaphore}.
      * 
      * @param semaphore
      */
@@ -326,7 +326,7 @@ public class ConnectionContainer {
 
     /**
      * Removes {@link ConnectionSemaphore} from cache and removes bindings of
-     * JNDI name from {@link javax.naming.Context} lookups
+     * JNDI name from {@link javax.naming.Context} lookups.
      * 
      * @param unitName
      */
@@ -341,7 +341,7 @@ public class ConnectionContainer {
     }
 
     /**
-     * Caches {@link PoolProviderType} to use for data source deployment
+     * Caches {@link PoolProviderType} to use for data source deployment.
      * 
      * @param jndiName
      * @param type
@@ -352,7 +352,7 @@ public class ConnectionContainer {
     }
 
     /**
-     * Gets configured {@link PoolProviderType} for data sources deployment
+     * Gets configured {@link PoolProviderType} for data sources deployment.
      * 
      * @param jndiName
      * @return {@link PoolProviderType}
@@ -372,7 +372,7 @@ public class ConnectionContainer {
     }
 
     /**
-     * Closes all connections and data sources and clears all cached data
+     * Closes all connections and data sources and clears all cached data.
      * 
      * @throws IOException
      */
