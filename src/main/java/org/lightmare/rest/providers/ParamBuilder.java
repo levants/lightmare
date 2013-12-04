@@ -354,7 +354,7 @@ public class ParamBuilder {
 	InputStream entityStream;
 
 	if (stream instanceof InputStream) {
-	    entityStream = (InputStream) stream;
+	    entityStream = ObjectUtils.cast(stream, InputStream.class);
 	    readFromStream(entityStream, parameter);
 	} else if (stream instanceof List) {
 	    List<InputStream> streamsList = ObjectUtils.cast(stream);
