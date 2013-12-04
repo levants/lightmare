@@ -119,6 +119,8 @@ public class ResourceBuilder {
     public static Resource rebuildResource(Resource resource)
 	    throws IOException {
 
+	Resource rebuiltResource;
+
 	Resource.Builder builder = Resource.builder(resource.getPath());
 	builder.name(resource.getName());
 	MetaData metaData = getMetaData(resource);
@@ -130,7 +132,7 @@ public class ResourceBuilder {
 	// Registers children resources recursively
 	registerChildren(resource, builder);
 
-	Resource rebuiltResource = builder.build();
+	rebuiltResource = builder.build();
 
 	return rebuiltResource;
     }
