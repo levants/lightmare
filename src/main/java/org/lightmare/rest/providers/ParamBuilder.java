@@ -279,14 +279,15 @@ public class ParamBuilder {
      * @return {@link Object}
      * @throws IOException
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings("unchecked")
     private Object extractParam(Parameter parameter, InputStream entityStream)
 	    throws IOException {
 
 	Object param;
 
 	try {
-	    param = reader.readFrom((Class) parameter.getRawType(),
+	    param = reader.readFrom(
+		    ObjectUtils.cast(parameter.getRawType(), Class.class),
 		    parameter.getType(), parameter.getAnnotations(), mediaType,
 		    httpHeaders, entityStream);
 
