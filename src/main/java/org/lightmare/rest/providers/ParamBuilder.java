@@ -290,7 +290,6 @@ public class ParamBuilder {
 		    ObjectUtils.cast(parameter.getRawType(), Class.class),
 		    parameter.getType(), parameter.getAnnotations(), mediaType,
 		    httpHeaders, entityStream);
-
 	} finally {
 	    close(entityStream);
 	}

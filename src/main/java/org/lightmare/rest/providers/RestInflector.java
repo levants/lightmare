@@ -59,7 +59,6 @@ public class RestInflector implements
      */
     public RestInflector(Method method, MetaData metaData, MediaType type,
 	    List<Parameter> parameters) {
-
 	this.method = method;
 	this.metaData = metaData;
 	this.type = type;
