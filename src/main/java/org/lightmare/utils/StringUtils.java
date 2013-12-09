@@ -51,6 +51,7 @@ public abstract class StringUtils {
 	    CharSequence line;
 	    for (int i = CollectionUtils.FIRST_INDEX; i < length && valid; i++) {
 		line = lines[i];
+		// TODO Think only second part of && is needed
 		valid = valid && valid(line);
 	    }
 	}

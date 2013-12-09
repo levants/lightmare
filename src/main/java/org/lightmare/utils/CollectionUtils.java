@@ -354,22 +354,6 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if passed {@link Object} is array
-     * 
-     * @param data
-     * @return <code>boolean</code>
-     */
-    public static boolean isArray(final Object data) {
-
-	boolean valid = (data instanceof Object[] || data instanceof boolean[]
-		|| data instanceof byte[] || data instanceof short[]
-		|| data instanceof char[] || data instanceof int[]
-		|| data instanceof long[] || data instanceof float[] || data instanceof double[]);
-
-	return valid;
-    }
-
-    /**
      * Checks if passed {@link Object} is {@link Object} types array
      * 
      * @param data
@@ -394,6 +378,19 @@ public abstract class CollectionUtils {
 		|| data instanceof short[] || data instanceof char[]
 		|| data instanceof int[] || data instanceof long[]
 		|| data instanceof float[] || data instanceof double[]);
+
+	return valid;
+    }
+
+    /**
+     * Checks if passed {@link Object} is array
+     * 
+     * @param data
+     * @return <code>boolean</code>
+     */
+    public static boolean isArray(final Object data) {
+
+	boolean valid = (isObjectArray(data) || isPrimitiveArray(data));
 
 	return valid;
     }
