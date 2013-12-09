@@ -63,6 +63,11 @@ public class IOUtils {
 	return ((stream == null) || (stream.available() == ZERO_AVAILABLE_STREAM));
     }
 
+    public static boolean available(InputStream stream) throws IOException {
+	return ObjectUtils.notNull(stream)
+		&& stream.available() > ZERO_AVAILABLE_STREAM;
+    }
+
     /**
      * Writes passed {@link InputStream} to associated {@link OutputStream}
      * instance
