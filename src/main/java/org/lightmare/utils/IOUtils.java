@@ -64,7 +64,7 @@ public class IOUtils {
     }
 
     /**
-     * Checks if passed {@link InputStream} is available
+     * Checks if passed {@link java.io.InputStream} is available
      * 
      * @param stream
      * @return <code>boolean</code>
