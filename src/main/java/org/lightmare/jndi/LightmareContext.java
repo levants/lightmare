@@ -15,6 +15,8 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.TransactionHolder;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.jpa.JpaManager;
+import org.lightmare.utils.CleanUtils;
+import org.lightmare.utils.Cleanable;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -27,7 +29,8 @@ import org.osjava.sj.memory.MemoryContext;
  * @author Levan Tsinadze
  * @since 0.0.60-SNAPSHOT
  */
-public class LightmareContext extends MemoryContext {
+@SuppressWarnings("unchecked")
+public class LightmareContext extends MemoryContext implements Cleanable {
 
     // Caches EntityManager instances got from lookup method to clear after
     private Collection<WeakReference<EntityManager>> ems = new ArrayList<WeakReference<EntityManager>>();
@@ -39,6 +42,7 @@ public class LightmareContext extends MemoryContext {
      */
     public LightmareContext(Hashtable<?, ?> env) {
 	super(env);
+	CleanUtils.add(this);
     }
 
     /**
@@ -134,5 +138,14 @@ public class LightmareContext extends MemoryContext {
 	clearResources();
 	// TODO: Must check is needed super.close() method call
 	// super.close();
+    }
+
+    @Override
+    public void clean() throws IOException {
+	try {
+	    close();
+	} catch (NamingException ex) {
+	    throw new IOException(ex);
+	}
     }
 }
