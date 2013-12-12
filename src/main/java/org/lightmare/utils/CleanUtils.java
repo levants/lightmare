@@ -9,6 +9,13 @@ import java.util.Queue;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Utility class to store {@link PhantomReference} implementations for cleaning
+ * unused resources after garbage collection
+ * 
+ * @author Levan Tsinadze
+ * @since 0.0.85-SNAPSHOT
+ */
 public class CleanUtils {
 
     private static final Queue<PhantomReference<Cleanable>> PHANTOMS = new LinkedList<PhantomReference<Cleanable>>();
@@ -43,6 +50,13 @@ public class CleanUtils {
 	referenceThread.start();
     }
 
+    /**
+     * Extension of {@link PhantomReference} for cleaning unused resources after
+     * garbage collection
+     * 
+     * @author Levan Tsinadze
+     * @since 0.0.85-SNAPSHOT
+     */
     public static class FinReference extends PhantomReference<Cleanable> {
 
 	private ReferenceQueue<Cleanable> queue;
