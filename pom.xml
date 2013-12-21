@@ -43,7 +43,7 @@
 		<jaxrs.version>2.0</jaxrs.version>
 		<!-- end of java ee components versions -->
 		<!-- hibernate -->
-		<hibernate.version>4.2.8.Final</hibernate.version>
+		<hibernate.version>4.3.0.Final</hibernate.version>
 		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
 		<!-- scannotation -->
@@ -266,8 +266,36 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+			<classifier>javadoc</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+			<classifier>javadoc</classifier>
 			<scope>provided</scope>
 		</dependency>
 
