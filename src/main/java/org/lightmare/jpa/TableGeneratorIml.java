@@ -193,7 +193,7 @@ public class TableGeneratorIml extends TableGenerator {
 						// value is less then value and
 						// puts incremented value
 						// instead of incremented
-						// currentvalue for
+						// current value for
 						// update
 						if (existing > current) {
 						    updateValue.initialize(
@@ -218,6 +218,11 @@ public class TableGeneratorIml extends TableGenerator {
 					return value;
 				    }
 				}, true);
+	    }
+
+	    @Override
+	    public String getTenantIdentifier() {
+		return session.getTenantIdentifier();
 	    }
 	});
     }
