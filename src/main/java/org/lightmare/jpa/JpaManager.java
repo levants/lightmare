@@ -16,6 +16,7 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
+import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl;
 import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.CollectionUtils;
@@ -111,12 +112,12 @@ public class JpaManager {
 
 	EntityManagerFactory emf;
 
-	Ejb3ConfigurationImpl cfg;
+	HibernatePersistenceProviderImpl cfg;
 
 	boolean pathCheck = StringUtils.valid(path);
 	boolean urlCheck = checkForURL();
 
-	Ejb3ConfigurationImpl.Builder builder = new Ejb3ConfigurationImpl.Builder();
+	HibernatePersistenceProviderImpl.Builder builder = new HibernatePersistenceProviderImpl.Builder();
 
 	if (loader == null) {
 	    loader = LibraryLoader.getContextClassLoader();
@@ -154,13 +155,15 @@ public class JpaManager {
 	    addTransactionManager();
 	}
 
-	Ejb3ConfigurationImpl configured = cfg.configure(unitName, properties);
+	// Ejb3ConfigurationImpl configured = cfg.configure(unitName,
+	// properties);
 
-	if (ObjectUtils.notNull(configured)) {
-	    emf = configured.buildEntityManagerFactory();
-	} else {
-	    emf = null;
-	}
+	// if (ObjectUtils.notNull(configured)) {
+	// emf = configured.buildEntityManagerFactory();
+	emf = cfg.createEntityManagerFactory(unitName, properties);
+	// } else {
+	emf = null;
+	// }
 
 	return emf;
     }
