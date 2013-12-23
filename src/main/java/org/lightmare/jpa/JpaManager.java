@@ -106,7 +106,6 @@ public class JpaManager {
      * @param unitName
      * @return {@link EntityManagerFactory}
      */
-    @SuppressWarnings("deprecation")
     private EntityManagerFactory buildEntityManagerFactory(String unitName)
 	    throws IOException {
 
@@ -155,15 +154,7 @@ public class JpaManager {
 	    addTransactionManager();
 	}
 
-	// Ejb3ConfigurationImpl configured = cfg.configure(unitName,
-	// properties);
-
-	// if (ObjectUtils.notNull(configured)) {
-	// emf = configured.buildEntityManagerFactory();
 	emf = cfg.createEntityManagerFactory(unitName, properties);
-	// } else {
-	// emf = null;
-	// }
 
 	return emf;
     }
