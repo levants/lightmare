@@ -69,18 +69,6 @@ public class JpaManager {
     }
 
     /**
-     * Checks if entity classes or persistence.xml path are provided
-     * 
-     * @param classes
-     * @return boolean
-     */
-    private boolean checkForBuild() {
-
-	return CollectionUtils.valid(classes) || StringUtils.valid(path)
-		|| checkForURL() || swapDataSource || scanArchives;
-    }
-
-    /**
      * Added transaction properties for JTA data sources
      */
     private void addTransactionManager() {
