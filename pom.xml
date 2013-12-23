@@ -44,7 +44,7 @@
 		<!-- end of java ee components versions -->
 		<!-- hibernate -->
 		<hibernate.version>4.3.0.Final</hibernate.version>
-		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
+		<hibernate-validator.version>5.0.2.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
 		<!-- scannotation -->
 		<scannotation.version>1.0.3</scannotation.version>
