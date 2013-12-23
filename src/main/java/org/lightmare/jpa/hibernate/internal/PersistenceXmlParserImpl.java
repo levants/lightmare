@@ -32,6 +32,8 @@ import org.hibernate.jpa.internal.EntityManagerMessageLogger;
 import org.hibernate.jpa.internal.util.ConfigurationHelper;
 import org.hibernate.metamodel.source.XsdException;
 import org.jboss.logging.Logger;
+import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl;
+import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl.MetaConfig;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -43,6 +45,8 @@ import org.xml.sax.SAXParseException;
 
 public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 
+    private HibernatePersistenceProviderImpl.MetaConfig metaConfig;
+
     private static final EntityManagerMessageLogger LOG = Logger
 	    .getMessageLogger(EntityManagerMessageLogger.class,
 		    PersistenceXmlParser.class.getName());
@@ -52,10 +56,12 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 
     @SuppressWarnings({ "deprecation", "rawtypes" })
     public static List<ParsedPersistenceXmlDescriptor> locatePersistenceUnits(
-	    Map integration) {
+	    Map integration,
+	    HibernatePersistenceProviderImpl.MetaConfig metaConfig) {
 	final PersistenceXmlParserImpl parser = new PersistenceXmlParserImpl(
 		ClassLoaderServiceImpl.fromConfigSettings(integration),
 		PersistenceUnitTransactionType.RESOURCE_LOCAL);
+	parser.metaConfig = metaConfig;
 
 	return parser.doResolve(integration);
     }
@@ -71,8 +77,15 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
     public List<ParsedPersistenceXmlDescriptor> doResolve(Map integration) {
 	final List<ParsedPersistenceXmlDescriptor> persistenceUnits = new ArrayList<ParsedPersistenceXmlDescriptor>();
 
-	final List<URL> xmlUrls = classLoaderService
-		.locateResources("META-INF/persistence.xml");
+	final List<URL> xmlUrls;
+
+	if (metaConfig.xmls == null || metaConfig.xmls.isEmpty()) {
+	    xmlUrls = classLoaderService
+		    .locateResources("META-INF/persistence.xml");
+	} else {
+	    xmlUrls = metaConfig.xmls;
+	}
+
 	if (xmlUrls.isEmpty()) {
 	    LOG.unableToFindPersistenceXmlInClasspath();
 	} else {

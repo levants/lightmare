@@ -2,7 +2,6 @@ package org.lightmare.jpa.hibernate;
 
 import java.net.URL;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
