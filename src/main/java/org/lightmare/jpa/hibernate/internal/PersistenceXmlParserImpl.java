@@ -302,7 +302,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 		    if (metaConfig == null
 			    || CollectionUtils.invalid(metaConfig.classes)) {
 			persistenceUnit.addClasses(extractContent(element));
-		    } else {
+		    } else if (ObjectUtils.notTrue(resolvedClasses)) {
 			resolveEntities(persistenceUnit);
 		    }
 		    resolvedClasses = Boolean.TRUE;
