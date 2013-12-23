@@ -1,11 +1,15 @@
 package org.lightmare.jpa.hibernate;
 
+import java.net.URL;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.PersistenceException;
+import javax.persistence.spi.PersistenceUnitTransactionType;
 
+import org.hibernate.cfg.Configuration;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
 import org.hibernate.jpa.boot.spi.Bootstrap;
@@ -16,6 +20,27 @@ import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
 
 public class HibernatePersistenceProviderImpl extends
 	HibernatePersistenceProvider {
+
+    private String persistenceUnitName;
+    private String cfgXmlResource;
+
+    private Configuration cfg;
+    // made transient and not restored in deserialization on purpose, should no
+    // longer be called after restoration
+    private PersistenceUnitTransactionType transactionType;
+    private boolean discardOnClose;
+    // made transient and not restored in deserialization on purpose, should no
+    // longer be called after restoration
+    private transient ClassLoader overridenClassLoader;
+    private boolean isConfigurationProcessed = false;
+
+    // arguments from lightmare
+    private List<String> classes;
+    private Enumeration<URL> xmls;
+    private boolean swapDataSource;
+    private boolean scanArchives;
+
+    private String shortPath = "/META-INF/persistence.xml";
 
     private static final Logger LOG = Logger
 	    .getLogger(HibernatePersistenceProvider.class);
@@ -81,5 +106,55 @@ public class HibernatePersistenceProviderImpl extends
 
 	LOG.debug("Found no matching persistence units");
 	return null;
+    }
+
+    public static class Builder {
+
+	private HibernatePersistenceProviderImpl target;
+
+	public Builder() {
+	    target = new HibernatePersistenceProviderImpl();
+	}
+
+	public Builder setClasses(List<String> classes) {
+	    target.classes = classes;
+
+	    return this;
+	}
+
+	public Builder setXmls(Enumeration<URL> xmls) {
+	    target.xmls = xmls;
+
+	    return this;
+	}
+
+	public Builder setShortPath(String shortPath) {
+	    target.shortPath = shortPath;
+
+	    return this;
+	}
+
+	public Builder setSwapDataSource(boolean swapDataSource) {
+	    target.swapDataSource = swapDataSource;
+
+	    return this;
+	}
+
+	public Builder setScanArchives(boolean scanArchives) {
+	    target.scanArchives = scanArchives;
+
+	    return this;
+	}
+
+	public Builder setOverridenClassLoader(ClassLoader overridenClassLoader) {
+	    target.overridenClassLoader = overridenClassLoader;
+
+	    return this;
+	}
+
+	public HibernatePersistenceProviderImpl build() {
+
+	    return target;
+	}
     }
 }
