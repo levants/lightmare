@@ -7,9 +7,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
-import javax.persistence.spi.PersistenceUnitTransactionType;
 
-import org.hibernate.cfg.Configuration;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
 import org.hibernate.jpa.boot.spi.Bootstrap;
@@ -23,22 +21,8 @@ public class HibernatePersistenceProviderImpl extends
 
     public static class MetaConfig {
 
-	public String persistenceUnitName;
-	public String cfgXmlResource;
-
-	public Configuration cfg;
-	// made transient and not restored in deserialization on purpose, should
-	// no
-	// longer be called after restoration
-	public PersistenceUnitTransactionType transactionType;
-	public boolean discardOnClose;
-	// made transient and not restored in deserialization on purpose, should
-	// no
-	// longer be called after restoration
-	public transient ClassLoader overridenClassLoader;
-	public boolean isConfigurationProcessed = false;
-
 	// arguments from lightmare
+	public transient ClassLoader overridenClassLoader;
 	public List<String> classes;
 	public List<URL> xmls;
 	public boolean swapDataSource;
