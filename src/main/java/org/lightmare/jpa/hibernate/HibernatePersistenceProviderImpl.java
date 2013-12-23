@@ -22,29 +22,40 @@ import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
 public class HibernatePersistenceProviderImpl extends
 	HibernatePersistenceProvider {
 
-    private String persistenceUnitName;
-    private String cfgXmlResource;
+    public static class MetaConfig {
 
-    private Configuration cfg;
-    // made transient and not restored in deserialization on purpose, should no
-    // longer be called after restoration
-    private PersistenceUnitTransactionType transactionType;
-    private boolean discardOnClose;
-    // made transient and not restored in deserialization on purpose, should no
-    // longer be called after restoration
-    private transient ClassLoader overridenClassLoader;
-    private boolean isConfigurationProcessed = false;
+	public String persistenceUnitName;
+	public String cfgXmlResource;
 
-    // arguments from lightmare
-    private List<String> classes;
-    private List<URL> xmls;
-    private boolean swapDataSource;
-    private boolean scanArchives;
+	public Configuration cfg;
+	// made transient and not restored in deserialization on purpose, should
+	// no
+	// longer be called after restoration
+	public PersistenceUnitTransactionType transactionType;
+	public boolean discardOnClose;
+	// made transient and not restored in deserialization on purpose, should
+	// no
+	// longer be called after restoration
+	public transient ClassLoader overridenClassLoader;
+	public boolean isConfigurationProcessed = false;
 
-    private String shortPath = "/META-INF/persistence.xml";
+	// arguments from lightmare
+	public List<String> classes;
+	public List<URL> xmls;
+	public boolean swapDataSource;
+	public boolean scanArchives;
+
+	public String shortPath = "/META-INF/persistence.xml";
+    }
+
+    private MetaConfig metaConfig;
 
     private static final Logger LOG = Logger
 	    .getLogger(HibernatePersistenceProvider.class);
+
+    private HibernatePersistenceProviderImpl(MetaConfig metaConfig) {
+	this.metaConfig = metaConfig;
+    }
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -78,12 +89,13 @@ public class HibernatePersistenceProviderImpl extends
 
 	EntityManagerFactoryBuilder emfBuilder;
 
-	if (overridenClassLoader == null) {
+	if (metaConfig == null || metaConfig.overridenClassLoader == null) {
 	    emfBuilder = getEntityManagerFactoryBuilderOrNull(
 		    persistenceUnitName, properties, null);
 	} else {
 	    emfBuilder = getEntityManagerFactoryBuilderOrNull(
-		    persistenceUnitName, properties, overridenClassLoader);
+		    persistenceUnitName, properties,
+		    metaConfig.overridenClassLoader);
 	}
 
 	return emfBuilder;
@@ -154,10 +166,10 @@ public class HibernatePersistenceProviderImpl extends
 
     public static class Builder {
 
-	private HibernatePersistenceProviderImpl target;
+	private HibernatePersistenceProviderImpl.MetaConfig target;
 
 	public Builder() {
-	    target = new HibernatePersistenceProviderImpl();
+	    target = new HibernatePersistenceProviderImpl.MetaConfig();
 	}
 
 	public Builder setClasses(List<String> classes) {
@@ -198,7 +210,7 @@ public class HibernatePersistenceProviderImpl extends
 
 	public HibernatePersistenceProviderImpl build() {
 
-	    return target;
+	    return new HibernatePersistenceProviderImpl(target);
 	}
     }
 }
