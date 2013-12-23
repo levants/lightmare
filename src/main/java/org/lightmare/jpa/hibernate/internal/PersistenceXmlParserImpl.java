@@ -33,7 +33,6 @@ import org.hibernate.jpa.internal.util.ConfigurationHelper;
 import org.hibernate.metamodel.source.XsdException;
 import org.jboss.logging.Logger;
 import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl;
-import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl.MetaConfig;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
@@ -48,7 +47,25 @@ import org.xml.sax.SAXParseException;
 
 public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 
-    private HibernatePersistenceProviderImpl.MetaConfig metaConfig;
+    /**
+     * Additional properties for JPA configuration
+     * 
+     * @author Levan Tsinadze
+     * @since 0.0.86-SNAPSHOT
+     */
+    public static class MetaConfig {
+
+	// arguments from lightmare
+	public transient ClassLoader overridenClassLoader;
+	public List<String> classes;
+	public List<URL> xmls;
+	public boolean swapDataSource;
+	public boolean scanArchives;
+
+	public String shortPath = "/META-INF/persistence.xml";
+    }
+
+    private MetaConfig metaConfig;
 
     private static final EntityManagerMessageLogger LOG = Logger
 	    .getMessageLogger(EntityManagerMessageLogger.class,
@@ -59,8 +76,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 
     @SuppressWarnings({ "deprecation", "rawtypes" })
     public static List<ParsedPersistenceXmlDescriptor> locatePersistenceUnits(
-	    Map integration,
-	    HibernatePersistenceProviderImpl.MetaConfig metaConfig) {
+	    Map integration, MetaConfig metaConfig) {
 	final PersistenceXmlParserImpl parser = new PersistenceXmlParserImpl(
 		ClassLoaderServiceImpl.fromConfigSettings(integration),
 		PersistenceUnitTransactionType.RESOURCE_LOCAL);

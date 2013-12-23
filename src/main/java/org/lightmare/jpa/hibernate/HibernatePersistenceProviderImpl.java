@@ -15,21 +15,10 @@ import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
 import org.hibernate.jpa.boot.spi.ProviderChecker;
 import org.jboss.logging.Logger;
 import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
+import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl.MetaConfig;
 
 public class HibernatePersistenceProviderImpl extends
 	HibernatePersistenceProvider {
-
-    public static class MetaConfig {
-
-	// arguments from lightmare
-	public transient ClassLoader overridenClassLoader;
-	public List<String> classes;
-	public List<URL> xmls;
-	public boolean swapDataSource;
-	public boolean scanArchives;
-
-	public String shortPath = "/META-INF/persistence.xml";
-    }
 
     private MetaConfig metaConfig;
 
@@ -149,10 +138,10 @@ public class HibernatePersistenceProviderImpl extends
 
     public static class Builder {
 
-	private HibernatePersistenceProviderImpl.MetaConfig target;
+	private MetaConfig target;
 
 	public Builder() {
-	    target = new HibernatePersistenceProviderImpl.MetaConfig();
+	    target = new MetaConfig();
 	}
 
 	public Builder setClasses(List<String> classes) {
