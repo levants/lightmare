@@ -162,7 +162,7 @@ public class JpaManager {
 	// emf = configured.buildEntityManagerFactory();
 	emf = cfg.createEntityManagerFactory(unitName, properties);
 	// } else {
-	emf = null;
+	// emf = null;
 	// }
 
 	return emf;
