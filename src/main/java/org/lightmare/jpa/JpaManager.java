@@ -118,7 +118,7 @@ public class JpaManager {
 
 	if (pathCheck || urlCheck) {
 
-	    Enumeration<URL> xmls;
+	    List<URL> xmls;
 	    ConfigLoader configLoader = new ConfigLoader();
 	    if (pathCheck) {
 		xmls = configLoader.readFile(path);
