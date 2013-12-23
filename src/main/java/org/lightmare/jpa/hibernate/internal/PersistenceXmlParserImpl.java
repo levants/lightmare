@@ -33,6 +33,7 @@ import org.hibernate.jpa.internal.util.ConfigurationHelper;
 import org.hibernate.metamodel.source.XsdException;
 import org.jboss.logging.Logger;
 import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl;
+import org.lightmare.utils.ObjectUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -97,6 +98,24 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	return persistenceUnits;
     }
 
+    private void resolveTransactionType(
+	    ParsedPersistenceXmlDescriptor persistenceUnit) {
+
+	if (ObjectUtils.notNull(metaConfig) && metaConfig.swapDataSource) {
+	    persistenceUnit
+		    .setTransactionType(PersistenceUnitTransactionType.RESOURCE_LOCAL);
+	}
+    }
+
+    private void resolveDataSource(
+	    ParsedPersistenceXmlDescriptor persistenceUnit) {
+
+	Object dataSource = persistenceUnit.getJtaDataSource();
+	if (ObjectUtils.notNull(metaConfig) && metaConfig.swapDataSource) {
+	    persistenceUnit.setNonJtaDataSource(dataSource);
+	}
+    }
+
     @SuppressWarnings("rawtypes")
     private List<ParsedPersistenceXmlDescriptor> parsePersistenceXml(
 	    URL xmlUrl, Map integration) {
@@ -135,6 +154,9 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 			persistenceUnit
 				.setTransactionType(parseTransactionType(transactionType));
 		    }
+
+		    resolveTransactionType(persistenceUnit);
+
 		    if (integration
 			    .containsKey(AvailableSettings.JTA_DATASOURCE)) {
 			persistenceUnit.setJtaDataSource(integration
@@ -145,6 +167,8 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 			persistenceUnit.setNonJtaDataSource(integration
 				.get(AvailableSettings.NON_JTA_DATASOURCE));
 		    }
+
+		    resolveDataSource(persistenceUnit);
 
 		    decodeTransactionType(persistenceUnit);
 
