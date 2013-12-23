@@ -17,6 +17,13 @@ import org.jboss.logging.Logger;
 import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
 import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl.MetaConfig;
 
+/**
+ * Implementation of {@link HibernatePersistenceProvider} with additional
+ * configuration
+ * 
+ * @author Levan Tsinadze
+ * @Since 0.0.56=SNAPSHOT
+ */
 public class HibernatePersistenceProviderImpl extends
 	HibernatePersistenceProvider {
 
