@@ -143,6 +143,8 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 		final Element element = (Element) children.item(i);
 		final String tag = element.getTagName();
 		if (tag.equals("persistence-unit")) {
+
+		    // Decides which sub path in archives to use
 		    String shortPath;
 		    if (metaConfig == null
 			    || StringUtils.invalid(metaConfig.shortPath)) {
