@@ -37,7 +37,7 @@ public class HibernatePersistenceProviderImpl extends
 
     // arguments from lightmare
     private List<String> classes;
-    private Enumeration<URL> xmls;
+    private List<URL> xmls;
     private boolean swapDataSource;
     private boolean scanArchives;
 
@@ -166,7 +166,7 @@ public class HibernatePersistenceProviderImpl extends
 	    return this;
 	}
 
-	public Builder setXmls(Enumeration<URL> xmls) {
+	public Builder setXmls(List<URL> xmls) {
 	    target.xmls = xmls;
 
 	    return this;
