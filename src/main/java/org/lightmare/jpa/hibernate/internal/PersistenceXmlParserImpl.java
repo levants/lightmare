@@ -60,7 +60,6 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	public List<URL> xmls;
 	public boolean swapDataSource;
 	public boolean scanArchives;
-
 	public String shortPath = "/META-INF/persistence.xml";
     }
 
