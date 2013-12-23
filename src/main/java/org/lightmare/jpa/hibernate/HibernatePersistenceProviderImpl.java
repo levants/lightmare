@@ -118,8 +118,8 @@ public class HibernatePersistenceProviderImpl extends
 	final Map integration = wrap(properties);
 	final List<ParsedPersistenceXmlDescriptor> units;
 	try {
-	    units = PersistenceXmlParserImpl
-		    .locatePersistenceUnits(integration);
+	    units = PersistenceXmlParserImpl.locatePersistenceUnits(
+		    integration, metaConfig);
 	} catch (Exception e) {
 	    LOG.debug("Unable to locate persistence units", e);
 	    throw new PersistenceException(

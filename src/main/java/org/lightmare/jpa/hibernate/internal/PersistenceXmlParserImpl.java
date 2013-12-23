@@ -33,7 +33,6 @@ import org.hibernate.jpa.internal.util.ConfigurationHelper;
 import org.hibernate.metamodel.source.XsdException;
 import org.jboss.logging.Logger;
 import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl;
-import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl.MetaConfig;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
