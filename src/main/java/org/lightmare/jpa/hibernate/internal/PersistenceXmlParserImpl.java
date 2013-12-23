@@ -101,6 +101,12 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	return persistenceUnits;
     }
 
+    /**
+     * Resolved which transaction type should be set from {@link MetaConfig}
+     * object
+     * 
+     * @param persistenceUnit
+     */
     private void resolveTransactionType(
 	    ParsedPersistenceXmlDescriptor persistenceUnit) {
 
