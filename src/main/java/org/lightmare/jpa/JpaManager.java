@@ -175,15 +175,7 @@ public class JpaManager {
     private EntityManagerFactory createEntityManagerFactory(String unitName)
 	    throws IOException {
 
-	EntityManagerFactory emf;
-
-	if (checkForBuild()) {
-	    emf = buildEntityManagerFactory(unitName);
-	} else if (properties == null) {
-	    emf = Persistence.createEntityManagerFactory(unitName);
-	} else {
-	    emf = Persistence.createEntityManagerFactory(unitName, properties);
-	}
+	EntityManagerFactory emf = buildEntityManagerFactory(unitName);
 
 	return emf;
     }
