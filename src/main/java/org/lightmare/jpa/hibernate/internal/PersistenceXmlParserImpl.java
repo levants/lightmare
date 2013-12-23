@@ -242,6 +242,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	}
 
 	NodeList children = persistenceUnitElement.getChildNodes();
+	boolean resolvedClasses = Boolean.FALSE;
 	for (int i = 0; i < children.getLength(); i++) {
 	    if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
 		Element element = (Element) children.item(i);
@@ -261,6 +262,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 		    } else {
 			resolveEntities(persistenceUnit);
 		    }
+		    resolvedClasses = Boolean.TRUE;
 		} else if (tag.equals("mapping-file")) {
 		    persistenceUnit.addMappingFiles(extractContent(element));
 		} else if (tag.equals("jar-file")) {
@@ -299,6 +301,10 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 		    }
 		}
 	    }
+	}
+
+	if (ObjectUtils.notTrue(resolvedClasses)) {
+	    resolveEntities(persistenceUnit);
 	}
     }
 
