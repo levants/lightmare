@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
 import javax.persistence.spi.PersistenceUnitTransactionType;
 
@@ -44,6 +45,49 @@ public class HibernatePersistenceProviderImpl extends
 
     private static final Logger LOG = Logger
 	    .getLogger(HibernatePersistenceProvider.class);
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public EntityManagerFactory createEntityManagerFactory(
+	    String persistenceUnitName, Map properties) {
+	LOG.tracef(
+		"Starting createEntityManagerFactory for persistenceUnitName %s",
+		persistenceUnitName);
+
+	try {
+	    final EntityManagerFactoryBuilder builder = getEntityManagerFactoryBuilderOrNull(
+		    persistenceUnitName, properties);
+	    if (builder == null) {
+		LOG.trace("Could not obtain matching EntityManagerFactoryBuilder, returning null");
+		return null;
+	    } else {
+		return builder.build();
+	    }
+	} catch (PersistenceException pe) {
+	    throw pe;
+	} catch (Exception e) {
+	    LOG.debug("Unable to build entity manager factory", e);
+	    throw new PersistenceException(
+		    "Unable to build entity manager factory", e);
+	}
+    }
+
+    @SuppressWarnings("rawtypes")
+    protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(
+	    String persistenceUnitName, Map properties) {
+
+	EntityManagerFactoryBuilder emfBuilder;
+
+	if (overridenClassLoader == null) {
+	    emfBuilder = getEntityManagerFactoryBuilderOrNull(
+		    persistenceUnitName, properties, null);
+	} else {
+	    emfBuilder = getEntityManagerFactoryBuilderOrNull(
+		    persistenceUnitName, properties, overridenClassLoader);
+	}
+
+	return emfBuilder;
+    }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private static Map wrap(Map properties) {
