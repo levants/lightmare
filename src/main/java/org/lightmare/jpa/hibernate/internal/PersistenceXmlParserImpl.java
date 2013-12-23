@@ -44,6 +44,13 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+/**
+ * Implementation for {@link PersistenceXmlParser} with aditional configuration
+ * 
+ * @author Levan Tsinadze
+ * @since 0.0.86-SNAPSHOT
+ * 
+ */
 public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 
     /**
