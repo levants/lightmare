@@ -110,6 +110,11 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	}
     }
 
+    /**
+     * Resolves data source from {@link MetaConfig} object
+     * 
+     * @param persistenceUnit
+     */
     private void resolveDataSource(
 	    ParsedPersistenceXmlDescriptor persistenceUnit) {
 
