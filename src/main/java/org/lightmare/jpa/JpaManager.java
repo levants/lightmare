@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.apache.log4j.Logger;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.config.Configuration;
@@ -97,7 +98,7 @@ public class JpaManager {
 
 	EntityManagerFactory emf;
 
-	HibernatePersistenceProviderImpl cfg;
+	HibernatePersistenceProvider cfg;
 
 	boolean pathCheck = StringUtils.valid(path);
 	boolean urlCheck = checkForURL();
