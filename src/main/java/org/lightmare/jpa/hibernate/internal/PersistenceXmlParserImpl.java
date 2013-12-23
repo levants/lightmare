@@ -150,8 +150,17 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 		    } else {
 			shortPath = metaConfig.shortPath;
 		    }
-		    final URL puRootUrl = ArchiveHelper.getJarURLFromURLEntry(
-			    xmlUrl, shortPath);
+
+		    // Decides whether is needed to scan archives
+		    final URL puRootUrl;
+		    if (ObjectUtils.notNull(metaConfig)
+			    && metaConfig.scanArchives) {
+			puRootUrl = ArchiveHelper.getJarURLFromURLEntry(xmlUrl,
+				shortPath);
+		    } else {
+			puRootUrl = xmlUrl;
+		    }
+
 		    ParsedPersistenceXmlDescriptor persistenceUnit = new ParsedPersistenceXmlDescriptor(
 			    puRootUrl);
 		    bindPersistenceUnit(persistenceUnit, element);
