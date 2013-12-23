@@ -35,6 +35,7 @@ import org.jboss.logging.Logger;
 import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -142,8 +143,15 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 		final Element element = (Element) children.item(i);
 		final String tag = element.getTagName();
 		if (tag.equals("persistence-unit")) {
+		    String shortPath;
+		    if (metaConfig == null
+			    || StringUtils.invalid(metaConfig.shortPath)) {
+			shortPath = "/META-INF/persistence.xml";
+		    } else {
+			shortPath = metaConfig.shortPath;
+		    }
 		    final URL puRootUrl = ArchiveHelper.getJarURLFromURLEntry(
-			    xmlUrl, "/META-INF/persistence.xml");
+			    xmlUrl, shortPath);
 		    ParsedPersistenceXmlDescriptor persistenceUnit = new ParsedPersistenceXmlDescriptor(
 			    puRootUrl);
 		    bindPersistenceUnit(persistenceUnit, element);
