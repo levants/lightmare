@@ -33,6 +33,7 @@ import org.hibernate.jpa.internal.util.ConfigurationHelper;
 import org.hibernate.metamodel.source.XsdException;
 import org.jboss.logging.Logger;
 import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl;
+import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl.MetaConfig;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
@@ -118,6 +119,11 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	}
     }
 
+    /**
+     * Resolves entity classes from {@link MetaConfig} object
+     * 
+     * @param persistenceUnit
+     */
     private void resolveEntities(ParsedPersistenceXmlDescriptor persistenceUnit) {
 
 	if (ObjectUtils.notNull(metaConfig)
