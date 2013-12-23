@@ -304,8 +304,8 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 			persistenceUnit.addClasses(extractContent(element));
 		    } else if (ObjectUtils.notTrue(resolvedClasses)) {
 			resolveEntities(persistenceUnit);
+			resolvedClasses = Boolean.TRUE;
 		    }
-		    resolvedClasses = Boolean.TRUE;
 		} else if (tag.equals("mapping-file")) {
 		    persistenceUnit.addMappingFiles(extractContent(element));
 		} else if (tag.equals("jar-file")) {
