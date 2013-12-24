@@ -25,10 +25,10 @@ public class CleanUtils {
     // Queue of Cleanable instances being watched
     private static final ReferenceQueue<Cleanable> REFERENCE_QUEUE = new ReferenceQueue<Cleanable>();
 
-    private static final String REFERENCE_THREAD_NAME = "Finalizer-thread-";
-
     // Daemon thread to finalize references objects
     private static Thread cleaner;
+
+    private static final String REFERENCE_THREAD_NAME = "custom-finalizer-thread-";
 
     private static final Logger LOG = Logger.getLogger(CleanUtils.class);
 
