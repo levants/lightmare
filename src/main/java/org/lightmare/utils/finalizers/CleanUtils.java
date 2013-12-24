@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.lang.ref.PhantomReference;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.lightmare.utils.ObjectUtils;
@@ -20,7 +22,7 @@ import org.lightmare.utils.StringUtils;
  */
 public class CleanUtils {
 
-    private static final Queue<PhantomReference<Cleanable>> PHANTOMS = new LinkedList<PhantomReference<Cleanable>>();
+    private static final Set<PhantomReference<Cleanable>> PHANTOMS = new HashSet<PhantomReference<Cleanable>>();
 
     private static final ReferenceQueue<Cleanable> REFERENCE_QUEUE = new ReferenceQueue<Cleanable>();
 
@@ -34,8 +36,8 @@ public class CleanUtils {
 
 		while (Boolean.TRUE) {
 		    try {
-			PhantomReference<?> ref = (PhantomReference<?>) REFERENCE_QUEUE
-				.remove();
+			PhantomReference<Cleanable> ref = ObjectUtils
+				.cast(REFERENCE_QUEUE.remove());
 			if (ObjectUtils.notNull(ref)) {
 			    ref.clear();
 			    PHANTOMS.remove(ref);
@@ -102,6 +104,6 @@ public class CleanUtils {
 
 	FinReference reference = new FinReference(context, REFERENCE_QUEUE);
 	reference.enqueue();
-	PHANTOMS.offer(reference);
+	PHANTOMS.add(reference);
     }
 }
