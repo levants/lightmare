@@ -109,6 +109,11 @@ public class CleanUtils {
 	}
     }
 
+    /**
+     * Adds {@link Cleanable} instance to be watched for finaizing
+     * 
+     * @param context
+     */
     public static void add(Cleanable context) {
 
 	if (cleaner == null) {
