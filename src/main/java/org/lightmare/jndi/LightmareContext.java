@@ -142,10 +142,6 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 
     @Override
     public void clean() throws IOException {
-	try {
-	    close();
-	} catch (NamingException ex) {
-	    throw new IOException(ex);
-	}
+	clearResources();
     }
 }
