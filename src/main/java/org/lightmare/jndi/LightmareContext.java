@@ -18,7 +18,7 @@ import org.lightmare.jpa.JpaManager;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.finalizers.CleanUtils;
+import org.lightmare.utils.finalizers.FinalizationUtils;
 import org.lightmare.utils.finalizers.Cleanable;
 import org.osjava.sj.memory.MemoryContext;
 
@@ -42,7 +42,7 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      */
     public LightmareContext(Hashtable<?, ?> env) {
 	super(env);
-	CleanUtils.add(this);
+	FinalizationUtils.add(this);
     }
 
     /**

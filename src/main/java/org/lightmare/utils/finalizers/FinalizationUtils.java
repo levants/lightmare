@@ -17,7 +17,7 @@ import org.lightmare.utils.StringUtils;
  * @author Levan Tsinadze
  * @since 0.0.85-SNAPSHOT
  */
-public class CleanUtils {
+public class FinalizationUtils {
 
     // Collection of watched objects
     private static final Set<PhantomReference<Cleanable>> PHANTOMS = new HashSet<PhantomReference<Cleanable>>();
@@ -30,7 +30,7 @@ public class CleanUtils {
 
     private static final String REFERENCE_THREAD_NAME = "custom-finalizer-thread-";
 
-    private static final Logger LOG = Logger.getLogger(CleanUtils.class);
+    private static final Logger LOG = Logger.getLogger(FinalizationUtils.class);
 
     /**
      * Implementation of Runnable for cleaner thread
@@ -98,6 +98,9 @@ public class CleanUtils {
 	}
     }
 
+    /**
+     * Initializes and starts cleaner thread if it is not initialized yet
+     */
     private static void initCleaner() {
 
 	if (cleaner == null) {
@@ -117,7 +120,7 @@ public class CleanUtils {
     public static void add(Cleanable context) {
 
 	if (cleaner == null) {
-	    synchronized (CleanUtils.class) {
+	    synchronized (FinalizationUtils.class) {
 		initCleaner();
 	    }
 	}

@@ -8,7 +8,7 @@ import java.io.IOException;
  * 
  * @author Levan Tsinadze
  * @since 0.0.85-SNAPSHOT
- * @see CleanUtils
+ * @see FinalizationUtils
  */
 public interface Cleanable {
 
