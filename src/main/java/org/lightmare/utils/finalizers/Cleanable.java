@@ -14,7 +14,7 @@ public interface Cleanable {
 
     /**
      * Should be implemented as resources cleaner after object was collected
-     * instead of finalize method
+     * instead of override {@link Object}'s finalize method
      * 
      * @throws IOException
      */
