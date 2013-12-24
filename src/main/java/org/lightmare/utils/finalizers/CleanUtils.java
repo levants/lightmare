@@ -35,6 +35,15 @@ public class CleanUtils {
      */
     private static class CleanerTask implements Runnable {
 
+	private void clearReference(PhantomReference<Cleanable> ref) {
+
+	    try {
+		ref.clear();
+	    } finally {
+		PHANTOMS.remove(ref);
+	    }
+	}
+
 	@Override
 	public void run() {
 
@@ -43,8 +52,7 @@ public class CleanUtils {
 		    PhantomReference<Cleanable> ref = ObjectUtils
 			    .cast(REFERENCE_QUEUE.remove());
 		    if (ObjectUtils.notNull(ref)) {
-			ref.clear();
-			PHANTOMS.remove(ref);
+			clearReference(ref);
 		    }
 		} catch (Throwable ex) {
 		    LOG.error(ex.getMessage(), ex);
