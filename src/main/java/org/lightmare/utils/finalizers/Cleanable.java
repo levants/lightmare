@@ -13,7 +13,8 @@ import java.io.IOException;
 public interface Cleanable {
 
     /**
-     * Should be implemented resources cleaning instead of finalize method
+     * Should be implemented as resources cleaner after object was collected
+     * instead of finalize method
      * 
      * @throws IOException
      */
