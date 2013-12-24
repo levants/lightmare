@@ -28,30 +28,45 @@ public class CleanUtils {
 
     private static final String REFERENCE_THREAD_NAME = "Finalizer-thread-";
 
-    private static final Logger LOG = Logger.getLogger(CleanUtils.class);
+    private static Thread cleaner;
 
-    static {
-	Thread referenceThread = new Thread() {
-	    public void run() {
+    /**
+     * Implementation of Runnable for cleaner thread
+     * 
+     * @author Levan Tsinadze
+     * @since 0.1.0-SNAPSHOT
+     */
+    private static class CleanerTask implements Runnable {
 
-		while (Boolean.TRUE) {
-		    try {
-			PhantomReference<Cleanable> ref = ObjectUtils
-				.cast(REFERENCE_QUEUE.remove());
-			if (ObjectUtils.notNull(ref)) {
-			    ref.clear();
-			    PHANTOMS.remove(ref);
-			}
-		    } catch (Throwable ex) {
-			LOG.error(ex.getMessage(), ex);
+	@Override
+	public void run() {
+
+	    while (Boolean.TRUE) {
+		try {
+		    PhantomReference<Cleanable> ref = ObjectUtils
+			    .cast(REFERENCE_QUEUE.remove());
+		    if (ObjectUtils.notNull(ref)) {
+			ref.clear();
+			PHANTOMS.remove(ref);
 		    }
+		} catch (Throwable ex) {
+		    LOG.error(ex.getMessage(), ex);
 		}
 	    }
-	};
-	referenceThread.setName(StringUtils.concat(REFERENCE_THREAD_NAME,
-		referenceThread.getId()));
-	referenceThread.setDaemon(Boolean.TRUE);
-	referenceThread.start();
+	}
+    }
+
+    private static final Logger LOG = Logger.getLogger(CleanUtils.class);
+
+    private static void initCleaner() {
+
+	if (cleaner == null) {
+	    cleaner = new Thread(new CleanerTask());
+	    cleaner.setName(StringUtils.concat(REFERENCE_THREAD_NAME,
+		    cleaner.getId()));
+	    cleaner.setDaemon(Boolean.TRUE);
+	    cleaner.start();
+	}
     }
 
     /**
@@ -101,6 +116,12 @@ public class CleanUtils {
     }
 
     public static void add(Cleanable context) {
+
+	if (cleaner == null) {
+	    synchronized (CleanUtils.class) {
+		initCleaner();
+	    }
+	}
 
 	FinReference reference = new FinReference(context, REFERENCE_QUEUE);
 	reference.enqueue();
