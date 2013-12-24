@@ -27,6 +27,8 @@ public class CleanUtils {
 
     private static Thread cleaner;
 
+    private static final Logger LOG = Logger.getLogger(CleanUtils.class);
+
     /**
      * Implementation of Runnable for cleaner thread
      * 
@@ -60,8 +62,6 @@ public class CleanUtils {
 	    }
 	}
     }
-
-    private static final Logger LOG = Logger.getLogger(CleanUtils.class);
 
     /**
      * Extension of {@link PhantomReference} for cleaning unused resources after
