@@ -2,11 +2,8 @@ package org.lightmare.utils.finalizers;
 
 import java.io.IOException;
 import java.lang.ref.PhantomReference;
-import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
