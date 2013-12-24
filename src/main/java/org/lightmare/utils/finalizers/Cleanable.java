@@ -12,5 +12,10 @@ import java.io.IOException;
  */
 public interface Cleanable {
 
+    /**
+     * Should be implemented resources cleaning instead of finalize method
+     * 
+     * @throws IOException
+     */
     void clean() throws IOException;
 }
