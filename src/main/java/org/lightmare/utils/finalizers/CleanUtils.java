@@ -58,17 +58,6 @@ public class CleanUtils {
 
     private static final Logger LOG = Logger.getLogger(CleanUtils.class);
 
-    private static void initCleaner() {
-
-	if (cleaner == null) {
-	    cleaner = new Thread(new CleanerTask());
-	    cleaner.setName(StringUtils.concat(REFERENCE_THREAD_NAME,
-		    cleaner.getId()));
-	    cleaner.setDaemon(Boolean.TRUE);
-	    cleaner.start();
-	}
-    }
-
     /**
      * Extension of {@link PhantomReference} for cleaning unused resources after
      * garbage collection
@@ -78,13 +67,10 @@ public class CleanUtils {
      */
     public static class FinReference extends PhantomReference<Cleanable> {
 
-	private ReferenceQueue<Cleanable> queue;
-
 	private Cleanable referent;
 
 	public FinReference(Cleanable referent, ReferenceQueue<Cleanable> queue) {
 	    super(referent, queue);
-	    this.queue = queue;
 	    this.referent = referent;
 	}
 
@@ -92,26 +78,26 @@ public class CleanUtils {
 	public void clear() {
 
 	    try {
-		Reference<Cleanable> reference = ObjectUtils.cast(queue
-			.remove());
-		if (ObjectUtils.notNull(reference)) {
-		    Cleanable cleanable = reference.get();
-		    if (ObjectUtils.notNull(cleanable)) {
-			cleanable.clean();
-		    }
-		}
-
 		if (ObjectUtils.notNull(referent)) {
 		    referent.clean();
 		    referent = null;
 		}
-	    } catch (InterruptedException ex) {
-		LOG.error(ex.getMessage(), ex);
 	    } catch (IOException ex) {
 		LOG.error(ex.getMessage(), ex);
 	    }
 
 	    super.clear();
+	}
+    }
+
+    private static void initCleaner() {
+
+	if (cleaner == null) {
+	    cleaner = new Thread(new CleanerTask());
+	    cleaner.setName(StringUtils.concat(REFERENCE_THREAD_NAME,
+		    cleaner.getId()));
+	    cleaner.setDaemon(Boolean.TRUE);
+	    cleaner.start();
 	}
     }
 
