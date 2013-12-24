@@ -21,6 +21,7 @@ public class CleanUtils {
 
     private static final Set<PhantomReference<Cleanable>> PHANTOMS = new HashSet<PhantomReference<Cleanable>>();
 
+    // Queue of Cleanable instances being watched
     private static final ReferenceQueue<Cleanable> REFERENCE_QUEUE = new ReferenceQueue<Cleanable>();
 
     private static final String REFERENCE_THREAD_NAME = "Finalizer-thread-";
