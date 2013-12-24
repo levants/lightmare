@@ -19,6 +19,7 @@ import org.lightmare.utils.StringUtils;
  */
 public class CleanUtils {
 
+    // Collection of watched objects
     private static final Set<PhantomReference<Cleanable>> PHANTOMS = new HashSet<PhantomReference<Cleanable>>();
 
     // Queue of Cleanable instances being watched
@@ -26,6 +27,7 @@ public class CleanUtils {
 
     private static final String REFERENCE_THREAD_NAME = "Finalizer-thread-";
 
+    // Daemon thread to finalize references objects
     private static Thread cleaner;
 
     private static final Logger LOG = Logger.getLogger(CleanUtils.class);
