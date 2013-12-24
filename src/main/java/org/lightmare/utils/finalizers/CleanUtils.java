@@ -93,9 +93,8 @@ public class CleanUtils {
 		LOG.error(ex.getMessage(), ex);
 	    } finally {
 		referent = null;
+		super.clear();
 	    }
-
-	    super.clear();
 	}
     }
 
