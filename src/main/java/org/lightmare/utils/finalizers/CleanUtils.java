@@ -80,10 +80,11 @@ public class CleanUtils {
 	    try {
 		if (ObjectUtils.notNull(referent)) {
 		    referent.clean();
-		    referent = null;
 		}
 	    } catch (IOException ex) {
 		LOG.error(ex.getMessage(), ex);
+	    } finally {
+		referent = null;
 	    }
 
 	    super.clear();
