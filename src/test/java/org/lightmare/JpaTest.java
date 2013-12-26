@@ -68,19 +68,20 @@ public class JpaTest {
 		.setPersistenceProperties(properties);
 	builder.setPoolPropertiesPath("./pool/pool.properties");
 	builder.addPoolProperty("statementCacheNumDeferredCloseThreads", "3");
-	builder.setHotDeployment(true);
+	builder.setHotDeployment(Boolean.FALSE);
 	builder.addDeploymentPath("./lib");
 	if (unitName != null) {
-	    builder.setScanForEntities(true).setUnitName(unitName);
+	    builder.setScanForEntities(Boolean.TRUE).setUnitName(unitName);
 	}
 	builder.setSwapDataSource(true);
 	if (dataSourcePath != null) {
-	    builder.setSwapDataSource(true).addDataSourcePath(dataSourcePath);
+	    builder.setSwapDataSource(Boolean.TRUE).addDataSourcePath(
+		    dataSourcePath);
 	}
 
 	MetaCreator metaCreator;
 	if (path != null) {
-	    builder.setXmlFromJar(true);
+	    builder.setXmlFromJar(Boolean.TRUE);
 	    File file = new File(path);
 	    File[] files = { file };
 	    metaCreator = builder.build();
@@ -91,8 +92,8 @@ public class JpaTest {
 	}
 	Map<String, URL> classOwnershipURLs = metaCreator.getAnnotationFinder()
 		.getClassOwnersURLs();
-	Map<String, String> classOwnershipFiles = metaCreator.getAnnotationFinder()
-		.getClassOwnersFiles();
+	Map<String, String> classOwnershipFiles = metaCreator
+		.getAnnotationFinder().getClassOwnersFiles();
 	System.out
 		.println("============URLs of scanned classes ================");
 	for (Map.Entry<String, URL> entry : classOwnershipURLs.entrySet()) {
