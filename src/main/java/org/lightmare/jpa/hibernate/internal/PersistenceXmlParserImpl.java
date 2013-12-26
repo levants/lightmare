@@ -32,7 +32,6 @@ import org.hibernate.jpa.internal.EntityManagerMessageLogger;
 import org.hibernate.jpa.internal.util.ConfigurationHelper;
 import org.hibernate.metamodel.source.XsdException;
 import org.jboss.logging.Logger;
-import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
@@ -121,14 +120,6 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	}
 
 	return persistenceUnits;
-    }
-
-    private void resolveProviderClass(
-	    ParsedPersistenceXmlDescriptor persistenceUnit) {
-
-	persistenceUnit
-		.setProviderClassName(HibernatePersistenceProviderImpl.class
-			.getName());
     }
 
     /**
@@ -222,6 +213,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 				.setProviderClassName((String) integration
 					.get(AvailableSettings.PROVIDER));
 		    }
+
 		    if (integration
 			    .containsKey(AvailableSettings.TRANSACTION_TYPE)) {
 			String transactionType = (String) integration
