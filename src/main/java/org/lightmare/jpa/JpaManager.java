@@ -2,20 +2,20 @@ package org.lightmare.jpa;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.apache.log4j.Logger;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
+import org.lightmare.jpa.hibernate.HibernatePersistenceProviderImpl;
 import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.CollectionUtils;
@@ -68,18 +68,6 @@ public class JpaManager {
     }
 
     /**
-     * Checks if entity classes or persistence.xml path are provided
-     * 
-     * @param classes
-     * @return boolean
-     */
-    private boolean checkForBuild() {
-
-	return CollectionUtils.valid(classes) || StringUtils.valid(path)
-		|| checkForURL() || swapDataSource || scanArchives;
-    }
-
-    /**
      * Added transaction properties for JTA data sources
      */
     private void addTransactionManager() {
@@ -105,18 +93,17 @@ public class JpaManager {
      * @param unitName
      * @return {@link EntityManagerFactory}
      */
-    @SuppressWarnings("deprecation")
     private EntityManagerFactory buildEntityManagerFactory(String unitName)
 	    throws IOException {
 
 	EntityManagerFactory emf;
 
-	Ejb3ConfigurationImpl cfg;
+	HibernatePersistenceProvider cfg;
 
 	boolean pathCheck = StringUtils.valid(path);
 	boolean urlCheck = checkForURL();
 
-	Ejb3ConfigurationImpl.Builder builder = new Ejb3ConfigurationImpl.Builder();
+	HibernatePersistenceProviderImpl.Builder builder = new HibernatePersistenceProviderImpl.Builder();
 
 	if (loader == null) {
 	    loader = LibraryLoader.getContextClassLoader();
@@ -131,7 +118,7 @@ public class JpaManager {
 
 	if (pathCheck || urlCheck) {
 
-	    Enumeration<URL> xmls;
+	    List<URL> xmls;
 	    ConfigLoader configLoader = new ConfigLoader();
 	    if (pathCheck) {
 		xmls = configLoader.readFile(path);
@@ -154,13 +141,7 @@ public class JpaManager {
 	    addTransactionManager();
 	}
 
-	Ejb3ConfigurationImpl configured = cfg.configure(unitName, properties);
-
-	if (ObjectUtils.notNull(configured)) {
-	    emf = configured.buildEntityManagerFactory();
-	} else {
-	    emf = null;
-	}
+	emf = cfg.createEntityManagerFactory(unitName, properties);
 
 	return emf;
     }
@@ -181,15 +162,7 @@ public class JpaManager {
     private EntityManagerFactory createEntityManagerFactory(String unitName)
 	    throws IOException {
 
-	EntityManagerFactory emf;
-
-	if (checkForBuild()) {
-	    emf = buildEntityManagerFactory(unitName);
-	} else if (properties == null) {
-	    emf = Persistence.createEntityManagerFactory(unitName);
-	} else {
-	    emf = Persistence.createEntityManagerFactory(unitName, properties);
-	}
+	EntityManagerFactory emf = buildEntityManagerFactory(unitName);
 
 	return emf;
     }

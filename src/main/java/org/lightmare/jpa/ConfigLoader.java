@@ -3,7 +3,9 @@ package org.lightmare.jpa;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
@@ -40,25 +42,9 @@ public class ConfigLoader {
      * @return Enumeration<{@link URL}>
      * @throws IOException
      */
-    public Enumeration<URL> readURL(final URL url) {
+    public List<URL> readURL(final URL url) {
 
-	Enumeration<URL> xmls = new Enumeration<URL>() {
-
-	    private boolean nextElement = Boolean.TRUE;
-
-	    @Override
-	    public boolean hasMoreElements() {
-		return nextElement;
-	    }
-
-	    @Override
-	    public URL nextElement() {
-
-		nextElement = Boolean.FALSE;
-
-		return url;
-	    }
-	};
+	List<URL> xmls = new ArrayList<URL>();
 
 	shortPath = StringUtils
 		.concat(ArchiveUtils.ARCHIVE_URL_DELIM, XML_PATH);
@@ -76,9 +62,9 @@ public class ConfigLoader {
      * @return Enumeration<{@link URL} >
      * @throws IOException
      */
-    public Enumeration<URL> readFile(String path) throws IOException {
+    public List<URL> readFile(String path) throws IOException {
 
-	Enumeration<URL> xmls;
+	List<URL> xmls;
 
 	if (path == null || path.isEmpty()) {
 	    throw new IOException(PATH_NOT_PROVIDED_ERROR);
