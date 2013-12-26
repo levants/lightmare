@@ -41,7 +41,7 @@ public abstract class LoaderPoolManager {
      * 
      * @return {@link ClassLoader}
      */
-    protected static ClassLoader getCurrent() {
+    public static ClassLoader getCurrent() {
 
 	ClassLoader current;
 

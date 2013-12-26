@@ -130,7 +130,7 @@ public class ORMCreator {
      * @param beanName
      * @throws IOException
      */
-    protected void configureConnection() throws IOException {
+    public void configureConnection() throws IOException {
 
 	JpaManager.Builder builder = new JpaManager.Builder();
 	Map<String, String> classOwnersFiles = annotationFinder
@@ -180,7 +180,7 @@ public class ORMCreator {
      * @since 0.0.85-SNAPSHOT
      * 
      */
-    protected static class Builder {
+    public static class Builder {
 
 	// ORMCreator instance to initialize
 	private ORMCreator ormCreator;
@@ -190,7 +190,7 @@ public class ORMCreator {
 	 * 
 	 * @param creator
 	 */
-	protected Builder(MetaCreator creator) {
+	public Builder(MetaCreator creator) {
 	    this.ormCreator = new ORMCreator(creator);
 	}
 
@@ -200,7 +200,7 @@ public class ORMCreator {
 	 * @param unitName
 	 * @return {@link Builder}
 	 */
-	protected Builder setUnitName(String unitName) {
+	public Builder setUnitName(String unitName) {
 
 	    ormCreator.unitName = unitName;
 
@@ -213,7 +213,7 @@ public class ORMCreator {
 	 * @param beanName
 	 * @return {@link Builder}
 	 */
-	protected Builder setBeanName(String beanName) {
+	public Builder setBeanName(String beanName) {
 
 	    ormCreator.beanName = beanName;
 
@@ -226,7 +226,7 @@ public class ORMCreator {
 	 * @param loader
 	 * @return {@link Builder}
 	 */
-	protected Builder setClassLoader(ClassLoader loader) {
+	public Builder setClassLoader(ClassLoader loader) {
 
 	    ormCreator.loader = loader;
 
@@ -239,7 +239,7 @@ public class ORMCreator {
 	 * @param configClone
 	 * @return {@link Builder}
 	 */
-	protected Builder setConfiguration(Configuration configClone) {
+	public Builder setConfiguration(Configuration configClone) {
 
 	    ormCreator.configClone = configClone;
 
