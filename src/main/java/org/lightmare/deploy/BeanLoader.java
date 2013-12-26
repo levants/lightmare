@@ -16,11 +16,9 @@ import org.lightmare.cache.DeployData;
 import org.lightmare.cache.MetaData;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.deployers.BeanDeployer;
-import org.lightmare.jpa.datasource.InitMessages;
-import org.lightmare.jpa.datasource.Initializer;
+import org.lightmare.deploy.deployers.ConnectionDeployer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.LogUtils;
-import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.fs.FileUtils;
 
@@ -61,57 +59,6 @@ public class BeanLoader {
 	    Callable<T> privileged = Executors.privilegedCallable(current);
 
 	    return privileged;
-	}
-    }
-
-    /**
-     * {@link Runnable} implementation for initializing and deploying
-     * {@link javax.sql.DataSource}
-     * 
-     * @author Levan Tsinadze
-     * @since 0.0.45-SNAPSHOT
-     */
-    private static class ConnectionDeployer implements Callable<Boolean> {
-
-	private Properties properties;
-
-	private final CountDownLatch blocker;
-
-	private boolean countedDown;
-
-	public ConnectionDeployer(DataSourceParameters parameters) {
-
-	    this.properties = parameters.properties;
-	    this.blocker = parameters.blocker;
-	}
-
-	private void releaseBlocker() {
-
-	    if (ObjectUtils.notTrue(countedDown)) {
-		blocker.countDown();
-		countedDown = Boolean.TRUE;
-	    }
-	}
-
-	@Override
-	public Boolean call() throws Exception {
-
-	    boolean result;
-
-	    ClassLoader loader = LoaderPoolManager.getCurrent();
-
-	    try {
-		Initializer.registerDataSource(properties);
-		result = Boolean.TRUE;
-	    } catch (IOException ex) {
-		result = Boolean.FALSE;
-		LOG.error(InitMessages.INITIALIZING_ERROR, ex);
-	    } finally {
-		releaseBlocker();
-		LibraryLoader.loadCurrentLibraries(loader);
-	    }
-
-	    return result;
 	}
     }
 
