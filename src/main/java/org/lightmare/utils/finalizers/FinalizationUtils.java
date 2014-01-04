@@ -20,13 +20,13 @@ import org.lightmare.utils.StringUtils;
 public class FinalizationUtils {
 
     // Collection of watched objects
-    private static final Set<PhantomReference<Cleanable>> PHANTOMS = new HashSet<PhantomReference<Cleanable>>();
+    private final Set<PhantomReference<Cleanable>> PHANTOMS = new HashSet<PhantomReference<Cleanable>>();
 
     // Queue of Cleanable instances being watched
-    private static final ReferenceQueue<Cleanable> REFERENCE_QUEUE = new ReferenceQueue<Cleanable>();
+    private final ReferenceQueue<Cleanable> REFERENCE_QUEUE = new ReferenceQueue<Cleanable>();
 
     // Daemon thread to finalize references objects
-    private static Thread cleaner;
+    private Thread cleaner;
 
     private static final String REFERENCE_THREAD_NAME = "custom-finalizer-thread-";
 
@@ -38,7 +38,7 @@ public class FinalizationUtils {
      * @author Levan Tsinadze
      * @since 0.1.0-SNAPSHOT
      */
-    private static class CleanerTask implements Runnable {
+    private class CleanerTask implements Runnable {
 
 	private void clearReference(PhantomReference<Cleanable> ref) {
 
@@ -101,7 +101,7 @@ public class FinalizationUtils {
     /**
      * Initializes and starts cleaner thread if it is not initialized yet
      */
-    private static void initCleaner() {
+    private void initCleaner() {
 
 	if (cleaner == null) {
 	    CleanerTask task = new CleanerTask();
@@ -119,7 +119,7 @@ public class FinalizationUtils {
      * 
      * @param context
      */
-    public static void add(Cleanable context) {
+    public void trace(Cleanable context) {
 
 	if (cleaner == null) {
 	    synchronized (FinalizationUtils.class) {
@@ -130,5 +130,10 @@ public class FinalizationUtils {
 	FinReference reference = new FinReference(context, REFERENCE_QUEUE);
 	reference.enqueue();
 	PHANTOMS.add(reference);
+    }
+
+    public static void add(Cleanable cleanable) {
+
+	new FinalizationUtils().trace(cleanable);
     }
 }
