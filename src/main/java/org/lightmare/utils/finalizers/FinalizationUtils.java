@@ -23,7 +23,7 @@ public class FinalizationUtils {
     private final Set<PhantomReference<Cleanable>> phantoms = new HashSet<PhantomReference<Cleanable>>();
 
     // Queue of Cleanable instances being watched
-    private final ReferenceQueue<Cleanable> REFERENCE_QUEUE = new ReferenceQueue<Cleanable>();
+    private final ReferenceQueue<Cleanable> references = new ReferenceQueue<Cleanable>();
 
     // Daemon thread to finalize references objects
     private Thread cleaner;
@@ -55,7 +55,7 @@ public class FinalizationUtils {
 	    while (Boolean.TRUE) {
 		try {
 		    PhantomReference<Cleanable> ref = ObjectUtils
-			    .cast(REFERENCE_QUEUE.remove());
+			    .cast(references.remove());
 		    if (ObjectUtils.notNull(ref)) {
 			clearReference(ref);
 		    }
@@ -127,7 +127,7 @@ public class FinalizationUtils {
 	    }
 	}
 
-	FinReference reference = new FinReference(context, REFERENCE_QUEUE);
+	FinReference reference = new FinReference(context, references);
 	reference.enqueue();
 	phantoms.add(reference);
     }
