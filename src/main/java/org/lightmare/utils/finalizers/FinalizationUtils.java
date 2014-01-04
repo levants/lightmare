@@ -17,7 +17,10 @@ import org.lightmare.utils.StringUtils;
  * @author Levan Tsinadze
  * @since 0.0.85-SNAPSHOT
  */
-public class FinalizationUtils {
+public enum FinalizationUtils {
+
+    // Singleton instance for finalization
+    INSTANCE;
 
     // Collection of watched objects
     private final Set<PhantomReference<Cleanable>> phantoms = new HashSet<PhantomReference<Cleanable>>();
@@ -31,6 +34,12 @@ public class FinalizationUtils {
     private static final String REFERENCE_THREAD_NAME = "custom-finalizer-thread-";
 
     private static final Logger LOG = Logger.getLogger(FinalizationUtils.class);
+
+    /**
+     * Constructor which should be called only within this class
+     */
+    private FinalizationUtils() {
+    }
 
     /**
      * Implementation of Runnable for cleaner thread
@@ -115,7 +124,7 @@ public class FinalizationUtils {
     }
 
     /**
-     * Adds {@link Cleanable} instance to be watched for finaizing
+     * Adds {@link Cleanable} instance to be watched for finalization
      * 
      * @param context
      */
@@ -140,7 +149,6 @@ public class FinalizationUtils {
      */
     public static void add(Cleanable cleanable) {
 
-	FinalizationUtils finalizer = new FinalizationUtils();
-	finalizer.trace(cleanable);
+	INSTANCE.trace(cleanable);
     }
 }
