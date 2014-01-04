@@ -132,6 +132,12 @@ public class FinalizationUtils {
 	phantoms.add(reference);
     }
 
+    /**
+     * Initializes {@link FinalizationUtils} and adds {@link Cleanable} instance
+     * to be trace for finalization
+     * 
+     * @param cleanable
+     */
     public static void add(Cleanable cleanable) {
 
 	new FinalizationUtils().trace(cleanable);
