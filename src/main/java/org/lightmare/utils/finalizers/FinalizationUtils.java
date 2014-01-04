@@ -20,7 +20,7 @@ import org.lightmare.utils.StringUtils;
 public class FinalizationUtils {
 
     // Collection of watched objects
-    private final Set<PhantomReference<Cleanable>> PHANTOMS = new HashSet<PhantomReference<Cleanable>>();
+    private final Set<PhantomReference<Cleanable>> phantoms = new HashSet<PhantomReference<Cleanable>>();
 
     // Queue of Cleanable instances being watched
     private final ReferenceQueue<Cleanable> REFERENCE_QUEUE = new ReferenceQueue<Cleanable>();
@@ -45,7 +45,7 @@ public class FinalizationUtils {
 	    try {
 		ref.clear();
 	    } finally {
-		PHANTOMS.remove(ref);
+		phantoms.remove(ref);
 	    }
 	}
 
@@ -129,7 +129,7 @@ public class FinalizationUtils {
 
 	FinReference reference = new FinReference(context, REFERENCE_QUEUE);
 	reference.enqueue();
-	PHANTOMS.add(reference);
+	phantoms.add(reference);
     }
 
     public static void add(Cleanable cleanable) {
