@@ -104,7 +104,9 @@ public class FinalizationUtils {
     private static void initCleaner() {
 
 	if (cleaner == null) {
-	    cleaner = new Thread(new CleanerTask());
+	    CleanerTask task = new CleanerTask();
+	    cleaner = new Thread(task);
+	    cleaner.setPriority(Thread.MAX_PRIORITY);
 	    cleaner.setName(StringUtils.concat(REFERENCE_THREAD_NAME,
 		    cleaner.getId()));
 	    cleaner.setDaemon(Boolean.TRUE);
