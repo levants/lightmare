@@ -1,4 +1,4 @@
-package org.lightmare.utils.shutdown;
+package org.lightmare.utils.finalizers;
 
 import java.io.IOException;
 import java.util.ArrayList;
