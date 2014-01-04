@@ -140,6 +140,7 @@ public class FinalizationUtils {
      */
     public static void add(Cleanable cleanable) {
 
-	new FinalizationUtils().trace(cleanable);
+	FinalizationUtils finalizer = new FinalizationUtils();
+	finalizer.trace(cleanable);
     }
 }
