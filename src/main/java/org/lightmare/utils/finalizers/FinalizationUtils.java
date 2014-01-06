@@ -18,7 +18,7 @@ import org.lightmare.utils.StringUtils;
  * @author Levan Tsinadze
  * @since 0.0.85-SNAPSHOT
  */
-public class CleanUtils {
+public class FinalizationUtils {
 
     private static final Queue<PhantomReference<Cleanable>> PHANTOMS = new LinkedList<PhantomReference<Cleanable>>();
 
@@ -26,7 +26,7 @@ public class CleanUtils {
 
     private static final String REFERENCE_THREAD_NAME = "Finalizer-thread-";
 
-    private static final Logger LOG = Logger.getLogger(CleanUtils.class);
+    private static final Logger LOG = Logger.getLogger(FinalizationUtils.class);
 
     static {
 	Thread referenceThread = new Thread() {
