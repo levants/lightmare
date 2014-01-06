@@ -1,4 +1,4 @@
-package org.lightmare.utils;
+package org.lightmare.utils.finalizers;
 
 import java.io.IOException;
 import java.lang.ref.PhantomReference;
@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.apache.log4j.Logger;
+import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Utility class to store {@link PhantomReference} implementations for cleaning

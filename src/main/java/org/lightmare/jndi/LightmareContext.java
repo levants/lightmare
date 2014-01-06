@@ -15,11 +15,11 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.TransactionHolder;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.jpa.JpaManager;
-import org.lightmare.utils.CleanUtils;
-import org.lightmare.utils.Cleanable;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.finalizers.CleanUtils;
+import org.lightmare.utils.finalizers.Cleanable;
 import org.osjava.sj.memory.MemoryContext;
 
 /**

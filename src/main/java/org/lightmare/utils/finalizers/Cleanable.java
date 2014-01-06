@@ -1,4 +1,4 @@
-package org.lightmare.utils;
+package org.lightmare.utils.finalizers;
 
 import java.io.IOException;
 
