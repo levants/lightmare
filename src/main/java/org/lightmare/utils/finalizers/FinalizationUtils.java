@@ -2,10 +2,9 @@ package org.lightmare.utils.finalizers;
 
 import java.io.IOException;
 import java.lang.ref.PhantomReference;
-import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.lightmare.utils.ObjectUtils;
@@ -18,38 +17,62 @@ import org.lightmare.utils.StringUtils;
  * @author Levan Tsinadze
  * @since 0.0.85-SNAPSHOT
  */
-public class FinalizationUtils {
+public enum FinalizationUtils {
 
-    private static final Queue<PhantomReference<Cleanable>> PHANTOMS = new LinkedList<PhantomReference<Cleanable>>();
+    // Singleton instance for finalization
+    INSTANCE;
 
-    private static final ReferenceQueue<Cleanable> REFERENCE_QUEUE = new ReferenceQueue<Cleanable>();
+    // Collection of watched objects
+    private final Set<PhantomReference<Cleanable>> phantoms = new HashSet<PhantomReference<Cleanable>>();
 
-    private static final String REFERENCE_THREAD_NAME = "Finalizer-thread-";
+    // Queue of Cleanable instances being watched
+    private final ReferenceQueue<Cleanable> references = new ReferenceQueue<Cleanable>();
+
+    // Daemon thread to finalize references objects
+    private Thread cleaner;
+
+    private static final String REFERENCE_THREAD_NAME = "custom-finalizer-thread-";
 
     private static final Logger LOG = Logger.getLogger(FinalizationUtils.class);
 
-    static {
-	Thread referenceThread = new Thread() {
-	    public void run() {
+    /**
+     * Constructor which should be called only within this class
+     */
+    private FinalizationUtils() {
+    }
 
-		while (Boolean.TRUE) {
-		    try {
-			PhantomReference<?> ref = (PhantomReference<?>) REFERENCE_QUEUE
-				.remove();
-			if (ObjectUtils.notNull(ref)) {
-			    ref.clear();
-			    PHANTOMS.remove(ref);
-			}
-		    } catch (Throwable ex) {
-			LOG.error(ex.getMessage(), ex);
+    /**
+     * Implementation of Runnable for cleaner thread
+     * 
+     * @author Levan Tsinadze
+     * @since 0.1.0-SNAPSHOT
+     */
+    private class CleanerTask implements Runnable {
+
+	private void clearReference(PhantomReference<Cleanable> ref) {
+
+	    try {
+		ref.clear();
+	    } finally {
+		phantoms.remove(ref);
+	    }
+	}
+
+	@Override
+	public void run() {
+
+	    while (Boolean.TRUE) {
+		try {
+		    PhantomReference<Cleanable> ref = ObjectUtils
+			    .cast(references.remove());
+		    if (ObjectUtils.notNull(ref)) {
+			clearReference(ref);
 		    }
+		} catch (Throwable ex) {
+		    LOG.error(ex.getMessage(), ex);
 		}
 	    }
-	};
-	referenceThread.setName(StringUtils.concat(REFERENCE_THREAD_NAME,
-		referenceThread.getId()));
-	referenceThread.setDaemon(Boolean.TRUE);
-	referenceThread.start();
+	}
     }
 
     /**
@@ -61,13 +84,10 @@ public class FinalizationUtils {
      */
     public static class FinReference extends PhantomReference<Cleanable> {
 
-	private ReferenceQueue<Cleanable> queue;
-
 	private Cleanable referent;
 
 	public FinReference(Cleanable referent, ReferenceQueue<Cleanable> queue) {
 	    super(referent, queue);
-	    this.queue = queue;
 	    this.referent = referent;
 	}
 
@@ -75,33 +95,60 @@ public class FinalizationUtils {
 	public void clear() {
 
 	    try {
-		Reference<Cleanable> reference = ObjectUtils.cast(queue
-			.remove());
-		if (ObjectUtils.notNull(reference)) {
-		    Cleanable cleanable = reference.get();
-		    if (ObjectUtils.notNull(cleanable)) {
-			cleanable.clean();
-		    }
-		}
-
 		if (ObjectUtils.notNull(referent)) {
 		    referent.clean();
-		    referent = null;
 		}
-	    } catch (InterruptedException ex) {
-		LOG.error(ex.getMessage(), ex);
 	    } catch (IOException ex) {
 		LOG.error(ex.getMessage(), ex);
+	    } finally {
+		referent = null;
+		super.clear();
 	    }
-
-	    super.clear();
 	}
     }
 
-    public static void add(Cleanable context) {
+    /**
+     * Initializes and starts cleaner thread if it is not initialized yet
+     */
+    private void initCleaner() {
 
-	FinReference reference = new FinReference(context, REFERENCE_QUEUE);
+	if (cleaner == null) {
+	    CleanerTask task = new CleanerTask();
+	    cleaner = new Thread(task);
+	    cleaner.setPriority(Thread.MAX_PRIORITY);
+	    cleaner.setName(StringUtils.concat(REFERENCE_THREAD_NAME,
+		    cleaner.getId()));
+	    cleaner.setDaemon(Boolean.TRUE);
+	    cleaner.start();
+	}
+    }
+
+    /**
+     * Adds {@link Cleanable} instance to be watched for finalization
+     * 
+     * @param context
+     */
+    public void trace(Cleanable context) {
+
+	if (cleaner == null) {
+	    synchronized (FinalizationUtils.class) {
+		initCleaner();
+	    }
+	}
+
+	FinReference reference = new FinReference(context, references);
 	reference.enqueue();
-	PHANTOMS.offer(reference);
+	phantoms.add(reference);
+    }
+
+    /**
+     * Initializes {@link FinalizationUtils} and adds {@link Cleanable} instance
+     * to be trace for finalization
+     * 
+     * @param cleanable
+     */
+    public static void add(Cleanable cleanable) {
+
+	INSTANCE.trace(cleanable);
     }
 }
