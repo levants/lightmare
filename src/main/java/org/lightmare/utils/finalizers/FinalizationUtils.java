@@ -31,6 +31,7 @@ public enum FinalizationUtils {
     // Daemon thread to finalize references objects
     private Thread cleaner;
 
+    // Name of finalizer daemon thread
     private static final String REFERENCE_THREAD_NAME = "custom-finalizer-thread-";
 
     private static final Logger LOG = Logger.getLogger(FinalizationUtils.class);

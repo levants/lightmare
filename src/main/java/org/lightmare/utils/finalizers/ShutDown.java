@@ -25,6 +25,8 @@ public class ShutDown implements Runnable {
     // Collection of TmpResources instances to clear on shutdown hook
     private List<TmpResources> resources;
 
+    private static final String SHUTDOWN_THREAD_NAME = "shutdown-hook-thread-";
+
     // Message logged at shut down time when hook starts
     private static final String SHUTDOWN_MESSAGE = "Lightmare server is going to shut down";
 
