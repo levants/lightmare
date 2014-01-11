@@ -13,6 +13,7 @@ import org.lightmare.cache.TmpResources;
 import org.lightmare.deploy.LoaderPoolManager;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Runnable class for shut down hook
@@ -121,6 +122,10 @@ public class ShutDown implements Runnable {
 	if (HOOK_NOT_SET.getAndSet(Boolean.FALSE)) {
 	    shutDown = new ShutDown(tmpResources);
 	    Thread shutDownThread = new Thread(shutDown);
+	    String name = StringUtils.concat(SHUTDOWN_THREAD_NAME,
+		    shutDownThread.getId());
+	    shutDownThread.setName(name);
+	    shutDownThread.setDaemon(Boolean.TRUE);
 	    Runtime runtime = Runtime.getRuntime();
 	    runtime.addShutdownHook(shutDownThread);
 	} else {
