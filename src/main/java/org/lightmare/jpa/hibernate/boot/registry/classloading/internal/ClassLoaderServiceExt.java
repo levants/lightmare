@@ -15,9 +15,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.Set;
 
 import org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.boot.registry.classloading.spi.ClassLoadingException;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.internal.CoreLogging;
@@ -35,7 +35,7 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 
     private static final long serialVersionUID = 1L;
 
-    private static final Logger log = CoreLogging
+    private static final Logger LOG = CoreLogging
 	    .logger(ClassLoaderServiceImpl.class);
 
     @SuppressWarnings("rawtypes")
@@ -79,26 +79,26 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 
 	// normalize adding known class-loaders...
 	// then the Hibernate class loader
-	// orderedClassLoaderSet
-	// .add(ClassLoaderServiceImpl.class.getClassLoader());
+	orderedClassLoaderSet
+		.add(ClassLoaderServiceImpl.class.getClassLoader());
 
 	// then the TCCL, if one...
 	final ClassLoader tccl = locateTCCL();
 	if (tccl != null) {
 	    orderedClassLoaderSet.add(tccl);
 	}
-	// // finally the system classloader
-	// final ClassLoader sysClassLoader = locateSystemClassLoader();
-	// if (sysClassLoader != null) {
-	// orderedClassLoaderSet.add(sysClassLoader);
-	// }
+	// finally the system classloader
+	final ClassLoader sysClassLoader = locateSystemClassLoader();
+	if (sysClassLoader != null) {
+	    orderedClassLoaderSet.add(sysClassLoader);
+	}
 
 	// now build the aggregated class loader...
 	this.aggregatedClassLoader = new AggregatedClassLoader(
 		orderedClassLoaderSet);
     }
 
-    public static ClassLoaderService get(ClassLoader... loaders) {
+    public void addLoaders(ClassLoader... loaders) {
 
 	Collection<ClassLoader> providedLoaders;
 
@@ -108,7 +108,8 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	    providedLoaders = Collections.emptySet();
 	}
 
-	return new ClassLoaderServiceExt(providedLoaders);
+	this.aggregatedClassLoader.addLoaders(providedLoaders);
+	;
     }
 
     /**
@@ -144,7 +145,7 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 		AvailableSettings.ENVIRONMENT_CLASSLOADER, configValues);
 
 	if (providedClassLoaders.isEmpty()) {
-	    log.debugf("Incoming config yielded no classloaders; adding standard SE ones");
+	    LOG.debugf("Incoming config yielded no classloaders; adding standard SE ones");
 	    final ClassLoader tccl = locateTCCL();
 	    if (tccl != null) {
 		providedClassLoaders.add(tccl);
@@ -190,6 +191,17 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	    super(null);
 	    individualClassLoaders = orderedClassLoaderSet
 		    .toArray(new ClassLoader[orderedClassLoaderSet.size()]);
+	}
+
+	public void addLoaders(Collection<ClassLoader> loaders) {
+
+	    if (CollectionUtils.valid(loaders)) {
+		Set<ClassLoader> existeds = new LinkedHashSet<ClassLoader>(
+			Arrays.asList(individualClassLoaders));
+		loaders.addAll(loaders);
+		individualClassLoaders = existeds
+			.toArray(new ClassLoader[existeds.size()]);
+	    }
 	}
 
 	@Override
@@ -280,13 +292,13 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
     public InputStream locateResourceStream(String name) {
 	// first we try name as a URL
 	try {
-	    log.tracef("trying via [new URL(\"%s\")]", name);
+	    LOG.tracef("trying via [new URL(\"%s\")]", name);
 	    return new URL(name).openStream();
 	} catch (Exception ignore) {
 	}
 
 	try {
-	    log.tracef("trying via [ClassLoader.getResourceAsStream(\"%s\")]",
+	    LOG.tracef("trying via [ClassLoader.getResourceAsStream(\"%s\")]",
 		    name);
 	    final InputStream stream = aggregatedClassLoader
 		    .getResourceAsStream(name);
@@ -300,13 +312,13 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 
 	if (stripped != null) {
 	    try {
-		log.tracef("trying via [new URL(\"%s\")]", stripped);
+		LOG.tracef("trying via [new URL(\"%s\")]", stripped);
 		return new URL(stripped).openStream();
 	    } catch (Exception ignore) {
 	    }
 
 	    try {
-		log.tracef(
+		LOG.tracef(
 			"trying via [ClassLoader.getResourceAsStream(\"%s\")]",
 			stripped);
 		final InputStream stream = aggregatedClassLoader

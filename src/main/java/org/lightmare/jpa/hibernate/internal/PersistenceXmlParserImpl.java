@@ -21,7 +21,6 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl;
 import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.internal.util.StringHelper;
 import org.hibernate.jpa.AvailableSettings;
@@ -84,7 +83,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
     public static List<ParsedPersistenceXmlDescriptor> locatePersistenceUnits(
 	    Map integration, MetaConfig metaConfig) {
 	final PersistenceXmlParserImpl parser = new PersistenceXmlParserImpl(
-		ClassLoaderServiceImpl.fromConfigSettings(integration),
+		ClassLoaderServiceExt.fromConfigSettings(integration),
 		PersistenceUnitTransactionType.RESOURCE_LOCAL);
 	parser.metaConfig = metaConfig;
 
@@ -106,11 +105,14 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	if (ObjectUtils.notNull(metaConfig)
 		&& ObjectUtils.notNull(metaConfig.overridenClassLoader)) {
 	    ClassLoader loader = metaConfig.overridenClassLoader;
-	    xmlUrls = ClassLoaderServiceExt.get(loader).locateResources(
-		    resourcePath);
-	} else {
-	    xmlUrls = classLoaderService.locateResources(resourcePath);
+	    if (classLoaderService instanceof ClassLoaderServiceExt) {
+		ClassLoaderServiceExt casted = ObjectUtils.cast(
+			classLoaderService, ClassLoaderServiceExt.class);
+		casted.addLoaders(loader);
+	    }
 	}
+
+	xmlUrls = classLoaderService.locateResources(resourcePath);
 
 	return xmlUrls;
     }
