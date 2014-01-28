@@ -475,7 +475,6 @@ public class MetaCreator {
 
 	    // Tries to lock for avoid concurrent modification
 	    locked = ObjectUtils.tryLock(scannerLock);
-
 	    if (locked) {
 		try {
 		    if (CollectionUtils.valid(realURL)) {
@@ -498,7 +497,6 @@ public class MetaCreator {
 		    }
 
 		    configuration = null;
-
 		} finally {
 		    ObjectUtils.unlock(scannerLock);
 		}
@@ -512,7 +510,6 @@ public class MetaCreator {
      * @throws IOException
      */
     public static void close() throws IOException {
-
 	ShutDown.clearAll();
     }
 
