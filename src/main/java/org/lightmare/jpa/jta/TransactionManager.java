@@ -69,10 +69,8 @@ public class TransactionManager {
 	    EntityTransaction entityTransaction, EntityManager em) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
-
 	    if (ObjectUtils.notNull(entityTransaction)) {
 		transaction.addTransaction(entityTransaction);
 	    }
@@ -97,10 +95,8 @@ public class TransactionManager {
 
 	if (userTransaction instanceof UserTransactionImpl
 		&& CollectionUtils.valid(entityTransactions)) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
-
 	    for (BeanTransactions.TransactionData transactionData : entityTransactions) {
 		addEntityTransaction(transaction,
 			transactionData.entityTransaction, transactionData.em);
@@ -119,7 +115,6 @@ public class TransactionManager {
 
 	if (userTransaction instanceof UserTransactionImpl
 		&& ObjectUtils.notNull(em)) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    transaction.addEntityManager(em);
@@ -138,7 +133,6 @@ public class TransactionManager {
 
 	if (userTransaction instanceof UserTransactionImpl
 		&& CollectionUtils.valid(ems)) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    for (EntityManager em : ems) {
@@ -158,7 +152,6 @@ public class TransactionManager {
 
 	if (userTransaction instanceof UserTransactionImpl
 		&& CollectionUtils.valid(ems)) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    for (EntityManager em : ems) {
@@ -202,10 +195,8 @@ public class TransactionManager {
 
 	if (userTransaction instanceof UserTransactionImpl
 		&& CollectionUtils.valid(entityTransactions)) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
-
 	    for (BeanTransactions.TransactionData transactionData : entityTransactions) {
 		addReqNewTransaction(transaction,
 			transactionData.entityTransaction, transactionData.em);
@@ -223,10 +214,8 @@ public class TransactionManager {
 	    BeanHandler handler) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
-
 	    Object caller = transaction.getCaller();
 	    if (caller == null) {
 		transaction.setCaller(handler);
@@ -294,7 +283,6 @@ public class TransactionManager {
 	    throws IOException {
 
 	if (userTransaction instanceof UserTransactionImpl) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    try {
@@ -347,10 +335,8 @@ public class TransactionManager {
 	    throws IOException {
 
 	if (userTransaction instanceof UserTransactionImpl) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
-
 	    try {
 		transaction.rollbackReqNews();
 	    } catch (IllegalStateException ex) {
@@ -367,7 +353,6 @@ public class TransactionManager {
 	    UserTransaction userTransaction) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    transaction.closeReqNew();
@@ -383,7 +368,6 @@ public class TransactionManager {
     protected static void closeEntityManagers(UserTransaction userTransaction) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    transaction.closeEntityManagers();
@@ -400,7 +384,6 @@ public class TransactionManager {
 	    UserTransaction userTransaction) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    transaction.closeFreeEntityManagers();
@@ -415,7 +398,6 @@ public class TransactionManager {
     protected static void close(UserTransaction userTransaction) {
 
 	if (userTransaction instanceof UserTransactionImpl) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    transaction.close();
