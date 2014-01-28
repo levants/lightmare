@@ -253,19 +253,14 @@ public class BeanTransactions {
 	if (type.equals(TransactionAttributeType.NOT_SUPPORTED)) {
 	    TransactionManager.addFreeEntityManagers(transaction, ems);
 	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
-
 	    entityTransactions = getEntityTransactions(ems);
 	    TransactionManager.addEntityTransactions(transaction,
 		    entityTransactions);
-
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
-
 	    entityTransactions = getEntityTransactions(ems);
 	    TransactionManager.addReqNewTransactions(transaction,
 		    entityTransactions);
-
 	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
-
 	    int status = getStatus(transaction);
 	    if (status == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
 		TransactionManager.addEntityManagers(transaction, ems);
@@ -276,7 +271,6 @@ public class BeanTransactions {
 			entityTransactions);
 	    }
 	} else if (type.equals(TransactionAttributeType.NEVER)) {
-
 	    try {
 		int status = getStatus(transaction);
 		if (status > UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
@@ -286,7 +280,6 @@ public class BeanTransactions {
 		TransactionManager.addFreeEntityManagers(transaction, ems);
 	    }
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
-
 	    entityTransactions = getEntityTransactions(ems);
 	    TransactionManager.addEntityTransactions(transaction,
 		    entityTransactions);
@@ -378,7 +371,6 @@ public class BeanTransactions {
 	if (type.equals(TransactionAttributeType.REQUIRED)) {
 	    TransactionManager.commit(transaction);
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
-
 	    int status = getStatus(transaction);
 	    if (status == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
 		TransactionManager.remove(transaction);
@@ -406,7 +398,6 @@ public class BeanTransactions {
 	UserTransaction transaction = getTransaction();
 
 	if (TransactionManager.isTransactionalType(type)) {
-
 	    boolean check = TransactionManager
 		    .checkCaller(transaction, handler);
 	    if (check) {
@@ -465,7 +456,6 @@ public class BeanTransactions {
 	UserTransaction transaction = TransactionHolder.getTransaction();
 
 	if (ObjectUtils.notNull(transaction)) {
-
 	    if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 		TransactionManager.closeReqNewEntityManagers(transaction);
 	    } else if (TransactionManager.isFreeType(type)) {
