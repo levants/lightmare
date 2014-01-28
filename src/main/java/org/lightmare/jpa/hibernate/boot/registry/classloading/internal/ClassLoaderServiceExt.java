@@ -122,8 +122,7 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
      * @deprecated No longer used/supported!
      */
     @Deprecated
-    @SuppressWarnings({ "UnusedDeclaration", "unchecked", "deprecation",
-	    "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static ClassLoaderServiceImpl fromConfigSettings(Map configValues) {
 	final List<ClassLoader> providedClassLoaders = new ArrayList<ClassLoader>();
 
@@ -167,7 +166,7 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	}
     }
 
-    private static ClassLoader locateSystemClassLoader() {
+    protected static ClassLoader locateSystemClassLoader() {
 	try {
 	    return ClassLoader.getSystemClassLoader();
 	} catch (Exception e) {
