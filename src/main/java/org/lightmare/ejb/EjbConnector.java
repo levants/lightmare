@@ -188,7 +188,6 @@ public class EjbConnector {
 	Class<?>[] interfaceClasses = metaData.getInterfaceClasses();
 
 	if (CollectionUtils.invalid(interfaceClasses)) {
-
 	    List<Class<?>> interfacesList = new ArrayList<Class<?>>();
 	    Class<?>[] interfaces = metaData.getLocalInterfaces();
 
@@ -226,7 +225,6 @@ public class EjbConnector {
 	Class<?>[] interfaces = setInterfaces(metaData);
 	Class<T>[] typedInterfaces = ObjectUtils.cast(interfaces);
 	ClassLoader loader = metaData.getLoader();
-
 	beanInstance = instatiateBean(typedInterfaces, handler, loader);
 
 	return beanInstance;
@@ -287,7 +285,6 @@ public class EjbConnector {
 	Class<?> classForName = MetaUtils.classForName(interfaceName,
 		Boolean.FALSE, loader);
 	Class<T> interfaceClass = ObjectUtils.cast(classForName);
-
 	beanInstance = connectToBean(beanName, interfaceClass, rpcArgs);
 
 	return beanInstance;
@@ -309,7 +306,6 @@ public class EjbConnector {
 	BeanHandler handler = getBeanHandler(metaData);
 	Class<T> beanClass = ObjectUtils.cast(metaData.getBeanClass());
 	T beanInstance = MetaUtils.instantiate(beanClass);
-
 	restHandler = RestHandlerFactory.get(handler, beanInstance);
 
 	return restHandler;
