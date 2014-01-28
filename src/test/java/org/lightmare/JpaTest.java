@@ -73,7 +73,7 @@ public class JpaTest {
 	if (unitName != null) {
 	    builder.setScanForEntities(Boolean.TRUE).setUnitName(unitName);
 	}
-	builder.setSwapDataSource(true);
+	builder.setSwapDataSource(Boolean.TRUE);
 	if (dataSourcePath != null) {
 	    builder.setSwapDataSource(Boolean.TRUE).addDataSourcePath(
 		    dataSourcePath);
