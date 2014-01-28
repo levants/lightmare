@@ -98,6 +98,11 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 		orderedClassLoaderSet);
     }
 
+    /**
+     * Adds {@link ClassLoader} at runtime
+     * 
+     * @param loaders
+     */
     public void addLoaders(ClassLoader... loaders) {
 
 	Collection<ClassLoader> providedLoaders;
@@ -109,7 +114,6 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	}
 
 	this.aggregatedClassLoader.addLoaders(providedLoaders);
-	;
     }
 
     /**
