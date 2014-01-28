@@ -69,7 +69,6 @@ public class UserTransactionImpl implements UserTransaction {
      * @param transaction
      */
     public void addTransaction(EntityTransaction transaction) {
-
 	transactions.add(transaction);
     }
 
@@ -80,7 +79,6 @@ public class UserTransactionImpl implements UserTransaction {
      * @param transactions
      */
     public void addTransactions(EntityTransaction... transactions) {
-
 	Collections.addAll(this.transactions, transactions);
     }
 
@@ -96,7 +94,6 @@ public class UserTransactionImpl implements UserTransaction {
 	    if (ems == null) {
 		ems = new Stack<EntityManager>();
 	    }
-
 	    ems.push(em);
 	}
     }
@@ -151,7 +148,6 @@ public class UserTransactionImpl implements UserTransaction {
      * @param entityTransaction
      */
     public void pushReqNew(EntityTransaction entityTransaction) {
-
 	getNews().push(entityTransaction);
     }
 
@@ -163,7 +159,6 @@ public class UserTransactionImpl implements UserTransaction {
      * @param em
      */
     public void pushReqNewEm(EntityManager em) {
-
 	getNewEms().push(em);
     }
 
@@ -174,7 +169,6 @@ public class UserTransactionImpl implements UserTransaction {
      * @param em
      */
     public void pushFreeEntityManager(EntityManager em) {
-
 	getFreeEntityManagers().push(em);
     }
 
@@ -186,7 +180,6 @@ public class UserTransactionImpl implements UserTransaction {
     private void close(Stack<EntityManager> entityManagers) {
 
 	if (CollectionUtils.valid(entityManagers)) {
-
 	    EntityManager em;
 	    while (CollectionUtils.notEmpty(entityManagers)) {
 		em = entityManagers.pop();
@@ -281,7 +274,6 @@ public class UserTransactionImpl implements UserTransaction {
 	    SystemException {
 
 	if (CollectionUtils.valid(entityTransactions)) {
-
 	    EntityTransaction entityTransaction;
 	    while (CollectionUtils.notEmpty(entityTransactions)) {
 		entityTransaction = entityTransactions.pop();
@@ -322,7 +314,6 @@ public class UserTransactionImpl implements UserTransaction {
      * Closes all cached immediate {@link EntityManager} instances
      */
     protected void closeReqNew() {
-
 	close(requareNewEms);
     }
 
@@ -330,7 +321,6 @@ public class UserTransactionImpl implements UserTransaction {
      * Closes all contained {@link EntityManager}s
      */
     public void closeEntityManagers() {
-
 	close(ems);
     }
 
@@ -338,7 +328,6 @@ public class UserTransactionImpl implements UserTransaction {
      * Closes all not in transaction {@link EntityManager} instances
      */
     public void closeFreeEntityManagers() {
-
 	close(freeEms);
     }
 
@@ -428,7 +417,6 @@ public class UserTransactionImpl implements UserTransaction {
 
     @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
-
 	setRollbackOnly(transactions);
     }
 
@@ -456,7 +444,6 @@ public class UserTransactionImpl implements UserTransaction {
 
     @Override
     public void setTransactionTimeout(int time) throws SystemException {
-
 	throw new UnsupportedOperationException(TIMEOUT_NOT_SUPPORTED_ERROR);
     }
 
@@ -482,7 +469,6 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     public Object getCaller() {
-
 	return caller;
     }
 

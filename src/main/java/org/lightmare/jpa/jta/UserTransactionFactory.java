@@ -25,7 +25,6 @@ public abstract class UserTransactionFactory {
     }
 
     public static UserTransaction get(EntityTransaction... transactions) {
-
 	return new UserTransactionImpl(transactions);
     }
 
@@ -41,7 +40,6 @@ public abstract class UserTransactionFactory {
 
 	if (userTransaction instanceof UserTransactionImpl
 		&& CollectionUtils.valid(entityTransactions)) {
-
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
 		    UserTransactionImpl.class);
 	    transaction.addTransactions(entityTransactions);
