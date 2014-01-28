@@ -198,7 +198,7 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	    if (CollectionUtils.valid(loaders)) {
 		Set<ClassLoader> existeds = new LinkedHashSet<ClassLoader>(
 			Arrays.asList(individualClassLoaders));
-		loaders.addAll(loaders);
+		existeds.addAll(loaders);
 		individualClassLoaders = existeds
 			.toArray(new ClassLoader[existeds.size()]);
 	    }
