@@ -24,7 +24,6 @@ public class TimerHandleImpl implements TimerHandle {
      * @param timer
      */
     public TimerHandleImpl(Timer timer) {
-
 	this.timer = timer;
     }
 
@@ -33,5 +32,4 @@ public class TimerHandleImpl implements TimerHandle {
 	    NoSuchObjectLocalException, EJBException {
 	return timer;
     }
-
 }
