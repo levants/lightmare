@@ -54,6 +54,10 @@ public class JpaManager {
 
     private static final Logger LOG = Logger.getLogger(JpaManager.class);
 
+    /**
+     * Private constructor to avoid initialization beside
+     * {@link JpaManager.Builder} class
+     */
     private JpaManager() {
     }
 
