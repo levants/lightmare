@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -16,11 +17,13 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 import org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl;
+import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.boot.registry.classloading.spi.ClassLoadingException;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.internal.CoreLogging;
 import org.hibernate.internal.util.ClassLoaderHelper;
 import org.jboss.logging.Logger;
+import org.lightmare.utils.CollectionUtils;
 
 /**
  * Implementation of class loader services
@@ -76,8 +79,8 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 
 	// normalize adding known class-loaders...
 	// then the Hibernate class loader
-	orderedClassLoaderSet
-		.add(ClassLoaderServiceImpl.class.getClassLoader());
+	// orderedClassLoaderSet
+	// .add(ClassLoaderServiceImpl.class.getClassLoader());
 
 	// then the TCCL, if one...
 	final ClassLoader tccl = locateTCCL();
@@ -93,6 +96,19 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	// now build the aggregated class loader...
 	this.aggregatedClassLoader = new AggregatedClassLoader(
 		orderedClassLoaderSet);
+    }
+
+    public static ClassLoaderService get(ClassLoader... loaders) {
+
+	Collection<ClassLoader> providedLoaders;
+
+	if (CollectionUtils.valid(loaders)) {
+	    providedLoaders = new HashSet<ClassLoader>(Arrays.asList(loaders));
+	} else {
+	    providedLoaders = Collections.emptySet();
+	}
+
+	return new ClassLoaderServiceExt(providedLoaders);
     }
 
     /**

@@ -32,6 +32,7 @@ import org.hibernate.jpa.internal.EntityManagerMessageLogger;
 import org.hibernate.jpa.internal.util.ConfigurationHelper;
 import org.hibernate.metamodel.source.XsdException;
 import org.jboss.logging.Logger;
+import org.lightmare.jpa.hibernate.boot.registry.classloading.internal.ClassLoaderServiceExt;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
@@ -101,13 +102,15 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 
 	final List<URL> xmlUrls;
 
+	String resourcePath = "META-INF/persistence.xml";
 	if (ObjectUtils.notNull(metaConfig)
 		&& ObjectUtils.notNull(metaConfig.overridenClassLoader)) {
 	    ClassLoader loader = metaConfig.overridenClassLoader;
+	    xmlUrls = ClassLoaderServiceExt.get(loader).locateResources(
+		    resourcePath);
+	} else {
+	    xmlUrls = classLoaderService.locateResources(resourcePath);
 	}
-
-	xmlUrls = classLoaderService
-		.locateResources("META-INF/persistence.xml");
 
 	return xmlUrls;
     }
