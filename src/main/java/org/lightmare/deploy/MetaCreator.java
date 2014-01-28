@@ -327,7 +327,6 @@ public class MetaCreator {
     private void deployBeans(Set<String> beanNames) {
 
 	blocker = new CountDownLatch(beanNames.size());
-
 	for (String beanName : beanNames) {
 	    LogUtils.info(LOG, "Deploing bean %s", beanName);
 	    try {
@@ -339,14 +338,12 @@ public class MetaCreator {
 	}
 
 	awaitDeployments();
-
 	if (RestContainer.hasRest()) {
 	    RestProvider.reload();
 	}
 
 	boolean hotDeployment = configuration.isHotDeployment();
 	boolean watchStatus = configuration.isWatchStatus();
-
 	if (hotDeployment && ObjectUtils.notTrue(watchStatus)) {
 	    Watcher.startWatch();
 	    watchStatus = Boolean.TRUE;
@@ -364,7 +361,6 @@ public class MetaCreator {
     public void scanForBeans(URL[] archives) throws IOException {
 
 	ObjectUtils.lock(scannerLock);
-
 	try {
 	    configure(archives);
 
@@ -439,7 +435,6 @@ public class MetaCreator {
 
 	if (CollectionUtils.invalid(paths)
 		&& CollectionUtils.valid(configuration.getDeploymentPath())) {
-
 	    Set<DeploymentDirectory> deployments = configuration
 		    .getDeploymentPath();
 	    List<String> pathList = new ArrayList<String>();
