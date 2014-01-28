@@ -180,7 +180,6 @@ public class BeanTransactions {
      */
     private static void beginEntityTransaction(
 	    EntityTransaction entityTransaction) {
-
 	if (ObjectUtils.notTrue(entityTransaction.isActive())) {
 	    entityTransaction.begin();
 	}
