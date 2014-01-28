@@ -59,7 +59,6 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     private final MetaData metaData;
 
     protected BeanHandler(final MetaData metaData) {
-
 	this.beanClass = metaData.getBeanClass();
 	this.transactionField = metaData.getTransactionField();
 	this.connectionDatas = metaData.getConnections();
@@ -93,7 +92,6 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     private void setFieldValue(Field field, Object value) throws IOException {
-
 	MetaUtils.setFieldValue(field, bean, value);
     }
 
@@ -119,7 +117,6 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void setConnection(Field connectionField, EntityManager em)
 	    throws IOException {
-
 	setFieldValue(connectionField, em);
     }
 
@@ -145,7 +142,6 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
 	    injectMetaData.setInterfaceClasses(injectionData
 		    .getInterfaceClasses());
-
 	    injectionData.setMetaData(injectMetaData);
 	}
 
@@ -178,7 +174,6 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     public void configure() throws IOException {
-
 	// TODO Add other configurations
 	configureInjects();
     }
@@ -241,7 +236,6 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	EntityManagerFactory emf = connection.getEmf();
 	Field connectionField = connection.getConnectionField();
 	Field unitField = connection.getUnitField();
-
 	if (ObjectUtils.notNull(emf)) {
 	    em = emf.createEntityManager();
 	    if (ObjectUtils.notNull(unitField)) {
@@ -377,7 +371,6 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	Object[] intercepteds;
 
 	if (CollectionUtils.valid(interceptorDatas)) {
-
 	    Iterator<InterceptorData> interceptors = interceptorDatas
 		    .iterator();
 	    InterceptorData interceptor;
