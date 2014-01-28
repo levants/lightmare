@@ -39,7 +39,6 @@ public class EJBContainerImpl extends EJBContainer {
     protected EJBContainerImpl(Map<?, ?> properties) {
 
 	try {
-
 	    MetaCreator.Builder builder;
 	    if (CollectionUtils.valid(properties)) {
 		Map<Object, Object> configuration = ObjectUtils
