@@ -97,6 +97,21 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	this.defaultTransactionType = defaultTransactionType;
     }
 
+    private List<URL> locateUrls() {
+
+	final List<URL> xmlUrls;
+
+	if (ObjectUtils.notNull(metaConfig)
+		&& ObjectUtils.notNull(metaConfig.overridenClassLoader)) {
+	    ClassLoader loader = metaConfig.overridenClassLoader;
+	}
+
+	xmlUrls = classLoaderService
+		.locateResources("META-INF/persistence.xml");
+
+	return xmlUrls;
+    }
+
     @SuppressWarnings("rawtypes")
     public List<ParsedPersistenceXmlDescriptor> doResolve(Map integration) {
 	final List<ParsedPersistenceXmlDescriptor> persistenceUnits = new ArrayList<ParsedPersistenceXmlDescriptor>();
@@ -104,8 +119,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	final List<URL> xmlUrls;
 
 	if (metaConfig.xmls == null || metaConfig.xmls.isEmpty()) {
-	    xmlUrls = classLoaderService
-		    .locateResources("META-INF/persistence.xml");
+	    xmlUrls = locateUrls();
 	} else {
 	    xmlUrls = metaConfig.xmls;
 	}
