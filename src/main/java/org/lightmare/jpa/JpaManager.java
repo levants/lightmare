@@ -98,7 +98,7 @@ public class JpaManager {
 
 	EntityManagerFactory emf;
 
-	HibernatePersistenceProvider cfg;
+	HibernatePersistenceProvider provider;
 
 	boolean pathCheck = StringUtils.valid(path);
 	boolean urlCheck = checkForURL();
@@ -135,13 +135,13 @@ public class JpaManager {
 	builder.setScanArchives(scanArchives);
 	builder.setOverridenClassLoader(loader);
 
-	cfg = builder.build();
+	provider = builder.build();
 
 	if (ObjectUtils.notTrue(swapDataSource)) {
 	    addTransactionManager();
 	}
 
-	emf = cfg.createEntityManagerFactory(unitName, properties);
+	emf = provider.createEntityManagerFactory(unitName, properties);
 
 	return emf;
     }

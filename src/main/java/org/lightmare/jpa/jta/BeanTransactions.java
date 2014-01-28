@@ -135,17 +135,14 @@ public class BeanTransactions {
 		    .getTransactionAttrType();
 	    TransactionManagementType manType = metaData
 		    .getTransactionManType();
-
 	    TransactionAttribute attr = method
 		    .getAnnotation(TransactionAttribute.class);
 	    if (manType.equals(TransactionManagementType.CONTAINER)) {
-
 		if (attr == null) {
 		    type = attrType;
 		} else {
 		    type = attr.value();
 		}
-
 	    } else {
 		type = null;
 	    }
