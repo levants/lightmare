@@ -111,7 +111,6 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 		casted.addLoaders(loader);
 	    }
 	}
-
 	xmlUrls = classLoaderService.locateResources(resourcePath);
 
 	return xmlUrls;

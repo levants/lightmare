@@ -36,21 +36,21 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = CoreLogging
-	    .logger(ClassLoaderServiceImpl.class);
+	    .logger(ClassLoaderServiceExt.class);
 
     @SuppressWarnings("rawtypes")
     private final Map<Class, ServiceLoader> serviceLoaders = new HashMap<Class, ServiceLoader>();
     private AggregatedClassLoader aggregatedClassLoader;
 
     /**
-     * Constructs a ClassLoaderServiceImpl with standard set-up
+     * Constructs a {@link ClassLoaderServiceExt} with standard set-up
      */
     public ClassLoaderServiceExt() {
-	this(ClassLoaderServiceImpl.class.getClassLoader());
+	this(ClassLoaderServiceExt.class.getClassLoader());
     }
 
     /**
-     * Constructs a ClassLoaderServiceImpl with the given ClassLoader
+     * Constructs a ClassLoaderServiceExt with the given ClassLoader
      * 
      * @param classLoader
      *            The ClassLoader to use
@@ -60,7 +60,8 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
     }
 
     /**
-     * Constructs a ClassLoaderServiceImpl with the given ClassLoader instances
+     * Constructs a {@link ClassLoaderServiceExt} with the given ClassLoader
+     * instances
      * 
      * @param providedClassLoaders
      *            The ClassLoader instances to use
@@ -79,8 +80,7 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 
 	// normalize adding known class-loaders...
 	// then the Hibernate class loader
-	orderedClassLoaderSet
-		.add(ClassLoaderServiceImpl.class.getClassLoader());
+	orderedClassLoaderSet.add(ClassLoaderServiceExt.class.getClassLoader());
 
 	// then the TCCL, if one...
 	final ClassLoader tccl = locateTCCL();
@@ -124,7 +124,7 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
      */
     @Deprecated
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static ClassLoaderServiceImpl fromConfigSettings(Map configValues) {
+    public static ClassLoaderServiceExt fromConfigSettings(Map configValues) {
 	final List<ClassLoader> providedClassLoaders = new ArrayList<ClassLoader>();
 
 	final Collection<ClassLoader> classLoaders = (Collection<ClassLoader>) configValues
@@ -150,11 +150,11 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	    if (tccl != null) {
 		providedClassLoaders.add(tccl);
 	    }
-	    providedClassLoaders.add(ClassLoaderServiceImpl.class
+	    providedClassLoaders.add(ClassLoaderServiceExt.class
 		    .getClassLoader());
 	}
 
-	return new ClassLoaderServiceImpl(providedClassLoaders);
+	return new ClassLoaderServiceExt(providedClassLoaders);
     }
 
     @SuppressWarnings("rawtypes")
