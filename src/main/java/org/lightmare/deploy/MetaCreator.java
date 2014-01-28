@@ -278,11 +278,8 @@ public class MetaCreator {
 
 	// Finds appropriated ClassLoader if needed and or creates new one
 	List<File> tmpFiles = null;
-
 	if (ObjectUtils.notNull(ioUtils)) {
-
 	    if (loader == null) {
-
 		if (ioUtils.notExecuted()) {
 		    ioUtils.scan(configuration.isPersXmlFromJar());
 		}
