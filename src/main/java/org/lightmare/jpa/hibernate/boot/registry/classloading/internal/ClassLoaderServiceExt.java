@@ -193,6 +193,11 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 		    .toArray(new ClassLoader[orderedClassLoaderSet.size()]);
 	}
 
+	/**
+	 * To add {@link ClassLoader} at runtime
+	 * 
+	 * @param loaders
+	 */
 	public void addLoaders(Collection<ClassLoader> loaders) {
 
 	    if (CollectionUtils.valid(loaders)) {
