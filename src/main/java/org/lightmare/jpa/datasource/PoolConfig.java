@@ -169,7 +169,6 @@ public class PoolConfig {
      */
     private void fillDefaults(Map<Object, Object> defaults,
 	    Map<Object, Object> initial) {
-
 	defaults.putAll(initial);
     }
 
@@ -258,7 +257,6 @@ public class PoolConfig {
 	Map<Object, Object> properties;
 
 	InputStream stream;
-
 	if (StringUtils.invalid(poolPath)) {
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    stream = loader.getResourceAsStream(POOL_PATH_DEF_VALUE);
