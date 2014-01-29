@@ -31,6 +31,7 @@ import org.hibernate.jpa.internal.EntityManagerMessageLogger;
 import org.hibernate.jpa.internal.util.ConfigurationHelper;
 import org.hibernate.metamodel.source.XsdException;
 import org.jboss.logging.Logger;
+import org.lightmare.jpa.MetaConfig;
 import org.lightmare.jpa.hibernate.boot.registry.classloading.internal.ClassLoaderServiceExt;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -59,16 +60,16 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
      * @author Levan Tsinadze
      * @since 0.0.86-SNAPSHOT
      */
-    public static class MetaConfig {
-
-	// Arguments from lightmare
-	public transient ClassLoader overridenClassLoader;
-	public transient List<String> classes;
-	public transient List<URL> xmls;
-	public transient boolean swapDataSource;
-	public transient boolean scanArchives;
-	public transient String shortPath = "/META-INF/persistence.xml";
-    }
+    // public static class MetaConfig {
+    //
+    // // Arguments from lightmare
+    // public transient ClassLoader overridenClassLoader;
+    // public transient List<String> classes;
+    // public transient List<URL> xmls;
+    // public transient boolean swapDataSource;
+    // public transient boolean scanArchives;
+    // public transient String shortPath = "/META-INF/persistence.xml";
+    // }
 
     private MetaConfig metaConfig;
 
@@ -103,10 +104,9 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	final List<URL> xmlUrls;
 
 	String resourcePath = "META-INF/persistence.xml";
-	if (ObjectUtils.notNull(metaConfig)
-		&& ObjectUtils.notNull(metaConfig.overridenClassLoader)) {
-	    ClassLoader loader = metaConfig.overridenClassLoader;
-	    if (classLoaderService instanceof ClassLoaderServiceExt) {
+	ClassLoader loader = MetaConfig.getOverridenClassLoader(metaConfig);
+	if (classLoaderService instanceof ClassLoaderServiceExt) {
+	    if (ObjectUtils.notNull(loader)) {
 		ClassLoaderServiceExt casted = ObjectUtils.cast(
 			classLoaderService, ClassLoaderServiceExt.class);
 		casted.addLoaders(loader);
@@ -121,12 +121,10 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
     public List<ParsedPersistenceXmlDescriptor> doResolve(Map integration) {
 	final List<ParsedPersistenceXmlDescriptor> persistenceUnits = new ArrayList<ParsedPersistenceXmlDescriptor>();
 
-	final List<URL> xmlUrls;
+	List<URL> xmlUrls = MetaConfig.getXmls(metaConfig);
 
-	if (metaConfig.xmls == null || metaConfig.xmls.isEmpty()) {
+	if (xmlUrls == null || xmlUrls.isEmpty()) {
 	    xmlUrls = locateUrls();
-	} else {
-	    xmlUrls = metaConfig.xmls;
 	}
 
 	if (xmlUrls.isEmpty()) {
@@ -150,7 +148,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
     private void resolveTransactionType(
 	    ParsedPersistenceXmlDescriptor persistenceUnit) {
 
-	if (ObjectUtils.notNull(metaConfig) && metaConfig.swapDataSource) {
+	if (MetaConfig.isSwapDataSource(metaConfig)) {
 	    persistenceUnit
 		    .setTransactionType(PersistenceUnitTransactionType.RESOURCE_LOCAL);
 	}
@@ -165,7 +163,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	    ParsedPersistenceXmlDescriptor persistenceUnit) {
 
 	Object dataSource = persistenceUnit.getJtaDataSource();
-	if (ObjectUtils.notNull(metaConfig) && metaConfig.swapDataSource) {
+	if (MetaConfig.isSwapDataSource(metaConfig)) {
 	    persistenceUnit.setNonJtaDataSource(dataSource);
 	}
     }
@@ -177,9 +175,9 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
      */
     private void resolveEntities(ParsedPersistenceXmlDescriptor persistenceUnit) {
 
-	if (ObjectUtils.notNull(metaConfig)
-		&& CollectionUtils.valid(metaConfig.classes)) {
-	    persistenceUnit.addClasses(metaConfig.classes);
+	List<String> classes = MetaConfig.getClasses(metaConfig);
+	if (CollectionUtils.valid(classes)) {
+	    persistenceUnit.addClasses(classes);
 	}
     }
 
@@ -202,18 +200,14 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 		if (tag.equals("persistence-unit")) {
 
 		    // Decides which sub path in archives to use
-		    String shortPath;
-		    if (metaConfig == null
-			    || StringUtils.invalid(metaConfig.shortPath)) {
+		    String shortPath = MetaConfig.getShortPath(metaConfig);
+		    if (StringUtils.invalid(shortPath)) {
 			shortPath = "/META-INF/persistence.xml";
-		    } else {
-			shortPath = metaConfig.shortPath;
 		    }
 
 		    // Decides whether is needed to scan archives
 		    final URL puRootUrl;
-		    if (ObjectUtils.notNull(metaConfig)
-			    && metaConfig.scanArchives) {
+		    if (MetaConfig.isScanArchives(metaConfig)) {
 			puRootUrl = ArchiveHelper.getJarURLFromURLEntry(xmlUrl,
 				shortPath);
 		    } else {
@@ -325,8 +319,8 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 		    persistenceUnit
 			    .setProviderClassName(extractContent(element));
 		} else if (tag.equals("class")) {
-		    if (metaConfig == null
-			    || CollectionUtils.invalid(metaConfig.classes)) {
+		    if (CollectionUtils.invalid(MetaConfig
+			    .getClasses(metaConfig))) {
 			persistenceUnit.addClasses(extractContent(element));
 		    } else if (ObjectUtils.notTrue(resolvedClasses)) {
 			resolveEntities(persistenceUnit);
