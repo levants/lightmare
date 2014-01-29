@@ -63,11 +63,11 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 
 	// Arguments from lightmare
 	public transient ClassLoader overridenClassLoader;
-	public List<String> classes;
-	public List<URL> xmls;
-	public boolean swapDataSource;
-	public boolean scanArchives;
-	public String shortPath = "/META-INF/persistence.xml";
+	public transient List<String> classes;
+	public transient List<URL> xmls;
+	public transient boolean swapDataSource;
+	public transient boolean scanArchives;
+	public transient String shortPath = "/META-INF/persistence.xml";
     }
 
     private MetaConfig metaConfig;
