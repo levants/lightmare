@@ -116,7 +116,6 @@ public class RestConfig extends ResourceConfig {
 	if (this.preResources == null || this.preResources.isEmpty()) {
 	    this.preResources = new HashSet<Resource>();
 	}
-
 	this.preResources.add(resource);
     }
 
@@ -126,7 +125,6 @@ public class RestConfig extends ResourceConfig {
 	    if (this.preResources == null || this.preResources.isEmpty()) {
 		this.preResources = new HashSet<Resource>();
 	    }
-
 	    this.preResources.addAll(preResources);
 	}
     }
