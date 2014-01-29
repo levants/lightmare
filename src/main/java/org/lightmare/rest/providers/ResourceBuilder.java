@@ -41,7 +41,6 @@ public class ResourceBuilder {
 	Collection<Class<?>> handlers = resource.getHandlerClasses();
 	Class<?> beanClass = CollectionUtils.getFirst(handlers);
 	String beanEjbName = BeanUtils.beanName(beanClass);
-
 	metaData = MetaContainer.getSyncMetaData(beanEjbName);
 
 	return metaData;
@@ -130,7 +129,6 @@ public class ResourceBuilder {
 	}
 	// Registers children resources recursively
 	registerChildren(resource, builder);
-
 	rebuiltResource = builder.build();
 
 	return rebuiltResource;
