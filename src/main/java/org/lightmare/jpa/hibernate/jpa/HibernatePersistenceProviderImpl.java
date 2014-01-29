@@ -1,4 +1,4 @@
-package org.lightmare.jpa.hibernate;
+package org.lightmare.jpa.hibernate.jpa;
 
 import java.net.URL;
 import java.util.Collections;
