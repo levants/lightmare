@@ -84,7 +84,6 @@ public class RestConfig extends ResourceConfig {
     private void clearResources() {
 
 	Set<Resource> resources = getResources();
-
 	if (CollectionUtils.valid(resources)) {
 	    getResources().clear();
 	}
@@ -119,7 +118,6 @@ public class RestConfig extends ResourceConfig {
 	}
 
 	this.preResources.add(resource);
-
     }
 
     public void addPreResources(Collection<Resource> preResources) {
@@ -131,7 +129,6 @@ public class RestConfig extends ResourceConfig {
 
 	    this.preResources.addAll(preResources);
 	}
-
     }
 
     public void addPreResources(RestConfig oldConfig) {
