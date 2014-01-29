@@ -67,11 +67,9 @@ public class RestReloader implements ContainerLifecycleListener {
 
     @Override
     public void onReload(Container container) {
-
     }
 
     @Override
     public void onShutdown(Container container) {
-
     }
 }
