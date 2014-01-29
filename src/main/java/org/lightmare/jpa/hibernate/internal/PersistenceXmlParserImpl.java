@@ -82,6 +82,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
     @SuppressWarnings({ "deprecation", "rawtypes" })
     public static List<ParsedPersistenceXmlDescriptor> locatePersistenceUnits(
 	    Map integration, MetaConfig metaConfig) {
+
 	final PersistenceXmlParserImpl parser = new PersistenceXmlParserImpl(
 		ClassLoaderServiceExt.fromConfigSettings(integration),
 		PersistenceUnitTransactionType.RESOURCE_LOCAL);
