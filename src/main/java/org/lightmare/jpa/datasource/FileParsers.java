@@ -161,6 +161,12 @@ public class FileParsers {
 		driverName);
     }
 
+    /**
+     * Validates passed {@link NodeList} length
+     * 
+     * @param nodeList
+     * @return
+     */
     private boolean validate(NodeList nodeList) {
 
 	boolean valid;
@@ -180,22 +186,23 @@ public class FileParsers {
     public void setDataFromJBossSecurity(NodeList nodeList,
 	    Properties properties) {
 
-	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
+	boolean valid;
+	int length = nodeList.getLength();
+	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
 	    Element thisElement = (Element) nodeList.item(i);
 	    NodeList userList = thisElement.getElementsByTagName(USER_TAG);
-	    if (validate(userList)) {
+	    valid = validate(userList);
+	    if (valid) {
 		Element userElement = (Element) getFirst(userList);
 		String user = getContext(userElement);
-
 		properties.setProperty(ConnectionConfig.USER_PROPERTY.name,
 			user);
-
 		NodeList passList = thisElement
 			.getElementsByTagName(PASSWORD_TAG);
-		if (validate(passList)) {
+		valid = validate(passList);
+		if (valid) {
 		    Element passElement = (Element) getFirst(passList);
 		    String password = getContext(passElement);
-
 		    properties.setProperty(
 			    ConnectionConfig.PASSWORD_PROPERTY.name, password);
 		}
