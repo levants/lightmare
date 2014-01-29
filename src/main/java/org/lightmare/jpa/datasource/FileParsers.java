@@ -131,7 +131,6 @@ public class FileParsers {
 
 	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder builder;
-
 	try {
 	    builder = factory.newDocumentBuilder();
 	    document = builder.parse(stream);
@@ -162,6 +161,16 @@ public class FileParsers {
 		driverName);
     }
 
+    private boolean validate(NodeList nodeList) {
+
+	boolean valid;
+
+	int elementLength = nodeList.getLength();
+	valid = !(elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH);
+
+	return valid;
+    }
+
     /**
      * Gets security information from {@link javax.sql.DataSource} meta data
      * 
@@ -174,27 +183,23 @@ public class FileParsers {
 	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
 	    Element thisElement = (Element) nodeList.item(i);
 	    NodeList userList = thisElement.getElementsByTagName(USER_TAG);
-	    int elementLength = userList.getLength();
-	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
-		continue;
+	    if (validate(userList)) {
+		Element userElement = (Element) getFirst(userList);
+		String user = getContext(userElement);
+
+		properties.setProperty(ConnectionConfig.USER_PROPERTY.name,
+			user);
+
+		NodeList passList = thisElement
+			.getElementsByTagName(PASSWORD_TAG);
+		if (validate(passList)) {
+		    Element passElement = (Element) getFirst(passList);
+		    String password = getContext(passElement);
+
+		    properties.setProperty(
+			    ConnectionConfig.PASSWORD_PROPERTY.name, password);
+		}
 	    }
-
-	    Element userElement = (Element) getFirst(userList);
-	    String user = getContext(userElement);
-
-	    properties.setProperty(ConnectionConfig.USER_PROPERTY.name, user);
-
-	    NodeList passList = thisElement.getElementsByTagName(PASSWORD_TAG);
-	    elementLength = passList.getLength();
-	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
-		continue;
-	    }
-
-	    Element passElement = (Element) getFirst(passList);
-	    String password = getContext(passElement);
-
-	    properties.setProperty(ConnectionConfig.PASSWORD_PROPERTY.name,
-		    password);
 	}
     }
 
