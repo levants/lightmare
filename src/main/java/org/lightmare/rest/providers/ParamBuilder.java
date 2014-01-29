@@ -53,7 +53,6 @@ public class ParamBuilder {
     private static final int PARAM_VALIES_LENGTH = 1;
 
     private ParamBuilder() {
-
     }
 
     public ParamBuilder(MediaType mediaType, List<Parameter> parameters,
@@ -127,7 +126,6 @@ public class ParamBuilder {
      * @throws IOException
      */
     private boolean check() throws IOException {
-
 	return ObjectUtils.notTrue(request.hasEntity())
 		&& IOUtils.notAvailable(request.getEntityStream());
     }
@@ -250,7 +248,6 @@ public class ParamBuilder {
      * @return <code>boolean</code>
      */
     private boolean available(InputStream entityStream, Parameter parameter) {
-
 	return ObjectUtils.notNullAll(reader, entityStream)
 		&& reader.isReadable(parameter.getRawType(),
 			parameter.getType(), parameter.getAnnotations(),
@@ -380,9 +377,7 @@ public class ParamBuilder {
 	uriParams = extractParameters(request);
 	Object stream;
 	for (Parameter parameter : parameters) {
-
 	    reader = RequestUtils.getReader(workers, parameter, mediaType);
-
 	    stream = getEntityStream(request, parameter);
 	    if (ObjectUtils.notNull(stream)) {
 		fillParamList(stream, parameter);
@@ -416,6 +411,7 @@ public class ParamBuilder {
 	 * @return {@link Builder}
 	 */
 	public ParamBuilder.Builder setMediaType(MediaType mediaType) {
+
 	    target.mediaType = mediaType;
 
 	    return this;
