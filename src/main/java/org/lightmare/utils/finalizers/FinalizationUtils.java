@@ -149,7 +149,6 @@ public enum FinalizationUtils {
      * @param cleanable
      */
     public static void add(Cleanable cleanable) {
-
 	INSTANCE.trace(cleanable);
     }
 }

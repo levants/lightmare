@@ -202,7 +202,6 @@ public class AnnotationFinder extends AnnotationDB {
 	DataInputStream dstream = new DataInputStream(new BufferedInputStream(
 		bits));
 	ClassFile cf = null;
-
 	try {
 	    cf = new ClassFile(dstream);
 	    String classFileName = cf.getName();
@@ -227,7 +226,6 @@ public class AnnotationFinder extends AnnotationDB {
 		for (String intf : interfaces) {
 		    intfs.add(intf);
 		}
-
 		implementsIndex.put(classFileName, intfs);
 	    }
 	} finally {
