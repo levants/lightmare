@@ -14,8 +14,8 @@ import org.hibernate.jpa.boot.spi.Bootstrap;
 import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
 import org.hibernate.jpa.boot.spi.ProviderChecker;
 import org.jboss.logging.Logger;
+import org.lightmare.jpa.MetaConfig;
 import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
-import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl.MetaConfig;
 
 /**
  * Implementation of {@link HibernatePersistenceProvider} with additional
@@ -68,13 +68,13 @@ public class HibernatePersistenceProviderImpl extends
 
 	EntityManagerFactoryBuilder emfBuilder;
 
-	if (metaConfig == null || metaConfig.overridenClassLoader == null) {
+	ClassLoader loader = MetaConfig.getOverridenClassLoader(metaConfig);
+	if (loader == null) {
 	    emfBuilder = getEntityManagerFactoryBuilderOrNull(
 		    persistenceUnitName, properties, null);
 	} else {
 	    emfBuilder = getEntityManagerFactoryBuilderOrNull(
-		    persistenceUnitName, properties,
-		    metaConfig.overridenClassLoader);
+		    persistenceUnitName, properties, loader);
 	}
 
 	return emfBuilder;
@@ -160,42 +160,42 @@ public class HibernatePersistenceProviderImpl extends
 
 	public Builder setClasses(List<String> classes) {
 
-	    target.classes = classes;
+	    target.setClasses(classes);
 
 	    return this;
 	}
 
 	public Builder setXmls(List<URL> xmls) {
 
-	    target.xmls = xmls;
+	    target.setXmls(xmls);
 
 	    return this;
 	}
 
 	public Builder setShortPath(String shortPath) {
 
-	    target.shortPath = shortPath;
+	    target.setShortPath(shortPath);
 
 	    return this;
 	}
 
 	public Builder setSwapDataSource(boolean swapDataSource) {
 
-	    target.swapDataSource = swapDataSource;
+	    target.setSwapDataSource(swapDataSource);
 
 	    return this;
 	}
 
 	public Builder setScanArchives(boolean scanArchives) {
 
-	    target.scanArchives = scanArchives;
+	    target.setScanArchives(scanArchives);
 
 	    return this;
 	}
 
 	public Builder setOverridenClassLoader(ClassLoader overridenClassLoader) {
 
-	    target.overridenClassLoader = overridenClassLoader;
+	    target.setOverridenClassLoader(overridenClassLoader);
 
 	    return this;
 	}
