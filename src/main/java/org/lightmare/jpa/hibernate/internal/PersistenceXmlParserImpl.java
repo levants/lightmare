@@ -54,23 +54,7 @@ import org.xml.sax.SAXParseException;
  */
 public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 
-    /**
-     * Additional properties for JPA configuration
-     * 
-     * @author Levan Tsinadze
-     * @since 0.0.86-SNAPSHOT
-     */
-    // public static class MetaConfig {
-    //
-    // // Arguments from lightmare
-    // public transient ClassLoader overridenClassLoader;
-    // public transient List<String> classes;
-    // public transient List<URL> xmls;
-    // public transient boolean swapDataSource;
-    // public transient boolean scanArchives;
-    // public transient String shortPath = "/META-INF/persistence.xml";
-    // }
-
+    // Additional configuration
     private MetaConfig metaConfig;
 
     private static final EntityManagerMessageLogger LOG = Logger
