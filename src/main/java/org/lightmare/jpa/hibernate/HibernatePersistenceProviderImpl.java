@@ -143,6 +143,13 @@ public class HibernatePersistenceProviderImpl extends
 	return null;
     }
 
+    /**
+     * Builder class to instantiate {@link HibernatePersistenceProviderImpl}
+     * class
+     * 
+     * @author Levan Tsinadze
+     * 
+     */
     public static class Builder {
 
 	private MetaConfig target;

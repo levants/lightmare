@@ -61,7 +61,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
      */
     public static class MetaConfig {
 
-	// arguments from lightmare
+	// Arguments from lightmare
 	public transient ClassLoader overridenClassLoader;
 	public List<String> classes;
 	public List<URL> xmls;
