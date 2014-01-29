@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * Additional properties for JPA configuration
+ * Additional properties for JPA / Hibernate configuration
  * 
  * @author Levan Tsinadze
  * @since 0.0.86-SNAPSHOT
