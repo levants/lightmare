@@ -152,43 +152,48 @@ public class HibernatePersistenceProviderImpl extends
 	}
 
 	public Builder setClasses(List<String> classes) {
+
 	    target.classes = classes;
 
 	    return this;
 	}
 
 	public Builder setXmls(List<URL> xmls) {
+
 	    target.xmls = xmls;
 
 	    return this;
 	}
 
 	public Builder setShortPath(String shortPath) {
+
 	    target.shortPath = shortPath;
 
 	    return this;
 	}
 
 	public Builder setSwapDataSource(boolean swapDataSource) {
+
 	    target.swapDataSource = swapDataSource;
 
 	    return this;
 	}
 
 	public Builder setScanArchives(boolean scanArchives) {
+
 	    target.scanArchives = scanArchives;
 
 	    return this;
 	}
 
 	public Builder setOverridenClassLoader(ClassLoader overridenClassLoader) {
+
 	    target.overridenClassLoader = overridenClassLoader;
 
 	    return this;
 	}
 
 	public HibernatePersistenceProviderImpl build() {
-
 	    return new HibernatePersistenceProviderImpl(target);
 	}
     }
