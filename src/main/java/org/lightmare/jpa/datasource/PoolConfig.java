@@ -124,7 +124,6 @@ public class PoolConfig {
 	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
 
 	Defaults[] defaults = Defaults.values();
-
 	String key;
 	String value;
 	for (Defaults config : defaults) {
