@@ -1,4 +1,4 @@
-package org.lightmare.jpa;
+package org.lightmare.jpa.hibernate.id.enhanced;
 
 import java.io.Serializable;
 import java.sql.Connection;
