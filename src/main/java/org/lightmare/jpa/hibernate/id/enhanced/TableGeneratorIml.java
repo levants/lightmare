@@ -48,6 +48,117 @@ public class TableGeneratorIml extends TableGenerator {
     private static final CoreMessageLogger LOG = Logger.getMessageLogger(
 	    CoreMessageLogger.class, TableGeneratorIml.class.getName());
 
+    protected class AbstractReturningWorkExt extends
+	    AbstractReturningWork<IntegralDataTypeHolder> {
+
+	private final SqlStatementLogger statementLogger;
+
+	private final long currentValue;
+
+	public AbstractReturningWorkExt(SqlStatementLogger statementLogger,
+		long currentValue) {
+	    this.statementLogger = statementLogger;
+	    this.currentValue = currentValue;
+	}
+
+	private void onSelect(Connection connection,
+		IntegralDataTypeHolder value) throws SQLException {
+
+	    PreparedStatement selectPS = connection
+		    .prepareStatement(selectQuery);
+	    try {
+		selectPS.setString(1, segmentValue);
+		ResultSet selectRS = selectPS.executeQuery();
+		if (!selectRS.next()) {
+		    value.initialize(currentValue);
+		    PreparedStatement insertPS = null;
+		    try {
+			statementLogger.logStatement(insertQuery,
+				FormatStyle.BASIC.getFormatter());
+			insertPS = connection.prepareStatement(insertQuery);
+			insertPS.setString(1, segmentValue);
+			value.bind(insertPS, 2);
+			insertPS.execute();
+		    } finally {
+			if (insertPS != null) {
+			    insertPS.close();
+			}
+		    }
+		} else {
+		    value.initialize(selectRS, 1);
+		}
+		selectRS.close();
+	    } catch (SQLException ex) {
+		LOG.unableToReadOrInitHiValue(ex);
+		throw ex;
+	    } finally {
+		selectPS.close();
+	    }
+	}
+
+	private int onUpdate(Connection connection, IntegralDataTypeHolder value)
+		throws SQLException {
+
+	    int rows;
+
+	    PreparedStatement updatePS = connection
+		    .prepareStatement(updateQuery);
+	    try {
+		final IntegralDataTypeHolder updateValue = value.copy()
+			.initialize(currentValue);
+		// TODO check for incrementSize
+		// increment options
+		updateValue.increment();
+
+		// gets existing value and
+		// incremented current values as
+		// long types to compare
+		Long existing = value.copy().makeValue().longValue();
+		Long current = updateValue.copy().makeValue().longValue();
+		// checks if incremented current
+		// value is less then value and
+		// puts incremented value
+		// instead of incremented
+		// current value for
+		// update
+		if (existing > current) {
+		    updateValue.initialize(existing).increment();
+		}
+		updateValue.bind(updatePS, 1);
+		value.bind(updatePS, 2);
+		updatePS.setString(3, segmentValue);
+		rows = updatePS.executeUpdate();
+		value.initialize(currentValue);
+	    } catch (SQLException ex) {
+		LOG.unableToUpdateQueryHiValue(tableName, ex);
+		throw ex;
+	    } finally {
+		updatePS.close();
+	    }
+
+	    return rows;
+	}
+
+	@Override
+	public IntegralDataTypeHolder execute(Connection connection)
+		throws SQLException {
+	    IntegralDataTypeHolder value = IdentifierGeneratorHelper
+		    .getIntegralDataTypeHolder(identifierType
+			    .getReturnedClass());
+	    int rows;
+	    do {
+		statementLogger.logStatement(selectQuery,
+			FormatStyle.BASIC.getFormatter());
+		onSelect(connection, value);
+		statementLogger.logStatement(updateQuery,
+			FormatStyle.BASIC.getFormatter());
+		rows = onUpdate(connection, value);
+	    } while (rows == 0);
+
+	    return value;
+	}
+    }
+
     /**
      * Overrides configure method to get selectQuery, updateQuery and
      * insertQuery
@@ -60,6 +171,7 @@ public class TableGeneratorIml extends TableGenerator {
     @Override
     public void configure(Type type, Properties params, Dialect dialect)
 	    throws MappingException {
+
 	super.configure(type, params, dialect);
 
 	this.selectQuery = super.buildSelectQuery(dialect);
