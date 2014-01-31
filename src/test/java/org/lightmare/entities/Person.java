@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.lightmare.annotations.UnitName;
+import org.lightmare.jpa.hibernate.id.enhanced.TableGeneratorExt;
 import org.lightmare.rest.providers.RestProvider;
 
 @Entity
@@ -25,11 +26,9 @@ import org.lightmare.rest.providers.RestProvider;
 @UnitName("testUnit")
 public class Person {
 
-    private static final String STRATEGY = "org.lightmare.jpa.hibernate.id.enhanced.TableGeneratorExt";
-
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.entities.Person")
-    @GenericGenerator(name = "org.lightmare.entities.Person", strategy = STRATEGY, parameters = {
+    @GenericGenerator(name = "org.lightmare.entities.Person", strategy = TableGeneratorExt.STRATEGY, parameters = {
 	    @Parameter(name = "table_name", value = "ID_GENERATORS"),
 	    @Parameter(name = "segment_column_name", value = "TABLE_NAME"),
 	    @Parameter(name = "segment_value", value = "PERSONS"),
