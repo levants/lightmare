@@ -50,7 +50,7 @@ public class TableGeneratorIml extends TableGenerator {
 
     /**
      * Implementation for {@link AbstractReturningWork} for
-     * {@link IntegralDataTypeHolder} for identifier generator
+     * {@link IntegralDataTypeHolder} for specific identifier generator
      * 
      * @author Levan Tsinadze
      * @since 0.1.0
@@ -166,6 +166,13 @@ public class TableGeneratorIml extends TableGenerator {
 	}
     }
 
+    /**
+     * Implementation of {@link AccessCallback} for specific identifier
+     * generator
+     * 
+     * @author Levan Tsinadze
+     * 
+     */
     protected class AccessCallbackImpl implements AccessCallback {
 
 	private final SessionImplementor session;
