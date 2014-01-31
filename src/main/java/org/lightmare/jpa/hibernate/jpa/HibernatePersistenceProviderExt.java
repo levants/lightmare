@@ -21,7 +21,7 @@ import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
  * Implementation of {@link HibernatePersistenceProvider} with additional
  * configuration
  * 
- * @author Levan Tsinadze
+ * @author Steve Ebersole, Levan Tsinadze
  * @Since 0.0.56=SNAPSHOT
  */
 public class HibernatePersistenceProviderExt extends
