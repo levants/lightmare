@@ -33,7 +33,6 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
 	// all instances will share stored data
 	boolean notContainsKey = ObjectUtils.notTrue(sharingEnv
 		.containsKey(key));
-
 	if (notContainsKey) {
 	    sharingEnv.put(key, value);
 	}
@@ -43,13 +42,13 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
     public Context getInitialContext(Hashtable<?, ?> properties)
 	    throws NamingException {
 
+	Context lightmareContext;
+
 	// clone the environment
 	Hashtable<Object, Object> sharingEnv = ObjectUtils.cast(properties
 		.clone());
-
 	putToEnv(sharingEnv, JNDIParameters.SHARED_PARAMETER);
-
-	Context lightmareContext = new LightmareContext(sharingEnv);
+	lightmareContext = new LightmareContext(sharingEnv);
 
 	return lightmareContext;
     }

@@ -7,7 +7,7 @@
 	<packaging>jar</packaging>
 
 	<name>lightmare</name>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<description>Embeddable and remote EJB container for Stateless session beans and JPA / Hibernate ORM support</description>
 	<url>https://github.com/levants/lightmare</url>
 
@@ -62,7 +62,7 @@
 		<jersey.version>2.5.1</jersey.version>
 		<!-- end of jersey -->
 		<!-- netty -->
-		<netty.version>4.0.14.Final</netty.version>
+		<netty.version>4.0.15.Final</netty.version>
 		<!-- end of netty -->
 		<!-- data sources on connection pooling -->
 		<tomcat-jdbc.version>7.0.50</tomcat-jdbc.version>
