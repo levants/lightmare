@@ -85,7 +85,6 @@ public class JndiManager {
      * @param configs
      */
     private void addSystemProperties(Properties configs) {
-
 	System.getProperties().putAll(configs);
     }
 
