@@ -27,6 +27,7 @@ import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
 public class HibernatePersistenceProviderExt extends
 	HibernatePersistenceProvider {
 
+    // Additional configuration for extension
     private MetaConfig metaConfig;
 
     private static final Logger LOG = Logger
