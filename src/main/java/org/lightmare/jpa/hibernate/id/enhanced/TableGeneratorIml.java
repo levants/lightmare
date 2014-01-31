@@ -166,6 +166,38 @@ public class TableGeneratorIml extends TableGenerator {
 	}
     }
 
+    protected class AccessCallbackImpl implements AccessCallback {
+
+	private final SessionImplementor session;
+
+	private final long currentValue;
+
+	private final SqlStatementLogger statementLogger;
+
+	public AccessCallbackImpl(SessionImplementor session,
+		long currentValue, SqlStatementLogger statementLogger) {
+	    this.session = session;
+	    this.currentValue = currentValue;
+	    this.statementLogger = statementLogger;
+	}
+
+	@Override
+	public IntegralDataTypeHolder getNextValue() {
+	    return session
+		    .getTransactionCoordinator()
+		    .getTransaction()
+		    .createIsolationDelegate()
+		    .delegateWork(
+			    new AbstractReturningWorkExt(statementLogger,
+				    currentValue), true);
+	}
+
+	@Override
+	public String getTenantIdentifier() {
+	    return session.getTenantIdentifier();
+	}
+    }
+
     /**
      * Overrides configure method to get selectQuery, updateQuery and
      * insertQuery
@@ -232,111 +264,8 @@ public class TableGeneratorIml extends TableGenerator {
 			.getTransaction()
 			.createIsolationDelegate()
 			.delegateWork(
-				new AbstractReturningWork<IntegralDataTypeHolder>() {
-				    @Override
-				    public IntegralDataTypeHolder execute(
-					    Connection connection)
-					    throws SQLException {
-					IntegralDataTypeHolder value = IdentifierGeneratorHelper
-						.getIntegralDataTypeHolder(identifierType
-							.getReturnedClass());
-					int rows;
-					do {
-					    statementLogger.logStatement(
-						    selectQuery,
-						    FormatStyle.BASIC
-							    .getFormatter());
-					    PreparedStatement selectPS = connection
-						    .prepareStatement(selectQuery);
-					    try {
-						selectPS.setString(1,
-							segmentValue);
-						ResultSet selectRS = selectPS
-							.executeQuery();
-						if (!selectRS.next()) {
-						    value.initialize(currentValue);
-						    PreparedStatement insertPS = null;
-						    try {
-							statementLogger
-								.logStatement(
-									insertQuery,
-									FormatStyle.BASIC
-										.getFormatter());
-							insertPS = connection
-								.prepareStatement(insertQuery);
-							insertPS.setString(1,
-								segmentValue);
-							value.bind(insertPS, 2);
-							insertPS.execute();
-						    } finally {
-							if (insertPS != null) {
-							    insertPS.close();
-							}
-						    }
-						} else {
-						    value.initialize(selectRS,
-							    1);
-						}
-						selectRS.close();
-					    } catch (SQLException e) {
-						LOG.unableToReadOrInitHiValue(e);
-						throw e;
-					    } finally {
-						selectPS.close();
-					    }
-
-					    statementLogger.logStatement(
-						    updateQuery,
-						    FormatStyle.BASIC
-							    .getFormatter());
-					    PreparedStatement updatePS = connection
-						    .prepareStatement(updateQuery);
-					    try {
-						final IntegralDataTypeHolder updateValue = value
-							.copy().initialize(
-								currentValue);
-						// TODO check for incrementSize
-						// increment options
-						updateValue.increment();
-
-						// gets existing value and
-						// incremented current values as
-						// long types to compare
-						Long existing = value.copy()
-							.makeValue()
-							.longValue();
-						Long current = updateValue
-							.copy().makeValue()
-							.longValue();
-						// checks if incremented current
-						// value is less then value and
-						// puts incremented value
-						// instead of incremented
-						// current value for
-						// update
-						if (existing > current) {
-						    updateValue.initialize(
-							    existing)
-							    .increment();
-						}
-						updateValue.bind(updatePS, 1);
-						value.bind(updatePS, 2);
-						updatePS.setString(3,
-							segmentValue);
-						rows = updatePS.executeUpdate();
-						value.initialize(currentValue);
-					    } catch (SQLException e) {
-						LOG.unableToUpdateQueryHiValue(
-							tableName, e);
-						throw e;
-					    } finally {
-						updatePS.close();
-					    }
-					} while (rows == 0);
-
-					return value;
-				    }
-				}, true);
+				new AbstractReturningWorkExt(statementLogger,
+					currentValue), true);
 	    }
 
 	    @Override
