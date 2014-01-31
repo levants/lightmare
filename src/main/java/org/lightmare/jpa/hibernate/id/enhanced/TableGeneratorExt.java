@@ -29,7 +29,7 @@ import org.jboss.logging.Logger;
  * @author Levan Tsinadze
  * 
  */
-public class TableGeneratorIml extends TableGenerator {
+public class TableGeneratorExt extends TableGenerator {
 
     private String selectQuery;
 
@@ -46,7 +46,7 @@ public class TableGeneratorIml extends TableGenerator {
     private Optimizer optimizer;
 
     private static final CoreMessageLogger LOG = Logger.getMessageLogger(
-	    CoreMessageLogger.class, TableGeneratorIml.class.getName());
+	    CoreMessageLogger.class, TableGeneratorExt.class.getName());
 
     /**
      * Implementation for {@link AbstractReturningWork} for
@@ -246,7 +246,7 @@ public class TableGeneratorIml extends TableGenerator {
 	if (id == null) {
 	    id = super.generate(session, entity);
 	} else {
-	    id = generateImpl(session, Long.valueOf(id.toString()));
+	    id = generateExt(session, Long.valueOf(id.toString()));
 	}
 	return id;
     }
@@ -258,7 +258,7 @@ public class TableGeneratorIml extends TableGenerator {
      * @param currentValue
      * @return {@link Serializable}
      */
-    public Serializable generateImpl(final SessionImplementor session,
+    public Serializable generateExt(final SessionImplementor session,
 	    final long currentValue) {
 
 	final SqlStatementLogger statementLogger = session.getFactory()
