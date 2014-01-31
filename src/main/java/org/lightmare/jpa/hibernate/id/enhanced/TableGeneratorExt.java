@@ -45,6 +45,9 @@ public class TableGeneratorExt extends TableGenerator {
 
     private Optimizer optimizer;
 
+    // To use in annotations and avoid errors
+    public static final String STRATEGY = "org.lightmare.jpa.hibernate.id.enhanced.TableGeneratorExt";
+
     private static final CoreMessageLogger LOG = Logger.getMessageLogger(
 	    CoreMessageLogger.class, TableGeneratorExt.class.getName());
 
