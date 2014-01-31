@@ -24,7 +24,7 @@ import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
  * @author Levan Tsinadze
  * @Since 0.0.56=SNAPSHOT
  */
-public class HibernatePersistenceProviderImpl extends
+public class HibernatePersistenceProviderExt extends
 	HibernatePersistenceProvider {
 
     private MetaConfig metaConfig;
@@ -32,7 +32,7 @@ public class HibernatePersistenceProviderImpl extends
     private static final Logger LOG = Logger
 	    .getLogger(HibernatePersistenceProvider.class);
 
-    private HibernatePersistenceProviderImpl(MetaConfig metaConfig) {
+    private HibernatePersistenceProviderExt(MetaConfig metaConfig) {
 	this.metaConfig = metaConfig;
     }
 
@@ -144,7 +144,7 @@ public class HibernatePersistenceProviderImpl extends
     }
 
     /**
-     * Builder class to instantiate {@link HibernatePersistenceProviderImpl}
+     * Builder class to instantiate {@link HibernatePersistenceProviderExt}
      * class
      * 
      * @author Levan Tsinadze
@@ -200,8 +200,8 @@ public class HibernatePersistenceProviderImpl extends
 	    return this;
 	}
 
-	public HibernatePersistenceProviderImpl build() {
-	    return new HibernatePersistenceProviderImpl(target);
+	public HibernatePersistenceProviderExt build() {
+	    return new HibernatePersistenceProviderExt(target);
 	}
     }
 }

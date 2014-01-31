@@ -15,7 +15,7 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
-import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderImpl;
+import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.CollectionUtils;
@@ -107,7 +107,7 @@ public class JpaManager {
 	boolean pathCheck = StringUtils.valid(path);
 	boolean urlCheck = checkForURL();
 
-	HibernatePersistenceProviderImpl.Builder builder = new HibernatePersistenceProviderImpl.Builder();
+	HibernatePersistenceProviderExt.Builder builder = new HibernatePersistenceProviderExt.Builder();
 
 	if (loader == null) {
 	    loader = LibraryLoader.getContextClassLoader();

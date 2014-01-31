@@ -24,7 +24,7 @@ import org.hibernate.type.Type;
 import org.jboss.logging.Logger;
 
 /**
- * To generate primary keys from table and bypass existing keys
+ * To generate primary keys from table and bypasses existing keys
  * 
  * @author Levan Tsinadze
  * 
@@ -260,25 +260,13 @@ public class TableGeneratorIml extends TableGenerator {
      */
     public Serializable generateImpl(final SessionImplementor session,
 	    final long currentValue) {
+
 	final SqlStatementLogger statementLogger = session.getFactory()
 		.getServiceRegistry().getService(JdbcServices.class)
 		.getSqlStatementLogger();
-	return optimizer.generate(new AccessCallback() {
-	    @Override
-	    public IntegralDataTypeHolder getNextValue() {
-		return session
-			.getTransactionCoordinator()
-			.getTransaction()
-			.createIsolationDelegate()
-			.delegateWork(
-				new AbstractReturningWorkExt(statementLogger,
-					currentValue), true);
-	    }
+	final AccessCallback callback = new AccessCallbackImpl(session,
+		currentValue, statementLogger);
 
-	    @Override
-	    public String getTenantIdentifier() {
-		return session.getTenantIdentifier();
-	    }
-	});
+	return optimizer.generate(callback);
     }
 }
