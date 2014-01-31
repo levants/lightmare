@@ -227,7 +227,6 @@ public class ConnectionContainer {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 	boolean inProgress = ObjectUtils.notNull(semaphore);
-
 	if (inProgress) {
 	    inProgress = checkOnProgress(semaphore);
 	    if (inProgress) {

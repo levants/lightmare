@@ -10,18 +10,24 @@ import java.lang.reflect.Field;
  */
 public class InjectionData {
 
+    // Bean class which should be injected
     private Class<?> beanClass;
 
+    // Appropriate interface class for bean
     private Class<?>[] interfaceClasses;
 
+    // Bean name
     private String name;
 
     private String description;
 
+    // Bean JNDI name
     private String mappedName;
 
+    // MetaData for injected bean
     private MetaData metaData;
 
+    // Field for injection
     private Field field;
 
     public Class<?> getBeanClass() {
