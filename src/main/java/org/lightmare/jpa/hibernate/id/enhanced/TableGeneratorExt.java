@@ -55,14 +55,14 @@ public class TableGeneratorExt extends TableGenerator {
      * @author Levan Tsinadze
      * @since 0.1.0
      */
-    protected class AbstractReturningWorkExt extends
+    protected class ReturningWork extends
 	    AbstractReturningWork<IntegralDataTypeHolder> {
 
 	private final SqlStatementLogger statementLogger;
 
 	private final long currentValue;
 
-	public AbstractReturningWorkExt(SqlStatementLogger statementLogger,
+	public ReturningWork(SqlStatementLogger statementLogger,
 		long currentValue) {
 	    this.statementLogger = statementLogger;
 	    this.currentValue = currentValue;
@@ -190,13 +190,11 @@ public class TableGeneratorExt extends TableGenerator {
 
 	@Override
 	public IntegralDataTypeHolder getNextValue() {
-	    return session
-		    .getTransactionCoordinator()
-		    .getTransaction()
+	    ReturningWork returnWork = new ReturningWork(statementLogger,
+		    currentValue);
+	    return session.getTransactionCoordinator().getTransaction()
 		    .createIsolationDelegate()
-		    .delegateWork(
-			    new AbstractReturningWorkExt(statementLogger,
-				    currentValue), true);
+		    .delegateWork(returnWork, Boolean.TRUE);
 	}
 
 	@Override
@@ -246,7 +244,7 @@ public class TableGeneratorExt extends TableGenerator {
 	if (id == null) {
 	    id = super.generate(session, entity);
 	} else {
-	    id = generateExt(session, Long.valueOf(id.toString()));
+	    id = generateIncrementally(session, Long.valueOf(id.toString()));
 	}
 	return id;
     }
@@ -258,7 +256,7 @@ public class TableGeneratorExt extends TableGenerator {
      * @param currentValue
      * @return {@link Serializable}
      */
-    public Serializable generateExt(final SessionImplementor session,
+    public Serializable generateIncrementally(final SessionImplementor session,
 	    final long currentValue) {
 
 	final SqlStatementLogger statementLogger = session.getFactory()

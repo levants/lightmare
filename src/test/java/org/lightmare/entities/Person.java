@@ -27,7 +27,7 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.entities.Person")
-    @GenericGenerator(name = "org.lightmare.entities.Person", strategy = "org.lightmare.jpa.TableGeneratorIml", parameters = {
+    @GenericGenerator(name = "org.lightmare.entities.Person", strategy = "org.lightmare.jpa.hibernate.id.enhanced.TableGeneratorExt", parameters = {
 	    @Parameter(name = "table_name", value = "ID_GENERATORS"),
 	    @Parameter(name = "segment_column_name", value = "TABLE_NAME"),
 	    @Parameter(name = "segment_value", value = "PERSONS"),
