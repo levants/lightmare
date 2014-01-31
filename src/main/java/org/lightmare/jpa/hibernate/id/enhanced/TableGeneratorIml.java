@@ -48,6 +48,13 @@ public class TableGeneratorIml extends TableGenerator {
     private static final CoreMessageLogger LOG = Logger.getMessageLogger(
 	    CoreMessageLogger.class, TableGeneratorIml.class.getName());
 
+    /**
+     * Implementation for {@link AbstractReturningWork} for
+     * {@link IntegralDataTypeHolder} for identifier generator
+     * 
+     * @author Levan Tsinadze
+     * @since 0.1.0
+     */
     protected class AbstractReturningWorkExt extends
 	    AbstractReturningWork<IntegralDataTypeHolder> {
 
