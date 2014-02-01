@@ -304,6 +304,13 @@
 			<version>${hibernate.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate.version}</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
