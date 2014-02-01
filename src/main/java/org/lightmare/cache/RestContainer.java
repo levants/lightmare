@@ -183,10 +183,13 @@ public class RestContainer {
      */
     public static boolean hasRest() {
 
-	synchronized (RestContainer.class) {
+	boolean valid;
 
-	    return ObjectUtils.notNull(restConfig);
+	synchronized (RestContainer.class) {
+	    valid = ObjectUtils.notNull(restConfig);
 	}
+
+	return valid;
     }
 
     public static void setRestConfig(RestConfig newConfig) {

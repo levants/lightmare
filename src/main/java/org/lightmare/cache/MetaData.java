@@ -256,7 +256,6 @@ public class MetaData {
     }
 
     public Collection<InterceptorData> getInterceptors() {
-
 	return interceptors;
     }
 

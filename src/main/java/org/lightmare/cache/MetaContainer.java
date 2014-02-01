@@ -25,8 +25,9 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.WatchUtils;
 
 /**
- * Container class to save {@link MetaData} for bean interface {@link Class} and
- * connections ({@link EntityManagerFactory}) for unit names
+ * Container class to save {@link MetaData} for bean interface {@link Class},
+ * connections ({@link EntityManagerFactory}) for unit names and
+ * {@link Configuration}s for distinct deployments
  * 
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
@@ -36,9 +37,7 @@ public class MetaContainer {
     // Cached instance of MetaCreator
     private static MetaCreator creator;
 
-    /**
-     * {@link Configuration} container class for server
-     */
+    // Configurations cache for server
     public static final Map<String, Configuration> CONFIGS = new ConcurrentHashMap<String, Configuration>();
 
     // Cached bean meta data
