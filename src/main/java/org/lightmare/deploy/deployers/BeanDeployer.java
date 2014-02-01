@@ -394,7 +394,6 @@ public class BeanDeployer implements Callable<String> {
 	Class<?> interceptorClass;
 	List<Method> interceptorMethods;
 	Method interceptorMethod;
-
 	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
 	    interceptorClass = interceptorClasses[i];
 	    interceptorMethods = MetaUtils.getAnnotatedMethods(beanClass,
