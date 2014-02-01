@@ -875,6 +875,7 @@ public class Configuration implements Cloneable {
 
 	// Deep clone for configuration
 	Configuration cloneConfig = (Configuration) super.clone();
+
 	cloneConfig.config.clear();
 	cloneConfig.configure(this.config);
 
