@@ -153,7 +153,7 @@
 
 	<dependencies>
 
-		<!-- java ee components -->
+		<!-- Java EE components -->
 		<!-- ejb -->
 		<dependency>
 			<groupId>javax.ejb</groupId>
@@ -268,7 +268,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- end of jaxrs -->
-		<!-- java ee components -->
+		<!-- Java EE components -->
 
 		<!-- hibernate -->
 		<dependency>
