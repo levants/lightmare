@@ -214,16 +214,14 @@ public class BeanDeployer implements Callable<String> {
 	    Field connectionField) throws IOException {
 
 	ConnectionData connection = new ConnectionData();
-
 	connection.setConnectionField(connectionField);
 	String unitName = context.unitName();
 	String jndiName = context.name();
 	connection.setUnitName(unitName);
 	connection.setJndiName(jndiName);
-	boolean checkForEmf = checkOnEmf(unitName, jndiName);
 
 	ConnectionSemaphore semaphore;
-
+	boolean checkForEmf = checkOnEmf(unitName, jndiName);
 	if (checkForEmf) {
 	    releaseBlocker();
 	    semaphore = ConnectionContainer.getSemaphore(unitName);
