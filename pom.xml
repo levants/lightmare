@@ -672,6 +672,7 @@
 
 	</dependencies>
 
+	<!-- repositories for dependencies -->
 	<repositories>
 		<repository>
 			<id>codelds</id>
@@ -679,6 +680,7 @@
 		</repository>
 	</repositories>
 
+	<!-- repositories for deployments -->
 	<distributionManagement>
 		<repository>
 			<id>maven-central</id>
