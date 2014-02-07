@@ -48,6 +48,8 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  */
 public class FileUtils {
 
+    public static byte[] MAGIC = { 'P', 'K', 0x3, 0x4 };
+
     /**
      * Lists java archive class files in passed file
      * 

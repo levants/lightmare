@@ -71,7 +71,6 @@ public class JarUtils extends ArchiveUtils {
 
     @Override
     public void getEjbLibs() throws IOException {
-
     }
 
     @Override
