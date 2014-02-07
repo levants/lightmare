@@ -48,7 +48,11 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  */
 public class FileUtils {
 
-    public static byte[] MAGIC = { 'P', 'K', 0x3, 0x4 };
+    // First bytes for ZIP file
+    private static byte[] MAGIC = { 'P', 'K', 0x3, 0x4 };
+
+    // Read privilege for random access file
+    private static final String READ = "r";
 
     /**
      * Lists java archive class files in passed file
