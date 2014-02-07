@@ -35,6 +35,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -54,6 +55,8 @@ public class FileUtils {
 
     // Read privilege for random access file
     private static final String READ = "r";
+
+    private static final Logger LOG = Logger.getLogger(FileUtils.class);
 
     /**
      * Lists java archive class files in passed file
@@ -310,7 +313,8 @@ public class FileUtils {
 	    } finally {
 		raf.close();
 	    }
-	} catch (Throwable e) {
+	} catch (IOException ex) {
+	    LOG.error(ex.getMessage(), ex);
 	    isZip = Boolean.FALSE;
 	}
 
