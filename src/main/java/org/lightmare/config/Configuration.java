@@ -1,7 +1,7 @@
 /*
  * Lightmare, Embeddable ejb container (works for stateless session beans) with JPA / Hibernate support
  *
- * Copyright (c) 2013, Levan Tsinadze, or third-party contributors as
+ * Copyright (c) 2014, Levan Tsinadze, or third-party contributors as
  * indicated by the @author tags or express copyright attribution
  * statements applied by the authors.
  *
