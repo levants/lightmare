@@ -25,6 +25,7 @@ package org.lightmare.utils.fs;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -285,5 +286,25 @@ public class FileUtils {
 	}
 
 	return urls;
+    }
+
+    public static boolean checkOnZip(File file) {
+
+	boolean isZip = Boolean.TRUE;
+
+	int length = MAGIC.length;
+	byte[] buffer = new byte[length];
+	try {
+	    RandomAccessFile raf = new RandomAccessFile(file, READ);
+	    raf.readFully(buffer);
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length && isZip; i++) {
+		isZip = buffer[i] == MAGIC[i];
+	    }
+	    raf.close();
+	} catch (Throwable e) {
+	    isZip = Boolean.FALSE;
+	}
+
+	return isZip;
     }
 }
