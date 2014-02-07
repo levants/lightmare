@@ -288,6 +288,12 @@ public class FileUtils {
 	return urls;
     }
 
+    /**
+     * Checks if passed file is ZIP archive file
+     * 
+     * @param file
+     * @return <code>boolean</code>
+     */
     public static boolean checkOnZip(File file) {
 
 	boolean isZip = Boolean.TRUE;
