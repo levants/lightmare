@@ -3,8 +3,6 @@ package org.lightmare.utils.fs.codecs;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.net.URI;
-import java.net.URL;
-import java.util.zip.ZipFile;
 
 import org.junit.Test;
 
