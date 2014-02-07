@@ -302,11 +302,14 @@ public class FileUtils {
 	byte[] buffer = new byte[length];
 	try {
 	    RandomAccessFile raf = new RandomAccessFile(file, READ);
-	    raf.readFully(buffer);
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length && isZip; i++) {
-		isZip = buffer[i] == MAGIC[i];
+	    try {
+		raf.readFully(buffer);
+		for (int i = CollectionUtils.FIRST_INDEX; i < length && isZip; i++) {
+		    isZip = buffer[i] == MAGIC[i];
+		}
+	    } finally {
+		raf.close();
 	    }
-	    raf.close();
 	} catch (Throwable e) {
 	    isZip = Boolean.FALSE;
 	}
