@@ -18,12 +18,11 @@ public class JarUtilsTest {
     public void checkUriTest() {
 
 	try {
-	    URL url = new URL(URI_TEXT);
-	    URI uri = url.toURI();
+	    File file = new File(URI_TEXT);
+	    URI uri = file.toURI();
 	    String path = uri.getSchemeSpecificPart();
 	    System.out.println(path);
 
-	    File file = new File(path);
 	    boolean isZip = true;
 	    byte[] buffer = new byte[MAGIC.length];
 	    try {
