@@ -280,7 +280,6 @@ public class ConnectionContainer {
 	    try {
 		String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
 		Object boundData = jndiManager.lookup(fullJndiName);
-
 		if (ObjectUtils.notNull(boundData)) {
 		    jndiManager.unbind(fullJndiName);
 		}
