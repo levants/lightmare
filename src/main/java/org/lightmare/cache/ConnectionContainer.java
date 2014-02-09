@@ -332,14 +332,12 @@ public class ConnectionContainer {
 	// Checks if users (EJB beans) for appropriated ConnectionSemaphore is
 	// less or equals minimal amount to close appropriated connection
 	if (users < ConnectionSemaphore.MINIMAL_USERS) {
-
 	    EntityManagerFactory emf = semaphore.getEmf();
 	    JpaManager.closeEntityManagerFactory(emf);
 	    unbindConnection(semaphore);
 
 	    CONNECTIONS.remove(semaphore.getUnitName());
 	    String jndiName = semaphore.getJndiName();
-
 	    if (StringUtils.valid(jndiName)) {
 		CONNECTIONS.remove(jndiName);
 		semaphore.setBound(Boolean.FALSE);
