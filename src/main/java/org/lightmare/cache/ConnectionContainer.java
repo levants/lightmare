@@ -118,6 +118,12 @@ public class ConnectionContainer {
 	} else {
 	    current = semaphore;
 	}
+
+	// Checks if current semaphore is not set
+	if (current == null) {
+	    current = semaphore;
+	}
+
 	// Increments user count in semaphore
 	current.incrementUser();
 
