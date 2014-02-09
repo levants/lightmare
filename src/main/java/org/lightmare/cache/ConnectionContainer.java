@@ -131,6 +131,24 @@ public class ConnectionContainer {
     }
 
     /**
+     * Caches {@link ConnectionSemaphore} instance if it is not already
+     * 
+     * @param jndiName
+     * @param semaphore
+     */
+    private static void cacheIfNot(String jndiName,
+	    ConnectionSemaphore semaphore) {
+
+	if (StringUtils.valid(jndiName)) {
+	    ConnectionSemaphore existent = CONNECTIONS.putIfAbsent(jndiName,
+		    semaphore);
+	    if (existent == null) {
+		semaphore.setJndiName(jndiName);
+	    }
+	}
+    }
+
+    /**
      * Caches {@link ConnectionSemaphore} with lock.
      * 
      * @param unitName
@@ -146,14 +164,7 @@ public class ConnectionContainer {
 	// JNDI names
 	if (StringUtils.valid(unitName)) {
 	    semaphore = createSemaphore(unitName);
-	    if (StringUtils.valid(jndiName)) {
-		ConnectionSemaphore existent = CONNECTIONS.putIfAbsent(
-			jndiName, semaphore);
-
-		if (existent == null) {
-		    semaphore.setJndiName(jndiName);
-		}
-	    }
+	    cacheIfNot(jndiName, semaphore);
 	} else {
 	    semaphore = null;
 	}
