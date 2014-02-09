@@ -106,8 +106,9 @@ public class ConnectionContainer {
      */
     private static ConnectionSemaphore createSemaphore(String unitName) {
 
+	ConnectionSemaphore current;
+
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
-	ConnectionSemaphore current = null;
 
 	if (semaphore == null) {
 	    semaphore = new ConnectionSemaphore();
@@ -115,6 +116,8 @@ public class ConnectionContainer {
 	    semaphore.setInProgress(Boolean.TRUE);
 	    semaphore.setCached(Boolean.TRUE);
 	    current = CONNECTIONS.putIfAbsent(unitName, semaphore);
+	} else {
+	    current = null;
 	}
 
 	if (current == null) {
