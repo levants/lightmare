@@ -109,7 +109,6 @@ public class ConnectionContainer {
 	ConnectionSemaphore current;
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
-
 	if (semaphore == null) {
 	    semaphore = new ConnectionSemaphore();
 	    semaphore.setUnitName(unitName);
@@ -117,10 +116,6 @@ public class ConnectionContainer {
 	    semaphore.setCached(Boolean.TRUE);
 	    current = CONNECTIONS.putIfAbsent(unitName, semaphore);
 	} else {
-	    current = null;
-	}
-
-	if (current == null) {
 	    current = semaphore;
 	}
 
