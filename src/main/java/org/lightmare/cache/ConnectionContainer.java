@@ -118,7 +118,7 @@ public class ConnectionContainer {
 	} else {
 	    current = semaphore;
 	}
-
+	// Increments user count in semaphore
 	current.incrementUser();
 
 	return current;
