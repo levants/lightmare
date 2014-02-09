@@ -73,12 +73,17 @@ public enum FinalizationUtils {
      */
     private class CleanerTask implements Runnable {
 
-	private void clearReference(PhantomReference<Cleanable> ref) {
+	/**
+	 * Clears passed {@link Cleanable} reference
+	 * 
+	 * @param reference
+	 */
+	private void clearReference(Reference<? extends Cleanable> reference) {
 
 	    try {
-		ref.clear();
+		reference.clear();
 	    } finally {
-		phantoms.remove(ref);
+		phantoms.remove(reference);
 	    }
 	}
 
@@ -90,9 +95,8 @@ public enum FinalizationUtils {
 
 	    try {
 		Reference<? extends Cleanable> reference = references.remove();
-		PhantomReference<Cleanable> ref = ObjectUtils.cast(reference);
-		if (ObjectUtils.notNull(ref)) {
-		    clearReference(ref);
+		if (ObjectUtils.notNull(reference)) {
+		    clearReference(reference);
 		}
 	    } catch (Throwable ex) {
 		LOG.error(ex.getMessage(), ex);
