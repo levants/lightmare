@@ -24,6 +24,7 @@ package org.lightmare.utils.finalizers;
 
 import java.io.IOException;
 import java.lang.ref.PhantomReference;
+import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.util.HashSet;
 import java.util.Set;
@@ -81,19 +82,28 @@ public enum FinalizationUtils {
 	    }
 	}
 
+	/**
+	 * Gets {@link Reference} from {@link ReferenceQueue} and cleans
+	 * resources for finalization
+	 */
+	private void cleanReference() {
+
+	    try {
+		Reference<? extends Cleanable> reference = references.remove();
+		PhantomReference<Cleanable> ref = ObjectUtils.cast(reference);
+		if (ObjectUtils.notNull(ref)) {
+		    clearReference(ref);
+		}
+	    } catch (Throwable ex) {
+		LOG.error(ex.getMessage(), ex);
+	    }
+	}
+
 	@Override
 	public void run() {
 
 	    while (Boolean.TRUE) {
-		try {
-		    PhantomReference<Cleanable> ref = ObjectUtils
-			    .cast(references.remove());
-		    if (ObjectUtils.notNull(ref)) {
-			clearReference(ref);
-		    }
-		} catch (Throwable ex) {
-		    LOG.error(ex.getMessage(), ex);
-		}
+		cleanReference();
 	    }
 	}
     }
