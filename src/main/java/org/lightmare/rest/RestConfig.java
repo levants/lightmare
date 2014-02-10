@@ -24,6 +24,7 @@ package org.lightmare.rest;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -122,9 +123,7 @@ public class RestConfig extends ResourceConfig {
     public void registerAll(RestConfig oldConfig) {
 
 	clearResources();
-	Set<Resource> newResources;
-	newResources = new HashSet<Resource>();
-
+	Set<Resource> newResources = new HashSet<Resource>();
 	if (ObjectUtils.notNull(oldConfig)) {
 	    Set<Resource> olds = oldConfig.getResources();
 	    if (CollectionUtils.valid(olds)) {
@@ -135,22 +134,20 @@ public class RestConfig extends ResourceConfig {
 	registerResources(newResources);
     }
 
-    public void addPreResource(Resource resource) {
+    public void addPreResources(Collection<Resource> toAdd) {
 
-	if (this.preResources == null || this.preResources.isEmpty()) {
-	    this.preResources = new HashSet<Resource>();
-	}
-	this.preResources.add(resource);
-    }
-
-    public void addPreResources(Collection<Resource> preResources) {
-
-	if (CollectionUtils.valid(preResources)) {
+	if (CollectionUtils.valid(toAdd)) {
 	    if (this.preResources == null || this.preResources.isEmpty()) {
 		this.preResources = new HashSet<Resource>();
 	    }
-	    this.preResources.addAll(preResources);
+	    this.preResources.addAll(toAdd);
 	}
+    }
+
+    public void addPreResource(Resource resource) {
+
+	Collection<Resource> resources = Collections.singleton(resource);
+	addPreResources(resources);
     }
 
     public void addPreResources(RestConfig oldConfig) {
