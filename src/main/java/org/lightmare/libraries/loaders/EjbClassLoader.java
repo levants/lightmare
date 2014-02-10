@@ -162,6 +162,7 @@ public class EjbClassLoader extends URLClassLoader {
 	    return validToBreack;
 	}
 
+	@Override
 	public boolean hasMoreElements() {
 	    return next();
 	}
