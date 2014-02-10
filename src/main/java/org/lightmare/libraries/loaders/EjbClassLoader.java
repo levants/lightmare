@@ -267,7 +267,7 @@ public class EjbClassLoader extends URLClassLoader {
 
 	String javaPlatform = System.getProperty(JAVA_VENDOR_PROPERY);
 	String vmPlatform = System.getProperty(VM_VENDOR_PROPERY);
-	valid = (checkVendor(javaPlatform) || checkVendor(vmPlatform));
+	valid = checkVendor(javaPlatform, vmPlatform);
 
 	return valid;
     }
