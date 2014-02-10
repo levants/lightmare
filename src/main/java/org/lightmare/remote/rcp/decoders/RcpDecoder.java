@@ -71,7 +71,8 @@ public class RcpDecoder extends ByteToMessageDecoder {
     protected void decode(ChannelHandlerContext context, ByteBuf buffer,
 	    List<Object> out) throws IOException {
 
-	if (buffer.readableBytes() < RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE) {
+	int validSize = RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE;
+	if (buffer.readableBytes() < validSize) {
 	    buffer.resetReaderIndex();
 	} else {
 	    decode(buffer, out);
