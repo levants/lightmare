@@ -237,7 +237,7 @@ public class EjbClassLoader extends URLClassLoader {
      * @param platform
      * @return <code>boolean</code>
      */
-    private boolean checkVendor(String... platforms) {
+    private static boolean checkVendor(String... platforms) {
 
 	boolean valid = CollectionUtils.valid(platforms);
 
@@ -264,7 +264,7 @@ public class EjbClassLoader extends URLClassLoader {
      * 
      * @return <code>boolean</code>
      */
-    private boolean checkPlatform() {
+    private static boolean checkPlatform() {
 
 	boolean valid;
 
