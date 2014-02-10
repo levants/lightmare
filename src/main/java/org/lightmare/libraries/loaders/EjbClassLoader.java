@@ -229,6 +229,14 @@ public class EjbClassLoader extends URLClassLoader {
 	return loader;
     }
 
+    /**
+     * Checks if passed {@link String} name of platform vendor contains
+     * appropriated vendor's name for extension of {@link ClassLoader} and / or
+     * {@link URLClassLoader} resource search
+     * 
+     * @param platform
+     * @return <code>boolean</code>
+     */
     private boolean checkVendor(String platform) {
 	return StringUtils.valid(platform)
 		&& (platform.contains(ORACLE_CORP_PREFIX) || platform
