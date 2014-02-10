@@ -414,8 +414,8 @@ public class ParamBuilder {
     /**
      * Builder class to configure and initialize {@link ParamBuilder} instance
      * 
-     * @author Levan
-     * 
+     * @author Levan Tsinadze
+     * @since 0.0.75-SNAPSHOT
      */
     public static final class Builder {
 
