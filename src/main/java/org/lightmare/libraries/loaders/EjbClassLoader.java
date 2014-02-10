@@ -235,6 +235,12 @@ public class EjbClassLoader extends URLClassLoader {
 			.contains(SUN_MICROSYSTEMS_PREFIX));
     }
 
+    /**
+     * Checks if platform is appropriated for extension of {@link ClassLoader}
+     * and / or {@link URLClassLoader} resource search
+     * 
+     * @return <code>boolean</code>
+     */
     private boolean checkPlatform() {
 
 	boolean valid;
