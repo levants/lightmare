@@ -47,14 +47,19 @@ import sun.misc.URLClassPath;
  */
 public class EjbClassLoader extends URLClassLoader {
 
+    // Resources length to get class loaders resources
     private static final int RESOURCES_DEFAULT_LENGTH = 2;
 
+    // Property key for virtual machine vendor
     private static final String VM_VENDOR_PROPERY = "java.vm.vendor";
 
+    // Property key for platform vendor
     private static final String JAVA_VENDOR_PROPERY = "java.vendor";
 
+    // Appropriated former vendor
     private static final String SUN_MICROSYSTEMS_PREFIX = "Sun Microsystems";
 
+    // Appropriated acting vendor
     private static final String ORACLE_CORP_PREFIX = "Oracle Corporation";
 
     /**
