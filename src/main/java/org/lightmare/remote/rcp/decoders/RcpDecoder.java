@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.serialization.NativeSerializer;
 
@@ -43,6 +44,29 @@ import org.lightmare.utils.serialization.NativeSerializer;
  */
 public class RcpDecoder extends ByteToMessageDecoder {
 
+    /**
+     * Decodes if data is enough in buffer
+     * 
+     * @param buffer
+     * @param out
+     * @throws IOException
+     */
+    private void decode(ByteBuf buffer, List<Object> out) throws IOException {
+
+	boolean valid = buffer.readByte() > CollectionUtils.EMPTY_ARRAY_LENGTH;
+	int dataSize = buffer.readInt();
+	if (buffer.readableBytes() < dataSize) {
+	    buffer.resetReaderIndex();
+	} else {
+	    byte[] data = new byte[dataSize];
+	    Object value = NativeSerializer.deserialize(data);
+	    RcpWrapper rcp = new RcpWrapper();
+	    rcp.setValid(valid);
+	    rcp.setValue(value);
+	    out.add(rcp);
+	}
+    }
+
     @Override
     protected void decode(ChannelHandlerContext context, ByteBuf buffer,
 	    List<Object> out) throws IOException {
@@ -50,18 +74,7 @@ public class RcpDecoder extends ByteToMessageDecoder {
 	if (buffer.readableBytes() < RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE) {
 	    buffer.resetReaderIndex();
 	} else {
-	    boolean valid = buffer.readByte() > 0;
-	    int dataSize = buffer.readInt();
-	    if (buffer.readableBytes() < dataSize) {
-		buffer.resetReaderIndex();
-	    } else {
-		byte[] data = new byte[dataSize];
-		Object value = NativeSerializer.deserialize(data);
-		RcpWrapper rcp = new RcpWrapper();
-		rcp.setValid(valid);
-		rcp.setValue(value);
-		out.add(rcp);
-	    }
+	    decode(buffer, out);
 	}
     }
 }
