@@ -239,6 +239,13 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	    }
 	}
 
+	/**
+	 * Gets {@link Collection} of {@link EjbClassLoader} only if persistence
+	 * configuration path is needed
+	 * 
+	 * @param name
+	 * @return {@link Collection}
+	 */
 	private Collection<ClassLoader> getAppropriateLoaders(String name) {
 
 	    Collection<ClassLoader> loaders;
