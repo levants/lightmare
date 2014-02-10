@@ -183,7 +183,7 @@ public class RestProvider {
 	try {
 	    RestReloader reloader = RestReloader.get();
 	    RestConfig conf = get();
-	    if (ObjectUtils.notNull(conf) && ObjectUtils.notNull(reloader)) {
+	    if (ObjectUtils.notNullAll(conf, reloader)) {
 		if (RestContainer.hasRest()) {
 		    RestConfig existingConfig = RestContainer.getRestConfig();
 		    Set<Resource> existingResources = existingConfig
