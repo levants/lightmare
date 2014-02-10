@@ -139,6 +139,11 @@ public class EjbClassLoader extends URLClassLoader {
 	    this.enums = enums;
 	}
 
+	/**
+	 * Checks if one of the {@link Enumeration} array has next vaue
+	 * 
+	 * @return <code>boolean</code>
+	 */
 	private boolean next() {
 
 	    boolean validToBreack = Boolean.FALSE;
