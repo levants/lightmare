@@ -81,16 +81,11 @@ public class RcpEncoder extends ChannelOutboundHandlerAdapter {
 	RcpWrapper wrapper = ObjectUtils.cast(msg, RcpWrapper.class);
 	boolean valid = wrapper.isValid();
 	int validNum = BooleanNumber.getValue(valid);
-
 	Object value = wrapper.getValue();
-
 	byte[] valueBt = NativeSerializer.serialize(value);
 	int valueSize = valueBt.length;
-
 	int protSize = (RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE + valueSize);
-
 	ByteBuf buffer = ctx.alloc().buffer(protSize);
-
 	buffer.writeInt(valueSize);
 	buffer.writeByte(validNum);
 	buffer.writeBytes(valueBt);
