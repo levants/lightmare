@@ -166,16 +166,29 @@ public class EjbClassLoader extends URLClassLoader {
 	return loader;
     }
 
+    /**
+     * Replica of parent {@link URLClassLoader} and {@link ClassLoader} class
+     * method for other method
+     * 
+     * @return {@link URLClassPath}
+     */
     static URLClassPath getBootstrapClassPath() {
 	return Launcher.getBootstrapClassPath();
     }
 
+    /**
+     * Replica of parent {@link URLClassLoader} and {@link ClassLoader} class
+     * method for other method
+     * 
+     * @return {@link URL}
+     */
     private static URL getBootstrapResource(String name) {
 	URLClassPath ucp = getBootstrapClassPath();
 	Resource res = ucp.getResource(name);
 	return ((res != null) ? res.getURL() : null);
     }
 
+    
     @SuppressWarnings("rawtypes")
     private static Enumeration getBootstrapResources(String name)
 	    throws IOException {
