@@ -320,6 +320,7 @@ public class EjbClassLoader extends URLClassLoader {
     private static Enumeration<URL> getBootstrapResources(String name)
 	    throws IOException {
 
+	// Enumeration to iterate over
 	final Enumeration<Resource> enumeration = getBootstrapClassPath()
 		.getResources(name);
 
