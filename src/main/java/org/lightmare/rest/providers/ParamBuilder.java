@@ -77,7 +77,7 @@ public class ParamBuilder {
     // Check flag of message stream
     private boolean check;
 
-    // List of parameters
+    // List of decoded parameters from HTTP request
     private List<Object> paramsList;
 
     // Default length of parameters list (used for MultivaluedMap)
