@@ -74,6 +74,9 @@ public class ParamBuilder {
     // Default length of parameters list (used for MultivaluedMap)
     private static final int PARAM_VALIES_LENGTH = 1;
 
+    /**
+     * Private constructor to avoid class initialization from outside
+     */
     private ParamBuilder() {
     }
 
