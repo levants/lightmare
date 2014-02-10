@@ -47,14 +47,16 @@ public class JacksonFXmlFeature implements Feature {
     @Override
     public boolean configure(FeatureContext context) {
 
+	boolean valid = Boolean.TRUE;
+
 	String runtimeType = context.getConfiguration().getRuntimeType().name()
 		.toLowerCase();
 	String disableMoxy = StringUtils.concat(DISABLE_JSON_KEY, runtimeType);
-	context.property(disableMoxy, Boolean.TRUE);
+	context.property(disableMoxy, valid);
 	Class<?>[] ios = new Class[] { MessageBodyReader.class,
 		MessageBodyWriter.class };
 	context.register(JacksonJaxbJsonProvider.class, ios);
 
-	return Boolean.TRUE;
+	return valid;
     }
 }
