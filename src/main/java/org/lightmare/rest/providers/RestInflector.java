@@ -65,6 +65,7 @@ public class RestInflector implements
     // Parameters of REST service to be translated java Method parameters
     private List<Parameter> parameters;
 
+    // Message body decoder provided and injected by framework
     @Context
     private MessageBodyWorkers workers;
 
