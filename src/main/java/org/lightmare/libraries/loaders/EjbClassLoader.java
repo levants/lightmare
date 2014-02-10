@@ -110,30 +110,42 @@ public class EjbClassLoader extends URLClassLoader {
     protected static class MergeEnumeration<E> implements Enumeration<E> {
 
 	private Enumeration<E>[] enums;
-	private int index = 0;
+
+	private int index = CollectionUtils.FIRST_INDEX;
 
 	public MergeEnumeration(Enumeration<E>[] enums) {
 	    this.enums = enums;
 	}
 
 	private boolean next() {
-	    while (this.index < this.enums.length) {
-		if ((this.enums[this.index] != null)
-			&& (this.enums[this.index].hasMoreElements())) {
-		    return true;
+
+	    boolean validToBreack = Boolean.FALSE;
+
+	    Enumeration<E> current;
+	    int length = this.enums.length;
+	    while (this.index < length && ObjectUtils.notTrue(validToBreack)) {
+		current = this.enums[this.index];
+		validToBreack = (ObjectUtils.notNull(current) && (current
+			.hasMoreElements()));
+		if (ObjectUtils.notTrue(validToBreack)) {
+		    this.index++;
 		}
-		this.index += 1;
 	    }
-	    return false;
+
+	    return validToBreack;
 	}
 
 	public boolean hasMoreElements() {
 	    return next();
 	}
 
+	private boolean hasNotElements() {
+	    return ObjectUtils.notTrue((next()));
+	}
+
 	public E nextElement() {
 
-	    if (ObjectUtils.notTrue((next()))) {
+	    if (hasNotElements()) {
 		throw new NoSuchElementException();
 	    }
 
@@ -231,7 +243,7 @@ public class EjbClassLoader extends URLClassLoader {
 		.getResources(name);
 	return new Enumeration<URL>() {
 	    public URL nextElement() {
-		return ((Resource) enumeration.nextElement()).getURL();
+		return (enumeration.nextElement()).getURL();
 	    }
 
 	    public boolean hasMoreElements() {
