@@ -167,10 +167,16 @@ public class EjbClassLoader extends URLClassLoader {
 	    return next();
 	}
 
+	/**
+	 * Checks if {@link Enumeration} has not next value
+	 * 
+	 * @return <code></code>
+	 */
 	private boolean hasNotElements() {
 	    return ObjectUtils.notTrue((next()));
 	}
 
+	@Override
 	public E nextElement() {
 
 	    if (hasNotElements()) {
