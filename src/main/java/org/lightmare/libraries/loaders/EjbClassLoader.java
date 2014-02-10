@@ -337,8 +337,8 @@ public class EjbClassLoader extends URLClassLoader {
     }
 
     /**
-     * Gets resource only from current {@link EjbClassLoader} not from parent
-     * class loader
+     * Gets resource only from current {@link EjbClassLoader} not from any
+     * parent {@link ClassLoader} instance
      * 
      * @param name
      * @return {@link URL}

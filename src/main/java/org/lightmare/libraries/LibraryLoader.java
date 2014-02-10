@@ -149,7 +149,9 @@ public class LibraryLoader {
 	URL[] urls;
 
 	if (loader instanceof URLClassLoader) {
-	    urls = ((URLClassLoader) loader).getURLs();
+	    URLClassLoader urlLoader = ObjectUtils.cast(loader,
+		    URLClassLoader.class);
+	    urls = urlLoader.getURLs();
 	} else {
 	    urls = CollectionUtils.emptyArray(URL.class);
 	}
