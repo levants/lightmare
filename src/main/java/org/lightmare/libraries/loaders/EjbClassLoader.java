@@ -130,6 +130,11 @@ public class EjbClassLoader extends URLClassLoader {
 	// Index of Enumeration array to iterate
 	private int index = CollectionUtils.FIRST_INDEX;
 
+	/**
+	 * Constructor with {@link Enumeration} array for union
+	 * 
+	 * @param enums
+	 */
 	public MergeEnumeration(Enumeration<E>[] enums) {
 	    this.enums = enums;
 	}
