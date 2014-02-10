@@ -176,6 +176,11 @@ public class RestConfig extends ResourceConfig {
 
     }
 
+    /**
+     * Removes {@link Resource} from cache before it's been registered
+     * 
+     * @param resource
+     */
     private void removePreResource(Resource resource) {
 
 	if (CollectionUtils.valid(preResources)) {
