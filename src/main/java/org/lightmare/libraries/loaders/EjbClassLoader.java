@@ -28,10 +28,11 @@ import java.net.URLClassLoader;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.ObjectUtils;
 
-import sun.misc.CompoundEnumeration;
 import sun.misc.Launcher;
 import sun.misc.Resource;
 import sun.misc.URLClassPath;
@@ -96,6 +97,47 @@ public class EjbClassLoader extends URLClassLoader {
 	    }
 
 	    return ejbClassLoader;
+	}
+    }
+
+    /**
+     * Implementation of {@link Enumeration} for class loader resources
+     * 
+     * @author Levan Tsinadze
+     * 
+     * @param <E>
+     */
+    protected static class MergeEnumeration<E> implements Enumeration<E> {
+
+	private Enumeration<E>[] enums;
+	private int index = 0;
+
+	public MergeEnumeration(Enumeration<E>[] enums) {
+	    this.enums = enums;
+	}
+
+	private boolean next() {
+	    while (this.index < this.enums.length) {
+		if ((this.enums[this.index] != null)
+			&& (this.enums[this.index].hasMoreElements())) {
+		    return true;
+		}
+		this.index += 1;
+	    }
+	    return false;
+	}
+
+	public boolean hasMoreElements() {
+	    return next();
+	}
+
+	public E nextElement() {
+
+	    if (ObjectUtils.notTrue((next()))) {
+		throw new NoSuchElementException();
+	    }
+
+	    return this.enums[this.index].nextElement();
 	}
     }
 
@@ -182,14 +224,13 @@ public class EjbClassLoader extends URLClassLoader {
      * 
      * @return {@link URL}
      */
-    @SuppressWarnings("rawtypes")
-    private static Enumeration getBootstrapResources(String name)
+    private static Enumeration<URL> getBootstrapResources(String name)
 	    throws IOException {
 
-	final Enumeration enumeration = getBootstrapClassPath().getResources(
-		name);
-	return new Enumeration() {
-	    public Object nextElement() {
+	final Enumeration<Resource> enumeration = getBootstrapClassPath()
+		.getResources(name);
+	return new Enumeration<URL>() {
+	    public URL nextElement() {
 		return ((Resource) enumeration.nextElement()).getURL();
 	    }
 
@@ -206,13 +247,16 @@ public class EjbClassLoader extends URLClassLoader {
      * @param name
      * @return {@link URL}
      */
-    @SuppressWarnings("rawtypes")
     public Enumeration<URL> getOnlyResources(String name) throws IOException {
 
-	Enumeration[] tmp = new Enumeration[RESOURCES_DEFAULT_LENGTH];
-	tmp[CollectionUtils.FIRST_INDEX] = getBootstrapResources(name);
-	tmp[CollectionUtils.SECOND_INDEX] = findResources(name);
+	Enumeration<URL> resources;
 
-	return new CompoundEnumeration<URL>(tmp);
+	Enumeration<URL>[] tmps = ObjectUtils
+		.cast(new Enumeration[RESOURCES_DEFAULT_LENGTH]);
+	tmps[CollectionUtils.FIRST_INDEX] = getBootstrapResources(name);
+	tmps[CollectionUtils.SECOND_INDEX] = super.findResources(name);
+	resources = new MergeEnumeration<URL>(tmps);
+
+	return resources;
     }
 }
