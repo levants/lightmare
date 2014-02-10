@@ -182,18 +182,6 @@ public class EjbClassLoader extends URLClassLoader {
      * 
      * @return {@link URL}
      */
-    private static URL getBootstrapResource(String name) {
-	URLClassPath ucp = getBootstrapClassPath();
-	Resource res = ucp.getResource(name);
-	return ((res != null) ? res.getURL() : null);
-    }
-
-    /**
-     * Replica of parent {@link URLClassLoader} and {@link ClassLoader} class
-     * method for other method
-     * 
-     * @return {@link URL}
-     */
     @SuppressWarnings("rawtypes")
     private static Enumeration getBootstrapResources(String name)
 	    throws IOException {
@@ -209,24 +197,6 @@ public class EjbClassLoader extends URLClassLoader {
 		return enumeration.hasMoreElements();
 	    }
 	};
-    }
-
-    /**
-     * Gets resource only from current {@link EjbClassLoader} not from parent
-     * class loader
-     * 
-     * @param name
-     * @return {@link URL}
-     */
-    public URL getOnlyResource(String name) {
-
-	URL url = getBootstrapResource(name);
-
-	if (url == null) {
-	    url = findResource(name);
-	}
-
-	return url;
     }
 
     /**
