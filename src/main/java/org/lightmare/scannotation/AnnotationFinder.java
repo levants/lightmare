@@ -260,13 +260,11 @@ public class AnnotationFinder extends AnnotationDB {
 
 	LOG.info(SCANNING_STARTED_MESSAGE);
 	for (URL url : urls) {
-
 	    Filter filter = new ArchiveFilter();
 	    LOG.info(StringUtils.concat(SCANNING_URL_MESSAGE, url));
 
 	    StreamIterator it = IteratorFactory.create(url, filter);
 	    InputStream stream = it.next();
-
 	    while (ObjectUtils.notNull(stream)) {
 		scanClass(stream, url);
 		stream = it.next();

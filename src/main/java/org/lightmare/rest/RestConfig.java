@@ -68,6 +68,7 @@ public class RestConfig extends ResourceConfig {
 		reloader = new RestReloader();
 	    }
 	    this.registerInstances(reloader);
+
 	    if (ObjectUtils.notNull(config)) {
 		// Adds resources to pre-resources from existing cached
 		// configuration
@@ -77,6 +78,7 @@ public class RestConfig extends ResourceConfig {
 		    addProperties(properties);
 		}
 	    }
+
 	    if (changeCache) {
 		RestContainer.setRestConfig(this);
 	    }
