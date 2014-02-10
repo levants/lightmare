@@ -56,8 +56,15 @@ public class RestConfig extends ResourceConfig {
     // Reloader instance (implementation of ContainerLifecycleListener class)
     private RestReloader reloader = RestReloader.get();
 
+    // Lock of registration and initialization
     private static final Lock LOCK = new ReentrantLock();
 
+    /**
+     * Constructor with <code>boolean</code> flag change cache of configuration
+     * or not
+     * 
+     * @param changeCache
+     */
     public RestConfig(boolean changeCache) {
 	super();
 	RestConfig config = RestContainer.getRestConfig();
