@@ -188,7 +188,12 @@ public class EjbClassLoader extends URLClassLoader {
 	return ((res != null) ? res.getURL() : null);
     }
 
-    
+    /**
+     * Replica of parent {@link URLClassLoader} and {@link ClassLoader} class
+     * method for other method
+     * 
+     * @return {@link URL}
+     */
     @SuppressWarnings("rawtypes")
     private static Enumeration getBootstrapResources(String name)
 	    throws IOException {
