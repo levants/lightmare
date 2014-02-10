@@ -244,12 +244,15 @@ public class EjbClassLoader extends URLClassLoader {
 	if (valid) {
 	    int length = platforms.length;
 	    String platform;
-	    for (int i = CollectionUtils.FIRST_INDEX; valid && i < length; i++) {
+	    boolean check = Boolean.FALSE;
+	    for (int i = CollectionUtils.FIRST_INDEX; ObjectUtils
+		    .notTrue(check) && i < length; i++) {
 		platform = platforms[i];
-		valid = StringUtils.valid(platform)
+		check = StringUtils.valid(platform)
 			&& (platform.contains(ORACLE_CORP_PREFIX) || platform
 				.contains(SUN_MICROSYSTEMS_PREFIX));
 	    }
+	    valid = check;
 	}
 
 	return valid;
