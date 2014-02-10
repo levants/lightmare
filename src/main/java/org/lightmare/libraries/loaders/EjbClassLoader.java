@@ -22,10 +22,19 @@
  */
 package org.lightmare.libraries.loaders;
 
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.Enumeration;
+
+import org.lightmare.utils.CollectionUtils;
+
+import sun.misc.CompoundEnumeration;
+import sun.misc.Launcher;
+import sun.misc.Resource;
+import sun.misc.URLClassPath;
 
 /**
  * Implementation of {@link URLClassLoader} class for deployed EJB applications
@@ -35,6 +44,8 @@ import java.security.PrivilegedAction;
  * @see URLClassLoader
  */
 public class EjbClassLoader extends URLClassLoader {
+
+    private static final int RESOURCES_DEFAULT_LENGTH = 2;
 
     /**
      * Implementation of {@link PrivilegedAction} for initialization of
@@ -153,5 +164,55 @@ public class EjbClassLoader extends URLClassLoader {
 	loader = AccessController.doPrivileged(action);
 
 	return loader;
+    }
+
+    static URLClassPath getBootstrapClassPath() {
+	return Launcher.getBootstrapClassPath();
+    }
+
+    private static URL getBootstrapResource(String name) {
+	URLClassPath ucp = getBootstrapClassPath();
+	Resource res = ucp.getResource(name);
+	return ((res != null) ? res.getURL() : null);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private static Enumeration getBootstrapResources(String name)
+	    throws IOException {
+
+	final Enumeration enumeration = getBootstrapClassPath().getResources(
+		name);
+	return new Enumeration() {
+	    public Object nextElement() {
+		return ((Resource) enumeration.nextElement()).getURL();
+	    }
+
+	    public boolean hasMoreElements() {
+		return enumeration.hasMoreElements();
+	    }
+	};
+    }
+
+    @Override
+    public URL getResource(String name) {
+
+	URL url = getBootstrapResource(name);
+
+	if (url == null) {
+	    url = findResource(name);
+	}
+
+	return url;
+    }
+
+    @Override
+    @SuppressWarnings("rawtypes")
+    public Enumeration<URL> getResources(String name) throws IOException {
+
+	Enumeration[] tmp = new Enumeration[RESOURCES_DEFAULT_LENGTH];
+	tmp[CollectionUtils.FIRST_INDEX] = getBootstrapResources(name);
+	tmp[CollectionUtils.SECOND_INDEX] = findResources(name);
+
+	return new CompoundEnumeration<URL>(tmp);
     }
 }
