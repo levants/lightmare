@@ -230,17 +230,29 @@ public class EjbClassLoader extends URLClassLoader {
     }
 
     /**
-     * Checks if passed {@link String} name of platform vendor contains
+     * Checks if passed {@link String} names of platform vendor contains
      * appropriated vendor's name for extension of {@link ClassLoader} and / or
      * {@link URLClassLoader} resource search
      * 
      * @param platform
      * @return <code>boolean</code>
      */
-    private boolean checkVendor(String platform) {
-	return StringUtils.valid(platform)
-		&& (platform.contains(ORACLE_CORP_PREFIX) || platform
-			.contains(SUN_MICROSYSTEMS_PREFIX));
+    private boolean checkVendor(String... platforms) {
+
+	boolean valid = CollectionUtils.valid(platforms);
+
+	if (valid) {
+	    int length = platforms.length;
+	    String platform;
+	    for (int i = CollectionUtils.FIRST_INDEX; valid && i < length; i++) {
+		platform = platforms[i];
+		valid = StringUtils.valid(platform)
+			&& (platform.contains(ORACLE_CORP_PREFIX) || platform
+				.contains(SUN_MICROSYSTEMS_PREFIX));
+	    }
+	}
+
+	return valid;
     }
 
     /**
