@@ -211,8 +211,14 @@ public class EjbClassLoader extends URLClassLoader {
 	};
     }
 
-    @Override
-    public URL getResource(String name) {
+    /**
+     * Gets resource only from current {@link EjbClassLoader} not from parent
+     * class loader
+     * 
+     * @param name
+     * @return {@link URL}
+     */
+    public URL getOnlyResource(String name) {
 
 	URL url = getBootstrapResource(name);
 
@@ -223,9 +229,15 @@ public class EjbClassLoader extends URLClassLoader {
 	return url;
     }
 
-    @Override
+    /**
+     * Gets resource only from current {@link EjbClassLoader} not from parent
+     * class loader
+     * 
+     * @param name
+     * @return {@link URL}
+     */
     @SuppressWarnings("rawtypes")
-    public Enumeration<URL> getResources(String name) throws IOException {
+    public Enumeration<URL> getNlyResources(String name) throws IOException {
 
 	Enumeration[] tmp = new Enumeration[RESOURCES_DEFAULT_LENGTH];
 	tmp[CollectionUtils.FIRST_INDEX] = getBootstrapResources(name);
