@@ -49,23 +49,19 @@ public class RcpDecoder extends ByteToMessageDecoder {
 
 	if (buffer.readableBytes() < RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE) {
 	    buffer.resetReaderIndex();
-	    return;
+	} else {
+	    boolean valid = buffer.readByte() > 0;
+	    int dataSize = buffer.readInt();
+	    if (buffer.readableBytes() < dataSize) {
+		buffer.resetReaderIndex();
+	    } else {
+		byte[] data = new byte[dataSize];
+		Object value = NativeSerializer.deserialize(data);
+		RcpWrapper rcp = new RcpWrapper();
+		rcp.setValid(valid);
+		rcp.setValue(value);
+		out.add(rcp);
+	    }
 	}
-
-	boolean valid = buffer.readByte() > 0;
-	int dataSize = buffer.readInt();
-
-	if (buffer.readableBytes() < dataSize) {
-	    buffer.resetReaderIndex();
-	    return;
-	}
-
-	byte[] data = new byte[dataSize];
-	Object value = NativeSerializer.deserialize(data);
-	RcpWrapper rcp = new RcpWrapper();
-	rcp.setValid(valid);
-	rcp.setValue(value);
-
-	out.add(rcp);
     }
 }
