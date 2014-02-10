@@ -32,6 +32,7 @@ import java.util.NoSuchElementException;
 
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 import sun.misc.Launcher;
 import sun.misc.Resource;
@@ -47,6 +48,14 @@ import sun.misc.URLClassPath;
 public class EjbClassLoader extends URLClassLoader {
 
     private static final int RESOURCES_DEFAULT_LENGTH = 2;
+
+    private static final String VM_VENDOR_PROPERY = "java.vm.vendor";
+
+    private static final String JAVA_VENDOR_PROPERY = "java.vendor";
+
+    private static final String SUN_MICROSYSTEMS_PREFIX = "Sun Microsystems";
+
+    private static final String ORACLE_CORP_PREFIX = "Oracle Corporation";
 
     /**
      * Implementation of {@link PrivilegedAction} for initialization of
@@ -220,6 +229,23 @@ public class EjbClassLoader extends URLClassLoader {
 	return loader;
     }
 
+    private boolean checkVendor(String platform) {
+	return StringUtils.valid(platform)
+		&& (platform.contains(ORACLE_CORP_PREFIX) || platform
+			.contains(SUN_MICROSYSTEMS_PREFIX));
+    }
+
+    private boolean checkPlatform() {
+
+	boolean valid;
+
+	String javaPlatform = System.getProperty(JAVA_VENDOR_PROPERY);
+	String vmPlatform = System.getProperty(VM_VENDOR_PROPERY);
+	valid = (checkVendor(javaPlatform) || checkVendor(vmPlatform));
+
+	return valid;
+    }
+
     /**
      * Replica of parent {@link URLClassLoader} and {@link ClassLoader} class
      * method for other method
@@ -263,11 +289,15 @@ public class EjbClassLoader extends URLClassLoader {
 
 	Enumeration<URL> resources;
 
-	Enumeration<URL>[] tmps = ObjectUtils
-		.cast(new Enumeration[RESOURCES_DEFAULT_LENGTH]);
-	tmps[CollectionUtils.FIRST_INDEX] = getBootstrapResources(name);
-	tmps[CollectionUtils.SECOND_INDEX] = super.findResources(name);
-	resources = new MergeEnumeration<URL>(tmps);
+	if (checkPlatform()) {
+	    Enumeration<URL>[] tmps = ObjectUtils
+		    .cast(new Enumeration[RESOURCES_DEFAULT_LENGTH]);
+	    tmps[CollectionUtils.FIRST_INDEX] = getBootstrapResources(name);
+	    tmps[CollectionUtils.SECOND_INDEX] = super.findResources(name);
+	    resources = new MergeEnumeration<URL>(tmps);
+	} else {
+	    resources = super.getResources(name);
+	}
 
 	return resources;
     }
