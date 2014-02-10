@@ -322,7 +322,9 @@ public class EjbClassLoader extends URLClassLoader {
 
 	final Enumeration<Resource> enumeration = getBootstrapClassPath()
 		.getResources(name);
+
 	return new Enumeration<URL>() {
+
 	    public URL nextElement() {
 		return (enumeration.nextElement()).getURL();
 	    }
