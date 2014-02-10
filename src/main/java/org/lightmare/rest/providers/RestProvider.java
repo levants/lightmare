@@ -48,6 +48,7 @@ import org.lightmare.utils.serialization.JsonSerializer;
  */
 public class RestProvider {
 
+    // Temporary caches new config before it will be deployed
     private static RestConfig newConfig;
 
     private static final Lock LOCK = new ReentrantLock();
