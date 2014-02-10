@@ -53,22 +53,31 @@ import org.lightmare.utils.rest.RequestUtils;
  */
 public class ParamBuilder {
 
+    // Consumption media type
     private MediaType mediaType;
 
+    // Parameters of request
     private List<Parameter> parameters;
 
+    // Message body initializer provided by framework
     private MessageBodyWorkers workers;
 
+    // Request context from framework
     private ContainerRequestContext request;
 
+    // HTTP headers of request
     private MultivaluedMap<String, String> httpHeaders;
 
+    // URI parameters of request
     private MultivaluedMap<String, String> uriParams;
 
+    // Message decoder provided by framework
     private MessageBodyReader<?> reader;
 
+    // Check flag of message stream
     private boolean check;
 
+    // List of parameters
     private List<Object> paramsList;
 
     // Default length of parameters list (used for MultivaluedMap)
