@@ -91,7 +91,9 @@ public class ResourceBuilder {
 	} else {
 	    type = null;
 	}
-	// Inflector to define bean methods
+	// Implementation of framework defined "Inflector" interface to define
+	// bean
+	// methods
 	Inflector<ContainerRequestContext, Response> inflector = new RestInflector(
 		realMethod, metaData, type, parameters);
 
