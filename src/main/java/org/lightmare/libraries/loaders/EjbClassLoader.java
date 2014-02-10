@@ -45,6 +45,7 @@ import sun.misc.URLClassPath;
  * @since 0.0.45-SNAPSHOT
  * @see URLClassLoader
  */
+@SuppressWarnings("restriction")
 public class EjbClassLoader extends URLClassLoader {
 
     // Resources length to get class loaders resources
