@@ -59,6 +59,8 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 
     private static final long serialVersionUID = 1L;
 
+    private static final String PERSISTENCE_XML_PATH = "META-INF/persistence.xml";
+
     private static final Logger LOG = CoreLogging
 	    .logger(ClassLoaderServiceExt.class);
 
@@ -237,11 +239,37 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	    }
 	}
 
+	private Collection<ClassLoader> getAppropriateLoaders(String name) {
+
+	    Collection<ClassLoader> loaders;
+
+	    boolean valid = name.contains(PERSISTENCE_XML_PATH);
+
+	    if (valid) {
+		loaders = new HashSet<ClassLoader>();
+		for (ClassLoader classLoader : individualClassLoaders) {
+		    if (classLoader instanceof EjbClassLoader) {
+			loaders.add(classLoader);
+		    }
+		}
+
+		if (loaders.isEmpty()) {
+		    loaders = Arrays.asList(individualClassLoaders);
+		}
+	    } else {
+		loaders = Arrays.asList(individualClassLoaders);
+	    }
+
+	    return loaders;
+	}
+
 	@Override
 	public Enumeration<URL> getResources(String name) throws IOException {
 	    final HashSet<URL> resourceUrls = new HashSet<URL>();
 
-	    for (ClassLoader classLoader : individualClassLoaders) {
+	    Collection<ClassLoader> loaders = getAppropriateLoaders(name);
+
+	    for (ClassLoader classLoader : loaders) {
 		final Enumeration<URL> urls;
 		if (classLoader instanceof EjbClassLoader) {
 		    EjbClassLoader ejbLoader = ObjectUtils.cast(classLoader,
