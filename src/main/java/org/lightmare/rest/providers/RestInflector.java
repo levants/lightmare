@@ -43,8 +43,8 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
- * Implementation of {@link Inflector} for EJB beans appropriate {@link Method}
- * invocation for REST service
+ * Implementation of framework defined {@link Inflector} interface for EJB beans
+ * appropriate {@link Method} invocation by REST service
  * 
  * @author Levan Tsinadze
  * @since 0.0.50-SNAPSHOT
