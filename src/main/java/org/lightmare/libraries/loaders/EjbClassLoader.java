@@ -237,7 +237,7 @@ public class EjbClassLoader extends URLClassLoader {
      * @return {@link URL}
      */
     @SuppressWarnings("rawtypes")
-    public Enumeration<URL> getNlyResources(String name) throws IOException {
+    public Enumeration<URL> getOnlyResources(String name) throws IOException {
 
 	Enumeration[] tmp = new Enumeration[RESOURCES_DEFAULT_LENGTH];
 	tmp[CollectionUtils.FIRST_INDEX] = getBootstrapResources(name);

@@ -45,7 +45,9 @@ import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.internal.CoreLogging;
 import org.hibernate.internal.util.ClassLoaderHelper;
 import org.jboss.logging.Logger;
+import org.lightmare.libraries.loaders.EjbClassLoader;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Implementation of class loader services
@@ -240,7 +242,15 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	    final HashSet<URL> resourceUrls = new HashSet<URL>();
 
 	    for (ClassLoader classLoader : individualClassLoaders) {
-		final Enumeration<URL> urls = classLoader.getResources(name);
+		final Enumeration<URL> urls;
+		if (classLoader instanceof EjbClassLoader) {
+		    EjbClassLoader ejbLoader = ObjectUtils.cast(classLoader,
+			    EjbClassLoader.class);
+		    urls = ejbLoader.getOnlyResources(name);
+		} else {
+		    urls = classLoader.getResources(name);
+		}
+
 		while (urls.hasMoreElements()) {
 		    resourceUrls.add(urls.nextElement());
 		}
