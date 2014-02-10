@@ -134,6 +134,12 @@ public class RestConfig extends ResourceConfig {
 	registerResources(newResources);
     }
 
+    /**
+     * Adds {@link Collection} of {@link Resource} to cache for further
+     * registration
+     * 
+     * @param toAdd
+     */
     public void addPreResources(Collection<Resource> toAdd) {
 
 	if (CollectionUtils.valid(toAdd)) {
@@ -144,12 +150,23 @@ public class RestConfig extends ResourceConfig {
 	}
     }
 
+    /**
+     * Adds {@link Resource} to cache for further registration
+     * 
+     * @param resource
+     */
     public void addPreResource(Resource resource) {
 
 	Collection<Resource> resources = Collections.singleton(resource);
 	addPreResources(resources);
     }
 
+    /**
+     * Adds {@link Collection} of {@link Resource} from old {@link RestConfig}
+     * to cache for further registration
+     * 
+     * @param oldConfig
+     */
     public void addPreResources(RestConfig oldConfig) {
 
 	if (ObjectUtils.notNull(oldConfig)) {
