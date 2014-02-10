@@ -124,8 +124,10 @@ public class EjbClassLoader extends URLClassLoader {
      */
     protected static class MergeEnumeration<E> implements Enumeration<E> {
 
+	// Enumeration array which should be merged
 	private Enumeration<E>[] enums;
 
+	// Index of Enumeration array to iterate
 	private int index = CollectionUtils.FIRST_INDEX;
 
 	public MergeEnumeration(Enumeration<E>[] enums) {
