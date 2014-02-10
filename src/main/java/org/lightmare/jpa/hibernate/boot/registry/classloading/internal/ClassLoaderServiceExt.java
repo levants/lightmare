@@ -250,7 +250,8 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 
 	    Collection<ClassLoader> loaders;
 
-	    boolean valid = name.contains(PERSISTENCE_XML_PATH);
+	    boolean valid = name.contains(PERSISTENCE_XML_PATH)
+		    && EjbClassLoader.checkPlatform();
 
 	    if (valid) {
 		loaders = new HashSet<ClassLoader>();

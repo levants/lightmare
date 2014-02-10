@@ -264,7 +264,7 @@ public class EjbClassLoader extends URLClassLoader {
      * 
      * @return <code>boolean</code>
      */
-    private static boolean checkPlatform() {
+    public static boolean checkPlatform() {
 
 	boolean valid;
 
