@@ -198,6 +198,10 @@ public class LibraryLoader {
      */
     public static ClassLoader getContextClassLoader() {
 
+	/**
+	 * Implementation of PrivilegedAction to get current thread's class
+	 * loader
+	 */
 	PrivilegedAction<ClassLoader> action = new PrivilegedAction<ClassLoader>() {
 
 	    @Override

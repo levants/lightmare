@@ -152,8 +152,8 @@ public class EjbClassLoader extends URLClassLoader {
 	    int length = this.enums.length;
 	    while (this.index < length && ObjectUtils.notTrue(validToBreack)) {
 		current = this.enums[this.index];
-		validToBreack = (ObjectUtils.notNull(current) && (current
-			.hasMoreElements()));
+		validToBreack = (ObjectUtils.notNull(current) && current
+			.hasMoreElements());
 		if (ObjectUtils.notTrue(validToBreack)) {
 		    this.index++;
 		}
