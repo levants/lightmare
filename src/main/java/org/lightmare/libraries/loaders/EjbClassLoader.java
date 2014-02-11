@@ -39,7 +39,8 @@ import sun.misc.Resource;
 import sun.misc.URLClassPath;
 
 /**
- * Implementation of {@link URLClassLoader} class for deployed EJB applications
+ * Implementation of {@link URLClassLoader} class for isolation of deployed EJB
+ * applications
  * 
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT

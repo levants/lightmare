@@ -373,10 +373,8 @@ public class LibraryLoader {
 	if (file.exists()) {
 	    Set<URL> urls = new HashSet<URL>();
 	    FileUtils.getSubfiles(file, urls);
-
 	    URL[] paths = CollectionUtils.toArray(urls, URL.class);
 	    ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
-
 	    if (systemLoader instanceof URLClassLoader) {
 		URLClassLoader urlLoader = (URLClassLoader) systemLoader;
 
@@ -468,7 +466,7 @@ public class LibraryLoader {
 
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
-		// Finds if loader associated class or superclass has
+		// Finds if loader associated class or it's superclass has
 		// "close"
 		// method
 		hasCloseMethod(loaderClass);
@@ -490,7 +488,6 @@ public class LibraryLoader {
 		URLClassLoader urlClassLoader = ObjectUtils.cast(loader,
 			URLClassLoader.class);
 		urlClassLoader.clearAssertionStatus();
-
 		// Finds if loader associated class or superclass has "close"
 		// method
 		checkOnClose(URLClassLoader.class);
