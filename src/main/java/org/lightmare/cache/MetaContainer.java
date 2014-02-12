@@ -274,9 +274,13 @@ public class MetaContainer {
      */
     public static Collection<String> getBeanNames(URL url) {
 
+	Collection<String> urls;
+
 	synchronized (MetaContainer.class) {
-	    return EJB_URLS.get(url);
+	    urls = EJB_URLS.get(url);
 	}
+
+	return urls;
     }
 
     /**
@@ -287,9 +291,13 @@ public class MetaContainer {
      */
     public static boolean chackDeployment(URL url) {
 
+	boolean containsKey;
+
 	synchronized (MetaContainer.class) {
-	    return EJB_URLS.containsKey(url);
+	    containsKey = EJB_URLS.containsKey(url);
 	}
+
+	return containsKey;
     }
 
     /**
