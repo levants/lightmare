@@ -67,8 +67,6 @@ public class MetaContainer {
 
     // Cached bean class name by its URL for undeploy processing
     private static final ConcurrentMap<URL, Collection<String>> EJB_URLS = new ConcurrentHashMap<URL, Collection<String>>();
-    
-    private static final String BEAN_NOT_DEPLOYED_ERROR = "Bean %s is not deployed";
 
     private static final Logger LOG = Logger.getLogger(MetaContainer.class);
 
