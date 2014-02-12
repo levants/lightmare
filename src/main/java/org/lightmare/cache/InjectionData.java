@@ -25,7 +25,7 @@ package org.lightmare.cache;
 import java.lang.reflect.Field;
 
 /**
- * Container class to cache bean injections
+ * Container class to cache EJB bean injections
  * 
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT

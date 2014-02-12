@@ -201,6 +201,9 @@ public class LibraryLoader {
 	/**
 	 * Implementation of PrivilegedAction to get current thread's class
 	 * loader
+	 * 
+	 * @author Levan Tsinadze
+	 * 
 	 */
 	PrivilegedAction<ClassLoader> action = new PrivilegedAction<ClassLoader>() {
 
