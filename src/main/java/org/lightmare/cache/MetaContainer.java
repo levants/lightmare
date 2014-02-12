@@ -353,11 +353,8 @@ public class MetaContainer {
     private static void clearConnection(MetaData metaData) throws IOException {
 
 	Collection<ConnectionData> connections = metaData.getConnections();
-
 	if (CollectionUtils.valid(connections)) {
-
 	    for (ConnectionData connection : connections) {
-
 		// Gets connection to clear
 		String unitName = connection.getUnitName();
 		ConnectionSemaphore semaphore = connection.getConnection();
