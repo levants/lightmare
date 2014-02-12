@@ -39,6 +39,7 @@ import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
+import org.lightmare.ejb.exceptions.BeanNotDeployedException;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
 import org.lightmare.utils.CollectionUtils;
@@ -257,8 +258,7 @@ public class MetaContainer {
 	MetaData metaData = getMetaData(beanName);
 
 	if (metaData == null) {
-	    throw new IOException(String.format("Bean %s is not deployed",
-		    beanName));
+	    throw BeanNotDeployedException.get(beanName);
 	}
 
 	awaitMetaData(metaData);
