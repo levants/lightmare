@@ -204,21 +204,11 @@ public class RestContainer {
      * @return <code>boolean</code>
      */
     public static boolean hasRest() {
-
-	boolean valid;
-
-	synchronized (RestContainer.class) {
-	    valid = ObjectUtils.notNull(restConfig);
-	}
-
-	return valid;
+	return ObjectUtils.notNull(restConfig);
     }
 
     public static void setRestConfig(RestConfig newConfig) {
-
-	synchronized (RestContainer.class) {
-	    restConfig = newConfig;
-	}
+	restConfig = newConfig;
     }
 
     public static RestConfig getRestConfig() {

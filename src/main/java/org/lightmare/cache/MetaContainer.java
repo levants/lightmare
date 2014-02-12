@@ -77,11 +77,7 @@ public class MetaContainer {
      * @return {@link MetaCreator}
      */
     public static MetaCreator getCreator() {
-
-	synchronized (MetaContainer.class) {
-
-	    return creator;
-	}
+	return creator;
     }
 
     /**
@@ -161,7 +157,6 @@ public class MetaContainer {
 	    throws BeanInUseException {
 
 	MetaData tmpMeta = addMetaData(beanName, metaData);
-
 	if (ObjectUtils.notNull(tmpMeta)) {
 	    throw BeanInUseException.get(beanName);
 	}
@@ -382,20 +377,20 @@ public class MetaContainer {
      */
     public static void undeployBean(String beanName) throws IOException {
 
-	MetaData metaData = null;
+	MetaData metaData;
 
 	try {
 	    metaData = getSyncMetaData(beanName);
 	} catch (IOException ex) {
 	    LogUtils.error(LOG, ex, "Could not get bean resources %s cause %s",
 		    beanName, ex.getMessage());
+	    metaData = null;
 	}
 
 	// Removes MetaData from cache
 	removeMeta(beanName);
 
 	if (ObjectUtils.notNull(metaData)) {
-
 	    // Removes appropriated resource class from REST service
 	    if (RestContainer.hasRest()) {
 		RestProvider.remove(metaData.getBeanClass());
@@ -420,7 +415,6 @@ public class MetaContainer {
 	boolean valid;
 
 	synchronized (MetaContainer.class) {
-
 	    Collection<String> beanNames = getBeanNames(url);
 	    valid = CollectionUtils.valid(beanNames);
 	    if (valid) {
