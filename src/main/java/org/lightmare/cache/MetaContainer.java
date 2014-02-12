@@ -86,7 +86,9 @@ public class MetaContainer {
      * @param metaCreator
      */
     public static void setCreator(MetaCreator metaCreator) {
-	creator = metaCreator;
+	synchronized (MetaContainer.class) {
+	    creator = metaCreator;
+	}
     }
 
     /**
