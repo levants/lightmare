@@ -86,10 +86,7 @@ public class MetaContainer {
      * @param metaCreator
      */
     public static void setCreator(MetaCreator metaCreator) {
-
-	synchronized (MetaContainer.class) {
-	    creator = metaCreator;
-	}
+	creator = metaCreator;
     }
 
     /**
@@ -483,16 +480,24 @@ public class MetaContainer {
     }
 
     /**
+     * Clears {@link MetaCreator} instance
+     */
+    private static void clearMetaCreator() {
+
+	if (ObjectUtils.notNull(creator)) {
+	    creator.clear();
+	    creator = null;
+	}
+    }
+
+    /**
      * Removes all cached resources
      */
     public static void clear() {
 
 	if (ObjectUtils.notNull(creator)) {
 	    synchronized (MetaContainer.class) {
-		if (ObjectUtils.notNull(creator)) {
-		    creator.clear();
-		    creator = null;
-		}
+		clearMetaCreator();
 	    }
 	}
 
