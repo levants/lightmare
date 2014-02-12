@@ -106,10 +106,8 @@ public class MetaContainer {
 	if (CollectionUtils.valid(archives)) {
 	    boolean containsPath;
 	    for (URL archive : archives) {
-
 		String path = WatchUtils.clearPath(archive.getFile());
 		containsPath = CONFIGS.containsKey(path);
-
 		if (ObjectUtils.notTrue(containsPath)) {
 		    CONFIGS.put(path, config);
 		}
