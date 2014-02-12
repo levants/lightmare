@@ -275,7 +275,6 @@ public class MetaContainer {
     public static Collection<String> getBeanNames(URL url) {
 
 	synchronized (MetaContainer.class) {
-
 	    return EJB_URLS.get(url);
 	}
     }
@@ -289,7 +288,6 @@ public class MetaContainer {
     public static boolean chackDeployment(URL url) {
 
 	synchronized (MetaContainer.class) {
-
 	    return EJB_URLS.containsKey(url);
 	}
     }
