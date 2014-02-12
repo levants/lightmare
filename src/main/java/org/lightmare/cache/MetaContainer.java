@@ -77,7 +77,14 @@ public class MetaContainer {
      * @return {@link MetaCreator}
      */
     public static MetaCreator getCreator() {
-	return creator;
+
+	MetaCreator syncCreator;
+
+	synchronized (MetaContainer.class) {
+	    syncCreator = creator;
+	}
+
+	return syncCreator;
     }
 
     /**
