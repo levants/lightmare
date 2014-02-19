@@ -312,8 +312,9 @@ public class EjbClassLoader extends URLClassLoader {
     }
 
     /**
-     * Replica of parent {@link URLClassLoader} and {@link ClassLoader} class
-     * method for other method
+     * Implementation of parent {@link URLClassLoader} and {@link ClassLoader}
+     * class method for filter parent ClassLoader and current
+     * {@link ClassLoader}'s resources
      * 
      * @return {@link Enumeration}
      */
