@@ -36,7 +36,6 @@ import org.lightmare.utils.StringUtils;
 
 import sun.misc.Launcher;
 import sun.misc.Resource;
-import sun.misc.URLClassPath;
 
 /**
  * Implementation of {@link URLClassLoader} class for isolation of deployed EJB
@@ -316,10 +315,10 @@ public class EjbClassLoader extends URLClassLoader {
      * Replica of parent {@link URLClassLoader} and {@link ClassLoader} class
      * method for other method
      * 
-     * @return {@link URLClassPath}
+     * @return {@link Enumeration}
      */
-    static URLClassPath getBootstrapClassPath() {
-	return Launcher.getBootstrapClassPath();
+    static Enumeration<Resource> getBootstrapsResource(String name) {
+	return Launcher.getBootstrapClassPath().getResources(name);
     }
 
     /**
@@ -332,8 +331,7 @@ public class EjbClassLoader extends URLClassLoader {
 	    throws IOException {
 
 	// Enumeration to iterate over
-	final Enumeration<Resource> enumeration = getBootstrapClassPath()
-		.getResources(name);
+	final Enumeration<Resource> enumeration = getBootstrapsResource(name);
 
 	return new Enumeration<URL>() {
 
