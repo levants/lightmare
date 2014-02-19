@@ -62,14 +62,16 @@ public class RcpHandler extends ChannelInboundHandlerAdapter {
 
 	public ResponseListener(final BlockingQueue<RcpWrapper> answer,
 		final MessageEvent ev) {
-
 	    this.answer = answer;
 	    this.ev = ev;
 	}
 
 	@Override
 	public void operationComplete(ChannelFuture future) throws Exception {
-	    boolean offered = answer.offer((RcpWrapper) ev.getSource());
+
+	    RcpWrapper rcpWrapper = ObjectUtils.cast(ev.getSource(),
+		    RcpWrapper.class);
+	    boolean offered = answer.offer(rcpWrapper);
 	    assert offered;
 	}
     }

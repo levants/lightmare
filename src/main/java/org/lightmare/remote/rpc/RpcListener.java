@@ -56,6 +56,12 @@ public class RpcListener {
     // Worker pool for Netty server
     private static EventLoopGroup worker;
 
+    private static final String BOSS_THREAD_NAME = "netty-boss-thread";
+
+    private static final String WORKER_THREAD_NAME = "netty-boss-thread";
+
+    private static final int WORKER_THEAD_PRIORITY = Thread.MAX_PRIORITY - 1;
+
     private static final Logger LOG = Logger.getLogger(RpcListener.class);
 
     /**
@@ -87,15 +93,16 @@ public class RpcListener {
 	if (bossCount == null) {
 	    bossCount = ConfigKeys.BOSS_POOL.getValue();
 	}
+
 	Integer workerCount = config.getIntValue(ConfigKeys.WORKER_POOL.key);
 	if (workerCount == null) {
 	    workerCount = ConfigKeys.WORKER_POOL.getValue();
 	}
 
 	boss = new NioEventLoopGroup(bossCount, new ThreadFactoryUtil(
-		"netty-boss-thread", Thread.MAX_PRIORITY));
+		BOSS_THREAD_NAME, Thread.MAX_PRIORITY));
 	worker = new NioEventLoopGroup(workerCount, new ThreadFactoryUtil(
-		"netty-worker-thread", (Thread.MAX_PRIORITY - 1)));
+		WORKER_THREAD_NAME, WORKER_THEAD_PRIORITY));
     }
 
     /**
