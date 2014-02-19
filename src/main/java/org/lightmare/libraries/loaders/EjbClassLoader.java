@@ -282,13 +282,12 @@ public class EjbClassLoader extends URLClassLoader {
 	if (valid) {
 	    int length = platforms.length;
 	    String platform;
-	    boolean check = Boolean.FALSE;
+	    valid = Boolean.FALSE;
 	    for (int i = CollectionUtils.FIRST_INDEX; ObjectUtils
-		    .notTrue(check) && i < length; i++) {
+		    .notTrue(valid) && i < length; i++) {
 		platform = platforms[i];
-		check = checkPlatform(platform);
+		valid = checkPlatform(platform);
 	    }
-	    valid = check;
 	}
 
 	return valid;
@@ -331,19 +330,22 @@ public class EjbClassLoader extends URLClassLoader {
     private static Enumeration<URL> getBootstrapResources(String name)
 	    throws IOException {
 
-	// Enumeration to iterate over
-	final Enumeration<Resource> enumeration = getBootstrapsResources(name);
+	Enumeration<URL> urls;
 
-	return new Enumeration<URL>() {
+	// Enumeration to iterate over
+	final Enumeration<Resource> resources = getBootstrapsResources(name);
+	urls = new Enumeration<URL>() {
 
 	    public URL nextElement() {
-		return (enumeration.nextElement()).getURL();
+		return (resources.nextElement()).getURL();
 	    }
 
 	    public boolean hasMoreElements() {
-		return enumeration.hasMoreElements();
+		return resources.hasMoreElements();
 	    }
 	};
+
+	return urls;
     }
 
     /**
