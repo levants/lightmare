@@ -318,7 +318,7 @@ public class EjbClassLoader extends URLClassLoader {
      * 
      * @return {@link Enumeration}
      */
-    static Enumeration<Resource> getBootstrapsResource(String name) {
+    static Enumeration<Resource> getBootstrapsResources(String name) {
 	return Launcher.getBootstrapClassPath().getResources(name);
     }
 
@@ -332,7 +332,7 @@ public class EjbClassLoader extends URLClassLoader {
 	    throws IOException {
 
 	// Enumeration to iterate over
-	final Enumeration<Resource> enumeration = getBootstrapsResource(name);
+	final Enumeration<Resource> enumeration = getBootstrapsResources(name);
 
 	return new Enumeration<URL>() {
 
