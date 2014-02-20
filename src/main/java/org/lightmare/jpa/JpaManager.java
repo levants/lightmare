@@ -124,12 +124,9 @@ public class JpaManager {
 	EntityManagerFactory emf;
 
 	HibernatePersistenceProvider provider;
-
 	boolean pathCheck = StringUtils.valid(path);
 	boolean urlCheck = checkForURL();
-
 	HibernatePersistenceProviderExt.Builder builder = new HibernatePersistenceProviderExt.Builder();
-
 	if (loader == null) {
 	    loader = LibraryLoader.getContextClassLoader();
 	}
