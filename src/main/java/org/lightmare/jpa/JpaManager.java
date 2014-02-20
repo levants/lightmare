@@ -57,6 +57,7 @@ public class JpaManager {
     // Entity classes
     private List<String> classes;
 
+    // Path for configuration XML file
     private String path;
 
     private URL url;
