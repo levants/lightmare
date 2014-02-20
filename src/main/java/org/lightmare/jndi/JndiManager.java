@@ -24,14 +24,13 @@ package org.lightmare.jndi;
 
 import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
+import org.apache.log4j.Logger;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
@@ -47,6 +46,8 @@ public class JndiManager {
 
     // Value of InitialContextFactory implementation class
     private static final Class<LightmareInitialContextFactory> FACTORY_CLASS = LightmareInitialContextFactory.class;
+
+    private static final Logger LOG = Logger.getLogger(JndiManager.class);
 
     /**
      * Caches JNDI system parameters for initializing {@link Context} instance
@@ -93,87 +94,56 @@ public class JndiManager {
 	}
     }
 
-    // Check variable if system property are set
-    private static boolean isContextFactory;
-
-    // Cached context variable
-    private static Context context;
-
-    private static final Lock LOCK = new ReentrantLock();
-
     /**
-     * Registers passed {@link Properties} as system properties
+     * Enumeration to set JNDI system properties and initialize {@link Context}
+     * instance
      * 
-     * @param configs
-     */
-    private void addSystemProperties(Properties configs) {
-	System.getProperties().putAll(configs);
-    }
-
-    /**
-     * If context is not initialized and {@link Properties} are not registered
-     * then registers system properties and initializes {@link Context} instance
+     * @author Levan Tsinadze
      * 
-     * @param properties
      */
-    private void setFactoryProperties(Properties properties) {
+    private static enum NamingContexts {
 
-	if (ObjectUtils.notTrue(isContextFactory)) {
-	    addSystemProperties(properties);
-	    isContextFactory = Boolean.TRUE;
-	}
-    }
+	CONTEXT;
 
-    /**
-     * Initializes {@link Context} if it is null
-     * 
-     * @param properties
-     * @throws IOException
-     */
-    private void createContext(Properties properties) throws IOException {
+	private final Context context;
 
-	if (context == null) {
+	private static final String NOT_INITIALIZED_ERROR = "Context not initialized";
+
+	private NamingContexts() throws ExceptionInInitializerError {
+
+	    Properties properties = JNDIParameters.getConfig();
+	    // Registers properties as system properties
+	    System.getProperties().putAll(properties);
 	    try {
 		context = new InitialContext(properties);
 	    } catch (NamingException ex) {
-		throw new IOException(ex);
+		throw new ExceptionInInitializerError(ex);
 	    }
 	}
-    }
 
-    /**
-     * Creates and sets {@link InitialContext}
-     * 
-     * @throws IOException
-     */
-    private void setInitialCotext() throws IOException {
+	/**
+	 * If context is not initialized throws {@link IOException} registered
+	 * else returns single {@link Context} instance instance
+	 * 
+	 */
+	protected Context getContext() throws IOException {
 
-	if (ObjectUtils.notTrue(isContextFactory) || context == null) {
-	    Properties properties = JNDIParameters.getConfig();
-	    setFactoryProperties(properties);
-	    createContext(properties);
+	    if (context == null) {
+		throw new IOException(NOT_INITIALIZED_ERROR);
+	    }
+
+	    return context;
 	}
     }
 
     /**
-     * Getter for {@link Context} with check if it is initialized if not calls
-     * {@link JndiManager#setInitialCotext()} method
+     * Getter for {@link Context} instance
      * 
      * @return {@link Context}
      * @throws IOException
      */
     public Context getContext() throws IOException {
-
-	if (context == null) {
-	    ObjectUtils.lock(LOCK);
-	    try {
-		setInitialCotext();
-	    } finally {
-		ObjectUtils.unlock(LOCK);
-	    }
-	}
-
-	return context;
+	return NamingContexts.CONTEXT.getContext();
     }
 
     /**
