@@ -89,7 +89,6 @@ public class JpaManager {
      * @return boolean
      */
     private boolean checkForURL() {
-
 	return ObjectUtils.notNull(url) && StringUtils.valid(url.toString());
     }
 
@@ -136,14 +135,12 @@ public class JpaManager {
 	}
 
 	if (CollectionUtils.valid(classes)) {
-
 	    builder.setClasses(classes);
 	    // Loads entity classes to current ClassLoader instance
 	    LibraryLoader.loadClasses(classes, loader);
 	}
 
 	if (pathCheck || urlCheck) {
-
 	    List<URL> xmls;
 	    ConfigLoader configLoader = new ConfigLoader();
 	    if (pathCheck) {
@@ -160,7 +157,6 @@ public class JpaManager {
 	builder.setSwapDataSource(swapDataSource);
 	builder.setScanArchives(scanArchives);
 	builder.setOverridenClassLoader(loader);
-
 	provider = builder.build();
 
 	if (ObjectUtils.notTrue(swapDataSource)) {
