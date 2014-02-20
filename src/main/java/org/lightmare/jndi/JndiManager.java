@@ -118,6 +118,10 @@ public class JndiManager {
 	// Error descriptor if Context is not initialized
 	private static final String NOT_INITIALIZED_ERROR = "Context not initialized";
 
+	/**
+	 * Initialized {@link NamingContexts} and contained {@link Context} with
+	 * system properties
+	 */
 	private NamingContexts() {
 	    // Gets system properties
 	    Properties properties = JNDIParameters.getConfig();

@@ -40,8 +40,8 @@ import org.lightmare.jpa.JpaManager;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.finalizers.FinalizationUtils;
 import org.lightmare.utils.finalizers.Cleanable;
+import org.lightmare.utils.finalizers.FinalizationUtils;
 import org.osjava.sj.memory.MemoryContext;
 
 /**
