@@ -22,7 +22,7 @@ public class NamingUtilsTest {
 
 	try {
 
-	    Context contextBind = new JndiManager().getContext();
+	    Context contextBind = JndiManager.getContext();
 	    contextBind.bind(name, value);
 	    contextBind.close();
 

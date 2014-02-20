@@ -99,7 +99,7 @@ public class JndiManager {
      * instance
      * 
      * @author Levan Tsinadze
-     * 
+     * @since 0.1.1
      */
     private static enum NamingContexts {
 
@@ -109,14 +109,16 @@ public class JndiManager {
 
 	private static final String NOT_INITIALIZED_ERROR = "Context not initialized";
 
-	private NamingContexts() throws ExceptionInInitializerError {
+	private NamingContexts() {
 
+	    // Gets system properties
 	    Properties properties = JNDIParameters.getConfig();
 	    // Registers properties as system properties
 	    System.getProperties().putAll(properties);
 	    try {
 		context = new InitialContext(properties);
 	    } catch (NamingException ex) {
+		LOG.error(ex.getMessage(), ex);
 		throw new ExceptionInInitializerError(ex);
 	    }
 	}
@@ -142,7 +144,7 @@ public class JndiManager {
      * @return {@link Context}
      * @throws IOException
      */
-    public Context getContext() throws IOException {
+    public static Context getContext() throws IOException {
 	return NamingContexts.CONTEXT.getContext();
     }
 

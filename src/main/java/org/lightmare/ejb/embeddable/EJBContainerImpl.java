@@ -83,8 +83,7 @@ public class EJBContainerImpl extends EJBContainer {
 	Context context;
 
 	try {
-	    JndiManager utils = new JndiManager();
-	    context = utils.getContext();
+	    context = JndiManager.getContext();
 	} catch (IOException ex) {
 	    context = null;
 	    LOG.error("Could not initialize Context", ex);
