@@ -60,6 +60,7 @@ public class JpaManager {
     // Path for configuration XML file
     private String path;
 
+    // URL for configuration XML file
     private URL url;
 
     // Additional properties
