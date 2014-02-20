@@ -103,10 +103,13 @@ public class JndiManager {
      */
     private static enum NamingContexts {
 
-	CONTEXT;
+	CONTEXT; // Single instance of NamingContexts to initialize and keep
+		 // Context instance
 
+	// Single Context instance
 	private final Context context;
 
+	// Error descriptor if Context is not initialized
 	private static final String NOT_INITIALIZED_ERROR = "Context not initialized";
 
 	private NamingContexts() {
