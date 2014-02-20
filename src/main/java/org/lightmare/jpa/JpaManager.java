@@ -340,7 +340,7 @@ public class JpaManager {
 	}
 
 	/**
-	 * Sets boolean check property to swap jta data source value with non
+	 * Sets boolean check property to swap JTA data source value with non
 	 * JTA data source value
 	 * 
 	 * @param swapDataSource
