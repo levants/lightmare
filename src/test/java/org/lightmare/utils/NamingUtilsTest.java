@@ -26,7 +26,6 @@ public class NamingUtilsTest {
 
 	    Context contextGet = new InitialContext();
 	    Object gotten = contextGet.lookup(name);
-
 	    System.out.println(gotten);
 	} catch (NamingException ex) {
 	    ex.printStackTrace();
