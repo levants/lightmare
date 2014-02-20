@@ -110,9 +110,9 @@ public class JpaManager {
     }
 
     /**
-     * Creates {@link EntityManagerFactory} by hibernate or by extended builder
-     * {@link Ejb3ConfigurationImpl} if entity classes or persistence.xml file
-     * path are provided
+     * Creates {@link EntityManagerFactory} by "Hibernate" or by extended
+     * builder {@link Ejb3ConfigurationImpl} if entity classes or
+     * persistence.xml file path are provided
      * 
      * @see Ejb3ConfigurationImpl#configure(String, Map) and
      *      Ejb3ConfigurationImpl#createEntityManagerFactory()
