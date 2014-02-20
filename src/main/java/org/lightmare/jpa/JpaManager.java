@@ -199,7 +199,6 @@ public class JpaManager {
 	boolean bound = semaphore.isBound();
 
 	if (ObjectUtils.notTrue(bound)) {
-
 	    String jndiName = semaphore.getJndiName();
 	    if (StringUtils.valid(jndiName)) {
 		JndiManager jndiManager = new JndiManager();
