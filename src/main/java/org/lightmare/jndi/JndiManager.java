@@ -73,6 +73,12 @@ public class JndiManager {
 
 	public String value;
 
+	/**
+	 * Constructor with key and value
+	 * 
+	 * @param key
+	 * @param value
+	 */
 	private JNDIParameters(String key, String value) {
 	    this.key = key;
 	    this.value = value;
@@ -210,7 +216,7 @@ public class JndiManager {
     }
 
     /**
-     * Deletes (Unbinds) passed name and associated {@link Object} from
+     * Deletes (unbinds) passed name and associated {@link Object} from
      * {@link Context}
      * 
      * @param name
