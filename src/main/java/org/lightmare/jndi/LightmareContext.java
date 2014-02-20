@@ -94,10 +94,8 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 	    UserTransaction transaction = TransactionHolder.getTransaction();
 	    value = transaction;
 	} else if (jndiName.startsWith(NamingUtils.JPA_NAME_PREF)) {
-
 	    // Checks if it is request for entity manager
 	    name = NamingUtils.formatJpaJndiName(jndiName);
-
 	    // Checks if connection is in progress and waits for finish
 	    ConnectionContainer.isInProgress(name);
 
@@ -118,7 +116,6 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 	    NamingUtils.BeanDescriptor descriptor = NamingUtils
 		    .parseEjbJndiName(jndiName);
 	    EjbConnector ejbConnection = new EjbConnector();
-
 	    try {
 		String beanName = descriptor.getBeanName();
 		String interfaceName = descriptor.getInterfaceName();
@@ -129,7 +126,6 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 	} else {
 	    value = super.lookup(jndiName);
 	}
-
 	// Saves value to clear after close method is called
 	cacheResource(value);
 

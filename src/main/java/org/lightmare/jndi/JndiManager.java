@@ -110,7 +110,6 @@ public class JndiManager {
 	private static final String NOT_INITIALIZED_ERROR = "Context not initialized";
 
 	private NamingContexts() {
-
 	    // Gets system properties
 	    Properties properties = JNDIParameters.getConfig();
 	    // Registers properties as system properties
