@@ -19,9 +19,7 @@ public class NamingUtilsTest {
 
 	String name = "test_name";
 	String value = "test_value";
-
 	try {
-
 	    Context contextBind = JndiManager.getContext();
 	    contextBind.bind(name, value);
 	    contextBind.close();
@@ -30,7 +28,6 @@ public class NamingUtilsTest {
 	    Object gotten = contextGet.lookup(name);
 
 	    System.out.println(gotten);
-
 	} catch (NamingException ex) {
 	    ex.printStackTrace();
 	} catch (IOException ex) {
