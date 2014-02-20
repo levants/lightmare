@@ -339,7 +339,7 @@ public class JpaManager {
 
 	/**
 	 * Sets boolean check property to swap jta data source value with non
-	 * jta data source value
+	 * JTA data source value
 	 * 
 	 * @param swapDataSource
 	 * @return {@link Builder}
