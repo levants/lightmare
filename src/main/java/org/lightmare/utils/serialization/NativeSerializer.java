@@ -65,7 +65,7 @@ public abstract class NativeSerializer {
     }
 
     /**
-     * De-serializes byte array in java type ({@link Object}) with java native
+     * Diserializes byte array in java type ({@link Object}) with java native
      * serialization API
      * 
      * @param data

@@ -24,10 +24,7 @@ package org.lightmare.utils.serialization;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
-import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -45,7 +42,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public abstract class JsonSerializer {
 
     /**
-     * Enumeration to initialize {@link ObjectMapper} instance
+     * Enumeration to initialize and configure single {@link ObjectMapper}
+     * instance
      * 
      * @author Levan Tsinadze
      * 
@@ -74,7 +72,7 @@ public abstract class JsonSerializer {
 
     /**
      * Serializes {@link Object} to JSON {@link String} with <a
-     * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
+     * href="https://github.com/FasterXML/jackson-databind">jackson API</a>
      * 
      * @param value
      * @return {@link String}
@@ -126,7 +124,7 @@ public abstract class JsonSerializer {
 
     /**
      * Deserializes JSON {@link InputStream} to {@link Object} with <a
-     * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
+     * href="https://github.com/FasterXML/jackson-databind">jackson API</a>
      * 
      * @param data
      * @param valueClass
@@ -143,7 +141,7 @@ public abstract class JsonSerializer {
 
     /**
      * Deserializes JSON (<code>byte[]</code>) to {@link Object} with <a
-     * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
+     * href="https://github.com/FasterXML/jackson-databind">jackson API</a>
      * 
      * @param data
      * @param valueClass
