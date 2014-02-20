@@ -44,25 +44,21 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  */
 public abstract class JsonSerializer {
 
-    // Converter class
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    /**
+     * Enumeration to initialize {@link ObjectMapper} instance
+     * 
+     * @author Levan Tsinadze
+     * 
+     */
+    protected static enum JsonMapper {
 
-    // Check for configuration of ObjectMapper instance
-    private static boolean mapperConfigured;
+	MAPPER; // Single instance of converter container class
 
-    // Lock for initializing ObjectMapper instance
-    private static final Lock LOCK = new ReentrantLock();
+	// Converter class
+	protected final ObjectMapper objectMapper = new ObjectMapper();
 
-    private static void configureMapper() {
-
-	ObjectUtils.lock(LOCK);
-	try {
-	    if (ObjectUtils.notTrue(mapperConfigured)) {
-		MAPPER.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		mapperConfigured = Boolean.TRUE;
-	    }
-	} finally {
-	    ObjectUtils.unlock(LOCK);
+	private JsonMapper() {
+	    objectMapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 	}
     }
 
@@ -73,12 +69,7 @@ public abstract class JsonSerializer {
      * @return {@link ObjectMapper}
      */
     public static ObjectMapper getMapper() {
-
-	if (ObjectUtils.notTrue(mapperConfigured)) {
-	    configureMapper();
-	}
-
-	return MAPPER;
+	return JsonMapper.MAPPER.objectMapper;
     }
 
     /**
