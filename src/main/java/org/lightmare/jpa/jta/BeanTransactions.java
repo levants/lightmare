@@ -106,7 +106,6 @@ public class BeanTransactions {
 	    transaction = UserTransactionFactory.get(entityTransactions);
 	    TransactionHolder.setTransaction(transaction);
 	} else {
-
 	    // If entityTransactions array is available then adds it to
 	    // UserTransaction object
 	    UserTransactionFactory.join(transaction, entityTransactions);
@@ -202,6 +201,7 @@ public class BeanTransactions {
      */
     private static void beginEntityTransaction(
 	    EntityTransaction entityTransaction) {
+
 	if (ObjectUtils.notTrue(entityTransaction.isActive())) {
 	    entityTransaction.begin();
 	}

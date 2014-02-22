@@ -42,10 +42,19 @@ public abstract class UserTransactionFactory {
     // Error messages
     private static final String ISNANTIATING_ERROR = "Class UserTransactionFactory can not be instntiate";
 
+    /**
+     * Private constructor to avoid class initialization
+     */
     private UserTransactionFactory() {
 	throw new InstantiationError(ISNANTIATING_ERROR);
     }
 
+    /**
+     * To initialize {@link UserTransaction} instance
+     * 
+     * @param transactions
+     * @return {@link UserTransaction}
+     */
     public static UserTransaction get(EntityTransaction... transactions) {
 	return new UserTransactionImpl(transactions);
     }
