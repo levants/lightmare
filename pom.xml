@@ -629,6 +629,11 @@
 			<version>${jackson.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-afterburner</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
 		<!-- end of jackson json serialization -->
 
 		<!-- yaml snakeyaml -->

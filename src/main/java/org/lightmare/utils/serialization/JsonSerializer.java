@@ -25,12 +25,14 @@ package org.lightmare.utils.serialization;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.RpcUtils;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 
 /**
  * Reads write java objects from {@link Byte} array or {@link String} with java
@@ -57,6 +59,7 @@ public abstract class JsonSerializer {
 
 	private JsonMapper() {
 	    objectMapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+	    objectMapper.registerModule(new AfterburnerModule());
 	}
     }
 
