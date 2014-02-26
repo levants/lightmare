@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.utils.serialization.json;
+package org.lightmare.utils.serialization;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +31,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 
 /**
@@ -54,11 +55,12 @@ public abstract class JsonSerializer {
 	MAPPER; // Single instance of converter container class
 
 	// Converter class
-	protected final ObjectMapper objectMapper = new ObjectMapper4Hibernate();
+	protected final ObjectMapper objectMapper = new ObjectMapper();
 
 	private JsonMapper() {
-	    objectMapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-	    objectMapper.registerModule(new AfterburnerModule());
+	    objectMapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+		    .registerModule(new AfterburnerModule())
+		    .registerModule(new Hibernate4Module());
 	}
     }
 
