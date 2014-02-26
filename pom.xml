@@ -634,6 +634,11 @@
 			<artifactId>jackson-module-afterburner</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate4</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
 		<!-- end of jackson json serialization -->
 
 		<!-- yaml snakeyaml -->

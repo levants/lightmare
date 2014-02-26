@@ -54,7 +54,7 @@ public abstract class JsonSerializer {
 	MAPPER; // Single instance of converter container class
 
 	// Converter class
-	protected final ObjectMapper objectMapper = new ObjectMapper();
+	protected final ObjectMapper objectMapper = new ObjectMapper4Hibernate();
 
 	private JsonMapper() {
 	    objectMapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
