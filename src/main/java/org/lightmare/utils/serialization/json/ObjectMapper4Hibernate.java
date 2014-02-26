@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 
 /**
- * Extension of {@link ObjectMapper} with JPA / Hibernate relationship lazy
- * initialization utilities
+ * Extension of {@link ObjectMapper} class for JSON serialization with JPA /
+ * Hibernate ORM lazy initialization support
  * 
  * @author Levan Tsinadze
  * @since 0.1.1
