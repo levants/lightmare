@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.utils.serialization;
+package org.lightmare.utils.serialization.json;
 
 import java.io.IOException;
 import java.io.InputStream;
