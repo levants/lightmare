@@ -317,6 +317,17 @@ public class DeployManager extends HttpServlet {
 	super.init();
     }
 
+    private void write(HttpServletResponse response, String html)
+	    throws IOException {
+
+	Writer writer = response.getWriter();
+	try {
+	    writer.write(html);
+	} finally {
+	    IOUtils.close(writer);
+	}
+    }
+
     @Override
     protected void doGet(HttpServletRequest request,
 	    HttpServletResponse response) throws ServletException, IOException {
@@ -345,12 +356,7 @@ public class DeployManager extends HttpServlet {
 		html = toLoginPage(Boolean.FALSE);
 	    }
 
-	    Writer writer = response.getWriter();
-	    try {
-		writer.write(html);
-	    } finally {
-		IOUtils.close(writer);
-	    }
+	    write(response, html);
 	}
     }
 
@@ -377,12 +383,7 @@ public class DeployManager extends HttpServlet {
 	    } else {
 
 		String html = toLoginPage(Boolean.TRUE);
-		Writer writer = response.getWriter();
-		try {
-		    writer.write(html);
-		} finally {
-		    IOUtils.close(writer);
-		}
+		write(response, html);
 	    }
 	}
     }
