@@ -48,7 +48,7 @@ public abstract class JsonSerializer {
      * instance
      * 
      * @author Levan Tsinadze
-     * 
+     * @since o.1.1
      */
     protected static enum JsonMapper {
 
