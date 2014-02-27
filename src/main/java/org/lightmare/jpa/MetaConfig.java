@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class MetaConfig {
 
-    // Arguments from lightmare
+    // Arguments from "Lightmare" server
     private transient ClassLoader overridenClassLoader;
 
     private transient List<String> classes;
