@@ -317,6 +317,13 @@ public class DeployManager extends HttpServlet {
 	super.init();
     }
 
+    /**
+     * Writes passed HTML {@link String} to {@link HttpServletResponse} output
+     * 
+     * @param response
+     * @param html
+     * @throws IOException
+     */
     private void write(HttpServletResponse response, String html)
 	    throws IOException {
 
@@ -341,7 +348,6 @@ public class DeployManager extends HttpServlet {
 	    boolean check = check(request.getSession(Boolean.FALSE));
 	    String html;
 	    if (check) {
-
 		String fileName = request.getParameter(REDEPLOY_PARAM_NAME);
 		String type = request.getParameter(TYPE_PARAM_NAME);
 		if (StringUtils.valid(fileName)) {
@@ -381,7 +387,6 @@ public class DeployManager extends HttpServlet {
 	    if (valid) {
 		response.sendRedirect(DEPLOY_MANAGER_DEFAULT_NAME);
 	    } else {
-
 		String html = toLoginPage(Boolean.TRUE);
 		write(response, html);
 	    }
