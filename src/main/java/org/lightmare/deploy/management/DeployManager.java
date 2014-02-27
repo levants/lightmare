@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.IOUtils;
@@ -139,6 +140,8 @@ public class DeployManager extends HttpServlet {
     // Security for deploy management
     private Security security;
 
+    private static final Logger LOG = Logger.getLogger(DeployManager.class);
+
     /**
      * Class to cache authenticated users for {@link DeployManager} java
      * {@link javax.servlet.http.HttpServlet} page
@@ -179,7 +182,6 @@ public class DeployManager extends HttpServlet {
 	builder.append(TYPE_TAG);
 	builder.append(DATA_SOURCES);
 	builder.append(END_TYPE_TAG);
-
 	if (CollectionUtils.valid(dss)) {
 	    for (File ds : dss) {
 		tag = getTag(ds.getPath(), DTS_DEPLOYMENT_TYPE);
@@ -311,7 +313,7 @@ public class DeployManager extends HttpServlet {
 	try {
 	    security = new Security();
 	} catch (IOException ex) {
-
+	    LOG.error(ex.getMessage(), ex);
 	}
 
 	super.init();
