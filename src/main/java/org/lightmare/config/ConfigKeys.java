@@ -44,7 +44,8 @@ public enum ConfigKeys {
     REMOTE_CONTROL("remoteControl", Boolean.FALSE), // Disables remote control
 
     // Netty server / client configuration properties for RPC calls
-    IP_ADDRESS("listeningIp", "0.0.0.0"), // IP
+    IP_ADDRESS("listeningIp", "0.0.0.0"), // Default IP address for EJB
+					  // container
 
     PORT("listeningPort", 1199), // Port
 

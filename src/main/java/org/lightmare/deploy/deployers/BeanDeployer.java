@@ -458,14 +458,12 @@ public class BeanDeployer implements Callable<String> {
     private void identifyInterceptors(Class<?> beanClass) throws IOException {
 
 	Interceptors interceptors = beanClass.getAnnotation(Interceptors.class);
-
 	if (ObjectUtils.notNull(interceptors)) {
 	    cacheInterceptors(interceptors, beanClass);
 	}
 
 	List<Method> beanMethods = MetaUtils.getAnnotatedMethods(beanClass,
 		Interceptors.class);
-
 	if (CollectionUtils.valid(beanMethods)) {
 	    for (Method beanMethod : beanMethods) {
 		interceptors = beanMethod.getAnnotation(Interceptors.class);
@@ -521,7 +519,6 @@ public class BeanDeployer implements Callable<String> {
 
 	if (CollectionUtils.invalid(localInterface)
 		&& CollectionUtils.invalid(remoteInterface)) {
-
 	    localInterface = interfaces;
 	}
 
@@ -547,11 +544,11 @@ public class BeanDeployer implements Callable<String> {
 	    if (RestCheck.check(beanClass)) {
 		RestProvider.add(beanClass);
 	    }
+
 	    createMeta(beanClass);
 	    indentifyInterfaces(beanClass);
 	    identifyInterceptors(beanClass);
 	    metaData.setInProgress(Boolean.FALSE);
-
 	} catch (IOException ex) {
 	    releaseBlocker();
 	    throw ex;
