@@ -43,8 +43,8 @@
 		<jaxrs.version>2.0</jaxrs.version>
 		<!-- end of java ee components versions -->
 		<!-- hibernate -->
-		<hibernate.version>4.2.8.Final</hibernate.version>
-		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
+		<hibernate.version>4.2.9.Final</hibernate.version>
+		<hibernate-validator.version>5.0.3.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
 		<!-- scannotation -->
 		<scannotation.version>1.0.3</scannotation.version>
@@ -59,7 +59,7 @@
 		<snakeyaml.version>1.13</snakeyaml.version>
 		<!-- end of yaml -->
 		<!-- jersey -->
-		<jersey.version>2.5</jersey.version>
+		<jersey.version>2.6</jersey.version>
 		<!-- end of jersey -->
 		<!-- netty -->
 		<netty.version>4.0.14.Final</netty.version>
@@ -594,6 +594,16 @@
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 			<version>${jackson.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-afterburner</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate4</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 		<!-- end of jackson json serialization -->
 
