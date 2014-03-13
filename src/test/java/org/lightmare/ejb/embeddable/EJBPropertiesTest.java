@@ -6,9 +6,10 @@ import java.util.ServiceLoader;
 import javax.ejb.embeddable.EJBContainer;
 import javax.ejb.spi.EJBContainerProvider;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
-//@Ignore
+@Ignore
 public class EJBPropertiesTest {
 
     private static final String DS_PATH = "./ds/standalone.xml";

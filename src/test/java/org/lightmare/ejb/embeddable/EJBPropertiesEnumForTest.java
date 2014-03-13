@@ -86,7 +86,8 @@ public enum EJBPropertiesEnumForTest {
 	properties.put(ConfigKeys.HOT_DEPLOYMENT.key, Boolean.FALSE);
 	properties.put(ConfigKeys.DEMPLOYMENT_PATH.key, Collections
 		.singleton(new DeploymentDirectory("./lib", Boolean.TRUE)));
-	properties.put(ConfigKeys.DATA_SOURCE_PATH.key, "./ds/standalone.xml");
+	properties.put(ConfigKeys.DATA_SOURCE_PATH.key,
+		Collections.singleton("./ds/standalone.xml"));
 
 	return properties;
     }
