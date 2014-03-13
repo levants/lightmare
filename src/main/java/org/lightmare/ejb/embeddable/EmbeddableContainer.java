@@ -46,7 +46,13 @@ public class EmbeddableContainer extends EJBContainer {
     // Initializes EJB container
     private MetaCreator creator;
 
-    private static final Logger LOG = Logger.getLogger(EmbeddableContainer.class);
+    // Error messages
+    private static final String CONTAINER_ERROR = "Could not initialize EJBContainer";
+
+    private static final String CONTEXT_ERROR = "Could not initialize Context";
+
+    private static final Logger LOG = Logger
+	    .getLogger(EmbeddableContainer.class);
 
     protected EmbeddableContainer() {
 
@@ -54,7 +60,7 @@ public class EmbeddableContainer extends EJBContainer {
 	    this.creator = new MetaCreator.Builder().build();
 	    this.creator.scanForBeans();
 	} catch (IOException ex) {
-	    LOG.error("Could not initialize EJBContainer", ex);
+	    LOG.error(CONTAINER_ERROR, ex);
 	}
     }
 
@@ -73,7 +79,7 @@ public class EmbeddableContainer extends EJBContainer {
 	    this.creator = builder.build();
 	    this.creator.scanForBeans();
 	} catch (IOException ex) {
-	    LOG.error("Could not initialize EJBContainer", ex);
+	    LOG.error(CONTAINER_ERROR, ex);
 	}
     }
 
@@ -86,7 +92,7 @@ public class EmbeddableContainer extends EJBContainer {
 	    context = JndiManager.getContext();
 	} catch (IOException ex) {
 	    context = null;
-	    LOG.error("Could not initialize Context", ex);
+	    LOG.error(CONTEXT_ERROR, ex);
 	}
 
 	return context;
