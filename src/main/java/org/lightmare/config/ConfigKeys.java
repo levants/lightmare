@@ -57,6 +57,9 @@ public enum ConfigKeys {
 
     CONNECTION_TIMEOUT("timeout", 1000), // Connection timeout
 
+    // Configuration key for modules
+    MODULES(EJBContainer.MODULES, CollectionUtils.EMPTY_ARRAY), // Sets modules
+
     // Properties for data source path and deployment path
     DEMPLOYMENT_PATH("deploymentPath", new HashSet<DeploymentDirectory>(
 	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
@@ -73,9 +76,6 @@ public enum ConfigKeys {
     REMOTE("remote", Boolean.FALSE),
 
     CLIENT("client", Boolean.FALSE),
-
-    // Configuration key for modules
-    MODULES(EJBContainer.MODULES, CollectionUtils.EMPTY_ARRAY), // Sets modules
 
     // Configuration keys properties for deployment
     DEPLOY_CONFIG("deployConfiguration"), // Deploy CONFIG
