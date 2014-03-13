@@ -58,13 +58,7 @@ public class EmbeddableContainer extends EJBContainer {
      * Default constructor without specified properties
      */
     protected EmbeddableContainer() {
-
-	try {
-	    this.creator = new MetaCreator.Builder().build();
-	    this.creator.scanForBeans();
-	} catch (IOException ex) {
-	    LOG.error(CONTAINER_ERROR, ex);
-	}
+	this(null);
     }
 
     /**
