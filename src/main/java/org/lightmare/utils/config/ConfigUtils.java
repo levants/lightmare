@@ -36,7 +36,7 @@ public class ConfigUtils {
 	    answer = ObjectUtils.cast(value);
 	} else if (value instanceof String) {
 	    String text = ObjectUtils.cast(value, String.class);
-	    answer = Boolean.valueOf(text);
+	    answer = Boolean.parseBoolean(text);
 	} else {
 	    answer = Boolean.FALSE;
 	}
@@ -131,6 +131,22 @@ public class ConfigUtils {
     }
 
     /**
+     * Adds initialized EJB module paths to passed collection
+     * 
+     * @param modules
+     * @param configModule
+     */
+    private static void addModule(List<String[]> modules, Object configModule) {
+
+	if (ObjectUtils.notNull(configModule)) {
+	    String[] module = getModule(configModule);
+	    if (ObjectUtils.notNull(module)) {
+		modules.add(module);
+	    }
+	}
+    }
+
+    /**
      * Converts passed value to deployment module paths from several java types
      * 
      * @param value
@@ -151,14 +167,8 @@ public class ConfigUtils {
 
 	if (CollectionUtils.valid(configModules)) {
 	    modules = new ArrayList<String[]>();
-	    String[] module;
 	    for (Object configModule : configModules) {
-		if (ObjectUtils.notNull(configModule)) {
-		    module = getModule(configModule);
-		    if (ObjectUtils.notNull(module)) {
-			modules.add(module);
-		    }
-		}
+		addModule(modules, configModule);
 	    }
 	} else {
 	    modules = null;
