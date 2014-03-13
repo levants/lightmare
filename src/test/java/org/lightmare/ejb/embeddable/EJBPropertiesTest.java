@@ -3,6 +3,9 @@ package org.lightmare.ejb.embeddable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.lightmare.config.ConfigKeys;
+import org.lightmare.jpa.datasource.PoolConfig;
+
 public enum EJBPropertiesTest {
 
     INSTANCE;
@@ -39,8 +42,9 @@ public enum EJBPropertiesTest {
 
 	Map<Object, Object> properties = new HashMap<Object, Object>();
 
-	properties.put("swapDataSource", Boolean.TRUE.toString());
-	properties.put("persistenceProperties", createHibernateProperties());
+	properties.put(ConfigKeys.SWAP_DATASOURCE.key, Boolean.TRUE.toString());
+	properties.put(ConfigKeys.PERSISTENCE_PROPERTIES.key,
+		createHibernateProperties());
 
 	return properties;
     }
@@ -49,8 +53,9 @@ public enum EJBPropertiesTest {
 
 	Map<Object, Object> properties = new HashMap<Object, Object>();
 
-	properties.put("statementCacheNumDeferredCloseThreads", "3");
-	properties.put("checkoutTimeout", "1000");
+	properties
+		.put(PoolConfig.Defaults.STAT_CACHE_NUM_DEFF_THREADS.key, "3");
+	properties.put(PoolConfig.Defaults.CHECK_OUT_TIMEOUT.key, "1000");
 
 	return properties;
     }
@@ -59,8 +64,20 @@ public enum EJBPropertiesTest {
 
 	Map<Object, Object> properties = new HashMap<Object, Object>();
 
-	properties.put("poolPropertiesPath", "./pool/pool.properties");
-	properties.put("poolProperties", createPoolProperties());
+	properties.put(ConfigKeys.POOL_PROPERTIES_PATH.key,
+		"./pool/pool.properties");
+	properties.put(ConfigKeys.POOL_PROPERTIES.key, createPoolProperties());
+
+	return properties;
+    }
+
+    public Map<Object, Object> createDeployeProperties() {
+
+	Map<Object, Object> properties = new HashMap<Object, Object>();
+
+	properties.put(ConfigKeys.HOT_DEPLOYMENT.key, Boolean.FALSE.toString());
+	properties.put(ConfigKeys.DEMPLOYMENT_PATH.key, "./lib");
+	properties.put(ConfigKeys.DATA_SOURCE_PATH.key, "./ds/standalone.xml");
 
 	return properties;
     }
@@ -69,8 +86,10 @@ public enum EJBPropertiesTest {
 
 	Map<Object, Object> properties = new HashMap<Object, Object>();
 
-	properties.put("persistenceConfig", createJPAProperties());
-	properties.put("poolConfig", createPoolConfig());
+	properties.put(ConfigKeys.DEPLOY_CONFIG.key, createDeployeProperties());
+	properties
+		.put(ConfigKeys.PERSISTENCE_CONFIG.key, createJPAProperties());
+	properties.put(ConfigKeys.POOL_CONFIG.key, createPoolConfig());
 
 	return properties;
     }
