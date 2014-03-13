@@ -830,7 +830,9 @@ public class Configuration implements Cloneable {
 	Set<String> paths;
 
 	Object value = getConfigValue(ConfigKeys.DATA_SOURCE_PATH.key);
-	if (value instanceof Set) {
+	if (value == null) {
+	    paths = null;
+	} else if (value instanceof Set) {
 	    paths = ObjectUtils.cast(value);
 	} else if (value instanceof String) {
 	    String path = ObjectUtils.cast(value, String.class);
@@ -847,7 +849,9 @@ public class Configuration implements Cloneable {
 	String[] paths;
 
 	Object value = getConfigValue(ConfigKeys.LIBRARY_PATH.key);
-	if (value instanceof String[]) {
+	if (value == null) {
+	    paths = null;
+	} else if (value instanceof String[]) {
 	    paths = ObjectUtils.cast(value);
 	} else if (value instanceof String) {
 	    String path = ObjectUtils.cast(value, String.class);
@@ -864,7 +868,23 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isHotDeployment() {
-	return getConfigValue(ConfigKeys.HOT_DEPLOYMENT.key, Boolean.FALSE);
+
+	boolean answer;
+
+	Object value = getConfigValue(ConfigKeys.HOT_DEPLOYMENT.key,
+		Boolean.FALSE);
+	if (value == null) {
+	    answer = Boolean.FALSE;
+	} else if (value instanceof Boolean) {
+	    answer = ObjectUtils.cast(value);
+	} else if (value instanceof String) {
+	    String text = ObjectUtils.cast(value, String.class);
+	    answer = Boolean.valueOf(text);
+	} else {
+	    answer = Boolean.FALSE;
+	}
+
+	return answer;
     }
 
     public void setHotDeployment(boolean hotDeployment) {
@@ -872,7 +892,23 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isWatchStatus() {
-	return getConfigValue(ConfigKeys.WATCH_STATUS.key, Boolean.FALSE);
+
+	boolean answer;
+
+	Object value = getConfigValue(ConfigKeys.WATCH_STATUS.key,
+		Boolean.FALSE);
+	if (value == null) {
+	    answer = Boolean.FALSE;
+	} else if (value instanceof Boolean) {
+	    answer = ObjectUtils.cast(value);
+	} else if (value instanceof String) {
+	    String text = ObjectUtils.cast(value, String.class);
+	    answer = Boolean.valueOf(text);
+	} else {
+	    answer = Boolean.FALSE;
+	}
+
+	return answer;
     }
 
     public void setWatchStatus(boolean watchStatus) {
