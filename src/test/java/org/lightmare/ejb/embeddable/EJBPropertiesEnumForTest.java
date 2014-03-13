@@ -7,6 +7,7 @@ import java.util.Map;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.jpa.datasource.PoolConfig;
+import org.lightmare.logger.Configure;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 
@@ -96,6 +97,7 @@ public enum EJBPropertiesEnumForTest {
 
 	Map<Object, Object> deployProperties = createDeployeProperties();
 	properties.put(ConfigKeys.DEPLOY_CONFIG.key, deployProperties);
+	deployProperties.put(ConfigKeys.MODULES.key, "./lib/loader-tester.ear");
 	deployProperties.put(ConfigKeys.PERSISTENCE_CONFIG.key,
 		createJPAProperties());
 	deployProperties.put(ConfigKeys.POOL_CONFIG.key, createPoolConfig());
@@ -111,6 +113,7 @@ public enum EJBPropertiesEnumForTest {
 
 	Map<Object, Object> properties;
 
+	Configure.configure();
 	if (StringUtils.valid(unitName)) {
 
 	    properties = ObjectUtils.cast(getDeployConfig(config).get(

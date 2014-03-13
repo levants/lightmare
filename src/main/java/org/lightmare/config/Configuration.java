@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -740,6 +741,44 @@ public class Configuration implements Cloneable {
     }
 
     /**
+     * Gets paths of instant EJB module from configuration
+     * 
+     * @param configModule
+     * @return String[] path of EJB modules
+     */
+    private String[] getModule(Object configModule) {
+
+	String[] module;
+
+	String path;
+	File file;
+	File[] files;
+	if (configModule instanceof String[]) {
+	    module = ObjectUtils.cast(configModule);
+	} else if (configModule instanceof String) {
+	    path = ObjectUtils.cast(configModule, String.class);
+	    module = new String[] { path };
+	} else if (configModule instanceof File) {
+	    file = ObjectUtils.cast(configModule, File.class);
+	    path = file.getPath();
+	    module = new String[] { path };
+	} else if (configModule instanceof File[]) {
+	    files = ObjectUtils.cast(configModule);
+	    int length = files.length;
+	    module = new String[length];
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
+		file = files[i];
+		path = file.getPath();
+		module[i] = path;
+	    }
+	} else {
+	    module = null;
+	}
+
+	return module;
+    }
+
+    /**
      * Initializes modules by deployment modules parameter from configuration
      * 
      * @return {@link List} of deployment file paths
@@ -748,27 +787,23 @@ public class Configuration implements Cloneable {
 
 	List<String[]> modules;
 
-	Object[] configModules = getConfigValue(ConfigKeys.MODULES.key);
+	Object[] configModules;
+	// Extracts modules from configuration
+	Object preModule = getConfigValue(ConfigKeys.MODULES.key);
+	if (preModule == null) {
+	    configModules = null;
+	} else if (preModule instanceof Object[]) {
+	    configModules = ObjectUtils.cast(preModule);
+	} else {
+	    configModules = getModule(preModule);
+	}
+
 	if (CollectionUtils.valid(configModules)) {
 	    modules = new ArrayList<String[]>();
 	    String[] module;
-	    String path;
-	    File file;
 	    for (Object configModule : configModules) {
 		if (ObjectUtils.notNull(configModule)) {
-		    if (configModule instanceof String[]) {
-			module = ObjectUtils.cast(configModule);
-		    } else if (configModule instanceof String) {
-			path = ObjectUtils.cast(configModule, String.class);
-			module = new String[] { path };
-		    } else if (configModule instanceof File) {
-			file = ObjectUtils.cast(configModule, File.class);
-			path = file.getPath();
-			module = new String[] { path };
-		    } else {
-			module = null;
-		    }
-
+		    module = getModule(configModule);
 		    if (ObjectUtils.notNull(module)) {
 			modules.add(module);
 		    }
