@@ -41,14 +41,14 @@ import org.lightmare.utils.ObjectUtils;
  * @author Levan Tsinadze
  * @since 0.0.48-SNAPSHOT
  */
-public class EJBContainerImpl extends EJBContainer {
+public class EJBContainerExt extends EJBContainer {
 
     // Initializes EJB container
     private MetaCreator creator;
 
-    private static final Logger LOG = Logger.getLogger(EJBContainerImpl.class);
+    private static final Logger LOG = Logger.getLogger(EJBContainerExt.class);
 
-    protected EJBContainerImpl() {
+    protected EJBContainerExt() {
 
 	try {
 	    this.creator = new MetaCreator.Builder().build();
@@ -58,7 +58,7 @@ public class EJBContainerImpl extends EJBContainer {
 	}
     }
 
-    protected EJBContainerImpl(Map<?, ?> properties) {
+    protected EJBContainerExt(Map<?, ?> properties) {
 
 	try {
 	    MetaCreator.Builder builder;

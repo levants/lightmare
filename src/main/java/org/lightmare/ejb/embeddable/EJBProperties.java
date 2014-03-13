@@ -17,7 +17,7 @@ import org.lightmare.utils.ObjectUtils;
 public class EJBProperties {
 
     // Name of EJB container provider class "Lightmare" implementation
-    public static final String PROVIDER_CLASS = EJBContainerProviderImpl.class
+    public static final String PROVIDER_CLASS = EJBContainerProvider.class
 	    .getName();
 
     /**
