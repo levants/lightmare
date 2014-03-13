@@ -5,12 +5,18 @@ import java.util.Map;
 
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.jpa.datasource.PoolConfig;
+import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 public enum EJBPropertiesTest {
 
     INSTANCE;
 
-    public final Map<?, ?> config;
+    private final Map<?, ?> config;
+
+    private EJBPropertiesTest() {
+	this.config = createProperties();
+    }
 
     public Map<Object, Object> createHibernateProperties() {
 
@@ -94,7 +100,25 @@ public enum EJBPropertiesTest {
 	return properties;
     }
 
-    private EJBPropertiesTest() {
-	this.config = createProperties();
+    public Map<?, ?> getProperties(String unitName, String path) {
+
+	Map<Object, Object> properties;
+
+	if (StringUtils.valid(unitName)) {
+	    properties = ObjectUtils.cast(config
+		    .get(ConfigKeys.PERSISTENCE_CONFIG.key));
+	    properties.put(ConfigKeys.SCAN_FOR_ENTITIES.key,
+		    Boolean.TRUE.toString());
+	    properties.put(ConfigKeys.ANNOTATED_UNIT_NAME.key, unitName);
+	}
+
+	if (StringUtils.valid(path)) {
+	    properties = ObjectUtils.cast(config
+		    .get(ConfigKeys.PERSISTENCE_CONFIG.key));
+	    properties.put(ConfigKeys.PERSISTENCE_XML_FROM_JAR.key,
+		    Boolean.TRUE.toString());
+	}
+
+	return config;
     }
 }
