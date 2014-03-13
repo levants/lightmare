@@ -112,7 +112,6 @@ public abstract class LoaderPoolManager {
 	 * @param thread
 	 */
 	private void setPriority(Thread thread) {
-
 	    thread.setPriority(Thread.MAX_PRIORITY);
 	}
 
