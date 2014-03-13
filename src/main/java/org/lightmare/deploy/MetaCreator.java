@@ -505,10 +505,12 @@ public class MetaCreator {
      */
     public void scanForBeans(String... paths) throws IOException {
 
-	List<String[]> modules = configuration.getDeploymentModules();
-	if (CollectionUtils.invalid(paths) && CollectionUtils.valid(modules)) {
-	    for (String[] module : modules) {
-		scanForBeans(module);
+	if (CollectionUtils.invalid(paths)) {
+	    List<String[]> modules = configuration.getDeploymentModules();
+	    if (CollectionUtils.valid(modules)) {
+		for (String[] module : modules) {
+		    scanForBeans(module);
+		}
 	    }
 	} else {
 	    deployPaths(paths);
