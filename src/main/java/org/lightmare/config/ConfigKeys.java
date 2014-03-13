@@ -25,7 +25,10 @@ package org.lightmare.config;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import javax.ejb.embeddable.EJBContainer;
+
 import org.lightmare.cache.DeploymentDirectory;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -43,7 +46,7 @@ public enum ConfigKeys {
 
     REMOTE_CONTROL("remoteControl", Boolean.FALSE), // Disables remote control
 
-    // Netty server / client configuration properties for RPC calls
+    // Remote server / client configuration properties for RPC calls
     IP_ADDRESS("listeningIp", "0.0.0.0"), // Default IP address
 
     PORT("listeningPort", 1199), // Port
@@ -70,6 +73,9 @@ public enum ConfigKeys {
     REMOTE("remote", Boolean.FALSE),
 
     CLIENT("client", Boolean.FALSE),
+
+    // Configuration key for modules
+    MODULES(EJBContainer.MODULES, CollectionUtils.EMPTY_ARRAY), // Sets modules
 
     // Configuration keys properties for deployment
     DEPLOY_CONFIG("deployConfiguration"), // Deploy CONFIG

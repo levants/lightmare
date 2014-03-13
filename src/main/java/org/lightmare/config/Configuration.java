@@ -737,8 +737,40 @@ public class Configuration implements Cloneable {
 	dataSourcePaths.add(path);
     }
 
+    /**
+     * Initializes modules by deployment modules or deployment path parameters
+     * 
+     * @return
+     */
     public Set<DeploymentDirectory> getDeploymentPath() {
-	return getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
+
+	Set<DeploymentDirectory> directories;
+
+	Set<DeploymentDirectory> paths = getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
+
+	if (CollectionUtils.valid(paths)) {
+	    directories = new HashSet<DeploymentDirectory>();
+	    directories.addAll(paths);
+	} else {
+	    directories = null;
+	}
+
+	String[] modules = getConfigValue(ConfigKeys.MODULES.key);
+	if (CollectionUtils.valid(modules)) {
+	    Set<DeploymentDirectory> modueleDirectories = new HashSet<DeploymentDirectory>();
+	    DeploymentDirectory modueleDirectory;
+	    for (String module : modules) {
+		modueleDirectory = new DeploymentDirectory(module);
+		modueleDirectories.add(modueleDirectory);
+	    }
+
+	    if (directories == null) {
+		directories = new HashSet<DeploymentDirectory>();
+	    }
+	    directories.addAll(modueleDirectories);
+	}
+
+	return directories;
     }
 
     public Set<String> getDataSourcePath() {

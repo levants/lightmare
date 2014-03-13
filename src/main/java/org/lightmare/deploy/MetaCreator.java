@@ -472,6 +472,7 @@ public class MetaCreator {
 	    }
 	    paths = CollectionUtils.toArray(pathList, String.class);
 	}
+	
 	List<URL> urlList = new ArrayList<URL>();
 	List<URL> archive;
 	for (String path : paths) {
