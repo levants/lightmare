@@ -753,18 +753,25 @@ public class Configuration implements Cloneable {
 	    modules = new ArrayList<String[]>();
 	    String[] module;
 	    String path;
+	    File file;
 	    for (Object configModule : configModules) {
-		if (configModule instanceof String[]) {
-		    module = ObjectUtils.cast(configModule);
-		} else if (configModule instanceof String) {
-		    path = ObjectUtils.cast(configModule, String.class);
-		    module = new String[] { path };
-		} else {
-		    module = null;
-		}
+		if (ObjectUtils.notNull(configModule)) {
+		    if (configModule instanceof String[]) {
+			module = ObjectUtils.cast(configModule);
+		    } else if (configModule instanceof String) {
+			path = ObjectUtils.cast(configModule, String.class);
+			module = new String[] { path };
+		    } else if (configModule instanceof File) {
+			file = ObjectUtils.cast(configModule, File.class);
+			path = file.getPath();
+			module = new String[] { path };
+		    } else {
+			module = null;
+		    }
 
-		if (ObjectUtils.notNull(module)) {
-		    modules.add(module);
+		    if (ObjectUtils.notNull(module)) {
+			modules.add(module);
+		    }
 		}
 	    }
 	} else {
