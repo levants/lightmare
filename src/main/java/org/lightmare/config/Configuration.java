@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -825,11 +826,37 @@ public class Configuration implements Cloneable {
     }
 
     public Set<String> getDataSourcePath() {
-	return getConfigValue(ConfigKeys.DATA_SOURCE_PATH.key);
+
+	Set<String> paths;
+
+	Object value = getConfigValue(ConfigKeys.DATA_SOURCE_PATH.key);
+	if (value instanceof Set) {
+	    paths = ObjectUtils.cast(value);
+	} else if (value instanceof String) {
+	    String path = ObjectUtils.cast(value, String.class);
+	    paths = Collections.singleton(path);
+	} else {
+	    paths = null;
+	}
+
+	return paths;
     }
 
     public String[] getLibraryPaths() {
-	return getConfigValue(ConfigKeys.LIBRARY_PATH.key);
+
+	String[] paths;
+
+	Object value = getConfigValue(ConfigKeys.LIBRARY_PATH.key);
+	if (value instanceof String[]) {
+	    paths = ObjectUtils.cast(value);
+	} else if (value instanceof String) {
+	    String path = ObjectUtils.cast(value, String.class);
+	    paths = new String[] { path };
+	} else {
+	    paths = null;
+	}
+
+	return paths;
     }
 
     public void setLibraryPaths(String[] libraryPaths) {
