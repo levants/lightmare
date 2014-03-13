@@ -447,6 +447,24 @@ public class MetaCreator {
     }
 
     /**
+     * Scans sub files for deploy path
+     * 
+     * @param pathList
+     * @param deployment
+     */
+    private void scanDeployPath(List<String> pathList,
+	    DeploymentDirectory deployment) {
+
+	File deployFile = new File(deployment.getPath());
+	if (deployment.isScan()) {
+	    String[] subDeployments = deployFile.list();
+	    if (CollectionUtils.valid(subDeployments)) {
+		pathList.addAll(Arrays.asList(subDeployments));
+	    }
+	}
+    }
+
+    /**
      * Deploys paths for EJB beans containing files in one module
      * 
      * @param paths
@@ -459,15 +477,8 @@ public class MetaCreator {
 		Set<DeploymentDirectory> deployments = configuration
 			.getDeploymentPath();
 		List<String> pathList = new ArrayList<String>();
-		File deployFile;
 		for (DeploymentDirectory deployment : deployments) {
-		    deployFile = new File(deployment.getPath());
-		    if (deployment.isScan()) {
-			String[] subDeployments = deployFile.list();
-			if (CollectionUtils.valid(subDeployments)) {
-			    pathList.addAll(Arrays.asList(subDeployments));
-			}
-		    }
+		    scanDeployPath(pathList, deployment);
 		}
 
 		paths = CollectionUtils.toArray(pathList, String.class);
