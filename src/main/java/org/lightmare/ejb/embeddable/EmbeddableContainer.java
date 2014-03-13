@@ -54,6 +54,9 @@ public class EmbeddableContainer extends EJBContainer {
     private static final Logger LOG = Logger
 	    .getLogger(EmbeddableContainer.class);
 
+    /**
+     * Default constructor without specified properties
+     */
     protected EmbeddableContainer() {
 
 	try {
@@ -64,6 +67,11 @@ public class EmbeddableContainer extends EJBContainer {
 	}
     }
 
+    /**
+     * Constructor with specified configuration properties
+     * 
+     * @param properties
+     */
     protected EmbeddableContainer(Map<?, ?> properties) {
 
 	try {
