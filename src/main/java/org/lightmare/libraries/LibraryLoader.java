@@ -364,6 +364,22 @@ public class LibraryLoader {
     }
 
     /**
+     * Loads class to system {@link ClassLoader} for general use
+     * 
+     * @param className
+     * @throws IOException
+     */
+    public static void loadLibraryClass(String className) throws IOException {
+
+	ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
+	try {
+	    systemLoader.loadClass(className);
+	} catch (ClassNotFoundException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
      * Loads all files and sub files {@link URL}s to system class loader
      * 
      * @param libraryPath
