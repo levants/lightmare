@@ -192,6 +192,22 @@ public class ConfigUtils {
     }
 
     /**
+     * Initializes {@link DeploymentDirectory} from passed java type and adds it
+     * to appropriate collection
+     * 
+     * @param value
+     * @param deployments
+     */
+    private static void addDirectory(Object value,
+	    Set<DeploymentDirectory> deployments) {
+
+	DeploymentDirectory directory = getDeployment(value);
+	if (ObjectUtils.notNull(directory)) {
+	    deployments.add(directory);
+	}
+    }
+
+    /**
      * Initializes {@link DeploymentDirectory} instance from several java types
      * 
      * @param collection
@@ -204,12 +220,8 @@ public class ConfigUtils {
 
 	if (CollectionUtils.valid(collection)) {
 	    deployments = new HashSet<DeploymentDirectory>();
-	    DeploymentDirectory directory;
 	    for (Object data : collection) {
-		directory = getDeployment(data);
-		if (ObjectUtils.notNull(directory)) {
-		    deployments.add(directory);
-		}
+		addDirectory(data, deployments);
 	    }
 	} else {
 	    deployments = null;
@@ -230,12 +242,8 @@ public class ConfigUtils {
 
 	if (CollectionUtils.valid(array)) {
 	    deployments = new HashSet<DeploymentDirectory>();
-	    DeploymentDirectory directory;
 	    for (Object data : array) {
-		directory = getDeployment(data);
-		if (ObjectUtils.notNull(directory)) {
-		    deployments.add(directory);
-		}
+		addDirectory(data, deployments);
 	    }
 	} else {
 	    deployments = null;
