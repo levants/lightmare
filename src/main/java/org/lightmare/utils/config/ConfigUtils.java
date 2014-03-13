@@ -21,6 +21,44 @@ import org.lightmare.utils.ObjectUtils;
 public class ConfigUtils {
 
     /**
+     * Gets paths of instant EJB module from configuration
+     * 
+     * @param configModule
+     * @return String[] path of EJB modules
+     */
+    public static String[] getModule(Object value) {
+
+	String[] module;
+
+	String path;
+	File file;
+	File[] files;
+	if (value instanceof String[]) {
+	    module = ObjectUtils.cast(value);
+	} else if (value instanceof String) {
+	    path = ObjectUtils.cast(value, String.class);
+	    module = new String[] { path };
+	} else if (value instanceof File) {
+	    file = ObjectUtils.cast(value, File.class);
+	    path = file.getPath();
+	    module = new String[] { path };
+	} else if (value instanceof File[]) {
+	    files = ObjectUtils.cast(value);
+	    int length = files.length;
+	    module = new String[length];
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
+		file = files[i];
+		path = file.getPath();
+		module[i] = path;
+	    }
+	} else {
+	    module = null;
+	}
+
+	return module;
+    }
+
+    /**
      * Converts data to boolean from several java types
      * 
      * @param value
@@ -45,30 +83,6 @@ public class ConfigUtils {
     }
 
     /**
-     * Converts data to {@link String} array from several java types
-     * 
-     * @param value
-     * @return {@link String}[] array of specific values
-     */
-    public static String[] getArray(Object value) {
-
-	String[] values;
-
-	if (value == null) {
-	    values = null;
-	} else if (value instanceof String[]) {
-	    values = ObjectUtils.cast(value);
-	} else if (value instanceof String) {
-	    String path = ObjectUtils.cast(value, String.class);
-	    values = new String[] { path };
-	} else {
-	    values = null;
-	}
-
-	return values;
-    }
-
-    /**
      * Converts data to {@link Set} of {@link String} from several java types
      * 
      * @param value
@@ -90,44 +104,6 @@ public class ConfigUtils {
 	}
 
 	return values;
-    }
-
-    /**
-     * Gets paths of instant EJB module from configuration
-     * 
-     * @param configModule
-     * @return String[] path of EJB modules
-     */
-    private static String[] getModule(Object configModule) {
-
-	String[] module;
-
-	String path;
-	File file;
-	File[] files;
-	if (configModule instanceof String[]) {
-	    module = ObjectUtils.cast(configModule);
-	} else if (configModule instanceof String) {
-	    path = ObjectUtils.cast(configModule, String.class);
-	    module = new String[] { path };
-	} else if (configModule instanceof File) {
-	    file = ObjectUtils.cast(configModule, File.class);
-	    path = file.getPath();
-	    module = new String[] { path };
-	} else if (configModule instanceof File[]) {
-	    files = ObjectUtils.cast(configModule);
-	    int length = files.length;
-	    module = new String[length];
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-		file = files[i];
-		path = file.getPath();
-		module[i] = path;
-	    }
-	} else {
-	    module = null;
-	}
-
-	return module;
     }
 
     /**
@@ -187,12 +163,17 @@ public class ConfigUtils {
 
 	DeploymentDirectory deployment;
 
+	String path;
 	if (value == null) {
 	    deployment = null;
 	} else if (value instanceof DeploymentDirectory) {
 	    deployment = ObjectUtils.cast(value, DeploymentDirectory.class);
 	} else if (value instanceof String) {
-	    String path = ObjectUtils.cast(value, String.class);
+	    path = ObjectUtils.cast(value, String.class);
+	    deployment = new DeploymentDirectory(path);
+	} else if (value instanceof File) {
+	    File file = ObjectUtils.cast(value, File.class);
+	    path = file.getPath();
 	    deployment = new DeploymentDirectory(path);
 	} else {
 	    deployment = null;
@@ -282,7 +263,7 @@ public class ConfigUtils {
 	} else if (value instanceof Object[]) {
 	    Object[] values = ObjectUtils.cast(value);
 	    deployments = getDeployments(values);
-	} else if (value instanceof String) {
+	} else if (value instanceof String || value instanceof File) {
 	    DeploymentDirectory deployment = getDeployment(value);
 	    deployments = Collections.singleton(deployment);
 	} else {

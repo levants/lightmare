@@ -803,7 +803,7 @@ public class Configuration implements Cloneable {
 	String[] paths;
 
 	Object value = getConfigValue(ConfigKeys.LIBRARY_PATH.key);
-	paths = ConfigUtils.getArray(value);
+	paths = ConfigUtils.getModule(value);
 
 	return paths;
     }

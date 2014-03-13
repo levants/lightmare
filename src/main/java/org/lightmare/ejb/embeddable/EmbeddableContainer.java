@@ -55,13 +55,6 @@ public class EmbeddableContainer extends EJBContainer {
 	    .getLogger(EmbeddableContainer.class);
 
     /**
-     * Default constructor without specified properties
-     */
-    protected EmbeddableContainer() {
-	this(null);
-    }
-
-    /**
      * Constructor with specified configuration properties
      * 
      * @param properties
@@ -83,6 +76,13 @@ public class EmbeddableContainer extends EJBContainer {
 	} catch (IOException ex) {
 	    LOG.error(CONTAINER_ERROR, ex);
 	}
+    }
+
+    /**
+     * Default constructor without specified properties
+     */
+    protected EmbeddableContainer() {
+	this(null);
     }
 
     @Override
