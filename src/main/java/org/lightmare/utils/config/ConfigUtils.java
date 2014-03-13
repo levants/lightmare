@@ -2,6 +2,7 @@ package org.lightmare.utils.config;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.Set;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Utility class to convert configuration attributes from files and java types
@@ -83,6 +85,33 @@ public class ConfigUtils {
     }
 
     /**
+     * Converts data to {@link String} from several java types
+     * 
+     * @param value
+     * @return {@link String} value of passed parameter
+     */
+    private static String getText(Object value) {
+
+	String text;
+
+	if (value == null) {
+	    text = null;
+	} else if (value instanceof String) {
+	    text = ObjectUtils.cast(value, String.class);
+	} else if (value instanceof CharSequence) {
+	    CharSequence chars = ObjectUtils.cast(value, CharSequence.class);
+	    text = chars.toString();
+	} else if (value instanceof File) {
+	    File file = ObjectUtils.cast(value, File.class);
+	    text = file.getPath();
+	} else {
+	    text = null;
+	}
+
+	return text;
+    }
+
+    /**
      * Converts data to {@link Set} of {@link String} from several java types
      * 
      * @param value
@@ -95,12 +124,22 @@ public class ConfigUtils {
 	if (value == null) {
 	    values = null;
 	} else if (value instanceof Set) {
-	    values = ObjectUtils.cast(value);
-	} else if (value instanceof String) {
-	    String path = ObjectUtils.cast(value, String.class);
-	    values = Collections.singleton(path);
+	    Set<?> paths = ObjectUtils.cast(value);
+	    values = new HashSet<String>();
+	    String path;
+	    for (Object data : paths) {
+		path = getText(data);
+		if (StringUtils.valid(path)) {
+		    values.add(path);
+		}
+	    }
 	} else {
-	    values = null;
+	    String[] paths = getModule(value);
+	    if (paths == null) {
+		values = null;
+	    } else {
+		values = new HashSet<String>(Arrays.asList(paths));
+	    }
 	}
 
 	return values;
@@ -168,15 +207,13 @@ public class ConfigUtils {
 	    deployment = null;
 	} else if (value instanceof DeploymentDirectory) {
 	    deployment = ObjectUtils.cast(value, DeploymentDirectory.class);
-	} else if (value instanceof String) {
-	    path = ObjectUtils.cast(value, String.class);
-	    deployment = new DeploymentDirectory(path);
-	} else if (value instanceof File) {
-	    File file = ObjectUtils.cast(value, File.class);
-	    path = file.getPath();
-	    deployment = new DeploymentDirectory(path);
 	} else {
-	    deployment = null;
+	    path = getText(value);
+	    if (StringUtils.valid(path)) {
+		deployment = new DeploymentDirectory(path);
+	    } else {
+		deployment = null;
+	    }
 	}
 
 	return deployment;
