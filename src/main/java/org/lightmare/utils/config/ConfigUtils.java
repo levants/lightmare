@@ -23,44 +23,6 @@ import org.lightmare.utils.StringUtils;
 public class ConfigUtils {
 
     /**
-     * Gets paths of instant EJB module from configuration
-     * 
-     * @param configModule
-     * @return String[] path of EJB modules
-     */
-    public static String[] getModule(Object value) {
-
-	String[] module;
-
-	String path;
-	File file;
-	File[] files;
-	if (value instanceof String[]) {
-	    module = ObjectUtils.cast(value);
-	} else if (value instanceof String) {
-	    path = ObjectUtils.cast(value, String.class);
-	    module = new String[] { path };
-	} else if (value instanceof File) {
-	    file = ObjectUtils.cast(value, File.class);
-	    path = file.getPath();
-	    module = new String[] { path };
-	} else if (value instanceof File[]) {
-	    files = ObjectUtils.cast(value);
-	    int length = files.length;
-	    module = new String[length];
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-		file = files[i];
-		path = file.getPath();
-		module[i] = path;
-	    }
-	} else {
-	    module = null;
-	}
-
-	return module;
-    }
-
-    /**
      * Converts data to boolean from several java types
      * 
      * @param value
@@ -112,37 +74,39 @@ public class ConfigUtils {
     }
 
     /**
-     * Converts data to {@link Set} of {@link String} from several java types
+     * Gets paths of instant EJB module from configuration
      * 
-     * @param value
-     * @return {@link Set} of appropriated values
+     * @param configModule
+     * @return String[] path of EJB modules
      */
-    public static Set<String> getSet(Object value) {
+    public static String[] getModule(Object value) {
 
-	Set<String> values;
+	String[] module;
 
-	if (value == null) {
-	    values = null;
-	} else if (value instanceof Set) {
-	    Set<?> paths = ObjectUtils.cast(value);
-	    values = new HashSet<String>();
-	    String path;
-	    for (Object data : paths) {
-		path = getText(data);
-		if (StringUtils.valid(path)) {
-		    values.add(path);
-		}
+	String path;
+	File file;
+	File[] files;
+	if (value instanceof String[]) {
+	    module = ObjectUtils.cast(value);
+	} else if (value instanceof File[]) {
+	    files = ObjectUtils.cast(value);
+	    int length = files.length;
+	    module = new String[length];
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
+		file = files[i];
+		path = file.getPath();
+		module[i] = path;
 	    }
 	} else {
-	    String[] paths = getModule(value);
-	    if (paths == null) {
-		values = null;
+	    path = getText(value);
+	    if (path == null) {
+		module = null;
 	    } else {
-		values = new HashSet<String>(Arrays.asList(paths));
+		module = new String[] { path };
 	    }
 	}
 
-	return values;
+	return module;
     }
 
     /**
@@ -190,6 +154,40 @@ public class ConfigUtils {
 	}
 
 	return modules;
+    }
+
+    /**
+     * Converts data to {@link Set} of {@link String} from several java types
+     * 
+     * @param value
+     * @return {@link Set} of appropriated values
+     */
+    public static Set<String> getSet(Object value) {
+
+	Set<String> values;
+
+	if (value == null) {
+	    values = null;
+	} else if (value instanceof Set) {
+	    Set<?> paths = ObjectUtils.cast(value);
+	    values = new HashSet<String>();
+	    String path;
+	    for (Object data : paths) {
+		path = getText(data);
+		if (StringUtils.valid(path)) {
+		    values.add(path);
+		}
+	    }
+	} else {
+	    String[] paths = getModule(value);
+	    if (paths == null) {
+		values = null;
+	    } else {
+		values = new HashSet<String>(Arrays.asList(paths));
+	    }
+	}
+
+	return values;
     }
 
     /**

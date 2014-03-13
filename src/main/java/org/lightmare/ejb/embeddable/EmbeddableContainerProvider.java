@@ -29,8 +29,8 @@ import javax.ejb.embeddable.EJBContainer;
 import javax.ejb.spi.EJBContainerProvider;
 
 /**
- * Implementation for {@link javax.ejb.spi.EJBContainerProvider} interface for
- * "Lightmare" EJB container
+ * Implementation of {@link javax.ejb.spi.EJBContainerProvider} interface for
+ * embedded EJB container by Java EE standards
  * 
  * @author Levan Tsinadze
  * @since 0.0.48-SNAPSHOT
