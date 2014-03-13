@@ -447,13 +447,12 @@ public class MetaCreator {
     }
 
     /**
-     * Scan application for find all {@link javax.ejb.Stateless} beans and
-     * {@link Remote} or {@link Local} proxy interfaces
+     * Deploys paths for EJB beans containing files in one module
      * 
-     * @throws ClassNotFoundException
+     * @param paths
      * @throws IOException
      */
-    public void scanForBeans(String... paths) throws IOException {
+    private void deployPaths(String... paths) throws IOException {
 
 	if (CollectionUtils.invalid(paths)) {
 	    if (CollectionUtils.valid(configuration.getDeploymentPath())) {
@@ -484,6 +483,25 @@ public class MetaCreator {
 
 	URL[] archives = CollectionUtils.toArray(urlList, URL.class);
 	scanForBeans(archives);
+    }
+
+    /**
+     * Scan application for find all {@link javax.ejb.Stateless} beans and
+     * {@link Remote} or {@link Local} proxy interfaces
+     * 
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    public void scanForBeans(String... paths) throws IOException {
+
+	List<String[]> modules = configuration.getDeploymentModules();
+	if (CollectionUtils.invalid(paths) && CollectionUtils.valid(modules)) {
+	    for (String[] module : modules) {
+		scanForBeans(module);
+	    }
+	} else {
+	    deployPaths(paths);
+	}
     }
 
     public ClassLoader getCurrent() {
