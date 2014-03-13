@@ -160,6 +160,20 @@ public class LibraryLoader {
     }
 
     /**
+     * Gets file for current class
+     * 
+     * @param executing
+     * @return File where current class is
+     */
+    public static File classFile(Class<?> executing) {
+
+	final File file = new File(executing.getProtectionDomain()
+		.getCodeSource().getLocation().getPath());
+
+	return file;
+    }
+
+    /**
      * Initializes and returns enriched {@link ClassLoader} in separated
      * {@link Thread} to load bean and library classes
      * 
@@ -382,13 +396,11 @@ public class LibraryLoader {
     /**
      * Loads all files and sub files {@link URL}s to system class loader
      * 
-     * @param libraryPath
+     * @param file
      * @throws IOException
      */
-    private static void loadLibraryFromPath(String libraryPath)
-	    throws IOException {
+    public static void loadLibraryFromFile(File file) throws IOException {
 
-	File file = new File(libraryPath);
 	if (file.exists()) {
 	    Set<URL> urls = new HashSet<URL>();
 	    FileUtils.getSubfiles(file, urls);
@@ -403,6 +415,19 @@ public class LibraryLoader {
 		}
 	    }
 	}
+    }
+
+    /**
+     * Loads all files and sub files {@link URL}s to system class loader
+     * 
+     * @param libraryPath
+     * @throws IOException
+     */
+    private static void loadLibraryFromPath(String libraryPath)
+	    throws IOException {
+
+	File file = new File(libraryPath);
+	loadLibraryFromFile(file);
     }
 
     /**

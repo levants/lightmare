@@ -26,6 +26,7 @@ import java.util.Map;
 
 import javax.ejb.EJBException;
 import javax.ejb.embeddable.EJBContainer;
+import javax.ejb.spi.EJBContainerProvider;
 
 /**
  * Implementation for {@link javax.ejb.spi.EJBContainerProvider} interface for
@@ -34,7 +35,7 @@ import javax.ejb.embeddable.EJBContainer;
  * @author Levan Tsinadze
  * @since 0.0.48-SNAPSHOT
  */
-public class EJBContainerProvider implements javax.ejb.spi.EJBContainerProvider {
+public class EmbeddableContainerProvider implements EJBContainerProvider {
 
     @Override
     public EJBContainer createEJBContainer(Map<?, ?> properties)

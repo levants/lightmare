@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.ejb.embeddable.EJBContainer;
 
-import org.lightmare.ejb.embeddable.EJBContainerProvider;
+import org.lightmare.ejb.embeddable.EmbeddableContainerProvider;
 
 public class EjbEmbeddableTest {
 
@@ -13,7 +13,7 @@ public class EjbEmbeddableTest {
 
 	Map<Object, Object> properties = new HashMap<Object, Object>();
 	properties.put(EJBContainer.PROVIDER,
-		EJBContainerProvider.class.getSimpleName());
+		EmbeddableContainerProvider.class.getSimpleName());
 	EJBContainer.createEJBContainer(properties);
     }
 }
