@@ -455,30 +455,33 @@ public class MetaCreator {
      */
     public void scanForBeans(String... paths) throws IOException {
 
-	if (CollectionUtils.invalid(paths)
-		&& CollectionUtils.valid(configuration.getDeploymentPath())) {
-	    Set<DeploymentDirectory> deployments = configuration
-		    .getDeploymentPath();
-	    List<String> pathList = new ArrayList<String>();
-	    File deployFile;
-	    for (DeploymentDirectory deployment : deployments) {
-		deployFile = new File(deployment.getPath());
-		if (deployment.isScan()) {
-		    String[] subDeployments = deployFile.list();
-		    if (CollectionUtils.valid(subDeployments)) {
-			pathList.addAll(Arrays.asList(subDeployments));
+	if (CollectionUtils.invalid(paths)) {
+	    if (CollectionUtils.valid(configuration.getDeploymentPath())) {
+		Set<DeploymentDirectory> deployments = configuration
+			.getDeploymentPath();
+		List<String> pathList = new ArrayList<String>();
+		File deployFile;
+		for (DeploymentDirectory deployment : deployments) {
+		    deployFile = new File(deployment.getPath());
+		    if (deployment.isScan()) {
+			String[] subDeployments = deployFile.list();
+			if (CollectionUtils.valid(subDeployments)) {
+			    pathList.addAll(Arrays.asList(subDeployments));
+			}
 		    }
 		}
+
+		paths = CollectionUtils.toArray(pathList, String.class);
 	    }
-	    paths = CollectionUtils.toArray(pathList, String.class);
 	}
-	
+
 	List<URL> urlList = new ArrayList<URL>();
 	List<URL> archive;
 	for (String path : paths) {
 	    archive = FileUtils.toURLWithClasspath(path);
 	    urlList.addAll(archive);
 	}
+
 	URL[] archives = CollectionUtils.toArray(urlList, URL.class);
 	scanForBeans(archives);
     }

@@ -26,8 +26,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -738,39 +740,47 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Initializes modules by deployment modules or deployment path parameters
+     * Initializes modules by deployment modules parameter from configuration
+     * 
+     * @return {@link List} of deployment file paths
+     */
+    public List<String[]> getDeploymentModules() {
+
+	List<String[]> modules;
+
+	Object[] configModules = getConfigValue(ConfigKeys.MODULES.key);
+	if (CollectionUtils.valid(configModules)) {
+	    modules = new ArrayList<String[]>();
+	    String[] module;
+	    String path;
+	    for (Object configModule : configModules) {
+		if (configModule instanceof String[]) {
+		    module = ObjectUtils.cast(configModule);
+		} else if (configModule instanceof String) {
+		    path = ObjectUtils.cast(configModule, String.class);
+		    module = new String[] { path };
+		} else {
+		    module = null;
+		}
+
+		if (ObjectUtils.notNull(module)) {
+		    modules.add(module);
+		}
+	    }
+	} else {
+	    modules = null;
+	}
+
+	return modules;
+    }
+
+    /**
+     * Initializes deployment path parameters
      * 
      * @return
      */
     public Set<DeploymentDirectory> getDeploymentPath() {
-
-	Set<DeploymentDirectory> directories;
-
-	Set<DeploymentDirectory> paths = getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
-
-	if (CollectionUtils.valid(paths)) {
-	    directories = new HashSet<DeploymentDirectory>();
-	    directories.addAll(paths);
-	} else {
-	    directories = null;
-	}
-
-	String[] modules = getConfigValue(ConfigKeys.MODULES.key);
-	if (CollectionUtils.valid(modules)) {
-	    Set<DeploymentDirectory> modueleDirectories = new HashSet<DeploymentDirectory>();
-	    DeploymentDirectory modueleDirectory;
-	    for (String module : modules) {
-		modueleDirectory = new DeploymentDirectory(module);
-		modueleDirectories.add(modueleDirectory);
-	    }
-
-	    if (directories == null) {
-		directories = new HashSet<DeploymentDirectory>();
-	    }
-	    directories.addAll(modueleDirectories);
-	}
-
-	return directories;
+	return getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
     }
 
     public Set<String> getDataSourcePath() {
