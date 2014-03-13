@@ -26,8 +26,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -43,6 +41,7 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
+import org.lightmare.utils.config.ConfigUtils;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -680,7 +679,13 @@ public class Configuration implements Cloneable {
     }
 
     public static boolean getRemoteControl() {
-	return ConfigKeys.REMOTE_CONTROL.getValue();
+
+	boolean answer;
+
+	Object value = ConfigKeys.REMOTE_CONTROL.getValue();
+	answer = ConfigUtils.getBoolean(value);
+
+	return answer;
     }
 
     public boolean isRemote() {
@@ -692,7 +697,13 @@ public class Configuration implements Cloneable {
     }
 
     public static boolean isServer() {
-	return ConfigKeys.SERVER.getValue();
+
+	boolean answer;
+
+	Object value = ConfigKeys.SERVER.getValue();
+	answer = ConfigUtils.getBoolean(value);
+
+	return answer;
     }
 
     public static void setServer(boolean server) {
@@ -700,7 +711,13 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isClient() {
-	return getConfigValue(ConfigKeys.CLIENT.key, Boolean.FALSE);
+
+	boolean answer;
+
+	Object value = getConfigValue(ConfigKeys.CLIENT.key, Boolean.FALSE);
+	answer = ConfigUtils.getBoolean(value);
+
+	return answer;
     }
 
     public void setClient(boolean client) {
@@ -741,44 +758,6 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Gets paths of instant EJB module from configuration
-     * 
-     * @param configModule
-     * @return String[] path of EJB modules
-     */
-    private String[] getModule(Object configModule) {
-
-	String[] module;
-
-	String path;
-	File file;
-	File[] files;
-	if (configModule instanceof String[]) {
-	    module = ObjectUtils.cast(configModule);
-	} else if (configModule instanceof String) {
-	    path = ObjectUtils.cast(configModule, String.class);
-	    module = new String[] { path };
-	} else if (configModule instanceof File) {
-	    file = ObjectUtils.cast(configModule, File.class);
-	    path = file.getPath();
-	    module = new String[] { path };
-	} else if (configModule instanceof File[]) {
-	    files = ObjectUtils.cast(configModule);
-	    int length = files.length;
-	    module = new String[length];
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-		file = files[i];
-		path = file.getPath();
-		module[i] = path;
-	    }
-	} else {
-	    module = null;
-	}
-
-	return module;
-    }
-
-    /**
      * Initializes modules by deployment modules parameter from configuration
      * 
      * @return {@link List} of deployment file paths
@@ -787,31 +766,9 @@ public class Configuration implements Cloneable {
 
 	List<String[]> modules;
 
-	Object[] configModules;
 	// Extracts modules from configuration
-	Object preModule = getConfigValue(ConfigKeys.MODULES.key);
-	if (preModule == null) {
-	    configModules = null;
-	} else if (preModule instanceof Object[]) {
-	    configModules = ObjectUtils.cast(preModule);
-	} else {
-	    configModules = getModule(preModule);
-	}
-
-	if (CollectionUtils.valid(configModules)) {
-	    modules = new ArrayList<String[]>();
-	    String[] module;
-	    for (Object configModule : configModules) {
-		if (ObjectUtils.notNull(configModule)) {
-		    module = getModule(configModule);
-		    if (ObjectUtils.notNull(module)) {
-			modules.add(module);
-		    }
-		}
-	    }
-	} else {
-	    modules = null;
-	}
+	Object value = getConfigValue(ConfigKeys.MODULES.key);
+	modules = ConfigUtils.getModules(value);
 
 	return modules;
     }
@@ -819,10 +776,16 @@ public class Configuration implements Cloneable {
     /**
      * Initializes deployment path parameters
      * 
-     * @return
+     * @return {@link Set} of {@link DeploymentDirectory} instances
      */
     public Set<DeploymentDirectory> getDeploymentPath() {
-	return getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
+
+	Set<DeploymentDirectory> deployments;
+
+	Object value = getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
+	deployments = ConfigUtils.getDeployments(value);
+
+	return deployments;
     }
 
     public Set<String> getDataSourcePath() {
@@ -830,16 +793,7 @@ public class Configuration implements Cloneable {
 	Set<String> paths;
 
 	Object value = getConfigValue(ConfigKeys.DATA_SOURCE_PATH.key);
-	if (value == null) {
-	    paths = null;
-	} else if (value instanceof Set) {
-	    paths = ObjectUtils.cast(value);
-	} else if (value instanceof String) {
-	    String path = ObjectUtils.cast(value, String.class);
-	    paths = Collections.singleton(path);
-	} else {
-	    paths = null;
-	}
+	paths = ConfigUtils.getSet(value);
 
 	return paths;
     }
@@ -849,16 +803,7 @@ public class Configuration implements Cloneable {
 	String[] paths;
 
 	Object value = getConfigValue(ConfigKeys.LIBRARY_PATH.key);
-	if (value == null) {
-	    paths = null;
-	} else if (value instanceof String[]) {
-	    paths = ObjectUtils.cast(value);
-	} else if (value instanceof String) {
-	    String path = ObjectUtils.cast(value, String.class);
-	    paths = new String[] { path };
-	} else {
-	    paths = null;
-	}
+	paths = ConfigUtils.getArray(value);
 
 	return paths;
     }
@@ -873,16 +818,7 @@ public class Configuration implements Cloneable {
 
 	Object value = getConfigValue(ConfigKeys.HOT_DEPLOYMENT.key,
 		Boolean.FALSE);
-	if (value == null) {
-	    answer = Boolean.FALSE;
-	} else if (value instanceof Boolean) {
-	    answer = ObjectUtils.cast(value);
-	} else if (value instanceof String) {
-	    String text = ObjectUtils.cast(value, String.class);
-	    answer = Boolean.valueOf(text);
-	} else {
-	    answer = Boolean.FALSE;
-	}
+	answer = ConfigUtils.getBoolean(value);
 
 	return answer;
     }
@@ -897,16 +833,7 @@ public class Configuration implements Cloneable {
 
 	Object value = getConfigValue(ConfigKeys.WATCH_STATUS.key,
 		Boolean.FALSE);
-	if (value == null) {
-	    answer = Boolean.FALSE;
-	} else if (value instanceof Boolean) {
-	    answer = ObjectUtils.cast(value);
-	} else if (value instanceof String) {
-	    String text = ObjectUtils.cast(value, String.class);
-	    answer = Boolean.valueOf(text);
-	} else {
-	    answer = Boolean.FALSE;
-	}
+	answer = ConfigUtils.getBoolean(value);
 
 	return answer;
     }
@@ -921,8 +848,14 @@ public class Configuration implements Cloneable {
      * @return <code>boolean</code>
      */
     public boolean isScanForEntities() {
-	return getPersistenceConfigValue(ConfigKeys.SCAN_FOR_ENTITIES.key,
-		Boolean.FALSE);
+
+	boolean answer;
+
+	Object value = getPersistenceConfigValue(
+		ConfigKeys.SCAN_FOR_ENTITIES.key, Boolean.FALSE);
+	answer = ConfigUtils.getBoolean(value);
+
+	return answer;
     }
 
     public void setScanForEntities(boolean scanForEntities) {
@@ -949,8 +882,14 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isPersXmlFromJar() {
-	return getPersistenceConfigValue(
+
+	boolean answer;
+
+	Object value = getPersistenceConfigValue(
 		ConfigKeys.PERSISTENCE_XML_FROM_JAR.key, Boolean.FALSE);
+	answer = ConfigUtils.getBoolean(value);
+
+	return answer;
     }
 
     public void setPersXmlFromJar(boolean persXmlFromJar) {
@@ -969,8 +908,14 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isScanArchives() {
-	return getPersistenceConfigValue(ConfigKeys.SCAN_ARCHIVES.key,
+
+	boolean answer;
+
+	Object value = getPersistenceConfigValue(ConfigKeys.SCAN_ARCHIVES.key,
 		Boolean.FALSE);
+	answer = ConfigUtils.getBoolean(value);
+
+	return answer;
     }
 
     public void setScanArchives(boolean scanArchives) {
@@ -978,8 +923,14 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isPooledDataSource() {
-	return getPersistenceConfigValue(ConfigKeys.POOLED_DATA_SOURCE.key,
-		Boolean.FALSE);
+
+	boolean answer;
+
+	Object value = getPersistenceConfigValue(
+		ConfigKeys.POOLED_DATA_SOURCE.key, Boolean.FALSE);
+	answer = ConfigUtils.getBoolean(value);
+
+	return answer;
     }
 
     public void setPooledDataSource(boolean pooledDataSource) {
