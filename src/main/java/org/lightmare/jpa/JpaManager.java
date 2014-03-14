@@ -76,6 +76,8 @@ public class JpaManager {
     // Error message for connection binding to JNDI names
     private static final String COULD_NOT_BIND_JNDI_ERROR = "could not bind connection";
 
+    private static final String NOT_IN_PROG_ERROR = "Connection %s was not in progress";
+
     private static final Logger LOG = Logger.getLogger(JpaManager.class);
 
     /**
@@ -189,6 +191,31 @@ public class JpaManager {
     }
 
     /**
+     * Binds {@link EntityManagerFactory} from passed
+     * {@link ConnectionSemaphore} to appropriate JNDI name
+     * 
+     * @param jndiName
+     * @param semaphore
+     * @throws IOException
+     */
+    private void bindJndiName(String jndiName, ConnectionSemaphore semaphore)
+	    throws IOException {
+
+	JndiManager jndiManager = new JndiManager();
+	try {
+	    String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
+	    if (jndiManager.lookup(fullJndiName) == null) {
+		jndiManager.rebind(fullJndiName, semaphore.getEmf());
+	    }
+	} catch (IOException ex) {
+	    LOG.error(ex.getMessage(), ex);
+	    String errorMessage = StringUtils.concat(COULD_NOT_BIND_JNDI_ERROR,
+		    semaphore.getUnitName());
+	    throw new IOException(errorMessage, ex);
+	}
+    }
+
+    /**
      * Binds {@link EntityManagerFactory} to {@link javax.naming.InitialContext}
      * 
      * @param jndiName
@@ -203,19 +230,7 @@ public class JpaManager {
 	if (ObjectUtils.notTrue(bound)) {
 	    String jndiName = semaphore.getJndiName();
 	    if (StringUtils.valid(jndiName)) {
-		JndiManager jndiManager = new JndiManager();
-		try {
-		    String fullJndiName = NamingUtils
-			    .createJpaJndiName(jndiName);
-		    if (jndiManager.lookup(fullJndiName) == null) {
-			jndiManager.rebind(fullJndiName, semaphore.getEmf());
-		    }
-		} catch (IOException ex) {
-		    LOG.error(ex.getMessage(), ex);
-		    String errorMessage = StringUtils.concat(
-			    COULD_NOT_BIND_JNDI_ERROR, semaphore.getUnitName());
-		    throw new IOException(errorMessage, ex);
-		}
+		bindJndiName(jndiName, semaphore);
 	    }
 	}
 
@@ -239,8 +254,7 @@ public class JpaManager {
 	    semaphore.setInProgress(Boolean.FALSE);
 	    bindJndiName(semaphore);
 	} else if (semaphore.getEmf() == null) {
-	    String errorMessage = String.format(
-		    "Connection %s was not in progress", unitName);
+	    String errorMessage = String.format(NOT_IN_PROG_ERROR, unitName);
 	    throw new IOException(errorMessage);
 	} else {
 	    bindJndiName(semaphore);

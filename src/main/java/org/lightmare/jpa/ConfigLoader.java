@@ -34,7 +34,7 @@ import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
 /**
- * For getting resources from persistence.xml path
+ * For getting XML resources and resources from persistence.xml path
  * 
  * @author Levan Tsinadze
  * @since 0.0.16-SNAPSHOT

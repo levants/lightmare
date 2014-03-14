@@ -44,6 +44,7 @@ public class MetaConfig {
 
     private transient boolean scanArchives;
 
+    // Default path of location for persistence XML configuration file
     private transient String shortPath = "/META-INF/persistence.xml";
 
     public static ClassLoader getOverridenClassLoader(MetaConfig metaConfig) {
