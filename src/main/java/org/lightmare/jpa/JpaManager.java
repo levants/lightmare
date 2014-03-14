@@ -97,7 +97,7 @@ public class JpaManager {
     }
 
     /**
-     * Added transaction properties for JTA data sources
+     * Adds default transaction properties for JTA data sources
      */
     private void addTransactionManager() {
 
