@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class MetaConfig {
 
-    // Arguments from "Lightmare" server
+    // Additional Arguments for JPA / ORM initialization
     private transient ClassLoader overridenClassLoader;
 
     private transient List<String> classes;
