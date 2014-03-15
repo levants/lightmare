@@ -107,7 +107,9 @@ public class JpaManager {
 
 	HibernateConfig[] hibernateConfigs = HibernateConfig.values();
 	for (HibernateConfig hibernateConfig : hibernateConfigs) {
-	    properties.put(hibernateConfig.key, hibernateConfig.value);
+	    if (CollectionUtils.notContains(properties, hibernateConfig.key)) {
+		properties.put(hibernateConfig.key, hibernateConfig.value);
+	    }
 	}
     }
 

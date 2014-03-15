@@ -208,6 +208,31 @@ public abstract class CollectionUtils {
     }
 
     /**
+     * Opposite to {@link Map#containsKey(Object)} method for passed {@link Map}
+     * map and K key
+     * 
+     * @param map
+     * @param key
+     * @return <code>boolean</code>
+     */
+    public static <K, V> boolean notContains(Map<K, V> map, K key) {
+	return valid(map) && ObjectUtils.notTrue(map.containsKey(key));
+    }
+
+    /**
+     * Opposite to {@link Collection#contains(Object)} method for passed
+     * {@link Collection} collection and E element
+     * 
+     * @param collection
+     * @param element
+     * @return <code>boolean</code>
+     */
+    public static <E> boolean notContains(Collection<E> collection, E element) {
+	return valid(collection)
+		&& ObjectUtils.notTrue(collection.contains(element));
+    }
+
+    /**
      * Gets value from passed {@link Map} as other {@link Map} instance
      * 
      * @param key
