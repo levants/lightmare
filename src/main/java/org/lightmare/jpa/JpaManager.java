@@ -23,6 +23,7 @@
 package org.lightmare.jpa;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +48,8 @@ import org.lightmare.utils.StringUtils;
 
 /**
  * Creates and caches {@link EntityManagerFactory} for each EJB bean
- * {@link Class}'s appropriate field (annotated by @PersistenceContext)
+ * {@link Class}'s appropriate {@link Field} (annotated by @PersistenceContext)
+ * value
  * 
  * @author Levan Tsinadze
  * @since 0.0.79-SNAPSHOT
