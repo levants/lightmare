@@ -65,7 +65,7 @@ public abstract class Initializer {
      * Container for connection configuration properties
      * 
      * @author Levan Tsinadze
-     * 
+     * @since 0.0.80-SNAPSHOT
      */
     public static enum ConnectionConfig {
 
@@ -117,7 +117,6 @@ public abstract class Initializer {
 
 	boolean locked = Boolean.FALSE;
 	while (ObjectUtils.notTrue(locked)) {
-
 	    locked = ObjectUtils.tryLock(DRIVER_LOCK);
 	    if (locked) {
 		try {
@@ -201,13 +200,12 @@ public abstract class Initializer {
      */
     public static void close(String jndiName) throws IOException {
 
-	JndiManager jndiManager = new JndiManager();
-	DataSource dataSource = jndiManager.lookup(jndiName);
+	DataSource dataSource = JndiManager.lookup(jndiName);
 	if (ObjectUtils.notNull(dataSource)) {
 	    cleanUp(dataSource);
 	}
 	dataSource = null;
-	jndiManager.unbind(jndiName);
+	JndiManager.unbind(jndiName);
 	INITIALIZED_NAMES.remove(jndiName);
     }
 

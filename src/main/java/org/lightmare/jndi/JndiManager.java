@@ -168,7 +168,7 @@ public class JndiManager {
      * @return <code>T</code>
      * @throws IOException
      */
-    public <T> T lookup(String name) throws IOException {
+    public static <T> T lookup(String name) throws IOException {
 
 	T value;
 
@@ -190,7 +190,7 @@ public class JndiManager {
      * @param data
      * @throws IOException
      */
-    public void rebind(String name, Object data) throws IOException {
+    public static void rebind(String name, Object data) throws IOException {
 
 	try {
 	    getContext().rebind(name, data);
@@ -208,7 +208,7 @@ public class JndiManager {
      * @param data
      * @throws IOException
      */
-    public void bind(String name, Object data) throws IOException {
+    public static void bind(String name, Object data) throws IOException {
 
 	try {
 	    getContext().bind(name, data);
@@ -226,7 +226,7 @@ public class JndiManager {
      * @param name
      * @throws IOException
      */
-    public void unbind(String name) throws IOException {
+    public static void unbind(String name) throws IOException {
 
 	try {
 	    getContext().unbind(name);

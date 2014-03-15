@@ -205,11 +205,10 @@ public class JpaManager {
     private void bindJndiName(String jndiName, ConnectionSemaphore semaphore)
 	    throws IOException {
 
-	JndiManager jndiManager = new JndiManager();
 	try {
 	    String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
-	    if (jndiManager.lookup(fullJndiName) == null) {
-		jndiManager.rebind(fullJndiName, semaphore.getEmf());
+	    if (JndiManager.lookup(fullJndiName) == null) {
+		JndiManager.rebind(fullJndiName, semaphore.getEmf());
 	    }
 	} catch (IOException ex) {
 	    LOG.error(ex.getMessage(), ex);

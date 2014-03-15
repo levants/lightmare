@@ -114,8 +114,7 @@ public abstract class InitDataSource {
 	    DataSource dataSource = initializeDataSource();
 	    boolean valid = checkInstance(dataSource);
 	    if (valid) {
-		JndiManager namingUtils = new JndiManager();
-		namingUtils.rebind(jndiName, dataSource);
+		JndiManager.rebind(jndiName, dataSource);
 	    } else {
 		throw new IOException(String.format(
 			InitMessages.NOT_APPR_INSTANCE_ERROR, jndiName));
