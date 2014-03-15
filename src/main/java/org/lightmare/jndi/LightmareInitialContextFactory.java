@@ -29,6 +29,7 @@ import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
 import org.lightmare.jndi.JndiManager.JNDIParameters;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -52,8 +53,7 @@ public class LightmareInitialContextFactory implements InitialContextFactory {
 	String key = parameter.key;
 	String value = parameter.value;
 	// all instances will share stored data
-	boolean notContainsKey = ObjectUtils.notTrue(sharingEnv
-		.containsKey(key));
+	boolean notContainsKey = CollectionUtils.notContains(sharingEnv, key);
 	if (notContainsKey) {
 	    sharingEnv.put(key, value);
 	}
