@@ -48,6 +48,23 @@ public class RestCheck {
     public static final String PATH_CLASS_NAME = "javax.ws.rs.Path";
 
     /**
+     * Checks and caches if libraries has {@link Path} class file to load it
+     * 
+     * @author Levan Tsinadze
+     * 
+     */
+    private static enum PathChecks {
+
+	CHECK;
+
+	final boolean value;
+
+	private PathChecks() {
+	    value = LibraryLoader.isClass(PATH_CLASS_NAME);
+	}
+    }
+
+    /**
      * Reloads REST service
      */
     public static void reload() {
@@ -83,7 +100,7 @@ public class RestCheck {
      */
     public static boolean check(Class<?> resourceClass) {
 
-	boolean valid = LibraryLoader.isClass(PATH_CLASS_NAME);
+	boolean valid = PathChecks.CHECK.value;
 
 	if (valid) {
 	    valid = ObjectUtils.notNull(resourceClass)
