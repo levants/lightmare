@@ -53,6 +53,7 @@ import org.lightmare.cache.TmpResources;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.fs.Watcher;
+import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
 import org.lightmare.libraries.LibraryLoader;
@@ -118,6 +119,7 @@ public class MetaCreator {
     private MetaCreator() {
 	tmpResources = new TmpResources();
 	ShutDown.setHook(tmpResources);
+	JndiManager.loadContext();
     }
 
     /**

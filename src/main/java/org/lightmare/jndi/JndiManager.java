@@ -24,6 +24,7 @@ package org.lightmare.jndi;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -42,6 +43,8 @@ import org.lightmare.utils.ObjectUtils;
  * @since 0.0.60-SNAPSHOT
  */
 public class JndiManager {
+
+    private static final AtomicBoolean SET = new AtomicBoolean();
 
     private static final Logger LOG = Logger.getLogger(JndiManager.class);
 
@@ -154,6 +157,17 @@ public class JndiManager {
      */
     public static Context getContext() throws IOException {
 	return NamingContexts.CONTEXT.getContext();
+    }
+
+    public static void loadContext() {
+
+	try {
+	    if (ObjectUtils.notTrue(SET.getAndSet(Boolean.TRUE))) {
+		getContext();
+	    }
+	} catch (IOException ex) {
+	    LOG.error(ex.getMessage(), ex);
+	}
     }
 
     /**
