@@ -8,6 +8,11 @@ import java.util.Scanner;
 import javax.naming.InitialContext;
 import javax.transaction.UserTransaction;
 
+import org.apache.log4j.Appender;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -38,8 +43,20 @@ public class EjbEarTest {
 
     private static Scanner scanner;
 
+    private static void configureLogger() {
+	Logger logger = Logger.getRootLogger();
+	Appender appender = logger.getAppender("CA");
+	logger.removeAppender(appender);
+	SimpleLayout layout = new SimpleLayout();
+	ConsoleAppender console = new ConsoleAppender(layout);
+	logger.addAppender(console);
+	logger.setLevel(Level.INFO);
+    }
+
     @BeforeClass
     public static void start() {
+
+	configureLogger();
 
 	try {
 	    InputStream stream = EjbTest.class.getResourceAsStream("path");

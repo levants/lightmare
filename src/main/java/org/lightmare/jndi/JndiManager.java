@@ -31,7 +31,6 @@ import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
 import org.apache.log4j.Logger;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -86,7 +85,7 @@ public class JndiManager {
 	 */
 	protected static Properties getConfig() {
 
-	    if (CollectionUtils.invalid(CONFIG)) {
+	    if (CONFIG.isEmpty()) {
 		JNDIParameters[] parameters = JNDIParameters.values();
 		for (JNDIParameters parameter : parameters) {
 		    CONFIG.put(parameter.key, parameter.value);

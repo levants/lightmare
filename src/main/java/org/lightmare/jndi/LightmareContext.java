@@ -150,6 +150,9 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 	}
     }
 
+    /**
+     * Clears resources
+     */
     @Override
     public void close() throws NamingException {
 	clearResources();
