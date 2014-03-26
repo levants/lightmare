@@ -100,7 +100,7 @@ public abstract class JsonSerializer {
     }
 
     /**
-     * For deserializatio of JSON {@link String} to {@link Object} with <a
+     * For deserialization of JSON {@link String} to {@link Object} with <a
      * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
      * 
      * @param data
@@ -127,7 +127,7 @@ public abstract class JsonSerializer {
     }
 
     /**
-     * For deserializatio of JSON {@link InputStream} to {@link Object} with <a
+     * For deserialization of JSON {@link InputStream} to {@link Object} with <a
      * href="https://github.com/FasterXML/jackson-databind">jackson API</a>
      * 
      * @param data
@@ -144,7 +144,7 @@ public abstract class JsonSerializer {
     }
 
     /**
-     * For deserializatio of JSON (<code>byte[]</code>) to {@link Object} with
+     * For deserialization of JSON (<code>byte[]</code>) to {@link Object} with
      * <a href="https://github.com/FasterXML/jackson-databind">jackson API</a>
      * 
      * @param data
