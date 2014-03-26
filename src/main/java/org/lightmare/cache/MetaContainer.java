@@ -99,6 +99,29 @@ public class MetaContainer {
     }
 
     /**
+     * Clones passed {@link Configuration} instance
+     * 
+     * @param configuration
+     * @return {@link Configuration} cloned
+     * @throws IOException
+     */
+    public static Configuration clone(Configuration configuration)
+	    throws IOException {
+
+	Configuration clone;
+
+	try {
+	    Object cloneObject = configuration.clone();
+	    clone = ObjectUtils.cast(cloneObject, Configuration.class);
+	} catch (CloneNotSupportedException ex) {
+	    throw new IOException(ex);
+	}
+
+	return clone;
+
+    }
+
+    /**
      * Caches {@link Configuration} for specific {@link URL} array
      * 
      * @param archives
