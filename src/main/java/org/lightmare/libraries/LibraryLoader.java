@@ -42,6 +42,7 @@ import org.apache.log4j.Logger;
 import org.lightmare.libraries.loaders.EjbClassLoader;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileUtils;
 import org.lightmare.utils.reflect.MetaUtils;
 
@@ -63,6 +64,9 @@ public class LibraryLoader {
 
     // Name of class loader isolated thread
     private static final String LOADER_THREAD_NAME = "library-class-loader-thread";
+
+    // Class extension
+    private static final String CLASS_EXTENSION = ".class";
 
     // Inaccessible method to add URL to existing class loader
     private static Method addURLMethod;
@@ -234,6 +238,46 @@ public class LibraryLoader {
 	ClassLoader loader = AccessController.doPrivileged(action);
 
 	return loader;
+    }
+
+    /**
+     * Finds class file {@link URL} by class name
+     * 
+     * @param className
+     * @return {@link URL} or class file
+     */
+    public static URL finadClass(String className) {
+
+	URL classURL;
+
+	ClassLoader loader = getContextClassLoader();
+	String fileName = className.replace(StringUtils.DOT,
+		File.pathSeparatorChar);
+	String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
+	classURL = loader.getResource(classFile);
+
+	return classURL;
+    }
+
+    /**
+     * Finds is class file in class path resource or not
+     * 
+     * @param className
+     * @return <code>boolean</code>
+     */
+    public static boolean isClass(String className) {
+
+	boolean valid;
+
+	ClassLoader loader = getContextClassLoader();
+	String fileName = className.replace(StringUtils.DOT,
+		File.pathSeparatorChar);
+	String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
+	URL classURL = loader.getResource(classFile);
+	valid = ObjectUtils.notNull(classURL);
+
+	return valid;
+
     }
 
     /**

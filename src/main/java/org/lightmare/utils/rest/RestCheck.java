@@ -31,6 +31,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 
 import org.lightmare.cache.RestContainer;
+import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
 import org.lightmare.utils.ObjectUtils;
 
@@ -43,6 +44,8 @@ import org.lightmare.utils.ObjectUtils;
  * @since 0.0.74-SNAPSHOT
  */
 public class RestCheck {
+
+    public static final String PATH_CLASS_NAME = "javax.ws.rs.Path";
 
     /**
      * Reloads REST service
@@ -80,15 +83,20 @@ public class RestCheck {
      */
     public static boolean check(Class<?> resourceClass) {
 
-	boolean valid = ObjectUtils.notNull(resourceClass)
-		&& resourceClass.isAnnotationPresent(Path.class);
+	boolean valid = LibraryLoader.isClass(PATH_CLASS_NAME);
 
-	Method[] methods = resourceClass.getDeclaredMethods();
-	int length = methods.length;
-	Method method;
-	for (int i = 0; i < length && ObjectUtils.notTrue(valid); i++) {
-	    method = methods[i];
-	    valid = checkAnnotation(method);
+	if (valid) {
+	    valid = ObjectUtils.notNull(resourceClass)
+		    && resourceClass.isAnnotationPresent(Path.class);
+	    if (valid) {
+		Method[] methods = resourceClass.getDeclaredMethods();
+		int length = methods.length;
+		Method method;
+		for (int i = 0; i < length && ObjectUtils.notTrue(valid); i++) {
+		    method = methods[i];
+		    valid = checkAnnotation(method);
+		}
+	    }
 	}
 
 	return valid;
