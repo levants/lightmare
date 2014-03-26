@@ -241,7 +241,8 @@ public class LibraryLoader {
     }
 
     /**
-     * Finds class file {@link URL} by class name
+     * Finds class file {@link URL} by class name in current {@link ClassLoader}
+     * 's resources (claspath) or returns null if class file is not present
      * 
      * @param className
      * @return {@link URL} or class file
@@ -260,7 +261,8 @@ public class LibraryLoader {
     }
 
     /**
-     * Finds is class file in class path resource or not
+     * Finds is class file in current {@link ClassLoader}'s resources (in
+     * classpath) or not
      * 
      * @param className
      * @return <code>boolean</code>
