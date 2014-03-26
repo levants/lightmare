@@ -44,9 +44,6 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class JndiManager {
 
-    // Value of InitialContextFactory implementation class
-    private static final Class<LightmareInitialContextFactory> FACTORY_CLASS = LightmareInitialContextFactory.class;
-
     private static final Logger LOG = Logger.getLogger(JndiManager.class);
 
     /**
@@ -58,11 +55,11 @@ public class JndiManager {
     protected static enum JNDIParameters {
 
 	// Name of InitialContextFactory implementation class
-	FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY, FACTORY_CLASS
-		.getName()),
+	FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY,
+		LightmareInitialContextFactory.class.getName()),
 	// Name of InitialContextFactory implementation class package
-	PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES, FACTORY_CLASS.getPackage()
-		.getName()),
+	PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES,
+		LightmareInitialContextFactory.class.getPackage().getName()),
 	// Additional parameter to share JNDI cache
 	SHARED_PARAMETER("org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
 
