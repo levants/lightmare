@@ -55,6 +55,7 @@ public class RestCheck {
      */
     private static enum PathChecks {
 
+	// Check if JAX-RS libraries are present
 	CHECK;
 
 	final boolean value;
@@ -100,6 +101,7 @@ public class RestCheck {
      */
     public static boolean check(Class<?> resourceClass) {
 
+	// Checks if JAX-RS library is present
 	boolean valid = PathChecks.CHECK.value;
 
 	if (valid) {
