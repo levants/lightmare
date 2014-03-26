@@ -45,6 +45,7 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class RestCheck {
 
+    // Path annotation class name
     public static final String PATH_CLASS_NAME = "javax.ws.rs.Path";
 
     /**
