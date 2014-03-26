@@ -272,8 +272,8 @@ public class LibraryLoader {
 	boolean valid;
 
 	ClassLoader loader = getContextClassLoader();
-	String fileName = className.replace(StringUtils.DOT,
-		File.pathSeparatorChar);
+	String fileName = className
+		.replace(StringUtils.DOT, File.separatorChar);
 	String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
 	URL classURL = loader.getResource(classFile);
 	valid = ObjectUtils.notNull(classURL);
