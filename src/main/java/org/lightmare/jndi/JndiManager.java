@@ -62,10 +62,10 @@ public class JndiManager {
 
 	// Name of InitialContextFactory implementation class
 	FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY,
-		LightmareInitialContextFactory.class.getName()),
+		LightmareContextFactory.class.getName()),
 	// Name of InitialContextFactory implementation class package
 	PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES,
-		LightmareInitialContextFactory.class.getPackage().getName()),
+		LightmareContextFactory.class.getPackage().getName()),
 	// Additional parameter to share JNDI cache
 	SHARED_PARAMETER("org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
 
@@ -75,9 +75,9 @@ public class JndiManager {
 	// Cache of JNDI configuration key value pairs
 	private static final Map<String, String> HIBERNATE_CONFIG = new HashMap<String, String>();
 
-	public String key;
+	public final String key;
 
-	public String value;
+	public final String value;
 
 	/**
 	 * Constructor with key and value

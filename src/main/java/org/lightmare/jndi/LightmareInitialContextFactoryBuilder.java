@@ -92,7 +92,7 @@ public class LightmareInitialContextFactoryBuilder implements
 	if (ObjectUtils.notNull(requestedFactory)) {
 	    initialContextFactory = simulateBuilderLessNamingManager(requestedFactory);
 	} else {
-	    initialContextFactory = new LightmareInitialContextFactory();
+	    initialContextFactory = new LightmareContextFactory();
 	}
 
 	return initialContextFactory;
