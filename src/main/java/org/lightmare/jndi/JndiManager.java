@@ -47,7 +47,7 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class JndiManager {
 
-    // Check if JNDI properties set as system propertes
+    // Check if JNDI properties set as system properties
     private static final AtomicBoolean JNDI_IS_SET = new AtomicBoolean();
 
     private static final Logger LOG = Logger.getLogger(JndiManager.class);
@@ -110,13 +110,7 @@ public class JndiManager {
      * @author Levan Tsinadze
      * @since 0.1.1
      */
-    private static enum NamingContexts {
-
-	CONTEXT; // Single instance of NamingContexts to initialize and keep
-		 // Context instance
-
-	// Single Context instance
-	private final Context context;
+    private static class NamingContext {
 
 	// Error descriptor if Context is not initialized
 	private static final String NOT_INITIALIZED_ERROR = "Context not initialized";
@@ -156,17 +150,11 @@ public class JndiManager {
 	 * Initialized {@link NamingContexts} and contained {@link Context} with
 	 * system properties
 	 */
-	private NamingContexts() {
+	private void configure() {
 	    // Gets system properties
 	    Properties properties = JNDIParameters.getConfig();
 	    // Registers properties as system properties
 	    configure(properties);
-	    try {
-		context = new InitialContext(properties);
-	    } catch (NamingException ex) {
-		LOG.error(ex.getMessage(), ex);
-		throw new ExceptionInInitializerError(ex);
-	    }
 	}
 
 	/**
@@ -174,10 +162,14 @@ public class JndiManager {
 	 * else returns single {@link Context} instance instance
 	 * 
 	 */
-	protected Context getContext() throws IOException {
+	private static Context getContext() throws IOException {
 
-	    if (context == null) {
-		throw new IOException(NOT_INITIALIZED_ERROR);
+	    InitialContext context;
+	    try {
+		context = new InitialContext();
+	    } catch (NamingException ex) {
+		LOG.error(ex.getMessage(), ex);
+		throw new IOException(NOT_INITIALIZED_ERROR, ex);
 	    }
 
 	    return context;
@@ -191,7 +183,7 @@ public class JndiManager {
      * @throws IOException
      */
     public static Context getContext() throws IOException {
-	return NamingContexts.CONTEXT.getContext();
+	return NamingContext.getContext();
     }
 
     /**
@@ -200,12 +192,9 @@ public class JndiManager {
      */
     public static void loadContext() {
 
-	try {
-	    if (ObjectUtils.notTrue(JNDI_IS_SET.getAndSet(Boolean.TRUE))) {
-		getContext();
-	    }
-	} catch (IOException ex) {
-	    LOG.error(ex.getMessage(), ex);
+	if (ObjectUtils.notTrue(JNDI_IS_SET.getAndSet(Boolean.TRUE))) {
+	    NamingContext namingContext = new NamingContext();
+	    namingContext.configure();
 	}
     }
 
