@@ -111,8 +111,7 @@ public class MetaContainer {
 	Configuration clone;
 
 	try {
-	    Object cloneObject = configuration.clone();
-	    clone = ObjectUtils.cast(cloneObject, Configuration.class);
+	    clone = configuration.clone();
 	} catch (CloneNotSupportedException ex) {
 	    throw new IOException(ex);
 	}

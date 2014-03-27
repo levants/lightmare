@@ -989,11 +989,14 @@ public class Configuration implements Cloneable {
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
+    public Configuration clone() throws CloneNotSupportedException {
 
 	// Deep clone for configuration
-	Configuration cloneConfig = (Configuration) super.clone();
+	Configuration cloneConfig;
 
+	Object cloneObject = super.clone();
+
+	cloneConfig = ObjectUtils.cast(cloneObject, Configuration.class);
 	cloneConfig.config.clear();
 	cloneConfig.configure(this.config);
 
