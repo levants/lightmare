@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 
+import javax.enterprise.context.spi.Context;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -42,10 +43,12 @@ import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.finalizers.Cleanable;
 import org.lightmare.utils.finalizers.FinalizationUtils;
+import org.osjava.sj.jndi.AbstractContext;
 import org.osjava.sj.memory.MemoryContext;
 
 /**
- * Implementation of simple JNDI {@link MemoryContext} for EJB bean interface,
+ * Implementation of JNDI {@link Context} and extension of simple JNDI's
+ * {@link MemoryContext} and {@link AbstractContext} for EJB bean interface,
  * {@link UserTransaction} and {@link EntityManager} caching and retrieving
  * 
  * @author Levan Tsinadze
