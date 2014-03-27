@@ -47,7 +47,8 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class JndiManager {
 
-    private static final AtomicBoolean SET = new AtomicBoolean();
+    // Check if JNDI properties set as system propertes
+    private static final AtomicBoolean JNDI_IS_SET = new AtomicBoolean();
 
     private static final Logger LOG = Logger.getLogger(JndiManager.class);
 
@@ -200,7 +201,7 @@ public class JndiManager {
     public static void loadContext() {
 
 	try {
-	    if (ObjectUtils.notTrue(SET.getAndSet(Boolean.TRUE))) {
+	    if (ObjectUtils.notTrue(JNDI_IS_SET.getAndSet(Boolean.TRUE))) {
 		getContext();
 	    }
 	} catch (IOException ex) {
