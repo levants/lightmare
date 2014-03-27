@@ -521,6 +521,7 @@ public class MetaCreator {
 	if (CollectionUtils.invalid(paths)) {
 	    List<String[]> modules = configuration.getDeploymentModules();
 	    if (CollectionUtils.valid(modules)) {
+		// Clones configuration for next module
 		Configuration cloneConfig = MetaContainer.clone(configuration);
 		for (String[] module : modules) {
 		    scanForBeans(module);
