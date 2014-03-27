@@ -23,6 +23,7 @@
 package org.lightmare.jndi;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -34,9 +35,12 @@ import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
 import org.apache.log4j.Logger;
-import org.lightmare.jndi.JndiManager.JNDIParameters;
+import org.hibernate.cfg.AvailableSettings;
+import org.lightmare.jndi.JndiManager.JNDIConfigs;
+import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Utility class to initialize and set (
@@ -68,6 +72,9 @@ public class JndiManager {
 	// Cache of JNDI configuration key value pairs
 	private static final Properties CONFIG = new Properties();
 
+	// Cache of JNDI configuration key value pairs
+	private static final Map<String, String> HIBERNATE_CONFIG = new HashMap<String, String>();
+
 	public String key;
 
 	public String value;
@@ -96,6 +103,46 @@ public class JndiManager {
 	    }
 
 	    return CONFIG;
+	}
+
+	/**
+	 * Gets {@link Map} of all key value pairs of this enumeration prefixed
+	 * with as JPA configuration prefix
+	 */
+	protected static Map<String, String> getHibreanteConfig() {
+
+	    if (HIBERNATE_CONFIG.isEmpty()) {
+		JNDIParameters[] parameters = JNDIParameters.values();
+		String hibernatekey;
+		for (JNDIParameters parameter : parameters) {
+		    hibernatekey = StringUtils.concat(
+			    AvailableSettings.JNDI_PREFIX, StringUtils.DOT,
+			    parameter.key);
+		    HIBERNATE_CONFIG.put(hibernatekey, parameter.value);
+		}
+	    }
+
+	    return HIBERNATE_CONFIG;
+	}
+    }
+
+    /**
+     * Gets data for JPA JNDI configuration
+     * 
+     * @author Levan Tsinadze
+     * 
+     */
+    public static enum JNDIConfigs {
+
+	INIT; // Initialization to read JNDI parameters
+
+	public final Properties config;
+
+	public final Map<String, String> hinbernateConfig;
+
+	private JNDIConfigs() {
+	    config = JNDIParameters.getConfig();
+	    hinbernateConfig = JNDIParameters.getHibreanteConfig();
 	}
     }
 
@@ -250,11 +297,18 @@ class NamingContext {
     protected static void configure() {
 
 	if (ObjectUtils.notTrue(JNDI_IS_SET.getAndSet(Boolean.TRUE))) {
-	    // Gets system properties
-	    Properties properties = JNDIParameters.getConfig();
-	    // Registers properties as system properties
-	    NamingContext namingContext = new NamingContext();
-	    namingContext.configure(properties);
+	    ClassLoader loader = LibraryLoader.getContextClassLoader();
+	    Thread thread = Thread.currentThread();
+	    try {
+		thread.setContextClassLoader(ClassLoader.getSystemClassLoader());
+		// Gets system properties
+		Properties properties = JNDIConfigs.INIT.config;
+		// Registers properties as system properties
+		NamingContext namingContext = new NamingContext();
+		namingContext.configure(properties);
+	    } finally {
+		thread.setContextClassLoader(loader);
+	    }
 	}
     }
 
@@ -269,7 +323,8 @@ class NamingContext {
 
 	try {
 	    configure();
-	    context = new InitialContext();
+	    Properties propertis = JNDIConfigs.INIT.config;
+	    context = new InitialContext(propertis);
 	} catch (NamingException ex) {
 	    LOG.error(ex.getMessage(), ex);
 	    throw new IOException(NOT_INITIALIZED_ERROR, ex);

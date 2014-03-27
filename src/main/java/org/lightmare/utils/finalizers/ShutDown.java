@@ -63,7 +63,6 @@ public class ShutDown implements Runnable {
     private static final Logger LOG = Logger.getLogger(ShutDown.class);
 
     public ShutDown(TmpResources tmpResources) {
-
 	getResources().add(tmpResources);
     }
 
@@ -88,7 +87,6 @@ public class ShutDown implements Runnable {
      * @param tmpResources
      */
     private void addTmpResources(TmpResources tmpResources) {
-
 	getResources().add(tmpResources);
     }
 
@@ -162,7 +160,6 @@ public class ShutDown implements Runnable {
     private static void clearHook() {
 
 	synchronized (ShutDown.class) {
-
 	    // Prevents null pointer exception for SutDown instance
 	    boolean hookIsSet = Boolean.FALSE;
 	    while (ObjectUtils.notTrue(hookIsSet)) {

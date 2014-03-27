@@ -145,7 +145,7 @@ public class MetaContainer {
      * Gets {@link Configuration} from cache for specific {@link URL} array
      * 
      * @param archives
-     * @param config
+     * @param hinbernateConfig
      */
     public static Configuration getConfig(URL[] archives) {
 

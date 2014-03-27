@@ -180,7 +180,16 @@ public class MetaCreator {
     }
 
     public Map<String, ArchiveUtils> getAggregateds() {
-	return aggregateds;
+
+	Map<String, ArchiveUtils> clone = new HashMap<String, ArchiveUtils>();
+
+	if (CollectionUtils.valid(aggregateds)) {
+	    synchronized (aggregateds) {
+		clone.putAll(aggregateds);
+	    }
+	}
+
+	return clone;
     }
 
     /**
@@ -315,7 +324,9 @@ public class MetaCreator {
 	    }
 
 	    tmpFiles = ioUtils.getTmpFiles();
-	    aggregateds.put(beanName, ioUtils);
+	    synchronized (aggregateds) {
+		aggregateds.put(beanName, ioUtils);
+	    }
 	}
 
 	// Archive file url which contains this bean
@@ -546,7 +557,9 @@ public class MetaCreator {
 		    }
 
 		    if (CollectionUtils.valid(aggregateds)) {
-			aggregateds.clear();
+			synchronized (aggregateds) {
+			    aggregateds.clear();
+			}
 		    }
 
 		    if (CollectionUtils.valid(archivesURLs)) {

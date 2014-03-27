@@ -90,6 +90,27 @@ public class JpaManager {
     }
 
     /**
+     * Initializes {@link Map} of additional properties
+     * 
+     * @return {@link Map} additional properties
+     */
+    private Map<Object, Object> getProperties() {
+
+	if (properties == null) {
+	    properties = new HashMap<Object, Object>();
+	}
+
+	return properties;
+    }
+
+    /**
+     * Adds JPA JNDI properties to additional configuration
+     */
+    private void addJndiProperties() {
+	getProperties().putAll(JndiManager.JNDIConfigs.INIT.hinbernateConfig);
+    }
+
+    /**
      * Checks if entity persistence.xml {@link URL} is provided
      * 
      * @return boolean
@@ -103,14 +124,11 @@ public class JpaManager {
      */
     private void addTransactionManager() {
 
-	if (properties == null) {
-	    properties = new HashMap<Object, Object>();
-	}
-
 	HibernateConfig[] hibernateConfigs = HibernateConfig.values();
 	for (HibernateConfig hibernateConfig : hibernateConfigs) {
-	    if (CollectionUtils.notContains(properties, hibernateConfig.key)) {
-		properties.put(hibernateConfig.key, hibernateConfig.value);
+	    if (CollectionUtils.notContains(getProperties(),
+		    hibernateConfig.key)) {
+		getProperties().put(hibernateConfig.key, hibernateConfig.value);
 	    }
 	}
     }
@@ -167,6 +185,8 @@ public class JpaManager {
 	if (ObjectUtils.notTrue(swapDataSource)) {
 	    addTransactionManager();
 	}
+	// Adds JNDI properties
+	addJndiProperties();
 
 	emf = provider.createEntityManagerFactory(unitName, properties);
 
