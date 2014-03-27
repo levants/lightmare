@@ -995,10 +995,12 @@ public class Configuration implements Cloneable {
 	Configuration cloneConfig;
 
 	Object cloneObject = super.clone();
-
+	// Casting cloned object to the appropriated type
 	cloneConfig = ObjectUtils.cast(cloneObject, Configuration.class);
-	Map<Object, Object> copyConfig = new HashMap<Object, Object>(this.config);
-	//copyConfig.putAll(this.config);
+	// Coping configuration for cloned data
+	Map<Object, Object> copyConfig = new HashMap<Object, Object>(
+		this.config);
+	// copyConfig.putAll(this.config);
 	cloneConfig.config.clear();
 	cloneConfig.configure(copyConfig);
 
