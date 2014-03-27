@@ -130,7 +130,8 @@ public class JndiManager {
      * Gets data for JPA JNDI configuration
      * 
      * @author Levan Tsinadze
-     * 
+     * @see JNDIParameters
+     * @since 0.1.2
      */
     public static enum JNDIConfigs {
 
@@ -248,6 +249,7 @@ public class JndiManager {
  * 
  * @author Levan Tsinadze
  * @since 0.1.1
+ * @see JNDIConfigs
  */
 class NamingContext {
 

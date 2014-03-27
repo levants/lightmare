@@ -60,6 +60,10 @@ public class LightmareContext extends MemoryContext implements Cleanable {
     // Caches EntityManager instances got from lookup method to clear after
     private Collection<WeakReference<EntityManager>> ems = new ArrayList<WeakReference<EntityManager>>();
 
+    /**
+     * Constructor with no parameters just calls superclass appropriated
+     * constructor
+     */
     public LightmareContext() {
 	super();
     }
