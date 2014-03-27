@@ -34,6 +34,7 @@ import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
 import org.apache.log4j.Logger;
+import org.lightmare.jndi.JndiManager.JNDIParameters;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
@@ -46,11 +47,6 @@ import org.lightmare.utils.ObjectUtils;
  * @since 0.0.60-SNAPSHOT
  */
 public class JndiManager {
-
-    // Check if JNDI properties set as system properties
-    private static final AtomicBoolean JNDI_IS_SET = new AtomicBoolean();
-
-    private static final Logger LOG = Logger.getLogger(JndiManager.class);
 
     /**
      * Caches JNDI system parameters for initializing {@link Context} instance
@@ -104,79 +100,6 @@ public class JndiManager {
     }
 
     /**
-     * Enumeration to set JNDI system properties and initialize {@link Context}
-     * instance
-     * 
-     * @author Levan Tsinadze
-     * @since 0.1.1
-     */
-    private static class NamingContext {
-
-	// Error descriptor if Context is not initialized
-	private static final String NOT_INITIALIZED_ERROR = "Context not initialized";
-
-	/**
-	 * Checks if {@link System} properties do not contains passed key and
-	 * sets it
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	private void checkAndSet(Object key, Object value) {
-
-	    if (CollectionUtils.notContains(System.getProperties(), key)) {
-		System.getProperties().put(key, value);
-	    }
-	}
-
-	/**
-	 * Puts passed {@link Properties} as {@link System} properties
-	 * 
-	 * @param properties
-	 */
-	private void configure(Properties properties) {
-
-	    Set<Map.Entry<Object, Object>> entries = properties.entrySet();
-	    Object key;
-	    Object value;
-	    for (Map.Entry<Object, Object> entry : entries) {
-		key = entry.getKey();
-		value = entry.getValue();
-		checkAndSet(key, value);
-	    }
-	}
-
-	/**
-	 * Initialized {@link NamingContexts} and contained {@link Context} with
-	 * system properties
-	 */
-	private void configure() {
-	    // Gets system properties
-	    Properties properties = JNDIParameters.getConfig();
-	    // Registers properties as system properties
-	    configure(properties);
-	}
-
-	/**
-	 * If context is not initialized throws {@link IOException} registered
-	 * else returns single {@link Context} instance instance
-	 * 
-	 */
-	private static Context getContext() throws IOException {
-
-	    InitialContext context;
-	    try {
-		context = new InitialContext();
-	    } catch (NamingException ex) {
-		LOG.error(ex.getMessage(), ex);
-		throw new IOException(NOT_INITIALIZED_ERROR, ex);
-	    }
-
-	    return context;
-	}
-    }
-
-    /**
      * Getter for {@link Context} instance
      * 
      * @return {@link Context}
@@ -191,11 +114,7 @@ public class JndiManager {
      * built yet
      */
     public static void loadContext() {
-
-	if (ObjectUtils.notTrue(JNDI_IS_SET.getAndSet(Boolean.TRUE))) {
-	    NamingContext namingContext = new NamingContext();
-	    namingContext.configure();
-	}
+	NamingContext.configure();
     }
 
     /**
@@ -273,5 +192,89 @@ public class JndiManager {
 	} catch (IOException ex) {
 	    throw new IOException(ex);
 	}
+    }
+}
+
+/**
+ * Enumeration to set JNDI system properties and initialize {@link Context}
+ * instance
+ * 
+ * @author Levan Tsinadze
+ * @since 0.1.1
+ */
+class NamingContext {
+
+    // Error descriptor if Context is not initialized
+    private static final String NOT_INITIALIZED_ERROR = "Context not initialized";
+
+    // Check if JNDI properties set as system properties
+    private static final AtomicBoolean JNDI_IS_SET = new AtomicBoolean();
+
+    private static final Logger LOG = Logger.getLogger(NamingContext.class);
+
+    /**
+     * Checks if {@link System} properties do not contains passed key and sets
+     * it
+     * 
+     * @param key
+     * @param value
+     */
+    private void checkAndSet(Object key, Object value) {
+
+	if (CollectionUtils.notContains(System.getProperties(), key)) {
+	    System.getProperties().put(key, value);
+	}
+    }
+
+    /**
+     * Puts passed {@link Properties} as {@link System} properties
+     * 
+     * @param properties
+     */
+    private void configure(Properties properties) {
+
+	Set<Map.Entry<Object, Object>> entries = properties.entrySet();
+	Object key;
+	Object value;
+	for (Map.Entry<Object, Object> entry : entries) {
+	    key = entry.getKey();
+	    value = entry.getValue();
+	    checkAndSet(key, value);
+	}
+    }
+
+    /**
+     * Initialized {@link NamingContexts} and contained {@link Context} with
+     * system properties
+     */
+    protected static void configure() {
+
+	if (ObjectUtils.notTrue(JNDI_IS_SET.getAndSet(Boolean.TRUE))) {
+	    // Gets system properties
+	    Properties properties = JNDIParameters.getConfig();
+	    // Registers properties as system properties
+	    NamingContext namingContext = new NamingContext();
+	    namingContext.configure(properties);
+	}
+    }
+
+    /**
+     * If context is not initialized throws {@link IOException} registered else
+     * returns single {@link Context} instance instance
+     * 
+     */
+    protected static Context getContext() throws IOException {
+
+	InitialContext context;
+
+	try {
+	    configure();
+	    context = new InitialContext();
+	} catch (NamingException ex) {
+	    LOG.error(ex.getMessage(), ex);
+	    throw new IOException(NOT_INITIALIZED_ERROR, ex);
+	}
+
+	return context;
     }
 }
