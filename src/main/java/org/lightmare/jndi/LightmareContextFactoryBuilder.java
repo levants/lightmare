@@ -41,7 +41,7 @@ import org.lightmare.utils.reflect.MetaUtils;
  * @author Levan Tsinadze
  * @since 0.0.60-SNAPSHOT
  */
-public class LightmareInitialContextFactoryBuilder implements
+public class LightmareContextFactoryBuilder implements
 	InitialContextFactoryBuilder {
 
     // Error message
