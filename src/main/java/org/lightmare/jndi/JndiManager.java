@@ -23,7 +23,9 @@
 package org.lightmare.jndi;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.naming.Context;
@@ -32,6 +34,7 @@ import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
 import org.apache.log4j.Logger;
+import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 
 /**
@@ -118,6 +121,37 @@ public class JndiManager {
 	private static final String NOT_INITIALIZED_ERROR = "Context not initialized";
 
 	/**
+	 * Checks if {@link System} properties do not contains passed key and
+	 * sets it
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	private void checkAndSet(Object key, Object value) {
+
+	    if (CollectionUtils.notContains(System.getProperties(), key)) {
+		System.getProperties().put(key, value);
+	    }
+	}
+
+	/**
+	 * Puts passed {@link Properties} as {@link System} properties
+	 * 
+	 * @param properties
+	 */
+	private void configure(Properties properties) {
+
+	    Set<Map.Entry<Object, Object>> entries = properties.entrySet();
+	    Object key;
+	    Object value;
+	    for (Map.Entry<Object, Object> entry : entries) {
+		key = entry.getKey();
+		value = entry.getValue();
+		checkAndSet(key, value);
+	    }
+	}
+
+	/**
 	 * Initialized {@link NamingContexts} and contained {@link Context} with
 	 * system properties
 	 */
@@ -125,7 +159,7 @@ public class JndiManager {
 	    // Gets system properties
 	    Properties properties = JNDIParameters.getConfig();
 	    // Registers properties as system properties
-	    System.getProperties().putAll(properties);
+	    configure(properties);
 	    try {
 		context = new InitialContext(properties);
 	    } catch (NamingException ex) {
@@ -159,6 +193,10 @@ public class JndiManager {
 	return NamingContexts.CONTEXT.getContext();
     }
 
+    /**
+     * Configures JNDI system properties and build {@link Context} if it is not
+     * built yet
+     */
     public static void loadContext() {
 
 	try {

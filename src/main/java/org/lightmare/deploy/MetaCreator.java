@@ -119,6 +119,7 @@ public class MetaCreator {
     private MetaCreator() {
 	tmpResources = new TmpResources();
 	ShutDown.setHook(tmpResources);
+	// Configures JNDI properties
 	JndiManager.loadContext();
     }
 
