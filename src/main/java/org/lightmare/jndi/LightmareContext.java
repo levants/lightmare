@@ -148,6 +148,7 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      */
     private void clearResources() {
 
+	// Closes existing EntityManagers from cache
 	if (CollectionUtils.valid(ems)) {
 	    try {
 		EntityManager em;
@@ -168,7 +169,7 @@ public class LightmareContext extends MemoryContext implements Cleanable {
     public void close() throws NamingException {
 	clearResources();
 	// TODO: Must check is needed super.close() method call
-	// super.close();
+	super.close();
     }
 
     @Override

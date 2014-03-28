@@ -96,6 +96,7 @@ public class JndiManager {
 	protected static Properties getConfig() {
 
 	    if (CONFIG.isEmpty()) {
+		// Gathers configuration instances
 		JNDIParameters[] parameters = JNDIParameters.values();
 		for (JNDIParameters parameter : parameters) {
 		    CONFIG.put(parameter.key, parameter.value);
@@ -112,6 +113,7 @@ public class JndiManager {
 	protected static Map<String, String> getHibreanteConfig() {
 
 	    if (HIBERNATE_CONFIG.isEmpty()) {
+		// Gathers JPA configuration
 		JNDIParameters[] parameters = JNDIParameters.values();
 		String hibernatekey;
 		for (JNDIParameters parameter : parameters) {
