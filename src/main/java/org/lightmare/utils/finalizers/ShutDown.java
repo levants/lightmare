@@ -62,6 +62,12 @@ public class ShutDown implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(ShutDown.class);
 
+    /**
+     * Constructor with param for removal
+     * 
+     * @param tmpResources
+     *            to cache
+     */
     public ShutDown(TmpResources tmpResources) {
 	getResources().add(tmpResources);
     }
@@ -103,26 +109,35 @@ public class ShutDown implements Runnable {
 	LoaderPoolManager.reload();
     }
 
+    /**
+     * Removes all temporal resources
+     * 
+     * @throws IOException
+     */
+    private void clear() throws IOException {
+
+	if (CollectionUtils.valid(resources)) {
+	    for (TmpResources tmpResources : resources) {
+
+		// Clears all temporal resources held in this
+		// TmpResources
+		// instance
+		tmpResources.removeTempFiles();
+	    }
+	    // Clears resources
+	    resources.clear();
+	}
+	// Clears all cached data
+	clearAll();
+	clearHook();
+    }
+
     @Override
     public void run() {
 
 	try {
 	    synchronized (this) {
-		if (CollectionUtils.valid(resources)) {
-		    for (TmpResources tmpResources : resources) {
-
-			// Clears all temporal resources held in this
-			// TmpResources
-			// instance
-			tmpResources.removeTempFiles();
-		    }
-
-		    resources.clear();
-		}
-
-		// Clears all cached data
-		clearAll();
-		clearHook();
+		clear();
 	    }
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
@@ -165,7 +180,6 @@ public class ShutDown implements Runnable {
 	    while (ObjectUtils.notTrue(hookIsSet)) {
 		hookIsSet = HOOK_NOT_SET.getAndSet(Boolean.TRUE);
 	    }
-
 	    // Nulls cached ShutDown instance for PermGen sake
 	    shutDown = null;
 	}
