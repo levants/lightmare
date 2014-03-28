@@ -163,7 +163,9 @@ public class LightmareContext extends MemoryContext implements Cleanable {
     }
 
     /**
-     * Clears resources
+     * Clears cached resources and calls {@link MemoryContext#close()} method
+     * 
+     * @see AbstractContext#close()
      */
     @Override
     public void close() throws NamingException {
