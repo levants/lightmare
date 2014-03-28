@@ -114,7 +114,7 @@ public class ShutDown implements Runnable {
      * 
      * @throws IOException
      */
-    private void clear() throws IOException {
+    private void clearTmpResources() throws IOException {
 
 	if (CollectionUtils.valid(resources)) {
 	    for (TmpResources tmpResources : resources) {
@@ -137,7 +137,7 @@ public class ShutDown implements Runnable {
 
 	try {
 	    synchronized (this) {
-		clear();
+		clearTmpResources();
 	    }
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
