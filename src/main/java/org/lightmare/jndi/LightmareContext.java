@@ -174,6 +174,9 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 	super.close();
     }
 
+    /**
+     * Clears cached resources
+     */
     @Override
     public void clean() throws IOException {
 	clearResources();
