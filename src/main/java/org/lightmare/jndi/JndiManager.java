@@ -264,44 +264,6 @@ class NamingContext {
     private static final Logger LOG = Logger.getLogger(NamingContext.class);
 
     /**
-     * Checks if {@link System} not contains passed key or passed key is
-     * associated with different value
-     * 
-     * @param key
-     * @param value
-     * @return <code>boolean</code>
-     */
-    private boolean check(Object key, Object value) {
-
-	// Checks if system do not contain key
-	boolean valid = CollectionUtils
-		.notContains(System.getProperties(), key);
-
-	// Checks if system value on key is different then passed value
-	if (ObjectUtils.notTrue(valid)) {
-	    Object systemvalue = System.getProperties().get(key);
-	    valid = ((systemvalue == null) || ObjectUtils.notEquals(
-		    systemvalue, value));
-	}
-
-	return valid;
-    }
-
-    /**
-     * Checks if {@link System} properties do not contains passed key and sets
-     * it
-     * 
-     * @param key
-     * @param value
-     */
-    private void checkAndSet(Object key, Object value) {
-
-	if (check(key, value)) {
-	    System.getProperties().put(key, value);
-	}
-    }
-
-    /**
      * Puts passed {@link Properties} as {@link System} properties
      * 
      * @param properties
@@ -314,7 +276,7 @@ class NamingContext {
 	for (Map.Entry<Object, Object> entry : entries) {
 	    key = entry.getKey();
 	    value = entry.getValue();
-	    checkAndSet(key, value);
+	    CollectionUtils.checkAndAdd(System.getProperties(), key, value);
 	}
     }
 
