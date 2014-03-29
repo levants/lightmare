@@ -336,8 +336,7 @@ public abstract class CollectionUtils {
      */
     public static <K, V> void checkAndAdd(Map<K, V> map, K key, V value) {
 
-	boolean contained = map.containsKey(key)
-		&& ObjectUtils.notEquals(value, map.get(key));
+	boolean contained = map.containsKey(key) && value.equals(map.get(key));
 	if (ObjectUtils.notTrue(contained)) {
 	    map.put(key, value);
 	}
