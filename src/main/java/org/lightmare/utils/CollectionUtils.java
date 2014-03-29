@@ -328,7 +328,7 @@ public abstract class CollectionUtils {
 
     /**
      * Puts passed value to passed {@link Map} instance on passed key of such
-     * does not contained or its assicoated key does not equals passed value
+     * does not contained or its associated key does not equals passed value
      * 
      * @param map
      * @param key
@@ -347,7 +347,7 @@ public abstract class CollectionUtils {
      * Creates new {@link Set} from passed {@link Collection} instance
      * 
      * @param collection
-     * @return {@link Set}<code><T></code>
+     * @return {@link Set} translated from collection
      */
     public static <T> Set<T> translateToSet(Collection<T> collection) {
 

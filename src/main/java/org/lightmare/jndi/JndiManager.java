@@ -273,10 +273,11 @@ class NamingContext {
 	Set<Map.Entry<Object, Object>> entries = properties.entrySet();
 	Object key;
 	Object value;
+	Properties systemProperties = System.getProperties();
 	for (Map.Entry<Object, Object> entry : entries) {
 	    key = entry.getKey();
 	    value = entry.getValue();
-	    CollectionUtils.checkAndAdd(System.getProperties(), key, value);
+	    CollectionUtils.checkAndAdd(systemProperties, key, value);
 	}
     }
 
