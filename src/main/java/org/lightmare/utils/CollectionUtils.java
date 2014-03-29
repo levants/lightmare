@@ -366,7 +366,7 @@ public abstract class CollectionUtils {
      * Creates new {@link Set} from passed array instance
      * 
      * @param array
-     * @return {@link Set}<code><T></code>
+     * @return {@link Set} translated from array
      */
     public static <T> Set<T> translateToSet(T[] array) {
 
@@ -385,7 +385,7 @@ public abstract class CollectionUtils {
      * Creates new {@link List} from passed {@link Collection} instance
      * 
      * @param collection
-     * @return {@link List}<code><T></code>
+     * @return {@link List} translated from collection
      */
     public static <T> List<T> translateToList(Collection<T> collection) {
 
@@ -405,7 +405,7 @@ public abstract class CollectionUtils {
      * 
      * @param type
      * @param size
-     * @return <code>T[]</code>
+     * @return <code>T[]</code> initialized array
      */
     private static <T> T[] toArray(Class<T> type, int size) {
 
