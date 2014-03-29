@@ -282,7 +282,8 @@ class NamingContext {
     }
 
     /**
-     * Adds configuration form initializing {@link Context} to system properties
+     * Adds configuration for initializing {@link Context} to system properties
+     * if they are not set yet
      */
     protected static void configure() {
 
