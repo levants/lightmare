@@ -327,6 +327,23 @@ public abstract class CollectionUtils {
     }
 
     /**
+     * Puts passed value to passed {@link Map} instance on passed key of such
+     * does not contained or its assicoated key does not equals passed value
+     * 
+     * @param map
+     * @param key
+     * @param value
+     */
+    public static <K, V> void checkAndAdd(Map<K, V> map, K key, V value) {
+
+	boolean contained = map.containsKey(key)
+		&& ObjectUtils.notEquals(value, map.get(key));
+	if (ObjectUtils.notTrue(contained)) {
+	    map.put(key, value);
+	}
+    }
+
+    /**
      * Creates new {@link Set} from passed {@link Collection} instance
      * 
      * @param collection

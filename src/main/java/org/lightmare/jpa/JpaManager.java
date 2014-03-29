@@ -125,11 +125,10 @@ public class JpaManager {
     private void addTransactionManager() {
 
 	HibernateConfig[] hibernateConfigs = HibernateConfig.values();
+	Map<Object, Object> configMap = getProperties();
 	for (HibernateConfig hibernateConfig : hibernateConfigs) {
-	    if (CollectionUtils.notContains(getProperties(),
-		    hibernateConfig.key)) {
-		getProperties().put(hibernateConfig.key, hibernateConfig.value);
-	    }
+	    CollectionUtils.putIfAbscent(configMap, hibernateConfig.key,
+		    hibernateConfig.value);
 	}
     }
 
