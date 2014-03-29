@@ -304,8 +304,7 @@ class NamingContext {
     }
 
     /**
-     * If context is not initialized throws {@link IOException} registered else
-     * returns single {@link Context} instance instance
+     * Configures and creates JNDI {@link Context} instance
      * 
      */
     protected static Context getContext() throws IOException {
