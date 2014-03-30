@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Utility class to work with {@link Collection} instances
+ * Utility class to work with {@link Collection} and {@link Map} implementations
  * 
  * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
