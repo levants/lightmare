@@ -109,7 +109,7 @@ public abstract class StringUtils {
 	} else if (CollectionUtils.isPrimitiveArray(tocken)) {
 	    int length = Array.getLength(tocken);
 	    Object subTocken;
-	    for (int i = 0; i < length; i++) {
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
 		subTocken = Array.get(tocken, i);
 		append(subTocken, builder);
 	    }
@@ -151,7 +151,6 @@ public abstract class StringUtils {
 	String resultText;
 
 	if (CollectionUtils.valid(parts)) {
-
 	    StringBuilder resultBuider = new StringBuilder();
 	    for (Object part : parts) {
 		resultBuider.append(part);

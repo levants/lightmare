@@ -35,6 +35,9 @@ import java.io.OutputStream;
  */
 public class IOUtils {
 
+    // Index of non read bytes
+    public static final int NOT_EXISTING_INDEX = -1;
+
     // IO bytes buffer default size
     public static final int BUFFER_SIZE = 1024;
 
@@ -111,7 +114,7 @@ public class IOUtils {
 	try {
 	    byte[] buffer = new byte[BUFFER_SIZE];
 	    int len = in.read(buffer);
-	    while (ObjectUtils.notEquals(len, ObjectUtils.NOT_EXISTING_INDEX)) {
+	    while (ObjectUtils.notEquals(len, NOT_EXISTING_INDEX)) {
 		out.write(buffer, ZERO_OFFSET, len);
 		len = in.read(buffer);
 	    }

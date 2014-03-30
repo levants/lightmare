@@ -37,9 +37,6 @@ import org.lightmare.utils.reflect.MetaUtils;
  */
 public abstract class ObjectUtils {
 
-    // Index of non read bytes
-    public static final int NOT_EXISTING_INDEX = -1;
-
     /**
      * Checks if passed boolean value is not true
      * 
