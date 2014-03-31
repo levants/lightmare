@@ -79,12 +79,15 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
     // Additional configuration
     private MetaConfig metaConfig;
 
-    private static final EntityManagerMessageLogger LOG = Logger
-	    .getMessageLogger(EntityManagerMessageLogger.class,
-		    PersistenceXmlParser.class.getName());
+    // Default path of persistence.xml file
+    private static final String RESOURCE_PATH = "META-INF/persistence.xml";
 
     private final ClassLoaderService classLoaderService;
     private final PersistenceUnitTransactionType defaultTransactionType;
+
+    private static final EntityManagerMessageLogger LOG = Logger
+	    .getMessageLogger(EntityManagerMessageLogger.class,
+		    PersistenceXmlParser.class.getName());
 
     @SuppressWarnings({ "deprecation", "rawtypes" })
     public static List<ParsedPersistenceXmlDescriptor> locatePersistenceUnits(
@@ -109,7 +112,7 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 
 	final List<URL> xmlUrls;
 
-	String resourcePath = "META-INF/persistence.xml";
+	String resourcePath = RESOURCE_PATH;
 	ClassLoader loader = MetaConfig.getOverridenClassLoader(metaConfig);
 	if (classLoaderService instanceof ClassLoaderServiceExt) {
 	    if (ObjectUtils.notNull(loader)) {

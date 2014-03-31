@@ -27,6 +27,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import org.hibernate.MappingException;
@@ -44,6 +45,7 @@ import org.hibernate.internal.CoreMessageLogger;
 import org.hibernate.jdbc.AbstractReturningWork;
 import org.hibernate.type.Type;
 import org.jboss.logging.Logger;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * To generate primary keys from table and bypasses existing keys
@@ -70,6 +72,15 @@ public class TableGeneratorExt extends TableGenerator {
     // To use in annotations and avoid errors
     public static final String STRATEGY = "org.lightmare.jpa.hibernate.id.enhanced.TableGeneratorExt";
 
+    // Column numbers
+    private static final int FIRST_COLUMN = 1;
+
+    private static final int SECOND_COLUMN = 2;
+
+    private static final int THIRD_COLUMN = 3;
+
+    private static final int ZERO_ROWS = 0;
+
     private static final CoreMessageLogger LOG = Logger.getMessageLogger(
 	    CoreMessageLogger.class, TableGeneratorExt.class.getName());
 
@@ -93,31 +104,36 @@ public class TableGeneratorExt extends TableGenerator {
 	    this.currentValue = currentValue;
 	}
 
+	private void close(Statement closeable) throws SQLException {
+
+	    if (ObjectUtils.notNull(closeable)) {
+		closeable.close();
+	    }
+	}
+
 	private void onSelect(Connection connection,
 		IntegralDataTypeHolder value) throws SQLException {
 
 	    PreparedStatement selectPS = connection
 		    .prepareStatement(selectQuery);
 	    try {
-		selectPS.setString(1, segmentValue);
+		selectPS.setString(FIRST_COLUMN, segmentValue);
 		ResultSet selectRS = selectPS.executeQuery();
-		if (!selectRS.next()) {
+		if (selectRS.next()) {
+		    value.initialize(selectRS, FIRST_COLUMN);
+		} else {
 		    value.initialize(currentValue);
 		    PreparedStatement insertPS = null;
 		    try {
 			statementLogger.logStatement(insertQuery,
 				FormatStyle.BASIC.getFormatter());
 			insertPS = connection.prepareStatement(insertQuery);
-			insertPS.setString(1, segmentValue);
-			value.bind(insertPS, 2);
+			insertPS.setString(FIRST_COLUMN, segmentValue);
+			value.bind(insertPS, SECOND_COLUMN);
 			insertPS.execute();
 		    } finally {
-			if (insertPS != null) {
-			    insertPS.close();
-			}
+			close(insertPS);
 		    }
-		} else {
-		    value.initialize(selectRS, 1);
 		}
 		selectRS.close();
 	    } catch (SQLException ex) {
@@ -156,9 +172,9 @@ public class TableGeneratorExt extends TableGenerator {
 		if (existing > current) {
 		    updateValue.initialize(existing).increment();
 		}
-		updateValue.bind(updatePS, 1);
-		value.bind(updatePS, 2);
-		updatePS.setString(3, segmentValue);
+		updateValue.bind(updatePS, FIRST_COLUMN);
+		value.bind(updatePS, SECOND_COLUMN);
+		updatePS.setString(THIRD_COLUMN, segmentValue);
 		rows = updatePS.executeUpdate();
 		value.initialize(currentValue);
 	    } catch (SQLException ex) {
@@ -185,7 +201,7 @@ public class TableGeneratorExt extends TableGenerator {
 		statementLogger.logStatement(updateQuery,
 			FormatStyle.BASIC.getFormatter());
 		rows = onUpdate(connection, value);
-	    } while (rows == 0);
+	    } while (rows == ZERO_ROWS);
 
 	    return value;
 	}
@@ -263,7 +279,9 @@ public class TableGeneratorExt extends TableGenerator {
     @Override
     public synchronized Serializable generate(SessionImplementor session,
 	    Object entity) {
+
 	Serializable id;
+
 	id = session.getEntityPersister(null, entity).getClassMetadata()
 		.getIdentifier(entity, session);
 	if (id == null) {
@@ -271,6 +289,7 @@ public class TableGeneratorExt extends TableGenerator {
 	} else {
 	    id = generateIncrementally(session, Long.valueOf(id.toString()));
 	}
+
 	return id;
     }
 
