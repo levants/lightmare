@@ -38,6 +38,7 @@ import org.hibernate.jpa.boot.spi.ProviderChecker;
 import org.jboss.logging.Logger;
 import org.lightmare.jpa.MetaConfig;
 import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
+import org.lightmare.utils.CollectionUtils;
 
 /**
  * Implementation of {@link HibernatePersistenceProvider} with additional
@@ -132,7 +133,8 @@ public class HibernatePersistenceProviderExt extends
 	LOG.debugf("Located and parsed %s persistence units; checking each",
 		units.size());
 
-	if (persistenceUnitName == null && units.size() > 1) {
+	if (persistenceUnitName == null
+		&& units.size() > CollectionUtils.SINGLTON_LENGTH) {
 	    // no persistence-unit name to look for was given and we found
 	    // multiple persistence-units
 	    throw new PersistenceException(
