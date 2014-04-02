@@ -111,6 +111,29 @@ public class TableGeneratorExt extends TableGenerator {
 	    }
 	}
 
+	/**
+	 * Makes insert of last value of identifier
+	 * 
+	 * @param connection
+	 * @param value
+	 * @throws SQLException
+	 */
+	private void insert(Connection connection, IntegralDataTypeHolder value)
+		throws SQLException {
+
+	    PreparedStatement insertPS = null;
+	    try {
+		statementLogger.logStatement(insertQuery,
+			FormatStyle.BASIC.getFormatter());
+		insertPS = connection.prepareStatement(insertQuery);
+		insertPS.setString(FIRST_COLUMN, segmentValue);
+		value.bind(insertPS, SECOND_COLUMN);
+		insertPS.execute();
+	    } finally {
+		close(insertPS);
+	    }
+	}
+
 	private void onSelect(Connection connection,
 		IntegralDataTypeHolder value) throws SQLException {
 
@@ -123,17 +146,7 @@ public class TableGeneratorExt extends TableGenerator {
 		    value.initialize(selectRS, FIRST_COLUMN);
 		} else {
 		    value.initialize(currentValue);
-		    PreparedStatement insertPS = null;
-		    try {
-			statementLogger.logStatement(insertQuery,
-				FormatStyle.BASIC.getFormatter());
-			insertPS = connection.prepareStatement(insertQuery);
-			insertPS.setString(FIRST_COLUMN, segmentValue);
-			value.bind(insertPS, SECOND_COLUMN);
-			insertPS.execute();
-		    } finally {
-			close(insertPS);
-		    }
+		    insert(connection, value);
 		}
 		selectRS.close();
 	    } catch (SQLException ex) {

@@ -68,8 +68,10 @@ public class JpaManager {
     // Additional properties
     private Map<Object, Object> properties;
 
+    // Cache JTA data source with RESOURCE_LOCAL type
     private boolean swapDataSource;
 
+    // Scan archives in classpath to find entities
     private boolean scanArchives;
 
     // Initialize level class loader
