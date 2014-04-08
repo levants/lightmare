@@ -62,6 +62,7 @@ public class UserTransactionImpl implements UserTransaction {
     // Caches EntityManager instances for immediate clean up
     private Stack<EntityManager> requareNewEms;
 
+    // Caches EntityManager instances for transaction free methods
     private Stack<EntityManager> freeEms;
 
     // Object which first called this (UserTransaction) instance
@@ -495,7 +496,7 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     /**
-     * Closes all cached {@link EntityManager} isntances
+     * Closes all cached {@link EntityManager} instances
      */
     public void close() {
 
