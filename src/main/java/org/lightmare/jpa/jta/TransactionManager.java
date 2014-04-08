@@ -61,7 +61,6 @@ public class TransactionManager {
      * @return <code>boolean</code>
      */
     protected static boolean isTransactionalType(TransactionAttributeType type) {
-
 	return type.equals(TransactionAttributeType.REQUIRED)
 		|| type.equals(TransactionAttributeType.MANDATORY)
 		|| type.equals(TransactionAttributeType.SUPPORTS);
@@ -75,7 +74,6 @@ public class TransactionManager {
      * @return <code>boolean</code>
      */
     protected static boolean isFreeType(TransactionAttributeType type) {
-
 	return type.equals(TransactionAttributeType.NOT_SUPPORTED)
 		|| type.equals(TransactionAttributeType.NEVER);
     }

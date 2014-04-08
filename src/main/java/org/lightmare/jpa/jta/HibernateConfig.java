@@ -38,9 +38,9 @@ public enum HibernateConfig {
     FACTORY("hibernate.transaction.factory_class",
 	    "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory");
 
-    public String key;
+    public final String key;
 
-    public String value;
+    public final String value;
 
     private HibernateConfig(String key, String value) {
 	this.key = key;
