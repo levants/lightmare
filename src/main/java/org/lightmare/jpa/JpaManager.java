@@ -28,9 +28,12 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.spi.PersistenceProvider;
+import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.hibernate.jpa.HibernatePersistenceProvider;
@@ -38,6 +41,7 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
+import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.jpa.spring.SpringData;
@@ -80,6 +84,9 @@ public class JpaManager {
 
     // Check if JPA is configured by Spring data
     private boolean springPersistence;
+
+    // Data source name for Spring data configuration
+    private String dataSourceName;
 
     // Error message for connection binding to JNDI names
     private static final String COULD_NOT_BIND_JNDI_ERROR = "could not bind connection";
@@ -139,6 +146,49 @@ public class JpaManager {
     }
 
     /**
+     * Gets {@link DataSource} by its JNDI name for Spring data configuration
+     * 
+     * @return {@link DataSource}
+     * @throws IOException
+     */
+    private DataSource getDataSource() throws IOException {
+
+	DataSource dataSource;
+
+	if (dataSourceName == null || dataSourceName.isEmpty()) {
+	    Properties nameProperties = new Properties();
+	    nameProperties.putAll(properties);
+	    dataSourceName = Initializer.getJndiName(nameProperties);
+	}
+
+	dataSource = JndiManager.lookup(dataSourceName);
+
+	return dataSource;
+    }
+
+    /**
+     * Initializes {@link SpringData} with appropriate configuration for Spring
+     * data JPA configuration
+     * 
+     * @param provider
+     * @param unitName
+     * @return {@link SpringData}
+     * @throws IOException
+     */
+    private SpringData getSpringData(PersistenceProvider provider,
+	    String unitName) throws IOException {
+
+	SpringData springData;
+
+	DataSource dataSource = getDataSource();
+	springData = new SpringData.Builder(dataSource, provider, unitName)
+		.properties(properties).classLoader(loader)
+		.swapDataSource(swapDataSource).build();
+
+	return springData;
+    }
+
+    /**
      * Creates {@link EntityManagerFactory} by "Hibernate" or by extended
      * builder {@link Ejb3ConfigurationImpl} if entity classes or
      * persistence.xml file path are provided
@@ -194,9 +244,7 @@ public class JpaManager {
 	addJndiProperties();
 
 	if (springPersistence) {
-	    SpringData springData = new SpringData.Builder(null, provider,
-		    unitName).properties(properties).classLoader(loader)
-		    .swapDataSource(swapDataSource).build();
+	    SpringData springData = getSpringData(provider, unitName);
 	    emf = springData.getEmf();
 	} else {
 	    emf = provider.createEntityManagerFactory(unitName, properties);
@@ -438,6 +486,19 @@ public class JpaManager {
 	public Builder springPersistence(boolean springPersistence) {
 
 	    manager.springPersistence = springPersistence;
+
+	    return this;
+	}
+
+	/**
+	 * Sets data source name for Spring data configuration
+	 * 
+	 * @param dataSourceName
+	 * @return {@link Builder}
+	 */
+	public Builder dataSourceName(String dataSourceName) {
+
+	    manager.dataSourceName = dataSourceName;
 
 	    return this;
 	}
