@@ -8,13 +8,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.utils.ObjectUtils;
 
+@Ignore
 public class SpringDataTest {
 
     private static final String UNIT_NAME = "testUnit";
@@ -79,5 +82,10 @@ public class SpringDataTest {
 		emf.close();
 	    }
 	}
+    }
+
+    @AfterClass
+    public static void afterClass() {
+	Initializer.cleanUp(dataSource);
     }
 }

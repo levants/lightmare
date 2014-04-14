@@ -858,6 +858,15 @@ public class Configuration implements Cloneable {
 	return answer;
     }
 
+    public void setSpringPersistence(boolean springPersistence) {
+	setPersistenceConfigValue(ConfigKeys.SPRING_PERSISTENCE.key,
+		springPersistence);
+    }
+
+    public boolean isSpringPersistence() {
+	return getPersistenceConfigValue(ConfigKeys.SPRING_PERSISTENCE.key);
+    }
+
     public void setScanForEntities(boolean scanForEntities) {
 	setPersistenceConfigValue(ConfigKeys.SCAN_FOR_ENTITIES.key,
 		scanForEntities);

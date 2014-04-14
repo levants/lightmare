@@ -89,6 +89,8 @@ public enum ConfigKeys {
     // Persistence provider property keys
     PERSISTENCE_CONFIG("persistenceConfig"), // Persistence CONFIG
 
+    SPRING_PERSISTENCE("spring"), // Spring data JPA configuration
+
     SCAN_FOR_ENTITIES("scanForEntities"), // Scan for entities
 
     ANNOTATED_UNIT_NAME("annotatedUnitName"), // Annotated unit
