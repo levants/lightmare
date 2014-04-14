@@ -36,10 +36,12 @@ public class SpringData {
 	this.properties = properties;
     }
 
-    private LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    private LocalContainerEntityManagerFactoryBean entityManagerFactory(
+	    String unitName) {
 
 	LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
+	entityManagerFactoryBean.setPersistenceUnitName(unitName);
 	entityManagerFactoryBean.setDataSource(dataSource);
 	entityManagerFactoryBean.setPackagesToScan();
 	entityManagerFactoryBean.setPersistenceProvider(persistenceProvider);
@@ -47,14 +49,16 @@ public class SpringData {
 	    entityManagerFactoryBean.setJpaProperties(properties);
 	}
 
+	entityManagerFactoryBean.afterPropertiesSet();
+
 	return entityManagerFactoryBean;
     }
 
-    public JpaTransactionManager transactionManager() {
+    public JpaTransactionManager transactionManager(String unitName) {
 
 	JpaTransactionManager transactionManager = new JpaTransactionManager();
 
-	LocalContainerEntityManagerFactoryBean emfBean = entityManagerFactory();
+	LocalContainerEntityManagerFactoryBean emfBean = entityManagerFactory(unitName);
 	EntityManagerFactory emf = emfBean.getObject();
 	transactionManager.setEntityManagerFactory(emf);
 
@@ -62,11 +66,11 @@ public class SpringData {
 
     }
 
-    public EntityManagerFactory getEmf() {
+    public EntityManagerFactory getEmf(String unitName) {
 
 	EntityManagerFactory emf;
 
-	JpaTransactionManager transactionManager = transactionManager();
+	JpaTransactionManager transactionManager = transactionManager(unitName);
 	emf = transactionManager.getEntityManagerFactory();
 
 	return emf;
