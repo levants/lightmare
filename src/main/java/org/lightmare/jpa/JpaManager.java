@@ -40,6 +40,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.jpa.jta.HibernateConfig;
+import org.lightmare.jpa.spring.SpringData;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
@@ -76,6 +77,9 @@ public class JpaManager {
 
     // Initialize level class loader
     private ClassLoader loader;
+
+    // Check if JPA is configured by Spring data
+    private boolean springPersistence;
 
     // Error message for connection binding to JNDI names
     private static final String COULD_NOT_BIND_JNDI_ERROR = "could not bind connection";
@@ -189,7 +193,14 @@ public class JpaManager {
 	// Adds JNDI properties
 	addJndiProperties();
 
-	emf = provider.createEntityManagerFactory(unitName, properties);
+	if (springPersistence) {
+	    SpringData springData = new SpringData.Builder(null, provider,
+		    unitName).properties(properties).classLoader(loader)
+		    .swapDataSource(swapDataSource).build();
+	    emf = springData.getEmf();
+	} else {
+	    emf = provider.createEntityManagerFactory(unitName, properties);
+	}
 
 	return emf;
     }
@@ -414,6 +425,19 @@ public class JpaManager {
 	public Builder setClassLoader(ClassLoader loader) {
 
 	    manager.loader = loader;
+
+	    return this;
+	}
+
+	/**
+	 * Sets if JPA is configured over Spring data
+	 * 
+	 * @param springPersistence
+	 * @return {@link Builder}
+	 */
+	public Builder springPersistence(boolean springPersistence) {
+
+	    manager.springPersistence = springPersistence;
 
 	    return this;
 	}

@@ -1,5 +1,6 @@
 package org.lightmare.jpa.spring;
 
+import java.util.Map;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
@@ -98,6 +99,16 @@ public class SpringData {
 
 	public Builder properties(Properties properties) {
 	    springData.properties = properties;
+	    return this;
+	}
+
+	public Builder properties(Map<Object, Object> properties) {
+
+	    if (CollectionUtils.valid(properties)) {
+		springData.properties = new Properties();
+		springData.properties.putAll(properties);
+	    }
+
 	    return this;
 	}
 
