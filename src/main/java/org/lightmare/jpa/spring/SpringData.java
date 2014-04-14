@@ -7,6 +7,7 @@ import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.ObjectUtils;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
@@ -22,27 +23,36 @@ public class SpringData {
 
     private PersistenceProvider persistenceProvider;
 
+    private String unitName;
+
     private Properties properties;
 
-    public SpringData(DataSource dataSource,
-	    PersistenceProvider persistenceProvider) {
+    private ClassLoader loader;
+
+    private boolean swapDataSources;
+
+    private SpringData(DataSource dataSource,
+	    PersistenceProvider persistenceProvider, String unitName) {
 	this.dataSource = dataSource;
 	this.persistenceProvider = persistenceProvider;
+	this.unitName = unitName;
     }
 
-    public SpringData(DataSource dataSource,
-	    PersistenceProvider persistenceProvider, Properties properties) {
-	this(dataSource, persistenceProvider);
-	this.properties = properties;
-    }
-
-    private LocalContainerEntityManagerFactoryBean entityManagerFactory(
-	    String unitName) {
+    private LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
 	LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
 	entityManagerFactoryBean.setPersistenceUnitName(unitName);
-	entityManagerFactoryBean.setDataSource(dataSource);
+	if (swapDataSources) {
+	    entityManagerFactoryBean.setDataSource(dataSource);
+	} else {
+	    entityManagerFactoryBean.setJtaDataSource(dataSource);
+	}
+
+	if (ObjectUtils.notNull(loader)) {
+	    entityManagerFactoryBean.setBeanClassLoader(loader);
+	}
+
 	entityManagerFactoryBean.setPackagesToScan();
 	entityManagerFactoryBean.setPersistenceProvider(persistenceProvider);
 	if (CollectionUtils.valid(properties)) {
@@ -54,11 +64,11 @@ public class SpringData {
 	return entityManagerFactoryBean;
     }
 
-    public JpaTransactionManager transactionManager(String unitName) {
+    public JpaTransactionManager transactionManager() {
 
 	JpaTransactionManager transactionManager = new JpaTransactionManager();
 
-	LocalContainerEntityManagerFactoryBean emfBean = entityManagerFactory(unitName);
+	LocalContainerEntityManagerFactoryBean emfBean = entityManagerFactory();
 	EntityManagerFactory emf = emfBean.getObject();
 	transactionManager.setEntityManagerFactory(emf);
 
@@ -66,13 +76,43 @@ public class SpringData {
 
     }
 
-    public EntityManagerFactory getEmf(String unitName) {
+    public EntityManagerFactory getEmf() {
 
 	EntityManagerFactory emf;
 
-	JpaTransactionManager transactionManager = transactionManager(unitName);
+	JpaTransactionManager transactionManager = transactionManager();
 	emf = transactionManager.getEntityManagerFactory();
 
 	return emf;
+    }
+
+    public static class Builder {
+
+	private SpringData springData;
+
+	public Builder(DataSource dataSource,
+		PersistenceProvider persistenceProvider, String unitName) {
+	    this.springData = new SpringData(dataSource, persistenceProvider,
+		    unitName);
+	}
+
+	public Builder properties(Properties properties) {
+	    springData.properties = properties;
+	    return this;
+	}
+
+	public Builder classLoader(ClassLoader loader) {
+	    springData.loader = loader;
+	    return this;
+	}
+
+	public Builder swapDataSource(boolean swapDataSources) {
+	    springData.swapDataSources = swapDataSources;
+	    return this;
+	}
+
+	public SpringData build() {
+	    return this.springData;
+	}
     }
 }

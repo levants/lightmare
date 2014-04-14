@@ -65,12 +65,12 @@ public class SpringDataTest {
 
 	HibernatePersistenceProviderExt.Builder builder = new HibernatePersistenceProviderExt.Builder();
 	PersistenceProvider persistenceProvider = builder.build();
-	SpringData springData = new SpringData(dataSource, persistenceProvider,
-		properties);
+	SpringData springData = new SpringData.Builder(dataSource,
+		persistenceProvider, UNIT_NAME).properties(properties).build();
 
 	EntityManagerFactory emf = null;
 	try {
-	    emf = springData.getEmf(UNIT_NAME);
+	    emf = springData.getEmf();
 	    System.out.println(emf);
 	} catch (Exception ex) {
 	    ex.printStackTrace();
