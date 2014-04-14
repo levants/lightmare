@@ -46,6 +46,10 @@
 		<hibernate.version>4.3.4.Final</hibernate.version>
 		<hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
+		<!-- spring -->
+		<spring.version>4.0.2.RELEASE</spring.version>
+		<spring-data.version>1.5.1.RELEASE</spring-data.version>
+		<!-- end of spring -->
 		<!-- scannotation -->
 		<scannotation.version>1.0.3</scannotation.version>
 		<!-- end of scannotation -->
@@ -325,6 +329,48 @@
 			</exclusions>
 		</dependency>
 		<!-- end of hibernate -->
+
+		<!-- spring dependencies -->
+		<!--spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+			<version>${spring.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring-data.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring-data.version}</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<!-- end of spring dependencies -->
 
 		<!-- data source providers -->
 		<dependency>
