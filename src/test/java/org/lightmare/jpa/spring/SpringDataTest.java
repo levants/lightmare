@@ -3,14 +3,18 @@ package org.lightmare.jpa.spring;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
 
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.lightmare.jndi.JndiManager;
+import org.lightmare.jpa.JpaManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
+import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 
 @Ignore
@@ -47,6 +51,7 @@ public class SpringDataTest {
 	// <!-- hiberanate key generation properties -->
 	properties.put("hibernate.jdbc.use_get_generated_keys", "true");
 	properties.put("hibernate.max_fetch_depth", "3");
+	properties.putAll(JndiManager.JNDIConfigs.INIT.hinbernateConfig);
 
 	try {
 	    Initializer.initializeDataSource(DATA_SOURCE_PATH);
@@ -59,18 +64,25 @@ public class SpringDataTest {
     public void getEmfTest() {
 
 	HibernatePersistenceProviderExt.Builder builder = new HibernatePersistenceProviderExt.Builder();
-	PersistenceProvider persistenceProvider = builder.build();
+	PersistenceProvider persistenceProvider = builder
+		.setSwapDataSource(Boolean.TRUE).setScanArchives(Boolean.TRUE)
+		.setOverridenClassLoader(LibraryLoader.getContextClassLoader())
+		.build();
 	SpringData springData = new SpringData.Builder(DATA_SOURCE_NAME,
 		persistenceProvider, UNIT_NAME).properties(properties)
 		.swapDataSource(Boolean.TRUE).build();
 
 	EntityManagerFactory emf = null;
+	EntityManager em = null;
 	try {
 	    emf = springData.getEmf();
-	    System.out.println(emf);
+	    em = emf.createEntityManager();
+	    System.out.format("EntityManager - %s\n", em);
+	    System.out.format("EntityManagerfactory - %s\n", emf);
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	} finally {
+	    JpaManager.closeEntityManager(em);
 	    if (ObjectUtils.notNull(emf)) {
 		emf.close();
 	    }

@@ -12,10 +12,12 @@ import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
+import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
 /**
  * To initialize spring based connection
@@ -38,6 +40,8 @@ public class SpringData {
     private ClassLoader loader;
 
     private boolean swapDataSources;
+
+    private ParsedPersistenceXmlDescriptor persistenceUnit;
 
     private SpringData(String dataSourceName,
 	    PersistenceProvider persistenceProvider, String unitName) {
@@ -64,10 +68,6 @@ public class SpringData {
      * Resolves data source JNDI name from persistence.xml file
      */
     private void initDataSourceFromUnit() {
-
-	ParsedPersistenceXmlDescriptor persistenceUnit = ObjectUtils.cast(
-		persistenceProvider, HibernatePersistenceProviderExt.class)
-		.getPersistenceXmlDescriptor(unitName, properties);
 
 	Object dataSourceValue;
 	if (swapDataSources) {
@@ -104,6 +104,31 @@ public class SpringData {
     }
 
     /**
+     * Adds additional configuration to properties
+     */
+    private void initProperties() {
+
+	if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
+
+	    persistenceUnit = ObjectUtils.cast(persistenceProvider,
+		    HibernatePersistenceProviderExt.class)
+		    .getPersistenceXmlDescriptor(unitName, properties);
+	    properties.putAll(persistenceUnit.getProperties());
+	}
+    }
+
+    /**
+     * Adds default transaction properties for Spring JTA data sources
+     */
+    private void addTransactionManager() {
+
+	CollectionUtils.putIfAbscent(properties, HibernateConfig.FACTORY.key,
+		HibernateConfig.FACTORY.value);
+	CollectionUtils.putIfAbscent(properties, HibernateConfig.PLATFORM.key,
+		JtaTransactionManager.class.getName());
+    }
+
+    /**
      * Creates LocalContainerEntityManagerFactoryBean for container scoped use
      * 
      * @return {@link LocalContainerEntityManagerFactoryBean}
@@ -113,9 +138,11 @@ public class SpringData {
 	LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
 	entityManagerFactoryBean.setPersistenceUnitName(unitName);
+
 	if (swapDataSources) {
 	    entityManagerFactoryBean.setDataSource(dataSource);
 	} else {
+	    addTransactionManager();
 	    entityManagerFactoryBean.setJtaDataSource(dataSource);
 	}
 
@@ -123,7 +150,7 @@ public class SpringData {
 	    entityManagerFactoryBean.setBeanClassLoader(loader);
 	}
 
-	entityManagerFactoryBean.setPackagesToScan();
+	// entityManagerFactoryBean.setPackagesToScan();
 	entityManagerFactoryBean.setPersistenceProvider(persistenceProvider);
 	if (CollectionUtils.valid(properties)) {
 	    entityManagerFactoryBean.setJpaProperties(properties);
@@ -139,7 +166,7 @@ public class SpringData {
      * 
      * @return {@link JpaTransactionManager}
      */
-    public JpaTransactionManager transactionManager() {
+    private JpaTransactionManager transactionManager() {
 
 	JpaTransactionManager transactionManager = new JpaTransactionManager();
 
@@ -155,6 +182,7 @@ public class SpringData {
 
 	EntityManagerFactory emf;
 
+	initProperties();
 	initDataSource();
 	JpaTransactionManager transactionManager = transactionManager();
 	emf = transactionManager.getEntityManagerFactory();
