@@ -23,7 +23,7 @@ import org.springframework.transaction.jta.JtaTransactionManager;
  * To initialize spring based connection
  * 
  * @author Levan Tsinadze
- * 
+ * @since 0.1.2
  */
 public class SpringData {
 
