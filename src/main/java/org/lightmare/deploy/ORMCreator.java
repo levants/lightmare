@@ -164,7 +164,6 @@ public class ORMCreator {
 	}
 
 	if (configClone.isScanForEntities()) {
-
 	    Set<String> classSet;
 	    Map<String, Set<String>> annotationIndex = annotationFinder
 		    .getAnnotationIndex();

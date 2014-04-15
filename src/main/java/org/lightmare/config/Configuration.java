@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -755,6 +756,25 @@ public class Configuration implements Cloneable {
 	}
 
 	dataSourcePaths.add(path);
+    }
+
+    /**
+     * Gets data source name for appropriated JPA persistence unit from
+     * configuration
+     * 
+     * @param unitName
+     * @return String data source name
+     */
+    public String getDataSourceName(String unitName) {
+
+	String dataSourceName;
+
+	Map<Object, Object> datasourceNames = getPersistenceConfigValue(
+		ConfigKeys.UNIT_DATASOURCES.key, Collections.emptyMap());
+	Object value = datasourceNames.get(unitName);
+	dataSourceName = ObjectUtils.cast(value, String.class);
+
+	return dataSourceName;
     }
 
     /**

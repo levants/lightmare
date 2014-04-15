@@ -515,7 +515,8 @@ public class JpaManager {
 	    setPath(configuration.getPersXmlPath())
 		    .setProperties(configuration.getPersistenceProperties())
 		    .setSwapDataSource(configuration.isSwapDataSource())
-		    .setScanArchives(configuration.isScanArchives());
+		    .setScanArchives(configuration.isScanArchives())
+		    .springPersistence(configuration.isSpringPersistence());
 
 	    return this;
 	}

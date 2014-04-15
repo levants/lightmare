@@ -91,6 +91,9 @@ public enum ConfigKeys {
 
     SPRING_PERSISTENCE("spring"), // Spring data JPA configuration
 
+    UNIT_DATASOURCES("dataSourceForUnits"), // Data source names for persistence
+					    // units
+
     SCAN_FOR_ENTITIES("scanForEntities"), // Scan for entities
 
     ANNOTATED_UNIT_NAME("annotatedUnitName"), // Annotated unit
