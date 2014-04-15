@@ -188,6 +188,10 @@ public class ORMCreator {
 	    builder.setClasses(classes);
 	}
 
+	// Find data source name for thins unit name
+	String dataSourceName = configClone.getDataSourceName(unitName);
+	builder.dataSourceName(dataSourceName);
+
 	// Builds connection for appropriated persistence unit name
 	builder.configure(configClone).setClassLoader(loader).build()
 		.create(unitName);
