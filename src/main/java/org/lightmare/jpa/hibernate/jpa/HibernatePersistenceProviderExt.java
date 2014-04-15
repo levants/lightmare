@@ -60,21 +60,6 @@ public class HibernatePersistenceProviderExt extends
 	this.metaConfig = metaConfig;
     }
 
-    public EntityManagerFactory createEntityManagerFactory(
-	    final EntityManagerFactoryBuilder builder) {
-
-	EntityManagerFactory emf;
-
-	if (builder == null) {
-	    LOG.trace("Could not obtain matching EntityManagerFactoryBuilder, returning null");
-	    emf = null;
-	} else {
-	    emf = builder.build();
-	}
-
-	return emf;
-    }
-
     @SuppressWarnings("rawtypes")
     @Override
     public EntityManagerFactory createEntityManagerFactory(
@@ -85,11 +70,16 @@ public class HibernatePersistenceProviderExt extends
 	LOG.tracef(
 		"Starting createEntityManagerFactory for persistenceUnitName %s",
 		persistenceUnitName);
-	final EntityManagerFactoryBuilder builder;
+
 	try {
-	    builder = getEntityManagerFactoryBuilderOrNull(persistenceUnitName,
-		    properties);
-	    emf = createEntityManagerFactory(builder);
+	    final EntityManagerFactoryBuilder builder = getEntityManagerFactoryBuilderOrNull(
+		    persistenceUnitName, properties);
+	    if (builder == null) {
+		LOG.trace("Could not obtain matching EntityManagerFactoryBuilder, returning null");
+		emf = null;
+	    } else {
+		emf = builder.build();
+	    }
 	} catch (PersistenceException pe) {
 	    throw pe;
 	} catch (Exception e) {
@@ -176,6 +166,19 @@ public class HibernatePersistenceProviderExt extends
 	return descriptor;
     }
 
+    @SuppressWarnings({ "rawtypes" })
+    public ParsedPersistenceXmlDescriptor getPersistenceXmlDescriptor(
+	    String persistenceUnitName, Map properties) {
+
+	ParsedPersistenceXmlDescriptor persistenceUnit;
+
+	ClassLoader loader = MetaConfig.getOverridenClassLoader(metaConfig);
+	persistenceUnit = getPersistenceXmlDescriptor(persistenceUnitName,
+		properties, loader);
+
+	return persistenceUnit;
+    }
+
     @Override
     @SuppressWarnings("rawtypes")
     protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(
@@ -191,24 +194,6 @@ public class HibernatePersistenceProviderExt extends
 	final Map integration = wrap(properties);
 	ParsedPersistenceXmlDescriptor persistenceUnit = getPersistenceXmlDescriptor(
 		persistenceUnitName, properties, providedClassLoader);
-	if (persistenceUnit == null) {
-	    LOG.debug("Found no matching persistence units");
-	    builder = null;
-	} else {
-	    builder = Bootstrap.getEntityManagerFactoryBuilder(persistenceUnit,
-		    integration, providedClassLoader);
-	}
-
-	return builder;
-    }
-
-    @SuppressWarnings("rawtypes")
-    protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(
-	    ParsedPersistenceXmlDescriptor persistenceUnit,
-	    final Map integration, ClassLoader providedClassLoader) {
-
-	EntityManagerFactoryBuilder builder;
-
 	if (persistenceUnit == null) {
 	    LOG.debug("Found no matching persistence units");
 	    builder = null;

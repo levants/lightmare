@@ -37,6 +37,7 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
 import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.ConnectionSemaphore;
 import org.lightmare.config.Configuration;
@@ -145,20 +146,46 @@ public class JpaManager {
 	}
     }
 
+    private void initDataSourceName() {
+
+	if (dataSourceName == null || dataSourceName.isEmpty()) {
+	    Properties nameProperties = new Properties();
+	    nameProperties.putAll(properties);
+	    dataSourceName = Initializer.getJndiName(nameProperties);
+	}
+    }
+
     /**
      * Gets {@link DataSource} by its JNDI name for Spring data configuration
      * 
      * @return {@link DataSource}
      * @throws IOException
      */
-    private DataSource getDataSource() throws IOException {
+    private DataSource getDataSource(PersistenceProvider provider,
+	    String unitName) throws IOException {
 
 	DataSource dataSource;
 
 	if (dataSourceName == null || dataSourceName.isEmpty()) {
-	    Properties nameProperties = new Properties();
-	    nameProperties.putAll(properties);
-	    dataSourceName = Initializer.getJndiName(nameProperties);
+	    ParsedPersistenceXmlDescriptor persistenceUnit = ObjectUtils.cast(
+		    provider, HibernatePersistenceProviderExt.class)
+		    .getPersistenceXmlDescriptor(unitName, properties);
+
+	    Object dataSourceValue;
+	    if (swapDataSource) {
+		dataSourceValue = persistenceUnit.getNonJtaDataSource();
+	    } else {
+		dataSourceValue = persistenceUnit.getJtaDataSource();
+	    }
+
+	    if (dataSourceValue == null) {
+		initDataSourceName();
+	    } else if (dataSourceValue instanceof String) {
+		dataSourceName = ObjectUtils
+			.cast(dataSourceValue, String.class);
+	    } else {
+		dataSourceName = dataSourceValue.toString();
+	    }
 	}
 
 	dataSource = JndiManager.lookup(dataSourceName);
@@ -180,7 +207,7 @@ public class JpaManager {
 
 	SpringData springData;
 
-	DataSource dataSource = getDataSource();
+	DataSource dataSource = getDataSource(provider, unitName);
 	springData = new SpringData.Builder(dataSource, provider, unitName)
 		.properties(properties).classLoader(loader)
 		.swapDataSource(swapDataSource).build();
