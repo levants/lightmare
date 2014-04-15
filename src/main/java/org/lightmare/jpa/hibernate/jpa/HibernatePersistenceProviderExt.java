@@ -60,23 +60,36 @@ public class HibernatePersistenceProviderExt extends
 	this.metaConfig = metaConfig;
     }
 
+    public EntityManagerFactory createEntityManagerFactory(
+	    final EntityManagerFactoryBuilder builder) {
+
+	EntityManagerFactory emf;
+
+	if (builder == null) {
+	    LOG.trace("Could not obtain matching EntityManagerFactoryBuilder, returning null");
+	    emf = null;
+	} else {
+	    emf = builder.build();
+	}
+
+	return emf;
+    }
+
     @SuppressWarnings("rawtypes")
     @Override
     public EntityManagerFactory createEntityManagerFactory(
 	    String persistenceUnitName, Map properties) {
+
+	EntityManagerFactory emf;
+
 	LOG.tracef(
 		"Starting createEntityManagerFactory for persistenceUnitName %s",
 		persistenceUnitName);
-
+	final EntityManagerFactoryBuilder builder;
 	try {
-	    final EntityManagerFactoryBuilder builder = getEntityManagerFactoryBuilderOrNull(
-		    persistenceUnitName, properties);
-	    if (builder == null) {
-		LOG.trace("Could not obtain matching EntityManagerFactoryBuilder, returning null");
-		return null;
-	    } else {
-		return builder.build();
-	    }
+	    builder = getEntityManagerFactoryBuilderOrNull(persistenceUnitName,
+		    properties);
+	    emf = createEntityManagerFactory(builder);
 	} catch (PersistenceException pe) {
 	    throw pe;
 	} catch (Exception e) {
@@ -84,6 +97,8 @@ public class HibernatePersistenceProviderExt extends
 	    throw new PersistenceException(
 		    "Unable to build entity manager factory", e);
 	}
+
+	return emf;
     }
 
     @SuppressWarnings("rawtypes")
@@ -93,13 +108,8 @@ public class HibernatePersistenceProviderExt extends
 	EntityManagerFactoryBuilder emfBuilder;
 
 	ClassLoader loader = MetaConfig.getOverridenClassLoader(metaConfig);
-	if (loader == null) {
-	    emfBuilder = getEntityManagerFactoryBuilderOrNull(
-		    persistenceUnitName, properties, null);
-	} else {
-	    emfBuilder = getEntityManagerFactoryBuilderOrNull(
-		    persistenceUnitName, properties, loader);
-	}
+	emfBuilder = getEntityManagerFactoryBuilderOrNull(persistenceUnitName,
+		properties, loader);
 
 	return emfBuilder;
     }
@@ -110,17 +120,16 @@ public class HibernatePersistenceProviderExt extends
 		.unmodifiableMap(properties);
     }
 
-    @Override
-    @SuppressWarnings("rawtypes")
-    protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(
+    @SuppressWarnings({ "rawtypes" })
+    public ParsedPersistenceXmlDescriptor getPersistenceXmlDescriptor(
 	    String persistenceUnitName, Map properties,
 	    ClassLoader providedClassLoader) {
-	LOG.tracef(
-		"Attempting to obtain correct EntityManagerFactoryBuilder for persistenceUnitName : %s",
-		persistenceUnitName);
+
+	ParsedPersistenceXmlDescriptor descriptor = null;
 
 	final Map integration = wrap(properties);
 	final List<ParsedPersistenceXmlDescriptor> units;
+
 	try {
 	    units = PersistenceXmlParserImpl.locatePersistenceUnits(
 		    integration, metaConfig);
@@ -160,12 +169,55 @@ public class HibernatePersistenceProviderExt extends
 		continue;
 	    }
 
-	    return Bootstrap.getEntityManagerFactoryBuilder(persistenceUnit,
+	    descriptor = persistenceUnit;
+	    break;
+	}
+
+	return descriptor;
+    }
+
+    @Override
+    @SuppressWarnings("rawtypes")
+    protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(
+	    String persistenceUnitName, Map properties,
+	    ClassLoader providedClassLoader) {
+
+	EntityManagerFactoryBuilder builder;
+
+	LOG.tracef(
+		"Attempting to obtain correct EntityManagerFactoryBuilder for persistenceUnitName : %s",
+		persistenceUnitName);
+
+	final Map integration = wrap(properties);
+	ParsedPersistenceXmlDescriptor persistenceUnit = getPersistenceXmlDescriptor(
+		persistenceUnitName, properties, providedClassLoader);
+	if (persistenceUnit == null) {
+	    LOG.debug("Found no matching persistence units");
+	    builder = null;
+	} else {
+	    builder = Bootstrap.getEntityManagerFactoryBuilder(persistenceUnit,
 		    integration, providedClassLoader);
 	}
 
-	LOG.debug("Found no matching persistence units");
-	return null;
+	return builder;
+    }
+
+    @SuppressWarnings("rawtypes")
+    protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(
+	    ParsedPersistenceXmlDescriptor persistenceUnit,
+	    final Map integration, ClassLoader providedClassLoader) {
+
+	EntityManagerFactoryBuilder builder;
+
+	if (persistenceUnit == null) {
+	    LOG.debug("Found no matching persistence units");
+	    builder = null;
+	} else {
+	    builder = Bootstrap.getEntityManagerFactoryBuilder(persistenceUnit,
+		    integration, providedClassLoader);
+	}
+
+	return builder;
     }
 
     /**

@@ -759,25 +759,6 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Gets data source name for appropriated JPA persistence unit from
-     * configuration
-     * 
-     * @param unitName
-     * @return String data source name
-     */
-    public String getDataSourceName(String unitName) {
-
-	String dataSourceName;
-
-	Map<Object, Object> datasourceNames = getPersistenceConfigValue(
-		ConfigKeys.UNIT_DATASOURCES.key, Collections.emptyMap());
-	Object value = datasourceNames.get(unitName);
-	dataSourceName = ObjectUtils.cast(value, String.class);
-
-	return dataSourceName;
-    }
-
-    /**
      * Initializes modules by deployment modules parameter from configuration
      * 
      * @return {@link List} of deployment file paths
@@ -884,7 +865,27 @@ public class Configuration implements Cloneable {
     }
 
     public boolean isSpringPersistence() {
-	return getPersistenceConfigValue(ConfigKeys.SPRING_PERSISTENCE.key);
+	return getPersistenceConfigValue(ConfigKeys.SPRING_PERSISTENCE.key,
+		Boolean.FALSE);
+    }
+
+    /**
+     * Gets data source name for appropriated JPA persistence unit from
+     * configuration
+     * 
+     * @param unitName
+     * @return String data source name
+     */
+    public String getDataSourceName(String unitName) {
+
+	String dataSourceName;
+
+	Map<Object, Object> datasourceNames = getPersistenceConfigValue(
+		ConfigKeys.UNIT_DATASOURCES.key, Collections.emptyMap());
+	Object value = datasourceNames.get(unitName);
+	dataSourceName = ObjectUtils.cast(value, String.class);
+
+	return dataSourceName;
     }
 
     public void setScanForEntities(boolean scanForEntities) {
