@@ -147,56 +147,6 @@ public class JpaManager {
     }
 
     /**
-     * Initializes data source name
-     */
-    private void initDataSourceName() {
-
-	if (dataSourceName == null || dataSourceName.isEmpty()) {
-	    Properties nameProperties = new Properties();
-	    nameProperties.putAll(properties);
-	    dataSourceName = Initializer.getJndiName(nameProperties);
-	}
-    }
-
-    /**
-     * Gets {@link DataSource} by its JNDI name for Spring data configuration
-     * 
-     * @return {@link DataSource}
-     * @throws IOException
-     */
-    private DataSource getDataSource(PersistenceProvider provider,
-	    String unitName) throws IOException {
-
-	DataSource dataSource;
-
-	if (dataSourceName == null || dataSourceName.isEmpty()) {
-	    ParsedPersistenceXmlDescriptor persistenceUnit = ObjectUtils.cast(
-		    provider, HibernatePersistenceProviderExt.class)
-		    .getPersistenceXmlDescriptor(unitName, properties);
-
-	    Object dataSourceValue;
-	    if (swapDataSource) {
-		dataSourceValue = persistenceUnit.getNonJtaDataSource();
-	    } else {
-		dataSourceValue = persistenceUnit.getJtaDataSource();
-	    }
-
-	    if (dataSourceValue == null) {
-		initDataSourceName();
-	    } else if (dataSourceValue instanceof String) {
-		dataSourceName = ObjectUtils
-			.cast(dataSourceValue, String.class);
-	    } else {
-		dataSourceName = dataSourceValue.toString();
-	    }
-	}
-
-	dataSource = JndiManager.lookup(dataSourceName);
-
-	return dataSource;
-    }
-
-    /**
      * Initializes {@link SpringData} with appropriate configuration for Spring
      * data JPA configuration
      * 
@@ -208,11 +158,8 @@ public class JpaManager {
     private SpringData getSpringData(PersistenceProvider provider,
 	    String unitName) throws IOException {
 
-	SpringData springData;
-
-	DataSource dataSource = getDataSource(provider, unitName);
-	springData = new SpringData.Builder(dataSource, provider, unitName)
-		.properties(properties).classLoader(loader)
+	SpringData springData = new SpringData.Builder(dataSourceName,
+		provider, unitName).properties(properties).classLoader(loader)
 		.swapDataSource(swapDataSource).build();
 
 	return springData;

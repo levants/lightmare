@@ -3,16 +3,12 @@ package org.lightmare.jpa.spring;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
-import javax.sql.DataSource;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.utils.ObjectUtils;
@@ -24,7 +20,7 @@ public class SpringDataTest {
 
     private static final String DATA_SOURCE_PATH = "./ds/standalone.xml";
 
-    private static DataSource dataSource;
+    private static final String DATA_SOURCE_NAME = "java:/personsDerby";
 
     private static Properties properties;
 
@@ -54,11 +50,7 @@ public class SpringDataTest {
 
 	try {
 	    Initializer.initializeDataSource(DATA_SOURCE_PATH);
-	    dataSource = (DataSource) JndiManager.getContext().lookup(
-		    "java:/personsDerby");
 	} catch (IOException ex) {
-	    ex.printStackTrace();
-	} catch (NamingException ex) {
 	    ex.printStackTrace();
 	}
     }
@@ -68,7 +60,7 @@ public class SpringDataTest {
 
 	HibernatePersistenceProviderExt.Builder builder = new HibernatePersistenceProviderExt.Builder();
 	PersistenceProvider persistenceProvider = builder.build();
-	SpringData springData = new SpringData.Builder(dataSource,
+	SpringData springData = new SpringData.Builder(DATA_SOURCE_NAME,
 		persistenceProvider, UNIT_NAME).properties(properties).build();
 
 	EntityManagerFactory emf = null;
@@ -82,10 +74,5 @@ public class SpringDataTest {
 		emf.close();
 	    }
 	}
-    }
-
-    @AfterClass
-    public static void afterClass() {
-	Initializer.cleanUp(dataSource);
     }
 }

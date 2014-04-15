@@ -1,5 +1,6 @@
 package org.lightmare.jpa.spring;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
@@ -7,6 +8,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 
+import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
+import org.lightmare.jndi.JndiManager;
+import org.lightmare.jpa.datasource.Initializer;
+import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -20,6 +25,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
  */
 public class SpringData {
 
+    private String dataSourceName;
+
     private DataSource dataSource;
 
     private PersistenceProvider persistenceProvider;
@@ -32,13 +39,74 @@ public class SpringData {
 
     private boolean swapDataSources;
 
-    private SpringData(DataSource dataSource,
+    private SpringData(String dataSourceName,
 	    PersistenceProvider persistenceProvider, String unitName) {
-	this.dataSource = dataSource;
+	this.dataSourceName = dataSourceName;
 	this.persistenceProvider = persistenceProvider;
 	this.unitName = unitName;
     }
 
+    /**
+     * Initializes data source name from properties
+     */
+    private void initDataSourceName() {
+
+	if (dataSourceName == null || dataSourceName.isEmpty()) {
+	    Properties nameProperties = new Properties();
+	    nameProperties.putAll(properties);
+	    dataSourceName = Initializer.getJndiName(nameProperties);
+	}
+    }
+
+    /**
+     * Resolves data source JNDI name from persistence.xml file
+     */
+    private void initDataSourceFromUnit() {
+
+	ParsedPersistenceXmlDescriptor persistenceUnit = ObjectUtils.cast(
+		persistenceProvider, HibernatePersistenceProviderExt.class)
+		.getPersistenceXmlDescriptor(unitName, properties);
+
+	Object dataSourceValue;
+	if (swapDataSources) {
+	    dataSourceValue = persistenceUnit.getNonJtaDataSource();
+	} else {
+	    dataSourceValue = persistenceUnit.getJtaDataSource();
+	}
+
+	if (dataSourceValue == null) {
+	    initDataSourceName();
+	} else if (dataSourceValue instanceof String) {
+	    dataSourceName = ObjectUtils.cast(dataSourceValue, String.class);
+	} else {
+	    dataSourceName = dataSourceValue.toString();
+	}
+    }
+
+    /**
+     * Gets {@link DataSource} by its JNDI name for Spring data configuration
+     * 
+     * @return {@link DataSource}
+     * @throws IOException
+     */
+    private void initDataSource() throws IOException {
+
+	if (dataSourceName == null || dataSourceName.isEmpty()) {
+	    if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
+		initDataSourceFromUnit();
+	    } else {
+		initDataSourceName();
+	    }
+	}
+
+	dataSource = JndiManager.lookup(dataSourceName);
+    }
+
+    /**
+     * Creates LocalContainerEntityManagerFactoryBean for container scoped use
+     * 
+     * @return {@link LocalContainerEntityManagerFactoryBean}
+     */
     private LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
 	LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -65,6 +133,11 @@ public class SpringData {
 	return entityManagerFactoryBean;
     }
 
+    /**
+     * Creates JpaTransactionManager for container scoped use
+     * 
+     * @return {@link JpaTransactionManager}
+     */
     public JpaTransactionManager transactionManager() {
 
 	JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -77,10 +150,11 @@ public class SpringData {
 
     }
 
-    public EntityManagerFactory getEmf() {
+    public EntityManagerFactory getEmf() throws IOException {
 
 	EntityManagerFactory emf;
 
+	initDataSource();
 	JpaTransactionManager transactionManager = transactionManager();
 	emf = transactionManager.getEntityManagerFactory();
 
@@ -91,10 +165,10 @@ public class SpringData {
 
 	private SpringData springData;
 
-	public Builder(DataSource dataSource,
+	public Builder(String dataSourceName,
 		PersistenceProvider persistenceProvider, String unitName) {
-	    this.springData = new SpringData(dataSource, persistenceProvider,
-		    unitName);
+	    this.springData = new SpringData(dataSourceName,
+		    persistenceProvider, unitName);
 	}
 
 	public Builder properties(Properties properties) {
