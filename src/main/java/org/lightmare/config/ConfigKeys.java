@@ -91,6 +91,9 @@ public enum ConfigKeys {
 
     SPRING_PERSISTENCE("spring"), // Spring data JPA configuration
 
+    SPRING_DS_NAME_KEY("dataSource"), // Data source name for Spring JPA
+				      // configuration
+
     UNIT_DATASOURCES("dataSourceForUnits"), // Data source names for persistence
 					    // units
 

@@ -9,8 +9,8 @@ import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 
 import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
+import org.lightmare.config.ConfigKeys;
 import org.lightmare.jndi.JndiManager;
-import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
@@ -54,7 +54,9 @@ public class SpringData {
 	if (dataSourceName == null || dataSourceName.isEmpty()) {
 	    Properties nameProperties = new Properties();
 	    nameProperties.putAll(properties);
-	    dataSourceName = Initializer.getJndiName(nameProperties);
+	    dataSourceName = nameProperties
+		    .getProperty(ConfigKeys.SPRING_DS_NAME_KEY.key);
+	    properties.remove(ConfigKeys.SPRING_DS_NAME_KEY.key);
 	}
     }
 
@@ -75,7 +77,7 @@ public class SpringData {
 	}
 
 	if (dataSourceValue == null) {
-	    initDataSourceName();
+	    dataSourceName = null;
 	} else if (dataSourceValue instanceof String) {
 	    dataSourceName = ObjectUtils.cast(dataSourceValue, String.class);
 	} else {
@@ -91,11 +93,10 @@ public class SpringData {
      */
     private void initDataSource() throws IOException {
 
+	initDataSourceName();
 	if (dataSourceName == null || dataSourceName.isEmpty()) {
 	    if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
 		initDataSourceFromUnit();
-	    } else {
-		initDataSourceName();
 	    }
 	}
 
