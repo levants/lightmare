@@ -61,7 +61,8 @@ public class SpringDataTest {
 	HibernatePersistenceProviderExt.Builder builder = new HibernatePersistenceProviderExt.Builder();
 	PersistenceProvider persistenceProvider = builder.build();
 	SpringData springData = new SpringData.Builder(DATA_SOURCE_NAME,
-		persistenceProvider, UNIT_NAME).properties(properties).build();
+		persistenceProvider, UNIT_NAME).properties(properties)
+		.swapDataSource(Boolean.TRUE).build();
 
 	EntityManagerFactory emf = null;
 	try {
