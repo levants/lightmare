@@ -146,6 +146,9 @@ public class JpaManager {
 	}
     }
 
+    /**
+     * Initializes data source name
+     */
     private void initDataSourceName() {
 
 	if (dataSourceName == null || dataSourceName.isEmpty()) {
