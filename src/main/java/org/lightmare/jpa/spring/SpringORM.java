@@ -214,41 +214,41 @@ public class SpringORM {
      */
     public static class Builder {
 
-	private SpringORM springData;
+	private SpringORM springORM;
 
 	public Builder(String dataSourceName,
 		PersistenceProvider persistenceProvider, String unitName) {
-	    this.springData = new SpringORM(dataSourceName,
+	    this.springORM = new SpringORM(dataSourceName,
 		    persistenceProvider, unitName);
 	}
 
 	public Builder properties(Properties properties) {
-	    springData.properties = properties;
+	    springORM.properties = properties;
 	    return this;
 	}
 
 	public Builder properties(Map<Object, Object> properties) {
 
 	    if (CollectionUtils.valid(properties)) {
-		springData.properties = new Properties();
-		springData.properties.putAll(properties);
+		springORM.properties = new Properties();
+		springORM.properties.putAll(properties);
 	    }
 
 	    return this;
 	}
 
 	public Builder classLoader(ClassLoader loader) {
-	    springData.loader = loader;
+	    springORM.loader = loader;
 	    return this;
 	}
 
 	public Builder swapDataSource(boolean swapDataSources) {
-	    springData.swapDataSources = swapDataSources;
+	    springORM.swapDataSources = swapDataSources;
 	    return this;
 	}
 
 	public SpringORM build() {
-	    return this.springData;
+	    return this.springORM;
 	}
     }
 }
