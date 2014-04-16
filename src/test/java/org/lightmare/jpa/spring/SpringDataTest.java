@@ -68,7 +68,7 @@ public class SpringDataTest {
 		.setSwapDataSource(Boolean.TRUE).setScanArchives(Boolean.TRUE)
 		.setOverridenClassLoader(LibraryLoader.getContextClassLoader())
 		.build();
-	SpringData springData = new SpringData.Builder(DATA_SOURCE_NAME,
+	SpringORM springData = new SpringORM.Builder(DATA_SOURCE_NAME,
 		persistenceProvider, UNIT_NAME).properties(properties)
 		.swapDataSource(Boolean.TRUE).build();
 

@@ -41,7 +41,7 @@ import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.jpa.jta.HibernateConfig;
-import org.lightmare.jpa.spring.SpringData;
+import org.lightmare.jpa.spring.SpringORM;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
@@ -143,22 +143,22 @@ public class JpaManager {
     }
 
     /**
-     * Initializes {@link SpringData} with appropriate configuration for Spring
+     * Initializes {@link SpringORM} with appropriate configuration for Spring
      * data JPA configuration
      * 
      * @param provider
      * @param unitName
-     * @return {@link SpringData}
+     * @return {@link SpringORM}
      * @throws IOException
      */
-    private SpringData getSpringData(PersistenceProvider provider,
+    private SpringORM getSpringData(PersistenceProvider provider,
 	    String unitName) throws IOException {
 
-	SpringData springData = new SpringData.Builder(dataSourceName,
-		provider, unitName).properties(properties).classLoader(loader)
+	SpringORM springORM = new SpringORM.Builder(dataSourceName, provider,
+		unitName).properties(properties).classLoader(loader)
 		.swapDataSource(swapDataSource).build();
 
-	return springData;
+	return springORM;
     }
 
     /**
@@ -217,8 +217,8 @@ public class JpaManager {
 	addJndiProperties();
 
 	if (springPersistence) {
-	    SpringData springData = getSpringData(provider, unitName);
-	    emf = springData.getEmf();
+	    SpringORM springORM = getSpringData(provider, unitName);
+	    emf = springORM.getEmf();
 	} else {
 	    emf = provider.createEntityManagerFactory(unitName, properties);
 	}

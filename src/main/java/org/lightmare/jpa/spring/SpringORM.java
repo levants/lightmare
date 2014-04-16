@@ -25,7 +25,7 @@ import org.springframework.transaction.jta.JtaTransactionManager;
  * @author Levan Tsinadze
  * @since 0.1.2
  */
-public class SpringData {
+public class SpringORM {
 
     private String dataSourceName;
 
@@ -43,7 +43,7 @@ public class SpringData {
 
     private PersistenceUnitDescriptor persistenceUnit;
 
-    private SpringData(String dataSourceName,
+    private SpringORM(String dataSourceName,
 	    PersistenceProvider persistenceProvider, String unitName) {
 	this.dataSourceName = dataSourceName;
 	this.persistenceProvider = persistenceProvider;
@@ -207,18 +207,18 @@ public class SpringData {
     }
 
     /**
-     * Builder class for {@link SpringData} initialization
+     * Builder class for {@link SpringORM} initialization
      * 
      * @author Levan Tsinadze
      * @since 0.1.2
      */
     public static class Builder {
 
-	private SpringData springData;
+	private SpringORM springData;
 
 	public Builder(String dataSourceName,
 		PersistenceProvider persistenceProvider, String unitName) {
-	    this.springData = new SpringData(dataSourceName,
+	    this.springData = new SpringORM(dataSourceName,
 		    persistenceProvider, unitName);
 	}
 
@@ -247,7 +247,7 @@ public class SpringData {
 	    return this;
 	}
 
-	public SpringData build() {
+	public SpringORM build() {
 	    return this.springData;
 	}
     }
