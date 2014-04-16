@@ -12,6 +12,13 @@ import org.hibernate.jpa.boot.internal.PersistenceUnitInfoDescriptor;
 import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
 import org.lightmare.utils.ObjectUtils;
 
+/**
+ * Extension of {@link PersistenceUnitInfoDescriptor} with data source
+ * transaction type and managed classes properties modification capabilities
+ * 
+ * @author Levan Tsinadze
+ * @since 0.1.2
+ */
 public class PersistenceUnitSwapDescriptor extends
 	PersistenceUnitInfoDescriptor implements PersistenceUnitDescriptor {
 
@@ -74,6 +81,7 @@ public class PersistenceUnitSwapDescriptor extends
     }
 
     public void addClasses(Collection<String> classes) {
+
 	if (managedClassNames == null) {
 	    managedClassNames = new ArrayList<String>();
 	}

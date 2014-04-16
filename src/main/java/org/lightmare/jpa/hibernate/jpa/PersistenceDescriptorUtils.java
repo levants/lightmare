@@ -15,7 +15,7 @@ import org.lightmare.utils.ObjectUtils;
  * Utility class to make changes for JPA configuration
  * 
  * @author Levan Tsinadze
- * 
+ * @since 0.1.2
  */
 public class PersistenceDescriptorUtils {
 
