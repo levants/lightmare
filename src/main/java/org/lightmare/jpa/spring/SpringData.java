@@ -8,7 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 
-import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
+import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
@@ -41,7 +41,7 @@ public class SpringData {
 
     private boolean swapDataSources;
 
-    private ParsedPersistenceXmlDescriptor persistenceUnit;
+    private PersistenceUnitDescriptor persistenceUnit;
 
     private SpringData(String dataSourceName,
 	    PersistenceProvider persistenceProvider, String unitName) {

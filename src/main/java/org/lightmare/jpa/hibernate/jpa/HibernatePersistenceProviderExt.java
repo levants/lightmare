@@ -29,14 +29,17 @@ import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
+import javax.persistence.spi.PersistenceUnitInfo;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
 import org.hibernate.jpa.boot.spi.Bootstrap;
 import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
+import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
 import org.hibernate.jpa.boot.spi.ProviderChecker;
 import org.jboss.logging.Logger;
 import org.lightmare.jpa.MetaConfig;
+import org.lightmare.jpa.hibernate.internal.PersistenceUnitSwapDescriptor;
 import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
 import org.lightmare.utils.CollectionUtils;
 
@@ -91,6 +94,31 @@ public class HibernatePersistenceProviderExt extends
 	return emf;
     }
 
+    /**
+     * Improved with transaction and data source swapping properties
+     */
+    @SuppressWarnings("rawtypes")
+    @Override
+    public EntityManagerFactory createContainerEntityManagerFactory(
+	    PersistenceUnitInfo info, Map properties) {
+
+	EntityManagerFactory emf;
+
+	LOG.tracef("Starting createContainerEntityManagerFactory : %s",
+		info.getPersistenceUnitName());
+
+	PersistenceUnitDescriptor descriptor = new PersistenceUnitSwapDescriptor(
+		info);
+	PersistenceDescriptorUtils.resolveTransactionType(descriptor,
+		metaConfig);
+	PersistenceDescriptorUtils.resolveDataSource(descriptor, metaConfig);
+	PersistenceDescriptorUtils.resolveEntities(descriptor, metaConfig);
+	emf = Bootstrap.getEntityManagerFactoryBuilder(descriptor, properties)
+		.build();
+
+	return emf;
+    }
+
     @SuppressWarnings("rawtypes")
     protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(
 	    String persistenceUnitName, Map properties) {
@@ -111,7 +139,7 @@ public class HibernatePersistenceProviderExt extends
     }
 
     @SuppressWarnings({ "rawtypes" })
-    public ParsedPersistenceXmlDescriptor getPersistenceXmlDescriptor(
+    public PersistenceUnitDescriptor getPersistenceXmlDescriptor(
 	    String persistenceUnitName, Map properties,
 	    ClassLoader providedClassLoader) {
 
@@ -167,10 +195,10 @@ public class HibernatePersistenceProviderExt extends
     }
 
     @SuppressWarnings({ "rawtypes" })
-    public ParsedPersistenceXmlDescriptor getPersistenceXmlDescriptor(
+    public PersistenceUnitDescriptor getPersistenceXmlDescriptor(
 	    String persistenceUnitName, Map properties) {
 
-	ParsedPersistenceXmlDescriptor persistenceUnit;
+	PersistenceUnitDescriptor persistenceUnit;
 
 	ClassLoader loader = MetaConfig.getOverridenClassLoader(metaConfig);
 	persistenceUnit = getPersistenceXmlDescriptor(persistenceUnitName,
@@ -192,7 +220,7 @@ public class HibernatePersistenceProviderExt extends
 		persistenceUnitName);
 
 	final Map integration = wrap(properties);
-	ParsedPersistenceXmlDescriptor persistenceUnit = getPersistenceXmlDescriptor(
+	PersistenceUnitDescriptor persistenceUnit = getPersistenceXmlDescriptor(
 		persistenceUnitName, properties, providedClassLoader);
 	if (persistenceUnit == null) {
 	    LOG.debug("Found no matching persistence units");

@@ -17,7 +17,7 @@ import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 
-@Ignore
+//@Ignore
 public class SpringDataTest {
 
     private static final String UNIT_NAME = "testUnit";
