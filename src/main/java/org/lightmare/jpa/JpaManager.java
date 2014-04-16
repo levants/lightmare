@@ -151,7 +151,7 @@ public class JpaManager {
      * @return {@link SpringORM}
      * @throws IOException
      */
-    private SpringORM getSpringData(PersistenceProvider provider,
+    private SpringORM getSpringORM(PersistenceProvider provider,
 	    String unitName) throws IOException {
 
 	SpringORM springORM = new SpringORM.Builder(dataSourceName, provider,
@@ -174,7 +174,7 @@ public class JpaManager {
 
 	EntityManagerFactory emf;
 
-	SpringORM springORM = getSpringData(provider, unitName);
+	SpringORM springORM = getSpringORM(provider, unitName);
 	emf = springORM.getEmf();
 
 	return emf;

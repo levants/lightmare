@@ -18,7 +18,7 @@ import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
 
 @Ignore
-public class SpringDataTest {
+public class SpringORMTest {
 
     private static final String UNIT_NAME = "testUnit";
 
