@@ -109,7 +109,6 @@ public class SpringData {
     private void initProperties() {
 
 	if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
-
 	    persistenceUnit = ObjectUtils.cast(persistenceProvider,
 		    HibernatePersistenceProviderExt.class)
 		    .getPersistenceXmlDescriptor(unitName, properties);
