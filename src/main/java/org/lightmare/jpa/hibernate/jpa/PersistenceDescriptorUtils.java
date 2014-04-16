@@ -108,4 +108,21 @@ public class PersistenceDescriptorUtils {
 	    addClasses(persistenceUnit, classes);
 	}
     }
+
+    /**
+     * Changes JPA configuration and resolves additional data from
+     * {@link MetaConfig} parameter
+     * 
+     * @param persistenceUnit
+     * @param metaConfig
+     */
+    public static void resolve(PersistenceUnitDescriptor persistenceUnit,
+	    MetaConfig metaConfig) {
+
+	PersistenceDescriptorUtils.resolveTransactionType(persistenceUnit,
+		metaConfig);
+	PersistenceDescriptorUtils.resolveDataSource(persistenceUnit,
+		metaConfig);
+	PersistenceDescriptorUtils.resolveEntities(persistenceUnit, metaConfig);
+    }
 }

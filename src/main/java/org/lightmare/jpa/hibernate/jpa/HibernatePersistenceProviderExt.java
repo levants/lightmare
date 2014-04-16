@@ -109,10 +109,7 @@ public class HibernatePersistenceProviderExt extends
 
 	PersistenceUnitDescriptor descriptor = new PersistenceUnitSwapDescriptor(
 		info);
-	PersistenceDescriptorUtils.resolveTransactionType(descriptor,
-		metaConfig);
-	PersistenceDescriptorUtils.resolveDataSource(descriptor, metaConfig);
-	PersistenceDescriptorUtils.resolveEntities(descriptor, metaConfig);
+	PersistenceDescriptorUtils.resolve(descriptor, metaConfig);
 	emf = Bootstrap.getEntityManagerFactoryBuilder(descriptor, properties)
 		.build();
 
