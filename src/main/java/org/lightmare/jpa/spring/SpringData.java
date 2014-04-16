@@ -128,6 +128,18 @@ public class SpringData {
     }
 
     /**
+     * Adds JTA transaction configuration and appropriated data source
+     * 
+     * @param entityManagerFactoryBean
+     */
+    private void addJtaDatasource(
+	    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+
+	addTransactionManager();
+	entityManagerFactoryBean.setJtaDataSource(dataSource);
+    }
+
+    /**
      * Creates LocalContainerEntityManagerFactoryBean for container scoped use
      * 
      * @return {@link LocalContainerEntityManagerFactoryBean}
@@ -141,8 +153,7 @@ public class SpringData {
 	if (swapDataSources) {
 	    entityManagerFactoryBean.setDataSource(dataSource);
 	} else {
-	    addTransactionManager();
-	    entityManagerFactoryBean.setJtaDataSource(dataSource);
+	    addJtaDatasource(entityManagerFactoryBean);
 	}
 
 	if (ObjectUtils.notNull(loader)) {
