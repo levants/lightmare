@@ -109,7 +109,6 @@ public class SpringData {
     private void initProperties() {
 
 	if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
-
 	    persistenceUnit = ObjectUtils.cast(persistenceProvider,
 		    HibernatePersistenceProviderExt.class)
 		    .getPersistenceXmlDescriptor(unitName, properties);
@@ -178,6 +177,12 @@ public class SpringData {
 
     }
 
+    /**
+     * Initializes and builds {@link EntityManagerFactory} from configuration
+     * 
+     * @return {@link EntityManagerFactory}
+     * @throws IOException
+     */
     public EntityManagerFactory getEmf() throws IOException {
 
 	EntityManagerFactory emf;
@@ -190,6 +195,12 @@ public class SpringData {
 	return emf;
     }
 
+    /**
+     * Builder class for {@link SpringData} initialization
+     * 
+     * @author Levan Tsinadze
+     * @since 0.1.2
+     */
     public static class Builder {
 
 	private SpringData springData;
