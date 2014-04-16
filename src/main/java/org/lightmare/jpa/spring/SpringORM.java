@@ -8,7 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 
-import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
+import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
@@ -25,7 +25,7 @@ import org.springframework.transaction.jta.JtaTransactionManager;
  * @author Levan Tsinadze
  * @since 0.1.2
  */
-public class SpringData {
+public class SpringORM {
 
     private String dataSourceName;
 
@@ -41,9 +41,9 @@ public class SpringData {
 
     private boolean swapDataSources;
 
-    private ParsedPersistenceXmlDescriptor persistenceUnit;
+    private PersistenceUnitDescriptor persistenceUnit;
 
-    private SpringData(String dataSourceName,
+    private SpringORM(String dataSourceName,
 	    PersistenceProvider persistenceProvider, String unitName) {
 	this.dataSourceName = dataSourceName;
 	this.persistenceProvider = persistenceProvider;
@@ -128,6 +128,18 @@ public class SpringData {
     }
 
     /**
+     * Adds JTA transaction configuration and appropriated data source
+     * 
+     * @param entityManagerFactoryBean
+     */
+    private void addJtaDatasource(
+	    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+
+	addTransactionManager();
+	entityManagerFactoryBean.setJtaDataSource(dataSource);
+    }
+
+    /**
      * Creates LocalContainerEntityManagerFactoryBean for container scoped use
      * 
      * @return {@link LocalContainerEntityManagerFactoryBean}
@@ -141,8 +153,7 @@ public class SpringData {
 	if (swapDataSources) {
 	    entityManagerFactoryBean.setDataSource(dataSource);
 	} else {
-	    addTransactionManager();
-	    entityManagerFactoryBean.setJtaDataSource(dataSource);
+	    addJtaDatasource(entityManagerFactoryBean);
 	}
 
 	if (ObjectUtils.notNull(loader)) {
@@ -177,6 +188,12 @@ public class SpringData {
 
     }
 
+    /**
+     * Initializes and builds {@link EntityManagerFactory} from configuration
+     * 
+     * @return {@link EntityManagerFactory}
+     * @throws IOException
+     */
     public EntityManagerFactory getEmf() throws IOException {
 
 	EntityManagerFactory emf;
@@ -189,43 +206,49 @@ public class SpringData {
 	return emf;
     }
 
+    /**
+     * Builder class for {@link SpringORM} initialization
+     * 
+     * @author Levan Tsinadze
+     * @since 0.1.2
+     */
     public static class Builder {
 
-	private SpringData springData;
+	private SpringORM springORM;
 
 	public Builder(String dataSourceName,
 		PersistenceProvider persistenceProvider, String unitName) {
-	    this.springData = new SpringData(dataSourceName,
+	    this.springORM = new SpringORM(dataSourceName,
 		    persistenceProvider, unitName);
 	}
 
 	public Builder properties(Properties properties) {
-	    springData.properties = properties;
+	    springORM.properties = properties;
 	    return this;
 	}
 
 	public Builder properties(Map<Object, Object> properties) {
 
 	    if (CollectionUtils.valid(properties)) {
-		springData.properties = new Properties();
-		springData.properties.putAll(properties);
+		springORM.properties = new Properties();
+		springORM.properties.putAll(properties);
 	    }
 
 	    return this;
 	}
 
 	public Builder classLoader(ClassLoader loader) {
-	    springData.loader = loader;
+	    springORM.loader = loader;
 	    return this;
 	}
 
 	public Builder swapDataSource(boolean swapDataSources) {
-	    springData.swapDataSources = swapDataSources;
+	    springORM.swapDataSources = swapDataSources;
 	    return this;
 	}
 
-	public SpringData build() {
-	    return this.springData;
+	public SpringORM build() {
+	    return this.springORM;
 	}
     }
 }

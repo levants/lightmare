@@ -55,6 +55,7 @@ import org.hibernate.metamodel.source.XsdException;
 import org.jboss.logging.Logger;
 import org.lightmare.jpa.MetaConfig;
 import org.lightmare.jpa.hibernate.boot.registry.classloading.internal.ClassLoaderServiceExt;
+import org.lightmare.jpa.hibernate.jpa.PersistenceDescriptorUtils;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
@@ -148,48 +149,6 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	return persistenceUnits;
     }
 
-    /**
-     * Resolved which transaction type should be set from {@link MetaConfig}
-     * object
-     * 
-     * @param persistenceUnit
-     */
-    private void resolveTransactionType(
-	    ParsedPersistenceXmlDescriptor persistenceUnit) {
-
-	if (MetaConfig.isSwapDataSource(metaConfig)) {
-	    persistenceUnit
-		    .setTransactionType(PersistenceUnitTransactionType.RESOURCE_LOCAL);
-	}
-    }
-
-    /**
-     * Resolves data source from {@link MetaConfig} object
-     * 
-     * @param persistenceUnit
-     */
-    private void resolveDataSource(
-	    ParsedPersistenceXmlDescriptor persistenceUnit) {
-
-	Object dataSource = persistenceUnit.getJtaDataSource();
-	if (MetaConfig.isSwapDataSource(metaConfig)) {
-	    persistenceUnit.setNonJtaDataSource(dataSource);
-	}
-    }
-
-    /**
-     * Resolves entity classes from {@link MetaConfig} object
-     * 
-     * @param persistenceUnit
-     */
-    private void resolveEntities(ParsedPersistenceXmlDescriptor persistenceUnit) {
-
-	List<String> classes = MetaConfig.getClasses(metaConfig);
-	if (CollectionUtils.valid(classes)) {
-	    persistenceUnit.addClasses(classes);
-	}
-    }
-
     @SuppressWarnings("rawtypes")
     private List<ParsedPersistenceXmlDescriptor> parsePersistenceXml(
 	    URL xmlUrl, Map integration) {
@@ -244,7 +203,8 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 				.setTransactionType(parseTransactionType(transactionType));
 		    }
 
-		    resolveTransactionType(persistenceUnit);
+		    PersistenceDescriptorUtils.resolveTransactionType(
+			    persistenceUnit, metaConfig);
 
 		    if (integration
 			    .containsKey(AvailableSettings.JTA_DATASOURCE)) {
@@ -257,7 +217,8 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 				.get(AvailableSettings.NON_JTA_DATASOURCE));
 		    }
 
-		    resolveDataSource(persistenceUnit);
+		    PersistenceDescriptorUtils.resolveDataSource(
+			    persistenceUnit, metaConfig);
 
 		    decodeTransactionType(persistenceUnit);
 
@@ -332,7 +293,8 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 			    .getClasses(metaConfig))) {
 			persistenceUnit.addClasses(extractContent(element));
 		    } else if (ObjectUtils.notTrue(resolvedClasses)) {
-			resolveEntities(persistenceUnit);
+			PersistenceDescriptorUtils.resolveEntities(
+				persistenceUnit, metaConfig);
 			resolvedClasses = Boolean.TRUE;
 		    }
 		} else if (tag.equals("mapping-file")) {
@@ -376,7 +338,8 @@ public class PersistenceXmlParserImpl extends PersistenceXmlParser {
 	}
 
 	if (ObjectUtils.notTrue(resolvedClasses)) {
-	    resolveEntities(persistenceUnit);
+	    PersistenceDescriptorUtils.resolveEntities(persistenceUnit,
+		    metaConfig);
 	}
     }
 
