@@ -162,6 +162,25 @@ public class JpaManager {
     }
 
     /**
+     * Builds {@link EntityManagerFactory} from Spring ORM module
+     * 
+     * @param provider
+     * @param unitName
+     * @return {@link EntityManagerFactory}
+     * @throws IOException
+     */
+    private EntityManagerFactory getFromSpring(PersistenceProvider provider,
+	    String unitName) throws IOException {
+
+	EntityManagerFactory emf;
+
+	SpringORM springORM = getSpringData(provider, unitName);
+	emf = springORM.getEmf();
+
+	return emf;
+    }
+
+    /**
      * Creates {@link EntityManagerFactory} by "Hibernate" or by extended
      * builder {@link Ejb3ConfigurationImpl} if entity classes or
      * persistence.xml file path are provided
@@ -217,8 +236,7 @@ public class JpaManager {
 	addJndiProperties();
 
 	if (springPersistence) {
-	    SpringORM springORM = getSpringData(provider, unitName);
-	    emf = springORM.getEmf();
+	    emf = getFromSpring(provider, unitName);
 	} else {
 	    emf = provider.createEntityManagerFactory(unitName, properties);
 	}
