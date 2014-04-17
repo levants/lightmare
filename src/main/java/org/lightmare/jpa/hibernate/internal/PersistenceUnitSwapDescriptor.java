@@ -44,6 +44,7 @@ import org.lightmare.utils.ObjectUtils;
 public class PersistenceUnitSwapDescriptor extends
 	PersistenceUnitInfoDescriptor implements PersistenceUnitDescriptor {
 
+    // Editable JPA configuration parameters
     private PersistenceUnitTransactionType transactionType;
 
     private DataSource jtaDataSource;

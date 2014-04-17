@@ -24,6 +24,7 @@ package org.lightmare.jpa.hibernate.jpa;
 
 import java.net.URL;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +43,7 @@ import org.lightmare.jpa.MetaConfig;
 import org.lightmare.jpa.hibernate.internal.PersistenceUnitSwapDescriptor;
 import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
 import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Implementation of {@link HibernatePersistenceProvider} with additional
@@ -164,27 +166,29 @@ public class HibernatePersistenceProviderExt extends
 		    "No name provided and multiple persistence units found");
 	}
 
-	for (ParsedPersistenceXmlDescriptor persistenceUnit : units) {
+	boolean notMatches = Boolean.TRUE;
+	Iterator<ParsedPersistenceXmlDescriptor> descriptorIterator = units
+		.iterator();
+	ParsedPersistenceXmlDescriptor persistenceUnit;
+	while (descriptorIterator.hasNext() && notMatches) {
+	    persistenceUnit = descriptorIterator.next();
 	    LOG.debugf(
 		    "Checking persistence-unit [name=%s, explicit-provider=%s] against incoming persistence unit name [%s]",
 		    persistenceUnit.getName(),
 		    persistenceUnit.getProviderClassName(), persistenceUnitName);
 
-	    final boolean matches = persistenceUnitName == null
-		    || persistenceUnit.getName().equals(persistenceUnitName);
-	    if (!matches) {
+	    final boolean matches = (persistenceUnitName == null || persistenceUnitName
+		    .equals(persistenceUnit.getName()));
+	    notMatches = ObjectUtils.notTrue(matches);
+	    if (notMatches) {
 		LOG.debug("Excluding from consideration due to name mis-match");
-		continue;
-	    }
-
-	    // See if we (Hibernate) are the persistence provider
-	    if (!ProviderChecker.isProvider(persistenceUnit, properties)) {
+		// See if we (Hibernate) are the persistence provider
+	    } else if (ObjectUtils.notTrue(ProviderChecker.isProvider(
+		    persistenceUnit, properties))) {
 		LOG.debug("Excluding from consideration due to provider mis-match");
-		continue;
+	    } else {
+		descriptor = persistenceUnit;
 	    }
-
-	    descriptor = persistenceUnit;
-	    break;
 	}
 
 	return descriptor;
