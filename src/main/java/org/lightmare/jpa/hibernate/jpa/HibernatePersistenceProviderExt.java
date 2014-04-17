@@ -73,7 +73,6 @@ public class HibernatePersistenceProviderExt extends
 	LOG.tracef(
 		"Starting createEntityManagerFactory for persistenceUnitName %s",
 		persistenceUnitName);
-
 	try {
 	    final EntityManagerFactoryBuilder builder = getEntityManagerFactoryBuilderOrNull(
 		    persistenceUnitName, properties);
@@ -85,10 +84,10 @@ public class HibernatePersistenceProviderExt extends
 	    }
 	} catch (PersistenceException pe) {
 	    throw pe;
-	} catch (Exception e) {
-	    LOG.debug("Unable to build entity manager factory", e);
+	} catch (Exception ex) {
+	    LOG.debug("Unable to build entity manager factory", ex);
 	    throw new PersistenceException(
-		    "Unable to build entity manager factory", e);
+		    "Unable to build entity manager factory", ex);
 	}
 
 	return emf;
@@ -148,10 +147,10 @@ public class HibernatePersistenceProviderExt extends
 	try {
 	    units = PersistenceXmlParserImpl.locatePersistenceUnits(
 		    integration, metaConfig);
-	} catch (Exception e) {
-	    LOG.debug("Unable to locate persistence units", e);
+	} catch (Exception ex) {
+	    LOG.debug("Unable to locate persistence units", ex);
 	    throw new PersistenceException(
-		    "Unable to locate persistence units", e);
+		    "Unable to locate persistence units", ex);
 	}
 
 	LOG.debugf("Located and parsed %s persistence units; checking each",

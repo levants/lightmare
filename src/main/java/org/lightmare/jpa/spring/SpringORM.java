@@ -117,7 +117,8 @@ public class SpringORM {
     }
 
     /**
-     * Adds default transaction properties for Spring JTA data sources
+     * Adds default transaction properties for Spring implementation of JTA data
+     * sources
      */
     private void addTransactionManager() {
 
