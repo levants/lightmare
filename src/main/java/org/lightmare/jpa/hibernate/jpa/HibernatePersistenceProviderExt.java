@@ -59,7 +59,7 @@ public class HibernatePersistenceProviderExt extends
     private MetaConfig metaConfig;
 
     private static final Logger LOG = Logger
-	    .getLogger(HibernatePersistenceProvider.class);
+	    .getLogger(HibernatePersistenceProviderExt.class);
 
     private HibernatePersistenceProviderExt(MetaConfig metaConfig) {
 	this.metaConfig = metaConfig;

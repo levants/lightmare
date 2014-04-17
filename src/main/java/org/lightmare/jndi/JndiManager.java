@@ -115,12 +115,12 @@ public class JndiManager {
 	    if (HIBERNATE_CONFIG.isEmpty()) {
 		// Gathers JPA configuration
 		JNDIParameters[] parameters = JNDIParameters.values();
-		String hibernatekey;
+		String hibernateKey;
 		for (JNDIParameters parameter : parameters) {
-		    hibernatekey = StringUtils.concat(
+		    hibernateKey = StringUtils.concat(
 			    AvailableSettings.JNDI_PREFIX, StringUtils.DOT,
 			    parameter.key);
-		    HIBERNATE_CONFIG.put(hibernatekey, parameter.value);
+		    HIBERNATE_CONFIG.put(hibernateKey, parameter.value);
 		}
 	    }
 
