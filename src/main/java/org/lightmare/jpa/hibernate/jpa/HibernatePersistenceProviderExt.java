@@ -249,44 +249,32 @@ public class HibernatePersistenceProviderExt extends
 	}
 
 	public Builder setClasses(List<String> classes) {
-
 	    target.setClasses(classes);
-
 	    return this;
 	}
 
 	public Builder setXmls(List<URL> xmls) {
-
 	    target.setXmls(xmls);
-
 	    return this;
 	}
 
 	public Builder setShortPath(String shortPath) {
-
 	    target.setShortPath(shortPath);
-
 	    return this;
 	}
 
 	public Builder setSwapDataSource(boolean swapDataSource) {
-
 	    target.setSwapDataSource(swapDataSource);
-
 	    return this;
 	}
 
 	public Builder setScanArchives(boolean scanArchives) {
-
 	    target.setScanArchives(scanArchives);
-
 	    return this;
 	}
 
 	public Builder setOverridenClassLoader(ClassLoader overridenClassLoader) {
-
 	    target.setOverridenClassLoader(overridenClassLoader);
-
 	    return this;
 	}
 
