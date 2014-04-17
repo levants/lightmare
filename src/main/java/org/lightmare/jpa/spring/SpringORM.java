@@ -140,7 +140,8 @@ public class SpringORM {
     }
 
     /**
-     * Creates LocalContainerEntityManagerFactoryBean for container scoped use
+     * Creates {@link LocalContainerEntityManagerFactoryBean} for container
+     * scoped use
      * 
      * @return {@link LocalContainerEntityManagerFactoryBean}
      */
@@ -172,7 +173,7 @@ public class SpringORM {
     }
 
     /**
-     * Creates JpaTransactionManager for container scoped use
+     * Creates {@link JpaTransactionManager} for container scoped use
      * 
      * @return {@link JpaTransactionManager}
      */
@@ -218,8 +219,8 @@ public class SpringORM {
 
 	public Builder(String dataSourceName,
 		PersistenceProvider persistenceProvider, String unitName) {
-	    this.springORM = new SpringORM(dataSourceName,
-		    persistenceProvider, unitName);
+	    this.springORM = new SpringORM(dataSourceName, persistenceProvider,
+		    unitName);
 	}
 
 	public Builder properties(Properties properties) {
