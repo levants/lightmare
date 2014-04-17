@@ -150,7 +150,7 @@ public class SpringORM {
 	LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
 	entityManagerFactoryBean.setPersistenceUnitName(unitName);
-
+	// Checks data source type
 	if (swapDataSources) {
 	    entityManagerFactoryBean.setDataSource(dataSource);
 	} else {
