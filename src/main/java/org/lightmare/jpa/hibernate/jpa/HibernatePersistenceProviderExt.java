@@ -61,6 +61,11 @@ public class HibernatePersistenceProviderExt extends
     private static final Logger LOG = Logger
 	    .getLogger(HibernatePersistenceProviderExt.class);
 
+    /**
+     * Constructor with {@link MetaConfig} as additional JPA properties
+     * 
+     * @param metaConfig
+     */
     private HibernatePersistenceProviderExt(MetaConfig metaConfig) {
 	this.metaConfig = metaConfig;
     }
