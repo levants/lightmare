@@ -190,6 +190,7 @@ public class SpringORM {
 	    entityManagerFactoryBean.setJpaProperties(properties);
 	}
 
+	// Configures JPA ORM system for use
 	entityManagerFactoryBean.afterPropertiesSet();
 
 	return entityManagerFactoryBean;

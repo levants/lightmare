@@ -48,7 +48,6 @@
 		<!-- end of hibernate -->
 		<!-- spring -->
 		<spring.version>4.0.3.RELEASE</spring.version>
-		<spring-data.version>1.5.2.RELEASE</spring-data.version>
 		<!-- end of spring -->
 		<!-- scannotation -->
 		<scannotation.version>1.0.3</scannotation.version>
@@ -356,19 +355,6 @@
 					<groupId>commons-logging</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>${spring-data.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>${spring-data.version}</version>
-			<classifier>sources</classifier>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
