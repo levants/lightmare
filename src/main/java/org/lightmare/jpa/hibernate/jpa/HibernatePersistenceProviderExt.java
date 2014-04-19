@@ -135,6 +135,9 @@ public class HibernatePersistenceProviderExt extends
 	return emf;
     }
 
+    /**
+     * Generates schema from {@link PersistenceUnitInfo} instance
+     */
     @SuppressWarnings("rawtypes")
     @Override
     public void generateSchema(PersistenceUnitInfo info, Map map) {
@@ -147,6 +150,10 @@ public class HibernatePersistenceProviderExt extends
 	builder.generateSchema();
     }
 
+    /**
+     * Generates schema from passed persistence unit name and {@link Map} of
+     * properties
+     */
     @SuppressWarnings("rawtypes")
     @Override
     public boolean generateSchema(String persistenceUnitName, Map map) {
@@ -168,6 +175,10 @@ public class HibernatePersistenceProviderExt extends
 	return valid;
     }
 
+    /**
+     * Gets {@link EntityManagerFactoryBuilder} for passed unit name and
+     * {@link Map} of properties
+     */
     @SuppressWarnings("rawtypes")
     protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(
 	    String persistenceUnitName, Map properties) {
@@ -181,6 +192,15 @@ public class HibernatePersistenceProviderExt extends
 	return emfBuilder;
     }
 
+    /**
+     * Creates {@link PersistenceUnitDescriptor} for passed persistence unit
+     * name {@link Map} of properties and {@link ClassLoader} instance
+     * 
+     * @param persistenceUnitName
+     * @param properties
+     * @param providedClassLoader
+     * @return {@link PersistenceUnitDescriptor}
+     */
     @SuppressWarnings({ "rawtypes" })
     public PersistenceUnitDescriptor getPersistenceXmlDescriptor(
 	    String persistenceUnitName, Map properties,
