@@ -108,7 +108,7 @@ public abstract class InitDataSource {
     public void create() throws IOException {
 
 	String jndiName = Initializer.getJndiName(properties);
-	LogUtils.info(LOG, InitMessages.INITIALIZING_MESSAGE, jndiName);
+	LogUtils.info(LOG, InitMessages.INITIALIZING_MESSAGE.message, jndiName);
 
 	try {
 	    DataSource dataSource = initializeDataSource();
@@ -117,14 +117,17 @@ public abstract class InitDataSource {
 		JndiManager.rebind(jndiName, dataSource);
 	    } else {
 		throw new IOException(String.format(
-			InitMessages.NOT_APPR_INSTANCE_ERROR, jndiName));
+			InitMessages.NOT_APPR_INSTANCE_ERROR.message, jndiName));
 	    }
 
-	    LogUtils.info(LOG, InitMessages.INITIALIZED_MESSAGE, jndiName);
+	    LogUtils.info(LOG, InitMessages.INITIALIZED_MESSAGE.message,
+		    jndiName);
 	} catch (IOException ex) {
-	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR, jndiName);
+	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR.message,
+		    jndiName);
 	} catch (Exception ex) {
-	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR, jndiName);
+	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR.message,
+		    jndiName);
 	}
     }
 

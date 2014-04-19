@@ -28,19 +28,26 @@ package org.lightmare.jpa.datasource;
  * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
-public abstract class InitMessages {
+public enum InitMessages {
 
     // Error messages
-    public static final String NOT_APPR_INSTANCE_ERROR = "Could not initialize data source %s (it is not appropriated DataSource instance)";
+    NOT_APPR_INSTANCE_ERROR(
+	    "Could not initialize data source %s (it is not appropriated DataSource instance)"),
 
-    public static final String COULD_NOT_INIT_ERROR = "Could not initialize data source %s";
+    COULD_NOT_INIT_ERROR("Could not initialize data source %s"),
 
-    public static final String COULD_NOT_CLOSE_ERROR = "Could not close DataSource %s";
+    COULD_NOT_CLOSE_ERROR("Could not close DataSource %s"),
 
-    public static final String INITIALIZING_ERROR = "Could not initialize datasource";
+    INITIALIZING_ERROR("Could not initialize datasource"),
 
     // Info Messages
-    public static final String INITIALIZING_MESSAGE = "Initializing data source %s";
+    INITIALIZING_MESSAGE("Initializing data source %s"),
 
-    public static final String INITIALIZED_MESSAGE = "Data source %s initialized";
+    INITIALIZED_MESSAGE("Data source %s initialized");
+
+    public final String message;
+
+    private InitMessages(final String message) {
+	this.message = message;
+    }
 }

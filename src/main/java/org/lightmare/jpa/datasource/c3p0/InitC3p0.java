@@ -111,7 +111,7 @@ public class InitC3p0 extends InitDataSource {
 	try {
 	    DataSources.destroy(dataSource);
 	} catch (SQLException ex) {
-	    LOG.error(InitMessages.COULD_NOT_CLOSE_ERROR, ex);
+	    LOG.error(InitMessages.COULD_NOT_CLOSE_ERROR.message, ex);
 	}
     }
 }

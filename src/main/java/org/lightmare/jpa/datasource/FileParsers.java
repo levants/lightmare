@@ -430,7 +430,7 @@ public class FileParsers {
 		BeanLoader.initializeDatasource(parameters);
 
 	    } catch (IOException ex) {
-		LOG.error(InitMessages.INITIALIZING_ERROR, ex);
+		LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
 	    }
 	}
 

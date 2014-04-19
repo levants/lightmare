@@ -102,7 +102,7 @@ public class InitDBCP extends InitDataSource {
 			SharedPoolDataSource.class);
 		pooledDataSource.close();
 	    } catch (Exception ex) {
-		LOG.error(InitMessages.COULD_NOT_CLOSE_ERROR, ex);
+		LOG.error(InitMessages.COULD_NOT_CLOSE_ERROR.message, ex);
 	    }
 	}
     }

@@ -79,7 +79,7 @@ public class ConnectionDeployer implements Callable<Boolean> {
 	    result = Boolean.TRUE;
 	} catch (IOException ex) {
 	    result = Boolean.FALSE;
-	    LOG.error(InitMessages.INITIALIZING_ERROR, ex);
+	    LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
 	} finally {
 	    releaseBlocker();
 	    LibraryLoader.loadCurrentLibraries(loader);
