@@ -23,7 +23,6 @@
 package org.lightmare.jpa.hibernate.jpa;
 
 import java.net.URL;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +49,7 @@ import org.lightmare.utils.ObjectUtils;
  * configuration
  * 
  * @author Steve Ebersole, Levan Tsinadze
- * @Since 0.0.56=SNAPSHOT
+ * @Since 0.1.0
  */
 public class HibernatePersistenceProviderExt extends
 	HibernatePersistenceProvider {
@@ -135,12 +134,6 @@ public class HibernatePersistenceProviderExt extends
 	return emfBuilder;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    private static Map wrap(Map properties) {
-	return properties == null ? Collections.emptyMap() : Collections
-		.unmodifiableMap(properties);
-    }
-
     @SuppressWarnings({ "rawtypes" })
     public PersistenceUnitDescriptor getPersistenceXmlDescriptor(
 	    String persistenceUnitName, Map properties,
@@ -200,7 +193,7 @@ public class HibernatePersistenceProviderExt extends
     }
 
     @SuppressWarnings({ "rawtypes" })
-    public PersistenceUnitDescriptor getPersistenceXmlDescriptor(
+    public PersistenceUnitDescriptor getPersistenceUnitDescriptor(
 	    String persistenceUnitName, Map properties) {
 
 	PersistenceUnitDescriptor persistenceUnit;
@@ -243,6 +236,7 @@ public class HibernatePersistenceProviderExt extends
      * class
      * 
      * @author Levan Tsinadze
+     * @since 0.1.0
      * 
      */
     public static class Builder {

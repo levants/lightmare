@@ -133,7 +133,7 @@ public class SpringORM {
 	if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
 	    persistenceUnit = ObjectUtils.cast(persistenceProvider,
 		    HibernatePersistenceProviderExt.class)
-		    .getPersistenceXmlDescriptor(unitName, properties);
+		    .getPersistenceUnitDescriptor(unitName, properties);
 	    properties.putAll(persistenceUnit.getProperties());
 	}
     }
