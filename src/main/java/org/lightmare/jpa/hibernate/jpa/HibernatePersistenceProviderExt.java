@@ -100,6 +100,22 @@ public class HibernatePersistenceProviderExt extends
     }
 
     /**
+     * Enriches and configures passed {@link PersistenceUnitInfo} wrapper
+     * 
+     * @param info
+     * @return {@link PersistenceUnitDescriptor}
+     */
+    protected PersistenceUnitDescriptor getPersistenceUnitDescriptor(
+	    PersistenceUnitInfo info) {
+
+	PersistenceUnitDescriptor descriptor = new PersistenceUnitSwapDescriptor(
+		info);
+	PersistenceDescriptorUtils.resolve(descriptor, metaConfig);
+
+	return descriptor;
+    }
+
+    /**
      * Improved with transaction and data source swapping properties
      */
     @SuppressWarnings("rawtypes")
@@ -112,13 +128,44 @@ public class HibernatePersistenceProviderExt extends
 	LOG.tracef("Starting createContainerEntityManagerFactory : %s",
 		info.getPersistenceUnitName());
 
-	PersistenceUnitDescriptor descriptor = new PersistenceUnitSwapDescriptor(
-		info);
-	PersistenceDescriptorUtils.resolve(descriptor, metaConfig);
+	PersistenceUnitDescriptor descriptor = getPersistenceUnitDescriptor(info);
 	emf = Bootstrap.getEntityManagerFactoryBuilder(descriptor, properties)
 		.build();
 
 	return emf;
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void generateSchema(PersistenceUnitInfo info, Map map) {
+	LOG.tracef("Starting generateSchema : PUI.name=%s",
+		info.getPersistenceUnitName());
+
+	PersistenceUnitDescriptor descriptor = getPersistenceUnitDescriptor(info);
+	final EntityManagerFactoryBuilder builder = Bootstrap
+		.getEntityManagerFactoryBuilder(descriptor, map);
+	builder.generateSchema();
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public boolean generateSchema(String persistenceUnitName, Map map) {
+	LOG.tracef("Starting generateSchema for persistenceUnitName %s",
+		persistenceUnitName);
+
+	boolean valid;
+
+	final EntityManagerFactoryBuilder builder = getEntityManagerFactoryBuilderOrNull(
+		persistenceUnitName, map);
+	if (builder == null) {
+	    LOG.trace("Could not obtain matching EntityManagerFactoryBuilder, returning false");
+	    valid = Boolean.FALSE;
+	} else {
+	    builder.generateSchema();
+	    valid = Boolean.TRUE;
+	}
+
+	return valid;
     }
 
     @SuppressWarnings("rawtypes")
