@@ -42,6 +42,8 @@
 		<servlet.version>3.1.0</servlet.version>
 		<jaxrs.version>2.0</jaxrs.version>
 		<!-- end of java ee components versions -->
+
+		<!-- major dependencies versions -->
 		<!-- hibernate -->
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
@@ -49,6 +51,8 @@
 		<!-- spring -->
 		<spring.version>4.0.3.RELEASE</spring.version>
 		<!-- end of spring -->
+		<!-- major dependencies versions -->
+
 		<!-- scannotation -->
 		<scannotation.version>1.0.3</scannotation.version>
 		<!-- end of scannotation -->

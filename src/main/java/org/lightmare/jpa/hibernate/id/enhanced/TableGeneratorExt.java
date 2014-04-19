@@ -51,7 +51,7 @@ import org.lightmare.utils.ObjectUtils;
  * To generate primary keys from table and bypasses existing keys
  * 
  * @author Levan Tsinadze
- * 
+ * @see TableGenerator
  */
 public class TableGeneratorExt extends TableGenerator {
 

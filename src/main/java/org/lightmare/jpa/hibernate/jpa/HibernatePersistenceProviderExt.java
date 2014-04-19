@@ -69,6 +69,9 @@ public class HibernatePersistenceProviderExt extends
 	this.metaConfig = metaConfig;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("rawtypes")
     @Override
     public EntityManagerFactory createEntityManagerFactory(
@@ -101,6 +104,7 @@ public class HibernatePersistenceProviderExt extends
 
     /**
      * Enriches and configures passed {@link PersistenceUnitInfo} wrapper
+     * {@inheritDoc}
      * 
      * @param info
      * @return {@link PersistenceUnitDescriptor}
@@ -116,6 +120,8 @@ public class HibernatePersistenceProviderExt extends
     }
 
     /**
+     * {@inheritDoc}
+     * <p/>
      * Improved with transaction and data source swapping properties
      */
     @SuppressWarnings("rawtypes")

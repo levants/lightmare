@@ -53,7 +53,8 @@ import org.lightmare.utils.ObjectUtils;
  * Implementation of class loader services
  * 
  * @author Levan Tsinadze
- * 
+ * @since 0.1.0
+ * @see ClassLoaderServiceImpl
  */
 public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 
