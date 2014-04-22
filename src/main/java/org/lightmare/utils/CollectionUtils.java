@@ -135,7 +135,8 @@ public abstract class CollectionUtils {
 
 	if (avaliable) {
 	    Map<?, ?> map;
-	    for (int i = FIRST_INDEX; i < maps.length && avaliable; i++) {
+	    int length = maps.length;
+	    for (int i = FIRST_INDEX; i < length && avaliable; i++) {
 		map = maps[i];
 		avaliable = avaliable && valid(map);
 	    }

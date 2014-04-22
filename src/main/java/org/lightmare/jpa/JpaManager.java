@@ -28,6 +28,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -93,6 +94,59 @@ public class JpaManager {
     private static final Logger LOG = Logger.getLogger(JpaManager.class);
 
     /**
+     * Enumeration for JPA configuration prefixes
+     * 
+     * @author Levan Tsinadze
+     * @since 0.1.2
+     * 
+     */
+    private static enum HibernatePrefixes {
+
+	SPRING("spring."), JPA("jpa."), DAO("dao.");
+
+	// Configuration properties prefixes
+	private static final String HIBERNATE = "hibernate.";
+
+	private final String prefix;
+
+	private HibernatePrefixes(String prefix) {
+	    this.prefix = prefix;
+	}
+
+	/**
+	 * Checks if passed key has appropriate prefix and if not adds this
+	 * prefix to passed key
+	 * 
+	 * @param text
+	 * @return {@link String} key with appropriate prefix
+	 */
+	public static String validKey(String text) {
+
+	    String key = text;
+
+	    HibernatePrefixes[] configs = HibernatePrefixes.values();
+	    int length = configs.length;
+	    String config;
+	    boolean modified = Boolean.FALSE;
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length
+		    && ObjectUtils.notTrue(modified); i++) {
+		config = configs[i].prefix;
+		modified = text.startsWith(config);
+		if (modified) {
+		    key = text.replace(config, HIBERNATE);
+		}
+	    }
+
+	    if (ObjectUtils.notTrue(modified)
+		    && ObjectUtils.notTrue(text.startsWith(HIBERNATE))) {
+		key = StringUtils.concat(HIBERNATE, text);
+	    }
+
+	    return key;
+	}
+    }
+
+    /**
      * Private constructor to avoid initialization beside
      * {@link JpaManager.Builder} class
      */
@@ -118,6 +172,38 @@ public class JpaManager {
      */
     private void addJndiProperties() {
 	getProperties().putAll(JndiManager.JNDIConfigs.INIT.hinbernateConfig);
+    }
+
+    /**
+     * Adds appropriated prefixes to JPA configuration properties
+     * 
+     * @param properties
+     */
+    private Map<Object, Object> configure(Map<Object, Object> properties) {
+
+	Map<Object, Object> config;
+
+	if (properties == null || properties.isEmpty()) {
+	    config = properties;
+	} else {
+	    config = new HashMap<Object, Object>();
+	    Set<Map.Entry<Object, Object>> entries = properties.entrySet();
+	    Object key;
+	    Object value;
+	    String textKey;
+	    for (Map.Entry<Object, Object> entry : entries) {
+		key = entry.getKey();
+		value = entry.getValue();
+		if (key instanceof String) {
+		    textKey = ObjectUtils.cast(key, String.class);
+		    textKey = HibernatePrefixes.validKey(textKey);
+		}
+
+		config.put(key, value);
+	    }
+	}
+
+	return config;
     }
 
     /**
@@ -151,8 +237,8 @@ public class JpaManager {
      * @return {@link SpringORM}
      * @throws IOException
      */
-    private SpringORM getSpringORM(PersistenceProvider provider,
-	    String unitName) throws IOException {
+    private SpringORM getSpringORM(PersistenceProvider provider, String unitName)
+	    throws IOException {
 
 	SpringORM springORM = new SpringORM.Builder(dataSourceName, provider,
 		unitName).properties(properties).classLoader(loader)
@@ -384,7 +470,6 @@ public class JpaManager {
 	public Builder setClasses(List<String> classes) {
 
 	    manager.classes = classes;
-
 	    return this;
 	}
 
@@ -397,7 +482,6 @@ public class JpaManager {
 	public Builder setURL(URL url) {
 
 	    manager.url = url;
-
 	    return this;
 	}
 
@@ -410,7 +494,6 @@ public class JpaManager {
 	public Builder setPath(String path) {
 
 	    manager.path = path;
-
 	    return this;
 	}
 
@@ -422,8 +505,7 @@ public class JpaManager {
 	 */
 	public Builder setProperties(Map<Object, Object> properties) {
 
-	    manager.properties = properties;
-
+	    manager.properties = manager.configure(properties);
 	    return this;
 	}
 
@@ -437,7 +519,6 @@ public class JpaManager {
 	public Builder setSwapDataSource(boolean swapDataSource) {
 
 	    manager.swapDataSource = swapDataSource;
-
 	    return this;
 	}
 
@@ -451,7 +532,6 @@ public class JpaManager {
 	public Builder setScanArchives(boolean scanArchives) {
 
 	    manager.scanArchives = scanArchives;
-
 	    return this;
 	}
 
@@ -464,7 +544,6 @@ public class JpaManager {
 	public Builder setClassLoader(ClassLoader loader) {
 
 	    manager.loader = loader;
-
 	    return this;
 	}
 
@@ -477,7 +556,6 @@ public class JpaManager {
 	public Builder springPersistence(boolean springPersistence) {
 
 	    manager.springPersistence = springPersistence;
-
 	    return this;
 	}
 
@@ -490,7 +568,6 @@ public class JpaManager {
 	public Builder dataSourceName(String dataSourceName) {
 
 	    manager.dataSourceName = dataSourceName;
-
 	    return this;
 	}
 
