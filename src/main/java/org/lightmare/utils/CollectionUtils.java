@@ -179,7 +179,8 @@ public abstract class CollectionUtils {
 
 	if (avaliable) {
 	    Collection<?> collection;
-	    for (int i = FIRST_INDEX; i < collections.length && avaliable; i++) {
+	    int length = collections.length;
+	    for (int i = FIRST_INDEX; i < length && avaliable; i++) {
 		collection = collections[i];
 		avaliable = avaliable && valid(collection);
 	    }
