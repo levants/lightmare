@@ -190,7 +190,7 @@ public class JndiManager {
     }
 
     /**
-     * Rebinds (deletes and binds again) passed {@link Object} to
+     * Re-binds (deletes and binds again) passed {@link Object} to
      * {@link Context} by appropriate name
      * 
      * @param name
@@ -227,7 +227,7 @@ public class JndiManager {
     }
 
     /**
-     * Deletes (unbinds) passed name and associated {@link Object} from
+     * Deletes (un-binds) passed name and associated {@link Object} from
      * {@link Context}
      * 
      * @param name
