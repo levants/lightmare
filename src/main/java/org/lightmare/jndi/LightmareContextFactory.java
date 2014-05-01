@@ -59,6 +59,9 @@ public class LightmareContextFactory implements InitialContextFactory {
 	}
     }
 
+    /**
+     * Initializes {@link Context} implementation instance for passed properties
+     */
     @Override
     public Context getInitialContext(Hashtable<?, ?> properties)
 	    throws NamingException {
