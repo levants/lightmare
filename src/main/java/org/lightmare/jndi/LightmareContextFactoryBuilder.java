@@ -75,6 +75,10 @@ public class LightmareContextFactoryBuilder implements
 	return factory;
     }
 
+    /**
+     * Initializes {@link InitialContextFactory} implementation for passed
+     * parameters
+     */
     @Override
     public InitialContextFactory createInitialContextFactory(Hashtable<?, ?> env)
 	    throws NamingException {
