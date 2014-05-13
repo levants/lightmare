@@ -228,8 +228,10 @@ public class LibraryLoader {
 	    @Override
 	    public ClassLoader run() {
 
+		ClassLoader classLoader;
+
 		Thread currentThread = Thread.currentThread();
-		ClassLoader classLoader = currentThread.getContextClassLoader();
+		classLoader = currentThread.getContextClassLoader();
 
 		return classLoader;
 	    }

@@ -49,7 +49,7 @@
 		<hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
 		<!-- spring -->
-		<spring.version>4.0.3.RELEASE</spring.version>
+		<spring.version>4.0.4.RELEASE</spring.version>
 		<!-- end of spring -->
 		<!-- major dependencies versions -->
 
@@ -60,16 +60,16 @@
 		<simple-jndi.version>0.11.4.1</simple-jndi.version>
 		<!-- end of simple-jndi -->
 		<!-- jackson -->
-		<jackson.version>2.3.2</jackson.version>
+		<jackson.version>2.3.3</jackson.version>
 		<!-- end of jackson -->
 		<!-- yaml -->
 		<snakeyaml.version>1.13</snakeyaml.version>
 		<!-- end of yaml -->
 		<!-- jersey -->
-		<jersey.version>2.7</jersey.version>
+		<jersey.version>2.8</jersey.version>
 		<!-- end of jersey -->
 		<!-- netty -->
-		<netty.version>4.0.18.Final</netty.version>
+		<netty.version>4.0.19.Final</netty.version>
 		<!-- end of netty -->
 		<!-- data sources on connection pooling -->
 		<tomcat-jdbc.version>7.0.53</tomcat-jdbc.version>
