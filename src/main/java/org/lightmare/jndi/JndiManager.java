@@ -1,5 +1,5 @@
 /*
- * Lightmare, Embeddable ejb container (works for stateless session beans) with JPA / Hibernate support
+ * Lightmare, Lightweight embedded EJB container (works for stateless session beans) with JPA / Hibernate support
  *
  * Copyright (c) 2013, Levan Tsinadze, or third-party contributors as
  * indicated by the @author tags or express copyright attribution
@@ -190,7 +190,7 @@ public class JndiManager {
     }
 
     /**
-     * Rebinds (deletes and binds again) passed {@link Object} to
+     * Re-binds (deletes and binds again) passed {@link Object} to
      * {@link Context} by appropriate name
      * 
      * @param name
@@ -227,7 +227,7 @@ public class JndiManager {
     }
 
     /**
-     * Deletes (unbinds) passed name and associated {@link Object} from
+     * Deletes (un-binds) passed name and associated {@link Object} from
      * {@link Context}
      * 
      * @param name

@@ -1,5 +1,5 @@
 /*
- * Lightmare, Embeddable ejb container (works for stateless session beans) with JPA / Hibernate support
+ * Lightmare, Lightweight embedded EJB container (works for stateless session beans) with JPA / Hibernate support
  *
  * Copyright (c) 2013, Levan Tsinadze, or third-party contributors as
  * indicated by the @author tags or express copyright attribution
@@ -75,6 +75,10 @@ public class LightmareContextFactoryBuilder implements
 	return factory;
     }
 
+    /**
+     * Initializes {@link InitialContextFactory} implementation for passed
+     * parameters
+     */
     @Override
     public InitialContextFactory createInitialContextFactory(Hashtable<?, ?> env)
 	    throws NamingException {

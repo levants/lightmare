@@ -1,5 +1,5 @@
 /*
- * Lightmare, Embeddable ejb container (works for stateless session beans) with JPA / Hibernate support
+ * Lightmare, Lightweight embedded EJB container (works for stateless session beans) with JPA / Hibernate support
  *
  * Copyright (c) 2013, Levan Tsinadze, or third-party contributors as
  * indicated by the @author tags or express copyright attribution
@@ -170,8 +170,8 @@ public class LightmareContext extends MemoryContext implements Cleanable {
     @Override
     public void close() throws NamingException {
 	clearResources();
-	// TODO: Must check is needed super.close() method call
-	super.close();
+	// TODO: Must check if needed super.close() method call
+	// super.close();
     }
 
     /**

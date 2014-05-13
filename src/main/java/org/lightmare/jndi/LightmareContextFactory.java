@@ -1,5 +1,5 @@
 /*
- * Lightmare, Embeddable ejb container (works for stateless session beans) with JPA / Hibernate support
+ * Lightmare, Lightweight embedded EJB container (works for stateless session beans) with JPA / Hibernate support
  *
  * Copyright (c) 2013, Levan Tsinadze, or third-party contributors as
  * indicated by the @author tags or express copyright attribution
@@ -59,6 +59,9 @@ public class LightmareContextFactory implements InitialContextFactory {
 	}
     }
 
+    /**
+     * Initializes {@link Context} implementation instance for passed properties
+     */
     @Override
     public Context getInitialContext(Hashtable<?, ?> properties)
 	    throws NamingException {
