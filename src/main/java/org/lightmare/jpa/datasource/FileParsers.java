@@ -1,5 +1,5 @@
 /*
- * Lightmare, Embeddable ejb container (works for stateless session beans) with JPA / Hibernate support
+ * Lightmare, Embeddable EJB container (works for stateless session beans) with JPA / Hibernate support
  *
  * Copyright (c) 2013, Levan Tsinadze, or third-party contributors as
  * indicated by the @author tags or express copyright attribution
@@ -44,6 +44,7 @@ import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.NamingUtils;
+import org.lightmare.utils.ObjectUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -51,7 +52,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- * Parses xml files to initialize {@link javax.sql.DataSource}s and bind them to
+ * Parses XML files to initialize {@link javax.sql.DataSource}s and bind them to
  * <a href="http://www.oracle.com/technetwork/java/jndi/index.html">jndi</a>
  * {@link javax.naming.Context} by name
  * 
@@ -102,7 +103,6 @@ public class FileParsers {
 
 	URLConnection connection = url.openConnection();
 	InputStream stream = connection.getInputStream();
-
 	try {
 	    document = parse(stream);
 	} finally {
@@ -176,7 +176,8 @@ public class FileParsers {
      */
     public void setDataFromJBossDriver(NodeList nodeList, Properties properties) {
 
-	Element thisElement = (Element) getFirst(nodeList);
+	Node elementNode = getFirst(nodeList);
+	Element thisElement = ObjectUtils.cast(elementNode, Element.class);
 	String name = getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
 	properties.setProperty(ConnectionConfig.DRIVER_PROPERTY.name,
@@ -194,7 +195,8 @@ public class FileParsers {
 	boolean valid;
 
 	int elementLength = nodeList.getLength();
-	valid = !(elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH);
+	valid = ObjectUtils.notEquals(elementLength,
+		CollectionUtils.EMPTY_ARRAY_LENGTH);
 
 	return valid;
     }
@@ -393,7 +395,8 @@ public class FileParsers {
 
 	NodeList nodeList = getDataSourceTags(dataSourcePath);
 	String jndiName;
-	for (int i = 0; i < nodeList.getLength(); i++) {
+	int length = nodeList.getLength();
+	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
 	    Element thisElement = (Element) nodeList.item(i);
 	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
 	    jndiNames.add(jndiName);
@@ -434,6 +437,7 @@ public class FileParsers {
 	    }
 	}
 
+	// Tries to lock until operation is complete
 	try {
 	    blocker.await();
 	} catch (InterruptedException ex) {
