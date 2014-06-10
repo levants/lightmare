@@ -152,7 +152,7 @@ public class JndiManager {
     /**
      * Getter for {@link Context} instance
      * 
-     * @return {@link Context}
+     * @return {@link Context} initialized context
      * @throws IOException
      */
     public static Context getContext() throws IOException {
