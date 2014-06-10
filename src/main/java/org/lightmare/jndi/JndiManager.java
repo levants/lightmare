@@ -172,7 +172,7 @@ public class JndiManager {
      * appropriated generic type
      * 
      * @param name
-     * @return <code>T</code>
+     * @return <code>T</code> instance of appropriated generic type
      * @throws IOException
      */
     public static <T> T lookup(String name) throws IOException {
