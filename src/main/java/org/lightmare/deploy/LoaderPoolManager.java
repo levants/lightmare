@@ -57,6 +57,22 @@ public abstract class LoaderPoolManager {
     // Time amount (in milliseconds) for trying lock
     private static final long LOCK_TIME = 10;
 
+    private static ClassLoader getCurrent(MetaCreator creator) {
+
+	ClassLoader current;
+
+	// Gets class loader for this deployment
+	ClassLoader existing = creator.getCurrent();
+	if (ObjectUtils.notNull(existing)) {
+	    current = existing;
+	} else {
+	    // Gets default, context class loader for current thread
+	    current = LibraryLoader.getContextClassLoader();
+	}
+
+	return current;
+    }
+
     /**
      * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
      * instance
@@ -68,16 +84,8 @@ public abstract class LoaderPoolManager {
 	ClassLoader current;
 
 	MetaCreator creator = MetaContainer.getCreator();
-	ClassLoader creatorLoader;
 	if (ObjectUtils.notNull(creator)) {
-	    // Gets class loader for this deployment
-	    creatorLoader = creator.getCurrent();
-	    if (ObjectUtils.notNull(creatorLoader)) {
-		current = creatorLoader;
-	    } else {
-		// Gets default, context class loader for current thread
-		current = LibraryLoader.getContextClassLoader();
-	    }
+	    current = getCurrent(creator);
 	} else {
 	    // Gets default, context class loader for current thread
 	    current = LibraryLoader.getContextClassLoader();
@@ -100,7 +108,6 @@ public abstract class LoaderPoolManager {
 	 * @param thread
 	 */
 	private void nameThread(Thread thread) {
-
 	    String name = StringUtils
 		    .concat(LOADER_THREAD_NAME, thread.getId());
 	    thread.setName(name);
@@ -121,7 +128,6 @@ public abstract class LoaderPoolManager {
 	 * @param thread
 	 */
 	private void setContextClassLoader(Thread thread) {
-
 	    ClassLoader parent = getCurrent();
 	    LibraryLoader.loadCurrentLibraries(thread, parent);
 	}
@@ -174,6 +180,21 @@ public abstract class LoaderPoolManager {
 	}
     }
 
+    private static boolean initAndUnlock() throws IOException {
+
+	boolean locked = ObjectUtils.tryLock(LOCK, LOCK_TIME,
+		TimeUnit.MILLISECONDS);
+	if (locked) {
+	    try {
+		initLoaderPool();
+	    } finally {
+		ObjectUtils.unlock(LOCK);
+	    }
+	}
+
+	return locked;
+    }
+
     /**
      * Checks and if not valid reopens deploy {@link ExecutorService} instance
      * 
@@ -185,18 +206,9 @@ public abstract class LoaderPoolManager {
 	if (invalid()) {
 	    boolean locked = Boolean.FALSE;
 	    while (ObjectUtils.notTrue(locked)) {
-
 		// Locks the Lock object to avoid shut down and submit in
 		// parallel
-		locked = ObjectUtils.tryLock(LOCK, LOCK_TIME,
-			TimeUnit.MILLISECONDS);
-		if (locked) {
-		    try {
-			initLoaderPool();
-		    } finally {
-			ObjectUtils.unlock(LOCK);
-		    }
-		}
+		locked = initAndUnlock();
 	    }
 	}
 
@@ -210,7 +222,6 @@ public abstract class LoaderPoolManager {
      * @throws IOException
      */
     public static void submit(Runnable runnable) throws IOException {
-
 	ExecutorService pool = getLoaderPool();
 	pool.submit(runnable);
     }
@@ -224,10 +235,24 @@ public abstract class LoaderPoolManager {
      */
     public static <T> Future<T> submit(Callable<T> callable) throws IOException {
 
+	Future<T> future;
+
 	ExecutorService pool = getLoaderPool();
-	Future<T> future = pool.submit(callable);
+	future = pool.submit(callable);
 
 	return future;
+    }
+
+    private static void reloadAndUnlock() throws IOException {
+
+	try {
+	    if (ObjectUtils.notNull(LOADER_POOL)) {
+		LOADER_POOL.shutdown();
+		LOADER_POOL = null;
+	    }
+	} finally {
+	    ObjectUtils.unlock(LOCK);
+	}
     }
 
     /**
@@ -244,14 +269,7 @@ public abstract class LoaderPoolManager {
 	    locked = ObjectUtils
 		    .tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
 	    if (locked) {
-		try {
-		    if (ObjectUtils.notNull(LOADER_POOL)) {
-			LOADER_POOL.shutdown();
-			LOADER_POOL = null;
-		    }
-		} finally {
-		    ObjectUtils.unlock(LOCK);
-		}
+		reloadAndUnlock();
 	    }
 	}
     }
