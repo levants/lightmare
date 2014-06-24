@@ -143,6 +143,32 @@ public class ORMCreator {
 	return classes;
     }
 
+    private void scanEntities(ArchiveUtils ioUtils,
+	    Map<String, String> classOwnersFiles, JpaManager.Builder builder)
+	    throws IOException {
+
+	Map<String, Set<String>> annotationIndex = annotationFinder
+		.getAnnotationIndex();
+	Set<String> classSet = annotationIndex.get(Entity.class.getName());
+	String annotatedUnitName = configClone.getAnnotatedUnitName();
+	if (annotatedUnitName == null) {
+	    classSet = annotationIndex.get(Entity.class.getName());
+	} else if (annotatedUnitName.equals(unitName)) {
+	    Set<String> unitNamedSet = annotationIndex.get(UnitName.class
+		    .getName());
+	    // Intersects entities with unit name annotated classes
+	    classSet.retainAll(unitNamedSet);
+	}
+
+	if (ObjectUtils.notNull(ioUtils)) {
+	    String fileNameForBean = classOwnersFiles.get(beanName);
+	    filterEntitiesForJar(classSet, fileNameForBean);
+	}
+
+	List<String> classes = filterEntities(classSet);
+	builder.setClasses(classes);
+    }
+
     /**
      * Creates connection associated with unit name if such connection does not
      * exists yet
@@ -164,28 +190,7 @@ public class ORMCreator {
 	}
 
 	if (configClone.isScanForEntities()) {
-	    Set<String> classSet;
-	    Map<String, Set<String>> annotationIndex = annotationFinder
-		    .getAnnotationIndex();
-	    classSet = annotationIndex.get(Entity.class.getName());
-	    String annotatedUnitName = configClone.getAnnotatedUnitName();
-
-	    if (annotatedUnitName == null) {
-		classSet = annotationIndex.get(Entity.class.getName());
-	    } else if (annotatedUnitName.equals(unitName)) {
-		Set<String> unitNamedSet = annotationIndex.get(UnitName.class
-			.getName());
-		// Intersects entities with unit name annotated classes
-		classSet.retainAll(unitNamedSet);
-	    }
-
-	    if (ObjectUtils.notNull(ioUtils)) {
-		String fileNameForBean = classOwnersFiles.get(beanName);
-		filterEntitiesForJar(classSet, fileNameForBean);
-	    }
-
-	    List<String> classes = filterEntities(classSet);
-	    builder.setClasses(classes);
+	    scanEntities(ioUtils, classOwnersFiles, builder);
 	}
 
 	// Find data source name for thins unit name
