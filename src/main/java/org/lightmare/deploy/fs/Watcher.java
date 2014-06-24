@@ -96,6 +96,13 @@ public class Watcher implements Runnable {
     // Error code for java main process exit
     private static final int ERROR_EXIT = -1;
 
+    // Messages
+    private static final String MODIFY_MESSAGE = "Modify: %s, count: %s\n";
+
+    private static final String DELETE_MESSAGE = "Delete: %s, count: %s\n";
+
+    private static final String CREATE_MESSAGE = "Create: %s, count: %s\n";
+
     private static final Logger LOG = Logger.getLogger(Watcher.class);
 
     /**
@@ -136,7 +143,6 @@ public class Watcher implements Runnable {
 
 	    return accept;
 	}
-
     }
 
     private Watcher() {
@@ -206,6 +212,30 @@ public class Watcher implements Runnable {
 	return paths;
     }
 
+    private static WatchFileType checkType(Set<DeploymentDirectory> apps,
+	    String parentPath) {
+
+	WatchFileType type;
+
+	String deploymantPath;
+	Iterator<DeploymentDirectory> iterator = apps.iterator();
+	boolean notDeployment = Boolean.TRUE;
+	DeploymentDirectory deployment;
+	while (iterator.hasNext() && notDeployment) {
+	    deployment = iterator.next();
+	    deploymantPath = deployment.getPath();
+	    notDeployment = ObjectUtils.notEquals(deploymantPath, parentPath);
+	}
+
+	if (notDeployment) {
+	    type = WatchFileType.NONE;
+	} else {
+	    type = WatchFileType.DEPLOYMENT;
+	}
+
+	return type;
+    }
+
     /**
      * Checks and gets appropriated {@link WatchFileType} by passed file name
      * 
@@ -224,24 +254,8 @@ public class Watcher implements Runnable {
 
 	Set<DeploymentDirectory> apps = getDeployDirectories();
 	Set<String> dss = getDataSourcePaths();
-
 	if (CollectionUtils.valid(apps)) {
-	    String deploymantPath;
-	    Iterator<DeploymentDirectory> iterator = apps.iterator();
-	    boolean notDeployment = Boolean.TRUE;
-	    DeploymentDirectory deployment;
-	    while (iterator.hasNext() && notDeployment) {
-		deployment = iterator.next();
-		deploymantPath = deployment.getPath();
-		notDeployment = ObjectUtils.notEquals(deploymantPath,
-			parentPath);
-	    }
-
-	    if (notDeployment) {
-		type = WatchFileType.NONE;
-	    } else {
-		type = WatchFileType.DEPLOYMENT;
-	    }
+	    type = checkType(apps, parentPath);
 	} else if (CollectionUtils.valid(dss) && dss.contains(filePath)) {
 	    type = WatchFileType.DATA_SOURCE;
 	} else {
@@ -354,7 +368,6 @@ public class Watcher implements Runnable {
      * @throws IOException
      */
     public static void deployFile(URL url) throws IOException {
-
 	URL[] archives = { url };
 	MetaContainer.getCreator().scanForBeans(archives);
     }
@@ -400,7 +413,6 @@ public class Watcher implements Runnable {
      * @throws IOException
      */
     public static void redeployFile(String fileName) throws IOException {
-
 	undeployFile(fileName);
 	deployFile(fileName);
     }
@@ -412,28 +424,75 @@ public class Watcher implements Runnable {
      * @param currentEvent
      * @throws IOException
      */
-    private void handleEvent(Path dir, WatchEvent<Path> currentEvent)
+    private void handleEvent(Path dir, WatchEvent<Path> event)
 	    throws IOException {
 
-	if (ObjectUtils.notNull(currentEvent)) {
-
-	    Path prePath = currentEvent.context();
+	if (ObjectUtils.notNull(event)) {
+	    Path prePath = event.context();
 	    Path path = dir.resolve(prePath);
 	    String fileName = path.toString();
-	    int count = currentEvent.count();
-	    Kind<?> kind = currentEvent.kind();
-
+	    int count = event.count();
+	    Kind<?> kind = event.kind();
 	    if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-		LogUtils.info(LOG, "Modify: %s, count: %s\n", fileName, count);
+		LogUtils.info(LOG, MODIFY_MESSAGE, fileName, count);
 		redeployFile(fileName);
 	    } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
-		LogUtils.info(LOG, "Delete: %s, count: %s\n", fileName, count);
+		LogUtils.info(LOG, DELETE_MESSAGE, fileName, count);
 		undeployFile(fileName);
 	    } else if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
-		LogUtils.info(LOG, "Create: %s, count: %s\n", fileName, count);
+		LogUtils.info(LOG, CREATE_MESSAGE, fileName, count);
 		redeployFile(fileName);
 	    }
 	}
+    }
+
+    private void handleEvent(WatchEvent<?> event, Path dir)
+	    throws InterruptedException, IOException {
+
+	Thread.sleep(SLEEP_TIME);
+	WatchEvent<Path> typedEvent = ObjectUtils.cast(event);
+	handleEvent(dir, typedEvent);
+    }
+
+    private boolean handleEvent(WatchKey key, WatchEvent<?> event, Path dir)
+	    throws InterruptedException, IOException {
+
+	boolean run = key.reset() && key.isValid();
+
+	if (run) {
+	    handleEvent(event, dir);
+	}
+
+	return run;
+    }
+
+    private boolean validate(WatchEvent<?> event) {
+	return (event.kind() != StandardWatchEventKinds.OVERFLOW);
+    }
+
+    private boolean watchService(WatchService watch)
+	    throws InterruptedException, IOException {
+
+	boolean run = Boolean.FALSE;
+
+	WatchKey key = watch.take();
+	List<WatchEvent<?>> events = key.pollEvents();
+	WatchEvent<?> currentEvent = null;
+	int times = ZERO_WATCH_STATUS;
+	Path dir = ObjectUtils.cast(key.watchable(), Path.class);
+	for (WatchEvent<?> event : events) {
+	    if (validate(event)) {
+		if (times == ZERO_WATCH_STATUS
+			|| event.count() > currentEvent.count()) {
+		    currentEvent = event;
+		}
+
+		times++;
+		run = handleEvent(key, currentEvent, dir);
+	    }
+	}
+
+	return run;
     }
 
     /**
@@ -444,38 +503,10 @@ public class Watcher implements Runnable {
      */
     private void runService(WatchService watch) throws IOException {
 
-	Path dir;
-	boolean toRun = true;
-	boolean valid;
-	while (toRun) {
+	boolean run = Boolean.TRUE;
+	while (run) {
 	    try {
-		WatchKey key;
-		key = watch.take();
-		List<WatchEvent<?>> events = key.pollEvents();
-		WatchEvent<?> currentEvent = null;
-		WatchEvent<Path> typedCurrentEvent;
-		int times = ZERO_WATCH_STATUS;
-		dir = (Path) key.watchable();
-
-		for (WatchEvent<?> event : events) {
-		    if (event.kind() == StandardWatchEventKinds.OVERFLOW) {
-			continue;
-		    }
-
-		    if (times == ZERO_WATCH_STATUS
-			    || event.count() > currentEvent.count()) {
-			currentEvent = event;
-		    }
-
-		    times++;
-		    valid = key.reset();
-		    toRun = valid && key.isValid();
-		    if (toRun) {
-			Thread.sleep(SLEEP_TIME);
-			typedCurrentEvent = ObjectUtils.cast(currentEvent);
-			handleEvent(dir, typedCurrentEvent);
-		    }
-		}
+		run = watchService(watch);
 	    } catch (InterruptedException ex) {
 		throw new IOException(ex);
 	    }
@@ -534,11 +565,9 @@ public class Watcher implements Runnable {
 	boolean scan;
 	File directory;
 	File[] files;
-
 	for (DeploymentDirectory deployment : deploymentDirss) {
 	    path = deployment.getPath();
 	    scan = deployment.isScan();
-
 	    if (scan) {
 		directory = new File(path);
 		files = directory.listFiles();
@@ -592,7 +621,6 @@ public class Watcher implements Runnable {
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
 	    LOG.fatal("system going to shut down cause of hot deployment");
-
 	    try {
 		ConnectionContainer.closeConnections();
 	    } catch (IOException iex) {

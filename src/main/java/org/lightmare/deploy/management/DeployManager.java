@@ -226,6 +226,7 @@ public class DeployManager extends HttpServlet {
     private String getTag(String app, String fileType) {
 
 	StringBuilder builder = new StringBuilder();
+
 	builder.append(BEGIN_TAGS);
 	builder.append(app);
 	builder.append(NAME_OF_TAGS);
@@ -283,6 +284,19 @@ public class DeployManager extends HttpServlet {
 
     }
 
+    private boolean checkOnDeployPath(Object pass) {
+
+	boolean valid = (pass instanceof DeployPass);
+
+	if (valid) {
+	    DeployPass deployPass = ObjectUtils.cast(pass, DeployPass.class);
+	    String userName = deployPass.userName;
+	    valid = StringUtils.valid(userName);
+	}
+
+	return valid;
+    }
+
     /**
      * Checks is user session is valid
      * 
@@ -297,8 +311,7 @@ public class DeployManager extends HttpServlet {
 	    Object pass = session.getAttribute(Security.DEPLOY_PASS_KEY);
 	    valid = ObjectUtils.notNull(pass);
 	    if (valid) {
-		valid = (pass instanceof DeployPass)
-			&& (StringUtils.valid(((DeployPass) pass).userName));
+		valid = checkOnDeployPath(pass);
 	    } else {
 		valid = security.check();
 	    }

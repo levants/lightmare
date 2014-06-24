@@ -145,7 +145,7 @@ public class BeanLoader {
 	parameters.metaData = new MetaData();
 	String beanName = BeanUtils.parseName(parameters.className);
 	parameters.beanName = beanName;
-	BeanDeployer beanDeployer = new BeanDeployer(parameters);
+	final BeanDeployer beanDeployer = new BeanDeployer(parameters);
 	Future<String> future = LoaderPoolManager.submit(beanDeployer);
 
 	return future;
@@ -161,11 +161,10 @@ public class BeanLoader {
     public static void initializeDatasource(DataSourceParameters parameters)
 	    throws IOException {
 
-	final ConnectionDeployer connectionDeployer = new ConnectionDeployer(
-		parameters);
-	Callable<Boolean> privileged = AccessController
-		.doPrivileged(new ContextLoaderAction<Boolean>(
-			connectionDeployer));
+	final ConnectionDeployer conn = new ConnectionDeployer(parameters);
+	ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(
+		conn);
+	Callable<Boolean> privileged = AccessController.doPrivileged(action);
 
 	LoaderPoolManager.submit(privileged);
     }
@@ -178,9 +177,9 @@ public class BeanLoader {
     public static void removeResources(List<File> tmpFiles) throws IOException {
 
 	ResourceCleaner cleaner = new ResourceCleaner(tmpFiles);
-	Callable<Boolean> privileged = AccessController
-		.doPrivileged(new ContextLoaderAction<Boolean>(cleaner));
-
+	ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(
+		cleaner);
+	Callable<Boolean> privileged = AccessController.doPrivileged(action);
 	try {
 	    LoaderPoolManager.submit(privileged);
 	} catch (IOException ex) {
