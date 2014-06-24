@@ -54,7 +54,6 @@ import org.osjava.sj.memory.MemoryContext;
  * @author Levan Tsinadze
  * @since 0.0.60-SNAPSHOT
  */
-@SuppressWarnings("unchecked")
 public class LightmareContext extends MemoryContext implements Cleanable {
 
     // Caches EntityManager instances got from lookup method to clear after
@@ -94,46 +93,77 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 	}
     }
 
+    /**
+     * Searches JPA objects by JNDI name
+     * 
+     * @param jndiName
+     * @return {@link Object}
+     * @throws NamingException
+     */
+    private Object lookupJpa(String jndiName) throws NamingException {
+
+	Object value;
+
+	// Checks if it is request for entity manager
+	String name = NamingUtils.formatJpaJndiName(jndiName);
+	// Checks if connection is in progress and waits for finish
+	ConnectionContainer.isInProgress(name);
+
+	// Gets EntityManagerFactory from parent
+	Object candidate = super.lookup(jndiName);
+	if (candidate == null) {
+	    value = candidate;
+	} else if (candidate instanceof EntityManagerFactory) {
+	    EntityManagerFactory emf = ObjectUtils.cast(candidate,
+		    EntityManagerFactory.class);
+	    EntityManager em = emf.createEntityManager();
+	    value = em;
+	} else {
+	    value = candidate;
+	}
+
+	return value;
+    }
+
+    /**
+     * Initializes EJB objects by JNDI name
+     * 
+     * @param jndiName
+     * @return {@link Object}
+     * @throws NamingException
+     */
+    private Object lookupEjb(String jndiName) throws NamingException {
+
+	Object value;
+
+	NamingUtils.BeanDescriptor descriptor = NamingUtils
+		.parseEjbJndiName(jndiName);
+	EjbConnector ejbConnection = new EjbConnector();
+	try {
+	    String beanName = descriptor.getBeanName();
+	    String interfaceName = descriptor.getInterfaceName();
+	    value = ejbConnection.connectToBean(beanName, interfaceName);
+	} catch (IOException ex) {
+	    throw new NamingException(ex.getMessage());
+	}
+
+	return value;
+    }
+
     @Override
     public Object lookup(String jndiName) throws NamingException {
 
 	Object value;
 
-	String name;
 	// Retrieves JTA UserTransaction object from thread cache
 	if (jndiName.equals(NamingUtils.USER_TRANSACTION_NAME)) {
 	    UserTransaction transaction = TransactionHolder.getTransaction();
 	    value = transaction;
 	} else if (jndiName.startsWith(NamingUtils.JPA_NAME_PREF)) {
-	    // Checks if it is request for entity manager
-	    name = NamingUtils.formatJpaJndiName(jndiName);
-	    // Checks if connection is in progress and waits for finish
-	    ConnectionContainer.isInProgress(name);
-
-	    // Gets EntityManagerFactory from parent
-	    Object candidate = super.lookup(jndiName);
-	    if (candidate == null) {
-		value = candidate;
-	    } else if (candidate instanceof EntityManagerFactory) {
-		EntityManagerFactory emf = ObjectUtils.cast(candidate,
-			EntityManagerFactory.class);
-		EntityManager em = emf.createEntityManager();
-		value = em;
-	    } else {
-		value = candidate;
-	    }
+	    value = lookupJpa(jndiName);
 	    // Retrieves EJB bean object from lookup
 	} else if (jndiName.startsWith(NamingUtils.EJB_NAME_PREF)) {
-	    NamingUtils.BeanDescriptor descriptor = NamingUtils
-		    .parseEjbJndiName(jndiName);
-	    EjbConnector ejbConnection = new EjbConnector();
-	    try {
-		String beanName = descriptor.getBeanName();
-		String interfaceName = descriptor.getInterfaceName();
-		value = ejbConnection.connectToBean(beanName, interfaceName);
-	    } catch (IOException ex) {
-		throw new NamingException(ex.getMessage());
-	    }
+	    value = lookupEjb(jndiName);
 	} else {
 	    value = super.lookup(jndiName);
 	}
