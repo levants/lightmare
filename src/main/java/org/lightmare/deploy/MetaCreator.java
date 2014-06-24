@@ -687,9 +687,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setScanForEntities(boolean scanForEnt) {
-
 	    creator.configuration.setScanForEntities(scanForEnt);
-
 	    return this;
 	}
 
@@ -703,9 +701,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setUnitName(String unitName) {
-
 	    creator.configuration.setAnnotatedUnitName(unitName);
-
 	    return this;
 	}
 
@@ -730,9 +726,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setLibraryPath(String... libPaths) {
-
 	    creator.configuration.setLibraryPaths(libPaths);
-
 	    return this;
 	}
 
@@ -744,9 +738,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setXmlFromJar(boolean xmlFromJar) {
-
 	    creator.configuration.setPersXmlFromJar(xmlFromJar);
-
 	    return this;
 	}
 
@@ -758,9 +750,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setSwapDataSource(boolean swapDataSource) {
-
 	    creator.configuration.setSwapDataSource(swapDataSource);
-
 	    return this;
 	}
 
@@ -771,9 +761,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder addDataSourcePath(String dataSourcePath) {
-
 	    creator.configuration.addDataSourcePath(dataSourcePath);
-
 	    return this;
 	}
 
@@ -786,9 +774,7 @@ public class MetaCreator {
 	 */
 	@Deprecated
 	public Builder setDataSourcePath(String dataSourcePath) {
-
 	    creator.configuration.addDataSourcePath(dataSourcePath);
-
 	    return this;
 	}
 
@@ -800,9 +786,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setScanArchives(boolean scanArchives) {
-
 	    creator.configuration.setScanArchives(scanArchives);
-
 	    return this;
 	}
 
@@ -815,7 +799,6 @@ public class MetaCreator {
 	public Builder setAwaitDeploiment(boolean await) {
 
 	    creator.await = await;
-
 	    return this;
 	}
 
@@ -826,9 +809,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setRemote(boolean remote) {
-
 	    creator.configuration.setRemote(remote);
-
 	    return this;
 	}
 
@@ -869,9 +850,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setProperty(String key, String property) {
-
 	    creator.configuration.putValue(key, property);
-
 	    return this;
 	}
 
@@ -882,9 +861,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setRemoteControl(boolean remoteControl) {
-
 	    Configuration.setRemoteControl(remoteControl);
-
 	    return this;
 	}
 
@@ -895,9 +872,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setAdminUsersPth(String property) {
-
 	    Configuration.setAdminUsersPath(property);
-
 	    return this;
 	}
 
@@ -909,9 +884,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setIpAddress(String property) {
-
 	    creator.configuration.putValue(ConfigKeys.IP_ADDRESS.key, property);
-
 	    return this;
 	}
 
@@ -922,9 +895,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPort(String property) {
-
 	    creator.configuration.putValue(ConfigKeys.PORT.key, property);
-
 	    return this;
 	}
 
@@ -936,9 +907,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setMasterThreads(String property) {
-
 	    creator.configuration.putValue(ConfigKeys.BOSS_POOL.key, property);
-
 	    return this;
 	}
 
@@ -950,10 +919,8 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setWorkerThreads(String property) {
-
 	    creator.configuration
 		    .putValue(ConfigKeys.WORKER_POOL.key, property);
-
 	    return this;
 	}
 
@@ -980,9 +947,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder addDeploymentPath(String deploymentPath) {
-
 	    addDeploymentPath(deploymentPath, Boolean.FALSE);
-
 	    return this;
 	}
 
@@ -994,10 +959,8 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setTimeout(String property) {
-
 	    creator.configuration.putValue(ConfigKeys.CONNECTION_TIMEOUT.key,
 		    property);
-
 	    return this;
 	}
 
@@ -1008,9 +971,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setDataSourcePooledType(boolean dsPooledType) {
-
 	    creator.configuration.setDataSourcePooledType(dsPooledType);
-
 	    return this;
 	}
 
@@ -1022,9 +983,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPoolProviderType(PoolProviderType poolProviderType) {
-
 	    creator.configuration.setPoolProviderType(poolProviderType);
-
 	    return this;
 	}
 
@@ -1035,9 +994,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPoolPropertiesPath(String path) {
-
 	    creator.configuration.setPoolPropertiesPath(path);
-
 	    return this;
 	}
 
@@ -1049,9 +1006,7 @@ public class MetaCreator {
 	 */
 	public Builder setPoolProperties(
 		Map<? extends Object, ? extends Object> properties) {
-
 	    creator.configuration.setPoolProperties(properties);
-
 	    return this;
 	}
 
@@ -1063,9 +1018,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder addPoolProperty(Object key, Object value) {
-
 	    creator.configuration.addPoolProperty(key, value);
-
 	    return this;
 	}
 
@@ -1077,9 +1030,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setHotDeployment(boolean hotDeployment) {
-
 	    creator.configuration.setHotDeployment(hotDeployment);
-
 	    return this;
 	}
 
@@ -1091,9 +1042,7 @@ public class MetaCreator {
 	 * @return
 	 */
 	public Builder addConfiguration(Map<Object, Object> configuration) {
-
 	    creator.configuration.configure(configuration);
-
 	    return this;
 	}
 
