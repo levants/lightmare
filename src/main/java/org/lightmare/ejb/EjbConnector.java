@@ -69,10 +69,7 @@ public class EjbConnector {
      * @throws IOException
      */
     private MetaData getMeta(String beanName) throws IOException {
-
-	MetaData metaData = MetaContainer.getSyncMetaData(beanName);
-
-	return metaData;
+	return MetaContainer.getSyncMetaData(beanName);
     }
 
     /**
