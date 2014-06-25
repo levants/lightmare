@@ -113,6 +113,20 @@ public class JpaManager {
 	    this.prefix = prefix;
 	}
 
+	private static String replacePrefix(boolean modified,
+		HibernatePrefixes prefix, String text) {
+
+	    String key;
+
+	    if (modified) {
+		key = text.replace(prefix.prefix, HIBERNATE);
+	    } else {
+		key = text;
+	    }
+
+	    return key;
+	}
+
 	/**
 	 * Checks if passed key has appropriate prefix and if not adds this
 	 * prefix to passed key
@@ -124,17 +138,15 @@ public class JpaManager {
 
 	    String key = text;
 
-	    HibernatePrefixes[] configs = HibernatePrefixes.values();
-	    int length = configs.length;
-	    String config;
+	    HibernatePrefixes[] prefixes = HibernatePrefixes.values();
+	    int length = prefixes.length;
+	    HibernatePrefixes prefix;
 	    boolean modified = Boolean.FALSE;
 	    for (int i = CollectionUtils.FIRST_INDEX; i < length
 		    && ObjectUtils.notTrue(modified); i++) {
-		config = configs[i].prefix;
-		modified = text.startsWith(config);
-		if (modified) {
-		    key = text.replace(config, HIBERNATE);
-		}
+		prefix = prefixes[i];
+		modified = text.startsWith(prefix.prefix);
+		key = replacePrefix(modified, prefix, text);
 	    }
 
 	    if (ObjectUtils.notTrue(modified)

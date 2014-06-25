@@ -47,6 +47,13 @@ public class MetaConfig {
     // Default path of location for persistence XML configuration file
     private transient String shortPath = "/META-INF/persistence.xml";
 
+    /**
+     * Gets {@link ClassLoader} from passed {@link MetaConfig} configuration
+     * container for instant EJB bean
+     * 
+     * @param metaConfig
+     * @return {@link ClassLoader} enriched with additional methods
+     */
     public static ClassLoader getOverridenClassLoader(MetaConfig metaConfig) {
 
 	ClassLoader loader;
