@@ -73,8 +73,8 @@ public class EjbConnector {
     }
 
     /**
-     * Gets connection for {@link javax.ejb.Stateless} bean {@link Class} from
-     * cache
+     * Gets connection for {@link javax.ejb.Stateless} EJB bean {@link Class}
+     * from cache
      * 
      * @param unitName
      * @return {@link EntityManagerFactory}
@@ -94,7 +94,7 @@ public class EjbConnector {
     }
 
     /**
-     * Gets connections for {@link Stateless} bean {@link Class} from cache
+     * Gets connections for {@link Stateless} EJB bean {@link Class} from cache
      * 
      * @param unitName
      * @return {@link EntityManagerFactory}
@@ -115,7 +115,7 @@ public class EjbConnector {
      * Instantiates bean by class
      * 
      * @param metaData
-     * @return <code>T</code> Bean instance
+     * @return <code>T</code> EJB Bean instance
      * @throws IOException
      */
     private <T> T getBeanInstance(MetaData metaData) throws IOException {

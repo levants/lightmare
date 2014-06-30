@@ -49,7 +49,7 @@
 		<hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
 		<!-- spring -->
-		<spring.version>4.0.4.RELEASE</spring.version>
+		<spring.version>4.0.5.RELEASE</spring.version>
 		<!-- end of spring -->
 		<!-- major dependencies versions -->
 
@@ -69,7 +69,7 @@
 		<jersey.version>2.8</jersey.version>
 		<!-- end of jersey -->
 		<!-- netty -->
-		<netty.version>4.0.19.Final</netty.version>
+		<netty.version>4.0.20.Final</netty.version>
 		<!-- end of netty -->
 		<!-- data sources on connection pooling -->
 		<tomcat-jdbc.version>7.0.53</tomcat-jdbc.version>
