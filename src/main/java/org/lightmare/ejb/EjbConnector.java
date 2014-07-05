@@ -49,7 +49,7 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.StringUtils;
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Connector class for get EJB beans or call remote procedure in this bean (RPC)
@@ -124,7 +124,7 @@ public class EjbConnector {
 
 	Class<? extends T> beanClass = ObjectUtils
 		.cast(metaData.getBeanClass());
-	beanInstance = MetaUtils.instantiate(beanClass);
+	beanInstance = ClassUtils.instantiate(beanClass);
 
 	return beanInstance;
     }
@@ -301,7 +301,7 @@ public class EjbConnector {
 
 	MetaData metaData = getMeta(beanName);
 	ClassLoader loader = metaData.getLoader();
-	Class<?> classForName = MetaUtils.classForName(interfaceName,
+	Class<?> classForName = ClassUtils.classForName(interfaceName,
 		Boolean.FALSE, loader);
 	Class<T> interfaceClass = ObjectUtils.cast(classForName);
 	beanInstance = connectToBean(beanName, interfaceClass, rpcArgs);
@@ -324,7 +324,7 @@ public class EjbConnector {
 
 	BeanHandler handler = getBeanHandler(metaData);
 	Class<T> beanClass = ObjectUtils.cast(metaData.getBeanClass());
-	T beanInstance = MetaUtils.instantiate(beanClass);
+	T beanInstance = ClassUtils.instantiate(beanClass);
 	restHandler = RestHandlerFactory.get(handler, beanInstance);
 
 	return restHandler;

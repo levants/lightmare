@@ -48,7 +48,7 @@ import org.lightmare.ejb.interceptors.InvocationContextImpl;
 import org.lightmare.jpa.jta.BeanTransactions;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Implementation of {@link InvocationHandler} interface to intercept bean
@@ -114,7 +114,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     private void setFieldValue(Field field, Object value) throws IOException {
-	MetaUtils.setFieldValue(field, bean, value);
+	ClassUtils.setFieldValue(field, bean, value);
     }
 
     /**
@@ -127,7 +127,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private Object invokeMethod(Method method, Object... arguments)
 	    throws IOException {
-	return MetaUtils.invoke(method, bean, arguments);
+	return ClassUtils.invoke(method, bean, arguments);
     }
 
     /**
@@ -351,7 +351,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    Queue<Method> methods, Queue<Object> targets) throws IOException {
 
 	Class<?> interceptorClass = interceptorData.getInterceptorClass();
-	Object interceptor = MetaUtils.instantiate(interceptorClass);
+	Object interceptor = ClassUtils.instantiate(interceptorClass);
 	Method method = interceptorData.getInterceptorMethod();
 	methods.offer(method);
 	targets.offer(interceptor);
@@ -462,7 +462,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    Class<?>[] parameterTypes = method.getParameterTypes();
 
 	    // Gets real method of bean class
-	    realMethod = MetaUtils.getDeclaredMethod(beanClass, methodName,
+	    realMethod = ClassUtils.getDeclaredMethod(beanClass, methodName,
 		    parameterTypes);
 	    value = invokeBeanMethod(ems, realMethod, arguments);
 	} catch (Throwable th) {

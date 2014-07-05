@@ -39,7 +39,7 @@ import org.lightmare.jndi.JndiManager;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Parses XML and property files to initialize and cache {@link DataSource}
@@ -120,7 +120,7 @@ public abstract class Initializer {
 	    locked = ObjectUtils.tryLock(DRIVER_LOCK);
 	    if (locked) {
 		try {
-		    MetaUtils.initClassForName(driver);
+		    ClassUtils.initClassForName(driver);
 		} finally {
 		    ObjectUtils.unlock(DRIVER_LOCK);
 		}

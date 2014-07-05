@@ -21,26 +21,26 @@ public class MetaUtilsTest {
     @Test
     public void testDefaultValues() {
 
-	System.out.println(MetaUtils.getDefault(byte.class));
-	System.out.println(MetaUtils.getDefault(boolean.class));
-	System.out.println(MetaUtils.getDefault(char.class));
-	System.out.println(MetaUtils.getDefault(short.class));
-	System.out.println(MetaUtils.getDefault(int.class));
-	System.out.println(MetaUtils.getDefault(long.class));
-	System.out.println(MetaUtils.getDefault(float.class));
-	System.out.println(MetaUtils.getDefault(double.class));
+	System.out.println(ClassUtils.getDefault(byte.class));
+	System.out.println(ClassUtils.getDefault(boolean.class));
+	System.out.println(ClassUtils.getDefault(char.class));
+	System.out.println(ClassUtils.getDefault(short.class));
+	System.out.println(ClassUtils.getDefault(int.class));
+	System.out.println(ClassUtils.getDefault(long.class));
+	System.out.println(ClassUtils.getDefault(float.class));
+	System.out.println(ClassUtils.getDefault(double.class));
     }
 
     @Test
     public void testAccessibleObjectInstances() {
 
 	try {
-	    AccessibleObject acc1 = MetaUtils.getDeclaredField(
+	    AccessibleObject acc1 = ClassUtils.getDeclaredField(
 		    LightMareBean.class, "em");
-	    AccessibleObject acc2 = MetaUtils.getDeclaredField(
+	    AccessibleObject acc2 = ClassUtils.getDeclaredField(
 		    LightMareBean.class, "em");
 
-	    AccessibleObject acc3 = MetaUtils.getDeclaredField(
+	    AccessibleObject acc3 = ClassUtils.getDeclaredField(
 		    MetaUtilsTest.class, "em");
 
 	    Assert.assertTrue("AccessibleObject instances are not the same",

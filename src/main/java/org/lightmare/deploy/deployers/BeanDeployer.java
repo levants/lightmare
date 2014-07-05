@@ -71,7 +71,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.fs.WatchUtils;
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 import org.lightmare.utils.rest.RestCheck;
 
 /**
@@ -418,7 +418,7 @@ public class BeanDeployer implements Callable<String> {
 	Method interceptorMethod;
 	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
 	    interceptorClass = interceptorClasses[i];
-	    interceptorMethods = MetaUtils.getAnnotatedMethods(beanClass,
+	    interceptorMethods = ClassUtils.getAnnotatedMethods(beanClass,
 		    AroundInvoke.class);
 	    interceptorMethod = CollectionUtils.getFirst(interceptorMethods);
 	    InterceptorData data = new InterceptorData();
@@ -462,7 +462,7 @@ public class BeanDeployer implements Callable<String> {
 	    cacheInterceptors(interceptors, beanClass);
 	}
 
-	List<Method> beanMethods = MetaUtils.getAnnotatedMethods(beanClass,
+	List<Method> beanMethods = ClassUtils.getAnnotatedMethods(beanClass,
 		Interceptors.class);
 	if (CollectionUtils.valid(beanMethods)) {
 	    for (Method beanMethod : beanMethods) {
@@ -536,7 +536,7 @@ public class BeanDeployer implements Callable<String> {
 
 	String beanEjbName;
 	try {
-	    Class<?> beanClass = MetaUtils.classForName(className,
+	    Class<?> beanClass = ClassUtils.classForName(className,
 		    Boolean.FALSE, loader);
 	    checkOnTransactional(beanClass);
 	    beanEjbName = BeanUtils.beanName(beanClass);

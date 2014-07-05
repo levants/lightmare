@@ -44,7 +44,7 @@ import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileUtils;
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Class for load jar or class files from specified path
@@ -113,9 +113,9 @@ public class LibraryLoader {
     private static void initURLMethod() throws IOException {
 
 	if (addURLMethod == null
-		&& MetaUtils.hasMethod(URLClassLoader.class,
+		&& ClassUtils.hasMethod(URLClassLoader.class,
 			ADD_URL_METHOD_NAME)) {
-	    addURLMethod = MetaUtils.getDeclaredMethod(URLClassLoader.class,
+	    addURLMethod = ClassUtils.getDeclaredMethod(URLClassLoader.class,
 		    ADD_URL_METHOD_NAME, URL.class);
 	}
     }
@@ -421,7 +421,7 @@ public class LibraryLoader {
 	    URLClassLoader urlLoader) throws IOException {
 
 	for (URL url : urls) {
-	    MetaUtils.invokePrivate(method, urlLoader, url);
+	    ClassUtils.invokePrivate(method, urlLoader, url);
 	}
     }
 
@@ -541,7 +541,7 @@ public class LibraryLoader {
 	    // Finds if loader associated class or superclass has
 	    // "close"
 	    // method
-	    hasCloseMethod = MetaUtils.hasPublicMethod(loaderClass,
+	    hasCloseMethod = ClassUtils.hasPublicMethod(loaderClass,
 		    CLOSE_METHOD_NAME);
 	}
     }

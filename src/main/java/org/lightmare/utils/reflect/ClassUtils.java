@@ -46,7 +46,7 @@ import org.lightmare.utils.ObjectUtils;
  * @author Levan Tsinadze
  * @since 0.0.26-SNAPSHOT
  */
-public class MetaUtils {
+public class ClassUtils {
 
     // default values for primitives
     private static final byte BYTE_DEF = 0;
@@ -186,7 +186,7 @@ public class MetaUtils {
     /**
      * Instantiates class by {@link Constructor} (MetaUtils
      * {@link #newInstance(Constructor, Object...)}) after
-     * {@link MetaUtils#getConstructor(Class, Class...)} method call
+     * {@link ClassUtils#getConstructor(Class, Class...)} method call
      * 
      * @param type
      * @param parameterTypes
@@ -423,7 +423,7 @@ public class MetaUtils {
 
 	Class<?> superClass = clazz;
 	while (ObjectUtils.notNull(superClass) && ObjectUtils.notTrue(found)) {
-	    found = MetaUtils.classHasMethod(superClass, methodName, modifiers);
+	    found = ClassUtils.classHasMethod(superClass, methodName, modifiers);
 	    if (ObjectUtils.notTrue(found)) {
 		superClass = superClass.getSuperclass();
 	    }
@@ -444,7 +444,7 @@ public class MetaUtils {
     public static boolean hasPublicMethod(Class<?> clazz, String methodName)
 	    throws IOException {
 
-	boolean found = MetaUtils.hasMethod(clazz, methodName, Modifier.PUBLIC);
+	boolean found = ClassUtils.hasMethod(clazz, methodName, Modifier.PUBLIC);
 
 	return found;
     }

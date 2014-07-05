@@ -36,10 +36,10 @@ import java.util.zip.ZipInputStream;
 
 import org.lightmare.jpa.ConfigLoader;
 import org.lightmare.utils.CollectionUtils;
-import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
+import org.lightmare.utils.io.IOUtils;
 
 /**
  * Utility class for checking jar, ear and zip files read contents and etc.

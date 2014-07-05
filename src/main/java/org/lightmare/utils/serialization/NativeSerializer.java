@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.lightmare.utils.IOUtils;
+import org.lightmare.utils.io.IOUtils;
 
 /**
  * Reads write java objects from {@link Byte} array with java native

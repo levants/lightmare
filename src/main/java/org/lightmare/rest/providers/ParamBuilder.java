@@ -40,9 +40,9 @@ import org.glassfish.jersey.internal.util.collection.MultivaluedStringMap;
 import org.glassfish.jersey.message.MessageBodyWorkers;
 import org.glassfish.jersey.server.model.Parameter;
 import org.lightmare.utils.CollectionUtils;
-import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.io.IOUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 import org.lightmare.utils.rest.RequestUtils;
 
 /**
@@ -345,7 +345,7 @@ public class ParamBuilder {
 	Class<?> paramType = parameter.getRawType();
 	Object nullParam;
 	if (paramType.isPrimitive()) {
-	    nullParam = MetaUtils.getDefault(paramType);
+	    nullParam = ClassUtils.getDefault(paramType);
 	} else {
 	    nullParam = null;
 	}

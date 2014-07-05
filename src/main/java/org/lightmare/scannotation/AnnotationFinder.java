@@ -38,10 +38,10 @@ import javassist.bytecode.annotation.Annotation;
 
 import org.apache.log4j.Logger;
 import org.lightmare.utils.CollectionUtils;
-import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.codecs.ArchiveUtils;
+import org.lightmare.utils.io.IOUtils;
 import org.scannotation.AnnotationDB;
 import org.scannotation.archiveiterator.Filter;
 import org.scannotation.archiveiterator.IteratorFactory;

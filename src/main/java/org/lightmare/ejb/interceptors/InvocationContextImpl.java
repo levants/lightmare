@@ -32,7 +32,7 @@ import javax.ejb.Timer;
 import javax.interceptor.InvocationContext;
 
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Implementation of {@link InvocationContext} for EJB intercepter
@@ -131,7 +131,7 @@ public class InvocationContextImpl implements InvocationContext {
 	Method method = methods.poll();
 	Object target = targets.poll();
 	if (ObjectUtils.notNull(method) && ObjectUtils.notNull(target)) {
-	    value = MetaUtils.invokePrivate(method, target, this);
+	    value = ClassUtils.invokePrivate(method, target, this);
 	} else {
 	    value = null;
 	}

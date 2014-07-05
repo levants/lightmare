@@ -20,12 +20,15 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.utils;
+package org.lightmare.utils.io;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Utility class to work with streams and other IO operations

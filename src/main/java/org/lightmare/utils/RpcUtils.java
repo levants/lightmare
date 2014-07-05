@@ -29,7 +29,7 @@ import org.lightmare.ejb.EjbConnector;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.RPCall;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Listener class for serialization and de-serialization (both java and json) of
@@ -101,9 +101,9 @@ public class RpcUtils {
 	Object bean = new EjbConnector()
 		.connectToBean(beanName, interfaceClass);
 	Class<?> beanClass = bean.getClass();
-	Method beanMethod = MetaUtils.getDeclaredMethod(beanClass, methodName,
+	Method beanMethod = ClassUtils.getDeclaredMethod(beanClass, methodName,
 		paramTypes);
-	value = MetaUtils.invoke(beanMethod, bean, params);
+	value = ClassUtils.invoke(beanMethod, bean, params);
 
 	return value;
     }

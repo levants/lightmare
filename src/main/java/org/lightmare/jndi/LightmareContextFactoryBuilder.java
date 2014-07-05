@@ -32,7 +32,7 @@ import javax.naming.spi.InitialContextFactory;
 import javax.naming.spi.InitialContextFactoryBuilder;
 
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Implementation of {@link InitialContextFactoryBuilder} factory builder class
@@ -62,8 +62,8 @@ public class LightmareContextFactoryBuilder implements
 
 	Class<?> requestedClass;
 	try {
-	    requestedClass = MetaUtils.initClassForName(requestedFactory);
-	    Object instance = MetaUtils.instantiate(requestedClass);
+	    requestedClass = ClassUtils.initClassForName(requestedFactory);
+	    Object instance = ClassUtils.instantiate(requestedClass);
 	    factory = ObjectUtils.cast(instance, InitialContextFactory.class);
 	} catch (IOException ex) {
 	    NoInitialContextException nex = new NoInitialContextException(

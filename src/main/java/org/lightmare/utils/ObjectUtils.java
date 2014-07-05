@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Utility class to help with general object checks / lock / modification
@@ -129,7 +129,7 @@ public abstract class ObjectUtils {
 
 	T value;
 
-	Class<T> wrapper = MetaUtils.getWrapper(castClass);
+	Class<T> wrapper = ClassUtils.getWrapper(castClass);
 	value = wrapper.cast(data);
 
 	return value;

@@ -32,10 +32,10 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.lightmare.utils.IOUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
+import org.lightmare.utils.io.IOUtils;
 
 /**
  * Implementation of {@link DirUtils} for ear files

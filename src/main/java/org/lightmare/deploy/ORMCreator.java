@@ -39,7 +39,7 @@ import org.lightmare.scannotation.AnnotationFinder;
 import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.fs.codecs.ArchiveUtils;
-import org.lightmare.utils.reflect.MetaUtils;
+import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Class to initialize and deploy JPA units
@@ -81,7 +81,7 @@ public class ORMCreator {
 	boolean isValid;
 
 	Class<?> entityClass;
-	entityClass = MetaUtils.initClassForName(className);
+	entityClass = ClassUtils.initClassForName(className);
 	UnitName annotation = entityClass.getAnnotation(UnitName.class);
 	isValid = annotation.value().equals(configClone.getAnnotatedUnitName());
 
