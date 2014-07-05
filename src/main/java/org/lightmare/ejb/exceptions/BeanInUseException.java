@@ -24,7 +24,7 @@ package org.lightmare.ejb.exceptions;
 
 import java.io.IOException;
 
-import org.lightmare.utils.LogUtils;
+import org.lightmare.utils.logging.LogUtils;
 
 /**
  * Extension of {@link Exception} class which is thrown at bean deploy time if

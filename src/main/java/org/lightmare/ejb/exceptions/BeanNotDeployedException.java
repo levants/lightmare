@@ -2,7 +2,7 @@ package org.lightmare.ejb.exceptions;
 
 import java.io.IOException;
 
-import org.lightmare.utils.LogUtils;
+import org.lightmare.utils.logging.LogUtils;
 
 public class BeanNotDeployedException extends IOException {
 

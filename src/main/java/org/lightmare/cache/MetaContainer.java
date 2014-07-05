@@ -42,10 +42,10 @@ import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.ejb.exceptions.BeanNotDeployedException;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
-import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.fs.WatchUtils;
+import org.lightmare.utils.logging.LogUtils;
 
 /**
  * Container class to save {@link MetaData} for bean interface {@link Class},

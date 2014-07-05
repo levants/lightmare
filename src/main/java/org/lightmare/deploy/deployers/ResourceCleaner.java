@@ -29,8 +29,8 @@ import java.util.concurrent.Callable;
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.LoaderPoolManager;
 import org.lightmare.libraries.LibraryLoader;
-import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.fs.FileUtils;
+import org.lightmare.utils.logging.LogUtils;
 
 /**
  * {@link Runnable} implementation for temporal resources removal

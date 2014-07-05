@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.utils;
+package org.lightmare.utils.logging;
 
 import org.apache.log4j.Logger;
 import org.lightmare.utils.collections.CollectionUtils;

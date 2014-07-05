@@ -64,13 +64,13 @@ import org.lightmare.deploy.ORMCreator;
 import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
-import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.beans.BeanUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.fs.WatchUtils;
+import org.lightmare.utils.logging.LogUtils;
 import org.lightmare.utils.reflect.ClassUtils;
 import org.lightmare.utils.rest.RestCheck;
 
