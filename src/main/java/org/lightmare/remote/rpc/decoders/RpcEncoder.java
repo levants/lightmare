@@ -31,7 +31,7 @@ import java.io.IOException;
 
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.remote.RpcUtils;
 import org.lightmare.utils.serialization.NativeSerializer;
 
 /**

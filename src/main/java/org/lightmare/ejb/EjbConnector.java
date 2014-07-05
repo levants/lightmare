@@ -46,10 +46,10 @@ import org.lightmare.ejb.handlers.RestHandler;
 import org.lightmare.ejb.handlers.RestHandlerFactory;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.RpcUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.reflect.ClassUtils;
+import org.lightmare.utils.remote.RpcUtils;
 
 /**
  * Connector class for get EJB beans or call remote procedure in this bean (RPC)

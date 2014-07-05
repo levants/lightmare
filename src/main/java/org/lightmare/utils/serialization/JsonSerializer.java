@@ -25,7 +25,7 @@ package org.lightmare.utils.serialization;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.remote.RpcUtils;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;

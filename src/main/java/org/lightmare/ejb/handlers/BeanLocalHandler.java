@@ -26,7 +26,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import org.lightmare.remote.rpc.RPCall;
-import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.remote.RpcUtils;
 
 /**
  * Local handler class for remote client call

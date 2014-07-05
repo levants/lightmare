@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.remote.RpcUtils;
 
 /**
  * Handler @see {@link ChannelInboundHandlerAdapter} for RPC request
