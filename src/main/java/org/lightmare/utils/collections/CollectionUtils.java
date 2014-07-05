@@ -79,7 +79,7 @@ public abstract class CollectionUtils {
      * @return <code></code>
      */
     public static boolean valid(Collection<?> collection) {
-	return collection != null && !collection.isEmpty();
+	return (collection != null && !collection.isEmpty());
     }
 
     /**
@@ -90,7 +90,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(Map<?, ?> map) {
-	return map != null && !map.isEmpty();
+	return (map != null && !map.isEmpty());
     }
 
     /**
@@ -155,7 +155,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(Object[] array) {
-	return array != null && array.length > EMPTY_ARRAY_LENGTH;
+	return (array != null && array.length > EMPTY_ARRAY_LENGTH);
     }
 
     /**
@@ -223,7 +223,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static <K, V> boolean notContains(Map<K, V> map, K key) {
-	return valid(map) && ObjectUtils.notTrue(map.containsKey(key));
+	return (valid(map) && ObjectUtils.notTrue(map.containsKey(key)));
     }
 
     /**
@@ -235,8 +235,8 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static <E> boolean notContains(Collection<E> collection, E element) {
-	return valid(collection)
-		&& ObjectUtils.notTrue(collection.contains(element));
+	return (valid(collection) && ObjectUtils.notTrue(collection
+		.contains(element)));
     }
 
     /**
@@ -430,8 +430,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean isObjectArray(final Object data) {
-	boolean valid = (data instanceof Object[]);
-	return valid;
+	return (data instanceof Object[]);
     }
 
     /**
@@ -441,13 +440,10 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean isPrimitiveArray(final Object data) {
-
-	boolean valid = (data instanceof boolean[] || data instanceof byte[]
+	return (data instanceof boolean[] || data instanceof byte[]
 		|| data instanceof short[] || data instanceof char[]
 		|| data instanceof int[] || data instanceof long[]
 		|| data instanceof float[] || data instanceof double[]);
-
-	return valid;
     }
 
     /**
@@ -457,8 +453,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean isArray(final Object data) {
-	boolean valid = (isObjectArray(data) || isPrimitiveArray(data));
-	return valid;
+	return (isObjectArray(data) || isPrimitiveArray(data));
     }
 
     /**
@@ -490,8 +485,7 @@ public abstract class CollectionUtils {
      * @return <code>T[]</code>
      */
     public static <T> T[] emptyArray(Class<T> type) {
-	T[] empty = toArray(type, EMPTY_ARRAY_LENGTH);
-	return empty;
+	return toArray(type, EMPTY_ARRAY_LENGTH);
     }
 
     /**
