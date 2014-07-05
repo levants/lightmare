@@ -46,8 +46,8 @@ import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.ejb.interceptors.InvocationContextImpl;
 import org.lightmare.jpa.jta.BeanTransactions;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.reflect.ClassUtils;
 
 /**

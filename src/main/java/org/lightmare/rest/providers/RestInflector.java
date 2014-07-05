@@ -39,8 +39,8 @@ import org.glassfish.jersey.server.model.Parameter;
 import org.lightmare.cache.MetaData;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.ejb.handlers.RestHandler;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Implementation of framework defined {@link Inflector} interface for EJB beans

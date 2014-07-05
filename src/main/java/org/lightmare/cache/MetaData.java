@@ -37,7 +37,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
 import org.lightmare.ejb.handlers.BeanHandler;
-import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Container class to save bean {@link Field} with annotation

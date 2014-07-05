@@ -30,8 +30,8 @@ import org.hibernate.jpa.boot.internal.ParsedPersistenceXmlDescriptor;
 import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
 import org.lightmare.jpa.MetaConfig;
 import org.lightmare.jpa.hibernate.internal.PersistenceUnitSwapDescriptor;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Utility class to make changes for JPA configuration

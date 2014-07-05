@@ -36,8 +36,8 @@ import org.lightmare.annotations.UnitName;
 import org.lightmare.config.Configuration;
 import org.lightmare.jpa.JpaManager;
 import org.lightmare.scannotation.AnnotationFinder;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.fs.codecs.ArchiveUtils;
 import org.lightmare.utils.reflect.ClassUtils;
 

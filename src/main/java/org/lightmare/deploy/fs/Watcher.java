@@ -53,9 +53,9 @@ import org.lightmare.config.Configuration;
 import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.rest.providers.RestProvider;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 import org.lightmare.utils.fs.WatchUtils;
 

@@ -23,6 +23,7 @@
 package org.lightmare.utils;
 
 import org.apache.log4j.Logger;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Utility class for logging

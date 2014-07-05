@@ -24,8 +24,8 @@ package org.lightmare.utils.beans;
 
 import javax.ejb.Stateless;
 
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.StringUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Utility class for EJB beans

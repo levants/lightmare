@@ -30,8 +30,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.RpcUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.serialization.NativeSerializer;
 
 /**

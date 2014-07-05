@@ -39,8 +39,8 @@ import javax.transaction.UserTransaction;
 import org.lightmare.cache.MetaData;
 import org.lightmare.cache.TransactionHolder;
 import org.lightmare.ejb.handlers.BeanHandler;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Class to manage {@link javax.transaction.UserTransaction} for

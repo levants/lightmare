@@ -40,9 +40,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 import org.lightmare.libraries.loaders.EjbClassLoader;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.fs.FileUtils;
 import org.lightmare.utils.reflect.ClassUtils;
 

@@ -42,9 +42,9 @@ import org.lightmare.ejb.exceptions.BeanInUseException;
 import org.lightmare.ejb.exceptions.BeanNotDeployedException;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.providers.RestProvider;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.LogUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.fs.WatchUtils;
 
 /**

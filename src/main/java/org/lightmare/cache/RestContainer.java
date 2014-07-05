@@ -31,8 +31,8 @@ import java.util.concurrent.ConcurrentMap;
 import org.glassfish.jersey.server.model.Resource;
 import org.lightmare.rest.RestConfig;
 import org.lightmare.rest.providers.RestInflector;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Container class to cache REST resource classes

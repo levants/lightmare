@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.utils;
+package org.lightmare.utils.collections;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -32,6 +32,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Utility class to work with {@link Collection} and {@link Map} implementations

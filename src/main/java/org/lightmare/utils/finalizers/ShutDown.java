@@ -33,9 +33,9 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.RestContainer;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.deploy.LoaderPoolManager;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Runnable class for shut down hook

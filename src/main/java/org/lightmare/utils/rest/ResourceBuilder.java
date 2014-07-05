@@ -39,8 +39,8 @@ import org.glassfish.jersey.server.model.ResourceMethod;
 import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.MetaData;
 import org.lightmare.rest.providers.RestInflector;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.beans.BeanUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Class to build and {@link Resource} for REST services

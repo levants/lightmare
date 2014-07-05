@@ -38,8 +38,8 @@ import java.util.zip.ZipFile;
 
 import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.scannotation.AnnotationFinder;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.fs.FileType;
 import org.lightmare.utils.fs.FileUtils;
 import org.lightmare.utils.io.IOUtils;

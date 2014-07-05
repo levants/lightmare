@@ -38,8 +38,8 @@ import org.lightmare.rest.providers.JacksonFXmlFeature;
 import org.lightmare.rest.providers.ObjectMapperProvider;
 import org.lightmare.rest.providers.ResourceBuilder;
 import org.lightmare.rest.providers.RestReloader;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Dynamically manage REST resources, implementation of {@link ResourceConfig}

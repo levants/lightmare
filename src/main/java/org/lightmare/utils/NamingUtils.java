@@ -22,6 +22,8 @@
  */
 package org.lightmare.utils;
 
+import org.lightmare.utils.collections.CollectionUtils;
+
 /**
  * Utility class for JNDI names
  * 

@@ -33,7 +33,7 @@ import javax.ws.rs.ext.MessageBodyReader;
 
 import org.glassfish.jersey.message.MessageBodyWorkers;
 import org.glassfish.jersey.server.model.Parameter;
-import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Utility class to extract parameters from REST request

@@ -29,8 +29,8 @@ import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
 import org.lightmare.jndi.JndiManager.JNDIParameters;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Implementation of {@link InitialContextFactory} factory class to register and

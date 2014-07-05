@@ -46,8 +46,8 @@ import org.hibernate.internal.CoreLogging;
 import org.hibernate.internal.util.ClassLoaderHelper;
 import org.jboss.logging.Logger;
 import org.lightmare.libraries.loaders.EjbClassLoader;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Implementation of class loader services

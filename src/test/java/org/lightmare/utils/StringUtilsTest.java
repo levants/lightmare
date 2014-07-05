@@ -3,6 +3,7 @@ package org.lightmare.utils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.lightmare.config.ConfigKeys;
+import org.lightmare.utils.collections.CollectionUtils;
 
 public class StringUtilsTest {
 

@@ -3,7 +3,7 @@ package org.lightmare.config;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.lightmare.utils.CollectionUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 public class ConfigurationClonningTest {
 

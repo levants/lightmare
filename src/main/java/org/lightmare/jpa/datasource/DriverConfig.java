@@ -22,8 +22,8 @@
  */
 package org.lightmare.jpa.datasource;
 
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Configuration of JDBC driver classes and database names

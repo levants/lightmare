@@ -31,8 +31,8 @@ import javax.naming.Context;
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jndi.JndiManager;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Extension of {@link javax.ejb.embeddable.EJBContainer} class for embedded EJB

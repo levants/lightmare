@@ -28,8 +28,8 @@ import java.util.HashSet;
 import javax.ejb.embeddable.EJBContainer;
 
 import org.lightmare.cache.DeploymentDirectory;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Keeps keys and default values for configuration.

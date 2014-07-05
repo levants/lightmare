@@ -32,9 +32,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.lightmare.cache.DeploymentDirectory;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Utility class to convert configuration attributes from files and java types

@@ -36,9 +36,9 @@ import javax.sql.DataSource;
 
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.reflect.ClassUtils;
 
 /**

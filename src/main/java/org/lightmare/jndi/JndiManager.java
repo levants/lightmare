@@ -38,9 +38,9 @@ import org.apache.log4j.Logger;
 import org.hibernate.cfg.AvailableSettings;
 import org.lightmare.jndi.JndiManager.JNDIConfigs;
 import org.lightmare.libraries.LibraryLoader;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Utility class to initialize and set (

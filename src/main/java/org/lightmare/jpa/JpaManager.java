@@ -44,10 +44,10 @@ import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.jpa.jta.HibernateConfig;
 import org.lightmare.jpa.spring.SpringORM;
 import org.lightmare.libraries.LibraryLoader;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Creates and caches {@link EntityManagerFactory} for each EJB bean

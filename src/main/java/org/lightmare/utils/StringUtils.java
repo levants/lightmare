@@ -24,6 +24,8 @@ package org.lightmare.utils;
 
 import java.lang.reflect.Array;
 
+import org.lightmare.utils.collections.CollectionUtils;
+
 /**
  * Utility class for {@link String} and {@link CharSequence} operations
  * 

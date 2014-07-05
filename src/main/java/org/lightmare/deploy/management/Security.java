@@ -32,9 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.io.IOUtils;
 
 /**

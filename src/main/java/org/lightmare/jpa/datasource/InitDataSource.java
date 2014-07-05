@@ -32,8 +32,8 @@ import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.LogUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Initializes and bind to {@link Context} pooled {@link DataSource} object

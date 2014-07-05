@@ -27,8 +27,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.lightmare.cache.DeployData;
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Utility class for directory watch service

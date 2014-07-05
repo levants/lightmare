@@ -25,8 +25,8 @@ package org.lightmare.jpa.jta;
 import javax.persistence.EntityTransaction;
 import javax.transaction.UserTransaction;
 
-import org.lightmare.utils.CollectionUtils;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Factory class to initialize and create {@link UserTransaction} instance
