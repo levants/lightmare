@@ -9,7 +9,8 @@ import javax.naming.NamingException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.jndi.JndiManager;
-import org.lightmare.utils.NamingUtils.BeanDescriptor;
+import org.lightmare.utils.namimg.NamingUtils;
+import org.lightmare.utils.namimg.NamingUtils.BeanDescriptor;
 
 public class NamingUtilsTest {
 

@@ -35,10 +35,10 @@ import org.lightmare.jpa.JpaManager;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
-import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.logging.LogUtils;
+import org.lightmare.utils.namimg.NamingUtils;
 
 /**
  * Container class to cache connections and connection types.

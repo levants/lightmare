@@ -26,7 +26,7 @@ import org.lightmare.ejb.EjbConnector;
 import org.lightmare.entities.Person;
 import org.lightmare.unitorder.RunOrder;
 import org.lightmare.unitorder.SortedRunner;
-import org.lightmare.utils.NamingUtils;
+import org.lightmare.utils.namimg.NamingUtils;
 
 @RunWith(SortedRunner.class)
 public class EjbEarTest {

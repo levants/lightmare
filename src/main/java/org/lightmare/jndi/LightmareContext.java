@@ -38,11 +38,11 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.cache.TransactionHolder;
 import org.lightmare.ejb.EjbConnector;
 import org.lightmare.jpa.JpaManager;
-import org.lightmare.utils.NamingUtils;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.finalizers.Cleanable;
 import org.lightmare.utils.finalizers.FinalizationUtils;
+import org.lightmare.utils.namimg.NamingUtils;
 import org.osjava.sj.jndi.AbstractContext;
 import org.osjava.sj.memory.MemoryContext;
 
