@@ -423,7 +423,8 @@ public class ClassUtils {
 
 	Class<?> superClass = clazz;
 	while (ObjectUtils.notNull(superClass) && ObjectUtils.notTrue(found)) {
-	    found = ClassUtils.classHasMethod(superClass, methodName, modifiers);
+	    found = ClassUtils
+		    .classHasMethod(superClass, methodName, modifiers);
 	    if (ObjectUtils.notTrue(found)) {
 		superClass = superClass.getSuperclass();
 	    }
@@ -444,7 +445,8 @@ public class ClassUtils {
     public static boolean hasPublicMethod(Class<?> clazz, String methodName)
 	    throws IOException {
 
-	boolean found = ClassUtils.hasMethod(clazz, methodName, Modifier.PUBLIC);
+	boolean found = ClassUtils
+		.hasMethod(clazz, methodName, Modifier.PUBLIC);
 
 	return found;
     }
@@ -546,7 +548,6 @@ public class ClassUtils {
 	Object value;
 
 	boolean accessible = method.isAccessible();
-
 	try {
 	    setAccessible(method, accessible);
 	    value = invoke(method, data, arguments);
@@ -597,7 +598,6 @@ public class ClassUtils {
 	Object value;
 
 	boolean accessible = method.isAccessible();
-
 	try {
 	    setAccessible(method, accessible);
 	    value = invokeStatic(method, arguments);
@@ -735,7 +735,6 @@ public class ClassUtils {
 	Class<T> wrapper;
 
 	if (type.isPrimitive()) {
-
 	    if (type.equals(byte.class)) {
 		wrapper = ObjectUtils.cast(Byte.class);
 	    } else if (type.equals(boolean.class)) {

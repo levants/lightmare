@@ -430,9 +430,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean isObjectArray(final Object data) {
-
 	boolean valid = (data instanceof Object[]);
-
 	return valid;
     }
 
@@ -459,9 +457,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean isArray(final Object data) {
-
 	boolean valid = (isObjectArray(data) || isPrimitiveArray(data));
-
 	return valid;
     }
 
@@ -494,9 +490,7 @@ public abstract class CollectionUtils {
      * @return <code>T[]</code>
      */
     public static <T> T[] emptyArray(Class<T> type) {
-
 	T[] empty = toArray(type, EMPTY_ARRAY_LENGTH);
-
 	return empty;
     }
 

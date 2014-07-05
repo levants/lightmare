@@ -88,10 +88,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static <X, Y> boolean notEquals(X x, Y y) {
-
-	boolean valid = !x.equals(y);
-
-	return valid;
+	return (!x.equals(y));
     }
 
     /**
