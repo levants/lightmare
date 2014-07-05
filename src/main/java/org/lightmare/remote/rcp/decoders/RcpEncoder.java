@@ -31,8 +31,8 @@ import java.io.IOException;
 
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.io.serialization.NativeSerializer;
 import org.lightmare.utils.remote.RpcUtils;
-import org.lightmare.utils.serialization.NativeSerializer;
 
 /**
  * Encoder (extends {@link ChannelOutboundHandlerAdapter}) class @see <a

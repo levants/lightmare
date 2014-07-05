@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.lightmare.utils.serialization.NativeSerializer;
+import org.lightmare.utils.io.serialization.NativeSerializer;
 
 public class SerializationTest {
 

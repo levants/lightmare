@@ -31,8 +31,8 @@ import java.util.List;
 
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.utils.collections.CollectionUtils;
+import org.lightmare.utils.io.serialization.NativeSerializer;
 import org.lightmare.utils.remote.RpcUtils;
-import org.lightmare.utils.serialization.NativeSerializer;
 
 /**
  * Decoder (extends {@link ByteToMessageDecoder}) class @see <a

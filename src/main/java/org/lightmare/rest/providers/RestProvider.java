@@ -37,7 +37,7 @@ import org.lightmare.cache.RestContainer;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.rest.RestConfig;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.serialization.JsonSerializer;
+import org.lightmare.utils.io.serialization.JsonSerializer;
 
 /**
  * Utility class for REST resources
