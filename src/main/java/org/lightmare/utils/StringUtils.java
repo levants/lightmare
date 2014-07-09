@@ -157,7 +157,6 @@ public abstract class StringUtils {
 	    for (Object part : parts) {
 		resultBuider.append(part);
 	    }
-
 	    resultText = resultBuider.toString();
 	} else {
 	    resultText = null;
@@ -175,7 +174,6 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean notContains(String text, CharSequence item) {
-
 	boolean contains = text.contains(item);
 
 	return ObjectUtils.notTrue(contains);

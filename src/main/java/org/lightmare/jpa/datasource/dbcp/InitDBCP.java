@@ -28,8 +28,8 @@ import java.util.Properties;
 import javax.naming.Context;
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
-import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
+import org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS;
+import org.apache.commons.dbcp2.datasources.SharedPoolDataSource;
 import org.lightmare.jpa.datasource.InitDataSource;
 import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.Initializer;
@@ -74,11 +74,11 @@ public class InitDBCP extends InitDataSource {
 		.setDefaultTransactionIsolation(DEFAULT_TRANSACTION_ISOLATION);
 	dataSource.setLoginTimeout(PoolConfig.asInt(properties,
 		PoolConfig.Defaults.MAX_IDLE_TIMEOUT));
-	dataSource.setMaxActive(PoolConfig.asInt(properties,
+	dataSource.setDefaultMaxTotal(PoolConfig.asInt(properties,
 		PoolConfig.Defaults.MAX_POOL_SIZE));
-	dataSource.setMaxIdle(PoolConfig.asInt(properties,
+	dataSource.setDefaultMaxIdle(PoolConfig.asInt(properties,
 		PoolConfig.Defaults.MAX_IDLE_TIMEOUT));
-	dataSource.setMaxWait(PoolConfig.asInt(properties,
+	dataSource.setDefaultMaxWaitMillis(PoolConfig.asInt(properties,
 		PoolConfig.Defaults.CHECK_OUT_TIMEOUT));
 
 	return dataSource;
