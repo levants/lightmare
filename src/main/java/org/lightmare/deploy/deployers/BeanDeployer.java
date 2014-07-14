@@ -115,6 +115,11 @@ public class BeanDeployer implements Callable<String> {
     // Configuration instance for deployment
     private Configuration configuration;
 
+    // Messages
+    private static final String DEPLOYED_MESSAGE = "bean %s deployed";
+
+    private static final String COULD_NOT_DEPLOY_MESSAGE = "Could not deploy bean %s cause %s";
+
     private static final Logger LOG = Logger.getLogger(BeanDeployer.class);
 
     public BeanDeployer(BeanParameters parameters) {
@@ -616,10 +621,10 @@ public class BeanDeployer implements Callable<String> {
 		url = WatchUtils.clearURL(url);
 		MetaContainer.addBeanName(url, deployed);
 	    }
-	    LogUtils.info(LOG, "bean %s deployed", beanName);
+	    LogUtils.info(LOG, DEPLOYED_MESSAGE, beanName);
 	} catch (IOException ex) {
-	    LogUtils.error(LOG, ex, "Could not deploy bean %s cause %s",
-		    beanName, ex.getMessage());
+	    LogUtils.error(LOG, ex, COULD_NOT_DEPLOY_MESSAGE, beanName,
+		    ex.getMessage());
 	} finally {
 	    LibraryLoader.loadCurrentLibraries(currentLoader);
 	}
