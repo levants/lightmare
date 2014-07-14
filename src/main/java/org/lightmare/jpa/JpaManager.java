@@ -378,9 +378,6 @@ public class JpaManager {
      * @see #buildEntityManagerFactory(String, String, Map, List)
      * 
      * @param unitName
-     * @param properties
-     * @param path
-     * @param classes
      * @return {@link EntityManagerFactory}
      * @throws IOException
      */
@@ -419,9 +416,7 @@ public class JpaManager {
     /**
      * Binds {@link EntityManagerFactory} to {@link javax.naming.InitialContext}
      * 
-     * @param jndiName
-     * @param unitName
-     * @param emf
+     * @param semaphore
      * @throws IOException
      */
     private void bindJndiName(ConnectionSemaphore semaphore) throws IOException {
