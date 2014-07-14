@@ -277,7 +277,6 @@ public class BeanDeployer implements Callable<String> {
 		lockSemaphore(semaphore);
 	    }
 	}
-
 	metaData.addConnection(connection);
     }
 
@@ -289,7 +288,6 @@ public class BeanDeployer implements Callable<String> {
     private void cacheInjectFields(Field field) {
 
 	EJB ejb = field.getAnnotation(EJB.class);
-
 	Class<?> interfaceClass = ejb.beanInterface();
 	if (interfaceClass == null || interfaceClass.equals(Object.class)) {
 	    interfaceClass = field.getType();
@@ -389,7 +387,6 @@ public class BeanDeployer implements Callable<String> {
 	} else {
 	    releaseBlocker();
 	}
-
 	metaData.setLoader(loader);
     }
 
@@ -452,7 +449,6 @@ public class BeanDeployer implements Callable<String> {
 	    data.setBeanMethod(beanMethod);
 	    data.setInterceptorClass(interceptorClass);
 	    data.setInterceptorMethod(interceptorMethod);
-
 	    metaData.addInterceptor(data);
 	}
     }
@@ -572,6 +568,7 @@ public class BeanDeployer implements Callable<String> {
     private String createBeanClass() throws IOException {
 
 	String beanEjbName;
+
 	try {
 	    Class<?> beanClass = ClassUtils.classForName(className,
 		    Boolean.FALSE, loader);

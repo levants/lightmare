@@ -279,6 +279,59 @@ public class JpaManager {
     }
 
     /**
+     * Initializes persistence.xml file path
+     * 
+     * @param builder
+     * @throws IOException
+     */
+    private void initPersisteceXmlPath(
+	    HibernatePersistenceProviderExt.Builder builder) throws IOException {
+
+	boolean pathCheck = StringUtils.valid(path);
+	boolean urlCheck = checkForURL();
+	if (pathCheck || urlCheck) {
+	    List<URL> xmls;
+	    ConfigLoader configLoader = new ConfigLoader();
+	    if (pathCheck) {
+		xmls = configLoader.readFile(path);
+	    } else {
+		xmls = configLoader.readURL(url);
+	    }
+
+	    builder.setXmls(xmls);
+	    String shortPath = configLoader.getShortPath();
+	    builder.setShortPath(shortPath);
+	}
+    }
+
+    /**
+     * Configures and adds parameters to
+     * {@link HibernatePersistenceProviderExt.Builder} instance
+     * 
+     * @param builder
+     * @throws IOException
+     */
+    private void configureProvider(
+	    HibernatePersistenceProviderExt.Builder builder) throws IOException {
+
+	if (loader == null) {
+	    loader = LibraryLoader.getContextClassLoader();
+	}
+
+	if (CollectionUtils.valid(classes)) {
+	    builder.setClasses(classes);
+	    // Loads entity classes to current ClassLoader instance
+	    LibraryLoader.loadClasses(classes, loader);
+	}
+	// configureProvider
+	initPersisteceXmlPath(builder);
+	// Sets additional parameters
+	builder.setSwapDataSource(swapDataSource);
+	builder.setScanArchives(scanArchives);
+	builder.setOverridenClassLoader(loader);
+    }
+
+    /**
      * Creates {@link EntityManagerFactory} by "Hibernate" or by extended
      * builder {@link Ejb3ConfigurationImpl} if entity classes or
      * persistence.xml file path are provided
@@ -295,36 +348,8 @@ public class JpaManager {
 	EntityManagerFactory emf;
 
 	HibernatePersistenceProvider provider;
-	boolean pathCheck = StringUtils.valid(path);
-	boolean urlCheck = checkForURL();
 	HibernatePersistenceProviderExt.Builder builder = new HibernatePersistenceProviderExt.Builder();
-	if (loader == null) {
-	    loader = LibraryLoader.getContextClassLoader();
-	}
-
-	if (CollectionUtils.valid(classes)) {
-	    builder.setClasses(classes);
-	    // Loads entity classes to current ClassLoader instance
-	    LibraryLoader.loadClasses(classes, loader);
-	}
-
-	if (pathCheck || urlCheck) {
-	    List<URL> xmls;
-	    ConfigLoader configLoader = new ConfigLoader();
-	    if (pathCheck) {
-		xmls = configLoader.readFile(path);
-	    } else {
-		xmls = configLoader.readURL(url);
-	    }
-
-	    builder.setXmls(xmls);
-	    String shortPath = configLoader.getShortPath();
-	    builder.setShortPath(shortPath);
-	}
-
-	builder.setSwapDataSource(swapDataSource);
-	builder.setScanArchives(scanArchives);
-	builder.setOverridenClassLoader(loader);
+	configureProvider(builder);
 	provider = builder.build();
 
 	if (ObjectUtils.notTrue(swapDataSource)) {
@@ -480,7 +505,6 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setClasses(List<String> classes) {
-
 	    manager.classes = classes;
 	    return this;
 	}
@@ -492,7 +516,6 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setURL(URL url) {
-
 	    manager.url = url;
 	    return this;
 	}
@@ -504,7 +527,6 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setPath(String path) {
-
 	    manager.path = path;
 	    return this;
 	}
@@ -516,7 +538,6 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setProperties(Map<Object, Object> properties) {
-
 	    manager.properties = manager.configure(properties);
 	    return this;
 	}
@@ -529,7 +550,6 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setSwapDataSource(boolean swapDataSource) {
-
 	    manager.swapDataSource = swapDataSource;
 	    return this;
 	}
@@ -542,7 +562,6 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setScanArchives(boolean scanArchives) {
-
 	    manager.scanArchives = scanArchives;
 	    return this;
 	}
@@ -554,7 +573,6 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder setClassLoader(ClassLoader loader) {
-
 	    manager.loader = loader;
 	    return this;
 	}
@@ -566,7 +584,6 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder springPersistence(boolean springPersistence) {
-
 	    manager.springPersistence = springPersistence;
 	    return this;
 	}
@@ -578,7 +595,6 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder dataSourceName(String dataSourceName) {
-
 	    manager.dataSourceName = dataSourceName;
 	    return this;
 	}

@@ -97,7 +97,6 @@ public class ConfigLoader {
 	    throw new IOException(
 		    StringUtils.concat(COULD_NOT_FIND_ERROR, path));
 	}
-
 	shortPath = file.getName();
 	final URL url = file.toURI().toURL();
 	xmls = readURL(url);
