@@ -188,7 +188,6 @@ public class DeployManager extends HttpServlet {
 		builder.append(tag);
 	    }
 	}
-
 	builder.append(END_PAGE);
 
 	return builder.toString();
