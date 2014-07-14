@@ -187,6 +187,24 @@ public class JpaManager {
     }
 
     /**
+     * Validates modifies and adds parameters to global JPA configuration
+     * 
+     * @param entry
+     * @param config
+     */
+    private void configure(Map.Entry<Object, Object> entry,
+	    Map<Object, Object> config) {
+
+	Object key = entry.getKey();
+	Object value = entry.getValue();
+	if (key instanceof String) {
+	    String textKey = ObjectUtils.cast(key, String.class);
+	    key = HibernatePrefixes.validKey(textKey);
+	}
+	config.put(key, value);
+    }
+
+    /**
      * Adds appropriated prefixes to JPA configuration properties
      * 
      * @param properties
@@ -200,18 +218,8 @@ public class JpaManager {
 	} else {
 	    config = new HashMap<Object, Object>();
 	    Set<Map.Entry<Object, Object>> entries = properties.entrySet();
-	    Object key;
-	    Object value;
-	    String textKey;
 	    for (Map.Entry<Object, Object> entry : entries) {
-		key = entry.getKey();
-		value = entry.getValue();
-		if (key instanceof String) {
-		    textKey = ObjectUtils.cast(key, String.class);
-		    textKey = HibernatePrefixes.validKey(textKey);
-		}
-
-		config.put(key, value);
+		configure(entry, config);
 	    }
 	}
 
