@@ -307,7 +307,6 @@ public class BeanDeployer implements Callable<String> {
 	injectionData.setName(name);
 	injectionData.setDescription(description);
 	injectionData.setMappedName(mappedName);
-
 	metaData.addInject(injectionData);
     }
 
@@ -498,6 +497,13 @@ public class BeanDeployer implements Callable<String> {
 	return interfacesSet.toArray(new Class<?>[interfacesSet.size()]);
     }
 
+    /**
+     * Retrieves interface classes from passed {@link Local} or {@link Remote}
+     * annotation
+     * 
+     * @param annotation
+     * @return {@link Class}[] array of interface classes
+     */
     private Class<?>[] ejbInterfaces(Annotation annotation) {
 
 	Class<?>[] interfaces;
