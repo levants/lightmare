@@ -24,12 +24,16 @@ package org.lightmare.deploy.deployers;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
@@ -140,6 +144,21 @@ public class BeanDeployer implements Callable<String> {
     }
 
     /**
+     * Initializes {@link ORMCreator} instance and connection for EJB module
+     * 
+     * @param semaphore
+     * @throws IOException
+     */
+    private void initOrmCreator(ConnectionSemaphore semaphore)
+	    throws IOException {
+
+	ORMCreator orm = new ORMCreator.Builder(creator)
+		.setUnitName(semaphore.getUnitName()).setBeanName(beanName)
+		.setClassLoader(loader).setConfiguration(configuration).build();
+	orm.configureConnection();
+    }
+
+    /**
      * Locks {@link ConnectionSemaphore} if needed for connection processing
      * 
      * @param semaphore
@@ -153,11 +172,7 @@ public class BeanDeployer implements Callable<String> {
 	synchronized (semaphore) {
 	    if (ObjectUtils.notTrue(semaphore.isCheck())) {
 		try {
-		    ORMCreator orm = new ORMCreator.Builder(creator)
-			    .setUnitName(semaphore.getUnitName())
-			    .setBeanName(beanName).setClassLoader(loader)
-			    .setConfiguration(configuration).build();
-		    orm.configureConnection();
+		    initOrmCreator(semaphore);
 		} finally {
 		    semaphore.notifyAll();
 		}
@@ -195,6 +210,11 @@ public class BeanDeployer implements Callable<String> {
 	}
     }
 
+    /**
+     * Caches {@link Field}s with persistence injection
+     * 
+     * @param unitField
+     */
     private void addUnitField(Field unitField) {
 
 	if (unitFields == null) {
@@ -294,6 +314,35 @@ public class BeanDeployer implements Callable<String> {
     }
 
     /**
+     * Retrieves and caches {@link Field}s with injection
+     * 
+     * @param field
+     * @throws IOException
+     */
+    private void retriveConnection(Field field) throws IOException {
+
+	PersistenceContext context = field
+		.getAnnotation(PersistenceContext.class);
+	Resource resource = field.getAnnotation(Resource.class);
+	PersistenceUnit unit = field.getAnnotation(PersistenceUnit.class);
+	EJB ejbAnnot = field.getAnnotation(EJB.class);
+	if (ObjectUtils.notNull(context)) {
+	    identifyConnections(context, field);
+	    addAccessibleField(field);
+	} else if (ObjectUtils.notNull(resource)) {
+	    metaData.setTransactionField(field);
+	    addAccessibleField(field);
+	} else if (ObjectUtils.notNull(unit)) {
+	    addUnitField(field);
+	    addAccessibleField(field);
+	} else if (ObjectUtils.notNull(ejbAnnot)) {
+	    // caches EJB annotated fields
+	    cacheInjectFields(field);
+	    addAccessibleField(field);
+	}
+    }
+
+    /**
      * Finds and caches {@link PersistenceContext}, {@link PersistenceUnit} and
      * {@link Resource} annotated {@link Field}s in bean class and configures
      * connections and creates {@link ConnectionSemaphore}s if it does not
@@ -305,35 +354,12 @@ public class BeanDeployer implements Callable<String> {
 
 	Class<?> beanClass = metaData.getBeanClass();
 	Field[] fields = beanClass.getDeclaredFields();
-
-	PersistenceUnit unit;
-	PersistenceContext context;
-	Resource resource;
-	EJB ejbAnnot;
-
 	if (CollectionUtils.invalid(fields)) {
 	    releaseBlocker();
 	}
 
 	for (Field field : fields) {
-	    context = field.getAnnotation(PersistenceContext.class);
-	    resource = field.getAnnotation(Resource.class);
-	    unit = field.getAnnotation(PersistenceUnit.class);
-	    ejbAnnot = field.getAnnotation(EJB.class);
-	    if (ObjectUtils.notNull(context)) {
-		identifyConnections(context, field);
-		addAccessibleField(field);
-	    } else if (ObjectUtils.notNull(resource)) {
-		metaData.setTransactionField(field);
-		addAccessibleField(field);
-	    } else if (ObjectUtils.notNull(unit)) {
-		addUnitField(field);
-		addAccessibleField(field);
-	    } else if (ObjectUtils.notNull(ejbAnnot)) {
-		// caches EJB annotated fields
-		cacheInjectFields(field);
-		addAccessibleField(field);
-	    }
+	    retriveConnection(field);
 	}
 
 	if (CollectionUtils.valid(unitFields)) {
@@ -472,58 +498,69 @@ public class BeanDeployer implements Callable<String> {
 	}
     }
 
+    private Class<?>[] toArray(Set<Class<?>> interfacesSet) {
+	return interfacesSet.toArray(new Class<?>[interfacesSet.size()]);
+    }
+
+    private Class<?>[] ejbInterfaces(Annotation annotation) {
+
+	Class<?>[] interfaces;
+
+	if (annotation instanceof Remote) {
+	    interfaces = ObjectUtils.cast(annotation, Remote.class).value();
+	} else if (annotation instanceof Local) {
+	    interfaces = ObjectUtils.cast(annotation, Local.class).value();
+	} else {
+	    interfaces = null;
+	}
+
+	return interfaces;
+    }
+
     /**
-     * Identifies and caches bean interfaces
+     * Identifies and caches EJB bean's {@link Local} and / or {@link Remote}
+     * annotated interfaces
+     * 
+     * @param beanClass
+     */
+    private void initInterfaces(Class<?> beanClass,
+	    Class<? extends Annotation> type) {
+
+	Class<?>[] interfaces = null;
+	Set<Class<?>> interfacesSet = new HashSet<Class<?>>();
+	Annotation ejbAnnotation = beanClass.getAnnotation(type);
+	Class<?>[] ejbInterfaces = beanClass.getInterfaces();
+
+	if (ObjectUtils.notNull(ejbAnnotation)) {
+	    interfaces = ejbInterfaces(ejbAnnotation);
+	    if (CollectionUtils.valid(interfaces)) {
+		interfacesSet.addAll(Arrays.asList(interfaces));
+	    }
+	}
+
+	for (Class<?> interfaceClass : ejbInterfaces) {
+	    if (interfaceClass.isAnnotationPresent(type))
+		interfacesSet.add(interfaceClass);
+	}
+
+	if (CollectionUtils.valid(interfacesSet)) {
+	    interfaces = toArray(interfacesSet);
+	    if (ejbAnnotation instanceof Local) {
+		metaData.setRemoteInterfaces(interfaces);
+	    } else if (ejbAnnotation instanceof Remote) {
+		metaData.setRemoteInterfaces(interfaces);
+	    }
+	}
+    }
+
+    /**
+     * Identifies and caches EJB bean interfaces
      * 
      * @param beanClass
      */
     private void indentifyInterfaces(Class<?> beanClass) {
-
-	Class<?>[] remoteInterface = null;
-	Class<?>[] localInterface = null;
-	Class<?>[] interfaces;
-	List<Class<?>> interfacesList;
-	Remote remote = beanClass.getAnnotation(Remote.class);
-	Local local = beanClass.getAnnotation(Local.class);
-	interfaces = beanClass.getInterfaces();
-
-	if (ObjectUtils.notNull(remote)) {
-	    remoteInterface = remote.value();
-	}
-
-	interfacesList = new ArrayList<Class<?>>();
-	for (Class<?> interfaceClass : interfaces) {
-	    if (interfaceClass.isAnnotationPresent(Remote.class))
-		interfacesList.add(interfaceClass);
-	}
-
-	if (CollectionUtils.valid(interfacesList)) {
-	    remoteInterface = interfacesList
-		    .toArray(new Class<?>[interfacesList.size()]);
-	}
-
-	if (ObjectUtils.notNull(local)) {
-	    localInterface = local.value();
-	}
-
-	interfacesList = new ArrayList<Class<?>>();
-	for (Class<?> interfaceClass : interfaces) {
-	    if (interfaceClass.isAnnotationPresent(Local.class))
-		interfacesList.add(interfaceClass);
-	}
-
-	if (CollectionUtils.valid(interfacesList)) {
-	    localInterface = interfacesList.toArray(new Class<?>[interfacesList
-		    .size()]);
-	}
-
-	if (CollectionUtils.invalid(localInterface)
-		&& CollectionUtils.invalid(remoteInterface)) {
-	    localInterface = interfaces;
-	}
-
-	metaData.setLocalInterfaces(localInterface);
-	metaData.setRemoteInterfaces(remoteInterface);
+	initInterfaces(beanClass, Local.class);
+	initInterfaces(beanClass, Remote.class);
     }
 
     /**

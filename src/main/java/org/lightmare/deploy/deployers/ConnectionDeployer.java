@@ -54,7 +54,6 @@ public class ConnectionDeployer implements Callable<Boolean> {
 	    .getLogger(ConnectionDeployer.class);
 
     public ConnectionDeployer(DataSourceParameters parameters) {
-
 	this.properties = parameters.properties;
 	this.blocker = parameters.blocker;
     }
@@ -73,7 +72,6 @@ public class ConnectionDeployer implements Callable<Boolean> {
 	boolean result;
 
 	ClassLoader loader = LoaderPoolManager.getCurrent();
-
 	try {
 	    Initializer.registerDataSource(properties);
 	    result = Boolean.TRUE;
