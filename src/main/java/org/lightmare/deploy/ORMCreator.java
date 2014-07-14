@@ -212,7 +212,7 @@ public class ORMCreator {
     public static class Builder {
 
 	// ORMCreator instance to initialize
-	private ORMCreator ormCreator;
+	private ORMCreator creator;
 
 	/**
 	 * Constructor with necessary {@link MetaCreator} instance
@@ -220,7 +220,7 @@ public class ORMCreator {
 	 * @param creator
 	 */
 	public Builder(MetaCreator creator) {
-	    this.ormCreator = new ORMCreator(creator);
+	    this.creator = new ORMCreator(creator);
 	}
 
 	/**
@@ -230,9 +230,7 @@ public class ORMCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setUnitName(String unitName) {
-
-	    ormCreator.unitName = unitName;
-
+	    creator.unitName = unitName;
 	    return this;
 	}
 
@@ -243,9 +241,7 @@ public class ORMCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setBeanName(String beanName) {
-
-	    ormCreator.beanName = beanName;
-
+	    creator.beanName = beanName;
 	    return this;
 	}
 
@@ -256,9 +252,7 @@ public class ORMCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setClassLoader(ClassLoader loader) {
-
-	    ormCreator.loader = loader;
-
+	    creator.loader = loader;
 	    return this;
 	}
 
@@ -269,9 +263,7 @@ public class ORMCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setConfiguration(Configuration configClone) {
-
-	    ormCreator.configClone = configClone;
-
+	    creator.configClone = configClone;
 	    return this;
 	}
 
@@ -281,7 +273,7 @@ public class ORMCreator {
 	 * @return
 	 */
 	public ORMCreator build() {
-	    return this.ormCreator;
+	    return this.creator;
 	}
     }
 }
