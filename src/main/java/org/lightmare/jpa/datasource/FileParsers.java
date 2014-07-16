@@ -23,15 +23,20 @@
 package org.lightmare.jpa.datasource;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.BeanLoader;
+import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 
 /**
@@ -43,6 +48,9 @@ import org.lightmare.utils.collections.CollectionUtils;
  * @since 0.0.15-SNAPSHOT
  */
 public class FileParsers {
+
+    private static final String DEFAULT_KEY = String
+	    .valueOf(StringUtils.HYPHEN);;
 
     private static final Logger LOG = Logger.getLogger(FileParsers.class);
 
@@ -67,6 +75,56 @@ public class FileParsers {
 	}
     }
 
+    private static void initDatasources(List<Properties> datasources,
+	    CountDownLatch blocker) {
+
+	if (CollectionUtils.valid(datasources)) {
+	    for (Properties properties : datasources) {
+		initDatasource(properties, blocker);
+	    }
+	}
+    }
+
+    private static void fillFromXml(Collection<String> paths,
+	    Map<String, List<Properties>> datasources) throws IOException {
+
+	if (CollectionUtils.valid(paths)) {
+	    List<Properties> xmlDatasources;
+	    for (String dataSourcePath : paths) {
+		xmlDatasources = XMLFileParsers
+			.getPropertiesFromJBoss(dataSourcePath);
+		if (CollectionUtils.valid(xmlDatasources)) {
+		    datasources.put(dataSourcePath, xmlDatasources);
+		}
+	    }
+	}
+    }
+
+    private static void fillFromYaml(Configuration config,
+	    Map<String, List<Properties>> datasources) throws IOException {
+
+	if (ObjectUtils.notNull(config)) {
+	    List<Properties> yamlDatasources = YamlParsers.parseYaml(config);
+	    if (CollectionUtils.valid(yamlDatasources)) {
+		datasources.put(DEFAULT_KEY, yamlDatasources);
+	    }
+	}
+    }
+
+    private static int calculateSize(Map<String, List<Properties>> datasources) {
+
+	int size = CollectionUtils.EMPTY_ARRAY_LENGTH;
+
+	if (CollectionUtils.valid(datasources)) {
+	    Collection<List<Properties>> values = datasources.values();
+	    for (List<Properties> value : values) {
+		size += value.size();
+	    }
+	}
+
+	return size;
+    }
+
     /**
      * Parses standalone.xml file and initializes {@link javax.sql.DataSource}s
      * and binds them to JNDI context
@@ -77,27 +135,22 @@ public class FileParsers {
     public static void parseDataSources(Collection<String> paths,
 	    Configuration config) throws IOException {
 
-	List<Properties> datasources = new ArrayList<Properties>();
+	Map<String, List<Properties>> datasources = new HashMap<String, List<Properties>>();
 
-	if (CollectionUtils.valid(paths)) {
-	    List<Properties> xmlDatasources;
-	    for (String dataSourcePath : paths) {
-		xmlDatasources = XMLFileParsers
-			.getPropertiesFromJBoss(dataSourcePath);
-		if (CollectionUtils.valid(xmlDatasources)) {
-		    datasources.addAll(xmlDatasources);
-		}
-	    }
-	}
-
-	List<Properties> yamlDatasources = YamlParsers.parseYaml(config);
-	if (CollectionUtils.valid(yamlDatasources)) {
-	    datasources.addAll(yamlDatasources);
-	}
+	fillFromXml(paths, datasources);
+	fillFromYaml(config, datasources);
+	int size = calculateSize(datasources);
 	// Blocking semaphore before all data source initialization finished
-	CountDownLatch blocker = new CountDownLatch(datasources.size());
-	for (Properties properties : datasources) {
-	    initDatasource(properties, blocker);
+	CountDownLatch blocker = new CountDownLatch(size);
+	Set<Map.Entry<String, List<Properties>>> entrySet = datasources
+		.entrySet();
+	String key;
+	List<Properties> value;
+	for (Map.Entry<String, List<Properties>> entry : entrySet) {
+	    key = entry.getKey();
+	    value = entry.getValue();
+	    initDatasources(value, blocker);
+	    Initializer.setDsAsInitialized(key);
 	}
 	// Tries to lock until operation is complete
 	try {
@@ -105,6 +158,10 @@ public class FileParsers {
 	} catch (InterruptedException ex) {
 	    throw new IOException(ex);
 	}
+    }
 
+    public static void parseDataSources(String path) throws IOException {
+	Collection<String> paths = Collections.singleton(path);
+	parseDataSources(paths, null);
     }
 }

@@ -353,8 +353,7 @@ public class Watcher implements Runnable {
 
 	WatchFileType type = checkType(fileName);
 	if (type.equals(WatchFileType.DATA_SOURCE)) {
-	    FileParsers fileParsers = new FileParsers();
-	    fileParsers.parseStandaloneXml(fileName);
+	    FileParsers.parseDataSources(fileName);
 	} else if (type.equals(WatchFileType.DEPLOYMENT)) {
 	    URL url = getAppropriateURL(fileName);
 	    deployFile(url);

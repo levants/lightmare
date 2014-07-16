@@ -28,9 +28,8 @@ public class DataSourceParserTest {
     @Test
     public void parseTest() {
 
-	FileParsers parsers = new FileParsers();
 	try {
-	    parsers.parseStandaloneXml(PATH);
+	    FileParsers.parseDataSources(PATH);
 	} catch (MalformedURLException ex) {
 	    ex.printStackTrace();
 	} catch (IOException ex) {
