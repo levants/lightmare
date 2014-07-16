@@ -22,25 +22,13 @@
  */
 package org.lightmare.jpa.datasource;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
-import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
-import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.collections.CollectionUtils;
-import org.lightmare.utils.io.parsers.XMLUtils;
-import org.lightmare.utils.namimg.NamingUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  * Parses XML files to initialize {@link javax.sql.DataSource}s and bind them to
@@ -83,7 +71,8 @@ public class FileParsers {
      */
     public void parseStandaloneXml(String dataSourcePath) throws IOException {
 
-	List<Properties> datasources = XMLFileParsers.getPropertiesFromJBoss(dataSourcePath);
+	List<Properties> datasources = XMLFileParsers
+		.getPropertiesFromJBoss(dataSourcePath);
 	// Blocking semaphore before all data source initialization finished
 	CountDownLatch blocker = new CountDownLatch(datasources.size());
 	for (Properties properties : datasources) {
