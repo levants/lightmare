@@ -24,6 +24,7 @@ import org.lightmare.cache.ConnectionContainer;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.logger.Configure;
+import org.lightmare.utils.ObjectUtils;
 import org.yaml.snakeyaml.Yaml;
 
 @Ignore
@@ -88,14 +89,20 @@ public class JpaTest {
 	    InputStream in = new FileInputStream(configFile);
 	    try {
 		Map<?, ?> config = (Map<?, ?>) yaml.load(in);
-		String key = ConfigKeys.DATASOURCE.key;
-		@SuppressWarnings("unchecked")
-		Map<Object, Object> deployConfig = (Map<Object, Object>) config
-			.get(ConfigKeys.DEPLOY_CONFIG.key);
-		@SuppressWarnings("unchecked")
-		Map<Object, Object> datasource = (Map<Object, Object>) deployConfig
-			.get(key);
-		builder.setDataSource(datasource);
+		String key = ConfigKeys.DEPLOY_CONFIG.key;
+		if (ObjectUtils.notNull(config) && config.containsKey(key)) {
+		    @SuppressWarnings("unchecked")
+		    Map<Object, Object> deployConfig = (Map<Object, Object>) config
+			    .get(key);
+		    key = ConfigKeys.DATASOURCE.key;
+		    if (ObjectUtils.notNull(deployConfig)
+			    && deployConfig.containsKey(key)) {
+			@SuppressWarnings("unchecked")
+			Map<Object, Object> datasource = (Map<Object, Object>) deployConfig
+				.get(key);
+			builder.setDataSource(datasource);
+		    }
+		}
 	    } finally {
 		in.close();
 	    }
