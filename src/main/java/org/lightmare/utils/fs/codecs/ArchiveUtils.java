@@ -36,13 +36,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.zip.ZipFile;
 
-import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.scannotation.AnnotationFinder;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.fs.FileType;
 import org.lightmare.utils.fs.FileUtils;
 import org.lightmare.utils.io.IOUtils;
+import org.lightmare.utils.io.parsers.XMLUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -142,7 +142,6 @@ public abstract class ArchiveUtils {
      * @param file
      */
     protected void ensureTmpFile(File file) {
-
 	file.deleteOnExit();
     }
 
@@ -155,7 +154,6 @@ public abstract class ArchiveUtils {
     }
 
     public void setXmlFromJar(boolean xmlFromJar) {
-
 	this.xmlFromJar = xmlFromJar;
     }
 
@@ -284,9 +282,7 @@ public abstract class ArchiveUtils {
      * @throws IOException
      */
     public static ArchiveUtils getAppropriatedType(URL url) throws IOException {
-
 	ArchiveUtils ioUtils = getAppropriatedType(url, null);
-
 	return ioUtils;
     }
 
@@ -343,15 +339,13 @@ public abstract class ArchiveUtils {
 	Set<String> ejbNames = new HashSet<String>();
 
 	try {
-	    Document document = FileParsers.parse(xmlStream);
+	    Document document = XMLUtils.parse(xmlStream);
 	    NodeList nodeList = document.getElementsByTagName(EJB_TAG_NAME);
 	    String ejbName;
-
-	    for (int i = 0; i < nodeList.getLength(); i++) {
-
+	    int length = nodeList.getLength();
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
 		Element ejbElement = (Element) nodeList.item(i);
-		ejbName = FileParsers.getContext(ejbElement);
-
+		ejbName = XMLUtils.getContext(ejbElement);
 		if (ObjectUtils.notNull(ejbName)) {
 		    ejbNames.add(ejbName);
 		}

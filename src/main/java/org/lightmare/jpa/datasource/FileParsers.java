@@ -24,9 +24,6 @@ package org.lightmare.jpa.datasource;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -34,22 +31,16 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.log4j.Logger;
 import org.lightmare.deploy.BeanLoader;
 import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.collections.CollectionUtils;
-import org.lightmare.utils.io.IOUtils;
+import org.lightmare.utils.io.parsers.XMLUtils;
 import org.lightmare.utils.namimg.NamingUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * Parses XML files to initialize {@link javax.sql.DataSource}s and bind them to
@@ -80,112 +71,6 @@ public class FileParsers {
     private static final Logger LOG = Logger.getLogger(FileParsers.class);
 
     /**
-     * Reads passed {@link File} as {@link Document} object
-     * 
-     * @param file
-     * @return {@link Document}
-     * @throws IOException
-     */
-    public static Document document(File file) throws IOException {
-	return document(file.toURI().toURL());
-    }
-
-    /**
-     * Reads passed {@link URL} as {@link Document} object
-     * 
-     * @param url
-     * @return Document
-     * @throws IOException
-     */
-    public static Document document(URL url) throws IOException {
-
-	Document document;
-
-	URLConnection connection = url.openConnection();
-	InputStream stream = connection.getInputStream();
-	try {
-	    document = parse(stream);
-	} finally {
-	    IOUtils.close(stream);
-	}
-
-	return document;
-    }
-
-    /**
-     * Gets item with first index from passed {@link NodeList} instance
-     * 
-     * @param list
-     * @return {@link Node}
-     */
-    private static Node getFirst(NodeList list) {
-	return list.item(CollectionUtils.FIRST_INDEX);
-    }
-
-    private static Element getFirstElement(NodeList nodeList) {
-
-	Element element;
-
-	Node node = getFirst(nodeList);
-	element = ObjectUtils.cast(node, Element.class);
-
-	return element;
-    }
-
-    private static Element getElement(NodeList nodeList, int i) {
-
-	Element element;
-
-	Node node = nodeList.item(i);
-	element = ObjectUtils.cast(node, Element.class);
-
-	return element;
-    }
-
-    /**
-     * To get text from tag depended on JRE installation
-     * 
-     * @param element
-     * @return {@link String}
-     */
-    public static String getContext(Element element) {
-
-	String data;
-
-	NodeList textList = element.getChildNodes();
-	Node firstNode = getFirst(textList);
-	data = firstNode.getNodeValue().trim();
-
-	return data;
-    }
-
-    /**
-     * Parses XML document to initialize {@link javax.sql.DataSource}s
-     * configuration properties
-     * 
-     * @param stream
-     * @return {@link Document}
-     * @throws IOException
-     */
-    public static Document parse(InputStream stream) throws IOException {
-
-	Document document;
-
-	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	DocumentBuilder builder;
-	try {
-	    builder = factory.newDocumentBuilder();
-	    document = builder.parse(stream);
-	} catch (ParserConfigurationException ex) {
-	    throw new IOException(ex);
-	} catch (SAXException ex) {
-	    throw new IOException(ex);
-	}
-
-	return document;
-    }
-
-    /**
      * Initializes <a
      * href="http://www.oracle.com/technetwork/java/javase/jdbc/index.html"
      * >jdbc</a> driver for appropriated {@link javax.sql.DataSource} for
@@ -194,10 +79,10 @@ public class FileParsers {
      * @param nodeList
      * @param properties
      */
-    public void setDataFromJBossDriver(NodeList nodeList, Properties properties) {
+    private void setDataFromJBossDriver(NodeList nodeList, Properties properties) {
 
-	Element thisElement = getFirstElement(nodeList);
-	String name = getContext(thisElement);
+	Element thisElement = XMLUtils.getFirstElement(nodeList);
+	String name = XMLUtils.getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
 	properties.setProperty(ConnectionConfig.DRIVER_PROPERTY.name,
 		driverName);
@@ -226,26 +111,26 @@ public class FileParsers {
      * @param nodeList
      * @param properties
      */
-    public void setDataFromJBossSecurity(NodeList nodeList,
+    private void setDataFromJBossSecurity(NodeList nodeList,
 	    Properties properties) {
 
 	boolean valid;
 	int length = nodeList.getLength();
 	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-	    Element thisElement = getElement(nodeList, i);
+	    Element thisElement = XMLUtils.getElement(nodeList, i);
 	    NodeList userList = thisElement.getElementsByTagName(USER_TAG);
 	    valid = validate(userList);
 	    if (valid) {
-		Element userElement = getFirstElement(userList);
-		String user = getContext(userElement);
+		Element userElement = XMLUtils.getFirstElement(userList);
+		String user = XMLUtils.getContext(userElement);
 		properties.setProperty(ConnectionConfig.USER_PROPERTY.name,
 			user);
 		NodeList passList = thisElement
 			.getElementsByTagName(PASSWORD_TAG);
 		valid = validate(passList);
 		if (valid) {
-		    Element passElement = getFirstElement(passList);
-		    String password = getContext(passElement);
+		    Element passElement = XMLUtils.getFirstElement(passList);
+		    String password = XMLUtils.getContext(passElement);
 		    properties.setProperty(
 			    ConnectionConfig.PASSWORD_PROPERTY.name, password);
 		}
@@ -267,8 +152,9 @@ public class FileParsers {
 	NodeList minPoolSizeList = element.getElementsByTagName(MIN_POOL_TAG);
 	int elementLength = minPoolSizeList.getLength();
 	if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
-	    Element minPoolSizeElement = getFirstElement(minPoolSizeList);
-	    minPoolSize = getContext(minPoolSizeElement);
+	    Element minPoolSizeElement = XMLUtils
+		    .getFirstElement(minPoolSizeList);
+	    minPoolSize = XMLUtils.getContext(minPoolSizeElement);
 
 	    properties.setProperty(PoolConfig.Defaults.MIN_POOL_SIZE.key,
 		    minPoolSize);
@@ -294,8 +180,9 @@ public class FileParsers {
 	int elementLength = maxPoolSizeList.getLength();
 	if (elementLength > CollectionUtils.EMPTY_ARRAY_LENGTH) {
 	    valid = Boolean.TRUE;
-	    Element maxPoolSizeElement = getFirstElement(maxPoolSizeList);
-	    String maxPoolSize = getContext(maxPoolSizeElement);
+	    Element maxPoolSizeElement = XMLUtils
+		    .getFirstElement(maxPoolSizeList);
+	    String maxPoolSize = XMLUtils.getContext(maxPoolSizeElement);
 
 	    properties.setProperty(PoolConfig.Defaults.MAX_POOL_SIZE.key,
 		    maxPoolSize);
@@ -320,8 +207,9 @@ public class FileParsers {
 		.getElementsByTagName(INITIAL_POOL_TAG);
 	int elementLength = initPoolSizeList.getLength();
 	if (elementLength > CollectionUtils.EMPTY_ARRAY_LENGTH) {
-	    Element initPoolSizeElement = getFirstElement(initPoolSizeList);
-	    String prefill = getContext(initPoolSizeElement);
+	    Element initPoolSizeElement = XMLUtils
+		    .getFirstElement(initPoolSizeList);
+	    String prefill = XMLUtils.getContext(initPoolSizeElement);
 	    if (Boolean.valueOf(prefill)) {
 		properties.setProperty(
 			PoolConfig.Defaults.INITIAL_POOL_SIZE.key, minPoolSize);
@@ -332,7 +220,7 @@ public class FileParsers {
     private void setPoolDataFromNode(NodeList nodeList, Properties properties,
 	    int i) {
 
-	Element thisElement = getElement(nodeList, i);
+	Element thisElement = XMLUtils.getElement(nodeList, i);
 	String minPoolSize = setMinPoolSize(thisElement, properties);
 	if (ObjectUtils.notNull(minPoolSize)) {
 	    boolean valid = setMaxPoolSize(thisElement, properties);
@@ -348,7 +236,7 @@ public class FileParsers {
      * @param nodeList
      * @param properties
      */
-    public void setDataFromJBossPool(NodeList nodeList, Properties properties) {
+    private void setDataFromJBossPool(NodeList nodeList, Properties properties) {
 
 	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
 	    setPoolDataFromNode(nodeList, properties, i);
@@ -380,8 +268,8 @@ public class FileParsers {
     private void setFromURLData(Element element, NodeList urlList,
 	    Properties properties) {
 
-	Element urlElement = getFirstElement(urlList);
-	String url = getContext(urlElement);
+	Element urlElement = XMLUtils.getFirstElement(urlList);
+	String url = XMLUtils.getContext(urlElement);
 	properties.setProperty(ConnectionConfig.URL_PROPERTY.name, url);
 	NodeList securityList = element.getElementsByTagName(SECURITY_TAG);
 	setDataFromJBossSecurity(securityList, properties);
@@ -404,7 +292,7 @@ public class FileParsers {
     private void setConnectionDataFromNode(NodeList nodeList,
 	    List<Properties> properties, int i) {
 
-	Element thisElement = getElement(nodeList, i);
+	Element thisElement = XMLUtils.getElement(nodeList, i);
 	Properties props = new Properties();
 	setJndiName(thisElement, props);
 	NodeList urlList = thisElement.getElementsByTagName(CONNECTION_URL_TAG);
@@ -422,7 +310,7 @@ public class FileParsers {
      * @param nodeList
      * @return
      */
-    public List<Properties> getDataFromJBoss(NodeList nodeList) {
+    private List<Properties> getDataFromJBoss(NodeList nodeList) {
 
 	List<Properties> properties = new ArrayList<Properties>();
 
@@ -455,7 +343,7 @@ public class FileParsers {
 
 	NodeList nodeList;
 
-	Document document = document(file);
+	Document document = XMLUtils.document(file);
 	nodeList = getDataSourceTags(document);
 
 	return nodeList;
@@ -495,7 +383,7 @@ public class FileParsers {
 	String jndiName;
 	int length = nodeList.getLength();
 	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-	    Element thisElement = getElement(nodeList, i);
+	    Element thisElement = XMLUtils.getElement(nodeList, i);
 	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
 	    jndiNames.add(jndiName);
 	}
