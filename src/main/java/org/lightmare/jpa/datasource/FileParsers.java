@@ -122,6 +122,26 @@ public class FileParsers {
 	return list.item(CollectionUtils.FIRST_INDEX);
     }
 
+    private static Element getFirstElement(NodeList nodeList) {
+
+	Element element;
+
+	Node node = getFirst(nodeList);
+	element = ObjectUtils.cast(node, Element.class);
+
+	return element;
+    }
+
+    private static Element getElement(NodeList nodeList, int i) {
+
+	Element element;
+
+	Node node = nodeList.item(i);
+	element = ObjectUtils.cast(node, Element.class);
+
+	return element;
+    }
+
     /**
      * To get text from tag depended on JRE installation
      * 
@@ -176,8 +196,7 @@ public class FileParsers {
      */
     public void setDataFromJBossDriver(NodeList nodeList, Properties properties) {
 
-	Node elementNode = getFirst(nodeList);
-	Element thisElement = ObjectUtils.cast(elementNode, Element.class);
+	Element thisElement = getFirstElement(nodeList);
 	String name = getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
 	properties.setProperty(ConnectionConfig.DRIVER_PROPERTY.name,
@@ -213,11 +232,11 @@ public class FileParsers {
 	boolean valid;
 	int length = nodeList.getLength();
 	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-	    Element thisElement = (Element) nodeList.item(i);
+	    Element thisElement = getElement(nodeList, i);
 	    NodeList userList = thisElement.getElementsByTagName(USER_TAG);
 	    valid = validate(userList);
 	    if (valid) {
-		Element userElement = (Element) getFirst(userList);
+		Element userElement = getFirstElement(userList);
 		String user = getContext(userElement);
 		properties.setProperty(ConnectionConfig.USER_PROPERTY.name,
 			user);
@@ -225,11 +244,100 @@ public class FileParsers {
 			.getElementsByTagName(PASSWORD_TAG);
 		valid = validate(passList);
 		if (valid) {
-		    Element passElement = (Element) getFirst(passList);
+		    Element passElement = getFirstElement(passList);
 		    String password = getContext(passElement);
 		    properties.setProperty(
 			    ConnectionConfig.PASSWORD_PROPERTY.name, password);
 		}
+	    }
+	}
+    }
+
+    /**
+     * Sets minimum size of connections in pool
+     * 
+     * @param element
+     * @param properties
+     * @return {@link String}
+     */
+    private String setMinPoolSize(Element element, Properties properties) {
+
+	String minPoolSize;
+
+	NodeList minPoolSizeList = element.getElementsByTagName(MIN_POOL_TAG);
+	int elementLength = minPoolSizeList.getLength();
+	if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
+	    Element minPoolSizeElement = getFirstElement(minPoolSizeList);
+	    minPoolSize = getContext(minPoolSizeElement);
+
+	    properties.setProperty(PoolConfig.Defaults.MIN_POOL_SIZE.key,
+		    minPoolSize);
+	} else {
+	    minPoolSize = null;
+	}
+
+	return minPoolSize;
+    }
+
+    /**
+     * Sets maximum size of connections in pool
+     * 
+     * @param element
+     * @param properties
+     * @return <code>boolean</code>
+     */
+    private boolean setMaxPoolSize(Element element, Properties properties) {
+
+	boolean valid;
+
+	NodeList maxPoolSizeList = element.getElementsByTagName(MAX_POOL_TAG);
+	int elementLength = maxPoolSizeList.getLength();
+	if (elementLength > CollectionUtils.EMPTY_ARRAY_LENGTH) {
+	    valid = Boolean.TRUE;
+	    Element maxPoolSizeElement = getFirstElement(maxPoolSizeList);
+	    String maxPoolSize = getContext(maxPoolSizeElement);
+
+	    properties.setProperty(PoolConfig.Defaults.MAX_POOL_SIZE.key,
+		    maxPoolSize);
+	} else {
+	    valid = Boolean.FALSE;
+	}
+
+	return valid;
+    }
+
+    /**
+     * Sets initial size of connections in pool
+     * 
+     * @param element
+     * @param properties
+     * @param minPoolSize
+     */
+    private void setInitPoolSize(Element element, Properties properties,
+	    String minPoolSize) {
+
+	NodeList initPoolSizeList = element
+		.getElementsByTagName(INITIAL_POOL_TAG);
+	int elementLength = initPoolSizeList.getLength();
+	if (elementLength > CollectionUtils.EMPTY_ARRAY_LENGTH) {
+	    Element initPoolSizeElement = getFirstElement(initPoolSizeList);
+	    String prefill = getContext(initPoolSizeElement);
+	    if (Boolean.valueOf(prefill)) {
+		properties.setProperty(
+			PoolConfig.Defaults.INITIAL_POOL_SIZE.key, minPoolSize);
+	    }
+	}
+    }
+
+    private void setPoolDataFromNode(NodeList nodeList, Properties properties,
+	    int i) {
+
+	Element thisElement = getElement(nodeList, i);
+	String minPoolSize = setMinPoolSize(thisElement, properties);
+	if (ObjectUtils.notNull(minPoolSize)) {
+	    boolean valid = setMaxPoolSize(thisElement, properties);
+	    if (valid) {
+		setInitPoolSize(thisElement, properties, minPoolSize);
 	    }
 	}
     }
@@ -243,46 +351,67 @@ public class FileParsers {
     public void setDataFromJBossPool(NodeList nodeList, Properties properties) {
 
 	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
-	    Element thisElement = (Element) nodeList.item(i);
-	    NodeList minPoolSizeList = thisElement
-		    .getElementsByTagName(MIN_POOL_TAG);
-	    int elementLength = minPoolSizeList.getLength();
-	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
-		continue;
-	    }
+	    setPoolDataFromNode(nodeList, properties, i);
+	}
+    }
 
-	    Element minPoolSizeElement = (Element) getFirst(minPoolSizeList);
-	    String minPoolSize = getContext(minPoolSizeElement);
+    /**
+     * Sets JNDI name and native name of connection pool
+     * 
+     * @param element
+     * @param props
+     */
+    private void setJndiName(Element element, Properties properties) {
 
-	    properties.setProperty(PoolConfig.Defaults.MIN_POOL_SIZE.key,
-		    minPoolSize);
+	String jndiName = element.getAttribute(JNDI_NAME_TAG);
+	String clearName = NamingUtils.clearDataSourceName(jndiName);
+	properties.setProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name,
+		jndiName);
+	properties.setProperty(ConnectionConfig.NAME_PROPERTY.name, clearName);
+    }
 
-	    NodeList maxPoolSizeList = thisElement
-		    .getElementsByTagName(MAX_POOL_TAG);
-	    elementLength = maxPoolSizeList.getLength();
-	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
-		continue;
-	    }
+    /**
+     * Sets data from URL tag
+     * 
+     * @param element
+     * @param urlList
+     * @param properties
+     */
+    private void setFromURLData(Element element, NodeList urlList,
+	    Properties properties) {
 
-	    Element maxPoolSizeElement = (Element) getFirst(maxPoolSizeList);
-	    String maxPoolSize = getContext(maxPoolSizeElement);
+	Element urlElement = getFirstElement(urlList);
+	String url = getContext(urlElement);
+	properties.setProperty(ConnectionConfig.URL_PROPERTY.name, url);
+	NodeList securityList = element.getElementsByTagName(SECURITY_TAG);
+	setDataFromJBossSecurity(securityList, properties);
 
-	    properties.setProperty(PoolConfig.Defaults.MAX_POOL_SIZE.key,
-		    maxPoolSize);
+	NodeList poolList = element.getElementsByTagName(POOL_TAG);
+	setDataFromJBossPool(poolList, properties);
 
-	    NodeList initPoolSizeList = thisElement
-		    .getElementsByTagName(INITIAL_POOL_TAG);
-	    elementLength = initPoolSizeList.getLength();
-	    if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
-		continue;
-	    }
+	NodeList driverList = element.getElementsByTagName(DRIVER_TAG);
+	setDataFromJBossDriver(driverList, properties);
+    }
 
-	    Element initPoolSizeElement = (Element) getFirst(initPoolSizeList);
-	    String prefill = getContext(initPoolSizeElement);
-	    if (Boolean.valueOf(prefill)) {
-		properties.setProperty(
-			PoolConfig.Defaults.INITIAL_POOL_SIZE.key, minPoolSize);
-	    }
+    /**
+     * Sets JNDI name native name and security, URL, driver properties
+     * 
+     * @param nodeList
+     * @param properties
+     * @param i
+     *            index of current node
+     */
+    private void setConnectionDataFromNode(NodeList nodeList,
+	    List<Properties> properties, int i) {
+
+	Element thisElement = getElement(nodeList, i);
+	Properties props = new Properties();
+	setJndiName(thisElement, props);
+	NodeList urlList = thisElement.getElementsByTagName(CONNECTION_URL_TAG);
+	int urlElementLength = urlList.getLength();
+	if (urlElementLength > CollectionUtils.EMPTY_ARRAY_LENGTH) {
+	    setFromURLData(thisElement, urlList, props);
+	    properties.add(props);
 	}
     }
 
@@ -297,37 +426,8 @@ public class FileParsers {
 
 	List<Properties> properties = new ArrayList<Properties>();
 
-	String jndiName;
-	String clearName;
 	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
-	    Element thisElement = (Element) nodeList.item(i);
-	    Properties props = new Properties();
-	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
-	    clearName = NamingUtils.clearDataSourceName(jndiName);
-	    props.setProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name,
-		    jndiName);
-	    props.setProperty(ConnectionConfig.NAME_PROPERTY.name, clearName);
-	    NodeList urlList = thisElement
-		    .getElementsByTagName(CONNECTION_URL_TAG);
-	    int urlElementLength = urlList.getLength();
-	    if (urlElementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
-		continue;
-	    }
-
-	    Element urlElement = (Element) getFirst(urlList);
-	    String url = getContext(urlElement);
-	    props.setProperty(ConnectionConfig.URL_PROPERTY.name, url);
-	    NodeList securityList = thisElement
-		    .getElementsByTagName(SECURITY_TAG);
-	    setDataFromJBossSecurity(securityList, props);
-
-	    NodeList poolList = thisElement.getElementsByTagName(POOL_TAG);
-	    setDataFromJBossPool(poolList, props);
-
-	    NodeList driverList = thisElement.getElementsByTagName(DRIVER_TAG);
-	    setDataFromJBossDriver(driverList, props);
-
-	    properties.add(props);
+	    setConnectionDataFromNode(nodeList, properties, i);
 	}
 
 	return properties;
@@ -340,9 +440,7 @@ public class FileParsers {
      * @return {@link NodeList}
      */
     private static NodeList getDataSourceTags(Document document) {
-
 	NodeList nodeList = document.getElementsByTagName(DATA_SURCE_TAG);
-
 	return nodeList;
     }
 
@@ -397,12 +495,32 @@ public class FileParsers {
 	String jndiName;
 	int length = nodeList.getLength();
 	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-	    Element thisElement = (Element) nodeList.item(i);
+	    Element thisElement = getElement(nodeList, i);
 	    jndiName = thisElement.getAttribute(JNDI_NAME_TAG);
 	    jndiNames.add(jndiName);
 	}
 
 	return jndiNames;
+    }
+
+    /**
+     * Initializes and connection pool
+     * 
+     * @param properties
+     * @param blocker
+     */
+    private void initDatasource(Properties properties, CountDownLatch blocker) {
+	try {
+	    // Initializes and fills BeanLoader.DataSourceParameters class
+	    // to deploy data source
+	    BeanLoader.DataSourceParameters parameters = new BeanLoader.DataSourceParameters();
+	    parameters.properties = properties;
+	    parameters.blocker = blocker;
+
+	    BeanLoader.initializeDatasource(parameters);
+	} catch (IOException ex) {
+	    LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
+	}
     }
 
     /**
@@ -417,26 +535,11 @@ public class FileParsers {
 	NodeList nodeList = getDataSourceTags(dataSourcePath);
 
 	List<Properties> properties = getDataFromJBoss(nodeList);
-
 	// Blocking semaphore before all data source initialization finished
 	CountDownLatch blocker = new CountDownLatch(properties.size());
-
-	BeanLoader.DataSourceParameters parameters;
 	for (Properties props : properties) {
-	    try {
-		// Initializes and fills BeanLoader.DataSourceParameters class
-		// to deploy data source
-		parameters = new BeanLoader.DataSourceParameters();
-		parameters.properties = props;
-		parameters.blocker = blocker;
-
-		BeanLoader.initializeDatasource(parameters);
-
-	    } catch (IOException ex) {
-		LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
-	    }
+	    initDatasource(props, blocker);
 	}
-
 	// Tries to lock until operation is complete
 	try {
 	    blocker.await();
