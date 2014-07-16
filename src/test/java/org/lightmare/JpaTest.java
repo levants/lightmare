@@ -1,7 +1,9 @@
 package org.lightmare;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.HashMap;
@@ -80,15 +82,23 @@ public class JpaTest {
 	    builder.addDataSourcePath(dataSourcePath);
 	}
 
-	File configFile = new File("./config/configuration.yaml");
+	File configFile = new File("./config/configuration.yml");
 	if (configFile.exists()) {
 	    Yaml yaml = new Yaml();
-	    Map<?, ?> config = (Map<?, ?>) yaml.load(configFile
-		    .getAbsolutePath());
-	    @SuppressWarnings("unchecked")
-	    Map<Object, Object> datasource = (Map<Object, Object>) config
-		    .get(ConfigKeys.DATASOURCE.key);
-	    builder.setDataSource(datasource);
+	    InputStream in = new FileInputStream(configFile);
+	    try {
+		Map<?, ?> config = (Map<?, ?>) yaml.load(in);
+		String key = ConfigKeys.DATASOURCE.key;
+		@SuppressWarnings("unchecked")
+		Map<Object, Object> deployConfig = (Map<Object, Object>) config
+			.get(ConfigKeys.DEPLOY_CONFIG.key);
+		@SuppressWarnings("unchecked")
+		Map<Object, Object> datasource = (Map<Object, Object>) deployConfig
+			.get(key);
+		builder.setDataSource(datasource);
+	    } finally {
+		in.close();
+	    }
 	}
 
 	MetaCreator metaCreator;
