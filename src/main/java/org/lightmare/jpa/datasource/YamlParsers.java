@@ -10,31 +10,42 @@ import org.apache.log4j.Logger;
 import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.utils.ObjectUtils;
 
+/**
+ * Initializes data source from configuration YAML file
+ * 
+ * @author Levan Tsinadze
+ * @since 0.1.2
+ */
 public class YamlParsers {
 
+    // Key elements
     private static final String DATASOURCES_KEY = "datasources";
 
     private static final String DATASOURCE_KEY = "datasource";
 
     private static final Logger LOG = Logger.getLogger(YamlParsers.class);
 
+    private void setProperty(Map.Entry<Object, Object> entry,
+	    Properties propertis) {
+
+	Object key = entry.getKey();
+	Object value = entry.getValue();
+	if (ConnectionConfig.DRIVER_PROPERTY.name.equals(key)) {
+	    String name = ObjectUtils.cast(value, String.class);
+	    value = DriverConfig.getDriverName(name);
+	}
+	propertis.put(key, value);
+    }
+
     private void initDataSource(Map<Object, Object> datasource)
 	    throws IOException {
 
-	Properties propertis = new Properties();
+	Properties properties = new Properties();
 	Set<Map.Entry<Object, Object>> entrySet = datasource.entrySet();
-	Object key;
-	Object value;
 	for (Map.Entry<Object, Object> entry : entrySet) {
-	    key = entry.getKey();
-	    value = entry.getValue();
-	    if (ConnectionConfig.DRIVER_PROPERTY.name.equals(key)) {
-		value = DriverConfig
-			.getDriverName(ConnectionConfig.DRIVER_PROPERTY.name);
-	    }
-	    propertis.put(key, value);
+	    setProperty(entry, properties);
 	}
-	Initializer.registerDataSource(propertis);
+	Initializer.registerDataSource(properties);
     }
 
     public void parseYaml(Map<Object, Object> config) throws IOException {
