@@ -80,7 +80,7 @@ public class JpaTest {
 	    builder.addDataSourcePath(dataSourcePath);
 	}
 
-	File configFile = new File("./configuration.yaml");
+	File configFile = new File("./config/configuration.yaml");
 	if (configFile.exists()) {
 	    Yaml yaml = new Yaml();
 	    Map<?, ?> config = (Map<?, ?>) yaml.load(configFile
