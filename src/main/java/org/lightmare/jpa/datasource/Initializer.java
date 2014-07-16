@@ -232,7 +232,7 @@ public abstract class Initializer {
      */
     public static void undeploy(String dataSourcePath) throws IOException {
 
-	Collection<String> jndiNames = FileParsers
+	Collection<String> jndiNames = XMLFileParsers
 		.dataSourceNames(dataSourcePath);
 	if (StringUtils.valid(dataSourcePath)) {
 	    for (String jndiName : jndiNames) {
