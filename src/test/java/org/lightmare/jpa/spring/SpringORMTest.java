@@ -12,7 +12,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.JpaManager;
-import org.lightmare.jpa.datasource.Initializer;
+import org.lightmare.jpa.datasource.FileParsers;
 import org.lightmare.jpa.hibernate.jpa.HibernatePersistenceProviderExt;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
@@ -54,7 +54,7 @@ public class SpringORMTest {
 	properties.putAll(JndiManager.JNDIConfigs.INIT.hinbernateConfig);
 
 	try {
-	    Initializer.initializeDataSource(DATA_SOURCE_PATH);
+	    FileParsers.parseDataSources(DATA_SOURCE_PATH);
 	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}
