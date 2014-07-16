@@ -145,11 +145,13 @@ public abstract class Initializer {
 
 	Collection<String> paths = config.getDataSourcePath();
 	Collection<String> values = new HashSet<String>();
-	boolean valid;
-	for (String value : paths) {
-	    valid = validate(value);
-	    if (valid) {
-		values.add(value);
+	if (CollectionUtils.valid(paths)) {
+	    boolean valid;
+	    for (String value : paths) {
+		valid = validate(value);
+		if (valid) {
+		    values.add(value);
+		}
 	    }
 	}
 

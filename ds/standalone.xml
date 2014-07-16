@@ -3,7 +3,7 @@
 <server xmlns="urn:jboss:domain:1.2">
 	<profile>
 		<subsystem xmlns="urn:jboss:domain:datasources:1.0">
-			<datasources>
+			<!--datasources>
 				<datasource jndi-name="java:/personsDerby" pool-name="personsDerby"
 					enabled="true" use-java-context="true">
 					<connection-url>jdbc:h2:file:./database/test-db;INIT=create schema
@@ -29,7 +29,7 @@
 						<driver-class>com.mysql.jdbc.Driver</driver-class>
 					</driver>
 				</drivers>
-			</datasources>
+			</datasources-->
 		</subsystem>
 	</profile>
 </server>

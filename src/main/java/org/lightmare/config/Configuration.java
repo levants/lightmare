@@ -773,7 +773,7 @@ public class Configuration implements Cloneable {
      * 
      * @param datasource
      */
-    public void addDataSources(Map<Object, Object> datasource) {
+    public void addDataSource(Map<Object, Object> datasource) {
 
 	List<Map<Object, Object>> datasources = getConfigValue(ConfigKeys.DATASOURCES.key);
 	if (datasources == null) {

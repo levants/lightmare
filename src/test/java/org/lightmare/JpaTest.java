@@ -19,8 +19,10 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.lightmare.cache.ConnectionContainer;
+import org.lightmare.config.ConfigKeys;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.logger.Configure;
+import org.yaml.snakeyaml.Yaml;
 
 @Ignore
 public class JpaTest {
@@ -75,8 +77,18 @@ public class JpaTest {
 	}
 	builder.setSwapDataSource(Boolean.TRUE);
 	if (dataSourcePath != null) {
-	    builder.setSwapDataSource(Boolean.TRUE).addDataSourcePath(
-		    dataSourcePath);
+	    builder.addDataSourcePath(dataSourcePath);
+	}
+
+	File configFile = new File("./configuration.yaml");
+	if (configFile.exists()) {
+	    Yaml yaml = new Yaml();
+	    Map<?, ?> config = (Map<?, ?>) yaml.load(configFile
+		    .getAbsolutePath());
+	    @SuppressWarnings("unchecked")
+	    Map<Object, Object> datasource = (Map<Object, Object>) config
+		    .get(ConfigKeys.DATASOURCE.key);
+	    builder.setDataSource(datasource);
 	}
 
 	MetaCreator metaCreator;

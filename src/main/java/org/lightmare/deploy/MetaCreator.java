@@ -779,6 +779,39 @@ public class MetaCreator {
 	}
 
 	/**
+	 * Sets single data source configuration
+	 * 
+	 * @param datasource
+	 * @return {@link MetaCreator.Builder}
+	 */
+	public Builder setDataSource(Map<Object, Object> datasource) {
+	    creator.configuration.setDataSource(datasource);
+	    return this;
+	}
+
+	/**
+	 * Adds passed data source to configuration
+	 * 
+	 * @param datasource
+	 * @return {@link MetaCreator.Builder}
+	 */
+	public Builder addDataSource(Map<Object, Object> datasource) {
+	    creator.configuration.addDataSource(datasource);
+	    return this;
+	}
+
+	/**
+	 * Sets collection of data sources configuration
+	 * 
+	 * @param datasources
+	 * @return {@link MetaCreator.Builder}
+	 */
+	public Builder setDataSources(List<Map<Object, Object>> datasources) {
+	    creator.configuration.setDataSources(datasources);
+	    return this;
+	}
+
+	/**
 	 * Sets boolean checker to scan {@link javax.persistence.Entity}
 	 * annotated classes from appropriated deployed archive files
 	 * 
@@ -797,7 +830,6 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setAwaitDeploiment(boolean await) {
-
 	    creator.await = await;
 	    return this;
 	}

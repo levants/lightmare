@@ -7,3 +7,13 @@ deployConfiguration:
                                           checkoutTimeout: "2000"
                                           maxStatements: "55"
                                           numHelperThreads: "3"
+                 datasource:
+                            name: personsDerby
+                            jndiname: java:/personsDerby
+                            driver: h2
+                            url: jdbc:h2:file:./database/test-db;INIT=create schema IF NOT EXISTS persons
+                            user: admin
+                            password: admin
+                            minPoolSize: 5
+                            maxPoolSize: 15
+                            initPoolSize: 5
