@@ -87,6 +87,23 @@ public class XMLUtils {
     }
 
     /**
+     * Validates passed {@link NodeList} length
+     * 
+     * @param nodeList
+     * @return
+     */
+    public static boolean validate(NodeList nodeList) {
+
+	boolean valid;
+
+	int elementLength = nodeList.getLength();
+	valid = ObjectUtils.notEquals(elementLength,
+		CollectionUtils.EMPTY_ARRAY_LENGTH);
+
+	return valid;
+    }
+
+    /**
      * Gets item with first index from passed {@link NodeList} instance
      * 
      * @param list
