@@ -23,12 +23,16 @@
 package org.lightmare.jpa.datasource;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.log4j.Logger;
+import org.lightmare.config.Configuration;
 import org.lightmare.deploy.BeanLoader;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Parses XML files to initialize {@link javax.sql.DataSource}s and bind them to
@@ -48,14 +52,15 @@ public class FileParsers {
      * @param properties
      * @param blocker
      */
-    private void initDatasource(Properties properties, CountDownLatch blocker) {
+    private static void initDatasource(Properties properties,
+	    CountDownLatch blocker) {
+
 	try {
 	    // Initializes and fills BeanLoader.DataSourceParameters class
 	    // to deploy data source
 	    BeanLoader.DataSourceParameters parameters = new BeanLoader.DataSourceParameters();
 	    parameters.properties = properties;
 	    parameters.blocker = blocker;
-
 	    BeanLoader.initializeDatasource(parameters);
 	} catch (IOException ex) {
 	    LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
@@ -69,10 +74,26 @@ public class FileParsers {
      * @param dataSourcePath
      * @throws IOException
      */
-    public void parseStandaloneXml(String dataSourcePath) throws IOException {
+    public static void parseDataSources(Collection<String> paths,
+	    Configuration config) throws IOException {
 
-	List<Properties> datasources = XMLFileParsers
-		.getPropertiesFromJBoss(dataSourcePath);
+	List<Properties> datasources = new ArrayList<Properties>();
+
+	if (CollectionUtils.valid(paths)) {
+	    List<Properties> xmlDatasources;
+	    for (String dataSourcePath : paths) {
+		xmlDatasources = XMLFileParsers
+			.getPropertiesFromJBoss(dataSourcePath);
+		if (CollectionUtils.valid(xmlDatasources)) {
+		    datasources.addAll(xmlDatasources);
+		}
+	    }
+	}
+
+	List<Properties> yamlDatasources = YamlParsers.parseYaml(config);
+	if (CollectionUtils.valid(yamlDatasources)) {
+	    datasources.addAll(yamlDatasources);
+	}
 	// Blocking semaphore before all data source initialization finished
 	CountDownLatch blocker = new CountDownLatch(datasources.size());
 	for (Properties properties : datasources) {
@@ -85,6 +106,5 @@ public class FileParsers {
 	    throw new IOException(ex);
 	}
 
-	Initializer.setDsAsInitialized(dataSourcePath);
     }
 }

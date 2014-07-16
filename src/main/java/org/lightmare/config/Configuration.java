@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -759,6 +760,39 @@ public class Configuration implements Cloneable {
     }
 
     /**
+     * Sets data sources properties list
+     * 
+     * @param datasources
+     */
+    public void setDataSources(List<Map<Object, Object>> datasources) {
+	setConfigValue(ConfigKeys.DATASOURCES.key, datasources);
+    }
+
+    /**
+     * Adds data source to existed data sources
+     * 
+     * @param datasource
+     */
+    public void addDataSources(Map<Object, Object> datasource) {
+
+	List<Map<Object, Object>> datasources = getConfigValue(ConfigKeys.DATASOURCES.key);
+	if (datasources == null) {
+	    datasources = new ArrayList<Map<Object, Object>>();
+	    setDataSources(datasources);
+	}
+	datasources.add(datasource);
+    }
+
+    /**
+     * Sets single data source
+     * 
+     * @param datasources
+     */
+    public void setDataSource(Map<Object, Object> datasources) {
+	setConfigValue(ConfigKeys.DATASOURCE.key, datasources);
+    }
+
+    /**
      * Initializes modules by deployment modules parameter from configuration
      * 
      * @return {@link List} of deployment file paths
@@ -797,6 +831,14 @@ public class Configuration implements Cloneable {
 	paths = ConfigUtils.getSet(value);
 
 	return paths;
+    }
+
+    public List<Map<Object, Object>> getDataSources() {
+	return getConfigValue(ConfigKeys.DATASOURCES.key);
+    }
+
+    public Map<Object, Object> getDataSource() {
+	return getConfigValue(ConfigKeys.DATASOURCE.key);
     }
 
     public String[] getLibraryPaths() {

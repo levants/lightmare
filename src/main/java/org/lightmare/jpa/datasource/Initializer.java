@@ -83,14 +83,21 @@ public abstract class Initializer {
 	}
     }
 
-    /**
-     * Checks if passed file path is valid data source file path
-     * 
-     * @param path
-     * @return <code>boolean</code>
-     */
-    private static boolean checkForDataSource(String path) {
-	return StringUtils.valid(path);
+    public static void setDsAsInitialized(String datasourcePath) {
+	INITIALIZED_SOURCES.add(datasourcePath);
+    }
+
+    public static void removeInitialized(String datasourcePath) {
+	INITIALIZED_SOURCES.remove(datasourcePath);
+    }
+
+    public static boolean checkDSPath(String datasourcePath) {
+	return INITIALIZED_SOURCES.contains(datasourcePath);
+    }
+
+    private static boolean validate(String datasourcePath) {
+	return StringUtils.valid(datasourcePath)
+		&& ObjectUtils.notTrue(checkDSPath(datasourcePath));
     }
 
     /**
@@ -129,21 +136,6 @@ public abstract class Initializer {
     }
 
     /**
-     * Initialized data source from passed file path
-     * 
-     * @throws IOException
-     */
-    public static void initializeDataSource(String path) throws IOException {
-
-	boolean valid = checkForDataSource(path)
-		&& ObjectUtils.notTrue(Initializer.checkDSPath(path));
-	if (valid) {
-	    FileParsers parsers = new FileParsers();
-	    parsers.parseStandaloneXml(path);
-	}
-    }
-
-    /**
      * Initializes data sources from passed {@link Configuration} instance
      * 
      * @throws IOException
@@ -152,10 +144,17 @@ public abstract class Initializer {
 	    throws IOException {
 
 	Collection<String> paths = config.getDataSourcePath();
-	if (CollectionUtils.valid(paths)) {
-	    for (String path : paths) {
-		initializeDataSource(path);
+	Collection<String> values = new HashSet<String>();
+	boolean valid;
+	for (String value : paths) {
+	    valid = validate(value);
+	    if (valid) {
+		values.add(value);
 	    }
+	}
+
+	if (CollectionUtils.valid(values)) {
+	    FileParsers.parseDataSources(values, config);
 	}
     }
 
@@ -177,18 +176,6 @@ public abstract class Initializer {
 	// Caches jndiName for data source
 	String jndiName = getJndiName(properties);
 	INITIALIZED_NAMES.add(jndiName);
-    }
-
-    public static void setDsAsInitialized(String datasourcePath) {
-	INITIALIZED_SOURCES.add(datasourcePath);
-    }
-
-    public static void removeInitialized(String datasourcePath) {
-	INITIALIZED_SOURCES.remove(datasourcePath);
-    }
-
-    public static boolean checkDSPath(String datasourcePath) {
-	return INITIALIZED_SOURCES.contains(datasourcePath);
     }
 
     /**

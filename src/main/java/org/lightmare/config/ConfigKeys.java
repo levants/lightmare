@@ -69,6 +69,11 @@ public enum ConfigKeys {
 				     // source
 				     // path
 
+    // Properties for data sources
+    DATASOURCES("datasources"), // Collection of data sources
+
+    DATASOURCE("datasource"), // Single data source
+
     // Properties which version of server is running remote it requires server
     // client RPC infrastructure or local (embedded mode)
     SERVER("server", Boolean.TRUE),

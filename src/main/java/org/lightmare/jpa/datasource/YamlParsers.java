@@ -1,14 +1,17 @@
 package org.lightmare.jpa.datasource;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.lightmare.config.Configuration;
 import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Initializes data source from configuration YAML file
@@ -18,14 +21,9 @@ import org.lightmare.utils.ObjectUtils;
  */
 public class YamlParsers {
 
-    // Key elements
-    private static final String DATASOURCES_KEY = "datasources";
-
-    private static final String DATASOURCE_KEY = "datasource";
-
     private static final Logger LOG = Logger.getLogger(YamlParsers.class);
 
-    private void setProperty(Map.Entry<Object, Object> entry,
+    private static void setProperty(Map.Entry<Object, Object> entry,
 	    Properties propertis) {
 
 	Object key = entry.getKey();
@@ -37,35 +35,42 @@ public class YamlParsers {
 	propertis.put(key, value);
     }
 
-    private void initDataSource(Map<Object, Object> datasource)
+    private static Properties initDataSource(Map<Object, Object> datasource)
 	    throws IOException {
 
 	Properties properties = new Properties();
+
 	Set<Map.Entry<Object, Object>> entrySet = datasource.entrySet();
 	for (Map.Entry<Object, Object> entry : entrySet) {
 	    setProperty(entry, properties);
 	}
-	Initializer.registerDataSource(properties);
+
+	return properties;
     }
 
-    public void parseYaml(Map<Object, Object> config) throws IOException {
+    public static List<Properties> parseYaml(Configuration config) throws IOException {
 
-	Object value = config.get(DATASOURCES_KEY);
-	if (ObjectUtils.notNull(value)) {
-	    List<Map<Object, Object>> datasources = ObjectUtils.cast(value);
-	    for (Map<Object, Object> datasource : datasources) {
+	List<Properties> datasources = new ArrayList<Properties>();
+
+	Properties datasource;
+	List<Map<Object, Object>> YamlDatasources = config.getDataSources();
+	if (CollectionUtils.valid(YamlDatasources)) {
+	    for (Map<Object, Object> yamlDatasource : YamlDatasources) {
 		try {
-		    initDataSource(datasource);
+		    datasource = initDataSource(yamlDatasource);
+		    datasources.add(datasource);
 		} catch (IOException ex) {
 		    LOG.error(ex.getMessage(), ex);
 		}
 	    }
 	}
 
-	value = config.get(DATASOURCE_KEY);
-	if (ObjectUtils.notNull(value)) {
-	    Map<Object, Object> datasource = ObjectUtils.cast(value);
-	    initDataSource(datasource);
+	Map<Object, Object> yamlDatasource = config.getDataSource();
+	if (CollectionUtils.valid(yamlDatasource)) {
+	    datasource = initDataSource(yamlDatasource);
+	    datasources.add(datasource);
 	}
+
+	return datasources;
     }
 }
