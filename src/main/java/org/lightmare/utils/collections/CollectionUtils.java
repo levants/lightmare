@@ -236,8 +236,8 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static <E> boolean notContains(Collection<E> collection, E element) {
-	return (valid(collection) && ObjectUtils.notTrue(collection
-		.contains(element)));
+	return ((element == null || invalid(collection)) || (valid(collection) && ObjectUtils
+		.notTrue(collection.contains(element))));
     }
 
     /**
