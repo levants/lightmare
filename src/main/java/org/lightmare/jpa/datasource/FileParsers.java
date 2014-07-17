@@ -57,40 +57,18 @@ public class FileParsers {
     private static final Logger LOG = Logger.getLogger(FileParsers.class);
 
     /**
-     * Initializes and connection pool
+     * Checks if JNDI name is valid and passed container not contains elements
+     * with this name
      * 
-     * @param properties
-     * @param blocker
+     * @param jndiName
+     * @param container
+     * @return <code>boolean</code>
      */
-    private static void initDatasource(Properties properties,
-	    CountDownLatch blocker) {
-
-	try {
-	    // Initializes and fills BeanLoader.DataSourceParameters class
-	    // to deploy data source
-	    BeanLoader.DataSourceParameters parameters = new BeanLoader.DataSourceParameters();
-	    parameters.properties = properties;
-	    parameters.blocker = blocker;
-	    BeanLoader.initializeDatasource(parameters);
-	} catch (IOException ex) {
-	    LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
-	}
-    }
-
-    /**
-     * Initializes each data source from {@link Properties} in parallel mode
-     * 
-     * @param datasources
-     * @param blocker
-     */
-    private static void initDatasources(List<Properties> datasources,
-	    CountDownLatch blocker) {
-
-	if (CollectionUtils.valid(datasources)) {
-	    for (Properties properties : datasources) {
-		initDatasource(properties, blocker);
-	    }
-	}
+    private static boolean valid(String jndiName,
+	    Map<String, Properties> container) {
+	return StringUtils.valid(jndiName)
+		&& (container.isEmpty() || CollectionUtils.notContains(
+			container, jndiName));
     }
 
     /**
@@ -145,7 +123,7 @@ public class FileParsers {
 
 	String property = ConnectionConfig.JNDI_NAME_PROPERTY.name;
 	String jndiName = properties.getProperty(property);
-	if (CollectionUtils.notContains(container, jndiName)) {
+	if (valid(jndiName, container)) {
 	    container.put(jndiName, properties);
 	}
     }
@@ -222,6 +200,43 @@ public class FileParsers {
 	}
 
 	return size;
+    }
+
+    /**
+     * Initializes and connection pool
+     * 
+     * @param properties
+     * @param blocker
+     */
+    private static void initDatasource(Properties properties,
+	    CountDownLatch blocker) {
+
+	try {
+	    // Initializes and fills BeanLoader.DataSourceParameters class
+	    // to deploy data source
+	    BeanLoader.DataSourceParameters parameters = new BeanLoader.DataSourceParameters();
+	    parameters.properties = properties;
+	    parameters.blocker = blocker;
+	    BeanLoader.initializeDatasource(parameters);
+	} catch (IOException ex) {
+	    LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
+	}
+    }
+
+    /**
+     * Initializes each data source from {@link Properties} in parallel mode
+     * 
+     * @param datasources
+     * @param blocker
+     */
+    private static void initDatasources(List<Properties> datasources,
+	    CountDownLatch blocker) {
+
+	if (CollectionUtils.valid(datasources)) {
+	    for (Properties properties : datasources) {
+		initDatasource(properties, blocker);
+	    }
+	}
     }
 
     /**
