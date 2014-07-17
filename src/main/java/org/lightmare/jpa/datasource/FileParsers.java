@@ -118,7 +118,7 @@ public class FileParsers {
      * @param properties
      * @param container
      */
-    private static void fillContainer(Properties properties,
+    private static void put(Properties properties,
 	    Map<String, Properties> container) {
 
 	String property = ConnectionConfig.JNDI_NAME_PROPERTY.name;
@@ -141,7 +141,7 @@ public class FileParsers {
 	if (CollectionUtils.valid(datasources)) {
 	    Map<String, Properties> container = new HashMap<String, Properties>();
 	    for (Properties properties : datasources) {
-		fillContainer(properties, container);
+		put(properties, container);
 	    }
 	    shrinked = new ArrayList<Properties>(container.values());
 	} else {
