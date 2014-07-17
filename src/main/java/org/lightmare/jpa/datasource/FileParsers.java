@@ -23,6 +23,7 @@
 package org.lightmare.jpa.datasource;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ import java.util.concurrent.CountDownLatch;
 import org.apache.log4j.Logger;
 import org.lightmare.config.Configuration;
 import org.lightmare.deploy.BeanLoader;
+import org.lightmare.jpa.datasource.Initializer.ConnectionConfig;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
@@ -75,6 +77,12 @@ public class FileParsers {
 	}
     }
 
+    /**
+     * Initializes each data source from {@link Properties} in parallel mode
+     * 
+     * @param datasources
+     * @param blocker
+     */
     private static void initDatasources(List<Properties> datasources,
 	    CountDownLatch blocker) {
 
@@ -85,6 +93,13 @@ public class FileParsers {
 	}
     }
 
+    /**
+     * Gets data source {@link Properties} from XML configuration file
+     * 
+     * @param paths
+     * @param datasources
+     * @throws IOException
+     */
     private static void fillFromXml(Collection<String> paths,
 	    Map<String, List<Properties>> datasources) throws IOException {
 
@@ -100,6 +115,13 @@ public class FileParsers {
 	}
     }
 
+    /**
+     * Gets data source {@link Properties} from YAML configuration file
+     * 
+     * @param config
+     * @param datasources
+     * @throws IOException
+     */
     private static void fillFromYaml(Configuration config,
 	    Map<String, List<Properties>> datasources) throws IOException {
 
@@ -111,6 +133,83 @@ public class FileParsers {
 	}
     }
 
+    /**
+     * Checks if passed {@link Properties} contains JNDI name property and puts
+     * this name in passed {@link Map} of data sources
+     * 
+     * @param properties
+     * @param container
+     */
+    private static void fillContainer(Properties properties,
+	    Map<String, Properties> container) {
+
+	String property = ConnectionConfig.JNDI_NAME_PROPERTY.name;
+	String jndiName = properties.getProperty(property);
+	if (CollectionUtils.notContains(container, jndiName)) {
+	    container.put(jndiName, properties);
+	}
+    }
+
+    /**
+     * Avoids duplicate data source properties
+     * 
+     * @param datasources
+     * @return {@link List} of data source {@link Properties} without duplicates
+     */
+    private static List<Properties> shrink(List<Properties> datasources) {
+
+	List<Properties> shrinked;
+
+	if (CollectionUtils.valid(datasources)) {
+	    Map<String, Properties> container = new HashMap<String, Properties>();
+	    for (Properties properties : datasources) {
+		fillContainer(properties, container);
+	    }
+	    shrinked = new ArrayList<Properties>(container.values());
+	} else {
+	    shrinked = Collections.emptyList();
+	}
+
+	return shrinked;
+    }
+
+    /**
+     * Avoids duplicate data source properties
+     * 
+     * @param datasources
+     * @return {@link Map} of JNDI names and {@link List} of data source
+     *         {@link Properties} without duplicates
+     */
+    private static Map<String, List<Properties>> shrink(
+	    Map<String, List<Properties>> datasources) {
+
+	Map<String, List<Properties>> shrinked = new HashMap<String, List<Properties>>();
+
+	if (CollectionUtils.valid(datasources)) {
+	    Set<Map.Entry<String, List<Properties>>> entrySet = datasources
+		    .entrySet();
+	    String key;
+	    List<Properties> value;
+	    List<Properties> fine;
+	    for (Map.Entry<String, List<Properties>> entry : entrySet) {
+		key = entry.getKey();
+		value = entry.getValue();
+		fine = shrink(value);
+		shrinked.put(key, fine);
+	    }
+	}
+
+	return shrinked;
+    }
+
+    /**
+     * Calculates sum of sizes for each {@link List} of data source
+     * {@link Properties} for passed data sources
+     * 
+     * @param datasources
+     * @return <code>int</code> suze of all {@link List} of {@link Properties}
+     *         in passed data sources
+     */
     private static int calculateSize(Map<String, List<Properties>> datasources) {
 
 	int size = CollectionUtils.EMPTY_ARRAY_LENGTH;
@@ -137,8 +236,9 @@ public class FileParsers {
 
 	Map<String, List<Properties>> datasources = new HashMap<String, List<Properties>>();
 
-	fillFromXml(paths, datasources);
 	fillFromYaml(config, datasources);
+	fillFromXml(paths, datasources);
+	datasources = shrink(datasources);
 	int size = calculateSize(datasources);
 	// Blocking semaphore before all data source initialization finished
 	CountDownLatch blocker = new CountDownLatch(size);
