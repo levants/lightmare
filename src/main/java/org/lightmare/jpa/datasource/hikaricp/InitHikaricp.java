@@ -50,14 +50,31 @@ public class InitHikaricp extends InitDataSource {
 	    this.value = value;
 	}
 
+	/**
+	 * Casts {@link HikariDefault#value} to {@link Integer} type
+	 * 
+	 * @return {@link Integer}
+	 */
 	public Integer asInt() {
 	    return ObjectUtils.cast(value, Integer.class);
 	}
 
+	/**
+	 * Casts {@link HikariDefault#value} to {@link Boolean} type
+	 * 
+	 * @return {@link Boolean}
+	 */
 	public Boolean asBoolean() {
 	    return ObjectUtils.cast(value, Boolean.class);
 	}
 
+	/**
+	 * Gets value from passed {@link Map} or if it is not present
+	 * appropriated {@link HikariDefault#value} as {@link Integer} type
+	 * 
+	 * @param properties
+	 * @return {@link Integer} value
+	 */
 	public Integer asInt(Map<Object, Object> properties) {
 
 	    Integer property = PoolConfig.asInt(properties, key);
@@ -69,6 +86,13 @@ public class InitHikaricp extends InitDataSource {
 	    return property;
 	}
 
+	/**
+	 * Gets value from passed {@link Map} or if it is not present
+	 * appropriated {@link HikariDefault#value} as {@link Boolean} type
+	 * 
+	 * @param properties
+	 * @return {@link Boolean} value
+	 */
 	public Boolean asBoolean(Map<Object, Object> properties) {
 
 	    Boolean property = PoolConfig.asBoolean(properties, key);
@@ -85,12 +109,24 @@ public class InitHikaricp extends InitDataSource {
 	super(properties);
     }
 
+    /**
+     * Sets auto commit properties
+     * 
+     * @param configMap
+     * @param config
+     */
     private void setAutoCommit(Map<Object, Object> configMap,
 	    HikariConfig config) {
 	config.setAutoCommit(Boolean.FALSE);
 	config.setIsolateInternalQueries(Boolean.TRUE);
     }
 
+    /**
+     * Sets connection URL and user and password parameters
+     * 
+     * @param configMap
+     * @param config
+     */
     private void setConnection(Map<Object, Object> configMap,
 	    HikariConfig config) {
 
@@ -103,6 +139,12 @@ public class InitHikaricp extends InitDataSource {
 	config.setDriverClassName(driver);
     }
 
+    /**
+     * Sets timeout parameters
+     * 
+     * @param configMap
+     * @param config
+     */
     private void setTimeouts(Map<Object, Object> configMap, HikariConfig config) {
 
 	config.setConnectionTimeout(CONNECTION_TIMEOUT);
@@ -117,6 +159,12 @@ public class InitHikaricp extends InitDataSource {
 	config.setInitializationFailFast(initFaulFast);
     }
 
+    /**
+     * Sets maximum minimum and initial pool size parameters
+     * 
+     * @param configMap
+     * @param config
+     */
     private void setPoolSize(Map<Object, Object> configMap, HikariConfig config) {
 
 	config.setMinimumIdle(PoolConfig.asInt(configMap,
