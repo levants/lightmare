@@ -94,10 +94,7 @@ public class InitC3p0 extends InitDataSource {
 
     @Override
     protected boolean checkInstance(DataSource dataSource) throws IOException {
-
-	boolean valid = (dataSource instanceof PooledDataSource);
-
-	return valid;
+	return (dataSource instanceof PooledDataSource);
     }
 
     /**

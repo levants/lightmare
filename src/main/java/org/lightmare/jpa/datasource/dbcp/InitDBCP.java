@@ -86,10 +86,7 @@ public class InitDBCP extends InitDataSource {
 
     @Override
     protected boolean checkInstance(DataSource dataSource) throws IOException {
-
-	boolean valid = (dataSource instanceof DataSource);
-
-	return valid;
+	return (dataSource instanceof DataSource);
     }
 
     @Override

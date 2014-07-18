@@ -225,6 +225,30 @@ public class PoolConfig {
     }
 
     /**
+     * Gets property as {@link String} value
+     * 
+     * @param properties
+     * @param key
+     * @return {@link String} property
+     */
+    public static String asText(Map<Object, Object> properties, Object key) {
+
+	String value;
+
+	Object property = properties.get(key);
+
+	if (property == null) {
+	    value = null;
+	} else if (property instanceof String) {
+	    value = ObjectUtils.cast(property, String.class);
+	} else {
+	    value = property.toString();
+	}
+
+	return value;
+    }
+
+    /**
      * Gets property as <code>int</code> value
      * 
      * @param properties
@@ -233,20 +257,21 @@ public class PoolConfig {
      */
     public static Integer asInt(Map<Object, Object> properties, Object key) {
 
-	Integer propertyInt;
+	Integer value;
 
 	Object property = properties.get(key);
 	if (property == null) {
-	    propertyInt = null;
+	    value = null;
 	} else if (property instanceof Integer) {
-	    propertyInt = (Integer) property;
+	    value = ObjectUtils.cast(property, Integer.class);
 	} else if (property instanceof String) {
-	    propertyInt = Integer.valueOf((String) property);
+	    String text = ObjectUtils.cast(property, String.class);
+	    value = Integer.valueOf(text);
 	} else {
-	    propertyInt = null;
+	    value = null;
 	}
 
-	return propertyInt;
+	return value;
     }
 
     /**

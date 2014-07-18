@@ -44,6 +44,12 @@ import org.lightmare.utils.StringUtils;
  */
 public class InitTomcat extends InitDataSource {
 
+    // Max wait property
+    private static final int MAX_WAIT = 10000;
+
+    // Statement to check connection
+    private static final String TEST_SQL = "SELECT 1";
+
     /**
      * Container for Tomcat default configurations
      * 
@@ -68,8 +74,6 @@ public class InitTomcat extends InitDataSource {
 	}
     }
 
-    private static final String TEST_SQL = "SELECT 1";
-
     public InitTomcat(Properties properties) {
 	super(properties);
     }
@@ -80,9 +84,11 @@ public class InitTomcat extends InitDataSource {
 	Map<Object, Object> configMap = poolConfig.merge(properties);
 
 	int checkOutTimeout = PoolConfig.asInt(configMap,
-		PoolConfig.Defaults.CHECK_OUT_TIMEOUT);
+		PoolConfig.Defaults.CHECK_OUT_TIMEOUT.key);
 	int exeededTimeout = PoolConfig.asInt(configMap,
-		PoolConfig.Defaults.MAX_IDLE_TIME_EXCESS_CONN);
+		PoolConfig.Defaults.MAX_IDLE_TIME_EXCESS_CONN.key);
+	int minPoolSize = PoolConfig.asInt(configMap,
+		PoolConfig.Defaults.MIN_POOL_SIZE.key);
 
 	DataSource dataSource;
 	PoolProperties poolProperties = new PoolProperties();
@@ -101,10 +107,10 @@ public class InitTomcat extends InitDataSource {
 		PoolConfig.Defaults.MAX_POOL_SIZE));
 	poolProperties.setInitialSize(PoolConfig.asInt(configMap,
 		PoolConfig.Defaults.INITIAL_POOL_SIZE));
-	poolProperties.setMaxWait(10000);
+	poolProperties.setMaxWait(MAX_WAIT);
 	poolProperties.setRemoveAbandonedTimeout(exeededTimeout);
 	poolProperties.setMinEvictableIdleTimeMillis(checkOutTimeout);
-	poolProperties.setMinIdle(10);
+	poolProperties.setMinIdle(minPoolSize);
 	poolProperties.setLogAbandoned(Boolean.TRUE);
 	poolProperties.setRemoveAbandoned(Boolean.TRUE);
 	poolProperties.setJdbcInterceptors(StringUtils.concat(
@@ -119,10 +125,7 @@ public class InitTomcat extends InitDataSource {
     @Override
     protected boolean checkInstance(javax.sql.DataSource dataSource)
 	    throws IOException {
-
-	boolean valid = (dataSource instanceof DataSource);
-
-	return valid;
+	return (dataSource instanceof DataSource);
     }
 
     @Override
