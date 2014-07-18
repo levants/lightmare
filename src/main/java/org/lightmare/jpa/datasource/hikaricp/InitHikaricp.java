@@ -25,24 +25,104 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 public class InitHikaricp extends InitDataSource {
 
-    // Configuration keys
-    private static final String MAX_LIFETIME_KEY = "maxLifetime";
-
-    private static final String LEAK_DETECTION_KEY = "leakDetectionThreshold";
-
-    private static final String INIT_FAIL_FAST_KEY = "initializationFailFast";
-
     // Connection timeout
     private static final long CONNECTION_TIMEOUT = 30000;
 
-    private static final int MAX_LIFETIME = 1800000;
+    /**
+     * Default properties of HikariDB connection pool
+     * 
+     * @author Levan Tsinadze
+     *
+     */
+    private static enum HikariDefault {
 
-    private static final int LEAK_DETECTION = 0;
+	MAX_LIFETIME("maxLifetime", 1800000), // Lifetime
+	LEAK_DETECTION("leakDetectionThreshold", 0), // Leak detection
+	INIT_FAIL_FAST("initializationFailFast", Boolean.TRUE); // Initialization
+								// fail
 
-    private static final int INIT_FAIL_FAST = 120000;
+	private final String key;
+
+	private final Object value;
+
+	private HikariDefault(final String key, final Object value) {
+	    this.key = key;
+	    this.value = value;
+	}
+
+	public Integer asInt() {
+	    return ObjectUtils.cast(value, Integer.class);
+	}
+
+	public Boolean asBoolean() {
+	    return ObjectUtils.cast(value, Boolean.class);
+	}
+
+	public Integer asInt(Map<Object, Object> properties) {
+
+	    Integer property = PoolConfig.asInt(properties, key);
+
+	    if (property == null) {
+		property = asInt();
+	    }
+
+	    return property;
+	}
+
+	public Boolean asBoolean(Map<Object, Object> properties) {
+
+	    Boolean property = PoolConfig.asBoolean(properties, key);
+
+	    if (property == null) {
+		property = asBoolean();
+	    }
+
+	    return property;
+	}
+    }
 
     public InitHikaricp(Properties properties) {
 	super(properties);
+    }
+
+    private void setAutoCommit(Map<Object, Object> configMap,
+	    HikariConfig config) {
+	config.setAutoCommit(Boolean.FALSE);
+	config.setIsolateInternalQueries(Boolean.TRUE);
+    }
+
+    private void setConnection(Map<Object, Object> configMap,
+	    HikariConfig config) {
+
+	config.setUsername(user);
+	config.setPassword(password);
+	config.setJdbcUrl(url);
+	String name = PoolConfig.asText(configMap,
+		Defaults.DATA_SOURCE_NAME.key);
+	config.setPoolName(name);
+	config.setDriverClassName(driver);
+    }
+
+    private void setTimeouts(Map<Object, Object> configMap, HikariConfig config) {
+
+	config.setConnectionTimeout(CONNECTION_TIMEOUT);
+	config.setIdleTimeout(PoolConfig.asInt(configMap,
+		Defaults.MAX_IDLE_TIMEOUT.key));
+	Integer maxLifetime = HikariDefault.MAX_LIFETIME.asInt(configMap);
+	config.setMaxLifetime(maxLifetime);
+	Integer leakDetection = HikariDefault.LEAK_DETECTION.asInt(configMap);
+	config.setLeakDetectionThreshold(leakDetection);
+	Boolean initFaulFast = HikariDefault.INIT_FAIL_FAST
+		.asBoolean(configMap);
+	config.setInitializationFailFast(initFaulFast);
+    }
+
+    private void setPoolSize(Map<Object, Object> configMap, HikariConfig config) {
+
+	config.setMinimumIdle(PoolConfig.asInt(configMap,
+		Defaults.MIN_POOL_SIZE.key));
+	config.setMaximumPoolSize(PoolConfig.asInt(configMap,
+		Defaults.MAX_POOL_SIZE.key));
     }
 
     @Override
@@ -54,45 +134,15 @@ public class InitHikaricp extends InitDataSource {
 	HikariConfig config = new HikariConfig();
 
 	// Auto commit
-	config.setAutoCommit(Boolean.FALSE);
-	config.setIsolateInternalQueries(Boolean.TRUE);
-
+	setAutoCommit(configMap, config);
 	// Connection properties
-	config.setUsername(user);
-	config.setPassword(password);
-	config.setJdbcUrl(url);
-	String name = PoolConfig.asText(configMap,
-		Defaults.DATA_SOURCE_NAME.key);
-	config.setPoolName(name);
-	config.setDriverClassName(driver);
-
+	setConnection(configMap, config);
 	// timeouts
-	config.setConnectionTimeout(CONNECTION_TIMEOUT);
-	config.setIdleTimeout(PoolConfig.asInt(configMap,
-		Defaults.MAX_IDLE_TIMEOUT.key));
-	Integer maxLifetime = PoolConfig.asInt(configMap, MAX_LIFETIME_KEY);
-	if (maxLifetime == null) {
-	    maxLifetime = MAX_LIFETIME;
-	}
-	config.setMaxLifetime(maxLifetime);
-	Integer leakDetection = PoolConfig.asInt(configMap, LEAK_DETECTION_KEY);
-	if (leakDetection == null) {
-	    leakDetection = LEAK_DETECTION;
-	}
-	config.setLeakDetectionThreshold(LEAK_DETECTION);
-
-//	Boolean initFaulFast = PoolConfig.asBoolean(configMap, INIT_FAIL_FAST_KEY);
-//	if (initFaulFast == null) {
-//	    initFaulFast = INIT_FAIL_FAST;
-//	}
-//	config.setInitializationFailFast(Boolean.TRUE);
-
+	setTimeouts(configMap, config);
 	// Pool size
-	config.setMinimumIdle(PoolConfig.asInt(configMap,
-		Defaults.MIN_POOL_SIZE.key));
-	config.setMaximumPoolSize(PoolConfig.asInt(configMap,
-		Defaults.MAX_POOL_SIZE.key));
+	setPoolSize(configMap, config);
 
+	// initializes data source with configuration
 	hikariDataSource = new HikariDataSource(config);
 
 	return hikariDataSource;

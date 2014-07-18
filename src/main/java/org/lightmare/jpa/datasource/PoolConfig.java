@@ -292,6 +292,32 @@ public class PoolConfig {
     }
 
     /**
+     * Gets property as {@link Boolean} value
+     * 
+     * @param properties
+     * @param key
+     * @return {@link Boolean} value of property
+     */
+    public static Boolean asBoolean(Map<Object, Object> properties, Object key) {
+
+	Boolean value;
+
+	Object property = properties.get(key);
+	if (property == null) {
+	    value = null;
+	} else if (property instanceof Boolean) {
+	    value = ObjectUtils.cast(property, Boolean.class);
+	} else if (property instanceof String) {
+	    String text = ObjectUtils.cast(property, String.class);
+	    value = Boolean.valueOf(text);
+	} else {
+	    value = null;
+	}
+
+	return value;
+    }
+
+    /**
      * Loads {@link Properties} from specific path
      * 
      * @param path
