@@ -290,6 +290,64 @@ public class MetaCreator {
     }
 
     /**
+     * Initializes {@link ArchiveData} to find archives
+     * 
+     * @param currentURL
+     * @return {@link ArchiveData}
+     */
+    private ArchiveData initArchiveData(URL currentURL) {
+
+	ArchiveData archiveData = archivesURLs.get(currentURL);
+
+	if (archiveData == null) {
+	    archiveData = new ArchiveData();
+	}
+
+	return archiveData;
+    }
+
+    /**
+     * Initializes appropriated implementation of {@link ArchiveUtils} to
+     * retrieve data from archives
+     * 
+     * @param archiveData
+     * @param currentURL
+     * @return {@link ArchiveUtils}
+     * @throws IOException
+     */
+    private ArchiveUtils initArchiveUtils(ArchiveData archiveData,
+	    URL currentURL) throws IOException {
+
+	ArchiveUtils ioUtils = archiveData.getIoUtils();
+
+	if (ioUtils == null) {
+	    ioUtils = ArchiveUtils.getAppropriatedType(currentURL);
+	    archiveData.setIoUtils(ioUtils);
+	}
+
+	return ioUtils;
+    }
+
+    /**
+     * Initializes {@link DeployData} to add deployments parameters
+     * 
+     * @param currentURL
+     * @return {@link DeployData}
+     */
+    private DeployData initDeploydata(URL currentURL) {
+
+	DeployData deployData;
+
+	if (CollectionUtils.valid(realURL)) {
+	    deployData = realURL.get(currentURL);
+	} else {
+	    deployData = null;
+	}
+
+	return deployData;
+    }
+
+    /**
      * Starts bean deployment process for bean name
      * 
      * @param beanName
@@ -298,18 +356,9 @@ public class MetaCreator {
     private void deployBean(String beanName) throws IOException {
 
 	URL currentURL = classOwnersURL.get(beanName);
-	ArchiveData archiveData = archivesURLs.get(currentURL);
-	if (archiveData == null) {
-	    archiveData = new ArchiveData();
-	}
-
-	ArchiveUtils ioUtils = archiveData.getIoUtils();
-	if (ioUtils == null) {
-	    ioUtils = ArchiveUtils.getAppropriatedType(currentURL);
-	    archiveData.setIoUtils(ioUtils);
-	}
+	ArchiveData archiveData = initArchiveData(currentURL);
+	ArchiveUtils ioUtils = initArchiveUtils(archiveData, currentURL);
 	ClassLoader loader = archiveData.getLoader();
-
 	// Finds appropriated ClassLoader if needed and or creates new one
 	List<File> tmpFiles = null;
 	if (ObjectUtils.notNull(ioUtils)) {
@@ -330,12 +379,7 @@ public class MetaCreator {
 	}
 
 	// Archive file url which contains this bean
-	DeployData deployData;
-	if (CollectionUtils.valid(realURL)) {
-	    deployData = realURL.get(currentURL);
-	} else {
-	    deployData = null;
-	}
+	DeployData deployData = initDeploydata(currentURL);
 	// Initializes and fills BeanLoader.BeanParameters class to deploy
 	// stateless EJB bean
 	BeanLoader.BeanParameters parameters = new BeanLoader.BeanParameters();
@@ -387,6 +431,108 @@ public class MetaCreator {
     }
 
     /**
+     * Starts RPC server if configured as remote and server
+     */
+    private void readRemoteProperties() {
+
+	if (configuration.isRemote() && Configuration.isServer()) {
+	    RpcListener.startServer(configuration);
+	} else if (configuration.isRemote()) {
+	    RPCall.configure(configuration);
+	}
+    }
+
+    /**
+     * Loads libraries from specified path
+     * 
+     * @throws IOException
+     */
+    private void initLibraries() throws IOException {
+
+	String[] libraryPaths = configuration.getLibraryPaths();
+	if (ObjectUtils.notNull(libraryPaths)) {
+	    LibraryLoader.loadLibraries(libraryPaths);
+	}
+    }
+
+    /**
+     * Gets / initializes and caches class loader
+     * 
+     * @param archives
+     */
+    private void initClassLoader(URL[] archives) {
+
+	current = LibraryLoader.getContextClassLoader();
+	archivesURLs = new WeakHashMap<URL, ArchiveData>();
+	if (CollectionUtils.valid(archives)) {
+	    realURL = new WeakHashMap<URL, DeployData>();
+	}
+    }
+
+    /**
+     * Reads EJB {@link Stateless} bean names from appropriated archives
+     * 
+     * @param archives
+     * @return
+     * @throws IOException
+     */
+    private Set<String> readBeanNames(URL[] archives) throws IOException {
+
+	Set<String> beanNames;
+
+	URL[] fullArchives = getFullArchives(archives);
+	annotationFinder = new AnnotationFinder();
+	annotationFinder.setScanFieldAnnotations(Boolean.FALSE);
+	annotationFinder.setScanParameterAnnotations(Boolean.FALSE);
+	annotationFinder.setScanMethodAnnotations(Boolean.FALSE);
+	annotationFinder.scanArchives(fullArchives);
+	beanNames = annotationFinder.getAnnotationIndex().get(
+		Stateless.class.getName());
+	classOwnersURL = annotationFinder.getClassOwnersURLs();
+
+	return beanNames;
+    }
+
+    /**
+     * Deploys EJB beans from passed array of {@link URL} for appropriated
+     * archives
+     * 
+     * @param archives
+     * @throws IOException
+     */
+    private void deploy(URL[] archives) throws IOException {
+
+	configure(archives);
+	// Starts RPC server if configured as remote and server
+	readRemoteProperties();
+	// Loads libraries from specified path
+	initLibraries();
+	// Gets and caches class loader
+	initClassLoader(archives);
+	Set<String> beanNames = readBeanNames(archives);
+	Initializer.initializeDataSources(configuration);
+	if (CollectionUtils.valid(beanNames)) {
+	    deployBeans(beanNames);
+	}
+    }
+
+    /**
+     * Clears and caches resources after deployment
+     * 
+     * @param archives
+     * @throws IOException
+     */
+    private void postDepoloy(URL[] archives) throws IOException {
+
+	// Caches configuration
+	MetaContainer.putConfig(archives, configuration);
+	// clears cached resources
+	clear();
+	// gets rid from all created temporary files
+	tmpResources.removeTempFiles();
+    }
+
+    /**
      * Scan application for find all {@link javax.ejb.Stateless} beans and
      * {@link Remote} or {@link Local} proxy interfaces
      * 
@@ -398,44 +544,9 @@ public class MetaCreator {
 
 	ObjectUtils.lock(scannerLock);
 	try {
-	    configure(archives);
-	    // starts RPC server if configured as remote and server
-	    if (configuration.isRemote() && Configuration.isServer()) {
-		RpcListener.startServer(configuration);
-	    } else if (configuration.isRemote()) {
-		RPCall.configure(configuration);
-	    }
-	    String[] libraryPaths = configuration.getLibraryPaths();
-	    // Loads libraries from specified path
-	    if (ObjectUtils.notNull(libraryPaths)) {
-		LibraryLoader.loadLibraries(libraryPaths);
-	    }
-	    // Gets and caches class loader
-	    current = LibraryLoader.getContextClassLoader();
-	    archivesURLs = new WeakHashMap<URL, ArchiveData>();
-	    if (CollectionUtils.valid(archives)) {
-		realURL = new WeakHashMap<URL, DeployData>();
-	    }
-	    URL[] fullArchives = getFullArchives(archives);
-	    annotationFinder = new AnnotationFinder();
-	    annotationFinder.setScanFieldAnnotations(Boolean.FALSE);
-	    annotationFinder.setScanParameterAnnotations(Boolean.FALSE);
-	    annotationFinder.setScanMethodAnnotations(Boolean.FALSE);
-	    annotationFinder.scanArchives(fullArchives);
-	    Set<String> beanNames = annotationFinder.getAnnotationIndex().get(
-		    Stateless.class.getName());
-	    classOwnersURL = annotationFinder.getClassOwnersURLs();
-	    Initializer.initializeDataSources(configuration);
-	    if (CollectionUtils.valid(beanNames)) {
-		deployBeans(beanNames);
-	    }
+	    deploy(archives);
 	} finally {
-	    // Caches configuration
-	    MetaContainer.putConfig(archives, configuration);
-	    // clears cached resources
-	    clear();
-	    // gets rid from all created temporary files
-	    tmpResources.removeTempFiles();
+	    postDepoloy(archives);
 	    ObjectUtils.unlock(scannerLock);
 	}
     }
@@ -601,13 +712,13 @@ public class MetaCreator {
 
 	private MetaCreator creator;
 
-	public Builder(boolean cloneConfiguration) throws IOException {
+	public Builder(boolean cloneConf) throws IOException {
 
 	    creator = MetaCreator.get();
 	    Configuration config = creator.configuration;
-	    if (cloneConfiguration && ObjectUtils.notNull(config)) {
+	    if (cloneConf && ObjectUtils.notNull(config)) {
 		try {
-		    creator.configuration = (Configuration) config.clone();
+		    creator.configuration = config.clone();
 		} catch (CloneNotSupportedException ex) {
 		    throw new IOException(ex);
 		}
