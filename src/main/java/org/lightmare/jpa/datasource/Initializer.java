@@ -155,9 +155,7 @@ public abstract class Initializer {
 	    }
 	}
 
-	if (CollectionUtils.valid(values)) {
-	    FileParsers.parseDataSources(values, config);
-	}
+	FileParsers.parseDataSources(values, config);
     }
 
     /**

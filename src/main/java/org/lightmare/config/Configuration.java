@@ -514,7 +514,6 @@ public class Configuration implements Cloneable {
 	    try {
 		Yaml yaml = new Yaml();
 		Object configuration = yaml.load(stream);
-
 		if (configuration instanceof Map) {
 		    Map<Object, Object> innerConfig = ObjectUtils
 			    .cast(configuration);
@@ -553,9 +552,7 @@ public class Configuration implements Cloneable {
      * @return {@link String}
      */
     public int getIntValue(String key) {
-
 	String value = getStringValue(key);
-
 	return Integer.parseInt(value);
     }
 
@@ -566,9 +563,7 @@ public class Configuration implements Cloneable {
      * @return {@link String}
      */
     public long getLongValue(String key) {
-
 	String value = getStringValue(key);
-
 	return Long.parseLong(value);
     }
 
