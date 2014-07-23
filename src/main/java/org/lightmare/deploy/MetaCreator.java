@@ -52,6 +52,7 @@ import org.lightmare.cache.RestContainer;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.config.ConfigKeys;
 import org.lightmare.config.Configuration;
+import org.lightmare.deploy.BeanLoader.BeanParameters;
 import org.lightmare.deploy.fs.Watcher;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.jpa.datasource.Initializer;
@@ -329,6 +330,49 @@ public class MetaCreator {
     }
 
     /**
+     * Re runs scanner for archives and initializes appropriated class loader
+     * with aggregated {@link URL}s if it is not executed yet
+     * 
+     * @param archiveData
+     * @param ioUtils
+     * @return
+     * @throws IOException
+     */
+    private ClassLoader initClassLoader(ArchiveData archiveData,
+	    ArchiveUtils ioUtils) throws IOException {
+
+	ClassLoader loader;
+
+	if (ioUtils.notExecuted()) {
+	    ioUtils.scan(configuration.isPersXmlFromJar());
+	}
+
+	URL[] libURLs = ioUtils.getURLs();
+	loader = LibraryLoader.initializeLoader(libURLs);
+	archiveData.setLoader(loader);
+
+	return loader;
+    }
+
+    /**
+     * Caches appropriated archives for instant EJB bean name
+     * 
+     * @param beanName
+     * @param ioUtils
+     * @return
+     */
+    private List<File> cacheArchives(String beanName, ArchiveUtils ioUtils) {
+
+	List<File> tmpFiles = ioUtils.getTmpFiles();
+
+	synchronized (aggregateds) {
+	    aggregateds.put(beanName, ioUtils);
+	}
+
+	return tmpFiles;
+    }
+
+    /**
      * Initializes {@link DeployData} to add deployments parameters
      * 
      * @param currentURL
@@ -348,14 +392,32 @@ public class MetaCreator {
     }
 
     /**
-     * Starts bean deployment process for bean name
+     * Initializes and sets fields in {@link BeanParameters} class
      * 
-     * @param beanName
+     * @return {@link BeanParameters}
+     */
+    private BeanParameters initDeployParameters() {
+
+	BeanParameters parameters = new BeanParameters();
+
+	parameters.creator = this;
+	parameters.blocker = blocker;
+	parameters.configuration = configuration;
+
+	return parameters;
+    }
+
+    /**
+     * Sets appropriated {@link ClassLoader} to passed {@link BeanParameters}
+     * instance
+     * 
+     * @param currentURL
+     * @param parameters
      * @throws IOException
      */
-    private void deployBean(String beanName) throws IOException {
+    private void setLoader(URL currentURL, BeanParameters parameters)
+	    throws IOException {
 
-	URL currentURL = classOwnersURL.get(beanName);
 	ArchiveData archiveData = initArchiveData(currentURL);
 	ArchiveUtils ioUtils = initArchiveUtils(archiveData, currentURL);
 	ClassLoader loader = archiveData.getLoader();
@@ -363,37 +425,53 @@ public class MetaCreator {
 	List<File> tmpFiles = null;
 	if (ObjectUtils.notNull(ioUtils)) {
 	    if (loader == null) {
-		if (ioUtils.notExecuted()) {
-		    ioUtils.scan(configuration.isPersXmlFromJar());
-		}
-
-		URL[] libURLs = ioUtils.getURLs();
-		loader = LibraryLoader.initializeLoader(libURLs);
-		archiveData.setLoader(loader);
+		loader = initClassLoader(archiveData, ioUtils);
 	    }
-
-	    tmpFiles = ioUtils.getTmpFiles();
-	    synchronized (aggregateds) {
-		aggregateds.put(beanName, ioUtils);
-	    }
+	    // Caches appropriated archive
+	    tmpFiles = cacheArchives(parameters.className, ioUtils);
 	}
+
+	parameters.loader = loader;
+	parameters.tmpFiles = tmpFiles;
+    }
+
+    /**
+     * Initializes and fills BeanParameters class to deploy EJB bean
+     * 
+     * @param beanName
+     * @throws IOException
+     */
+    private BeanParameters initDeployParameters(String beanName)
+	    throws IOException {
+
+	BeanParameters parameters = initDeployParameters();
+
+	parameters.className = beanName;
+	URL currentURL = classOwnersURL.get(beanName);
+	setLoader(currentURL, parameters);
 
 	// Archive file url which contains this bean
 	DeployData deployData = initDeploydata(currentURL);
-	// Initializes and fills BeanLoader.BeanParameters class to deploy
-	// stateless EJB bean
-	BeanLoader.BeanParameters parameters = new BeanLoader.BeanParameters();
-	parameters.creator = this;
-	parameters.className = beanName;
-	parameters.loader = loader;
-	parameters.tmpFiles = tmpFiles;
-	parameters.blocker = blocker;
+
 	parameters.deployData = deployData;
-	parameters.configuration = configuration;
+
+	return parameters;
+    }
+
+    /**
+     * Starts bean deployment process for bean name
+     * 
+     * @param beanName
+     * @throws IOException
+     */
+    private void deployBean(String beanName) throws IOException {
+
+	// Initializes and fills BeanParameters class to deploy EJB bean
+	BeanLoader.BeanParameters parameters = initDeployParameters(beanName);
 
 	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);
-
+	List<File> tmpFiles = parameters.tmpFiles;
 	if (CollectionUtils.valid(tmpFiles)) {
 	    tmpResources.addFile(tmpFiles);
 	}
