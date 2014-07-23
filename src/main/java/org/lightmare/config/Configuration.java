@@ -406,11 +406,10 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Merges configuration with default properties
+     * Sets hot deployment and directory watch configuration
      */
-    public void configureDeployments() {
+    private void mergeHotDeployment() {
 
-	// Checks if application run in hot deployment mode
 	Boolean hotDeployment = getConfigValue(ConfigKeys.HOT_DEPLOYMENT.key);
 	if (hotDeployment == null) {
 	    setConfigValue(ConfigKeys.HOT_DEPLOYMENT.key, Boolean.FALSE);
@@ -419,27 +418,48 @@ public class Configuration implements Cloneable {
 
 	// Check if application needs directory watch service
 	boolean watchStatus;
-
 	if (ObjectUtils.notTrue(hotDeployment)) {
 	    watchStatus = Boolean.TRUE;
 	} else {
 	    watchStatus = Boolean.FALSE;
 	}
-
 	setConfigValue(ConfigKeys.WATCH_STATUS.key, watchStatus);
+    }
 
-	// Sets deployments directories
+    /**
+     * Sets deployment directories
+     */
+    private void mergeDeployPath() {
+
 	Set<DeploymentDirectory> deploymentPaths = getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
 	if (deploymentPaths == null) {
 	    deploymentPaths = ConfigKeys.DEMPLOYMENT_PATH.getValue();
 	    setConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key, deploymentPaths);
 	}
+    }
 
-	// Sets remote control check
+    /**
+     * Sets remote control configuration
+     */
+    private void mergeRemoteControl() {
+
 	Boolean remoteControl = getConfigValue(ConfigKeys.REMOTE_CONTROL.key);
 	if (ObjectUtils.notNull(remoteControl)) {
 	    setRemoteControl(remoteControl);
 	}
+    }
+
+    /**
+     * Merges configuration with default properties
+     */
+    public void configureDeployments() {
+
+	// Checks if application run in hot deployment mode
+	mergeHotDeployment();
+	// Sets deployments directories
+	mergeDeployPath();
+	// Sets remote control check
+	mergeRemoteControl();
     }
 
     /**
@@ -450,6 +470,32 @@ public class Configuration implements Cloneable {
 	configureServer();
 	configureDeployments();
 	configurePool();
+    }
+
+    /**
+     * Merges key and value from passed {@link Entry} and passed {@link Map}'s
+     * appropriated key and value
+     * 
+     * @param map
+     * @param entry
+     */
+    private void deepMerge(Map<Object, Object> map,
+	    Map.Entry<Object, Object> entry) {
+
+	Object key = entry.getKey();
+	Object value2 = entry.getValue();
+	Object mergedValue;
+	if (value2 instanceof Map) {
+	    Map<Object, Object> value1 = CollectionUtils.getAsMap(key, map);
+	    Map<Object, Object> mapValue2 = ObjectUtils.cast(value2);
+	    mergedValue = deepMerge(value1, mapValue2);
+	} else {
+	    mergedValue = value2;
+	}
+
+	if (ObjectUtils.notNull(mergedValue)) {
+	    map.put(key, mergedValue);
+	}
     }
 
     /**
@@ -467,25 +513,8 @@ public class Configuration implements Cloneable {
 	    map1 = map2;
 	} else {
 	    Set<Map.Entry<Object, Object>> entries2 = map2.entrySet();
-	    Object key;
-	    Map<Object, Object> value1;
-	    Object value2;
-	    Map<Object, Object> mapValue2;
-	    Object mergedValue;
 	    for (Map.Entry<Object, Object> entry2 : entries2) {
-		key = entry2.getKey();
-		value2 = entry2.getValue();
-		if (value2 instanceof Map) {
-		    value1 = CollectionUtils.getAsMap(key, map1);
-		    mapValue2 = ObjectUtils.cast(value2);
-		    mergedValue = deepMerge(value1, mapValue2);
-		} else {
-		    mergedValue = value2;
-		}
-
-		if (ObjectUtils.notNull(mergedValue)) {
-		    map1.put(key, mergedValue);
-		}
+		deepMerge(map1, entry2);
 	    }
 	}
 
