@@ -436,6 +436,34 @@ public class MetaCreator {
     }
 
     /**
+     * Initializes and sets {@link DeployData} to pased {@link BeanParameters}
+     * instance
+     * 
+     * @param currentURL
+     * @param parameters
+     */
+    private void setDeployData(URL currentURL, BeanParameters parameters) {
+
+	// Archive file url which contains this bean
+	DeployData deployData = initDeploydata(currentURL);
+	parameters.deployData = deployData;
+    }
+
+    /**
+     * Fills appropriated field of passed {@link BeanParameters} intance
+     * 
+     * @param currentURL
+     * @param parameters
+     * @throws IOException
+     */
+    private void fillBeanParameters(URL currentURL, BeanParameters parameters)
+	    throws IOException {
+
+	setLoader(currentURL, parameters);
+	setDeployData(currentURL, parameters);
+    }
+
+    /**
      * Initializes and fills BeanParameters class to deploy EJB bean
      * 
      * @param beanName
@@ -448,12 +476,7 @@ public class MetaCreator {
 
 	parameters.className = beanName;
 	URL currentURL = classOwnersURL.get(beanName);
-	setLoader(currentURL, parameters);
-
-	// Archive file url which contains this bean
-	DeployData deployData = initDeploydata(currentURL);
-
-	parameters.deployData = deployData;
+	fillBeanParameters(currentURL, parameters);
 
 	return parameters;
     }
@@ -494,12 +517,12 @@ public class MetaCreator {
 			beanName, ex.getMessage());
 	    }
 	}
-
+	// Locks until deployments are finished
 	awaitDeployments();
 	if (RestContainer.hasRest()) {
 	    RestProvider.reload();
 	}
-
+	// Process post deployment procedures
 	boolean hotDeployment = configuration.isHotDeployment();
 	boolean watchStatus = configuration.isWatchStatus();
 	if (hotDeployment && ObjectUtils.notTrue(watchStatus)) {
@@ -729,6 +752,36 @@ public class MetaCreator {
     }
 
     /**
+     * Clears locally cached data
+     */
+    private void clearresources() {
+
+	// Real URL
+	if (CollectionUtils.valid(realURL)) {
+	    realURL.clear();
+	    realURL = null;
+	}
+	// Aggregated URLs
+	if (CollectionUtils.valid(aggregateds)) {
+	    synchronized (aggregateds) {
+		aggregateds.clear();
+	    }
+	}
+	// Archive URLs
+	if (CollectionUtils.valid(archivesURLs)) {
+	    archivesURLs.clear();
+	    archivesURLs = null;
+	}
+	// Class owner URLs
+	if (CollectionUtils.valid(classOwnersURL)) {
+	    classOwnersURL.clear();
+	    classOwnersURL = null;
+	}
+	// Configuration
+	configuration = null;
+    }
+
+    /**
      * Clears all locally cached data
      */
     public void clear() {
@@ -741,28 +794,7 @@ public class MetaCreator {
 	    locked = ObjectUtils.tryLock(scannerLock);
 	    if (locked) {
 		try {
-		    if (CollectionUtils.valid(realURL)) {
-			realURL.clear();
-			realURL = null;
-		    }
-
-		    if (CollectionUtils.valid(aggregateds)) {
-			synchronized (aggregateds) {
-			    aggregateds.clear();
-			}
-		    }
-
-		    if (CollectionUtils.valid(archivesURLs)) {
-			archivesURLs.clear();
-			archivesURLs = null;
-		    }
-
-		    if (CollectionUtils.valid(classOwnersURL)) {
-			classOwnersURL.clear();
-			classOwnersURL = null;
-		    }
-
-		    configuration = null;
+		    clearresources();
 		} finally {
 		    ObjectUtils.unlock(scannerLock);
 		}
