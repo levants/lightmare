@@ -118,12 +118,10 @@ public class ConnectionContainer {
 	} else {
 	    current = semaphore;
 	}
-
 	// Checks if current semaphore is not set
 	if (current == null) {
 	    current = semaphore;
 	}
-
 	// Increments user count in semaphore
 	current.incrementUser();
 
@@ -345,7 +343,7 @@ public class ConnectionContainer {
 	    EntityManagerFactory emf = semaphore.getEmf();
 	    JpaManager.closeEntityManagerFactory(emf);
 	    unbindConnection(semaphore);
-
+	    // Removed connection from cache
 	    CONNECTIONS.remove(semaphore.getUnitName());
 	    String jndiName = semaphore.getJndiName();
 	    if (StringUtils.valid(jndiName)) {

@@ -73,11 +73,9 @@ public class RestContainer {
 
 	Set<Object> handlers = resource.getHandlerInstances();
 	if (CollectionUtils.valid(handlers)) {
-
 	    Iterator<Object> iterator = handlers.iterator();
 	    Object handler;
 	    RestInflector inflector;
-
 	    while (iterator.hasNext() && handlerClass == null) {
 		handler = iterator.next();
 		if (handler instanceof RestInflector) {
@@ -147,10 +145,7 @@ public class RestContainer {
      * @return {@link Resource}
      */
     public static Resource getResource(Class<?> resourceClass) {
-
-	Resource resource = REST_RESOURCES.get(resourceClass);
-
-	return resource;
+	return REST_RESOURCES.get(resourceClass);
     }
 
     /**
