@@ -32,6 +32,9 @@ import org.lightmare.utils.fs.FileType;
  * 
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
+ * @see org.lightmare.deploy.MetaCreator
+ * @see org.lightmare.deploy.deployers.BeanDeployer
+ * @see org.lightmare.utils.fs.WatchUtils
  */
 public class DeployData {
 
