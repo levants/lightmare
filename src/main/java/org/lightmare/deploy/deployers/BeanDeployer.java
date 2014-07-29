@@ -122,6 +122,11 @@ public class BeanDeployer implements Callable<String> {
 
     private static final Logger LOG = Logger.getLogger(BeanDeployer.class);
 
+    /**
+     * Constructor with {@link BeanParameters} deployments parameters
+     * 
+     * @param parameters
+     */
     public BeanDeployer(BeanParameters parameters) {
 	this.creator = parameters.creator;
 	this.beanName = parameters.beanName;
@@ -632,6 +637,11 @@ public class BeanDeployer implements Callable<String> {
 	return deployed;
     }
 
+    /**
+     * Deploys EJB bean from extracted EAR or JAR file
+     * 
+     * @return {@link String} EJB bean name
+     */
     private String deployExtracted() {
 
 	String deployed;
@@ -647,17 +657,36 @@ public class BeanDeployer implements Callable<String> {
 	return deployed;
     }
 
+    /**
+     * Deploys EJB bean from extracted EAR file or JAR file
+     * 
+     * @return {@link String} EJB bean name
+     */
+    private String deployBean() {
+
+	String deployed;
+
+	if (ObjectUtils.notNull(tmpFiles)) {
+	    deployed = deployExtracted();
+	} else {
+	    deployed = deployFile();
+	}
+
+	return deployed;
+    }
+
+    /**
+     * Deploys EJB bean from extracted EAR file or JAR file
+     * 
+     * @return {@link String} EJB bean name
+     */
     private String deploy() {
 
 	String deployed;
 
 	synchronized (metaData) {
 	    try {
-		if (ObjectUtils.notNull(tmpFiles)) {
-		    deployed = deployExtracted();
-		} else {
-		    deployed = deployFile();
-		}
+		deployed = deployBean();
 	    } catch (Exception ex) {
 		LOG.error(ex.getMessage(), ex);
 		deployed = null;
@@ -665,17 +694,13 @@ public class BeanDeployer implements Callable<String> {
 		releaseBlocker();
 		metaData.notifyAll();
 	    }
-
-	    return deployed;
 	}
-    }
-
-    @Override
-    public String call() throws Exception {
-
-	String deployed = deploy();
 
 	return deployed;
     }
 
+    @Override
+    public String call() throws Exception {
+	return deploy();
+    }
 }
