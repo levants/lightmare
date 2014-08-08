@@ -26,6 +26,12 @@ public class InterceptorHandler {
     // Interceptors for given bean instance
     private final Collection<InterceptorData> interceptorDatas;
 
+    /**
+     * Constructor with {@link MetaData} to set {@link InterceptorData}
+     * parameters
+     * 
+     * @param metaData
+     */
     public InterceptorHandler(MetaData metaData) {
 	this.interceptorDatas = metaData.getInterceptors();
     }
