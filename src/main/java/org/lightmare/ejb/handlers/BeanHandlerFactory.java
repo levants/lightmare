@@ -43,7 +43,6 @@ public class BeanHandlerFactory {
      */
     private static void configure(final BeanHandler handler, final Object bean)
 	    throws IOException {
-
 	handler.setBean(bean);
 	handler.configure();
     }

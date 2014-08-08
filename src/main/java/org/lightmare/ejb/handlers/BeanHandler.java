@@ -143,6 +143,36 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
+     * Initializes injection for EJB bean
+     * 
+     * @param injectionData
+     * @return {@link MetaData} for injected EJB bean
+     * @throws IOException
+     */
+    private MetaData initInjection(InjectionData injectionData)
+	    throws IOException {
+
+	MetaData injectMetaData = injectionData.getMetaData();
+
+	if (injectMetaData == null) {
+	    String beanName;
+	    String mappedName = injectionData.getMappedName();
+	    if (mappedName == null || mappedName.isEmpty()) {
+		beanName = injectionData.getName();
+	    } else {
+		beanName = injectionData.getMappedName();
+	    }
+	    // Fills injection meta data parameters
+	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
+	    injectMetaData.setInterfaceClasses(injectionData
+		    .getInterfaceClasses());
+	    injectionData.setMetaData(injectMetaData);
+	}
+
+	return injectMetaData;
+    }
+
+    /**
      * Sets each injected EJB bean as value to annotated field respectively for
      * passed {@link InjectionData} object
      * 
@@ -153,18 +183,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
 	MetaData injectMetaData = injectionData.getMetaData();
 	if (injectMetaData == null) {
-	    String beanName;
-	    String mappedName = injectionData.getMappedName();
-	    if (mappedName == null || mappedName.isEmpty()) {
-		beanName = injectionData.getName();
-	    } else {
-		beanName = injectionData.getMappedName();
-	    }
-
-	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
-	    injectMetaData.setInterfaceClasses(injectionData
-		    .getInterfaceClasses());
-	    injectionData.setMetaData(injectMetaData);
+	    injectMetaData = initInjection(injectionData);
 	}
 
 	EjbConnector ejbConnector = new EjbConnector();
@@ -221,10 +240,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @return {@link UserTransaction}
      */
     private UserTransaction getTransaction(Collection<EntityManager> ems) {
-
-	UserTransaction transaction = BeanTransactions.getTransaction(ems);
-
-	return transaction;
+	return BeanTransactions.getTransaction(ems);
     }
 
     /**
@@ -358,6 +374,30 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
+     * Fills {@link Queue} of methods and targets for specified bean
+     * {@link Method} and {@link InterceptorData}'s collection
+     * 
+     * @param method
+     * @param methods
+     * @param targets
+     * @throws IOException
+     */
+    private void fillInterceptors(Method method, Queue<Method> methods,
+	    Queue<Object> targets) throws IOException {
+
+	Iterator<InterceptorData> interceptors = interceptorDatas.iterator();
+	InterceptorData interceptor;
+	boolean valid;
+	while (interceptors.hasNext()) {
+	    interceptor = interceptors.next();
+	    valid = checkInterceptor(interceptor, method);
+	    if (valid) {
+		fillInterceptor(interceptor, methods, targets);
+	    }
+	}
+    }
+
+    /**
      * Checks if current {@link javax.interceptor.Interceptors} data is valid
      * for specified {@link Method} call
      * 
@@ -380,6 +420,35 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
+     * Initializes and invokes {@link InvocationContext} implementation
+     * 
+     * @param method
+     * @param parameters
+     * @return Array of {@link Object} parameters for intercepted method
+     * @throws IOException
+     */
+    private Object[] callInterceptorContext(Method method, Object[] parameters)
+	    throws IOException {
+
+	Object[] intercepteds;
+
+	Queue<Method> methods = new LinkedList<Method>();
+	Queue<Object> targets = new LinkedList<Object>();
+	fillInterceptors(method, methods, targets);
+	// Initializes invocation context
+	InvocationContext context = new InvocationContextImpl(methods, targets,
+		parameters);
+	try {
+	    context.proceed();
+	    intercepteds = context.getParameters();
+	} catch (Exception ex) {
+	    throw new IOException(ex);
+	}
+
+	return intercepteds;
+    }
+
+    /**
      * Invokes first method from {@link javax.interceptor.Interceptors}
      * annotated data
      * 
@@ -393,28 +462,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	Object[] intercepteds;
 
 	if (CollectionUtils.valid(interceptorDatas)) {
-	    Iterator<InterceptorData> interceptors = interceptorDatas
-		    .iterator();
-	    InterceptorData interceptor;
-	    Queue<Method> methods = new LinkedList<Method>();
-	    Queue<Object> targets = new LinkedList<Object>();
-	    boolean valid;
-	    while (interceptors.hasNext()) {
-		interceptor = interceptors.next();
-		valid = checkInterceptor(interceptor, method);
-		if (valid) {
-		    fillInterceptor(interceptor, methods, targets);
-		}
-	    }
-
-	    InvocationContext context = new InvocationContextImpl(methods,
-		    targets, parameters);
-	    try {
-		context.proceed();
-		intercepteds = context.getParameters();
-	    } catch (Exception ex) {
-		throw new IOException(ex);
-	    }
+	    intercepteds = callInterceptorContext(method, parameters);
 	} else {
 	    intercepteds = parameters;
 	}
@@ -467,7 +515,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    value = invokeBeanMethod(ems, realMethod, arguments);
 	} catch (Throwable th) {
 	    rollback(realMethod);
-	    throw new Throwable(th);
+	    throw th;
 	} finally {
 	    close(realMethod);
 	}
