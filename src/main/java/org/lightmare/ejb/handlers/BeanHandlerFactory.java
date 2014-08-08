@@ -87,7 +87,7 @@ public class BeanHandlerFactory {
 	    handler = new BeanHandler(metaData);
 	    metaData.setHandler(handler);
 	}
-
+	// Clones EJB bean handler
 	cloneHandler = cloneHandler(handler);
 	configure(cloneHandler, bean);
 

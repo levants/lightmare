@@ -72,6 +72,28 @@ public class ClassUtils {
     private static final Lock ACCESSOR_LOCK = new ReentrantLock();
 
     /**
+     * Gets target {@link Throwable} from passed
+     * {@link InvocationTargetException} instance
+     * 
+     * @param ex
+     * @return {@link IOException}
+     */
+    private static IOException unwrap(InvocationTargetException ex) {
+
+	IOException exception;
+
+	Throwable targetException = ex.getTargetException();
+	if (targetException == null) {
+	    exception = new IOException(ex.getMessage(), ex);
+	} else {
+	    exception = new IOException(targetException.getMessage(),
+		    targetException);
+	}
+
+	return exception;
+    }
+
+    /**
      * Checks if passed {@link AccessibleObject} instance is not accessible
      * 
      * @param accessibleObject
@@ -151,7 +173,7 @@ public class ClassUtils {
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
 	} catch (InvocationTargetException ex) {
-	    throw new IOException(ex);
+	    throw unwrap(ex);
 	} finally {
 	    resetAccessible(constructor, accessible);
 	}
@@ -527,7 +549,7 @@ public class ClassUtils {
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
 	} catch (InvocationTargetException ex) {
-	    throw new IOException(ex);
+	    throw unwrap(ex);
 	}
 
 	return value;
@@ -578,7 +600,7 @@ public class ClassUtils {
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
 	} catch (InvocationTargetException ex) {
-	    throw new IOException(ex);
+	    throw unwrap(ex);
 	}
 
 	return value;
