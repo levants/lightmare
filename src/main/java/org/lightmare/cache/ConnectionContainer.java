@@ -107,6 +107,7 @@ public class ConnectionContainer {
     private static ConnectionSemaphore initSemaphore(String unitName) {
 
 	ConnectionSemaphore semaphore = new ConnectionSemaphore();
+
 	semaphore.setUnitName(unitName);
 	semaphore.setInProgress(Boolean.TRUE);
 	semaphore.setCached(Boolean.TRUE);
