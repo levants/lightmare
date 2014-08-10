@@ -99,6 +99,23 @@ public class ConnectionContainer {
     }
 
     /**
+     * Initializes nw {@link ConnectionSemaphore} and sets default properties
+     * 
+     * @param unitName
+     * @return {@link ConnectionSemaphore}
+     */
+    private static ConnectionSemaphore initSemaphore(String unitName) {
+
+	ConnectionSemaphore semaphore = new ConnectionSemaphore();
+	semaphore.setUnitName(unitName);
+	semaphore.setInProgress(Boolean.TRUE);
+	semaphore.setCached(Boolean.TRUE);
+
+	return semaphore;
+
+    }
+
+    /**
      * Creates and locks {@link ConnectionSemaphore} instance.
      * 
      * @param unitName
@@ -110,10 +127,7 @@ public class ConnectionContainer {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
 	if (semaphore == null) {
-	    semaphore = new ConnectionSemaphore();
-	    semaphore.setUnitName(unitName);
-	    semaphore.setInProgress(Boolean.TRUE);
-	    semaphore.setCached(Boolean.TRUE);
+	    semaphore = initSemaphore(unitName);
 	    current = CONNECTIONS.putIfAbsent(unitName, semaphore);
 	} else {
 	    current = semaphore;

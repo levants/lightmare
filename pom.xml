@@ -46,7 +46,7 @@
 		<!-- major dependencies versions -->
 		<!-- hibernate -->
 		<hibernate.version>4.3.6.Final</hibernate.version>
-		<hibernate-validator.version>5.1.1.Final</hibernate-validator.version>
+		<hibernate-validator.version>5.1.2.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
 		<!-- spring -->
 		<spring.version>4.0.6.RELEASE</spring.version>
@@ -60,7 +60,7 @@
 		<simple-jndi.version>0.11.4.1</simple-jndi.version>
 		<!-- end of simple-jndi -->
 		<!-- jackson -->
-		<jackson.version>2.4.0</jackson.version>
+		<jackson.version>2.4.1</jackson.version>
 		<!-- end of jackson -->
 		<!-- yaml -->
 		<snakeyaml.version>1.13</snakeyaml.version>
