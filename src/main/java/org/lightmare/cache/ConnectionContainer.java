@@ -256,7 +256,6 @@ public class ConnectionContainer {
 	    throws IOException {
 
 	ConnectionSemaphore semaphore = CONNECTIONS.get(unitName);
-
 	isInProgress(semaphore);
 
 	return semaphore;
@@ -282,7 +281,6 @@ public class ConnectionContainer {
 	    if (inProgress) {
 		awaitConnection(semaphore);
 	    }
-
 	    emf = semaphore.getEmf();
 	} else {
 	    emf = null;
@@ -321,7 +319,7 @@ public class ConnectionContainer {
 
 	Collection<ConnectionSemaphore> semaphores = CONNECTIONS.values();
 	EntityManagerFactory emf;
-
+	// Closes each connection from cache
 	for (ConnectionSemaphore semaphore : semaphores) {
 	    emf = semaphore.getEmf();
 	    JpaManager.closeEntityManagerFactory(emf);
@@ -410,7 +408,7 @@ public class ConnectionContainer {
 	    type = new PoolConfig().getPoolProviderType();
 	    POOL_CONFIG_TYPES.put(jndiName, type);
 	}
-
+	// Removes JNDI name from cache
 	POOL_CONFIG_TYPES.remove(jndiName);
 
 	return type;
