@@ -158,7 +158,7 @@ public class MetaData {
 	if (connections == null) {
 	    connections = new ArrayList<ConnectionData>();
 	}
-
+	// Caches connection meta data
 	connections.add(connection);
     }
 
@@ -193,7 +193,7 @@ public class MetaData {
 			.unitName();
 		addUnitField(unitName, unitField);
 	    }
-
+	    // Caches connection EJB bean fields meta data
 	    this.unitFields = unitFields;
 	}
     }
@@ -254,7 +254,7 @@ public class MetaData {
 	if (injects == null) {
 	    injects = new ArrayList<InjectionData>();
 	}
-
+	// Caches EJB injection meta data
 	injects.add(inject);
     }
 
@@ -273,7 +273,7 @@ public class MetaData {
 	if (interceptors == null) {
 	    interceptors = new LinkedList<InterceptorData>();
 	}
-
+	// Caches EJB intercept meta data
 	interceptors.offer(interceptor);
     }
 

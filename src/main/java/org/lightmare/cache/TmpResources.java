@@ -53,7 +53,7 @@ public class TmpResources {
 	for (File file : files) {
 	    file.deleteOnExit();
 	}
-
+	// Caches temporal files
 	tmpFiles.add(files);
     }
 
@@ -67,7 +67,7 @@ public class TmpResources {
 	for (List<File> files : tmpFiles) {
 	    BeanLoader.removeResources(files);
 	}
-
+	// Clears temporal files cache
 	tmpFiles.clear();
     }
 

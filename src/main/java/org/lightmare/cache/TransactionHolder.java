@@ -47,9 +47,7 @@ public class TransactionHolder {
      * @return {@link UserTransaction}
      */
     public static UserTransaction getTransaction() {
-
 	UserTransaction transaction = TRANSACTION_HOLDER.get();
-
 	return transaction;
     }
 

@@ -283,7 +283,7 @@ public class MetaContainer {
 	if (metaData == null) {
 	    throw BeanNotDeployedException.get(beanName);
 	}
-
+	// Locks until initialization is complete
 	awaitMetaData(metaData);
 
 	return metaData;
@@ -349,7 +349,7 @@ public class MetaContainer {
 		beanNames = new HashSet<String>();
 		EJB_URLS.put(url, beanNames);
 	    }
-
+	    // Caches EJB bean name
 	    beanNames.add(beanName);
 	}
     }
@@ -360,9 +360,7 @@ public class MetaContainer {
      * @return {@link Set}<URL>
      */
     public static Set<URL> listApplications() {
-
 	Set<URL> apps = EJB_URLS.keySet();
-
 	return apps;
     }
 
@@ -380,11 +378,10 @@ public class MetaContainer {
 		// Gets connection to clear
 		String unitName = connection.getUnitName();
 		ConnectionSemaphore semaphore = connection.getConnection();
-
 		if (semaphore == null) {
 		    semaphore = ConnectionContainer.getConnection(unitName);
 		}
-
+		// Clears connection from cache
 		if (ObjectUtils.notNull(semaphore)
 			&& semaphore.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS) {
 		    ConnectionContainer.removeConnection(unitName);
@@ -411,16 +408,15 @@ public class MetaContainer {
 		    beanName, ex.getMessage());
 	    metaData = null;
 	}
-
 	// Removes MetaData from cache
 	removeMeta(beanName);
-
+	// Clears REST services and connections
 	if (ObjectUtils.notNull(metaData)) {
 	    // Removes appropriated resource class from REST service
 	    if (RestContainer.hasRest()) {
 		RestProvider.remove(metaData.getBeanClass());
 	    }
-
+	    // Clears connection and unloads classes
 	    clearConnection(metaData);
 	    ClassLoader loader = metaData.getLoader();
 	    LibraryLoader.closeClassLoader(loader);
@@ -447,7 +443,7 @@ public class MetaContainer {
 		    undeployBean(beanName);
 		}
 	    }
-
+	    // Clears EJB bean names
 	    removeBeanNames(url);
 	}
 
@@ -528,7 +524,7 @@ public class MetaContainer {
 		clearMetaCreator();
 	    }
 	}
-
+	// Clears caches
 	CONFIGS.clear();
 	EJBS.clear();
 	EJB_URLS.clear();
