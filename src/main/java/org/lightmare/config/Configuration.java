@@ -92,7 +92,7 @@ public class Configuration implements Cloneable {
 	if (from == null) {
 	    from = config;
 	}
-
+	// Gets value associated with key as map
 	Map<K, V> value = ObjectUtils.cast(CollectionUtils.getAsMap(key, from));
 
 	return value;
