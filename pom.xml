@@ -60,16 +60,16 @@
 		<simple-jndi.version>0.11.4.1</simple-jndi.version>
 		<!-- end of simple-jndi -->
 		<!-- jackson -->
-		<jackson.version>2.4.1</jackson.version>
+		<jackson.version>2.4.2</jackson.version>
 		<!-- end of jackson -->
 		<!-- yaml -->
 		<snakeyaml.version>1.13</snakeyaml.version>
 		<!-- end of yaml -->
 		<!-- jersey -->
-		<jersey.version>2.11</jersey.version>
+		<jersey.version>2.12</jersey.version>
 		<!-- end of jersey -->
 		<!-- netty -->
-		<netty.version>4.0.21.Final</netty.version>
+		<netty.version>4.0.23.Final</netty.version>
 		<!-- end of netty -->
 		<!-- data sources on connection pooling -->
 		<tomcat-jdbc.version>8.0.9</tomcat-jdbc.version>
