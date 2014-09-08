@@ -67,7 +67,6 @@ public class ConfigLoader {
     public List<URL> readURL(final URL url) {
 
 	List<URL> xmls = new ArrayList<URL>();
-
 	shortPath = StringUtils
 		.concat(ArchiveUtils.ARCHIVE_URL_DELIM, XML_PATH);
 

@@ -210,7 +210,6 @@ public class SpringORM {
 	transactionManager.setEntityManagerFactory(emf);
 
 	return transactionManager;
-
     }
 
     /**
