@@ -216,7 +216,6 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @param value
      */
     protected <K, V> void setWithInitialization(Object key, K subKey, V value) {
-
 	Map<K, V> result = getWithInitialization(key);
 	result.put(subKey, value);
     }
@@ -249,7 +248,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 	} else {
 	    mergedValue = value2;
 	}
-
+	// Caches merged value
 	if (ObjectUtils.notNull(mergedValue)) {
 	    map.put(key, mergedValue);
 	}
