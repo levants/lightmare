@@ -28,14 +28,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
@@ -53,10 +50,7 @@ import org.yaml.snakeyaml.Yaml;
  * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
-public class Configuration implements Cloneable {
-
-    // Cache for all configuration passed from API or read from file
-    private final Map<Object, Object> config = new HashMap<Object, Object>();
+public class Configuration extends AbstractConfiguration implements Cloneable {
 
     // Instance of pool configuration
     private static final PoolConfig POOL_CONFIG = new PoolConfig();
@@ -64,207 +58,7 @@ public class Configuration implements Cloneable {
     // Runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
-    // Resource path (META-INF)
-    private static final String META_INF_PATH = "META-INF/";
-
-    // Error messages
-    private static final String COULD_NOT_LOAD_CONFIG_ERROR = "Could not load configuration";
-
-    private static final String COULD_NOT_OPEN_FILE_ERROR = "Could not open config file";
-
-    private static final String RESOURCE_NOT_EXISTS_ERROR = "Configuration resource doesn't exist";
-
-    private static final Logger LOG = Logger.getLogger(Configuration.class);
-
     public Configuration() {
-    }
-
-    /**
-     * Gets value on passed generic key K of passed {@link Map} as {@link Map}
-     * of generic key values
-     * 
-     * @param key
-     * @param from
-     * @return {@link Map}<code><K, V></code>
-     */
-    private <K, V> Map<K, V> getAsMap(Object key, Map<Object, Object> from) {
-
-	if (from == null) {
-	    from = config;
-	}
-	// Gets value associated with key as map
-	Map<K, V> value = ObjectUtils.cast(CollectionUtils.getAsMap(key, from));
-
-	return value;
-    }
-
-    /**
-     * Gets value on passed generic key K of cached configuration as {@link Map}
-     * of generic key values
-     * 
-     * @param key
-     * @return {@link Map}<code><K, V></code>
-     */
-    private <K, V> Map<K, V> getAsMap(Object key) {
-	return getAsMap(key, null);
-    }
-
-    /**
-     * Sets value of sub {@link Map} on passed sub key contained in cached
-     * configuration on passed key
-     * 
-     * @param key
-     * @param subKey
-     * @param value
-     */
-    private <K, V> void setSubConfigValue(Object key, K subKey, V value) {
-
-	Map<K, V> subConfig = getAsMap(key);
-	if (subConfig == null) {
-	    subConfig = new HashMap<K, V>();
-	    config.put(key, subConfig);
-	}
-
-	subConfig.put(subKey, value);
-    }
-
-    /**
-     * Gets value of sub {@link Map} on passed sub key contained in cached
-     * configuration on passed key
-     * 
-     * @param key
-     * @param subKey
-     * @param defaultValue
-     * @return V
-     */
-    private <K, V> V getSubConfigValue(Object key, K subKey, V defaultValue) {
-
-	V def;
-
-	Map<K, V> subConfig = getAsMap(key);
-	if (CollectionUtils.valid(subConfig)) {
-	    def = subConfig.get(subKey);
-	    if (def == null) {
-		def = defaultValue;
-	    }
-	} else {
-	    def = defaultValue;
-	}
-
-	return def;
-    }
-
-    /**
-     * Check if sub {@link Map} contains passed sub key contained in cached
-     * configuration on passed key
-     * 
-     * @param key
-     * @param subKey
-     * @return <code>boolean</code>
-     */
-    private <K> boolean containsSubConfigKey(Object key, K subKey) {
-
-	boolean valid;
-
-	Map<K, ?> subConfig = getAsMap(key);
-	valid = CollectionUtils.valid(subConfig);
-	if (valid) {
-	    valid = subConfig.containsKey(subKey);
-	}
-
-	return valid;
-    }
-
-    /**
-     * Checks if configuration contains passed key
-     * 
-     * @param key
-     * @return <code>boolean</code>
-     */
-    private <K> boolean containsConfigKey(K key) {
-	return containsSubConfigKey(ConfigKeys.DEPLOY_CONFIG.key, key);
-    }
-
-    /**
-     * Gets value from sub configuration for passed sub key contained in
-     * configuration for passed key
-     * 
-     * @param key
-     * @param subKey
-     * @return <coder>V</code>
-     */
-    private <K, V> V getSubConfigValue(Object key, K subKey) {
-	return getSubConfigValue(key, subKey, null);
-    }
-
-    /**
-     * Sets sub configuration configuration value for passed sub key for default
-     * configuration key
-     * 
-     * @param subKey
-     * @param value
-     */
-    private <K, V> void setConfigValue(K subKey, V value) {
-	setSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey, value);
-    }
-
-    /**
-     * Gets value from sub configuration for passed sub key contained in
-     * configuration for default configuration key and if such not exists
-     * returns passed default value
-     * 
-     * @param subKey
-     * @param defaultValue
-     * @return <coder>V</code>
-     */
-    private <K, V> V getConfigValue(K subKey, V defaultValue) {
-	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey,
-		defaultValue);
-    }
-
-    /**
-     * Gets value from sub configuration for passed sub key contained in
-     * configuration for default configuration key
-     * 
-     * @param subKey
-     * @param defaultValue
-     * @return <coder>V</code>
-     */
-    private <K, V> V getConfigValue(K subKey) {
-	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey);
-    }
-
-    /**
-     * Gets {@link Map} value from configuration with passed key and if such
-     * does not exists creates and puts new instance
-     * 
-     * @param key
-     * @return {@link Map}<code><K, V></code>
-     */
-    private <K, V> Map<K, V> getWithInitialization(Object key) {
-
-	Map<K, V> result = getConfigValue(key);
-
-	if (result == null) {
-	    result = new HashMap<K, V>();
-	    setConfigValue(key, result);
-	}
-
-	return result;
-    }
-
-    /**
-     * Sets sub configuration configuration value for passed sub key for passed
-     * configuration key (if sub configuration does not exists creates and puts
-     * new instance)
-     * 
-     * @param subKey
-     * @param value
-     */
-    private <K, V> void setWithInitialization(Object key, K subKey, V value) {
-
-	Map<K, V> result = getWithInitialization(key);
-	result.put(subKey, value);
     }
 
     /**
@@ -375,14 +169,6 @@ public class Configuration implements Cloneable {
 	}
     }
 
-    private <K, V> void setIfContains(K key, V value) {
-
-	boolean contains = containsConfigKey(key);
-	if (ObjectUtils.notTrue(contains)) {
-	    setConfigValue(key, value);
-	}
-    }
-
     /**
      * Configures server from properties and default values
      */
@@ -473,64 +259,6 @@ public class Configuration implements Cloneable {
     }
 
     /**
-     * Merges key and value from passed {@link Entry} and passed {@link Map}'s
-     * appropriated key and value
-     * 
-     * @param map
-     * @param entry
-     */
-    private void deepMerge(Map<Object, Object> map,
-	    Map.Entry<Object, Object> entry) {
-
-	Object key = entry.getKey();
-	Object value2 = entry.getValue();
-	Object mergedValue;
-	if (value2 instanceof Map) {
-	    Map<Object, Object> value1 = CollectionUtils.getAsMap(key, map);
-	    Map<Object, Object> mapValue2 = ObjectUtils.cast(value2);
-	    mergedValue = deepMerge(value1, mapValue2);
-	} else {
-	    mergedValue = value2;
-	}
-
-	if (ObjectUtils.notNull(mergedValue)) {
-	    map.put(key, mergedValue);
-	}
-    }
-
-    /**
-     * Merges two {@link Map}s and if second {@link Map}'s value is instance of
-     * {@link Map} merges this value with first {@link Map}'s value recursively
-     * 
-     * @param map1
-     * @param map2
-     * @return <code>{@link Map}<Object, Object></code>
-     */
-    protected Map<Object, Object> deepMerge(Map<Object, Object> map1,
-	    Map<Object, Object> map2) {
-
-	if (map1 == null) {
-	    map1 = map2;
-	} else {
-	    Set<Map.Entry<Object, Object>> entries2 = map2.entrySet();
-	    for (Map.Entry<Object, Object> entry2 : entries2) {
-		deepMerge(map1, entry2);
-	    }
-	}
-
-	return map1;
-    }
-
-    /**
-     * Reads configuration from passed properties
-     * 
-     * @param configuration
-     */
-    public void configure(Map<Object, Object> configuration) {
-	deepMerge(config, configuration);
-    }
-
-    /**
      * Reads configuration from passed file path
      * 
      * @param configuration
@@ -551,144 +279,6 @@ public class Configuration implements Cloneable {
 	    } finally {
 		IOUtils.close(stream);
 	    }
-	}
-    }
-
-    /**
-     * Gets value associated with particular key as {@link String} instance
-     * 
-     * @param key
-     * @return {@link String}
-     */
-    public String getStringValue(String key) {
-
-	String textValue;
-
-	Object value = config.get(key);
-	if (value == null) {
-	    textValue = null;
-	} else {
-	    textValue = value.toString();
-	}
-
-	return textValue;
-    }
-
-    /**
-     * Gets value associated with particular key as <code>int</code> instance
-     * 
-     * @param key
-     * @return {@link String}
-     */
-    public int getIntValue(String key) {
-	String value = getStringValue(key);
-	return Integer.parseInt(value);
-    }
-
-    /**
-     * Gets value associated with particular key as <code>long</code> instance
-     * 
-     * @param key
-     * @return {@link String}
-     */
-    public long getLongValue(String key) {
-	String value = getStringValue(key);
-	return Long.parseLong(value);
-    }
-
-    /**
-     * Gets value associated with particular key as <code>boolean</code>
-     * instance
-     * 
-     * @param key
-     * @return {@link String}
-     */
-    public boolean getBooleanValue(String key) {
-
-	String value = getStringValue(key);
-
-	return Boolean.parseBoolean(value);
-    }
-
-    public void putValue(String key, String value) {
-	config.put(key, value);
-    }
-
-    /**
-     * Load {@link Configuration} in memory as {@link Map} of parameters
-     * 
-     * @throws IOException
-     */
-    public void loadFromStream(InputStream propertiesStream) throws IOException {
-
-	try {
-	    Properties props = new Properties();
-	    props.load(propertiesStream);
-
-	    for (String propertyName : props.stringPropertyNames()) {
-		config.put(propertyName, props.getProperty(propertyName));
-	    }
-	} catch (IOException ex) {
-	    LOG.error(COULD_NOT_LOAD_CONFIG_ERROR, ex);
-	} finally {
-	    IOUtils.close(propertiesStream);
-	}
-    }
-
-    /**
-     * Loads configuration form file
-     * 
-     * @throws IOException
-     */
-    public void loadFromFile() throws IOException {
-
-	String configFilePath = ConfigKeys.CONFIG_FILE.getValue();
-
-	try {
-	    File configFile = new File(configFilePath);
-	    if (configFile.exists()) {
-		InputStream propertiesStream = new FileInputStream(configFile);
-		loadFromStream(propertiesStream);
-	    } else {
-		configFile.mkdirs();
-	    }
-	} catch (IOException ex) {
-	    LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
-	}
-    }
-
-    /**
-     * Loads configuration form file by passed file path
-     * 
-     * @param configFilename
-     * @throws IOException
-     */
-    public void loadFromFile(String configFilename) throws IOException {
-
-	try {
-	    InputStream propertiesStream = new FileInputStream(new File(
-		    configFilename));
-	    loadFromStream(propertiesStream);
-	} catch (IOException ex) {
-	    LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
-	}
-    }
-
-    /**
-     * Loads configuration from file contained in classpath
-     * 
-     * @param resourceName
-     * @param loader
-     */
-    public void loadFromResource(String resourceName, ClassLoader loader)
-	    throws IOException {
-
-	InputStream resourceStream = loader.getResourceAsStream(StringUtils
-		.concat(META_INF_PATH, resourceName));
-	if (resourceStream == null) {
-	    LOG.error(RESOURCE_NOT_EXISTS_ERROR);
-	} else {
-	    loadFromStream(resourceStream);
 	}
     }
 
@@ -1054,52 +644,28 @@ public class Configuration implements Cloneable {
     }
 
     public void setDataSourcePooledType(boolean dsPooledType) {
-
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.setPooledDataSource(dsPooledType);
     }
 
     public void setPoolPropertiesPath(String path) {
-
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.setPoolPath(path);
     }
 
     public void setPoolProperties(
 	    Map<? extends Object, ? extends Object> properties) {
-
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.getPoolProperties().putAll(properties);
     }
 
     public void addPoolProperty(Object key, Object value) {
-
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.getPoolProperties().put(key, value);
     }
 
     public void setPoolProviderType(PoolProviderType poolProviderType) {
-
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.setPoolProviderType(poolProviderType);
-    }
-
-    @Override
-    public Configuration clone() throws CloneNotSupportedException {
-
-	// Deep clone for configuration
-	Configuration cloneConfig;
-
-	Object cloneObject = super.clone();
-	// Casting cloned object to the appropriated type
-	cloneConfig = ObjectUtils.cast(cloneObject, Configuration.class);
-	// Coping configuration for cloned data
-	Map<Object, Object> copyConfig = new HashMap<Object, Object>(
-		this.config);
-	// copyConfig.putAll(this.config);
-	cloneConfig.config.clear();
-	cloneConfig.configure(copyConfig);
-
-	return cloneConfig;
     }
 }

@@ -156,9 +156,7 @@ public enum ConfigKeys {
      * @return <code>T</code>
      */
     public <T> T getValue() {
-
 	T typedValue = ObjectUtils.cast(value);
-
 	return typedValue;
     }
 }
