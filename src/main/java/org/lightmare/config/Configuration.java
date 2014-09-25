@@ -670,28 +670,28 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 	return POOL_CONFIG;
     }
 
-    public void setDataSourcePooledType(boolean dsPooledType) {
+    public static void setDataSourcePooledType(boolean dsPooledType) {
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.setPooledDataSource(dsPooledType);
     }
 
-    public void setPoolPropertiesPath(String path) {
+    public static void setPoolPropertiesPath(String path) {
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.setPoolPath(path);
     }
 
-    public void setPoolProperties(
+    public static void setPoolProperties(
 	    Map<? extends Object, ? extends Object> properties) {
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.getPoolProperties().putAll(properties);
     }
 
-    public void addPoolProperty(Object key, Object value) {
+    public static void addPoolProperty(Object key, Object value) {
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.getPoolProperties().put(key, value);
     }
 
-    public void setPoolProviderType(PoolProviderType poolProviderType) {
+    public static void setPoolProviderType(PoolProviderType poolProviderType) {
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.setPoolProviderType(poolProviderType);
     }

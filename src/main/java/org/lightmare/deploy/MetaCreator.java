@@ -1224,7 +1224,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setDataSourcePooledType(boolean dsPooledType) {
-	    creator.configuration.setDataSourcePooledType(dsPooledType);
+	    Configuration.setDataSourcePooledType(dsPooledType);
 	    return this;
 	}
 
@@ -1236,7 +1236,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPoolProviderType(PoolProviderType poolProviderType) {
-	    creator.configuration.setPoolProviderType(poolProviderType);
+	    Configuration.setPoolProviderType(poolProviderType);
 	    return this;
 	}
 
@@ -1247,7 +1247,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setPoolPropertiesPath(String path) {
-	    creator.configuration.setPoolPropertiesPath(path);
+	    Configuration.setPoolPropertiesPath(path);
 	    return this;
 	}
 
@@ -1259,7 +1259,7 @@ public class MetaCreator {
 	 */
 	public Builder setPoolProperties(
 		Map<? extends Object, ? extends Object> properties) {
-	    creator.configuration.setPoolProperties(properties);
+	    Configuration.setPoolProperties(properties);
 	    return this;
 	}
 
@@ -1271,7 +1271,7 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder addPoolProperty(Object key, Object value) {
-	    creator.configuration.addPoolProperty(key, value);
+	    Configuration.addPoolProperty(key, value);
 	    return this;
 	}
 
