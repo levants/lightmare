@@ -18,7 +18,7 @@ import org.lightmare.utils.io.IOUtils;
  * Configuration utilities in sbtract class
  * 
  * @author Levan Tsinadze
- *
+ * @since 0.1.4
  */
 public abstract class AbstractConfiguration implements Cloneable {
 
