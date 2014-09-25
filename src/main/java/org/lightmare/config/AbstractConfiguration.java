@@ -11,7 +11,6 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.io.IOUtils;
 
@@ -26,15 +25,10 @@ public abstract class AbstractConfiguration implements Cloneable {
     // Cache for all configuration passed from API or read from file
     protected final Map<Object, Object> config = new HashMap<Object, Object>();
 
-    // Resource path (META-INF)
-    private static final String META_INF_PATH = "META-INF/";
-
     // Error messages
     private static final String COULD_NOT_LOAD_CONFIG_ERROR = "Could not load configuration";
 
     private static final String COULD_NOT_OPEN_FILE_ERROR = "Could not open config file";
-
-    private static final String RESOURCE_NOT_EXISTS_ERROR = "Configuration resource doesn't exist";
 
     private static final Logger LOG = Logger
 	    .getLogger(AbstractConfiguration.class);
@@ -410,24 +404,6 @@ public abstract class AbstractConfiguration implements Cloneable {
 	    loadFromStream(propertiesStream);
 	} catch (IOException ex) {
 	    LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
-	}
-    }
-
-    /**
-     * Loads configuration from file contained in classpath
-     * 
-     * @param resourceName
-     * @param loader
-     */
-    public void loadFromResource(String resourceName, ClassLoader loader)
-	    throws IOException {
-
-	InputStream resourceStream = loader.getResourceAsStream(StringUtils
-		.concat(META_INF_PATH, resourceName));
-	if (resourceStream == null) {
-	    LOG.error(RESOURCE_NOT_EXISTS_ERROR);
-	} else {
-	    loadFromStream(resourceStream);
 	}
     }
 

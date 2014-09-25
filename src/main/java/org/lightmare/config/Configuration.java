@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.lightmare.cache.DeploymentDirectory;
 import org.lightmare.jpa.datasource.PoolConfig;
 import org.lightmare.jpa.datasource.PoolConfig.PoolProviderType;
@@ -58,7 +59,33 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
     // Runtime to get available processors
     private static final Runtime RUNTIME = Runtime.getRuntime();
 
+    // Resource path (META-INF)
+    private static final String META_INF_PATH = "META-INF/";
+
+    // Error messages
+    private static final String RESOURCE_NOT_EXISTS_ERROR = "Configuration resource doesn't exist";
+
+    private static final Logger LOG = Logger.getLogger(Configuration.class);
+
     public Configuration() {
+    }
+
+    /**
+     * Loads configuration from file contained in classpath
+     * 
+     * @param resourceName
+     * @param loader
+     */
+    public void loadFromResource(String resourceName, ClassLoader loader)
+	    throws IOException {
+
+	InputStream resourceStream = loader.getResourceAsStream(StringUtils
+		.concat(META_INF_PATH, resourceName));
+	if (resourceStream == null) {
+	    LOG.error(RESOURCE_NOT_EXISTS_ERROR);
+	} else {
+	    loadFromStream(resourceStream);
+	}
     }
 
     /**
