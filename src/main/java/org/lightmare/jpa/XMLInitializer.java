@@ -39,7 +39,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  * @author Levan Tsinadze
  * @since 0.0.16-SNAPSHOT
  */
-public class ConfigLoader {
+public class XMLInitializer {
 
     // Short path for ORM configuration file
     private String shortPath;

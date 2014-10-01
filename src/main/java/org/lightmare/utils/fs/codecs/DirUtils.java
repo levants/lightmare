@@ -32,7 +32,7 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.lightmare.jpa.ConfigLoader;
+import org.lightmare.jpa.XMLInitializer;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
@@ -136,7 +136,7 @@ public class DirUtils extends ArchiveUtils {
     public boolean checkOnOrm(String jarName) throws IOException {
 
 	JarEntry xmlEntry = extracted(jarName).getJarEntry(
-		ConfigLoader.XML_PATH);
+		XMLInitializer.XML_PATH);
 
 	return ObjectUtils.notNull(xmlEntry);
     }
@@ -163,7 +163,7 @@ public class DirUtils extends ArchiveUtils {
 	    if (xmlFromJar && checkOnOrm) {
 		jarPath = StringUtils.concat(currentURL.toString(),
 			ARCHIVE_URL_DELIM, FILE_SEPARATOR,
-			ConfigLoader.XML_PATH);
+			XMLInitializer.XML_PATH);
 		URL jarURL = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
 		getXmlFiles().put(jarName, jarURL);
 		getXmlURLs().put(currentURL, jarURL);

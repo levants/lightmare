@@ -299,7 +299,7 @@ public class JpaManager {
 	boolean urlCheck = checkForURL();
 	if (pathCheck || urlCheck) {
 	    List<URL> xmls;
-	    ConfigLoader configLoader = new ConfigLoader();
+	    XMLInitializer configLoader = new XMLInitializer();
 	    if (pathCheck) {
 		xmls = configLoader.readFile(path);
 	    } else {

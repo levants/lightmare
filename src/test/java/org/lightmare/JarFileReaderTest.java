@@ -12,7 +12,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.junit.Test;
-import org.lightmare.jpa.ConfigLoader;
+import org.lightmare.jpa.XMLInitializer;
 
 public class JarFileReaderTest {
 
@@ -24,7 +24,7 @@ public class JarFileReaderTest {
     public void readEntryTest() {
 	try {
 	    jarFile = new JarFile(JAR_PATH);
-	    JarEntry xmlEntry = jarFile.getJarEntry(ConfigLoader.XML_PATH);
+	    JarEntry xmlEntry = jarFile.getJarEntry(XMLInitializer.XML_PATH);
 	    System.out.println(xmlEntry);
 	    Enumeration<JarEntry> entries = jarFile.entries();
 	    while (entries.hasMoreElements()) {
@@ -38,7 +38,7 @@ public class JarFileReaderTest {
     public void readEntryStreamTest() {
 	try {
 	    jarFile = new JarFile(JAR_PATH);
-	    JarEntry xmlEntry = jarFile.getJarEntry(ConfigLoader.XML_PATH);
+	    JarEntry xmlEntry = jarFile.getJarEntry(XMLInitializer.XML_PATH);
 	    if (xmlEntry != null) {
 		InputStream stream = jarFile.getInputStream(xmlEntry);
 		scanner = new Scanner(stream);
@@ -61,7 +61,7 @@ public class JarFileReaderTest {
 	try {
 	    URL jarURL = file.toURI().toURL();
 	    String jarPath = String.format("%s!/%s", jarURL.toString(),
-		    ConfigLoader.XML_PATH);
+		    XMLInitializer.XML_PATH);
 	    System.out.println(jarPath);
 	    URL url = new URL("jar", "", jarPath);
 	    System.out.println(url);

@@ -34,7 +34,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-import org.lightmare.jpa.ConfigLoader;
+import org.lightmare.jpa.XMLInitializer;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
@@ -126,7 +126,7 @@ public class EarUtils extends ArchiveUtils {
 	    IOUtils.write(jarStream, output);
 	    URL jarURL = tmpFile.toURI().toURL();
 	    String jarPath = StringUtils.concat(jarURL.toString(),
-		    ARCHIVE_URL_DELIM, FILE_SEPARATOR, ConfigLoader.XML_PATH);
+		    ARCHIVE_URL_DELIM, FILE_SEPARATOR, XMLInitializer.XML_PATH);
 	    url = new URL(JAR, StringUtils.EMPTY_STRING, jarPath);
 	} else {
 	    url = null;
@@ -147,7 +147,7 @@ public class EarUtils extends ArchiveUtils {
 	ZipEntry xmlEntry = zipStream.getNextEntry();
 
 	while (ObjectUtils.notNull(xmlEntry) && ObjectUtils.notTrue(check)) {
-	    check = xmlEntry.getName().equals(ConfigLoader.XML_PATH);
+	    check = xmlEntry.getName().equals(XMLInitializer.XML_PATH);
 	    if (ObjectUtils.notTrue(check)) {
 		xmlEntry = zipStream.getNextEntry();
 	    }

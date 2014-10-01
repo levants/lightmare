@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.lightmare.jpa.ConfigLoader;
+import org.lightmare.jpa.XMLInitializer;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
@@ -82,7 +82,7 @@ public class JarUtils extends ArchiveUtils {
 	boolean checkOnOrm = checkOnOrm(path);
 	if (xmlFromJar && checkOnOrm) {
 	    String xmlPath = StringUtils.concat(currentURL.toString(),
-		    ARCHIVE_URL_DELIM, ConfigLoader.XML_PATH);
+		    ARCHIVE_URL_DELIM, XMLInitializer.XML_PATH);
 	    URL xmlURL = new URL(JAR, StringUtils.EMPTY_STRING, xmlPath);
 	    getXmlFiles().put(realFile.getName(), xmlURL);
 	    getXmlURLs().put(currentURL, xmlURL);
@@ -93,7 +93,7 @@ public class JarUtils extends ArchiveUtils {
     public boolean checkOnOrm(String jarName) throws IOException {
 
 	ZipFile zipFile = getEarFile();
-	ZipEntry xmlEntry = zipFile.getEntry(ConfigLoader.XML_PATH);
+	ZipEntry xmlEntry = zipFile.getEntry(XMLInitializer.XML_PATH);
 
 	return ObjectUtils.notNull(xmlEntry);
     }

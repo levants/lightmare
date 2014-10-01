@@ -24,7 +24,7 @@ import java.util.zip.ZipFile;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.lightmare.jpa.ConfigLoader;
+import org.lightmare.jpa.XMLInitializer;
 import org.lightmare.utils.fs.FileUtils;
 import org.lightmare.utils.fs.codecs.ArchiveUtils;
 import org.lightmare.utils.fs.codecs.EarUtils;
@@ -131,7 +131,7 @@ public class EarFileReaderTest {
 	    URL jarInEarURL = new URL("jar", "", jarFileParh);
 	    System.out.println(jarInEarURL);
 	    String manifestPath = String.format("%s!/%s", jarInEarURL,
-		    ConfigLoader.XML_PATH);
+		    XMLInitializer.XML_PATH);
 	    URL url = new URL(manifestPath);
 	    System.out.println(url);
 
@@ -183,7 +183,7 @@ public class EarFileReaderTest {
 	    System.out.println(filePath);
 	    URL jarURL = file.toURI().toURL();
 	    String jarPath = String.format("%s!/%s", jarURL.toString(),
-		    ConfigLoader.XML_PATH);
+		    XMLInitializer.XML_PATH);
 	    System.out.println(jarPath);
 	    URL url = new URL("jar", "", jarPath);
 	    System.out.println(url);
