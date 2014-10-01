@@ -73,6 +73,23 @@ public class ConfigLoader {
 	return xmls;
     }
 
+    private static File createFile(String path) throws IOException {
+
+	File file;
+
+	if (path == null || path.isEmpty()) {
+	    throw new IOException(PATH_NOT_PROVIDED_ERROR);
+	}
+
+	file = new File(path);
+	if (ObjectUtils.notTrue(file.exists())) {
+	    String error = StringUtils.concat(COULD_NOT_FIND_ERROR, path);
+	    throw new IOException(error);
+	}
+
+	return file;
+    }
+
     /**
      * Reads {@link URL} from passed path {@link String} for build persistence
      * configuration
@@ -87,15 +104,7 @@ public class ConfigLoader {
 
 	List<URL> xmls;
 
-	if (path == null || path.isEmpty()) {
-	    throw new IOException(PATH_NOT_PROVIDED_ERROR);
-	}
-
-	File file = new File(path);
-	if (ObjectUtils.notTrue(file.exists())) {
-	    throw new IOException(
-		    StringUtils.concat(COULD_NOT_FIND_ERROR, path));
-	}
+	File file = createFile(path);
 	shortPath = file.getName();
 	final URL url = file.toURI().toURL();
 	xmls = readURL(url);
