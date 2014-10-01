@@ -1,6 +1,7 @@
 package org.lightmare.entities;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +17,9 @@ import org.lightmare.rest.providers.RestProvider;
 @Entity
 @Table(name = "EMAILS", schema = "PERSONS")
 @UnitName("testUnit")
-public class Email {
+public class Email implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.entities.Email")
