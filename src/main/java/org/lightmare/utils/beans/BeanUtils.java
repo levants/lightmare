@@ -63,7 +63,7 @@ public class BeanUtils {
      * Removes <b>Remote</b> or <b>Local</b> part from bean interface name
      * 
      * @param interfaceClass
-     * @return
+     * @return {@link String} EJB bean name
      */
     public static String nameFromInterface(Class<?> interfaceClass) {
 
@@ -87,10 +87,10 @@ public class BeanUtils {
     }
 
     /**
-     * Gets bean name from passed {@link Class} instance
+     * Gets EJB bean name from passed {@link Class} instance
      * 
      * @param beanClass
-     * @return {@link String}
+     * @return {@link String} EJB bean name
      */
     public static String beanName(Class<?> beanClass) {
 
