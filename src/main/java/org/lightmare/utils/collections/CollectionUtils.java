@@ -223,8 +223,8 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static <K, V> boolean notContains(Map<K, V> map, K key) {
-	return (key == null || invalid(map) || (valid(map) && ObjectUtils
-		.notTrue(map.containsKey(key))));
+	return (key == null || invalid(map) || ObjectUtils.notTrue(map
+		.containsKey(key)));
     }
 
     /**
