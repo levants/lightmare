@@ -103,10 +103,10 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Cats passed {@link Object} to generic parameter
+     * Casts passed {@link Object} to generic parameter
      * 
      * @param data
-     * @return <code>T</code>
+     * @return <code>T</code> casted to type instance
      */
     public static <T> T cast(Object data) {
 
@@ -117,11 +117,12 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Cats passed {@link Object} to generic parameter
+     * Casts passed {@link Object} to generic parameter by {@link Class} of
+     * special type
      * 
      * @param data
      * @param castClass
-     * @return <code>T</code>
+     * @return <code>T</code> casted to type instance
      */
     public static <T> T cast(Object data, Class<T> castClass) {
 

@@ -192,7 +192,7 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * * Checks if each of passed {@link Object} array instances is not null and
+     * Checks if each of passed {@link Object} array instances is not null and
      * is not empty
      * 
      * @param arrays
@@ -251,8 +251,7 @@ public abstract class CollectionUtils {
 
 	Map<K, V> result;
 
-	boolean valid = valid(from);
-	if (valid) {
+	if (valid(from)) {
 	    Object objectValue = from.get(key);
 	    if (objectValue instanceof Map) {
 		result = ObjectUtils.cast(objectValue);
@@ -307,7 +306,7 @@ public abstract class CollectionUtils {
 	for (int i = FIRST_INDEX; i < length; i++) {
 	    subKeys[i] = keys[i];
 	}
-
+	// Gets intermediate Map type value
 	Map<?, ?> result = getAsMap(from, subKeys);
 	if (valid(result)) {
 	    value = ObjectUtils.cast(result.get(key));
