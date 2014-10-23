@@ -219,10 +219,7 @@ public class ClassUtils {
      * @throws IOException
      */
     public static Class<?> classForName(String className) throws IOException {
-
-	Class<?> clazz = classForName(className, null);
-
-	return clazz;
+	return classForName(className, null);
     }
 
     /**
@@ -236,10 +233,7 @@ public class ClassUtils {
      */
     public static Class<?> classForName(String className, ClassLoader loader)
 	    throws IOException {
-
-	Class<?> clazz = classForName(className, Boolean.TRUE, loader);
-
-	return clazz;
+	return classForName(className, Boolean.TRUE, loader);
     }
 
     /**
@@ -662,10 +656,7 @@ public class ClassUtils {
      * @throws IOException
      */
     public static Object getFieldValue(Field field) throws IOException {
-
-	Object value = getFieldValue(field, null);
-
-	return value;
+	return getFieldValue(field, null);
     }
 
     /**
