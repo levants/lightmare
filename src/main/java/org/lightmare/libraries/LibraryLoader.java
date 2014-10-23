@@ -529,7 +529,7 @@ public class LibraryLoader {
 
     /**
      * Checks and caches if passed {@link ClassLoader} implementation or it's
-     * parent class has close method
+     * parent class has "close" method
      * 
      * @param loader
      * @throws IOException
@@ -538,9 +538,6 @@ public class LibraryLoader {
 	    throws IOException {
 
 	if (hasCloseMethod == null) {
-	    // Finds if loader associated class or superclass has
-	    // "close"
-	    // method
 	    hasCloseMethod = ClassUtils.hasPublicMethod(loaderClass,
 		    CLOSE_METHOD_NAME);
 	}
@@ -558,9 +555,6 @@ public class LibraryLoader {
 
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
-		// Finds if loader associated class or it's superclass has
-		// "close"
-		// method
 		hasCloseMethod(loaderClass);
 	    }
 	}
