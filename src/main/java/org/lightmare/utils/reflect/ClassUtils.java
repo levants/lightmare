@@ -28,6 +28,7 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -466,11 +467,7 @@ public class ClassUtils {
      */
     public static boolean hasPublicMethod(Class<?> clazz, String methodName)
 	    throws IOException {
-
-	boolean found = ClassUtils
-		.hasMethod(clazz, methodName, Modifier.PUBLIC);
-
-	return found;
+	return ClassUtils.hasMethod(clazz, methodName, Modifier.PUBLIC);
     }
 
     /**
@@ -498,23 +495,13 @@ public class ClassUtils {
     }
 
     /**
-     * Returns passed {@link Field}'s modifier
+     * Returns passed {@link Member}'s modifiers
      * 
-     * @param field
-     * @return <code>int</code>
+     * @param member
+     * @return <code>int</code> modifiers
      */
-    public static int getModifiers(Field field) {
-	return field.getModifiers();
-    }
-
-    /**
-     * Returns passed {@link Method}'s modifier
-     * 
-     * @param method
-     * @return <code>int</code>
-     */
-    public static int getModifiers(Method method) {
-	return method.getModifiers();
+    public static int getModifiers(Member member) {
+	return member.getModifiers();
     }
 
     /**
