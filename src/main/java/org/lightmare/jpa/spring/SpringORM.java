@@ -157,7 +157,6 @@ public class SpringORM {
      */
     private void addJtaDatasource(
 	    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
-
 	addTransactionManager();
 	entityManagerFactoryBean.setJtaDataSource(dataSource);
     }
