@@ -121,6 +121,7 @@ public class EjbClassLoader extends URLClassLoader {
      * @author Levan Tsinadze
      * 
      * @param <E>
+     *            element type
      */
     protected static class MergeEnumeration<E> implements Enumeration<E> {
 
