@@ -137,10 +137,7 @@ public abstract class JsonSerializer {
      */
     public static <T> T read(InputStream stream, Class<T> valueClass)
 	    throws IOException {
-
-	T value = getMapper().readValue(stream, valueClass);
-
-	return value;
+	return getMapper().readValue(stream, valueClass);
     }
 
     /**
