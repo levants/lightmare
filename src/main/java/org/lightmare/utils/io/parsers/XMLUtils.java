@@ -39,6 +39,25 @@ public class XMLUtils {
     }
 
     /**
+     * Initializes {@link DocumentBuilder} from passed {@link InputStream} of
+     * document's file
+     * 
+     * @param stream
+     * @return {@link DocumentBuilder} initialized from {@link InputStream}
+     * @throws ParserConfigurationException
+     */
+    private static DocumentBuilder initDocumentBuilder(InputStream stream)
+	    throws ParserConfigurationException {
+
+	DocumentBuilder builder;
+
+	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	builder = factory.newDocumentBuilder();
+
+	return builder;
+    }
+
+    /**
      * Parses XML document to initialize {@link javax.sql.DataSource}s
      * configuration properties
      * 
@@ -50,10 +69,8 @@ public class XMLUtils {
 
 	Document document;
 
-	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	DocumentBuilder builder;
 	try {
-	    builder = factory.newDocumentBuilder();
+	    DocumentBuilder builder = initDocumentBuilder(stream);
 	    document = builder.parse(stream);
 	} catch (ParserConfigurationException ex) {
 	    throw new IOException(ex);
