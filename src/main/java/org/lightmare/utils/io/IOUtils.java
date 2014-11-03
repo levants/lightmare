@@ -104,7 +104,7 @@ public class IOUtils {
     }
 
     /**
-     * Writes passed {@link InputStream} to associated {@link OutputStream}
+     * Writes from passed {@link InputStream} to associated {@link OutputStream}
      * instance
      * 
      * @param in
