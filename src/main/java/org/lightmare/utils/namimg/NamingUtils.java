@@ -188,10 +188,9 @@ public class NamingUtils {
 	String[] formatedNames = pureName.split(EJB_NAME_DELIM);
 	String beanNames = formatedNames[CollectionUtils.SECOND_INDEX];
 	String[] beanDescriptors = beanNames.split(EJB_APP_DELIM);
-	// Retrieves EJB bean name
+	// Retrieves EJB bean and it's interface names
 	String beanName = CollectionUtils.getFirst(beanDescriptors);
 	String interfaceName = beanDescriptors[CollectionUtils.SECOND_INDEX];
-
 	descriptor = new BeanDescriptor(beanName, interfaceName);
 
 	return descriptor;
