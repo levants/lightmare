@@ -151,9 +151,6 @@ public abstract class JsonSerializer {
      */
     public static <T> T read(byte[] bytes, Class<T> valueClass)
 	    throws IOException {
-
-	T value = getMapper().readValue(bytes, valueClass);
-
-	return value;
+	return getMapper().readValue(bytes, valueClass);
     }
 }
