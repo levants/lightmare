@@ -40,7 +40,7 @@ public class XMLUtils {
 
     /**
      * Initializes {@link DocumentBuilder} from passed {@link InputStream} of
-     * document's file
+     * XML document's file
      * 
      * @param stream
      * @return {@link DocumentBuilder} initialized from {@link InputStream}
