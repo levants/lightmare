@@ -164,8 +164,7 @@ public class NamingUtils {
 
 	String jndiName;
 
-	if (StringUtils.valid(clearName)
-		&& StringUtils.notContains(clearName, DS_JNDI_FREFIX)) {
+	if (StringUtils.notContains(clearName, DS_JNDI_FREFIX)) {
 	    jndiName = StringUtils.concat(DS_JNDI_FREFIX, clearName);
 	} else {
 	    jndiName = clearName;
