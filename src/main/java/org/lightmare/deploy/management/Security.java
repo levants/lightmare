@@ -101,6 +101,13 @@ public class Security {
 	return CollectionUtils.invalid(cache);
     }
 
+    /**
+     * Checks if passed {@link HttpServletRequest} not contains PROXY user
+     * address forwarding header
+     * 
+     * @param request
+     * @return <code>boolean</code> validation result
+     */
     private static boolean checkHeader(HttpServletRequest request) {
 
 	boolean valid;
