@@ -151,11 +151,11 @@ public class EjbClassLoader extends URLClassLoader {
 
 	    Enumeration<E> current;
 	    int length = this.enums.length;
-	    while (this.index < length && ObjectUtils.notTrue(validToBreack)) {
+	    while (this.index < length && Boolean.FALSE.equals(validToBreack)) {
 		current = this.enums[this.index];
 		validToBreack = (ObjectUtils.notNull(current) && current
 			.hasMoreElements());
-		if (ObjectUtils.notTrue(validToBreack)) {
+		if (Boolean.FALSE.equals(validToBreack)) {
 		    this.index++;
 		}
 	    }

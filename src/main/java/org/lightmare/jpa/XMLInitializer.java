@@ -82,7 +82,7 @@ public class XMLInitializer {
 	}
 
 	file = new File(path);
-	if (ObjectUtils.notTrue(file.exists())) {
+	if (Boolean.FALSE.equals(file.exists())) {
 	    String error = StringUtils.concat(COULD_NOT_FIND_ERROR, path);
 	    throw new IOException(error);
 	}
