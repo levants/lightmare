@@ -140,7 +140,7 @@ public class AnnotationFinder extends AnnotationDB {
 	String value;
 	String ignored;
 	int length = ignoredPackages.length;
-	for (int i = CollectionUtils.FIRST_INDEX; ObjectUtils.notTrue(valid)
+	for (int i = CollectionUtils.FIRST_INDEX; Boolean.FALSE.equals(valid)
 		&& i < length; i++) {
 	    ignored = ignoredPackages[i];
 	    value = StringUtils.concat(ignored, FILE_EXTENTION_DELIM);
@@ -178,7 +178,7 @@ public class AnnotationFinder extends AnnotationDB {
 		CollectionUtils.putIfAbscent(classOwnersURLs, className, url);
 
 		contained = classOwnersFiles.containsKey(className);
-		if (ObjectUtils.notTrue(contained)) {
+		if (Boolean.FALSE.equals(contained)) {
 		    fileName = getFileName(url);
 		    classOwnersFiles.put(className, fileName);
 		}
