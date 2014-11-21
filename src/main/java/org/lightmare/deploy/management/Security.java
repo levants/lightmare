@@ -101,6 +101,20 @@ public class Security {
 	return CollectionUtils.invalid(cache);
     }
 
+    private static boolean checkHeader(HttpServletRequest request) {
+
+	boolean valid;
+
+	String header = request.getHeader(PROXY_HEADER);
+	valid = (header == null);
+	if (valid) {
+	    header = request.getHeader(PROXY_HEADER.toUpperCase());
+	    valid = (header == null);
+	}
+
+	return valid;
+    }
+
     /**
      * Checks if container allows remote control
      * 
@@ -112,12 +126,7 @@ public class Security {
 	boolean valid = Configuration.getRemoteControl();
 
 	if (Boolean.FALSE.equals(valid)) {
-	    String header = request.getHeader(PROXY_HEADER);
-	    valid = (header == null);
-	    if (valid) {
-		header = request.getHeader(PROXY_HEADER.toUpperCase());
-		valid = (header == null);
-	    }
+	    valid = checkHeader(request);
 	    if (valid) {
 		String host = request.getRemoteAddr();
 		String localhost = request.getLocalAddr();
