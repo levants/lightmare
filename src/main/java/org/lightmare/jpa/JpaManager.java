@@ -143,14 +143,14 @@ public class JpaManager {
 	    HibernatePrefixes prefix;
 	    boolean modified = Boolean.FALSE;
 	    for (int i = CollectionUtils.FIRST_INDEX; i < length
-		    && ObjectUtils.notTrue(modified); i++) {
+		    && Boolean.FALSE.equals(modified); i++) {
 		prefix = prefixes[i];
 		modified = text.startsWith(prefix.prefix);
 		key = replacePrefix(modified, prefix, text);
 	    }
 
-	    if (ObjectUtils.notTrue(modified)
-		    && ObjectUtils.notTrue(text.startsWith(HIBERNATE))) {
+	    if (Boolean.FALSE.equals(modified)
+		    && Boolean.FALSE.equals(text.startsWith(HIBERNATE))) {
 		key = StringUtils.concat(HIBERNATE, text);
 	    }
 
@@ -364,7 +364,7 @@ public class JpaManager {
 	configureProvider(builder);
 	provider = builder.build();
 
-	if (ObjectUtils.notTrue(swapDataSource)) {
+	if (Boolean.FALSE.equals(swapDataSource)) {
 	    addTransactionManager();
 	}
 	// Adds JNDI properties
@@ -431,7 +431,7 @@ public class JpaManager {
 
 	boolean bound = semaphore.isBound();
 
-	if (ObjectUtils.notTrue(bound)) {
+	if (Boolean.FALSE.equals(bound)) {
 	    String jndiName = semaphore.getJndiName();
 	    if (StringUtils.valid(jndiName)) {
 		bindJndiName(jndiName, semaphore);
