@@ -250,11 +250,11 @@ public class HibernatePersistenceProviderExt extends
 
 	    final boolean matches = (persistenceUnitName == null || persistenceUnitName
 		    .equals(persistenceUnit.getName()));
-	    notMatches = ObjectUtils.notTrue(matches);
+	    notMatches = Boolean.FALSE.equals(matches);
 	    if (notMatches) {
 		LOG.debug("Excluding from consideration due to name mis-match");
 		// See if we (Hibernate) are the persistence provider
-	    } else if (ObjectUtils.notTrue(ProviderChecker.isProvider(
+	    } else if (Boolean.FALSE.equals(ProviderChecker.isProvider(
 		    persistenceUnit, properties))) {
 		LOG.debug("Excluding from consideration due to provider mis-match");
 	    } else {
