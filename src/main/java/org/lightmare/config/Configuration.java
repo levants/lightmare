@@ -207,7 +207,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 	setIfContains(ConfigKeys.BOSS_POOL.key, ConfigKeys.BOSS_POOL.value);
 
 	boolean contains = containsConfigKey(ConfigKeys.WORKER_POOL.key);
-	if (ObjectUtils.notTrue(contains)) {
+	if (Boolean.FALSE.equals(contains)) {
 	    int defaultWorkers = ConfigKeys.WORKER_POOL.getValue();
 	    int workers = (RUNTIME.availableProcessors() * defaultWorkers);
 	    String workerProperty = String.valueOf(workers);
@@ -231,7 +231,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 
 	// Check if application needs directory watch service
 	boolean watchStatus;
-	if (ObjectUtils.notTrue(hotDeployment)) {
+	if (Boolean.FALSE.equals(hotDeployment)) {
 	    watchStatus = Boolean.TRUE;
 	} else {
 	    watchStatus = Boolean.FALSE;

@@ -223,7 +223,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     protected <K, V> void setIfContains(K key, V value) {
 
 	boolean contains = containsConfigKey(key);
-	if (ObjectUtils.notTrue(contains)) {
+	if (Boolean.FALSE.equals(contains)) {
 	    setConfigValue(key, value);
 	}
     }
