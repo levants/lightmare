@@ -175,7 +175,7 @@ public class EjbClassLoader extends URLClassLoader {
 	 * @return <code></code>
 	 */
 	private boolean hasNotElements() {
-	    return ObjectUtils.notTrue(next());
+	    return Boolean.FALSE.equals(next());
 	}
 
 	@Override
