@@ -133,7 +133,7 @@ public class MetaContainer {
 	    for (URL archive : archives) {
 		String path = WatchUtils.clearPath(archive.getFile());
 		containsPath = CONFIGS.containsKey(path);
-		if (ObjectUtils.notTrue(containsPath)) {
+		if (Boolean.FALSE.equals(containsPath)) {
 		    CONFIGS.put(path, config);
 		}
 	    }
@@ -203,7 +203,7 @@ public class MetaContainer {
 
 	MetaData metaData = EJBS.get(beanName);
 	check = metaData == null;
-	if (ObjectUtils.notTrue(check)) {
+	if (Boolean.FALSE.equals(check)) {
 	    check = metaData.isInProgress();
 	}
 

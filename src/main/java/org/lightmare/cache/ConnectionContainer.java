@@ -95,7 +95,7 @@ public class ConnectionContainer {
      */
     private static boolean checkOnProgress(ConnectionSemaphore semaphore) {
 	return semaphore.isInProgress()
-		&& ObjectUtils.notTrue(semaphore.isBound());
+		&& Boolean.FALSE.equals(semaphore.isBound());
     }
 
     /**
