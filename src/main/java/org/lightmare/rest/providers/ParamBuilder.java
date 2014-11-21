@@ -144,7 +144,7 @@ public class ParamBuilder {
 	boolean valid = ObjectUtils.notNullAll(mediaType, parameters, workers,
 		request);
 
-	if (ObjectUtils.notTrue(valid)) {
+	if (Boolean.FALSE.equals(valid)) {
 	    String errorMessage = errorOnBuild();
 	    throw new IOException(errorMessage);
 	}
@@ -160,7 +160,7 @@ public class ParamBuilder {
      * @throws IOException
      */
     private boolean check() throws IOException {
-	return ObjectUtils.notTrue(request.hasEntity())
+	return Boolean.FALSE.equals(request.hasEntity())
 		&& IOUtils.notAvailable(request.getEntityStream());
     }
 
