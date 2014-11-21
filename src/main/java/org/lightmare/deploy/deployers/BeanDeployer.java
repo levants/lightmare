@@ -180,7 +180,7 @@ public class BeanDeployer implements Callable<String> {
 	    throws IOException {
 
 	synchronized (semaphore) {
-	    if (ObjectUtils.notTrue(semaphore.isCheck())) {
+	    if (Boolean.FALSE.equals(semaphore.isCheck())) {
 		try {
 		    initOrmCreator(semaphore);
 		} finally {
@@ -196,7 +196,7 @@ public class BeanDeployer implements Callable<String> {
      */
     private void releaseBlocker() {
 
-	if (ObjectUtils.notTrue(countedDown)) {
+	if (Boolean.FALSE.equals(countedDown)) {
 	    blocker.countDown();
 	    countedDown = Boolean.TRUE;
 	}

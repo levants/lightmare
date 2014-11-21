@@ -33,7 +33,6 @@ import org.lightmare.deploy.LoaderPoolManager;
 import org.lightmare.jpa.datasource.InitMessages;
 import org.lightmare.jpa.datasource.Initializer;
 import org.lightmare.libraries.LibraryLoader;
-import org.lightmare.utils.ObjectUtils;
 
 /**
  * {@link Runnable} implementation for initializing and deploying
@@ -60,7 +59,7 @@ public class ConnectionDeployer implements Callable<Boolean> {
 
     private void releaseBlocker() {
 
-	if (ObjectUtils.notTrue(countedDown)) {
+	if (Boolean.FALSE.equals(countedDown)) {
 	    blocker.countDown();
 	    countedDown = Boolean.TRUE;
 	}
