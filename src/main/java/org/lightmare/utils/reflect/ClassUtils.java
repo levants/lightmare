@@ -84,7 +84,7 @@ public class ClassUtils {
      * @return <code>boolean</code>
      */
     private static boolean notAccessible(AccessibleObject accessibleObject) {
-	return ObjectUtils.notTrue(accessibleObject.isAccessible());
+	return Boolean.FALSE.equals(accessibleObject.isAccessible());
     }
 
     /**
@@ -96,7 +96,7 @@ public class ClassUtils {
     private static void setAccessible(AccessibleObject accessibleObject,
 	    boolean accessible) {
 
-	if (ObjectUtils.notTrue(accessible)) {
+	if (Boolean.FALSE.equals(accessible)) {
 	    try {
 		// Should I use synchronized(accessibleObject) block
 		ObjectUtils.lock(ACCESSOR_LOCK);
@@ -119,7 +119,7 @@ public class ClassUtils {
     private static void resetAccessible(AccessibleObject accessibleObject,
 	    boolean accessible) {
 
-	if (ObjectUtils.notTrue(accessible)) {
+	if (Boolean.FALSE.equals(accessible)) {
 	    try {
 		// Should I use synchronized(accessibleObject) block
 		ObjectUtils.lock(ACCESSOR_LOCK);
@@ -395,7 +395,7 @@ public class ClassUtils {
 	int modifier = calculateModifier(modifiers);
 	Method method;
 	for (int i = CollectionUtils.FIRST_INDEX; i < length
-		&& ObjectUtils.notTrue(found); i++) {
+		&& Boolean.FALSE.equals(found); i++) {
 	    method = methods[i];
 	    found = method.getName().equals(methodName);
 	    if (found && ObjectUtils.notEquals(modifier, DEFAULT_MODIFIER)) {
@@ -422,10 +422,10 @@ public class ClassUtils {
 	boolean found = Boolean.FALSE;
 
 	Class<?> superClass = clazz;
-	while (ObjectUtils.notNull(superClass) && ObjectUtils.notTrue(found)) {
+	while (ObjectUtils.notNull(superClass) && Boolean.FALSE.equals(found)) {
 	    found = ClassUtils
 		    .classHasMethod(superClass, methodName, modifiers);
-	    if (ObjectUtils.notTrue(found)) {
+	    if (Boolean.FALSE.equals(found)) {
 		superClass = superClass.getSuperclass();
 	    }
 	}

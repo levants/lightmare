@@ -94,7 +94,7 @@ public class RestCheck {
 		Method[] methods = resourceClass.getDeclaredMethods();
 		int length = methods.length;
 		Method method;
-		for (int i = 0; i < length && ObjectUtils.notTrue(valid); i++) {
+		for (int i = 0; i < length && Boolean.FALSE.equals(valid); i++) {
 		    method = methods[i];
 		    valid = checkAnnotation(method);
 		}

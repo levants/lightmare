@@ -174,6 +174,6 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean notContains(String text, CharSequence item) {
-	return (text == null || ObjectUtils.notTrue(text.contains(item)));
+	return (text == null || Boolean.FALSE.equals(text.contains(item)));
     }
 }
