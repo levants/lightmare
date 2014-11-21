@@ -525,7 +525,7 @@ public class MetaCreator {
 	// Process post deployment procedures
 	boolean hotDeployment = configuration.isHotDeployment();
 	boolean watchStatus = configuration.isWatchStatus();
-	if (hotDeployment && ObjectUtils.notTrue(watchStatus)) {
+	if (hotDeployment && Boolean.FALSE.equals(watchStatus)) {
 	    Watcher.startWatch();
 	    watchStatus = Boolean.TRUE;
 	}
@@ -788,8 +788,7 @@ public class MetaCreator {
 
 	boolean locked = Boolean.FALSE;
 
-	while (ObjectUtils.notTrue(locked)) {
-
+	while (Boolean.FALSE.equals(locked)) {
 	    // Tries to lock for avoid concurrent modification
 	    locked = ObjectUtils.tryLock(scannerLock);
 	    if (locked) {
