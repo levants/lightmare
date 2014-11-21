@@ -32,7 +32,6 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.fs.FileType;
 import org.lightmare.utils.io.IOUtils;
@@ -77,11 +76,9 @@ public class ExtUtils extends DirUtils {
 		StringUtils.EMPTY_STRING);
 	tmpFile.delete();
 	tmpFile.mkdir();
-
 	addTmpFile(tmpFile);
 	ZipFile zipFile = getEarFile();
 	Enumeration<? extends ZipEntry> zipFileEntries = zipFile.entries();
-
 	while (zipFileEntries.hasMoreElements()) {
 	    ZipEntry entry = zipFileEntries.nextElement();
 	    exctractFile(entry);
@@ -93,23 +90,18 @@ public class ExtUtils extends DirUtils {
 	InputStream extStream = getEarFile().getInputStream(entry);
 	File file = new File(tmpFile, entry.getName());
 	File parrent = file.getParentFile();
-	if (ObjectUtils.notTrue(parrent.exists())) {
+	if (Boolean.FALSE.equals(parrent.exists())) {
 	    parrent.mkdirs();
 	    addTmpFile(parrent);
 	}
-
 	// Caches temporal files
 	addTmpFile(file);
-
-	if (ObjectUtils.notTrue(entry.isDirectory())) {
-
-	    if (ObjectUtils.notTrue(file.exists())) {
+	if (Boolean.FALSE.equals(entry.isDirectory())) {
+	    if (Boolean.FALSE.equals(file.exists())) {
 		file.createNewFile();
 	    }
-
 	    OutputStream out = new FileOutputStream(file);
 	    IOUtils.write(extStream, out);
-
 	} else {
 	    file.mkdir();
 	}
@@ -117,9 +109,7 @@ public class ExtUtils extends DirUtils {
 
     @Override
     protected void scanArchive(Object... args) throws IOException {
-
 	exctractEar();
-
 	super.realFile = tmpFile;
 	super.path = tmpFile.getPath();
 	super.isDirectory = tmpFile.isDirectory();

@@ -150,7 +150,7 @@ public abstract class ArchiveUtils {
     }
 
     public boolean notExecuted() {
-	return ObjectUtils.notTrue(executed);
+	return Boolean.FALSE.equals(executed);
     }
 
     public void setXmlFromJar(boolean xmlFromJar) {

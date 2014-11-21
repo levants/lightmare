@@ -223,7 +223,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static <K, V> boolean notContains(Map<K, V> map, K key) {
-	return (key == null || invalid(map) || ObjectUtils.notTrue(map
+	return (key == null || invalid(map) || Boolean.FALSE.equals(map
 		.containsKey(key)));
     }
 
@@ -236,8 +236,8 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static <E> boolean notContains(Collection<E> collection, E element) {
-	return ((element == null || invalid(collection)) || (valid(collection) && ObjectUtils
-		.notTrue(collection.contains(element))));
+	return ((element == null || invalid(collection)) || (valid(collection) && Boolean.FALSE
+		.equals(collection.contains(element))));
     }
 
     /**
@@ -328,7 +328,7 @@ public abstract class CollectionUtils {
     public static <K, V> void putIfAbscent(Map<K, V> map, K key, V value) {
 
 	boolean contained = map.containsKey(key);
-	if (ObjectUtils.notTrue(contained)) {
+	if (Boolean.FALSE.equals(contained)) {
 	    map.put(key, value);
 	}
     }
@@ -344,7 +344,7 @@ public abstract class CollectionUtils {
     public static <K, V> void checkAndAdd(Map<K, V> map, K key, V value) {
 
 	boolean contained = map.containsKey(key) && value.equals(map.get(key));
-	if (ObjectUtils.notTrue(contained)) {
+	if (Boolean.FALSE.equals(contained)) {
 	    map.put(key, value);
 	}
     }

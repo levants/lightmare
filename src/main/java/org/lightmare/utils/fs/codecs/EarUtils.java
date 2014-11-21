@@ -146,9 +146,9 @@ public class EarUtils extends ArchiveUtils {
 	ZipInputStream zipStream = new ZipInputStream(stream);
 	ZipEntry xmlEntry = zipStream.getNextEntry();
 
-	while (ObjectUtils.notNull(xmlEntry) && ObjectUtils.notTrue(check)) {
+	while (ObjectUtils.notNull(xmlEntry) && Boolean.FALSE.equals(check)) {
 	    check = xmlEntry.getName().equals(XMLInitializer.XML_PATH);
-	    if (ObjectUtils.notTrue(check)) {
+	    if (Boolean.FALSE.equals(check)) {
 		xmlEntry = zipStream.getNextEntry();
 	    }
 	}
@@ -183,8 +183,7 @@ public class EarUtils extends ArchiveUtils {
     }
 
     public void checkFile() throws IOException {
-
-	if (path.endsWith(EAR_FILE_EXT) && ObjectUtils.notTrue(isDirectory)) {
+	if (path.endsWith(EAR_FILE_EXT) && Boolean.FALSE.equals(isDirectory)) {
 	    getEjbLibs();
 	}
     }

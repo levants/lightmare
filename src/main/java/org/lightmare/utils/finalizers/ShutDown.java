@@ -33,7 +33,6 @@ import org.lightmare.cache.MetaContainer;
 import org.lightmare.cache.RestContainer;
 import org.lightmare.cache.TmpResources;
 import org.lightmare.deploy.LoaderPoolManager;
-import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 
@@ -177,7 +176,7 @@ public class ShutDown implements Runnable {
 	synchronized (ShutDown.class) {
 	    // Prevents null pointer exception for SutDown instance
 	    boolean hookIsSet = Boolean.FALSE;
-	    while (ObjectUtils.notTrue(hookIsSet)) {
+	    while (Boolean.FALSE.equals(hookIsSet)) {
 		hookIsSet = HOOK_NOT_SET.getAndSet(Boolean.TRUE);
 	    }
 	    // Nulls cached ShutDown instance for PermGen sake
