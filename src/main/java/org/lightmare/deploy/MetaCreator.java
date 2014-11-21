@@ -1075,7 +1075,7 @@ public class MetaCreator {
 	public Builder setServer(boolean server) {
 
 	    Configuration.setServer(server);
-	    creator.configuration.setClient(ObjectUtils.notTrue(server));
+	    creator.configuration.setClient(Boolean.FALSE.equals(server));
 
 	    return this;
 	}
@@ -1089,7 +1089,7 @@ public class MetaCreator {
 	public Builder setClient(boolean client) {
 
 	    creator.configuration.setClient(client);
-	    Configuration.setServer(ObjectUtils.notTrue(client));
+	    Configuration.setServer(Boolean.FALSE.equals(client));
 
 	    return this;
 	}
