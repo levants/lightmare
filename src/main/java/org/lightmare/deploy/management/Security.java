@@ -111,8 +111,7 @@ public class Security {
 
 	boolean valid = Configuration.getRemoteControl();
 
-	if (ObjectUtils.notTrue(valid)) {
-
+	if (Boolean.FALSE.equals(valid)) {
 	    String header = request.getHeader(PROXY_HEADER);
 	    valid = (header == null);
 	    if (valid) {
