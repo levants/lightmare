@@ -22,7 +22,6 @@
  */
 package org.lightmare.jpa.datasource;
 
-import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 
 /**
@@ -80,7 +79,7 @@ public abstract class DriverConfig {
 	int length = drivers.length;
 	boolean match = Boolean.FALSE;
 	for (int i = CollectionUtils.FIRST_INDEX; i < length
-		&& ObjectUtils.notTrue(match); i++) {
+		&& Boolean.FALSE.equals(match); i++) {
 	    driver = drivers[i];
 	    match = driver.name.equals(name);
 	    if (match) {

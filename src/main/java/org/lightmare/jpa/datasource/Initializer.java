@@ -97,7 +97,7 @@ public abstract class Initializer {
 
     private static boolean validate(String datasourcePath) {
 	return StringUtils.valid(datasourcePath)
-		&& ObjectUtils.notTrue(checkDSPath(datasourcePath));
+		&& Boolean.FALSE.equals(checkDSPath(datasourcePath));
     }
 
     /**
@@ -123,7 +123,7 @@ public abstract class Initializer {
     public static void initializeDriver(String driver) throws IOException {
 
 	boolean locked = Boolean.FALSE;
-	while (ObjectUtils.notTrue(locked)) {
+	while (Boolean.FALSE.equals(locked)) {
 	    locked = ObjectUtils.tryLock(DRIVER_LOCK);
 	    if (locked) {
 		try {

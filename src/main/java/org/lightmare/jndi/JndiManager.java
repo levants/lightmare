@@ -287,7 +287,7 @@ class NamingContext {
      */
     protected static void configure() {
 
-	if (ObjectUtils.notTrue(JNDI_IS_SET.getAndSet(Boolean.TRUE))) {
+	if (Boolean.FALSE.equals(JNDI_IS_SET.getAndSet(Boolean.TRUE))) {
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    Thread thread = Thread.currentThread();
 	    try {
