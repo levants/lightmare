@@ -355,7 +355,7 @@ public class DeployManager extends HttpServlet {
 
 	boolean controllAllowed = security.controlAllowed(request);
 
-	if (ObjectUtils.notTrue(controllAllowed)) {
+	if (Boolean.FALSE.equals(controllAllowed)) {
 	    response.sendError(HttpServletResponse.SC_FORBIDDEN,
 		    CONTROLL_NOT_ALLOWED_MESSAGE);
 	} else {
@@ -386,7 +386,7 @@ public class DeployManager extends HttpServlet {
 
 	boolean remoteAllowed = security.controlAllowed(request);
 
-	if (ObjectUtils.notTrue(remoteAllowed)) {
+	if (Boolean.FALSE.equals(remoteAllowed)) {
 	    response.sendError(HttpServletResponse.SC_FORBIDDEN,
 		    CONTROLL_NOT_ALLOWED_MESSAGE);
 	} else {

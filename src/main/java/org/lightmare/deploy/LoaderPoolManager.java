@@ -205,7 +205,7 @@ public abstract class LoaderPoolManager {
 
 	if (invalid()) {
 	    boolean locked = Boolean.FALSE;
-	    while (ObjectUtils.notTrue(locked)) {
+	    while (Boolean.FALSE.equals(locked)) {
 		// Locks the Lock object to avoid shut down and submit in
 		// parallel
 		locked = initAndUnlock();
@@ -263,7 +263,7 @@ public abstract class LoaderPoolManager {
     public static void reload() throws IOException {
 
 	boolean locked = Boolean.FALSE;
-	while (ObjectUtils.notTrue(locked)) {
+	while (Boolean.FALSE.equals(locked)) {
 	    // Locks the Lock object to avoid shut down and submit in
 	    // parallel
 	    locked = ObjectUtils
