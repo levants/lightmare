@@ -118,7 +118,6 @@ public class Security {
 		header = request.getHeader(PROXY_HEADER.toUpperCase());
 		valid = (header == null);
 	    }
-
 	    if (valid) {
 		String host = request.getRemoteAddr();
 		String localhost = request.getLocalAddr();
