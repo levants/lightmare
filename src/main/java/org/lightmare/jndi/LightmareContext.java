@@ -54,6 +54,7 @@ import org.osjava.sj.memory.MemoryContext;
  * @author Levan Tsinadze
  * @since 0.0.60-SNAPSHOT
  */
+@SuppressWarnings("unchecked")
 public class LightmareContext extends MemoryContext implements Cleanable {
 
     // Caches EntityManager instances got from lookup method to clear after

@@ -85,8 +85,8 @@
 		<junit.version>4.11</junit.version>
 		<!-- end of junit -->
 		<!-- h2 -->
-		<!-- end of h2 -->
 		<h2.version>1.4.181</h2.version>
+		<!-- end of h2 -->
 		<!-- end of test -->
 	</properties>
 
