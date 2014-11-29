@@ -41,7 +41,6 @@ import org.jboss.logging.Logger;
 import org.lightmare.jpa.MetaConfig;
 import org.lightmare.jpa.hibernate.internal.PersistenceUnitSwapDescriptor;
 import org.lightmare.jpa.hibernate.internal.PersistenceXmlParserImpl;
-import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 
 /**
