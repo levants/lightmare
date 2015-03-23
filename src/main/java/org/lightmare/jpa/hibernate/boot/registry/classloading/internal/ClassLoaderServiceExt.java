@@ -104,11 +104,9 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 		}
 	    }
 	}
-
 	// normalize adding known class-loaders...
 	// then the Hibernate class loader
 	orderedClassLoaderSet.add(ClassLoaderServiceExt.class.getClassLoader());
-
 	// then the TCCL, if one...
 	final ClassLoader tccl = locateTCCL();
 	if (tccl != null) {
@@ -119,7 +117,6 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 	if (sysClassLoader != null) {
 	    orderedClassLoaderSet.add(sysClassLoader);
 	}
-
 	// now build the aggregated class loader...
 	this.aggregatedClassLoader = new AggregatedClassLoader(
 		orderedClassLoaderSet);
@@ -165,7 +162,6 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 		providedClassLoaders.add(classLoader);
 	    }
 	}
-
 	addIfSet(providedClassLoaders, AvailableSettings.APP_CLASSLOADER,
 		configValues);
 	addIfSet(providedClassLoaders, AvailableSettings.RESOURCES_CLASSLOADER,
@@ -174,7 +170,6 @@ public class ClassLoaderServiceExt extends ClassLoaderServiceImpl {
 		configValues);
 	addIfSet(providedClassLoaders,
 		AvailableSettings.ENVIRONMENT_CLASSLOADER, configValues);
-
 	if (providedClassLoaders.isEmpty()) {
 	    LOG.debugf("Incoming config yielded no classloaders; adding standard SE ones");
 	    final ClassLoader tccl = locateTCCL();
