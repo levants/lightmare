@@ -117,12 +117,34 @@ public class ConnectionContainer {
     }
 
     /**
-     * Creates and locks {@link ConnectionSemaphore} instance.
+     * Checks and gets {@link ConnectionSemaphore} from cache
+     * 
+     * @param current
+     * @param semaphore
+     * @return {@link ConnectionSemaphore} instance
+     */
+    private static ConnectionSemaphore checkAndGetSemaphore(
+	    ConnectionSemaphore current, ConnectionSemaphore semaphore) {
+
+	ConnectionSemaphore result;
+
+	// Checks if current semaphore is not set
+	if (current == null) {
+	    result = semaphore;
+	} else {
+	    result = current;
+	}
+
+	return result;
+    }
+
+    /**
+     * Checks and gets {@link ConnectionSemaphore} from cache
      * 
      * @param unitName
-     * @return {@link ConnectionSemaphore}
+     * @return {@link ConnectionSemaphore} instance
      */
-    private static ConnectionSemaphore createSemaphore(String unitName) {
+    private static ConnectionSemaphore checkAndGetSemaphore(String unitName) {
 
 	ConnectionSemaphore current;
 
@@ -130,13 +152,24 @@ public class ConnectionContainer {
 	if (semaphore == null) {
 	    semaphore = initSemaphore(unitName);
 	    current = CONNECTIONS.putIfAbsent(unitName, semaphore);
+	    // Checks if current semaphore is not set
+	    current = checkAndGetSemaphore(current, semaphore);
 	} else {
 	    current = semaphore;
 	}
-	// Checks if current semaphore is not set
-	if (current == null) {
-	    current = semaphore;
-	}
+
+	return current;
+    }
+
+    /**
+     * Creates and locks {@link ConnectionSemaphore} instance.
+     * 
+     * @param unitName
+     * @return {@link ConnectionSemaphore}
+     */
+    private static ConnectionSemaphore createSemaphore(String unitName) {
+
+	ConnectionSemaphore current = checkAndGetSemaphore(unitName);
 	// Increments user count in semaphore
 	current.incrementUser();
 
