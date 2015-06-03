@@ -116,13 +116,7 @@ public class ConnectionContainer {
 
     }
 
-    /**
-     * Creates and locks {@link ConnectionSemaphore} instance.
-     * 
-     * @param unitName
-     * @return {@link ConnectionSemaphore}
-     */
-    private static ConnectionSemaphore createSemaphore(String unitName) {
+    private static ConnectionSemaphore initCurrent(String unitName) {
 
 	ConnectionSemaphore current;
 
@@ -137,6 +131,19 @@ public class ConnectionContainer {
 	if (current == null) {
 	    current = semaphore;
 	}
+
+	return current;
+    }
+
+    /**
+     * Creates and locks {@link ConnectionSemaphore} instance.
+     * 
+     * @param unitName
+     * @return {@link ConnectionSemaphore}
+     */
+    private static ConnectionSemaphore createSemaphore(String unitName) {
+
+	ConnectionSemaphore current = initCurrent(unitName);
 	// Increments user count in semaphore
 	current.incrementUser();
 

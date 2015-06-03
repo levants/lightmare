@@ -56,6 +56,9 @@
 		<!-- scannotation -->
 		<scannotation.version>1.0.3</scannotation.version>
 		<!-- end of scannotation -->
+		<!-- javassist -->
+		<javassist.version>3.19.0-GA</javassist.version>
+		<!-- end of javassist -->
 		<!-- simple-jndi -->
 		<simple-jndi.version>0.11.4.1</simple-jndi.version>
 		<!-- end of simple-jndi -->
@@ -485,6 +488,12 @@
 			<groupId>org.scannotation</groupId>
 			<artifactId>scannotation</artifactId>
 			<version>${scannotation.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javassist</groupId>
+					<artifactId>javassist</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.scannotation</groupId>
@@ -492,6 +501,12 @@
 			<version>${scannotation.version}</version>
 			<classifier>sources</classifier>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>javassist</groupId>
+					<artifactId>javassist</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.scannotation</groupId>
@@ -499,9 +514,21 @@
 			<version>${scannotation.version}</version>
 			<classifier>javadoc</classifier>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>javassist</groupId>
+					<artifactId>javassist</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- end of startup -->
-
+		<!-- javassist -->
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>${javassist.version}</version>
+		</dependency>
+		<!-- end of javassist -->
 		<!-- jndi -->
 		<dependency>
 			<groupId>simple-jndi</groupId>
