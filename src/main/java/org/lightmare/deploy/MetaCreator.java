@@ -501,13 +501,12 @@ public class MetaCreator {
     }
 
     /**
-     * Deploys single bean by class name
+     * Deployes passed bean names
      * 
      * @param beanNames
      */
-    private void deployBeans(Set<String> beanNames) {
+    private void blockAndDeployBeans(Set<String> beanNames) {
 
-	blocker = new CountDownLatch(beanNames.size());
 	for (String beanName : beanNames) {
 	    LogUtils.info(LOG, "Deploing bean %s", beanName);
 	    try {
@@ -517,11 +516,29 @@ public class MetaCreator {
 			beanName, ex.getMessage());
 	    }
 	}
-	// Locks until deployments are finished
-	awaitDeployments();
+    }
+
+    /**
+     * Reboots REST application server
+     */
+    private void realoadRestServer() {
 	if (RestContainer.hasRest()) {
 	    RestProvider.reload();
 	}
+    }
+
+    /**
+     * Deploys single bean by class name
+     * 
+     * @param beanNames
+     */
+    private void deployBeans(Set<String> beanNames) {
+
+	blocker = new CountDownLatch(beanNames.size());
+	blockAndDeployBeans(beanNames);
+	// Locks until deployments are finished
+	awaitDeployments();
+	realoadRestServer();
 	// Process post deployment procedures
 	boolean hotDeployment = configuration.isHotDeployment();
 	boolean watchStatus = configuration.isWatchStatus();

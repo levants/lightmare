@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -415,12 +416,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
      * @param datasource
      */
     public void addDataSource(Map<Object, Object> datasource) {
-
-	List<Map<Object, Object>> datasources = getConfigValue(ConfigKeys.DATASOURCES.key);
-	if (datasources == null) {
-	    datasources = new ArrayList<Map<Object, Object>>();
-	    setDataSources(datasources);
-	}
+	List<Map<Object, Object>> datasources = getDataSources();
 	datasources.add(datasource);
     }
 
@@ -474,8 +470,31 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 	return paths;
     }
 
+    /**
+     * Gets datasources from configuration
+     * 
+     * @return
+     */
     public List<Map<Object, Object>> getDataSources() {
-	return getConfigValue(ConfigKeys.DATASOURCES.key);
+
+	List<Map<Object, Object>> datasources;
+
+	Object raw = getConfigValue(ConfigKeys.DATASOURCES.key);
+	if (raw == null) {
+	    datasources = new ArrayList<Map<Object, Object>>();
+	    setDataSources(datasources);
+	} else if (raw instanceof Map<?, ?>) {
+	    Map<Object, Object> config = ObjectUtils.cast(raw);
+	    Collection<?> raws = config.values();
+	    Collection<Map<Object, Object>> values = ObjectUtils.cast(raws);
+	    datasources = new ArrayList<Map<Object, Object>>(values);
+	} else if (raw instanceof List<?>) {
+	    datasources = ObjectUtils.cast(raw);
+	} else {
+	    datasources = new ArrayList<Map<Object, Object>>();
+	}
+
+	return datasources;
     }
 
     public Map<Object, Object> getDataSource() {
