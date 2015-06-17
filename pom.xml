@@ -63,10 +63,10 @@
 		<simple-jndi.version>0.11.4.1</simple-jndi.version>
 		<!-- end of simple-jndi -->
 		<!-- jackson -->
-		<jackson.version>2.5.2</jackson.version>
+		<jackson.version>2.5.3</jackson.version>
 		<!-- end of jackson -->
 		<!-- yaml -->
-		<snakeyaml.version>1.14</snakeyaml.version>
+		<snakeyaml.version>1.15</snakeyaml.version>
 		<!-- end of yaml -->
 		<!-- jersey -->
 		<jersey.version>2.13</jersey.version>
