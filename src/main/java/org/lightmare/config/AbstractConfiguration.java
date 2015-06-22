@@ -349,6 +349,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Load {@link Configuration} in memory as {@link Map} of parameters
      * 
+     * @param propertiesStream
      * @throws IOException
      */
     public void loadFromStream(InputStream propertiesStream) throws IOException {
@@ -406,6 +407,13 @@ public abstract class AbstractConfiguration implements Cloneable {
 	}
     }
 
+    /**
+     * Clears existed configuration parameters
+     */
+    protected void clear() {
+	config.clear();
+    }
+
     @Override
     public Configuration clone() throws CloneNotSupportedException {
 
@@ -416,10 +424,9 @@ public abstract class AbstractConfiguration implements Cloneable {
 	// Casting cloned object to the appropriated type
 	cloneConfig = ObjectUtils.cast(cloneObject, Configuration.class);
 	// Coping configuration for cloned data
-	Map<Object, Object> copyConfig = new HashMap<Object, Object>(
-		this.config);
+	Map<Object, Object> copyConfig = new HashMap<Object, Object>(config);
 	// copyConfig.putAll(this.config);
-	cloneConfig.config.clear();
+	cloneConfig.clear();
 	cloneConfig.configure(copyConfig);
 
 	return cloneConfig;
