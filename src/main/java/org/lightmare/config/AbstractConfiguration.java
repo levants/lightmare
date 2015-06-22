@@ -347,7 +347,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     }
 
     /**
-     * Load {@link Configuration} in memory as {@link Map} of parameters
+     * Loads {@link Configuration} in memory as {@link Map} of parameters
      * 
      * @param propertiesStream
      * @throws IOException
@@ -357,9 +357,9 @@ public abstract class AbstractConfiguration implements Cloneable {
 	try {
 	    Properties props = new Properties();
 	    props.load(propertiesStream);
-
-	    for (String propertyName : props.stringPropertyNames()) {
-		config.put(propertyName, props.getProperty(propertyName));
+	    Set<String> names = props.stringPropertyNames();
+	    for (String name : names) {
+		config.put(name, props.getProperty(name));
 	    }
 	} catch (IOException ex) {
 	    LOG.error(COULD_NOT_LOAD_CONFIG_ERROR, ex);
@@ -399,8 +399,8 @@ public abstract class AbstractConfiguration implements Cloneable {
     public void loadFromFile(String configFilename) throws IOException {
 
 	try {
-	    InputStream propertiesStream = new FileInputStream(new File(
-		    configFilename));
+	    File propertiesFile = new File(configFilename);
+	    InputStream propertiesStream = new FileInputStream(propertiesFile);
 	    loadFromStream(propertiesStream);
 	} catch (IOException ex) {
 	    LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
