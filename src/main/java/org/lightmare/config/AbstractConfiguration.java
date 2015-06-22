@@ -408,6 +408,15 @@ public abstract class AbstractConfiguration implements Cloneable {
     }
 
     /**
+     * Copies existed configuration for cloning
+     * 
+     * @return {@link Map} copy of existed configuration
+     */
+    protected Map<Object, Object> copy() {
+	return new HashMap<Object, Object>(config);
+    }
+
+    /**
      * Clears existed configuration parameters
      */
     protected void clear() {
@@ -420,14 +429,14 @@ public abstract class AbstractConfiguration implements Cloneable {
 	// Deep clone for configuration
 	Configuration cloneConfig;
 
-	Object cloneObject = super.clone();
+	Object raw = super.clone();
 	// Casting cloned object to the appropriated type
-	cloneConfig = ObjectUtils.cast(cloneObject, Configuration.class);
+	cloneConfig = ObjectUtils.cast(raw, Configuration.class);
 	// Coping configuration for cloned data
-	Map<Object, Object> copyConfig = new HashMap<Object, Object>(config);
+	Map<Object, Object> copy = copy();
 	// copyConfig.putAll(this.config);
 	cloneConfig.clear();
-	cloneConfig.configure(copyConfig);
+	cloneConfig.configure(copy);
 
 	return cloneConfig;
     }
