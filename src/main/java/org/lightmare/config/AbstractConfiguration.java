@@ -64,6 +64,26 @@ public abstract class AbstractConfiguration implements Cloneable {
     }
 
     /**
+     * Checks and sets appropriated sub configuration parameter
+     * 
+     * @param key
+     * @param subKey
+     * @param value
+     * @return {@link Map} of sub configuration
+     */
+    private <K, V> Map<K, V> checkAndGetSubConfig(Object key, K subKey, V value) {
+
+	Map<K, V> subConfig = getAsMap(key);
+
+	if (subConfig == null) {
+	    subConfig = new HashMap<K, V>();
+	    config.put(key, subConfig);
+	}
+
+	return subConfig;
+    }
+
+    /**
      * Sets value of sub {@link Map} on passed sub key contained in cached
      * configuration on passed key
      * 
@@ -72,13 +92,7 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @param value
      */
     private <K, V> void setSubConfigValue(Object key, K subKey, V value) {
-
-	Map<K, V> subConfig = getAsMap(key);
-	if (subConfig == null) {
-	    subConfig = new HashMap<K, V>();
-	    config.put(key, subConfig);
-	}
-
+	Map<K, V> subConfig = checkAndGetSubConfig(key, subKey, value);
 	subConfig.put(subKey, value);
     }
 
