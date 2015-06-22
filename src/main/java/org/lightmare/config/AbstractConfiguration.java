@@ -336,12 +336,16 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @return {@link String}
      */
     public boolean getBooleanValue(String key) {
-
 	String value = getStringValue(key);
-
 	return Boolean.parseBoolean(value);
     }
 
+    /**
+     * Sets passed configuration value for appropriated key
+     * 
+     * @param key
+     * @param value
+     */
     public void putValue(String key, String value) {
 	config.put(key, value);
     }
