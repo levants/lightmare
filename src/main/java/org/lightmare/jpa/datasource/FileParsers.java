@@ -45,47 +45,42 @@ import org.lightmare.utils.collections.CollectionUtils;
  * Parses XML files to initialize {@link javax.sql.DataSource}s and bind them to
  * <a href="http://www.oracle.com/technetwork/java/jndi/index.html">jndi</a>
  * {@link javax.naming.Context} by name
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.15-SNAPSHOT
  */
 public class FileParsers {
 
-    private static final String DEFAULT_KEY = String
-	    .valueOf(StringUtils.HYPHEN);;
+    private static final String DEFAULT_KEY = String.valueOf(StringUtils.HYPHEN);;
 
     private static final Logger LOG = Logger.getLogger(FileParsers.class);
 
     /**
      * Checks if JNDI name is valid and passed container not contains elements
      * with this name
-     * 
+     *
      * @param jndiName
      * @param container
      * @return <code>boolean</code>
      */
-    private static boolean valid(String jndiName,
-	    Map<String, Properties> container) {
-	return StringUtils.valid(jndiName)
-		&& (container.isEmpty() || CollectionUtils.notContains(
-			container, jndiName));
+    private static boolean valid(String jndiName, Map<String, Properties> container) {
+	return StringUtils.valid(jndiName) && (container.isEmpty() || CollectionUtils.notContains(container, jndiName));
     }
 
     /**
      * Gets data source {@link Properties} from XML configuration file
-     * 
+     *
      * @param paths
      * @param datasources
      * @throws IOException
      */
-    private static void fillFromXml(Collection<String> paths,
-	    Map<String, List<Properties>> datasources) throws IOException {
+    private static void fillFromXml(Collection<String> paths, Map<String, List<Properties>> datasources)
+	    throws IOException {
 
 	if (CollectionUtils.valid(paths)) {
 	    List<Properties> xmlDatasources;
 	    for (String dataSourcePath : paths) {
-		xmlDatasources = XMLFileParsers
-			.getPropertiesFromJBoss(dataSourcePath);
+		xmlDatasources = XMLFileParsers.getPropertiesFromJBoss(dataSourcePath);
 		if (CollectionUtils.valid(xmlDatasources)) {
 		    datasources.put(dataSourcePath, xmlDatasources);
 		}
@@ -95,13 +90,13 @@ public class FileParsers {
 
     /**
      * Gets data source {@link Properties} from YAML configuration file
-     * 
+     *
      * @param config
      * @param datasources
      * @throws IOException
      */
-    private static void fillFromYaml(Configuration config,
-	    Map<String, List<Properties>> datasources) throws IOException {
+    private static void fillFromYaml(Configuration config, Map<String, List<Properties>> datasources)
+	    throws IOException {
 
 	if (ObjectUtils.notNull(config)) {
 	    List<Properties> yamlDatasources = YamlParsers.parseYaml(config);
@@ -114,12 +109,11 @@ public class FileParsers {
     /**
      * Checks if passed {@link Properties} contains JNDI name property and puts
      * this name in passed {@link Map} of data sources
-     * 
+     *
      * @param properties
      * @param container
      */
-    private static void put(Properties properties,
-	    Map<String, Properties> container) {
+    private static void put(Properties properties, Map<String, Properties> container) {
 
 	String property = ConnectionConfig.JNDI_NAME_PROPERTY.name;
 	String jndiName = properties.getProperty(property);
@@ -130,7 +124,7 @@ public class FileParsers {
 
     /**
      * Avoids duplicate data source properties
-     * 
+     *
      * @param datasources
      * @return {@link List} of data source {@link Properties} without duplicates
      */
@@ -153,19 +147,17 @@ public class FileParsers {
 
     /**
      * Avoids duplicate data source properties
-     * 
+     *
      * @param datasources
      * @return {@link Map} of JNDI names and {@link List} of data source
      *         {@link Properties} without duplicates
      */
-    private static Map<String, List<Properties>> shrink(
-	    Map<String, List<Properties>> datasources) {
+    private static Map<String, List<Properties>> shrink(Map<String, List<Properties>> datasources) {
 
 	Map<String, List<Properties>> shrinked = new HashMap<String, List<Properties>>();
 
 	if (CollectionUtils.valid(datasources)) {
-	    Set<Map.Entry<String, List<Properties>>> entrySet = datasources
-		    .entrySet();
+	    Set<Map.Entry<String, List<Properties>>> entrySet = datasources.entrySet();
 	    String key;
 	    List<Properties> value;
 	    List<Properties> fine;
@@ -183,7 +175,7 @@ public class FileParsers {
     /**
      * Calculates sum of sizes for each {@link List} of data source
      * {@link Properties} for passed data sources
-     * 
+     *
      * @param datasources
      * @return <code>int</code> suze of all {@link List} of {@link Properties}
      *         in passed data sources
@@ -204,12 +196,11 @@ public class FileParsers {
 
     /**
      * Initializes and connection pool
-     * 
+     *
      * @param properties
      * @param blocker
      */
-    private static void initDatasource(Properties properties,
-	    CountDownLatch blocker) {
+    private static void initDatasource(Properties properties, CountDownLatch blocker) {
 
 	try {
 	    // Initializes and fills BeanLoader.DataSourceParameters class
@@ -225,12 +216,11 @@ public class FileParsers {
 
     /**
      * Initializes each data source from {@link Properties} in parallel mode
-     * 
+     *
      * @param datasources
      * @param blocker
      */
-    private static void initDatasources(List<Properties> datasources,
-	    CountDownLatch blocker) {
+    private static void initDatasources(List<Properties> datasources, CountDownLatch blocker) {
 
 	if (CollectionUtils.valid(datasources)) {
 	    for (Properties properties : datasources) {
@@ -242,12 +232,11 @@ public class FileParsers {
     /**
      * Parses standalone.xml file and initializes {@link javax.sql.DataSource}s
      * and binds them to JNDI context
-     * 
+     *
      * @param dataSourcePath
      * @throws IOException
      */
-    public static void parseDataSources(Collection<String> paths,
-	    Configuration config) throws IOException {
+    public static void parseDataSources(Collection<String> paths, Configuration config) throws IOException {
 
 	Map<String, List<Properties>> datasources = new HashMap<String, List<Properties>>();
 
@@ -257,8 +246,7 @@ public class FileParsers {
 	int size = calculateSize(datasources);
 	// Blocking semaphore before all data source initialization finished
 	CountDownLatch blocker = new CountDownLatch(size);
-	Set<Map.Entry<String, List<Properties>>> entrySet = datasources
-		.entrySet();
+	Set<Map.Entry<String, List<Properties>>> entrySet = datasources.entrySet();
 	String key;
 	List<Properties> value;
 	for (Map.Entry<String, List<Properties>> entry : entrySet) {

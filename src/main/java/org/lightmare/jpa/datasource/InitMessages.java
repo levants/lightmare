@@ -24,15 +24,14 @@ package org.lightmare.jpa.datasource;
 
 /**
  * Contains error messages for data source initializations
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
 public enum InitMessages {
 
     // Error messages
-    NOT_APPR_INSTANCE_ERROR(
-	    "Could not initialize data source %s (it is not appropriated DataSource instance)"),
+    NOT_APPR_INSTANCE_ERROR("Could not initialize data source %s (it is not appropriated DataSource instance)"),
 
     COULD_NOT_INIT_ERROR("Could not initialize data source %s"),
 

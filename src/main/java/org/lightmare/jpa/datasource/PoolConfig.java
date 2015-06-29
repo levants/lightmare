@@ -40,7 +40,7 @@ import org.lightmare.utils.io.IOUtils;
 
 /**
  * Configuration with default and set parameters for c3p0 connection pooling
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.26-SNAPSHOT
  */
@@ -48,7 +48,7 @@ public class PoolConfig {
 
     /**
      * Container for default configuration keys and values
-     * 
+     *
      * @author Levan Tsinadze
      * @since 0.0.81-SNAPSHOT
      */
@@ -83,8 +83,9 @@ public class PoolConfig {
 	// Transaction properties
 	AUTOCOMMIT("autoCommit", Boolean.FALSE), // auto commit
 	AUTOCOMMIT_ON_CLOSE("autoCommitOnClose", Boolean.FALSE), // on close
-	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions",
-		Boolean.TRUE), // ignore unresolved transactions
+	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions", Boolean.TRUE), // ignore
+										   // unresolved
+										   // transactions
 
 	// Connection recovery properties
 	ACQUIRE_RETRY_ATTEMPTS("acquireRetryAttempts", 0), // retry
@@ -124,7 +125,7 @@ public class PoolConfig {
 
     /**
      * Enumeration to choose which type connection pool should be in use
-     * 
+     *
      * @author levan
      * @since 0.0.80-SNAPSHOT
      */
@@ -138,7 +139,7 @@ public class PoolConfig {
 
     /**
      * Sets default connection pooling properties
-     * 
+     *
      * @return {@link Map}<code><Object, Object></code>
      */
     public Map<Object, Object> getDefaultPooling() {
@@ -162,7 +163,7 @@ public class PoolConfig {
     /**
      * Caches keys which are not supported directly for pool configuration to
      * remove them
-     * 
+     *
      * @return {@link Set}<code><Object></code>
      * @throws IOException
      */
@@ -184,24 +185,22 @@ public class PoolConfig {
 
     /**
      * Add initialized properties to defaults
-     * 
+     *
      * @param defaults
      * @param initial
      */
-    private void fillDefaults(Map<Object, Object> defaults,
-	    Map<Object, Object> initial) {
+    private void fillDefaults(Map<Object, Object> defaults, Map<Object, Object> initial) {
 	defaults.putAll(initial);
     }
 
     /**
      * Generates pooling configuration properties
-     * 
+     *
      * @param initial
      * @return {@link Map}<Object, Object>
      * @throws IOException
      */
-    private Map<Object, Object> configProperties(Map<Object, Object> initial)
-	    throws IOException {
+    private Map<Object, Object> configProperties(Map<Object, Object> initial) throws IOException {
 
 	Map<Object, Object> propertiesMap = getDefaultPooling();
 
@@ -226,7 +225,7 @@ public class PoolConfig {
 
     /**
      * Gets property as {@link String} value
-     * 
+     *
      * @param properties
      * @param key
      * @return {@link String} property
@@ -250,7 +249,7 @@ public class PoolConfig {
 
     /**
      * Gets property as <code>int</code> value
-     * 
+     *
      * @param properties
      * @param key
      * @return <code>int</code>
@@ -276,7 +275,7 @@ public class PoolConfig {
 
     /**
      * Gets property as <code>int</code> value
-     * 
+     *
      * @param properties
      * @param name
      * @return <code>int</code>
@@ -293,7 +292,7 @@ public class PoolConfig {
 
     /**
      * Gets property as {@link Boolean} value
-     * 
+     *
      * @param properties
      * @param key
      * @return {@link Boolean} value of property
@@ -319,7 +318,7 @@ public class PoolConfig {
 
     /**
      * Loads {@link Properties} from specific path
-     * 
+     *
      * @param path
      * @return {@link Properties}
      * @throws IOException
@@ -357,13 +356,12 @@ public class PoolConfig {
     /**
      * Merges passed properties, startup time passed properties and properties
      * loaded from file
-     * 
+     *
      * @param properties
      * @return {@link Map}<Object, Object> merged properties map
      * @throws IOException
      */
-    public Map<Object, Object> merge(Map<Object, Object> properties)
-	    throws IOException {
+    public Map<Object, Object> merge(Map<Object, Object> properties) throws IOException {
 
 	Map<Object, Object> configMap = configProperties(properties);
 
@@ -409,7 +407,7 @@ public class PoolConfig {
 
     /**
      * Sets appropriate connection pool provider
-     * 
+     *
      * @param poolProviderType
      */
     public void setPoolProviderType(PoolProviderType poolProviderType) {
@@ -421,7 +419,7 @@ public class PoolConfig {
 
     /**
      * Sets appropriate connection pool provider
-     * 
+     *
      * @param poolProviderTypeName
      */
     public void setPoolProviderType(String poolProviderTypeName) {

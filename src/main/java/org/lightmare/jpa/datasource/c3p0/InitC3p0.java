@@ -41,7 +41,7 @@ import com.mchange.v2.c3p0.PooledDataSource;
 
 /**
  * Initializes and bind to {@link Context} c3p0 pooled {@link DataSource} object
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.79-SNAPSHOT
  */
@@ -53,7 +53,7 @@ public class InitC3p0 extends InitDataSource {
 
     /**
      * Initializes appropriated driver and {@link DataSource} objects
-     * 
+     *
      * @param properties
      * @return {@link DataSource}
      * @throws IOException
@@ -76,13 +76,11 @@ public class InitC3p0 extends InitDataSource {
 	    } else {
 		// Initializes and loads data base driver class by name
 		Initializer.initializeDriver(driver);
-		dataSource = DataSources
-			.unpooledDataSource(url, user, password);
+		dataSource = DataSources.unpooledDataSource(url, user, password);
 	    }
-
+	    // Merges configuration with immutable values
 	    Map<Object, Object> configMap = poolConfig.merge(properties);
-	    namedDataSource = DataSources.pooledDataSource(dataSource,
-		    configMap);
+	    namedDataSource = DataSources.pooledDataSource(dataSource, configMap);
 	} catch (SQLException ex) {
 	    throw new IOException(ex);
 	} catch (PropertyVetoException ex) {
@@ -99,7 +97,7 @@ public class InitC3p0 extends InitDataSource {
 
     /**
      * Destroys passed {@link DataSource} for shut down
-     * 
+     *
      * @param dataSource
      */
     @Override
