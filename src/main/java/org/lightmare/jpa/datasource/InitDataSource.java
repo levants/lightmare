@@ -37,7 +37,7 @@ import org.lightmare.utils.logging.LogUtils;
 
 /**
  * Initializes and bind to {@link Context} pooled {@link DataSource} object
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
@@ -59,7 +59,7 @@ public abstract class InitDataSource {
 
     /**
      * Constructor with configuration {@link Properties} instance
-     * 
+     *
      * @param properties
      */
     public InitDataSource(Properties properties) {
@@ -68,20 +68,16 @@ public abstract class InitDataSource {
 	    this.properties = properties;
 	    this.poolConfig = Configuration.getPoolConfig();
 
-	    driver = properties.getProperty(
-		    ConnectionConfig.DRIVER_PROPERTY.name).trim();
-	    url = properties.getProperty(ConnectionConfig.URL_PROPERTY.name)
-		    .trim();
-	    user = properties.getProperty(ConnectionConfig.USER_PROPERTY.name)
-		    .trim();
-	    password = properties.getProperty(
-		    ConnectionConfig.PASSWORD_PROPERTY.name).trim();
+	    driver = properties.getProperty(ConnectionConfig.DRIVER_PROPERTY.name).trim();
+	    url = properties.getProperty(ConnectionConfig.URL_PROPERTY.name).trim();
+	    user = properties.getProperty(ConnectionConfig.USER_PROPERTY.name).trim();
+	    password = properties.getProperty(ConnectionConfig.PASSWORD_PROPERTY.name).trim();
 	}
     }
 
     /**
      * Initializes appropriated driver and {@link DataSource} objects
-     * 
+     *
      * @return {@link DataSource}
      * @throws IOException
      */
@@ -89,17 +85,34 @@ public abstract class InitDataSource {
 
     /**
      * Checks if passed {@link DataSource} is instance of appropriated
-     * 
+     *
      * @param dataSource
      * @throws IOException
      */
-    protected abstract boolean checkInstance(DataSource dataSource)
-	    throws IOException;
+    protected abstract boolean checkInstance(DataSource dataSource) throws IOException;
+
+    /**
+     * Binds data source JNDI name
+     *
+     * @param dataSource
+     * @param jndiName
+     * @throws IOException
+     */
+    private void bindDataSource(DataSource dataSource, String jndiName) throws IOException {
+
+	boolean valid = checkInstance(dataSource);
+	if (valid) {
+	    JndiManager.rebind(jndiName, dataSource);
+	} else {
+	    String message = String.format(InitMessages.NOT_APPR_INSTANCE_ERROR.message, jndiName);
+	    throw new IOException(message);
+	}
+    }
 
     /**
      * Initializes and registers {@link DataSource} object in JNDI
      * {@link javax.naming.Context}
-     * 
+     *
      * @param poolingProperties
      * @param dataSource
      * @param jndiName
@@ -109,31 +122,20 @@ public abstract class InitDataSource {
 
 	String jndiName = Initializer.getJndiName(properties);
 	LogUtils.info(LOG, InitMessages.INITIALIZING_MESSAGE.message, jndiName);
-
 	try {
 	    DataSource dataSource = initializeDataSource();
-	    boolean valid = checkInstance(dataSource);
-	    if (valid) {
-		JndiManager.rebind(jndiName, dataSource);
-	    } else {
-		throw new IOException(String.format(
-			InitMessages.NOT_APPR_INSTANCE_ERROR.message, jndiName));
-	    }
-
-	    LogUtils.info(LOG, InitMessages.INITIALIZED_MESSAGE.message,
-		    jndiName);
+	    bindDataSource(dataSource, jndiName);
+	    LogUtils.info(LOG, InitMessages.INITIALIZED_MESSAGE.message, jndiName);
 	} catch (IOException ex) {
-	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR.message,
-		    jndiName);
+	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR.message, jndiName);
 	} catch (Exception ex) {
-	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR.message,
-		    jndiName);
+	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR.message, jndiName);
 	}
     }
 
     /**
      * Destroys passed {@link DataSource} instance
-     * 
+     *
      * @param dataSource
      */
     public abstract void cleanUp(DataSource dataSource);

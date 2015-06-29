@@ -34,7 +34,7 @@ import org.lightmare.jpa.datasource.tomcat.InitTomcat;
 
 /**
  * Factory class to get {@link InitDataSource} instance
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
@@ -42,7 +42,7 @@ public class InitDataSourceFactory {
 
     /**
      * Constructs appropriate {@link InitDataSource} instance
-     * 
+     *
      * @return {@link InitDataSource}
      */
     public static InitDataSource get(Properties properties) {
@@ -53,11 +53,9 @@ public class InitDataSourceFactory {
 
 	if (poolConfig.getPoolProviderType().equals(PoolProviderType.C3P0)) {
 	    initDataSource = new InitC3p0(properties);
-	} else if (poolConfig.getPoolProviderType().equals(
-		PoolProviderType.TOMCAT)) {
+	} else if (poolConfig.getPoolProviderType().equals(PoolProviderType.TOMCAT)) {
 	    initDataSource = new InitTomcat(properties);
-	} else if (poolConfig.getPoolProviderType().equals(
-		PoolProviderType.DBCP)) {
+	} else if (poolConfig.getPoolProviderType().equals(PoolProviderType.DBCP)) {
 	    initDataSource = new InitDBCP(properties);
 	} else {
 	    initDataSource = null;
@@ -69,11 +67,10 @@ public class InitDataSourceFactory {
     /**
      * Constructs appropriate {@link InitDataSource} instance to close or
      * destroy appropriate {@link DataSource} instance
-     * 
+     *
      * @return {@link InitDataSource}
      */
     public static void destroy(DataSource dataSource) {
-
 	InitDataSource initDataSource = get(null);
 	initDataSource.cleanUp(dataSource);
     }

@@ -44,26 +44,24 @@ import org.lightmare.utils.reflect.ClassUtils;
 /**
  * Parses XML and property files to initialize and cache {@link DataSource}
  * objects
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
 public abstract class Initializer {
 
     // Caches already initialized data source file paths
-    private static final Set<String> INITIALIZED_SOURCES = Collections
-	    .synchronizedSet(new HashSet<String>());
+    private static final Set<String> INITIALIZED_SOURCES = Collections.synchronizedSet(new HashSet<String>());
 
     // Caches already initialized data source JNDI names
-    private static final Set<String> INITIALIZED_NAMES = Collections
-	    .synchronizedSet(new HashSet<String>());
+    private static final Set<String> INITIALIZED_NAMES = Collections.synchronizedSet(new HashSet<String>());
 
     // Locks data base driver initialization to avoid thread blocking
     private static final Lock DRIVER_LOCK = new ReentrantLock();
 
     /**
      * Container for connection configuration properties
-     * 
+     *
      * @author Levan Tsinadze
      * @since 0.0.80-SNAPSHOT
      */
@@ -96,28 +94,24 @@ public abstract class Initializer {
     }
 
     private static boolean validate(String datasourcePath) {
-	return StringUtils.valid(datasourcePath)
-		&& Boolean.FALSE.equals(checkDSPath(datasourcePath));
+	return StringUtils.valid(datasourcePath) && Boolean.FALSE.equals(checkDSPath(datasourcePath));
     }
 
     /**
      * Gets JNDI name from passed data source configuration {@link Properties}
      * instance
-     * 
+     *
      * @param properties
      * @return {@link String}
      */
     public static String getJndiName(Properties properties) {
-
-	String jndiName = properties
-		.getProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name);
-
+	String jndiName = properties.getProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name);
 	return jndiName;
     }
 
     /**
      * Loads JDBC driver class
-     * 
+     *
      * @param driver
      */
     public static void initializeDriver(String driver) throws IOException {
@@ -136,43 +130,51 @@ public abstract class Initializer {
     }
 
     /**
-     * Initializes data sources from passed {@link Configuration} instance
-     * 
-     * @throws IOException
+     * Initializes and creates {@link Collection} of data sources
+     *
+     * @param paths
+     * @return {@link Collection} of data sources
      */
-    public static void initializeDataSources(Configuration config)
-	    throws IOException {
+    private static Collection<String> initializeDataSources(Collection<String> paths) {
 
-	Collection<String> paths = config.getDataSourcePath();
 	Collection<String> values = new HashSet<String>();
+
 	if (CollectionUtils.valid(paths)) {
-	    boolean valid;
 	    for (String value : paths) {
-		valid = validate(value);
-		if (valid) {
+		if (validate(value)) {
 		    values.add(value);
 		}
 	    }
 	}
 
+	return values;
+    }
+
+    /**
+     * Initializes data sources from passed {@link Configuration} instance
+     *
+     * @throws IOException
+     */
+    public static void initializeDataSources(Configuration config) throws IOException {
+
+	Collection<String> paths = config.getDataSourcePath();
+	Collection<String> values = initializeDataSources(paths);
 	FileParsers.parseDataSources(values, config);
     }
 
     /**
      * Initializes and registers {@link DataSource} object in JNDI by
      * {@link Properties} {@link Context}
-     * 
+     *
      * @param poolingProperties
      * @param dataSource
      * @param jndiName
      * @throws IOException
      */
-    public static void registerDataSource(Properties properties)
-	    throws IOException {
+    public static void registerDataSource(Properties properties) throws IOException {
 
 	InitDataSource initDataSource = InitDataSourceFactory.get(properties);
 	initDataSource.create();
-
 	// Caches jndiName for data source
 	String jndiName = getJndiName(properties);
 	INITIALIZED_NAMES.add(jndiName);
@@ -181,7 +183,7 @@ public abstract class Initializer {
     /**
      * Closes and removes from {@link Context} data source with specified JNDI
      * name
-     * 
+     *
      * @param jndiName
      * @throws IOException
      */
@@ -199,7 +201,7 @@ public abstract class Initializer {
     /**
      * Closes and removes from {@link Context} all initialized and cached data
      * sources
-     * 
+     *
      * @throws IOException
      */
     public static void closeAll() throws IOException {
@@ -213,14 +215,13 @@ public abstract class Initializer {
     /**
      * Closes and removes from {@link Context} all data sources from passed file
      * path
-     * 
+     *
      * @param dataSourcePath
      * @throws IOException
      */
     public static void undeploy(String dataSourcePath) throws IOException {
 
-	Collection<String> jndiNames = XMLFileParsers
-		.dataSourceNames(dataSourcePath);
+	Collection<String> jndiNames = XMLFileParsers.dataSourceNames(dataSourcePath);
 	if (StringUtils.valid(dataSourcePath)) {
 	    for (String jndiName : jndiNames) {
 		close(jndiName);
@@ -232,7 +233,7 @@ public abstract class Initializer {
 
     /**
      * Cleans and destroys passed {@link DataSource} instance
-     * 
+     *
      * @param dataSource
      */
     public static void cleanUp(DataSource dataSource) {
