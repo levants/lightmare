@@ -222,6 +222,13 @@ public abstract class Initializer {
 	}
     }
 
+    /**
+     * Checks and removes data sources from {@link Context} by passed file path
+     *
+     * @param dataSourcePath
+     * @param jndiNames
+     * @throws IOException
+     */
     private static void checkAndUndeploy(String dataSourcePath, Collection<String> jndiNames) throws IOException {
 
 	if (StringUtils.valid(dataSourcePath)) {
