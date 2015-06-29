@@ -52,6 +52,34 @@ public class InitC3p0 extends InitDataSource {
     }
 
     /**
+     * Initializes and configures {@link DataSource} by properties
+     *
+     * @return {@link DataSource} initialized and configured
+     * @throws PropertyVetoException
+     * @throws SQLException
+     * @throws IOException
+     */
+    private DataSource configure() throws PropertyVetoException, SQLException, IOException {
+
+	DataSource dataSource;
+
+	if (poolConfig.isPooledDataSource()) {
+	    ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
+	    comboPooledDataSource.setDriverClass(driver);
+	    comboPooledDataSource.setJdbcUrl(url);
+	    comboPooledDataSource.setUser(user);
+	    comboPooledDataSource.setPassword(password);
+	    dataSource = comboPooledDataSource;
+	} else {
+	    // Initializes and loads data base driver class by name
+	    Initializer.initializeDriver(driver);
+	    dataSource = DataSources.unpooledDataSource(url, user, password);
+	}
+
+	return dataSource;
+    }
+
+    /**
      * Initializes appropriated driver and {@link DataSource} objects
      *
      * @param properties
@@ -63,21 +91,8 @@ public class InitC3p0 extends InitDataSource {
 
 	DataSource namedDataSource;
 
-	DataSource dataSource;
-
 	try {
-	    if (poolConfig.isPooledDataSource()) {
-		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
-		comboPooledDataSource.setDriverClass(driver);
-		comboPooledDataSource.setJdbcUrl(url);
-		comboPooledDataSource.setUser(user);
-		comboPooledDataSource.setPassword(password);
-		dataSource = comboPooledDataSource;
-	    } else {
-		// Initializes and loads data base driver class by name
-		Initializer.initializeDriver(driver);
-		dataSource = DataSources.unpooledDataSource(url, user, password);
-	    }
+	    DataSource dataSource = configure();
 	    // Merges configuration with immutable values
 	    Map<Object, Object> configMap = poolConfig.merge(properties);
 	    namedDataSource = DataSources.pooledDataSource(dataSource, configMap);
