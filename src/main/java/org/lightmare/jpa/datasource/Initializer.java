@@ -181,6 +181,18 @@ public abstract class Initializer {
     }
 
     /**
+     * Checks and clears data source
+     *
+     * @param dataSource
+     */
+    private static void checkAndClear(DataSource dataSource) {
+
+	if (ObjectUtils.notNull(dataSource)) {
+	    cleanUp(dataSource);
+	}
+    }
+
+    /**
      * Closes and removes from {@link Context} data source with specified JNDI
      * name
      *
@@ -190,9 +202,7 @@ public abstract class Initializer {
     public static void close(String jndiName) throws IOException {
 
 	DataSource dataSource = JndiManager.lookup(jndiName);
-	if (ObjectUtils.notNull(dataSource)) {
-	    cleanUp(dataSource);
-	}
+	checkAndClear(dataSource);
 	dataSource = null;
 	JndiManager.unbind(jndiName);
 	INITIALIZED_NAMES.remove(jndiName);
@@ -212,6 +222,15 @@ public abstract class Initializer {
 	}
     }
 
+    private static void checkAndUndeploy(String dataSourcePath, Collection<String> jndiNames) throws IOException {
+
+	if (StringUtils.valid(dataSourcePath)) {
+	    for (String jndiName : jndiNames) {
+		close(jndiName);
+	    }
+	}
+    }
+
     /**
      * Closes and removes from {@link Context} all data sources from passed file
      * path
@@ -222,12 +241,7 @@ public abstract class Initializer {
     public static void undeploy(String dataSourcePath) throws IOException {
 
 	Collection<String> jndiNames = XMLFileParsers.dataSourceNames(dataSourcePath);
-	if (StringUtils.valid(dataSourcePath)) {
-	    for (String jndiName : jndiNames) {
-		close(jndiName);
-	    }
-	}
-
+	checkAndUndeploy(dataSourcePath, jndiNames);
 	removeInitialized(dataSourcePath);
     }
 
