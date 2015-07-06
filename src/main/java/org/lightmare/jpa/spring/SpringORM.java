@@ -212,6 +212,11 @@ public class SpringORM {
 	}
     }
 
+    /**
+     * Data source configuration
+     *
+     * @param entityManagerFactoryBean
+     */
     private void configureDataSource(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
 
 	entityManagerFactoryBean.setPersistenceUnitName(unitName);
