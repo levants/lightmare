@@ -34,7 +34,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
 /**
  * For getting XML resources and resources from persistence.xml path
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.16-SNAPSHOT
  */
@@ -56,9 +56,9 @@ public class XMLInitializer {
 
     /**
      * Converts passed to {@link Enumeration} to build persistence configuration
-     * 
+     *
      * @see Ejb3ConfigurationImpl#configure(String, java.util.Map)
-     * 
+     *
      * @param path
      * @return Enumeration<{@link URL}>
      * @throws IOException
@@ -66,8 +66,7 @@ public class XMLInitializer {
     public List<URL> readURL(final URL url) {
 
 	List<URL> xmls = new ArrayList<URL>();
-	shortPath = StringUtils
-		.concat(ArchiveUtils.ARCHIVE_URL_DELIM, XML_PATH);
+	shortPath = StringUtils.concat(ArchiveUtils.ARCHIVE_URL_DELIM, XML_PATH);
 
 	return xmls;
     }
@@ -92,9 +91,9 @@ public class XMLInitializer {
     /**
      * Reads {@link URL} from passed path {@link String} for build persistence
      * configuration
-     * 
+     *
      * @see Ejb3ConfigurationImpl#configure(String, java.util.Map)
-     * 
+     *
      * @param path
      * @return Enumeration<{@link URL} >
      * @throws IOException

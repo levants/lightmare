@@ -53,7 +53,7 @@ import org.lightmare.utils.namimg.NamingUtils;
  * Creates and caches {@link EntityManagerFactory} for each EJB bean
  * {@link Class}'s appropriate {@link Field} (annotated by @PersistenceContext)
  * value
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.79-SNAPSHOT
  */
@@ -95,10 +95,10 @@ public class JpaManager {
 
     /**
      * Enumeration for JPA configuration prefixes
-     * 
+     *
      * @author Levan Tsinadze
      * @since 0.1.2
-     * 
+     *
      */
     private static enum HibernatePrefixes {
 
@@ -113,8 +113,7 @@ public class JpaManager {
 	    this.prefix = prefix;
 	}
 
-	private static String replacePrefix(boolean modified,
-		HibernatePrefixes prefix, String text) {
+	private static String replacePrefix(boolean modified, HibernatePrefixes prefix, String text) {
 
 	    String key;
 
@@ -130,7 +129,7 @@ public class JpaManager {
 	/**
 	 * Checks if passed key has appropriate prefix and if not adds this
 	 * prefix to passed key
-	 * 
+	 *
 	 * @param text
 	 * @return {@link String} key with appropriate prefix
 	 */
@@ -142,15 +141,13 @@ public class JpaManager {
 	    int length = prefixes.length;
 	    HibernatePrefixes prefix;
 	    boolean modified = Boolean.FALSE;
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length
-		    && Boolean.FALSE.equals(modified); i++) {
+	    for (int i = CollectionUtils.FIRST_INDEX; i < length && Boolean.FALSE.equals(modified); i++) {
 		prefix = prefixes[i];
 		modified = text.startsWith(prefix.prefix);
 		key = replacePrefix(modified, prefix, text);
 	    }
 
-	    if (Boolean.FALSE.equals(modified)
-		    && Boolean.FALSE.equals(text.startsWith(HIBERNATE))) {
+	    if (Boolean.FALSE.equals(modified) && Boolean.FALSE.equals(text.startsWith(HIBERNATE))) {
 		key = StringUtils.concat(HIBERNATE, text);
 	    }
 
@@ -167,7 +164,7 @@ public class JpaManager {
 
     /**
      * Initializes {@link Map} of additional properties
-     * 
+     *
      * @return {@link Map} additional properties
      */
     private Map<Object, Object> getProperties() {
@@ -188,12 +185,11 @@ public class JpaManager {
 
     /**
      * Validates modifies and adds parameters to global JPA configuration
-     * 
+     *
      * @param entry
      * @param config
      */
-    private void configure(Map.Entry<Object, Object> entry,
-	    Map<Object, Object> config) {
+    private void configure(Map.Entry<Object, Object> entry, Map<Object, Object> config) {
 
 	Object key = entry.getKey();
 	Object value = entry.getValue();
@@ -206,7 +202,7 @@ public class JpaManager {
 
     /**
      * Adds appropriated prefixes to JPA configuration properties
-     * 
+     *
      * @param properties
      */
     private Map<Object, Object> configure(Map<Object, Object> properties) {
@@ -228,7 +224,7 @@ public class JpaManager {
 
     /**
      * Checks if entity persistence.xml {@link URL} is provided
-     * 
+     *
      * @return boolean
      */
     private boolean checkForURL() {
@@ -243,40 +239,36 @@ public class JpaManager {
 	HibernateConfig[] hibernateConfigs = HibernateConfig.values();
 	Map<Object, Object> configMap = getProperties();
 	for (HibernateConfig hibernateConfig : hibernateConfigs) {
-	    CollectionUtils.putIfAbscent(configMap, hibernateConfig.key,
-		    hibernateConfig.value);
+	    CollectionUtils.putIfAbscent(configMap, hibernateConfig.key, hibernateConfig.value);
 	}
     }
 
     /**
      * Initializes {@link SpringORM} with appropriate configuration for Spring
      * data JPA configuration
-     * 
+     *
      * @param provider
      * @param unitName
      * @return {@link SpringORM}
      * @throws IOException
      */
-    private SpringORM getSpringORM(PersistenceProvider provider, String unitName)
-	    throws IOException {
+    private SpringORM getSpringORM(PersistenceProvider provider, String unitName) throws IOException {
 
-	SpringORM springORM = new SpringORM.Builder(dataSourceName, provider,
-		unitName).properties(properties).classLoader(loader)
-		.swapDataSource(swapDataSource).build();
+	SpringORM springORM = new SpringORM.Builder(dataSourceName, provider, unitName).properties(properties)
+		.classLoader(loader).swapDataSource(swapDataSource).build();
 
 	return springORM;
     }
 
     /**
      * Builds {@link EntityManagerFactory} from Spring ORM module
-     * 
+     *
      * @param provider
      * @param unitName
      * @return {@link EntityManagerFactory}
      * @throws IOException
      */
-    private EntityManagerFactory getFromSpring(PersistenceProvider provider,
-	    String unitName) throws IOException {
+    private EntityManagerFactory getFromSpring(PersistenceProvider provider, String unitName) throws IOException {
 
 	EntityManagerFactory emf;
 
@@ -288,12 +280,11 @@ public class JpaManager {
 
     /**
      * Initializes persistence.xml file path
-     * 
+     *
      * @param builder
      * @throws IOException
      */
-    private void initPersisteceXmlPath(
-	    HibernatePersistenceProviderExt.Builder builder) throws IOException {
+    private void initPersisteceXmlPath(HibernatePersistenceProviderExt.Builder builder) throws IOException {
 
 	boolean pathCheck = StringUtils.valid(path);
 	boolean urlCheck = checkForURL();
@@ -315,15 +306,14 @@ public class JpaManager {
     /**
      * Configures and adds parameters to
      * {@link HibernatePersistenceProviderExt.Builder} instance
-     * 
+     *
      * @see #buildEntityManagerFactory(String)
      * @see HibernatePersistenceProviderExt
-     * 
+     *
      * @param builder
      * @throws IOException
      */
-    private void configureProvider(
-	    HibernatePersistenceProviderExt.Builder builder) throws IOException {
+    private void configureProvider(HibernatePersistenceProviderExt.Builder builder) throws IOException {
 
 	if (loader == null) {
 	    loader = LibraryLoader.getContextClassLoader();
@@ -343,19 +333,18 @@ public class JpaManager {
     }
 
     /**
-     * Creates {@link EntityManagerFactory} by <a
-     * href="http://hibernate.org">"Hibernate"</a> or by extended builder
+     * Creates {@link EntityManagerFactory} by
+     * <a href="http://hibernate.org">"Hibernate"</a> or by extended builder
      * {@link Ejb3ConfigurationImpl} if entity classes or persistence.xml file
      * path are provided
-     * 
+     *
      * @see Ejb3ConfigurationImpl#configure(String, Map) and
      *      Ejb3ConfigurationImpl#createEntityManagerFactory()
-     * 
+     *
      * @param unitName
      * @return {@link EntityManagerFactory}
      */
-    private EntityManagerFactory buildEntityManagerFactory(String unitName)
-	    throws IOException {
+    private EntityManagerFactory buildEntityManagerFactory(String unitName) throws IOException {
 
 	EntityManagerFactory emf;
 
@@ -382,15 +371,14 @@ public class JpaManager {
     /**
      * Checks if entity classes or persistence.xml file path are provided to
      * create {@link EntityManagerFactory}
-     * 
+     *
      * @see #buildEntityManagerFactory(String, String, Map, List)
-     * 
+     *
      * @param unitName
      * @return {@link EntityManagerFactory}
      * @throws IOException
      */
-    private EntityManagerFactory createEntityManagerFactory(String unitName)
-	    throws IOException {
+    private EntityManagerFactory createEntityManagerFactory(String unitName) throws IOException {
 
 	EntityManagerFactory emf = buildEntityManagerFactory(unitName);
 
@@ -400,13 +388,12 @@ public class JpaManager {
     /**
      * Binds {@link EntityManagerFactory} from passed
      * {@link ConnectionSemaphore} to appropriate JNDI name
-     * 
+     *
      * @param jndiName
      * @param semaphore
      * @throws IOException
      */
-    private void bindJndiName(String jndiName, ConnectionSemaphore semaphore)
-	    throws IOException {
+    private void bindJndiName(String jndiName, ConnectionSemaphore semaphore) throws IOException {
 
 	try {
 	    String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
@@ -415,15 +402,14 @@ public class JpaManager {
 	    }
 	} catch (IOException ex) {
 	    LOG.error(ex.getMessage(), ex);
-	    String errorMessage = StringUtils.concat(COULD_NOT_BIND_JNDI_ERROR,
-		    semaphore.getUnitName());
+	    String errorMessage = StringUtils.concat(COULD_NOT_BIND_JNDI_ERROR, semaphore.getUnitName());
 	    throw new IOException(errorMessage, ex);
 	}
     }
 
     /**
      * Binds {@link EntityManagerFactory} to {@link javax.naming.InitialContext}
-     * 
+     *
      * @param semaphore
      * @throws IOException
      */
@@ -444,14 +430,13 @@ public class JpaManager {
     /**
      * Builds connection, wraps it in {@link ConnectionSemaphore} locks and
      * caches appropriate instance
-     * 
+     *
      * @param unitName
      * @throws IOException
      */
     public void create(String unitName) throws IOException {
 
-	ConnectionSemaphore semaphore = ConnectionContainer
-		.getSemaphore(unitName);
+	ConnectionSemaphore semaphore = ConnectionContainer.getSemaphore(unitName);
 	if (semaphore.isInProgress()) {
 	    EntityManagerFactory emf = createEntityManagerFactory(unitName);
 	    semaphore.setEmf(emf);
@@ -467,7 +452,7 @@ public class JpaManager {
 
     /**
      * Closes passed {@link EntityManagerFactory}
-     * 
+     *
      * @param emf
      */
     public static void closeEntityManagerFactory(EntityManagerFactory emf) {
@@ -480,7 +465,7 @@ public class JpaManager {
     /**
      * Closes passed {@link EntityManager} instance if it is not null and it is
      * open
-     * 
+     *
      * @param em
      */
     public static void closeEntityManager(EntityManager em) {
@@ -492,7 +477,7 @@ public class JpaManager {
 
     /**
      * Builder class to create {@link JpaManager} class object
-     * 
+     *
      * @author Levan Tsinadze
      * @since 0.0.79-SNAPSHOT
      */
@@ -507,7 +492,7 @@ public class JpaManager {
 
 	/**
 	 * Sets {@link javax.persistence.Entity} class names to initialize
-	 * 
+	 *
 	 * @param classes
 	 * @return {@link Builder}
 	 */
@@ -518,7 +503,7 @@ public class JpaManager {
 
 	/**
 	 * Sets {@link URL} for persistence.xml file
-	 * 
+	 *
 	 * @param url
 	 * @return {@link Builder}
 	 */
@@ -529,7 +514,7 @@ public class JpaManager {
 
 	/**
 	 * Sets path for persistence.xml file
-	 * 
+	 *
 	 * @param path
 	 * @return {@link Builder}
 	 */
@@ -540,7 +525,7 @@ public class JpaManager {
 
 	/**
 	 * Sets additional persistence properties
-	 * 
+	 *
 	 * @param properties
 	 * @return {@link Builder}
 	 */
@@ -552,7 +537,7 @@ public class JpaManager {
 	/**
 	 * Sets boolean check property to swap JTA data source value with non
 	 * JTA data source value
-	 * 
+	 *
 	 * @param swapDataSource
 	 * @return {@link Builder}
 	 */
@@ -564,7 +549,7 @@ public class JpaManager {
 	/**
 	 * Sets boolean check to scan deployed archive files for
 	 * {@link javax.persistence.Entity} annotated classes
-	 * 
+	 *
 	 * @param scanArchives
 	 * @return {@link Builder}
 	 */
@@ -575,7 +560,7 @@ public class JpaManager {
 
 	/**
 	 * Sets {@link ClassLoader} for persistence classes
-	 * 
+	 *
 	 * @param loader
 	 * @return {@link Builder}
 	 */
@@ -586,7 +571,7 @@ public class JpaManager {
 
 	/**
 	 * Sets if JPA is configured over Spring data
-	 * 
+	 *
 	 * @param springPersistence
 	 * @return {@link Builder}
 	 */
@@ -597,7 +582,7 @@ public class JpaManager {
 
 	/**
 	 * Sets data source name for Spring data configuration
-	 * 
+	 *
 	 * @param dataSourceName
 	 * @return {@link Builder}
 	 */
@@ -608,17 +593,15 @@ public class JpaManager {
 
 	/**
 	 * Sets all parameters from passed {@link Configuration} instance
-	 * 
+	 *
 	 * @param configuration
 	 * @return {@link Builder}
 	 */
 	public Builder configure(Configuration configuration) {
 
 	    // Sets all parameters from Configuration class
-	    setPath(configuration.getPersXmlPath())
-		    .setProperties(configuration.getPersistenceProperties())
-		    .setSwapDataSource(configuration.isSwapDataSource())
-		    .setScanArchives(configuration.isScanArchives())
+	    setPath(configuration.getPersXmlPath()).setProperties(configuration.getPersistenceProperties())
+		    .setSwapDataSource(configuration.isSwapDataSource()).setScanArchives(configuration.isScanArchives())
 		    .springPersistence(configuration.isSpringPersistence());
 
 	    return this;
