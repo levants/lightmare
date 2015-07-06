@@ -22,10 +22,6 @@
  */
 package org.lightmare.remote.rpc.decoders;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoder;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -33,17 +29,20 @@ import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.io.serialization.NativeSerializer;
 import org.lightmare.utils.remote.RpcUtils;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageDecoder;
+
 /**
  * Decoder class for Netty remote procedure call
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
 public class RpcDecoder extends ByteToMessageDecoder {
 
     @Override
-    protected void decode(ChannelHandlerContext context, ByteBuf buffer,
-	    List<Object> out) throws IOException {
+    protected void decode(ChannelHandlerContext context, ByteBuf buffer, List<Object> out) throws IOException {
 
 	if (buffer.readableBytes() < RpcUtils.PROTOCOL_SIZE) {
 	    buffer.resetReaderIndex();
@@ -82,10 +81,8 @@ public class RpcDecoder extends ByteToMessageDecoder {
 
 	String beanName = new String(beanNameBt);
 	String methodName = (String) NativeSerializer.deserialize(methodBt);
-	Class<?>[] paramTypes = (Class<?>[]) NativeSerializer
-		.deserialize(paramTypesBt);
-	Class<?> interfaceClass = (Class<?>) NativeSerializer
-		.deserialize(classBt);
+	Class<?>[] paramTypes = (Class<?>[]) NativeSerializer.deserialize(paramTypesBt);
+	Class<?> interfaceClass = (Class<?>) NativeSerializer.deserialize(classBt);
 	Object[] params = (Object[]) NativeSerializer.deserialize(paramBt);
 
 	wrapper.setBeanName(beanName);

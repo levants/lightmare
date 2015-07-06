@@ -22,11 +22,6 @@
  */
 package org.lightmare.remote.rpc.decoders;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelOutboundHandlerAdapter;
-import io.netty.channel.ChannelPromise;
-
 import java.io.IOException;
 
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
@@ -34,17 +29,21 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.io.serialization.NativeSerializer;
 import org.lightmare.utils.remote.RpcUtils;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelOutboundHandlerAdapter;
+import io.netty.channel.ChannelPromise;
+
 /**
  * Encoder class for Netty remote procedure call
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
 public class RpcEncoder extends ChannelOutboundHandlerAdapter {
 
     @Override
-    public void write(ChannelHandlerContext ctx, Object msg,
-	    ChannelPromise promise) throws IOException {
+    public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws IOException {
 
 	RpcWrapper wrapper = ObjectUtils.cast(msg, RpcWrapper.class);
 
@@ -60,8 +59,7 @@ public class RpcEncoder extends ChannelOutboundHandlerAdapter {
 	byte[] interfaceClassBt = NativeSerializer.serialize(interfaceClass);
 	byte[] paramBt = NativeSerializer.serialize(params);
 
-	int paramsSize = RpcUtils.PROTOCOL_SIZE + beanNameBt.length
-		+ beanMethodBt.length + paramTypesBt.length
+	int paramsSize = RpcUtils.PROTOCOL_SIZE + beanNameBt.length + beanMethodBt.length + paramTypesBt.length
 		+ interfaceClassBt.length + paramBt.length;
 
 	ByteBuf buffer = ctx.alloc().buffer(paramsSize);
