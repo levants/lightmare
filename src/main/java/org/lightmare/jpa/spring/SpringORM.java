@@ -43,7 +43,7 @@ import org.springframework.transaction.jta.JtaTransactionManager;
 
 /**
  * To initialize spring based connection
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.1.2
  */
@@ -65,8 +65,7 @@ public class SpringORM {
 
     private PersistenceUnitDescriptor persistenceUnit;
 
-    private SpringORM(String dataSourceName,
-	    PersistenceProvider persistenceProvider, String unitName) {
+    private SpringORM(String dataSourceName, PersistenceProvider persistenceProvider, String unitName) {
 	this.dataSourceName = dataSourceName;
 	this.persistenceProvider = persistenceProvider;
 	this.unitName = unitName;
@@ -80,10 +79,27 @@ public class SpringORM {
 	if (dataSourceName == null || dataSourceName.isEmpty()) {
 	    Properties nameProperties = new Properties();
 	    nameProperties.putAll(properties);
-	    dataSourceName = nameProperties
-		    .getProperty(ConfigKeys.SPRING_DS_NAME_KEY.key);
+	    dataSourceName = nameProperties.getProperty(ConfigKeys.SPRING_DS_NAME_KEY.key);
 	    properties.remove(ConfigKeys.SPRING_DS_NAME_KEY.key);
 	}
+    }
+
+    /**
+     * Initializes raw data source value
+     *
+     * @return {@link Object} as data source value
+     */
+    private Object initDtaSourceValue() {
+
+	Object dataSourceValue;
+
+	if (swapDataSources) {
+	    dataSourceValue = persistenceUnit.getNonJtaDataSource();
+	} else {
+	    dataSourceValue = persistenceUnit.getJtaDataSource();
+	}
+
+	return dataSourceValue;
     }
 
     /**
@@ -91,12 +107,7 @@ public class SpringORM {
      */
     private void initDataSourceFromUnit() {
 
-	Object dataSourceValue;
-	if (swapDataSources) {
-	    dataSourceValue = persistenceUnit.getNonJtaDataSource();
-	} else {
-	    dataSourceValue = persistenceUnit.getJtaDataSource();
-	}
+	Object dataSourceValue = initDtaSourceValue();
 
 	if (dataSourceValue == null) {
 	    dataSourceName = null;
@@ -108,20 +119,27 @@ public class SpringORM {
     }
 
     /**
+     * Sets data source type and name
+     */
+    private void initDataSourceType() {
+
+	if (dataSourceName == null || dataSourceName.isEmpty()) {
+	    if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
+		initDataSourceFromUnit();
+	    }
+	}
+    }
+
+    /**
      * Gets {@link DataSource} by its JNDI name for Spring data configuration
-     * 
+     *
      * @return {@link DataSource}
      * @throws IOException
      */
     private void initDataSource() throws IOException {
 
 	initDataSourceName();
-	if (dataSourceName == null || dataSourceName.isEmpty()) {
-	    if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
-		initDataSourceFromUnit();
-	    }
-	}
-
+	initDataSourceType();
 	dataSource = JndiManager.lookup(dataSourceName);
     }
 
@@ -131,8 +149,7 @@ public class SpringORM {
     private void initProperties() {
 
 	if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
-	    persistenceUnit = ObjectUtils.cast(persistenceProvider,
-		    HibernatePersistenceProviderExt.class)
+	    persistenceUnit = ObjectUtils.cast(persistenceProvider, HibernatePersistenceProviderExt.class)
 		    .getPersistenceUnitDescriptor(unitName, properties);
 	    properties.putAll(persistenceUnit.getProperties());
 	}
@@ -143,52 +160,82 @@ public class SpringORM {
      * sources
      */
     private void addTransactionManager() {
-
-	CollectionUtils.putIfAbscent(properties, HibernateConfig.FACTORY.key,
-		HibernateConfig.FACTORY.value);
-	CollectionUtils.putIfAbscent(properties, HibernateConfig.PLATFORM.key,
-		JtaTransactionManager.class.getName());
+	CollectionUtils.putIfAbscent(properties, HibernateConfig.FACTORY.key, HibernateConfig.FACTORY.value);
+	CollectionUtils.putIfAbscent(properties, HibernateConfig.PLATFORM.key, JtaTransactionManager.class.getName());
     }
 
     /**
      * Adds JTA transaction configuration and appropriated data source
-     * 
+     *
      * @param entityManagerFactoryBean
      */
-    private void addJtaDatasource(
-	    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+    private void addJtaDatasource(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
 	addTransactionManager();
 	entityManagerFactoryBean.setJtaDataSource(dataSource);
     }
 
     /**
+     * Checks and sets data source type
+     *
+     * @param entityManagerFactoryBean
+     */
+    private void setWrapeDataSource(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+
+	if (swapDataSources) {
+	    entityManagerFactoryBean.setDataSource(dataSource);
+	} else {
+	    addJtaDatasource(entityManagerFactoryBean);
+	}
+    }
+
+    /**
+     * Sets class loader for data source
+     *
+     * @param entityManagerFactoryBean
+     */
+    private void setClassLoader(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+
+	if (ObjectUtils.notNull(loader)) {
+	    entityManagerFactoryBean.setBeanClassLoader(loader);
+	}
+    }
+
+    /**
+     * Sets additional properties to data source
+     *
+     * @param entityManagerFactoryBean
+     */
+    private void setAdditionalProperties(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+
+	if (CollectionUtils.valid(properties)) {
+	    entityManagerFactoryBean.setJpaProperties(properties);
+	}
+    }
+
+    private void configureDataSource(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+
+	entityManagerFactoryBean.setPersistenceUnitName(unitName);
+	// Checks data source type
+	setWrapeDataSource(entityManagerFactoryBean);
+	// Sets class loader
+	setClassLoader(entityManagerFactoryBean);
+	// entityManagerFactoryBean.setPackagesToScan();
+	entityManagerFactoryBean.setPersistenceProvider(persistenceProvider);
+	// Sets additional properties
+	setAdditionalProperties(entityManagerFactoryBean);
+    }
+
+    /**
      * Creates {@link LocalContainerEntityManagerFactoryBean} for container
      * scoped use
-     * 
+     *
      * @return {@link LocalContainerEntityManagerFactoryBean}
      */
     private LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
 	LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
-	entityManagerFactoryBean.setPersistenceUnitName(unitName);
-	// Checks data source type
-	if (swapDataSources) {
-	    entityManagerFactoryBean.setDataSource(dataSource);
-	} else {
-	    addJtaDatasource(entityManagerFactoryBean);
-	}
-
-	if (ObjectUtils.notNull(loader)) {
-	    entityManagerFactoryBean.setBeanClassLoader(loader);
-	}
-
-	// entityManagerFactoryBean.setPackagesToScan();
-	entityManagerFactoryBean.setPersistenceProvider(persistenceProvider);
-	if (CollectionUtils.valid(properties)) {
-	    entityManagerFactoryBean.setJpaProperties(properties);
-	}
-
+	configureDataSource(entityManagerFactoryBean);
 	// Configures JPA ORM system for use
 	entityManagerFactoryBean.afterPropertiesSet();
 
@@ -197,7 +244,7 @@ public class SpringORM {
 
     /**
      * Creates {@link JpaTransactionManager} for container scoped use
-     * 
+     *
      * @return {@link JpaTransactionManager}
      */
     private JpaTransactionManager transactionManager() {
@@ -213,7 +260,7 @@ public class SpringORM {
 
     /**
      * Initializes and builds {@link EntityManagerFactory} from configuration
-     * 
+     *
      * @return {@link EntityManagerFactory}
      * @throws IOException
      */
@@ -231,7 +278,7 @@ public class SpringORM {
 
     /**
      * Builder class for {@link SpringORM} initialization
-     * 
+     *
      * @author Levan Tsinadze
      * @since 0.1.2
      */
@@ -239,10 +286,8 @@ public class SpringORM {
 
 	private SpringORM springORM;
 
-	public Builder(String dataSourceName,
-		PersistenceProvider persistenceProvider, String unitName) {
-	    this.springORM = new SpringORM(dataSourceName, persistenceProvider,
-		    unitName);
+	public Builder(String dataSourceName, PersistenceProvider persistenceProvider, String unitName) {
+	    this.springORM = new SpringORM(dataSourceName, persistenceProvider, unitName);
 	}
 
 	public Builder properties(Properties properties) {

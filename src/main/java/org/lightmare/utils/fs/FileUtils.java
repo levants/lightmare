@@ -44,7 +44,7 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
 
 /**
  * Utility for removing {@link File}s recursively from file system
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.20-SNAPSHOT
  */
@@ -60,7 +60,7 @@ public class FileUtils {
 
     /**
      * Lists java archive class files in passed file
-     * 
+     *
      * @param file
      * @return {@link File}[]
      */
@@ -70,8 +70,7 @@ public class FileUtils {
 
 	    @Override
 	    public boolean accept(File file, String name) {
-		return name.endsWith(ArchiveUtils.JAR_FILE_EXT)
-			|| name.endsWith(ArchiveUtils.CLASS_FILE_EXT)
+		return name.endsWith(ArchiveUtils.JAR_FILE_EXT) || name.endsWith(ArchiveUtils.CLASS_FILE_EXT)
 			|| file.isDirectory();
 	    }
 	});
@@ -82,13 +81,12 @@ public class FileUtils {
     /**
      * Adds passed {@link File}'s {@link URL} to passed {@link Collection} of
      * {@link URL} objects
-     * 
+     *
      * @param urls
      * @param file
      * @throws IOException
      */
-    private static void addURL(Collection<URL> urls, File file)
-	    throws IOException {
+    private static void addURL(Collection<URL> urls, File file) throws IOException {
 
 	try {
 	    urls.add(file.toURI().toURL());
@@ -100,13 +98,12 @@ public class FileUtils {
     /**
      * Adds sub files of passed {@link File} array to passed {@link List} of
      * {@link URL} objects
-     * 
+     *
      * @param files
      * @param urls
      * @throws IOException
      */
-    private static void addSubDirectory(File[] files, Set<URL> urls)
-	    throws IOException {
+    private static void addSubDirectory(File[] files, Set<URL> urls) throws IOException {
 
 	for (File subFile : files) {
 	    if (subFile.isDirectory()) {
@@ -119,7 +116,7 @@ public class FileUtils {
 
     /**
      * Gets all jar or class subfiles from specified {@link File} recursively
-     * 
+     *
      * @param file
      * @param urls
      * @throws IOException
@@ -138,7 +135,7 @@ public class FileUtils {
 
     /**
      * Check whether passed {@link URL} is from extracted ear directory
-     * 
+     *
      * @param url
      * @return boolean
      * @throws IOException
@@ -160,7 +157,7 @@ public class FileUtils {
 
     /**
      * Check whether passed path is extracted ear directory path
-     * 
+     *
      * @param file
      * @return boolean
      */
@@ -175,8 +172,27 @@ public class FileUtils {
     }
 
     /**
+     * Initializes file path suffix
+     *
+     * @param path
+     * @return {@link String} file suffix
+     */
+    private static String getDeliminator(String path) {
+
+	String delim;
+
+	if (path.endsWith(ArchiveUtils.FILE_SEPARATOR)) {
+	    delim = StringUtils.EMPTY_STRING;
+	} else {
+	    delim = ArchiveUtils.FILE_SEPARATOR;
+	}
+
+	return delim;
+    }
+
+    /**
      * Check whether passed file is extracted ear directory
-     * 
+     *
      * @param file
      * @return boolean
      */
@@ -189,14 +205,9 @@ public class FileUtils {
 	    isEarDir = CollectionUtils.valid(files);
 	    if (isEarDir) {
 		String path = file.getPath();
-		String delim;
-		if (path.endsWith(ArchiveUtils.FILE_SEPARATOR)) {
-		    delim = StringUtils.EMPTY_STRING;
-		} else {
-		    delim = ArchiveUtils.FILE_SEPARATOR;
-		}
-		String appxmlPath = StringUtils.concat(path, delim,
-			ArchiveUtils.APPLICATION_XML_PATH);
+		String delim = getDeliminator(path);
+		String xmlPath = ArchiveUtils.APPLICATION_XML_PATH;
+		String appxmlPath = StringUtils.concat(path, delim, xmlPath);
 		File appXmlFile = new File(appxmlPath);
 		isEarDir = appXmlFile.exists();
 	    }
@@ -208,7 +219,7 @@ public class FileUtils {
     /**
      * Removes passed {@link File}s from file system and if
      * {@link File#isDirectory()} removes all it's content recursively
-     * 
+     *
      * @param file
      * @return boolean
      */
@@ -230,7 +241,7 @@ public class FileUtils {
      * Iterates over passed {@link File}s and removes each of them from file
      * system and if {@link File#isDirectory()} removes all it's content
      * recursively
-     * 
+     *
      * @param files
      */
     public static void deleteFiles(Iterable<File> files) {
@@ -242,7 +253,7 @@ public class FileUtils {
 
     /**
      * Converts passed file to {@link URL} instance
-     * 
+     *
      * @param file
      * @return {@link URL}
      * @throws IOException
@@ -253,7 +264,7 @@ public class FileUtils {
 
     /**
      * Creates {@link URL} from passed path
-     * 
+     *
      * @param path
      * @return {@link URL}
      * @throws IOException
@@ -267,7 +278,7 @@ public class FileUtils {
 
     /**
      * Checks passed path and if its empty path for current class directory
-     * 
+     *
      * @param path
      * @return {@link String}
      */
@@ -280,8 +291,7 @@ public class FileUtils {
 	    url = toURL(path);
 	    urls.add(url);
 	} else if (ObjectUtils.notNull(path) && path.isEmpty()) {
-	    Enumeration<URL> urlEnum = LibraryLoader.getContextClassLoader()
-		    .getResources(path);
+	    Enumeration<URL> urlEnum = LibraryLoader.getContextClassLoader().getResources(path);
 	    while (urlEnum.hasMoreElements()) {
 		url = urlEnum.nextElement();
 		urls.add(url);
@@ -293,7 +303,7 @@ public class FileUtils {
 
     /**
      * Checks if passed file is ZIP archive file
-     * 
+     *
      * @param file
      * @return <code>boolean</code>
      */

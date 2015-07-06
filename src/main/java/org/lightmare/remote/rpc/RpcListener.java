@@ -44,7 +44,7 @@ import org.lightmare.utils.concurrent.ThreadFactoryUtil;
 
 /**
  * Registers and starts RPC server @see <a href="netty.io"/>netty.io</a>
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.22-SNAPSHOT
  */
@@ -67,12 +67,11 @@ public class RpcListener {
     /**
      * Implementation of {@link ChannelInitializer} on {@link SocketChannel} for
      * RPC service
-     * 
+     *
      * @author Levan Tsinadze
-     * 
+     *
      */
-    protected static class ChannelInitializerImpl extends
-	    ChannelInitializer<SocketChannel> {
+    protected static class ChannelInitializerImpl extends ChannelInitializer<SocketChannel> {
 
 	@Override
 	public void initChannel(SocketChannel ch) throws Exception {
@@ -90,24 +89,14 @@ public class RpcListener {
     private static void setNettyPools(Configuration config) {
 
 	Integer bossCount = config.getIntValue(ConfigKeys.BOSS_POOL.key);
-	if (bossCount == null) {
-	    bossCount = ConfigKeys.BOSS_POOL.getValue();
-	}
-
 	Integer workerCount = config.getIntValue(ConfigKeys.WORKER_POOL.key);
-	if (workerCount == null) {
-	    workerCount = ConfigKeys.WORKER_POOL.getValue();
-	}
-
-	boss = new NioEventLoopGroup(bossCount, new ThreadFactoryUtil(
-		BOSS_THREAD_NAME, Thread.MAX_PRIORITY));
-	worker = new NioEventLoopGroup(workerCount, new ThreadFactoryUtil(
-		WORKER_THREAD_NAME, WORKER_THEAD_PRIORITY));
+	boss = new NioEventLoopGroup(bossCount, new ThreadFactoryUtil(BOSS_THREAD_NAME, Thread.MAX_PRIORITY));
+	worker = new NioEventLoopGroup(workerCount, new ThreadFactoryUtil(WORKER_THREAD_NAME, WORKER_THEAD_PRIORITY));
     }
 
     /**
      * Starts RPC server
-     * 
+     *
      */
     public static void startServer(Configuration config) {
 
@@ -117,15 +106,13 @@ public class RpcListener {
 	    ServerBootstrap bootstrap = new ServerBootstrap();
 	    bootstrap.group(boss, worker).channel(NioServerSocketChannel.class)
 		    .childHandler(new ChannelInitializerImpl());
-
+	    // Sets server options
 	    bootstrap.option(ChannelOption.SO_BACKLOG, 500);
 	    bootstrap.childOption(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
-	    bootstrap.childOption(ChannelOption.SO_TIMEOUT,
-		    config.getIntValue(ConfigKeys.CONNECTION_TIMEOUT.key));
-
+	    bootstrap.childOption(ChannelOption.SO_TIMEOUT, config.getIntValue(ConfigKeys.CONNECTION_TIMEOUT.key));
+	    // Initializes and sets address
 	    InetSocketAddress address = new InetSocketAddress(
-		    Inet4Address.getByName(config
-			    .getStringValue("listening_ip")),
+		    Inet4Address.getByName(config.getStringValue("listening_ip")),
 		    config.getIntValue("listening_port"));
 	    ChannelFuture future = bootstrap.bind(address).sync();
 	    LOG.info(future);
