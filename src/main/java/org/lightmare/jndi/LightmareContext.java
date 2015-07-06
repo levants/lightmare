@@ -50,7 +50,7 @@ import org.osjava.sj.memory.MemoryContext;
  * Implementation of JNDI {@link Context} and extension of simple JNDI's
  * {@link MemoryContext} and {@link AbstractContext} for EJB bean interface,
  * {@link UserTransaction} and {@link EntityManager} caching and retrieving
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.60-SNAPSHOT
  */
@@ -70,7 +70,7 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 
     /**
      * Constructor with {@link Hashtable} to cache lookups in memory
-     * 
+     *
      * @param env
      */
     public LightmareContext(Hashtable<?, ?> env) {
@@ -81,22 +81,21 @@ public class LightmareContext extends MemoryContext implements Cleanable {
     /**
      * Caches resources to close them after {@link LightmareContext#close()}
      * method is called
-     * 
+     *
      * @param resource
      */
     private void cacheResource(Object resource) {
 
 	if (ObjectUtils.notNull(resource) && resource instanceof EntityManager) {
 	    EntityManager em = ObjectUtils.cast(resource, EntityManager.class);
-	    WeakReference<EntityManager> ref = new WeakReference<EntityManager>(
-		    em);
+	    WeakReference<EntityManager> ref = new WeakReference<EntityManager>(em);
 	    ems.add(ref);
 	}
     }
 
     /**
      * Searches JPA objects by JNDI name
-     * 
+     *
      * @param jndiName
      * @return {@link Object}
      * @throws NamingException
@@ -115,8 +114,7 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 	if (candidate == null) {
 	    value = candidate;
 	} else if (candidate instanceof EntityManagerFactory) {
-	    EntityManagerFactory emf = ObjectUtils.cast(candidate,
-		    EntityManagerFactory.class);
+	    EntityManagerFactory emf = ObjectUtils.cast(candidate, EntityManagerFactory.class);
 	    EntityManager em = emf.createEntityManager();
 	    value = em;
 	} else {
@@ -128,7 +126,7 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 
     /**
      * Initializes EJB objects by JNDI name
-     * 
+     *
      * @param jndiName
      * @return {@link Object}
      * @throws NamingException
@@ -137,8 +135,7 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 
 	Object value;
 
-	NamingUtils.BeanDescriptor descriptor = NamingUtils
-		.parseEjbJndiName(jndiName);
+	NamingUtils.BeanDescriptor descriptor = NamingUtils.parseEjbJndiName(jndiName);
 	EjbConnector ejbConnection = new EjbConnector();
 	try {
 	    String beanName = descriptor.getBeanName();
@@ -151,8 +148,14 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 	return value;
     }
 
-    @Override
-    public Object lookup(String jndiName) throws NamingException {
+    /**
+     * Find object by name in JNDI context
+     *
+     * @param jndiName
+     * @return {@link Object} bound on name
+     * @throws NamingException
+     */
+    private Object findValue(String jndiName) throws NamingException {
 
 	Object value;
 
@@ -168,7 +171,14 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 	} else {
 	    value = super.lookup(jndiName);
 	}
-	// Saves value to clear after close method is called
+
+	return value;
+    }
+
+    @Override
+    public Object lookup(String jndiName) throws NamingException {
+
+	Object value = findValue(jndiName);
 	cacheResource(value);
 
 	return value;
@@ -195,7 +205,7 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 
     /**
      * Clears cached resources and calls {@link MemoryContext#close()} method
-     * 
+     *
      * @see AbstractContext#close()
      */
     @Override

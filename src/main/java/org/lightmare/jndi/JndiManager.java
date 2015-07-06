@@ -46,7 +46,7 @@ import org.lightmare.utils.collections.CollectionUtils;
  * Utility class to initialize and set (
  * {@link System#setProperty(String, String)}) the {@link InitialContextFactory}
  * for simple JNDI extensions
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.60-SNAPSHOT
  */
@@ -54,18 +54,16 @@ public class JndiManager {
 
     /**
      * Caches JNDI system parameters for initializing {@link Context} instance
-     * 
+     *
      * @author Levan Tsinadze
      * @since 0.81-SNAPSHOT
      */
     protected static enum JNDIParameters {
 
 	// Name of InitialContextFactory implementation class
-	FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY,
-		LightmareContextFactory.class.getName()),
+	FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY, LightmareContextFactory.class.getName()),
 	// Name of InitialContextFactory implementation class package
-	PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES,
-		LightmareContextFactory.class.getPackage().getName()),
+	PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES, LightmareContextFactory.class.getPackage().getName()),
 	// Additional parameter to share JNDI cache
 	SHARED_PARAMETER("org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
 
@@ -81,7 +79,7 @@ public class JndiManager {
 
 	/**
 	 * Constructor with key and value
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 */
@@ -106,6 +104,10 @@ public class JndiManager {
 	    return CONFIG;
 	}
 
+	private static String getORMKey(JNDIParameters parameter) {
+	    return StringUtils.concat(AvailableSettings.JNDI_PREFIX, StringUtils.DOT, parameter.key);
+	}
+
 	/**
 	 * Gets {@link Map} of all key value pairs of this enumeration prefixed
 	 * with as JPA configuration prefix
@@ -117,9 +119,7 @@ public class JndiManager {
 		JNDIParameters[] parameters = JNDIParameters.values();
 		String hibernateKey;
 		for (JNDIParameters parameter : parameters) {
-		    hibernateKey = StringUtils.concat(
-			    AvailableSettings.JNDI_PREFIX, StringUtils.DOT,
-			    parameter.key);
+		    hibernateKey = getORMKey(parameter);
 		    HIBERNATE_CONFIG.put(hibernateKey, parameter.value);
 		}
 	    }
@@ -130,7 +130,7 @@ public class JndiManager {
 
     /**
      * Gets data for JPA JNDI configuration
-     * 
+     *
      * @author Levan Tsinadze
      * @see JNDIParameters
      * @since 0.1.2
@@ -151,7 +151,7 @@ public class JndiManager {
 
     /**
      * Getter for {@link Context} instance
-     * 
+     *
      * @return {@link Context} initial context instance
      * @throws IOException
      */
@@ -170,7 +170,7 @@ public class JndiManager {
     /**
      * Lookups data with passed name in {@link Context} and casts it in
      * appropriated generic type
-     * 
+     *
      * @param name
      * @return <code>T</code> instance of appropriated generic type
      * @throws IOException
@@ -192,7 +192,7 @@ public class JndiManager {
     /**
      * Re-binds (deletes and binds again) passed {@link Object} to
      * {@link Context} by appropriate name
-     * 
+     *
      * @param name
      * @param data
      * @throws IOException
@@ -210,7 +210,7 @@ public class JndiManager {
 
     /**
      * Binds passed {@link Object} to {@link Context} by appropriate name
-     * 
+     *
      * @param name
      * @param data
      * @throws IOException
@@ -229,7 +229,7 @@ public class JndiManager {
     /**
      * Deletes (un-binds) passed name and associated {@link Object} from
      * {@link Context}
-     * 
+     *
      * @param name
      * @throws IOException
      */
@@ -248,7 +248,7 @@ public class JndiManager {
 /**
  * Enumeration to set JNDI system properties and initialize {@link Context}
  * instance
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.1.1
  * @see JNDIConfigs
@@ -265,7 +265,7 @@ class NamingContext {
 
     /**
      * Puts passed {@link Properties} as {@link System} properties
-     * 
+     *
      * @param properties
      */
     private void configure(Properties properties) {
@@ -305,7 +305,7 @@ class NamingContext {
 
     /**
      * Configures and creates JNDI {@link Context} instance
-     * 
+     *
      */
     protected static Context getContext() throws IOException {
 
