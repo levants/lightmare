@@ -28,7 +28,7 @@ import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Utility class for {@link String} and {@link CharSequence} operations
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.80-SNAPSHOT
  */
@@ -50,19 +50,18 @@ public abstract class StringUtils {
 
     /**
      * Checks if passed {@link CharSequence} is not null and is not empty
-     * 
+     *
      * @param chars
      * @return <code>boolean</code>
      */
     public static boolean valid(CharSequence chars) {
-	return chars != null
-		&& chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
+	return chars != null && chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
     }
 
     /**
      * Checks if each of passed {@link CharSequence}s is not null and is not
      * empty
-     * 
+     *
      * @param lines
      * @return <code>boolean</code>
      */
@@ -85,7 +84,7 @@ public abstract class StringUtils {
 
     /**
      * Checks if passed {@link CharSequence} is null or is empty
-     * 
+     *
      * @param chars
      * @return <code>boolean</code>
      */
@@ -97,7 +96,7 @@ public abstract class StringUtils {
      * Appends contents of passed array to passed {@link StringBuilder} and for
      * each content if it is instance of array then append its content
      * recursively
-     * 
+     *
      * @param tockens
      * @param builder
      */
@@ -123,7 +122,7 @@ public abstract class StringUtils {
     /**
      * Creates concatenates passed objects in one text and if one of them is
      * array then concatenates contents of this array recursively
-     * 
+     *
      * @param tockens
      * @return {@link String}
      */
@@ -144,7 +143,7 @@ public abstract class StringUtils {
 
     /**
      * Concatenates passed {@link Object}s in one {@link String} instance
-     * 
+     *
      * @param parts
      * @return {@link String}
      */
@@ -168,7 +167,7 @@ public abstract class StringUtils {
     /**
      * Checks if passed {@link String} instance not contains passed
      * {@link CharSequence} instance
-     * 
+     *
      * @param text
      * @param item
      * @return <code>boolean</code>

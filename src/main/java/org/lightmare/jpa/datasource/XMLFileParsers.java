@@ -19,10 +19,10 @@ import org.w3c.dom.NodeList;
 
 /**
  * File parser for XML data source formats
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.15-SNAPSHOT
- * 
+ *
  */
 public class XMLFileParsers {
 
@@ -43,32 +43,29 @@ public class XMLFileParsers {
     private static final String POOL_TAG = "pool";
 
     /**
-     * Initializes <a
-     * href="http://www.oracle.com/technetwork/java/javase/jdbc/index.html"
-     * >jdbc</a> driver for appropriated {@link javax.sql.DataSource} for
+     * Initializes
+     * <a href="http://www.oracle.com/technetwork/java/javase/jdbc/index.html" >
+     * jdbc</a> driver for appropriated {@link javax.sql.DataSource} for
      * connection pooling
-     * 
+     *
      * @param nodeList
      * @param properties
      */
-    private static void setDataFromJBossDriver(NodeList nodeList,
-	    Properties properties) {
+    private static void setDataFromJBossDriver(NodeList nodeList, Properties properties) {
 
 	Element thisElement = XMLUtils.getFirstElement(nodeList);
 	String name = XMLUtils.getContext(thisElement);
 	String driverName = DriverConfig.getDriverName(name);
-	properties.setProperty(ConnectionConfig.DRIVER_PROPERTY.name,
-		driverName);
+	properties.setProperty(ConnectionConfig.DRIVER_PROPERTY.name, driverName);
     }
 
     /**
      * Gets security information from {@link javax.sql.DataSource} meta data
-     * 
+     *
      * @param nodeList
      * @param properties
      */
-    private static void setDataFromJBossSecurity(NodeList nodeList,
-	    Properties properties) {
+    private static void setDataFromJBossSecurity(NodeList nodeList, Properties properties) {
 
 	boolean valid;
 	int length = nodeList.getLength();
@@ -79,16 +76,13 @@ public class XMLFileParsers {
 	    if (valid) {
 		Element userElement = XMLUtils.getFirstElement(userList);
 		String user = XMLUtils.getContext(userElement);
-		properties.setProperty(ConnectionConfig.USER_PROPERTY.name,
-			user);
-		NodeList passList = thisElement
-			.getElementsByTagName(PASSWORD_TAG);
+		properties.setProperty(ConnectionConfig.USER_PROPERTY.name, user);
+		NodeList passList = thisElement.getElementsByTagName(PASSWORD_TAG);
 		valid = XMLUtils.validate(passList);
 		if (valid) {
 		    Element passElement = XMLUtils.getFirstElement(passList);
 		    String password = XMLUtils.getContext(passElement);
-		    properties.setProperty(
-			    ConnectionConfig.PASSWORD_PROPERTY.name, password);
+		    properties.setProperty(ConnectionConfig.PASSWORD_PROPERTY.name, password);
 		}
 	    }
 	}
@@ -96,7 +90,7 @@ public class XMLFileParsers {
 
     /**
      * Sets minimum size of connections in pool
-     * 
+     *
      * @param element
      * @param properties
      * @return {@link String}
@@ -107,13 +101,11 @@ public class XMLFileParsers {
 
 	NodeList minPoolSizeList = element.getElementsByTagName(MIN_POOL_TAG);
 	int elementLength = minPoolSizeList.getLength();
-	if (elementLength == CollectionUtils.EMPTY_ARRAY_LENGTH) {
-	    Element minPoolSizeElement = XMLUtils
-		    .getFirstElement(minPoolSizeList);
+	if (elementLength == CollectionUtils.EMPTY) {
+	    Element minPoolSizeElement = XMLUtils.getFirstElement(minPoolSizeList);
 	    minPoolSize = XMLUtils.getContext(minPoolSizeElement);
 
-	    properties.setProperty(PoolConfig.Defaults.MIN_POOL_SIZE.key,
-		    minPoolSize);
+	    properties.setProperty(PoolConfig.Defaults.MIN_POOL_SIZE.key, minPoolSize);
 	} else {
 	    minPoolSize = null;
 	}
@@ -123,7 +115,7 @@ public class XMLFileParsers {
 
     /**
      * Sets maximum size of connections in pool
-     * 
+     *
      * @param element
      * @param properties
      * @return <code>boolean</code>
@@ -136,12 +128,10 @@ public class XMLFileParsers {
 	int elementLength = maxPoolSizeList.getLength();
 	if (elementLength > CollectionUtils.EMPTY_ARRAY_LENGTH) {
 	    valid = Boolean.TRUE;
-	    Element maxPoolSizeElement = XMLUtils
-		    .getFirstElement(maxPoolSizeList);
+	    Element maxPoolSizeElement = XMLUtils.getFirstElement(maxPoolSizeList);
 	    String maxPoolSize = XMLUtils.getContext(maxPoolSizeElement);
 
-	    properties.setProperty(PoolConfig.Defaults.MAX_POOL_SIZE.key,
-		    maxPoolSize);
+	    properties.setProperty(PoolConfig.Defaults.MAX_POOL_SIZE.key, maxPoolSize);
 	} else {
 	    valid = Boolean.FALSE;
 	}
@@ -151,30 +141,25 @@ public class XMLFileParsers {
 
     /**
      * Sets initial size of connections in pool
-     * 
+     *
      * @param element
      * @param properties
      * @param minPoolSize
      */
-    private static void setInitPoolSize(Element element, Properties properties,
-	    String minPoolSize) {
+    private static void setInitPoolSize(Element element, Properties properties, String minPoolSize) {
 
-	NodeList initPoolSizeList = element
-		.getElementsByTagName(INITIAL_POOL_TAG);
+	NodeList initPoolSizeList = element.getElementsByTagName(INITIAL_POOL_TAG);
 	int elementLength = initPoolSizeList.getLength();
 	if (elementLength > CollectionUtils.EMPTY_ARRAY_LENGTH) {
-	    Element initPoolSizeElement = XMLUtils
-		    .getFirstElement(initPoolSizeList);
+	    Element initPoolSizeElement = XMLUtils.getFirstElement(initPoolSizeList);
 	    String prefill = XMLUtils.getContext(initPoolSizeElement);
 	    if (Boolean.valueOf(prefill)) {
-		properties.setProperty(
-			PoolConfig.Defaults.INITIAL_POOL_SIZE.key, minPoolSize);
+		properties.setProperty(PoolConfig.Defaults.INITIAL_POOL_SIZE.key, minPoolSize);
 	    }
 	}
     }
 
-    private static void setPoolDataFromNode(NodeList nodeList,
-	    Properties properties, int i) {
+    private static void setPoolDataFromNode(NodeList nodeList, Properties properties, int i) {
 
 	Element thisElement = XMLUtils.getElement(nodeList, i);
 	String minPoolSize = setMinPoolSize(thisElement, properties);
@@ -188,12 +173,11 @@ public class XMLFileParsers {
 
     /**
      * Gets security information from {@link javax.sql.DataSource} meta data
-     * 
+     *
      * @param nodeList
      * @param properties
      */
-    private static void setDataFromJBossPool(NodeList nodeList,
-	    Properties properties) {
+    private static void setDataFromJBossPool(NodeList nodeList, Properties properties) {
 
 	for (int i = CollectionUtils.FIRST_INDEX; i < nodeList.getLength(); i++) {
 	    setPoolDataFromNode(nodeList, properties, i);
@@ -202,7 +186,7 @@ public class XMLFileParsers {
 
     /**
      * Sets JNDI name and native name of connection pool
-     * 
+     *
      * @param element
      * @param props
      */
@@ -210,20 +194,18 @@ public class XMLFileParsers {
 
 	String jndiName = element.getAttribute(JNDI_NAME_TAG);
 	String clearName = NamingUtils.clearDataSourceName(jndiName);
-	properties.setProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name,
-		jndiName);
+	properties.setProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name, jndiName);
 	properties.setProperty(ConnectionConfig.NAME_PROPERTY.name, clearName);
     }
 
     /**
      * Sets data from URL tag
-     * 
+     *
      * @param element
      * @param urlList
      * @param properties
      */
-    private static void setFromURLData(Element element, NodeList urlList,
-	    Properties properties) {
+    private static void setFromURLData(Element element, NodeList urlList, Properties properties) {
 
 	Element urlElement = XMLUtils.getFirstElement(urlList);
 	String url = XMLUtils.getContext(urlElement);
@@ -240,14 +222,13 @@ public class XMLFileParsers {
 
     /**
      * Sets JNDI name native name and security, URL, driver properties
-     * 
+     *
      * @param nodeList
      * @param properties
      * @param i
      *            index of current node
      */
-    private static void setConnectionDataFromNode(NodeList nodeList,
-	    List<Properties> properties, int i) {
+    private static void setConnectionDataFromNode(NodeList nodeList, List<Properties> properties, int i) {
 
 	Element thisElement = XMLUtils.getElement(nodeList, i);
 	Properties props = new Properties();
@@ -263,7 +244,7 @@ public class XMLFileParsers {
     /**
      * Gets {@link javax.sql.DataSource}s configuration properties as
      * {@link List} of {@link Properties}
-     * 
+     *
      * @param nodeList
      * @return
      */
@@ -280,7 +261,7 @@ public class XMLFileParsers {
 
     /**
      * Gets data source descriptor tags from passed {@link Document} parameter
-     * 
+     *
      * @param document
      * @return {@link NodeList}
      */
@@ -291,7 +272,7 @@ public class XMLFileParsers {
 
     /**
      * Gets data source descriptor tags from passed {@link File} parameter
-     * 
+     *
      * @param file
      * @return {@link NodeList}
      * @throws IOException
@@ -308,13 +289,12 @@ public class XMLFileParsers {
 
     /**
      * Gets data source descriptor tags from passed file path
-     * 
+     *
      * @param dataSourcePath
      * @return {@link NodeList}
      * @throws IOException
      */
-    private static NodeList getDataSourceTags(String dataSourcePath)
-	    throws IOException {
+    private static NodeList getDataSourceTags(String dataSourcePath) throws IOException {
 
 	NodeList nodeList;
 
@@ -326,13 +306,12 @@ public class XMLFileParsers {
 
     /**
      * Retrieves data source JNDI names from passed file
-     * 
+     *
      * @param dataSourcePath
      * @return
      * @throws IOException
      */
-    public static Collection<String> dataSourceNames(String dataSourcePath)
-	    throws IOException {
+    public static Collection<String> dataSourceNames(String dataSourcePath) throws IOException {
 
 	Collection<String> jndiNames = new HashSet<String>();
 
@@ -350,13 +329,12 @@ public class XMLFileParsers {
 
     /**
      * Reads properties from XML file
-     * 
+     *
      * @param dataSourcePath
      * @return {@link Properties}
      * @throws IOException
      */
-    public static List<Properties> getPropertiesFromJBoss(String dataSourcePath)
-	    throws IOException {
+    public static List<Properties> getPropertiesFromJBoss(String dataSourcePath) throws IOException {
 
 	List<Properties> properties;
 

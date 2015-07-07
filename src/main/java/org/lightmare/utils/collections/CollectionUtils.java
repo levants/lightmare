@@ -37,7 +37,7 @@ import org.lightmare.utils.ObjectUtils;
 
 /**
  * Utility class to work with {@link Collection} and {@link Map} implementations
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.81-SNAPSHOT
  */
@@ -55,6 +55,9 @@ public abstract class CollectionUtils {
     // Length of empty array
     public static final int EMPTY_ARRAY_LENGTH = 0;
 
+    // Length of empty array or set
+    public static final int EMPTY = 0;
+
     // Length of array / collection / map with single element
     public static final int SINGLTON_LENGTH = 0;
 
@@ -63,7 +66,7 @@ public abstract class CollectionUtils {
 
     /**
      * Checks if passed {@link Collection} instance is not empty
-     * 
+     *
      * @param collection
      * @return <code>boolean</code>
      */
@@ -74,7 +77,7 @@ public abstract class CollectionUtils {
     /**
      * Checks passed {@link Collection} instance on null and on emptiness
      * returns true if it is not null and is not empty
-     * 
+     *
      * @param collection
      * @return <code></code>
      */
@@ -85,7 +88,7 @@ public abstract class CollectionUtils {
     /**
      * Checks passed {@link Map} instance on null and emptiness returns true if
      * it is not null and is not empty
-     * 
+     *
      * @param map
      * @return <code>boolean</code>
      */
@@ -95,7 +98,7 @@ public abstract class CollectionUtils {
 
     /**
      * Checks if passed {@link Map} instance is null or is empty
-     * 
+     *
      * @param map
      * @return <code>boolean</code>
      */
@@ -105,7 +108,7 @@ public abstract class CollectionUtils {
 
     /**
      * Checks if passed {@link Collection} instance is null or is empty
-     * 
+     *
      * @param collection
      * @return <code>boolean</code>
      */
@@ -116,7 +119,7 @@ public abstract class CollectionUtils {
     /**
      * Checks if there is null or empty {@link Collection} instance is passed
      * collections
-     * 
+     *
      * @param collections
      * @return <code>boolean</code>
      */
@@ -127,7 +130,7 @@ public abstract class CollectionUtils {
     /**
      * Checks if each of passed {@link Map} instances is not null and is not
      * empty
-     * 
+     *
      * @param maps
      * @return <code>boolean</code>
      */
@@ -150,7 +153,7 @@ public abstract class CollectionUtils {
     /**
      * Checks if passed array of {@link Object}'s instances is not null and is
      * not empty
-     * 
+     *
      * @param array
      * @return <code>boolean</code>
      */
@@ -160,7 +163,7 @@ public abstract class CollectionUtils {
 
     /**
      * Checks if passed {@link Object} array is null or is empty
-     * 
+     *
      * @param array
      * @return <code>boolean</code>
      */
@@ -169,9 +172,19 @@ public abstract class CollectionUtils {
     }
 
     /**
+     * Checks if passed array is null ro empty
+     *
+     * @param array
+     * @return <code>boolean</code> validation result
+     */
+    public static <T> boolean isEmpty(T[] array) {
+	return array == null || array.length == EMPTY;
+    }
+
+    /**
      * Checks if each of passed {@link Collection} instances is not null and is
      * not empty
-     * 
+     *
      * @param collections
      * @return <code>boolean</code>
      */
@@ -194,7 +207,7 @@ public abstract class CollectionUtils {
     /**
      * Checks if each of passed {@link Object} array instances is not null and
      * is not empty
-     * 
+     *
      * @param arrays
      * @return <code>boolean</code>
      */
@@ -217,32 +230,31 @@ public abstract class CollectionUtils {
     /**
      * Opposite to {@link Map#containsKey(Object)} method for passed {@link Map}
      * map and K key
-     * 
+     *
      * @param map
      * @param key
      * @return <code>boolean</code>
      */
     public static <K, V> boolean notContains(Map<K, V> map, K key) {
-	return (key == null || invalid(map) || Boolean.FALSE.equals(map
-		.containsKey(key)));
+	return (key == null || invalid(map) || Boolean.FALSE.equals(map.containsKey(key)));
     }
 
     /**
      * Opposite to {@link Collection#contains(Object)} method for passed
      * {@link Collection} collection and E element
-     * 
+     *
      * @param collection
      * @param element
      * @return <code>boolean</code>
      */
     public static <E> boolean notContains(Collection<E> collection, E element) {
-	return ((element == null || invalid(collection)) || (valid(collection) && Boolean.FALSE
-		.equals(collection.contains(element))));
+	return ((element == null || invalid(collection))
+		|| (valid(collection) && Boolean.FALSE.equals(collection.contains(element))));
     }
 
     /**
      * Gets value from passed {@link Map} as other {@link Map} instance
-     * 
+     *
      * @param key
      * @param from
      * @return {@link Map}<K,V>
@@ -268,7 +280,7 @@ public abstract class CollectionUtils {
     /**
      * Gets values from passed {@link Map} as other {@link Map} instance
      * recursively by passed keys array
-     * 
+     *
      * @param from
      * @param keys
      * @return {@link Map}
@@ -291,7 +303,7 @@ public abstract class CollectionUtils {
      * Gets values from passed {@link Map} as other {@link Map} instance
      * recursively by passed keys array and for first key get value from last
      * {@link Map} instance
-     * 
+     *
      * @param from
      * @param keys
      * @return <code>V</code>
@@ -320,7 +332,7 @@ public abstract class CollectionUtils {
     /**
      * Puts passed value to passed {@link Map} instance on passed key of such
      * does not contained
-     * 
+     *
      * @param map
      * @param key
      * @param value
@@ -336,7 +348,7 @@ public abstract class CollectionUtils {
     /**
      * Puts passed value to passed {@link Map} instance on passed key of such
      * does not contained or its associated key does not equals passed value
-     * 
+     *
      * @param map
      * @param key
      * @param value
@@ -351,7 +363,7 @@ public abstract class CollectionUtils {
 
     /**
      * Creates new {@link Set} from passed {@link Collection} instance
-     * 
+     *
      * @param collection
      * @return {@link Set} translated from collection
      */
@@ -370,7 +382,7 @@ public abstract class CollectionUtils {
 
     /**
      * Creates new {@link Set} from passed array instance
-     * 
+     *
      * @param array
      * @return {@link Set} translated from array
      */
@@ -389,7 +401,7 @@ public abstract class CollectionUtils {
 
     /**
      * Creates new {@link List} from passed {@link Collection} instance
-     * 
+     *
      * @param collection
      * @return {@link List} translated from collection
      */
@@ -408,7 +420,7 @@ public abstract class CollectionUtils {
 
     /**
      * Creates array of generic type <code>T</code> of specific size
-     * 
+     *
      * @param type
      * @param size
      * @return <code>T[]</code> initialized array
@@ -425,7 +437,7 @@ public abstract class CollectionUtils {
 
     /**
      * Checks if passed {@link Object} is {@link Object} types array
-     * 
+     *
      * @param data
      * @return <code>boolean</code>
      */
@@ -435,20 +447,19 @@ public abstract class CollectionUtils {
 
     /**
      * Checks if passed {@link Object} is array of primitives
-     * 
+     *
      * @param data
      * @return <code>boolean</code>
      */
     public static boolean isPrimitiveArray(final Object data) {
-	return (data instanceof boolean[] || data instanceof byte[]
-		|| data instanceof short[] || data instanceof char[]
-		|| data instanceof int[] || data instanceof long[]
-		|| data instanceof float[] || data instanceof double[]);
+	return (data instanceof boolean[] || data instanceof byte[] || data instanceof short[] || data instanceof char[]
+		|| data instanceof int[] || data instanceof long[] || data instanceof float[]
+		|| data instanceof double[]);
     }
 
     /**
      * Checks if passed {@link Object} is array
-     * 
+     *
      * @param data
      * @return <code>boolean</code>
      */
@@ -459,7 +470,7 @@ public abstract class CollectionUtils {
     /**
      * Converts passed {@link Collection} to array of appropriated {@link Class}
      * types
-     * 
+     *
      * @param collection
      * @param type
      * @return <code>T[]</code>
@@ -480,7 +491,7 @@ public abstract class CollectionUtils {
 
     /**
      * Creates empty array of passed type
-     * 
+     *
      * @param type
      * @return <code>T[]</code>
      */
@@ -490,7 +501,7 @@ public abstract class CollectionUtils {
 
     /**
      * Peaks first element from list
-     * 
+     *
      * @param list
      * @return T
      */
@@ -509,7 +520,7 @@ public abstract class CollectionUtils {
 
     /**
      * Peaks first element from collection
-     * 
+     *
      * @param collection
      * @return T
      */
@@ -533,7 +544,7 @@ public abstract class CollectionUtils {
 
     /**
      * Peaks first element from array
-     * 
+     *
      * @param collection
      * @return T
      */

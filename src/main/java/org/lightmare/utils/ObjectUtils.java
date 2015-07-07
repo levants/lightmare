@@ -32,7 +32,7 @@ import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Utility class to help with general object checks / lock / modification
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.34-SNAPSHOT
  */
@@ -40,7 +40,7 @@ public abstract class ObjectUtils {
 
     /**
      * Checks if passed boolean value is not true
-     * 
+     *
      * @param statement
      * @return <code>boolean</code>
      */
@@ -50,7 +50,7 @@ public abstract class ObjectUtils {
 
     /**
      * Checks if passed object is not null
-     * 
+     *
      * @param data
      * @return <code>boolean</code>
      */
@@ -60,7 +60,7 @@ public abstract class ObjectUtils {
 
     /**
      * Checks if not a single object passed objects is not null
-     * 
+     *
      * @param datas
      * @return <code>boolean</code>
      */
@@ -82,7 +82,7 @@ public abstract class ObjectUtils {
 
     /**
      * Checks if parameters not equals
-     * 
+     *
      * @param x
      * @param y
      * @return <code>boolean</code>
@@ -93,7 +93,7 @@ public abstract class ObjectUtils {
 
     /**
      * Checks if passed {@link Object}s are not null and not equals each other
-     * 
+     *
      * @param data1
      * @param data2
      * @return <code>boolean</code>
@@ -104,7 +104,7 @@ public abstract class ObjectUtils {
 
     /**
      * Casts passed {@link Object} to generic parameter
-     * 
+     *
      * @param data
      * @return <code>T</code> casted to type instance
      */
@@ -119,7 +119,7 @@ public abstract class ObjectUtils {
     /**
      * Casts passed {@link Object} to generic parameter by {@link Class} of
      * special type
-     * 
+     *
      * @param data
      * @param castClass
      * @return <code>T</code> casted to type instance
@@ -136,7 +136,7 @@ public abstract class ObjectUtils {
 
     /**
      * Simply locks passed {@link Lock} object
-     * 
+     *
      * @param lock
      */
     public static void lock(Lock lock) {
@@ -146,13 +146,12 @@ public abstract class ObjectUtils {
     /**
      * Locks passed {@link Lock} object for passed time in appropriate
      * {@link TimeUnit} instance
-     * 
+     *
      * @param lock
      * @return <code>boolean</code>
      * @throws InterruptedException
      */
-    public static boolean tryLock(Lock lock, Long time, TimeUnit unit)
-	    throws IOException {
+    public static boolean tryLock(Lock lock, Long time, TimeUnit unit) throws IOException {
 
 	boolean locked;
 
@@ -167,7 +166,7 @@ public abstract class ObjectUtils {
 
     /**
      * Locks passed {@link Lock} object
-     * 
+     *
      * @param lock
      * @return <code>boolean</code>
      * @throws IOException
@@ -178,7 +177,7 @@ public abstract class ObjectUtils {
 
     /**
      * Unlocks passed {@link Lock} instance
-     * 
+     *
      * @param lock
      */
     public static void unlock(Lock lock) {
@@ -186,8 +185,7 @@ public abstract class ObjectUtils {
 	if (lock instanceof ReentrantLock) {
 	    // if passed lock instance of ReentrantLock then first defines if
 	    // locked by current thread
-	    ReentrantLock reentrantLock = ObjectUtils.cast(lock,
-		    ReentrantLock.class);
+	    ReentrantLock reentrantLock = ObjectUtils.cast(lock, ReentrantLock.class);
 	    if (reentrantLock.isHeldByCurrentThread()) {
 		lock.unlock();
 	    }

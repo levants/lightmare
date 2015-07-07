@@ -30,7 +30,7 @@ import org.lightmare.utils.StringUtils;
 /**
  * Implementation of {@link ThreadFactory} for
  * {@link java.util.concurrent.ExecutorService} thread pooling
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
  */
@@ -60,8 +60,7 @@ public class ThreadFactoryUtil implements ThreadFactory {
 	    thread.setPriority(priority);
 	}
 
-	String threadName = StringUtils.concat(name, StringUtils.HYPHEN,
-		thread.getId());
+	String threadName = StringUtils.concat(name, StringUtils.HYPHEN, thread.getId());
 	thread.setName(threadName);
 
 	return thread;
