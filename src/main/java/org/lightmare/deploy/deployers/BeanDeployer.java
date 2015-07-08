@@ -595,7 +595,7 @@ public class BeanDeployer implements Callable<String> {
 	if (RestCheck.check(beanClass)) {
 	    try {
 		RestProvider.add(beanClass);
-	    } catch (IOException ex) {
+	    } catch (Throwable ex) {
 		LOG.error(ex.getMessage(), ex);
 	    }
 	}
