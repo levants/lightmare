@@ -251,22 +251,15 @@ public class BeanDeployer implements Callable<String> {
     }
 
     /**
-     * Creates {@link ConnectionSemaphore} if such does not exists
+     * Configures and synchronizes connections initialization
      *
-     * @param context
-     * @param field
-     * @return <code>boolean</code>
+     * @param connection
      * @throws IOException
      */
-    private void identifyConnections(PersistenceContext context, Field connectionField) throws IOException {
+    private void configConnection(ConnectionData connection) throws IOException {
 
-	ConnectionData connection = new ConnectionData();
-	connection.setConnectionField(connectionField);
-	String unitName = context.unitName();
-	String jndiName = context.name();
-	connection.setUnitName(unitName);
-	connection.setJndiName(jndiName);
-
+	String unitName = connection.getUnitName();
+	String jndiName = connection.getJndiName();
 	ConnectionSemaphore semaphore;
 	boolean checkForEmf = checkOnEmf(unitName, jndiName);
 	if (checkForEmf) {
@@ -282,6 +275,36 @@ public class BeanDeployer implements Callable<String> {
 		lockSemaphore(semaphore);
 	    }
 	}
+    }
+
+    /**
+     * Sets connection common and JNDI names
+     *
+     * @param connection
+     * @param context
+     */
+    private void setConnectionNames(ConnectionData connection, PersistenceContext context) {
+
+	String unitName = context.unitName();
+	String jndiName = context.name();
+	connection.setUnitName(unitName);
+	connection.setJndiName(jndiName);
+    }
+
+    /**
+     * Creates {@link ConnectionSemaphore} if such does not exists
+     *
+     * @param context
+     * @param field
+     * @return <code>boolean</code>
+     * @throws IOException
+     */
+    private void identifyConnections(PersistenceContext context, Field connectionField) throws IOException {
+
+	ConnectionData connection = new ConnectionData();
+	connection.setConnectionField(connectionField);
+	setConnectionNames(connection, context);
+	configConnection(connection);
 	metaData.addConnection(connection);
     }
 
