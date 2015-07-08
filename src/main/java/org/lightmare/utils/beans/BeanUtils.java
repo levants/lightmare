@@ -29,7 +29,7 @@ import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Utility class for EJB beans
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.26-SNAPSHOT
  */
@@ -42,7 +42,7 @@ public class BeanUtils {
 
     /**
      * Retrieves bean name from class name
-     * 
+     *
      * @param name
      * @return String
      */
@@ -61,7 +61,7 @@ public class BeanUtils {
 
     /**
      * Removes <b>Remote</b> or <b>Local</b> part from bean interface name
-     * 
+     *
      * @param interfaceClass
      * @return {@link String} EJB bean name
      */
@@ -73,12 +73,10 @@ public class BeanUtils {
 	int start;
 	if (interfaceName.endsWith(REMOTE_IDENT)) {
 	    start = interfaceName.lastIndexOf(REMOTE_IDENT);
-	    beanName = interfaceName.substring(CollectionUtils.FIRST_INDEX,
-		    start);
+	    beanName = interfaceName.substring(CollectionUtils.FIRST_INDEX, start);
 	} else if (interfaceName.endsWith(LOCAL_IDENT)) {
 	    start = interfaceName.lastIndexOf(LOCAL_IDENT);
-	    beanName = interfaceName.substring(CollectionUtils.FIRST_INDEX,
-		    start);
+	    beanName = interfaceName.substring(CollectionUtils.FIRST_INDEX, start);
 	} else {
 	    beanName = interfaceName;
 	}
@@ -88,7 +86,7 @@ public class BeanUtils {
 
     /**
      * Gets EJB bean name from passed {@link Class} instance
-     * 
+     *
      * @param beanClass
      * @return {@link String} EJB bean name
      */

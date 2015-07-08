@@ -81,7 +81,7 @@ import org.lightmare.utils.rest.RestCheck;
 /**
  * {@link Callable} implementation for deploying {@link javax.ejb.Stateless}
  * session beans and cache {@link MetaData} keyed by bean name
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
@@ -124,7 +124,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Constructor with {@link BeanParameters} deployments parameters
-     * 
+     *
      * @param parameters
      */
     public BeanDeployer(BeanParameters parameters) {
@@ -141,7 +141,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Adds {@link AccessibleObject} to cache to set accessible flag after
-     * 
+     *
      * @param accessibleObject
      */
     private void addAccessibleField(AccessibleObject accessibleObject) {
@@ -155,29 +155,26 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Initializes {@link ORMCreator} instance and connection for EJB module
-     * 
+     *
      * @param semaphore
      * @throws IOException
      */
-    private void initOrmCreator(ConnectionSemaphore semaphore)
-	    throws IOException {
+    private void initOrmCreator(ConnectionSemaphore semaphore) throws IOException {
 
-	ORMCreator orm = new ORMCreator.Builder(creator)
-		.setUnitName(semaphore.getUnitName()).setBeanName(beanName)
+	ORMCreator orm = new ORMCreator.Builder(creator).setUnitName(semaphore.getUnitName()).setBeanName(beanName)
 		.setClassLoader(loader).setConfiguration(configuration).build();
 	orm.configureConnection();
     }
 
     /**
      * Locks {@link ConnectionSemaphore} if needed for connection processing
-     * 
+     *
      * @param semaphore
      * @param unitName
      * @param jndiName
      * @throws IOException
      */
-    private void lockSemaphore(ConnectionSemaphore semaphore)
-	    throws IOException {
+    private void lockSemaphore(ConnectionSemaphore semaphore) throws IOException {
 
 	synchronized (semaphore) {
 	    if (Boolean.FALSE.equals(semaphore.isCheck())) {
@@ -206,7 +203,7 @@ public class BeanDeployer implements Callable<String> {
      * Checks if bean {@link MetaData} with same name already cached if it is
      * increases {@link CountDownLatch} for connection and throws
      * {@link BeanInUseException} else caches meta data with associated name
-     * 
+     *
      * @param beanEjbName
      * @throws BeanInUseException
      */
@@ -222,7 +219,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Caches {@link Field}s with persistence injection
-     * 
+     *
      * @param unitField
      */
     private void addUnitField(Field unitField) {
@@ -236,7 +233,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Checks weather connection with passed unit or JNDI name already exists
-     * 
+     *
      * @param unitName
      * @param jndiName
      * @return <code>boolean</code>
@@ -247,8 +244,7 @@ public class BeanDeployer implements Callable<String> {
 
 	if (StringUtils.valid(jndiName)) {
 	    jndiName = NamingUtils.createJpaJndiName(jndiName);
-	    checkForEmf = checkForEmf
-		    && ConnectionContainer.checkForEmf(jndiName);
+	    checkForEmf = checkForEmf && ConnectionContainer.checkForEmf(jndiName);
 	}
 
 	return checkForEmf;
@@ -256,14 +252,13 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Creates {@link ConnectionSemaphore} if such does not exists
-     * 
+     *
      * @param context
      * @param field
      * @return <code>boolean</code>
      * @throws IOException
      */
-    private void identifyConnections(PersistenceContext context,
-	    Field connectionField) throws IOException {
+    private void identifyConnections(PersistenceContext context, Field connectionField) throws IOException {
 
 	ConnectionData connection = new ConnectionData();
 	connection.setConnectionField(connectionField);
@@ -292,7 +287,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Caches {@link EJB} annotated fields
-     * 
+     *
      * @param beanClass
      */
     private void cacheInjectFields(Field field) {
@@ -322,14 +317,13 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Retrieves and caches {@link Field}s with injection
-     * 
+     *
      * @param field
      * @throws IOException
      */
     private void retriveConnection(Field field) throws IOException {
 
-	PersistenceContext context = field
-		.getAnnotation(PersistenceContext.class);
+	PersistenceContext context = field.getAnnotation(PersistenceContext.class);
 	Resource resource = field.getAnnotation(Resource.class);
 	PersistenceUnit unit = field.getAnnotation(PersistenceUnit.class);
 	EJB ejbAnnot = field.getAnnotation(EJB.class);
@@ -354,7 +348,7 @@ public class BeanDeployer implements Callable<String> {
      * {@link Resource} annotated {@link Field}s in bean class and configures
      * connections and creates {@link ConnectionSemaphore}s if it does not
      * exists for {@link PersistenceContext#unitName()} object
-     * 
+     *
      * @throws IOException
      */
     private void retrieveConnections() throws IOException {
@@ -376,15 +370,14 @@ public class BeanDeployer implements Callable<String> {
 	// Sets fields for injection (PersistenceContext, PersistenceUnit,
 	// Resource, EJB) as accessible
 	if (CollectionUtils.valid(accessibleFields)) {
-	    AccessibleObject[] accessibleObjects = CollectionUtils.toArray(
-		    accessibleFields, AccessibleObject.class);
+	    AccessibleObject[] accessibleObjects = CollectionUtils.toArray(accessibleFields, AccessibleObject.class);
 	    AccessibleObject.setAccessible(accessibleObjects, Boolean.TRUE);
 	}
     }
 
     /**
      * Creates {@link MetaData} for bean class
-     * 
+     *
      * @param beanClass
      * @throws ClassNotFoundException
      */
@@ -404,15 +397,13 @@ public class BeanDeployer implements Callable<String> {
      * {@link TransactionManagement} and caches
      * {@link TransactionAttribute#value()} and
      * {@link TransactionManagement#value()} in {@link MetaData} object
-     * 
+     *
      * @param beanClass
      */
     private void checkOnTransactional(Class<?> beanClass) {
 
-	TransactionAttribute transactionAttribute = beanClass
-		.getAnnotation(TransactionAttribute.class);
-	TransactionManagement transactionManagement = beanClass
-		.getAnnotation(TransactionManagement.class);
+	TransactionAttribute transactionAttribute = beanClass.getAnnotation(TransactionAttribute.class);
+	TransactionManagement transactionManagement = beanClass.getAnnotation(TransactionManagement.class);
 	boolean transactional = Boolean.FALSE;
 	TransactionAttributeType transactionAttrType;
 	TransactionManagementType transactionManType;
@@ -435,13 +426,12 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Caches {@link Interceptors} annotation defined data
-     * 
+     *
      * @param beanClass
      * @param interceptorClasses
      * @throws IOException
      */
-    private void cacheInterceptors(Class<?> beanClass,
-	    Class<?>[] interceptorClasses, Method beanMethod)
+    private void cacheInterceptors(Class<?> beanClass, Class<?>[] interceptorClasses, Method beanMethod)
 	    throws IOException {
 
 	int length = interceptorClasses.length;
@@ -450,8 +440,7 @@ public class BeanDeployer implements Callable<String> {
 	Method interceptorMethod;
 	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
 	    interceptorClass = interceptorClasses[i];
-	    interceptorMethods = ClassUtils.getAnnotatedMethods(beanClass,
-		    AroundInvoke.class);
+	    interceptorMethods = ClassUtils.getAnnotatedMethods(beanClass, AroundInvoke.class);
 	    interceptorMethod = CollectionUtils.getFirst(interceptorMethods);
 	    InterceptorData data = new InterceptorData();
 	    data.setBeanClass(beanClass);
@@ -465,14 +454,14 @@ public class BeanDeployer implements Callable<String> {
     /**
      * Caches {@link Interceptor}, bean {@link Class} and {@link Method}s
      * parameters
-     * 
+     *
      * @param interceptors
      * @param beanClass
      * @param beanMethods
      * @throws IOException
      */
-    private void cacheInterceptors(Interceptors interceptors,
-	    Class<?> beanClass, Method... beanMethods) throws IOException {
+    private void cacheInterceptors(Interceptors interceptors, Class<?> beanClass, Method... beanMethods)
+	    throws IOException {
 
 	Class<?>[] interceptorClasses = interceptors.value();
 	if (CollectionUtils.valid(interceptorClasses)) {
@@ -483,7 +472,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Identifies and caches {@link Interceptors} annotation data
-     * 
+     *
      * @throws IOException
      */
     private void identifyInterceptors(Class<?> beanClass) throws IOException {
@@ -493,8 +482,7 @@ public class BeanDeployer implements Callable<String> {
 	    cacheInterceptors(interceptors, beanClass);
 	}
 
-	List<Method> beanMethods = ClassUtils.getAnnotatedMethods(beanClass,
-		Interceptors.class);
+	List<Method> beanMethods = ClassUtils.getAnnotatedMethods(beanClass, Interceptors.class);
 	if (CollectionUtils.valid(beanMethods)) {
 	    for (Method beanMethod : beanMethods) {
 		interceptors = beanMethod.getAnnotation(Interceptors.class);
@@ -510,7 +498,7 @@ public class BeanDeployer implements Callable<String> {
     /**
      * Retrieves interface classes from passed {@link Local} or {@link Remote}
      * annotation
-     * 
+     *
      * @param annotation
      * @return {@link Class}[] array of interface classes
      */
@@ -532,11 +520,10 @@ public class BeanDeployer implements Callable<String> {
     /**
      * Identifies and caches EJB bean's {@link Local} and / or {@link Remote}
      * annotated interfaces
-     * 
+     *
      * @param beanClass
      */
-    private void initInterfaces(Class<?> beanClass,
-	    Class<? extends Annotation> type) {
+    private void initInterfaces(Class<?> beanClass, Class<? extends Annotation> type) {
 
 	Class<?>[] interfaces = null;
 	Set<Class<?>> interfacesSet = new HashSet<Class<?>>();
@@ -567,7 +554,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Identifies and caches EJB bean interfaces
-     * 
+     *
      * @param beanClass
      */
     private void indentifyInterfaces(Class<?> beanClass) {
@@ -576,8 +563,24 @@ public class BeanDeployer implements Callable<String> {
     }
 
     /**
+     * Prepares REST deployment for passed EJB bean type
+     *
+     * @param beanClass
+     */
+    private void prepareRestBean(Class<?> beanClass) {
+
+	if (RestCheck.check(beanClass)) {
+	    try {
+		RestProvider.add(beanClass);
+	    } catch (IOException ex) {
+		LOG.error(ex.getMessage(), ex);
+	    }
+	}
+    }
+
+    /**
      * Loads and caches bean {@link Class} by name
-     * 
+     *
      * @return
      * @throws IOException
      */
@@ -586,15 +589,11 @@ public class BeanDeployer implements Callable<String> {
 	String beanEjbName;
 
 	try {
-	    Class<?> beanClass = ClassUtils.classForName(className,
-		    Boolean.FALSE, loader);
+	    Class<?> beanClass = ClassUtils.classForName(className, Boolean.FALSE, loader);
 	    checkOnTransactional(beanClass);
 	    beanEjbName = BeanUtils.beanName(beanClass);
 	    checkAndSetBean(beanEjbName);
-	    if (RestCheck.check(beanClass)) {
-		RestProvider.add(beanClass);
-	    }
-
+	    prepareRestBean(beanClass);
 	    createMeta(beanClass);
 	    indentifyInterfaces(beanClass);
 	    identifyInterceptors(beanClass);
@@ -609,7 +608,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Deploys EJB application from file
-     * 
+     *
      * @return {@link String}
      */
     private String deployFile() {
@@ -628,8 +627,7 @@ public class BeanDeployer implements Callable<String> {
 	    }
 	    LogUtils.info(LOG, DEPLOYED_MESSAGE, beanName);
 	} catch (IOException ex) {
-	    LogUtils.error(LOG, ex, COULD_NOT_DEPLOY_MESSAGE, beanName,
-		    ex.getMessage());
+	    LogUtils.error(LOG, ex, COULD_NOT_DEPLOY_MESSAGE, beanName, ex.getMessage());
 	} finally {
 	    LibraryLoader.loadCurrentLibraries(currentLoader);
 	}
@@ -639,7 +637,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Deploys EJB bean from extracted EAR or JAR file
-     * 
+     *
      * @return {@link String} EJB bean name
      */
     private String deployExtracted() {
@@ -659,7 +657,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Deploys EJB bean from extracted EAR file or JAR file
-     * 
+     *
      * @return {@link String} EJB bean name
      */
     private String deployBean() {
@@ -677,7 +675,7 @@ public class BeanDeployer implements Callable<String> {
 
     /**
      * Deploys EJB bean from extracted EAR file or JAR file
-     * 
+     *
      * @return {@link String} EJB bean name
      */
     private String deploy() {

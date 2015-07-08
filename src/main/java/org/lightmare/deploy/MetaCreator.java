@@ -73,7 +73,7 @@ import org.lightmare.utils.logging.LogUtils;
 /**
  * Determines and saves in cache EJB beans {@link org.lightmare.cache.MetaData}
  * on startup
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
@@ -126,7 +126,7 @@ public class MetaCreator {
 
     /**
      * Initializes {@link MetaCreator} instance if it is not cached yet
-     * 
+     *
      * @return {@link MetaCreator}
      */
     private static MetaCreator initCreator() {
@@ -143,7 +143,7 @@ public class MetaCreator {
 
     /**
      * Gets cached {@link MetaCreator} instance if such not exists creates new
-     * 
+     *
      * @return {@link MetaCreator}
      */
     private static MetaCreator get() {
@@ -166,7 +166,7 @@ public class MetaCreator {
     /**
      * Gets {@link Configuration} instance for passed {@link URL} array of
      * archives
-     * 
+     *
      * @param archives
      */
     private void configure(URL[] archives) {
@@ -195,12 +195,11 @@ public class MetaCreator {
 
     /**
      * Caches each archive by it's {@link URL} for deployment
-     * 
+     *
      * @param ejbURLs
      * @param archiveData
      */
-    private void fillArchiveURLs(Collection<URL> ejbURLs,
-	    ArchiveData archiveData, DeployData deployData) {
+    private void fillArchiveURLs(Collection<URL> ejbURLs, ArchiveData archiveData, DeployData deployData) {
 
 	for (URL ejbURL : ejbURLs) {
 	    archivesURLs.put(ejbURL, archiveData);
@@ -212,13 +211,12 @@ public class MetaCreator {
      * Caches each archive by it's {@link URL} for deployment and creates fill
      * {@link URL} array for scanning and finding {@link javax.ejb.Stateless}
      * annotated classes
-     * 
+     *
      * @param archive
      * @param modifiedArchives
      * @throws IOException
      */
-    private void fillArchiveURLs(URL archive, List<URL> modifiedArchives)
-	    throws IOException {
+    private void fillArchiveURLs(URL archive, List<URL> modifiedArchives) throws IOException {
 
 	ArchiveUtils ioUtils = ArchiveUtils.getAppropriatedType(archive);
 	if (ObjectUtils.notNull(ioUtils)) {
@@ -243,7 +241,7 @@ public class MetaCreator {
     /**
      * Gets {@link URL} array for all classes and jar libraries within archive
      * file for class loading policy
-     * 
+     *
      * @param archives
      * @return {@link URL}[]
      * @throws IOException
@@ -260,7 +258,7 @@ public class MetaCreator {
 
     /**
      * Awaits for {@link Future} tasks if it set so by configuration
-     * 
+     *
      * @param future
      */
     private void awaitDeployment(Future<String> future) {
@@ -268,8 +266,7 @@ public class MetaCreator {
 	if (await) {
 	    try {
 		String nameFromFuture = future.get();
-		LogUtils.info(LOG, "Deploy processing of %s finished",
-			nameFromFuture);
+		LogUtils.info(LOG, "Deploy processing of %s finished", nameFromFuture);
 	    } catch (InterruptedException ex) {
 		LOG.error(ex.getMessage(), ex);
 	    } catch (ExecutionException ex) {
@@ -292,7 +289,7 @@ public class MetaCreator {
 
     /**
      * Initializes {@link ArchiveData} to find archives
-     * 
+     *
      * @param currentURL
      * @return {@link ArchiveData}
      */
@@ -310,14 +307,13 @@ public class MetaCreator {
     /**
      * Initializes appropriated implementation of {@link ArchiveUtils} to
      * retrieve data from archives
-     * 
+     *
      * @param archiveData
      * @param currentURL
      * @return {@link ArchiveUtils}
      * @throws IOException
      */
-    private ArchiveUtils initArchiveUtils(ArchiveData archiveData,
-	    URL currentURL) throws IOException {
+    private ArchiveUtils initArchiveUtils(ArchiveData archiveData, URL currentURL) throws IOException {
 
 	ArchiveUtils ioUtils = archiveData.getIoUtils();
 
@@ -332,14 +328,13 @@ public class MetaCreator {
     /**
      * Re runs scanner for archives and initializes appropriated class loader
      * with aggregated {@link URL}s if it is not executed yet
-     * 
+     *
      * @param archiveData
      * @param ioUtils
      * @return
      * @throws IOException
      */
-    private ClassLoader initClassLoader(ArchiveData archiveData,
-	    ArchiveUtils ioUtils) throws IOException {
+    private ClassLoader initClassLoader(ArchiveData archiveData, ArchiveUtils ioUtils) throws IOException {
 
 	ClassLoader loader;
 
@@ -356,7 +351,7 @@ public class MetaCreator {
 
     /**
      * Caches appropriated archives for instant EJB bean name
-     * 
+     *
      * @param beanName
      * @param ioUtils
      * @return
@@ -374,7 +369,7 @@ public class MetaCreator {
 
     /**
      * Initializes {@link DeployData} to add deployments parameters
-     * 
+     *
      * @param currentURL
      * @return {@link DeployData}
      */
@@ -393,7 +388,7 @@ public class MetaCreator {
 
     /**
      * Initializes and sets fields in {@link BeanParameters} class
-     * 
+     *
      * @return {@link BeanParameters}
      */
     private BeanParameters initDeployParameters() {
@@ -410,13 +405,12 @@ public class MetaCreator {
     /**
      * Sets appropriated {@link ClassLoader} to passed {@link BeanParameters}
      * instance
-     * 
+     *
      * @param currentURL
      * @param parameters
      * @throws IOException
      */
-    private void setLoader(URL currentURL, BeanParameters parameters)
-	    throws IOException {
+    private void setLoader(URL currentURL, BeanParameters parameters) throws IOException {
 
 	ArchiveData archiveData = initArchiveData(currentURL);
 	ArchiveUtils ioUtils = initArchiveUtils(archiveData, currentURL);
@@ -438,7 +432,7 @@ public class MetaCreator {
     /**
      * Initializes and sets {@link DeployData} to pased {@link BeanParameters}
      * instance
-     * 
+     *
      * @param currentURL
      * @param parameters
      */
@@ -451,13 +445,12 @@ public class MetaCreator {
 
     /**
      * Fills appropriated field of passed {@link BeanParameters} intance
-     * 
+     *
      * @param currentURL
      * @param parameters
      * @throws IOException
      */
-    private void fillBeanParameters(URL currentURL, BeanParameters parameters)
-	    throws IOException {
+    private void fillBeanParameters(URL currentURL, BeanParameters parameters) throws IOException {
 
 	setLoader(currentURL, parameters);
 	setDeployData(currentURL, parameters);
@@ -465,12 +458,11 @@ public class MetaCreator {
 
     /**
      * Initializes and fills BeanParameters class to deploy EJB bean
-     * 
+     *
      * @param beanName
      * @throws IOException
      */
-    private BeanParameters initDeployParameters(String beanName)
-	    throws IOException {
+    private BeanParameters initDeployParameters(String beanName) throws IOException {
 
 	BeanParameters parameters = initDeployParameters();
 
@@ -483,7 +475,7 @@ public class MetaCreator {
 
     /**
      * Starts bean deployment process for bean name
-     * 
+     *
      * @param beanName
      * @throws IOException
      */
@@ -502,7 +494,7 @@ public class MetaCreator {
 
     /**
      * Deployes passed bean names
-     * 
+     *
      * @param beanNames
      */
     private void blockAndDeployBeans(Set<String> beanNames) {
@@ -512,8 +504,7 @@ public class MetaCreator {
 	    try {
 		deployBean(beanName);
 	    } catch (IOException ex) {
-		LogUtils.error(LOG, ex, "Could not deploy bean %s cause",
-			beanName, ex.getMessage());
+		LogUtils.error(LOG, ex, "Could not deploy bean %s cause", beanName, ex.getMessage());
 	    }
 	}
     }
@@ -529,7 +520,7 @@ public class MetaCreator {
 
     /**
      * Deploys single bean by class name
-     * 
+     *
      * @param beanNames
      */
     private void deployBeans(Set<String> beanNames) {
@@ -562,7 +553,7 @@ public class MetaCreator {
 
     /**
      * Loads libraries from specified path
-     * 
+     *
      * @throws IOException
      */
     private void initLibraries() throws IOException {
@@ -575,7 +566,7 @@ public class MetaCreator {
 
     /**
      * Gets / initializes and caches class loader
-     * 
+     *
      * @param archives
      */
     private void initClassLoader(URL[] archives) {
@@ -589,7 +580,7 @@ public class MetaCreator {
 
     /**
      * Reads EJB {@link Stateless} bean names from appropriated archives
-     * 
+     *
      * @param archives
      * @return
      * @throws IOException
@@ -604,8 +595,7 @@ public class MetaCreator {
 	annotationFinder.setScanParameterAnnotations(Boolean.FALSE);
 	annotationFinder.setScanMethodAnnotations(Boolean.FALSE);
 	annotationFinder.scanArchives(fullArchives);
-	beanNames = annotationFinder.getAnnotationIndex().get(
-		Stateless.class.getName());
+	beanNames = annotationFinder.getAnnotationIndex().get(Stateless.class.getName());
 	classOwnersURL = annotationFinder.getClassOwnersURLs();
 
 	return beanNames;
@@ -614,7 +604,7 @@ public class MetaCreator {
     /**
      * Deploys EJB beans from passed array of {@link URL} for appropriated
      * archives
-     * 
+     *
      * @param archives
      * @throws IOException
      */
@@ -636,7 +626,7 @@ public class MetaCreator {
 
     /**
      * Clears and caches resources after deployment
-     * 
+     *
      * @param archives
      * @throws IOException
      */
@@ -653,7 +643,7 @@ public class MetaCreator {
     /**
      * Scan application for find all {@link javax.ejb.Stateless} beans and
      * {@link Remote} or {@link Local} proxy interfaces
-     * 
+     *
      * @param archives
      * @throws IOException
      * @throws ClassNotFoundException
@@ -672,7 +662,7 @@ public class MetaCreator {
     /**
      * Scan application for find all {@link javax.ejb.Stateless} beans and
      * {@link Remote} or {@link Local} proxy interfaces
-     * 
+     *
      * @throws ClassNotFoundException
      * @throws IOException
      */
@@ -690,12 +680,11 @@ public class MetaCreator {
 
     /**
      * Scans sub files for deploy path
-     * 
+     *
      * @param pathList
      * @param deployment
      */
-    private void scanDeployPath(List<String> pathList,
-	    DeploymentDirectory deployment) {
+    private void scanDeployPath(List<String> pathList, DeploymentDirectory deployment) {
 
 	File deployFile = new File(deployment.getPath());
 	if (deployment.isScan()) {
@@ -708,7 +697,7 @@ public class MetaCreator {
 
     /**
      * Deploys paths for EJB beans containing files in one module
-     * 
+     *
      * @param paths
      * @throws IOException
      */
@@ -716,8 +705,7 @@ public class MetaCreator {
 
 	if (CollectionUtils.invalid(paths)) {
 	    if (CollectionUtils.valid(configuration.getDeploymentPath())) {
-		Set<DeploymentDirectory> deployments = configuration
-			.getDeploymentPath();
+		Set<DeploymentDirectory> deployments = configuration.getDeploymentPath();
 		List<String> pathList = new ArrayList<String>();
 		for (DeploymentDirectory deployment : deployments) {
 		    scanDeployPath(pathList, deployment);
@@ -741,7 +729,7 @@ public class MetaCreator {
     /**
      * Scan application for find all {@link javax.ejb.Stateless} beans and
      * {@link Remote} or {@link Local} proxy interfaces
-     * 
+     *
      * @throws ClassNotFoundException
      * @throws IOException
      */
@@ -820,7 +808,7 @@ public class MetaCreator {
 
     /**
      * Closes all connections clears all caches
-     * 
+     *
      * @throws IOException
      */
     public static void close() throws IOException {
@@ -830,7 +818,7 @@ public class MetaCreator {
     /**
      * Builder class to provide properties for lightmare application and
      * initialize {@link MetaCreator} instance
-     * 
+     *
      * @author Levan Tsinadze
      * @since 0.0.45-SNAPSHOT
      */
@@ -869,17 +857,15 @@ public class MetaCreator {
 
 	/**
 	 * Configures persistence for cached properties
-	 * 
+	 *
 	 * @return {@link Map}<code><Object, Object></code>
 	 */
 	private Map<Object, Object> initPersistenceProperties() {
 
-	    Map<Object, Object> persistenceProperties = creator.configuration
-		    .getPersistenceProperties();
+	    Map<Object, Object> persistenceProperties = creator.configuration.getPersistenceProperties();
 	    if (persistenceProperties == null) {
 		persistenceProperties = new HashMap<Object, Object>();
-		creator.configuration
-			.setPersistenceProperties(persistenceProperties);
+		creator.configuration.setPersistenceProperties(persistenceProperties);
 	    }
 
 	    return persistenceProperties;
@@ -887,7 +873,7 @@ public class MetaCreator {
 
 	/**
 	 * Sets additional persistence properties
-	 * 
+	 *
 	 * @param properties
 	 * @return {@link Builder}
 	 */
@@ -903,7 +889,7 @@ public class MetaCreator {
 
 	/**
 	 * Adds instant persistence property
-	 * 
+	 *
 	 * @param key
 	 * @param property
 	 * @return {@link Builder}
@@ -919,7 +905,7 @@ public class MetaCreator {
 	/**
 	 * Adds property to scan for {@link javax.persistence.Entity} annotated
 	 * classes from deployed archives
-	 * 
+	 *
 	 * @param scanForEnt
 	 * @return {@link Builder}
 	 */
@@ -933,7 +919,7 @@ public class MetaCreator {
 	 * annotated entities for which
 	 * {@link org.lightmare.annotations.UnitName#value()} matches passed
 	 * unit name
-	 * 
+	 *
 	 * @param unitName
 	 * @return {@link Builder}
 	 */
@@ -944,7 +930,7 @@ public class MetaCreator {
 
 	/**
 	 * Sets path for persistence.xml file
-	 * 
+	 *
 	 * @param path
 	 * @return {@link Builder}
 	 */
@@ -958,7 +944,7 @@ public class MetaCreator {
 
 	/**
 	 * Adds path for additional libraries to load at start time
-	 * 
+	 *
 	 * @param libPaths
 	 * @return {@link Builder}
 	 */
@@ -970,7 +956,7 @@ public class MetaCreator {
 	/**
 	 * Sets boolean checker to scan persistence.xml files from appropriated
 	 * jar files
-	 * 
+	 *
 	 * @param xmlFromJar
 	 * @return {@link Builder}
 	 */
@@ -982,7 +968,7 @@ public class MetaCreator {
 	/**
 	 * Sets boolean checker to swap jta data source value with non jta data
 	 * source value
-	 * 
+	 *
 	 * @param swapDataSource
 	 * @return {@link Builder}
 	 */
@@ -993,7 +979,7 @@ public class MetaCreator {
 
 	/**
 	 * Adds path for data source file
-	 * 
+	 *
 	 * @param dataSourcePath
 	 * @return {@link Builder}
 	 */
@@ -1005,7 +991,7 @@ public class MetaCreator {
 	/**
 	 * This method is deprecated should use
 	 * {@link MetaCreator.Builder#addDataSourcePath(String)} instead
-	 * 
+	 *
 	 * @param dataSourcePath
 	 * @return {@link MetaCreator.Builder}
 	 */
@@ -1017,7 +1003,7 @@ public class MetaCreator {
 
 	/**
 	 * Sets single data source configuration
-	 * 
+	 *
 	 * @param datasource
 	 * @return {@link MetaCreator.Builder}
 	 */
@@ -1028,7 +1014,7 @@ public class MetaCreator {
 
 	/**
 	 * Adds passed data source to configuration
-	 * 
+	 *
 	 * @param datasource
 	 * @return {@link MetaCreator.Builder}
 	 */
@@ -1039,7 +1025,7 @@ public class MetaCreator {
 
 	/**
 	 * Sets collection of data sources configuration
-	 * 
+	 *
 	 * @param datasources
 	 * @return {@link MetaCreator.Builder}
 	 */
@@ -1051,7 +1037,7 @@ public class MetaCreator {
 	/**
 	 * Sets boolean checker to scan {@link javax.persistence.Entity}
 	 * annotated classes from appropriated deployed archive files
-	 * 
+	 *
 	 * @param scanArchives
 	 * @return {@link Builder}
 	 */
@@ -1062,7 +1048,7 @@ public class MetaCreator {
 
 	/**
 	 * Sets boolean checker to block deployment processes
-	 * 
+	 *
 	 * @param await
 	 * @return {@link Builder}
 	 */
@@ -1073,7 +1059,7 @@ public class MetaCreator {
 
 	/**
 	 * Sets property is server or not in embedded mode
-	 * 
+	 *
 	 * @param remote
 	 * @return {@link Builder}
 	 */
@@ -1085,7 +1071,7 @@ public class MetaCreator {
 	/**
 	 * Sets property is application server or just client for other remote
 	 * server
-	 * 
+	 *
 	 * @param server
 	 * @return {@link Builder}
 	 */
@@ -1099,7 +1085,7 @@ public class MetaCreator {
 
 	/**
 	 * Sets boolean check is application in just client mode or not
-	 * 
+	 *
 	 * @param client
 	 * @return {@link Builder}
 	 */
@@ -1113,7 +1099,7 @@ public class MetaCreator {
 
 	/**
 	 * To add any additional property
-	 * 
+	 *
 	 * @param key
 	 * @param property
 	 * @return {@link Builder}
@@ -1125,7 +1111,7 @@ public class MetaCreator {
 
 	/**
 	 * To add remote control check
-	 * 
+	 *
 	 * @param remoteControl
 	 * @return {@link Builder}
 	 */
@@ -1136,7 +1122,7 @@ public class MetaCreator {
 
 	/**
 	 * File path for administrator user name and password
-	 * 
+	 *
 	 * @param property
 	 * @return {@link Builder}
 	 */
@@ -1148,7 +1134,7 @@ public class MetaCreator {
 	/**
 	 * Sets specific IP address in case when application is in remote server
 	 * mode
-	 * 
+	 *
 	 * @param property
 	 * @return {@link Builder}
 	 */
@@ -1159,7 +1145,7 @@ public class MetaCreator {
 
 	/**
 	 * Sets specific port in case when application is in remote server mode
-	 * 
+	 *
 	 * @param property
 	 * @return {@link Builder}
 	 */
@@ -1171,7 +1157,7 @@ public class MetaCreator {
 	/**
 	 * Sets amount for network master threads in case when application is in
 	 * remote server mode
-	 * 
+	 *
 	 * @param property
 	 * @return {@link Builder}
 	 */
@@ -1183,20 +1169,19 @@ public class MetaCreator {
 	/**
 	 * Sets amount of worker threads in case when application is in remote
 	 * server mode
-	 * 
+	 *
 	 * @param property
 	 * @return {@link Builder}
 	 */
 	public Builder setWorkerThreads(String property) {
-	    creator.configuration
-		    .putValue(ConfigKeys.WORKER_POOL.key, property);
+	    creator.configuration.putValue(ConfigKeys.WORKER_POOL.key, property);
 	    return this;
 	}
 
 	/**
 	 * Adds deploy file path to application with boolean checker if file is
 	 * directory to scan this directory for deployment files list
-	 * 
+	 *
 	 * @param deploymentPath
 	 * @param scan
 	 * @return {@link Builder}
@@ -1211,7 +1196,7 @@ public class MetaCreator {
 
 	/**
 	 * Adds deploy file path to application
-	 * 
+	 *
 	 * @param deploymentPath
 	 * @return {@link Builder}
 	 */
@@ -1223,19 +1208,18 @@ public class MetaCreator {
 	/**
 	 * Adds timeout for connection in case when application is in remote
 	 * server or client mode
-	 * 
+	 *
 	 * @param property
 	 * @return {@link Builder}
 	 */
 	public Builder setTimeout(String property) {
-	    creator.configuration.putValue(ConfigKeys.CONNECTION_TIMEOUT.key,
-		    property);
+	    creator.configuration.putValue(ConfigKeys.CONNECTION_TIMEOUT.key, property);
 	    return this;
 	}
 
 	/**
 	 * Adds boolean check if application is using pooled data source
-	 * 
+	 *
 	 * @param dsPooledType
 	 * @return {@link Builder}
 	 */
@@ -1247,7 +1231,7 @@ public class MetaCreator {
 	/**
 	 * Sets which data source pool provider should use application by
 	 * {@link PoolProviderType} parameter
-	 * 
+	 *
 	 * @param poolProviderType
 	 * @return {@link Builder}
 	 */
@@ -1258,7 +1242,7 @@ public class MetaCreator {
 
 	/**
 	 * Sets path for data source pool additional properties
-	 * 
+	 *
 	 * @param path
 	 * @return {@link Builder}
 	 */
@@ -1269,19 +1253,18 @@ public class MetaCreator {
 
 	/**
 	 * Sets data source pool additional properties
-	 * 
+	 *
 	 * @param properties
 	 * @return {@link Builder}
 	 */
-	public Builder setPoolProperties(
-		Map<? extends Object, ? extends Object> properties) {
+	public Builder setPoolProperties(Map<? extends Object, ? extends Object> properties) {
 	    Configuration.setPoolProperties(properties);
 	    return this;
 	}
 
 	/**
 	 * Adds instance property for pooled data source
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @return {@link Builder}
@@ -1294,7 +1277,7 @@ public class MetaCreator {
 	/**
 	 * Sets boolean check is application in hot deployment (with watch
 	 * service on deployment directories) or not
-	 * 
+	 *
 	 * @param hotDeployment
 	 * @return {@link Builder}
 	 */
@@ -1306,7 +1289,7 @@ public class MetaCreator {
 	/**
 	 * Adds additional parameters from passed {@link Map} to existing
 	 * configuration
-	 * 
+	 *
 	 * @param configuration
 	 * @return
 	 */
