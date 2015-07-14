@@ -136,6 +136,26 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
+     * Gets EJB bean name for injection field
+     *
+     * @param injectionData
+     * @return {@link String} bean name
+     */
+    private static String getJnjectBeanName(InjectionData injectionData) {
+
+	String beanName;
+
+	String mappedName = injectionData.getMappedName();
+	if (mappedName == null || mappedName.isEmpty()) {
+	    beanName = injectionData.getName();
+	} else {
+	    beanName = injectionData.getMappedName();
+	}
+
+	return beanName;
+    }
+
+    /**
      * Initializes injection for EJB bean
      *
      * @param injectionData
@@ -147,13 +167,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	MetaData injectMetaData = injectionData.getMetaData();
 
 	if (injectMetaData == null) {
-	    String beanName;
-	    String mappedName = injectionData.getMappedName();
-	    if (mappedName == null || mappedName.isEmpty()) {
-		beanName = injectionData.getName();
-	    } else {
-		beanName = injectionData.getMappedName();
-	    }
+	    String beanName = getJnjectBeanName(injectionData);
 	    // Fills injection meta data parameters
 	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
 	    injectMetaData.setInterfaceClasses(injectionData.getInterfaceClasses());
