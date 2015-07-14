@@ -291,6 +291,24 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
+     * Initializes and creates collection of {@link EntityManager}s for EJB bean
+     *
+     * @return {@link Collection} of {@link EntityManager}s
+     * @throws IOException
+     */
+    private Collection<EntityManager> initEntityManagers() throws IOException {
+
+	Collection<EntityManager> ems = new ArrayList<EntityManager>();
+
+	for (ConnectionData connection : connectionDatas) {
+	    EntityManager em = createEntityManager(connection);
+	    ems.add(em);
+	}
+
+	return ems;
+    }
+
+    /**
      * Creates {@link EntityManager}s to set as bean's appropriate {@link Field}
      * values
      *
@@ -302,16 +320,27 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	Collection<EntityManager> ems;
 
 	if (CollectionUtils.valid(connectionDatas)) {
-	    ems = new ArrayList<EntityManager>();
-	    for (ConnectionData connection : connectionDatas) {
-		EntityManager em = createEntityManager(connection);
-		ems.add(em);
-	    }
+	    ems = initEntityManagers();
 	} else {
 	    ems = null;
 	}
 
 	return ems;
+    }
+
+    /**
+     * Commits and / or closes appropriated transaction
+     *
+     * @param method
+     * @throws IOException
+     */
+    private void closeTransaction(Method method) throws IOException {
+
+	if (transactionField == null) {
+	    BeanTransactions.commitTransaction(this, method);
+	} else {
+	    BeanTransactions.closeEntityManagers();
+	}
     }
 
     /**
@@ -326,11 +355,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
 	try {
 	    if (ObjectUtils.notNull(method)) {
-		if (transactionField == null) {
-		    BeanTransactions.commitTransaction(this, method);
-		} else {
-		    BeanTransactions.closeEntityManagers();
-		}
+		closeTransaction(method);
 	    }
 	} finally {
 	    BeanTransactions.remove(this, method);
