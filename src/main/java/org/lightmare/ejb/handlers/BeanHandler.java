@@ -48,7 +48,7 @@ import org.lightmare.utils.reflect.ClassUtils;
 /**
  * Implementation of {@link InvocationHandler} interface to intercept bean
  * method calls to provide database transactions
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.16-SNAPSHOT
  */
@@ -94,7 +94,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
     /**
      * Sets bean instance to handler, should be called only after cloning
-     * 
+     *
      * @param bean
      */
     protected void setBean(final Object bean) {
@@ -103,7 +103,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
     /**
      * Sets passed {@link Object} as beans {@link Field} value
-     * 
+     *
      * @param field
      * @param value
      * @throws IOException
@@ -114,38 +114,35 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
     /**
      * Invokes passed bean {@link Method} for handlers EJB bean instance
-     * 
+     *
      * @param method
      * @param arguments
      * @return {@link Object}
      * @throws IOException
      */
-    private Object invokeMethod(Method method, Object... arguments)
-	    throws IOException {
+    private Object invokeMethod(Method method, Object... arguments) throws IOException {
 	return ClassUtils.invoke(method, bean, arguments);
     }
 
     /**
      * Sets {@link EntityManager} as handlers EJB beans's annotated
      * {@link Field} value
-     * 
+     *
      * @param em
      * @throws IOException
      */
-    private void setConnection(Field connectionField, EntityManager em)
-	    throws IOException {
+    private void setConnection(Field connectionField, EntityManager em) throws IOException {
 	setFieldValue(connectionField, em);
     }
 
     /**
      * Initializes injection for EJB bean
-     * 
+     *
      * @param injectionData
      * @return {@link MetaData} for injected EJB bean
      * @throws IOException
      */
-    private MetaData initInjection(InjectionData injectionData)
-	    throws IOException {
+    private MetaData initInjection(InjectionData injectionData) throws IOException {
 
 	MetaData injectMetaData = injectionData.getMetaData();
 
@@ -159,8 +156,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    }
 	    // Fills injection meta data parameters
 	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
-	    injectMetaData.setInterfaceClasses(injectionData
-		    .getInterfaceClasses());
+	    injectMetaData.setInterfaceClasses(injectionData.getInterfaceClasses());
 	    injectionData.setMetaData(injectMetaData);
 	}
 
@@ -170,11 +166,10 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     /**
      * Sets each injected EJB bean as value to annotated field respectively for
      * passed {@link InjectionData} object
-     * 
+     *
      * @throws IOException
      */
-    private void configureInjection(InjectionData injectionData)
-	    throws IOException {
+    private void configureInjection(InjectionData injectionData) throws IOException {
 
 	MetaData injectMetaData = injectionData.getMetaData();
 	if (injectMetaData == null) {
@@ -190,7 +185,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     /**
      * Sets injected EJB bean as values to {@link javax.ejb.EJB} annotated
      * fields respectively
-     * 
+     *
      * @throws IOException
      */
     private void configureInjects() throws IOException {
@@ -206,7 +201,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * Method to configure (injections {@link javax.ejb.EJB} or
      * {@link PersistenceUnit} annotated fields and etc.) {@link BeanHandler}
      * after initialization
-     * 
+     *
      * @throws IOException
      */
     public void configure() throws IOException {
@@ -218,7 +213,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * Method to set bean field and to configure (injections
      * {@link javax.ejb.EJB} or {@link PersistenceUnit} annotated fields and
      * etc.) {@link BeanHandler} after initialization
-     * 
+     *
      * @param bean
      * @throws IOException
      */
@@ -229,7 +224,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
     /**
      * Creates and caches {@link UserTransaction} per caller thread
-     * 
+     *
      * @param em
      * @return {@link UserTransaction}
      */
@@ -240,12 +235,11 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     /**
      * Sets transaction as handlers EJB bean's {@link javax.annotation.Resource}
      * annotated {@link Field}'s value
-     * 
+     *
      * @param ems
      * @throws IOException
      */
-    private void setTransactionField(Collection<EntityManager> ems)
-	    throws IOException {
+    private void setTransactionField(Collection<EntityManager> ems) throws IOException {
 
 	if (ObjectUtils.notNull(transactionField)) {
 	    UserTransaction transaction = getTransaction(ems);
@@ -254,14 +248,32 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
-     * Creates {@link EntityManager} if passed {@link EntityManagerFactory} is
-     * not null
-     * 
+     * Initializes {@link EntityManager} end sets appropriated field
+     *
+     * @param emf
+     * @param unitField
      * @return {@link EntityManager}
      * @throws IOException
      */
-    private EntityManager createEntityManager(ConnectionData connection)
-	    throws IOException {
+    private EntityManager createEntityManager(EntityManagerFactory emf, Field unitField) throws IOException {
+
+	EntityManager em = emf.createEntityManager();
+
+	if (ObjectUtils.notNull(unitField)) {
+	    setFieldValue(unitField, emf);
+	}
+
+	return em;
+    }
+
+    /**
+     * Creates {@link EntityManager} if passed {@link EntityManagerFactory} is
+     * not null
+     *
+     * @return {@link EntityManager}
+     * @throws IOException
+     */
+    private EntityManager createEntityManager(ConnectionData connection) throws IOException {
 
 	EntityManager em;
 
@@ -269,10 +281,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	Field connectionField = connection.getConnectionField();
 	Field unitField = connection.getUnitField();
 	if (ObjectUtils.notNull(emf)) {
-	    em = emf.createEntityManager();
-	    if (ObjectUtils.notNull(unitField)) {
-		setFieldValue(unitField, emf);
-	    }
+	    em = createEntityManager(emf, unitField);
 	    setConnection(connectionField, em);
 	} else {
 	    em = null;
@@ -284,7 +293,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     /**
      * Creates {@link EntityManager}s to set as bean's appropriate {@link Field}
      * values
-     * 
+     *
      * @return {@link Collection}<code><EntityManager></code>
      * @throws IOException
      */
@@ -308,7 +317,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     /**
      * Closes {@link EntityManager} if there is not
      * {@link javax.annotation.Resource} annotation in current bean
-     * 
+     *
      * @param transaction
      * @param em
      * @throws IOException
@@ -332,7 +341,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * Calls {@link BeanTransactions#rollbackTransaction(BeanHandler, Method))}
      * is case of {@link Throwable} is thrown at passed {@link Method} execution
      * time
-     * 
+     *
      * @param method
      * @throws IOException
      */
@@ -350,15 +359,15 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 
     /**
      * Invokes method surrounded with {@link UserTransaction} begin and commit
-     * 
+     *
      * @param em
      * @param method
      * @param arguments
      * @return Object
      * @throws IOException
      */
-    private Object invokeBeanMethod(final Collection<EntityManager> ems,
-	    final Method method, Object[] arguments) throws IOException {
+    private Object invokeBeanMethod(final Collection<EntityManager> ems, final Method method, Object[] arguments)
+	    throws IOException {
 
 	if (transactionField == null) {
 	    BeanTransactions.addTransaction(this, method, ems);
@@ -366,8 +375,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    setTransactionField(ems);
 	}
 	// Calls interceptors for this method or bean instance
-	Object[] intercepteds = interceptorHandel.callInterceptors(method,
-		arguments);
+	Object[] intercepteds = interceptorHandel.callInterceptors(method, arguments);
 	// Calls for bean method with "intercepted" parameters
 	Object value = invokeMethod(method, intercepteds);
 
@@ -375,8 +383,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] arguments)
-	    throws Throwable {
+    public Object invoke(Object proxy, Method method, Object[] arguments) throws Throwable {
 
 	Object value;
 
@@ -386,8 +393,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    String methodName = method.getName();
 	    Class<?>[] parameterTypes = method.getParameterTypes();
 	    // Gets real method of bean class
-	    realMethod = ClassUtils.getDeclaredMethod(beanClass, methodName,
-		    parameterTypes);
+	    realMethod = ClassUtils.getDeclaredMethod(beanClass, methodName, parameterTypes);
 	    value = invokeBeanMethod(ems, realMethod, arguments);
 	} catch (Throwable th) {
 	    rollback(realMethod);

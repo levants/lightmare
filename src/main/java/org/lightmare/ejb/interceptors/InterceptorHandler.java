@@ -17,7 +17,7 @@ import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Handler class to invoke EJB bean method intercepts
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.1.3
  */
@@ -29,7 +29,7 @@ public class InterceptorHandler {
     /**
      * Constructor with {@link MetaData} to set {@link InterceptorData}
      * parameters
-     * 
+     *
      * @param metaData
      */
     public InterceptorHandler(MetaData metaData) {
@@ -39,14 +39,14 @@ public class InterceptorHandler {
     /**
      * Fills {@link Queue} of methods and targets for specified bean
      * {@link Method} and {@link InterceptorData} object
-     * 
+     *
      * @param interceptorData
      * @param methods
      * @param targets
      * @throws IOException
      */
-    private void fillInterceptor(InterceptorData interceptorData,
-	    Queue<Method> methods, Queue<Object> targets) throws IOException {
+    private void fillInterceptor(InterceptorData interceptorData, Queue<Method> methods, Queue<Object> targets)
+	    throws IOException {
 
 	Class<?> interceptorClass = interceptorData.getInterceptorClass();
 	Object interceptor = ClassUtils.instantiate(interceptorClass);
@@ -58,14 +58,13 @@ public class InterceptorHandler {
     /**
      * Fills {@link Queue} of methods and targets for specified bean
      * {@link Method} and {@link InterceptorData}'s collection
-     * 
+     *
      * @param method
      * @param methods
      * @param targets
      * @throws IOException
      */
-    private void fillInterceptors(Method method, Queue<Method> methods,
-	    Queue<Object> targets) throws IOException {
+    private void fillInterceptors(Method method, Queue<Method> methods, Queue<Object> targets) throws IOException {
 
 	Iterator<InterceptorData> interceptors = interceptorDatas.iterator();
 	InterceptorData interceptor;
@@ -82,7 +81,7 @@ public class InterceptorHandler {
     /**
      * Checks if current {@link javax.interceptor.Interceptors} data is valid
      * for specified {@link Method} call
-     * 
+     *
      * @param interceptor
      * @param method
      * @return <code>boolean</code>
@@ -103,14 +102,13 @@ public class InterceptorHandler {
 
     /**
      * Initializes and invokes {@link InvocationContext} implementation
-     * 
+     *
      * @param method
      * @param parameters
      * @return Array of {@link Object} parameters for intercepted method
      * @throws IOException
      */
-    private Object[] callInterceptorContext(Method method, Object[] parameters)
-	    throws IOException {
+    private Object[] callInterceptorContext(Method method, Object[] parameters) throws IOException {
 
 	Object[] intercepteds;
 
@@ -118,8 +116,7 @@ public class InterceptorHandler {
 	Queue<Object> targets = new LinkedList<Object>();
 	fillInterceptors(method, methods, targets);
 	// Initializes invocation context
-	InvocationContext context = new InvocationContextImpl(methods, targets,
-		parameters);
+	InvocationContext context = new InvocationContextImpl(methods, targets, parameters);
 	try {
 	    context.proceed();
 	    intercepteds = context.getParameters();
@@ -133,13 +130,12 @@ public class InterceptorHandler {
     /**
      * Invokes first method from {@link javax.interceptor.Interceptors}
      * annotated data
-     * 
+     *
      * @param method
      * @param parameters
      * @throws IOException
      */
-    public Object[] callInterceptors(Method method, Object[] parameters)
-	    throws IOException {
+    public Object[] callInterceptors(Method method, Object[] parameters) throws IOException {
 
 	Object[] intercepteds;
 

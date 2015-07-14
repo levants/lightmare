@@ -54,7 +54,7 @@ import org.lightmare.utils.remote.RpcUtils;
 /**
  * Connector class for get EJB beans or call remote procedure in this bean (RPC)
  * by interface class
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.15-SNAPSHOT
  */
@@ -63,7 +63,7 @@ public class EjbConnector {
     /**
      * Gets {@link MetaData} from {@link MetaContainer} if it is not locked or
      * waits while {@link MetaData#isInProgress()} is true
-     * 
+     *
      * @param beanName
      * @return {@link MetaData}
      * @throws IOException
@@ -75,19 +75,17 @@ public class EjbConnector {
     /**
      * Gets connection for {@link javax.ejb.Stateless} EJB bean {@link Class}
      * from cache
-     * 
+     *
      * @param unitName
      * @return {@link EntityManagerFactory}
      * @throws IOException
      */
-    private void setEntityManagerFactory(ConnectionData connection)
-	    throws IOException {
+    private void setEntityManagerFactory(ConnectionData connection) throws IOException {
 
 	if (connection.getEmf() == null) {
 	    String unitName = connection.getUnitName();
 	    if (StringUtils.valid(unitName)) {
-		ConnectionSemaphore semaphore = ConnectionContainer
-			.getConnection(unitName);
+		ConnectionSemaphore semaphore = ConnectionContainer.getConnection(unitName);
 		connection.setConnection(semaphore);
 	    }
 	}
@@ -95,13 +93,12 @@ public class EjbConnector {
 
     /**
      * Gets connections for {@link Stateless} EJB bean {@link Class} from cache
-     * 
+     *
      * @param unitName
      * @return {@link EntityManagerFactory}
      * @throws IOException
      */
-    private void setEntityManagerFactories(MetaData metaData)
-	    throws IOException {
+    private void setEntityManagerFactories(MetaData metaData) throws IOException {
 
 	Collection<ConnectionData> connections = metaData.getConnections();
 	if (CollectionUtils.valid(connections)) {
@@ -113,7 +110,7 @@ public class EjbConnector {
 
     /**
      * Instantiates bean by class
-     * 
+     *
      * @param metaData
      * @return <code>T</code> EJB Bean instance
      * @throws IOException
@@ -122,8 +119,7 @@ public class EjbConnector {
 
 	T beanInstance;
 
-	Class<? extends T> beanClass = ObjectUtils
-		.cast(metaData.getBeanClass());
+	Class<? extends T> beanClass = ObjectUtils.cast(metaData.getBeanClass());
 	beanInstance = ClassUtils.instantiate(beanClass);
 
 	return beanInstance;
@@ -131,13 +127,12 @@ public class EjbConnector {
 
     /**
      * Creates {@link InvocationHandler} implementation for server mode
-     * 
+     *
      * @param metaData
      * @return {@link InvocationHandler}
      * @throws IOException
      */
-    private <T> BeanHandler getBeanHandler(MetaData metaData)
-	    throws IOException {
+    private <T> BeanHandler getBeanHandler(MetaData metaData) throws IOException {
 
 	BeanHandler handler;
 
@@ -153,24 +148,38 @@ public class EjbConnector {
     }
 
     /**
+     * Validates and get application {@link ClassLoader} instance
+     *
+     * @param loader
+     * @return {@link ClassLoader} instance
+     */
+    private static ClassLoader checkAndGetClassLoader(ClassLoader loader) {
+
+	ClassLoader applicationSoped;
+
+	if (loader == null) {
+	    applicationSoped = LibraryLoader.getContextClassLoader();
+	} else {
+	    applicationSoped = loader;
+	    LibraryLoader.loadCurrentLibraries(applicationSoped);
+	}
+
+	return applicationSoped;
+    }
+
+    /**
      * Instantiates bean with {@link Proxy} utility
-     * 
+     *
      * @param interfaces
      * @param handler
      * @return <code>T</code> implementation of bean interface
      */
-    private <T> T instatiateBean(Class<T>[] interfaces,
-	    InvocationHandler handler, ClassLoader loader) {
+    private <T> T instatiateBean(Class<T>[] interfaces, InvocationHandler handler, ClassLoader loader) {
 
 	T beanInstance;
 
-	if (loader == null) {
-	    loader = LibraryLoader.getContextClassLoader();
-	} else {
-	    LibraryLoader.loadCurrentLibraries(loader);
-	}
-
-	Object instance = Proxy.newProxyInstance(loader, interfaces, handler);
+	ClassLoader applicationSoped = checkAndGetClassLoader(loader);
+	Object instance = Proxy.newProxyInstance(applicationSoped, interfaces, handler);
 	beanInstance = ObjectUtils.cast(instance);
 
 	return beanInstance;
@@ -178,27 +187,60 @@ public class EjbConnector {
 
     /**
      * Instantiates bean with {@link Proxy} utility
-     * 
+     *
      * @param interfaceClass
      * @param handler
      * @return <code>T</code> implementation of bean interface
      */
-    private <T> T instatiateBean(Class<T> interfaceClass,
-	    InvocationHandler handler, ClassLoader loader) {
+    private <T> T instatiateBean(Class<T> interfaceClass, InvocationHandler handler, ClassLoader loader) {
 
 	T beanInstance;
 
-	Class<T>[] interfaceArray = ObjectUtils
-		.cast(new Class<?>[] { interfaceClass });
+	Class<T>[] interfaceArray = ObjectUtils.cast(new Class<?>[] { interfaceClass });
 	beanInstance = instatiateBean(interfaceArray, handler, loader);
 
 	return beanInstance;
     }
 
     /**
+     * Adds checks interfaces to list
+     *
+     * @param interfaces
+     * @param interfacesList
+     */
+    private static void addInterfaces(Class<?>[] interfaces, List<Class<?>> interfacesList) {
+
+	if (CollectionUtils.valid(interfaces)) {
+	    interfacesList.addAll(Arrays.asList(interfaces));
+	}
+    }
+
+    /**
+     * Sets local interfaces for EJB bean
+     *
+     * @param metaData
+     * @param interfacesList
+     */
+    private static void setLocalInterfaces(MetaData metaData, List<Class<?>> interfacesList) {
+	Class<?>[] interfaces = metaData.getLocalInterfaces();
+	addInterfaces(interfaces, interfacesList);
+    }
+
+    /**
+     * Sets remote interfaces for EJB bean
+     *
+     * @param metaData
+     * @param interfacesList
+     */
+    private static void setRemoteInterfaces(MetaData metaData, List<Class<?>> interfacesList) {
+	Class<?>[] interfaces = metaData.getRemoteInterfaces();
+	addInterfaces(interfaces, interfacesList);
+    }
+
+    /**
      * Initializes and caches all interfaces for bean class from passed
      * {@link MetaData} instance if it is not already cached
-     * 
+     *
      * @param metaData
      * @return {@link Class}[]
      */
@@ -208,17 +250,8 @@ public class EjbConnector {
 
 	if (CollectionUtils.invalid(interfaceClasses)) {
 	    List<Class<?>> interfacesList = new ArrayList<Class<?>>();
-	    Class<?>[] interfaces = metaData.getLocalInterfaces();
-
-	    if (CollectionUtils.valid(interfaces)) {
-		interfacesList.addAll(Arrays.asList(interfaces));
-	    }
-
-	    interfaces = metaData.getRemoteInterfaces();
-	    if (CollectionUtils.valid(interfaces)) {
-		interfacesList.addAll(Arrays.asList(interfaces));
-	    }
-
+	    setLocalInterfaces(metaData, interfacesList);
+	    setRemoteInterfaces(metaData, interfacesList);
 	    int size = interfacesList.size();
 	    interfaceClasses = interfacesList.toArray(new Class[size]);
 	    metaData.setInterfaceClasses(interfaceClasses);
@@ -230,7 +263,7 @@ public class EjbConnector {
     /**
      * Creates appropriate bean {@link Proxy} instance by passed
      * {@link MetaData} parameter
-     * 
+     *
      * @param metaData
      * @param rpcArgs
      * @return <code>T</code> implementation of bean interface
@@ -252,13 +285,12 @@ public class EjbConnector {
     /**
      * Creates custom implementation of bean {@link Class} by class name and its
      * {@link Proxy} interface {@link Class} instance
-     * 
+     *
      * @param interfaceClass
      * @return <code>T</code> implementation of bean interface
      * @throws IOException
      */
-    public <T> T connectToBean(String beanName, Class<T> interfaceClass,
-	    Object... rpcArgs) throws IOException {
+    public <T> T connectToBean(String beanName, Class<T> interfaceClass, Object... rpcArgs) throws IOException {
 
 	T beanInstance;
 
@@ -287,22 +319,20 @@ public class EjbConnector {
     /**
      * Creates custom implementation of bean {@link Class} by class name and its
      * {@link Proxy} interface name
-     * 
+     *
      * @param beanName
      * @param interfaceName
      * @param rpcArgs
      * @return <code>T</code> implementation of bean interface
      * @throws IOException
      */
-    public <T> T connectToBean(String beanName, String interfaceName,
-	    Object... rpcArgs) throws IOException {
+    public <T> T connectToBean(String beanName, String interfaceName, Object... rpcArgs) throws IOException {
 
 	T beanInstance;
 
 	MetaData metaData = getMeta(beanName);
 	ClassLoader loader = metaData.getLoader();
-	Class<?> classForName = ClassUtils.classForName(interfaceName,
-		Boolean.FALSE, loader);
+	Class<?> classForName = ClassUtils.classForName(interfaceName, Boolean.FALSE, loader);
 	Class<T> interfaceClass = ObjectUtils.cast(classForName);
 	beanInstance = connectToBean(beanName, interfaceClass, rpcArgs);
 
@@ -312,13 +342,12 @@ public class EjbConnector {
     /**
      * Creates {@link RestHandler} instance for invoking bean methods by REST
      * services
-     * 
+     *
      * @param metaData
      * @return {@link RestHandler}
      * @throws IOException
      */
-    public <T> RestHandler<T> createRestHandler(MetaData metaData)
-	    throws IOException {
+    public <T> RestHandler<T> createRestHandler(MetaData metaData) throws IOException {
 
 	RestHandler<T> restHandler;
 
