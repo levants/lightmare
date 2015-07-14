@@ -43,7 +43,7 @@ import org.lightmare.utils.collections.CollectionUtils;
 /**
  * Utility class to use reflection {@link Method}, {@link Constructor} or any
  * {@link AccessibleObject} calls and get / set / modify {@link Field} value
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.26-SNAPSHOT
  */
@@ -58,7 +58,7 @@ public class ClassUtils {
     /**
      * Gets target {@link Throwable} from passed
      * {@link InvocationTargetException} instance
-     * 
+     *
      * @param ex
      * @return {@link IOException}
      */
@@ -70,8 +70,7 @@ public class ClassUtils {
 	if (targetException == null) {
 	    exception = new IOException(ex.getMessage(), ex);
 	} else {
-	    exception = new IOException(targetException.getMessage(),
-		    targetException);
+	    exception = new IOException(targetException.getMessage(), targetException);
 	}
 
 	return exception;
@@ -79,7 +78,7 @@ public class ClassUtils {
 
     /**
      * Checks if passed {@link AccessibleObject} instance is not accessible
-     * 
+     *
      * @param accessibleObject
      * @return <code>boolean</code>
      */
@@ -89,12 +88,11 @@ public class ClassUtils {
 
     /**
      * Sets object accessible flag as true if it is not
-     * 
+     *
      * @param accessibleObject
      * @param accessible
      */
-    private static void setAccessible(AccessibleObject accessibleObject,
-	    boolean accessible) {
+    private static void setAccessible(AccessibleObject accessibleObject, boolean accessible) {
 
 	if (Boolean.FALSE.equals(accessible)) {
 	    try {
@@ -112,12 +110,11 @@ public class ClassUtils {
     /**
      * Sets passed {@link AccessibleObject}'s accessible flag as passed
      * accessible boolean value if the last one is false
-     * 
+     *
      * @param accessibleObject
      * @param accessible
      */
-    private static void resetAccessible(AccessibleObject accessibleObject,
-	    boolean accessible) {
+    private static void resetAccessible(AccessibleObject accessibleObject, boolean accessible) {
 
 	if (Boolean.FALSE.equals(accessible)) {
 	    try {
@@ -135,14 +132,13 @@ public class ClassUtils {
     /**
      * Makes accessible passed {@link Constructor}'s and invokes
      * {@link Constructor#newInstance(Object...)} method
-     * 
+     *
      * @param constructor
      * @param parameters
      * @return <code>T</code>
      * @throws IOException
      */
-    public static <T> T newInstance(Constructor<T> constructor,
-	    Object... parameters) throws IOException {
+    public static <T> T newInstance(Constructor<T> constructor, Object... parameters) throws IOException {
 
 	T instance;
 
@@ -167,14 +163,13 @@ public class ClassUtils {
 
     /**
      * Gets declared constructor for given {@link Class} and given parameters
-     * 
+     *
      * @param type
      * @param parameterTypes
      * @return {@link Constructor}
      * @throws IOException
      */
-    public static <T> Constructor<T> getConstructor(Class<T> type,
-	    Class<?>... parameterTypes) throws IOException {
+    public static <T> Constructor<T> getConstructor(Class<T> type, Class<?>... parameterTypes) throws IOException {
 
 	Constructor<T> constructor;
 
@@ -193,15 +188,15 @@ public class ClassUtils {
      * Instantiates class by {@link Constructor} (MetaUtils
      * {@link #newInstance(Constructor, Object...)}) after
      * {@link ClassUtils#getConstructor(Class, Class...)} method call
-     * 
+     *
      * @param type
      * @param parameterTypes
      * @param parameters
      * @return <code>T</code>
      * @throws IOException
      */
-    public static <T> T callConstructor(Class<T> type,
-	    Class<?>[] parameterTypes, Object... parameters) throws IOException {
+    public static <T> T callConstructor(Class<T> type, Class<?>[] parameterTypes, Object... parameters)
+	    throws IOException {
 
 	T instance;
 
@@ -213,7 +208,7 @@ public class ClassUtils {
 
     /**
      * Loads class by name
-     * 
+     *
      * @param className
      * @return {@link Class}
      * @throws IOException
@@ -225,29 +220,27 @@ public class ClassUtils {
     /**
      * Loads class by name with specific {@link ClassLoader} if it is not
      * <code>null</code>
-     * 
+     *
      * @param className
      * @param loader
      * @return {@link Class}
      * @throws IOException
      */
-    public static Class<?> classForName(String className, ClassLoader loader)
-	    throws IOException {
+    public static Class<?> classForName(String className, ClassLoader loader) throws IOException {
 	return classForName(className, Boolean.TRUE, loader);
     }
 
     /**
      * Loads and if initialize parameter is true initializes class by name with
      * specific {@link ClassLoader} if it is not <code>null</code>
-     * 
+     *
      * @param className
      * @param initialize
      * @param loader
      * @return {@link Class}
      * @throws IOException
      */
-    public static Class<?> classForName(String className, boolean initialize,
-	    ClassLoader loader) throws IOException {
+    public static Class<?> classForName(String className, boolean initialize, ClassLoader loader) throws IOException {
 
 	Class<?> clazz;
 
@@ -267,14 +260,13 @@ public class ClassUtils {
     /**
      * Loads class by name with current {@link Thread}'s {@link ClassLoader} and
      * initializes it
-     * 
+     *
      * @param className
      * @param loader
      * @return {@link Class}
      * @throws IOException
      */
-    public static Class<?> initClassForName(String className)
-	    throws IOException {
+    public static Class<?> initClassForName(String className) throws IOException {
 
 	Class<?> clazz;
 
@@ -286,7 +278,7 @@ public class ClassUtils {
 
     /**
      * Creates {@link Class} instance by {@link Class#newInstance()} method call
-     * 
+     *
      * @param clazz
      * @return
      */
@@ -307,15 +299,15 @@ public class ClassUtils {
 
     /**
      * Gets declared method from class
-     * 
+     *
      * @param clazz
      * @param methodName
      * @param parameterTypes
      * @return {@link Method}
      * @throws IOException
      */
-    public static Method getDeclaredMethod(Class<?> clazz, String methodName,
-	    Class<?>... parameterTypes) throws IOException {
+    public static Method getDeclaredMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes)
+	    throws IOException {
 
 	Method method;
 
@@ -332,15 +324,14 @@ public class ClassUtils {
 
     /**
      * Gets all declared methods from class
-     * 
+     *
      * @param clazz
      * @param methodName
      * @param parameterTypes
      * @return {@link Method}
      * @throws IOException
      */
-    public static Method[] getDeclaredMethods(Class<?> clazz)
-	    throws IOException {
+    public static Method[] getDeclaredMethods(Class<?> clazz) throws IOException {
 
 	Method[] methods;
 
@@ -355,7 +346,7 @@ public class ClassUtils {
 
     /**
      * Gets one modifier <code>int</code> value for passed collection
-     * 
+     *
      * @param modifiers
      * @return <code>int</code>
      */
@@ -378,15 +369,14 @@ public class ClassUtils {
     /**
      * Finds if passed {@link Class} has declared public {@link Method} with
      * appropriated name
-     * 
+     *
      * @param clazz
      * @param modifiers
      * @param methodName
      * @return <code>boolean</code>
      * @throws IOException
      */
-    private static boolean classHasMethod(Class<?> clazz, String methodName,
-	    int... modifiers) throws IOException {
+    private static boolean classHasMethod(Class<?> clazz, String methodName, int... modifiers) throws IOException {
 
 	boolean found = Boolean.FALSE;
 
@@ -394,8 +384,7 @@ public class ClassUtils {
 	int length = methods.length;
 	int modifier = calculateModifier(modifiers);
 	Method method;
-	for (int i = CollectionUtils.FIRST_INDEX; i < length
-		&& Boolean.FALSE.equals(found); i++) {
+	for (int i = CollectionUtils.FIRST_INDEX; i < length && Boolean.FALSE.equals(found); i++) {
 	    method = methods[i];
 	    found = method.getName().equals(methodName);
 	    if (found && ObjectUtils.notEquals(modifier, DEFAULT_MODIFIER)) {
@@ -409,22 +398,20 @@ public class ClassUtils {
     /**
      * Finds if passed {@link Class} has {@link Method} with appropriated name
      * and modifiers
-     * 
+     *
      * @param clazz
      * @param methodName
      * @param modifiers
      * @return <code>boolean</code>
      * @throws IOException
      */
-    public static boolean hasMethod(Class<?> clazz, String methodName,
-	    int... modifiers) throws IOException {
+    public static boolean hasMethod(Class<?> clazz, String methodName, int... modifiers) throws IOException {
 
 	boolean found = Boolean.FALSE;
 
 	Class<?> superClass = clazz;
 	while (ObjectUtils.notNull(superClass) && Boolean.FALSE.equals(found)) {
-	    found = ClassUtils
-		    .classHasMethod(superClass, methodName, modifiers);
+	    found = ClassUtils.classHasMethod(superClass, methodName, modifiers);
 	    if (Boolean.FALSE.equals(found)) {
 		superClass = superClass.getSuperclass();
 	    }
@@ -436,27 +423,25 @@ public class ClassUtils {
     /**
      * Finds if passed {@link Class} has public {@link Method} with appropriated
      * name
-     * 
+     *
      * @param clazz
      * @param methodName
      * @return <code>boolean</code>
      * @throws IOException
      */
-    public static boolean hasPublicMethod(Class<?> clazz, String methodName)
-	    throws IOException {
+    public static boolean hasPublicMethod(Class<?> clazz, String methodName) throws IOException {
 	return ClassUtils.hasMethod(clazz, methodName, Modifier.PUBLIC);
     }
 
     /**
      * Gets declared field from passed class with specified name
-     * 
+     *
      * @param clazz
      * @param name
      * @return {@link Field}
      * @throws IOException
      */
-    public static Field getDeclaredField(Class<?> clazz, String name)
-	    throws IOException {
+    public static Field getDeclaredField(Class<?> clazz, String name) throws IOException {
 
 	Field field;
 
@@ -473,7 +458,7 @@ public class ClassUtils {
 
     /**
      * Returns passed {@link Member}'s modifiers
-     * 
+     *
      * @param member
      * @return <code>int</code> modifiers
      */
@@ -484,7 +469,7 @@ public class ClassUtils {
     /**
      * Returns type of passed {@link Field} invoking {@link Field#getType()}
      * method
-     * 
+     *
      * @param field
      * @return {@link Class}<?>
      */
@@ -494,15 +479,14 @@ public class ClassUtils {
 
     /**
      * Common method to invoke {@link Method} with reflection
-     * 
+     *
      * @param method
      * @param data
      * @param arguments
      * @return {@link Object}
      * @throws IOException
      */
-    public static Object invoke(Method method, Object data, Object... arguments)
-	    throws IOException {
+    public static Object invoke(Method method, Object data, Object... arguments) throws IOException {
 
 	Object value;
 
@@ -521,15 +505,14 @@ public class ClassUtils {
 
     /**
      * Common method to invoke {@link Method} with reflection
-     * 
+     *
      * @param method
      * @param data
      * @param arguments
      * @return {@link Object}
      * @throws IOException
      */
-    public static Object invokePrivate(Method method, Object data,
-	    Object... arguments) throws IOException {
+    public static Object invokePrivate(Method method, Object data, Object... arguments) throws IOException {
 
 	Object value;
 
@@ -546,14 +529,13 @@ public class ClassUtils {
 
     /**
      * Common method to invoke static {@link Method} with reflection
-     * 
+     *
      * @param method
      * @param arguments
      * @return
      * @throws IOException
      */
-    public static Object invokeStatic(Method method, Object... arguments)
-	    throws IOException {
+    public static Object invokeStatic(Method method, Object... arguments) throws IOException {
 
 	Object value;
 
@@ -572,14 +554,13 @@ public class ClassUtils {
 
     /**
      * Common method to invoke private static {@link Method}
-     * 
+     *
      * @param method
      * @param arguments
      * @return
      * @throws IOException
      */
-    public static Object invokePrivateStatic(Method method, Object... arguments)
-	    throws IOException {
+    public static Object invokePrivateStatic(Method method, Object... arguments) throws IOException {
 
 	Object value;
 
@@ -597,13 +578,12 @@ public class ClassUtils {
     /**
      * Sets value to {@link Field} sets accessible Boolean.TRUE remporary if
      * needed
-     * 
+     *
      * @param field
      * @param value
      * @throws IOException
      */
-    public static void setFieldValue(Field field, Object data, Object value)
-	    throws IOException {
+    public static void setFieldValue(Field field, Object data, Object value) throws IOException {
 
 	boolean accessible = field.isAccessible();
 
@@ -621,14 +601,13 @@ public class ClassUtils {
 
     /**
      * Gets value of specific field in specific {@link Object}
-     * 
+     *
      * @param field
      * @param data
      * @return {@link Object}
      * @throws IOException
      */
-    public static Object getFieldValue(Field field, Object data)
-	    throws IOException {
+    public static Object getFieldValue(Field field, Object data) throws IOException {
 
 	Object value;
 
@@ -650,7 +629,7 @@ public class ClassUtils {
 
     /**
      * Gets value of specific static field
-     * 
+     *
      * @param field
      * @return {@link Object}
      * @throws IOException
@@ -662,14 +641,14 @@ public class ClassUtils {
     /**
      * Gets {@link List} of all {@link Method}s from passed class annotated with
      * specified annotation
-     * 
+     *
      * @param clazz
      * @param annotationClass
      * @return {@link List}<Method>
      * @throws IOException
      */
-    public static List<Method> getAnnotatedMethods(Class<?> clazz,
-	    Class<? extends Annotation> annotationClass) throws IOException {
+    public static List<Method> getAnnotatedMethods(Class<?> clazz, Class<? extends Annotation> annotationClass)
+	    throws IOException {
 
 	List<Method> methods = new ArrayList<Method>();
 
@@ -686,14 +665,14 @@ public class ClassUtils {
     /**
      * Gets {@link List} of all {@link Field}s from passed class annotated with
      * specified annotation
-     * 
+     *
      * @param clazz
      * @param annotationClass
      * @return {@link List}<Field>
      * @throws IOException
      */
-    public static List<Field> getAnnotatedFields(Class<?> clazz,
-	    Class<? extends Annotation> annotationClass) throws IOException {
+    public static List<Field> getAnnotatedFields(Class<?> clazz, Class<? extends Annotation> annotationClass)
+	    throws IOException {
 
 	List<Field> fields = new ArrayList<Field>();
 
@@ -709,7 +688,7 @@ public class ClassUtils {
 
     /**
      * Gets wrapper class if passed class is a primitive type
-     * 
+     *
      * @param type
      * @return {@link Class}<T>
      */
@@ -719,7 +698,7 @@ public class ClassUtils {
 
     /**
      * Returns default values if passed class is primitive else returns null
-     * 
+     *
      * @param clazz
      * @return Object
      */
