@@ -30,7 +30,7 @@ import org.lightmare.utils.remote.RpcUtils;
 
 /**
  * Local handler class for remote client call
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.26-SNAPSHOT
  */
@@ -44,11 +44,8 @@ public class BeanLocalHandler implements InvocationHandler {
     }
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args)
-	    throws Throwable {
-
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 	Object value = RpcUtils.callRemoteMethod(proxy, method, args, rpCall);
-
 	return value;
     }
 }

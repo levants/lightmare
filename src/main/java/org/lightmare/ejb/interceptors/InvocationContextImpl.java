@@ -36,7 +36,7 @@ import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Implementation of {@link InvocationContext} for EJB intercepter
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.65-SNAPSHOT
  */
@@ -61,13 +61,12 @@ public class InvocationContextImpl implements InvocationContext {
      * Constructor with {@link Queue} of called {@link Method}s, {@link Queue}
      * of EJB target {@link Object}s and {@link Object} array of called
      * {@link Method}s parameters
-     * 
+     *
      * @param methods
      * @param targets
      * @param parameters
      */
-    public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets,
-	    Object[] parameters) {
+    public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets, Object[] parameters) {
 	this.methods = methods;
 	this.targets = targets;
 	this.parameters = parameters;
@@ -77,14 +76,13 @@ public class InvocationContextImpl implements InvocationContext {
      * Constructor with {@link Queue} of called {@link Method}s, {@link Queue}
      * of EJB target {@link Object}s, {@link Object} array of called
      * {@link Method}s parameters and {@link Timer} instance
-     * 
+     *
      * @param methods
      * @param targets
      * @param parameters
      * @param timer
      */
-    public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets,
-	    Object[] parameters, Timer timer) {
+    public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets, Object[] parameters, Timer timer) {
 	this(methods, targets, parameters);
 	this.timer = timer;
     }
