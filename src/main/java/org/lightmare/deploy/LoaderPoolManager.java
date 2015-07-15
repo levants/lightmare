@@ -27,19 +27,18 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.lightmare.cache.MetaContainer;
+import org.lightmare.deploy.deployers.LoaderThreadFactory;
 import org.lightmare.libraries.LibraryLoader;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.StringUtils;
 
 /**
  * Manager class for application deployment in parallel mode
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.77-SNAPSHOT
  */
@@ -48,26 +47,32 @@ public abstract class LoaderPoolManager {
     // Amount of deployment thread pool
     private static final int LOADER_POOL_SIZE = 5;
 
-    // Name prefix of deployment threads
-    private static final String LOADER_THREAD_NAME = "Ejb-Loader-Thread-";
-
     // Lock for pool reopening
     private static final Lock LOCK = new ReentrantLock();
 
     // Time amount (in milliseconds) for trying lock
     private static final long LOCK_TIME = 10;
 
+    // Thread pool for deploying and removal of beans and temporal resources
+    private static ExecutorService LOADER_POOL;
+
+    /**
+     * Gets current {@link MetaCreator}'s cached {@link ClassLoader} for threads
+     *
+     * @param creator
+     * @return {@link ClassLoader} from {@link MetaCreator}'s cache
+     */
     private static ClassLoader getCurrent(MetaCreator creator) {
 
 	ClassLoader current;
 
 	// Gets class loader for this deployment
 	ClassLoader existing = creator.getCurrent();
-	if (ObjectUtils.notNull(existing)) {
-	    current = existing;
-	} else {
+	if (existing == null) {
 	    // Gets default, context class loader for current thread
 	    current = LibraryLoader.getContextClassLoader();
+	} else {
+	    current = existing;
 	}
 
 	return current;
@@ -76,7 +81,7 @@ public abstract class LoaderPoolManager {
     /**
      * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
      * instance
-     * 
+     *
      * @return {@link ClassLoader}
      */
     public static ClassLoader getCurrent() {
@@ -84,89 +89,24 @@ public abstract class LoaderPoolManager {
 	ClassLoader current;
 
 	MetaCreator creator = MetaContainer.getCreator();
-	if (ObjectUtils.notNull(creator)) {
-	    current = getCurrent(creator);
+	if (creator == null) {
+	    current = LibraryLoader.getContextClassLoader();
 	} else {
 	    // Gets default, context class loader for current thread
-	    current = LibraryLoader.getContextClassLoader();
+	    current = getCurrent(creator);
 	}
 
 	return current;
     }
 
     /**
-     * Implementation of {@link ThreadFactory} interface for application loading
-     * 
-     * @author Levan Tsinadze
-     * @since 0.0.77-SNAPSHOT
-     */
-    private static final class LoaderThreadFactory implements ThreadFactory {
-
-	/**
-	 * Constructs and sets thread name
-	 * 
-	 * @param thread
-	 */
-	private void nameThread(Thread thread) {
-	    String name = StringUtils
-		    .concat(LOADER_THREAD_NAME, thread.getId());
-	    thread.setName(name);
-	}
-
-	/**
-	 * Sets priority of {@link Thread} instance
-	 * 
-	 * @param thread
-	 */
-	private void setPriority(Thread thread) {
-	    thread.setPriority(Thread.MAX_PRIORITY);
-	}
-
-	/**
-	 * Sets {@link ClassLoader} to passed {@link Thread} instance
-	 * 
-	 * @param thread
-	 */
-	private void setContextClassLoader(Thread thread) {
-	    ClassLoader parent = getCurrent();
-	    LibraryLoader.loadCurrentLibraries(thread, parent);
-	}
-
-	/**
-	 * Configures (sets name, priority and {@link ClassLoader}) passed
-	 * {@link Thread} instance
-	 * 
-	 * @param thread
-	 */
-	private void configureThread(Thread thread) {
-
-	    nameThread(thread);
-	    setPriority(thread);
-	    setContextClassLoader(thread);
-	}
-
-	@Override
-	public Thread newThread(Runnable runnable) {
-
-	    Thread thread = new Thread(runnable);
-	    configureThread(thread);
-
-	    return thread;
-	}
-    }
-
-    // Thread pool for deploying and removal of beans and temporal resources
-    private static ExecutorService LOADER_POOL;
-
-    /**
      * Checks if loader {@link ExecutorService} is null or is shut down or is
      * terminated
-     * 
+     *
      * @return <code>boolean</code>
      */
     private static boolean invalid() {
-	return LOADER_POOL == null || LOADER_POOL.isShutdown()
-		|| LOADER_POOL.isTerminated();
+	return LOADER_POOL == null || LOADER_POOL.isShutdown() || LOADER_POOL.isTerminated();
     }
 
     /**
@@ -175,15 +115,19 @@ public abstract class LoaderPoolManager {
     private static void initLoaderPool() {
 
 	if (invalid()) {
-	    LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE,
-		    new LoaderThreadFactory());
+	    LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE, new LoaderThreadFactory());
 	}
     }
 
+    /**
+     * Initializes and locks thread pool
+     *
+     * @return <code>boolean</code> validation result for lock
+     * @throws IOException
+     */
     private static boolean initAndUnlock() throws IOException {
 
-	boolean locked = ObjectUtils.tryLock(LOCK, LOCK_TIME,
-		TimeUnit.MILLISECONDS);
+	boolean locked = ObjectUtils.tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
 	if (locked) {
 	    try {
 		initLoaderPool();
@@ -197,7 +141,7 @@ public abstract class LoaderPoolManager {
 
     /**
      * Checks and if not valid reopens deploy {@link ExecutorService} instance
-     * 
+     *
      * @return {@link ExecutorService}
      * @throws IOException
      */
@@ -217,7 +161,7 @@ public abstract class LoaderPoolManager {
 
     /**
      * Submit passed {@link Runnable} implementation in loader pool instance
-     * 
+     *
      * @param runnable
      * @throws IOException
      */
@@ -228,7 +172,7 @@ public abstract class LoaderPoolManager {
 
     /**
      * Submits passed {@link Callable} implementation in loader pool instance
-     * 
+     *
      * @param callable
      * @return {@link Future}<code><T></code>
      * @throws IOException
@@ -257,7 +201,7 @@ public abstract class LoaderPoolManager {
 
     /**
      * Clears existing {@link ExecutorService}s from loader threads
-     * 
+     *
      * @throws IOException
      */
     public static void reload() throws IOException {
@@ -266,8 +210,7 @@ public abstract class LoaderPoolManager {
 	while (Boolean.FALSE.equals(locked)) {
 	    // Locks the Lock object to avoid shut down and submit in
 	    // parallel
-	    locked = ObjectUtils
-		    .tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
+	    locked = ObjectUtils.tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
 	    if (locked) {
 		reloadAndUnlock();
 	    }

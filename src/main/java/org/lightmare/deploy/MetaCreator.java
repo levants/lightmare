@@ -228,7 +228,6 @@ public class MetaCreator {
 	    DeployData deployData = new DeployData();
 	    deployData.setType(ioUtils.getType());
 	    deployData.setUrl(archive);
-
 	    if (ejbURLs.isEmpty()) {
 		archivesURLs.put(archive, archiveData);
 		realURL.put(archive, deployData);
@@ -341,7 +340,6 @@ public class MetaCreator {
 	if (ioUtils.notExecuted()) {
 	    ioUtils.scan(configuration.isPersXmlFromJar());
 	}
-
 	URL[] libURLs = ioUtils.getURLs();
 	loader = LibraryLoader.initializeLoader(libURLs);
 	archiveData.setLoader(loader);
@@ -424,7 +422,6 @@ public class MetaCreator {
 	    // Caches appropriated archive
 	    tmpFiles = cacheArchives(parameters.className, ioUtils);
 	}
-
 	parameters.loader = loader;
 	parameters.tmpFiles = tmpFiles;
     }
@@ -437,8 +434,7 @@ public class MetaCreator {
      * @param parameters
      */
     private void setDeployData(URL currentURL, BeanParameters parameters) {
-
-	// Archive file url which contains this bean
+	// Archive file URL which contains this bean
 	DeployData deployData = initDeploydata(currentURL);
 	parameters.deployData = deployData;
     }
@@ -451,7 +447,6 @@ public class MetaCreator {
      * @throws IOException
      */
     private void fillBeanParameters(URL currentURL, BeanParameters parameters) throws IOException {
-
 	setLoader(currentURL, parameters);
 	setDeployData(currentURL, parameters);
     }
@@ -483,7 +478,6 @@ public class MetaCreator {
 
 	// Initializes and fills BeanParameters class to deploy EJB bean
 	BeanLoader.BeanParameters parameters = initDeployParameters(beanName);
-
 	Future<String> future = BeanLoader.loadBean(parameters);
 	awaitDeployment(future);
 	List<File> tmpFiles = parameters.tmpFiles;
@@ -710,7 +704,6 @@ public class MetaCreator {
 		for (DeploymentDirectory deployment : deployments) {
 		    scanDeployPath(pathList, deployment);
 		}
-
 		paths = CollectionUtils.toArray(pathList, String.class);
 	    }
 	}
