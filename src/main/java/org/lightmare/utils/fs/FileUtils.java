@@ -68,10 +68,13 @@ public class FileUtils {
 
 	File[] subFiles = file.listFiles(new FilenameFilter() {
 
+	    private boolean isJavaFile(String name) {
+		return (name.endsWith(ArchiveUtils.JAR_FILE_EXT) || name.endsWith(ArchiveUtils.CLASS_FILE_EXT));
+	    }
+
 	    @Override
 	    public boolean accept(File file, String name) {
-		return name.endsWith(ArchiveUtils.JAR_FILE_EXT) || name.endsWith(ArchiveUtils.CLASS_FILE_EXT)
-			|| file.isDirectory();
+		return (isJavaFile(name) || file.isDirectory());
 	    }
 	});
 
@@ -144,9 +147,8 @@ public class FileUtils {
 
 	boolean isEarDir;
 
-	File file;
 	try {
-	    file = new File(url.toURI());
+	    File file = new File(url.toURI());
 	    isEarDir = checkOnEarDir(file);
 	} catch (URISyntaxException ex) {
 	    throw new IOException(ex);
@@ -217,6 +219,33 @@ public class FileUtils {
     }
 
     /**
+     * Deletes directory content
+     *
+     * @param file
+     */
+    private static void deleteSubFiles(File file) {
+
+	File[] subFiles = file.listFiles();
+	if (CollectionUtils.valid(subFiles)) {
+	    for (File subFile : subFiles) {
+		deleteFile(subFile);
+	    }
+	}
+    }
+
+    /**
+     * Checks if passed file is directory then deletes it's content
+     *
+     * @param file
+     */
+    private static void checkAndDelete(File file) {
+
+	if (file.isDirectory()) {
+	    deleteSubFiles(file);
+	}
+    }
+
+    /**
      * Removes passed {@link File}s from file system and if
      * {@link File#isDirectory()} removes all it's content recursively
      *
@@ -224,16 +253,7 @@ public class FileUtils {
      * @return boolean
      */
     public static boolean deleteFile(File file) {
-
-	if (file.isDirectory()) {
-	    File[] subFiles = file.listFiles();
-	    if (CollectionUtils.valid(subFiles)) {
-		for (File subFile : subFiles) {
-		    deleteFile(subFile);
-		}
-	    }
-	}
-
+	checkAndDelete(file);
 	return file.delete();
     }
 
@@ -270,9 +290,7 @@ public class FileUtils {
      * @throws IOException
      */
     public static URL toURL(String path) throws IOException {
-
 	File file = new File(path);
-
 	return toURL(file);
     }
 
@@ -318,7 +336,7 @@ public class FileUtils {
 	    try {
 		raf.readFully(buffer);
 		for (int i = CollectionUtils.FIRST_INDEX; i < length && isZip; i++) {
-		    isZip = buffer[i] == MAGIC[i];
+		    isZip = (buffer[i] == MAGIC[i]);
 		}
 	    } finally {
 		raf.close();
