@@ -744,7 +744,6 @@ public class MetaCreator {
 		    scanForBeans(module);
 		    this.configuration = cloneConfig;
 		}
-
 		this.configuration = null;
 	    }
 	} else {

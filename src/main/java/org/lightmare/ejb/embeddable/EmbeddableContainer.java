@@ -32,12 +32,11 @@ import org.apache.log4j.Logger;
 import org.lightmare.deploy.MetaCreator;
 import org.lightmare.jndi.JndiManager;
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Extension of {@link javax.ejb.embeddable.EJBContainer} class for embedded EJB
  * container (runs only for java 7 and upper)
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.48-SNAPSHOT
  */
@@ -51,26 +50,38 @@ public class EmbeddableContainer extends EJBContainer {
 
     private static final String CONTEXT_ERROR = "Could not initialize Context";
 
-    private static final Logger LOG = Logger
-	    .getLogger(EmbeddableContainer.class);
+    private static final Logger LOG = Logger.getLogger(EmbeddableContainer.class);
+
+    /**
+     * Initializes {@link MetaCreator.Builder} for passed properties
+     *
+     * @param properties
+     * @return
+     * @throws IOException
+     */
+    private MetaCreator.Builder initBuilder(Map<?, ?> properties) throws IOException {
+
+	MetaCreator.Builder builder;
+
+	if (properties == null || properties.isEmpty()) {
+	    builder = new MetaCreator.Builder();
+	} else {
+	    Map<Object, Object> configuration = ObjectUtils.cast(properties);
+	    builder = new MetaCreator.Builder(configuration);
+	}
+
+	return builder;
+    }
 
     /**
      * Constructor with specified configuration properties
-     * 
+     *
      * @param properties
      */
     protected EmbeddableContainer(Map<?, ?> properties) {
 
 	try {
-	    MetaCreator.Builder builder;
-	    if (CollectionUtils.valid(properties)) {
-		Map<Object, Object> configuration = ObjectUtils
-			.cast(properties);
-		builder = new MetaCreator.Builder(configuration);
-	    } else {
-		builder = new MetaCreator.Builder();
-	    }
-
+	    MetaCreator.Builder builder = initBuilder(properties);
 	    this.creator = builder.build();
 	    this.creator.scanForBeans();
 	} catch (IOException ex) {
@@ -100,13 +111,21 @@ public class EmbeddableContainer extends EJBContainer {
 	return context;
     }
 
+    /**
+     * Empties deployment cache
+     */
+    private void clearData() {
+
+	if (ObjectUtils.notNull(creator)) {
+	    creator.clear();
+	}
+    }
+
     @Override
     public void close() {
 
 	try {
-	    if (ObjectUtils.notNull(creator)) {
-		creator.clear();
-	    }
+	    clearData();
 	    MetaCreator.close();
 	} catch (IOException ex) {
 	    LOG.fatal(ex.getMessage(), ex);
