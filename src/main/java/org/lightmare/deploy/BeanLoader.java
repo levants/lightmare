@@ -74,9 +74,7 @@ public class BeanLoader {
 
 	@Override
 	public Callable<T> run() {
-
 	    Callable<T> privileged = Executors.privilegedCallable(current);
-
 	    return privileged;
 	}
     }
@@ -140,11 +138,13 @@ public class BeanLoader {
      */
     public static Future<String> loadBean(BeanParameters parameters) throws IOException {
 
+	Future<String> future;
+
 	parameters.metaData = new MetaData();
 	String beanName = BeanUtils.parseName(parameters.className);
 	parameters.beanName = beanName;
 	final BeanDeployer beanDeployer = new BeanDeployer(parameters);
-	Future<String> future = LoaderPoolManager.submit(beanDeployer);
+	future = LoaderPoolManager.submit(beanDeployer);
 
 	return future;
     }
@@ -161,7 +161,6 @@ public class BeanLoader {
 	final ConnectionDeployer conn = new ConnectionDeployer(parameters);
 	ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(conn);
 	Callable<Boolean> privileged = AccessController.doPrivileged(action);
-
 	LoaderPoolManager.submit(privileged);
     }
 

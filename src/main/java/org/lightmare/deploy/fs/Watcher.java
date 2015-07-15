@@ -64,7 +64,7 @@ import org.lightmare.utils.logging.LogUtils;
  * {@link Watcher#undeployFile(URL)}, {@link Watcher#listDeployments()} and
  * {@link File} modification event handler for deployments if java version is
  * 1.7 or above
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
@@ -81,8 +81,7 @@ public class Watcher implements Runnable {
 
     // Thread pool for watch service threads
     private static final ExecutorService DEPLOY_POOL = Executors
-	    .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME,
-		    DEPLOY_POOL_PRIORITY));
+	    .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME, DEPLOY_POOL_PRIORITY));
 
     // Sets of directories of application deployments
     private Set<DeploymentDirectory> deployments;
@@ -107,7 +106,7 @@ public class Watcher implements Runnable {
 
     /**
      * Defines file types for watch service
-     * 
+     *
      * @author Levan Tsinadze
      * @since 0.0.45-SNAPSHOT
      */
@@ -118,7 +117,7 @@ public class Watcher implements Runnable {
 
     /**
      * To filter only deployed sub files from directory
-     * 
+     *
      * @author Levan Tsinadze
      * @since 0.0.45-SNAPSHOT
      */
@@ -152,7 +151,7 @@ public class Watcher implements Runnable {
 
     /**
      * Clears and gets file {@link URL} by file name
-     * 
+     *
      * @param fileName
      * @return {@link URL}
      * @throws IOException
@@ -171,7 +170,7 @@ public class Watcher implements Runnable {
     /**
      * Gets {@link Set} of {@link DeploymentDirectory} instances from
      * configuration
-     * 
+     *
      * @return {@link Set}<code><DeploymentDirectory></code>
      */
     private static Set<DeploymentDirectory> getDeployDirectories() {
@@ -182,8 +181,7 @@ public class Watcher implements Runnable {
 	Set<DeploymentDirectory> deploymetDirssCurrent;
 	for (Configuration config : configs) {
 	    deploymetDirssCurrent = config.getDeploymentPath();
-	    if (config.isWatchStatus()
-		    && CollectionUtils.valid(deploymetDirssCurrent)) {
+	    if (config.isWatchStatus() && CollectionUtils.valid(deploymetDirssCurrent)) {
 		deploymetDirss.addAll(deploymetDirssCurrent);
 	    }
 	}
@@ -193,7 +191,7 @@ public class Watcher implements Runnable {
 
     /**
      * Gets {@link Set} of data source paths from configuration
-     * 
+     *
      * @return {@link Set}<code><String></code>
      */
     private static Set<String> getDataSourcePaths() {
@@ -212,8 +210,7 @@ public class Watcher implements Runnable {
 	return paths;
     }
 
-    private static WatchFileType checkType(Set<DeploymentDirectory> apps,
-	    String parentPath) {
+    private static WatchFileType checkType(Set<DeploymentDirectory> apps, String parentPath) {
 
 	WatchFileType type;
 
@@ -238,7 +235,7 @@ public class Watcher implements Runnable {
 
     /**
      * Checks and gets appropriated {@link WatchFileType} by passed file name
-     * 
+     *
      * @param fileName
      * @return {@link WatchFileType}
      */
@@ -267,7 +264,7 @@ public class Watcher implements Runnable {
 
     /**
      * Fills passed {@link List} of {@link File}s by passed {@link File} array
-     * 
+     *
      * @param files
      * @param list
      */
@@ -282,7 +279,7 @@ public class Watcher implements Runnable {
 
     /**
      * Lists all deployed {@link File}s
-     * 
+     *
      * @return {@link List}<File>
      */
     public static List<File> listDeployments() {
@@ -315,7 +312,7 @@ public class Watcher implements Runnable {
 
     /**
      * Lists all data source {@link File}s
-     * 
+     *
      * @return {@link List}<File>
      */
     public static List<File> listDataSources() {
@@ -345,7 +342,7 @@ public class Watcher implements Runnable {
 
     /**
      * Deploys application or data source file by passed file name
-     * 
+     *
      * @param fileName
      * @throws IOException
      */
@@ -362,7 +359,7 @@ public class Watcher implements Runnable {
 
     /**
      * Deploys application or data source file by passed {@link URL} instance
-     * 
+     *
      * @param url
      * @throws IOException
      */
@@ -374,7 +371,7 @@ public class Watcher implements Runnable {
     /**
      * Removes from deployments application or data source file by passed
      * {@link URL} instance
-     * 
+     *
      * @param url
      * @throws IOException
      */
@@ -389,7 +386,7 @@ public class Watcher implements Runnable {
     /**
      * Removes from deployments application or data source file by passed file
      * name
-     * 
+     *
      * @param fileName
      * @throws IOException
      */
@@ -407,7 +404,7 @@ public class Watcher implements Runnable {
     /**
      * Removes from deployments and deploys again application or data source
      * file by passed file name
-     * 
+     *
      * @param fileName
      * @throws IOException
      */
@@ -418,13 +415,12 @@ public class Watcher implements Runnable {
 
     /**
      * Handles file change event
-     * 
+     *
      * @param dir
      * @param currentEvent
      * @throws IOException
      */
-    private void handleEvent(Path dir, WatchEvent<Path> event)
-	    throws IOException {
+    private void handleEvent(Path dir, WatchEvent<Path> event) throws IOException {
 
 	if (ObjectUtils.notNull(event)) {
 	    Path prePath = event.context();
@@ -445,16 +441,14 @@ public class Watcher implements Runnable {
 	}
     }
 
-    private void handleEvent(WatchEvent<?> event, Path dir)
-	    throws InterruptedException, IOException {
+    private void handleEvent(WatchEvent<?> event, Path dir) throws InterruptedException, IOException {
 
 	Thread.sleep(SLEEP_TIME);
 	WatchEvent<Path> typedEvent = ObjectUtils.cast(event);
 	handleEvent(dir, typedEvent);
     }
 
-    private boolean handleEvent(WatchKey key, WatchEvent<?> event, Path dir)
-	    throws InterruptedException, IOException {
+    private boolean handleEvent(WatchKey key, WatchEvent<?> event, Path dir) throws InterruptedException, IOException {
 
 	boolean run = key.reset() && key.isValid();
 
@@ -469,8 +463,7 @@ public class Watcher implements Runnable {
 	return (event.kind() != StandardWatchEventKinds.OVERFLOW);
     }
 
-    private boolean watchService(WatchService watch)
-	    throws InterruptedException, IOException {
+    private boolean watchService(WatchService watch) throws InterruptedException, IOException {
 
 	boolean run = Boolean.FALSE;
 
@@ -481,8 +474,7 @@ public class Watcher implements Runnable {
 	Path dir = ObjectUtils.cast(key.watchable(), Path.class);
 	for (WatchEvent<?> event : events) {
 	    if (validate(event)) {
-		if (times == ZERO_WATCH_STATUS
-			|| event.count() > currentEvent.count()) {
+		if (times == ZERO_WATCH_STATUS || event.count() > currentEvent.count()) {
 		    currentEvent = event;
 		}
 
@@ -496,7 +488,7 @@ public class Watcher implements Runnable {
 
     /**
      * Runs file watch service
-     * 
+     *
      * @param watch
      * @throws IOException
      */
@@ -514,33 +506,29 @@ public class Watcher implements Runnable {
 
     /**
      * Registers path to watch service
-     * 
+     *
      * @param fs
      * @param path
      * @param watch
      * @throws IOException
      */
-    private void registerPath(FileSystem fs, String path, WatchService watch)
-	    throws IOException {
+    private void registerPath(FileSystem fs, String path, WatchService watch) throws IOException {
 
 	Path deployPath = fs.getPath(path);
-	deployPath.register(watch, StandardWatchEventKinds.ENTRY_CREATE,
-		StandardWatchEventKinds.ENTRY_MODIFY,
-		StandardWatchEventKinds.OVERFLOW,
-		StandardWatchEventKinds.ENTRY_DELETE);
+	deployPath.register(watch, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY,
+		StandardWatchEventKinds.OVERFLOW, StandardWatchEventKinds.ENTRY_DELETE);
 	runService(watch);
     }
 
     /**
      * Registers passed {@link File} array to watch service
-     * 
+     *
      * @param files
      * @param fs
      * @param watch
      * @throws IOException
      */
-    private void registerPaths(File[] files, FileSystem fs, WatchService watch)
-	    throws IOException {
+    private void registerPaths(File[] files, FileSystem fs, WatchService watch) throws IOException {
 
 	String path;
 	for (File file : files) {
@@ -551,14 +539,14 @@ public class Watcher implements Runnable {
 
     /**
      * Registers deployments directories to watch service
-     * 
+     *
      * @param deploymentDirss
      * @param fs
      * @param watch
      * @throws IOException
      */
-    private void registerPaths(Collection<DeploymentDirectory> deploymentDirss,
-	    FileSystem fs, WatchService watch) throws IOException {
+    private void registerPaths(Collection<DeploymentDirectory> deploymentDirss, FileSystem fs, WatchService watch)
+	    throws IOException {
 
 	String path;
 	boolean scan;
@@ -582,14 +570,13 @@ public class Watcher implements Runnable {
 
     /**
      * Registers data source path to watch service
-     * 
+     *
      * @param paths
      * @param fs
      * @param watch
      * @throws IOException
      */
-    private void registerDsPaths(Collection<String> paths, FileSystem fs,
-	    WatchService watch) throws IOException {
+    private void registerDsPaths(Collection<String> paths, FileSystem fs, WatchService watch) throws IOException {
 
 	for (String path : paths) {
 	    registerPath(fs, path, watch);
@@ -635,7 +622,6 @@ public class Watcher implements Runnable {
      * Starts watch service for application and data source files
      */
     public static void startWatch() {
-
 	Watcher watcher = new Watcher();
 	DEPLOY_POOL.submit(watcher);
     }

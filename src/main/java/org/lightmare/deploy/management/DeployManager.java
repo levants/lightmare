@@ -46,7 +46,7 @@ import org.lightmare.utils.io.IOUtils;
 /**
  * Administrative {@link Servlet} to manage deployed applications and data
  * sources
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  */
@@ -56,8 +56,7 @@ public class DeployManager extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     public static final String DEPLOY_MANAGER_DEFAULT_NAME = CollectionUtils
-	    .getFirst(DeployManager.class.getAnnotation(WebServlet.class)
-		    .value());
+	    .getFirst(DeployManager.class.getAnnotation(WebServlet.class).value());
 
     // HTML tags
     private static final String BEGIN_TAGS = "<tr><td><a name = \"";
@@ -78,17 +77,12 @@ public class DeployManager extends HttpServlet {
 
     private static final String REDEPLOY_END_TAG = "</a></td>";
 
-    private static final String BEGIN_PAGE = StringUtils
-	    .concat("<html>\n",
-		    "\t<head><script type=\"text/javascript\">\n",
-		    "/* <![CDATA[ */\n",
-		    "\t\tfunction sendRequest(redeploy, type, fileType){\n ",
-		    "\t\t\tvar xmlhttp = new XMLHttpRequest();\n ",
-		    "\t\t\tvar reqUrl = \"DeployManager?file=\" + redeploy + \"&type=\" + type + \"&fileType=\" + fileType;\n",
-		    "\t\t\txmlhttp.open(\"GET\", reqUrl, true);\n",
-		    "\t\t\txmlhttp.send();\n", "}\n", "/* ]]> */\n",
-		    "</script>\n", "\t<title>Deployment management</title>",
-		    "</head>\n", "\t<body>\n", "\t<table>\n");
+    private static final String BEGIN_PAGE = StringUtils.concat("<html>\n",
+	    "\t<head><script type=\"text/javascript\">\n", "/* <![CDATA[ */\n",
+	    "\t\tfunction sendRequest(redeploy, type, fileType){\n ", "\t\t\tvar xmlhttp = new XMLHttpRequest();\n ",
+	    "\t\t\tvar reqUrl = \"DeployManager?file=\" + redeploy + \"&type=\" + type + \"&fileType=\" + fileType;\n",
+	    "\t\t\txmlhttp.open(\"GET\", reqUrl, true);\n", "\t\t\txmlhttp.send();\n", "}\n", "/* ]]> */\n",
+	    "</script>\n", "\t<title>Deployment management</title>", "</head>\n", "\t<body>\n", "\t<table>\n");
 
     private static final String TYPE_TAG = "\t\t<tr><td><br><b>";
 
@@ -96,17 +90,12 @@ public class DeployManager extends HttpServlet {
 
     private static final String END_PAGE = "</body></table>\n </html>";
 
-    private static final String LOGIN_PAGE = StringUtils
-	    .concat("<html>\n",
-		    "\t\t<head>\n",
-		    "\t\t\t<title>Login</title>\n",
-		    "\t\t</head>\n",
-		    "\t\t<body>\n",
-		    "\t\t\t\t\t\t<br><form name = \"ManagementLogin\" method=\"post\">",
-		    "\t\t\t\t\t\t\t<br><input type=\"user\" name=\"user\"></br>",
-		    "\t\t\t\t\t\t\t<br><input type=\"password\" name=\"password\"></br>",
-		    "\t\t\t\t\t\t\t<br><input type=\"submit\" value=\"Submit\"></br>",
-		    "\t\t\t\t\t\t</form></br>\n");
+    private static final String LOGIN_PAGE = StringUtils.concat("<html>\n", "\t\t<head>\n",
+	    "\t\t\t<title>Login</title>\n", "\t\t</head>\n", "\t\t<body>\n",
+	    "\t\t\t\t\t\t<br><form name = \"ManagementLogin\" method=\"post\">",
+	    "\t\t\t\t\t\t\t<br><input type=\"user\" name=\"user\"></br>",
+	    "\t\t\t\t\t\t\t<br><input type=\"password\" name=\"password\"></br>",
+	    "\t\t\t\t\t\t\t<br><input type=\"submit\" value=\"Submit\"></br>", "\t\t\t\t\t\t</form></br>\n");
 
     private static final String INCORRECT_MESSAGE = "<br><b>invalid user name / passowd</b></br>";
 
@@ -145,9 +134,9 @@ public class DeployManager extends HttpServlet {
     /**
      * Class to cache authenticated users for {@link DeployManager} java
      * {@link javax.servlet.http.HttpServlet} page
-     * 
+     *
      * @author Levan Tsinadze
-     * 
+     *
      */
     private static class DeployPass implements Serializable {
 
@@ -158,7 +147,7 @@ public class DeployManager extends HttpServlet {
 
     /**
      * Lists deployed applications
-     * 
+     *
      * @return {@link String}
      */
     private String getApplications() {
@@ -195,14 +184,13 @@ public class DeployManager extends HttpServlet {
 
     /**
      * Gets types of deployment
-     * 
+     *
      * @param builder
      * @param app
      * @param type
      * @param fileType
      */
-    private void fillDeployType(StringBuilder builder, String app, String type,
-	    String fileType) {
+    private void fillDeployType(StringBuilder builder, String app, String type, String fileType) {
 
 	builder.append(REDEPLOY_START_TAG);
 	builder.append(app);
@@ -217,7 +205,7 @@ public class DeployManager extends HttpServlet {
 
     /**
      * Gets tag of deployed application
-     * 
+     *
      * @param app
      * @param fileType
      * @return {@link String}
@@ -242,7 +230,7 @@ public class DeployManager extends HttpServlet {
 
     /**
      * Redirects page to login page with error message
-     * 
+     *
      * @param incorrect
      * @return {@link String}
      */
@@ -260,17 +248,15 @@ public class DeployManager extends HttpServlet {
 
     /**
      * Authenticates connected user
-     * 
+     *
      * @param userName
      * @param password
      * @param request
      * @return <code>boolean</code>
      */
-    private boolean authenticate(String userName, String password,
-	    HttpServletRequest request) {
+    private boolean authenticate(String userName, String password, HttpServletRequest request) {
 
-	boolean valid = security.controlAllowed(request)
-		&& security.authenticate(userName, password);
+	boolean valid = security.controlAllowed(request) && security.authenticate(userName, password);
 
 	if (valid) {
 	    DeployPass pass = new DeployPass();
@@ -298,7 +284,7 @@ public class DeployManager extends HttpServlet {
 
     /**
      * Checks is user session is valid
-     * 
+     *
      * @param session
      * @return <code>boolean</code>
      */
@@ -333,13 +319,12 @@ public class DeployManager extends HttpServlet {
 
     /**
      * Writes passed HTML {@link String} to {@link HttpServletResponse} output
-     * 
+     *
      * @param response
      * @param html
      * @throws IOException
      */
-    private void write(HttpServletResponse response, String html)
-	    throws IOException {
+    private void write(HttpServletResponse response, String html) throws IOException {
 
 	Writer writer = response.getWriter();
 	try {
@@ -350,14 +335,13 @@ public class DeployManager extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-	    HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
 
 	boolean controllAllowed = security.controlAllowed(request);
 
 	if (Boolean.FALSE.equals(controllAllowed)) {
-	    response.sendError(HttpServletResponse.SC_FORBIDDEN,
-		    CONTROLL_NOT_ALLOWED_MESSAGE);
+	    response.sendError(HttpServletResponse.SC_FORBIDDEN, CONTROLL_NOT_ALLOWED_MESSAGE);
 	} else {
 	    boolean check = check(request.getSession(Boolean.FALSE));
 	    String html;
@@ -381,19 +365,17 @@ public class DeployManager extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request,
-	    HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
 
 	boolean remoteAllowed = security.controlAllowed(request);
 
 	if (Boolean.FALSE.equals(remoteAllowed)) {
-	    response.sendError(HttpServletResponse.SC_FORBIDDEN,
-		    CONTROLL_NOT_ALLOWED_MESSAGE);
+	    response.sendError(HttpServletResponse.SC_FORBIDDEN, CONTROLL_NOT_ALLOWED_MESSAGE);
 	} else {
 	    String userName = request.getParameter(USER_PARAMETER_NAME);
 	    String password = request.getParameter(PASS_PARAMETER_NAME);
-	    boolean valid = StringUtils.valid(userName)
-		    && StringUtils.valid(password);
+	    boolean valid = StringUtils.valid(userName) && StringUtils.valid(password);
 	    if (valid) {
 		valid = authenticate(userName, password, request);
 	    }

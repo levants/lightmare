@@ -40,7 +40,7 @@ import org.lightmare.utils.io.IOUtils;
 /**
  * Manages container administrator users for
  * {@link org.lightmare.deploy.management.DeployManager} service
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.45-SNAPSHOT
  * @see DeployManager
@@ -59,7 +59,7 @@ public class Security {
 
     /**
      * Loads administrator user information from passed {@link File} parameter
-     * 
+     *
      * @param file
      * @throws IOException
      */
@@ -76,7 +76,7 @@ public class Security {
 
     /**
      * Caches administrator users
-     * 
+     *
      * @throws IOException
      */
     public void cacheUsers() throws IOException {
@@ -94,7 +94,7 @@ public class Security {
 
     /**
      * Checks if administrator users cache is valid
-     * 
+     *
      * @return <code>boolean</code>
      */
     public boolean check() {
@@ -104,7 +104,7 @@ public class Security {
     /**
      * Checks if passed {@link HttpServletRequest} not contains PROXY user
      * address forwarding header
-     * 
+     *
      * @param request
      * @return <code>boolean</code> validation result
      */
@@ -124,7 +124,7 @@ public class Security {
 
     /**
      * Checks if container allows remote control
-     * 
+     *
      * @param request
      * @return <code>boolean</code>
      */
@@ -137,8 +137,7 @@ public class Security {
 	    if (valid) {
 		String host = request.getRemoteAddr();
 		String localhost = request.getLocalAddr();
-		valid = StringUtils.validAll(host, localhost)
-			&& host.equals(localhost);
+		valid = StringUtils.validAll(host, localhost) && host.equals(localhost);
 	    }
 	}
 
@@ -147,7 +146,7 @@ public class Security {
 
     /**
      * Authenticates passed user name and password
-     * 
+     *
      * @param user
      * @param pass
      * @return <code>boolean</code>

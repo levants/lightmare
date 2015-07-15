@@ -112,10 +112,22 @@ public abstract class LoaderPoolManager {
     /**
      * Initializes loader pool ({@link ExecutorService}) if it is not available
      */
-    private static void initLoaderPool() {
+    private static void checkAndInitLoaderPool() {
 
 	if (invalid()) {
 	    LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE, new LoaderThreadFactory());
+	}
+    }
+
+    /**
+     * Initializes loader pool
+     */
+    private static void initLoaderPool() {
+
+	try {
+	    checkAndInitLoaderPool();
+	} finally {
+	    ObjectUtils.unlock(LOCK);
 	}
     }
 
@@ -129,11 +141,7 @@ public abstract class LoaderPoolManager {
 
 	boolean locked = ObjectUtils.tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
 	if (locked) {
-	    try {
-		initLoaderPool();
-	    } finally {
-		ObjectUtils.unlock(LOCK);
-	    }
+	    initLoaderPool();
 	}
 
 	return locked;
@@ -150,8 +158,7 @@ public abstract class LoaderPoolManager {
 	if (invalid()) {
 	    boolean locked = Boolean.FALSE;
 	    while (Boolean.FALSE.equals(locked)) {
-		// Locks the Lock object to avoid shut down and submit in
-		// parallel
+		// Locks the object to avoid shut down and submit in parallel
 		locked = initAndUnlock();
 	    }
 	}
@@ -187,13 +194,26 @@ public abstract class LoaderPoolManager {
 	return future;
     }
 
+    /**
+     * Checks if pool is not null and shuts it down
+     */
+    private static void shutDownPool() {
+
+	if (ObjectUtils.notNull(LOADER_POOL)) {
+	    LOADER_POOL.shutdown();
+	    LOADER_POOL = null;
+	}
+    }
+
+    /**
+     * Reloads pool and releases locks
+     *
+     * @throws IOException
+     */
     private static void reloadAndUnlock() throws IOException {
 
 	try {
-	    if (ObjectUtils.notNull(LOADER_POOL)) {
-		LOADER_POOL.shutdown();
-		LOADER_POOL = null;
-	    }
+	    shutDownPool();
 	} finally {
 	    ObjectUtils.unlock(LOCK);
 	}
@@ -208,8 +228,7 @@ public abstract class LoaderPoolManager {
 
 	boolean locked = Boolean.FALSE;
 	while (Boolean.FALSE.equals(locked)) {
-	    // Locks the Lock object to avoid shut down and submit in
-	    // parallel
+	    // Locks the object to avoid shut down and submit in parallel
 	    locked = ObjectUtils.tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
 	    if (locked) {
 		reloadAndUnlock();
