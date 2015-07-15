@@ -38,7 +38,7 @@ import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Utility class to convert configuration attributes from files and java types
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.1.1
  */
@@ -46,7 +46,7 @@ public class ConfigUtils {
 
     /**
      * Converts data to boolean from several java types
-     * 
+     *
      * @param value
      * @return <code>boolean</code>
      */
@@ -70,7 +70,7 @@ public class ConfigUtils {
 
     /**
      * Converts data to {@link String} from several java types
-     * 
+     *
      * @param value
      * @return {@link String} value of passed parameter
      */
@@ -97,7 +97,7 @@ public class ConfigUtils {
 
     /**
      * Gets paths of instant EJB module from configuration
-     * 
+     *
      * @param configModule
      * @return String[] path of EJB modules
      */
@@ -133,7 +133,7 @@ public class ConfigUtils {
 
     /**
      * Adds initialized EJB module paths to passed collection
-     * 
+     *
      * @param modules
      * @param configModule
      */
@@ -149,7 +149,7 @@ public class ConfigUtils {
 
     /**
      * Converts passed value to deployment module paths from several java types
-     * 
+     *
      * @param value
      * @return {@link List} of EJB module paths
      */
@@ -180,7 +180,7 @@ public class ConfigUtils {
 
     /**
      * Converts data to {@link Set} of {@link String} from several java types
-     * 
+     *
      * @param value
      * @return {@link Set} of appropriated values
      */
@@ -214,7 +214,7 @@ public class ConfigUtils {
 
     /**
      * Initializes {@link DeploymentDirectory} instance from several java types
-     * 
+     *
      * @param value
      * @return initialized {@link DeploymentDirectory} instance
      */
@@ -242,12 +242,11 @@ public class ConfigUtils {
     /**
      * Initializes {@link DeploymentDirectory} from passed java type and adds it
      * to appropriate collection
-     * 
+     *
      * @param value
      * @param deployments
      */
-    private static void addDirectory(Object value,
-	    Set<DeploymentDirectory> deployments) {
+    private static void addDirectory(Object value, Set<DeploymentDirectory> deployments) {
 
 	DeploymentDirectory directory = getDeployment(value);
 	if (ObjectUtils.notNull(directory)) {
@@ -257,12 +256,11 @@ public class ConfigUtils {
 
     /**
      * Initializes {@link DeploymentDirectory} instance from several java types
-     * 
+     *
      * @param collection
      * @return initialized {@link DeploymentDirectory} instance
      */
-    private static Set<DeploymentDirectory> getDeployments(
-	    Collection<?> collection) {
+    private static Set<DeploymentDirectory> getDeployments(Collection<?> collection) {
 
 	Set<DeploymentDirectory> deployments;
 
@@ -280,7 +278,7 @@ public class ConfigUtils {
 
     /**
      * Initializes {@link DeploymentDirectory} instance from several java types
-     * 
+     *
      * @param collection
      * @return initialized {@link DeploymentDirectory} instance
      */
@@ -302,7 +300,7 @@ public class ConfigUtils {
 
     /**
      * Initializes deployment path parameters
-     * 
+     *
      * @param value
      * @return {@link Set} of {@link DeploymentDirectory} instances
      */
