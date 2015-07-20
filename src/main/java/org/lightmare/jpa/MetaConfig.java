@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * Additional configuration parameters for JPA / Hibernate configuration
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.86-SNAPSHOT
  */
@@ -50,7 +50,7 @@ public class MetaConfig {
     /**
      * Gets {@link ClassLoader} from passed {@link MetaConfig} configuration
      * container for instant EJB bean
-     * 
+     *
      * @param metaConfig
      * @return {@link ClassLoader} enriched with additional methods
      */
@@ -105,6 +105,12 @@ public class MetaConfig {
 	this.xmls = xmls;
     }
 
+    /**
+     * Validates if swap of data sources is needed
+     *
+     * @param metaConfig
+     * @return <code>boolean</code> validation result
+     */
     public static boolean isSwapDataSource(MetaConfig metaConfig) {
 
 	boolean valid;
@@ -118,10 +124,21 @@ public class MetaConfig {
 	return valid;
     }
 
+    /**
+     * Sets flag for swap data sources
+     *
+     * @param swapDataSource
+     */
     public void setSwapDataSource(boolean swapDataSource) {
 	this.swapDataSource = swapDataSource;
     }
 
+    /**
+     * Validates if scan for archives in class path is needed
+     *
+     * @param metaConfig
+     * @return <code>boolean</code> validation result
+     */
     public static boolean isScanArchives(MetaConfig metaConfig) {
 
 	boolean valid;
@@ -135,6 +152,11 @@ public class MetaConfig {
 	return valid;
     }
 
+    /**
+     * Sets flag for scan of archives in class path
+     *
+     * @param scanArchives
+     */
     public void setScanArchives(boolean scanArchives) {
 	this.scanArchives = scanArchives;
     }

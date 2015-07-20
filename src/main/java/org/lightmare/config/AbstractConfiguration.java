@@ -16,7 +16,7 @@ import org.lightmare.utils.io.IOUtils;
 
 /**
  * Configuration utilities in sbtract class
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.1.4
  */
@@ -30,24 +30,42 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     private static final String COULD_NOT_OPEN_FILE_ERROR = "Could not open config file";
 
-    private static final Logger LOG = Logger
-	    .getLogger(AbstractConfiguration.class);
+    private static final Logger LOG = Logger.getLogger(AbstractConfiguration.class);
+
+    /**
+     * Checks and get appropriated configuration
+     *
+     * @param from
+     * @return {@link Map} of configuration
+     */
+    private Map<Object, Object> checkAndGetFrom(Map<Object, Object> from) {
+
+	Map<Object, Object> value;
+
+	if (from == null) {
+	    value = config;
+	} else {
+	    value = from;
+	}
+
+	return value;
+    }
 
     /**
      * Gets value on passed generic key K of passed {@link Map} as {@link Map}
      * of generic key values
-     * 
+     *
      * @param key
      * @param from
      * @return {@link Map}<code><K, V></code>
      */
     private <K, V> Map<K, V> getAsMap(Object key, Map<Object, Object> from) {
 
-	if (from == null) {
-	    from = config;
-	}
+	Map<K, V> value;
+
+	Map<Object, Object> source = checkAndGetFrom(from);
 	// Gets value associated with key as map
-	Map<K, V> value = ObjectUtils.cast(CollectionUtils.getAsMap(key, from));
+	value = CollectionUtils.getAsMap(key, source);
 
 	return value;
     }
@@ -55,7 +73,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Gets value on passed generic key K of cached configuration as {@link Map}
      * of generic key values
-     * 
+     *
      * @param key
      * @return {@link Map}<code><K, V></code>
      */
@@ -65,7 +83,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Checks and sets appropriated sub configuration parameter
-     * 
+     *
      * @param key
      * @param subKey
      * @param value
@@ -86,7 +104,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Sets value of sub {@link Map} on passed sub key contained in cached
      * configuration on passed key
-     * 
+     *
      * @param key
      * @param subKey
      * @param value
@@ -99,7 +117,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Gets value of sub {@link Map} on passed sub key contained in cached
      * configuration on passed key
-     * 
+     *
      * @param key
      * @param subKey
      * @param defaultValue
@@ -125,7 +143,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Check if sub {@link Map} contains passed sub key contained in cached
      * configuration on passed key
-     * 
+     *
      * @param key
      * @param subKey
      * @return <code>boolean</code>
@@ -145,7 +163,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Checks if configuration contains passed key
-     * 
+     *
      * @param key
      * @return <code>boolean</code>
      */
@@ -156,7 +174,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Gets value from sub configuration for passed sub key contained in
      * configuration for passed key
-     * 
+     *
      * @param key
      * @param subKey
      * @return <coder>V</code>
@@ -168,7 +186,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Sets sub configuration configuration value for passed sub key for default
      * configuration key
-     * 
+     *
      * @param subKey
      * @param value
      */
@@ -180,20 +198,19 @@ public abstract class AbstractConfiguration implements Cloneable {
      * Gets value from sub configuration for passed sub key contained in
      * configuration for default configuration key and if such not exists
      * returns passed default value
-     * 
+     *
      * @param subKey
      * @param defaultValue
      * @return <coder>V</code>
      */
     protected <K, V> V getConfigValue(K subKey, V defaultValue) {
-	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey,
-		defaultValue);
+	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey, defaultValue);
     }
 
     /**
      * Gets value from sub configuration for passed sub key contained in
      * configuration for default configuration key
-     * 
+     *
      * @param subKey
      * @param defaultValue
      * @return <coder>V</code>
@@ -205,7 +222,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Gets {@link Map} value from configuration with passed key and if such
      * does not exists creates and puts new instance
-     * 
+     *
      * @param key
      * @return {@link Map}<code><K, V></code>
      */
@@ -225,7 +242,7 @@ public abstract class AbstractConfiguration implements Cloneable {
      * Sets sub configuration configuration value for passed sub key for passed
      * configuration key (if sub configuration does not exists creates and puts
      * new instance)
-     * 
+     *
      * @param subKey
      * @param value
      */
@@ -245,12 +262,11 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Merges key and value from passed {@link java.util.Map.Entry} and passed
      * {@link java.util.Map}'s appropriated key and value
-     * 
+     *
      * @param map
      * @param entry
      */
-    private void deepMerge(Map<Object, Object> map,
-	    Map.Entry<Object, Object> entry) {
+    private void deepMerge(Map<Object, Object> map, Map.Entry<Object, Object> entry) {
 
 	Object key = entry.getKey();
 	Object value2 = entry.getValue();
@@ -271,13 +287,12 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Merges two {@link Map}s and if second {@link Map}'s value is instance of
      * {@link Map} merges this value with first {@link Map}'s value recursively
-     * 
+     *
      * @param map1
      * @param map2
      * @return <code>{@link Map}<Object, Object></code>
      */
-    protected Map<Object, Object> deepMerge(Map<Object, Object> map1,
-	    Map<Object, Object> map2) {
+    protected Map<Object, Object> deepMerge(Map<Object, Object> map1, Map<Object, Object> map2) {
 
 	if (map1 == null) {
 	    map1 = map2;
@@ -293,7 +308,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Reads configuration from passed properties
-     * 
+     *
      * @param configuration
      */
     public void configure(Map<Object, Object> configuration) {
@@ -302,7 +317,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Gets value associated with particular key as {@link String} instance
-     * 
+     *
      * @param key
      * @return {@link String}
      */
@@ -322,7 +337,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Gets value associated with particular key as <code>int</code> instance
-     * 
+     *
      * @param key
      * @return {@link String}
      */
@@ -333,7 +348,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Gets value associated with particular key as <code>long</code> instance
-     * 
+     *
      * @param key
      * @return {@link String}
      */
@@ -345,7 +360,7 @@ public abstract class AbstractConfiguration implements Cloneable {
     /**
      * Gets value associated with particular key as <code>boolean</code>
      * instance
-     * 
+     *
      * @param key
      * @return {@link String}
      */
@@ -356,7 +371,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Sets passed configuration value for appropriated key
-     * 
+     *
      * @param key
      * @param value
      */
@@ -366,7 +381,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Loads {@link Configuration} in memory as {@link Map} of parameters
-     * 
+     *
      * @param propertiesStream
      * @throws IOException
      */
@@ -388,7 +403,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Loads configuration form file
-     * 
+     *
      * @throws IOException
      */
     public void loadFromFile() throws IOException {
@@ -410,7 +425,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Loads configuration form file by passed file path
-     * 
+     *
      * @param configFilename
      * @throws IOException
      */
@@ -427,7 +442,7 @@ public abstract class AbstractConfiguration implements Cloneable {
 
     /**
      * Copies existed configuration for cloning
-     * 
+     *
      * @return {@link Map} copy of existed configuration
      */
     protected Map<Object, Object> copy() {
