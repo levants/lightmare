@@ -77,6 +77,32 @@ public class TransactionManager {
     }
 
     /**
+     * Adds new {@link EntityTransaction} to existed transactions
+     *
+     * @param entityTransaction
+     * @param transaction
+     */
+    private static void addTransaction(EntityTransaction entityTransaction, UserTransactionImpl transaction) {
+
+	if (ObjectUtils.notNull(entityTransaction)) {
+	    transaction.addTransaction(entityTransaction);
+	}
+    }
+
+    /**
+     * Adds {@link EntityManager} to passed transaction
+     *
+     * @param em
+     * @param transaction
+     */
+    private static void addEntityManager(EntityManager em, UserTransactionImpl transaction) {
+
+	if (ObjectUtils.notNull(em)) {
+	    transaction.addEntityManager(em);
+	}
+    }
+
+    /**
      * Adds {@link EntityTransaction} to passed {@link UserTransaction} instance
      *
      * @param userTransaction
@@ -88,13 +114,8 @@ public class TransactionManager {
 
 	if (userTransaction instanceof UserTransactionImpl) {
 	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    if (ObjectUtils.notNull(entityTransaction)) {
-		transaction.addTransaction(entityTransaction);
-	    }
-
-	    if (ObjectUtils.notNull(em)) {
-		transaction.addEntityManager(em);
-	    }
+	    addTransaction(entityTransaction, transaction);
+	    addEntityManager(em, transaction);
 	}
     }
 
@@ -166,6 +187,33 @@ public class TransactionManager {
     }
 
     /**
+     * Checks on null and adds {@link EntityManager} to transaction
+     *
+     * @param transaction
+     * @param em
+     */
+    private static void checkAndAddEntityManager(UserTransactionImpl transaction, EntityManager em) {
+
+	if (ObjectUtils.notNull(em)) {
+	    transaction.pushReqNewEm(em);
+	}
+    }
+
+    /**
+     * Checks on null and adds {@link UserTransactionImpl} to passed
+     * {@link EntityTransaction} instance
+     *
+     * @param transaction
+     * @param entityTransaction
+     */
+    private static void checkAndAddTransactiuon(UserTransactionImpl transaction, EntityTransaction entityTransaction) {
+
+	if (ObjectUtils.notNull(entityTransaction)) {
+	    transaction.pushReqNew(entityTransaction);
+	}
+    }
+
+    /**
      * Adds {@link EntityTransaction} to requires new stack in passed
      * {@link UserTransaction} instance
      *
@@ -175,14 +223,8 @@ public class TransactionManager {
      */
     private static void addReqNewTransaction(UserTransactionImpl transaction, EntityTransaction entityTransaction,
 	    EntityManager em) {
-
-	if (ObjectUtils.notNull(entityTransaction)) {
-	    transaction.pushReqNew(entityTransaction);
-	}
-
-	if (ObjectUtils.notNull(em)) {
-	    transaction.pushReqNewEm(em);
-	}
+	checkAndAddTransactiuon(transaction, entityTransaction);
+	checkAndAddEntityManager(transaction, em);
     }
 
     /**

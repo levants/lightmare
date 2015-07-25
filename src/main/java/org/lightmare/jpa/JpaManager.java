@@ -184,6 +184,26 @@ public class JpaManager {
     }
 
     /**
+     * Gets appropriated prefix for passed key
+     *
+     * @param key
+     * @return {@link Object} key with prefix
+     */
+    private Object getKeyWithPerfix(Object key) {
+
+	Object validKey;
+
+	if (key instanceof String) {
+	    String textKey = ObjectUtils.cast(key, String.class);
+	    validKey = HibernatePrefixes.validKey(textKey);
+	} else {
+	    validKey = key;
+	}
+
+	return validKey;
+    }
+
+    /**
      * Validates modifies and adds parameters to global JPA configuration
      *
      * @param entry
@@ -193,11 +213,8 @@ public class JpaManager {
 
 	Object key = entry.getKey();
 	Object value = entry.getValue();
-	if (key instanceof String) {
-	    String textKey = ObjectUtils.cast(key, String.class);
-	    key = HibernatePrefixes.validKey(textKey);
-	}
-	config.put(key, value);
+	Object validKey = getKeyWithPerfix(key);
+	config.put(validKey, value);
     }
 
     /**
@@ -276,6 +293,27 @@ public class JpaManager {
     }
 
     /**
+     * Gets {@link List} persistence XML configuration {@link URL} addresses
+     *
+     * @param pathCheck
+     * @param configLoader
+     * @return {@link List} of {@link URL} addresses
+     * @throws IOException
+     */
+    private List<URL> readFromPath(boolean pathCheck, XMLInitializer configLoader) throws IOException {
+
+	List<URL> xmls;
+
+	if (pathCheck) {
+	    xmls = configLoader.readFile(path);
+	} else {
+	    xmls = configLoader.readURL(url);
+	}
+
+	return xmls;
+    }
+
+    /**
      * Initializes persistence.xml file path
      *
      * @param builder
@@ -288,12 +326,7 @@ public class JpaManager {
 	if (pathCheck || urlCheck) {
 	    List<URL> xmls;
 	    XMLInitializer configLoader = new XMLInitializer();
-	    if (pathCheck) {
-		xmls = configLoader.readFile(path);
-	    } else {
-		xmls = configLoader.readURL(url);
-	    }
-
+	    xmls = readFromPath(pathCheck, configLoader);
 	    builder.setXmls(xmls);
 	    String shortPath = configLoader.getShortPath();
 	    builder.setShortPath(shortPath);
@@ -321,13 +354,12 @@ public class JpaManager {
      * @param overriden
      * @throws IOException
      */
-    private void loadEntities(HibernatePersistenceProviderExt.Builder builder, ClassLoader overriden)
-	    throws IOException {
+    private void loadEntities(HibernatePersistenceProviderExt.Builder builder, ClassLoader loader) throws IOException {
 
 	if (CollectionUtils.valid(classes)) {
 	    builder.setClasses(classes);
 	    // Loads entity classes to current ClassLoader instance
-	    LibraryLoader.loadClasses(classes, overriden);
+	    LibraryLoader.loadClasses(classes, loader);
 	}
     }
 
@@ -413,6 +445,20 @@ public class JpaManager {
     }
 
     /**
+     * Re-binds JNDI name for JPA unit
+     *
+     * @param semaphore
+     * @param fullJndiName
+     * @throws IOException
+     */
+    private void rebindJNDIName(ConnectionSemaphore semaphore, String fullJndiName) throws IOException {
+
+	if (JndiManager.lookup(fullJndiName) == null) {
+	    JndiManager.rebind(fullJndiName, semaphore.getEmf());
+	}
+    }
+
+    /**
      * Binds {@link EntityManagerFactory} from passed
      * {@link ConnectionSemaphore} to appropriate JNDI name
      *
@@ -424,13 +470,28 @@ public class JpaManager {
 
 	try {
 	    String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
-	    if (JndiManager.lookup(fullJndiName) == null) {
-		JndiManager.rebind(fullJndiName, semaphore.getEmf());
-	    }
+	    rebindJNDIName(semaphore, fullJndiName);
 	} catch (IOException ex) {
 	    LOG.error(ex.getMessage(), ex);
 	    String errorMessage = StringUtils.concat(COULD_NOT_BIND_JNDI_ERROR, semaphore.getUnitName());
 	    throw new IOException(errorMessage, ex);
+	}
+    }
+
+    /**
+     * Checks if JDNI is bound and if not bind passed connection for this name
+     *
+     * @param semaphore
+     * @param bound
+     * @throws IOException
+     */
+    private void checkAndBindJNDIName(ConnectionSemaphore semaphore, boolean bound) throws IOException {
+
+	if (Boolean.FALSE.equals(bound)) {
+	    String jndiName = semaphore.getJndiName();
+	    if (StringUtils.valid(jndiName)) {
+		bindJndiName(jndiName, semaphore);
+	    }
 	}
     }
 
@@ -443,14 +504,7 @@ public class JpaManager {
     private void bindJndiName(ConnectionSemaphore semaphore) throws IOException {
 
 	boolean bound = semaphore.isBound();
-
-	if (Boolean.FALSE.equals(bound)) {
-	    String jndiName = semaphore.getJndiName();
-	    if (StringUtils.valid(jndiName)) {
-		bindJndiName(jndiName, semaphore);
-	    }
-	}
-
+	checkAndBindJNDIName(semaphore, bound);
 	semaphore.setBound(Boolean.TRUE);
     }
 
@@ -625,12 +679,10 @@ public class JpaManager {
 	 * @return {@link Builder}
 	 */
 	public Builder configure(Configuration configuration) {
-
 	    // Sets all parameters from Configuration class
 	    setPath(configuration.getPersXmlPath()).setProperties(configuration.getPersistenceProperties())
 		    .setSwapDataSource(configuration.isSwapDataSource()).setScanArchives(configuration.isScanArchives())
 		    .springPersistence(configuration.isSpringPersistence());
-
 	    return this;
 	}
 
