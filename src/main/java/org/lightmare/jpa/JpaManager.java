@@ -438,9 +438,7 @@ public class JpaManager {
      * @throws IOException
      */
     private EntityManagerFactory createEntityManagerFactory(String unitName) throws IOException {
-
 	EntityManagerFactory emf = buildEntityManagerFactory(unitName);
-
 	return emf;
     }
 

@@ -46,22 +46,20 @@ import org.lightmare.utils.collections.CollectionUtils;
 /**
  * Implementation of {@link HibernatePersistenceProvider} with additional
  * configuration
- * 
+ *
  * @author Steve Ebersole, Levan Tsinadze
  * @Since 0.1.0
  */
-public class HibernatePersistenceProviderExt extends
-	HibernatePersistenceProvider {
+public class HibernatePersistenceProviderExt extends HibernatePersistenceProvider {
 
     // Additional configuration for extension
     private MetaConfig metaConfig;
 
-    private static final Logger LOG = Logger
-	    .getLogger(HibernatePersistenceProviderExt.class);
+    private static final Logger LOG = Logger.getLogger(HibernatePersistenceProviderExt.class);
 
     /**
      * Constructor with {@link MetaConfig} as additional JPA properties
-     * 
+     *
      * @param metaConfig
      */
     private HibernatePersistenceProviderExt(MetaConfig metaConfig) {
@@ -73,17 +71,14 @@ public class HibernatePersistenceProviderExt extends
      */
     @SuppressWarnings("rawtypes")
     @Override
-    public EntityManagerFactory createEntityManagerFactory(
-	    String persistenceUnitName, Map properties) {
+    public EntityManagerFactory createEntityManagerFactory(String persistenceUnitName, Map properties) {
 
 	EntityManagerFactory emf;
 
-	LOG.tracef(
-		"Starting createEntityManagerFactory for persistenceUnitName %s",
-		persistenceUnitName);
+	LOG.tracef("Starting createEntityManagerFactory for persistenceUnitName %s", persistenceUnitName);
 	try {
-	    final EntityManagerFactoryBuilder builder = getEntityManagerFactoryBuilderOrNull(
-		    persistenceUnitName, properties);
+	    final EntityManagerFactoryBuilder builder = getEntityManagerFactoryBuilderOrNull(persistenceUnitName,
+		    properties);
 	    if (builder == null) {
 		LOG.trace("Could not obtain matching EntityManagerFactoryBuilder, returning null");
 		emf = null;
@@ -94,8 +89,7 @@ public class HibernatePersistenceProviderExt extends
 	    throw pe;
 	} catch (Exception ex) {
 	    LOG.debug("Unable to build entity manager factory", ex);
-	    throw new PersistenceException(
-		    "Unable to build entity manager factory", ex);
+	    throw new PersistenceException("Unable to build entity manager factory", ex);
 	}
 
 	return emf;
@@ -104,15 +98,13 @@ public class HibernatePersistenceProviderExt extends
     /**
      * Enriches and configures passed {@link PersistenceUnitInfo} wrapper
      * {@inheritDoc}
-     * 
+     *
      * @param info
      * @return {@link PersistenceUnitDescriptor}
      */
-    protected PersistenceUnitDescriptor getPersistenceUnitDescriptor(
-	    PersistenceUnitInfo info) {
+    protected PersistenceUnitDescriptor getPersistenceUnitDescriptor(PersistenceUnitInfo info) {
 
-	PersistenceUnitDescriptor descriptor = new PersistenceUnitSwapDescriptor(
-		info);
+	PersistenceUnitDescriptor descriptor = new PersistenceUnitSwapDescriptor(info);
 	PersistenceDescriptorUtils.resolve(descriptor, metaConfig);
 
 	return descriptor;
@@ -125,17 +117,14 @@ public class HibernatePersistenceProviderExt extends
      */
     @SuppressWarnings("rawtypes")
     @Override
-    public EntityManagerFactory createContainerEntityManagerFactory(
-	    PersistenceUnitInfo info, Map properties) {
+    public EntityManagerFactory createContainerEntityManagerFactory(PersistenceUnitInfo info, Map properties) {
 
 	EntityManagerFactory emf;
 
-	LOG.tracef("Starting createContainerEntityManagerFactory : %s",
-		info.getPersistenceUnitName());
+	LOG.tracef("Starting createContainerEntityManagerFactory : %s", info.getPersistenceUnitName());
 
 	PersistenceUnitDescriptor descriptor = getPersistenceUnitDescriptor(info);
-	emf = Bootstrap.getEntityManagerFactoryBuilder(descriptor, properties)
-		.build();
+	emf = Bootstrap.getEntityManagerFactoryBuilder(descriptor, properties).build();
 
 	return emf;
     }
@@ -146,12 +135,10 @@ public class HibernatePersistenceProviderExt extends
     @SuppressWarnings("rawtypes")
     @Override
     public void generateSchema(PersistenceUnitInfo info, Map map) {
-	LOG.tracef("Starting generateSchema : PUI.name=%s",
-		info.getPersistenceUnitName());
+	LOG.tracef("Starting generateSchema : PUI.name=%s", info.getPersistenceUnitName());
 
 	PersistenceUnitDescriptor descriptor = getPersistenceUnitDescriptor(info);
-	final EntityManagerFactoryBuilder builder = Bootstrap
-		.getEntityManagerFactoryBuilder(descriptor, map);
+	final EntityManagerFactoryBuilder builder = Bootstrap.getEntityManagerFactoryBuilder(descriptor, map);
 	builder.generateSchema();
     }
 
@@ -162,13 +149,11 @@ public class HibernatePersistenceProviderExt extends
     @SuppressWarnings("rawtypes")
     @Override
     public boolean generateSchema(String persistenceUnitName, Map map) {
-	LOG.tracef("Starting generateSchema for persistenceUnitName %s",
-		persistenceUnitName);
+	LOG.tracef("Starting generateSchema for persistenceUnitName %s", persistenceUnitName);
 
 	boolean valid;
 
-	final EntityManagerFactoryBuilder builder = getEntityManagerFactoryBuilderOrNull(
-		persistenceUnitName, map);
+	final EntityManagerFactoryBuilder builder = getEntityManagerFactoryBuilderOrNull(persistenceUnitName, map);
 	if (builder == null) {
 	    LOG.trace("Could not obtain matching EntityManagerFactoryBuilder, returning false");
 	    valid = Boolean.FALSE;
@@ -185,14 +170,13 @@ public class HibernatePersistenceProviderExt extends
      * {@link Map} of properties
      */
     @SuppressWarnings("rawtypes")
-    protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(
-	    String persistenceUnitName, Map properties) {
+    protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(String persistenceUnitName,
+	    Map properties) {
 
 	EntityManagerFactoryBuilder emfBuilder;
 
 	ClassLoader loader = MetaConfig.getOverridenClassLoader(metaConfig);
-	emfBuilder = getEntityManagerFactoryBuilderOrNull(persistenceUnitName,
-		properties, loader);
+	emfBuilder = getEntityManagerFactoryBuilderOrNull(persistenceUnitName, properties, loader);
 
 	return emfBuilder;
     }
@@ -200,15 +184,14 @@ public class HibernatePersistenceProviderExt extends
     /**
      * Creates {@link PersistenceUnitDescriptor} for passed persistence unit
      * name {@link Map} of properties and {@link ClassLoader} instance
-     * 
+     *
      * @param persistenceUnitName
      * @param properties
      * @param providedClassLoader
      * @return {@link PersistenceUnitDescriptor}
      */
     @SuppressWarnings({ "rawtypes" })
-    public PersistenceUnitDescriptor getPersistenceXmlDescriptor(
-	    String persistenceUnitName, Map properties,
+    public PersistenceUnitDescriptor getPersistenceXmlDescriptor(String persistenceUnitName, Map properties,
 	    ClassLoader providedClassLoader) {
 
 	ParsedPersistenceXmlDescriptor descriptor = null;
@@ -217,44 +200,36 @@ public class HibernatePersistenceProviderExt extends
 	final List<ParsedPersistenceXmlDescriptor> units;
 
 	try {
-	    units = PersistenceXmlParserImpl.locatePersistenceUnits(
-		    integration, metaConfig);
+	    units = PersistenceXmlParserImpl.locatePersistenceUnits(integration, metaConfig);
 	} catch (Exception ex) {
 	    LOG.debug("Unable to locate persistence units", ex);
-	    throw new PersistenceException(
-		    "Unable to locate persistence units", ex);
+	    throw new PersistenceException("Unable to locate persistence units", ex);
 	}
 
-	LOG.debugf("Located and parsed %s persistence units; checking each",
-		units.size());
+	LOG.debugf("Located and parsed %s persistence units; checking each", units.size());
 
-	if (persistenceUnitName == null
-		&& units.size() > CollectionUtils.SINGLTON_LENGTH) {
+	if (persistenceUnitName == null && units.size() > CollectionUtils.SINGLTON_LENGTH) {
 	    // no persistence-unit name to look for was given and we found
 	    // multiple persistence-units
-	    throw new PersistenceException(
-		    "No name provided and multiple persistence units found");
+	    throw new PersistenceException("No name provided and multiple persistence units found");
 	}
 
 	boolean notMatches = Boolean.TRUE;
-	Iterator<ParsedPersistenceXmlDescriptor> descriptorIterator = units
-		.iterator();
+	Iterator<ParsedPersistenceXmlDescriptor> descriptorIterator = units.iterator();
 	ParsedPersistenceXmlDescriptor persistenceUnit;
 	while (descriptorIterator.hasNext() && notMatches) {
 	    persistenceUnit = descriptorIterator.next();
 	    LOG.debugf(
 		    "Checking persistence-unit [name=%s, explicit-provider=%s] against incoming persistence unit name [%s]",
-		    persistenceUnit.getName(),
-		    persistenceUnit.getProviderClassName(), persistenceUnitName);
+		    persistenceUnit.getName(), persistenceUnit.getProviderClassName(), persistenceUnitName);
 
-	    final boolean matches = (persistenceUnitName == null || persistenceUnitName
-		    .equals(persistenceUnit.getName()));
+	    final boolean matches = (persistenceUnitName == null
+		    || persistenceUnitName.equals(persistenceUnit.getName()));
 	    notMatches = Boolean.FALSE.equals(matches);
 	    if (notMatches) {
 		LOG.debug("Excluding from consideration due to name mis-match");
 		// See if we (Hibernate) are the persistence provider
-	    } else if (Boolean.FALSE.equals(ProviderChecker.isProvider(
-		    persistenceUnit, properties))) {
+	    } else if (Boolean.FALSE.equals(ProviderChecker.isProvider(persistenceUnit, properties))) {
 		LOG.debug("Excluding from consideration due to provider mis-match");
 	    } else {
 		descriptor = persistenceUnit;
@@ -265,39 +240,34 @@ public class HibernatePersistenceProviderExt extends
     }
 
     @SuppressWarnings({ "rawtypes" })
-    public PersistenceUnitDescriptor getPersistenceUnitDescriptor(
-	    String persistenceUnitName, Map properties) {
+    public PersistenceUnitDescriptor getPersistenceUnitDescriptor(String persistenceUnitName, Map properties) {
 
 	PersistenceUnitDescriptor persistenceUnit;
 
 	ClassLoader loader = MetaConfig.getOverridenClassLoader(metaConfig);
-	persistenceUnit = getPersistenceXmlDescriptor(persistenceUnitName,
-		properties, loader);
+	persistenceUnit = getPersistenceXmlDescriptor(persistenceUnitName, properties, loader);
 
 	return persistenceUnit;
     }
 
     @Override
     @SuppressWarnings("rawtypes")
-    protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(
-	    String persistenceUnitName, Map properties,
-	    ClassLoader providedClassLoader) {
+    protected EntityManagerFactoryBuilder getEntityManagerFactoryBuilderOrNull(String persistenceUnitName,
+	    Map properties, ClassLoader providedClassLoader) {
 
 	EntityManagerFactoryBuilder builder;
 
-	LOG.tracef(
-		"Attempting to obtain correct EntityManagerFactoryBuilder for persistenceUnitName : %s",
+	LOG.tracef("Attempting to obtain correct EntityManagerFactoryBuilder for persistenceUnitName : %s",
 		persistenceUnitName);
 
 	final Map integration = wrap(properties);
-	PersistenceUnitDescriptor persistenceUnit = getPersistenceXmlDescriptor(
-		persistenceUnitName, properties, providedClassLoader);
+	PersistenceUnitDescriptor persistenceUnit = getPersistenceXmlDescriptor(persistenceUnitName, properties,
+		providedClassLoader);
 	if (persistenceUnit == null) {
 	    LOG.debug("Found no matching persistence units");
 	    builder = null;
 	} else {
-	    builder = Bootstrap.getEntityManagerFactoryBuilder(persistenceUnit,
-		    integration, providedClassLoader);
+	    builder = Bootstrap.getEntityManagerFactoryBuilder(persistenceUnit, integration, providedClassLoader);
 	}
 
 	return builder;
@@ -306,10 +276,10 @@ public class HibernatePersistenceProviderExt extends
     /**
      * Builder class to instantiate {@link HibernatePersistenceProviderExt}
      * class
-     * 
+     *
      * @author Levan Tsinadze
      * @since 0.1.0
-     * 
+     *
      */
     public static class Builder {
 

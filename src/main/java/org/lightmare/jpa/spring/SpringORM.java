@@ -112,7 +112,7 @@ public class SpringORM {
 	if (dataSourceValue == null) {
 	    dataSourceName = null;
 	} else if (dataSourceValue instanceof String) {
-	    dataSourceName = ObjectUtils.cast(dataSourceValue, String.class);
+	    dataSourceName = ObjectUtils.cast(dataSourceValue);
 	} else {
 	    dataSourceName = dataSourceValue.toString();
 	}
@@ -149,8 +149,8 @@ public class SpringORM {
     private void initProperties() {
 
 	if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
-	    persistenceUnit = ObjectUtils.cast(persistenceProvider, HibernatePersistenceProviderExt.class)
-		    .getPersistenceUnitDescriptor(unitName, properties);
+	    HibernatePersistenceProviderExt descriptor = ObjectUtils.cast(persistenceProvider);
+	    persistenceUnit = descriptor.getPersistenceUnitDescriptor(unitName, properties);
 	    properties.putAll(persistenceUnit.getProperties());
 	}
     }
