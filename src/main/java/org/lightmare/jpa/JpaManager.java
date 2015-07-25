@@ -253,11 +253,8 @@ public class JpaManager {
      * @throws IOException
      */
     private SpringORM getSpringORM(PersistenceProvider provider, String unitName) throws IOException {
-
-	SpringORM springORM = new SpringORM.Builder(dataSourceName, provider, unitName).properties(properties)
-		.classLoader(loader).swapDataSource(swapDataSource).build();
-
-	return springORM;
+	return new SpringORM.Builder(dataSourceName, provider, unitName).properties(properties).classLoader(loader)
+		.swapDataSource(swapDataSource).build();
     }
 
     /**
@@ -304,6 +301,37 @@ public class JpaManager {
     }
 
     /**
+     * Initializes {@link ClassLoader} instance
+     *
+     * @return {@link ClassLoader}
+     */
+    private ClassLoader getLoader() {
+
+	if (loader == null) {
+	    loader = LibraryLoader.getContextClassLoader();
+	}
+
+	return loader;
+    }
+
+    /**
+     * Sets entity types
+     *
+     * @param builder
+     * @param overriden
+     * @throws IOException
+     */
+    private void loadEntities(HibernatePersistenceProviderExt.Builder builder, ClassLoader overriden)
+	    throws IOException {
+
+	if (CollectionUtils.valid(classes)) {
+	    builder.setClasses(classes);
+	    // Loads entity classes to current ClassLoader instance
+	    LibraryLoader.loadClasses(classes, overriden);
+	}
+    }
+
+    /**
      * Configures and adds parameters to
      * {@link HibernatePersistenceProviderExt.Builder} instance
      *
@@ -315,21 +343,24 @@ public class JpaManager {
      */
     private void configureProvider(HibernatePersistenceProviderExt.Builder builder) throws IOException {
 
-	if (loader == null) {
-	    loader = LibraryLoader.getContextClassLoader();
-	}
-
-	if (CollectionUtils.valid(classes)) {
-	    builder.setClasses(classes);
-	    // Loads entity classes to current ClassLoader instance
-	    LibraryLoader.loadClasses(classes, loader);
-	}
+	ClassLoader overriden = getLoader();
+	loadEntities(builder, overriden);
 	// configureProvider
 	initPersisteceXmlPath(builder);
 	// Sets additional parameters
 	builder.setSwapDataSource(swapDataSource);
 	builder.setScanArchives(scanArchives);
-	builder.setOverridenClassLoader(loader);
+	builder.setOverridenClassLoader(overriden);
+    }
+
+    /**
+     * Checks configuration and sets appropriated transaction manager
+     */
+    private void configureTransactionManager() {
+
+	if (Boolean.FALSE.equals(swapDataSource)) {
+	    addTransactionManager();
+	}
     }
 
     /**
@@ -352,13 +383,9 @@ public class JpaManager {
 	HibernatePersistenceProviderExt.Builder builder = new HibernatePersistenceProviderExt.Builder();
 	configureProvider(builder);
 	provider = builder.build();
-
-	if (Boolean.FALSE.equals(swapDataSource)) {
-	    addTransactionManager();
-	}
+	configureTransactionManager();
 	// Adds JNDI properties
 	addJndiProperties();
-
 	if (springPersistence) {
 	    emf = getFromSpring(provider, unitName);
 	} else {

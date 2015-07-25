@@ -43,7 +43,7 @@ import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Implementation of {@link UserTransaction} interface for JNDI and EJB beans
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.28-SNAPSHOT
  */
@@ -88,7 +88,7 @@ public class UserTransactionImpl implements UserTransaction {
     /**
      * Adds {@link EntityTransaction} to transactions {@link List} for further
      * processing
-     * 
+     *
      * @param transaction
      */
     public void addTransaction(EntityTransaction transaction) {
@@ -98,7 +98,7 @@ public class UserTransactionImpl implements UserTransaction {
     /**
      * Adds {@link EntityTransaction}s to transactions {@link List} for further
      * processing
-     * 
+     *
      * @param transactions
      */
     public void addTransactions(EntityTransaction... transactions) {
@@ -108,7 +108,7 @@ public class UserTransactionImpl implements UserTransaction {
     /**
      * Adds {@link EntityManager} to collection to close after transactions
      * processing
-     * 
+     *
      * @param em
      */
     public void addEntityManager(EntityManager em) {
@@ -124,7 +124,7 @@ public class UserTransactionImpl implements UserTransaction {
     /**
      * Adds {@link EntityManager}'s to collection to close after transactions
      * processing
-     * 
+     *
      * @param em
      */
     public void addEntityManagers(Collection<EntityManager> ems) {
@@ -167,7 +167,7 @@ public class UserTransactionImpl implements UserTransaction {
      * Adds new {@link EntityTransaction} for
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
      * methods
-     * 
+     *
      * @param entityTransaction
      */
     public void pushReqNew(EntityTransaction entityTransaction) {
@@ -178,7 +178,7 @@ public class UserTransactionImpl implements UserTransaction {
      * Adds {@link EntityManager} to collection to close after
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} type transactions
      * processing
-     * 
+     *
      * @param em
      */
     public void pushReqNewEm(EntityManager em) {
@@ -188,7 +188,7 @@ public class UserTransactionImpl implements UserTransaction {
     /**
      * Adds {@link EntityManager} to collection of not supported declarative
      * transactions
-     * 
+     *
      * @param em
      */
     public void pushFreeEntityManager(EntityManager em) {
@@ -197,7 +197,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     /**
      * Closes each of passed {@link EntityManager}s {@link Stack}
-     * 
+     *
      * @param entityManagers
      */
     private void close(Stack<EntityManager> entityManagers) {
@@ -213,13 +213,12 @@ public class UserTransactionImpl implements UserTransaction {
 
     /**
      * Sets passed {@link EntityTransaction} in rollbackOnly mode
-     * 
+     *
      * @param transaction
      * @throws IllegalStateException
      * @throws SystemException
      */
-    private void setRollbackOnly(EntityTransaction transaction)
-	    throws IllegalStateException, SystemException {
+    private void setRollbackOnly(EntityTransaction transaction) throws IllegalStateException, SystemException {
 
 	if (transaction.isActive()) {
 	    transaction.setRollbackOnly();
@@ -229,12 +228,11 @@ public class UserTransactionImpl implements UserTransaction {
     /**
      * Sets each {@link EntityTransaction}'s from passed {@link Collection} in
      * rollbackOnly mode
-     * 
+     *
      * @throws IllegalStateException
      * @throws SystemException
      */
-    private void setRollbackOnly(
-	    Collection<EntityTransaction> entityTransactions)
+    private void setRollbackOnly(Collection<EntityTransaction> entityTransactions)
 	    throws IllegalStateException, SystemException {
 
 	if (CollectionUtils.valid(entityTransactions)) {
@@ -246,13 +244,12 @@ public class UserTransactionImpl implements UserTransaction {
 
     /**
      * Begins each of passed {@link EntityTransaction}s {@link Collection}
-     * 
+     *
      * @param entityTransactions
      * @throws NotSupportedException
      * @throws SystemException
      */
-    private void begin(Collection<EntityTransaction> entityTransactions)
-	    throws NotSupportedException, SystemException {
+    private void begin(Collection<EntityTransaction> entityTransactions) throws NotSupportedException, SystemException {
 
 	if (CollectionUtils.valid(entityTransactions))
 	    for (EntityTransaction transaction : entityTransactions) {
@@ -262,7 +259,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     /**
      * Commits if passed transaction is active
-     * 
+     *
      * @param transaction
      * @throws RollbackException
      * @throws HeuristicMixedException
@@ -271,10 +268,8 @@ public class UserTransactionImpl implements UserTransaction {
      * @throws IllegalStateException
      * @throws SystemException
      */
-    private void commit(EntityTransaction transaction)
-	    throws RollbackException, HeuristicMixedException,
-	    HeuristicRollbackException, SecurityException,
-	    IllegalStateException, SystemException {
+    private void commit(EntityTransaction transaction) throws RollbackException, HeuristicMixedException,
+	    HeuristicRollbackException, SecurityException, IllegalStateException, SystemException {
 
 	if (transaction.isActive()) {
 	    transaction.commit();
@@ -283,7 +278,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     /**
      * Commits all {@link UserTransaction} cache
-     * 
+     *
      * @throws RollbackException
      * @throws HeuristicMixedException
      * @throws HeuristicRollbackException
@@ -291,10 +286,8 @@ public class UserTransactionImpl implements UserTransaction {
      * @throws IllegalStateException
      * @throws SystemException
      */
-    private void commit(Stack<EntityTransaction> entityTransactions)
-	    throws SecurityException, IllegalStateException, RollbackException,
-	    HeuristicMixedException, HeuristicRollbackException,
-	    SystemException {
+    private void commit(Stack<EntityTransaction> entityTransactions) throws SecurityException, IllegalStateException,
+	    RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException {
 
 	if (CollectionUtils.valid(entityTransactions)) {
 	    EntityTransaction entityTransaction;
@@ -307,7 +300,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     /**
      * Rollbacks passed {@link EntityTransaction} if it is active
-     * 
+     *
      * @param transaction
      */
     private void rollback(EntityTransaction transaction) {
@@ -319,7 +312,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     /**
      * Rollbacks each of {@link EntityTransaction}s {@link Stack}
-     * 
+     *
      * @param entityTransactions
      */
     private void rollback(Stack<EntityTransaction> entityTransactions) {
@@ -356,7 +349,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     /**
      * Begins all require new transactions
-     * 
+     *
      * @throws NotSupportedException
      * @throws SystemException
      */
@@ -379,7 +372,7 @@ public class UserTransactionImpl implements UserTransaction {
      * Commits new {@link EntityTransaction} at the end of
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
      * methods
-     * 
+     *
      * @throws SystemException
      * @throws HeuristicRollbackException
      * @throws HeuristicMixedException
@@ -387,9 +380,8 @@ public class UserTransactionImpl implements UserTransaction {
      * @throws IllegalStateException
      * @throws SecurityException
      */
-    public void commitReqNew() throws SecurityException, IllegalStateException,
-	    RollbackException, HeuristicMixedException,
-	    HeuristicRollbackException, SystemException {
+    public void commitReqNew() throws SecurityException, IllegalStateException, RollbackException,
+	    HeuristicMixedException, HeuristicRollbackException, SystemException {
 
 	try {
 	    commit(requareNews);
@@ -399,9 +391,8 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     @Override
-    public void commit() throws RollbackException, HeuristicMixedException,
-	    HeuristicRollbackException, SecurityException,
-	    IllegalStateException, SystemException {
+    public void commit() throws RollbackException, HeuristicMixedException, HeuristicRollbackException,
+	    SecurityException, IllegalStateException, SystemException {
 
 	try {
 	    if (CollectionUtils.valid(transactions)) {
@@ -417,8 +408,7 @@ public class UserTransactionImpl implements UserTransaction {
      * {@link javax.ejb.TransactionAttributeType#REQUIRES_NEW} annotated bean
      * methods
      */
-    public void rollbackReqNews() throws IllegalStateException,
-	    SecurityException, SystemException {
+    public void rollbackReqNews() throws IllegalStateException, SecurityException, SystemException {
 
 	try {
 	    rollback(requareNews);
@@ -428,8 +418,7 @@ public class UserTransactionImpl implements UserTransaction {
     }
 
     @Override
-    public void rollback() throws IllegalStateException, SecurityException,
-	    SystemException {
+    public void rollback() throws IllegalStateException, SecurityException, SystemException {
 
 	try {
 	    rollback(transactions);
@@ -472,7 +461,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     /**
      * Checks if this object was created by passed {@link BeanHandler} object
-     * 
+     *
      * @param handler
      * @return <code>boolean</code>
      */

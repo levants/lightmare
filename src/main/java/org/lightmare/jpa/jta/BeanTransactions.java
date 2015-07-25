@@ -45,7 +45,7 @@ import org.lightmare.utils.collections.CollectionUtils;
 /**
  * Class to manage {@link javax.transaction.UserTransaction} for
  * {@link javax.ejb.Stateless} bean {@link java.lang.reflect.Proxy} calls
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.28-SNAPSHOT
  */
@@ -61,9 +61,9 @@ public class BeanTransactions {
     /**
      * Inner class to cache {@link EntityTransaction}s and {@link EntityManager}
      * s in one {@link Collection} for {@link UserTransaction} implementation
-     * 
+     *
      * @author Levan Tsinadze
-     * 
+     *
      */
     protected static class TransactionData {
 
@@ -75,13 +75,12 @@ public class BeanTransactions {
     /**
      * Creates new {@link TransactionData} object with passed
      * {@link EntityTransaction} and {@link EntityManager} instances
-     * 
+     *
      * @param entityTransaction
      * @param em
      * @return {@link TransactionData}
      */
-    private static TransactionData createTransactionData(
-	    EntityTransaction entityTransaction, EntityManager em) {
+    private static TransactionData createTransactionData(EntityTransaction entityTransaction, EntityManager em) {
 
 	TransactionData transactionData = new TransactionData();
 
@@ -93,12 +92,11 @@ public class BeanTransactions {
 
     /**
      * Gets existing transaction from cache
-     * 
+     *
      * @param entityTransactions
      * @return {@link UserTransaction}
      */
-    public static UserTransaction getTransaction(
-	    EntityTransaction... entityTransactions) {
+    public static UserTransaction getTransaction(EntityTransaction... entityTransactions) {
 
 	UserTransaction transaction = TransactionHolder.getTransaction();
 
@@ -116,7 +114,7 @@ public class BeanTransactions {
 
     /**
      * Gets existing transaction from cache
-     * 
+     *
      * @param entityTransactions
      * @return {@link UserTransaction}
      */
@@ -130,8 +128,7 @@ public class BeanTransactions {
 	}
 
 	Collection<TransactionData> entityTransactions = getEntityTransactions(ems);
-	TransactionManager.addEntityTransactions(transaction,
-		entityTransactions);
+	TransactionManager.addEntityTransactions(transaction, entityTransactions);
 
 	return transaction;
     }
@@ -139,25 +136,21 @@ public class BeanTransactions {
     /**
      * Gets appropriated {@link TransactionAttributeType} for instant
      * {@link Method} of {@link javax.ejb.Stateless} bean
-     * 
+     *
      * @param metaData
      * @param method
      * @return {@link TransactionAttributeType}
      */
-    public static TransactionAttributeType getTransactionType(
-	    MetaData metaData, Method method) {
+    public static TransactionAttributeType getTransactionType(MetaData metaData, Method method) {
 
 	TransactionAttributeType type;
 
 	if (method == null) {
 	    type = null;
 	} else {
-	    TransactionAttributeType attrType = metaData
-		    .getTransactionAttrType();
-	    TransactionManagementType manType = metaData
-		    .getTransactionManType();
-	    TransactionAttribute attr = method
-		    .getAnnotation(TransactionAttribute.class);
+	    TransactionAttributeType attrType = metaData.getTransactionAttrType();
+	    TransactionManagementType manType = metaData.getTransactionManType();
+	    TransactionAttribute attr = method.getAnnotation(TransactionAttribute.class);
 	    if (manType.equals(TransactionManagementType.CONTAINER)) {
 		if (attr == null) {
 		    type = attrType;
@@ -175,13 +168,12 @@ public class BeanTransactions {
     /**
      * Gets status of passed transaction by {@link UserTransaction#getStatus()}
      * method call
-     * 
+     *
      * @param transaction
      * @return <code>int</code>
      * @throws IOException
      */
-    private static int getStatus(UserTransaction transaction)
-	    throws IOException {
+    private static int getStatus(UserTransaction transaction) throws IOException {
 
 	int status;
 
@@ -196,11 +188,10 @@ public class BeanTransactions {
 
     /**
      * Checks if transaction is active and if it is not begins transaction
-     * 
+     *
      * @param entityTransaction
      */
-    private static void beginEntityTransaction(
-	    EntityTransaction entityTransaction) {
+    private static void beginEntityTransaction(EntityTransaction entityTransaction) {
 
 	if (Boolean.FALSE.equals(entityTransaction.isActive())) {
 	    entityTransaction.begin();
@@ -210,7 +201,7 @@ public class BeanTransactions {
     /**
      * Gets {@link EntityTransaction} from passed {@link EntityManager} and
      * begins it
-     * 
+     *
      * @param em
      * @return {@link EntityTransaction}
      */
@@ -231,12 +222,11 @@ public class BeanTransactions {
     /**
      * Gets {@link EntityTransaction} for each {@link EntityManager} and begins
      * it
-     * 
+     *
      * @param ems
      * @return {@link Collection}<EntityTransaction>
      */
-    private static Collection<TransactionData> getEntityTransactions(
-	    Collection<EntityManager> ems) {
+    private static Collection<TransactionData> getEntityTransactions(Collection<EntityManager> ems) {
 
 	Collection<TransactionData> entityTransactions;
 
@@ -244,8 +234,7 @@ public class BeanTransactions {
 	    entityTransactions = new ArrayList<TransactionData>();
 	    for (EntityManager em : ems) {
 		EntityTransaction entityTransaction = getEntityTransaction(em);
-		TransactionData transactionData = createTransactionData(
-			entityTransaction, em);
+		TransactionData transactionData = createTransactionData(entityTransaction, em);
 		entityTransactions.add(transactionData);
 	    }
 	} else {
@@ -258,15 +247,14 @@ public class BeanTransactions {
     /**
      * Decides whether create or join {@link UserTransaction} by
      * {@link TransactionAttribute} annotation
-     * 
+     *
      * @param handler
      * @param type
      * @param transaction
      * @param em
      * @throws IOException
      */
-    private static void addTransaction(BeanHandler handler,
-	    TransactionAttributeType type, UserTransaction transaction,
+    private static void addTransaction(BeanHandler handler, TransactionAttributeType type, UserTransaction transaction,
 	    Collection<EntityManager> ems) throws IOException {
 
 	Collection<TransactionData> entityTransactions;
@@ -276,12 +264,10 @@ public class BeanTransactions {
 	    TransactionManager.addFreeEntityManagers(transaction, ems);
 	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
 	    entityTransactions = getEntityTransactions(ems);
-	    TransactionManager.addEntityTransactions(transaction,
-		    entityTransactions);
+	    TransactionManager.addEntityTransactions(transaction, entityTransactions);
 	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
 	    entityTransactions = getEntityTransactions(ems);
-	    TransactionManager.addReqNewTransactions(transaction,
-		    entityTransactions);
+	    TransactionManager.addReqNewTransactions(transaction, entityTransactions);
 	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
 	    int status = getStatus(transaction);
 	    if (status == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
@@ -289,8 +275,7 @@ public class BeanTransactions {
 		throw new EJBException(MANDATORY_ERROR);
 	    } else {
 		entityTransactions = getEntityTransactions(ems);
-		TransactionManager.addEntityTransactions(transaction,
-			entityTransactions);
+		TransactionManager.addEntityTransactions(transaction, entityTransactions);
 	    }
 	} else if (type.equals(TransactionAttributeType.NEVER)) {
 	    try {
@@ -303,8 +288,7 @@ public class BeanTransactions {
 	    }
 	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
 	    entityTransactions = getEntityTransactions(ems);
-	    TransactionManager.addEntityTransactions(transaction,
-		    entityTransactions);
+	    TransactionManager.addEntityTransactions(transaction, entityTransactions);
 	}
     }
 
@@ -312,14 +296,14 @@ public class BeanTransactions {
      * Defines which {@link TransactionAttribute} is used on bean {@link Class}
      * and decides whether create or join {@link UserTransaction} by this
      * annotation
-     * 
+     *
      * @param handler
      * @param method
      * @param entityTransaction
      * @throws IOException
      */
-    public static TransactionAttributeType addTransaction(BeanHandler handler,
-	    Method method, Collection<EntityManager> ems) throws IOException {
+    public static TransactionAttributeType addTransaction(BeanHandler handler, Method method,
+	    Collection<EntityManager> ems) throws IOException {
 
 	TransactionAttributeType type;
 
@@ -341,13 +325,12 @@ public class BeanTransactions {
      * {@link TransactionAttributeType} distinguishes only
      * {@link TransactionAttributeType#REQUIRES_NEW} case or uses standard
      * rollback for all other
-     * 
+     *
      * @param type
      * @param handler
      * @throws IOException
      */
-    private static void rollbackTransaction(TransactionAttributeType type)
-	    throws IOException {
+    private static void rollbackTransaction(TransactionAttributeType type) throws IOException {
 
 	UserTransaction transaction = getTransaction();
 
@@ -363,16 +346,14 @@ public class BeanTransactions {
     /**
      * Decides which rollback method to call of {@link UserTransaction}
      * implementation by {@link TransactionAttribute} annotation
-     * 
+     *
      * @param handler
      * @param method
      * @throws IOException
      */
-    public static void rollbackTransaction(BeanHandler handler, Method method)
-	    throws IOException {
+    public static void rollbackTransaction(BeanHandler handler, Method method) throws IOException {
 
-	TransactionAttributeType type = getTransactionType(
-		handler.getMetaData(), method);
+	TransactionAttributeType type = getTransactionType(handler.getMetaData(), method);
 	if (ObjectUtils.notNull(type)) {
 	    rollbackTransaction(type);
 	} else {
@@ -382,13 +363,12 @@ public class BeanTransactions {
 
     /**
      * Commits transactions which should be in scope
-     * 
+     *
      * @param type
      * @param transaction
      * @throws IOException
      */
-    private static void commitScoped(TransactionAttributeType type,
-	    UserTransaction transaction) throws IOException {
+    private static void commitScoped(TransactionAttributeType type, UserTransaction transaction) throws IOException {
 
 	if (type.equals(TransactionAttributeType.REQUIRED)) {
 	    TransactionManager.commit(transaction);
@@ -409,19 +389,17 @@ public class BeanTransactions {
     /**
      * Decides whether commit or not {@link UserTransaction} by
      * {@link TransactionAttribute} annotation
-     * 
+     *
      * @param type
      * @param handler
      * @throws IOException
      */
-    private static void commitTransaction(TransactionAttributeType type,
-	    BeanHandler handler) throws IOException {
+    private static void commitTransaction(TransactionAttributeType type, BeanHandler handler) throws IOException {
 
 	UserTransaction transaction = getTransaction();
 
 	if (TransactionManager.isTransactionalType(type)) {
-	    boolean check = TransactionManager
-		    .checkCaller(transaction, handler);
+	    boolean check = TransactionManager.checkCaller(transaction, handler);
 	    if (check) {
 		commitScoped(type, transaction);
 	    }
@@ -437,16 +415,14 @@ public class BeanTransactions {
     /**
      * Decides whether commit or not {@link UserTransaction} by
      * {@link TransactionAttribute} annotation
-     * 
+     *
      * @param handler
      * @param method
      * @throws IOException
      */
-    public static void commitTransaction(BeanHandler handler, Method method)
-	    throws IOException {
+    public static void commitTransaction(BeanHandler handler, Method method) throws IOException {
 
-	TransactionAttributeType type = getTransactionType(
-		handler.getMetaData(), method);
+	TransactionAttributeType type = getTransactionType(handler.getMetaData(), method);
 	if (ObjectUtils.notNull(type)) {
 	    commitTransaction(type, handler);
 	} else {
@@ -468,12 +444,11 @@ public class BeanTransactions {
     /**
      * Removes {@link UserTransaction} attribute from cache if passed
      * {@link BeanHandler} is first in EJB injection method chain
-     * 
+     *
      * @param handler
      * @param type
      */
-    private static void remove(BeanHandler handler,
-	    TransactionAttributeType type) {
+    private static void remove(BeanHandler handler, TransactionAttributeType type) {
 
 	UserTransaction transaction = TransactionHolder.getTransaction();
 
@@ -484,8 +459,7 @@ public class BeanTransactions {
 		TransactionManager.closeFreeEntityManagers(transaction);
 	    }
 
-	    boolean check = TransactionManager
-		    .checkCaller(transaction, handler);
+	    boolean check = TransactionManager.checkCaller(transaction, handler);
 	    if (check) {
 		TransactionManager.remove(transaction);
 	    }
@@ -498,14 +472,13 @@ public class BeanTransactions {
      * Removes {@link UserTransaction} attribute from cache if
      * {@link TransactionAttributeType} is null or if passed {@link BeanHandler}
      * is first in EJB injection method chain
-     * 
+     *
      * @param handler
      * @param method
      */
     public static void remove(BeanHandler handler, Method method) {
 
-	TransactionAttributeType type = getTransactionType(
-		handler.getMetaData(), method);
+	TransactionAttributeType type = getTransactionType(handler.getMetaData(), method);
 	if (ObjectUtils.notNull(type)) {
 	    remove(handler, type);
 	} else {

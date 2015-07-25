@@ -30,7 +30,7 @@ import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Factory class to initialize and create {@link UserTransaction} instance
- * 
+ *
  * @author Levan Tsinadze
  * @since 0.0.82-SNAPSHOT
  */
@@ -51,7 +51,7 @@ public abstract class UserTransactionFactory {
 
     /**
      * To initialize {@link UserTransaction} instance
-     * 
+     *
      * @param transactions
      * @return {@link UserTransaction}
      */
@@ -62,17 +62,14 @@ public abstract class UserTransactionFactory {
     /**
      * Joins passed {@link EntityTransaction} array to associated
      * {@link UserTransaction} instance
-     * 
+     *
      * @param transaction
      * @param entityTransactions
      */
-    protected static void join(UserTransaction userTransaction,
-	    EntityTransaction... entityTransactions) {
+    protected static void join(UserTransaction userTransaction, EntityTransaction... entityTransactions) {
 
-	if (userTransaction instanceof UserTransactionImpl
-		&& CollectionUtils.valid(entityTransactions)) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction,
-		    UserTransactionImpl.class);
+	if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(entityTransactions)) {
+	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
 	    transaction.addTransactions(entityTransactions);
 	}
     }
