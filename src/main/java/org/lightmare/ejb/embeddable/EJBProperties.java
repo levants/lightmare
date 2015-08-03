@@ -60,6 +60,7 @@ public class EJBProperties {
      *         {@link javax.ejb.embeddable.EJBContainer#PROVIDER} value
      */
     public static Map<?, ?> createProperties() {
+
 	Map<?, ?> properties = new HashMap<Object, Object>();
 	addProvider(properties);
 

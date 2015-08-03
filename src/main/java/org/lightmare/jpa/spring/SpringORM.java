@@ -131,15 +131,22 @@ public class SpringORM {
     }
 
     /**
+     * Initializes data source name and type
+     */
+    private void initDataSource() {
+	initDataSourceName();
+	initDataSourceType();
+    }
+
+    /**
      * Gets {@link DataSource} by its JNDI name for Spring data configuration
      *
      * @return {@link DataSource}
      * @throws IOException
      */
-    private void initDataSource() throws IOException {
+    private void initAndLookUpDataSource() throws IOException {
 
-	initDataSourceName();
-	initDataSourceType();
+	initDataSource();
 	dataSource = JndiManager.lookup(dataSourceName);
     }
 
@@ -274,7 +281,7 @@ public class SpringORM {
 	EntityManagerFactory emf;
 
 	initProperties();
-	initDataSource();
+	initAndLookUpDataSource();
 	JpaTransactionManager transactionManager = transactionManager();
 	emf = transactionManager.getEntityManagerFactory();
 

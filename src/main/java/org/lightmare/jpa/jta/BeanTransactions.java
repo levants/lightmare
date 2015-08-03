@@ -134,6 +134,28 @@ public class BeanTransactions {
     }
 
     /**
+     * Gets appropriated {@link TransactionAttributeType} by annotation or
+     * default
+     *
+     * @param attr
+     * @param attrType
+     * @return {@link TransactionAttributeType} for annotation
+     */
+    private static TransactionAttributeType getTransactionType(TransactionAttribute attr,
+	    TransactionAttributeType attrType) {
+
+	TransactionAttributeType type;
+
+	if (attr == null) {
+	    type = attrType;
+	} else {
+	    type = attr.value();
+	}
+
+	return type;
+    }
+
+    /**
      * Gets appropriated {@link TransactionAttributeType} for instant
      * {@link Method} of {@link javax.ejb.Stateless} bean
      *
@@ -152,11 +174,7 @@ public class BeanTransactions {
 	    TransactionManagementType manType = metaData.getTransactionManType();
 	    TransactionAttribute attr = method.getAnnotation(TransactionAttribute.class);
 	    if (manType.equals(TransactionManagementType.CONTAINER)) {
-		if (attr == null) {
-		    type = attrType;
-		} else {
-		    type = attr.value();
-		}
+		type = getTransactionType(attr, attrType);
 	    } else {
 		type = null;
 	    }

@@ -94,68 +94,6 @@ public class JpaManager {
     private static final Logger LOG = Logger.getLogger(JpaManager.class);
 
     /**
-     * Enumeration for JPA configuration prefixes
-     *
-     * @author Levan Tsinadze
-     * @since 0.1.2
-     *
-     */
-    private static enum HibernatePrefixes {
-
-	SPRING("spring."), JPA("jpa."), DAO("dao.");
-
-	// Configuration properties prefixes
-	private static final String HIBERNATE = "hibernate.";
-
-	private final String prefix;
-
-	private HibernatePrefixes(String prefix) {
-	    this.prefix = prefix;
-	}
-
-	private static String replacePrefix(boolean modified, HibernatePrefixes prefix, String text) {
-
-	    String key;
-
-	    if (modified) {
-		key = text.replace(prefix.prefix, HIBERNATE);
-	    } else {
-		key = text;
-	    }
-
-	    return key;
-	}
-
-	/**
-	 * Checks if passed key has appropriate prefix and if not adds this
-	 * prefix to passed key
-	 *
-	 * @param text
-	 * @return {@link String} key with appropriate prefix
-	 */
-	public static String validKey(String text) {
-
-	    String key = text;
-
-	    HibernatePrefixes[] prefixes = HibernatePrefixes.values();
-	    int length = prefixes.length;
-	    HibernatePrefixes prefix;
-	    boolean modified = Boolean.FALSE;
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length && Boolean.FALSE.equals(modified); i++) {
-		prefix = prefixes[i];
-		modified = text.startsWith(prefix.prefix);
-		key = replacePrefix(modified, prefix, text);
-	    }
-
-	    if (Boolean.FALSE.equals(modified) && Boolean.FALSE.equals(text.startsWith(HIBERNATE))) {
-		key = StringUtils.concat(HIBERNATE, text);
-	    }
-
-	    return key;
-	}
-    }
-
-    /**
      * Private constructor to avoid initialization beside
      * {@link JpaManager.Builder} class
      */
@@ -687,5 +625,105 @@ public class JpaManager {
 	public JpaManager build() {
 	    return manager;
 	}
+    }
+}
+
+/**
+ * Enumeration for JPA configuration prefixes
+ *
+ * @author Levan Tsinadze
+ * @since 0.1.2
+ *
+ */
+enum HibernatePrefixes {
+
+    SPRING("spring."), JPA("jpa."), DAO("dao.");
+
+    // Configuration properties prefixes
+    private static final String HIBERNATE = "hibernate.";
+
+    private final String prefix;
+
+    /**
+     * Validation class for key prefixes
+     *
+     * @author Levan Tsinadze
+     *
+     */
+    private static class KeyValidator {
+
+	String text;
+
+	HibernatePrefixes prefix;
+
+	boolean modified;
+
+	String key;
+
+	public KeyValidator(String text) {
+	    this.text = text;
+	    this.key = text;
+	}
+
+	public String getPrefix() {
+	    return this.prefix.prefix;
+	}
+
+	public boolean hibernateKey() {
+	    return Boolean.FALSE.equals(modified) && Boolean.FALSE.equals(text.startsWith(HIBERNATE));
+	}
+    }
+
+    private HibernatePrefixes(String prefix) {
+	this.prefix = prefix;
+    }
+
+    private static String replacePrefix(KeyValidator validator) {
+
+	String key;
+
+	String text = validator.text;
+	if (validator.modified) {
+	    String prefix = validator.getPrefix();
+	    key = text.replace(prefix, HIBERNATE);
+	} else {
+	    key = text;
+	}
+
+	return key;
+    }
+
+    private static void validateKey(KeyValidator validator) {
+
+	HibernatePrefixes[] prefixes = HibernatePrefixes.values();
+	int length = prefixes.length;
+	String prefix;
+	for (int i = CollectionUtils.FIRST_INDEX; i < length && Boolean.FALSE.equals(validator.modified); i++) {
+	    validator.prefix = prefixes[i];
+	    prefix = validator.getPrefix();
+	    validator.modified = validator.text.startsWith(prefix);
+	    validator.key = replacePrefix(validator);
+	}
+    }
+
+    /**
+     * Checks if passed key has appropriate prefix and if not adds this prefix
+     * to passed key
+     *
+     * @param text
+     * @return {@link String} key with appropriate prefix
+     */
+    public static String validKey(String text) {
+
+	String key;
+
+	KeyValidator validator = new KeyValidator(text);
+	validateKey(validator);
+	key = validator.key;
+	if (validator.hibernateKey()) {
+	    key = StringUtils.concat(HIBERNATE, text);
+	}
+
+	return key;
     }
 }

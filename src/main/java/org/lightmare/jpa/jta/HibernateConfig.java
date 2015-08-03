@@ -22,6 +22,12 @@
  */
 package org.lightmare.jpa.jta;
 
+import static org.hibernate.cfg.AvailableSettings.JTA_PLATFORM;
+import static org.hibernate.cfg.AvailableSettings.TRANSACTION_STRATEGY;
+
+import org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory;
+import org.hibernate.engine.transaction.jta.platform.internal.BitronixJtaPlatform;
+
 /**
  * Properties to use JTA in Hibernate environment
  *
@@ -31,11 +37,10 @@ package org.lightmare.jpa.jta;
 public enum HibernateConfig {
 
     // JTA configuration for Hibernate deployment - JTA platform
-    PLATFORM("hibernate.transaction.jta.platform", "org.hibernate.service.jta.platform.internal.BitronixJtaPlatform"),
+    PLATFORM(JTA_PLATFORM, BitronixJtaPlatform.class.getName()),
 
     // factory class
-    FACTORY("hibernate.transaction.factory_class",
-	    "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory");
+    FACTORY(TRANSACTION_STRATEGY, JtaTransactionFactory.class.getName());
 
     public final String key;
 
