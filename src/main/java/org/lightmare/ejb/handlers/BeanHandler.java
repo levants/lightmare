@@ -397,6 +397,22 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
+     * Adds transaction field
+     *
+     * @param ems
+     * @param method
+     * @throws IOException
+     */
+    private void addTransactionField(final Collection<EntityManager> ems, final Method method) throws IOException {
+
+	if (transactionField == null) {
+	    BeanTransactions.addTransaction(this, method, ems);
+	} else {
+	    setTransactionField(ems);
+	}
+    }
+
+    /**
      * Invokes method surrounded with {@link UserTransaction} begin and commit
      *
      * @param em
@@ -408,11 +424,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     private Object invokeBeanMethod(final Collection<EntityManager> ems, final Method method, Object[] arguments)
 	    throws IOException {
 
-	if (transactionField == null) {
-	    BeanTransactions.addTransaction(this, method, ems);
-	} else {
-	    setTransactionField(ems);
-	}
+	addTransactionField(ems, method);
 	// Calls interceptors for this method or bean instance
 	Object[] intercepteds = interceptorHandel.callInterceptors(method, arguments);
 	// Calls for bean method with "intercepted" parameters

@@ -29,23 +29,25 @@ public class BeanNotDeployedException extends IOException {
 
     /**
      * Initializes {@link BeanInUseException} with passed error message format
-     * 
+     *
      * @param message
      * @param formats
      * @return {@link BeanInUseException}
      */
-    public static BeanNotDeployedException get(String message,
-	    Object... formats) {
+    public static BeanNotDeployedException get(String message, Object... formats) {
+
+	BeanNotDeployedException exception;
 
 	String errorMessage = LogUtils.logMessage(message, formats);
+	exception = new BeanNotDeployedException(errorMessage);
 
-	return new BeanNotDeployedException(errorMessage);
+	return exception;
     }
 
     /**
      * Initializes {@link BeanInUseException} with existing error message format
      * and passed bean name
-     * 
+     *
      * @param bean
      * @return {@link BeanInUseException}
      */
