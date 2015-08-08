@@ -30,9 +30,9 @@ import javax.persistence.EntityManagerFactory;
 /**
  * Container class for {@link EntityManagerFactory} with check if connection
  * configuration is in progress and user count
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  * @see org.lightmare.deploy.BeanLoader#loadBean(org.lightmare.deploy.BeanLoader.BeanParameters)
  * @see org.lightmare.cache.ConnectionContainer#cacheSemaphore(String, String)
  * @see org.lightmare.cache.ConnectionContainer#getConnection(String)

@@ -51,9 +51,9 @@ import org.lightmare.utils.logging.LogUtils;
  * Container class to save {@link MetaData} for bean interface {@link Class},
  * connections ({@link EntityManagerFactory}) for unit names and
  * {@link Configuration}s for distinct deployments
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  */
 public class MetaContainer {
 
@@ -73,7 +73,7 @@ public class MetaContainer {
 
     /**
      * Gets cached {@link MetaCreator} object
-     * 
+     *
      * @return {@link MetaCreator}
      */
     public static MetaCreator getCreator() {
@@ -89,7 +89,7 @@ public class MetaContainer {
 
     /**
      * Caches {@link MetaCreator} object
-     * 
+     *
      * @param metaCreator
      */
     public static void setCreator(MetaCreator metaCreator) {
@@ -100,7 +100,7 @@ public class MetaContainer {
 
     /**
      * Clones passed {@link Configuration} instance
-     * 
+     *
      * @param configuration
      * @return {@link Configuration} cloned
      * @throws IOException
@@ -122,7 +122,7 @@ public class MetaContainer {
 
     /**
      * Caches {@link Configuration} for specific {@link URL} array
-     * 
+     *
      * @param archives
      * @param config
      */
@@ -142,7 +142,7 @@ public class MetaContainer {
 
     /**
      * Gets {@link Configuration} from cache for specific {@link URL} array
-     * 
+     *
      * @param archives
      * @param hinbernateConfig
      */
@@ -164,7 +164,7 @@ public class MetaContainer {
     /**
      * Adds {@link MetaData} to cache on specified bean name if absent and
      * returns previous value on this name or null if such value does not exists
-     * 
+     *
      * @param beanName
      * @param metaData
      * @return
@@ -176,7 +176,7 @@ public class MetaContainer {
     /**
      * Check if {@link MetaData} is ceched for specified bean name if true
      * throws {@link BeanInUseException}
-     * 
+     *
      * @param beanName
      * @param metaData
      * @throws BeanInUseException
@@ -193,7 +193,7 @@ public class MetaContainer {
     /**
      * Checks if bean with associated name deployed and if it is, then checks if
      * deployment is in progress
-     * 
+     *
      * @param beanName
      * @return boolean
      */
@@ -212,7 +212,7 @@ public class MetaContainer {
 
     /**
      * Checks if bean with associated name is already deployed
-     * 
+     *
      * @param beanName
      * @return boolean
      */
@@ -222,7 +222,7 @@ public class MetaContainer {
 
     /**
      * Waits while passed {@link MetaData} instance is in progress
-     * 
+     *
      * @param inProgress
      * @param metaData
      * @throws IOException
@@ -243,7 +243,7 @@ public class MetaContainer {
     /**
      * Waits while {@link MetaData#isInProgress()} is true (and if it is calls
      * {@link MetaContainer#awaitProgress(boolean, MetaData)} method)
-     * 
+     *
      * @param metaData
      * @throws IOException
      */
@@ -260,7 +260,7 @@ public class MetaContainer {
     /**
      * Gets deployed bean {@link MetaData} by name without checking deployment
      * progress
-     * 
+     *
      * @param beanName
      * @return {@link MetaData}
      */
@@ -271,7 +271,7 @@ public class MetaContainer {
     /**
      * Check if {@link MetaData} with associated name deployed and if it is
      * waits while {@link MetaData#isInProgress()} true before return it
-     * 
+     *
      * @param beanName
      * @return {@link MetaData}
      * @throws IOException
@@ -291,7 +291,7 @@ public class MetaContainer {
 
     /**
      * Gets bean name by containing archive {@link URL} address
-     * 
+     *
      * @param url
      * @return {@link Collection}<code><String></code>
      */
@@ -308,7 +308,7 @@ public class MetaContainer {
 
     /**
      * Checks containing archive {@link URL} address
-     * 
+     *
      * @param url
      * @return <code>boolean</code>
      */
@@ -326,7 +326,7 @@ public class MetaContainer {
     /**
      * Removes cached EJB bean names {@link Collection} by containing file
      * {@link URL} as key
-     * 
+     *
      * @param url
      */
     public static void removeBeanNames(URL url) {
@@ -338,7 +338,7 @@ public class MetaContainer {
 
     /**
      * Caches EJB bean name by {@link URL} of jar ear or any file
-     * 
+     *
      * @param beanName
      */
     public static void addBeanName(URL url, String beanName) {
@@ -356,7 +356,7 @@ public class MetaContainer {
 
     /**
      * Lists {@link Set} for deployed application {@link URL}'s
-     * 
+     *
      * @return {@link Set}<URL>
      */
     public static Set<URL> listApplications() {
@@ -366,7 +366,7 @@ public class MetaContainer {
 
     /**
      * Clears connection from cache for passed {@link MetaData} instance
-     * 
+     *
      * @param metaData
      * @throws IOException
      */
@@ -382,8 +382,8 @@ public class MetaContainer {
 		    semaphore = ConnectionContainer.getConnection(unitName);
 		}
 		// Clears connection from cache
-		if (ObjectUtils.notNull(semaphore)
-			&& semaphore.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS) {
+		if (ObjectUtils.notNull(semaphore) && semaphore
+			.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS) {
 		    ConnectionContainer.removeConnection(unitName);
 		}
 	    }
@@ -393,7 +393,7 @@ public class MetaContainer {
     /**
      * Removes EJB bean (removes it's {@link MetaData} from cache) by bean class
      * name
-     * 
+     *
      * @param beanName
      * @throws IOException
      */
@@ -427,7 +427,7 @@ public class MetaContainer {
     /**
      * Removes EJB bean (removes it's {@link MetaData} from cache) by
      * {@link URL} of archive file
-     * 
+     *
      * @param url
      * @throws IOException
      */
@@ -453,7 +453,7 @@ public class MetaContainer {
     /**
      * Removes EJB bean (removes it's {@link MetaData} from cache) by
      * {@link File} of archive file
-     * 
+     *
      * @param file
      * @throws IOException
      */
@@ -470,7 +470,7 @@ public class MetaContainer {
     /**
      * Removes EJB bean (removes it's {@link MetaData} from cache) by
      * {@link File} path of archive file
-     * 
+     *
      * @param path
      * @throws IOException
      */
@@ -486,7 +486,7 @@ public class MetaContainer {
 
     /**
      * Removed {@link MetaData} from cache by EJB bean name
-     * 
+     *
      * @param beanName
      */
     public static void removeMeta(String beanName) {
@@ -496,7 +496,7 @@ public class MetaContainer {
     /**
      * Gets {@link java.util.Iterator}<MetaData> over all cached
      * {@link org.lightmare.cache.MetaData} objects
-     * 
+     *
      * @return {@link java.util.Iterator}<MetaData>
      */
     public static Iterator<MetaData> getBeanClasses() {

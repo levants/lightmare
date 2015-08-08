@@ -32,9 +32,9 @@ import org.lightmare.utils.StringUtils;
 /**
  * Defines special persistence unit name of {@link javax.persistence.Entity}
  * annotated class for scanning at start time and load JPA / ORM entities.
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.16-SNAPSHOT
+ * @since 0.0.16
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

@@ -27,9 +27,9 @@ import javax.transaction.UserTransaction;
 /**
  * Caches {@link javax.transaction.Transaction} objects for each method call in
  * {@link ThreadLocal} cache
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.81-SNAPSHOT
+ * @since 0.0.81
  * @see org.lightmare.jpa.jta.UserTransactionImpl
  * @see org.lightmare.jpa.jta.BeanTransactions#getTransaction(java.util.Collection)
  * @see org.lightmare.jpa.jta.BeanTransactions#getTransaction(javax.persistence.EntityTransaction...)
@@ -43,7 +43,7 @@ public class TransactionHolder {
 
     /**
      * Gets {@link UserTransaction} object from {@link ThreadLocal} cache
-     * 
+     *
      * @return {@link UserTransaction}
      */
     public static UserTransaction getTransaction() {
@@ -53,7 +53,7 @@ public class TransactionHolder {
 
     /**
      * Caches {@link UserTransaction} object in {@link ThreadLocal} cache
-     * 
+     *
      * @param transaction
      */
     public static void setTransaction(UserTransaction transaction) {

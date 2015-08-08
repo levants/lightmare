@@ -28,10 +28,10 @@ import org.lightmare.utils.fs.codecs.ArchiveUtils;
  * Container class for {@link org.lightmare.utils.fs.codecs.ArchiveUtils} files
  * container and {@link ClassLoader} associated with this files for each
  * {@link java.net.URL} to cache and avoid duplicates at deploy time.
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
- * 
+ * @since 0.0.45
+ *
  * @see org.lightmare.deploy.MetaCreator
  */
 public class ArchiveData {

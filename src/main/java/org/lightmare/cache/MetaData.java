@@ -42,9 +42,9 @@ import org.lightmare.utils.collections.CollectionUtils;
 /**
  * Container class to save bean {@link Field} with annotation
  * {@link PersistenceContext} and bean class
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  * @see org.lightmare.deploy.BeanLoader#loadBean(org.lightmare.deploy.BeanLoader.BeanParameters)
  * @see org.lightmare.ejb.EjbConnector#connectToBean(MetaData)
  * @see org.lightmare.ejb.EjbConnector#createRestHandler(MetaData)
@@ -150,7 +150,7 @@ public class MetaData {
 
     /**
      * Caches passed connection information
-     * 
+     *
      * @param connection
      */
     public void addConnection(ConnectionData connection) {
@@ -165,7 +165,7 @@ public class MetaData {
     /**
      * Caches {@link javax.persistence.PersistenceUnit} annotated field and unit
      * name to cache
-     * 
+     *
      * @param unitName
      * @param unitField
      */
@@ -181,7 +181,7 @@ public class MetaData {
     /**
      * Adds {@link javax.ejb.PersistenceUnit} annotated field to
      * {@link MetaData} for cache
-     * 
+     *
      * @param unitFields
      */
     public void addUnitFields(Collection<Field> unitFields) {
@@ -246,7 +246,7 @@ public class MetaData {
 
     /**
      * Adds passed {@link InjectionData} to cache
-     * 
+     *
      * @param inject
      */
     public void addInject(InjectionData inject) {
@@ -265,7 +265,7 @@ public class MetaData {
     /**
      * Offers {@link InterceptorData} to {@link Stack} to process request by
      * order
-     * 
+     *
      * @param interceptor
      */
     public void addInterceptor(InterceptorData interceptor) {

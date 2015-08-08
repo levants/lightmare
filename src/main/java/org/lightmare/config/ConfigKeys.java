@@ -35,7 +35,7 @@ import org.lightmare.utils.collections.CollectionUtils;
  * Keeps keys and default values for configuration.
  *
  * @author Levan Tsinadze
- * @since 0.0.80-SNAPSHOT
+ * @since 0.0.80
  * @see Configuration
  */
 public enum ConfigKeys {
@@ -61,12 +61,13 @@ public enum ConfigKeys {
     MODULES(EJBContainer.MODULES, CollectionUtils.EMPTY_ARRAY), // Sets modules
 
     // Properties for data source path and deployment path
-    DEMPLOYMENT_PATH("deploymentPath",
-	    new HashSet<DeploymentDirectory>(Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
+    DEMPLOYMENT_PATH("deploymentPath", new HashSet<DeploymentDirectory>(
+	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
 
-    DATA_SOURCE_PATH("dataSourcePath", new HashSet<String>(Arrays.asList("./ds"))), // Data
-										    // source
-										    // path
+    DATA_SOURCE_PATH("dataSourcePath",
+	    new HashSet<String>(Arrays.asList("./ds"))), // Data
+							 // source
+							 // path
 
     // Properties for data sources
     DATASOURCES("datasources"), // Collection of data sources

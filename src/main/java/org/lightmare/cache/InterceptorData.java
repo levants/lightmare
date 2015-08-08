@@ -27,9 +27,9 @@ import java.lang.reflect.Method;
 /**
  * Container class to cache {@link javax.interceptor.Interceptors} annotation
  * defined data
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.57-SNAPSHOT
+ * @since 0.0.57
  */
 public class InterceptorData {
 

@@ -32,9 +32,9 @@ import org.lightmare.deploy.BeanLoader;
 
 /**
  * Caches all temporal {@link File} instances and deletes them after processing
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  * @see org.lightmare.deploy.BeanLoader#removeResources(List)
  * @see org.lightmare.utils.finalizers.ShutDown
  */
@@ -45,7 +45,7 @@ public class TmpResources {
 
     /**
      * Caches passed collection of temporal files
-     * 
+     *
      * @param files
      */
     public void addFile(List<File> files) {
@@ -59,7 +59,7 @@ public class TmpResources {
 
     /**
      * Deletes all temporal files used for deployment
-     * 
+     *
      * @throws IOException
      */
     public void removeTempFiles() throws IOException {
@@ -73,7 +73,7 @@ public class TmpResources {
 
     /**
      * Gets size of cached temporal files
-     * 
+     *
      * @return <code>int</code>
      */
     public int size() {

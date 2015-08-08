@@ -42,9 +42,9 @@ import org.lightmare.utils.namimg.NamingUtils;
 
 /**
  * Container class to cache connections and connection types.
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.65-SNAPSHOT
+ * @since 0.0.65
  * @see org.lightmare.deploy.BeanLoader#initializeDatasource(org.lightmare.deploy.BeanLoader.DataSourceParameters)
  * @see org.lightmare.deploy.BeanLoader#loadBean(org.lightmare.deploy.BeanLoader.BeanParameters)
  * @see org.lightmare.ejb.EjbConnector
@@ -62,7 +62,7 @@ public class ConnectionContainer {
 
     /**
      * Checks if connection with passed unit name is cached.
-     * 
+     *
      * @param unitName
      * @return <code>boolean</code>
      */
@@ -79,7 +79,7 @@ public class ConnectionContainer {
 
     /**
      * Gets {@link ConnectionSemaphore} from cache without waiting for lock.
-     * 
+     *
      * @param unitName
      * @return {@link ConnectionSemaphore}
      */
@@ -89,7 +89,7 @@ public class ConnectionContainer {
 
     /**
      * Checks if deployed {@link ConnectionSemaphore} components.
-     * 
+     *
      * @param semaphore
      * @return <code>boolean</code>
      */
@@ -100,7 +100,7 @@ public class ConnectionContainer {
 
     /**
      * Initializes nw {@link ConnectionSemaphore} and sets default properties
-     * 
+     *
      * @param unitName
      * @return {@link ConnectionSemaphore}
      */
@@ -118,7 +118,7 @@ public class ConnectionContainer {
 
     /**
      * Checks and gets {@link ConnectionSemaphore} from cache
-     * 
+     *
      * @param current
      * @param semaphore
      * @return {@link ConnectionSemaphore} instance
@@ -140,7 +140,7 @@ public class ConnectionContainer {
 
     /**
      * Checks and gets {@link ConnectionSemaphore} from cache
-     * 
+     *
      * @param unitName
      * @return {@link ConnectionSemaphore} instance
      */
@@ -163,7 +163,7 @@ public class ConnectionContainer {
 
     /**
      * Creates and locks {@link ConnectionSemaphore} instance.
-     * 
+     *
      * @param unitName
      * @return {@link ConnectionSemaphore}
      */
@@ -178,7 +178,7 @@ public class ConnectionContainer {
 
     /**
      * Caches {@link ConnectionSemaphore} instance if it is not already
-     * 
+     *
      * @param jndiName
      * @param semaphore
      */
@@ -196,7 +196,7 @@ public class ConnectionContainer {
 
     /**
      * Caches {@link ConnectionSemaphore} with lock.
-     * 
+     *
      * @param unitName
      * @param jndiName
      * @return {@link ConnectionSemaphore}
@@ -220,7 +220,7 @@ public class ConnectionContainer {
 
     /**
      * Waits until {@link ConnectionSemaphore} is in progress (locked).
-     * 
+     *
      * @param semaphore
      */
     private static void awaitConnection(ConnectionSemaphore semaphore) {
@@ -242,7 +242,7 @@ public class ConnectionContainer {
     /**
      * Checks if {@link ConnectionSemaphore} is in progress and if it is waits
      * while lock is released.
-     * 
+     *
      * @param semaphore
      * @return <code>boolean</code>
      */
@@ -263,7 +263,7 @@ public class ConnectionContainer {
     /**
      * Checks if {@link ConnectionSemaphore#isInProgress()} for appropriated
      * unit name.
-     * 
+     *
      * @param jndiName
      * @return <code>boolean</code>
      */
@@ -280,7 +280,7 @@ public class ConnectionContainer {
     /**
      * Gets {@link ConnectionSemaphore} from cache, awaits if connection
      * instantiation is in progress.
-     * 
+     *
      * @param unitName
      * @return {@link ConnectionSemaphore}
      * @throws IOException
@@ -297,7 +297,7 @@ public class ConnectionContainer {
     /**
      * Gets {@link EntityManagerFactory} from {@link ConnectionSemaphore},
      * awaits if connection.
-     * 
+     *
      * @param unitName
      * @return {@link EntityManagerFactory}
      * @throws IOException
@@ -324,7 +324,7 @@ public class ConnectionContainer {
 
     /**
      * Removes connection from {@link javax.naming.Context} cache.
-     * 
+     *
      * @param semaphore
      */
     private static void unbindConnection(ConnectionSemaphore semaphore) {
@@ -338,9 +338,8 @@ public class ConnectionContainer {
 		    JndiManager.unbind(fullJndiName);
 		}
 	    } catch (IOException ex) {
-		LogUtils.error(LOG, ex,
-			NamingUtils.COULD_NOT_UNBIND_NAME_ERROR, jndiName,
-			ex.getMessage());
+		LogUtils.error(LOG, ex, NamingUtils.COULD_NOT_UNBIND_NAME_ERROR,
+			jndiName, ex.getMessage());
 	    }
 	}
     }
@@ -364,7 +363,7 @@ public class ConnectionContainer {
     /**
      * Closes all {@link javax.persistence.EntityManagerFactory} cached
      * instances.
-     * 
+     *
      * @throws IOException
      */
     public static void closeConnections() throws IOException {
@@ -376,7 +375,7 @@ public class ConnectionContainer {
     /**
      * Closes connection ({@link EntityManagerFactory}) in passed
      * {@link ConnectionSemaphore}.
-     * 
+     *
      * @param semaphore
      */
     private static void closeConnection(ConnectionSemaphore semaphore) {
@@ -403,7 +402,7 @@ public class ConnectionContainer {
     /**
      * Removes {@link ConnectionSemaphore} from cache and removes bindings of
      * JNDI name from {@link javax.naming.Context} lookups.
-     * 
+     *
      * @param unitName
      */
     public static void removeConnection(String unitName) {
@@ -418,7 +417,7 @@ public class ConnectionContainer {
 
     /**
      * Caches {@link PoolProviderType} to use for data source deployment.
-     * 
+     *
      * @param jndiName
      * @param type
      */
@@ -429,11 +428,12 @@ public class ConnectionContainer {
 
     /**
      * Gets configured {@link PoolProviderType} for data sources deployment.
-     * 
+     *
      * @param jndiName
      * @return {@link PoolProviderType}
      */
-    public static PoolProviderType getAndRemovePoolProviderType(String jndiName) {
+    public static PoolProviderType getAndRemovePoolProviderType(
+	    String jndiName) {
 
 	PoolProviderType type = POOL_CONFIG_TYPES.get(jndiName);
 
@@ -449,7 +449,7 @@ public class ConnectionContainer {
 
     /**
      * Closes all connections and data sources and clears all cached data.
-     * 
+     *
      * @throws IOException
      */
     public static void clear() throws IOException {

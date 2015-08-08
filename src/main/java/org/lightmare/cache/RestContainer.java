@@ -36,9 +36,9 @@ import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Container class to cache REST resource classes
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.65-SNAPSHOT
+ * @since 0.0.65
  * @see org.lightmare.rest.providers.RestProvider#reload()
  */
 public class RestContainer {
@@ -52,7 +52,7 @@ public class RestContainer {
     /**
      * Caches passed REST {@link Resource} for appropriated {@link Class} of EJB
      * bean (as resource handler)
-     * 
+     *
      * @param handlerClass
      * @param resource
      */
@@ -63,7 +63,7 @@ public class RestContainer {
     /**
      * Finds if {@link Resource} has handler instances and if they are instance
      * of {@link RestInflector} and gets appropriate EJB bean class
-     * 
+     *
      * @param resource
      * @return {@link Class}
      */
@@ -91,7 +91,7 @@ public class RestContainer {
     /**
      * Gets handler EJB bean class directly from {@link Resource} or from
      * handler instances
-     * 
+     *
      * @param resource
      * @return {@link Class}
      */
@@ -112,7 +112,7 @@ public class RestContainer {
     /**
      * Caches passed REST {@link Resource} associated to it's {@link Class}
      * instance
-     * 
+     *
      * @param resource
      */
     public static void putResource(Resource resource) {
@@ -126,7 +126,7 @@ public class RestContainer {
     /**
      * Caches {@link Collection} of REST {@link Resource} instances associated
      * to their {@link Class} instance
-     * 
+     *
      * @param resources
      */
     public static void putResources(Collection<Resource> resources) {
@@ -140,7 +140,7 @@ public class RestContainer {
 
     /**
      * Gets REST {@link Resource} appropriate to passed {@link Class} instance
-     * 
+     *
      * @param resourceClass
      * @return {@link Resource}
      */
@@ -150,7 +150,7 @@ public class RestContainer {
 
     /**
      * Removes resource appropriate to passed {@link Class} instance
-     * 
+     *
      * @param resourceClass
      */
     public static void removeResource(Class<?> resourceClass) {
@@ -159,7 +159,7 @@ public class RestContainer {
 
     /**
      * Removes passed {@link Resource} from cache
-     * 
+     *
      * @param resource
      */
     public static void removeResource(Resource resource) {
@@ -172,7 +172,7 @@ public class RestContainer {
 
     /**
      * Gets size of cached {@link Resource} instances
-     * 
+     *
      * @return <code>int</code>
      */
     public static int size() {
@@ -181,7 +181,7 @@ public class RestContainer {
 
     /**
      * Removes passed set of {@link Resource} instances from REST service
-     * 
+     *
      * @param existingResources
      */
     public static void removeResources(Set<Resource> existingResources) {
@@ -195,7 +195,7 @@ public class RestContainer {
 
     /**
      * Checks if application has REST resources
-     * 
+     *
      * @return <code>boolean</code>
      */
     public static boolean hasRest() {

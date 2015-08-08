@@ -32,11 +32,11 @@ import org.lightmare.utils.ObjectUtils;
  * Container class to cache connection with descriptors ( {@link Field}s, unit
  * name, JNDI name and {@link ConnectionSemaphore}) in
  * {@link org.lightmare.cache.MetaData} for each EJB bean
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  * @see org.lightmare.deploy.BeanLoader#loadBean(org.lightmare.deploy.BeanLoader.BeanParameters)
- * 
+ *
  */
 public class ConnectionData {
 

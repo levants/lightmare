@@ -29,9 +29,9 @@ import org.lightmare.utils.fs.FileType;
 /**
  * Caches information about deployed file {@link URL} and {@link FileType} for
  * hot deployment processing
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  * @see org.lightmare.deploy.MetaCreator
  * @see org.lightmare.deploy.deployers.BeanDeployer
  * @see org.lightmare.utils.fs.WatchUtils
