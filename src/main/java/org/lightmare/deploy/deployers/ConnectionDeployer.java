@@ -39,7 +39,7 @@ import org.lightmare.libraries.LibraryLoader;
  * {@link javax.sql.DataSource}
  *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  */
 public class ConnectionDeployer implements Callable<Boolean> {
 
@@ -49,7 +49,8 @@ public class ConnectionDeployer implements Callable<Boolean> {
 
     private boolean countedDown;
 
-    private static final Logger LOG = Logger.getLogger(ConnectionDeployer.class);
+    private static final Logger LOG = Logger
+	    .getLogger(ConnectionDeployer.class);
 
     public ConnectionDeployer(DataSourceParameters parameters) {
 	this.properties = parameters.properties;

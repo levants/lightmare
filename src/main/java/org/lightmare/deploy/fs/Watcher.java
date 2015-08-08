@@ -66,7 +66,7 @@ import org.lightmare.utils.logging.LogUtils;
  * 1.7 or above
  *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  */
 public class Watcher implements Runnable {
 
@@ -108,7 +108,7 @@ public class Watcher implements Runnable {
      * Defines file types for watch service
      *
      * @author Levan Tsinadze
-     * @since 0.0.45-SNAPSHOT
+     * @since 0.0.45
      */
     private static enum WatchFileType {
 
@@ -119,7 +119,7 @@ public class Watcher implements Runnable {
      * To filter only deployed sub files from directory
      *
      * @author Levan Tsinadze
-     * @since 0.0.45-SNAPSHOT
+     * @since 0.0.45
      */
     private static class DeployFiletr implements FileFilter {
 

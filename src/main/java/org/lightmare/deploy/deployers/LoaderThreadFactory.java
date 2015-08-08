@@ -10,7 +10,7 @@ import org.lightmare.utils.StringUtils;
  * Implementation of {@link ThreadFactory} interface for application loading
  *
  * @author Levan Tsinadze
- * @since 0.0.77-SNAPSHOT
+ * @since 0.0.77
  */
 public class LoaderThreadFactory implements ThreadFactory {
 

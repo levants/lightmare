@@ -48,7 +48,7 @@ import org.lightmare.utils.io.IOUtils;
  * sources
  *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  */
 @WebServlet("/DeployManager")
 public class DeployManager extends HttpServlet {

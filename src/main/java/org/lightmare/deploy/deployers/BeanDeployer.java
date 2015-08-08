@@ -83,7 +83,7 @@ import org.lightmare.utils.rest.RestCheck;
  * session beans and cache {@link MetaData} keyed by bean name
  *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  */
 public class BeanDeployer implements Callable<String> {
 
@@ -159,9 +159,11 @@ public class BeanDeployer implements Callable<String> {
      * @param semaphore
      * @throws IOException
      */
-    private void initOrmCreator(ConnectionSemaphore semaphore) throws IOException {
+    private void initOrmCreator(ConnectionSemaphore semaphore)
+	    throws IOException {
 
-	ORMCreator orm = new ORMCreator.Builder(creator).setUnitName(semaphore.getUnitName()).setBeanName(beanName)
+	ORMCreator orm = new ORMCreator.Builder(creator)
+		.setUnitName(semaphore.getUnitName()).setBeanName(beanName)
 		.setClassLoader(loader).setConfiguration(configuration).build();
 	orm.configureConnection();
     }
@@ -174,7 +176,8 @@ public class BeanDeployer implements Callable<String> {
      * @param jndiName
      * @throws IOException
      */
-    private void lockSemaphore(ConnectionSemaphore semaphore) throws IOException {
+    private void lockSemaphore(ConnectionSemaphore semaphore)
+	    throws IOException {
 
 	synchronized (semaphore) {
 	    if (Boolean.FALSE.equals(semaphore.isCheck())) {
@@ -244,7 +247,8 @@ public class BeanDeployer implements Callable<String> {
 
 	if (StringUtils.valid(jndiName)) {
 	    jndiName = NamingUtils.createJpaJndiName(jndiName);
-	    checkForEmf = checkForEmf && ConnectionContainer.checkForEmf(jndiName);
+	    checkForEmf = checkForEmf
+		    && ConnectionContainer.checkForEmf(jndiName);
 	}
 
 	return checkForEmf;
@@ -256,7 +260,8 @@ public class BeanDeployer implements Callable<String> {
      * @param connection
      * @throws IOException
      */
-    private void configConnection(ConnectionData connection) throws IOException {
+    private void configConnection(ConnectionData connection)
+	    throws IOException {
 
 	String unitName = connection.getUnitName();
 	String jndiName = connection.getJndiName();
@@ -283,7 +288,8 @@ public class BeanDeployer implements Callable<String> {
      * @param connection
      * @param context
      */
-    private void setConnectionNames(ConnectionData connection, PersistenceContext context) {
+    private void setConnectionNames(ConnectionData connection,
+	    PersistenceContext context) {
 
 	String unitName = context.unitName();
 	String jndiName = context.name();
@@ -299,7 +305,8 @@ public class BeanDeployer implements Callable<String> {
      * @return <code>boolean</code>
      * @throws IOException
      */
-    private void identifyConnections(PersistenceContext context, Field connectionField) throws IOException {
+    private void identifyConnections(PersistenceContext context,
+	    Field connectionField) throws IOException {
 
 	ConnectionData connection = new ConnectionData();
 	connection.setConnectionField(connectionField);
@@ -346,7 +353,8 @@ public class BeanDeployer implements Callable<String> {
      */
     private void retriveConnection(Field field) throws IOException {
 
-	PersistenceContext context = field.getAnnotation(PersistenceContext.class);
+	PersistenceContext context = field
+		.getAnnotation(PersistenceContext.class);
 	Resource resource = field.getAnnotation(Resource.class);
 	PersistenceUnit unit = field.getAnnotation(PersistenceUnit.class);
 	EJB ejbAnnot = field.getAnnotation(EJB.class);
@@ -393,7 +401,8 @@ public class BeanDeployer implements Callable<String> {
 	// Sets fields for injection (PersistenceContext, PersistenceUnit,
 	// Resource, EJB) as accessible
 	if (CollectionUtils.valid(accessibleFields)) {
-	    AccessibleObject[] accessibleObjects = CollectionUtils.toArray(accessibleFields, AccessibleObject.class);
+	    AccessibleObject[] accessibleObjects = CollectionUtils
+		    .toArray(accessibleFields, AccessibleObject.class);
 	    AccessibleObject.setAccessible(accessibleObjects, Boolean.TRUE);
 	}
     }
@@ -425,8 +434,10 @@ public class BeanDeployer implements Callable<String> {
      */
     private void checkOnTransactional(Class<?> beanClass) {
 
-	TransactionAttribute transactionAttribute = beanClass.getAnnotation(TransactionAttribute.class);
-	TransactionManagement transactionManagement = beanClass.getAnnotation(TransactionManagement.class);
+	TransactionAttribute transactionAttribute = beanClass
+		.getAnnotation(TransactionAttribute.class);
+	TransactionManagement transactionManagement = beanClass
+		.getAnnotation(TransactionManagement.class);
 	boolean transactional = Boolean.FALSE;
 	TransactionAttributeType transactionAttrType;
 	TransactionManagementType transactionManType;
@@ -454,8 +465,9 @@ public class BeanDeployer implements Callable<String> {
      * @param interceptorClasses
      * @throws IOException
      */
-    private void cacheInterceptors(Class<?> beanClass, Class<?>[] interceptorClasses, Method beanMethod)
-	    throws IOException {
+    private void cacheInterceptors(Class<?> beanClass,
+	    Class<?>[] interceptorClasses, Method beanMethod)
+		    throws IOException {
 
 	int length = interceptorClasses.length;
 	Class<?> interceptorClass;
@@ -463,7 +475,8 @@ public class BeanDeployer implements Callable<String> {
 	Method interceptorMethod;
 	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
 	    interceptorClass = interceptorClasses[i];
-	    interceptorMethods = ClassUtils.getAnnotatedMethods(beanClass, AroundInvoke.class);
+	    interceptorMethods = ClassUtils.getAnnotatedMethods(beanClass,
+		    AroundInvoke.class);
 	    interceptorMethod = CollectionUtils.getFirst(interceptorMethods);
 	    InterceptorData data = new InterceptorData();
 	    data.setBeanClass(beanClass);
@@ -483,8 +496,8 @@ public class BeanDeployer implements Callable<String> {
      * @param beanMethods
      * @throws IOException
      */
-    private void cacheInterceptors(Interceptors interceptors, Class<?> beanClass, Method... beanMethods)
-	    throws IOException {
+    private void cacheInterceptors(Interceptors interceptors,
+	    Class<?> beanClass, Method... beanMethods) throws IOException {
 
 	Class<?>[] interceptorClasses = interceptors.value();
 	if (CollectionUtils.valid(interceptorClasses)) {
@@ -505,7 +518,8 @@ public class BeanDeployer implements Callable<String> {
 	    cacheInterceptors(interceptors, beanClass);
 	}
 
-	List<Method> beanMethods = ClassUtils.getAnnotatedMethods(beanClass, Interceptors.class);
+	List<Method> beanMethods = ClassUtils.getAnnotatedMethods(beanClass,
+		Interceptors.class);
 	if (CollectionUtils.valid(beanMethods)) {
 	    for (Method beanMethod : beanMethods) {
 		interceptors = beanMethod.getAnnotation(Interceptors.class);
@@ -546,7 +560,8 @@ public class BeanDeployer implements Callable<String> {
      *
      * @param beanClass
      */
-    private void initInterfaces(Class<?> beanClass, Class<? extends Annotation> type) {
+    private void initInterfaces(Class<?> beanClass,
+	    Class<? extends Annotation> type) {
 
 	Class<?>[] interfaces = null;
 	Set<Class<?>> interfacesSet = new HashSet<Class<?>>();
@@ -612,7 +627,8 @@ public class BeanDeployer implements Callable<String> {
 	String beanEjbName;
 
 	try {
-	    Class<?> beanClass = ClassUtils.classForName(className, Boolean.FALSE, loader);
+	    Class<?> beanClass = ClassUtils.classForName(className,
+		    Boolean.FALSE, loader);
 	    checkOnTransactional(beanClass);
 	    beanEjbName = BeanUtils.beanName(beanClass);
 	    checkAndSetBean(beanEjbName);
@@ -650,7 +666,8 @@ public class BeanDeployer implements Callable<String> {
 	    }
 	    LogUtils.info(LOG, DEPLOYED_MESSAGE, beanName);
 	} catch (IOException ex) {
-	    LogUtils.error(LOG, ex, COULD_NOT_DEPLOY_MESSAGE, beanName, ex.getMessage());
+	    LogUtils.error(LOG, ex, COULD_NOT_DEPLOY_MESSAGE, beanName,
+		    ex.getMessage());
 	} finally {
 	    LibraryLoader.loadCurrentLibraries(currentLoader);
 	}

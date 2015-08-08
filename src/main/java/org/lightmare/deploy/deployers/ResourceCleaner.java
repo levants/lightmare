@@ -34,9 +34,9 @@ import org.lightmare.utils.logging.LogUtils;
 
 /**
  * {@link Runnable} implementation for temporal resources removal
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  */
 public class ResourceCleaner implements Callable<Boolean> {
 
@@ -50,7 +50,7 @@ public class ResourceCleaner implements Callable<Boolean> {
 
     /**
      * Removes temporal resources after deploy {@link Thread} notifies
-     * 
+     *
      * @throws InterruptedException
      */
     private void clearTmpData() throws InterruptedException {

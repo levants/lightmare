@@ -42,7 +42,7 @@ import org.lightmare.utils.io.IOUtils;
  * {@link org.lightmare.deploy.management.DeployManager} service
  *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  * @see DeployManager
  */
 public class Security {
