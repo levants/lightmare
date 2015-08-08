@@ -40,12 +40,11 @@ import sun.misc.Resource;
 /**
  * Implementation of {@link URLClassLoader} class for isolation of deployed EJB
  * applications
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  * @see URLClassLoader
  */
-@SuppressWarnings("restriction")
 public class EjbClassLoader extends URLClassLoader {
 
     // Resources length to get class loaders resources
@@ -66,12 +65,12 @@ public class EjbClassLoader extends URLClassLoader {
     /**
      * Implementation of {@link PrivilegedAction} for initialization of
      * {@link EjbClassLoader} class
-     * 
+     *
      * @author Levan Tsinadze
-     * @since 0.0.45-SNAPSHOT
+     * @since 0.0.45
      */
-    protected static class EjbLoaderAction implements
-	    PrivilegedAction<EjbClassLoader> {
+    protected static class EjbLoaderAction
+	    implements PrivilegedAction<EjbClassLoader> {
 
 	// Classes URL array
 	private URL[] urls;
@@ -81,7 +80,7 @@ public class EjbClassLoader extends URLClassLoader {
 
 	/**
 	 * Constructor with classes {@link URL} array
-	 * 
+	 *
 	 * @param urls
 	 */
 	public EjbLoaderAction(URL[] urls) {
@@ -91,7 +90,7 @@ public class EjbClassLoader extends URLClassLoader {
 	/**
 	 * Constructor with classes {@link URL} array and parent
 	 * {@link ClassLoader} instance
-	 * 
+	 *
 	 * @param urls
 	 * @param parent
 	 */
@@ -117,9 +116,9 @@ public class EjbClassLoader extends URLClassLoader {
 
     /**
      * Implementation of {@link Enumeration} for class loader resources
-     * 
+     *
      * @author Levan Tsinadze
-     * 
+     *
      * @param <E>
      *            element type
      */
@@ -133,7 +132,7 @@ public class EjbClassLoader extends URLClassLoader {
 
 	/**
 	 * Constructor with {@link Enumeration} array for union
-	 * 
+	 *
 	 * @param enums
 	 */
 	public MergeEnumeration(Enumeration<E>[] enums) {
@@ -142,7 +141,7 @@ public class EjbClassLoader extends URLClassLoader {
 
 	/**
 	 * Checks if one of the {@link Enumeration} array has next vaue
-	 * 
+	 *
 	 * @return <code>boolean</code>
 	 */
 	private boolean next() {
@@ -153,8 +152,8 @@ public class EjbClassLoader extends URLClassLoader {
 	    int length = this.enums.length;
 	    while (this.index < length && Boolean.FALSE.equals(validToBreack)) {
 		current = this.enums[this.index];
-		validToBreack = (ObjectUtils.notNull(current) && current
-			.hasMoreElements());
+		validToBreack = (ObjectUtils.notNull(current)
+			&& current.hasMoreElements());
 		if (Boolean.FALSE.equals(validToBreack)) {
 		    this.index++;
 		}
@@ -170,7 +169,7 @@ public class EjbClassLoader extends URLClassLoader {
 
 	/**
 	 * Checks if {@link Enumeration} has not next value
-	 * 
+	 *
 	 * @see MergeEnumeration#next()
 	 * @return <code></code>
 	 */
@@ -191,7 +190,7 @@ public class EjbClassLoader extends URLClassLoader {
 
     /**
      * Constructor with classes {@link URL} array
-     * 
+     *
      * @param urls
      */
     public EjbClassLoader(final URL[] urls) {
@@ -201,7 +200,7 @@ public class EjbClassLoader extends URLClassLoader {
     /**
      * Constructor with classes {@link URL} array and parent {@link ClassLoader}
      * instance
-     * 
+     *
      * @param urls
      * @param parent
      */
@@ -215,7 +214,7 @@ public class EjbClassLoader extends URLClassLoader {
      * installed, the <code>loadClass</code> method of the
      * {@link EjbClassLoader} returned by this method will invoke the
      * <code>SecurityManager.checkPackageAccess</code> before loading the class.
-     * 
+     *
      * @param urls
      *            the URLs to search for classes and resources
      * @return the resulting class loader
@@ -237,7 +236,7 @@ public class EjbClassLoader extends URLClassLoader {
      * {@link EjbClassLoader} returned by this method will invoke the
      * <code>SecurityManager.checkPackageAccess</code> method before loading the
      * class.
-     * 
+     *
      * @param urls
      *            the URLs to search for classes and resources
      * @param parent
@@ -258,21 +257,21 @@ public class EjbClassLoader extends URLClassLoader {
 
     /**
      * Checks if passed platform contains parts of appropriate vendor's name
-     * 
+     *
      * @param platform
      * @return <code>boolean</code>
      */
     private static boolean checkPlatform(String platform) {
 	return StringUtils.valid(platform)
-		&& (platform.contains(ORACLE_CORP_PREFIX) || platform
-			.contains(SUN_MICROSYSTEMS_PREFIX));
+		&& (platform.contains(ORACLE_CORP_PREFIX)
+			|| platform.contains(SUN_MICROSYSTEMS_PREFIX));
     }
 
     /**
      * Checks if passed {@link String} names of platform vendor contains
      * appropriated vendor's name for extension of {@link ClassLoader} and / or
      * {@link URLClassLoader} resource search
-     * 
+     *
      * @param platform
      * @return <code>boolean</code>
      */
@@ -284,8 +283,8 @@ public class EjbClassLoader extends URLClassLoader {
 	    int length = platforms.length;
 	    String platform;
 	    valid = Boolean.FALSE;
-	    for (int i = CollectionUtils.FIRST_INDEX; ObjectUtils
-		    .notTrue(valid) && i < length; i++) {
+	    for (int i = CollectionUtils.FIRST_INDEX; ObjectUtils.notTrue(valid)
+		    && i < length; i++) {
 		platform = platforms[i];
 		valid = checkPlatform(platform);
 	    }
@@ -297,7 +296,7 @@ public class EjbClassLoader extends URLClassLoader {
     /**
      * Checks if platform is appropriated for extension of {@link ClassLoader}
      * and / or {@link URLClassLoader} resource search
-     * 
+     *
      * @return <code>boolean</code>
      */
     public static boolean checkPlatform() {
@@ -315,7 +314,7 @@ public class EjbClassLoader extends URLClassLoader {
      * Implementation of parent {@link URLClassLoader} and {@link ClassLoader}
      * class method for filter parent ClassLoader and current
      * {@link ClassLoader}'s resources
-     * 
+     *
      * @return {@link Enumeration}
      */
     static Enumeration<Resource> getBootstrapsResources(String name) {
@@ -325,7 +324,7 @@ public class EjbClassLoader extends URLClassLoader {
     /**
      * Replica of parent {@link URLClassLoader} and {@link ClassLoader} class
      * method for other method
-     * 
+     *
      * @return {@link URL}
      */
     private static Enumeration<URL> getBootstrapResources(String name)
@@ -352,7 +351,7 @@ public class EjbClassLoader extends URLClassLoader {
     /**
      * Gets resource only from current {@link EjbClassLoader} not from any
      * parent {@link ClassLoader} instance
-     * 
+     *
      * @param name
      * @return {@link URL}
      */

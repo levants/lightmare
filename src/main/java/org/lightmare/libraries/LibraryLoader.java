@@ -48,9 +48,9 @@ import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Class for load jar or class files from specified path
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.15-SNAPSHOT
+ * @since 0.0.15
  */
 public class LibraryLoader {
 
@@ -79,9 +79,9 @@ public class LibraryLoader {
     /**
      * implementation of {@link Callable}<ClassLoader> interface to initialize
      * {@link ClassLoader} in separate thread
-     * 
+     *
      * @author Levan Tsinadze
-     * @since 0.0.15-SNAPSHOT
+     * @since 0.0.15
      */
     private static class LibraryLoaderInit implements Callable<ClassLoader> {
 
@@ -107,14 +107,13 @@ public class LibraryLoader {
 
     /**
      * Caches specific "addURL" method for {@link URLClassLoader} class
-     * 
+     *
      * @throws IOException
      */
     private static void initURLMethod() throws IOException {
 
-	if (addURLMethod == null
-		&& ClassUtils.hasMethod(URLClassLoader.class,
-			ADD_URL_METHOD_NAME)) {
+	if (addURLMethod == null && ClassUtils.hasMethod(URLClassLoader.class,
+		ADD_URL_METHOD_NAME)) {
 	    addURLMethod = ClassUtils.getDeclaredMethod(URLClassLoader.class,
 		    ADD_URL_METHOD_NAME, URL.class);
 	}
@@ -122,7 +121,7 @@ public class LibraryLoader {
 
     /**
      * Gets {@link URLClassLoader} class addURL method
-     * 
+     *
      * @return Method
      * @throws IOException
      */
@@ -144,7 +143,7 @@ public class LibraryLoader {
      * If passed {@link ClassLoader} is instance of {@link URLClassLoader} then
      * gets {@link URL}[] of this {@link ClassLoader} calling
      * {@link URLClassLoader#getURLs()} method
-     * 
+     *
      * @param loader
      * @return {@link URL}[]
      */
@@ -165,7 +164,7 @@ public class LibraryLoader {
 
     /**
      * Gets file for current class
-     * 
+     *
      * @param executing
      * @return File where current class is
      */
@@ -180,7 +179,7 @@ public class LibraryLoader {
     /**
      * Initializes and returns enriched {@link ClassLoader} in separated
      * {@link Thread} to load bean and library classes
-     * 
+     *
      * @param urls
      * @return {@link ClassLoader}
      * @throws IOException
@@ -211,7 +210,7 @@ public class LibraryLoader {
 
     /**
      * Gets current {@link Thread}'s context {@link ClassLoader} object
-     * 
+     *
      * @return {@link ClassLoader}
      */
     public static ClassLoader getContextClassLoader() {
@@ -219,9 +218,9 @@ public class LibraryLoader {
 	/**
 	 * Implementation of PrivilegedAction to get current thread's class
 	 * loader
-	 * 
+	 *
 	 * @author Levan Tsinadze
-	 * 
+	 *
 	 */
 	PrivilegedAction<ClassLoader> action = new PrivilegedAction<ClassLoader>() {
 
@@ -245,7 +244,7 @@ public class LibraryLoader {
     /**
      * Finds class file {@link URL} by class name in current {@link ClassLoader}
      * 's resources (claspath) or returns null if class file is not present
-     * 
+     *
      * @param className
      * @return {@link URL} or class file
      */
@@ -265,7 +264,7 @@ public class LibraryLoader {
     /**
      * Finds is class file in current {@link ClassLoader}'s resources (in
      * classpath) or not
-     * 
+     *
      * @param className
      * @return <code>boolean</code>
      */
@@ -274,8 +273,8 @@ public class LibraryLoader {
 	boolean valid;
 
 	ClassLoader loader = getContextClassLoader();
-	String fileName = className
-		.replace(StringUtils.DOT, File.separatorChar);
+	String fileName = className.replace(StringUtils.DOT,
+		File.separatorChar);
 	String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
 	URL classURL = loader.getResource(classFile);
 	valid = ObjectUtils.notNull(classURL);
@@ -287,13 +286,14 @@ public class LibraryLoader {
     /**
      * Gets new {@link ClassLoader} enriched with passed {@link URL} array and
      * parent {@link ClassLoader} classes
-     * 
+     *
      * @param urls
      * @param parent
      * @return {@link ClassLoader}
      * @throws IOException
      */
-    public static ClassLoader getEnrichedLoader(URL[] urls, ClassLoader parent) {
+    public static ClassLoader getEnrichedLoader(URL[] urls,
+	    ClassLoader parent) {
 
 	ClassLoader enrichedLoader;
 
@@ -312,7 +312,7 @@ public class LibraryLoader {
     /**
      * Gets new {@link ClassLoader} enriched with passed {@link File} and it's
      * sub files {@link URL}s and parent {@link ClassLoader} classes
-     * 
+     *
      * @param file
      * @param urls
      * @return {@link ClassLoader}
@@ -334,7 +334,7 @@ public class LibraryLoader {
     /**
      * Initializes new {@link ClassLoader} from loaded {@link URL}'s from
      * enriched {@link ClassLoader} for beans and libraries
-     * 
+     *
      * @param urls
      * @return {@link ClassLoader}
      * @throws IOException
@@ -344,7 +344,8 @@ public class LibraryLoader {
 
 	ClassLoader clone;
 
-	URLClassLoader loader = (URLClassLoader) getEnrichedLoader(urls, parent);
+	URLClassLoader loader = (URLClassLoader) getEnrichedLoader(urls,
+		parent);
 	try {
 	    // get all resources for cloning
 	    URL[] urlArray = loader.getURLs();
@@ -365,7 +366,7 @@ public class LibraryLoader {
 
     /**
      * Merges two {@link ClassLoader}s in one
-     * 
+     *
      * @param newLoader
      * @param oldLoader
      * @return {@link ClassLoader}
@@ -386,7 +387,7 @@ public class LibraryLoader {
     /**
      * Sets passed {@link Thread}'s context class loader appropriated
      * {@link ClassLoader} instance
-     * 
+     *
      * @param thread
      * @param loader
      */
@@ -400,7 +401,7 @@ public class LibraryLoader {
     /**
      * Sets passed {@link ClassLoader} instance as current {@link Thread}'s
      * context class loader
-     * 
+     *
      * @param loader
      */
     public static void loadCurrentLibraries(ClassLoader loader) {
@@ -411,7 +412,7 @@ public class LibraryLoader {
 
     /**
      * Adds {@link URL} array to system {@link ClassLoader} instance
-     * 
+     *
      * @param urls
      * @param method
      * @param urlLoader
@@ -427,7 +428,7 @@ public class LibraryLoader {
 
     /**
      * Loads class to system {@link ClassLoader} for general use
-     * 
+     *
      * @param className
      * @throws IOException
      */
@@ -443,7 +444,7 @@ public class LibraryLoader {
 
     /**
      * Loads all files and sub files {@link URL}s to system class loader
-     * 
+     *
      * @param file
      * @throws IOException
      */
@@ -467,7 +468,7 @@ public class LibraryLoader {
 
     /**
      * Loads all files and sub files {@link URL}s to system class loader
-     * 
+     *
      * @param libraryPath
      * @throws IOException
      */
@@ -481,11 +482,12 @@ public class LibraryLoader {
     /**
      * Loads jar or <code>.class</code> files to the current thread from
      * libraryPaths recursively
-     * 
+     *
      * @param libraryPaths
      * @throws IOException
      */
-    public static void loadLibraries(String... libraryPaths) throws IOException {
+    public static void loadLibraries(String... libraryPaths)
+	    throws IOException {
 
 	if (CollectionUtils.valid(libraryPaths)) {
 	    for (String libraryPath : libraryPaths) {
@@ -496,7 +498,7 @@ public class LibraryLoader {
 
     /**
      * Loads passed classes to specified {@link ClassLoader} instance
-     * 
+     *
      * @param classes
      * @param loader
      */
@@ -517,7 +519,7 @@ public class LibraryLoader {
     /**
      * Loads passed classes to specified current {@link Thread}'s context class
      * loader
-     * 
+     *
      * @param classes
      */
     public static void loadClasses(Collection<String> classes)
@@ -530,7 +532,7 @@ public class LibraryLoader {
     /**
      * Checks and caches if passed {@link ClassLoader} implementation or it's
      * parent class has "close" method
-     * 
+     *
      * @param loader
      * @throws IOException
      */
@@ -546,7 +548,7 @@ public class LibraryLoader {
     /**
      * Checks and caches if passed {@link ClassLoader} implementation or it's
      * parent class has close method
-     * 
+     *
      * @param loader
      * @throws IOException
      */
@@ -563,7 +565,7 @@ public class LibraryLoader {
     /**
      * Closes passed {@link ClassLoader} if it is instance of
      * {@link URLClassLoader} class
-     * 
+     *
      * @param loader
      * @throws IOException
      */
