@@ -75,7 +75,7 @@ import org.lightmare.utils.logging.LogUtils;
  * on startup
  *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  */
 public class MetaCreator {
 
@@ -199,7 +199,8 @@ public class MetaCreator {
      * @param ejbURLs
      * @param archiveData
      */
-    private void fillArchiveURLs(Collection<URL> ejbURLs, ArchiveData archiveData, DeployData deployData) {
+    private void fillArchiveURLs(Collection<URL> ejbURLs,
+	    ArchiveData archiveData, DeployData deployData) {
 
 	for (URL ejbURL : ejbURLs) {
 	    archivesURLs.put(ejbURL, archiveData);
@@ -216,7 +217,8 @@ public class MetaCreator {
      * @param modifiedArchives
      * @throws IOException
      */
-    private void fillArchiveURLs(URL archive, List<URL> modifiedArchives) throws IOException {
+    private void fillArchiveURLs(URL archive, List<URL> modifiedArchives)
+	    throws IOException {
 
 	ArchiveUtils ioUtils = ArchiveUtils.getAppropriatedType(archive);
 	if (ObjectUtils.notNull(ioUtils)) {
@@ -265,7 +267,8 @@ public class MetaCreator {
 	if (await) {
 	    try {
 		String nameFromFuture = future.get();
-		LogUtils.info(LOG, "Deploy processing of %s finished", nameFromFuture);
+		LogUtils.info(LOG, "Deploy processing of %s finished",
+			nameFromFuture);
 	    } catch (InterruptedException ex) {
 		LOG.error(ex.getMessage(), ex);
 	    } catch (ExecutionException ex) {
@@ -312,7 +315,8 @@ public class MetaCreator {
      * @return {@link ArchiveUtils}
      * @throws IOException
      */
-    private ArchiveUtils initArchiveUtils(ArchiveData archiveData, URL currentURL) throws IOException {
+    private ArchiveUtils initArchiveUtils(ArchiveData archiveData,
+	    URL currentURL) throws IOException {
 
 	ArchiveUtils ioUtils = archiveData.getIoUtils();
 
@@ -333,7 +337,8 @@ public class MetaCreator {
      * @return
      * @throws IOException
      */
-    private ClassLoader initClassLoader(ArchiveData archiveData, ArchiveUtils ioUtils) throws IOException {
+    private ClassLoader initClassLoader(ArchiveData archiveData,
+	    ArchiveUtils ioUtils) throws IOException {
 
 	ClassLoader loader;
 
@@ -408,7 +413,8 @@ public class MetaCreator {
      * @param parameters
      * @throws IOException
      */
-    private void setLoader(URL currentURL, BeanParameters parameters) throws IOException {
+    private void setLoader(URL currentURL, BeanParameters parameters)
+	    throws IOException {
 
 	ArchiveData archiveData = initArchiveData(currentURL);
 	ArchiveUtils ioUtils = initArchiveUtils(archiveData, currentURL);
@@ -446,7 +452,8 @@ public class MetaCreator {
      * @param parameters
      * @throws IOException
      */
-    private void fillBeanParameters(URL currentURL, BeanParameters parameters) throws IOException {
+    private void fillBeanParameters(URL currentURL, BeanParameters parameters)
+	    throws IOException {
 	setLoader(currentURL, parameters);
 	setDeployData(currentURL, parameters);
     }
@@ -457,7 +464,8 @@ public class MetaCreator {
      * @param beanName
      * @throws IOException
      */
-    private BeanParameters initDeployParameters(String beanName) throws IOException {
+    private BeanParameters initDeployParameters(String beanName)
+	    throws IOException {
 
 	BeanParameters parameters = initDeployParameters();
 
@@ -498,7 +506,8 @@ public class MetaCreator {
 	    try {
 		deployBean(beanName);
 	    } catch (IOException ex) {
-		LogUtils.error(LOG, ex, "Could not deploy bean %s cause", beanName, ex.getMessage());
+		LogUtils.error(LOG, ex, "Could not deploy bean %s cause",
+			beanName, ex.getMessage());
 	    }
 	}
     }
@@ -589,7 +598,8 @@ public class MetaCreator {
 	annotationFinder.setScanParameterAnnotations(Boolean.FALSE);
 	annotationFinder.setScanMethodAnnotations(Boolean.FALSE);
 	annotationFinder.scanArchives(fullArchives);
-	beanNames = annotationFinder.getAnnotationIndex().get(Stateless.class.getName());
+	beanNames = annotationFinder.getAnnotationIndex()
+		.get(Stateless.class.getName());
 	classOwnersURL = annotationFinder.getClassOwnersURLs();
 
 	return beanNames;
@@ -678,7 +688,8 @@ public class MetaCreator {
      * @param pathList
      * @param deployment
      */
-    private void scanDeployPath(List<String> pathList, DeploymentDirectory deployment) {
+    private void scanDeployPath(List<String> pathList,
+	    DeploymentDirectory deployment) {
 
 	File deployFile = new File(deployment.getPath());
 	if (deployment.isScan()) {
@@ -699,7 +710,8 @@ public class MetaCreator {
 
 	if (CollectionUtils.invalid(paths)) {
 	    if (CollectionUtils.valid(configuration.getDeploymentPath())) {
-		Set<DeploymentDirectory> deployments = configuration.getDeploymentPath();
+		Set<DeploymentDirectory> deployments = configuration
+			.getDeploymentPath();
 		List<String> pathList = new ArrayList<String>();
 		for (DeploymentDirectory deployment : deployments) {
 		    scanDeployPath(pathList, deployment);
@@ -854,10 +866,12 @@ public class MetaCreator {
 	 */
 	private Map<Object, Object> initPersistenceProperties() {
 
-	    Map<Object, Object> persistenceProperties = creator.configuration.getPersistenceProperties();
+	    Map<Object, Object> persistenceProperties = creator.configuration
+		    .getPersistenceProperties();
 	    if (persistenceProperties == null) {
 		persistenceProperties = new HashMap<Object, Object>();
-		creator.configuration.setPersistenceProperties(persistenceProperties);
+		creator.configuration
+			.setPersistenceProperties(persistenceProperties);
 	    }
 
 	    return persistenceProperties;
@@ -869,7 +883,8 @@ public class MetaCreator {
 	 * @param properties
 	 * @return {@link Builder}
 	 */
-	public Builder setPersistenceProperties(Map<String, String> properties) {
+	public Builder setPersistenceProperties(
+		Map<String, String> properties) {
 
 	    if (CollectionUtils.valid(properties)) {
 		Map<Object, Object> persistenceProperties = initPersistenceProperties();
@@ -1166,7 +1181,8 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setWorkerThreads(String property) {
-	    creator.configuration.putValue(ConfigKeys.WORKER_POOL.key, property);
+	    creator.configuration.putValue(ConfigKeys.WORKER_POOL.key,
+		    property);
 	    return this;
 	}
 
@@ -1205,7 +1221,8 @@ public class MetaCreator {
 	 * @return {@link Builder}
 	 */
 	public Builder setTimeout(String property) {
-	    creator.configuration.putValue(ConfigKeys.CONNECTION_TIMEOUT.key, property);
+	    creator.configuration.putValue(ConfigKeys.CONNECTION_TIMEOUT.key,
+		    property);
 	    return this;
 	}
 
@@ -1249,7 +1266,8 @@ public class MetaCreator {
 	 * @param properties
 	 * @return {@link Builder}
 	 */
-	public Builder setPoolProperties(Map<? extends Object, ? extends Object> properties) {
+	public Builder setPoolProperties(
+		Map<? extends Object, ? extends Object> properties) {
 	    Configuration.setPoolProperties(properties);
 	    return this;
 	}

@@ -48,7 +48,7 @@ import org.lightmare.utils.beans.BeanUtils;
  * session beans and cache them and clean resources after deployments
  *
  * @author Levan Tsinadze
- * @since 0.0.45-SNAPSHOT
+ * @since 0.0.45
  */
 public class BeanLoader {
 
@@ -62,9 +62,10 @@ public class BeanLoader {
      * @author Levan Tsinadze
      *
      * @param <T>
-     * @since 0.0.45-SNAPSHOT
+     * @since 0.0.45
      */
-    private static class ContextLoaderAction<T> implements PrivilegedAction<Callable<T>> {
+    private static class ContextLoaderAction<T>
+	    implements PrivilegedAction<Callable<T>> {
 
 	private final Callable<T> current;
 
@@ -83,7 +84,7 @@ public class BeanLoader {
      * Contains parameters for bean deploy classes
      *
      * @author Levan Tsinadze
-     * @since 0.0.45-SNAPSHOT
+     * @since 0.0.45
      */
     public static class BeanParameters {
 
@@ -112,7 +113,7 @@ public class BeanLoader {
      * Contains parameters for data source deploy classes
      *
      * @author Levan Tsinadze
-     * @since 0.0.45-SNAPSHOT
+     * @since 0.0.45
      */
     public static class DataSourceParameters {
 
@@ -128,15 +129,12 @@ public class BeanLoader {
     /**
      * Creates and starts bean deployment process
      *
-     * @param creator
-     * @param className
-     * @param loader
-     * @param tmpFiles
-     * @param conn
+     * @param parameters
      * @return {@link Future}
      * @throws IOException
      */
-    public static Future<String> loadBean(BeanParameters parameters) throws IOException {
+    public static Future<String> loadBean(BeanParameters parameters)
+	    throws IOException {
 
 	Future<String> future;
 
@@ -152,14 +150,14 @@ public class BeanLoader {
     /**
      * Initialized {@link javax.sql.DataSource}s in parallel mode
      *
-     * @param initializer
-     * @param properties
-     * @param sdLatch
+     * @param parameters
      */
-    public static void initializeDatasource(DataSourceParameters parameters) throws IOException {
+    public static void initializeDatasource(DataSourceParameters parameters)
+	    throws IOException {
 
 	final ConnectionDeployer conn = new ConnectionDeployer(parameters);
-	ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(conn);
+	ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(
+		conn);
 	Callable<Boolean> privileged = AccessController.doPrivileged(action);
 	LoaderPoolManager.submit(privileged);
     }
@@ -172,7 +170,8 @@ public class BeanLoader {
     public static void removeResources(List<File> tmpFiles) throws IOException {
 
 	ResourceCleaner cleaner = new ResourceCleaner(tmpFiles);
-	ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(cleaner);
+	ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(
+		cleaner);
 	Callable<Boolean> privileged = AccessController.doPrivileged(action);
 	try {
 	    LoaderPoolManager.submit(privileged);

@@ -27,6 +27,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -40,7 +41,7 @@ import org.lightmare.utils.ObjectUtils;
  * Manager class for application deployment in parallel mode
  *
  * @author Levan Tsinadze
- * @since 0.0.77-SNAPSHOT
+ * @since 0.0.77
  */
 public abstract class LoaderPoolManager {
 
@@ -69,7 +70,6 @@ public abstract class LoaderPoolManager {
 	// Gets class loader for this deployment
 	ClassLoader existing = creator.getCurrent();
 	if (existing == null) {
-	    // Gets default, context class loader for current thread
 	    current = LibraryLoader.getContextClassLoader();
 	} else {
 	    current = existing;
@@ -82,7 +82,7 @@ public abstract class LoaderPoolManager {
      * Gets class loader for existing {@link org.lightmare.deploy.MetaCreator}
      * instance
      *
-     * @return {@link ClassLoader}
+     * @return {@link ClassLoader} instance
      */
     public static ClassLoader getCurrent() {
 
@@ -100,13 +100,40 @@ public abstract class LoaderPoolManager {
     }
 
     /**
-     * Checks if loader {@link ExecutorService} is null or is shut down or is
+     * Checks if loader {@link ExecutorService} is null or shut down or
      * terminated
      *
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     private static boolean invalid() {
-	return LOADER_POOL == null || LOADER_POOL.isShutdown() || LOADER_POOL.isTerminated();
+	return (LOADER_POOL == null || LOADER_POOL.isShutdown()
+		|| LOADER_POOL.isTerminated());
+    }
+
+    /**
+     * Tries to lock thread for {@link ReentrantLock} and fixed time and time
+     * unit
+     *
+     * @return <code>boolean</code> lock result
+     * @throws IOException
+     */
+    private static boolean tryLock() throws IOException {
+	return ObjectUtils.tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Creates loader {@link ExecutorService} for deployment
+     *
+     * @return {@link ExecutorService} instance
+     */
+    private static ExecutorService createLoaderPool() {
+
+	ExecutorService pool;
+
+	ThreadFactory factory = new LoaderThreadFactory();
+	pool = Executors.newFixedThreadPool(LOADER_POOL_SIZE, factory);
+
+	return pool;
     }
 
     /**
@@ -115,7 +142,7 @@ public abstract class LoaderPoolManager {
     private static void checkAndInitLoaderPool() {
 
 	if (invalid()) {
-	    LOADER_POOL = Executors.newFixedThreadPool(LOADER_POOL_SIZE, new LoaderThreadFactory());
+	    LOADER_POOL = createLoaderPool();
 	}
     }
 
@@ -139,7 +166,7 @@ public abstract class LoaderPoolManager {
      */
     private static boolean initAndUnlock() throws IOException {
 
-	boolean locked = ObjectUtils.tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
+	boolean locked = tryLock();
 	if (locked) {
 	    initLoaderPool();
 	}
@@ -150,7 +177,7 @@ public abstract class LoaderPoolManager {
     /**
      * Checks and if not valid reopens deploy {@link ExecutorService} instance
      *
-     * @return {@link ExecutorService}
+     * @return {@link ExecutorService} instance
      * @throws IOException
      */
     protected static ExecutorService getLoaderPool() throws IOException {
@@ -181,10 +208,12 @@ public abstract class LoaderPoolManager {
      * Submits passed {@link Callable} implementation in loader pool instance
      *
      * @param callable
-     * @return {@link Future}<code><T></code>
+     * @return {@link Future}<code><T></code> for passed {@link Callable}
+     *         instance
      * @throws IOException
      */
-    public static <T> Future<T> submit(Callable<T> callable) throws IOException {
+    public static <T> Future<T> submit(Callable<T> callable)
+	    throws IOException {
 
 	Future<T> future;
 
@@ -229,7 +258,7 @@ public abstract class LoaderPoolManager {
 	boolean locked = Boolean.FALSE;
 	while (Boolean.FALSE.equals(locked)) {
 	    // Locks the object to avoid shut down and submit in parallel
-	    locked = ObjectUtils.tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
+	    locked = tryLock();
 	    if (locked) {
 		reloadAndUnlock();
 	    }
