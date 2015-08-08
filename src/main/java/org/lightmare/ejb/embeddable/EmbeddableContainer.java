@@ -38,7 +38,7 @@ import org.lightmare.utils.ObjectUtils;
  * container (runs only for java 7 and upper)
  *
  * @author Levan Tsinadze
- * @since 0.0.48-SNAPSHOT
+ * @since 0.0.48
  */
 public class EmbeddableContainer extends EJBContainer {
 
@@ -50,7 +50,8 @@ public class EmbeddableContainer extends EJBContainer {
 
     private static final String CONTEXT_ERROR = "Could not initialize Context";
 
-    private static final Logger LOG = Logger.getLogger(EmbeddableContainer.class);
+    private static final Logger LOG = Logger
+	    .getLogger(EmbeddableContainer.class);
 
     /**
      * Initializes {@link MetaCreator.Builder} for passed properties
@@ -59,7 +60,8 @@ public class EmbeddableContainer extends EJBContainer {
      * @return
      * @throws IOException
      */
-    private MetaCreator.Builder initBuilder(Map<?, ?> properties) throws IOException {
+    private MetaCreator.Builder initBuilder(Map<?, ?> properties)
+	    throws IOException {
 
 	MetaCreator.Builder builder;
 

@@ -824,7 +824,7 @@ public class MetaCreator {
      * initialize {@link MetaCreator} instance
      *
      * @author Levan Tsinadze
-     * @since 0.0.45-SNAPSHOT
+     * @since 0.0.45
      */
     public static class Builder {
 

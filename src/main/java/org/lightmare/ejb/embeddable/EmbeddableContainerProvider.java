@@ -33,12 +33,13 @@ import javax.ejb.spi.EJBContainerProvider;
  * embedded EJB container by Java EE standards
  *
  * @author Levan Tsinadze
- * @since 0.0.48-SNAPSHOT
+ * @since 0.0.48
  */
 public class EmbeddableContainerProvider implements EJBContainerProvider {
 
     @Override
-    public EJBContainer createEJBContainer(Map<?, ?> properties) throws EJBException {
+    public EJBContainer createEJBContainer(Map<?, ?> properties)
+	    throws EJBException {
 	return new EmbeddableContainer(properties);
     }
 }

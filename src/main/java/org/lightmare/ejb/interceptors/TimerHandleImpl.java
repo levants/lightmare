@@ -31,7 +31,7 @@ import javax.ejb.TimerHandle;
  * Implementation of {@link TimerHandle} interface
  *
  * @author Levan Tsinadze
- * @since 0.0.65-SNAPSHOT
+ * @since 0.0.65
  */
 public class TimerHandleImpl implements TimerHandle {
 
@@ -50,7 +50,8 @@ public class TimerHandleImpl implements TimerHandle {
     }
 
     @Override
-    public Timer getTimer() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+    public Timer getTimer() throws IllegalStateException,
+	    NoSuchObjectLocalException, EJBException {
 	return timer;
     }
 }

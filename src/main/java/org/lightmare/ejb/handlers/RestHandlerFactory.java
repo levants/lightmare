@@ -26,7 +26,7 @@ package org.lightmare.ejb.handlers;
  * Factory class to create a {@link RestHandler} instance for REST services
  *
  * @author Levan Tsinadze
- * @since 0.0.81-SNAPSHOT
+ * @since 0.0.81
  */
 public class RestHandlerFactory {
 

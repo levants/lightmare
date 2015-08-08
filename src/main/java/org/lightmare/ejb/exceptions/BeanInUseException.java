@@ -29,9 +29,9 @@ import org.lightmare.utils.logging.LogUtils;
 /**
  * Extension of {@link Exception} class which is thrown at bean deploy time if
  * bean already is deployed
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.16-SNAPSHOT
+ * @since 0.0.16
  */
 public class BeanInUseException extends IOException {
 
@@ -58,7 +58,7 @@ public class BeanInUseException extends IOException {
 
     /**
      * Initializes {@link BeanInUseException} with passed error message format
-     * 
+     *
      * @param message
      * @param formats
      * @return {@link BeanInUseException}
@@ -73,7 +73,7 @@ public class BeanInUseException extends IOException {
     /**
      * Initializes {@link BeanInUseException} with existing error message format
      * and passed bean name
-     * 
+     *
      * @param bean
      * @return {@link BeanInUseException}
      */

@@ -48,7 +48,7 @@ import org.lightmare.utils.collections.CollectionUtils;
  * for simple JNDI extensions
  *
  * @author Levan Tsinadze
- * @since 0.0.60-SNAPSHOT
+ * @since 0.0.60
  */
 public class JndiManager {
 
@@ -56,16 +56,19 @@ public class JndiManager {
      * Caches JNDI system parameters for initializing {@link Context} instance
      *
      * @author Levan Tsinadze
-     * @since 0.81-SNAPSHOT
+     * @since 0.81
      */
     protected static enum JNDIParameters {
 
 	// Name of InitialContextFactory implementation class
-	FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY, LightmareContextFactory.class.getName()),
-	// Name of InitialContextFactory implementation class package
-	PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES, LightmareContextFactory.class.getPackage().getName()),
-	// Additional parameter to share JNDI cache
-	SHARED_PARAMETER("org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
+	FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY,
+		LightmareContextFactory.class.getName()),
+		// Name of InitialContextFactory implementation class package
+		PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES,
+			LightmareContextFactory.class.getPackage().getName()),
+			// Additional parameter to share JNDI cache
+			SHARED_PARAMETER("org.osjava.sj.jndi.shared",
+				Boolean.TRUE.toString());
 
 	// Cache of JNDI configuration key value pairs
 	private static final Properties CONFIG = new Properties();
@@ -105,7 +108,8 @@ public class JndiManager {
 	}
 
 	private static String getORMKey(JNDIParameters parameter) {
-	    return StringUtils.concat(AvailableSettings.JNDI_PREFIX, StringUtils.DOT, parameter.key);
+	    return StringUtils.concat(AvailableSettings.JNDI_PREFIX,
+		    StringUtils.DOT, parameter.key);
 	}
 
 	/**
@@ -291,7 +295,8 @@ class NamingContext {
 	    ClassLoader loader = LibraryLoader.getContextClassLoader();
 	    Thread thread = Thread.currentThread();
 	    try {
-		thread.setContextClassLoader(ClassLoader.getSystemClassLoader());
+		thread.setContextClassLoader(
+			ClassLoader.getSystemClassLoader());
 		// Gets system properties
 		Properties properties = JNDIConfigs.INIT.config;
 		// Registers properties as system properties

@@ -26,15 +26,15 @@ import org.lightmare.remote.rpc.RPCall;
 
 /**
  * Factory class to initialize {@link BeanLocalHandler} class instance
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.66-SNAPSHOT
+ * @since 0.0.66
  */
 public class BeanLocalHandlerFactory {
 
     /**
      * Initializes {@link RPCall} class instance by passed RPC arguments
-     * 
+     *
      * @param rpcArgs
      * @return {@link RPCall}
      */
@@ -51,7 +51,7 @@ public class BeanLocalHandlerFactory {
 
     /**
      * Creates {@link BeanLocalHandler} instance with host and port arguments
-     * 
+     *
      * @param rpcArgs
      * @return {@link BeanLocalHandler}
      */

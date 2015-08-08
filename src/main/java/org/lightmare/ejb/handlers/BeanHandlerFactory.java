@@ -30,7 +30,7 @@ import org.lightmare.cache.MetaData;
  * Factory class to initialize / clone {@link BeanHandler} instance
  *
  * @author Levan Tsinadze
- * @since 0.0.66-SNAPSHOT
+ * @since 0.0.66
  */
 public class BeanHandlerFactory {
 
@@ -41,7 +41,8 @@ public class BeanHandlerFactory {
      * @param bean
      * @throws IOException
      */
-    private static void configure(final BeanHandler handler, final Object bean) throws IOException {
+    private static void configure(final BeanHandler handler, final Object bean)
+	    throws IOException {
 	handler.setBean(bean);
 	handler.configure();
     }
@@ -53,7 +54,8 @@ public class BeanHandlerFactory {
      * @return {@link BeanHandler}
      * @throws IOException
      */
-    private static BeanHandler cloneHandler(BeanHandler handler) throws IOException {
+    private static BeanHandler cloneHandler(BeanHandler handler)
+	    throws IOException {
 
 	BeanHandler cloneHandler;
 
@@ -93,7 +95,8 @@ public class BeanHandlerFactory {
      * @return {@link BeanHandler}
      * @throws IOException
      */
-    public static BeanHandler get(MetaData metaData, Object bean) throws IOException {
+    public static BeanHandler get(MetaData metaData, Object bean)
+	    throws IOException {
 
 	BeanHandler cloneHandler;
 

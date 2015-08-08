@@ -26,9 +26,9 @@ import java.lang.reflect.Method;
 
 /**
  * Handler class to call EJB bean methods for REST services
- * 
+ *
  * @author Levan Tsinadze
- * @since 0.0.69-SNAPSHOT
+ * @since 0.0.69
  */
 public class RestHandler<T> {
 
@@ -45,7 +45,7 @@ public class RestHandler<T> {
 
     /**
      * Invokes passed {@link Method} for bean by {@link BeanHandler} instance
-     * 
+     *
      * @param method
      * @param args
      * @return {@link Object}

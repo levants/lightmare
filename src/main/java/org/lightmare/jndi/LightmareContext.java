@@ -52,7 +52,7 @@ import org.osjava.sj.memory.MemoryContext;
  * {@link UserTransaction} and {@link EntityManager} caching and retrieving
  *
  * @author Levan Tsinadze
- * @since 0.0.60-SNAPSHOT
+ * @since 0.0.60
  */
 @SuppressWarnings("unchecked")
 public class LightmareContext extends MemoryContext implements Cleanable {
@@ -86,9 +86,11 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      */
     private void cacheResource(Object resource) {
 
-	if (ObjectUtils.notNull(resource) && resource instanceof EntityManager) {
+	if (ObjectUtils.notNull(resource)
+		&& resource instanceof EntityManager) {
 	    EntityManager em = ObjectUtils.cast(resource, EntityManager.class);
-	    WeakReference<EntityManager> ref = new WeakReference<EntityManager>(em);
+	    WeakReference<EntityManager> ref = new WeakReference<EntityManager>(
+		    em);
 	    ems.add(ref);
 	}
     }
@@ -114,7 +116,8 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 	if (candidate == null) {
 	    value = candidate;
 	} else if (candidate instanceof EntityManagerFactory) {
-	    EntityManagerFactory emf = ObjectUtils.cast(candidate, EntityManagerFactory.class);
+	    EntityManagerFactory emf = ObjectUtils.cast(candidate,
+		    EntityManagerFactory.class);
 	    EntityManager em = emf.createEntityManager();
 	    value = em;
 	} else {
@@ -135,7 +138,8 @@ public class LightmareContext extends MemoryContext implements Cleanable {
 
 	Object value;
 
-	NamingUtils.BeanDescriptor descriptor = NamingUtils.parseEjbJndiName(jndiName);
+	NamingUtils.BeanDescriptor descriptor = NamingUtils
+		.parseEjbJndiName(jndiName);
 	EjbConnector ejbConnection = new EjbConnector();
 	try {
 	    String beanName = descriptor.getBeanName();

@@ -37,7 +37,7 @@ import org.lightmare.utils.collections.CollectionUtils;
  * instantiate JNDI {@link Context} instance
  *
  * @author Levan Tsinadze
- * @since 0.0.60-SNAPSHOT
+ * @since 0.0.60
  */
 public class LightmareContextFactory implements InitialContextFactory {
 
@@ -47,7 +47,8 @@ public class LightmareContextFactory implements InitialContextFactory {
      * @param sharingEnv
      * @param parameter
      */
-    private void putToEnv(Hashtable<Object, Object> sharingEnv, JNDIParameters parameter) {
+    private void putToEnv(Hashtable<Object, Object> sharingEnv,
+	    JNDIParameters parameter) {
 
 	String key = parameter.key;
 	String value = parameter.value;
@@ -62,12 +63,14 @@ public class LightmareContextFactory implements InitialContextFactory {
      * Initializes {@link Context} implementation instance for passed properties
      */
     @Override
-    public Context getInitialContext(Hashtable<?, ?> properties) throws NamingException {
+    public Context getInitialContext(Hashtable<?, ?> properties)
+	    throws NamingException {
 
 	Context lightmareContext;
 
 	// clone the environment
-	Hashtable<Object, Object> sharingEnv = ObjectUtils.cast(properties.clone());
+	Hashtable<Object, Object> sharingEnv = ObjectUtils
+		.cast(properties.clone());
 	putToEnv(sharingEnv, JNDIParameters.SHARED_PARAMETER);
 	lightmareContext = new LightmareContext(sharingEnv);
 
