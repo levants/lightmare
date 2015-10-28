@@ -1,16 +1,22 @@
 package org.lightmare.linq.query;
 
+/**
+ * Query parts
+ * 
+ * @author Levan Tsinadze
+ *
+ */
 public interface Filters {
 
-	String SELECT = "select ";
+    String SELECT = "select ";
 
-	String FROM = " from ";
+    String FROM = " from ";
 
-	String AS = " as ";
+    String AS = " as ";
 
-	String UPDATE = "update ";
+    String UPDATE = "update ";
 
-	String DELETE = "delete ";
+    String DELETE = "delete ";
 
-	String LIKE = "%";
+    String LIKE = "%";
 }
