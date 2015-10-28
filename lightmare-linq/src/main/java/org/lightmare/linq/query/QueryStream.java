@@ -15,11 +15,23 @@ import org.lightmare.linq.resolvers.FieldResolver;
 import org.lightmare.linq.tuples.ParameterTuple;
 import org.lightmare.linq.tuples.QueryTuple;
 
+/**
+ * Utility class for lambda expression analyze and JPA-QL query generator
+ * 
+ * @author Levan Tsinadze
+ *
+ * @param <T>
+ *            entity type for generated query
+ */
 public class QueryStream<T> {
 
     private final EntityManager em;
 
     protected final Class<T> entityType;
+
+    private final StringBuilder prefix;
+
+    private final StringBuilder suffix;
 
     private final StringBuilder sql;
 
@@ -33,9 +45,13 @@ public class QueryStream<T> {
 
     private static final char NEW_LINE = '\n';
 
+    private static final int START = 0;
+
     private QueryStream(final EntityManager em, final Class<T> entityType) {
 	this.em = em;
 	this.entityType = entityType;
+	prefix = new StringBuilder();
+	suffix = new StringBuilder();
 	sql = new StringBuilder();
 	parameters = new HashSet<>();
     }
@@ -72,7 +88,7 @@ public class QueryStream<T> {
 
 	QueryTuple tuple = opp(field);
 	String column = tuple.getField();
-	sql.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX).append(column).append(expression)
+	suffix.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX).append(column).append(expression)
 		.append(QueryParts.PARAM_PREFIX).append(column);
 	ParameterTuple<F> parameter = new ParameterTuple<F>(column, value);
 	parameters.add(parameter);
@@ -80,7 +96,7 @@ public class QueryStream<T> {
 
     private <F> void oppLine(FieldCaller<F> field, F value, String expression) throws IOException {
 	opp(field, value, expression);
-	sql.append(NEW_LINE);
+	suffix.append(NEW_LINE);
     }
 
     public <F> QueryStream<T> eq(FieldCaller<F> field, F value) throws IOException {
@@ -137,7 +153,7 @@ public class QueryStream<T> {
 
 	QueryStream<T> stream = new QueryStream<T>(em, entityType);
 
-	stream.sql.append(Filters.SELECT).append(entityAlias).append(Filters.FROM).append(entityType.getName())
+	stream.prefix.append(Filters.SELECT).append(entityAlias).append(Filters.FROM).append(entityType.getName())
 		.append(Filters.AS).append(entityAlias).append(NEW_LINE);
 
 	return stream;
@@ -149,7 +165,7 @@ public class QueryStream<T> {
 
     private TypedQuery<T> initQuery() {
 
-	TypedQuery<T> query = em.createQuery(sql.toString(), entityType);
+	TypedQuery<T> query = em.createQuery(sql(), entityType);
 	parameters.forEach(c -> query.setParameter(c.getName(), c.getValue()));
 
 	return query;
@@ -176,31 +192,32 @@ public class QueryStream<T> {
     }
 
     public QueryStream<T> where() {
-	sql.append(Clauses.WHERE);
+	suffix.append(Clauses.WHERE);
 	return this;
     }
 
     public QueryStream<T> and() {
-	sql.append(Clauses.AND);
+	suffix.append(Clauses.AND);
 	return this;
     }
 
     public QueryStream<T> or() {
-	sql.append(Clauses.OR);
+	suffix.append(Clauses.OR);
 	return this;
     }
 
     public QueryStream<T> openBracket() {
-	sql.append(Operators.OPEN_BRACKET);
+	suffix.append(Operators.OPEN_BRACKET);
 	return this;
     }
 
     public QueryStream<T> closeBracket() {
-	sql.append(Operators.CLOSE_BRACKET);
+	suffix.append(Operators.CLOSE_BRACKET);
 	return this;
     }
 
     public String sql() {
+	sql.delete(START, sql.length()).append(prefix).append(suffix);
 	return sql.toString();
     }
 
