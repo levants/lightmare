@@ -6,7 +6,7 @@ JPA-QL query generator using lambda expressions
 # Overview
 ==========
 
-Lightmare is lightweight library to run ejb project in any type application without any ejb containers
+Lightmare-linq is lightweight library to construct and run JPA queries by method reference instead of raw String composition
 
 # Get it!
 =========
@@ -24,10 +24,20 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 # Use it!
 =========
 
-Usage strts with parsing eny directory, jar or ear file to find and register stateless session beans (with scannotation http://scannotation.sourceforge.net/)
-and create and cache EntityManagerFactory for each @PersistenceContext annotated field in bean:
+Query may be composed by org.lightmare.linq.query.QueryStream select method call:
 ```java
-  List<Person> persons = QueryStream.select(em, Person.class).where().eq(entity::getPersonalNo, personalNo)
-		    .and().like(entity::getLastName, "fname").and().startsWith(entity::getFirstName, "lname").or()
-		    .moreOrEq(entity::getBirthDate, date).toList();
+  List<Person> persons = QueryStream.select(em, Person.class).where()
+  			.eq(entity::getPersonalNo, personalNo)
+		    .and().like(entity::getLastName, "fname")
+		    .and().startsWith(entity::getFirstName, "lname")
+		    .or().moreOrEq(entity::getBirthDate, date).toList();
 ```	
+
+Query also can be linked dynamically:
+
+  QueryStream<Person> stream = QueryStream.select(em, Person.class);
+  			 stream.where().eq(entity::getPersonalNo, personalNo);
+		     stream.and().like(entity::getLastName, "fname")
+		     stream.and().startsWith(entity::getFirstName, "lname")
+		     stream.or().moreOrEq(entity::getBirthDate, date);
+  List<Person> persons = stream.toList();

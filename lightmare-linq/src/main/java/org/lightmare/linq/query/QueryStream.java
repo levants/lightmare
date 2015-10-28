@@ -83,14 +83,9 @@ public class QueryStream<T> {
 	return tuple;
     }
 
-    private <F> QueryTuple opp(FieldCaller<F> field) throws IOException {
-	QueryTuple tuple = compose(field);
-	return tuple;
-    }
-
     private <F> void opp(FieldCaller<F> field, F value, String expression) throws IOException {
 
-	QueryTuple tuple = opp(field);
+	QueryTuple tuple = compose(field);
 	String column = tuple.getField();
 	suffix.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX);
 	suffix.append(column).append(expression);

@@ -27,16 +27,21 @@ public class QueryCache {
     }
 
     public static QueryTuple getQuery(SerializedLambda lambda) {
+
+	QueryTuple tuple;
+
 	String key = getKey(lambda);
-	return QUERIES.get(key);
+	tuple = getQuery(key);
+
+	return tuple;
     }
 
     public static void putQuery(String key, QueryTuple value) {
-	QUERIES.put(key, value);
+	QUERIES.putIfAbsent(key, value);
     }
 
     public static void putQuery(SerializedLambda lambda, QueryTuple value) {
 	String key = getKey(lambda);
-	QUERIES.put(key, value);
+	putQuery(key, value);
     }
 }

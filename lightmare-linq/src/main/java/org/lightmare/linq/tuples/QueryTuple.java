@@ -2,6 +2,8 @@ package org.lightmare.linq.tuples;
 
 import java.io.Serializable;
 
+import javax.persistence.TemporalType;
+
 /**
  * Query field and entity type container class
  * 
@@ -14,13 +16,18 @@ public class QueryTuple implements Serializable {
 
     private final String entity;
 
+    private final String method;
+
     private final String field;
+
+    private TemporalType temporalType;
 
     private String alias;
 
     private static final String ALIAS_PREFIX = "c";
 
-    public QueryTuple(final String entity, final String field) {
+    public QueryTuple(final String entity, final String method, final String field) {
+	this.method = method;
 	this.entity = entity;
 	this.field = field;
     }
@@ -29,8 +36,20 @@ public class QueryTuple implements Serializable {
 	return entity;
     }
 
+    public String getMethod() {
+	return method;
+    }
+
     public String getField() {
 	return field;
+    }
+
+    public TemporalType getTemporalType() {
+	return temporalType;
+    }
+
+    public void setTemporalType(TemporalType temporalType) {
+	this.temporalType = temporalType;
     }
 
     public String getAlias() {
