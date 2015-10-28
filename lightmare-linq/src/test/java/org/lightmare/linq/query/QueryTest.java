@@ -69,13 +69,14 @@ public class QueryTest {
 	Person entity = new Person();
 	stream.setWerbose(Boolean.TRUE);
 	stream.where().moreOrEq(entity::getBirthDate, getDateValue()).and();
-	stream.like(entity::getLastName, "ცინ").and();
-	stream.like(entity::getFirstName, "ლევ").and();
-	stream.eq(entity::getPersonalNo, personalNo);
+	stream.like(entity::getLastName, "ცინ");
+	stream.and().like(entity::getFirstName, "ლევ");
+	stream.or().eq(entity::getPersonalNo, personalNo);
 
 	return stream;
     }
 
+    @Test
     public void supplierTest() {
 
 	try {

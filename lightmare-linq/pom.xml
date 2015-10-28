@@ -47,7 +47,7 @@
 			<artifactId>asm-all</artifactId>
 			<version>${asm.version}</version>
 		</dependency>
-		<!-- end of ASM -->
+		<!-- ASM -->
 		<!-- ejb -->
 		<dependency>
 			<groupId>javax.ejb</groupId>
@@ -69,7 +69,7 @@
 			<classifier>javadoc</classifier>
 			<scope>provided</scope>
 		</dependency>
-		<!-- end of ejb -->
+		<!-- ejb -->
 		<!-- hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -97,7 +97,18 @@
 			<classifier>sources</classifier>
 			<scope>provided</scope>
 		</dependency>
-		<!-- end of hibernate -->
+		<!-- hibernate -->
+
+		<!-- loggers -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- loggers -->
+
+		<!-- test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -109,5 +120,6 @@
 			<version>${h2.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- test dependencies -->
 	</dependencies>
 </project>

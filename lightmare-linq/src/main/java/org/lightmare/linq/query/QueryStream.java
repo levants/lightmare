@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.apache.log4j.Logger;
 import org.lightmare.linq.cache.QueryCache;
 import org.lightmare.linq.io.Replacements;
 import org.lightmare.linq.resolvers.FieldResolver;
@@ -47,6 +48,8 @@ public class QueryStream<T> {
 
     private static final int START = 0;
 
+    private static final Logger LOG = Logger.getLogger(QueryStream.class);
+
     private QueryStream(final EntityManager em, final Class<T> entityType) {
 	this.em = em;
 	this.entityType = entityType;
@@ -69,11 +72,12 @@ public class QueryStream<T> {
 	QueryTuple tuple;
 
 	SerializedLambda lambda = Replacements.getReplacement(field);
-	String key = lambda.toString();
-	tuple = QueryCache.getQuery(key);
+	tuple = QueryCache.getQuery(lambda);
 	if (tuple == null) {
 	    tuple = FieldResolver.resolve(lambda, verbose);
 	    tuple.setAlias(DEFAULT_ALIAS);
+	    QueryCache.putQuery(lambda, tuple);
+	    FieldResolver.printVerbose(verbose, c -> LOG.info(String.format("Key %s is not bound to cache", lambda)));
 	}
 
 	return tuple;
@@ -88,8 +92,9 @@ public class QueryStream<T> {
 
 	QueryTuple tuple = opp(field);
 	String column = tuple.getField();
-	suffix.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX).append(column).append(expression)
-		.append(QueryParts.PARAM_PREFIX).append(column);
+	suffix.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX);
+	suffix.append(column).append(expression);
+	suffix.append(QueryParts.PARAM_PREFIX).append(column);
 	ParameterTuple<F> parameter = new ParameterTuple<F>(column, value);
 	parameters.add(parameter);
     }
