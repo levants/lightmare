@@ -1,7 +1,7 @@
 package org.lightmare.linq.query;
 
 /**
- * Query parts
+ * Query filter parts
  * 
  * @author Levan Tsinadze
  *

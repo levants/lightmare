@@ -26,6 +26,8 @@ public class FieldResolver {
 
     private static final int ZERO_FLAGS = 0;
 
+    private static final int FIRST = 0;
+
     private static final int BEGIN_INDEX = "get".length();
 
     private static final char SUB_CLASS = '$';
@@ -43,7 +45,7 @@ public class FieldResolver {
 
 	String fieldName = methodName.substring(BEGIN_INDEX);
 
-	String first = String.valueOf(fieldName.charAt(0));
+	String first = String.valueOf(fieldName.charAt(FIRST));
 	fieldName = fieldName.replaceFirst(first, first.toLowerCase());
 
 	return fieldName;
@@ -68,7 +70,7 @@ public class FieldResolver {
 	Type entityType = Type.getObjectType(entityName);
 	Type returnType = type.getReturnType();
 	Type[] argumentTypes = type.getArgumentTypes();
-	valid = argumentTypes.length == 0 && !Type.VOID_TYPE.equals(returnType);
+	valid = argumentTypes.length == FIRST && !Type.VOID_TYPE.equals(returnType);
 	printWerbose(werbose, c -> {
 	    System.out.println(entityType.getClassName());
 	    System.out.println(returnType.getClassName());
@@ -78,22 +80,32 @@ public class FieldResolver {
 	return valid;
     }
 
-    private static QueryTuple resolve(InsnList instructions, boolean werbose) {
+    private static QueryTuple resolve(AbstractInsnNode instruction, boolean verbose) {
+
+	QueryTuple tuple;
+
+	MethodInsnNode node = (MethodInsnNode) instruction;
+	if (valid(node, verbose)) {
+	    String fieldName = resolveFieldName(node.name);
+	    String entityName = resolveEntityName(node.owner);
+	    tuple = new QueryTuple(entityName, fieldName);
+	} else {
+	    tuple = null;
+	}
+
+	return tuple;
+    }
+
+    private static QueryTuple resolve(InsnList instructions, boolean verbose) {
 
 	QueryTuple tuple = null;
 
-	boolean next = Boolean.TRUE;
 	int size = instructions.size();
-	for (int i = 0; i < size && next; ++i) {
+	for (int i = FIRST; (i < size && tuple == null); ++i) {
 	    AbstractInsnNode instruction = instructions.get(i);
 	    if (instruction instanceof MethodInsnNode) {
 		MethodInsnNode node = (MethodInsnNode) instruction;
-		next = !valid(node, werbose);
-		if (!next) {
-		    String fieldName = resolveFieldName(node.name);
-		    String entityName = resolveEntityName(node.owner);
-		    tuple = new QueryTuple(entityName, fieldName);
-		}
+		tuple = resolve(node, verbose);
 	    }
 	}
 
@@ -111,7 +123,7 @@ public class FieldResolver {
 	return valid;
     }
 
-    public static QueryTuple resolve(SerializedLambda lambda, boolean werbose) throws IOException {
+    public static QueryTuple resolve(SerializedLambda lambda, boolean verbose) throws IOException {
 
 	QueryTuple tuple;
 
@@ -122,12 +134,12 @@ public class FieldResolver {
 	List<MethodNode> methods = node.methods;
 	if (Objects.nonNull(methods)) {
 	    MethodNode methodNode = methods.stream().filter(c -> validate(c, lambda)).findFirst().get();
-	    printWerbose(werbose, c -> System.out.format("%s %s", methodNode.name, methodNode.desc));
+	    printWerbose(verbose, c -> System.out.format("%s %s", methodNode.name, methodNode.desc));
 	    methodNode.visitCode();
 	    InsnList instructions = methodNode.instructions;
-	    tuple = resolve(instructions, werbose);
+	    tuple = resolve(instructions, verbose);
 	} else {
-	    throw new IOException("Unresolvabla field name");
+	    throw new IOException("Unresolvable field name");
 	}
 
 	return tuple;
