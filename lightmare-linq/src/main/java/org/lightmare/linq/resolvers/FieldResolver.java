@@ -33,9 +33,8 @@ public class FieldResolver {
 
     private static final int BEGIN_INDEX = "get".length();
 
-    private static final char SUB_CLASS = '$';
-
-    private static final char PACKAGE_SEP = '.';
+    // Error messages
+    private static final String UNRESOLVABLE_ERROR = "Unresolvable field name";
 
     private static final Logger LOG = Logger.getLogger(FieldResolver.class);
 
@@ -61,7 +60,7 @@ public class FieldResolver {
 	String entityName;
 
 	Type entityType = Type.getObjectType(owner);
-	entityName = entityType.getClassName().replace(SUB_CLASS, PACKAGE_SEP);
+	entityName = entityType.getClassName();
 
 	return entityName;
     }
@@ -88,11 +87,18 @@ public class FieldResolver {
 
     }
 
-    private static QueryTuple resolve(AbstractInsnNode instruction, boolean verbose) throws IOException {
+    /**
+     * Resolves field name from instruction instance
+     * 
+     * @param instruction
+     * @param verbose
+     * @return {@link QueryTuple} for resolved field and query part
+     * @throws IOException
+     */
+    private static QueryTuple resolve(MethodInsnNode node, boolean verbose) throws IOException {
 
 	QueryTuple tuple;
 
-	MethodInsnNode node = ObjectUtils.cast(instruction);
 	if (valid(node, verbose)) {
 	    String fieldName = resolveFieldName(node.name);
 	    String entityName = resolveEntityName(node.owner);
@@ -129,6 +135,13 @@ public class FieldResolver {
 	return tuple;
     }
 
+    /**
+     * Validates method and signature for field resolver
+     * 
+     * @param methodNode
+     * @param lambda
+     * @return </code>boolean</code> validation result
+     */
     public static boolean validate(MethodNode methodNode, SerializedLambda lambda) {
 
 	boolean valid;
@@ -164,7 +177,7 @@ public class FieldResolver {
 	    InsnList instructions = methodNode.instructions;
 	    tuple = resolve(instructions, verbose);
 	} else {
-	    throw new IOException("Unresolvable field name");
+	    throw new IOException(UNRESOLVABLE_ERROR);
 	}
 
 	return tuple;

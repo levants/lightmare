@@ -33,6 +33,8 @@ public class QueryStream<T> {
 
     private final StringBuilder prefix;
 
+    private final StringBuilder body;
+
     private final StringBuilder suffix;
 
     private final StringBuilder sql;
@@ -55,7 +57,8 @@ public class QueryStream<T> {
 	this.em = em;
 	this.entityType = entityType;
 	prefix = new StringBuilder();
-	suffix = new StringBuilder();
+	body = new StringBuilder();
+	this.suffix = new StringBuilder();
 	sql = new StringBuilder();
 	parameters = new HashSet<>();
     }
@@ -68,7 +71,7 @@ public class QueryStream<T> {
 	}
     }
 
-    private <F> QueryTuple compose(FieldCaller<F> field) throws IOException {
+    private <F> QueryTuple compose(FieldGetter<F> field) throws IOException {
 
 	QueryTuple tuple;
 
@@ -98,66 +101,66 @@ public class QueryStream<T> {
 	parameters.add(parameter);
     }
 
-    private <F> void opp(FieldCaller<F> field, F value, String expression) throws IOException {
+    private <F> void opp(FieldGetter<F> field, F value, String expression) throws IOException {
 
 	QueryTuple tuple = compose(field);
 	String column = tuple.getField();
-	suffix.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX);
-	suffix.append(column).append(expression);
-	suffix.append(QueryParts.PARAM_PREFIX).append(column);
+	body.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX);
+	body.append(column).append(expression);
+	body.append(QueryParts.PARAM_PREFIX).append(column);
 	addParameter(tuple, value);
     }
 
-    private <F> void oppLine(FieldCaller<F> field, F value, String expression) throws IOException {
+    private <F> void oppLine(FieldGetter<F> field, F value, String expression) throws IOException {
 	opp(field, value, expression);
-	suffix.append(NEW_LINE);
+	body.append(NEW_LINE);
     }
 
-    public <F> QueryStream<T> eq(FieldCaller<F> field, F value) throws IOException {
+    public <F> QueryStream<T> eq(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.EQ);
 	return this;
     }
 
-    public <F> QueryStream<T> more(FieldCaller<F> field, F value) throws IOException {
+    public <F> QueryStream<T> more(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.MORE);
 	return this;
     }
 
-    public <F> QueryStream<T> less(FieldCaller<F> field, F value) throws IOException {
+    public <F> QueryStream<T> less(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.LESS);
 	return this;
     }
 
-    public <F> QueryStream<T> moreOrEq(FieldCaller<F> field, F value) throws IOException {
+    public <F> QueryStream<T> moreOrEq(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.MORE_OR_EQ);
 	return this;
     }
 
-    public <F> QueryStream<T> lessOrEq(FieldCaller<F> field, F value) throws IOException {
+    public <F> QueryStream<T> lessOrEq(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.LESS_OR_EQ);
 	return this;
     }
 
-    public <F> QueryStream<T> contains(FieldCaller<F> field, F value) throws IOException {
+    public <F> QueryStream<T> contains(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.CONTAINS);
 	return this;
     }
 
-    public QueryStream<T> startsWith(FieldCaller<String> field, String value) throws IOException {
+    public QueryStream<T> startsWith(FieldGetter<String> field, String value) throws IOException {
 	oppLine(field, value.concat(Filters.LIKE), Operators.STARTS_WITH);
 	return this;
     }
 
-    public QueryStream<T> like(FieldCaller<String> field, String value) throws IOException {
+    public QueryStream<T> like(FieldGetter<String> field, String value) throws IOException {
 	return startsWith(field, value);
     }
 
-    public QueryStream<T> endsWith(FieldCaller<String> field, String value) throws IOException {
+    public QueryStream<T> endsWith(FieldGetter<String> field, String value) throws IOException {
 	oppLine(field, Filters.LIKE.concat(value), Operators.STARTS_WITH);
 	return this;
     }
 
-    public QueryStream<T> contains(FieldCaller<String> field, String value) throws IOException {
+    public QueryStream<T> contains(FieldGetter<String> field, String value) throws IOException {
 	oppLine(field, Filters.LIKE.concat(value).concat(Filters.LIKE), Operators.STARTS_WITH);
 	return this;
     }
@@ -222,27 +225,27 @@ public class QueryStream<T> {
     }
 
     public QueryStream<T> where() {
-	suffix.append(Clauses.WHERE);
+	body.append(Clauses.WHERE);
 	return this;
     }
 
     public QueryStream<T> and() {
-	suffix.append(Clauses.AND);
+	body.append(Clauses.AND);
 	return this;
     }
 
     public QueryStream<T> or() {
-	suffix.append(Clauses.OR);
+	body.append(Clauses.OR);
 	return this;
     }
 
     public QueryStream<T> openBracket() {
-	suffix.append(Operators.OPEN_BRACKET);
+	body.append(Operators.OPEN_BRACKET);
 	return this;
     }
 
     public QueryStream<T> closeBracket() {
-	suffix.append(Operators.CLOSE_BRACKET);
+	body.append(Operators.CLOSE_BRACKET);
 	return this;
     }
 
@@ -252,12 +255,17 @@ public class QueryStream<T> {
     }
 
     public QueryStream<T> appendBody(Object clause) {
-	suffix.append(clause);
+	body.append(clause);
 	return this;
     }
 
     public String sql() {
-	sql.delete(START, sql.length()).append(prefix).append(suffix);
+
+	sql.delete(START, sql.length());
+	sql.append(prefix);
+	sql.append(body);
+	sql.append(suffix);
+
 	return sql.toString();
     }
 

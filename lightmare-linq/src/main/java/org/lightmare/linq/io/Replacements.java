@@ -15,6 +15,7 @@ import org.lightmare.utils.reflect.ClassUtils;
  */
 public class Replacements {
 
+    // Method name to get SerializedLambda on the fly
     private static final String METHOD = "writeReplace";
 
     /**

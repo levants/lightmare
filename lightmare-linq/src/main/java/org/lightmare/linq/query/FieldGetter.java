@@ -1,6 +1,7 @@
 package org.lightmare.linq.query;
 
 import java.io.Serializable;
+import java.util.function.Supplier;
 
 /**
  * Interface for method reference call
@@ -10,7 +11,7 @@ import java.io.Serializable;
  * @param <T>
  */
 @FunctionalInterface
-public interface FieldCaller<T> extends Serializable {
+public interface FieldGetter<T> extends Supplier<T>, Serializable {
 
-    T call();
+    T get();
 }
