@@ -16,18 +16,18 @@ import org.lightmare.linq.entities.Person;
 
 public class QueryTest {
 
-    private final String personalNo = "01007007784";
+    private final String personalNo = "10100100100";
 
     private static EntityManagerFactory emf;
 
     private static void persistPersons() {
 
 	Person person = new Person();
-	person.setPersonalNo("01007007784");
-	person.setLastName("ცინაძე");
-	person.setFirstName("ლევან");
+	person.setPersonalNo("10100100100");
+	person.setLastName("lname");
+	person.setFirstName("fname");
 	person.setBirthDate(new Date());
-	person.setMiddName("ლევან");
+	person.setMiddName("mname");
 	EntityManager em = emf.createEntityManager();
 	EntityTransaction transaction = em.getTransaction();
 	transaction.begin();
@@ -69,8 +69,8 @@ public class QueryTest {
 	Person entity = new Person();
 	stream.setWerbose(Boolean.TRUE);
 	stream.where().moreOrEq(entity::getBirthDate, getDateValue()).and();
-	stream.like(entity::getLastName, "ცინ");
-	stream.and().like(entity::getFirstName, "ლევ");
+	stream.like(entity::getLastName, "lname");
+	stream.and().like(entity::getFirstName, "fname");
 	stream.or().eq(entity::getPersonalNo, personalNo);
 
 	return stream;
@@ -103,7 +103,7 @@ public class QueryTest {
 	    Date date = getDateValue();
 
 	    List<Person> persons = QueryStream.select(em, Person.class).where().eq(entity::getPersonalNo, personalNo)
-		    .and().like(entity::getLastName, "ცინ").and().startsWith(entity::getFirstName, "ლევ").or()
+		    .and().like(entity::getLastName, "fname").and().startsWith(entity::getFirstName, "lname").or()
 		    .moreOrEq(entity::getBirthDate, date).toList();
 
 	    System.out.println();
