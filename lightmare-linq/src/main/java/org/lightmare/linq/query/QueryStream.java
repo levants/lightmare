@@ -12,8 +12,8 @@ import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 import org.lightmare.linq.cache.QueryCache;
-import org.lightmare.linq.io.Replacements;
 import org.lightmare.linq.lambda.FieldGetter;
+import org.lightmare.linq.lambda.LambdaReplacements;
 import org.lightmare.linq.links.Clauses;
 import org.lightmare.linq.links.Filters;
 import org.lightmare.linq.links.Operators;
@@ -85,7 +85,7 @@ public class QueryStream<T> {
 
 	QueryTuple tuple;
 
-	SerializedLambda lambda = Replacements.getReplacement(field);
+	SerializedLambda lambda = LambdaReplacements.getReplacement(field);
 	tuple = QueryCache.getQuery(lambda);
 	if (tuple == null) {
 	    tuple = FieldResolver.resolve(lambda, verbose);
@@ -111,14 +111,27 @@ public class QueryStream<T> {
 	parameters.add(parameter);
     }
 
-    private <F> void opp(FieldGetter<F> field, F value, String expression) throws IOException {
+    private <F> QueryTuple opp(FieldGetter<F> field, String expression) throws IOException {
 
 	QueryTuple tuple = compose(field);
+
 	String column = tuple.getField();
 	body.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX);
 	body.append(column).append(expression);
-	body.append(QueryParts.PARAM_PREFIX).append(column);
+
+	return tuple;
+    }
+
+    private <F> void opp(FieldGetter<F> field, F value, String expression) throws IOException {
+
+	QueryTuple tuple = opp(field, expression);
+	body.append(QueryParts.PARAM_PREFIX).append(tuple.getField());
 	addParameter(tuple, value);
+    }
+
+    private <F> void oppLine(FieldGetter<F> field, String expression) throws IOException {
+	opp(field, expression);
+	body.append(NEW_LINE);
     }
 
     private <F> void oppLine(FieldGetter<F> field, F value, String expression) throws IOException {
@@ -151,13 +164,9 @@ public class QueryStream<T> {
 	return this;
     }
 
-    public <F> QueryStream<T> contains(FieldGetter<F> field, F value) throws IOException {
-	oppLine(field, value, Operators.CONTAINS);
-	return this;
-    }
-
     public QueryStream<T> startsWith(FieldGetter<String> field, String value) throws IOException {
-	oppLine(field, value.concat(Filters.LIKE), Operators.STARTS_WITH);
+	String enrich = value.concat(Filters.LIKE_SIGN);
+	oppLine(field, enrich, Operators.LIKE);
 	return this;
     }
 
@@ -166,12 +175,24 @@ public class QueryStream<T> {
     }
 
     public QueryStream<T> endsWith(FieldGetter<String> field, String value) throws IOException {
-	oppLine(field, Filters.LIKE.concat(value), Operators.STARTS_WITH);
+	String enrich = Filters.LIKE_SIGN.concat(value);
+	oppLine(field, enrich, Operators.LIKE);
 	return this;
     }
 
     public QueryStream<T> contains(FieldGetter<String> field, String value) throws IOException {
-	oppLine(field, Filters.LIKE.concat(value).concat(Filters.LIKE), Operators.STARTS_WITH);
+	String enrich = Filters.LIKE_SIGN.concat(value).concat(Filters.LIKE_SIGN);
+	oppLine(field, enrich, Operators.LIKE);
+	return this;
+    }
+
+    public QueryStream<T> isNull(FieldGetter<String> field) throws IOException {
+	oppLine(field, Operators.IS_NULL);
+	return this;
+    }
+
+    public QueryStream<T> notNull(FieldGetter<String> field) throws IOException {
+	oppLine(field, Operators.NOT_NULL);
 	return this;
     }
 

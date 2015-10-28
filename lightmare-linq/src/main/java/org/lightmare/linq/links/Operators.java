@@ -18,9 +18,11 @@ public interface Operators {
 
     String LESS_OR_EQ = " <= ";
 
-    String CONTAINS = " in ";
+    String LIKE = " like ";
 
-    String STARTS_WITH = " like ";
+    String IS_NULL = " is null ";
+
+    String NOT_NULL = " is not null ";
 
     String IN = " in ";
 

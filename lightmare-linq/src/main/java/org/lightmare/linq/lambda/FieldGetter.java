@@ -9,6 +9,7 @@ import java.util.function.Supplier;
  * @author Levan Tsinadze
  *
  * @param <T>
+ *            field type parameter
  */
 @FunctionalInterface
 public interface FieldGetter<T> extends Supplier<T>, Serializable {

@@ -1,4 +1,4 @@
-package org.lightmare.linq.io;
+package org.lightmare.linq.lambda;
 
 import java.io.IOException;
 import java.lang.invoke.SerializedLambda;
@@ -13,7 +13,7 @@ import org.lightmare.utils.reflect.ClassUtils;
  * @author Levan Tsinadze
  *
  */
-public class Replacements {
+public class LambdaReplacements {
 
     // Method name to get SerializedLambda on the fly
     private static final String METHOD = "writeReplace";

@@ -240,8 +240,7 @@ public abstract class ArchiveUtils {
      * @return {@link ArchiveUtils}
      * @throws IOException
      */
-    public static ArchiveUtils getAppropriatedType(URL url, FileType fileType)
-	    throws IOException {
+    public static ArchiveUtils getAppropriatedType(URL url, FileType fileType) throws IOException {
 
 	ArchiveUtils ioUtils;
 
@@ -293,8 +292,7 @@ public abstract class ArchiveUtils {
      * @param className
      * @return {@link URL}
      */
-    public URL getAppropriatedURL(Map<String, String> classOwnersFiles,
-	    String className) {
+    public URL getAppropriatedURL(Map<String, String> classOwnersFiles, String className) {
 
 	URL xmlURL;
 
@@ -315,13 +313,11 @@ public abstract class ArchiveUtils {
      * @param className
      * @return {@link URL}
      */
-    public URL getAppropriatedURL(AnnotationFinder annotationFinder,
-	    String className) {
+    public URL getAppropriatedURL(AnnotationFinder annotationFinder, String className) {
 
 	URL xmlURL;
 
-	Map<String, String> classOwnersFiles = annotationFinder
-		.getClassOwnersFiles();
+	Map<String, String> classOwnersFiles = annotationFinder.getClassOwnersFiles();
 	xmlURL = getAppropriatedURL(classOwnersFiles, className);
 
 	return xmlURL;
@@ -404,8 +400,7 @@ public abstract class ArchiveUtils {
      * @param jarNames
      * @throws IOException
      */
-    public abstract void extractEjbJars(Set<String> jarNames)
-	    throws IOException;
+    public abstract void extractEjbJars(Set<String> jarNames) throws IOException;
 
     /**
      * Checks if passed file name contains ORM module configuration files
@@ -440,8 +435,7 @@ public abstract class ArchiveUtils {
 	    fileName = subFile.getName();
 	    if (subFile.isDirectory()) {
 		scanDirectory(subFile);
-	    } else if (fileName.endsWith(JAR_FILE_EXT)
-		    || fileName.endsWith(CLASS_FILE_EXT)) {
+	    } else if (fileName.endsWith(JAR_FILE_EXT) || fileName.endsWith(CLASS_FILE_EXT)) {
 		fileURL = subFile.toURI().toURL();
 		getEjbURLs().add(fileURL);
 		getLibURLs().add(fileURL);

@@ -18,5 +18,5 @@ public interface Filters {
 
     String DELETE = "delete ";
 
-    String LIKE = "%";
+    String LIKE_SIGN = "%";
 }

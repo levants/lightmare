@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
-import org.lightmare.linq.jpa.ColumnProcessor;
+import org.lightmare.linq.orm.ColumnProcessor;
 import org.lightmare.linq.tuples.QueryTuple;
 import org.lightmare.utils.ObjectUtils;
 import org.objectweb.asm.ClassReader;

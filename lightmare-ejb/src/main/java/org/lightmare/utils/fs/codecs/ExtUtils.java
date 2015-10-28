@@ -72,8 +72,7 @@ public class ExtUtils extends DirUtils {
      */
     protected void exctractEar() throws IOException {
 
-	tmpFile = File.createTempFile(realFile.getName(),
-		StringUtils.EMPTY_STRING);
+	tmpFile = File.createTempFile(realFile.getName(), StringUtils.EMPTY_STRING);
 	tmpFile.delete();
 	tmpFile.mkdir();
 	addTmpFile(tmpFile);

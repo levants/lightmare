@@ -101,11 +101,11 @@ public class QueryTest {
 	    EntityManager em = emf.createEntityManager();
 	    Person entity = new Person();
 	    Date date = getDateValue();
-
+	    // ============= Query construction ============== //
 	    List<Person> persons = QueryStream.select(em, Person.class).where().eq(entity::getPersonalNo, personalNo)
 		    .and().like(entity::getLastName, "fname").and().startsWith(entity::getFirstName, "lname").or()
 		    .moreOrEq(entity::getBirthDate, date).toList();
-
+	    // =============================================//
 	    System.out.println();
 	    System.out.println("----------------");
 	    System.out.println();

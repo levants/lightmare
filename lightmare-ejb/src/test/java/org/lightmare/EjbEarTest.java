@@ -67,12 +67,10 @@ public class EjbEarTest {
 	    String path;
 	    if (scanner != null && scanner.hasNextLine()) {
 		path = scanner.nextLine().trim();
-		creator = JpaTest.getDBCreator(path, "./ds/standalone.xml",
-			"testUnit", null);
+		creator = JpaTest.getDBCreator(path, "./ds/standalone.xml", "testUnit", null);
 	    } else {
-		creator = JpaTest
-			.getDBCreator(EarFileReaderTest.EAR_PATH,
-				"./ds/standalone.xml", "testUnit", null/* "persistence/emf" */);
+		creator = JpaTest.getDBCreator(EarFileReaderTest.EAR_PATH, "./ds/standalone.xml", "testUnit",
+			null/* "persistence/emf" */);
 
 	    }
 	    personToAdd = creator.createPersonToAdd();
@@ -81,8 +79,7 @@ public class EjbEarTest {
 	    personToIdGeneratorNew = creator.personForIdGeneratorNew();
 
 	    EjbConnector connector = new EjbConnector();
-	    bean = connector.connectToBean("LightMareBean",
-		    LightMareBeanRemote.class);
+	    bean = connector.connectToBean("LightMareBean", LightMareBeanRemote.class);
 
 	} catch (Exception ex) {
 	    ex.printStackTrace();
@@ -169,8 +166,8 @@ public class EjbEarTest {
     public void getFalseBeanTest() {
 	try {
 	    EjbConnector connector = new EjbConnector();
-	    LightMareFalseBeanRemote falseBean = connector.connectToBean(
-		    "LightMareFalseBean", LightMareFalseBeanRemote.class);
+	    LightMareFalseBeanRemote falseBean = connector.connectToBean("LightMareFalseBean",
+		    LightMareFalseBeanRemote.class);
 	    boolean check = falseBean.isFalse();
 	    Assert.assertTrue(check);
 	    getThreadId();
@@ -185,14 +182,9 @@ public class EjbEarTest {
     public void getUserTransactionTest() {
 	try {
 	    InitialContext context = new InitialContext();
-	    UserTransaction transaction = (UserTransaction) context
-		    .lookup(NamingUtils.USER_TRANSACTION_NAME);
-	    Assert.assertNotNull(
-		    "Could not find UserTransaction by jndi lookup",
-		    transaction);
-	    System.out
-		    .format("\nRetrived UserTransaction object name is %s \n====================\n",
-			    transaction);
+	    UserTransaction transaction = (UserTransaction) context.lookup(NamingUtils.USER_TRANSACTION_NAME);
+	    Assert.assertNotNull("Could not find UserTransaction by jndi lookup", transaction);
+	    System.out.format("\nRetrived UserTransaction object name is %s \n====================\n", transaction);
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}

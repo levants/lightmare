@@ -1,4 +1,4 @@
-package org.lightmare.linq.jpa;
+package org.lightmare.linq.orm;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
