@@ -1,4 +1,4 @@
-package org.lightmare.linq.query;
+package org.lightmare.linq.links;
 
 /**
  * Query parts for JPA-QL expression

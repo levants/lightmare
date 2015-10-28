@@ -1,4 +1,4 @@
-package org.lightmare.linq.query;
+package org.lightmare.linq.links;
 
 /**
  * Query operators
@@ -23,6 +23,8 @@ public interface Operators {
     String STARTS_WITH = " like ";
 
     String IN = " in ";
+
+    String EXISTS = " exists ";
 
     String OPEN_BRACKET = " (";
 

@@ -1,4 +1,4 @@
-package org.lightmare.linq.query;
+package org.lightmare.linq.lambda;
 
 import java.io.Serializable;
 import java.util.function.Supplier;

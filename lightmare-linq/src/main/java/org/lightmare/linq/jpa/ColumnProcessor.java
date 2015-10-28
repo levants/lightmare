@@ -18,6 +18,16 @@ import org.lightmare.utils.reflect.ClassUtils;
  */
 public class ColumnProcessor {
 
+    /**
+     * Finds {@link javax.persistence.Temporal} annotation on field or on getter
+     * method
+     * 
+     * @param entityType
+     * @param fieldName
+     * @param methodName
+     * @return {@link javax.persistence.Temporal} annotation
+     * @throws IOException
+     */
     private static Temporal getTemporal(Class<?> entityType, String fieldName, String methodName) throws IOException {
 
 	Temporal temporal;

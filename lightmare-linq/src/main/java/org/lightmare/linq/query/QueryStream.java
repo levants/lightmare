@@ -13,12 +13,18 @@ import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 import org.lightmare.linq.cache.QueryCache;
 import org.lightmare.linq.io.Replacements;
+import org.lightmare.linq.lambda.FieldGetter;
+import org.lightmare.linq.links.Clauses;
+import org.lightmare.linq.links.Filters;
+import org.lightmare.linq.links.Operators;
+import org.lightmare.linq.links.QueryParts;
 import org.lightmare.linq.resolvers.FieldResolver;
 import org.lightmare.linq.tuples.ParameterTuple;
 import org.lightmare.linq.tuples.QueryTuple;
+import org.lightmare.utils.reflect.ClassUtils;
 
 /**
- * Utility class for lambda expression analyze and JPA-QL query generator
+ * Main class for lambda expression analyze and JPA query generator
  * 
  * @author Levan Tsinadze
  *
@@ -63,6 +69,10 @@ public class QueryStream<T> {
 	parameters = new HashSet<>();
     }
 
+    protected T instance() throws IOException {
+	return ClassUtils.instantiate(entityType);
+    }
+
     protected void setAlias(QueryTuple tuple) {
 
 	if (tuple.hasNoAlias()) {
@@ -71,7 +81,7 @@ public class QueryStream<T> {
 	}
     }
 
-    private <F> QueryTuple compose(FieldGetter<F> field) throws IOException {
+    protected <F> QueryTuple compose(FieldGetter<F> field) throws IOException {
 
 	QueryTuple tuple;
 
@@ -259,6 +269,11 @@ public class QueryStream<T> {
 	return this;
     }
 
+    /**
+     * Gets generated JPA query
+     * 
+     * @return {@link String} JPA query
+     */
     public String sql() {
 
 	sql.delete(START, sql.length());
