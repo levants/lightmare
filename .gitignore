@@ -1,9 +1,9 @@
-/.settings
-/target
-/.classpath
+**/target
+**/.settings
+**/.classpath
 /.hgignore
-/derby.log
-/.project
-/database
-/release.properties
-/reports
+**/derby.log
+**/.project
+**/database
+**/release.properties
+**/reportss
