@@ -32,6 +32,13 @@ public class ColumnProcessor {
 	return temporal;
     }
 
+    /**
+     * Sets appropriated {@link javax.persistence.TemporalType} to passed tuple
+     * from field or method annotation
+     * 
+     * @param tuple
+     * @throws IOException
+     */
     public static void setTemporalType(QueryTuple tuple) throws IOException {
 
 	try {

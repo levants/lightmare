@@ -92,7 +92,7 @@ public class FieldResolver {
 
 	QueryTuple tuple;
 
-	MethodInsnNode node = (MethodInsnNode) instruction;
+	MethodInsnNode node = ObjectUtils.cast(instruction);
 	if (valid(node, verbose)) {
 	    String fieldName = resolveFieldName(node.name);
 	    String entityName = resolveEntityName(node.owner);
@@ -105,6 +105,14 @@ public class FieldResolver {
 	return tuple;
     }
 
+    /**
+     * Resolves appropriated instructions for field recognition
+     * 
+     * @param instructions
+     * @param verbose
+     * @return {@link QueryTuple} for resolved field and query part
+     * @throws IOException
+     */
     private static QueryTuple resolve(InsnList instructions, boolean verbose) throws IOException {
 
 	QueryTuple tuple = null;
@@ -132,6 +140,15 @@ public class FieldResolver {
 	return valid;
     }
 
+    /**
+     * Resolved field name, getter method name and entity type from lambda
+     * argument
+     * 
+     * @param lambda
+     * @param verbose
+     * @return {@link QueryTuple} for resolved field and query part
+     * @throws IOException
+     */
     public static QueryTuple resolve(SerializedLambda lambda, boolean verbose) throws IOException {
 
 	QueryTuple tuple;

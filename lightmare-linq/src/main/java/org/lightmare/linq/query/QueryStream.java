@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
@@ -83,6 +84,20 @@ public class QueryStream<T> {
 	return tuple;
     }
 
+    /**
+     * Adds parameter to cache
+     * 
+     * @param tuple
+     * @param value
+     */
+    private <F> void addParameter(QueryTuple tuple, F value) {
+
+	String column = tuple.getField();
+	TemporalType temporalType = tuple.getTemporalType();
+	ParameterTuple<F> parameter = new ParameterTuple<F>(column, value, temporalType);
+	parameters.add(parameter);
+    }
+
     private <F> void opp(FieldCaller<F> field, F value, String expression) throws IOException {
 
 	QueryTuple tuple = compose(field);
@@ -90,8 +105,7 @@ public class QueryStream<T> {
 	suffix.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX);
 	suffix.append(column).append(expression);
 	suffix.append(QueryParts.PARAM_PREFIX).append(column);
-	ParameterTuple<F> parameter = new ParameterTuple<F>(column, value);
-	parameters.add(parameter);
+	addParameter(tuple, value);
     }
 
     private <F> void oppLine(FieldCaller<F> field, F value, String expression) throws IOException {
@@ -148,17 +162,33 @@ public class QueryStream<T> {
 	return this;
     }
 
+    /**
+     * Generates select statements with custom alias
+     * 
+     * @param em
+     * @param entityType
+     * @param entityAlias
+     * @return {@link QueryStream} with select statement
+     */
     public static <T> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
 
 	QueryStream<T> stream = new QueryStream<T>(em, entityType);
 
-	stream.prefix.append(Filters.SELECT).append(entityAlias).append(Filters.FROM).append(entityType.getName())
-		.append(Filters.AS).append(entityAlias).append(NEW_LINE);
+	stream.appendPrefix(Filters.SELECT).appendPrefix(entityAlias).appendPrefix(Filters.FROM);
+	stream.appendPrefix(entityType.getName()).appendPrefix(Filters.AS).appendPrefix(entityAlias);
+	stream.appendPrefix(NEW_LINE);
 
 	return stream;
     }
 
+    /**
+     * Generates select statements with default alias
+     * 
+     * @param em
+     * @param entityType
+     * @return {@link QueryStream} with select statement
+     */
     public static <T> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
 	return select(em, entityType, DEFAULT_ALIAS);
     }
@@ -213,6 +243,16 @@ public class QueryStream<T> {
 
     public QueryStream<T> closeBracket() {
 	suffix.append(Operators.CLOSE_BRACKET);
+	return this;
+    }
+
+    public QueryStream<T> appendPrefix(Object clause) {
+	prefix.append(clause);
+	return this;
+    }
+
+    public QueryStream<T> appendBody(Object clause) {
+	suffix.append(clause);
 	return this;
     }
 
