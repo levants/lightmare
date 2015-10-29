@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 import org.lightmare.linq.cache.QueryCache;
 import org.lightmare.linq.lambda.LambdaReplacements;
-import org.lightmare.linq.lambda.SLambda;
+import org.lightmare.linq.lambda.LambdaData;
 import org.lightmare.linq.links.Clauses;
 import org.lightmare.linq.links.Operators;
 import org.lightmare.linq.links.QueryParts;
@@ -78,7 +78,7 @@ public abstract class AbstractQueryStream<T extends Serializable> implements Que
 
 	QueryTuple tuple;
 
-	SLambda lambda = LambdaReplacements.getReplacement(field);
+	LambdaData lambda = LambdaReplacements.getReplacement(field);
 	tuple = QueryCache.getQuery(lambda);
 	if (tuple == null) {
 	    tuple = FieldResolver.resolve(lambda, verbose);

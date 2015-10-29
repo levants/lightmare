@@ -2,7 +2,7 @@ package org.lightmare.linq.cache;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.lightmare.linq.lambda.SLambda;
+import org.lightmare.linq.lambda.LambdaData;
 import org.lightmare.linq.tuples.QueryTuple;
 
 /**
@@ -17,16 +17,16 @@ public class QueryCache {
 
     private static final String DELIM = ":";
 
-    private static String getKey(SLambda lambda) {
-	return lambda.implClass.concat(DELIM).concat(lambda.implMethodName).concat(DELIM)
-		.concat(lambda.implMethodSignature);
+    private static String getKey(LambdaData lambda) {
+	return lambda.getImplClass().concat(DELIM).concat(lambda.getImplMethodName()).concat(DELIM)
+		.concat(lambda.getImplMethodSignature());
     }
 
     public static QueryTuple getQuery(String key) {
 	return QUERIES.get(key);
     }
 
-    public static QueryTuple getQuery(SLambda lambda) {
+    public static QueryTuple getQuery(LambdaData lambda) {
 
 	QueryTuple tuple;
 
@@ -40,7 +40,7 @@ public class QueryCache {
 	QUERIES.putIfAbsent(key, value);
     }
 
-    public static void putQuery(SLambda lambda, QueryTuple value) {
+    public static void putQuery(LambdaData lambda, QueryTuple value) {
 	String key = getKey(lambda);
 	putQuery(key, value);
     }

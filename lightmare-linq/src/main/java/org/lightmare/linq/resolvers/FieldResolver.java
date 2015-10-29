@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
-import org.lightmare.linq.lambda.SLambda;
+import org.lightmare.linq.lambda.LambdaData;
 import org.lightmare.linq.orm.ColumnProcessor;
 import org.lightmare.linq.tuples.QueryTuple;
 import org.lightmare.utils.ObjectUtils;
@@ -170,12 +170,12 @@ public class FieldResolver {
      * @param lambda
      * @return </code>boolean</code> validation result
      */
-    public static boolean validate(MethodNode methodNode, SLambda lambda) {
+    public static boolean validate(MethodNode methodNode, LambdaData lambda) {
 
 	boolean valid;
 
-	String lambdaName = lambda.implMethodName;
-	String lambdaSignature = lambda.implMethodSignature;
+	String lambdaName = lambda.getImplMethodName();
+	String lambdaSignature = lambda.getImplMethodSignature();
 	valid = (methodNode.name.equals(lambdaName) && methodNode.desc.equals(lambdaSignature));
 
 	return valid;
@@ -190,11 +190,11 @@ public class FieldResolver {
      * @return {@link QueryTuple} for resolved field and query part
      * @throws IOException
      */
-    public static QueryTuple resolve(SLambda lambda, boolean verbose) throws IOException {
+    public static QueryTuple resolve(LambdaData lambda, boolean verbose) throws IOException {
 
 	QueryTuple tuple;
 
-	ClassReader reader = new ClassReader(lambda.implClass);
+	ClassReader reader = new ClassReader(lambda.getImplClass());
 	ClassNode node = new ClassNode(Opcodes.ASM5);
 	reader.accept(node, ZERO_FLAGS);
 	@SuppressWarnings("unchecked")

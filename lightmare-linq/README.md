@@ -27,17 +27,30 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 Query may be composed by org.lightmare.linq.query.QueryStream select method call:
 ```java
   List<Person> persons = QueryStream.select(em, Person.class).where()
-  			.eq(entity::getPersonalNo, personalNo)
-		    .and().like(entity::getLastName, "fname")
-		    .and().startsWith(entity::getFirstName, "lname")
-		    .or().moreOrEq(entity::getBirthDate, date).toList();
+  			.eq(Person::getPersonalNo, personalNo)
+		    .and().like(Person::getLastName, "fname")
+		    .and().startsWith(Person::getFirstName, "lname")
+		    .or().moreOrEq(Person::getBirthDate, date).toList();
 ```	
 
 Query also can be linked dynamically:
+```java
+  QueryStream<Person> stream = QueryStream.select(em, Person.class);
+  			 stream.where().eq(Person::getPersonalNo, personalNo);
+		     stream.and().like(Person::getLastName, "fname")
+		     stream.and().startsWith(Person::getFirstName, "lname")
+		     stream.or().moreOrEq(Person::getBirthDate, date);
+  List<Person> persons = stream.toList();
+```	  
+or if one has entity instance
 
+--java
+  Person entity = ...
   QueryStream<Person> stream = QueryStream.select(em, Person.class);
   			 stream.where().eq(entity::getPersonalNo, personalNo);
 		     stream.and().like(entity::getLastName, "fname")
 		     stream.and().startsWith(entity::getFirstName, "lname")
 		     stream.or().moreOrEq(entity::getBirthDate, date);
   List<Person> persons = stream.toList();
+```	
+enjoy :)

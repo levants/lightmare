@@ -64,24 +64,14 @@ public class LambdaReplacements {
 	return lambda;
     }
 
-    private static SLambda toLambda(SerializedLambda serialized) {
+    private static LambdaData translate(Object field) throws IOException {
 
-	SLambda lambda = new SLambda();
-
-	lambda.implClass = serialized.getImplClass();
-	lambda.implMethodName = serialized.getImplMethodName();
-	lambda.implMethodSignature = serialized.getImplMethodSignature();
-
-	return lambda;
-    }
-
-    private static SLambda translate(Object field) throws IOException {
-
-	SLambda lambda;
+	LambdaData lambda;
 
 	byte[] value = serialize(field);
 	byte[] translated = new String(value, CHARSET).replace(NATIVE_NAME, LINQ_NAME).getBytes(CHARSET);
-	lambda = toLambda(translated);
+	SLambda slambda = toLambda(translated);
+	lambda = new LambdaData(slambda);
 
 	return lambda;
     }
@@ -106,16 +96,16 @@ public class LambdaReplacements {
      * @return {@link SerializedLambda} replacement
      * @throws IOException
      */
-    public static <T> SLambda getReplacement(Object field) throws IOException {
+    public static <T> LambdaData getReplacement(Object field) throws IOException {
 
-	SLambda lambda;
+	LambdaData lambda;
 
 	Class<?> parent = field.getClass();
 	try {
 	    Method method = getMethod(parent);
 	    Object raw = ClassUtils.invokePrivate(method, field);
 	    SerializedLambda serialized = ObjectUtils.cast(raw);
-	    lambda = toLambda(serialized);
+	    lambda = new LambdaData(serialized);
 	} catch (NoSuchMethodException ex) {
 	    lambda = translate(field);
 	}
