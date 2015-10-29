@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.lightmare.criteria.entities.Person;
@@ -53,15 +54,19 @@ public class QueryTest {
 	}
     }
 
-    private Date getDateValue() {
+    private Date getDateValue(int before) {
 
 	Date date;
 
 	Calendar calendar = Calendar.getInstance();
-	calendar.add(Calendar.YEAR, -100);
+	calendar.add(Calendar.YEAR, -before);
 	date = calendar.getTime();
 
 	return date;
+    }
+
+    private Date getDateValue() {
+	return getDateValue(100);
     }
 
     private QueryStream<Person> createGetterStream(final EntityManager em) throws IOException {
@@ -69,7 +74,6 @@ public class QueryTest {
 	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
 
 	Person entity = new Person();
-	stream.setWerbose(Boolean.TRUE);
 	stream.where().moreOrEq(entity::getBirthDate, getDateValue()).and();
 	stream.like(entity::getLastName, "lname");
 	stream.and().like(entity::getFirstName, "fname");
@@ -82,7 +86,6 @@ public class QueryTest {
 
 	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
 
-	stream.setWerbose(Boolean.TRUE);
 	stream.where().moreOrEq(c -> c.getBirthDate(), getDateValue()).and();
 	stream.like(Person::getLastName, "lname");
 	stream.and().like(Person::getFirstName, "fname");
@@ -130,8 +133,8 @@ public class QueryTest {
     @Test
     public void toListByGetterTest() {
 
+	EntityManager em = emf.createEntityManager();
 	try {
-	    EntityManager em = emf.createEntityManager();
 	    Person entity = new Person();
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
@@ -145,14 +148,16 @@ public class QueryTest {
 	    persons.forEach(System.out::println);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
     @Test
     public void toListByEntityTest() {
 
+	EntityManager em = emf.createEntityManager();
 	try {
-	    EntityManager em = emf.createEntityManager();
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
 	    List<Person> persons = QueryProvider.select(em, Person.class).where().eq(Person::getPersonalNo, personalNo)
@@ -165,6 +170,64 @@ public class QueryTest {
 	    persons.forEach(System.out::println);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
+	}
+    }
+
+    @Test
+    public void updateSetOneByEntityTest() {
+
+	EntityManager em = emf.createEntityManager();
+	EntityTransaction transaction = em.getTransaction();
+	try {
+	    Date date = getDateValue();
+	    transaction.begin();
+	    // ============= Query construction ============== //
+	    int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "middName").where()
+		    .eq(Person::getPersonalNo, personalNo).and().like(Person::getLastName, "fname").and()
+		    .startsWith(Person::getFirstName, "lname").or().moreOrEq(Person::getBirthDate, date).execute();
+	    // =============================================//
+	    transaction.commit();
+	    System.out.println();
+	    System.out.println("-------Entity----");
+	    System.out.println();
+	    System.out.format("updated %s rows\n", rows);
+	    Assert.assertEquals("No expected row number was updated", rows, 1);
+	} catch (Throwable ex) {
+	    transaction.rollback();
+	    ex.printStackTrace();
+	} finally {
+	    em.close();
+	}
+    }
+
+    @Test
+    public void updateSetMultiByEntityTest() {
+
+	EntityManager em = emf.createEntityManager();
+	EntityTransaction transaction = em.getTransaction();
+	try {
+	    Date newBirthDate = getDateValue(10);
+	    Date date = getDateValue();
+	    transaction.begin();
+	    // ============= Query construction ============== //
+	    int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "newMiddName")
+		    .set(Person::getBirthDate, newBirthDate).where().eq(Person::getPersonalNo, personalNo).and()
+		    .like(Person::getLastName, "fname").and().startsWith(Person::getFirstName, "lname").or()
+		    .moreOrEq(Person::getBirthDate, date).execute();
+	    // =============================================//
+	    transaction.commit();
+	    System.out.println();
+	    System.out.println("-------Entity----");
+	    System.out.println();
+	    System.out.format("updated %s rows\n", rows);
+	    Assert.assertEquals("No expected row number was updated", rows, 1);
+	} catch (Throwable ex) {
+	    transaction.rollback();
+	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 

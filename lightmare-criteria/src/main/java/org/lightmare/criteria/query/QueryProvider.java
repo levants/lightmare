@@ -44,7 +44,7 @@ public class QueryProvider {
      */
     public static <T extends Serializable> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
-	return FullQueryStream.select(em, entityType, entityAlias);
+	return FullQueryStream.delete(em, entityType, entityAlias);
     }
 
     /**
@@ -55,7 +55,7 @@ public class QueryProvider {
      * @return {@link FullQueryStream} with select statement
      */
     public static <T extends Serializable> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
-	return FullQueryStream.select(em, entityType, QueryStream.DEFAULT_ALIAS);
+	return FullQueryStream.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**
@@ -68,7 +68,7 @@ public class QueryProvider {
      */
     public static <T extends Serializable> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
-	return FullQueryStream.select(em, entityType, entityAlias);
+	return FullQueryStream.update(em, entityType, entityAlias);
     }
 
     /**
@@ -79,7 +79,7 @@ public class QueryProvider {
      * @return {@link FullQueryStream} with select statement
      */
     public static <T extends Serializable> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
-	return FullQueryStream.select(em, entityType, QueryStream.DEFAULT_ALIAS);
+	return FullQueryStream.update(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**

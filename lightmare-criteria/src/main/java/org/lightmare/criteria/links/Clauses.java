@@ -34,6 +34,8 @@ public interface Clauses {
 
     String SET = "set ";
 
+    String SET_SPACE = "    ";
+
     String AND = "and ";
 
     String OR = "or ";

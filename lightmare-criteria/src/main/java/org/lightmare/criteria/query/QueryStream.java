@@ -178,8 +178,6 @@ public interface QueryStream<T extends Serializable> {
 
     Set<ParameterTuple> getParameters();
 
-    void setWerbose(boolean verbose);
-
     // ================================= Result =============================//
 
     /**

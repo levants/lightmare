@@ -44,7 +44,6 @@ import org.lightmare.criteria.links.QueryParts;
 import org.lightmare.criteria.resolvers.FieldResolver;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.criteria.verbose.VerboseUtils;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.reflect.ClassUtils;
@@ -77,9 +76,12 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 
     protected int alias_suffix;
 
+    private int parameter_counter;
+
     protected final Set<ParameterTuple> parameters = new HashSet<>();
 
-    protected boolean verbose;
+    // Debug messages
+    private static final String DEBUG_MESSAGE_FORMAT = "Key %s is not bound to cache";
 
     private static final Logger LOG = Logger.getLogger(FullQueryStream.class);
 
@@ -111,10 +113,28 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	    tuple = FieldResolver.resolve(lambda);
 	    tuple.setAlias(DEFAULT_ALIAS);
 	    QueryCache.putQuery(lambda, tuple);
-	    VerboseUtils.apply(verbose, c -> LOG.info(String.format("Key %s is not bound to cache", lambda)));
+	    LOG.debug(String.format(DEBUG_MESSAGE_FORMAT, lambda));
 	}
 
 	return tuple;
+    }
+
+    private void incrementParameterCounter() {
+	parameter_counter++;
+    }
+
+    private String generateParameterName(String column) {
+	return column.concat(String.valueOf(parameter_counter));
+    }
+
+    private String generateParameterName(QueryTuple tuple) {
+
+	String parameterName;
+
+	String column = tuple.getField();
+	parameterName = generateParameterName(column);
+
+	return parameterName;
     }
 
     @Override
@@ -143,11 +163,18 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
      * @param tuple
      * @param value
      */
-    private <F> void addParameter(QueryTuple tuple, F value) {
+    private <F> void addParameter(String key, QueryTuple tuple, F value) {
 
-	String column = tuple.getField();
 	TemporalType temporalType = tuple.getTemporalType();
-	addParameter(column, value, temporalType);
+	addParameter(key, value, temporalType);
+	incrementParameterCounter();
+    }
+
+    private void oppWithParameter(QueryTuple tuple, Object value, StringBuilder sqlPart) {
+
+	String parameterName = generateParameterName(tuple);
+	sqlPart.append(QueryParts.PARAM_PREFIX).append(parameterName);
+	addParameter(parameterName, tuple, value);
     }
 
     protected QueryTuple opp(Object field, String expression) throws IOException {
@@ -164,8 +191,7 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
     protected <F> void opp(Object field, F value, String expression) throws IOException {
 
 	QueryTuple tuple = opp(field, expression);
-	body.append(QueryParts.PARAM_PREFIX).append(tuple.getField());
-	addParameter(tuple, value);
+	oppWithParameter(tuple, value, body);
     }
 
     private void appendSetClause() {
@@ -173,16 +199,17 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	if (StringUtils.valid(updateSet)) {
 	    updateSet.append(QueryParts.COMMA);
 	    updateSet.append(NEW_LINE);
+	    updateSet.append(Clauses.SET_SPACE);
+	} else {
+	    updateSet.append(Clauses.SET);
 	}
     }
 
     private void appendSetClause(QueryTuple tuple) {
 
 	String column = tuple.getField();
-	updateSet.append(Clauses.SET);
 	updateSet.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX);
 	updateSet.append(column).append(Operators.EQ);
-	updateSet.append(QueryParts.PARAM_PREFIX).append(column);
     }
 
     protected <F> void setOpp(Object field, F value) throws IOException {
@@ -190,6 +217,7 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	QueryTuple tuple = compose(field);
 	appendSetClause();
 	appendSetClause(tuple);
+	oppWithParameter(tuple, value, updateSet);
     }
 
     protected void oppLine(Object field, String expression) throws IOException {
@@ -336,11 +364,6 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
     @Override
     public Set<ParameterTuple> getParameters() {
 	return parameters;
-    }
-
-    @Override
-    public void setWerbose(boolean verbose) {
-	this.verbose = verbose;
     }
 
     @Override
