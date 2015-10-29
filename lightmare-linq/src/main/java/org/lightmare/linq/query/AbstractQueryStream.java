@@ -138,8 +138,13 @@ public abstract class AbstractQueryStream<T> implements QueryStream<T> {
 	addParameter(tuple, value);
     }
 
-    protected <F> void oppLine(Object field, String expression) throws IOException {
+    protected void oppLine(Object field, String expression) throws IOException {
 	opp(field, expression);
+	body.append(NEW_LINE);
+    }
+
+    protected <F> void oppLine(Object field, F value, String expression) throws IOException {
+	opp(field, value, expression);
 	body.append(NEW_LINE);
     }
 
