@@ -30,8 +30,8 @@ import java.util.function.Function;
  * 
  * @author Levan Tsinadze
  *
- * @param <T>
- *            field type parameter
+ * @param <T,F>
+ *            entity and field type parameters respectively
  */
 @FunctionalInterface
 public interface EntityField<T, F> extends Function<T, F>, Serializable {

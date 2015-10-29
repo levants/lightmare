@@ -32,10 +32,13 @@ import java.lang.invoke.SerializedLambda;
  */
 public class LambdaData {
 
+    // Class file name
     private final String implClass;
 
+    // Method name
     private final String implMethodName;
 
+    // Method signature
     private final String implMethodSignature;
 
     private static final String TO_TEXT_FORMAT = "SerializedLambda[implClass=%s,".concat(" implMethodName=%s,")
@@ -55,14 +58,29 @@ public class LambdaData {
 	this(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature);
     }
 
+    /**
+     * Get the name of the class containing the implementation method.
+     * 
+     * @return the name of the class containing the implementation method
+     */
     public String getImplClass() {
 	return implClass;
     }
 
+    /**
+     * Get the name of the implementation method.
+     * 
+     * @return the name of the implementation method
+     */
     public String getImplMethodName() {
 	return implMethodName;
     }
 
+    /**
+     * Get the signature of the implementation method.
+     * 
+     * @return the signature of the implementation method
+     */
     public String getImplMethodSignature() {
 	return implMethodSignature;
     }
