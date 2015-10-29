@@ -1,4 +1,4 @@
-package org.lightmare.criteria.visibqueries;
+package org.lightmare.criteria.queries;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -96,13 +96,13 @@ public class QueryTest {
 
 	try {
 	    System.out.println();
-	    System.out.println("===========================");
+	    System.out.println("==========Getter===========");
 	    EntityManager em = emf.createEntityManager();
 	    QueryStream<Person> stream = createGetterStream(em);
 	    System.out.println("===========JPA-QL==========");
 	    System.out.println();
 	    System.out.println(stream.sql());
-	    System.out.println("===========================");
+	    System.out.println("===========Getter==========");
 	    System.out.println();
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
@@ -114,13 +114,13 @@ public class QueryTest {
 
 	try {
 	    System.out.println();
-	    System.out.println("===========================");
+	    System.out.println("==========Entity============");
 	    EntityManager em = emf.createEntityManager();
 	    QueryStream<Person> stream = createSetterStream(em);
 	    System.out.println("===========JPA-QL==========");
 	    System.out.println();
 	    System.out.println(stream.sql());
-	    System.out.println("===========================");
+	    System.out.println("===========Entity==========");
 	    System.out.println();
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
@@ -140,7 +140,7 @@ public class QueryTest {
 		    .moreOrEq(entity::getBirthDate, date).toList();
 	    // =============================================//
 	    System.out.println();
-	    System.out.println("----------------");
+	    System.out.println("------Getter------");
 	    System.out.println();
 	    persons.forEach(System.out::println);
 	} catch (Throwable ex) {
@@ -160,7 +160,7 @@ public class QueryTest {
 		    .moreOrEq(Person::getBirthDate, date).toList();
 	    // =============================================//
 	    System.out.println();
-	    System.out.println("----------------");
+	    System.out.println("-------Entity----");
 	    System.out.println();
 	    persons.forEach(System.out::println);
 	} catch (Throwable ex) {

@@ -37,8 +37,8 @@ Query also can be linked dynamically:
 ```java
   QueryStream<Person> stream = QueryProvider.select(em, Person.class);
   			 stream.where().eq(Person::getPrivatNumber, "10010010011");
-		     stream.and().like(Person::getLastName, "fname")
-		     stream.and().startsWith(Person::getFirstName, "lname")
+		     stream.and().like(Person::getLastName, "fname");
+		     stream.and().startsWith(Person::getFirstName, "lname");
 		     stream.or().moreOrEq(Person::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
 ```	  
