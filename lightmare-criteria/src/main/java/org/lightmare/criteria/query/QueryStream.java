@@ -107,6 +107,16 @@ public interface QueryStream<T extends Serializable> {
 
     <F> QueryStream<T> notNull(FieldGetter<F> field) throws IOException;
 
+    /**
+     * Set clause for bulk UPDATE query
+     * 
+     * @param field
+     * @param value
+     * @return {@link QueryStream} current instance
+     * @throws IOException
+     */
+    <F> QueryStream<T> set(FieldGetter<F> field, F value) throws IOException;
+
     // ========================= Setter method composers ====================//
 
     <F> QueryStream<T> eq(EntityField<T, F> field, F value) throws IOException;
@@ -132,6 +142,16 @@ public interface QueryStream<T extends Serializable> {
     QueryStream<T> isNull(EntityField<T, ?> field) throws IOException;
 
     QueryStream<T> notNull(EntityField<T, ?> field) throws IOException;
+
+    /**
+     * Set clause for bulk UPDATE query
+     * 
+     * @param field
+     * @param value
+     * @return {@link QueryStream} current instance
+     * @throws IOException
+     */
+    <F> QueryStream<T> set(EntityField<T, F> field, F value) throws IOException;
 
     // ======================================================================//
 

@@ -45,65 +45,83 @@ abstract class GetterQueryStream<T extends Serializable> extends AbstractQuerySt
 	super(em, entityType, alias);
     }
 
+    @Override
     public <F> QueryStream<T> eq(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.EQ);
 	return this;
     }
 
+    @Override
     public <F> QueryStream<T> notEq(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.NOT_EQ);
 	return this;
     }
 
+    @Override
     public <F> QueryStream<T> more(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.MORE);
 	return this;
     }
 
+    @Override
     public <F> QueryStream<T> less(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.LESS);
 	return this;
     }
 
+    @Override
     public <F> QueryStream<T> moreOrEq(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.MORE_OR_EQ);
 	return this;
     }
 
+    @Override
     public <F> QueryStream<T> lessOrEq(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.LESS_OR_EQ);
 	return this;
     }
 
+    @Override
     public QueryStream<T> startsWith(FieldGetter<String> field, String value) throws IOException {
 	String enrich = value.concat(Filters.LIKE_SIGN);
 	oppLine(field, enrich, Operators.LIKE);
 	return this;
     }
 
+    @Override
     public QueryStream<T> like(FieldGetter<String> field, String value) throws IOException {
 	return startsWith(field, value);
     }
 
+    @Override
     public QueryStream<T> endsWith(FieldGetter<String> field, String value) throws IOException {
 	String enrich = Filters.LIKE_SIGN.concat(value);
 	oppLine(field, enrich, Operators.LIKE);
 	return this;
     }
 
+    @Override
     public QueryStream<T> contains(FieldGetter<String> field, String value) throws IOException {
 	String enrich = Filters.LIKE_SIGN.concat(value).concat(Filters.LIKE_SIGN);
 	oppLine(field, enrich, Operators.LIKE);
 	return this;
     }
 
+    @Override
     public <F> QueryStream<T> isNull(FieldGetter<F> field) throws IOException {
 	oppLine(field, Operators.IS_NULL);
 	return this;
     }
 
+    @Override
     public <F> QueryStream<T> notNull(FieldGetter<F> field) throws IOException {
 	oppLine(field, Operators.NOT_NULL);
+	return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> set(FieldGetter<F> field, F value) throws IOException {
+	setOpp(field, value);
 	return this;
     }
 }

@@ -33,4 +33,6 @@ public interface QueryParts {
     char COLUMN_PREFIX = '.';
 
     char PARAM_PREFIX = ':';
+
+    char COMMA = ',';
 }

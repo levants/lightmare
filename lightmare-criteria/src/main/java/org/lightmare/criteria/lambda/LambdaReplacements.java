@@ -22,16 +22,12 @@
  */
 package org.lightmare.criteria.lambda;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
 
 import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.io.IOUtils;
+import org.lightmare.utils.io.serialization.NativeSerializer;
 import org.lightmare.utils.reflect.ClassUtils;
 
 /**
@@ -52,37 +48,12 @@ public class LambdaReplacements {
 
     private static final String LINQ_NAME = org.lightmare.criteria.lambda.SLambda.class.getName();
 
-    private static byte[] serialize(Object field) throws IOException {
-
-	byte[] value;
-
-	ByteArrayOutputStream bos = new ByteArrayOutputStream();
-	ObjectOutputStream oos = new ObjectOutputStream(bos);
-	try {
-	    oos.writeObject(field);
-	    oos.flush();
-	    value = bos.toByteArray();
-	} finally {
-	    IOUtils.closeAll(bos, oos);
-	}
-
-	return value;
-    }
-
     private static SLambda toLambda(byte[] buff) throws IOException {
 
 	SLambda lambda;
 
-	ByteArrayInputStream bin = new ByteArrayInputStream(buff);
-	try {
-	    ObjectInputStream oin = new ObjectInputStream(bin);
-	    Object raw = oin.readObject();
-	    lambda = ObjectUtils.cast(raw);
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	} finally {
-	    IOUtils.close(bin);
-	}
+	Object raw = NativeSerializer.deserialize(buff);
+	lambda = ObjectUtils.cast(raw);
 
 	return lambda;
     }
@@ -91,7 +62,7 @@ public class LambdaReplacements {
 
 	LambdaData lambda;
 
-	byte[] value = serialize(field);
+	byte[] value = NativeSerializer.serialize(field);
 	byte[] translated = new String(value, CHARSET).replace(NATIVE_NAME, LINQ_NAME).getBytes(CHARSET);
 	SLambda slambda = toLambda(translated);
 	lambda = new LambdaData(slambda);

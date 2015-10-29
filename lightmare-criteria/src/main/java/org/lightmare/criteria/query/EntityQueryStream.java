@@ -118,4 +118,10 @@ abstract class EntityQueryStream<T extends Serializable> extends GetterQueryStre
 	oppLine(field, Operators.NOT_NULL);
 	return this;
     }
+
+    @Override
+    public <F> QueryStream<T> set(EntityField<T, F> field, F value) throws IOException {
+	setOpp(field, value);
+	return this;
+    }
 }

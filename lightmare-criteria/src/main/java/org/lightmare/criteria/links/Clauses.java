@@ -32,6 +32,8 @@ public interface Clauses {
 
     String WHERE = "where ";
 
+    String SET = "set ";
+
     String AND = "and ";
 
     String OR = "or ";

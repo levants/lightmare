@@ -45,6 +45,7 @@ import org.lightmare.criteria.resolvers.FieldResolver;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.verbose.VerboseUtils;
+import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.reflect.ClassUtils;
 
@@ -65,6 +66,8 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
     protected final String alias;
 
     protected final StringBuilder prefix = new StringBuilder();
+
+    protected final StringBuilder updateSet = new StringBuilder();
 
     protected final StringBuilder body = new StringBuilder();
 
@@ -165,6 +168,30 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	addParameter(tuple, value);
     }
 
+    private void appendSetClause() {
+
+	if (StringUtils.valid(updateSet)) {
+	    updateSet.append(QueryParts.COMMA);
+	    updateSet.append(NEW_LINE);
+	}
+    }
+
+    private void appendSetClause(QueryTuple tuple) {
+
+	String column = tuple.getField();
+	updateSet.append(Clauses.SET);
+	updateSet.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX);
+	updateSet.append(column).append(Operators.EQ);
+	updateSet.append(QueryParts.PARAM_PREFIX).append(column);
+    }
+
+    protected <F> void setOpp(Object field, F value) throws IOException {
+
+	QueryTuple tuple = compose(field);
+	appendSetClause();
+	appendSetClause(tuple);
+    }
+
     protected void oppLine(Object field, String expression) throws IOException {
 	opp(field, expression);
 	body.append(NEW_LINE);
@@ -253,11 +280,20 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	return this;
     }
 
+    private void prepareSetClause() {
+
+	if (StringUtils.valid(updateSet)) {
+	    updateSet.append(NEW_LINE);
+	}
+    }
+
     @Override
     public String sql() {
 
 	sql.delete(START, sql.length());
 	sql.append(prefix);
+	prepareSetClause();
+	sql.append(updateSet);
 	sql.append(body);
 	sql.append(suffix);
 
