@@ -38,7 +38,7 @@ public class FieldResolver {
 
     private static final String SET = "set";
 
-    private static final int BEGIN_INDEX = "GET".length();
+    private static final int BEGIN_INDEX = GET.length();
 
     // Error messages
     private static final String UNRESOLVABLE_ERROR = "Unresolvable field name";

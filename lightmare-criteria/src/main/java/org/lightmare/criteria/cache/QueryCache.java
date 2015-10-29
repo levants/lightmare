@@ -6,7 +6,7 @@ import org.lightmare.criteria.lambda.LambdaData;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
- * To cache queries by lambda data call
+ * To cache queries by resolved lambda parameters
  * 
  * @author Levan Tsinadze
  *
@@ -15,11 +15,26 @@ public class QueryCache {
 
     private static final ConcurrentHashMap<String, QueryTuple> QUERIES = new ConcurrentHashMap<>();
 
+    private static final String PREFIX = "LAMBDA:";
+
     private static final String DELIM = ":";
 
-    private static String getKey(LambdaData lambda) {
-	return lambda.getImplClass().concat(DELIM).concat(lambda.getImplMethodName()).concat(DELIM)
-		.concat(lambda.getImplMethodSignature());
+    /**
+     * Generates key from {@link LambdaData} fields
+     * 
+     * @param lambda
+     * @return
+     */
+    private static String generateKey(LambdaData lambda) {
+
+	String key;
+
+	String type = lambda.getImplClass();
+	String method = lambda.getImplMethodName();
+	String sign = lambda.getImplMethodSignature();
+	key = PREFIX.concat(type).concat(DELIM).concat(method).concat(DELIM).concat(sign);
+
+	return key;
     }
 
     public static QueryTuple getQuery(String key) {
@@ -30,7 +45,7 @@ public class QueryCache {
 
 	QueryTuple tuple;
 
-	String key = getKey(lambda);
+	String key = generateKey(lambda);
 	tuple = getQuery(key);
 
 	return tuple;
@@ -41,7 +56,7 @@ public class QueryCache {
     }
 
     public static void putQuery(LambdaData lambda, QueryTuple value) {
-	String key = getKey(lambda);
+	String key = generateKey(lambda);
 	putQuery(key, value);
     }
 }

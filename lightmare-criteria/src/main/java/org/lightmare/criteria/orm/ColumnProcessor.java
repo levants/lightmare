@@ -43,6 +43,20 @@ public class ColumnProcessor {
     }
 
     /**
+     * Sets {@link Temporal#value()} to passed {@link QueryTuple} if
+     * {@link Temporal} is not null
+     * 
+     * @param temporal
+     * @param tuple
+     */
+    private static void setTemporalType(Temporal temporal, QueryTuple tuple) {
+
+	if (Objects.nonNull(temporal)) {
+	    tuple.setTemporalType(temporal.value());
+	}
+    }
+
+    /**
      * Sets appropriated {@link javax.persistence.TemporalType} to passed tuple
      * from field or method annotation
      * 
@@ -57,12 +71,9 @@ public class ColumnProcessor {
 	    String fieldName = tuple.getField();
 	    String methodName = tuple.getMethod();
 	    Temporal temporal = getTemporal(entityType, fieldName, methodName);
-	    if (Objects.nonNull(temporal)) {
-		tuple.setTemporalType(temporal.value());
-	    }
+	    setTemporalType(temporal, tuple);
 	} catch (ClassNotFoundException ex) {
 	    throw new IOException(ex);
 	}
-
     }
 }

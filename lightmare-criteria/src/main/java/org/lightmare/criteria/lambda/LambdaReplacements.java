@@ -14,7 +14,7 @@ import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Utility class to retrieve {@link SerializedLambda} data from lambda
- * expression call
+ * expression
  * 
  * @author Levan Tsinadze
  *
