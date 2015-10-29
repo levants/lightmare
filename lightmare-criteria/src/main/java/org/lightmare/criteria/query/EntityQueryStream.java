@@ -41,8 +41,8 @@ import org.lightmare.criteria.links.Operators;
  */
 abstract class EntityQueryStream<T extends Serializable> extends GetterQueryStream<T> {
 
-    protected EntityQueryStream(EntityManager em, Class<T> entityType) {
-	super(em, entityType);
+    protected EntityQueryStream(EntityManager em, Class<T> entityType, final String alias) {
+	super(em, entityType, alias);
     }
 
     @Override

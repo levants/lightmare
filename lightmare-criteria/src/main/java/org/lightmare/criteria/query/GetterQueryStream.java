@@ -41,8 +41,8 @@ import org.lightmare.criteria.links.Operators;
  */
 abstract class GetterQueryStream<T extends Serializable> extends AbstractQueryStream<T> {
 
-    protected GetterQueryStream(final EntityManager em, final Class<T> entityType) {
-	super(em, entityType);
+    protected GetterQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
+	super(em, entityType, alias);
     }
 
     public <F> QueryStream<T> eq(FieldGetter<F> field, F value) throws IOException {

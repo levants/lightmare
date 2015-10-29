@@ -59,30 +59,28 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 
     protected final Class<T> entityType;
 
-    protected final StringBuilder prefix;
+    protected final String alias;
 
-    protected final StringBuilder body;
+    protected final StringBuilder prefix = new StringBuilder();
 
-    protected final StringBuilder suffix;
+    protected final StringBuilder body = new StringBuilder();
 
-    protected final StringBuilder sql;
+    protected final StringBuilder suffix = new StringBuilder();
 
-    protected int alias;
+    protected final StringBuilder sql = new StringBuilder();
 
-    protected Set<ParameterTuple<?>> parameters;
+    protected int alias_suffix;
+
+    protected final Set<ParameterTuple<?>> parameters = new HashSet<>();
 
     protected boolean verbose;
 
     private static final Logger LOG = Logger.getLogger(FullQueryStream.class);
 
-    protected AbstractQueryStream(final EntityManager em, final Class<T> entityType) {
+    protected AbstractQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
 	this.em = em;
 	this.entityType = entityType;
-	prefix = new StringBuilder();
-	body = new StringBuilder();
-	this.suffix = new StringBuilder();
-	sql = new StringBuilder();
-	parameters = new HashSet<>();
+	this.alias = alias;
     }
 
     public T instance() throws IOException {
@@ -92,8 +90,8 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
     protected void setAlias(QueryTuple tuple) {
 
 	if (tuple.hasNoAlias()) {
-	    tuple.setAlias(alias);
-	    alias++;
+	    tuple.setAlias(alias_suffix);
+	    alias_suffix++;
 	}
     }
 

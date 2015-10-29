@@ -35,7 +35,55 @@ import javax.persistence.EntityManager;
 public class QueryProvider {
 
     /**
-     * Generates select statements with custom alias
+     * Generates DELETE statements with custom alias
+     * 
+     * @param em
+     * @param entityType
+     * @param entityAlias
+     * @return {@link FullQueryStream} with select statement
+     */
+    public static <T extends Serializable> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
+	    final String entityAlias) {
+	return FullQueryStream.select(em, entityType, entityAlias);
+    }
+
+    /**
+     * Generates DELETE statements with default alias
+     * 
+     * @param em
+     * @param entityType
+     * @return {@link FullQueryStream} with select statement
+     */
+    public static <T extends Serializable> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
+	return FullQueryStream.select(em, entityType, QueryStream.DEFAULT_ALIAS);
+    }
+
+    /**
+     * Generates UPDATE statements with custom alias
+     * 
+     * @param em
+     * @param entityType
+     * @param entityAlias
+     * @return {@link FullQueryStream} with select statement
+     */
+    public static <T extends Serializable> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
+	    final String entityAlias) {
+	return FullQueryStream.select(em, entityType, entityAlias);
+    }
+
+    /**
+     * Generates UPDATE statements with default alias
+     * 
+     * @param em
+     * @param entityType
+     * @return {@link FullQueryStream} with select statement
+     */
+    public static <T extends Serializable> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
+	return FullQueryStream.select(em, entityType, QueryStream.DEFAULT_ALIAS);
+    }
+
+    /**
+     * Generates SELECT statements with custom alias
      * 
      * @param em
      * @param entityType
@@ -48,7 +96,7 @@ public class QueryProvider {
     }
 
     /**
-     * Generates select statements with default alias
+     * Generates SELECT statements with default alias
      * 
      * @param em
      * @param entityType

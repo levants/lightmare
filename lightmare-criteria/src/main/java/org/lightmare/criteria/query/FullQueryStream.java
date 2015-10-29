@@ -38,12 +38,86 @@ import org.lightmare.criteria.links.Filters;
  */
 class FullQueryStream<T extends Serializable> extends EntityQueryStream<T> {
 
-    private FullQueryStream(final EntityManager em, final Class<T> entityType) {
-	super(em, entityType);
+    private FullQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
+	super(em, entityType, alias);
     }
 
     /**
-     * Generates select statements with custom alias
+     * Appends entity and alias part to stream
+     * 
+     * @param stream
+     */
+    private static <T extends Serializable> void appendEntityPart(FullQueryStream<T> stream) {
+
+	stream.appendPrefix(stream.entityType.getName());
+	stream.appendPrefix(Filters.AS);
+	stream.appendPrefix(stream.alias);
+	stream.appendPrefix(NEW_LINE);
+    }
+
+    /**
+     * Generates DELETE statements with custom alias
+     * 
+     * @param em
+     * @param entityType
+     * @param entityAlias
+     * @return {@link FullQueryStream} with select statement
+     */
+    protected static <T extends Serializable> FullQueryStream<T> delete(final EntityManager em,
+	    final Class<T> entityType, final String alias) {
+
+	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType, alias);
+
+	stream.appendPrefix(Filters.DELETE).appendPrefix(stream.alias).appendPrefix(Filters.FROM);
+	appendEntityPart(stream);
+
+	return stream;
+    }
+
+    /**
+     * Generates DELETE statements with default alias
+     * 
+     * @param em
+     * @param entityType
+     * @return {@link FullQueryStream} with select statement
+     */
+    protected static <T extends Serializable> FullQueryStream<T> delete(final EntityManager em, Class<T> entityType) {
+	return delete(em, entityType, DEFAULT_ALIAS);
+    }
+
+    /**
+     * Generates UPDATE statements with custom alias
+     * 
+     * @param em
+     * @param entityType
+     * @param entityAlias
+     * @return {@link FullQueryStream} with select statement
+     */
+    protected static <T extends Serializable> FullQueryStream<T> update(final EntityManager em,
+	    final Class<T> entityType, final String alias) {
+
+	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType, alias);
+
+	stream.appendPrefix(Filters.UPDATE).appendPrefix(stream.alias);
+	stream.appendPrefix(entityType.getName()).appendPrefix(Filters.AS).appendPrefix(stream.alias);
+	stream.appendPrefix(NEW_LINE);
+
+	return stream;
+    }
+
+    /**
+     * Generates UPDATE statements with default alias
+     * 
+     * @param em
+     * @param entityType
+     * @return {@link FullQueryStream} with select statement
+     */
+    protected static <T extends Serializable> FullQueryStream<T> update(final EntityManager em, Class<T> entityType) {
+	return update(em, entityType, DEFAULT_ALIAS);
+    }
+
+    /**
+     * Generates SELECT statements with custom alias
      * 
      * @param em
      * @param entityType
@@ -51,19 +125,19 @@ class FullQueryStream<T extends Serializable> extends EntityQueryStream<T> {
      * @return {@link FullQueryStream} with select statement
      */
     protected static <T extends Serializable> FullQueryStream<T> select(final EntityManager em,
-	    final Class<T> entityType, final String entityAlias) {
+	    final Class<T> entityType, final String alias) {
 
-	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType);
+	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType, alias);
 
-	stream.appendPrefix(Filters.SELECT).appendPrefix(entityAlias).appendPrefix(Filters.FROM);
-	stream.appendPrefix(entityType.getName()).appendPrefix(Filters.AS).appendPrefix(entityAlias);
+	stream.appendPrefix(Filters.SELECT).appendPrefix(stream.alias).appendPrefix(Filters.FROM);
+	stream.appendPrefix(entityType.getName()).appendPrefix(Filters.AS).appendPrefix(stream.alias);
 	stream.appendPrefix(NEW_LINE);
 
 	return stream;
     }
 
     /**
-     * Generates select statements with default alias
+     * Generates SELECT statements with default alias
      * 
      * @param em
      * @param entityType
