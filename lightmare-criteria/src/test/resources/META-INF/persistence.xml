@@ -2,7 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
 	<persistence-unit name="testUnit" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>org.lightmare.linq.entities.Person</class>
+		<class>org.lightmare.criteria.entities.Person</class>
 		<properties>
 			<property name="hibernate.default_schema" value="PERSONS" />
 			<property name="hibernate.show_sql" value="true" />

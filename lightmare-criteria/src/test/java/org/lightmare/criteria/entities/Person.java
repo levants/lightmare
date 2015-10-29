@@ -1,4 +1,4 @@
-package org.lightmare.linq.entities;
+package org.lightmare.criteria.entities;
 
 import java.io.Serializable;
 import java.util.Date;
