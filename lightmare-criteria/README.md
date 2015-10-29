@@ -1,4 +1,4 @@
-lightmare-linq
+lightmare-criteria
 =========
 
 JPA-QL query generator using lambda expressions
@@ -6,7 +6,8 @@ JPA-QL query generator using lambda expressions
 # Overview
 ==========
 
-Lightmare-criteria is lightweight library to construct and run JPA queries by method reference instead of raw String composition
+Lightmare-criteria is lightweight library to construct and run JPA queries by method reference instead of raw String composition.
+name implies from similarity with JPA criteria query style.
 
 # Get it!
 =========
@@ -42,8 +43,7 @@ Query also can be linked dynamically:
 		     stream.or().moreOrEq(Person::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
 ```	  
-or if one has entity instance
-
+or if one has entity instance:
 ```java
   Person entity = ...
   QueryStream<Person> stream = QueryProvider.select(em, Person.class);

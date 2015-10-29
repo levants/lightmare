@@ -42,6 +42,7 @@ import org.lightmare.criteria.links.QueryParts;
 import org.lightmare.criteria.resolvers.FieldResolver;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.verbose.VerboseUtils;
 import org.lightmare.utils.reflect.ClassUtils;
 
 /**
@@ -103,10 +104,10 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	LambdaData lambda = LambdaReplacements.getReplacement(field);
 	tuple = QueryCache.getQuery(lambda);
 	if (tuple == null) {
-	    tuple = FieldResolver.resolve(lambda, verbose);
+	    tuple = FieldResolver.resolve(lambda);
 	    tuple.setAlias(DEFAULT_ALIAS);
 	    QueryCache.putQuery(lambda, tuple);
-	    FieldResolver.printVerbose(verbose, c -> LOG.info(String.format("Key %s is not bound to cache", lambda)));
+	    VerboseUtils.apply(verbose, c -> LOG.info(String.format("Key %s is not bound to cache", lambda)));
 	}
 
 	return tuple;
