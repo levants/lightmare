@@ -1,6 +1,6 @@
 package org.lightmare.linq.lambda;
 
-import java.util.function.Function;
+import java.io.Serializable;
 
 /**
  * Interface for getter method reference call with entities
@@ -11,7 +11,7 @@ import java.util.function.Function;
  *            field type parameter
  */
 @FunctionalInterface
-public interface EntityField<T, F> extends Function<T, F> {
+public interface EntityField<T, F> extends Serializable {
 
     F apply(T value);
 }

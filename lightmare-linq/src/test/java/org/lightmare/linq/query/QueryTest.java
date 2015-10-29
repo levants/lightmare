@@ -81,7 +81,7 @@ public class QueryTest {
 	FullQueryStream<Person> stream = FullQueryStream.select(em, Person.class);
 
 	stream.setWerbose(Boolean.TRUE);
-	stream.where().moreOrEq(Person::getBirthDate, getDateValue()).and();
+	stream.where().moreOrEq(c -> c.getBirthDate(), getDateValue()).and();
 	stream.like(Person::getLastName, "lname");
 	stream.and().like(Person::getFirstName, "fname");
 	stream.or().eq(Person::getPersonalNo, personalNo);

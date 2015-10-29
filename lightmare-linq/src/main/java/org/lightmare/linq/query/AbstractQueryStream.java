@@ -77,7 +77,7 @@ public abstract class AbstractQueryStream<T> implements QueryStream<T> {
 
 	QueryTuple tuple;
 
-	SerializedLambda lambda = LambdaReplacements.getReplacement(field);
+	SerializedLambda lambda = LambdaReplacements.getReplacement(field, entityType);
 	tuple = QueryCache.getQuery(lambda);
 	if (tuple == null) {
 	    tuple = FieldResolver.resolve(lambda, verbose);

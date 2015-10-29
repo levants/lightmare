@@ -30,8 +30,6 @@ public class FieldResolver {
 
     private static final int ZERO_FLAGS = 0;
 
-    private static final int ZERO_ARGS = 0;
-
     private static final int SINGLE_ARG = 1;
 
     private static final int FIRST = 0;
@@ -64,6 +62,12 @@ public class FieldResolver {
 	return fieldName;
     }
 
+    /**
+     * Resolves entity name
+     * 
+     * @param owner
+     * @return {@link String} entity name
+     */
     private static String resolveEntityName(String owner) {
 
 	String entityName;
@@ -88,7 +92,7 @@ public class FieldResolver {
     }
 
     private static boolean validGetter(Type returnType, Type[] argumentTypes) {
-	return (CollectionUtils.invalid(argumentTypes) && ObjectUtils.notEquals(Type.VOID_TYPE, returnType));
+	return (CollectionUtils.isEmpty(argumentTypes) && ObjectUtils.notEquals(Type.VOID_TYPE, returnType));
     }
 
     private static boolean valid(MethodInsnNode node, boolean verbose) {
