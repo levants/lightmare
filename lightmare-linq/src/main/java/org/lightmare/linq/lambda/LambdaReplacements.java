@@ -13,7 +13,8 @@ import org.lightmare.utils.io.IOUtils;
 import org.lightmare.utils.reflect.ClassUtils;
 
 /**
- * Utility class to retrieve {@link SerializedLambda} from lambda method call
+ * Utility class to retrieve {@link SerializedLambda} data from lambda
+ * expression call
  * 
  * @author Levan Tsinadze
  *
@@ -90,10 +91,10 @@ public class LambdaReplacements {
     }
 
     /**
-     * Gets {@link SerializedLambda} instance from passed lambda argument
+     * Gets {@link LambdaData} instance from passed lambda argument
      * 
      * @param field
-     * @return {@link SerializedLambda} replacement
+     * @return {@link LambdaData} replacement
      * @throws IOException
      */
     public static <T> LambdaData getReplacement(Object field) throws IOException {

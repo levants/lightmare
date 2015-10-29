@@ -6,7 +6,7 @@ import org.lightmare.linq.lambda.LambdaData;
 import org.lightmare.linq.tuples.QueryTuple;
 
 /**
- * To cache queries by lambda call
+ * To cache queries by lambda data call
  * 
  * @author Levan Tsinadze
  *

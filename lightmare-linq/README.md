@@ -24,9 +24,9 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 # Use it!
 =========
 
-Query may be composed by org.lightmare.linq.query.QueryStream select method call:
+Query may be composed by org.lightmare.linq.query.QueryProvider select method call:
 ```java
-  List<Person> persons = QueryStream.select(em, Person.class).where()
+  List<Person> persons = QueryProvider.select(em, Person.class).where()
   			.eq(Person::getPersonalNo, personalNo)
 		    .and().like(Person::getLastName, "fname")
 		    .and().startsWith(Person::getFirstName, "lname")
@@ -35,7 +35,7 @@ Query may be composed by org.lightmare.linq.query.QueryStream select method call
 
 Query also can be linked dynamically:
 ```java
-  QueryStream<Person> stream = QueryStream.select(em, Person.class);
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class);
   			 stream.where().eq(Person::getPersonalNo, personalNo);
 		     stream.and().like(Person::getLastName, "fname")
 		     stream.and().startsWith(Person::getFirstName, "lname")
@@ -44,9 +44,9 @@ Query also can be linked dynamically:
 ```	  
 or if one has entity instance
 
---java
+```java
   Person entity = ...
-  QueryStream<Person> stream = QueryStream.select(em, Person.class);
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class);
   			 stream.where().eq(entity::getPersonalNo, personalNo);
 		     stream.and().like(entity::getLastName, "fname")
 		     stream.and().startsWith(entity::getFirstName, "lname")
