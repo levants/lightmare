@@ -1,4 +1,4 @@
-package org.lightmare.linq.query;
+package org.lightmare.linq.visibqueries;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -13,6 +13,8 @@ import javax.persistence.Persistence;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.lightmare.linq.entities.Person;
+import org.lightmare.linq.query.QueryProvider;
+import org.lightmare.linq.query.QueryStream;
 
 public class QueryTest {
 
@@ -78,7 +80,7 @@ public class QueryTest {
 
     private QueryStream<Person> createSetterStream(final EntityManager em) throws IOException {
 
-	FullQueryStream<Person> stream = FullQueryStream.select(em, Person.class);
+	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
 
 	stream.setWerbose(Boolean.TRUE);
 	stream.where().moreOrEq(c -> c.getBirthDate(), getDateValue()).and();

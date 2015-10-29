@@ -18,7 +18,7 @@ import org.lightmare.linq.tuples.ParameterTuple;
  *
  * @param <T>
  */
-interface QueryStream<T extends Serializable> {
+public interface QueryStream<T extends Serializable> {
 
     String DEFAULT_ALIAS = "c";
 

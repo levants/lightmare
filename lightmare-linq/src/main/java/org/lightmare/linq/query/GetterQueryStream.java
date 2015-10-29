@@ -17,7 +17,7 @@ import org.lightmare.linq.links.Operators;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class GetterQueryStream<T extends Serializable> extends AbstractQueryStream<T> {
+abstract class GetterQueryStream<T extends Serializable> extends AbstractQueryStream<T> {
 
     protected GetterQueryStream(final EntityManager em, final Class<T> entityType) {
 	super(em, entityType);

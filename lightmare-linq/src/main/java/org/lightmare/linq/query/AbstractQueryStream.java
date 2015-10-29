@@ -12,8 +12,8 @@ import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 import org.lightmare.linq.cache.QueryCache;
-import org.lightmare.linq.lambda.LambdaReplacements;
 import org.lightmare.linq.lambda.LambdaData;
+import org.lightmare.linq.lambda.LambdaReplacements;
 import org.lightmare.linq.links.Clauses;
 import org.lightmare.linq.links.Operators;
 import org.lightmare.linq.links.QueryParts;
@@ -30,7 +30,7 @@ import org.lightmare.utils.reflect.ClassUtils;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class AbstractQueryStream<T extends Serializable> implements QueryStream<T> {
+abstract class AbstractQueryStream<T extends Serializable> implements QueryStream<T> {
 
     protected final EntityManager em;
 
