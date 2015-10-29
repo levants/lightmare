@@ -26,17 +26,26 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 # Use it!
 =========
 
-Query can be composed by org.lightmare.criteria.query.QueryProvider.select (update, delete) method call:
+Query can be composed by org.lightmare.criteria.query.QueryProvider.select method call:
 ```java
   List<Person> persons = QueryProvider.select(em, Person.class).where()
   			.eq(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "fname")
 		    .and().startsWith(Person::getFirstName, "lname")
 		    .or().moreOrEq(Person::getBirthDate, new Date()).toList(); 
-		    
-		    //(or .execute() for update or delete methods which returns int)
 ```	
+or for bulk update (delete) by org.lightmare.criteria.query.QueryProvider.update (delete) method call:
 
+```java
+  int rows = QueryProvider.update(em, Person.class)
+  			.set(Person::getMiddName, "newMiddName")
+  			.set(Person::getFirstName, "newFName")
+  			.where()
+  			.eq(Person::getPrivatNumber, "10010010011")
+		    .and().like(Person::getLastName, "fname")
+		    .and().startsWith(Person::getFirstName, "lname")
+		    .or().moreOrEq(Person::getBirthDate, new Date()).execute(); 
+```	
 Query also can be linked dynamically:
 ```java
   QueryStream<Person> stream = QueryProvider.select(em, Person.class);

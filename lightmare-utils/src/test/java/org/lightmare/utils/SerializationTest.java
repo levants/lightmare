@@ -17,9 +17,7 @@ public class SerializationTest {
 	    System.out.println(Arrays.toString(nullBt));
 	    Object value = NativeSerializer.deserialize(nullBt);
 	    System.out.println(value);
-
 	    Assert.assertNull("null serializetion is not valid", value);
-
 	} catch (IOException ex) {
 	    ex.printStackTrace();
 	}
