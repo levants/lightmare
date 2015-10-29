@@ -19,23 +19,58 @@ import org.lightmare.criteria.query.QueryStream;
 
 public class QueryTest {
 
-    private final String personalNo = "10100100100";
+    private static final String PERSONAL_NO = "10100100100";
 
     private static EntityManagerFactory emf;
 
+    private static Date defaultDate = new Date();
+
+    private static Date getDateValue(int before) {
+
+	Date date;
+
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(defaultDate);
+	calendar.add(Calendar.YEAR, -before);
+	date = calendar.getTime();
+
+	return date;
+    }
+
+    private static Date getDateValue() {
+	return getDateValue(100);
+    }
+
     private static void provideDataBase() {
 
-	Person person = new Person();
-	person.setPersonalNo("10100100100");
-	person.setLastName("lname");
-	person.setFirstName("fname");
-	person.setBirthDate(new Date());
-	person.setMiddName("mname");
+	Person person1 = new Person();
+	person1.setPersonalNo(PERSONAL_NO);
+	person1.setLastName("lname1");
+	person1.setFirstName("fname1");
+	person1.setBirthDate(getDateValue(80));
+	person1.setMiddName("mname1");
+
+	Person person2 = new Person();
+	person2.setPersonalNo("10100100111");
+	person2.setLastName("lname2");
+	person2.setFirstName("fname2");
+	person2.setBirthDate(getDateValue(90));
+	person2.setMiddName("mname2");
+
+	Person person3 = new Person();
+	person3.setPersonalNo("10100101111");
+	person3.setLastName("lname3");
+	person3.setFirstName("fname3");
+	person3.setBirthDate(getDateValue(95));
+	person3.setMiddName("mname3");
+
 	EntityManager em = emf.createEntityManager();
 	EntityTransaction transaction = em.getTransaction();
 	transaction.begin();
 	try {
-	    em.persist(person);
+	    em.persist(person1);
+	    em.persist(person2);
+	    em.persist(person3);
 	    transaction.commit();
 	} catch (Throwable ex) {
 	    transaction.rollback();
@@ -54,21 +89,6 @@ public class QueryTest {
 	}
     }
 
-    private Date getDateValue(int before) {
-
-	Date date;
-
-	Calendar calendar = Calendar.getInstance();
-	calendar.add(Calendar.YEAR, -before);
-	date = calendar.getTime();
-
-	return date;
-    }
-
-    private Date getDateValue() {
-	return getDateValue(100);
-    }
-
     private QueryStream<Person> createGetterStream(final EntityManager em) throws IOException {
 
 	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
@@ -77,7 +97,7 @@ public class QueryTest {
 	stream.where().moreOrEq(entity::getBirthDate, getDateValue()).and();
 	stream.like(entity::getLastName, "lname");
 	stream.and().like(entity::getFirstName, "fname");
-	stream.or().eq(entity::getPersonalNo, personalNo);
+	stream.or().eq(entity::getPersonalNo, PERSONAL_NO);
 
 	return stream;
     }
@@ -89,7 +109,7 @@ public class QueryTest {
 	stream.where().moreOrEq(c -> c.getBirthDate(), getDateValue()).and();
 	stream.like(Person::getLastName, "lname");
 	stream.and().like(Person::getFirstName, "fname");
-	stream.or().eq(Person::getPersonalNo, personalNo);
+	stream.or().eq(Person::getPersonalNo, PERSONAL_NO);
 
 	return stream;
     }
@@ -138,7 +158,7 @@ public class QueryTest {
 	    Person entity = new Person();
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
-	    List<Person> persons = QueryProvider.select(em, Person.class).where().eq(entity::getPersonalNo, personalNo)
+	    List<Person> persons = QueryProvider.select(em, Person.class).where().eq(entity::getPersonalNo, PERSONAL_NO)
 		    .and().like(entity::getLastName, "fname").and().startsWith(entity::getFirstName, "lname").or()
 		    .moreOrEq(entity::getBirthDate, date).toList();
 	    // =============================================//
@@ -160,7 +180,7 @@ public class QueryTest {
 	try {
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
-	    List<Person> persons = QueryProvider.select(em, Person.class).where().eq(Person::getPersonalNo, personalNo)
+	    List<Person> persons = QueryProvider.select(em, Person.class).where().eq(Person::getPersonalNo, PERSONAL_NO)
 		    .and().like(Person::getLastName, "fname").and().startsWith(Person::getFirstName, "lname").or()
 		    .moreOrEq(Person::getBirthDate, date).toList();
 	    // =============================================//
@@ -185,8 +205,9 @@ public class QueryTest {
 	    transaction.begin();
 	    // ============= Query construction ============== //
 	    int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "middName").where()
-		    .eq(Person::getPersonalNo, personalNo).and().like(Person::getLastName, "fname").and()
-		    .startsWith(Person::getFirstName, "lname").or().moreOrEq(Person::getBirthDate, date).execute();
+		    .eq(Person::getPersonalNo, PERSONAL_NO).and().like(Person::getLastName, "fname").and().openBracket()
+		    .startsWith(Person::getFirstName, "lname").or().moreOrEq(Person::getBirthDate, date).closeBracket()
+		    .execute();
 	    // =============================================//
 	    transaction.commit();
 	    System.out.println();
@@ -213,9 +234,9 @@ public class QueryTest {
 	    transaction.begin();
 	    // ============= Query construction ============== //
 	    int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "newMiddName")
-		    .set(Person::getBirthDate, newBirthDate).where().eq(Person::getPersonalNo, personalNo).and()
-		    .like(Person::getLastName, "fname").and().startsWith(Person::getFirstName, "lname").or()
-		    .moreOrEq(Person::getBirthDate, date).execute();
+		    .set(Person::getBirthDate, newBirthDate).where().eq(Person::getPersonalNo, PERSONAL_NO).and()
+		    .like(Person::getLastName, "fname").and().openBracket().startsWith(Person::getFirstName, "lname")
+		    .or().moreOrEq(Person::getBirthDate, date).closeBracket().execute();
 	    // =============================================//
 	    transaction.commit();
 	    System.out.println();
