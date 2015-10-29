@@ -38,8 +38,8 @@ public class LambdaData {
 
     private final String implMethodSignature;
 
-    private static final String TO_TEXT_FORMAT = "SerializedLambda[%implClass=%s,".concat(" %implMethodName=%s,")
-	    .concat(" %implMethodSignature=%s]");
+    private static final String TO_TEXT_FORMAT = "SerializedLambda[implClass=%s,".concat(" implMethodName=%s,")
+	    .concat(" implMethodSignature=%s]");
 
     public LambdaData(final String implClass, final String implMethodName, final String implMethodSignature) {
 	this.implClass = implClass;

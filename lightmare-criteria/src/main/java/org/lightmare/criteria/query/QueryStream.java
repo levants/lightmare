@@ -25,6 +25,7 @@ package org.lightmare.criteria.query;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.TemporalType;
@@ -62,7 +63,7 @@ public interface QueryStream<T extends Serializable> {
      * @param tuple
      * @param value
      */
-    <F> void addParameter(String key, F value);
+    void addParameter(String key, Object value);
 
     /**
      * Adds custom parameter to composed query
@@ -71,7 +72,14 @@ public interface QueryStream<T extends Serializable> {
      * @param value
      * @param temporalType
      */
-    <F> void addParameter(String key, F value, TemporalType temporalType);
+    void addParameter(String key, Object value, TemporalType temporalType);
+
+    /**
+     * Adds custom parameters to composed query
+     * 
+     * @param parameters
+     */
+    void addParameters(Map<String, Object> parameters);
 
     // ===================== Getter method composers ========================//
 
@@ -99,7 +107,7 @@ public interface QueryStream<T extends Serializable> {
 
     <F> QueryStream<T> notNull(FieldGetter<F> field) throws IOException;
 
-    // ===================== Setter method composers ========================//
+    // ========================= Setter method composers ====================//
 
     <F> QueryStream<T> eq(EntityField<T, F> field, F value) throws IOException;
 
@@ -125,11 +133,7 @@ public interface QueryStream<T extends Serializable> {
 
     QueryStream<T> notNull(EntityField<T, ?> field) throws IOException;
 
-    // ===========================================================================//
-
-    List<T> toList();
-
-    T get();
+    // ======================================================================//
 
     QueryStream<T> where();
 
@@ -152,7 +156,37 @@ public interface QueryStream<T extends Serializable> {
      */
     String sql();
 
-    Set<ParameterTuple<?>> getParameters();
+    Set<ParameterTuple> getParameters();
 
     void setWerbose(boolean verbose);
+
+    // ================================= Result =============================//
+
+    /**
+     * Runs generated query {@link javax.persistence.Query#getResultList()} and
+     * retrieves result list
+     * 
+     * @return {@link List} of query results
+     * @see javax.persistence.Query#getResultList()
+     */
+    List<T> toList();
+
+    /**
+     * Runs generated query {@link javax.persistence.Query#getSingleResult()}
+     * and retrieves single result
+     * 
+     * @return T single query result
+     * @see javax.persistence.Query#getSingleResult()
+     */
+    T get();
+
+    /**
+     * Executes generates bulk update or delete query
+     * {@link javax.persistence.Query#executeUpdate()} and returns number of
+     * modified rows
+     * 
+     * @return <code>int<code/> number of modified rows
+     * @see javax.persistence.Query#executeUpdate()
+     */
+    int execute();
 }

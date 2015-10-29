@@ -32,7 +32,7 @@ Query can be composed by org.lightmare.criteria.query.QueryProvider.select (upda
   			.eq(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "fname")
 		    .and().startsWith(Person::getFirstName, "lname")
-		    .or().moreOrEq(Person::getBirthDate, new Date()).toList();
+		    .or().moreOrEq(Person::getBirthDate, new Date()).toList(); //(or .execute() for update or delete methods)
 ```	
 
 Query also can be linked dynamically:

@@ -26,9 +26,11 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
@@ -43,6 +45,7 @@ import org.lightmare.criteria.resolvers.FieldResolver;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.verbose.VerboseUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.reflect.ClassUtils;
 
 /**
@@ -71,7 +74,7 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 
     protected int alias_suffix;
 
-    protected final Set<ParameterTuple<?>> parameters = new HashSet<>();
+    protected final Set<ParameterTuple> parameters = new HashSet<>();
 
     protected boolean verbose;
 
@@ -112,15 +115,23 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
     }
 
     @Override
-    public <F> void addParameter(String key, F value, TemporalType temporalType) {
+    public void addParameter(String key, Object value, TemporalType temporalType) {
 
-	ParameterTuple<F> parameter = new ParameterTuple<F>(key, value, temporalType);
+	ParameterTuple parameter = new ParameterTuple(key, value, temporalType);
 	parameters.add(parameter);
     }
 
     @Override
-    public <F> void addParameter(String key, F value) {
+    public void addParameter(String key, Object value) {
 	addParameter(key, value, null);
+    }
+
+    @Override
+    public void addParameters(Map<String, Object> parameters) {
+
+	if (CollectionUtils.valid(parameters)) {
+	    parameters.forEach((key, value) -> addParameter(key, value));
+	}
     }
 
     /**
@@ -164,34 +175,40 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	body.append(NEW_LINE);
     }
 
-    private TypedQuery<T> initQuery() {
-
-	TypedQuery<T> query = em.createQuery(sql(), entityType);
+    private void setParameters(Query query) {
 	parameters.forEach(c -> query.setParameter(c.getName(), c.getValue()));
+    }
+
+    /**
+     * Creates {@link TypedQuery} from generated SQL for SELECT statements
+     * 
+     * @return {@link TypedQuery} for entity type
+     */
+    private TypedQuery<T> initTypedQuery() {
+
+	TypedQuery<T> query;
+
+	String sqlText = sql();
+	query = em.createQuery(sqlText, entityType);
+	setParameters(query);
 
 	return query;
     }
 
-    @Override
-    public List<T> toList() {
+    /**
+     * Creates {@link Query} from generated SQL for UPDATE or DELETE statements
+     * 
+     * @return for bulk modification
+     */
+    private Query initBulkQuery() {
 
-	List<T> results;
+	Query query;
 
-	TypedQuery<T> query = initQuery();
-	results = query.getResultList();
+	String sqlText = sql();
+	query = em.createQuery(sqlText);
+	setParameters(query);
 
-	return results;
-    }
-
-    @Override
-    public T get() {
-
-	T result;
-
-	TypedQuery<T> query = initQuery();
-	result = query.getSingleResult();
-
-	return result;
+	return query;
     }
 
     @Override
@@ -248,7 +265,40 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
     }
 
     @Override
-    public Set<ParameterTuple<?>> getParameters() {
+    public List<T> toList() {
+
+	List<T> results;
+
+	TypedQuery<T> query = initTypedQuery();
+	results = query.getResultList();
+
+	return results;
+    }
+
+    @Override
+    public T get() {
+
+	T result;
+
+	TypedQuery<T> query = initTypedQuery();
+	result = query.getSingleResult();
+
+	return result;
+    }
+
+    @Override
+    public int execute() {
+
+	int result;
+
+	Query query = initBulkQuery();
+	result = query.executeUpdate();
+
+	return result;
+    }
+
+    @Override
+    public Set<ParameterTuple> getParameters() {
 	return parameters;
     }
 

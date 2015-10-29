@@ -32,21 +32,23 @@ import javax.persistence.TemporalType;
  * @param
  * 	   <P>
  */
-public class ParameterTuple<P> {
+public class ParameterTuple {
 
     private final String name;
 
-    private final P value;
+    private final Object value;
 
     private final TemporalType temporalType;
 
-    public ParameterTuple(final String name, final P value, final TemporalType temporalType) {
+    private static final String TO_TEXT_FORMAT = "%s : %s";
+
+    public ParameterTuple(final String name, final Object value, final TemporalType temporalType) {
 	this.name = name;
 	this.value = value;
 	this.temporalType = temporalType;
     }
 
-    public ParameterTuple(final String name, final P value) {
+    public ParameterTuple(final String name, final Object value) {
 	this(name, value, null);
     }
 
@@ -54,7 +56,7 @@ public class ParameterTuple<P> {
 	return name;
     }
 
-    public P getValue() {
+    public Object getValue() {
 	return value;
     }
 
@@ -64,6 +66,6 @@ public class ParameterTuple<P> {
 
     @Override
     public String toString() {
-	return String.format("%s : %s", name, value);
+	return String.format(TO_TEXT_FORMAT, name, value);
     }
 }
