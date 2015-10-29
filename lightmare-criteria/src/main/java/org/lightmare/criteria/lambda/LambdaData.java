@@ -1,4 +1,4 @@
-package org.lightmare.linq.lambda;
+package org.lightmare.criteria.lambda;
 
 import java.lang.invoke.SerializedLambda;
 

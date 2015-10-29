@@ -1,4 +1,4 @@
-package org.lightmare.linq.lambda;
+package org.lightmare.criteria.lambda;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,7 +28,7 @@ public class LambdaReplacements {
 
     private static final String NATIVE_NAME = java.lang.invoke.SerializedLambda.class.getName();
 
-    private static final String LINQ_NAME = org.lightmare.linq.lambda.SLambda.class.getName();
+    private static final String LINQ_NAME = org.lightmare.criteria.lambda.SLambda.class.getName();
 
     private static byte[] serialize(Object field) throws IOException {
 

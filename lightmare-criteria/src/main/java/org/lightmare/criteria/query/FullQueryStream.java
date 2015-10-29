@@ -1,10 +1,10 @@
-package org.lightmare.linq.query;
+package org.lightmare.criteria.query;
 
 import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 
-import org.lightmare.linq.links.Filters;
+import org.lightmare.criteria.links.Filters;
 
 /**
  * Main class for lambda expression analyze and JPA query generator

@@ -1,4 +1,4 @@
-package org.lightmare.linq.query;
+package org.lightmare.criteria.query;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -7,9 +7,9 @@ import java.util.Set;
 
 import javax.persistence.TemporalType;
 
-import org.lightmare.linq.lambda.EntityField;
-import org.lightmare.linq.lambda.FieldGetter;
-import org.lightmare.linq.tuples.ParameterTuple;
+import org.lightmare.criteria.lambda.EntityField;
+import org.lightmare.criteria.lambda.FieldGetter;
+import org.lightmare.criteria.tuples.ParameterTuple;
 
 /**
  * Main interface with query construction methods

@@ -1,4 +1,4 @@
-package org.lightmare.linq.orm;
+package org.lightmare.criteria.orm;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import javax.persistence.Temporal;
 
-import org.lightmare.linq.tuples.QueryTuple;
+import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.reflect.ClassUtils;
 
 /**

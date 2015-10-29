@@ -12,9 +12,9 @@ import javax.persistence.Persistence;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.lightmare.criteria.query.QueryProvider;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.linq.entities.Person;
-import org.lightmare.linq.query.QueryProvider;
-import org.lightmare.linq.query.QueryStream;
 
 public class QueryTest {
 

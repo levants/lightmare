@@ -1,13 +1,13 @@
-package org.lightmare.linq.query;
+package org.lightmare.criteria.query;
 
 import java.io.IOException;
 import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 
-import org.lightmare.linq.lambda.FieldGetter;
-import org.lightmare.linq.links.Filters;
-import org.lightmare.linq.links.Operators;
+import org.lightmare.criteria.lambda.FieldGetter;
+import org.lightmare.criteria.links.Filters;
+import org.lightmare.criteria.links.Operators;
 
 /**
  * Query builder from getter method references

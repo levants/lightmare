@@ -1,4 +1,4 @@
-package org.lightmare.linq.query;
+package org.lightmare.criteria.query;
 
 import java.io.Serializable;
 

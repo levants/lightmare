@@ -1,9 +1,9 @@
-package org.lightmare.linq.cache;
+package org.lightmare.criteria.cache;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.lightmare.linq.lambda.LambdaData;
-import org.lightmare.linq.tuples.QueryTuple;
+import org.lightmare.criteria.lambda.LambdaData;
+import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
  * To cache queries by lambda data call

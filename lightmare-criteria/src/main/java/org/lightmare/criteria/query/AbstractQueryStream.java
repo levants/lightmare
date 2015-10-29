@@ -1,4 +1,4 @@
-package org.lightmare.linq.query;
+package org.lightmare.criteria.query;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -11,15 +11,15 @@ import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
-import org.lightmare.linq.cache.QueryCache;
-import org.lightmare.linq.lambda.LambdaData;
-import org.lightmare.linq.lambda.LambdaReplacements;
-import org.lightmare.linq.links.Clauses;
-import org.lightmare.linq.links.Operators;
-import org.lightmare.linq.links.QueryParts;
-import org.lightmare.linq.resolvers.FieldResolver;
-import org.lightmare.linq.tuples.ParameterTuple;
-import org.lightmare.linq.tuples.QueryTuple;
+import org.lightmare.criteria.cache.QueryCache;
+import org.lightmare.criteria.lambda.LambdaData;
+import org.lightmare.criteria.lambda.LambdaReplacements;
+import org.lightmare.criteria.links.Clauses;
+import org.lightmare.criteria.links.Operators;
+import org.lightmare.criteria.links.QueryParts;
+import org.lightmare.criteria.resolvers.FieldResolver;
+import org.lightmare.criteria.tuples.ParameterTuple;
+import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.reflect.ClassUtils;
 
 /**

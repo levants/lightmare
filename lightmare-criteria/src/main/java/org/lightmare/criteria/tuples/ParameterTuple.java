@@ -1,4 +1,4 @@
-package org.lightmare.linq.tuples;
+package org.lightmare.criteria.tuples;
 
 import javax.persistence.TemporalType;
 

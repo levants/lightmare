@@ -1,4 +1,4 @@
-package org.lightmare.linq.resolvers;
+package org.lightmare.criteria.resolvers;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
-import org.lightmare.linq.lambda.LambdaData;
-import org.lightmare.linq.orm.ColumnProcessor;
-import org.lightmare.linq.tuples.QueryTuple;
+import org.lightmare.criteria.lambda.LambdaData;
+import org.lightmare.criteria.orm.ColumnProcessor;
+import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 import org.objectweb.asm.ClassReader;

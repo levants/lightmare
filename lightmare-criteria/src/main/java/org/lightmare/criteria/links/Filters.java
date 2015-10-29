@@ -1,4 +1,4 @@
-package org.lightmare.linq.links;
+package org.lightmare.criteria.links;
 
 /**
  * Query filter parts
