@@ -1,5 +1,7 @@
 package org.lightmare.linq.query;
 
+import java.io.Serializable;
+
 import javax.persistence.EntityManager;
 
 /**
@@ -18,7 +20,7 @@ public class QueryProvider {
      * @param entityAlias
      * @return {@link FullQueryStream} with select statement
      */
-    public static <T> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
+    public static <T extends Serializable> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
 	return FullQueryStream.select(em, entityType, entityAlias);
     }
@@ -30,7 +32,7 @@ public class QueryProvider {
      * @param entityType
      * @return {@link FullQueryStream} with select statement
      */
-    public static <T> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
+    public static <T extends Serializable> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
 	return FullQueryStream.select(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 }

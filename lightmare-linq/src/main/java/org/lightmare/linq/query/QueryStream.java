@@ -1,13 +1,14 @@
 package org.lightmare.linq.query;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.TemporalType;
 
-import org.lightmare.linq.lambda.FieldGetter;
 import org.lightmare.linq.lambda.EntityField;
+import org.lightmare.linq.lambda.FieldGetter;
 import org.lightmare.linq.tuples.ParameterTuple;
 
 /**
@@ -17,7 +18,7 @@ import org.lightmare.linq.tuples.ParameterTuple;
  *
  * @param <T>
  */
-interface QueryStream<T> {
+interface QueryStream<T extends Serializable> {
 
     String DEFAULT_ALIAS = "c";
 

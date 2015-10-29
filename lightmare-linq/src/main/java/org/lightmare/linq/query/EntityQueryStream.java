@@ -1,6 +1,7 @@
 package org.lightmare.linq.query;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 
@@ -16,7 +17,7 @@ import org.lightmare.linq.links.Operators;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class EntityQueryStream<T> extends GetterQueryStream<T> {
+public abstract class EntityQueryStream<T extends Serializable> extends GetterQueryStream<T> {
 
     protected EntityQueryStream(EntityManager em, Class<T> entityType) {
 	super(em, entityType);

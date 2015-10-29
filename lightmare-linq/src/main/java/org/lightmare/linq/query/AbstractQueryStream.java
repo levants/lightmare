@@ -1,7 +1,7 @@
 package org.lightmare.linq.query;
 
 import java.io.IOException;
-import java.lang.invoke.SerializedLambda;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 import org.lightmare.linq.cache.QueryCache;
 import org.lightmare.linq.lambda.LambdaReplacements;
+import org.lightmare.linq.lambda.SLambda;
 import org.lightmare.linq.links.Clauses;
 import org.lightmare.linq.links.Operators;
 import org.lightmare.linq.links.QueryParts;
@@ -29,7 +30,7 @@ import org.lightmare.utils.reflect.ClassUtils;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class AbstractQueryStream<T> implements QueryStream<T> {
+public abstract class AbstractQueryStream<T extends Serializable> implements QueryStream<T> {
 
     protected final EntityManager em;
 
@@ -77,7 +78,7 @@ public abstract class AbstractQueryStream<T> implements QueryStream<T> {
 
 	QueryTuple tuple;
 
-	SerializedLambda lambda = LambdaReplacements.getReplacement(field, entityType);
+	SLambda lambda = LambdaReplacements.getReplacement(field);
 	tuple = QueryCache.getQuery(lambda);
 	if (tuple == null) {
 	    tuple = FieldResolver.resolve(lambda, verbose);
