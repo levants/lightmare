@@ -62,16 +62,17 @@ public class QueryTest {
 	return date;
     }
 
-    private QueryStream<Person> createStream(final EntityManager em) throws IOException {
+    private FullQueryStream<Person> createStream(final EntityManager em) throws IOException {
 
-	QueryStream<Person> stream = QueryStream.select(em, Person.class);
+	FullQueryStream<Person> stream = FullQueryStream.select(em, Person.class);
 
-	Person entity = new Person();
-	stream.setWerbose(Boolean.TRUE);
-	stream.where().moreOrEq(entity::getBirthDate, getDateValue()).and();
-	stream.like(entity::getLastName, "lname");
-	stream.and().like(entity::getFirstName, "fname");
-	stream.or().eq(entity::getPersonalNo, personalNo);
+	stream.eq(Person::getFirstName, "name");
+	// Person entity = new Person();
+	// stream.setWerbose(Boolean.TRUE);
+	// stream.where().moreOrEq(entity::getBirthDate, getDateValue()).and();
+	// stream.like(entity::getLastName, "lname");
+	// stream.and().like(entity::getFirstName, "fname");
+	// stream.or().eq(entity::getPersonalNo, personalNo);
 
 	return stream;
     }
@@ -83,7 +84,7 @@ public class QueryTest {
 	    System.out.println();
 	    System.out.println("===========================");
 	    EntityManager em = emf.createEntityManager();
-	    QueryStream<Person> stream = createStream(em);
+	    FullQueryStream<Person> stream = createStream(em);
 	    System.out.println("===========JPA-QL==========");
 	    System.out.println();
 	    System.out.println(stream.sql());
@@ -102,7 +103,7 @@ public class QueryTest {
 	    Person entity = new Person();
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
-	    List<Person> persons = QueryStream.select(em, Person.class).where().eq(entity::getPersonalNo, personalNo)
+	    List<Person> persons = FullQueryStream.select(em, Person.class).where().eq(entity::getPersonalNo, personalNo)
 		    .and().like(entity::getLastName, "fname").and().startsWith(entity::getFirstName, "lname").or()
 		    .moreOrEq(entity::getBirthDate, date).toList();
 	    // =============================================//

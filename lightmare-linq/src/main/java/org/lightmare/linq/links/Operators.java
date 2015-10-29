@@ -10,6 +10,8 @@ public interface Operators {
 
     String EQ = " = ";
 
+    String NOT_EQ = " != ";
+
     String MORE = " > ";
 
     String LESS = " < ";

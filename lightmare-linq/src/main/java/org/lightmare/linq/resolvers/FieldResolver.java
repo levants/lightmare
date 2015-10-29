@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.lightmare.linq.orm.ColumnProcessor;
 import org.lightmare.linq.tuples.QueryTuple;
 import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -29,9 +30,17 @@ public class FieldResolver {
 
     private static final int ZERO_FLAGS = 0;
 
+    private static final int ZERO_ARGS = 0;
+
+    private static final int SINGLE_ARG = 1;
+
     private static final int FIRST = 0;
 
-    private static final int BEGIN_INDEX = "get".length();
+    private static final String GET = "get";
+
+    private static final String SET = "set";
+
+    private static final int BEGIN_INDEX = "GET".length();
 
     // Error messages
     private static final String UNRESOLVABLE_ERROR = "Unresolvable field name";
@@ -65,26 +74,41 @@ public class FieldResolver {
 	return entityName;
     }
 
-    private static void logMethod(Type entityType, Type returnType, MethodInsnNode node) {
+    private static void logMethod(Type returnType, MethodInsnNode node) {
 
+	Type entityType = Type.getObjectType(node.owner);
 	LOG.info(entityType.getClassName());
 	LOG.info(returnType.getClassName());
 	LOG.info(resolveFieldName(node.name));
     }
 
-    private static boolean valid(MethodInsnNode node, boolean werbose) {
+    private static boolean validSetter(Type returnType, Type[] argumentTypes) {
+	return (Objects.nonNull(argumentTypes) && argumentTypes.length == SINGLE_ARG
+		&& Type.VOID_TYPE.equals(returnType));
+    }
+
+    private static boolean validGetter(Type returnType, Type[] argumentTypes) {
+	return (CollectionUtils.invalid(argumentTypes) && ObjectUtils.notEquals(Type.VOID_TYPE, returnType));
+    }
+
+    private static boolean valid(MethodInsnNode node, boolean verbose) {
 
 	boolean valid;
 
-	Type type = Type.getMethodType(node.desc);
-	Type entityType = Type.getObjectType(node.owner);
-	Type returnType = type.getReturnType();
-	Type[] argumentTypes = type.getArgumentTypes();
-	valid = (argumentTypes.length == FIRST && ObjectUtils.notEquals(Type.VOID_TYPE, returnType));
-	printVerbose(werbose, c -> logMethod(entityType, returnType, node));
+	Type methodType = Type.getMethodType(node.desc);
+	Type returnType = methodType.getReturnType();
+	Type[] argumentTypes = methodType.getArgumentTypes();
+	printVerbose(verbose, c -> logMethod(returnType, node));
+	String name = node.name;
+	if (name.startsWith(GET)) {
+	    valid = validGetter(returnType, argumentTypes);
+	} else if (name.startsWith(SET)) {
+	    valid = validSetter(returnType, argumentTypes);
+	} else {
+	    valid = Boolean.FALSE;
+	}
 
 	return valid;
-
     }
 
     /**

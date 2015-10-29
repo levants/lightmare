@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
- * Interface for method reference call
+ * Interface for getter method reference call
  * 
  * @author Levan Tsinadze
  *
