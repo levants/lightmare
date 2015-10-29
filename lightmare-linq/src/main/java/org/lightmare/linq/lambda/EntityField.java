@@ -3,7 +3,7 @@ package org.lightmare.linq.lambda;
 import java.util.function.Function;
 
 /**
- * Interface for setter method reference call
+ * Interface for getter method reference call with entities
  * 
  * @author Levan Tsinadze
  *
@@ -11,7 +11,7 @@ import java.util.function.Function;
  *            field type parameter
  */
 @FunctionalInterface
-public interface FieldSetter<T, F> extends Function<T, F> {
+public interface EntityField<T, F> extends Function<T, F> {
 
     F apply(T value);
 }

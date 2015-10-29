@@ -12,7 +12,7 @@ import org.lightmare.linq.links.Filters;
  * @param <T>
  *            entity type for generated query
  */
-public class FullQueryStream<T> extends SetterQueryStream<T> {
+public class FullQueryStream<T> extends EntityQueryStream<T> {
 
     private FullQueryStream(final EntityManager em, final Class<T> entityType) {
 	super(em, entityType);

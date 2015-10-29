@@ -62,29 +62,41 @@ public class QueryTest {
 	return date;
     }
 
-    private FullQueryStream<Person> createStream(final EntityManager em) throws IOException {
+    private QueryStream<Person> createGetterStream(final EntityManager em) throws IOException {
+
+	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
+
+	Person entity = new Person();
+	stream.setWerbose(Boolean.TRUE);
+	stream.where().moreOrEq(entity::getBirthDate, getDateValue()).and();
+	stream.like(entity::getLastName, "lname");
+	stream.and().like(entity::getFirstName, "fname");
+	stream.or().eq(entity::getPersonalNo, personalNo);
+
+	return stream;
+    }
+
+    private QueryStream<Person> createSetterStream(final EntityManager em) throws IOException {
 
 	FullQueryStream<Person> stream = FullQueryStream.select(em, Person.class);
 
-	stream.eq(Person::getFirstName, "name");
-	// Person entity = new Person();
-	// stream.setWerbose(Boolean.TRUE);
-	// stream.where().moreOrEq(entity::getBirthDate, getDateValue()).and();
-	// stream.like(entity::getLastName, "lname");
-	// stream.and().like(entity::getFirstName, "fname");
-	// stream.or().eq(entity::getPersonalNo, personalNo);
+	stream.setWerbose(Boolean.TRUE);
+	stream.where().moreOrEq(Person::getBirthDate, getDateValue()).and();
+	stream.like(Person::getLastName, "lname");
+	stream.and().like(Person::getFirstName, "fname");
+	stream.or().eq(Person::getPersonalNo, personalNo);
 
 	return stream;
     }
 
     @Test
-    public void supplierTest() {
+    public void supplierGetterTest() {
 
 	try {
 	    System.out.println();
 	    System.out.println("===========================");
 	    EntityManager em = emf.createEntityManager();
-	    FullQueryStream<Person> stream = createStream(em);
+	    QueryStream<Person> stream = createGetterStream(em);
 	    System.out.println("===========JPA-QL==========");
 	    System.out.println();
 	    System.out.println(stream.sql());
@@ -96,14 +108,32 @@ public class QueryTest {
     }
 
     @Test
-    public void toListTest() {
+    public void supplierEntityTest() {
+
+	try {
+	    System.out.println();
+	    System.out.println("===========================");
+	    EntityManager em = emf.createEntityManager();
+	    QueryStream<Person> stream = createSetterStream(em);
+	    System.out.println("===========JPA-QL==========");
+	    System.out.println();
+	    System.out.println(stream.sql());
+	    System.out.println("===========================");
+	    System.out.println();
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @Test
+    public void toListByGetterTest() {
 
 	try {
 	    EntityManager em = emf.createEntityManager();
 	    Person entity = new Person();
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
-	    List<Person> persons = FullQueryStream.select(em, Person.class).where().eq(entity::getPersonalNo, personalNo)
+	    List<Person> persons = QueryProvider.select(em, Person.class).where().eq(entity::getPersonalNo, personalNo)
 		    .and().like(entity::getLastName, "fname").and().startsWith(entity::getFirstName, "lname").or()
 		    .moreOrEq(entity::getBirthDate, date).toList();
 	    // =============================================//
@@ -117,8 +147,32 @@ public class QueryTest {
     }
 
     @Test
+    public void toListByEntityTest() {
+
+	try {
+	    EntityManager em = emf.createEntityManager();
+	    Date date = getDateValue();
+	    // ============= Query construction ============== //
+	    List<Person> persons = QueryProvider.select(em, Person.class).where().eq(Person::getPersonalNo, personalNo)
+		    .and().like(Person::getLastName, "fname").and().startsWith(Person::getFirstName, "lname").or()
+		    .moreOrEq(Person::getBirthDate, date).toList();
+	    // =============================================//
+	    System.out.println();
+	    System.out.println("----------------");
+	    System.out.println();
+	    persons.forEach(System.out::println);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @Test
     public void cacheTest() {
-	supplierTest();
-	supplierTest();
+
+	supplierGetterTest();
+	supplierGetterTest();
+
+	supplierEntityTest();
+	supplierEntityTest();
     }
 }

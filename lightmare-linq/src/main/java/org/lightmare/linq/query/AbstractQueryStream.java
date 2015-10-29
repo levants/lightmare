@@ -22,7 +22,7 @@ import org.lightmare.linq.tuples.QueryTuple;
 import org.lightmare.utils.reflect.ClassUtils;
 
 /**
- * Main class for lambda expression analyze and JPA query generator
+ * Abstract class for lambda expression analyze and JPA query generator
  * 
  * @author Levan Tsinadze
  *
@@ -48,12 +48,6 @@ public abstract class AbstractQueryStream<T> implements QueryStream<T> {
     protected Set<ParameterTuple<?>> parameters;
 
     protected boolean verbose;
-
-    protected static final String DEFAULT_ALIAS = "c";
-
-    protected static final char NEW_LINE = '\n';
-
-    protected static final int START = 0;
 
     private static final Logger LOG = Logger.getLogger(FullQueryStream.class);
 

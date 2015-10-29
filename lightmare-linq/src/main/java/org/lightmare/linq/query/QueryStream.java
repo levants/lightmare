@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.persistence.TemporalType;
 
 import org.lightmare.linq.lambda.FieldGetter;
-import org.lightmare.linq.lambda.FieldSetter;
+import org.lightmare.linq.lambda.EntityField;
 import org.lightmare.linq.tuples.ParameterTuple;
 
 /**
@@ -18,6 +18,12 @@ import org.lightmare.linq.tuples.ParameterTuple;
  * @param <T>
  */
 interface QueryStream<T> {
+
+    String DEFAULT_ALIAS = "c";
+
+    char NEW_LINE = '\n';
+
+    int START = 0;
 
     /**
      * Instantiates entity type for getter query composition
@@ -72,29 +78,29 @@ interface QueryStream<T> {
 
     // ===================== Setter method composers ========================//
 
-    <F> QueryStream<T> eq(FieldSetter<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> eq(EntityField<T, F> field, F value) throws IOException;
 
-    <F> QueryStream<T> notEq(FieldSetter<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> notEq(EntityField<T, F> field, F value) throws IOException;
 
-    <F> QueryStream<T> more(FieldSetter<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> more(EntityField<T, F> field, F value) throws IOException;
 
-    <F> QueryStream<T> less(FieldSetter<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> less(EntityField<T, F> field, F value) throws IOException;
 
-    <F> QueryStream<T> moreOrEq(FieldSetter<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> moreOrEq(EntityField<T, F> field, F value) throws IOException;
 
-    <F> QueryStream<T> lessOrEq(FieldSetter<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> lessOrEq(EntityField<T, F> field, F value) throws IOException;
 
-    QueryStream<T> startsWith(FieldSetter<T, String> field, String value) throws IOException;
+    QueryStream<T> startsWith(EntityField<T, String> field, String value) throws IOException;
 
-    QueryStream<T> like(FieldSetter<T, String> field, String value) throws IOException;
+    QueryStream<T> like(EntityField<T, String> field, String value) throws IOException;
 
-    QueryStream<T> endsWith(FieldSetter<T, String> field, String value) throws IOException;
+    QueryStream<T> endsWith(EntityField<T, String> field, String value) throws IOException;
 
-    QueryStream<T> contains(FieldSetter<T, String> field, String value) throws IOException;
+    QueryStream<T> contains(EntityField<T, String> field, String value) throws IOException;
 
-    QueryStream<T> isNull(FieldSetter<T, ?> field) throws IOException;
+    QueryStream<T> isNull(EntityField<T, ?> field) throws IOException;
 
-    QueryStream<T> notNull(FieldSetter<T, ?> field) throws IOException;
+    QueryStream<T> notNull(EntityField<T, ?> field) throws IOException;
 
     // ===========================================================================//
 
