@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.github.levants</groupId>
 		<artifactId>lightmare</artifactId>
-		<version>4.8.10-SNAPSHOT</version>
+		<version>${project.version}</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>

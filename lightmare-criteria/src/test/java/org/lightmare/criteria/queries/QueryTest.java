@@ -22,7 +22,7 @@ public class QueryTest {
 
     private static EntityManagerFactory emf;
 
-    private static void persistPersons() {
+    private static void provideDataBase() {
 
 	Person person = new Person();
 	person.setPersonalNo("10100100100");
@@ -47,7 +47,7 @@ public class QueryTest {
 
 	try {
 	    emf = Persistence.createEntityManagerFactory("testUnit");
-	    persistPersons();
+	    provideDataBase();
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.github.levants</groupId>
 		<artifactId>lightmare</artifactId>
-		<version>4.8.10-SNAPSHOT</version>
+		<version>${project.version}</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -46,7 +46,8 @@
 			<groupId>com.github.levants</groupId>
 			<artifactId>lightmare-utils</artifactId>
 			<version>${project.version}</version>
-		</dependency><!-- utilities -->
+		</dependency>
+		<!-- utilities -->
 		<!-- ASM -->
 		<dependency>
 			<groupId>org.ow2.asm</groupId>
@@ -119,6 +120,7 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
