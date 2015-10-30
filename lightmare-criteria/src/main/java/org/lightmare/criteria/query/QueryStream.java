@@ -87,7 +87,11 @@ public interface QueryStream<T extends Serializable> {
 
     <F> QueryStream<T> eq(FieldGetter<F> field, F value) throws IOException;
 
+    <F> QueryStream<T> equals(FieldGetter<F> field, F value) throws IOException;
+
     <F> QueryStream<T> notEq(FieldGetter<F> field, F value) throws IOException;
+
+    <F> QueryStream<T> notEquals(FieldGetter<F> field, F value) throws IOException;
 
     <F> QueryStream<T> more(FieldGetter<F> field, F value) throws IOException;
 
@@ -131,7 +135,11 @@ public interface QueryStream<T extends Serializable> {
 
     <F> QueryStream<T> eq(EntityField<T, F> field, F value) throws IOException;
 
+    <F> QueryStream<T> equals(EntityField<T, F> field, F value) throws IOException;
+
     <F> QueryStream<T> notEq(EntityField<T, F> field, F value) throws IOException;
+
+    <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) throws IOException;
 
     <F> QueryStream<T> more(EntityField<T, F> field, F value) throws IOException;
 

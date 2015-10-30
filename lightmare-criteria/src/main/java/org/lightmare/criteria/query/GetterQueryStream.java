@@ -54,9 +54,19 @@ abstract class GetterQueryStream<T extends Serializable> extends AbstractQuerySt
     }
 
     @Override
+    public <F> QueryStream<T> equals(FieldGetter<F> field, F value) throws IOException {
+	return eq(field, value);
+    }
+
+    @Override
     public <F> QueryStream<T> notEq(FieldGetter<F> field, F value) throws IOException {
 	oppLine(field, value, Operators.NOT_EQ);
 	return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> notEquals(FieldGetter<F> field, F value) throws IOException {
+	return notEq(field, value);
     }
 
     @Override
