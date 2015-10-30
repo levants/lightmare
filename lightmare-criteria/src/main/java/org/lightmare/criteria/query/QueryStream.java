@@ -24,6 +24,7 @@ package org.lightmare.criteria.query;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -40,6 +41,7 @@ import org.lightmare.criteria.tuples.ParameterTuple;
  * @author Levan Tsinadze
  *
  * @param <T>
+ *            entity type for generated query
  */
 public interface QueryStream<T extends Serializable> {
 
@@ -103,9 +105,17 @@ public interface QueryStream<T extends Serializable> {
 
     QueryStream<T> contains(FieldGetter<String> field, String value) throws IOException;
 
+    QueryStream<T> in(FieldGetter<Collection<?>> field, Collection<?> values) throws IOException;
+
     <F> QueryStream<T> isNull(FieldGetter<F> field) throws IOException;
 
     <F> QueryStream<T> notNull(FieldGetter<F> field) throws IOException;
+
+    // =========================order=by=====================================//
+    QueryStream<T> orderBy(FieldGetter<?>... fields) throws IOException;
+
+    QueryStream<T> orderByDesc(FieldGetter<?>... fields) throws IOException;
+    // ======================================================================//
 
     /**
      * Set clause for bulk UPDATE query
@@ -117,7 +127,7 @@ public interface QueryStream<T extends Serializable> {
      */
     <F> QueryStream<T> set(FieldGetter<F> field, F value) throws IOException;
 
-    // ========================= Setter method composers ====================//
+    // ========================= Entity method composers ====================//
 
     <F> QueryStream<T> eq(EntityField<T, F> field, F value) throws IOException;
 
@@ -139,9 +149,17 @@ public interface QueryStream<T extends Serializable> {
 
     QueryStream<T> contains(EntityField<T, String> field, String value) throws IOException;
 
+    QueryStream<T> in(EntityField<T, Collection<?>> field, Collection<?> values) throws IOException;
+
     QueryStream<T> isNull(EntityField<T, ?> field) throws IOException;
 
     QueryStream<T> notNull(EntityField<T, ?> field) throws IOException;
+
+    // =========================order=by=====================================//
+    QueryStream<T> orderBy(EntityField<T, ?> field) throws IOException;
+
+    QueryStream<T> orderByDesc(EntityField<T, ?> field) throws IOException;
+    // ======================================================================//
 
     /**
      * Set clause for bulk UPDATE query
@@ -165,14 +183,6 @@ public interface QueryStream<T extends Serializable> {
 
     QueryStream<T> closeBracket();
 
-    // ======================================================================//
-    QueryStream<T> orderBy(FieldGetter<?>... fields) throws IOException;
-
-    QueryStream<T> orderByDesc(FieldGetter<?>... fields) throws IOException;
-
-    QueryStream<T> orderBy(EntityField<T, ?> field) throws IOException;
-
-    QueryStream<T> orderByDesc(EntityField<T, ?> field) throws IOException;
     // ======================================================================//
 
     QueryStream<T> appendPrefix(Object clause);

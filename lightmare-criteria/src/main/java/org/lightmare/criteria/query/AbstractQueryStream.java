@@ -24,6 +24,7 @@ package org.lightmare.criteria.query;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -195,6 +196,15 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 
 	QueryTuple tuple = opp(field, expression);
 	oppWithParameter(tuple, value, body);
+    }
+
+    protected void oppCollection(Object field, Collection<?> value) throws IOException {
+
+	QueryTuple tuple = opp(field, Operators.IN);
+	openBracket();
+	oppWithParameter(tuple, value, body);
+	closeBracket();
+	body.append(NEW_LINE);
     }
 
     private void appendSetClause() {

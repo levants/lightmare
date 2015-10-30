@@ -24,6 +24,7 @@ package org.lightmare.criteria.query;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 
@@ -105,6 +106,12 @@ abstract class GetterQueryStream<T extends Serializable> extends AbstractQuerySt
     public QueryStream<T> contains(FieldGetter<String> field, String value) throws IOException {
 	String enrich = Filters.LIKE_SIGN.concat(value).concat(Filters.LIKE_SIGN);
 	oppLine(field, enrich, Operators.LIKE);
+	return this;
+    }
+
+    @Override
+    public QueryStream<T> in(FieldGetter<Collection<?>> field, Collection<?> values) throws IOException {
+	oppCollection(field, values);
 	return this;
     }
 
