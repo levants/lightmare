@@ -54,6 +54,20 @@
 			<artifactId>asm-all</artifactId>
 			<version>${asm.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm-all</artifactId>
+			<version>${asm.version}</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm-all</artifactId>
+			<version>${asm.version}</version>
+			<classifier>javadoc</classifier>
+			<scope>provided</scope>
+		</dependency>
 		<!-- ASM -->
 		<!-- hibernate -->
 		<dependency>

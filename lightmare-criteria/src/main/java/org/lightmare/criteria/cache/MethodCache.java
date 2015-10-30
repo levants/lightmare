@@ -21,7 +21,7 @@ import org.objectweb.asm.tree.MethodNode;
  */
 public class MethodCache {
 
-    private static final ConcurrentMap<String, List<MethodNode>> METHODS = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, List<MethodNode>> METHOD_NODES = new ConcurrentHashMap<>();
 
     private static final int ZERO_FLAGS = 0;
 
@@ -57,11 +57,11 @@ public class MethodCache {
 
 	List<MethodNode> methods;
 
-	if (METHODS.containsKey(typeName)) {
-	    methods = METHODS.get(typeName);
+	if (METHOD_NODES.containsKey(typeName)) {
+	    methods = METHOD_NODES.get(typeName);
 	} else {
 	    methods = resolveMethods(typeName);
-	    METHODS.putIfAbsent(typeName, methods);
+	    METHOD_NODES.putIfAbsent(typeName, methods);
 	}
 
 	return methods;

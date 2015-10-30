@@ -14,7 +14,7 @@ import org.objectweb.asm.ClassReader;
  */
 public class CachedClassReader extends ClassReader {
 
-    private static final ConcurrentMap<String, byte[]> CLASS_FILES = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, ClassReader> CLASS_FILES = new ConcurrentHashMap<>();
 
     public CachedClassReader(byte[] buff) {
 	super(buff);
@@ -33,15 +33,11 @@ public class CachedClassReader extends ClassReader {
      */
     public static ClassReader get(String name) throws IOException {
 
-	ClassReader classReader;
+	ClassReader classReader = CLASS_FILES.get(name);
 
-	byte[] buff = CLASS_FILES.get(name);
-	if (buff == null) {
+	if (classReader == null) {
 	    classReader = new CachedClassReader(name);
-	    buff = classReader.b;
-	    CLASS_FILES.putIfAbsent(name, buff);
-	} else {
-	    classReader = new CachedClassReader(buff);
+	    CLASS_FILES.putIfAbsent(name, classReader);
 	}
 
 	return classReader;
