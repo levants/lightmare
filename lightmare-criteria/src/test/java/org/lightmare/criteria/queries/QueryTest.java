@@ -13,13 +13,19 @@ import javax.persistence.Persistence;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.runorder.RunOrder;
+import org.lightmare.criteria.runorder.SortedRunner;
 
+@RunWith(SortedRunner.class)
 public class QueryTest {
 
-    private static final String PERSONAL_NO = "10100100100";
+    private static final String PERSONAL_NO1 = "10100100100";
+
+    private static final String PERSONAL_NO2 = "10100100111";
 
     private static EntityManagerFactory emf;
 
@@ -44,14 +50,14 @@ public class QueryTest {
     private static void provideDataBase() {
 
 	Person person1 = new Person();
-	person1.setPersonalNo(PERSONAL_NO);
+	person1.setPersonalNo(PERSONAL_NO1);
 	person1.setLastName("lname1");
 	person1.setFirstName("fname1");
 	person1.setBirthDate(getDateValue(80));
 	person1.setMiddName("mname1");
 
 	Person person2 = new Person();
-	person2.setPersonalNo("10100100111");
+	person2.setPersonalNo(PERSONAL_NO2);
 	person2.setLastName("lname2");
 	person2.setFirstName("fname2");
 	person2.setBirthDate(getDateValue(90));
@@ -97,7 +103,7 @@ public class QueryTest {
 	stream.where().moreOrEq(entity::getBirthDate, getDateValue()).and();
 	stream.like(entity::getLastName, "lname");
 	stream.and().like(entity::getFirstName, "fname");
-	stream.or().eq(entity::getPersonalNo, PERSONAL_NO);
+	stream.or().eq(entity::getPersonalNo, PERSONAL_NO1);
 
 	return stream;
     }
@@ -109,12 +115,13 @@ public class QueryTest {
 	stream.where().moreOrEq(c -> c.getBirthDate(), getDateValue()).and();
 	stream.like(Person::getLastName, "lname");
 	stream.and().like(Person::getFirstName, "fname");
-	stream.or().eq(Person::getPersonalNo, PERSONAL_NO);
+	stream.or().eq(Person::getPersonalNo, PERSONAL_NO1);
 
 	return stream;
     }
 
     @Test
+    @RunOrder(1)
     public void supplierGetterTest() {
 
 	try {
@@ -133,6 +140,7 @@ public class QueryTest {
     }
 
     @Test
+    @RunOrder(2)
     public void supplierEntityTest() {
 
 	try {
@@ -151,6 +159,7 @@ public class QueryTest {
     }
 
     @Test
+    @RunOrder(3)
     public void toListByGetterTest() {
 
 	EntityManager em = emf.createEntityManager();
@@ -158,9 +167,9 @@ public class QueryTest {
 	    Person entity = new Person();
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
-	    List<Person> persons = QueryProvider.select(em, Person.class).where().eq(entity::getPersonalNo, PERSONAL_NO)
-		    .and().like(entity::getLastName, "fname").and().startsWith(entity::getFirstName, "lname").or()
-		    .moreOrEq(entity::getBirthDate, date).toList();
+	    List<Person> persons = QueryProvider.select(em, Person.class).where()
+		    .eq(entity::getPersonalNo, PERSONAL_NO1).and().like(entity::getLastName, "lname").and()
+		    .startsWith(entity::getFirstName, "fname").or().moreOrEq(entity::getBirthDate, date).toList();
 	    // =============================================//
 	    System.out.println();
 	    System.out.println("------Getter------");
@@ -174,15 +183,16 @@ public class QueryTest {
     }
 
     @Test
+    @RunOrder(4)
     public void toListByEntityTest() {
 
 	EntityManager em = emf.createEntityManager();
 	try {
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
-	    List<Person> persons = QueryProvider.select(em, Person.class).where().eq(Person::getPersonalNo, PERSONAL_NO)
-		    .and().like(Person::getLastName, "fname").and().startsWith(Person::getFirstName, "lname").or()
-		    .moreOrEq(Person::getBirthDate, date).toList();
+	    List<Person> persons = QueryProvider.select(em, Person.class).where()
+		    .eq(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+		    .startsWith(Person::getFirstName, "fname").or().moreOrEq(Person::getBirthDate, date).toList();
 	    // =============================================//
 	    System.out.println();
 	    System.out.println("-------Entity----");
@@ -196,6 +206,7 @@ public class QueryTest {
     }
 
     @Test
+    @RunOrder(5)
     public void updateSetOneByEntityTest() {
 
 	EntityManager em = emf.createEntityManager();
@@ -205,9 +216,9 @@ public class QueryTest {
 	    transaction.begin();
 	    // ============= Query construction ============== //
 	    int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "middName").where()
-		    .eq(Person::getPersonalNo, PERSONAL_NO).and().like(Person::getLastName, "fname").and().openBracket()
-		    .startsWith(Person::getFirstName, "lname").or().moreOrEq(Person::getBirthDate, date).closeBracket()
-		    .execute();
+		    .eq(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+		    .openBracket().startsWith(Person::getFirstName, "fname").or().moreOrEq(Person::getBirthDate, date)
+		    .closeBracket().execute();
 	    // =============================================//
 	    transaction.commit();
 	    System.out.println();
@@ -224,6 +235,7 @@ public class QueryTest {
     }
 
     @Test
+    @RunOrder(6)
     public void updateSetMultiByEntityTest() {
 
 	EntityManager em = emf.createEntityManager();
@@ -234,8 +246,8 @@ public class QueryTest {
 	    transaction.begin();
 	    // ============= Query construction ============== //
 	    int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "newMiddName")
-		    .set(Person::getBirthDate, newBirthDate).where().eq(Person::getPersonalNo, PERSONAL_NO).and()
-		    .like(Person::getLastName, "fname").and().openBracket().startsWith(Person::getFirstName, "lname")
+		    .set(Person::getBirthDate, newBirthDate).where().eq(Person::getPersonalNo, PERSONAL_NO1).and()
+		    .like(Person::getLastName, "lname").and().openBracket().startsWith(Person::getFirstName, "fname")
 		    .or().moreOrEq(Person::getBirthDate, date).closeBracket().execute();
 	    // =============================================//
 	    transaction.commit();
@@ -253,6 +265,35 @@ public class QueryTest {
     }
 
     @Test
+    @RunOrder(7)
+    public void deleteByEntityTest() {
+
+	EntityManager em = emf.createEntityManager();
+	EntityTransaction transaction = em.getTransaction();
+	try {
+	    transaction.begin();
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.delete(em, Person.class).where()
+		    .eq(Person::getPersonalNo, PERSONAL_NO2).and().like(Person::getLastName, "lname").and()
+		    .startsWith(Person::getFirstName, "fname");
+	    int rows = stream.execute();
+	    // =============================================//
+	    transaction.commit();
+	    System.out.println();
+	    System.out.println("-------Entity----");
+	    System.out.println();
+	    System.out.format("deleted %s rows\n", rows);
+	    Assert.assertEquals("No expected row number was updated", rows, 1);
+	} catch (Throwable ex) {
+	    transaction.rollback();
+	    ex.printStackTrace();
+	} finally {
+	    em.close();
+	}
+    }
+
+    @Test
+    @RunOrder(8)
     public void cacheTest() {
 
 	supplierGetterTest();

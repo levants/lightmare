@@ -68,7 +68,7 @@ class FullQueryStream<T extends Serializable> extends EntityQueryStream<T> {
 
 	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType, alias);
 
-	stream.appendPrefix(Filters.DELETE).appendPrefix(stream.alias).appendPrefix(Filters.FROM);
+	stream.appendPrefix(Filters.DELETE).appendPrefix(Filters.FROM);
 	appendEntityPart(stream);
 
 	return stream;
