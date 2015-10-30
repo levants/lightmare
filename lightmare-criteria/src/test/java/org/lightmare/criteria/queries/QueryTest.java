@@ -96,20 +96,6 @@ public class QueryTest {
 	}
     }
 
-    private QueryStream<Person> createGetterStream(final EntityManager em) throws IOException {
-
-	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
-
-	Person entity = new Person();
-	stream.where().moreOrEq(entity::getBirthDate, getDateValue()).and();
-	stream.like(entity::getLastName, "lname");
-	stream.and().like(entity::getFirstName, "fname");
-	stream.or().eq(entity::getPersonalNo, PERSONAL_NO1);
-	stream.orderBy(entity::getBirthDate, entity::getLastName);
-
-	return stream;
-    }
-
     private QueryStream<Person> createSetterStream(final EntityManager em) throws IOException {
 
 	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
@@ -127,25 +113,6 @@ public class QueryTest {
 
     @Test
     @RunOrder(1)
-    public void supplierGetterTest() {
-
-	try {
-	    System.out.println();
-	    System.out.println("==========Getter===========");
-	    EntityManager em = emf.createEntityManager();
-	    QueryStream<Person> stream = createGetterStream(em);
-	    System.out.println("===========JPA-QL==========");
-	    System.out.println();
-	    System.out.println(stream.sql());
-	    System.out.println("===========Getter==========");
-	    System.out.println();
-	} catch (Throwable ex) {
-	    ex.printStackTrace();
-	}
-    }
-
-    @Test
-    @RunOrder(2)
     public void supplierEntityTest() {
 
 	try {
@@ -164,32 +131,7 @@ public class QueryTest {
     }
 
     @Test
-    @RunOrder(3)
-    public void toListByGetterTest() {
-
-	EntityManager em = emf.createEntityManager();
-	try {
-	    Person entity = new Person();
-	    Date date = getDateValue();
-	    // ============= Query construction ============== //
-	    List<Person> persons = QueryProvider.select(em, Person.class).where()
-		    .eq(entity::getPersonalNo, PERSONAL_NO1).and().like(entity::getLastName, "lname").and()
-		    .startsWith(entity::getFirstName, "fname").or().moreOrEq(entity::getBirthDate, date)
-		    .orderByDesc(Person::getLastName).orderBy(Person::getBirthDate).toList();
-	    // =============================================//
-	    System.out.println();
-	    System.out.println("------Getter------");
-	    System.out.println();
-	    persons.forEach(System.out::println);
-	} catch (Throwable ex) {
-	    ex.printStackTrace();
-	} finally {
-	    em.close();
-	}
-    }
-
-    @Test
-    @RunOrder(4)
+    @RunOrder(2)
     public void toListByEntityTest() {
 
 	EntityManager em = emf.createEntityManager();
@@ -213,7 +155,7 @@ public class QueryTest {
     }
 
     @Test
-    @RunOrder(5)
+    @RunOrder(3)
     public void updateSetOneByEntityTest() {
 
 	EntityManager em = emf.createEntityManager();
@@ -242,7 +184,7 @@ public class QueryTest {
     }
 
     @Test
-    @RunOrder(6)
+    @RunOrder(4)
     public void updateSetMultiByEntityTest() {
 
 	EntityManager em = emf.createEntityManager();
@@ -272,7 +214,7 @@ public class QueryTest {
     }
 
     @Test
-    @RunOrder(7)
+    @RunOrder(5)
     public void deleteByEntityTest() {
 
 	EntityManager em = emf.createEntityManager();
@@ -300,11 +242,8 @@ public class QueryTest {
     }
 
     @Test
-    @RunOrder(8)
+    @RunOrder(6)
     public void cacheTest() {
-
-	supplierGetterTest();
-	supplierGetterTest();
 
 	supplierEntityTest();
 	supplierEntityTest();

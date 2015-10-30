@@ -32,7 +32,6 @@ import java.util.Set;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.lambda.EntityField;
-import org.lightmare.criteria.lambda.FieldGetter;
 import org.lightmare.criteria.tuples.ParameterTuple;
 
 /**
@@ -82,54 +81,6 @@ public interface QueryStream<T extends Serializable> {
      * @param parameters
      */
     void addParameters(Map<String, Object> parameters);
-
-    // ===================== Getter method composers ========================//
-
-    <F> QueryStream<T> eq(FieldGetter<F> field, F value) throws IOException;
-
-    <F> QueryStream<T> equals(FieldGetter<F> field, F value) throws IOException;
-
-    <F> QueryStream<T> notEq(FieldGetter<F> field, F value) throws IOException;
-
-    <F> QueryStream<T> notEquals(FieldGetter<F> field, F value) throws IOException;
-
-    <F> QueryStream<T> more(FieldGetter<F> field, F value) throws IOException;
-
-    <F> QueryStream<T> less(FieldGetter<F> field, F value) throws IOException;
-
-    <F> QueryStream<T> moreOrEq(FieldGetter<F> field, F value) throws IOException;
-
-    <F> QueryStream<T> lessOrEq(FieldGetter<F> field, F value) throws IOException;
-
-    QueryStream<T> startsWith(FieldGetter<String> field, String value) throws IOException;
-
-    QueryStream<T> like(FieldGetter<String> field, String value) throws IOException;
-
-    QueryStream<T> endsWith(FieldGetter<String> field, String value) throws IOException;
-
-    QueryStream<T> contains(FieldGetter<String> field, String value) throws IOException;
-
-    <F> QueryStream<T> in(FieldGetter<F> field, Collection<F> values) throws IOException;
-
-    <F> QueryStream<T> isNull(FieldGetter<F> field) throws IOException;
-
-    <F> QueryStream<T> notNull(FieldGetter<F> field) throws IOException;
-
-    // =========================order=by=====================================//
-    QueryStream<T> orderBy(FieldGetter<?>... fields) throws IOException;
-
-    QueryStream<T> orderByDesc(FieldGetter<?>... fields) throws IOException;
-    // ======================================================================//
-
-    /**
-     * Set clause for bulk UPDATE query
-     * 
-     * @param field
-     * @param value
-     * @return {@link QueryStream} current instance
-     * @throws IOException
-     */
-    <F> QueryStream<T> set(FieldGetter<F> field, F value) throws IOException;
 
     // ========================= Entity method composers ====================//
 
@@ -193,8 +144,20 @@ public interface QueryStream<T extends Serializable> {
 
     // ======================================================================//
 
+    /**
+     * Appends to generated query prefix custom clause
+     * 
+     * @param clause
+     * @return {@link QueryStream} current instance
+     */
     QueryStream<T> appendPrefix(Object clause);
 
+    /**
+     * Appends to generated query body custom clause
+     * 
+     * @param clause
+     * @return {@link QueryStream} current instance
+     */
     QueryStream<T> appendBody(Object clause);
 
     /**
@@ -204,6 +167,11 @@ public interface QueryStream<T extends Serializable> {
      */
     String sql();
 
+    /**
+     * Gets query parameters
+     * 
+     * @return {@link Set} of {@link ParameterTuple}s
+     */
     Set<ParameterTuple> getParameters();
 
     // ================================= Result =============================//

@@ -22,7 +22,10 @@
  */
 package org.lightmare.criteria.query;
 
+import java.io.IOException;
 import java.io.Serializable;
+
+import org.lightmare.criteria.lambda.EntityField;
 
 /**
  * 
@@ -31,6 +34,31 @@ import java.io.Serializable;
  * @param <T>
  *            entity type for generated (sub) query
  */
-public interface SubQueryStream<T extends Serializable> extends QueryStream<T> {
+public interface SubQueryStream<S extends Serializable, T extends Serializable> extends QueryStream<S> {
 
+    // ========================= Entity method composers ====================//
+
+    <F> QueryStream<T> eq(EntityField<S, F> field, EntityField<T, F> sfield) throws IOException;
+
+    <F> QueryStream<T> equals(EntityField<T, F> sfield) throws IOException;
+
+    <F> QueryStream<T> notEq(EntityField<T, F> sfielde) throws IOException;
+
+    <F> QueryStream<T> notEquals(EntityField<T, F> sfield) throws IOException;
+
+    <F> QueryStream<T> more(EntityField<T, F> sfield) throws IOException;
+
+    <F> QueryStream<T> less(EntityField<T, F> sfield) throws IOException;
+
+    <F> QueryStream<T> moreOrEq(EntityField<T, F> sfield) throws IOException;
+
+    <F> QueryStream<T> lessOrEq(EntityField<T, F> sfield) throws IOException;
+
+    QueryStream<T> startsWith(EntityField<T, String> sfield) throws IOException;
+
+    QueryStream<T> like(EntityField<T, String> sfield) throws IOException;
+
+    QueryStream<T> endsWith(EntityField<T, String> sfield) throws IOException;
+
+    QueryStream<T> contains(EntityField<T, String> sfield) throws IOException;
 }

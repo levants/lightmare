@@ -41,7 +41,7 @@ import org.lightmare.criteria.links.Orders;
  * @param <T>
  *            entity type for generated query
  */
-abstract class EntityQueryStream<T extends Serializable> extends GetterQueryStream<T> {
+abstract class EntityQueryStream<T extends Serializable> extends AbstractQueryStream<T> {
 
     protected EntityQueryStream(EntityManager em, Class<T> entityType, final String alias) {
 	super(em, entityType, alias);
