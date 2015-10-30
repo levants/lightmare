@@ -30,11 +30,11 @@ Query can be composed by org.lightmare.criteria.query.QueryProvider.select metho
 ```java
   List<Person> persons = QueryProvider.select(em, Person.class).where()
   			.eq(Person::getPrivatNumber, "10010010011")
-		    .and().like(Person::getLastName, "fname")
-		    .and().startsWith(Person::getFirstName, "lname")
+		    .and().like(Person::getLastName, "lname")
+		    .and().startsWith(Person::getFirstName, "fname")
 		    .or().moreOrEq(Person::getBirthDate, new Date()).toList(); 
 ```	
-or for bulk update (delete) by org.lightmare.criteria.query.QueryProvider.update (delete) method call:
+or for bulk update by org.lightmare.criteria.query.QueryProvider.update method call:
 
 ```java
   int rows = QueryProvider.update(em, Person.class)
@@ -42,16 +42,28 @@ or for bulk update (delete) by org.lightmare.criteria.query.QueryProvider.update
   			.set(Person::getFirstName, "newFName")
   			.where()
   			.eq(Person::getPrivatNumber, "10010010011")
-		    .and().like(Person::getLastName, "fname")
-		    .and().startsWith(Person::getFirstName, "lname")
-		    .or().moreOrEq(Person::getBirthDate, new Date()).execute(); 
+		    .and().like(Person::getLastName, "lname")
+		    .openBracket()
+		    .and().startsWith(Person::getFirstName, "fname")
+		    .or().moreOrEq(Person::getBirthDate, new Date())
+		    .closeBracket().execute(); 
+```
+or for bulk delete by org.lightmare.criteria.query.QueryProvider.delete method call:
+```java
+  int rows = QueryProvider.delete(em, Person.class)
+  			.set(Person::getMiddName, "newMiddName")
+  			.set(Person::getFirstName, "newFName")
+  			.where()
+  			.eq(Person::getPrivatNumber, "10010010011")
+		    .and().like(Person::getLastName, "lname")
+		    .execute(); 
 ```	
 Query also can be linked dynamically:
 ```java
   QueryStream<Person> stream = QueryProvider.select(em, Person.class);
   			 stream.where().eq(Person::getPrivatNumber, "10010010011");
-		     stream.and().like(Person::getLastName, "fname");
-		     stream.and().startsWith(Person::getFirstName, "lname");
+		     stream.and().like(Person::getLastName, "lname");
+		     stream.and().startsWith(Person::getFirstName, "fname");
 		     stream.or().moreOrEq(Person::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
 ```	  
@@ -60,8 +72,8 @@ or if one has entity instance:
   Person entity = ...
   QueryStream<Person> stream = QueryProvider.select(em, Person.class);
   			 stream.where().eq(entity::getPrivatNumber, "10010010011");
-		     stream.and().like(entity::getLastName, "fname")
-		     stream.and().startsWith(entity::getFirstName, "lname")
+		     stream.and().like(entity::getLastName, "lname")
+		     stream.and()..openBracket().startsWith(entity::getFirstName, "fname")
 		     stream.or().moreOrEq(entity::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
 ```	

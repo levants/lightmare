@@ -30,9 +30,9 @@ public class SortedRunner extends BlockJUnit4ClassRunner {
 
 	RunOrder order1 = method1.getAnnotation(RunOrder.class);
 	RunOrder order2 = method2.getAnnotation(RunOrder.class);
-	if (Objects.nonNull(order1) || order2 == null) {
+	if (Objects.nonNull(order1) && order2 == null) {
 	    comp = MORE;
-	} else if (order1 == null || Objects.nonNull(order2)) {
+	} else if (order1 == null && Objects.nonNull(order2)) {
 	    comp = LESS;
 	} else {
 	    comp = Double.compare(order1.value(), order2.value());

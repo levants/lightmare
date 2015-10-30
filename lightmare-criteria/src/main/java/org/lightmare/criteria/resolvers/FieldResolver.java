@@ -26,16 +26,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import org.lightmare.criteria.cache.MethodCache;
 import org.lightmare.criteria.lambda.LambdaData;
 import org.lightmare.criteria.orm.ColumnProcessor;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.collections.CollectionUtils;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
@@ -47,8 +45,6 @@ import org.objectweb.asm.tree.MethodNode;
  *
  */
 public class FieldResolver {
-
-    private static final int ZERO_FLAGS = 0;
 
     private static final int SINGLE_ARG = 1;
 
@@ -196,11 +192,7 @@ public class FieldResolver {
 
 	QueryTuple tuple;
 
-	ClassReader reader = new ClassReader(lambda.getImplClass());
-	ClassNode node = new ClassNode(Opcodes.ASM5);
-	reader.accept(node, ZERO_FLAGS);
-	@SuppressWarnings("unchecked")
-	List<MethodNode> methods = node.methods;
+	List<MethodNode> methods = MethodCache.getMethods(lambda);
 	if (Objects.nonNull(methods)) {
 	    MethodNode methodNode = methods.stream().filter(c -> validate(c, lambda)).findFirst().get();
 	    methodNode.visitCode();
