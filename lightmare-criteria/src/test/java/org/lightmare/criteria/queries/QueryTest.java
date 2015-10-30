@@ -104,10 +104,12 @@ public class QueryTest {
 	stream.like(entity::getLastName, "lname");
 	stream.and().like(entity::getFirstName, "fname");
 	stream.or().eq(entity::getPersonalNo, PERSONAL_NO1);
+	stream.orderBy(entity::getBirthDate, entity::getLastName);
 
 	return stream;
     }
 
+    @SuppressWarnings("unchecked")
     private QueryStream<Person> createSetterStream(final EntityManager em) throws IOException {
 
 	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
@@ -116,6 +118,8 @@ public class QueryTest {
 	stream.like(Person::getLastName, "lname");
 	stream.and().like(Person::getFirstName, "fname");
 	stream.or().eq(Person::getPersonalNo, PERSONAL_NO1);
+	stream.orderByDesc(Person::getLastName, Person::getBirthDate);
+	stream.orderBy(Person::getPersonId);
 
 	return stream;
     }

@@ -166,13 +166,13 @@ public interface QueryStream<T extends Serializable> {
     QueryStream<T> closeBracket();
 
     // ======================================================================//
-    QueryStream<T> orderBy(FieldGetter<?>... getters) throws IOException;
+    QueryStream<T> orderBy(FieldGetter<?>... fields) throws IOException;
 
-    QueryStream<T> orderByDesc(FieldGetter<?>... getters) throws IOException;
+    QueryStream<T> orderByDesc(FieldGetter<?>... fields) throws IOException;
 
-    QueryStream<T> orderBy(EntityField<?, ?>... getters) throws IOException;
+    QueryStream<T> orderBy(@SuppressWarnings("unchecked") EntityField<T, ?>... fields) throws IOException;
 
-    QueryStream<T> orderByDesc(EntityField<?, ?>... getters) throws IOException;
+    QueryStream<T> orderByDesc(@SuppressWarnings("unchecked") EntityField<T, ?>... fields) throws IOException;
     // ======================================================================//
 
     QueryStream<T> appendPrefix(Object clause);

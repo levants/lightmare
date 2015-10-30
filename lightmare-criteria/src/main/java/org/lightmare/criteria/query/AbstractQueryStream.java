@@ -228,14 +228,16 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	if (StringUtils.valid(orderBy)) {
 	    orderBy.append(QueryParts.COMMA);
 	    orderBy.append(NEW_LINE);
+	} else {
+	    orderBy.append(Orders.ORDER);
 	}
     }
 
     private void appendOrderBy(QueryTuple tuple, String dir) {
 
-	orderBy.append(tuple.getField()).append(StringUtils.SPACE);
+	orderBy.append(tuple.getField());
 	if (StringUtils.valid(dir)) {
-	    orderBy.append(dir);
+	    orderBy.append(StringUtils.SPACE).append(dir);
 	}
     }
 
@@ -244,7 +246,6 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	Object field;
 	QueryTuple tuple;
 	int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
-	orderBy.append(Orders.ORDER);
 	for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
 	    field = fields[i];
 	    tuple = compose(field);

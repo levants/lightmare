@@ -127,14 +127,14 @@ abstract class GetterQueryStream<T extends Serializable> extends AbstractQuerySt
     }
 
     @Override
-    public QueryStream<T> orderBy(FieldGetter<?>... getters) throws IOException {
-	setOrder(getters);
+    public QueryStream<T> orderBy(FieldGetter<?>... fields) throws IOException {
+	setOrder(fields);
 	return this;
     }
 
     @Override
-    public QueryStream<T> orderByDesc(FieldGetter<?>... getters) throws IOException {
-	setOrder(Orders.DESC, getters);
+    public QueryStream<T> orderByDesc(FieldGetter<?>... fields) throws IOException {
+	setOrder(Orders.DESC, fields);
 	return this;
     }
 }

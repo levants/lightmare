@@ -59,7 +59,7 @@ public abstract class CollectionUtils {
     public static final int EMPTY = 0;
 
     // Length of array / collection / map with single element
-    public static final int SINGLTON_LENGTH = 0;
+    public static final int SINGLTON_LENGTH = 1;
 
     // Empty array of objects
     public static final Object[] EMPTY_ARRAY = {};
