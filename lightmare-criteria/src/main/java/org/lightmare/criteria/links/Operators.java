@@ -48,7 +48,7 @@ public interface Operators {
 
     String NOT_NULL = " is not null ";
 
-    String IN = " in ";
+    String IN = " in";
 
     String EXISTS = " exists ";
 

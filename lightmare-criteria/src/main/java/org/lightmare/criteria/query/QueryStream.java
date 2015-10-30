@@ -105,7 +105,7 @@ public interface QueryStream<T extends Serializable> {
 
     QueryStream<T> contains(FieldGetter<String> field, String value) throws IOException;
 
-    QueryStream<T> in(FieldGetter<Collection<?>> field, Collection<?> values) throws IOException;
+    <F> QueryStream<T> in(FieldGetter<F> field, Collection<F> values) throws IOException;
 
     <F> QueryStream<T> isNull(FieldGetter<F> field) throws IOException;
 
@@ -149,7 +149,7 @@ public interface QueryStream<T extends Serializable> {
 
     QueryStream<T> contains(EntityField<T, String> field, String value) throws IOException;
 
-    QueryStream<T> in(EntityField<T, Collection<?>> field, Collection<?> values) throws IOException;
+    <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) throws IOException;
 
     QueryStream<T> isNull(EntityField<T, ?> field) throws IOException;
 

@@ -1,6 +1,7 @@
 package org.lightmare.criteria.queries;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -119,6 +120,7 @@ public class QueryTest {
 	stream.or().eq(Person::getPersonalNo, PERSONAL_NO1);
 	stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
 	stream.orderBy(Person::getPersonId);
+	stream.in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L));
 
 	return stream;
     }
@@ -196,7 +198,8 @@ public class QueryTest {
 	    // ============= Query construction ============== //
 	    List<Person> persons = QueryProvider.select(em, Person.class).where()
 		    .eq(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
-		    .startsWith(Person::getFirstName, "fname").or().moreOrEq(Person::getBirthDate, date).toList();
+		    .startsWith(Person::getFirstName, "fname").or().moreOrEq(Person::getBirthDate, date).and()
+		    .in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L)).toList();
 	    // =============================================//
 	    System.out.println();
 	    System.out.println("-------Entity----");

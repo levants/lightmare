@@ -110,7 +110,7 @@ abstract class EntityQueryStream<T extends Serializable> extends GetterQueryStre
     }
 
     @Override
-    public QueryStream<T> in(EntityField<T, Collection<?>> field, Collection<?> values) throws IOException {
+    public <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) throws IOException {
 	oppCollection(field, values);
 	return this;
     }
