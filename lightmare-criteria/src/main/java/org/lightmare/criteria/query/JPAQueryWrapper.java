@@ -10,9 +10,10 @@ import javax.persistence.LockModeType;
  * Interface for JPA query parameters
  * 
  * @author Levan Tsinadze
- *
+ * @param T
+ *            entity type for generated query
  */
-public interface JPAQueryWrapper<T extends Serializable> {
+public interface JPAQueryWrapper<T extends Serializable> extends QueryStream<T> {
 
     /**
      * Set the maximum number of results to retrieve.

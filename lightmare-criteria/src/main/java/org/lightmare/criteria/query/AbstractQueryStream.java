@@ -57,7 +57,8 @@ import org.lightmare.utils.collections.CollectionUtils;
  * @param <T>
  *            entity type for generated query
  */
-abstract class AbstractQueryStream<T extends Serializable> implements QueryStream<T> {
+abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQueryWrapper<T>
+	implements QueryStream<T> {
 
     protected final EntityManager em;
 
@@ -285,6 +286,7 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
     }
 
     private void setParameters(Query query) {
+	setConfiguration(query);
 	parameters.forEach(c -> query.setParameter(c.getName(), c.getValue()));
     }
 
