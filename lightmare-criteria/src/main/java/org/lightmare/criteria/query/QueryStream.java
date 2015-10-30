@@ -77,6 +77,9 @@ public interface QueryStream<T extends Serializable> {
 
     // ========================= Entity method composers ====================//
 
+    @SuppressWarnings("unchecked")
+    QueryStream<Object[]> select(EntityField<T, ?>... fields) throws IOException;
+
     <F> QueryStream<T> eq(EntityField<T, F> field, F value) throws IOException;
 
     <F> QueryStream<T> equals(EntityField<T, F> field, F value) throws IOException;

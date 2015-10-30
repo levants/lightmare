@@ -47,6 +47,18 @@ abstract class EntityQueryStream<T extends Serializable> extends AbstractQuerySt
 	super(em, entityType, alias);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public QueryStream<Object[]> select(EntityField<T, ?>... fields) throws IOException {
+
+	SelectStreamImpl<T> stream;
+
+	oppSelect(fields);
+	stream = new SelectStreamImpl<>(this);
+
+	return stream;
+    }
+
     @Override
     public <F> QueryStream<T> eq(EntityField<T, F> field, F value) throws IOException {
 	oppLine(field, value, Operators.EQ);

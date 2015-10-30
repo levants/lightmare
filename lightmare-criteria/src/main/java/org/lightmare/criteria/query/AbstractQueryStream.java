@@ -37,6 +37,7 @@ import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 import org.lightmare.criteria.cache.QueryCache;
+import org.lightmare.criteria.lambda.EntityField;
 import org.lightmare.criteria.lambda.LambdaData;
 import org.lightmare.criteria.lambda.LambdaReplacements;
 import org.lightmare.criteria.links.Clauses;
@@ -70,6 +71,8 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     protected final StringBuilder prefix = new StringBuilder();
 
     protected final StringBuilder count = new StringBuilder();
+
+    protected final StringBuilder columns = new StringBuilder();
 
     protected final StringBuilder updateSet = new StringBuilder();
 
@@ -245,6 +248,32 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	appendSetClause();
 	appendSetClause(tuple);
 	oppWithParameter(tuple, value, updateSet);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void appendSelect(EntityField<T, ?>... fields) throws IOException {
+
+	int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
+	EntityField<T, ?> field;
+	QueryTuple tuple;
+	for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
+	    field = fields[i];
+	    tuple = compose(field);
+	    columns.append(tuple.getField());
+	    if (i < length) {
+		columns.append(QueryParts.COMMA);
+	    }
+	}
+    }
+
+    @SuppressWarnings("unchecked")
+    protected void oppSelect(EntityField<T, ?>... fields) throws IOException {
+
+	if (CollectionUtils.valid(fields)) {
+	    columns.append(Filters.SELECT);
+	    appendSelect(fields);
+	    columns.append(StringUtils.SPACE);
+	}
     }
 
     private void prepareOrderBy() {

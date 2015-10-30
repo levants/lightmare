@@ -110,7 +110,7 @@ class FullQueryStream<T extends Serializable> extends EntityQueryStream<T> {
      * @param entityAlias
      * @return {@link FullQueryStream} with select statement
      */
-    protected static <T extends Serializable> FullQueryStream<T> select(final EntityManager em,
+    protected static <T extends Serializable> FullQueryStream<T> query(final EntityManager em,
 	    final Class<T> entityType, final String alias) {
 
 	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType, alias);
@@ -128,7 +128,7 @@ class FullQueryStream<T extends Serializable> extends EntityQueryStream<T> {
      * @param entityType
      * @return {@link FullQueryStream} with select statement
      */
-    protected static <T extends Serializable> FullQueryStream<T> select(final EntityManager em, Class<T> entityType) {
-	return select(em, entityType, DEFAULT_ALIAS);
+    protected static <T extends Serializable> FullQueryStream<T> query(final EntityManager em, Class<T> entityType) {
+	return query(em, entityType, DEFAULT_ALIAS);
     }
 }
