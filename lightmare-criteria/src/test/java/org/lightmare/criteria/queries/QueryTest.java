@@ -109,7 +109,6 @@ public class QueryTest {
 	return stream;
     }
 
-    @SuppressWarnings("unchecked")
     private QueryStream<Person> createSetterStream(final EntityManager em) throws IOException {
 
 	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
@@ -118,7 +117,7 @@ public class QueryTest {
 	stream.like(Person::getLastName, "lname");
 	stream.and().like(Person::getFirstName, "fname");
 	stream.or().eq(Person::getPersonalNo, PERSONAL_NO1);
-	stream.orderByDesc(Person::getLastName, Person::getBirthDate);
+	stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
 	stream.orderBy(Person::getPersonId);
 
 	return stream;
@@ -173,7 +172,8 @@ public class QueryTest {
 	    // ============= Query construction ============== //
 	    List<Person> persons = QueryProvider.select(em, Person.class).where()
 		    .eq(entity::getPersonalNo, PERSONAL_NO1).and().like(entity::getLastName, "lname").and()
-		    .startsWith(entity::getFirstName, "fname").or().moreOrEq(entity::getBirthDate, date).toList();
+		    .startsWith(entity::getFirstName, "fname").or().moreOrEq(entity::getBirthDate, date)
+		    .orderByDesc(Person::getLastName).orderBy(Person::getBirthDate).toList();
 	    // =============================================//
 	    System.out.println();
 	    System.out.println("------Getter------");

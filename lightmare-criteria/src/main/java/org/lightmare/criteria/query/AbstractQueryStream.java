@@ -227,7 +227,7 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 
 	if (StringUtils.valid(orderBy)) {
 	    orderBy.append(QueryParts.COMMA);
-	    orderBy.append(NEW_LINE);
+	    orderBy.append(StringUtils.SPACE);
 	} else {
 	    orderBy.append(Orders.ORDER);
 	}
@@ -235,7 +235,8 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 
     private void appendOrderBy(QueryTuple tuple, String dir) {
 
-	orderBy.append(tuple.getField());
+	orderBy.append(alias);
+	orderBy.append(QueryParts.COLUMN_PREFIX).append(tuple.getField());
 	if (StringUtils.valid(dir)) {
 	    orderBy.append(StringUtils.SPACE).append(dir);
 	}
@@ -251,7 +252,7 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	    tuple = compose(field);
 	    appendOrderBy(tuple, dir);
 	    if (i < length) {
-		orderBy.append(QueryParts.COMMA);
+		orderBy.append(QueryParts.COMMA).append(StringUtils.SPACE);
 	    }
 	}
     }

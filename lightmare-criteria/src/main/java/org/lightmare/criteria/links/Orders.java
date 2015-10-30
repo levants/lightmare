@@ -8,7 +8,7 @@ package org.lightmare.criteria.links;
  */
 public interface Orders {
 
-    String ORDER = "orderBy ";
+    String ORDER = "order by ";
 
-    String DESC = " DESC";
+    String DESC = "DESC";
 }

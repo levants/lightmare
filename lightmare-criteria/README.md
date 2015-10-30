@@ -32,7 +32,9 @@ Query can be composed by org.lightmare.criteria.query.QueryProvider.select metho
   			.eq(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().startsWith(Person::getFirstName, "fname")
-		    .or().moreOrEq(Person::getBirthDate, new Date()).toList(); 
+		    .or().moreOrEq(Person::getBirthDate, new Date()).
+		    .orderBy(Person::getLastName)
+		    .orderByDesc(Person::getBirthDate).toList(); 
 ```	
 or for bulk update by org.lightmare.criteria.query.QueryProvider.update method call:
 

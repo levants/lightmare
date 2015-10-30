@@ -127,14 +127,14 @@ abstract class EntityQueryStream<T extends Serializable> extends GetterQueryStre
     }
 
     @Override
-    public QueryStream<T> orderBy(@SuppressWarnings("unchecked") EntityField<T, ?>... fields) throws IOException {
-	setOrder(fields);
+    public QueryStream<T> orderBy(EntityField<T, ?> field) throws IOException {
+	setOrder(new EntityField[] { field });
 	return this;
     }
 
     @Override
-    public QueryStream<T> orderByDesc(@SuppressWarnings("unchecked") EntityField<T, ?>... fields) throws IOException {
-	setOrder(Orders.DESC, fields);
+    public QueryStream<T> orderByDesc(EntityField<T, ?> field) throws IOException {
+	setOrder(Orders.DESC, new EntityField[] { field });
 	return this;
     }
 }

@@ -170,9 +170,9 @@ public interface QueryStream<T extends Serializable> {
 
     QueryStream<T> orderByDesc(FieldGetter<?>... fields) throws IOException;
 
-    QueryStream<T> orderBy(@SuppressWarnings("unchecked") EntityField<T, ?>... fields) throws IOException;
+    QueryStream<T> orderBy(EntityField<T, ?> field) throws IOException;
 
-    QueryStream<T> orderByDesc(@SuppressWarnings("unchecked") EntityField<T, ?>... fields) throws IOException;
+    QueryStream<T> orderByDesc(EntityField<T, ?> field) throws IOException;
     // ======================================================================//
 
     QueryStream<T> appendPrefix(Object clause);
