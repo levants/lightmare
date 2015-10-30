@@ -186,6 +186,13 @@ public interface QueryStream<T extends Serializable> {
     String sql();
 
     /**
+     * Gets generated JPA query for element count
+     * 
+     * @return {@link String} JPA query
+     */
+    String countSql();
+
+    /**
      * Gets query parameters
      * 
      * @return {@link Set} of {@link ParameterTuple}s
@@ -216,6 +223,14 @@ public interface QueryStream<T extends Serializable> {
     String getAlias();
 
     // ================================= Result =============================//
+
+    /**
+     * Runs generated query {@link javax.persistence.Query#getSingleResult()}
+     * and retrieves single result for element count
+     * 
+     * @return {@link Long} element count value
+     */
+    Long count();
 
     /**
      * Runs generated query {@link javax.persistence.Query#getResultList()} and

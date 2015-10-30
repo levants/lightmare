@@ -155,6 +155,30 @@ public class QueryTest {
     }
 
     @Test
+    @RunOrder(2.5)
+    public void countByEntityTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    Date date = getDateValue();
+	    // ============= Query construction ============== //
+	    Long count = QueryProvider.select(em, Person.class).where().eq(Person::getPersonalNo, PERSONAL_NO1).and()
+		    .like(Person::getLastName, "lname").and().startsWith(Person::getFirstName, "fname").or()
+		    .moreOrEq(Person::getBirthDate, date).and()
+		    .in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L)).count();
+	    // =============================================//
+	    System.out.println();
+	    System.out.println("-------Entity----");
+	    System.out.println();
+	    System.out.format("Counted %s rows in database by query\n", count);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	} finally {
+	    em.close();
+	}
+    }
+
+    @Test
     @RunOrder(3)
     public void updateSetOneByEntityTest() {
 

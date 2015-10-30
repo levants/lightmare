@@ -40,6 +40,7 @@ import org.lightmare.criteria.cache.QueryCache;
 import org.lightmare.criteria.lambda.LambdaData;
 import org.lightmare.criteria.lambda.LambdaReplacements;
 import org.lightmare.criteria.links.Clauses;
+import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.links.QueryParts;
@@ -68,6 +69,8 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 
     protected final StringBuilder prefix = new StringBuilder();
 
+    protected final StringBuilder count = new StringBuilder();
+
     protected final StringBuilder updateSet = new StringBuilder();
 
     protected final StringBuilder body = new StringBuilder();
@@ -82,6 +85,8 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 
     private int parameter_counter;
 
+    private int alias_counter = -1;
+
     protected final Set<ParameterTuple> parameters = new HashSet<>();
 
     // Debug messages
@@ -93,6 +98,19 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	this.em = em;
 	this.entityType = entityType;
 	this.alias = alias;
+    }
+
+    /**
+     * Appends entity and alias part to stream
+     * 
+     * @param stream
+     */
+    protected static <T extends Serializable> void appendEntityPart(AbstractQueryStream<T> stream) {
+
+	stream.appendPrefix(stream.entityType.getName());
+	stream.appendPrefix(Filters.AS);
+	stream.appendPrefix(stream.alias);
+	stream.appendPrefix(NEW_LINE);
     }
 
     protected void setAlias(QueryTuple tuple) {
@@ -307,6 +325,22 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     }
 
     /**
+     * Generates {@link TypedQuery} for COUNT JPA-QL statement
+     * 
+     * @return {@link TypedQuery} with {@link Long} type for element count
+     */
+    private TypedQuery<Long> initCountQuery() {
+
+	TypedQuery<Long> query;
+
+	String sqlText = countSql();
+	query = em.createQuery(sqlText, Long.class);
+	setParameters(query);
+
+	return query;
+    }
+
+    /**
      * Creates {@link Query} from generated SQL for UPDATE or DELETE statements
      * 
      * @return for bulk modification
@@ -371,18 +405,59 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	}
     }
 
-    @Override
-    public String sql() {
+    private void generateBody(CharSequence startSql) {
 
 	sql.delete(START, sql.length());
-	sql.append(prefix);
+	sql.append(startSql);
 	prepareSetClause();
 	sql.append(updateSet);
 	sql.append(body);
+    }
+
+    @Override
+    public String sql() {
+
+	String value;
+
+	sql.delete(START, sql.length());
+	generateBody(prefix);
 	sql.append(orderBy);
 	sql.append(suffix);
+	value = sql.toString();
 
-	return sql.toString();
+	return value;
+    }
+
+    private void countBody() {
+
+	count.append(Filters.FROM);
+	count.append(entityType.getName());
+	count.append(Filters.AS);
+	count.append(alias);
+	count.append(NEW_LINE);
+    }
+
+    private void countPrefix() {
+
+	count.delete(START, count.length());
+	count.append(Filters.SELECT);
+	count.append(Filters.COUNT);
+	count.append(alias);
+	count.append(Filters.CLOSE_COUNT);
+	countBody();
+    }
+
+    @Override
+    public String countSql() {
+
+	String value;
+
+	countPrefix();
+	sql.delete(START, sql.length());
+	generateBody(count);
+	value = sql.toString();
+
+	return value;
     }
 
     // ============================= JPA Parameters =========================//
@@ -416,7 +491,33 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	return alias;
     }
 
+    /**
+     * Generates {@link AliasTuple} instance with incremented counter for sub
+     * queries
+     * 
+     * @return {@link AliasTuple} with incremented counter
+     */
+    protected AliasTuple getAliasTuple() {
+
+	AliasTuple tuple;
+
+	alias_counter++;
+	tuple = new AliasTuple(alias, alias_counter);
+
+	return tuple;
+    }
+
     // ================================= Result =============================//
+    @Override
+    public Long count() {
+
+	Long result;
+
+	TypedQuery<Long> query = initCountQuery();
+	result = query.getSingleResult();
+
+	return result;
+    }
 
     @Override
     public List<T> toList() {
@@ -458,6 +559,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 
     @Override
     public String toString() {
-	return sql.toString();
+	String value = sql();
+	return value;
     }
 }

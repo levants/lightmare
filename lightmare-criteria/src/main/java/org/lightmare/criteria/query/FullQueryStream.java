@@ -43,19 +43,6 @@ class FullQueryStream<T extends Serializable> extends EntityQueryStream<T> {
     }
 
     /**
-     * Appends entity and alias part to stream
-     * 
-     * @param stream
-     */
-    private static <T extends Serializable> void appendEntityPart(FullQueryStream<T> stream) {
-
-	stream.appendPrefix(stream.entityType.getName());
-	stream.appendPrefix(Filters.AS);
-	stream.appendPrefix(stream.alias);
-	stream.appendPrefix(NEW_LINE);
-    }
-
-    /**
      * Generates DELETE statements with custom alias
      * 
      * @param em
@@ -129,8 +116,7 @@ class FullQueryStream<T extends Serializable> extends EntityQueryStream<T> {
 	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType, alias);
 
 	stream.appendPrefix(Filters.SELECT).appendPrefix(stream.alias).appendPrefix(Filters.FROM);
-	stream.appendPrefix(entityType.getName()).appendPrefix(Filters.AS).appendPrefix(stream.alias);
-	stream.appendPrefix(NEW_LINE);
+	appendEntityPart(stream);
 
 	return stream;
     }
