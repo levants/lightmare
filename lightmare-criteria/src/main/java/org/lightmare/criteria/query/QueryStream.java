@@ -132,14 +132,39 @@ public interface QueryStream<T extends Serializable> {
 
     // ======================================================================//
 
+    /**
+     * WHERE clause appender
+     * 
+     * @return {@link QueryStream} current instance
+     */
     QueryStream<T> where();
 
+    /**
+     * AND part appender
+     * 
+     * @return {@link QueryStream} current instance
+     */
     QueryStream<T> and();
 
+    /**
+     * OR part appender
+     * 
+     * @return {@link QueryStream} current instance
+     */
     QueryStream<T> or();
 
+    /**
+     * Opens bracket in query body
+     * 
+     * @return {@link QueryStream} current instance
+     */
     QueryStream<T> openBracket();
 
+    /**
+     * Closes bracket in query body
+     * 
+     * @return {@link QueryStream} current instance
+     */
     QueryStream<T> closeBracket();
 
     // ======================================================================//

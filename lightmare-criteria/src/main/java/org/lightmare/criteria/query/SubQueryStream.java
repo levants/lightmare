@@ -24,6 +24,7 @@ package org.lightmare.criteria.query;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 
 import org.lightmare.criteria.lambda.EntityField;
 
@@ -40,27 +41,29 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
 
     // ========================= Entity method composers ====================//
 
-    <F> SubQueryStream<S, T> eq(EntityField<S, F> field, EntityField<T, F> sfield) throws IOException;
+    <F> SubQueryStream<S, T> eq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
-    <F> SubQueryStream<S, T> equals(EntityField<S, F> field, EntityField<T, F> sfield) throws IOException;
+    <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
-    <F> SubQueryStream<S, T> notEq(EntityField<S, F> field, EntityField<T, F> sfielde) throws IOException;
+    <F> SubQueryStream<S, T> notEq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
-    <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field, EntityField<T, F> sfield) throws IOException;
+    <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
-    <F> SubQueryStream<S, T> more(EntityField<S, F> field, EntityField<T, F> sfield) throws IOException;
+    <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
-    <F> SubQueryStream<S, T> less(EntityField<S, F> field, EntityField<T, F> sfield) throws IOException;
+    <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
-    <F> SubQueryStream<S, T> moreOrEq(EntityField<S, F> field, EntityField<T, F> sfield) throws IOException;
+    <F> SubQueryStream<S, T> moreOrEq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
-    <F> SubQueryStream<S, T> lessOrEq(EntityField<S, F> field, EntityField<T, F> sfield) throws IOException;
+    <F> SubQueryStream<S, T> lessOrEq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
-    SubQueryStream<S, T> startsWith(EntityField<S, String> field, EntityField<T, String> sfield) throws IOException;
+    SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, EntityField<T, String> field) throws IOException;
 
-    SubQueryStream<S, T> like(EntityField<S, String> field, EntityField<T, String> sfield) throws IOException;
+    SubQueryStream<S, T> like(EntityField<S, String> sfield, EntityField<T, String> field) throws IOException;
 
-    SubQueryStream<S, T> endsWith(EntityField<S, String> field, EntityField<T, String> sfield) throws IOException;
+    SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, EntityField<T, String> field) throws IOException;
 
-    SubQueryStream<S, T> contains(EntityField<S, String> field, EntityField<T, String> sfield) throws IOException;
+    SubQueryStream<S, T> contains(EntityField<S, String> sfield, EntityField<T, String> field) throws IOException;
+
+    <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, EntityField<T, Collection<F>> field) throws IOException;
 }
