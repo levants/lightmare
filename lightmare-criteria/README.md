@@ -68,15 +68,5 @@ Query also can be linked dynamically:
 		     stream.and().startsWith(Person::getFirstName, "fname");
 		     stream.or().moreOrEq(Person::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
-```	  
-or if one has entity instance:
-```java
-  Person entity = ...
-  QueryStream<Person> stream = QueryProvider.select(em, Person.class);
-  			 stream.where().eq(entity::getPrivatNumber, "10010010011");
-		     stream.and().like(entity::getLastName, "lname")
-		     stream.and()..openBracket().startsWith(entity::getFirstName, "fname")
-		     stream.or().moreOrEq(entity::getBirthDate, Calendar.getInstance());
-  List<Person> persons = stream.toList();
-```	
+```
 enjoy :)
