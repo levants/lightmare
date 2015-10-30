@@ -40,6 +40,7 @@ import org.lightmare.criteria.lambda.LambdaData;
 import org.lightmare.criteria.lambda.LambdaReplacements;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Operators;
+import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.links.QueryParts;
 import org.lightmare.criteria.resolvers.FieldResolver;
 import org.lightmare.criteria.tuples.ParameterTuple;
@@ -71,6 +72,8 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
     protected final StringBuilder body = new StringBuilder();
 
     protected final StringBuilder suffix = new StringBuilder();
+
+    protected final StringBuilder orderBy = new StringBuilder();
 
     protected final StringBuilder sql = new StringBuilder();
 
@@ -220,6 +223,50 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	oppWithParameter(tuple, value, updateSet);
     }
 
+    private void prepareOrderBy() {
+
+	if (StringUtils.valid(orderBy)) {
+	    orderBy.append(QueryParts.COMMA);
+	    orderBy.append(NEW_LINE);
+	}
+    }
+
+    private void appendOrderBy(QueryTuple tuple, String dir) {
+
+	orderBy.append(tuple.getField()).append(StringUtils.SPACE);
+	if (StringUtils.valid(dir)) {
+	    orderBy.append(dir);
+	}
+    }
+
+    private void iterateAndAppendOrders(String dir, Object[] fields) throws IOException {
+
+	Object field;
+	QueryTuple tuple;
+	int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
+	orderBy.append(Orders.ORDER);
+	for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
+	    field = fields[i];
+	    tuple = compose(field);
+	    appendOrderBy(tuple, dir);
+	    if (i < length) {
+		orderBy.append(QueryParts.COMMA);
+	    }
+	}
+    }
+
+    protected void setOrder(String dir, Object[] fields) throws IOException {
+
+	if (CollectionUtils.valid(fields)) {
+	    prepareOrderBy();
+	    iterateAndAppendOrders(dir, fields);
+	}
+    }
+
+    protected void setOrder(Object[] fields) throws IOException {
+	setOrder(null, fields);
+    }
+
     protected void oppLine(Object field, String expression) throws IOException {
 	opp(field, expression);
 	body.append(NEW_LINE);
@@ -323,6 +370,7 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	prepareSetClause();
 	sql.append(updateSet);
 	sql.append(body);
+	sql.append(orderBy);
 	sql.append(suffix);
 
 	return sql.toString();

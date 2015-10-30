@@ -30,6 +30,7 @@ import javax.persistence.EntityManager;
 import org.lightmare.criteria.lambda.FieldGetter;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
+import org.lightmare.criteria.links.Orders;
 
 /**
  * Query builder from getter method references
@@ -122,6 +123,18 @@ abstract class GetterQueryStream<T extends Serializable> extends AbstractQuerySt
     @Override
     public <F> QueryStream<T> set(FieldGetter<F> field, F value) throws IOException {
 	setOpp(field, value);
+	return this;
+    }
+
+    @Override
+    public QueryStream<T> orderBy(FieldGetter<?>... getters) throws IOException {
+	setOrder(getters);
+	return this;
+    }
+
+    @Override
+    public QueryStream<T> orderByDesc(FieldGetter<?>... getters) throws IOException {
+	setOrder(Orders.DESC, getters);
 	return this;
     }
 }
