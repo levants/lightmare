@@ -48,7 +48,6 @@ import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.StringUtils;
 import org.lightmare.utils.collections.CollectionUtils;
-import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Abstract class for lambda expression analyze and JPA query generator
@@ -93,10 +92,6 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 	this.em = em;
 	this.entityType = entityType;
 	this.alias = alias;
-    }
-
-    public T instance() throws IOException {
-	return ClassUtils.instantiate(entityType);
     }
 
     protected void setAlias(QueryTuple tuple) {
@@ -387,6 +382,39 @@ abstract class AbstractQueryStream<T extends Serializable> implements QueryStrea
 
 	return sql.toString();
     }
+
+    // ============================= JPA Parameters =========================//
+
+    // ============================= JPA Elements ===========================//
+
+    /**
+     * Gets wrapped {@link EntityManager} instance
+     * 
+     * @return {@link EntityManager} instance
+     */
+    public EntityManager getEntityManager() {
+	return em;
+    }
+
+    /**
+     * Gets wrapped entity {@link Class} instance
+     * 
+     * @return {@link Class} of entity type T
+     */
+    public Class<T> getEntityType() {
+	return entityType;
+    }
+
+    /**
+     * Gets entity alias for custom queries
+     * 
+     * @return {@link String} entity alias
+     */
+    public String getAlias() {
+	return alias;
+    }
+
+    // ================================= Result =============================//
 
     @Override
     public List<T> toList() {

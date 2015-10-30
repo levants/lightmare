@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.lambda.EntityField;
@@ -49,14 +50,6 @@ public interface QueryStream<T extends Serializable> {
     char NEW_LINE = '\n';
 
     int START = 0;
-
-    /**
-     * Instantiates entity type for getter query composition
-     * 
-     * @return T instance of entity type
-     * @throws IOException
-     */
-    T instance() throws IOException;
 
     /**
      * Adds custom parameter to composed query
@@ -198,6 +191,29 @@ public interface QueryStream<T extends Serializable> {
      * @return {@link Set} of {@link ParameterTuple}s
      */
     Set<ParameterTuple> getParameters();
+
+    // ============================= JPA Elements ===========================//
+
+    /**
+     * Gets wrapped {@link EntityManager} instance
+     * 
+     * @return {@link EntityManager} instance
+     */
+    EntityManager getEntityManager();
+
+    /**
+     * Gets wrapped entity {@link Class} instance
+     * 
+     * @return {@link Class} of entity type T
+     */
+    Class<T> getEntityType();
+
+    /**
+     * Gets entity alias for custom queries
+     * 
+     * @return {@link String} entity alias
+     */
+    String getAlias();
 
     // ================================= Result =============================//
 
