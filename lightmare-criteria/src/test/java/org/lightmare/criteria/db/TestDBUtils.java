@@ -9,6 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.lightmare.criteria.entities.Person;
+import org.lightmare.criteria.entities.PersonInfo;
 
 public class TestDBUtils {
 
@@ -41,6 +42,11 @@ public class TestDBUtils {
 	person1.setBirthDate(getDateValue(80));
 	person1.setMiddName("mname1");
 
+	PersonInfo info1 = new PersonInfo();
+	info1.setCardNumber("100");
+	info1.setNote("note1");
+	person1.setInfo(info1);
+
 	Person person2 = new Person();
 	person2.setPersonalNo(PERSONAL_NO2);
 	person2.setLastName("lname2");
@@ -48,12 +54,22 @@ public class TestDBUtils {
 	person2.setBirthDate(getDateValue(90));
 	person2.setMiddName("mname2");
 
+	PersonInfo info2 = new PersonInfo();
+	info1.setCardNumber("200");
+	info1.setNote("note2");
+	person2.setInfo(info2);
+
 	Person person3 = new Person();
 	person3.setPersonalNo("10100101111");
 	person3.setLastName("lname3");
 	person3.setFirstName("fname3");
 	person3.setBirthDate(getDateValue(95));
 	person3.setMiddName("mname3");
+
+	PersonInfo info3 = new PersonInfo();
+	info3.setCardNumber("300");
+	info3.setNote("note3");
+	person3.setInfo(info3);
 
 	EntityManager em = emf.createEntityManager();
 	EntityTransaction transaction = em.getTransaction();

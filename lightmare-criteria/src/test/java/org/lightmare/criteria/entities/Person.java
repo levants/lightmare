@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,6 @@ public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.linq.entities.Person")
     @TableGenerator(name = "org.lightmare.linq.entities.Person", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "PERSONS", valueColumnName = "KEY_VALUE", allocationSize = 20)
-
     @Column(name = "PERSON_ID")
     private Long personId;
 
@@ -41,6 +41,9 @@ public class Person implements Serializable {
 
     @Column(name = "MIDD_NAME")
     private String middName;
+
+    @Embedded
+    private PersonInfo info;
 
     public Long getPersonId() {
 	return personId;
@@ -88,6 +91,14 @@ public class Person implements Serializable {
 
     public void setMiddName(String middName) {
 	this.middName = middName;
+    }
+
+    public PersonInfo getInfo() {
+	return info;
+    }
+
+    public void setInfo(PersonInfo info) {
+	this.info = info;
     }
 
     @Override

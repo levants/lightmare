@@ -66,6 +66,7 @@ public class QueryTest {
 	stream.like(Person::getLastName, "lname");
 	stream.and().like(Person::getFirstName, "fname");
 	stream.or().eq(Person::getPersonalNo, PERSONAL_NO1);
+	stream.or().equals(Person::getInfo, null);
 	stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
 	stream.orderBy(Person::getPersonId);
 	stream.in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L));
