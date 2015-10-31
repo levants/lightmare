@@ -106,6 +106,11 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     QueryStream<T> notNull(EntityField<T, ?> field) throws IOException;
 
+    // =========================sub=queries==================================//
+    <F, S extends Serializable> SubQueryStream<S, T> in(EntityField<T, F> field, Class<S> subType) throws IOException;
+
+    <F, S extends Serializable> SubQueryStream<S, T> exists(Class<S> subType) throws IOException;
+
     // =========================order=by=====================================//
     QueryStream<T> orderBy(EntityField<T, ?> field) throws IOException;
 

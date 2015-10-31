@@ -249,7 +249,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	QueryTuple tuple = appSubQuery(field, Operators.IN);
 	oppWithParameter(tuple, value, body);
 	closeBracket();
-	body.append(NEW_LINE);
+	newLine();
     }
 
     private void appendSetClause() {
@@ -349,14 +349,18 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	setOrder(null, fields);
     }
 
+    protected void newLine() {
+	body.append(NEW_LINE);
+    }
+
     protected void oppLine(Object field, String expression) throws IOException {
 	opp(field, expression);
-	body.append(NEW_LINE);
+	newLine();
     }
 
     protected <F> void oppLine(Object field, F value, String expression) throws IOException {
 	opp(field, value, expression);
-	body.append(NEW_LINE);
+	newLine();
     }
 
     private void setParameters(Query query) {

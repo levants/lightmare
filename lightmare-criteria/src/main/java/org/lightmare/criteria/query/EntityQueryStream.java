@@ -139,6 +139,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     // ============Sub queries ================//
+    @Override
     public <F, S extends Serializable> SubQueryStream<S, T> in(EntityField<T, F> field, Class<S> subType)
 	    throws IOException {
 
@@ -150,7 +151,22 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	return subQuery;
     }
 
+    @Override
+    public <F, S extends Serializable> SubQueryStream<S, T> exists(Class<S> subType) throws IOException {
+
+	SubQueryStream<S, T> subQuery;
+
+	appendBody(Operators.EXISTS);
+	openBracket();
+	subQuery = subQuery(subType);
+
+	return subQuery;
+    }
+
     public QueryStream<T> closeSubQuery() {
+	closeBracket();
+	newLine();
+
 	return this;
     }
 
