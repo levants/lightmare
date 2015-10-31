@@ -146,4 +146,9 @@ abstract class AbstractJPAQueryWrapper<T extends Serializable> implements JPAQue
 	putFlushMode(query);
 	setLockMode(query);
     }
+
+    @Override
+    public void close() {
+	getEntityManager().close();
+    }
 }

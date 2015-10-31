@@ -2,10 +2,13 @@ package org.lightmare.criteria.query;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
+import org.lightmare.criteria.tuples.ParameterTuple;
 
 /**
  * Abstract class for generated JPA query result
@@ -63,5 +66,16 @@ abstract class AbstractResultStream<T extends Serializable> extends AbstractQuer
 	result = query.executeUpdate();
 
 	return result;
+    }
+
+    @Override
+    public Set<ParameterTuple> getParameters() {
+	return parameters;
+    }
+
+    @Override
+    public String toString() {
+	String value = sql();
+	return value;
     }
 }

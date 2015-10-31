@@ -548,21 +548,4 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 
 	return tuple;
     }
-
-    // ================================= Result =============================//
-    @Override
-    public Set<ParameterTuple> getParameters() {
-	return parameters;
-    }
-
-    @Override
-    public void close() {
-	em.close();
-    }
-
-    @Override
-    public String toString() {
-	String value = sql();
-	return value;
-    }
 }

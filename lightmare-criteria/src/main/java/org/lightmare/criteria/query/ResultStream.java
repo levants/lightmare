@@ -2,6 +2,9 @@ package org.lightmare.criteria.query;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
+
+import org.lightmare.criteria.tuples.ParameterTuple;
 
 /**
  * Interface for query result methods
@@ -12,6 +15,13 @@ import java.util.List;
  *            entity type for generated query
  */
 interface ResultStream<T extends Serializable> {
+
+    /**
+     * Gets query parameters
+     * 
+     * @return {@link Set} of {@link ParameterTuple}s
+     */
+    Set<ParameterTuple> getParameters();
 
     /**
      * Runs generated query {@link javax.persistence.Query#getSingleResult()}

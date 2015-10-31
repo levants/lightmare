@@ -26,13 +26,11 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.lambda.EntityField;
-import org.lightmare.criteria.tuples.ParameterTuple;
 
 /**
  * Main interface with query construction methods
@@ -190,13 +188,6 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * @return {@link String} JPA query
      */
     String countSql();
-
-    /**
-     * Gets query parameters
-     * 
-     * @return {@link Set} of {@link ParameterTuple}s
-     */
-    Set<ParameterTuple> getParameters();
 
     // ============================= JPA Elements ===========================//
 
