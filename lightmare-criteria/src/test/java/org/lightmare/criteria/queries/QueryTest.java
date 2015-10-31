@@ -9,12 +9,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.lightmare.criteria.db.TestDBUtils;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
@@ -48,49 +48,11 @@ public class QueryTest {
 	return getDateValue(100);
     }
 
-    private static void provideDataBase() {
-
-	Person person1 = new Person();
-	person1.setPersonalNo(PERSONAL_NO1);
-	person1.setLastName("lname1");
-	person1.setFirstName("fname1");
-	person1.setBirthDate(getDateValue(80));
-	person1.setMiddName("mname1");
-
-	Person person2 = new Person();
-	person2.setPersonalNo(PERSONAL_NO2);
-	person2.setLastName("lname2");
-	person2.setFirstName("fname2");
-	person2.setBirthDate(getDateValue(90));
-	person2.setMiddName("mname2");
-
-	Person person3 = new Person();
-	person3.setPersonalNo("10100101111");
-	person3.setLastName("lname3");
-	person3.setFirstName("fname3");
-	person3.setBirthDate(getDateValue(95));
-	person3.setMiddName("mname3");
-
-	EntityManager em = emf.createEntityManager();
-	EntityTransaction transaction = em.getTransaction();
-	transaction.begin();
-	try {
-	    em.persist(person1);
-	    em.persist(person2);
-	    em.persist(person3);
-	    transaction.commit();
-	} catch (Throwable ex) {
-	    transaction.rollback();
-	}
-
-    }
-
     @BeforeClass
     public static void config() {
 
 	try {
-	    emf = Persistence.createEntityManagerFactory("testUnit");
-	    provideDataBase();
+	    emf = TestDBUtils.create();
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
