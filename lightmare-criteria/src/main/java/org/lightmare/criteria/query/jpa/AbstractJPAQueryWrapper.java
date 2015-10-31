@@ -42,7 +42,7 @@ import org.lightmare.utils.collections.CollectionUtils;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class AbstractJPAQueryWrapper<T extends Serializable> implements JPAQueryWrapper<T> {
+abstract class AbstractJPAQueryWrapper<T extends Serializable> implements JPAQueryWrapper<T> {
 
     private Integer maxResult;
 

@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.jpa;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -29,7 +29,7 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Parts;
-import org.lightmare.criteria.query.jpa.AbstractQueryStream;
+import org.lightmare.criteria.query.SubQueryStream;
 import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 
