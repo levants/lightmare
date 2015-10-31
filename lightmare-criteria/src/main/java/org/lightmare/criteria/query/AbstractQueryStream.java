@@ -44,7 +44,7 @@ import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
-import org.lightmare.criteria.links.QueryParts;
+import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.resolvers.FieldResolver;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -117,7 +117,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     }
 
     protected static void appendFieldName(String alias, String field, StringBuilder buffer) {
-	buffer.append(alias).append(QueryParts.COLUMN_PREFIX).append(field);
+	buffer.append(alias).append(Parts.COLUMN_PREFIX).append(field);
     }
 
     protected static void appendFromClause(String typeName, String alias, StringBuilder buff) {
@@ -215,7 +215,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     private void oppWithParameter(QueryTuple tuple, Object value, StringBuilder sqlPart) {
 
 	String parameterName = generateParameterName(tuple);
-	sqlPart.append(QueryParts.PARAM_PREFIX).append(parameterName);
+	sqlPart.append(Parts.PARAM_PREFIX).append(parameterName);
 	addParameter(parameterName, tuple, value);
     }
 
@@ -247,7 +247,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     private void appendSetClause() {
 
 	if (StringUtils.valid(updateSet)) {
-	    updateSet.append(QueryParts.COMMA);
+	    updateSet.append(Parts.COMMA);
 	    updateSet.append(NEW_LINE);
 	    updateSet.append(Clauses.SET_SPACE);
 	} else {
@@ -279,7 +279,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	    tuple = compose(field);
 	    appendFieldName(tuple, columns);
 	    if (i < length) {
-		columns.append(QueryParts.COMMA);
+		columns.append(Parts.COMMA);
 		columns.append(StringUtils.SPACE);
 	    }
 	}
@@ -298,7 +298,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     private void prepareOrderBy() {
 
 	if (StringUtils.valid(orderBy)) {
-	    orderBy.append(QueryParts.COMMA);
+	    orderBy.append(Parts.COMMA);
 	    orderBy.append(StringUtils.SPACE);
 	} else {
 	    orderBy.append(Orders.ORDER);
@@ -308,7 +308,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     private void appendOrderBy(QueryTuple tuple, String dir) {
 
 	orderBy.append(alias);
-	orderBy.append(QueryParts.COLUMN_PREFIX).append(tuple.getField());
+	orderBy.append(Parts.COLUMN_PREFIX).append(tuple.getField());
 	if (StringUtils.valid(dir)) {
 	    orderBy.append(StringUtils.SPACE).append(dir);
 	}
@@ -324,7 +324,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	    tuple = compose(field);
 	    appendOrderBy(tuple, dir);
 	    if (i < length) {
-		orderBy.append(QueryParts.COMMA).append(StringUtils.SPACE);
+		orderBy.append(Parts.COMMA).append(StringUtils.SPACE);
 	    }
 	}
     }

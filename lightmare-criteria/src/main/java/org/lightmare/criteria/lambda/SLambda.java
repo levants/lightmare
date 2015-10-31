@@ -34,9 +34,12 @@ class SLambda implements Serializable {
 
     private static final long serialVersionUID = 8025925345765570181L;
 
+    // Implementing class file name
     public String implClass;
 
+    // Implementing method name
     public String implMethodName;
 
+    // Implementing method signature
     public String implMethodSignature;
 }

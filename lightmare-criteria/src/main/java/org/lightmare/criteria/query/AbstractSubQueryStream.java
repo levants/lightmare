@@ -28,7 +28,7 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.links.QueryParts;
+import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
@@ -53,7 +53,7 @@ abstract class AbstractSubQueryStream<S extends Serializable, T extends Serializ
     }
 
     private void appendColumn(QueryTuple tuple) {
-	body.append(parentAlias).append(QueryParts.COLUMN_PREFIX);
+	body.append(parentAlias).append(Parts.COLUMN_PREFIX);
 	body.append(tuple.getField());
     }
 

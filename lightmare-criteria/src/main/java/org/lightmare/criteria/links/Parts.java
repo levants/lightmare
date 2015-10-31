@@ -28,7 +28,7 @@ package org.lightmare.criteria.links;
  * @author Levan Tsinadze
  *
  */
-public interface QueryParts {
+public interface Parts {
 
     char COLUMN_PREFIX = '.';
 
