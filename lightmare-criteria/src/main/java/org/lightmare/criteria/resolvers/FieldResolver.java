@@ -39,7 +39,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 /**
- * Resolver class to initialize field name from lambda call
+ * Resolver class to initialize field name from lambda function
  * 
  * @author Levan Tsinadze
  *

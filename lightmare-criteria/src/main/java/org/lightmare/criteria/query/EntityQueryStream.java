@@ -51,10 +51,10 @@ abstract class EntityQueryStream<T extends Serializable> extends AbstractQuerySt
     @Override
     public final QueryStream<Object[]> select(EntityField<T, ?>... fields) throws IOException {
 
-	SelectStreamImpl<T> stream;
+	SelectStream<T> stream;
 
 	oppSelect(fields);
-	stream = new SelectStreamImpl<>(this);
+	stream = new SelectStream<>(this);
 
 	return stream;
     }

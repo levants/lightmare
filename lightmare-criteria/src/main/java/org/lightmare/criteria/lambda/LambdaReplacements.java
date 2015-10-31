@@ -31,8 +31,7 @@ import org.lightmare.utils.io.serialization.NativeSerializer;
 import org.lightmare.utils.reflect.ClassUtils;
 
 /**
- * Utility class to retrieve {@link SerializedLambda} data from lambda
- * expression
+ * Utility class to retrieve {@link SerializedLambda} data from lambda function
  * 
  * @author Levan Tsinadze
  *

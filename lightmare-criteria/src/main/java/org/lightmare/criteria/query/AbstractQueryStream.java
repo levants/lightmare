@@ -601,6 +601,11 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     }
 
     @Override
+    public void close() {
+	em.close();
+    }
+
+    @Override
     public String toString() {
 	String value = sql();
 	return value;
