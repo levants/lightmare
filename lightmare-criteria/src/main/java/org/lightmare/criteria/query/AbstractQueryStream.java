@@ -95,7 +95,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     // Debug messages
     private static final String DEBUG_MESSAGE_FORMAT = "Key %s is not bound to cache";
 
-    private static final Logger LOG = Logger.getLogger(FullQueryStream.class);
+    private static final Logger LOG = Logger.getLogger(QueryStream.class);
 
     protected AbstractQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
 	this.em = em;
@@ -114,6 +114,27 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	stream.appendPrefix(Filters.AS);
 	stream.appendPrefix(stream.alias);
 	stream.appendPrefix(NEW_LINE);
+    }
+
+    protected static void appendFieldName(String alias, String field, StringBuilder buffer) {
+	buffer.append(alias).append(QueryParts.COLUMN_PREFIX).append(field);
+    }
+
+    protected static void appendFromClause(String typeName, String alias, StringBuilder buff) {
+
+	buff.append(Filters.FROM);
+	buff.append(typeName);
+	buff.append(Filters.AS);
+	buff.append(alias);
+	buff.append(NEW_LINE);
+    }
+
+    protected static void appendFromClause(Class<?> type, String alias, StringBuilder buff) {
+	appendFromClause(type.getName(), alias, buff);
+    }
+
+    protected static void appendFieldName(QueryTuple tuple, StringBuilder buffer) {
+	appendFieldName(tuple.getAlias(), tuple.getField(), buffer);
     }
 
     protected void setAlias(QueryTuple tuple) {
@@ -202,9 +223,8 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 
 	QueryTuple tuple = compose(field);
 
-	String column = tuple.getField();
-	body.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX);
-	body.append(column).append(expression);
+	appendFieldName(tuple, body);
+	body.append(expression);
 
 	return tuple;
     }
@@ -236,10 +256,8 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     }
 
     private void appendSetClause(QueryTuple tuple) {
-
-	String column = tuple.getField();
-	updateSet.append(tuple.getAlias()).append(QueryParts.COLUMN_PREFIX);
-	updateSet.append(column).append(Operators.EQ);
+	appendFieldName(tuple, updateSet);
+	updateSet.append(Operators.EQ);
     }
 
     protected <F> void setOpp(Object field, F value) throws IOException {
@@ -259,9 +277,10 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
 	    field = fields[i];
 	    tuple = compose(field);
-	    columns.append(tuple.getField());
+	    appendFieldName(tuple, columns);
 	    if (i < length) {
 		columns.append(QueryParts.COMMA);
+		columns.append(StringUtils.SPACE);
 	    }
 	}
     }
@@ -342,7 +361,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
      * 
      * @return {@link TypedQuery} for entity type
      */
-    private TypedQuery<T> initTypedQuery() {
+    protected TypedQuery<T> initTypedQuery() {
 
 	TypedQuery<T> query;
 
@@ -434,7 +453,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	}
     }
 
-    private void generateBody(CharSequence startSql) {
+    protected void generateBody(CharSequence startSql) {
 
 	sql.delete(START, sql.length());
 	sql.append(startSql);
@@ -458,12 +477,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     }
 
     private void countBody() {
-
-	count.append(Filters.FROM);
-	count.append(entityType.getName());
-	count.append(Filters.AS);
-	count.append(alias);
-	count.append(NEW_LINE);
+	appendFromClause(entityType, alias, count);
     }
 
     private void countPrefix() {

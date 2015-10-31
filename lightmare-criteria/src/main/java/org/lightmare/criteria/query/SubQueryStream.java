@@ -29,7 +29,7 @@ import java.util.Collection;
 import org.lightmare.criteria.lambda.EntityField;
 
 /**
- * Implementation of {@link QueryStream} for subqueries
+ * Implementation of {@link QueryStream} for sub queries
  * 
  * @author Levan Tsinadze
  * @param <S>

@@ -47,9 +47,9 @@ abstract class EntityQueryStream<T extends Serializable> extends AbstractQuerySt
 	super(em, entityType, alias);
     }
 
-    @SuppressWarnings("unchecked")
+    @SafeVarargs
     @Override
-    public QueryStream<Object[]> select(EntityField<T, ?>... fields) throws IOException {
+    public final QueryStream<Object[]> select(EntityField<T, ?>... fields) throws IOException {
 
 	SelectStreamImpl<T> stream;
 

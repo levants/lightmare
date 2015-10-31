@@ -154,6 +154,32 @@ public class QueryTest {
 	}
     }
 
+    @SuppressWarnings("unchecked")
+    @Test
+    @RunOrder(2.3)
+    public void toListBySelectTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    Date date = getDateValue();
+	    // ============= Query construction ============== //
+	    List<Object[]> persons = QueryProvider.select(em, Person.class).where()
+		    .eq(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+		    .startsWith(Person::getFirstName, "fname").or().moreOrEq(Person::getBirthDate, date).and()
+		    .in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L))
+		    .select(Person::getPersonalNo, Person::getFirstName, Person::getLastName).toList();
+	    // =============================================//
+	    System.out.println();
+	    System.out.println("-------Entity----");
+	    System.out.println();
+	    persons.forEach(c -> System.out.println(Arrays.toString(c)));
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	} finally {
+	    em.close();
+	}
+    }
+
     @Test
     @RunOrder(2.5)
     public void countByEntityTest() {
