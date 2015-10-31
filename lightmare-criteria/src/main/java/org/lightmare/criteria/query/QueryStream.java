@@ -159,6 +159,14 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      */
     QueryStream<T> closeBracket();
 
+    /**
+     * Generates {@link SubQueryStream} for S type
+     * 
+     * @param subType
+     * @return {@link SubQueryStream}
+     */
+    <S extends Serializable> SubQueryStream<S, T> subQuery(Class<S> subType);
+
     // ======================================================================//
 
     /**

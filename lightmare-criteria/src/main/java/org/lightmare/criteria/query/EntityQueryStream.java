@@ -42,7 +42,7 @@ import org.lightmare.criteria.query.jpa.AbstractSelectStatements;
  * @param <T>
  *            entity type for generated query
  */
-abstract class EntityQueryStream<T extends Serializable> extends AbstractSelectStatements<T> {
+public abstract class EntityQueryStream<T extends Serializable> extends AbstractSelectStatements<T> {
 
     protected EntityQueryStream(EntityManager em, Class<T> entityType, final String alias) {
 	super(em, entityType, alias);
@@ -138,6 +138,22 @@ abstract class EntityQueryStream<T extends Serializable> extends AbstractSelectS
 	return this;
     }
 
+    // ============Sub queries ================//
+    public <F, S extends Serializable> SubQueryStream<S, T> in(EntityField<T, F> field, Class<S> subType)
+	    throws IOException {
+
+	SubQueryStream<S, T> subQuery;
+
+	appSubQuery(field, Operators.IN);
+	subQuery = subQuery(subType);
+
+	return subQuery;
+    }
+
+    public QueryStream<T> closeSubQuery() {
+	return this;
+    }
+
     @Override
     public <F> QueryStream<T> set(EntityField<T, F> field, F value) throws IOException {
 	setOpp(field, value);
@@ -154,5 +170,10 @@ abstract class EntityQueryStream<T extends Serializable> extends AbstractSelectS
     public QueryStream<T> orderByDesc(EntityField<T, ?> field) throws IOException {
 	setOrder(Orders.DESC, new EntityField[] { field });
 	return this;
+    }
+
+    @Override
+    public <S extends Serializable> SubQueryStream<S, T> subQuery(Class<S> subType) {
+	return new EntitySubQueryStream<S, T>(em, subType, getAliasTuple());
     }
 }

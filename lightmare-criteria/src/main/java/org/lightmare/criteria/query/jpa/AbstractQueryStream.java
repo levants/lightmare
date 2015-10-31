@@ -236,10 +236,17 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	oppWithParameter(tuple, value, body);
     }
 
+    protected QueryTuple appSubQuery(Object field, String expression) throws IOException {
+
+	QueryTuple tuple = opp(field, expression);
+	openBracket();
+
+	return tuple;
+    }
+
     protected void oppCollection(Object field, Collection<?> value) throws IOException {
 
-	QueryTuple tuple = opp(field, Operators.IN);
-	openBracket();
+	QueryTuple tuple = appSubQuery(field, Operators.IN);
 	oppWithParameter(tuple, value, body);
 	closeBracket();
 	body.append(NEW_LINE);

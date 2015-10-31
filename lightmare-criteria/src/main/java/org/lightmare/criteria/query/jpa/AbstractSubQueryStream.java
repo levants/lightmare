@@ -29,6 +29,7 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Parts;
+import org.lightmare.criteria.query.EntityQueryStream;
 import org.lightmare.criteria.query.SubQueryStream;
 import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -43,8 +44,8 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @param <T>entity
  *            type for generated query
  */
-abstract class AbstractSubQueryStream<S extends Serializable, T extends Serializable> extends AbstractQueryStream<S>
-	implements SubQueryStream<S, T> {
+public abstract class AbstractSubQueryStream<S extends Serializable, T extends Serializable>
+	extends EntityQueryStream<S> implements SubQueryStream<S, T> {
 
     // Parent entity alias
     protected String parentAlias;
