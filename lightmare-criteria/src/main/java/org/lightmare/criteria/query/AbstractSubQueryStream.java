@@ -29,6 +29,8 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Parts;
+import org.lightmare.criteria.query.jpa.AbstractQueryStream;
+import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**

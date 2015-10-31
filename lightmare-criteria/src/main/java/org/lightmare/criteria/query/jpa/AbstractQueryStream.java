@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.jpa;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -44,7 +44,9 @@ import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.links.Parts;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.resolvers.FieldResolver;
+import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.StringUtils;
@@ -58,7 +60,7 @@ import org.lightmare.utils.collections.CollectionUtils;
  * @param <T>
  *            entity type for generated query
  */
-abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQueryWrapper<T>
+public abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQueryWrapper<T>
 	implements QueryStream<T> {
 
     protected final EntityManager em;

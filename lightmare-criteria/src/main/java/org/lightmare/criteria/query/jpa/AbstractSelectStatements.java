@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.jpa;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -28,6 +28,7 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.lambda.EntityField;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Implementation of {@link SelectStatements} to generate SELECT for instant
@@ -38,7 +39,7 @@ import org.lightmare.criteria.lambda.EntityField;
  * @param <T>
  *            entity type for generated query
  */
-abstract class AbstractSelectStatements<T extends Serializable> extends AbstractResultStream<T> {
+public abstract class AbstractSelectStatements<T extends Serializable> extends AbstractResultStream<T> {
 
     protected AbstractSelectStatements(EntityManager em, Class<T> entityType, String alias) {
 	super(em, entityType, alias);

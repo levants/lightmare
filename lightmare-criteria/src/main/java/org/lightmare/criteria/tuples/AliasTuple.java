@@ -20,44 +20,35 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
-
-import java.io.Serializable;
+package org.lightmare.criteria.tuples;
 
 /**
- * Utility class to construct SELECT by fields
+ * Container class with query alias and appropriated increment coefficient for
+ * sub query alias generation
  * 
  * @author Levan Tsinadze
  *
- * @param <T>
- *            entity type for generated query
  */
-class AbstractSelectStream<T extends Serializable> extends FullQueryStream<Object[]> {
+public class AliasTuple {
 
-    // Real entity type before select statement
-    private final Class<?> realEntityType;
+    final String alias;
 
-    protected AbstractSelectStream(AbstractQueryStream<T> stream) {
-	super(stream.getEntityManager(), Object[].class, stream.getAlias());
-	this.realEntityType = stream.entityType;
-	this.columns.append(stream.columns);
-	this.body.append(stream.body);
-	this.orderBy.append(stream.orderBy);
-	this.parameters.addAll(stream.parameters);
+    final int counter;
+
+    public AliasTuple(final String alias, final int counter) {
+	this.alias = alias;
+	this.counter = counter;
     }
 
-    @Override
-    public String sql() {
+    public String getAlias() {
+	return alias;
+    }
 
-	String value;
+    public int getCounter() {
+	return counter;
+    }
 
-	sql.delete(START, sql.length());
-	appendFromClause(realEntityType, alias, columns);
-	generateBody(columns);
-	sql.append(orderBy);
-	sql.append(suffix);
-	value = sql.toString();
-
-	return value;
+    public String generate() {
+	return alias.concat(String.valueOf(counter));
     }
 }

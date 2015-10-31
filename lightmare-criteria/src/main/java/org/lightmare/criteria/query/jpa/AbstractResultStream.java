@@ -1,4 +1,4 @@
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.jpa;
 
 import java.io.Serializable;
 import java.util.List;

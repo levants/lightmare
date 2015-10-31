@@ -31,6 +31,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.lambda.EntityField;
+import org.lightmare.criteria.query.jpa.ResultStream;
+import org.lightmare.criteria.query.jpa.SelectStatements;
 
 /**
  * Main interface with query construction methods

@@ -20,13 +20,15 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.jpa;
 
 import java.io.Serializable;
 import java.util.Map;
 
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
+
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Interface for JPA query parameters
@@ -35,7 +37,7 @@ import javax.persistence.LockModeType;
  * @param T
  *            entity type for generated query
  */
-public interface JPAQueryWrapper<T extends Serializable> extends QueryStream<T> {
+interface JPAQueryWrapper<T extends Serializable> extends QueryStream<T> {
 
     /**
      * Set the maximum number of results to retrieve.

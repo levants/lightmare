@@ -32,6 +32,7 @@ import org.lightmare.criteria.lambda.EntityField;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
+import org.lightmare.criteria.query.jpa.AbstractSelectStatements;
 
 /**
  * Query builder from setter method references

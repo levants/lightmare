@@ -36,7 +36,7 @@ import org.lightmare.criteria.links.Filters;
  * @param <T>
  *            entity type for generated query
  */
-class FullQueryStream<T extends Serializable> extends EntityQueryStream<T> {
+public class FullQueryStream<T extends Serializable> extends EntityQueryStream<T> {
 
     protected FullQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
 	super(em, entityType, alias);

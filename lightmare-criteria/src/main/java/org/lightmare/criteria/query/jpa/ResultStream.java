@@ -1,4 +1,4 @@
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.jpa;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.lightmare.criteria.tuples.ParameterTuple;
  * @param <T>
  *            entity type for generated query
  */
-interface ResultStream<T extends Serializable> {
+public interface ResultStream<T extends Serializable> {
 
     /**
      * Gets query parameters

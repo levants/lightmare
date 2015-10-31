@@ -20,12 +20,13 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.jpa;
 
 import java.io.IOException;
 import java.io.Serializable;
 
 import org.lightmare.criteria.lambda.EntityField;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Interface to generate SELECT for instant fields
@@ -35,7 +36,7 @@ import org.lightmare.criteria.lambda.EntityField;
  * @param <T>entity
  *            type for generated query
  */
-interface SelectStatements<T extends Serializable> {
+public interface SelectStatements<T extends Serializable> {
 
     QueryStream<Object[]> select(EntityField<T, ?> field) throws IOException;
 
