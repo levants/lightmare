@@ -38,7 +38,7 @@ import org.lightmare.criteria.lambda.EntityField;
  * @param <T>
  *            entity type for generated query
  */
-abstract class AbstractSelectStatements<T extends Serializable> extends AbstractQueryStream<T> {
+abstract class AbstractSelectStatements<T extends Serializable> extends AbstractResultStream<T> {
 
     protected AbstractSelectStatements(EntityManager em, Class<T> entityType, String alias) {
 	super(em, entityType, alias);

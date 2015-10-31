@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -268,8 +267,8 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	oppWithParameter(tuple, value, updateSet);
     }
 
-    @SuppressWarnings("unchecked")
-    private void appendSelect(EntityField<T, ?>... fields) throws IOException {
+    @SafeVarargs
+    private final void appendSelect(EntityField<T, ?>... fields) throws IOException {
 
 	int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
 	EntityField<T, ?> field;
@@ -377,7 +376,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
      * 
      * @return {@link TypedQuery} with {@link Long} type for element count
      */
-    private TypedQuery<Long> initCountQuery() {
+    protected TypedQuery<Long> initCountQuery() {
 
 	TypedQuery<Long> query;
 
@@ -393,7 +392,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
      * 
      * @return for bulk modification
      */
-    private Query initBulkQuery() {
+    protected Query initBulkQuery() {
 
 	Query query;
 
@@ -551,50 +550,6 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     }
 
     // ================================= Result =============================//
-    @Override
-    public Long count() {
-
-	Long result;
-
-	TypedQuery<Long> query = initCountQuery();
-	result = query.getSingleResult();
-
-	return result;
-    }
-
-    @Override
-    public List<T> toList() {
-
-	List<T> results;
-
-	TypedQuery<T> query = initTypedQuery();
-	results = query.getResultList();
-
-	return results;
-    }
-
-    @Override
-    public T get() {
-
-	T result;
-
-	TypedQuery<T> query = initTypedQuery();
-	result = query.getSingleResult();
-
-	return result;
-    }
-
-    @Override
-    public int execute() {
-
-	int result;
-
-	Query query = initBulkQuery();
-	result = query.executeUpdate();
-
-	return result;
-    }
-
     @Override
     public Set<ParameterTuple> getParameters() {
 	return parameters;
