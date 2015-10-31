@@ -154,7 +154,6 @@ public class QueryTest {
 	}
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     @RunOrder(2.3)
     public void toListBySelectTest() {

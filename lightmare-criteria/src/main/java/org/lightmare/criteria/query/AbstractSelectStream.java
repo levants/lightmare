@@ -32,12 +32,12 @@ import java.io.Serializable;
  * @param <T>
  *            entity type for generated query
  */
-class SelectStream<T extends Serializable> extends FullQueryStream<Object[]> {
+class AbstractSelectStream<T extends Serializable> extends FullQueryStream<Object[]> {
 
     // Real entity type before select statement
     private final Class<?> realEntityType;
 
-    protected SelectStream(AbstractQueryStream<T> stream) {
+    protected AbstractSelectStream(AbstractQueryStream<T> stream) {
 	super(stream.getEntityManager(), Object[].class, stream.getAlias());
 	this.realEntityType = stream.entityType;
 	this.columns.append(stream.columns);

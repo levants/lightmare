@@ -41,22 +41,10 @@ import org.lightmare.criteria.links.Orders;
  * @param <T>
  *            entity type for generated query
  */
-abstract class EntityQueryStream<T extends Serializable> extends AbstractQueryStream<T> {
+abstract class EntityQueryStream<T extends Serializable> extends AbstractSelectStatements<T> {
 
     protected EntityQueryStream(EntityManager em, Class<T> entityType, final String alias) {
 	super(em, entityType, alias);
-    }
-
-    @SafeVarargs
-    @Override
-    public final QueryStream<Object[]> select(EntityField<T, ?>... fields) throws IOException {
-
-	SelectStream<T> stream;
-
-	oppSelect(fields);
-	stream = new SelectStream<>(this);
-
-	return stream;
     }
 
     @Override

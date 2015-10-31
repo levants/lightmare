@@ -43,7 +43,7 @@ import org.lightmare.criteria.tuples.ParameterTuple;
  * @param <T>
  *            entity type for generated query
  */
-public interface QueryStream<T extends Serializable> {
+public interface QueryStream<T extends Serializable> extends SelectStatements<T> {
 
     String DEFAULT_ALIAS = "c";
 
@@ -76,9 +76,6 @@ public interface QueryStream<T extends Serializable> {
     void addParameters(Map<String, Object> parameters);
 
     // ========================= Entity method composers ====================//
-
-    @SuppressWarnings("unchecked")
-    QueryStream<Object[]> select(EntityField<T, ?>... fields) throws IOException;
 
     <F> QueryStream<T> eq(EntityField<T, F> field, F value) throws IOException;
 

@@ -285,8 +285,8 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	}
     }
 
-    @SuppressWarnings("unchecked")
-    protected void oppSelect(EntityField<T, ?>... fields) throws IOException {
+    @SafeVarargs
+    protected final void oppSelect(EntityField<T, ?>... fields) throws IOException {
 
 	if (CollectionUtils.valid(fields)) {
 	    columns.append(Filters.SELECT);
