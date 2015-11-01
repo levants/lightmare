@@ -140,16 +140,22 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     // =========================Sub queries ===============//
+
+    protected <S extends Serializable> SubQueryStream<S, T> subQuery(Class<S> subType) {
+	return new EntitySubQueryStream<S, T>(this, subType);
+    }
+
     @Override
-    public <F, S extends Serializable> SubQueryStream<S, T> in(EntityField<T, F> field, Class<S> subType)
+    public <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQuery<S, T> consumer)
 	    throws IOException {
 
-	SubQueryStream<S, T> subQuery;
+	openBracket();
+	SubQueryStream<S, T> subQuery = subQuery(subType);
+	consumer.accept(subQuery);
+	closeBracket();
+	newLine();
 
-	appSubQuery(field, Operators.IN);
-	subQuery = subQuery(subType);
-
-	return subQuery;
+	return this;
     }
 
     @Override
@@ -166,27 +172,10 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F, S extends Serializable> SubQueryStream<S, T> exists(Class<S> subType) throws IOException {
-
-	SubQueryStream<S, T> subQuery;
-
-	appendBody(Operators.EXISTS);
-	openBracket();
-	subQuery = subQuery(subType);
-
-	return subQuery;
-    }
-
-    @Override
     public <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQuery<S, T> consumer)
 	    throws IOException {
-
 	appendBody(Operators.EXISTS);
-	openBracket();
-	SubQueryStream<S, T> subQuery = subQuery(subType);
-	consumer.accept(subQuery);
-	closeBracket();
-	newLine();
+	subQuery(subType, consumer);
 
 	return this;
     }
@@ -217,10 +206,5 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     public QueryStream<T> orderByDesc(EntityField<T, ?> field) throws IOException {
 	setOrder(Orders.DESC, new EntityField[] { field });
 	return this;
-    }
-
-    @Override
-    public <S extends Serializable> SubQueryStream<S, T> subQuery(Class<S> subType) {
-	return new EntitySubQueryStream<S, T>(em, subType, getAliasTuple());
     }
 }

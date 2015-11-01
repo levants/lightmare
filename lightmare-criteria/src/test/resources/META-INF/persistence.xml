@@ -3,6 +3,7 @@
 	<persistence-unit name="testUnit" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>org.lightmare.criteria.entities.Person</class>
+		<class>org.lightmare.criteria.entities.Phone</class>
 		<properties>
 			<property name="hibernate.default_schema" value="PERSONS" />
 			<property name="hibernate.show_sql" value="true" />

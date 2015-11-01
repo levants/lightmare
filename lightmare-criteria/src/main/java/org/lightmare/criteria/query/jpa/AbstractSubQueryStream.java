@@ -24,14 +24,12 @@ package org.lightmare.criteria.query.jpa;
 
 import java.io.IOException;
 import java.io.Serializable;
-
-import javax.persistence.EntityManager;
+import java.util.List;
 
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.EntityQueryStream;
 import org.lightmare.criteria.query.SubQueryStream;
-import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
@@ -48,11 +46,14 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	extends EntityQueryStream<S> implements SubQueryStream<S, T> {
 
     // Parent entity alias
-    protected String parentAlias;
+    protected final String parentAlias;
 
-    protected AbstractSubQueryStream(final EntityManager em, final Class<S> entityType, final AliasTuple alias) {
-	super(em, entityType, alias.generate());
-	parentAlias = alias.getAlias();
+    protected final EntityQueryStream<T> parent;
+
+    protected AbstractSubQueryStream(final EntityQueryStream<T> parent, Class<S> entityType) {
+	super(parent.getEntityManager(), entityType, parent.getAliasTuple().generate());
+	parentAlias = parent.getAlias();
+	this.parent = parent;
     }
 
     private void appendColumn(QueryTuple tuple) {
@@ -76,5 +77,13 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	appendColumn(tuple);
 	closeBracket();
 	body.append(NEW_LINE);
+    }
+
+    @Override
+    public List<S> toList() {
+	String query = sql();
+	parent.appendBody(query);
+
+	return null;
     }
 }

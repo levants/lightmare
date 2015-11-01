@@ -80,15 +80,18 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     QueryStream<T> notNull(EntityField<T, ?> field) throws IOException;
 
     // =========================sub=queries==================================//
-    <F, S extends Serializable> SubQueryStream<S, T> in(EntityField<T, F> field, Class<S> subType) throws IOException;
+    /**
+     * Generates {@link SubQueryStream} for S type
+     * 
+     * @param subType
+     * @return {@link SubQueryStream}
+     */
+    <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQuery<S, T> consumer) throws IOException;
 
-    <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
-	    SubQuery<S, T> consumer) throws IOException;
-
-    <F, S extends Serializable> SubQueryStream<S, T> exists(Class<S> subType) throws IOException;
-
-    <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQuery<S, T> consumer)
+    <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, SubQuery<S, T> consumer)
 	    throws IOException;
+
+    <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQuery<S, T> consumer) throws IOException;
 
     QueryStream<T> closeSubQuery();
 
@@ -144,14 +147,6 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * @return {@link QueryStream} current instance
      */
     QueryStream<T> closeBracket();
-
-    /**
-     * Generates {@link SubQueryStream} for S type
-     * 
-     * @param subType
-     * @return {@link SubQueryStream}
-     */
-    <S extends Serializable> SubQueryStream<S, T> subQuery(Class<S> subType);
 
     // ======================================================================//
 

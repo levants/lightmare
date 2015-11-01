@@ -154,7 +154,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	tuple = QueryCache.getQuery(lambda);
 	if (tuple == null) {
 	    tuple = FieldResolver.resolve(lambda);
-	    tuple.setAlias(DEFAULT_ALIAS);
+	    tuple.setAlias(alias);
 	    QueryCache.putQuery(lambda, tuple);
 	    LOG.debug(String.format(DEBUG_MESSAGE_FORMAT, lambda));
 	}
@@ -299,7 +299,6 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	if (CollectionUtils.valid(fields)) {
 	    columns.append(Filters.SELECT);
 	    appendSelect(fields);
-	    columns.append(StringUtils.SPACE);
 	}
     }
 

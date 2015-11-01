@@ -26,12 +26,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 
-import javax.persistence.EntityManager;
-
 import org.lightmare.criteria.lambda.EntityField;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.jpa.AbstractSubQueryStream;
-import org.lightmare.criteria.tuples.AliasTuple;
 
 /**
  * Implementation of {@link AbstractSubQueryStream} for sub query generation
@@ -45,8 +42,8 @@ import org.lightmare.criteria.tuples.AliasTuple;
  */
 class EntitySubQueryStream<S extends Serializable, T extends Serializable> extends AbstractSubQueryStream<S, T> {
 
-    protected EntitySubQueryStream(EntityManager em, Class<S> entityType, AliasTuple alias) {
-	super(em, entityType, alias);
+    protected EntitySubQueryStream(EntityQueryStream<T> parent, Class<S> type) {
+	super(parent, type);
     }
 
     @Override
