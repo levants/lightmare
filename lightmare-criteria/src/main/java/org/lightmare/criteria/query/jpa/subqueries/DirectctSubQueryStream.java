@@ -146,7 +146,9 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
 	return this;
     }
 
-    // ================= entity QL Filters ===================================//
+    // ================= entity QL Filters ==================================//
+
+    // ================= methods for custom QL ==============================//
 
     @Override
     public SubQueryStream<S, T> appendPrefix(Object clause) {

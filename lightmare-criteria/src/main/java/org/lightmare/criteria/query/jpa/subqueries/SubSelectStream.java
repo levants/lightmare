@@ -45,9 +45,13 @@ class SubSelectStream<T extends Serializable> extends SelectStream<T> {
 	this.stream = stream;
     }
 
+    /**
+     * Appends SQL part to original query and switches prepare state to called
+     */
     private void appendOriginal() {
 	String query = super.sql();
 	stream.appendToParent(query);
+	stream.switchState();
     }
 
     @Override

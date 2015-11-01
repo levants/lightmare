@@ -115,11 +115,19 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	body.append(NEW_LINE);
     }
 
+    /**
+     * Appends passed clause to parent stream
+     * 
+     * @param clause
+     */
     protected void appendToParent(CharSequence clause) {
 	parent.appendBody(clause);
     }
 
-    private void switchState() {
+    /**
+     * Switches prepared state to called
+     */
+    protected void switchState() {
 	preparedState = Boolean.FALSE;
     }
 
