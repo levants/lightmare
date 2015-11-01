@@ -28,6 +28,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.links.Operators;
+import org.lightmare.criteria.query.jpa.AbstractQueryStream;
 import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
 
 /**
@@ -42,7 +43,7 @@ import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
  */
 class EntitySubQueryStream<S extends Serializable, T extends Serializable> extends AbstractSubQueryStream<S, T> {
 
-    protected EntitySubQueryStream(EntityQueryStream<T> parent, Class<S> type) {
+    protected EntitySubQueryStream(AbstractQueryStream<T> parent, Class<S> type) {
 	super(parent, type);
     }
 

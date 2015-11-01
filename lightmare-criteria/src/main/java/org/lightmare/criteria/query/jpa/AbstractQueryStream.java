@@ -57,7 +57,7 @@ import org.lightmare.utils.collections.CollectionUtils;
  * @param <T>
  *            entity type for generated query
  */
-abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQueryWrapper<T>
+public abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQueryWrapper<T>
 	implements QueryStream<T> {
 
     protected final EntityManager em;

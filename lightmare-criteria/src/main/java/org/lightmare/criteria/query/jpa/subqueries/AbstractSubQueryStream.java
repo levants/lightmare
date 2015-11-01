@@ -32,8 +32,8 @@ import javax.persistence.TemporalType;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Parts;
-import org.lightmare.criteria.query.EntityQueryStream;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.jpa.AbstractQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.collections.CollectionUtils;
 
@@ -53,13 +53,13 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
     // Parent entity alias
     protected final String parentAlias;
 
-    protected final EntityQueryStream<T> parent;
+    protected final AbstractQueryStream<T> parent;
 
     private SubSelectStream<S> subSelect;
 
     private boolean preparedState = Boolean.TRUE;
 
-    protected AbstractSubQueryStream(final EntityQueryStream<T> parent, Class<S> entityType) {
+    protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, Class<S> entityType) {
 	super(parent.getEntityManager(), entityType, parent.getAliasTuple().generate());
 	parentAlias = parent.getAlias();
 	this.parent = parent;
