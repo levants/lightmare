@@ -25,10 +25,6 @@ package org.lightmare.criteria.query;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.lambda.EntityField;
 import org.lightmare.criteria.query.jpa.ResultStream;
@@ -49,30 +45,6 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     char NEW_LINE = '\n';
 
     int START = 0;
-
-    /**
-     * Adds custom parameter to composed query
-     * 
-     * @param tuple
-     * @param value
-     */
-    void addParameter(String key, Object value);
-
-    /**
-     * Adds custom parameter to composed query
-     * 
-     * @param key
-     * @param value
-     * @param temporalType
-     */
-    void addParameter(String key, Object value, TemporalType temporalType);
-
-    /**
-     * Adds custom parameters to composed query
-     * 
-     * @param parameters
-     */
-    void addParameters(Map<String, Object> parameters);
 
     // ========================= Entity method composers ====================//
 
@@ -110,6 +82,8 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     <F, S extends Serializable> SubQueryStream<S, T> in(EntityField<T, F> field, Class<S> subType) throws IOException;
 
     <F, S extends Serializable> SubQueryStream<S, T> exists(Class<S> subType) throws IOException;
+
+    QueryStream<T> closeSubQuery();
 
     // =========================order=by=====================================//
     QueryStream<T> orderBy(EntityField<T, ?> field) throws IOException;
@@ -203,27 +177,4 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * @return {@link String} JPA query
      */
     String countSql();
-
-    // ============================= JPA Elements ===========================//
-
-    /**
-     * Gets wrapped {@link EntityManager} instance
-     * 
-     * @return {@link EntityManager} instance
-     */
-    EntityManager getEntityManager();
-
-    /**
-     * Gets wrapped entity {@link Class} instance
-     * 
-     * @return {@link Class} of entity type T
-     */
-    Class<T> getEntityType();
-
-    /**
-     * Gets entity alias for custom queries
-     * 
-     * @return {@link String} entity alias
-     */
-    String getAlias();
 }

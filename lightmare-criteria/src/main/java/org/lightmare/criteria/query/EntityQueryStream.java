@@ -163,6 +163,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	return subQuery;
     }
 
+    @Override
     public QueryStream<T> closeSubQuery() {
 	closeBracket();
 	newLine();

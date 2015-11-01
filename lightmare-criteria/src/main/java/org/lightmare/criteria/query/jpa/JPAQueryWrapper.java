@@ -25,8 +25,10 @@ package org.lightmare.criteria.query.jpa;
 import java.io.Serializable;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
+import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.query.QueryStream;
 
@@ -38,6 +40,32 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type for generated query
  */
 interface JPAQueryWrapper<T extends Serializable> extends QueryStream<T> {
+
+    /**
+     * Adds custom parameter to composed query
+     * 
+     * @param tuple
+     * @param value
+     */
+    void addParameter(String key, Object value);
+
+    /**
+     * Adds custom parameter to composed query
+     * 
+     * @param key
+     * @param value
+     * @param temporalType
+     */
+    void addParameter(String key, Object value, TemporalType temporalType);
+
+    /**
+     * Adds custom parameters to composed query
+     * 
+     * @param parameters
+     */
+    void addParameters(Map<String, Object> parameters);
+
+    // ================================Wrapped JPA Methods===================//
 
     /**
      * Set the maximum number of results to retrieve.
@@ -143,6 +171,28 @@ interface JPAQueryWrapper<T extends Serializable> extends QueryStream<T> {
      *             language SELECT query or a Criteria API query
      */
     QueryStream<T> setLockMode(LockModeType lockMode);
+
+    // ================================Wrapped JPA Elements===================//
+    /**
+     * Gets wrapped {@link EntityManager} instance
+     * 
+     * @return {@link EntityManager} instance
+     */
+    EntityManager getEntityManager();
+
+    /**
+     * Gets wrapped entity {@link Class} instance
+     * 
+     * @return {@link Class} of entity type T
+     */
+    Class<T> getEntityType();
+
+    /**
+     * Gets entity alias for custom queries
+     * 
+     * @return {@link String} entity alias
+     */
+    String getAlias();
 
     /**
      * Closes wrapped {@link javax.persistence.EntityManager} instance
