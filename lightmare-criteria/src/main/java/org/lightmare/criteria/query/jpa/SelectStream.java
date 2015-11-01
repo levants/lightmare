@@ -34,7 +34,7 @@ import org.lightmare.criteria.query.FullQueryStream;
  * @param <T>
  *            entity type for generated query
  */
-class SelectStream<T extends Serializable> extends FullQueryStream<Object[]> {
+public class SelectStream<T extends Serializable> extends FullQueryStream<Object[]> {
 
     // Real entity type before select statement
     private final Class<?> realEntityType;

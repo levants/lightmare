@@ -28,7 +28,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.lambda.EntityField;
 import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.query.jpa.AbstractSubQueryStream;
+import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
 
 /**
  * Implementation of {@link AbstractSubQueryStream} for sub query generation

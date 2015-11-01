@@ -20,11 +20,12 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
+package org.lightmare.criteria.query.jpa.subqueries;
 
 import java.io.Serializable;
 import java.util.List;
 
+import org.lightmare.criteria.query.jpa.SelectStream;
 import org.lightmare.utils.collections.CollectionUtils;
 
 /**

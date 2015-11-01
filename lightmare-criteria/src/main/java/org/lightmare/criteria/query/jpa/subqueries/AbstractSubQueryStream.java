@@ -20,23 +20,20 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
+package org.lightmare.criteria.query.jpa.subqueries;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.lambda.EntityField;
-import org.lightmare.criteria.lambda.QueryField;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.EntityQueryStream;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.SubQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.collections.CollectionUtils;
 
@@ -51,9 +48,7 @@ import org.lightmare.utils.collections.CollectionUtils;
  *            type for generated query
  */
 public abstract class AbstractSubQueryStream<S extends Serializable, T extends Serializable>
-	extends EntityQueryStream<S> implements SubQueryStream<S, T> {
-
-    protected final StringBuilder sql;
+	extends DirectctSubQueryStream<S, T> {
 
     // Parent entity alias
     protected final String parentAlias;
@@ -68,100 +63,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	super(parent.getEntityManager(), entityType, parent.getAliasTuple().generate());
 	parentAlias = parent.getAlias();
 	this.parent = parent;
-	this.sql = parent.sql;
     }
-
-    // ================= entity QL methods ===================================//
-    @Override
-    public <F> SubQueryStream<S, T> eq(EntityField<S, F> field, F value) throws IOException {
-	super.eq(field, value);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> equals(EntityField<S, F> field, F value) throws IOException {
-	super.equals(field, value);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> notEq(EntityField<S, F> field, F value) throws IOException {
-	super.notEq(field, value);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field, F value) throws IOException {
-	super.notEquals(field, value);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> more(EntityField<S, F> field, F value) throws IOException {
-	super.more(field, value);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> less(EntityField<S, F> field, F value) throws IOException {
-	super.less(field, value);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> moreOrEq(EntityField<S, F> field, F value) throws IOException {
-	super.moreOrEq(field, value);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> lessOrEq(EntityField<S, F> field, F value) throws IOException {
-	super.lessOrEq(field, value);
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> startsWith(EntityField<S, String> field, String value) throws IOException {
-	super.startsWith(field, value);
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> like(EntityField<S, String> field, String value) throws IOException {
-	super.like(field, value);
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> endsWith(EntityField<S, String> field, String value) throws IOException {
-	super.endsWith(field, value);
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> contains(EntityField<S, String> field, String value) throws IOException {
-	super.startsWith(field, value);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> in(EntityField<S, F> field, Collection<F> values) throws IOException {
-	super.in(field, values);
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> isNull(EntityField<S, ?> field) throws IOException {
-	super.isNull(field);
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> notNull(EntityField<S, ?> field) throws IOException {
-	super.notNull(field);
-	return this;
-    }
-    // ================= entity QL methods ===================================//
 
     @SafeVarargs
     protected final QueryStream<Object[]> subSelectAll(EntityField<S, ?>... fields) throws IOException {
@@ -186,7 +88,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
     }
 
     @Override
-    protected <F> void addParameter(String key, QueryTuple tuple, F value) {
+    public <F> void addParameter(String key, QueryTuple tuple, F value) {
 	parent.addParameter(key, tuple, value);
     }
 
@@ -211,68 +113,6 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	appendColumn(tuple);
 	closeBracket();
 	body.append(NEW_LINE);
-    }
-
-    // ====================================================//
-    @Override
-    public SubQueryStream<S, T> where() {
-	super.where();
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> and() {
-	super.and();
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> or() {
-	super.or();
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> openBracket() {
-	super.openBracket();
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> closeBracket() {
-	super.closeBracket();
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> brackets(QueryField<S> field) throws IOException {
-	super.brackets(field);
-	return this;
-    }
-    // ======================================================================//
-
-    /**
-     * Appends to generated query prefix custom clause
-     * 
-     * @param clause
-     * @return {@link SubQueryStream} current instance
-     */
-    @Override
-    public SubQueryStream<S, T> appendPrefix(Object clause) {
-	super.appendPrefix(clause);
-	return this;
-    }
-
-    /**
-     * Appends to generated query body custom clause
-     * 
-     * @param clause
-     * @return {@link SubQueryStream} current instance
-     */
-    @Override
-    public SubQueryStream<S, T> appendBody(Object clause) {
-	super.appendBody(clause);
-	return this;
     }
 
     protected void appendToParent(CharSequence clause) {

@@ -226,7 +226,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
      * @param tuple
      * @param value
      */
-    protected <F> void addParameter(String key, QueryTuple tuple, F value) {
+    public <F> void addParameter(String key, QueryTuple tuple, F value) {
 
 	TemporalType temporalType = tuple.getTemporalType();
 	addParameter(key, value, temporalType);
@@ -591,7 +591,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
      * 
      * @return {@link AliasTuple} with incremented counter
      */
-    protected AliasTuple getAliasTuple() {
+    public AliasTuple getAliasTuple() {
 
 	AliasTuple tuple;
 
