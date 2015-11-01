@@ -28,7 +28,9 @@ import java.util.Objects;
 
 import org.lightmare.criteria.cache.MethodCache;
 import org.lightmare.criteria.lambda.LambdaData;
+import org.lightmare.criteria.orm.ClassProcessor;
 import org.lightmare.criteria.orm.ColumnProcessor;
+import org.lightmare.criteria.orm.GenericProcessor;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.collections.CollectionUtils;
@@ -114,6 +116,19 @@ public class FieldResolver {
     }
 
     /**
+     * Sets reflection meta data to passed tuple
+     * 
+     * @param tuple
+     * @throws IOException
+     */
+    private static void setMetaData(QueryTuple tuple) throws IOException {
+
+	ClassProcessor.setMetaData(tuple);
+	ColumnProcessor.setTemporalType(tuple);
+	GenericProcessor.setGenericType(tuple);
+    }
+
+    /**
      * Resolves field name from instruction instance
      * 
      * @param instruction
@@ -129,7 +144,7 @@ public class FieldResolver {
 	    String fieldName = resolveFieldName(node.name);
 	    String entityName = resolveEntityName(node.owner);
 	    tuple = new QueryTuple(entityName, node.name, fieldName);
-	    ColumnProcessor.setTemporalType(tuple);
+	    setMetaData(tuple);
 	} else {
 	    tuple = null;
 	}

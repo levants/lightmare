@@ -23,6 +23,8 @@
 package org.lightmare.criteria.tuples;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import javax.persistence.TemporalType;
 
@@ -36,34 +38,66 @@ public class QueryTuple implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String entity;
+    private final String entityName;
 
-    private final String method;
+    private final String methodName;
 
     private final String fieldName;
 
+    private Class<?> entityType;
+
+    private Method method;
+
+    private Field field;
+
     private TemporalType temporalType;
+
+    private Class<?> genericType;
 
     private String alias;
 
     private static final String ALIAS_PREFIX = "c";
 
-    public QueryTuple(final String entity, final String method, final String fieldName) {
-	this.method = method;
-	this.entity = entity;
+    public QueryTuple(final String entityName, final String methodName, final String fieldName) {
+	this.entityName = entityName;
+	this.methodName = methodName;
 	this.fieldName = fieldName;
     }
 
-    public String getEntity() {
-	return entity;
+    public String getEntityName() {
+	return entityName;
     }
 
-    public String getMethod() {
-	return method;
+    public String getMethodName() {
+	return methodName;
     }
 
     public String getFieldName() {
 	return fieldName;
+    }
+
+    public Class<?> getEntityType() {
+	return entityType;
+    }
+
+    public void setEntityType(Class<?> entityType) {
+	this.entityType = entityType;
+    }
+
+    public Method getMethod() {
+	return method;
+    }
+
+    public void setMethod(Method method) {
+	this.method = method;
+    }
+
+    public Field getField() {
+	return field;
+    }
+
+    public void setField(Field field) {
+	this.field = field;
     }
 
     public TemporalType getTemporalType() {
@@ -72,6 +106,14 @@ public class QueryTuple implements Serializable {
 
     public void setTemporalType(TemporalType temporalType) {
 	this.temporalType = temporalType;
+    }
+
+    public Class<?> getGenericType() {
+	return genericType;
+    }
+
+    public void setGenericType(Class<?> genericType) {
+	this.genericType = genericType;
     }
 
     public String getAlias() {
@@ -91,9 +133,5 @@ public class QueryTuple implements Serializable {
 	if (this.alias == null || this.alias.isEmpty()) {
 	    this.alias = ALIAS_PREFIX.concat(String.valueOf(index));
 	}
-    }
-
-    public String getEntityType() {
-	return entity.concat(" ").concat(alias);
     }
 }

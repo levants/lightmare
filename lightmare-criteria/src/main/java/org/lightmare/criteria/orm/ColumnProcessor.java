@@ -30,7 +30,6 @@ import java.util.Objects;
 import javax.persistence.Temporal;
 
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.utils.reflect.ClassUtils;
 
 /**
  * Finds appropriated {@link javax.persistence.TemporalType} for field
@@ -50,14 +49,12 @@ public class ColumnProcessor {
      * @return {@link javax.persistence.Temporal} annotation
      * @throws IOException
      */
-    private static Temporal getTemporal(Class<?> entityType, String fieldName, String methodName) throws IOException {
+    private static Temporal getTemporal(Field field, Method method) throws IOException {
 
 	Temporal temporal;
 
-	Field field = ClassUtils.getDeclaredField(entityType, fieldName);
 	temporal = field.getAnnotation(Temporal.class);
 	if (temporal == null) {
-	    Method method = ClassUtils.getDeclaredMethod(entityType, methodName);
 	    temporal = method.getAnnotation(Temporal.class);
 	}
 
@@ -87,15 +84,9 @@ public class ColumnProcessor {
      */
     public static void setTemporalType(QueryTuple tuple) throws IOException {
 
-	try {
-	    String className = tuple.getEntity();
-	    Class<?> entityType = Class.forName(className);
-	    String fieldName = tuple.getFieldName();
-	    String methodName = tuple.getMethod();
-	    Temporal temporal = getTemporal(entityType, fieldName, methodName);
-	    setTemporalType(temporal, tuple);
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	}
+	Field field = tuple.getField();
+	Method method = tuple.getMethod();
+	Temporal temporal = getTemporal(field, method);
+	setTemporalType(temporal, tuple);
     }
 }
