@@ -50,25 +50,15 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F> QueryStream<T> eq(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> equals(EntityField<T, F> field, F value) throws IOException {
 	oppLine(field, value, Operators.EQ);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> equals(EntityField<T, F> field, F value) throws IOException {
-	return eq(field, value);
-    }
-
-    @Override
-    public <F> QueryStream<T> notEq(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) throws IOException {
 	oppLine(field, value, Operators.NOT_EQ);
 	return this;
-    }
-
-    @Override
-    public <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) throws IOException {
-	return notEq(field, value);
     }
 
     @Override
@@ -84,13 +74,13 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F> QueryStream<T> moreOrEq(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> moreOrEquals(EntityField<T, F> field, F value) throws IOException {
 	oppLine(field, value, Operators.MORE_OR_EQ);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> lessOrEq(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value) throws IOException {
 	oppLine(field, value, Operators.LESS_OR_EQ);
 	return this;
     }
@@ -183,14 +173,6 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	appendBody(Operators.EXISTS);
 	openBracket();
 	initSubQuery(subType, consumer);
-
-	return this;
-    }
-
-    @Override
-    public QueryStream<T> closeSubQuery() {
-	closeBracket();
-	newLine();
 
 	return this;
     }

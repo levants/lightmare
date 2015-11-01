@@ -62,10 +62,10 @@ public class QueryTest {
 
 	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
 
-	stream.where().moreOrEq(c -> c.getBirthDate(), getDateValue()).and();
+	stream.where().moreOrEquals(c -> c.getBirthDate(), getDateValue()).and();
 	stream.like(Person::getLastName, "lname");
 	stream.and().brackets(
-		part -> part.like(Person::getFirstName, "fname").or().eq(Person::getPersonalNo, PERSONAL_NO1));
+		part -> part.like(Person::getFirstName, "fname").or().equals(Person::getPersonalNo, PERSONAL_NO1));
 	stream.or().equals(Person::getInfo, null);
 	stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
 	stream.orderBy(Person::getPersonId);
@@ -102,8 +102,8 @@ public class QueryTest {
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
 	    List<Person> persons = QueryProvider.select(em, Person.class).where()
-		    .eq(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
-		    .startsWith(Person::getFirstName, "fname").or().moreOrEq(Person::getBirthDate, date).and()
+		    .equals(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+		    .startsWith(Person::getFirstName, "fname").or().moreOrEquals(Person::getBirthDate, date).and()
 		    .in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L)).toList();
 	    // =============================================//
 	    System.out.println();
@@ -126,9 +126,9 @@ public class QueryTest {
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
 	    List<Object[]> persons = QueryProvider.select(em, Person.class).where()
-		    .eq(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+		    .equals(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
 		    .brackets(stream -> stream.startsWith(Person::getFirstName, "fname").or()
-			    .moreOrEq(Person::getBirthDate, date))
+			    .moreOrEquals(Person::getBirthDate, date))
 		    .and().in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L))
 		    .select(Person::getPersonalNo, Person::getFirstName, Person::getLastName).toList();
 	    // =============================================//
@@ -151,9 +151,9 @@ public class QueryTest {
 	try {
 	    Date date = getDateValue();
 	    // ============= Query construction ============== //
-	    Long count = QueryProvider.select(em, Person.class).where().eq(Person::getPersonalNo, PERSONAL_NO1).and()
-		    .like(Person::getLastName, "lname").and().startsWith(Person::getFirstName, "fname").or()
-		    .moreOrEq(Person::getBirthDate, date).and()
+	    Long count = QueryProvider.select(em, Person.class).where().equals(Person::getPersonalNo, PERSONAL_NO1)
+		    .and().like(Person::getLastName, "lname").and().startsWith(Person::getFirstName, "fname").or()
+		    .moreOrEquals(Person::getBirthDate, date).and()
 		    .in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L)).count();
 	    // =============================================//
 	    System.out.println();
@@ -178,9 +178,9 @@ public class QueryTest {
 	    transaction.begin();
 	    // ============= Query construction ============== //
 	    int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "middName").where()
-		    .eq(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
-		    .openBracket().startsWith(Person::getFirstName, "fname").or().moreOrEq(Person::getBirthDate, date)
-		    .closeBracket().execute();
+		    .equals(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+		    .openBracket().startsWith(Person::getFirstName, "fname").or()
+		    .moreOrEquals(Person::getBirthDate, date).closeBracket().execute();
 	    // =============================================//
 	    transaction.commit();
 	    System.out.println();
@@ -208,9 +208,9 @@ public class QueryTest {
 	    transaction.begin();
 	    // ============= Query construction ============== //
 	    int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "newMiddName")
-		    .set(Person::getBirthDate, newBirthDate).where().eq(Person::getPersonalNo, PERSONAL_NO1).and()
+		    .set(Person::getBirthDate, newBirthDate).where().equals(Person::getPersonalNo, PERSONAL_NO1).and()
 		    .like(Person::getLastName, "lname").and().openBracket().startsWith(Person::getFirstName, "fname")
-		    .or().moreOrEq(Person::getBirthDate, date).closeBracket().execute();
+		    .or().moreOrEquals(Person::getBirthDate, date).closeBracket().execute();
 	    // =============================================//
 	    transaction.commit();
 	    System.out.println();
@@ -236,7 +236,7 @@ public class QueryTest {
 	    transaction.begin();
 	    // ============= Query construction ============== //
 	    QueryStream<Person> stream = QueryProvider.delete(em, Person.class).where()
-		    .eq(Person::getPersonalNo, PERSONAL_NO2).and().like(Person::getLastName, "lname").and()
+		    .equals(Person::getPersonalNo, PERSONAL_NO2).and().like(Person::getLastName, "lname").and()
 		    .startsWith(Person::getFirstName, "fname");
 	    int rows = stream.execute();
 	    // =============================================//

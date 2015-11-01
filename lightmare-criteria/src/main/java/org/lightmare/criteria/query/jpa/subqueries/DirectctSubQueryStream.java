@@ -21,29 +21,18 @@ import org.lightmare.criteria.query.SubQueryStream;
  * @param <T>entity
  *            type for generated query
  */
-public abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializable>
-	extends EntityQueryStream<S> implements SubQueryStream<S, T> {
+abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializable> extends EntityQueryStream<S>
+	implements SubQueryStream<S, T> {
 
     protected DirectctSubQueryStream(EntityManager em, Class<S> entityType, String alias) {
 	super(em, entityType, alias);
     }
 
     // ================= entity QL methods ===================================//
-    @Override
-    public <F> SubQueryStream<S, T> eq(EntityField<S, F> field, F value) throws IOException {
-	super.eq(field, value);
-	return this;
-    }
 
     @Override
     public <F> SubQueryStream<S, T> equals(EntityField<S, F> field, F value) throws IOException {
 	super.equals(field, value);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> notEq(EntityField<S, F> field, F value) throws IOException {
-	super.notEq(field, value);
 	return this;
     }
 
@@ -66,14 +55,14 @@ public abstract class DirectctSubQueryStream<S extends Serializable, T extends S
     }
 
     @Override
-    public <F> SubQueryStream<S, T> moreOrEq(EntityField<S, F> field, F value) throws IOException {
-	super.moreOrEq(field, value);
+    public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field, F value) throws IOException {
+	super.moreOrEquals(field, value);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> lessOrEq(EntityField<S, F> field, F value) throws IOException {
-	super.lessOrEq(field, value);
+    public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field, F value) throws IOException {
+	super.lessOrEquals(field, value);
 	return this;
     }
 

@@ -48,13 +48,16 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     int START = 0;
 
+    /**
+     * Gets wrapped entity {@link Class} instance
+     * 
+     * @return {@link Class} of entity type T
+     */
+    Class<T> getEntityType();
+
     // ========================= Entity method composers ====================//
 
-    <F> QueryStream<T> eq(EntityField<T, F> field, F value) throws IOException;
-
     <F> QueryStream<T> equals(EntityField<T, F> field, F value) throws IOException;
-
-    <F> QueryStream<T> notEq(EntityField<T, F> field, F value) throws IOException;
 
     <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) throws IOException;
 
@@ -62,9 +65,9 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     <F> QueryStream<T> less(EntityField<T, F> field, F value) throws IOException;
 
-    <F> QueryStream<T> moreOrEq(EntityField<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> moreOrEquals(EntityField<T, F> field, F value) throws IOException;
 
-    <F> QueryStream<T> lessOrEq(EntityField<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value) throws IOException;
 
     QueryStream<T> startsWith(EntityField<T, String> field, String value) throws IOException;
 
@@ -89,12 +92,22 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      */
     <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQuery<S, T> consumer) throws IOException;
 
+    default QueryStream<T> subQuery(SubQuery<T, T> consumer) throws IOException {
+	return subQuery(getEntityType(), consumer);
+    }
+
     <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, SubQuery<S, T> consumer)
 	    throws IOException;
 
+    default <F> QueryStream<T> in(EntityField<T, F> field, SubQuery<T, T> consumer) throws IOException {
+	return in(field, getEntityType(), consumer);
+    }
+
     <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQuery<S, T> consumer) throws IOException;
 
-    QueryStream<T> closeSubQuery();
+    default <F> QueryStream<T> exists(SubQuery<T, T> consumer) throws IOException {
+	return exists(getEntityType(), consumer);
+    }
 
     // =========================order=by=====================================//
     QueryStream<T> orderBy(EntityField<T, ?> field) throws IOException;

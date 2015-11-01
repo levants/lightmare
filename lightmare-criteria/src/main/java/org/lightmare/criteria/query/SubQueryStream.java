@@ -42,14 +42,9 @@ import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
 public interface SubQueryStream<S extends Serializable, T extends Serializable> extends QueryStream<S> {
 
     // ========================= Entity method composers ====================//
-    @Override
-    <F> SubQueryStream<S, T> eq(EntityField<S, F> field, F value) throws IOException;
 
     @Override
     <F> SubQueryStream<S, T> equals(EntityField<S, F> field, F value) throws IOException;
-
-    @Override
-    <F> SubQueryStream<S, T> notEq(EntityField<S, F> field, F value) throws IOException;
 
     @Override
     <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field, F value) throws IOException;
@@ -61,10 +56,10 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
     <F> SubQueryStream<S, T> less(EntityField<S, F> field, F value) throws IOException;
 
     @Override
-    <F> SubQueryStream<S, T> moreOrEq(EntityField<S, F> field, F value) throws IOException;
+    <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field, F value) throws IOException;
 
     @Override
-    <F> SubQueryStream<S, T> lessOrEq(EntityField<S, F> field, F value) throws IOException;
+    <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field, F value) throws IOException;
 
     @Override
     SubQueryStream<S, T> startsWith(EntityField<S, String> field, String value) throws IOException;

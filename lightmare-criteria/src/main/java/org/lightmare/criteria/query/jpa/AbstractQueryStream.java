@@ -554,33 +554,19 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	return value;
     }
 
-    // ============================= JPA Parameters =========================//
-
     // ============================= JPA Elements ===========================//
 
-    /**
-     * Gets wrapped {@link EntityManager} instance
-     * 
-     * @return {@link EntityManager} instance
-     */
+    @Override
     public EntityManager getEntityManager() {
 	return em;
     }
 
-    /**
-     * Gets wrapped entity {@link Class} instance
-     * 
-     * @return {@link Class} of entity type T
-     */
+    @Override
     public Class<T> getEntityType() {
 	return entityType;
     }
 
-    /**
-     * Gets entity alias for custom queries
-     * 
-     * @return {@link String} entity alias
-     */
+    @Override
     public String getAlias() {
 	return alias;
     }
