@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
 import org.objectweb.asm.ClassReader;
 
 /**
- * Caches read classes for synchronization sake
+ * Caches read classes for multiply and parallel uses sake
  * 
  * @author Levan Tsinadze
  *
