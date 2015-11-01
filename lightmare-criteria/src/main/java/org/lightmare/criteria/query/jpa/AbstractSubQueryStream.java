@@ -45,6 +45,8 @@ import org.lightmare.criteria.tuples.QueryTuple;
 public abstract class AbstractSubQueryStream<S extends Serializable, T extends Serializable>
 	extends EntityQueryStream<S> implements SubQueryStream<S, T> {
 
+    protected final StringBuilder sql;
+
     // Parent entity alias
     protected final String parentAlias;
 
@@ -54,6 +56,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	super(parent.getEntityManager(), entityType, parent.getAliasTuple().generate());
 	parentAlias = parent.getAlias();
 	this.parent = parent;
+	this.sql = parent.sql;
     }
 
     private void appendColumn(QueryTuple tuple) {

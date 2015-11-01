@@ -125,4 +125,15 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
 	opSubQueryCollection(sfield, field);
 	return this;
     }
+
+    @Override
+    public QueryStream<Object[]> select(EntityField<S, ?> field) throws IOException {
+
+	SubQueryStream<Object[], S> stream;
+
+	oppSelect(field);
+	stream = subQuery(Object[].class);
+
+	return stream;
+    }
 }
