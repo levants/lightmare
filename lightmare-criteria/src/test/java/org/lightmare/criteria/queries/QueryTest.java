@@ -28,6 +28,8 @@ public class QueryTest {
 
     private static final String PERSONAL_NO2 = "10100100111";
 
+    protected static final Long[] IDENTIFIERS = { 1L, 2L, 3L, 4L, 5L };
+
     protected static EntityManagerFactory emf;
 
     private static Date defaultDate = new Date();
@@ -69,7 +71,7 @@ public class QueryTest {
 	stream.or().equals(Person::getInfo, null);
 	stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
 	stream.orderBy(Person::getPersonId);
-	stream.in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L));
+	stream.in(Person::getPersonId, IDENTIFIERS);
 
 	return stream;
     }
@@ -104,7 +106,7 @@ public class QueryTest {
 	    List<Person> persons = QueryProvider.select(em, Person.class).where()
 		    .equals(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
 		    .startsWith(Person::getFirstName, "fname").or().moreOrEquals(Person::getBirthDate, date).and()
-		    .in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L)).toList();
+		    .in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).toList();
 	    // =============================================//
 	    System.out.println();
 	    System.out.println("-------Entity----");
@@ -129,7 +131,7 @@ public class QueryTest {
 		    .equals(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
 		    .brackets(stream -> stream.startsWith(Person::getFirstName, "fname").or()
 			    .moreOrEquals(Person::getBirthDate, date))
-		    .and().in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L))
+		    .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS))
 		    .select(Person::getPersonalNo, Person::getFirstName, Person::getLastName).toList();
 	    // =============================================//
 	    System.out.println();
@@ -153,8 +155,8 @@ public class QueryTest {
 	    // ============= Query construction ============== //
 	    Long count = QueryProvider.select(em, Person.class).where().equals(Person::getPersonalNo, PERSONAL_NO1)
 		    .and().like(Person::getLastName, "lname").and().startsWith(Person::getFirstName, "fname").or()
-		    .moreOrEquals(Person::getBirthDate, date).and()
-		    .in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L)).count();
+		    .moreOrEquals(Person::getBirthDate, date).and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS))
+		    .count();
 	    // =============================================//
 	    System.out.println();
 	    System.out.println("-------Entity----");
@@ -257,7 +259,6 @@ public class QueryTest {
     @Test
     @RunOrder(6)
     public void cacheTest() {
-
 	supplierEntityTest();
 	supplierEntityTest();
     }

@@ -28,7 +28,7 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 
 Query can be composed by org.lightmare.criteria.query.QueryProvider.select method call:
 ```java
-  List<Person> persons = QueryProvider.select(em, Person.class).where()
+  List<Person> persons = QueryProvider.query(em, Person.class).where()
   			.equals(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().startsWith(Person::getFirstName, "fname")
@@ -69,4 +69,16 @@ Query also can be linked dynamically:
 		     stream.or().moreOrEquals(Person::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
 ```
+Implementation of sub queries is also in functional manner:
+```java
+  List<Person> persons = QueryProvider.query(em, Person.class).where()
+  			.equals(Person::getPrivatNumber, "10010010011")
+		    .and().like(Person::getLastName, "lname")
+		    .and().exists(Phone.class, c -> c.where().in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
+		                               .and()
+		                               .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
+		    .orderBy(Person::getLastName)
+		    .orderByDesc(Person::getBirthDate).toList(); 
+```
+
 enjoy :)

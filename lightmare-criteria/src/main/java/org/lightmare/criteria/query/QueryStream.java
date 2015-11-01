@@ -24,6 +24,7 @@ package org.lightmare.criteria.query;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
@@ -79,6 +80,10 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) throws IOException;
 
+    default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) throws IOException {
+	return in(field, Arrays.asList(values));
+    }
+
     QueryStream<T> isNull(EntityField<T, ?> field) throws IOException;
 
     QueryStream<T> notNull(EntityField<T, ?> field) throws IOException;
@@ -90,20 +95,22 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * @param subType
      * @return {@link SubQueryStream}
      */
-    <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer) throws IOException;
+    <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer)
+	    throws IOException;
 
     default QueryStream<T> subQuery(SubQueryConsumer<T, T> consumer) throws IOException {
 	return subQuery(getEntityType(), consumer);
     }
 
-    <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer)
-	    throws IOException;
+    <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
+	    SubQueryConsumer<S, T> consumer) throws IOException;
 
     default <F> QueryStream<T> in(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) throws IOException {
 	return in(field, getEntityType(), consumer);
     }
 
-    <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer) throws IOException;
+    <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer)
+	    throws IOException;
 
     default <F> QueryStream<T> exists(SubQueryConsumer<T, T> consumer) throws IOException {
 	return exists(getEntityType(), consumer);
