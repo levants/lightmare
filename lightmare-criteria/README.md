@@ -72,12 +72,13 @@ Query also can be linked dynamically:
 ```
 # Subqueries
 
-Implementation of sub queries is also in functional manner:
+Implementations of sub queries are by calling exits or in functions:
 ```java
   List<Person> persons = QueryProvider.query(em, Person.class).where()
   			.equals(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
-		    .and().exists(Phone.class, c -> c.where().in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
+		    .and().exists(Phone.class, c -> c.where()
+		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
 		                               .and()
 		                               .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)

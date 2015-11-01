@@ -64,7 +64,7 @@ public class GenericProcessor {
 
 	Type type = field.getGenericType();
 	if (type instanceof ParameterizedType) {
-	    ParameterizedType parametrizedType = ObjectUtils.cast(field);
+	    ParameterizedType parametrizedType = ObjectUtils.cast(type);
 	    Type parameterType = CollectionUtils.getFirst(parametrizedType.getActualTypeArguments());
 	    validateAndSetType(parameterType, tuple);
 	}

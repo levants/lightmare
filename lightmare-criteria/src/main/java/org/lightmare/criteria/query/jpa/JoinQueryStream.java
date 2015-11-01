@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa.joins;
+package org.lightmare.criteria.query.jpa;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -29,7 +29,6 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.SubQueryStream;
 
 /**
  * Interface for [INNER, LEFT, FETCH] JOIN implementations
@@ -39,8 +38,7 @@ import org.lightmare.criteria.query.SubQueryStream;
  * @param <T>
  *            entity type for generated query
  */
-public interface JoinQueryStream<T extends Serializable, E extends Serializable, C extends Collection<E>>
-	extends SubQueryStream<E, T> {
+public interface JoinQueryStream<T extends Serializable> {
 
     /**
      * Method for INNER JOIN function call
@@ -50,7 +48,8 @@ public interface JoinQueryStream<T extends Serializable, E extends Serializable,
      * @return {@link QueryStream} current instance
      * @throws IOException
      */
-    JoinQueryStream<T, E, C> join(EntityField<T, C> field, SubQueryConsumer<E, T> consumer) throws IOException;
+    <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field,
+	    SubQueryConsumer<E, T> consumer) throws IOException;
 
     /**
      * Method for LEFT JOIN function class
@@ -60,7 +59,8 @@ public interface JoinQueryStream<T extends Serializable, E extends Serializable,
      * @return {@link QueryStream} current instance
      * @throws IOException
      */
-    JoinQueryStream<T, E, C> leftJoin(EntityField<T, C> field, SubQueryConsumer<E, T> consumer) throws IOException;
+    <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
+	    SubQueryConsumer<E, T> consumer) throws IOException;
 
     /**
      * Method for FETCH JOIN function call
@@ -70,5 +70,6 @@ public interface JoinQueryStream<T extends Serializable, E extends Serializable,
      * @return {@link QueryStream} current instance
      * @throws IOException
      */
-    JoinQueryStream<T, E, C> fetchJoin(EntityField<T, C> field, SubQueryConsumer<E, T> consumer) throws IOException;
+    <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
+	    SubQueryConsumer<E, T> consumer) throws IOException;
 }

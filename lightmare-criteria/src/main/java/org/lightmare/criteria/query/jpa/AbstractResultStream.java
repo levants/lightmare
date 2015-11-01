@@ -40,7 +40,7 @@ import org.lightmare.criteria.tuples.ParameterTuple;
  * @param <T>
  *            entity type for generated query
  */
-abstract class AbstractResultStream<T extends Serializable> extends AbstractQueryStream<T> {
+abstract class AbstractResultStream<T extends Serializable> extends AbstractJoinStream<T> {
 
     protected AbstractResultStream(EntityManager em, Class<T> entityType, String alias) {
 	super(em, entityType, alias);

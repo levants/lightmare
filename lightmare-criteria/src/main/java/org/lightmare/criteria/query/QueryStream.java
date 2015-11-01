@@ -30,6 +30,7 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
+import org.lightmare.criteria.query.jpa.JoinQueryStream;
 import org.lightmare.criteria.query.jpa.ResultStream;
 import org.lightmare.criteria.query.jpa.SelectStatements;
 
@@ -41,7 +42,7 @@ import org.lightmare.criteria.query.jpa.SelectStatements;
  * @param <T>
  *            entity type for generated query
  */
-public interface QueryStream<T extends Serializable> extends SelectStatements<T>, ResultStream<T> {
+public interface QueryStream<T extends Serializable> extends SelectStatements<T>, JoinQueryStream<T>, ResultStream<T> {
 
     String DEFAULT_ALIAS = "c";
 

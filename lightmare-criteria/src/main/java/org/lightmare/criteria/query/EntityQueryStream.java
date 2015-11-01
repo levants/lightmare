@@ -131,12 +131,12 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     // =========================Sub queries ===============//
 
-    protected <S extends Serializable> SubQueryStream<S, T> subQuery(Class<S> subType) {
+    public <S extends Serializable> SubQueryStream<S, T> subQuery(Class<S> subType) {
 	return new EntitySubQueryStream<S, T>(this, subType);
     }
 
-    private <S extends Serializable> SubQueryStream<S, T> initSubQuery(Class<S> subType, SubQueryConsumer<S, T> consumer)
-	    throws IOException {
+    private <S extends Serializable> SubQueryStream<S, T> initSubQuery(Class<S> subType,
+	    SubQueryConsumer<S, T> consumer) throws IOException {
 
 	SubQueryStream<S, T> subQuery = subQuery(subType);
 
