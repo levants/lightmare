@@ -14,7 +14,40 @@ import org.lightmare.criteria.runorder.SortedRunner;
 @RunWith(SortedRunner.class)
 public class SubQueryTest extends QueryTest {
 
-    @RunOrder(100)
+    @RunOrder(100.1)
+    @Test
+    public void subQueryTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().subQuery(Phone.class,
+		    c -> c.where().equals(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @RunOrder(100.1)
+    @Test
+    public void subQueryCallTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().subQuery(Phone.class,
+		    c -> c.where().equals(Phone::getPhoneNumber, "100100").and()
+			    .equals(Phone::getOperatorId, Person::getPersonId).select(Phone::getPhoneNumber));
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @RunOrder(100.1)
     @Test
     public void subQuerySelectTest() {
 
@@ -40,6 +73,22 @@ public class SubQueryTest extends QueryTest {
 	    // ============= Query construction ============== //
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
 		    c -> c.where().equals(Phone::getPhoneNumber, "100100").get());
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @RunOrder(100.51)
+    @Test
+    public void subQueryExistsCallTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
+		    c -> c.where().equals(Phone::getPhoneNumber, "100100").and());
 	    String sql = stream.sql();
 	    System.out.println(sql);
 	} catch (Throwable ex) {

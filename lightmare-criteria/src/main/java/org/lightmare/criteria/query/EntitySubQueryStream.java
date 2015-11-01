@@ -46,6 +46,7 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
 	super(parent, type);
     }
 
+    // ========================= Entity and parent method composers =========//
     @Override
     public <F> SubQueryStream<S, T> eq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
 	opSubQuery(sfield, field, Operators.EQ);

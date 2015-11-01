@@ -24,11 +24,14 @@ package org.lightmare.criteria.query.jpa;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.lambda.EntityField;
+import org.lightmare.criteria.lambda.QueryField;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.EntityQueryStream;
@@ -57,12 +60,108 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 
     protected final EntityQueryStream<T> parent;
 
+    private SubSelectStream<S> subSelect;
+
+    private boolean preparedState = Boolean.TRUE;
+
     protected AbstractSubQueryStream(final EntityQueryStream<T> parent, Class<S> entityType) {
 	super(parent.getEntityManager(), entityType, parent.getAliasTuple().generate());
 	parentAlias = parent.getAlias();
 	this.parent = parent;
 	this.sql = parent.sql;
     }
+
+    // ================= entity QL methods ===================================//
+    @Override
+    public <F> SubQueryStream<S, T> eq(EntityField<S, F> field, F value) throws IOException {
+	super.eq(field, value);
+	return this;
+    }
+
+    @Override
+    public <F> SubQueryStream<S, T> equals(EntityField<S, F> field, F value) throws IOException {
+	super.equals(field, value);
+	return this;
+    }
+
+    @Override
+    public <F> SubQueryStream<S, T> notEq(EntityField<S, F> field, F value) throws IOException {
+	super.notEq(field, value);
+	return this;
+    }
+
+    @Override
+    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field, F value) throws IOException {
+	super.notEquals(field, value);
+	return this;
+    }
+
+    @Override
+    public <F> SubQueryStream<S, T> more(EntityField<S, F> field, F value) throws IOException {
+	super.more(field, value);
+	return this;
+    }
+
+    @Override
+    public <F> SubQueryStream<S, T> less(EntityField<S, F> field, F value) throws IOException {
+	super.less(field, value);
+	return this;
+    }
+
+    @Override
+    public <F> SubQueryStream<S, T> moreOrEq(EntityField<S, F> field, F value) throws IOException {
+	super.moreOrEq(field, value);
+	return this;
+    }
+
+    @Override
+    public <F> SubQueryStream<S, T> lessOrEq(EntityField<S, F> field, F value) throws IOException {
+	super.lessOrEq(field, value);
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> startsWith(EntityField<S, String> field, String value) throws IOException {
+	super.startsWith(field, value);
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> like(EntityField<S, String> field, String value) throws IOException {
+	super.like(field, value);
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> endsWith(EntityField<S, String> field, String value) throws IOException {
+	super.endsWith(field, value);
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> contains(EntityField<S, String> field, String value) throws IOException {
+	super.startsWith(field, value);
+	return this;
+    }
+
+    @Override
+    public <F> SubQueryStream<S, T> in(EntityField<S, F> field, Collection<F> values) throws IOException {
+	super.in(field, values);
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> isNull(EntityField<S, ?> field) throws IOException {
+	super.isNull(field);
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> notNull(EntityField<S, ?> field) throws IOException {
+	super.notNull(field);
+	return this;
+    }
+    // ================= entity QL methods ===================================//
 
     @SafeVarargs
     protected final QueryStream<Object[]> subSelectAll(EntityField<S, ?>... fields) throws IOException {
@@ -71,6 +170,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 
 	oppSelect(fields);
 	stream = new SubSelectStream<>(this);
+	subSelect = stream;
 
 	return stream;
     }
@@ -113,8 +213,90 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	body.append(NEW_LINE);
     }
 
+    // ====================================================//
+    @Override
+    public SubQueryStream<S, T> where() {
+	super.where();
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> and() {
+	super.and();
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> or() {
+	super.or();
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> openBracket() {
+	super.openBracket();
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> closeBracket() {
+	super.closeBracket();
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> brackets(QueryField<S> field) throws IOException {
+	super.brackets(field);
+	return this;
+    }
+    // ======================================================================//
+
+    /**
+     * Appends to generated query prefix custom clause
+     * 
+     * @param clause
+     * @return {@link SubQueryStream} current instance
+     */
+    @Override
+    public SubQueryStream<S, T> appendPrefix(Object clause) {
+	super.appendPrefix(clause);
+	return this;
+    }
+
+    /**
+     * Appends to generated query body custom clause
+     * 
+     * @param clause
+     * @return {@link SubQueryStream} current instance
+     */
+    @Override
+    public SubQueryStream<S, T> appendBody(Object clause) {
+	super.appendBody(clause);
+	return this;
+    }
+
     protected void appendToParent(CharSequence clause) {
 	parent.appendBody(clause);
+    }
+
+    private void switchState() {
+	preparedState = Boolean.FALSE;
+    }
+
+    private void callState(CharSequence clause) {
+
+	if (preparedState) {
+	    appendToParent(clause);
+	    switchState();
+	}
+    }
+
+    private void callState() {
+
+	if (preparedState) {
+	    appendToParent();
+	    switchState();
+	}
     }
 
     private void appendToParent() {
@@ -125,25 +307,43 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 
     @Override
     public List<S> toList() {
-	appendToParent();
+	callState();
 	return null;
     }
 
     @Override
     public S get() {
-	appendToParent();
+	callState();
 	return null;
     }
 
     @Override
     public Long count() {
 	String query = countSql();
-	appendToParent(query);
+	callState(query);
 	return null;
     }
 
     @Override
     public int execute() {
 	return CollectionUtils.EMPTY;
+    }
+
+    private void chectStateAndCall() {
+
+	if (Objects.nonNull(subSelect)) {
+	    subSelect.get();
+	} else {
+	    get();
+	}
+    }
+
+    @Override
+    public void call() {
+
+	if (preparedState) {
+	    chectStateAndCall();
+	    switchState();
+	}
     }
 }
