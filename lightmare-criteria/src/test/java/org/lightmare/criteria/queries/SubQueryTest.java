@@ -128,4 +128,38 @@ public class SubQueryTest extends QueryTest {
 	    ex.printStackTrace();
 	}
     }
+
+    @RunOrder(101.1)
+    @Test
+    public void subQueryCountWithParentTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
+		    Phone.class, c -> c.where().equals(Phone::getPhoneNumber, "100100").and()
+			    .lessOrEq(Phone::getOperatorId, Person::getPersonId).count());
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @RunOrder(101.2)
+    @Test
+    public void subQueryCountWithParentInTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
+		    Phone.class, c -> c.where().equals(Phone::getPhoneNumber, "100100").and()
+			    .in(Phone::getOperatorId, Person::getIdentifiers).count());
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
 }

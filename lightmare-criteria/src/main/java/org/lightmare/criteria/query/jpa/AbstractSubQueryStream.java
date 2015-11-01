@@ -203,9 +203,9 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	body.append(NEW_LINE);
     }
 
-    protected void opSubQueryCollection(Object field, Object sfield) throws IOException {
+    protected void opSubQueryCollection(Object sfield, Object field) throws IOException {
 
-	opSubQuery(field, sfield, Operators.IN);
+	opp(sfield, Operators.IN);
 	QueryTuple tuple = compose(field);
 	openBracket();
 	appendColumn(tuple);
