@@ -27,7 +27,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.lightmare.criteria.lambda.EntityField;
-import org.lightmare.criteria.lambda.QueryField;
+import org.lightmare.criteria.lambda.QueryConsumer;
 import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
 
 /**
@@ -157,7 +157,7 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
      * @throws IOException
      */
     @Override
-    SubQueryStream<S, T> brackets(QueryField<S> field) throws IOException;
+    SubQueryStream<S, T> brackets(QueryConsumer<S> field) throws IOException;
 
     // ======================================================================//
 

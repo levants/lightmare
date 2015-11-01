@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type
  */
 @FunctionalInterface
-public interface QueryField<T extends Serializable> {
+public interface QueryConsumer<T extends Serializable> {
 
     void accept(QueryStream<T> stream) throws IOException;
 }

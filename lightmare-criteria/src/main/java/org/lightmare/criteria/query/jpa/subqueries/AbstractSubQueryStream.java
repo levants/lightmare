@@ -42,10 +42,10 @@ import org.lightmare.utils.collections.CollectionUtils;
  * 
  * @author Levan Tsinadze
  *
- * @param <S>entity
- *            type for generated (sub) query
- * @param <T>entity
- *            type for generated query
+ * @param <S>
+ *            entity type for generated (sub) query
+ * @param <T>
+ *            entity type for generated query
  */
 public abstract class AbstractSubQueryStream<S extends Serializable, T extends Serializable>
 	extends DirectctSubQueryStream<S, T> {

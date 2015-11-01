@@ -7,7 +7,7 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.lambda.EntityField;
-import org.lightmare.criteria.lambda.QueryField;
+import org.lightmare.criteria.lambda.QueryConsumer;
 import org.lightmare.criteria.query.EntityQueryStream;
 import org.lightmare.criteria.query.SubQueryStream;
 
@@ -16,10 +16,10 @@ import org.lightmare.criteria.query.SubQueryStream;
  * 
  * @author Levan Tsinadze
  *
- * @param <S>entity
- *            type for generated (sub) query
- * @param <T>entity
- *            type for generated query
+ * @param <S>
+ *            entity type for generated (sub) query
+ * @param <T>
+ *            entity type for generated query
  */
 abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializable> extends EntityQueryStream<S>
 	implements SubQueryStream<S, T> {
@@ -141,31 +141,19 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
     }
 
     @Override
-    public SubQueryStream<S, T> brackets(QueryField<S> field) throws IOException {
-	super.brackets(field);
+    public SubQueryStream<S, T> brackets(QueryConsumer<S> consumer) throws IOException {
+	super.brackets(consumer);
 	return this;
     }
 
     // ================= entity QL Filters ===================================//
 
-    /**
-     * Appends to generated query prefix custom clause
-     * 
-     * @param clause
-     * @return {@link SubQueryStream} current instance
-     */
     @Override
     public SubQueryStream<S, T> appendPrefix(Object clause) {
 	super.appendPrefix(clause);
 	return this;
     }
 
-    /**
-     * Appends to generated query body custom clause
-     * 
-     * @param clause
-     * @return {@link SubQueryStream} current instance
-     */
     @Override
     public SubQueryStream<S, T> appendBody(Object clause) {
 	super.appendBody(clause);

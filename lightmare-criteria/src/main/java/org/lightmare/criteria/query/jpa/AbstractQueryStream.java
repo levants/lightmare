@@ -39,7 +39,7 @@ import org.lightmare.criteria.cache.QueryCache;
 import org.lightmare.criteria.lambda.EntityField;
 import org.lightmare.criteria.lambda.LambdaData;
 import org.lightmare.criteria.lambda.LambdaReplacements;
-import org.lightmare.criteria.lambda.QueryField;
+import org.lightmare.criteria.lambda.QueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
@@ -475,7 +475,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     }
 
     @Override
-    public QueryStream<T> brackets(QueryField<T> consumer) throws IOException {
+    public QueryStream<T> brackets(QueryConsumer<T> consumer) throws IOException {
 
 	openBracket();
 	consumer.accept(this);
