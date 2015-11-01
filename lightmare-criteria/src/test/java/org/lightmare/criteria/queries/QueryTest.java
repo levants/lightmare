@@ -64,8 +64,8 @@ public class QueryTest {
 
 	stream.where().moreOrEq(c -> c.getBirthDate(), getDateValue()).and();
 	stream.like(Person::getLastName, "lname");
-	stream.and().like(Person::getFirstName, "fname");
-	stream.or().eq(Person::getPersonalNo, PERSONAL_NO1);
+	stream.and().brackets(
+		part -> part.like(Person::getFirstName, "fname").or().eq(Person::getPersonalNo, PERSONAL_NO1));
 	stream.or().equals(Person::getInfo, null);
 	stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
 	stream.orderBy(Person::getPersonId);
@@ -127,8 +127,9 @@ public class QueryTest {
 	    // ============= Query construction ============== //
 	    List<Object[]> persons = QueryProvider.select(em, Person.class).where()
 		    .eq(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
-		    .startsWith(Person::getFirstName, "fname").or().moreOrEq(Person::getBirthDate, date).and()
-		    .in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L))
+		    .brackets(stream -> stream.startsWith(Person::getFirstName, "fname").or()
+			    .moreOrEq(Person::getBirthDate, date))
+		    .and().in(Person::getPersonId, Arrays.asList(1L, 2L, 3L, 4L, 5L))
 		    .select(Person::getPersonalNo, Person::getFirstName, Person::getLastName).toList();
 	    // =============================================//
 	    System.out.println();

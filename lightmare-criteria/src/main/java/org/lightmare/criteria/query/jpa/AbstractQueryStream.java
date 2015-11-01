@@ -39,6 +39,7 @@ import org.lightmare.criteria.cache.QueryCache;
 import org.lightmare.criteria.lambda.EntityField;
 import org.lightmare.criteria.lambda.LambdaData;
 import org.lightmare.criteria.lambda.LambdaReplacements;
+import org.lightmare.criteria.lambda.QueryField;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
@@ -352,6 +353,15 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	body.append(NEW_LINE);
     }
 
+    protected void removeNewLine() {
+
+	int last = body.length();
+	int first = last - CollectionUtils.SINGLTON_LENGTH;
+	if (body.charAt(first) == StringUtils.LINE) {
+	    body.delete(first, last);
+	}
+    }
+
     protected void oppLine(Object field, String expression) throws IOException {
 	opp(field, expression);
 	newLine();
@@ -442,6 +452,17 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     @Override
     public QueryStream<T> closeBracket() {
 	body.append(Operators.CLOSE_BRACKET);
+	return this;
+    }
+
+    @Override
+    public QueryStream<T> brackets(QueryField<T> consumer) throws IOException {
+
+	openBracket();
+	consumer.accept(this);
+	removeNewLine();
+	closeBracket();
+
 	return this;
     }
 

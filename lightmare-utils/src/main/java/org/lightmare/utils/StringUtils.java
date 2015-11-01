@@ -46,6 +46,8 @@ public abstract class StringUtils {
 
     public static final String NEWLINE = "\n";
 
+    public static final char LINE = '\n';
+
     public static final int NOT_EXISTING_INDEX = -1;
 
     /**
