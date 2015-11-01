@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.lightmare.criteria.lambda.EntityField;
+import org.lightmare.criteria.lambda.SubQuery;
 import org.lightmare.criteria.query.jpa.ResultStream;
 import org.lightmare.criteria.query.jpa.SelectStatements;
 
@@ -81,7 +82,13 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     // =========================sub=queries==================================//
     <F, S extends Serializable> SubQueryStream<S, T> in(EntityField<T, F> field, Class<S> subType) throws IOException;
 
+    <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
+	    SubQuery<S, T> consumer) throws IOException;
+
     <F, S extends Serializable> SubQueryStream<S, T> exists(Class<S> subType) throws IOException;
+
+    <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQuery<S, T> consumer)
+	    throws IOException;
 
     QueryStream<T> closeSubQuery();
 

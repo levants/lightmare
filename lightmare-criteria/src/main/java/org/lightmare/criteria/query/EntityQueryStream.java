@@ -29,6 +29,7 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.lambda.EntityField;
+import org.lightmare.criteria.lambda.SubQuery;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
@@ -138,7 +139,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	return this;
     }
 
-    // ============Sub queries ================//
+    // =========================Sub queries ===============//
     @Override
     public <F, S extends Serializable> SubQueryStream<S, T> in(EntityField<T, F> field, Class<S> subType)
 	    throws IOException {
@@ -149,6 +150,19 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	subQuery = subQuery(subType);
 
 	return subQuery;
+    }
+
+    @Override
+    public <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
+	    SubQuery<S, T> consumer) throws IOException {
+
+	appSubQuery(field, Operators.IN);
+	SubQueryStream<S, T> subQuery = subQuery(subType);
+	consumer.accept(subQuery);
+	closeBracket();
+	newLine();
+
+	return this;
     }
 
     @Override
@@ -164,12 +178,28 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
+    public <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQuery<S, T> consumer)
+	    throws IOException {
+
+	appendBody(Operators.EXISTS);
+	openBracket();
+	SubQueryStream<S, T> subQuery = subQuery(subType);
+	consumer.accept(subQuery);
+	closeBracket();
+	newLine();
+
+	return this;
+    }
+
+    @Override
     public QueryStream<T> closeSubQuery() {
 	closeBracket();
 	newLine();
 
 	return this;
     }
+
+    // =======================================================================//
 
     @Override
     public <F> QueryStream<T> set(EntityField<T, F> field, F value) throws IOException {

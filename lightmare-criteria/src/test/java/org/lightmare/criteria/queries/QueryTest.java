@@ -28,7 +28,7 @@ public class QueryTest {
 
     private static final String PERSONAL_NO2 = "10100100111";
 
-    private static EntityManagerFactory emf;
+    protected static EntityManagerFactory emf;
 
     private static Date defaultDate = new Date();
 
