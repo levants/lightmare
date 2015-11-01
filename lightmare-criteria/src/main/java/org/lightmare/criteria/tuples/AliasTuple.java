@@ -31,9 +31,9 @@ package org.lightmare.criteria.tuples;
  */
 public class AliasTuple {
 
-    final String alias;
+    private final String alias;
 
-    final int counter;
+    private final int counter;
 
     public AliasTuple(final String alias, final int counter) {
 	this.alias = alias;

@@ -29,7 +29,7 @@ import java.util.Objects;
 
 import javax.persistence.TemporalType;
 
-import org.lightmare.criteria.lambda.EntityField;
+import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.EntityQueryStream;

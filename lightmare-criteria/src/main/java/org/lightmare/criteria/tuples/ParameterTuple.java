@@ -29,8 +29,6 @@ import javax.persistence.TemporalType;
  * 
  * @author Levan Tsinadze
  *
- * @param
- * 	   <P>
  */
 public class ParameterTuple {
 

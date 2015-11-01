@@ -29,10 +29,10 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 Query can be composed by org.lightmare.criteria.query.QueryProvider.select method call:
 ```java
   List<Person> persons = QueryProvider.select(em, Person.class).where()
-  			.eq(Person::getPrivatNumber, "10010010011")
+  			.equals(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().startsWith(Person::getFirstName, "fname")
-		    .or().moreOrEq(Person::getBirthDate, new Date()).
+		    .or().moreOrEqual(Person::getBirthDate, new Date()).
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```	
@@ -43,11 +43,11 @@ or for bulk update by org.lightmare.criteria.query.QueryProvider.update method c
   			.set(Person::getMiddName, "newMiddName")
   			.set(Person::getFirstName, "newFName")
   			.where()
-  			.eq(Person::getPrivatNumber, "10010010011")
+  			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .openBracket()
 		    .and().startsWith(Person::getFirstName, "fname")
-		    .or().moreOrEq(Person::getBirthDate, new Date())
+		    .or().moreOrEqual(Person::getBirthDate, new Date())
 		    .closeBracket().execute(); 
 ```
 or for bulk delete by org.lightmare.criteria.query.QueryProvider.delete method call:
@@ -56,17 +56,17 @@ or for bulk delete by org.lightmare.criteria.query.QueryProvider.delete method c
   			.set(Person::getMiddName, "newMiddName")
   			.set(Person::getFirstName, "newFName")
   			.where()
-  			.eq(Person::getPrivatNumber, "10010010011")
+  			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .execute(); 
 ```	
 Query also can be linked dynamically:
 ```java
   QueryStream<Person> stream = QueryProvider.select(em, Person.class);
-  			 stream.where().eq(Person::getPrivatNumber, "10010010011");
+  			 stream.where().equal(Person::getPrivatNumber, "10010010011");
 		     stream.and().like(Person::getLastName, "lname");
 		     stream.and().startsWith(Person::getFirstName, "fname");
-		     stream.or().moreOrEq(Person::getBirthDate, Calendar.getInstance());
+		     stream.or().moreOrEquals(Person::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
 ```
 enjoy :)

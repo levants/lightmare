@@ -36,10 +36,10 @@ import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 import org.lightmare.criteria.cache.QueryCache;
-import org.lightmare.criteria.lambda.EntityField;
+import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.lambda.LambdaData;
 import org.lightmare.criteria.lambda.LambdaReplacements;
-import org.lightmare.criteria.lambda.QueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;

@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.jpa;
 import java.io.IOException;
 import java.io.Serializable;
 
-import org.lightmare.criteria.lambda.EntityField;
+import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
 
 /**

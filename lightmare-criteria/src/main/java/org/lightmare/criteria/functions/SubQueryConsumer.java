@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.lambda;
+package org.lightmare.criteria.functions;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -38,7 +38,7 @@ import org.lightmare.criteria.query.SubQueryStream;
  *            entity type
  */
 @FunctionalInterface
-public interface SubQuery<S extends Serializable, T extends Serializable> extends Serializable {
+public interface SubQueryConsumer<S extends Serializable, T extends Serializable> extends Serializable {
 
     void accept(SubQueryStream<S, T> subQuery) throws IOException;
 }

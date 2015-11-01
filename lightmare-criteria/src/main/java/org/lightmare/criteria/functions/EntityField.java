@@ -20,23 +20,21 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.lambda;
+package org.lightmare.criteria.functions;
 
-import java.io.IOException;
 import java.io.Serializable;
-
-import org.lightmare.criteria.query.QueryStream;
+import java.util.function.Function;
 
 /**
- * Query parts generator
+ * Interface for getter method reference call with entities
  * 
  * @author Levan Tsinadze
  *
- * @param <T>
- *            entity type
+ * @param <T,F>
+ *            entity and field type parameters respectively
  */
 @FunctionalInterface
-public interface QueryConsumer<T extends Serializable> {
+public interface EntityField<T, F> extends Function<T, F>, Serializable {
 
-    void accept(QueryStream<T> stream) throws IOException;
+    F apply(T value);
 }

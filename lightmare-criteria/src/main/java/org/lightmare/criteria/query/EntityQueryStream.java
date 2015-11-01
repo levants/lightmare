@@ -28,8 +28,8 @@ import java.util.Collection;
 
 import javax.persistence.EntityManager;
 
-import org.lightmare.criteria.lambda.EntityField;
-import org.lightmare.criteria.lambda.SubQuery;
+import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
@@ -135,7 +135,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	return new EntitySubQueryStream<S, T>(this, subType);
     }
 
-    private <S extends Serializable> SubQueryStream<S, T> initSubQuery(Class<S> subType, SubQuery<S, T> consumer)
+    private <S extends Serializable> SubQueryStream<S, T> initSubQuery(Class<S> subType, SubQueryConsumer<S, T> consumer)
 	    throws IOException {
 
 	SubQueryStream<S, T> subQuery = subQuery(subType);
@@ -149,7 +149,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQuery<S, T> consumer)
+    public <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer)
 	    throws IOException {
 	openBracket();
 	initSubQuery(subType, consumer);
@@ -159,7 +159,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     @Override
     public <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
-	    SubQuery<S, T> consumer) throws IOException {
+	    SubQueryConsumer<S, T> consumer) throws IOException {
 	appSubQuery(field, Operators.IN);
 	initSubQuery(subType, consumer);
 
@@ -167,7 +167,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQuery<S, T> consumer)
+    public <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer)
 	    throws IOException {
 
 	appendBody(Operators.EXISTS);
