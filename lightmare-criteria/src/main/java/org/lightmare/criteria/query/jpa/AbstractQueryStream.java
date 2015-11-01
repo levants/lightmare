@@ -392,7 +392,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     }
 
     private void setParameters(Query query) {
-	setConfiguration(query);
+	setJPAConfiguration(query);
 	parameters.forEach(c -> query.setParameter(c.getName(), c.getValue()));
     }
 

@@ -329,6 +329,10 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	return CollectionUtils.EMPTY;
     }
 
+    /**
+     * Checks state and if state in prepared mode calls appropriated query
+     * method
+     */
     private void chectStateAndCall() {
 
 	if (Objects.nonNull(subSelect)) {

@@ -139,7 +139,7 @@ abstract class AbstractJPAQueryWrapper<T extends Serializable> implements JPAQue
      * 
      * @param query
      */
-    protected void setConfiguration(Query query) {
+    protected void setJPAConfiguration(Query query) {
 
 	putFirstResult(query);
 	putMaxResult(query);

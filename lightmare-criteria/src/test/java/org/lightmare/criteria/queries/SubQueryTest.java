@@ -14,7 +14,7 @@ import org.lightmare.criteria.runorder.SortedRunner;
 @RunWith(SortedRunner.class)
 public class SubQueryTest extends QueryTest {
 
-    @RunOrder(100.1)
+    @RunOrder(100)
     @Test
     public void subQueryTest() {
 
@@ -47,7 +47,7 @@ public class SubQueryTest extends QueryTest {
 	}
     }
 
-    @RunOrder(100.1)
+    @RunOrder(100.2)
     @Test
     public void subQuerySelectTest() {
 
@@ -88,7 +88,8 @@ public class SubQueryTest extends QueryTest {
 	try {
 	    // ============= Query construction ============== //
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
-		    c -> c.where().equals(Phone::getPhoneNumber, "100100").and());
+		    c -> c.where().equals(Phone::getPhoneNumber, "100100").and().moreOrEq(Phone::getOperatorId,
+			    Person::getPersonId));
 	    String sql = stream.sql();
 	    System.out.println(sql);
 	} catch (Throwable ex) {
