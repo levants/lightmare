@@ -26,11 +26,14 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.TemporalType;
+
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.EntityQueryStream;
 import org.lightmare.criteria.query.SubQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Main class to operate on sub queries and generate query clauses
@@ -59,6 +62,21 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	this.sql = parent.sql;
     }
 
+    @Override
+    public void addParameter(String key, Object value) {
+	parent.addParameter(key, value);
+    }
+
+    @Override
+    public void addParameter(String key, Object value, TemporalType temporalType) {
+	parent.addParameter(key, value, temporalType);
+    }
+
+    @Override
+    protected <F> void addParameter(String key, QueryTuple tuple, F value) {
+	parent.addParameter(key, tuple, value);
+    }
+
     private void appendColumn(QueryTuple tuple) {
 	body.append(parentAlias).append(Parts.COLUMN_PREFIX);
 	body.append(tuple.getField());
@@ -82,11 +100,32 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	body.append(NEW_LINE);
     }
 
-    @Override
-    public List<S> toList() {
+    private void appendToParent() {
 	String query = sql();
 	parent.appendBody(query);
+    }
 
+    @Override
+    public List<S> toList() {
+	appendToParent();
 	return null;
+    }
+
+    @Override
+    public S get() {
+	appendToParent();
+	return null;
+    }
+
+    @Override
+    public Long count() {
+	String query = countSql();
+	parent.appendBody(query);
+	return null;
+    }
+
+    @Override
+    public int execute() {
+	return CollectionUtils.EMPTY;
     }
 }

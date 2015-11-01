@@ -16,7 +16,7 @@ public class SubQueryTest extends QueryTest {
 
     @RunOrder(100)
     @Test
-    public void subQueryTest() {
+    public void subQuerySelectTest() {
 
 	EntityManager em = emf.createEntityManager();
 	try {
@@ -24,6 +24,22 @@ public class SubQueryTest extends QueryTest {
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
 		    Phone.class,
 		    c -> c.where().equals(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @RunOrder(101)
+    @Test
+    public void subQueryCountTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
+		    Phone.class, c -> c.where().equals(Phone::getPhoneNumber, "100100").count());
 	    String sql = stream.sql();
 	    System.out.println(sql);
 	} catch (Throwable ex) {
