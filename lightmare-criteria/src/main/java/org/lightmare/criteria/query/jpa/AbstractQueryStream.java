@@ -146,7 +146,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     }
 
     protected static void appendFieldName(QueryTuple tuple, StringBuilder buffer) {
-	appendFieldName(tuple.getAlias(), tuple.getField(), buffer);
+	appendFieldName(tuple.getAlias(), tuple.getFieldName(), buffer);
     }
 
     protected void setAlias(QueryTuple tuple) {
@@ -185,7 +185,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 
 	String parameterName;
 
-	String column = tuple.getField();
+	String column = tuple.getFieldName();
 	parameterName = generateParameterName(column);
 
 	return parameterName;
@@ -326,7 +326,7 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     private void appendOrderBy(QueryTuple tuple, String dir) {
 
 	orderBy.append(alias);
-	orderBy.append(Parts.COLUMN_PREFIX).append(tuple.getField());
+	orderBy.append(Parts.COLUMN_PREFIX).append(tuple.getFieldName());
 	if (StringUtils.valid(dir)) {
 	    orderBy.append(StringUtils.SPACE).append(dir);
 	}

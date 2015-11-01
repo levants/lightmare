@@ -90,7 +90,7 @@ public class ColumnProcessor {
 	try {
 	    String className = tuple.getEntity();
 	    Class<?> entityType = Class.forName(className);
-	    String fieldName = tuple.getField();
+	    String fieldName = tuple.getFieldName();
 	    String methodName = tuple.getMethod();
 	    Temporal temporal = getTemporal(entityType, fieldName, methodName);
 	    setTemporalType(temporal, tuple);

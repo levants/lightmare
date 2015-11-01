@@ -40,7 +40,7 @@ public class QueryTuple implements Serializable {
 
     private final String method;
 
-    private final String field;
+    private final String fieldName;
 
     private TemporalType temporalType;
 
@@ -48,10 +48,10 @@ public class QueryTuple implements Serializable {
 
     private static final String ALIAS_PREFIX = "c";
 
-    public QueryTuple(final String entity, final String method, final String field) {
+    public QueryTuple(final String entity, final String method, final String fieldName) {
 	this.method = method;
 	this.entity = entity;
-	this.field = field;
+	this.fieldName = fieldName;
     }
 
     public String getEntity() {
@@ -62,8 +62,8 @@ public class QueryTuple implements Serializable {
 	return method;
     }
 
-    public String getField() {
-	return field;
+    public String getFieldName() {
+	return fieldName;
     }
 
     public TemporalType getTemporalType() {

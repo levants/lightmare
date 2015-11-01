@@ -29,6 +29,7 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.SubQueryStream;
 
 /**
  * Interface for [INNER, LEFT, FETCH] JOIN implementations
@@ -38,7 +39,8 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type for generated query
  */
-public interface JoinQueryStream<T extends Serializable> {
+public interface JoinQueryStream<T extends Serializable, E extends Serializable, C extends Collection<E>>
+	extends SubQueryStream<E, T> {
 
     /**
      * Method for INNER JOIN function call
@@ -48,8 +50,7 @@ public interface JoinQueryStream<T extends Serializable> {
      * @return {@link QueryStream} current instance
      * @throws IOException
      */
-    <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field,
-	    SubQueryConsumer<T, E> consumer) throws IOException;
+    JoinQueryStream<T, E, C> join(EntityField<T, C> field, SubQueryConsumer<E, T> consumer) throws IOException;
 
     /**
      * Method for LEFT JOIN function class
@@ -59,8 +60,7 @@ public interface JoinQueryStream<T extends Serializable> {
      * @return {@link QueryStream} current instance
      * @throws IOException
      */
-    <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
-	    SubQueryConsumer<T, E> consumer) throws IOException;
+    JoinQueryStream<T, E, C> leftJoin(EntityField<T, C> field, SubQueryConsumer<E, T> consumer) throws IOException;
 
     /**
      * Method for FETCH JOIN function call
@@ -70,6 +70,5 @@ public interface JoinQueryStream<T extends Serializable> {
      * @return {@link QueryStream} current instance
      * @throws IOException
      */
-    <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
-	    SubQueryConsumer<T, E> consumer) throws IOException;
+    JoinQueryStream<T, E, C> fetchJoin(EntityField<T, C> field, SubQueryConsumer<E, T> consumer) throws IOException;
 }

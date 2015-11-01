@@ -94,7 +94,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 
     private void appendColumn(QueryTuple tuple) {
 	body.append(parentAlias).append(Parts.COLUMN_PREFIX);
-	body.append(tuple.getField());
+	body.append(tuple.getFieldName());
     }
 
     protected void opSubQuery(Object sfield, Object field, String expression) throws IOException {
