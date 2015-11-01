@@ -149,7 +149,6 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     public <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQuery<S, T> consumer)
 	    throws IOException {
 
-	openBracket();
 	SubQueryStream<S, T> subQuery = subQuery(subType);
 	consumer.accept(subQuery);
 	closeBracket();
@@ -161,12 +160,8 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     @Override
     public <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
 	    SubQuery<S, T> consumer) throws IOException {
-
 	appSubQuery(field, Operators.IN);
-	SubQueryStream<S, T> subQuery = subQuery(subType);
-	consumer.accept(subQuery);
-	closeBracket();
-	newLine();
+	subQuery(subType, consumer);
 
 	return this;
     }
@@ -175,6 +170,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     public <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQuery<S, T> consumer)
 	    throws IOException {
 	appendBody(Operators.EXISTS);
+	openBracket();
 	subQuery(subType, consumer);
 
 	return this;

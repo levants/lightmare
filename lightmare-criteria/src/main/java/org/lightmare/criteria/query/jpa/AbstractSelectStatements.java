@@ -48,10 +48,10 @@ public abstract class AbstractSelectStatements<T extends Serializable> extends A
     @SafeVarargs
     private final QueryStream<Object[]> selectAll(EntityField<T, ?>... fields) throws IOException {
 
-	AbstractSelectStream<T> stream;
+	SelectStream<T> stream;
 
 	oppSelect(fields);
-	stream = new AbstractSelectStream<>(this);
+	stream = new SelectStream<>(this);
 
 	return stream;
     }

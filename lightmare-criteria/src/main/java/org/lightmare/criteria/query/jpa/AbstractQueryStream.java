@@ -106,6 +106,15 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     }
 
     /**
+     * Generates SELECT statement prefix
+     * 
+     * @param stream
+     */
+    protected static <T extends Serializable> void appendSelect(AbstractQueryStream<T> stream) {
+	stream.appendPrefix(Filters.SELECT).appendPrefix(stream.alias).appendPrefix(Filters.FROM);
+    }
+
+    /**
      * Appends entity and alias part to stream
      * 
      * @param stream
@@ -116,6 +125,16 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	stream.appendPrefix(Filters.AS);
 	stream.appendPrefix(stream.alias);
 	stream.appendPrefix(NEW_LINE);
+    }
+
+    /**
+     * Creates SELECT statement prefix
+     * 
+     * @param stream
+     */
+    protected static <T extends Serializable> void startsSelect(AbstractQueryStream<T> stream) {
+	appendSelect(stream);
+	appendEntityPart(stream);
     }
 
     protected static void appendFieldName(String alias, String field, StringBuilder buffer) {

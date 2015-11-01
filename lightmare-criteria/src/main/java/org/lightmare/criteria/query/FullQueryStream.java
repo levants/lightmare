@@ -112,11 +112,8 @@ public class FullQueryStream<T extends Serializable> extends EntityQueryStream<T
      */
     protected static <T extends Serializable> FullQueryStream<T> query(final EntityManager em,
 	    final Class<T> entityType, final String alias) {
-
 	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType, alias);
-
-	stream.appendPrefix(Filters.SELECT).appendPrefix(stream.alias).appendPrefix(Filters.FROM);
-	appendEntityPart(stream);
+	startsSelect(stream);
 
 	return stream;
     }

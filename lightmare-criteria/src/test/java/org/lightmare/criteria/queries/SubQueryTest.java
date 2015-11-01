@@ -31,6 +31,38 @@ public class SubQueryTest extends QueryTest {
 	}
     }
 
+    @RunOrder(100.5)
+    @Test
+    public void subQueryExistsGetTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
+		    c -> c.where().equals(Phone::getPhoneNumber, "100100").get());
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @RunOrder(100.6)
+    @Test
+    public void subQueryExistsListTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
+		    c -> c.where().equals(Phone::getPhoneNumber, "100100").toList());
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
     @RunOrder(101)
     @Test
     public void subQueryCountTest() {

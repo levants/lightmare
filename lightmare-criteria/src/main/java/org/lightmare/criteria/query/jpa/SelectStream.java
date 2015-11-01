@@ -34,12 +34,12 @@ import org.lightmare.criteria.query.FullQueryStream;
  * @param <T>
  *            entity type for generated query
  */
-class AbstractSelectStream<T extends Serializable> extends FullQueryStream<Object[]> {
+class SelectStream<T extends Serializable> extends FullQueryStream<Object[]> {
 
     // Real entity type before select statement
     private final Class<?> realEntityType;
 
-    protected AbstractSelectStream(AbstractQueryStream<T> stream) {
+    protected SelectStream(AbstractQueryStream<T> stream) {
 	super(stream.getEntityManager(), Object[].class, stream.getAlias());
 	this.realEntityType = stream.entityType;
 	this.columns.append(stream.columns);

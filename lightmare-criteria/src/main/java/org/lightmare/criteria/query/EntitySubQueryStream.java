@@ -128,12 +128,6 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
 
     @Override
     public QueryStream<Object[]> select(EntityField<S, ?> field) throws IOException {
-
-	SubQueryStream<Object[], S> stream;
-
-	oppSelect(field);
-	stream = subQuery(Object[].class);
-
-	return stream;
+	return subSelectAll(field);
     }
 }

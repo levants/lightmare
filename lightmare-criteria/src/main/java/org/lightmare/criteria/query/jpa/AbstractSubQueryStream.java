@@ -28,9 +28,11 @@ import java.util.List;
 
 import javax.persistence.TemporalType;
 
+import org.lightmare.criteria.lambda.EntityField;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.EntityQueryStream;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.SubQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.collections.CollectionUtils;
@@ -60,6 +62,17 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	parentAlias = parent.getAlias();
 	this.parent = parent;
 	this.sql = parent.sql;
+    }
+
+    @SafeVarargs
+    protected final QueryStream<Object[]> subSelectAll(EntityField<S, ?>... fields) throws IOException {
+
+	SubSelectStream<S> stream;
+
+	oppSelect(fields);
+	stream = new SubSelectStream<>(this);
+
+	return stream;
     }
 
     @Override
@@ -100,9 +113,14 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	body.append(NEW_LINE);
     }
 
+    protected void appendToParent(CharSequence clause) {
+	parent.appendBody(clause);
+    }
+
     private void appendToParent() {
+	startsSelect(this);
 	String query = sql();
-	parent.appendBody(query);
+	appendToParent(query);
     }
 
     @Override
@@ -120,7 +138,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
     @Override
     public Long count() {
 	String query = countSql();
-	parent.appendBody(query);
+	appendToParent(query);
 	return null;
     }
 
