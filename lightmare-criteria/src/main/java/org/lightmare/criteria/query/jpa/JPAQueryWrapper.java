@@ -37,7 +37,7 @@ import org.lightmare.criteria.query.QueryStream;
  * 
  * @author Levan Tsinadze
  * @param T
- *            entity type for generated query
+ *            entity type for appropriated query
  */
 interface JPAQueryWrapper<T extends Serializable> extends QueryStream<T> {
 

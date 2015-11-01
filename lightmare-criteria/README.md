@@ -26,6 +26,7 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 # Use it!
 =========
 
+# Query API
 Query can be composed by org.lightmare.criteria.query.QueryProvider.select method call:
 ```java
   List<Person> persons = QueryProvider.query(em, Person.class).where()
@@ -69,6 +70,8 @@ Query also can be linked dynamically:
 		     stream.or().moreOrEquals(Person::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
 ```
+# Subqueries
+
 Implementation of sub queries is also in functional manner:
 ```java
   List<Person> persons = QueryProvider.query(em, Person.class).where()

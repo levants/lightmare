@@ -34,19 +34,15 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
-import org.apache.log4j.Logger;
-import org.lightmare.criteria.cache.QueryCache;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.lambda.LambdaData;
-import org.lightmare.criteria.lambda.LambdaReplacements;
+import org.lightmare.criteria.lambda.LambdaUtils;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.resolvers.FieldResolver;
 import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -93,11 +89,6 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
     private int alias_counter = -1;
 
     protected final Set<ParameterTuple> parameters = new HashSet<>();
-
-    // Debug messages
-    private static final String DEBUG_MESSAGE_FORMAT = "Key %s is not bound to cache";
-
-    private static final Logger LOG = Logger.getLogger(QueryStream.class);
 
     protected AbstractQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
 	this.em = em;
@@ -166,18 +157,18 @@ abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQu
 	}
     }
 
+    /**
+     * Gets appropriated {@link QueryTuple} from cache or generates from
+     * compiled class
+     * 
+     * @param field
+     * @return {@link QueryTuple} for passed lambda function
+     * @throws IOException
+     */
     protected QueryTuple compose(Object field) throws IOException {
 
-	QueryTuple tuple;
-
-	LambdaData lambda = LambdaReplacements.getReplacement(field);
-	tuple = QueryCache.getQuery(lambda);
-	if (tuple == null) {
-	    tuple = FieldResolver.resolve(lambda);
-	    tuple.setAlias(alias);
-	    QueryCache.putQuery(lambda, tuple);
-	    LOG.debug(String.format(DEBUG_MESSAGE_FORMAT, lambda));
-	}
+	QueryTuple tuple = LambdaUtils.getOrInit(field);
+	tuple.setAlias(alias);
 
 	return tuple;
     }
