@@ -29,13 +29,43 @@ public class JoinQueryTest extends SubQueryTest {
 
     @Test
     @RunOrder(201)
-    public void leftJoinTest() {
+    public void leftJoinWhereTest() {
 
 	EntityManager em = emf.createEntityManager();
 	try {
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
 		    .like(Person::getLastName, "lname")
 		    .leftJoin(Person::getPhones, c -> c.equals(Phone::getPhoneNumber, Person::getPersonalNo));
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @Test
+    @RunOrder(201.1)
+    public void leftJoinTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).leftJoin(Person::getPhones,
+		    c -> c.equals(Phone::getPhoneNumber, Person::getPersonalNo));
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @Test
+    @RunOrder(201.1)
+    public void leftJoinInWhereTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).leftJoin(Person::getPhones,
+		    c -> c.where().equals(Phone::getPhoneNumber, Person::getPersonalNo));
 	    String sql = stream.sql();
 	    System.out.println(sql);
 	} catch (Throwable ex) {

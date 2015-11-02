@@ -21,6 +21,11 @@ class EntityJoinProcessor<S extends Serializable, T extends Serializable> extend
     }
 
     @Override
+    public SubQueryStream<S, T> where() {
+	return this;
+    }
+
+    @Override
     public String sql() {
 
 	String value;

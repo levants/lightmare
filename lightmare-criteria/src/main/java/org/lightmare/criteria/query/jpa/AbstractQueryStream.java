@@ -439,7 +439,6 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 
     @Override
     public QueryStream<T> where() {
-	body.append(Clauses.WHERE);
 	return this;
     }
 
@@ -502,6 +501,13 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	}
     }
 
+    private void setWhereClause() {
+
+	if (StringUtils.valid(body)) {
+	    sql.append(Clauses.WHERE);
+	}
+    }
+
     protected void generateBody(CharSequence startSql) {
 
 	sql.delete(START, sql.length());
@@ -509,6 +515,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	sql.append(joins);
 	prepareSetClause();
 	sql.append(updateSet);
+	setWhereClause();
 	sql.append(body);
     }
 
