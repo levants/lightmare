@@ -72,6 +72,8 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 
     protected final StringBuilder columns = new StringBuilder();
 
+    protected final StringBuilder joins = new StringBuilder();
+
     protected final StringBuilder updateSet = new StringBuilder();
 
     protected final StringBuilder body = new StringBuilder();
@@ -479,6 +481,11 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
     @Override
     public QueryStream<T> appendPrefix(Object clause) {
 	prefix.append(clause);
+	return this;
+    }
+
+    protected QueryStream<T> appendJoin(Object clause) {
+	joins.append(clause);
 	return this;
     }
 

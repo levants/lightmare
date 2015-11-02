@@ -31,9 +31,12 @@ import javax.persistence.EntityManager;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Filters;
+import org.lightmare.criteria.links.Joins;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.query.jpa.AbstractSelectStatements;
+import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.utils.ObjectUtils;
 
 /**
  * Query builder from setter method references
@@ -135,6 +138,20 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	return new EntitySubQueryStream<S, T>(this, subType);
     }
 
+    public <S extends Serializable> SubQueryStream<S, T> joinStream(Class<S> subType) {
+	return new EntityJoinProcessor<S, T>(this, subType);
+    }
+
+    public <S extends Serializable> SubQueryStream<S, T> joinStream(QueryTuple tuple) {
+
+	SubQueryStream<S, T> joinStream;
+
+	Class<S> subType = ObjectUtils.cast(tuple.getGenericType());
+	joinStream = joinStream(subType);
+
+	return joinStream;
+    }
+
     private <S extends Serializable> SubQueryStream<S, T> initSubQuery(Class<S> subType,
 	    SubQueryConsumer<S, T> consumer) throws IOException {
 
@@ -177,8 +194,39 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	return this;
     }
 
-    // =======================================================================//
+    // ===============================Joins==================================//
+    private <E extends Serializable, C extends Collection<E>> void procesJoin(EntityField<T, C> field,
+	    String expression, SubQueryConsumer<E, T> consumer) throws IOException {
 
+	QueryTuple tuple = oppJoin(field, expression);
+	SubQueryStream<E, T> joinQuery = joinStream(tuple);
+	appendJoin(joinQuery.getAlias());
+	consumer.accept(joinQuery);
+	joinQuery.call();
+    }
+
+    @Override
+    public <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field,
+	    SubQueryConsumer<E, T> consumer) throws IOException {
+	procesJoin(field, Joins.JOIN, consumer);
+	return this;
+    }
+
+    @Override
+    public <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
+	    SubQueryConsumer<E, T> consumer) throws IOException {
+	procesJoin(field, Joins.LEFT, consumer);
+	return this;
+    }
+
+    @Override
+    public <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
+	    SubQueryConsumer<E, T> consumer) throws IOException {
+	procesJoin(field, Joins.LEFT, consumer);
+	return this;
+    }
+
+    // =======================================================================//
     @Override
     public <F> QueryStream<T> set(EntityField<T, F> field, F value) throws IOException {
 	setOpp(field, value);

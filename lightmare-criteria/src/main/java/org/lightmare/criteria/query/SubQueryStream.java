@@ -41,6 +41,13 @@ import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
  */
 public interface SubQueryStream<S extends Serializable, T extends Serializable> extends QueryStream<S> {
 
+    /**
+     * Gets entity alias for custom sub queries
+     * 
+     * @return {@link String} entity alias
+     */
+    String getAlias();
+
     // ========================= Entity method composers ====================//
 
     @Override

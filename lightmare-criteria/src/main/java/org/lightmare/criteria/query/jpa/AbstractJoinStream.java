@@ -7,11 +7,7 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.functions.SubQueryConsumer;
-import org.lightmare.criteria.links.Joins;
-import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.utils.ObjectUtils;
 
 /**
  * Implementation for JOIN clause query generation
@@ -27,32 +23,15 @@ abstract class AbstractJoinStream<T extends Serializable> extends AbstractQueryS
 	super(em, entityType, alias);
     }
 
-    private <C extends Collection<?>> QueryTuple oppJoin(EntityField<T, C> field, String expression)
+    protected <C extends Collection<?>> QueryTuple oppJoin(EntityField<T, C> field, String expression)
 	    throws IOException {
-	appendPrefix(expression);
-	return compose(field);
-    }
 
-    @Override
-    public <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer) throws IOException {
+	QueryTuple tuple;
 
-	QueryTuple tuple = oppJoin(field, Joins.JOIN);
-	@SuppressWarnings("unused")
-	Class<E> subType = ObjectUtils.cast(tuple.getGenericType());
+	appendJoin(expression);
+	appendJoin(NEW_LINE);
+	tuple = compose(field);
 
-	return this;
-    }
-
-    @Override
-    public <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer) throws IOException {
-	return this;
-    }
-
-    @Override
-    public <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer) throws IOException {
-	return this;
+	return tuple;
     }
 }
