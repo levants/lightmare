@@ -52,7 +52,19 @@ public interface JoinQueryStream<T extends Serializable> {
 	    SubQueryConsumer<E, T> consumer) throws IOException;
 
     /**
-     * Method for LEFT JOIN function class
+     * Method for INNER JOIN function call without conditions
+     * 
+     * @param field
+     * @return {@link QueryStream} current instance
+     * @throws IOException
+     */
+    default <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field)
+	    throws IOException {
+	return join(field, null);
+    }
+
+    /**
+     * Method for LEFT JOIN function call
      * 
      * @param field
      * @param consumer
@@ -61,6 +73,18 @@ public interface JoinQueryStream<T extends Serializable> {
      */
     <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
 	    SubQueryConsumer<E, T> consumer) throws IOException;
+
+    /**
+     * Method for LEFT JOIN function call without conditions
+     * 
+     * @param field
+     * @return {@link QueryStream} current instance
+     * @throws IOException
+     */
+    default <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field)
+	    throws IOException {
+	return leftJoin(field, null);
+    }
 
     /**
      * Method for FETCH JOIN function call
@@ -72,4 +96,16 @@ public interface JoinQueryStream<T extends Serializable> {
      */
     <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
 	    SubQueryConsumer<E, T> consumer) throws IOException;
+
+    /**
+     * Method for FETCH JOIN function call without conditions
+     * 
+     * @param field
+     * @return {@link QueryStream} current instance
+     * @throws IOException
+     */
+    default <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field)
+	    throws IOException {
+	return fetchJoin(field, null);
+    }
 }

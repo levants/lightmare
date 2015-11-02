@@ -106,12 +106,26 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
 	    SubQueryConsumer<S, T> consumer) throws IOException;
 
+    default <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType)
+	    throws IOException {
+	return in(field, subType, null);
+    }
+
     default <F> QueryStream<T> in(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) throws IOException {
 	return in(field, getEntityType(), consumer);
     }
 
+    default <F> QueryStream<T> in(EntityField<T, F> field) throws IOException {
+	SubQueryConsumer<T, T> consumer = null;
+	return in(field, consumer);
+    }
+
     <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer)
 	    throws IOException;
+
+    default <F, S extends Serializable> QueryStream<T> exists(Class<S> subType) throws IOException {
+	return exists(subType, null);
+    }
 
     default <F> QueryStream<T> exists(SubQueryConsumer<T, T> consumer) throws IOException {
 	return exists(getEntityType(), consumer);
