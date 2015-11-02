@@ -84,5 +84,40 @@ Implementations of sub queries are by calling exits or in functions:
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
+# Joins
 
+Joins are similar to sub queries
+```java
+  List<Person> persons = QueryProvider.query(em, Person.class).where()
+  			.equals(Person::getPrivatNumber, "10010010011")
+		    .and().like(Person::getLastName, "lname")
+		    .and().join(Person::getPhones, c -> c.where()
+		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
+		                               .and()
+		                               .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
+		    .orderBy(Person::getLastName)
+		    .orderByDesc(Person::getBirthDate).toList(); 
+```
+```java
+  List<Person> persons = QueryProvider.query(em, Person.class).where()
+  			.equals(Person::getPrivatNumber, "10010010011")
+		    .and().like(Person::getLastName, "lname")
+		    .and().leftJoin(Person::getPhones, c -> c.where()
+		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
+		                               .and()
+		                               .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
+		    .orderBy(Person::getLastName)
+		    .orderByDesc(Person::getBirthDate).toList(); 
+```
+```java
+  List<Person> persons = QueryProvider.query(em, Person.class).where()
+  			.equals(Person::getPrivatNumber, "10010010011")
+		    .and().like(Person::getLastName, "lname")
+		    .and().fetchJoin(Person::getPhones, c -> c.where()
+		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
+		                               .and()
+		                               .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
+		    .orderBy(Person::getLastName)
+		    .orderByDesc(Person::getBirthDate).toList(); 
+```
 enjoy :)

@@ -33,7 +33,7 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.collections.CollectionUtils;
 
 /**
- * Utility class to resolve generic type of {@link Collection} field
+ * Resolves generic type of {@link Collection} field
  * 
  * @author Levan Tsinadze
  *
