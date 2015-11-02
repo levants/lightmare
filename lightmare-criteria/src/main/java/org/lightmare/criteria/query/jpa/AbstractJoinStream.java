@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.utils.StringUtils;
 
 /**
  * Implementation for JOIN clause query generation
@@ -29,8 +30,9 @@ abstract class AbstractJoinStream<T extends Serializable> extends AbstractQueryS
 	QueryTuple tuple;
 
 	appendJoin(expression);
-	appendJoin(NEW_LINE);
 	tuple = compose(field);
+	appendJoin(tuple.getFieldName());
+	appendJoin(StringUtils.SPACE);
 
 	return tuple;
     }

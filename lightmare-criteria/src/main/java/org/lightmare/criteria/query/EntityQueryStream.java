@@ -201,6 +201,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	QueryTuple tuple = oppJoin(field, expression);
 	SubQueryStream<E, T> joinQuery = joinStream(tuple);
 	appendJoin(joinQuery.getAlias());
+	appendJoin(NEW_LINE);
 	consumer.accept(joinQuery);
 	joinQuery.call();
     }
@@ -222,7 +223,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     @Override
     public <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
 	    SubQueryConsumer<E, T> consumer) throws IOException {
-	procesJoin(field, Joins.LEFT, consumer);
+	procesJoin(field, Joins.FETCH, consumer);
 	return this;
     }
 
