@@ -46,6 +46,14 @@ abstract class AbstractJoinStream<T extends Serializable> extends AbstractQueryS
 	super(em, entityType, alias);
     }
 
+    /**
+     * Processes join statement for passed collection field
+     * 
+     * @param field
+     * @param expression
+     * @return
+     * @throws IOException
+     */
     protected <C extends Collection<?>> QueryTuple oppJoin(EntityField<T, C> field, String expression)
 	    throws IOException {
 

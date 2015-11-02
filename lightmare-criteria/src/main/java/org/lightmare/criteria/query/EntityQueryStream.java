@@ -25,6 +25,7 @@ package org.lightmare.criteria.query;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 
 import javax.persistence.EntityManager;
 
@@ -152,12 +153,27 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	return joinStream;
     }
 
+    /**
+     * Validates and calls sub query tream methods
+     * 
+     * @param consumer
+     * @param subQuery
+     * @throws IOException
+     */
+    private <S extends Serializable> void acceptConsumer(SubQueryConsumer<S, T> consumer, SubQueryStream<S, T> subQuery)
+	    throws IOException {
+
+	if (Objects.nonNull(consumer)) {
+	    consumer.accept(subQuery);
+	}
+    }
+
     private <S extends Serializable> SubQueryStream<S, T> initSubQuery(Class<S> subType,
 	    SubQueryConsumer<S, T> consumer) throws IOException {
 
 	SubQueryStream<S, T> subQuery = subQuery(subType);
 
-	consumer.accept(subQuery);
+	acceptConsumer(consumer, subQuery);
 	subQuery.call();
 	closeBracket();
 	newLine();
@@ -202,7 +218,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	SubQueryStream<E, T> joinQuery = joinStream(tuple);
 	appendJoin(joinQuery.getAlias());
 	appendJoin(NEW_LINE);
-	consumer.accept(joinQuery);
+	acceptConsumer(consumer, joinQuery);
 	joinQuery.call();
     }
 

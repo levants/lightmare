@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.jpa.subqueries;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -92,12 +93,27 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	parent.addParameter(key, tuple, value);
     }
 
+    /**
+     * Appends column (field) name with parent alias
+     * 
+     * @param tuple
+     */
     private void appendColumn(QueryTuple tuple) {
-	body.append(parentAlias).append(Parts.COLUMN_PREFIX);
-	body.append(tuple.getFieldName());
+
+	appendBody(parentAlias);
+	appendBody(Parts.COLUMN_PREFIX);
+	appendBody(tuple.getFieldName());
     }
 
-    protected void opSubQuery(Object sfield, Object field, String expression) throws IOException {
+    /**
+     * Processes sub query part
+     * 
+     * @param sfield
+     * @param field
+     * @param expression
+     * @throws IOException
+     */
+    protected void oppSubQuery(Object sfield, Object field, String expression) throws IOException {
 
 	opp(sfield, expression);
 	QueryTuple tuple = compose(field);
@@ -105,14 +121,21 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	body.append(NEW_LINE);
     }
 
-    protected void opSubQueryCollection(Object sfield, Object field) throws IOException {
+    /**
+     * Processes sub query part for IN {@link Collection} clause
+     * 
+     * @param sfield
+     * @param field
+     * @throws IOException
+     */
+    protected void oppSubQueryCollection(Object sfield, Object field) throws IOException {
 
 	opp(sfield, Operators.IN);
 	QueryTuple tuple = compose(field);
 	openBracket();
 	appendColumn(tuple);
 	closeBracket();
-	body.append(NEW_LINE);
+	appendBody(NEW_LINE);
     }
 
     /**
@@ -125,12 +148,27 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
     }
 
     /**
+     * Generates sub query and appends to parent
+     */
+    private void appendToParent() {
+	startsSelect(this);
+	String query = sql();
+	appendToParent(query);
+    }
+
+    /**
      * Switches prepared state to called
      */
     protected void switchState() {
 	preparedState = Boolean.FALSE;
     }
 
+    /**
+     * Checks if state in prepare mode and calls statement by appending passed
+     * {@link Character} to parent
+     * 
+     * @param clause
+     */
     private void callState(CharSequence clause) {
 
 	if (preparedState) {
@@ -139,18 +177,15 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	}
     }
 
+    /**
+     * Checks if state in prepare mode and calls statement
+     */
     private void callState() {
 
 	if (preparedState) {
 	    appendToParent();
 	    switchState();
 	}
-    }
-
-    private void appendToParent() {
-	startsSelect(this);
-	String query = sql();
-	appendToParent(query);
     }
 
     @Override
@@ -161,7 +196,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 
     @Override
     public S get() {
-	callState();
+	toList();
 	return null;
     }
 
@@ -174,6 +209,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 
     @Override
     public int execute() {
+	get();
 	return CollectionUtils.EMPTY;
     }
 

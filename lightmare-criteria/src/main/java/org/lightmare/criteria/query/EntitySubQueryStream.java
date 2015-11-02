@@ -50,71 +50,71 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
     // ========================= Entity and parent method composers =========//
     @Override
     public <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
-	opSubQuery(sfield, field, Operators.EQ);
+	oppSubQuery(sfield, field, Operators.EQ);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
-	opSubQuery(sfield, field, Operators.NOT_EQ);
+	oppSubQuery(sfield, field, Operators.NOT_EQ);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
-	opSubQuery(sfield, field, Operators.MORE);
+	oppSubQuery(sfield, field, Operators.MORE);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
-	opSubQuery(sfield, field, Operators.LESS);
+	oppSubQuery(sfield, field, Operators.LESS);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
-	opSubQuery(sfield, field, Operators.MORE_OR_EQ);
+	oppSubQuery(sfield, field, Operators.MORE_OR_EQ);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
-	opSubQuery(sfield, field, Operators.LESS_OR_EQ);
+	oppSubQuery(sfield, field, Operators.LESS_OR_EQ);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, EntityField<T, String> field)
 	    throws IOException {
-	opSubQuery(sfield, field, Operators.LIKE);
+	oppSubQuery(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> like(EntityField<S, String> sfield, EntityField<T, String> field) throws IOException {
-	opSubQuery(sfield, field, Operators.LIKE);
+	oppSubQuery(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, EntityField<T, String> field)
 	    throws IOException {
-	opSubQuery(sfield, field, Operators.LIKE);
+	oppSubQuery(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> contains(EntityField<S, String> sfield, EntityField<T, String> field)
 	    throws IOException {
-	opSubQuery(sfield, field, Operators.LIKE);
+	oppSubQuery(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, EntityField<T, Collection<F>> field)
 	    throws IOException {
-	opSubQueryCollection(sfield, field);
+	oppSubQueryCollection(sfield, field);
 	return this;
     }
 
