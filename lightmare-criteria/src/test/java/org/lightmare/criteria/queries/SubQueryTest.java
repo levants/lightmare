@@ -88,7 +88,7 @@ public class SubQueryTest extends QueryTest {
 	try {
 	    // ============= Query construction ============== //
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
-		    c -> c.where().equals(Phone::getPhoneNumber, "100100").and().moreOrEq(Phone::getOperatorId,
+		    c -> c.where().equals(Phone::getPhoneNumber, "100100").and().moreOrEquals(Phone::getOperatorId,
 			    Person::getPersonId));
 	    String sql = stream.sql();
 	    System.out.println(sql);
@@ -138,7 +138,7 @@ public class SubQueryTest extends QueryTest {
 	    // ============= Query construction ============== //
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
 		    Phone.class, c -> c.where().equals(Phone::getPhoneNumber, "100100").and()
-			    .lessOrEq(Phone::getOperatorId, Person::getPersonId).count());
+			    .lessOrEquals(Phone::getOperatorId, Person::getPersonId).count());
 	    String sql = stream.sql();
 	    System.out.println(sql);
 	} catch (Throwable ex) {

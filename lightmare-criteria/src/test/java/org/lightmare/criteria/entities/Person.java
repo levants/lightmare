@@ -5,13 +5,17 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -45,6 +49,10 @@ public class Person implements Serializable {
 
     @Column(name = "MIDD_NAME")
     private String middName;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "PERSON_PHONES")
+    private Set<Phone> phones;
 
     @Transient
     private Collection<Long> identifiers;
@@ -98,6 +106,14 @@ public class Person implements Serializable {
 
     public void setMiddName(String middName) {
 	this.middName = middName;
+    }
+
+    public Set<Phone> getPhones() {
+	return phones;
+    }
+
+    public void setPhones(Set<Phone> phones) {
+	this.phones = phones;
     }
 
     public Collection<Long> getIdentifiers() {

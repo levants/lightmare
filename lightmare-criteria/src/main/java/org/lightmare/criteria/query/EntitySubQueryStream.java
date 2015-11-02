@@ -49,25 +49,15 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
 
     // ========================= Entity and parent method composers =========//
     @Override
-    public <F> SubQueryStream<S, T> eq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
+    public <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
 	opSubQuery(sfield, field, Operators.EQ);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
-	return eq(sfield, field);
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> notEq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
+    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
 	opSubQuery(sfield, field, Operators.NOT_EQ);
 	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
-	return notEq(sfield, field);
     }
 
     @Override
@@ -83,13 +73,13 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
     }
 
     @Override
-    public <F> SubQueryStream<S, T> moreOrEq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
+    public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
 	opSubQuery(sfield, field, Operators.MORE_OR_EQ);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> lessOrEq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
+    public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
 	opSubQuery(sfield, field, Operators.LESS_OR_EQ);
 	return this;
     }

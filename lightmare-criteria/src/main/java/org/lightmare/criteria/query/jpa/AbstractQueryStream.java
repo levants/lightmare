@@ -506,6 +506,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 
 	sql.delete(START, sql.length());
 	sql.append(startSql);
+	sql.append(joins);
 	prepareSetClause();
 	sql.append(updateSet);
 	sql.append(body);

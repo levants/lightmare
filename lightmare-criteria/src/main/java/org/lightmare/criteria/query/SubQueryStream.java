@@ -90,11 +90,7 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
     SubQueryStream<S, T> notNull(EntityField<S, ?> field) throws IOException;
 
     // ========================= Entity and parent method composers =========//
-    <F> SubQueryStream<S, T> eq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
-
     <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
-
-    <F> SubQueryStream<S, T> notEq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
     <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
@@ -102,9 +98,9 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
 
     <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
-    <F> SubQueryStream<S, T> moreOrEq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
+    <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
-    <F> SubQueryStream<S, T> lessOrEq(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
+    <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
     SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, EntityField<T, String> field) throws IOException;
 
