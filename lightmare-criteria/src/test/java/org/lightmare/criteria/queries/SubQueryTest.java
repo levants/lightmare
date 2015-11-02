@@ -97,6 +97,21 @@ public class SubQueryTest extends QueryTest {
 	}
     }
 
+    @RunOrder(100.51)
+    @Test
+    public void subQueryUnconditionalExistsCallTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class);
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
     @RunOrder(100.6)
     @Test
     public void subQueryExistsListTest() {

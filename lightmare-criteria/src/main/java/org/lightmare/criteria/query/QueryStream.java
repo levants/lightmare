@@ -94,11 +94,19 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * Generates {@link SubQueryStream} for S type
      * 
      * @param subType
-     * @return {@link SubQueryStream}
+     * @param consumer
+     * @return {@link SubQueryStream} similar stream for sub query
      */
     <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer)
 	    throws IOException;
 
+    /**
+     * Generates {@link SubQueryStream} for S type without conditions
+     * 
+     * @param consumer
+     * @return {@link SubQueryStream} similar stream for sub query
+     * @throws IOException
+     */
     default QueryStream<T> subQuery(SubQueryConsumer<T, T> consumer) throws IOException {
 	return subQuery(getEntityType(), consumer);
     }

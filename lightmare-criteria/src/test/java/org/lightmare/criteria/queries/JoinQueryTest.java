@@ -103,6 +103,21 @@ public class JoinQueryTest extends SubQueryTest {
     }
 
     @Test
+    @RunOrder(201.3)
+    public void parentAndUnconditionalLeftJoinTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).leftJoin(Person::getPhones).where()
+		    .like(Person::getLastName, "lname");
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	}
+    }
+
+    @Test
     @RunOrder(202)
     public void fetchJoinTest() {
 
