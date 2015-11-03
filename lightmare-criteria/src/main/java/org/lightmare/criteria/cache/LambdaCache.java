@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.cache;
 
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -38,19 +39,49 @@ public class LambdaCache {
 
     private static final ConcurrentMap<Class<?>, QueryTuple> LAMBDAS = new ConcurrentHashMap<>();
 
+    /**
+     * Adds passed lambda {@link Class} and {@link QueryTuple} to cache
+     * 
+     * @param key
+     * @param value
+     */
     public static void putLambda(Class<?> key, QueryTuple value) {
-	LAMBDAS.putIfAbsent(key, value);
+
+	QueryTuple existed = LAMBDAS.putIfAbsent(key, value);
+	if (Objects.equals(value, existed)) {
+	    LambdaReferences.INSTANCE.trace(key);
+	}
     }
 
+    /**
+     * Adds lambda {@link Class} by object instance and {@link QueryTuple} to
+     * cache
+     * 
+     * @param lambda
+     * @param value
+     */
     public static void putByInstance(Object lambda, QueryTuple value) {
 	Class<?> key = lambda.getClass();
 	putLambda(key, value);
     }
 
+    /**
+     * Gets {@link QueryTuple} from cache by passed lambda {@link Class} as key
+     * 
+     * @param key
+     * @return {@link QueryTuple} for this lambda {@link Class}
+     */
     public static QueryTuple getLambda(Class<?> key) {
 	return LAMBDAS.get(key);
     }
 
+    /**
+     * Gets {@link QueryTuple} from cache by lambda {@link Class} from passed
+     * lambda instance as key
+     * 
+     * @param lambda
+     * @return {@link QueryTuple} for this lambda {@link Class}
+     */
     public static QueryTuple getByInstance(Object lambda) {
 
 	QueryTuple tuple;
@@ -59,5 +90,15 @@ public class LambdaCache {
 	tuple = getLambda(key);
 
 	return tuple;
+    }
+
+    /**
+     * Removes passed lambda {@link Class} and associated {@link QueryTuple}
+     * from cache
+     * 
+     * @param key
+     */
+    public static void remove(Class<?> key) {
+	LAMBDAS.remove(key);
     }
 }
