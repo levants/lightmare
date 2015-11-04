@@ -35,7 +35,7 @@ import org.lightmare.utils.reflect.ClassUtils;
  * @author Levan Tsinadze
  *
  */
-public class ClassProcessor {
+public class EntityProcessor {
 
     /**
      * Sets {@link Field} by name to passed wrapper

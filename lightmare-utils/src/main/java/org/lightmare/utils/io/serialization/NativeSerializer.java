@@ -44,7 +44,7 @@ public abstract class NativeSerializer {
      * serialization API
      * 
      * @param value
-     * @return byte[]
+     * @return <code>byte</code>[] serialized object
      * @throws IOException
      */
     public static byte[] serialize(Object value) throws IOException {
@@ -65,8 +65,8 @@ public abstract class NativeSerializer {
     }
 
     /**
-     * For deserialization of byte array in java type ({@link Object}) with java
-     * native serialization API
+     * For de - serialization of byte array in java type ({@link Object}) with
+     * java native serialization API
      * 
      * @param data
      * @return {@link Object}

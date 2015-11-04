@@ -28,7 +28,7 @@ import java.util.Objects;
 
 import org.lightmare.criteria.cache.MethodCache;
 import org.lightmare.criteria.lambda.LambdaData;
-import org.lightmare.criteria.orm.ClassProcessor;
+import org.lightmare.criteria.orm.EntityProcessor;
 import org.lightmare.criteria.orm.ColumnProcessor;
 import org.lightmare.criteria.orm.GenericProcessor;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -123,7 +123,7 @@ public class FieldResolver {
      */
     private static void setMetaData(QueryTuple tuple) throws IOException {
 
-	ClassProcessor.setMetaData(tuple);
+	EntityProcessor.setMetaData(tuple);
 	ColumnProcessor.setTemporalType(tuple);
 	GenericProcessor.setGenericType(tuple);
     }
