@@ -519,27 +519,59 @@ public abstract class CollectionUtils {
     }
 
     /**
+     * Peaks first element from list or passed default value if list is null or
+     * empty
+     *
+     * @param list
+     * @param defaultValue
+     * @return T first value of list or passed default value
+     */
+    private static <T> T getFirstFromList(List<T> list, T defaultValue) {
+
+	T value;
+
+	if (valid(list)) {
+	    value = list.get(FIRST_INDEX);
+	} else {
+	    value = defaultValue;
+	}
+
+	return value;
+    }
+
+    /**
      * Peaks first element from collection
      *
      * @param collection
      * @return T
      */
-    public static <T> T getFirst(Collection<T> collection) {
+    public static <T> T getFirst(Collection<T> collection, T defaultValue) {
 
 	T value;
 
 	if (valid(collection)) {
 	    if (collection instanceof List) {
-		value = getFirstFromList(((List<T>) collection));
+		value = getFirstFromList(((List<T>) collection), defaultValue);
 	    } else {
 		Iterator<T> iterator = collection.iterator();
 		value = iterator.next();
 	    }
 	} else {
-	    value = null;
+	    value = defaultValue;
 	}
 
 	return value;
+    }
+
+    /**
+     * Peaks first element from collection
+     *
+     * @param collection
+     * @param defaultValue
+     * @return T first element or default value
+     */
+    public static <T> T getFirst(Collection<T> collection) {
+	return getFirst(collection, null);
     }
 
     /**

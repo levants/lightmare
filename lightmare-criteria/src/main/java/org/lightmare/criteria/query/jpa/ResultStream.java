@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.lightmare.criteria.tuples.ParameterTuple;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Interface for query result methods
@@ -80,4 +81,31 @@ public interface ResultStream<T extends Serializable> {
      * @see javax.persistence.Query#executeUpdate()
      */
     int execute();
+
+    /**
+     * Runs generated query {@link javax.persistence.Query#getSingleResult()}
+     * and retrieves first or passed default result if no element was found
+     * 
+     * @param defaultValue
+     * @return T query first or passed default result
+     */
+    default T firstOrDefault(T defaultValue) {
+
+	T result;
+
+	List<T> results = toList();
+	result = CollectionUtils.getFirst(results, defaultValue);
+
+	return result;
+    }
+
+    /**
+     * Runs generated query {@link javax.persistence.Query#getSingleResult()}
+     * and retrieves first result
+     * 
+     * @return T query first result
+     */
+    default T getFirst() {
+	return firstOrDefault(null);
+    }
 }

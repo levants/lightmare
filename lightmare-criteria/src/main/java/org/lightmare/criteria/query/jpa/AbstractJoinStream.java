@@ -51,7 +51,7 @@ abstract class AbstractJoinStream<T extends Serializable> extends AbstractQueryS
      * 
      * @param field
      * @param expression
-     * @return
+     * @return {@link QueryTuple} for field and expression
      * @throws IOException
      */
     protected <C extends Collection<?>> QueryTuple oppJoin(EntityField<T, C> field, String expression)
