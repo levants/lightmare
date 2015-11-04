@@ -58,6 +58,8 @@ public class QueryTuple implements Serializable {
 
     private static final String ALIAS_PREFIX = "c";
 
+    private static final String FORMATTER = "%s %s %s";
+
     public QueryTuple(final String entityName, final String methodName, final String fieldName) {
 	this.entityName = entityName;
 	this.methodName = methodName;
@@ -133,5 +135,10 @@ public class QueryTuple implements Serializable {
 	if (this.alias == null || this.alias.isEmpty()) {
 	    this.alias = ALIAS_PREFIX.concat(String.valueOf(index));
 	}
+    }
+
+    @Override
+    public String toString() {
+	return String.format(FORMATTER, entityName, methodName, fieldName);
     }
 }

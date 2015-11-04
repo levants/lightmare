@@ -61,6 +61,12 @@ public class FieldResolver {
     // Error messages
     private static final String UNRESOLVABLE_ERROR = "Unresolvable field name";
 
+    /**
+     * Resolves field name from method name
+     * 
+     * @param methodName
+     * @return {@link String} field name
+     */
     private static String resolveFieldName(String methodName) {
 
 	String fieldName = methodName.substring(BEGIN_INDEX);

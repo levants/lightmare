@@ -23,6 +23,7 @@
 package org.lightmare.criteria.lambda;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
 
@@ -57,12 +58,30 @@ public class LambdaReplacements {
 	return lambda;
     }
 
+    /**
+     * Replaces special characters to get appropriated object type
+     * 
+     * @param value
+     * @return <code>byte</code>[] instance of translated type
+     * @throws UnsupportedEncodingException
+     */
+    private static byte[] replace(byte[] value) throws UnsupportedEncodingException {
+
+	byte[] translated;
+
+	String buffText = new String(value, CHARSET);
+	String replText = buffText.replace(NATIVE_NAME, LINQ_NAME);
+	translated = replText.getBytes(CHARSET);
+
+	return translated;
+    }
+
     private static LambdaData translate(Object field) throws IOException {
 
 	LambdaData lambda;
 
 	byte[] value = NativeSerializer.serialize(field);
-	byte[] translated = new String(value, CHARSET).replace(NATIVE_NAME, LINQ_NAME).getBytes(CHARSET);
+	byte[] translated = replace(value);
 	SLambda slambda = toLambda(translated);
 	lambda = new LambdaData(slambda);
 
