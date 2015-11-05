@@ -32,9 +32,9 @@ import org.lightmare.criteria.query.jpa.AbstractQueryStream;
  * @author Levan Tsiadze
  *
  * @param <S>
- *            join entity type for generated query
+ *            join entity type parameter for generated query
  * @param <T>
- *            entity type for generated query
+ *            entity type parameter for generated query
  */
 class EntityJoinProcessor<S extends Serializable, T extends Serializable> extends EntitySubQueryStream<S, T> {
 

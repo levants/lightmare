@@ -289,8 +289,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	oppWithParameter(tuple, value, updateSet);
     }
 
-    @SafeVarargs
-    private final void appendSelect(EntityField<T, ?>... fields) throws IOException {
+    private void appendSelect(EntityField<T, ?>[] fields) throws IOException {
 
 	int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
 	EntityField<T, ?> field;
