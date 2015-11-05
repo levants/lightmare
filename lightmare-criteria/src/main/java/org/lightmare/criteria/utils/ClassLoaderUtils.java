@@ -22,14 +22,11 @@
  */
 package org.lightmare.criteria.utils;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Class for load jar or class files from specified path
@@ -38,22 +35,6 @@ import java.util.Collection;
  * @since 0.0.15
  */
 public class ClassLoaderUtils {
-
-    // Class extension
-    private static final String CLASS_EXTENSION = ".class";
-
-    /**
-     * Gets file for current class
-     *
-     * @param executing
-     * @return File where current class is
-     */
-    public static File classFile(Class<?> executing) {
-
-	final File file = new File(executing.getProtectionDomain().getCodeSource().getLocation().getPath());
-
-	return file;
-    }
 
     /**
      * Gets current {@link Thread}'s context {@link ClassLoader} object
@@ -69,63 +50,10 @@ public class ClassLoaderUtils {
 	 * @author Levan Tsinadze
 	 *
 	 */
-	PrivilegedAction<ClassLoader> action = new PrivilegedAction<ClassLoader>() {
-
-	    @Override
-	    public ClassLoader run() {
-
-		ClassLoader classLoader;
-
-		Thread currentThread = Thread.currentThread();
-		classLoader = currentThread.getContextClassLoader();
-
-		return classLoader;
-	    }
-	};
-
+	PrivilegedAction<ClassLoader> action = () -> Thread.currentThread().getContextClassLoader();
 	ClassLoader loader = AccessController.doPrivileged(action);
 
 	return loader;
-    }
-
-    /**
-     * Finds class file {@link URL} by class name in current {@link ClassLoader}
-     * 's resources (claspath) or returns null if class file is not present
-     *
-     * @param className
-     * @return {@link URL} or class file
-     */
-    public static URL finadClass(String className) {
-
-	URL classURL;
-
-	ClassLoader loader = getContextClassLoader();
-	String fileName = className.replace(StringUtils.DOT, File.pathSeparatorChar);
-	String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
-	classURL = loader.getResource(classFile);
-
-	return classURL;
-    }
-
-    /**
-     * Finds is class file in current {@link ClassLoader}'s resources (in
-     * classpath) or not
-     *
-     * @param className
-     * @return <code>boolean</code>
-     */
-    public static boolean isClass(String className) {
-
-	boolean valid;
-
-	ClassLoader loader = getContextClassLoader();
-	String fileName = className.replace(StringUtils.DOT, File.separatorChar);
-	String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
-	URL classURL = loader.getResource(classFile);
-	valid = ObjectUtils.notNull(classURL);
-
-	return valid;
-
     }
 
     /**
@@ -137,7 +65,7 @@ public class ClassLoaderUtils {
      */
     public static void loadCurrentLibraries(Thread thread, ClassLoader loader) {
 
-	if (ObjectUtils.notNull(loader)) {
+	if (Objects.nonNull(loader)) {
 	    thread.setContextClassLoader(loader);
 	}
     }
@@ -155,37 +83,6 @@ public class ClassLoaderUtils {
     }
 
     /**
-     * Adds {@link URL} array to system {@link ClassLoader} instance
-     *
-     * @param urls
-     * @param method
-     * @param urlLoader
-     * @throws IOException
-     */
-    public static void loadURLToSystem(URL[] urls, Method method, URLClassLoader urlLoader) throws IOException {
-
-	for (URL url : urls) {
-	    ClassUtils.invokePrivate(method, urlLoader, url);
-	}
-    }
-
-    /**
-     * Loads class to system {@link ClassLoader} for general use
-     *
-     * @param className
-     * @throws IOException
-     */
-    public static void loadLibraryClass(String className) throws IOException {
-
-	ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
-	try {
-	    systemLoader.loadClass(className);
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	}
-    }
-
-    /**
      * Loads passed classes to specified {@link ClassLoader} instance
      *
      * @param classes
@@ -193,7 +90,7 @@ public class ClassLoaderUtils {
      */
     public static void loadClasses(Collection<String> classes, ClassLoader loader) throws IOException {
 
-	if (CollectionUtils.valid(classes) && ObjectUtils.notNull(loader)) {
+	if (CollectionUtils.valid(classes) && Objects.nonNull(loader)) {
 	    for (String className : classes) {
 		try {
 		    loader.loadClass(className);

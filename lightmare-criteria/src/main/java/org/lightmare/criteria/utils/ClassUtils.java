@@ -33,6 +33,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -79,7 +80,7 @@ public class ClassUtils {
      * @return <code>boolean</code>
      */
     private static boolean notAccessible(AccessibleObject accessibleObject) {
-	return Boolean.FALSE.equals(accessibleObject.isAccessible());
+	return ObjectUtils.notTrue(accessibleObject.isAccessible());
     }
 
     /**
@@ -90,7 +91,7 @@ public class ClassUtils {
      */
     private static void setAccessible(AccessibleObject accessibleObject, boolean accessible) {
 
-	if (Boolean.FALSE.equals(accessible)) {
+	if (ObjectUtils.notTrue(accessible)) {
 	    try {
 		// Should I use synchronized(accessibleObject) block
 		ObjectUtils.lock(ACCESSOR_LOCK);
@@ -350,7 +351,7 @@ public class ClassUtils {
 
 	int modifier = DEFAULT_MODIFIER;
 
-	if (ObjectUtils.notNull(modifiers)) {
+	if (Objects.nonNull(modifiers)) {
 	    int length = modifiers.length;
 	    int modifierValue;
 	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
@@ -406,9 +407,9 @@ public class ClassUtils {
 	boolean found = Boolean.FALSE;
 
 	Class<?> superClass = clazz;
-	while (ObjectUtils.notNull(superClass) && Boolean.FALSE.equals(found)) {
+	while (Objects.nonNull(superClass) && ObjectUtils.notTrue(found)) {
 	    found = ClassUtils.classHasMethod(superClass, methodName, modifiers);
-	    if (Boolean.FALSE.equals(found)) {
+	    if (ObjectUtils.notTrue(found)) {
 		superClass = superClass.getSuperclass();
 	    }
 	}

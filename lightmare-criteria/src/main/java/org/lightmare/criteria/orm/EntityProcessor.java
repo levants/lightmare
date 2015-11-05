@@ -74,13 +74,9 @@ public class EntityProcessor {
      */
     public static void setMetaData(QueryTuple tuple) throws IOException {
 
-	try {
-	    String className = tuple.getEntityName();
-	    Class<?> entityType = Class.forName(className);
-	    tuple.setEntityType(entityType);
-	    setMethodAndField(tuple);
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	}
+	String className = tuple.getEntityName();
+	Class<?> entityType = ClassUtils.classForName(className);
+	tuple.setEntityType(entityType);
+	setMethodAndField(tuple);
     }
 }

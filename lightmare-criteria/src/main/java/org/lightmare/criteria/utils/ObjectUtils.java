@@ -27,9 +27,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Stream;
 
 /**
  * Utility class to help with general object checks / lock / modification
@@ -49,32 +51,17 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Checks if passed object is not null
-     *
-     * @param data
-     * @return <code>boolean</code>
-     */
-    public static boolean notNull(Object data) {
-	return (data != null);
-    }
-
-    /**
      * Checks if not a single object passed objects is not null
      *
      * @param datas
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean notNullAll(Object... datas) {
 
-	boolean valid = notNull(datas);
+	boolean valid = Objects.nonNull(datas);
 
 	if (valid) {
-	    int length = datas.length;
-	    Object data;
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length && valid; i++) {
-		data = datas[i];
-		valid = notNull(data);
-	    }
+	    valid = Stream.of(datas).allMatch(data -> Objects.nonNull(data));
 	}
 
 	return valid;
@@ -88,7 +75,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static <X, Y> boolean notEquals(X x, Y y) {
-	return (!x.equals(y));
+	return (!Objects.equals(x, y));
     }
 
     /**
@@ -190,7 +177,6 @@ public abstract class ObjectUtils {
 
 	ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	ObjectOutputStream objectStream = new ObjectOutputStream(stream);
-
 	try {
 	    objectStream.writeObject(value);
 	    data = stream.toByteArray();
@@ -213,15 +199,10 @@ public abstract class ObjectUtils {
 
 	Object value;
 
-	ByteArrayInputStream stream = new ByteArrayInputStream(data);
-	ObjectInputStream objectStream = new ObjectInputStream(stream);
-
-	try {
-	    value = objectStream.readObject();
+	try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data))) {
+	    value = in.readObject();
 	} catch (ClassNotFoundException ex) {
 	    throw new IOException(ex);
-	} finally {
-	    IOUtils.closeAll(stream, objectStream);
 	}
 
 	return value;

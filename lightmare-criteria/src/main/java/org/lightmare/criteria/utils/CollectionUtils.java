@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -133,7 +134,7 @@ public abstract class CollectionUtils {
      */
     public static boolean validAll(Map<?, ?>... maps) {
 
-	boolean avaliable = ObjectUtils.notNull(maps);
+	boolean avaliable = Objects.nonNull(maps);
 
 	if (avaliable) {
 	    Map<?, ?> map;
@@ -187,7 +188,7 @@ public abstract class CollectionUtils {
      */
     public static boolean validAll(Collection<?>... collections) {
 
-	boolean avaliable = ObjectUtils.notNull(collections);
+	boolean avaliable = Objects.nonNull(collections);
 
 	if (avaliable) {
 	    Collection<?> collection;
@@ -210,7 +211,7 @@ public abstract class CollectionUtils {
      */
     public static boolean validAll(Object[]... arrays) {
 
-	boolean avaliable = ObjectUtils.notNull(arrays);
+	boolean avaliable = Objects.nonNull(arrays);
 
 	if (avaliable) {
 	    Object[] collection;
@@ -288,7 +289,7 @@ public abstract class CollectionUtils {
 
 	int length = keys.length;
 	Object key;
-	for (int i = FIRST_INDEX; i < length && ObjectUtils.notNull(result); i++) {
+	for (int i = FIRST_INDEX; i < length && Objects.nonNull(result); i++) {
 	    key = keys[i];
 	    result = getAsMap(key, result);
 	}
@@ -476,7 +477,7 @@ public abstract class CollectionUtils {
 
 	T[] array;
 
-	if (ObjectUtils.notNull(collection)) {
+	if (Objects.nonNull(collection)) {
 	    array = toArray(type, collection.size());
 	    array = collection.toArray(array);
 	} else {

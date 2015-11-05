@@ -26,6 +26,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 
 /**
  * Utility class to work with streams and other IO operations
@@ -56,7 +57,7 @@ public class IOUtils {
      */
     public static void close(Closeable closeable) throws IOException {
 
-	if (ObjectUtils.notNull(closeable)) {
+	if (Objects.nonNull(closeable)) {
 	    closeable.close();
 	}
     }
@@ -96,7 +97,7 @@ public class IOUtils {
      * @throws IOException
      */
     public static boolean available(InputStream stream) throws IOException {
-	return ObjectUtils.notNull(stream) && stream.available() > ZERO_AVAILABLE_STREAM;
+	return Objects.nonNull(stream) && stream.available() > ZERO_AVAILABLE_STREAM;
     }
 
     /**
