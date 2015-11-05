@@ -438,11 +438,6 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
     }
 
     @Override
-    public QueryStream<T> where() {
-	return this;
-    }
-
-    @Override
     public QueryStream<T> and() {
 	body.append(Clauses.AND);
 	return this;

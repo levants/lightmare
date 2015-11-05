@@ -27,7 +27,7 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 /**
- * Provider class to initialize {@link QueryStream} by clause
+ * Provider class to initialize {@link QueryStream} by clause for entity type
  * 
  * @author Levan Tsinadze
  *

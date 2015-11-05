@@ -31,7 +31,7 @@ import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
 
 /**
- * Implementation of {@link QueryStream} for sub queries
+ * Implementation of {@link QueryStream} for sub queries and joins
  * 
  * @author Levan Tsinadze
  * @param <S>

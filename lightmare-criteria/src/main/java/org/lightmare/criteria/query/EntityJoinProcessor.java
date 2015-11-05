@@ -27,7 +27,7 @@ import java.io.Serializable;
 import org.lightmare.criteria.query.jpa.AbstractQueryStream;
 
 /**
- * Utility class to process JOIN statements
+ * Implementation of {@link SubQueryStream} to process JOIN statements
  * 
  * @author Levan Tsiadze
  *
@@ -40,11 +40,6 @@ class EntityJoinProcessor<S extends Serializable, T extends Serializable> extend
 
     protected EntityJoinProcessor(AbstractQueryStream<T> parent, Class<S> entityType) {
 	super(parent, entityType);
-    }
-
-    @Override
-    public SubQueryStream<S, T> where() {
-	return this;
     }
 
     @Override

@@ -162,7 +162,9 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * 
      * @return {@link QueryStream} current instance
      */
-    QueryStream<T> where();
+    default QueryStream<T> where() {
+	return this;
+    }
 
     /**
      * AND part appender
@@ -195,7 +197,7 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     /**
      * Creates query part in brackets
      * 
-     * @param field
+     * @param consumer
      * @return {@link QueryStream} current instance
      * @throws IOException
      */
