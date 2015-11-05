@@ -30,6 +30,7 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.EntityQueryStream;
 import org.lightmare.criteria.query.SubQueryStream;
 
@@ -126,6 +127,12 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
     @Override
     public <F> SubQueryStream<S, T> in(EntityField<S, F> field, Collection<F> values) throws IOException {
 	super.in(field, values);
+	return this;
+    }
+
+    @Override
+    public <F> SubQueryStream<S, T> notIn(EntityField<S, F> field, Collection<F> values) throws IOException {
+	super.oppCollection(field, values, Operators.NOT_IN);
 	return this;
     }
 

@@ -50,7 +50,11 @@ public interface Operators {
 
     String IN = " in";
 
+    String NOT_IN = " not in";
+
     String EXISTS = " exists ";
+
+    String NOT_EXISTS = " not exists ";
 
     String OPEN_BRACKET = " (";
 

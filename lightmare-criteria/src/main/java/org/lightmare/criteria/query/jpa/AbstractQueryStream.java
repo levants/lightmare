@@ -257,12 +257,16 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	return tuple;
     }
 
-    protected void oppCollection(Object field, Collection<?> value) throws IOException {
+    protected void oppCollection(Object field, Collection<?> value, String expression) throws IOException {
 
-	QueryTuple tuple = appSubQuery(field, Operators.IN);
+	QueryTuple tuple = appSubQuery(field, expression);
 	oppWithParameter(tuple, value, body);
 	closeBracket();
 	newLine();
+    }
+
+    protected void oppCollection(Object field, Collection<?> values) throws IOException {
+	oppCollection(field, values, Operators.IN);
     }
 
     private void appendSetClause() {

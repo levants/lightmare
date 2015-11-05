@@ -134,6 +134,12 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
+    public <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) throws IOException {
+	oppCollection(field, values, Operators.NOT_IN);
+	return this;
+    }
+
+    @Override
     public QueryStream<T> isNull(EntityField<T, ?> field) throws IOException {
 	oppLine(field, Operators.IS_NULL);
 	return this;
@@ -212,10 +218,30 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
+    public <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType,
+	    SubQueryConsumer<S, T> consumer) throws IOException {
+	appSubQuery(field, Operators.NOT_IN);
+	initSubQuery(subType, consumer);
+
+	return this;
+    }
+
+    @Override
     public <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer)
 	    throws IOException {
 
 	appendBody(Operators.EXISTS);
+	openBracket();
+	initSubQuery(subType, consumer);
+
+	return this;
+    }
+
+    @Override
+    public <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer)
+	    throws IOException {
+
+	appendBody(Operators.NOT_EXISTS);
 	openBracket();
 	initSubQuery(subType, consumer);
 

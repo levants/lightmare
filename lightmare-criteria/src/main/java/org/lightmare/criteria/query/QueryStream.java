@@ -90,18 +90,14 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) throws IOException;
 
-    default <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) throws IOException {
-	openBracket().appendBody(Operators.NOT);
-	return in(field, values).closeBracket();
-    }
+    <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) throws IOException;
 
     default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) throws IOException {
 	return in(field, Arrays.asList(values));
     }
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) throws IOException {
-	openBracket().appendBody(Operators.NOT);
-	return in(field, values).closeBracket();
+	return notIn(field, Arrays.asList(values));
     }
 
     QueryStream<T> isNull(EntityField<T, ?> field) throws IOException;
@@ -133,11 +129,8 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
 	    SubQueryConsumer<S, T> consumer) throws IOException;
 
-    default <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType,
-	    SubQueryConsumer<S, T> consumer) throws IOException {
-	appendBody(Operators.NOT);
-	return in(field, subType, consumer);
-    }
+    <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType,
+	    SubQueryConsumer<S, T> consumer) throws IOException;
 
     default <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType)
 	    throws IOException {
@@ -146,8 +139,7 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     default <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType)
 	    throws IOException {
-	appendBody(Operators.NOT);
-	return in(field, subType);
+	return notIn(field, subType, null);
     }
 
     default <F> QueryStream<T> in(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) throws IOException {
@@ -155,8 +147,7 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     }
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) throws IOException {
-	appendBody(Operators.NOT);
-	return in(field, consumer);
+	return notIn(field, getEntityType(), consumer);
     }
 
     default <F> QueryStream<T> in(EntityField<T, F> field) throws IOException {
@@ -165,26 +156,22 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     }
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field) throws IOException {
-	appendBody(Operators.NOT);
-	return in(field);
+	SubQueryConsumer<T, T> consumer = null;
+	return notIn(field, consumer);
     }
 
     <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer)
 	    throws IOException;
 
-    default <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer)
-	    throws IOException {
-	appendBody(Operators.NOT);
-	return exists(subType, consumer);
-    }
+    <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer)
+	    throws IOException;
 
     default <F, S extends Serializable> QueryStream<T> exists(Class<S> subType) throws IOException {
 	return exists(subType, null);
     }
 
     default <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType) throws IOException {
-	appendBody(Operators.NOT);
-	return exists(subType);
+	return notExists(subType, null);
     }
 
     default <F> QueryStream<T> exists(SubQueryConsumer<T, T> consumer) throws IOException {
@@ -192,8 +179,7 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     }
 
     default <F> QueryStream<T> notExists(SubQueryConsumer<T, T> consumer) throws IOException {
-	appendBody(Operators.NOT);
-	return exists(consumer);
+	return notExists(getEntityType(), consumer);
     }
 
     // =========================order=by=====================================//
