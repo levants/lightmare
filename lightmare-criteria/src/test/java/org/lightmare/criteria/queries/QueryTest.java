@@ -80,10 +80,10 @@ public class QueryTest {
     @RunOrder(1)
     public void supplierEntityTest() {
 
+	EntityManager em = emf.createEntityManager();
 	try {
 	    System.out.println();
 	    System.out.println("==========Entity============");
-	    EntityManager em = emf.createEntityManager();
 	    QueryStream<Person> stream = createSetterStream(em);
 	    System.out.println("===========JPA-QL==========");
 	    System.out.println();
@@ -92,6 +92,8 @@ public class QueryTest {
 	    System.out.println();
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 

@@ -27,6 +27,8 @@ public class SubQueryTest extends QueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -44,6 +46,8 @@ public class SubQueryTest extends QueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -61,6 +65,8 @@ public class SubQueryTest extends QueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -77,6 +83,8 @@ public class SubQueryTest extends QueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -94,10 +102,12 @@ public class SubQueryTest extends QueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
-    @RunOrder(100.51)
+    @RunOrder(100.52)
     @Test
     public void subQueryUnconditionalExistsCallTest() {
 
@@ -109,6 +119,8 @@ public class SubQueryTest extends QueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -125,6 +137,8 @@ public class SubQueryTest extends QueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -141,6 +155,8 @@ public class SubQueryTest extends QueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -158,6 +174,8 @@ public class SubQueryTest extends QueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -175,6 +193,8 @@ public class SubQueryTest extends QueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 }

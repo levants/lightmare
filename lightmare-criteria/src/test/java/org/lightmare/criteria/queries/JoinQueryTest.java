@@ -24,6 +24,8 @@ public class JoinQueryTest extends SubQueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -40,11 +42,13 @@ public class JoinQueryTest extends SubQueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
     @Test
-    @RunOrder(201.1)
+    @RunOrder(201.05)
     public void leftJoinTest() {
 
 	EntityManager em = emf.createEntityManager();
@@ -55,6 +59,8 @@ public class JoinQueryTest extends SubQueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -70,6 +76,8 @@ public class JoinQueryTest extends SubQueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -85,6 +93,8 @@ public class JoinQueryTest extends SubQueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -99,11 +109,13 @@ public class JoinQueryTest extends SubQueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
     @Test
-    @RunOrder(201.3)
+    @RunOrder(201.4)
     public void parentAndUnconditionalLeftJoinTest() {
 
 	EntityManager em = emf.createEntityManager();
@@ -114,6 +126,8 @@ public class JoinQueryTest extends SubQueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 
@@ -131,6 +145,8 @@ public class JoinQueryTest extends SubQueryTest {
 	    System.out.println(sql);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
+	} finally {
+	    em.close();
 	}
     }
 }
