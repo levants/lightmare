@@ -41,7 +41,7 @@ import org.lightmare.criteria.query.jpa.SelectStatements;
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type for generated query
+ *            entity type parameter for generated query
  */
 public interface QueryStream<T extends Serializable> extends SelectStatements<T>, JoinQueryStream<T>, ResultStream<T> {
 
@@ -59,6 +59,8 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     Class<T> getEntityType();
 
     // ========================= Entity method composers ====================//
+    <F> QueryStream<T> operate(EntityField<T, F> field, String operator) throws IOException;
+
     <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator) throws IOException;
 
     <F> QueryStream<T> equals(EntityField<T, F> field, F value) throws IOException;
@@ -82,15 +84,15 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     QueryStream<T> contains(EntityField<T, String> field, String value) throws IOException;
 
     default QueryStream<T> notContains(EntityField<T, String> field, String value) throws IOException {
-	appendBody(Operators.NO);
-	return contains(field, value);
+	openBracket().appendBody(Operators.NO);
+	return contains(field, value).closeBracket();
     }
 
     <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) throws IOException;
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) throws IOException {
-	appendBody(Operators.NOT);
-	return in(field, values);
+	openBracket().appendBody(Operators.NOT);
+	return in(field, values).closeBracket();
     }
 
     default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) throws IOException {
@@ -98,8 +100,8 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     }
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) throws IOException {
-	appendBody(Operators.NOT);
-	return in(field, values);
+	openBracket().appendBody(Operators.NOT);
+	return in(field, values).closeBracket();
     }
 
     QueryStream<T> isNull(EntityField<T, ?> field) throws IOException;

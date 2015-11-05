@@ -54,6 +54,12 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
+    public <F> QueryStream<T> operate(EntityField<T, F> field, String operator) throws IOException {
+	oppLine(field, operator);
+	return this;
+    }
+
+    @Override
     public <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator) throws IOException {
 	oppLine(field, value, operator);
 	return this;
