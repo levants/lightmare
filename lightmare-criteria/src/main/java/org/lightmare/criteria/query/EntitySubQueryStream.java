@@ -126,6 +126,13 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
     }
 
     @Override
+    public <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, EntityField<T, Collection<F>> field)
+	    throws IOException {
+	oppSubQueryCollection(sfield, field, Operators.NOT_IN);
+	return this;
+    }
+
+    @Override
     public QueryStream<Object[]> select(EntityField<S, ?> field) throws IOException {
 	return subSelectAll(field);
     }

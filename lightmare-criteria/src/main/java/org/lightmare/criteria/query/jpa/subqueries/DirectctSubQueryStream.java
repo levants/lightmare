@@ -30,7 +30,7 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.links.Operators;
+import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.query.EntityQueryStream;
 import org.lightmare.criteria.query.SubQueryStream;
 
@@ -132,7 +132,7 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
 
     @Override
     public <F> SubQueryStream<S, T> notIn(EntityField<S, F> field, Collection<F> values) throws IOException {
-	super.oppCollection(field, values, Operators.NOT_IN);
+	super.notIn(field, values);
 	return this;
     }
 
@@ -147,7 +147,59 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
 	super.notNull(field);
 	return this;
     }
-    // ================= entity QL methods ===================================//
+
+    // =========================sub=queries==================================//
+
+    @Override
+    public <K extends Serializable> SubQueryStream<S, T> subQuery(Class<K> subType, SubQueryConsumer<K, S> consumer)
+	    throws IOException {
+	super.subQuery(subType, consumer);
+	return this;
+    }
+
+    @Override
+    public <F, K extends Serializable> SubQueryStream<S, T> in(EntityField<S, F> field, Class<K> subType,
+	    SubQueryConsumer<K, S> consumer) throws IOException {
+	super.in(field, subType, consumer);
+	return this;
+    }
+
+    @Override
+    public <F, K extends Serializable> SubQueryStream<S, T> notIn(EntityField<S, F> field, Class<K> subType,
+	    SubQueryConsumer<K, S> consumer) throws IOException {
+	super.notIn(field, subType, consumer);
+	return this;
+    }
+
+    @Override
+    public <F, K extends Serializable> SubQueryStream<S, T> exists(Class<K> subType, SubQueryConsumer<K, S> consumer)
+	    throws IOException {
+	super.exists(subType, consumer);
+	return this;
+    }
+
+    @Override
+    public <F, K extends Serializable> SubQueryStream<S, T> notExists(Class<K> subType, SubQueryConsumer<K, S> consumer)
+	    throws IOException {
+	super.notExists(subType, consumer);
+	return this;
+    }
+
+    // =========================sub=queries==================================//
+
+    // =========================order=by=====================================//
+    @Override
+    public SubQueryStream<S, T> orderBy(EntityField<S, ?> field) throws IOException {
+	super.orderBy(field);
+	return this;
+    }
+
+    @Override
+    public SubQueryStream<S, T> orderByDesc(EntityField<S, ?> field) throws IOException {
+	super.orderByDesc(field);
+	return this;
+    }
+    // ======================================================================//
 
     // ================= entity QL Filters ===================================//
     @Override

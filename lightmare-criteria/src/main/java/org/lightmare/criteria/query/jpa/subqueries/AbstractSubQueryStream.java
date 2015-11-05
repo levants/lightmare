@@ -121,6 +121,16 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	body.append(NEW_LINE);
     }
 
+    protected void oppSubQueryCollection(Object sfield, Object field, String expression) throws IOException {
+
+	opp(sfield, expression);
+	QueryTuple tuple = compose(field);
+	openBracket();
+	appendColumn(tuple);
+	closeBracket();
+	appendBody(NEW_LINE);
+    }
+
     /**
      * Processes sub query part for IN {@link Collection} clause
      * 
@@ -129,13 +139,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
      * @throws IOException
      */
     protected void oppSubQueryCollection(Object sfield, Object field) throws IOException {
-
-	opp(sfield, Operators.IN);
-	QueryTuple tuple = compose(field);
-	openBracket();
-	appendColumn(tuple);
-	closeBracket();
-	appendBody(NEW_LINE);
+	oppSubQueryCollection(sfield, field, Operators.IN);
     }
 
     /**

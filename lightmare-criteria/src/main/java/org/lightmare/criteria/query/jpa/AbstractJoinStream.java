@@ -38,7 +38,7 @@ import org.lightmare.utils.StringUtils;
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type for generated query
+ *            entity type parameter for generated query
  */
 abstract class AbstractJoinStream<T extends Serializable> extends AbstractQueryStream<T> {
 
