@@ -149,4 +149,23 @@ public class JoinQueryTest extends SubQueryTest {
 	    em.close();
 	}
     }
+
+    @Test
+    @RunOrder(203)
+    public void fetchJoinNotEqualsTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+		    .notEquals(Person::getLastName, "lname")
+		    .fetchJoin(Person::getPhones, c -> c.equals(Phone::getPhoneNumber, "100100").and()
+			    .notEquals(Phone::getOperatorId, Person::getPersonId));
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	} finally {
+	    em.close();
+	}
+    }
 }

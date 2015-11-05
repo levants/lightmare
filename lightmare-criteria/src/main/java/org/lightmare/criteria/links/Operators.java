@@ -55,4 +55,8 @@ public interface Operators {
     String OPEN_BRACKET = " (";
 
     String CLOSE_BRACKET = ") ";
+
+    String NOT = " not ";
+
+    String NO = " !";
 }

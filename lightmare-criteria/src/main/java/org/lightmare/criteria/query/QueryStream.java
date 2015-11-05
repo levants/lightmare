@@ -30,6 +30,7 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
+import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.jpa.JoinQueryStream;
 import org.lightmare.criteria.query.jpa.ResultStream;
 import org.lightmare.criteria.query.jpa.SelectStatements;
@@ -79,10 +80,25 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     QueryStream<T> contains(EntityField<T, String> field, String value) throws IOException;
 
+    default QueryStream<T> notContains(EntityField<T, String> field, String value) throws IOException {
+	appendBody(Operators.NO);
+	return contains(field, value);
+    }
+
     <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) throws IOException;
+
+    default <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) throws IOException {
+	appendBody(Operators.NOT);
+	return in(field, values);
+    }
 
     default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) throws IOException {
 	return in(field, Arrays.asList(values));
+    }
+
+    default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) throws IOException {
+	appendBody(Operators.NOT);
+	return in(field, values);
     }
 
     QueryStream<T> isNull(EntityField<T, ?> field) throws IOException;
@@ -114,13 +130,30 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
 	    SubQueryConsumer<S, T> consumer) throws IOException;
 
+    default <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType,
+	    SubQueryConsumer<S, T> consumer) throws IOException {
+	appendBody(Operators.NOT);
+	return in(field, subType, consumer);
+    }
+
     default <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType)
 	    throws IOException {
 	return in(field, subType, null);
     }
 
+    default <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType)
+	    throws IOException {
+	appendBody(Operators.NOT);
+	return in(field, subType);
+    }
+
     default <F> QueryStream<T> in(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) throws IOException {
 	return in(field, getEntityType(), consumer);
+    }
+
+    default <F> QueryStream<T> notIn(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) throws IOException {
+	appendBody(Operators.NOT);
+	return in(field, consumer);
     }
 
     default <F> QueryStream<T> in(EntityField<T, F> field) throws IOException {
@@ -128,15 +161,36 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 	return in(field, consumer);
     }
 
+    default <F> QueryStream<T> notIn(EntityField<T, F> field) throws IOException {
+	appendBody(Operators.NOT);
+	return in(field);
+    }
+
     <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer)
 	    throws IOException;
+
+    default <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer)
+	    throws IOException {
+	appendBody(Operators.NOT);
+	return exists(subType, consumer);
+    }
 
     default <F, S extends Serializable> QueryStream<T> exists(Class<S> subType) throws IOException {
 	return exists(subType, null);
     }
 
+    default <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType) throws IOException {
+	appendBody(Operators.NOT);
+	return exists(subType);
+    }
+
     default <F> QueryStream<T> exists(SubQueryConsumer<T, T> consumer) throws IOException {
 	return exists(getEntityType(), consumer);
+    }
+
+    default <F> QueryStream<T> notExists(SubQueryConsumer<T, T> consumer) throws IOException {
+	appendBody(Operators.NOT);
+	return exists(consumer);
     }
 
     // =========================order=by=====================================//
