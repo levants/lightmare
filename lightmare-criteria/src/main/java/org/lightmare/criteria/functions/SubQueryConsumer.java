@@ -33,9 +33,9 @@ import org.lightmare.criteria.query.SubQueryStream;
  * @author Levan Tsinadze
  *
  * @param <S>
- *            sub query entity type
+ *            sub query or join entity type parameter
  * @param <T>
- *            entity type
+ *            entity type parameter
  */
 @FunctionalInterface
 public interface SubQueryConsumer<S extends Serializable, T extends Serializable> extends Serializable {

@@ -23,6 +23,7 @@
 package org.lightmare.criteria.lambda;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
@@ -48,6 +49,13 @@ public class LambdaReplacements {
 
     private static final String LINQ_NAME = org.lightmare.criteria.lambda.SLambda.class.getName();
 
+    /**
+     * Serializes object and translates it to {@link SLambda} instance
+     * 
+     * @param buff
+     * @return {@link SLambda} from serialized object
+     * @throws IOException
+     */
     private static SLambda toLambda(byte[] buff) throws IOException {
 
 	SLambda lambda;
@@ -76,6 +84,14 @@ public class LambdaReplacements {
 	return translated;
     }
 
+    /**
+     * Serializes object and translates it and wraps it's field to
+     * {@link LambdaData} object
+     * 
+     * @param field
+     * @return {@link LambdaData} from lambda expression
+     * @throws IOException
+     */
     private static LambdaData translate(Object field) throws IOException {
 
 	LambdaData lambda;
@@ -88,6 +104,15 @@ public class LambdaReplacements {
 	return lambda;
     }
 
+    /**
+     * Gets serialization {@link Method} from {@link Serializable}
+     * implementation
+     * 
+     * @param parent
+     * @return {@link Method} for serialization
+     * @throws IOException
+     * @throws NoSuchMethodException
+     */
     private static <T> Method getMethod(Class<?> parent) throws IOException, NoSuchMethodException {
 
 	Method method;
@@ -112,8 +137,8 @@ public class LambdaReplacements {
 
 	LambdaData lambda;
 
-	Class<?> parent = field.getClass();
 	try {
+	    Class<?> parent = field.getClass();
 	    Method method = getMethod(parent);
 	    Object raw = ClassUtils.invokePrivate(method, field);
 	    SerializedLambda serialized = ObjectUtils.cast(raw);

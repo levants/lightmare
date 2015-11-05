@@ -33,7 +33,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type
+ *            entity type parameter
  */
 @FunctionalInterface
 public interface QueryConsumer<T extends Serializable> {

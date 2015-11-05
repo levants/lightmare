@@ -93,15 +93,35 @@ public class FieldResolver {
 	return entityName;
     }
 
+    /**
+     * Validates setter method by name, arguments and return type
+     * 
+     * @param returnType
+     * @param argumentTypes
+     * @return <code>boolean</code> validation result
+     */
     private static boolean validSetter(Type returnType, Type[] argumentTypes) {
 	return (Objects.nonNull(argumentTypes) && argumentTypes.length == SINGLE_ARG
 		&& Type.VOID_TYPE.equals(returnType));
     }
 
+    /**
+     * Validates getter method by name, arguments and return type
+     * 
+     * @param returnType
+     * @param argumentTypes
+     * @return <code>boolean</code> validation result
+     */
     private static boolean validGetter(Type returnType, Type[] argumentTypes) {
 	return (CollectionUtils.isEmpty(argumentTypes) && ObjectUtils.notEquals(Type.VOID_TYPE, returnType));
     }
 
+    /**
+     * Validates if resolved method is setter or getter for entity field
+     * 
+     * @param node
+     * @return <code>boolean</code> validation result
+     */
     private static boolean valid(MethodInsnNode node) {
 
 	boolean valid;
