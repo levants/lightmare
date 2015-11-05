@@ -59,6 +59,7 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     Class<T> getEntityType();
 
     // ========================= Entity method composers ====================//
+    <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator) throws IOException;
 
     <F> QueryStream<T> equals(EntityField<T, F> field, F value) throws IOException;
 

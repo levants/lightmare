@@ -90,6 +90,9 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
     SubQueryStream<S, T> notNull(EntityField<S, ?> field) throws IOException;
 
     // ========================= Entity and parent method composers =========//
+    <F> SubQueryStream<S, T> operate(EntityField<T, F> sfield, EntityField<T, F> field, String operator)
+	    throws IOException;
+
     <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
 
     <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException;
