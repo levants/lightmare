@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.lightmare.criteria.lambda.LambdaData;
 import org.lightmare.criteria.resolvers.CachedClassReader;
-import org.lightmare.utils.ObjectUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;

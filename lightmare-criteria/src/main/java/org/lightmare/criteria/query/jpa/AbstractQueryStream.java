@@ -45,8 +45,8 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.utils.StringUtils;
-import org.lightmare.utils.collections.CollectionUtils;
+import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Abstract class for lambda expression analyze and JPA query generator

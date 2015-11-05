@@ -5,7 +5,7 @@ import java.lang.ref.ReferenceQueue;
 import java.util.Objects;
 
 import org.apache.log4j.Logger;
-import org.lightmare.utils.StringUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * References for lambda generated classes to avoid cache overflow

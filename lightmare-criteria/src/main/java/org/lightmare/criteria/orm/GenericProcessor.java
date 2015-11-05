@@ -28,8 +28,8 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.collections.CollectionUtils;
+import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Resolves generic type of {@link Collection} field

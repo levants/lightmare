@@ -29,7 +29,7 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.utils.StringUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation for JOIN clause query generation

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.lightmare.criteria.tuples.ParameterTuple;
-import org.lightmare.utils.collections.CollectionUtils;
+import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
  * Interface for query result methods

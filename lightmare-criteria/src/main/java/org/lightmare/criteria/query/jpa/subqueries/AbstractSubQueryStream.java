@@ -35,7 +35,7 @@ import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.jpa.AbstractQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.utils.collections.CollectionUtils;
+import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
  * Main class to operate on sub queries and generate query clauses

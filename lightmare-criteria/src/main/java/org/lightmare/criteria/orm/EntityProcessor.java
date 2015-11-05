@@ -27,7 +27,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.utils.reflect.ClassUtils;
+import org.lightmare.criteria.utils.ClassUtils;
 
 /**
  * Adds reflection meta data to {@link QueryTuple} instance

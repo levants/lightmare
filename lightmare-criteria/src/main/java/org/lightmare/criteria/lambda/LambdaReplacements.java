@@ -28,9 +28,8 @@ import java.io.UnsupportedEncodingException;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
 
-import org.lightmare.utils.ObjectUtils;
-import org.lightmare.utils.io.serialization.NativeSerializer;
-import org.lightmare.utils.reflect.ClassUtils;
+import org.lightmare.criteria.utils.ClassUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Utility class to retrieve {@link SerializedLambda} data from lambda function
@@ -60,7 +59,7 @@ public class LambdaReplacements {
 
 	SLambda lambda;
 
-	Object raw = NativeSerializer.deserialize(buff);
+	Object raw = ObjectUtils.deserialize(buff);
 	lambda = ObjectUtils.cast(raw);
 
 	return lambda;
@@ -96,7 +95,7 @@ public class LambdaReplacements {
 
 	LambdaData lambda;
 
-	byte[] value = NativeSerializer.serialize(field);
+	byte[] value = ObjectUtils.serialize(field);
 	byte[] translated = replace(value);
 	SLambda slambda = toLambda(translated);
 	lambda = new LambdaData(slambda);

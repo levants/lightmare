@@ -36,7 +36,7 @@ import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.query.jpa.AbstractSelectStatements;
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.utils.ObjectUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Query builder from setter method references

@@ -26,7 +26,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.lightmare.criteria.query.jpa.SelectStream;
-import org.lightmare.utils.collections.CollectionUtils;
+import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
  * Processes SELECT statements for sub queries

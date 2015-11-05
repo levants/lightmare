@@ -41,13 +41,6 @@
 		</plugins>
 	</build>
 	<dependencies>
-		<!-- utilities -->
-		<dependency>
-			<groupId>com.github.levants</groupId>
-			<artifactId>lightmare-utils</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<!-- utilities -->
 		<!-- ASM -->
 		<dependency>
 			<groupId>org.ow2.asm</groupId>

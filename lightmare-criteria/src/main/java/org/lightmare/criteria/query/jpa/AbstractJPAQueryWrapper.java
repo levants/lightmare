@@ -32,7 +32,7 @@ import javax.persistence.LockModeType;
 import javax.persistence.Query;
 
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.utils.collections.CollectionUtils;
+import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
  * Abstract implementation of {@link JPAQueryWrapper} interface
