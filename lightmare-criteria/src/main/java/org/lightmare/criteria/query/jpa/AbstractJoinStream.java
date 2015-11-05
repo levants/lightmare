@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.jpa;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -52,10 +51,8 @@ abstract class AbstractJoinStream<T extends Serializable> extends AbstractQueryS
      * @param field
      * @param expression
      * @return {@link QueryTuple} for field and expression
-     * @throws IOException
      */
-    protected <C extends Collection<?>> QueryTuple oppJoin(EntityField<T, C> field, String expression)
-	    throws IOException {
+    protected <C extends Collection<?>> QueryTuple oppJoin(EntityField<T, C> field, String expression) {
 
 	QueryTuple tuple;
 

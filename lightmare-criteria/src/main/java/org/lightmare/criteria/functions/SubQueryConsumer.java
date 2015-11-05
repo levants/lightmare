@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.functions;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import org.lightmare.criteria.query.SubQueryStream;
@@ -40,5 +39,5 @@ import org.lightmare.criteria.query.SubQueryStream;
 @FunctionalInterface
 public interface SubQueryConsumer<S extends Serializable, T extends Serializable> extends Serializable {
 
-    void accept(SubQueryStream<S, T> subQuery) throws IOException;
+    void accept(SubQueryStream<S, T> subQuery);
 }

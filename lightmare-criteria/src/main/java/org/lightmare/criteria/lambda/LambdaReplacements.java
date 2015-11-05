@@ -133,7 +133,7 @@ public class LambdaReplacements {
      * @return {@link LambdaData} replacement
      * @throws IOException
      */
-    public static <T> LambdaData getReplacement(Object field) throws IOException {
+    private static <T> LambdaData getReplacement(Object field) throws IOException {
 
 	LambdaData lambda;
 
@@ -145,6 +145,25 @@ public class LambdaReplacements {
 	    lambda = new LambdaData(serialized);
 	} catch (NoSuchMethodException ex) {
 	    lambda = translate(field);
+	}
+
+	return lambda;
+    }
+
+    /**
+     * Gets {@link LambdaData} instance from passed lambda argument
+     * 
+     * @param field
+     * @return {@link LambdaData} replacement
+     */
+    public static <T> LambdaData getReplacementQuietly(Object field) {
+
+	LambdaData lambda;
+
+	try {
+	    lambda = getReplacement(field);
+	} catch (IOException ex) {
+	    throw new RuntimeException(ex);
 	}
 
 	return lambda;

@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -49,91 +48,85 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
 
     // ========================= Entity and parent method composers =========//
     @Override
-    public <F> SubQueryStream<S, T> operate(EntityField<T, F> sfield, EntityField<T, F> field, String operator)
-	    throws IOException {
+    public <F> SubQueryStream<S, T> operate(EntityField<T, F> sfield, EntityField<T, F> field, String operator) {
 	oppSubQuery(sfield, field, operator);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
+    public <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, EntityField<T, F> field) {
 	oppSubQuery(sfield, field, Operators.EQ);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
+    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, EntityField<T, F> field) {
 	oppSubQuery(sfield, field, Operators.NOT_EQ);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
+    public <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, EntityField<T, F> field) {
 	oppSubQuery(sfield, field, Operators.MORE);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
+    public <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, EntityField<T, F> field) {
 	oppSubQuery(sfield, field, Operators.LESS);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
+    public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) {
 	oppSubQuery(sfield, field, Operators.MORE_OR_EQ);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) throws IOException {
+    public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) {
 	oppSubQuery(sfield, field, Operators.LESS_OR_EQ);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, EntityField<T, String> field)
-	    throws IOException {
+    public SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, EntityField<T, String> field) {
 	oppSubQuery(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> like(EntityField<S, String> sfield, EntityField<T, String> field) throws IOException {
+    public SubQueryStream<S, T> like(EntityField<S, String> sfield, EntityField<T, String> field) {
 	oppSubQuery(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, EntityField<T, String> field)
-	    throws IOException {
+    public SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, EntityField<T, String> field) {
 	oppSubQuery(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> contains(EntityField<S, String> sfield, EntityField<T, String> field)
-	    throws IOException {
+    public SubQueryStream<S, T> contains(EntityField<S, String> sfield, EntityField<T, String> field) {
 	oppSubQuery(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, EntityField<T, Collection<F>> field)
-	    throws IOException {
+    public <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, EntityField<T, Collection<F>> field) {
 	oppSubQueryCollection(sfield, field);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, EntityField<T, Collection<F>> field)
-	    throws IOException {
+    public <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, EntityField<T, Collection<F>> field) {
 	oppSubQueryCollection(sfield, field, Operators.NOT_IN);
 	return this;
     }
 
     @Override
-    public QueryStream<Object[]> select(EntityField<S, ?> field) throws IOException {
+    public QueryStream<Object[]> select(EntityField<S, ?> field) {
 	return subSelectAll(field);
     }
 }

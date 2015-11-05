@@ -22,8 +22,6 @@
  */
 package org.lightmare.criteria.lambda;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.lightmare.criteria.cache.LambdaCache;
 import org.lightmare.criteria.cache.QueryCache;
@@ -49,13 +47,12 @@ public class LambdaUtils {
      * 
      * @param field
      * @return {@link QueryTuple} from cache
-     * @throws IOException
      */
-    private static QueryTuple getByLambda(Object method) throws IOException {
+    private static QueryTuple getByLambda(Object method) {
 
 	QueryTuple tuple;
 
-	LambdaData lambda = LambdaReplacements.getReplacement(method);
+	LambdaData lambda = LambdaReplacements.getReplacementQuietly(method);
 	tuple = QueryCache.getQuery(lambda);
 	if (tuple == null) {
 	    tuple = FieldResolver.resolve(lambda);
@@ -72,9 +69,8 @@ public class LambdaUtils {
      * 
      * @param method
      * @return {@link QueryTuple} from cache
-     * @throws IOException
      */
-    public static QueryTuple getOrInit(Object method) throws IOException {
+    public static QueryTuple getOrInit(Object method) {
 
 	QueryTuple tuple = LambdaCache.getByInstance(method);
 

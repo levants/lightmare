@@ -28,8 +28,8 @@ import java.util.Objects;
 
 import org.lightmare.criteria.cache.MethodCache;
 import org.lightmare.criteria.lambda.LambdaData;
-import org.lightmare.criteria.orm.EntityProcessor;
 import org.lightmare.criteria.orm.ColumnProcessor;
+import org.lightmare.criteria.orm.EntityProcessor;
 import org.lightmare.criteria.orm.GenericProcessor;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.utils.ObjectUtils;
@@ -203,6 +203,26 @@ public class FieldResolver {
     }
 
     /**
+     * Resolves appropriated instructions for field recognition swallowing
+     * errors
+     * 
+     * @param instructions
+     * @return {@link QueryTuple} for resolved field and query part
+     */
+    private static QueryTuple resolveQuietly(InsnList instructions) {
+
+	QueryTuple tuple;
+
+	try {
+	    tuple = resolve(instructions);
+	} catch (IOException ex) {
+	    throw new RuntimeException(ex);
+	}
+
+	return tuple;
+    }
+
+    /**
      * Validates method and signature for field resolver
      * 
      * @param methodNode
@@ -227,9 +247,8 @@ public class FieldResolver {
      * @param lambda
      * @param verbose
      * @return {@link QueryTuple} for resolved field and query part
-     * @throws IOException
      */
-    public static QueryTuple resolve(LambdaData lambda) throws IOException {
+    public static QueryTuple resolve(LambdaData lambda) {
 
 	QueryTuple tuple;
 
@@ -238,9 +257,9 @@ public class FieldResolver {
 	    MethodNode methodNode = methods.stream().filter(c -> validate(c, lambda)).findFirst().get();
 	    methodNode.visitCode();
 	    InsnList instructions = methodNode.instructions;
-	    tuple = resolve(instructions);
+	    tuple = resolveQuietly(instructions);
 	} else {
-	    throw new IOException(UNRESOLVABLE_ERROR);
+	    throw new RuntimeException(UNRESOLVABLE_ERROR);
 	}
 
 	return tuple;

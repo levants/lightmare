@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.functions;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import org.lightmare.criteria.query.QueryStream;
@@ -38,5 +37,5 @@ import org.lightmare.criteria.query.QueryStream;
 @FunctionalInterface
 public interface QueryConsumer<T extends Serializable> {
 
-    void accept(QueryStream<T> stream) throws IOException;
+    void accept(QueryStream<T> stream);
 }

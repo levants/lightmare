@@ -52,17 +52,20 @@ public class MethodCache {
      * 
      * @param typeName
      * @return {@link List} of {@link MethodNode}
-     * @throws IOException
      */
 
-    private static List<MethodNode> resolveMethods(String typeName) throws IOException {
+    private static List<MethodNode> resolveMethods(String typeName) {
 
 	List<MethodNode> methods;
 
-	ClassReader reader = CachedClassReader.get(typeName);
-	ClassNode node = new ClassNode(Opcodes.ASM5);
-	reader.accept(node, ZERO_FLAGS);
-	methods = ObjectUtils.cast(node.methods);
+	try {
+	    ClassReader reader = CachedClassReader.get(typeName);
+	    ClassNode node = new ClassNode(Opcodes.ASM5);
+	    reader.accept(node, ZERO_FLAGS);
+	    methods = ObjectUtils.cast(node.methods);
+	} catch (IOException ex) {
+	    throw new RuntimeException(ex);
+	}
 
 	return methods;
     }
@@ -73,9 +76,8 @@ public class MethodCache {
      * 
      * @param typeName
      * @return {@link List} of {@link MethodNode} methods
-     * @throws IOException
      */
-    public static List<MethodNode> getMethods(String typeName) throws IOException {
+    public static List<MethodNode> getMethods(String typeName) {
 
 	List<MethodNode> methods;
 
@@ -95,9 +97,8 @@ public class MethodCache {
      * 
      * @param lambda
      * @return {@link List} of {@link MethodNode} methods
-     * @throws IOException
      */
-    public static List<MethodNode> getMethods(LambdaData lambda) throws IOException {
+    public static List<MethodNode> getMethods(LambdaData lambda) {
 
 	List<MethodNode> methods;
 

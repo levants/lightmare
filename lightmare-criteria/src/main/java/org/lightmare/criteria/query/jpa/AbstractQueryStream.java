@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.jpa;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -165,9 +164,8 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
      * 
      * @param field
      * @return {@link QueryTuple} for passed lambda function
-     * @throws IOException
      */
-    protected QueryTuple compose(Object field) throws IOException {
+    protected QueryTuple compose(Object field) {
 
 	QueryTuple tuple = LambdaUtils.getOrInit(field);
 	tuple.setAlias(alias);
@@ -233,7 +231,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	addParameter(parameterName, tuple, value);
     }
 
-    protected QueryTuple opp(Object field, String expression) throws IOException {
+    protected QueryTuple opp(Object field, String expression) {
 
 	QueryTuple tuple = compose(field);
 
@@ -243,13 +241,13 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	return tuple;
     }
 
-    protected <F> void opp(Object field, F value, String expression) throws IOException {
+    protected <F> void opp(Object field, F value, String expression) {
 
 	QueryTuple tuple = opp(field, expression);
 	oppWithParameter(tuple, value, body);
     }
 
-    protected QueryTuple appSubQuery(Object field, String expression) throws IOException {
+    protected QueryTuple appSubQuery(Object field, String expression) {
 
 	QueryTuple tuple = opp(field, expression);
 	openBracket();
@@ -257,7 +255,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	return tuple;
     }
 
-    protected void oppCollection(Object field, Collection<?> value, String expression) throws IOException {
+    protected void oppCollection(Object field, Collection<?> value, String expression) {
 
 	QueryTuple tuple = appSubQuery(field, expression);
 	oppWithParameter(tuple, value, body);
@@ -265,7 +263,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	newLine();
     }
 
-    protected void oppCollection(Object field, Collection<?> values) throws IOException {
+    protected void oppCollection(Object field, Collection<?> values) {
 	oppCollection(field, values, Operators.IN);
     }
 
@@ -285,7 +283,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	updateSet.append(Operators.EQ);
     }
 
-    protected <F> void setOpp(Object field, F value) throws IOException {
+    protected <F> void setOpp(Object field, F value) {
 
 	QueryTuple tuple = compose(field);
 	appendSetClause();
@@ -293,7 +291,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	oppWithParameter(tuple, value, updateSet);
     }
 
-    private void appendSelect(EntityField<T, ?>[] fields) throws IOException {
+    private void appendSelect(EntityField<T, ?>[] fields) {
 
 	int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
 	EntityField<T, ?> field;
@@ -310,7 +308,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
     }
 
     @SafeVarargs
-    protected final void oppSelect(EntityField<T, ?>... fields) throws IOException {
+    protected final void oppSelect(EntityField<T, ?>... fields) {
 
 	if (CollectionUtils.valid(fields)) {
 	    columns.append(Filters.SELECT);
@@ -337,7 +335,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	}
     }
 
-    private void iterateAndAppendOrders(String dir, Object[] fields) throws IOException {
+    private void iterateAndAppendOrders(String dir, Object[] fields) {
 
 	Object field;
 	QueryTuple tuple;
@@ -352,7 +350,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	}
     }
 
-    protected void setOrder(String dir, Object[] fields) throws IOException {
+    protected void setOrder(String dir, Object[] fields) {
 
 	if (CollectionUtils.valid(fields)) {
 	    prepareOrderBy();
@@ -360,7 +358,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	}
     }
 
-    protected void setOrder(Object[] fields) throws IOException {
+    protected void setOrder(Object[] fields) {
 	setOrder(null, fields);
     }
 
@@ -377,12 +375,12 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	}
     }
 
-    protected void oppLine(Object field, String expression) throws IOException {
+    protected void oppLine(Object field, String expression) {
 	opp(field, expression);
 	newLine();
     }
 
-    protected <F> void oppLine(Object field, F value, String expression) throws IOException {
+    protected <F> void oppLine(Object field, F value, String expression) {
 	opp(field, value, expression);
 	newLine();
     }
@@ -465,7 +463,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
     }
 
     @Override
-    public QueryStream<T> brackets(QueryConsumer<T> consumer) throws IOException {
+    public QueryStream<T> brackets(QueryConsumer<T> consumer) {
 
 	openBracket();
 	consumer.accept(this);

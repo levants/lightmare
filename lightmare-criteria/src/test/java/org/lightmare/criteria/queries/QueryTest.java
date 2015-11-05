@@ -1,6 +1,5 @@
 package org.lightmare.criteria.queries;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -60,7 +59,7 @@ public class QueryTest {
 	}
     }
 
-    private QueryStream<Person> createSetterStream(final EntityManager em) throws IOException {
+    private QueryStream<Person> createSetterStream(final EntityManager em) {
 
 	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
 

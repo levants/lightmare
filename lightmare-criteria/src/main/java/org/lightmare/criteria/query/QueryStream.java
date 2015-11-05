@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -59,50 +58,50 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     Class<T> getEntityType();
 
     // ========================= Entity method composers ====================//
-    <F> QueryStream<T> operate(EntityField<T, F> field, String operator) throws IOException;
+    <F> QueryStream<T> operate(EntityField<T, F> field, String operator);
 
-    <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator) throws IOException;
+    <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator);
 
-    <F> QueryStream<T> equals(EntityField<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> equals(EntityField<T, F> field, F value);
 
-    <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> notEquals(EntityField<T, F> field, F value);
 
-    <F> QueryStream<T> more(EntityField<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> more(EntityField<T, F> field, F value);
 
-    <F> QueryStream<T> less(EntityField<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> less(EntityField<T, F> field, F value);
 
-    <F> QueryStream<T> moreOrEquals(EntityField<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> moreOrEquals(EntityField<T, F> field, F value);
 
-    <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value);
 
-    QueryStream<T> startsWith(EntityField<T, String> field, String value) throws IOException;
+    QueryStream<T> startsWith(EntityField<T, String> field, String value);
 
-    QueryStream<T> like(EntityField<T, String> field, String value) throws IOException;
+    QueryStream<T> like(EntityField<T, String> field, String value);
 
-    QueryStream<T> endsWith(EntityField<T, String> field, String value) throws IOException;
+    QueryStream<T> endsWith(EntityField<T, String> field, String value);
 
-    QueryStream<T> contains(EntityField<T, String> field, String value) throws IOException;
+    QueryStream<T> contains(EntityField<T, String> field, String value);
 
-    default QueryStream<T> notContains(EntityField<T, String> field, String value) throws IOException {
+    default QueryStream<T> notContains(EntityField<T, String> field, String value) {
 	openBracket().appendBody(Operators.NO);
 	return contains(field, value).closeBracket();
     }
 
-    <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) throws IOException;
+    <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values);
 
-    <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) throws IOException;
+    <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values);
 
-    default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) throws IOException {
+    default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) {
 	return in(field, Arrays.asList(values));
     }
 
-    default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) throws IOException {
+    default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) {
 	return notIn(field, Arrays.asList(values));
     }
 
-    QueryStream<T> isNull(EntityField<T, ?> field) throws IOException;
+    QueryStream<T> isNull(EntityField<T, ?> field);
 
-    QueryStream<T> notNull(EntityField<T, ?> field) throws IOException;
+    QueryStream<T> notNull(EntityField<T, ?> field);
 
     // =========================sub=queries==================================//
     /**
@@ -112,80 +111,74 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * @param consumer
      * @return {@link SubQueryStream} similar stream for sub query
      */
-    <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer)
-	    throws IOException;
+    <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer);
 
     /**
      * Generates {@link SubQueryStream} for S type without conditions
      * 
      * @param consumer
      * @return {@link SubQueryStream} similar stream for sub query
-     * @throws IOException
      */
-    default QueryStream<T> subQuery(SubQueryConsumer<T, T> consumer) throws IOException {
+    default QueryStream<T> subQuery(SubQueryConsumer<T, T> consumer) {
 	return subQuery(getEntityType(), consumer);
     }
 
     <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
-	    SubQueryConsumer<S, T> consumer) throws IOException;
+	    SubQueryConsumer<S, T> consumer);
 
     <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType,
-	    SubQueryConsumer<S, T> consumer) throws IOException;
+	    SubQueryConsumer<S, T> consumer);
 
-    default <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType)
-	    throws IOException {
+    default <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType) {
 	return in(field, subType, null);
     }
 
-    default <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType)
-	    throws IOException {
+    default <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType) {
 	return notIn(field, subType, null);
     }
 
-    default <F> QueryStream<T> in(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) throws IOException {
+    default <F> QueryStream<T> in(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) {
 	return in(field, getEntityType(), consumer);
     }
 
-    default <F> QueryStream<T> notIn(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) throws IOException {
+    default <F> QueryStream<T> notIn(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) {
 	return notIn(field, getEntityType(), consumer);
     }
 
-    default <F> QueryStream<T> in(EntityField<T, F> field) throws IOException {
+    default <F> QueryStream<T> in(EntityField<T, F> field) {
 	SubQueryConsumer<T, T> consumer = null;
 	return in(field, consumer);
     }
 
-    default <F> QueryStream<T> notIn(EntityField<T, F> field) throws IOException {
+    default <F> QueryStream<T> notIn(EntityField<T, F> field) {
 	SubQueryConsumer<T, T> consumer = null;
 	return notIn(field, consumer);
     }
 
-    <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer)
-	    throws IOException;
+    <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer);
 
-    <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer)
-	    throws IOException;
+    <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer);
 
-    default <F, S extends Serializable> QueryStream<T> exists(Class<S> subType) throws IOException {
+    default <F, S extends Serializable> QueryStream<T> exists(Class<S> subType) {
 	return exists(subType, null);
     }
 
-    default <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType) throws IOException {
+    default <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType) {
 	return notExists(subType, null);
     }
 
-    default <F> QueryStream<T> exists(SubQueryConsumer<T, T> consumer) throws IOException {
+    default <F> QueryStream<T> exists(SubQueryConsumer<T, T> consumer) {
 	return exists(getEntityType(), consumer);
     }
 
-    default <F> QueryStream<T> notExists(SubQueryConsumer<T, T> consumer) throws IOException {
+    default <F> QueryStream<T> notExists(SubQueryConsumer<T, T> consumer) {
 	return notExists(getEntityType(), consumer);
     }
 
     // =========================order=by=====================================//
-    QueryStream<T> orderBy(EntityField<T, ?> field) throws IOException;
+    QueryStream<T> orderBy(EntityField<T, ?> field);
 
-    QueryStream<T> orderByDesc(EntityField<T, ?> field) throws IOException;
+    QueryStream<T> orderByDesc(EntityField<T, ?> field);
     // ======================================================================//
 
     /**
@@ -194,9 +187,8 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * @param field
      * @param value
      * @return {@link QueryStream} current instance
-     * @throws IOException
      */
-    <F> QueryStream<T> set(EntityField<T, F> field, F value) throws IOException;
+    <F> QueryStream<T> set(EntityField<T, F> field, F value);
 
     // ======================================================================//
 
@@ -242,9 +234,8 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * 
      * @param consumer
      * @return {@link QueryStream} current instance
-     * @throws IOException
      */
-    QueryStream<T> brackets(QueryConsumer<T> consumer) throws IOException;
+    QueryStream<T> brackets(QueryConsumer<T> consumer);
 
     // ======================================================================//
 

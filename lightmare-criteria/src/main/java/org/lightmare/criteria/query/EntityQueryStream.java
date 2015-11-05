@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
@@ -54,99 +53,99 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F> QueryStream<T> operate(EntityField<T, F> field, String operator) throws IOException {
+    public <F> QueryStream<T> operate(EntityField<T, F> field, String operator) {
 	oppLine(field, operator);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator) throws IOException {
+    public <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator) {
 	oppLine(field, value, operator);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> equals(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> equals(EntityField<T, F> field, F value) {
 	oppLine(field, value, Operators.EQ);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) {
 	oppLine(field, value, Operators.NOT_EQ);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> more(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> more(EntityField<T, F> field, F value) {
 	oppLine(field, value, Operators.MORE);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> less(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> less(EntityField<T, F> field, F value) {
 	oppLine(field, value, Operators.LESS);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> moreOrEquals(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> moreOrEquals(EntityField<T, F> field, F value) {
 	oppLine(field, value, Operators.MORE_OR_EQ);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value) {
 	oppLine(field, value, Operators.LESS_OR_EQ);
 	return this;
     }
 
     @Override
-    public QueryStream<T> startsWith(EntityField<T, String> field, String value) throws IOException {
+    public QueryStream<T> startsWith(EntityField<T, String> field, String value) {
 	String enrich = value.concat(Filters.LIKE_SIGN);
 	oppLine(field, enrich, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public QueryStream<T> like(EntityField<T, String> field, String value) throws IOException {
+    public QueryStream<T> like(EntityField<T, String> field, String value) {
 	return startsWith(field, value);
     }
 
     @Override
-    public QueryStream<T> endsWith(EntityField<T, String> field, String value) throws IOException {
+    public QueryStream<T> endsWith(EntityField<T, String> field, String value) {
 	String enrich = Filters.LIKE_SIGN.concat(value);
 	oppLine(field, enrich, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public QueryStream<T> contains(EntityField<T, String> field, String value) throws IOException {
+    public QueryStream<T> contains(EntityField<T, String> field, String value) {
 	String enrich = Filters.LIKE_SIGN.concat(value).concat(Filters.LIKE_SIGN);
 	oppLine(field, enrich, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) throws IOException {
+    public <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
 	oppCollection(field, values);
 	return this;
     }
 
     @Override
-    public <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) throws IOException {
+    public <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) {
 	oppCollection(field, values, Operators.NOT_IN);
 	return this;
     }
 
     @Override
-    public QueryStream<T> isNull(EntityField<T, ?> field) throws IOException {
+    public QueryStream<T> isNull(EntityField<T, ?> field) {
 	oppLine(field, Operators.IS_NULL);
 	return this;
     }
 
     @Override
-    public QueryStream<T> notNull(EntityField<T, ?> field) throws IOException {
+    public QueryStream<T> notNull(EntityField<T, ?> field) {
 	oppLine(field, Operators.NOT_NULL);
 	return this;
     }
@@ -176,10 +175,9 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
      * 
      * @param consumer
      * @param subQuery
-     * @throws IOException
      */
-    private <S extends Serializable> void acceptConsumer(SubQueryConsumer<S, T> consumer, SubQueryStream<S, T> subQuery)
-	    throws IOException {
+    private <S extends Serializable> void acceptConsumer(SubQueryConsumer<S, T> consumer,
+	    SubQueryStream<S, T> subQuery) {
 
 	if (Objects.nonNull(consumer)) {
 	    consumer.accept(subQuery);
@@ -187,7 +185,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     private <S extends Serializable> SubQueryStream<S, T> initSubQuery(Class<S> subType,
-	    SubQueryConsumer<S, T> consumer) throws IOException {
+	    SubQueryConsumer<S, T> consumer) {
 
 	SubQueryStream<S, T> subQuery = subQuery(subType);
 
@@ -200,8 +198,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer)
-	    throws IOException {
+    public <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer) {
 	openBracket();
 	initSubQuery(subType, consumer);
 
@@ -210,7 +207,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     @Override
     public <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
-	    SubQueryConsumer<S, T> consumer) throws IOException {
+	    SubQueryConsumer<S, T> consumer) {
 	appSubQuery(field, Operators.IN);
 	initSubQuery(subType, consumer);
 
@@ -219,7 +216,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     @Override
     public <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType,
-	    SubQueryConsumer<S, T> consumer) throws IOException {
+	    SubQueryConsumer<S, T> consumer) {
 	appSubQuery(field, Operators.NOT_IN);
 	initSubQuery(subType, consumer);
 
@@ -227,8 +224,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer)
-	    throws IOException {
+    public <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer) {
 
 	appendBody(Operators.EXISTS);
 	openBracket();
@@ -238,8 +234,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer)
-	    throws IOException {
+    public <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer) {
 
 	appendBody(Operators.NOT_EXISTS);
 	openBracket();
@@ -250,7 +245,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     // ===============================Joins==================================//
     private <E extends Serializable, C extends Collection<E>> void procesJoin(EntityField<T, C> field,
-	    String expression, SubQueryConsumer<E, T> consumer) throws IOException {
+	    String expression, SubQueryConsumer<E, T> consumer) {
 
 	QueryTuple tuple = oppJoin(field, expression);
 	SubQueryStream<E, T> joinQuery = joinStream(tuple);
@@ -262,40 +257,40 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     @Override
     public <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer) throws IOException {
+	    SubQueryConsumer<E, T> consumer) {
 	procesJoin(field, Joins.JOIN, consumer);
 	return this;
     }
 
     @Override
     public <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer) throws IOException {
+	    SubQueryConsumer<E, T> consumer) {
 	procesJoin(field, Joins.LEFT, consumer);
 	return this;
     }
 
     @Override
     public <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer) throws IOException {
+	    SubQueryConsumer<E, T> consumer) {
 	procesJoin(field, Joins.FETCH, consumer);
 	return this;
     }
 
     // =======================================================================//
     @Override
-    public <F> QueryStream<T> set(EntityField<T, F> field, F value) throws IOException {
+    public <F> QueryStream<T> set(EntityField<T, F> field, F value) {
 	setOpp(field, value);
 	return this;
     }
 
     @Override
-    public QueryStream<T> orderBy(EntityField<T, ?> field) throws IOException {
+    public QueryStream<T> orderBy(EntityField<T, ?> field) {
 	setOrder(new EntityField[] { field });
 	return this;
     }
 
     @Override
-    public QueryStream<T> orderByDesc(EntityField<T, ?> field) throws IOException {
+    public QueryStream<T> orderByDesc(EntityField<T, ?> field) {
 	setOrder(Orders.DESC, new EntityField[] { field });
 	return this;
     }

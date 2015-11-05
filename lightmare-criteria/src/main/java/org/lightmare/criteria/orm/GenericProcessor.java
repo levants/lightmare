@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.orm;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -74,9 +73,8 @@ public class GenericProcessor {
      * Sets generic type of collection field
      * 
      * @param tuple
-     * @throws IOException
      */
-    public static void setGenericType(QueryTuple tuple) throws IOException {
+    public static void setGenericType(QueryTuple tuple) {
 	Field field = tuple.getField();
 	setGenericType(field, tuple);
     }

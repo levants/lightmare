@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.jpa.subqueries;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -67,7 +66,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
     }
 
     @SafeVarargs
-    protected final QueryStream<Object[]> subSelectAll(EntityField<S, ?>... fields) throws IOException {
+    protected final QueryStream<Object[]> subSelectAll(EntityField<S, ?>... fields) {
 
 	SubSelectStream<S> stream;
 
@@ -111,9 +110,8 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
      * @param sfield
      * @param field
      * @param expression
-     * @throws IOException
      */
-    protected void oppSubQuery(Object sfield, Object field, String expression) throws IOException {
+    protected void oppSubQuery(Object sfield, Object field, String expression) {
 
 	opp(sfield, expression);
 	QueryTuple tuple = compose(field);
@@ -121,7 +119,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	body.append(NEW_LINE);
     }
 
-    protected void oppSubQueryCollection(Object sfield, Object field, String expression) throws IOException {
+    protected void oppSubQueryCollection(Object sfield, Object field, String expression) {
 
 	opp(sfield, expression);
 	QueryTuple tuple = compose(field);
@@ -136,9 +134,8 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
      * 
      * @param sfield
      * @param field
-     * @throws IOException
      */
-    protected void oppSubQueryCollection(Object sfield, Object field) throws IOException {
+    protected void oppSubQueryCollection(Object sfield, Object field) {
 	oppSubQueryCollection(sfield, field, Operators.IN);
     }
 

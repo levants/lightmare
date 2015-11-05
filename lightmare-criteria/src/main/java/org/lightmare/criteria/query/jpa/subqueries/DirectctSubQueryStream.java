@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.jpa.subqueries;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -53,97 +52,97 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
 
     // ================= entity QL methods ===================================//
     @Override
-    public <F> SubQueryStream<S, T> operate(EntityField<S, F> field, String operator) throws IOException {
+    public <F> SubQueryStream<S, T> operate(EntityField<S, F> field, String operator) {
 	super.operate(field, operator);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> operate(EntityField<S, F> field, F value, String operator) throws IOException {
+    public <F> SubQueryStream<S, T> operate(EntityField<S, F> field, F value, String operator) {
 	super.operate(field, value, operator);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> equals(EntityField<S, F> field, F value) throws IOException {
+    public <F> SubQueryStream<S, T> equals(EntityField<S, F> field, F value) {
 	super.equals(field, value);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field, F value) throws IOException {
+    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field, F value) {
 	super.notEquals(field, value);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> more(EntityField<S, F> field, F value) throws IOException {
+    public <F> SubQueryStream<S, T> more(EntityField<S, F> field, F value) {
 	super.more(field, value);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> less(EntityField<S, F> field, F value) throws IOException {
+    public <F> SubQueryStream<S, T> less(EntityField<S, F> field, F value) {
 	super.less(field, value);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field, F value) throws IOException {
+    public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field, F value) {
 	super.moreOrEquals(field, value);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field, F value) throws IOException {
+    public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field, F value) {
 	super.lessOrEquals(field, value);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> startsWith(EntityField<S, String> field, String value) throws IOException {
+    public SubQueryStream<S, T> startsWith(EntityField<S, String> field, String value) {
 	super.startsWith(field, value);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> like(EntityField<S, String> field, String value) throws IOException {
+    public SubQueryStream<S, T> like(EntityField<S, String> field, String value) {
 	super.like(field, value);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> endsWith(EntityField<S, String> field, String value) throws IOException {
+    public SubQueryStream<S, T> endsWith(EntityField<S, String> field, String value) {
 	super.endsWith(field, value);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> contains(EntityField<S, String> field, String value) throws IOException {
+    public SubQueryStream<S, T> contains(EntityField<S, String> field, String value) {
 	super.startsWith(field, value);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> in(EntityField<S, F> field, Collection<F> values) throws IOException {
+    public <F> SubQueryStream<S, T> in(EntityField<S, F> field, Collection<F> values) {
 	super.in(field, values);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> notIn(EntityField<S, F> field, Collection<F> values) throws IOException {
+    public <F> SubQueryStream<S, T> notIn(EntityField<S, F> field, Collection<F> values) {
 	super.notIn(field, values);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> isNull(EntityField<S, ?> field) throws IOException {
+    public SubQueryStream<S, T> isNull(EntityField<S, ?> field) {
 	super.isNull(field);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> notNull(EntityField<S, ?> field) throws IOException {
+    public SubQueryStream<S, T> notNull(EntityField<S, ?> field) {
 	super.notNull(field);
 	return this;
     }
@@ -151,36 +150,34 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
     // =========================sub=queries==================================//
 
     @Override
-    public <K extends Serializable> SubQueryStream<S, T> subQuery(Class<K> subType, SubQueryConsumer<K, S> consumer)
-	    throws IOException {
+    public <K extends Serializable> SubQueryStream<S, T> subQuery(Class<K> subType, SubQueryConsumer<K, S> consumer) {
 	super.subQuery(subType, consumer);
 	return this;
     }
 
     @Override
     public <F, K extends Serializable> SubQueryStream<S, T> in(EntityField<S, F> field, Class<K> subType,
-	    SubQueryConsumer<K, S> consumer) throws IOException {
+	    SubQueryConsumer<K, S> consumer) {
 	super.in(field, subType, consumer);
 	return this;
     }
 
     @Override
     public <F, K extends Serializable> SubQueryStream<S, T> notIn(EntityField<S, F> field, Class<K> subType,
-	    SubQueryConsumer<K, S> consumer) throws IOException {
+	    SubQueryConsumer<K, S> consumer) {
 	super.notIn(field, subType, consumer);
 	return this;
     }
 
     @Override
-    public <F, K extends Serializable> SubQueryStream<S, T> exists(Class<K> subType, SubQueryConsumer<K, S> consumer)
-	    throws IOException {
+    public <F, K extends Serializable> SubQueryStream<S, T> exists(Class<K> subType, SubQueryConsumer<K, S> consumer) {
 	super.exists(subType, consumer);
 	return this;
     }
 
     @Override
-    public <F, K extends Serializable> SubQueryStream<S, T> notExists(Class<K> subType, SubQueryConsumer<K, S> consumer)
-	    throws IOException {
+    public <F, K extends Serializable> SubQueryStream<S, T> notExists(Class<K> subType,
+	    SubQueryConsumer<K, S> consumer) {
 	super.notExists(subType, consumer);
 	return this;
     }
@@ -189,13 +186,13 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
 
     // =========================order=by=====================================//
     @Override
-    public SubQueryStream<S, T> orderBy(EntityField<S, ?> field) throws IOException {
+    public SubQueryStream<S, T> orderBy(EntityField<S, ?> field) {
 	super.orderBy(field);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> orderByDesc(EntityField<S, ?> field) throws IOException {
+    public SubQueryStream<S, T> orderByDesc(EntityField<S, ?> field) {
 	super.orderByDesc(field);
 	return this;
     }
@@ -233,7 +230,7 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
     }
 
     @Override
-    public SubQueryStream<S, T> brackets(QueryConsumer<S> consumer) throws IOException {
+    public SubQueryStream<S, T> brackets(QueryConsumer<S> consumer) {
 	super.brackets(consumer);
 	return this;
     }

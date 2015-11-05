@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.jpa;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -46,20 +45,17 @@ public interface JoinQueryStream<T extends Serializable> {
      * @param field
      * @param consumer
      * @return {@link QueryStream} current instance
-     * @throws IOException
      */
     <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer) throws IOException;
+	    SubQueryConsumer<E, T> consumer);
 
     /**
      * Method for INNER JOIN function call without conditions
      * 
      * @param field
      * @return {@link QueryStream} current instance
-     * @throws IOException
      */
-    default <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field)
-	    throws IOException {
+    default <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field) {
 	return join(field, null);
     }
 
@@ -69,20 +65,17 @@ public interface JoinQueryStream<T extends Serializable> {
      * @param field
      * @param consumer
      * @return {@link QueryStream} current instance
-     * @throws IOException
      */
     <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer) throws IOException;
+	    SubQueryConsumer<E, T> consumer);
 
     /**
      * Method for LEFT JOIN function call without conditions
      * 
      * @param field
      * @return {@link QueryStream} current instance
-     * @throws IOException
      */
-    default <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field)
-	    throws IOException {
+    default <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field) {
 	return leftJoin(field, null);
     }
 
@@ -92,20 +85,17 @@ public interface JoinQueryStream<T extends Serializable> {
      * @param field
      * @param consumer
      * @return {@link QueryStream} current instance
-     * @throws IOException
      */
     <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer) throws IOException;
+	    SubQueryConsumer<E, T> consumer);
 
     /**
      * Method for FETCH JOIN function call without conditions
      * 
      * @param field
      * @return {@link QueryStream} current instance
-     * @throws IOException
      */
-    default <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field)
-	    throws IOException {
+    default <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field) {
 	return fetchJoin(field, null);
     }
 }

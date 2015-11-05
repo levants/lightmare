@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.orm;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -47,9 +46,8 @@ public class ColumnProcessor {
      * @param fieldName
      * @param methodName
      * @return {@link javax.persistence.Temporal} annotation
-     * @throws IOException
      */
-    private static Temporal getTemporal(Field field, Method method) throws IOException {
+    private static Temporal getTemporal(Field field, Method method) {
 
 	Temporal temporal;
 
@@ -80,9 +78,8 @@ public class ColumnProcessor {
      * from field or method annotation
      * 
      * @param tuple
-     * @throws IOException
      */
-    public static void setTemporalType(QueryTuple tuple) throws IOException {
+    public static void setTemporalType(QueryTuple tuple) {
 
 	Field field = tuple.getField();
 	Method method = tuple.getMethod();
