@@ -394,6 +394,17 @@ public class ClassUtils {
     }
 
     /**
+     * Validates for next iteration class member search methods
+     * 
+     * @param type
+     * @param member
+     * @return <code>boolean</code> validation result
+     */
+    private static boolean validate(Class<?> type, Member member) {
+	return (Objects.nonNull(type) && (member == null));
+    }
+
+    /**
      * Finds passed {@link Class}'s or one of th's superclass {@link Method}
      * with appropriated name and parameters
      * 
@@ -408,7 +419,7 @@ public class ClassUtils {
 	Method method = null;
 
 	Class<?> superClass = type;
-	while (Objects.nonNull(superClass) && (method == null)) {
+	while (validate(superClass, method)) {
 	    try {
 		method = superClass.getDeclaredMethod(methodName, parameters);
 	    } catch (NoSuchMethodException ex) {
@@ -435,7 +446,7 @@ public class ClassUtils {
 	Field field = null;
 
 	Class<?> superClass = type;
-	while (Objects.nonNull(superClass) && (field == null)) {
+	while (validate(superClass, field)) {
 	    try {
 		field = superClass.getDeclaredField(fieldName);
 	    } catch (NoSuchFieldException ex) {

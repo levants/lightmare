@@ -224,7 +224,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	incrementParameterCounter();
     }
 
-    private void oppWithParameter(QueryTuple tuple, Object value, StringBuilder sqlPart) {
+    protected void oppWithParameter(QueryTuple tuple, Object value, StringBuilder sqlPart) {
 
 	String parameterName = generateParameterName(tuple);
 	sqlPart.append(Parts.PARAM_PREFIX).append(parameterName);
@@ -265,6 +265,60 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 
     protected void oppCollection(Object field, Collection<?> values) {
 	oppCollection(field, values, Operators.IN);
+    }
+
+    /**
+     * Appends column (field) name with alias
+     * 
+     * @param tuple
+     * @param tuple
+     */
+    protected void appendColumn(String columnAlias, QueryTuple tuple) {
+
+	appendBody(columnAlias);
+	appendBody(Parts.COLUMN_PREFIX);
+	appendBody(tuple.getFieldName());
+    }
+
+    /**
+     * Appends column (field) name with alias
+     * 
+     * @param tuple
+     */
+    protected void appendColumn(QueryTuple tuple) {
+	appendColumn(tuple.getAlias(), tuple);
+    }
+
+    /**
+     * Processes query part with other field
+     * 
+     * @param sfield
+     * @param field
+     * @param expression
+     */
+    protected void oppField(Object field1, Object field2, String expression) {
+
+	opp(field1, expression);
+	QueryTuple tuple = compose(field2);
+	appendColumn(tuple);
+	body.append(NEW_LINE);
+    }
+
+    /**
+     * Processes query part with other field with {@link Collection} type
+     * 
+     * @param sfield
+     * @param field
+     * @param expression
+     */
+    protected void oppCollectionField(Object field1, Object field2, String expression) {
+
+	opp(field1, expression);
+	QueryTuple tuple = compose(field2);
+	openBracket();
+	appendColumn(tuple);
+	closeBracket();
+	appendBody(NEW_LINE);
     }
 
     private void appendSetClause() {

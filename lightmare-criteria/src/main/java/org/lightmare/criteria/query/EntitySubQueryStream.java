@@ -26,6 +26,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.ParentField;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.jpa.AbstractQueryStream;
 import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
@@ -48,82 +49,84 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
 
     // ========================= Entity and parent method composers =========//
     @Override
-    public <F> SubQueryStream<S, T> operate(EntityField<T, F> sfield, EntityField<T, F> field, String operator) {
-	oppSubQuery(sfield, field, operator);
+    public <F> SubQueryStream<S, T> operate(EntityField<S, F> sfield, ParentField<T, F> field, String operator) {
+	oppField(sfield, field, operator);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, EntityField<T, F> field) {
-	oppSubQuery(sfield, field, Operators.EQ);
+    public <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, ParentField<T, F> field) {
+	oppField(sfield, field, Operators.EQ);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, EntityField<T, F> field) {
-	oppSubQuery(sfield, field, Operators.NOT_EQ);
+    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
+	oppField(sfield, field, Operators.NOT_EQ);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, EntityField<T, F> field) {
-	oppSubQuery(sfield, field, Operators.MORE);
+    public <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, ParentField<T, F> field) {
+	oppField(sfield, field, Operators.MORE);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, EntityField<T, F> field) {
-	oppSubQuery(sfield, field, Operators.LESS);
+    public <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, ParentField<T, F> field) {
+	oppField(sfield, field, Operators.LESS);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) {
-	oppSubQuery(sfield, field, Operators.MORE_OR_EQ);
+    public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
+	oppField(sfield, field, Operators.MORE_OR_EQ);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, EntityField<T, F> field) {
-	oppSubQuery(sfield, field, Operators.LESS_OR_EQ);
+    public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
+	oppField(sfield, field, Operators.LESS_OR_EQ);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, EntityField<T, String> field) {
-	oppSubQuery(sfield, field, Operators.LIKE);
+    public SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, ParentField<T, String> field) {
+	oppField(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> like(EntityField<S, String> sfield, EntityField<T, String> field) {
-	oppSubQuery(sfield, field, Operators.LIKE);
+    public SubQueryStream<S, T> like(EntityField<S, String> sfield, ParentField<T, String> field) {
+	oppField(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, EntityField<T, String> field) {
-	oppSubQuery(sfield, field, Operators.LIKE);
+    public SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, ParentField<T, String> field) {
+	oppField(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public SubQueryStream<S, T> contains(EntityField<S, String> sfield, EntityField<T, String> field) {
-	oppSubQuery(sfield, field, Operators.LIKE);
+    public SubQueryStream<S, T> contains(EntityField<S, String> sfield, ParentField<T, String> field) {
+	oppField(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, EntityField<T, Collection<F>> field) {
-	oppSubQueryCollection(sfield, field);
+    public <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
+	oppCollectionField(sfield, field, Operators.IN);
 	return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, EntityField<T, Collection<F>> field) {
-	oppSubQueryCollection(sfield, field, Operators.NOT_IN);
+    public <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
+	oppCollectionField(sfield, field, Operators.NOT_IN);
 	return this;
     }
+
+    // ========================= select method composers ====================//
 
     @Override
     public QueryStream<Object[]> select(EntityField<S, ?> field) {

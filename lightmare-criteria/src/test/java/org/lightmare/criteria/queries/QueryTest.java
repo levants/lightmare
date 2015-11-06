@@ -67,7 +67,7 @@ public class QueryTest {
 	stream.like(Person::getLastName, "lname");
 	stream.and().brackets(
 		part -> part.like(Person::getFirstName, "fname").or().equals(Person::getPersonalNo, PERSONAL_NO1));
-	stream.or().equals(Person::getInfo, null);
+	stream.or().isNull(Person::getInfo);
 	stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
 	stream.orderBy(Person::getPersonId);
 	stream.in(Person::getPersonId, IDENTIFIERS);
@@ -262,5 +262,49 @@ public class QueryTest {
     public void cacheTest() {
 	supplierEntityTest();
 	supplierEntityTest();
+    }
+
+    @Test
+    @RunOrder(7)
+    public void selfQueryTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+		    .equals(Person::getPersonalNo, Person::getAddrress).and()
+		    .like(Person::getFirstName, Person::getFullName).and().startsWith(Person::getLastName, "lname");
+	    // =============================================//
+	    System.out.println();
+	    System.out.println("-------Entity----");
+	    System.out.println();
+	    System.out.println(stream.sql());
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	} finally {
+	    em.close();
+	}
+    }
+
+    @Test
+    @RunOrder(8)
+    public void selfQueryResultTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    // ============= Query construction ============== //
+	    Person person = QueryProvider.select(em, Person.class).where()
+		    .equals(Person::getPersonalNo, Person::getAddrress).and()
+		    .like(Person::getLastName, Person::getFullName).and().startsWith(Person::getLastName, "lname")
+		    .firstOrDefault(new Person());
+	    // =============================================//
+	    System.out.println();
+	    System.out.println("-------Entity----");
+	    System.out.println(person);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	} finally {
+	    em.close();
+	}
     }
 }

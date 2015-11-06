@@ -20,48 +20,21 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.resolvers;
+package org.lightmare.criteria.functions;
 
-import java.io.IOException;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
-import org.objectweb.asm.ClassReader;
+import java.io.Serializable;
+import java.util.function.Function;
 
 /**
- * Caches read classes for multiply and parallel uses sake
+ * Interface for getter method reference for parent entity for sub queries
  * 
  * @author Levan Tsinadze
  *
+ * @param <T,F>
+ *            entity and field type parameters
  */
-public class CachedClassReader extends ClassReader {
+@FunctionalInterface
+public interface ParentField<T, F> extends Function<T, F>, Serializable {
 
-    private static final ConcurrentMap<String, ClassReader> CLASS_FILES = new ConcurrentHashMap<>();
-
-    public CachedClassReader(byte[] buff) {
-	super(buff);
-    }
-
-    public CachedClassReader(String name) throws IOException {
-	super(name);
-    }
-
-    /**
-     * Gets {@link ClassReader} from cache or initializes and caches
-     * 
-     * @param name
-     * @return
-     * @throws IOException
-     */
-    public static ClassReader get(String name) throws IOException {
-
-	ClassReader classReader = CLASS_FILES.get(name);
-
-	if (classReader == null) {
-	    classReader = new CachedClassReader(name);
-	    CLASS_FILES.putIfAbsent(name, classReader);
-	}
-
-	return classReader;
-    }
+    F apply(T value);
 }

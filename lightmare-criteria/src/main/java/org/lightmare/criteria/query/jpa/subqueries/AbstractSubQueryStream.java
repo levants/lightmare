@@ -23,15 +23,12 @@
 package org.lightmare.criteria.query.jpa.subqueries;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.jpa.AbstractQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -97,46 +94,14 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
      * 
      * @param tuple
      */
-    private void appendColumn(QueryTuple tuple) {
+    @Override
+    protected void appendColumn(QueryTuple tuple) {
 
-	appendBody(parentAlias);
-	appendBody(Parts.COLUMN_PREFIX);
-	appendBody(tuple.getFieldName());
-    }
-
-    /**
-     * Processes sub query part
-     * 
-     * @param sfield
-     * @param field
-     * @param expression
-     */
-    protected void oppSubQuery(Object sfield, Object field, String expression) {
-
-	opp(sfield, expression);
-	QueryTuple tuple = compose(field);
-	appendColumn(tuple);
-	body.append(NEW_LINE);
-    }
-
-    protected void oppSubQueryCollection(Object sfield, Object field, String expression) {
-
-	opp(sfield, expression);
-	QueryTuple tuple = compose(field);
-	openBracket();
-	appendColumn(tuple);
-	closeBracket();
-	appendBody(NEW_LINE);
-    }
-
-    /**
-     * Processes sub query part for IN {@link Collection} clause
-     * 
-     * @param sfield
-     * @param field
-     */
-    protected void oppSubQueryCollection(Object sfield, Object field) {
-	oppSubQueryCollection(sfield, field, Operators.IN);
+	if (tuple.getEntityType().equals(parent.getEntityType())) {
+	    super.appendColumn(parentAlias, tuple);
+	} else {
+	    super.appendColumn(tuple);
+	}
     }
 
     /**

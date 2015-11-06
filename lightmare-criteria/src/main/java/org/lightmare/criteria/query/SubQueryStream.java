@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.ParentField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
@@ -103,34 +104,77 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
     @Override
     SubQueryStream<S, T> notNull(EntityField<S, ?> field);
 
+    // ========================= Entity self method composers ===============//
+
+    @Override
+    <F> SubQueryStream<S, T> operate(EntityField<S, F> field1, EntityField<S, F> field2, String operator);
+
+    @Override
+    <F> SubQueryStream<S, T> equals(EntityField<S, F> field1, EntityField<S, F> field2);
+
+    @Override
+    <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field1, EntityField<S, F> field2);
+
+    @Override
+    <F> SubQueryStream<S, T> more(EntityField<S, F> field1, EntityField<S, F> field2);
+
+    @Override
+    <F> SubQueryStream<S, T> less(EntityField<S, F> field1, EntityField<S, F> field2);
+
+    @Override
+    <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field1, EntityField<S, F> field2);
+
+    @Override
+    <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field1, EntityField<S, F> field2);
+
+    @Override
+    SubQueryStream<S, T> startsWith(EntityField<S, String> field1, EntityField<S, String> field2);
+
+    @Override
+    SubQueryStream<S, T> like(EntityField<S, String> field1, EntityField<S, String> field2);
+
+    @Override
+    SubQueryStream<S, T> endsWith(EntityField<S, String> field1, EntityField<S, String> field2);
+
+    @Override
+    SubQueryStream<S, T> contains(EntityField<S, String> field1, EntityField<S, String> field2);
+
+    @Override
+    <F> SubQueryStream<S, T> in(EntityField<S, F> field1, EntityField<S, Collection<F>> field2);
+
+    @Override
+    <F> SubQueryStream<S, T> notIn(EntityField<S, F> field1, EntityField<S, Collection<F>> field2);
+
     // ========================= Entity and parent method composers =========//
-    <F> SubQueryStream<S, T> operate(EntityField<T, F> sfield, EntityField<T, F> field, String operator);
 
-    <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, EntityField<T, F> field);
+    <F> SubQueryStream<S, T> operate(EntityField<S, F> sfield, ParentField<T, F> field, String operator);
 
-    <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, EntityField<T, F> field);
+    <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, ParentField<T, F> field);
 
-    <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, EntityField<T, F> field);
+    <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, ParentField<T, F> field);
 
-    <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, EntityField<T, F> field);
+    <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, ParentField<T, F> field);
 
-    <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, EntityField<T, F> field);
+    <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, ParentField<T, F> field);
 
-    <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, EntityField<T, F> field);
+    <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, ParentField<T, F> field);
 
-    SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, EntityField<T, String> field);
+    <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, ParentField<T, F> field);
 
-    SubQueryStream<S, T> like(EntityField<S, String> sfield, EntityField<T, String> field);
+    SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, ParentField<T, String> field);
 
-    SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, EntityField<T, String> field);
+    SubQueryStream<S, T> like(EntityField<S, String> sfield, ParentField<T, String> field);
 
-    SubQueryStream<S, T> contains(EntityField<S, String> sfield, EntityField<T, String> field);
+    SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, ParentField<T, String> field);
 
-    <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, EntityField<T, Collection<F>> field);
+    SubQueryStream<S, T> contains(EntityField<S, String> sfield, ParentField<T, String> field);
 
-    <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, EntityField<T, Collection<F>> field);
+    <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, ParentField<T, Collection<F>> field);
+
+    <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, ParentField<T, Collection<F>> field);
 
     // =========================sub=queries==================================//
+
     /**
      * Generates {@link SubQueryStream} for S type
      * 
@@ -217,14 +261,17 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
     default <F> SubQueryStream<S, T> notExists(SubQueryConsumer<S, S> consumer) {
 	return this.notExists(getEntityType(), consumer);
     }
+
     // =========================sub=queries==================================//
 
     // =========================order=by=====================================//
+
     @Override
     SubQueryStream<S, T> orderBy(EntityField<S, ?> field);
 
     @Override
     SubQueryStream<S, T> orderByDesc(EntityField<S, ?> field);
+
     // ======================================================================//
 
     /**

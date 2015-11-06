@@ -151,6 +151,86 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	return this;
     }
 
+    // ========================= Entity self method composers ===============//
+
+    @Override
+    public <F> QueryStream<T> operate(EntityField<T, F> field1, EntityField<T, F> field2, String operator) {
+	oppField(field1, field2, operator);
+	return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> equals(EntityField<T, F> field1, EntityField<T, F> field2) {
+	oppField(field1, field2, Operators.EQ);
+	return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> notEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
+	oppField(field1, field2, Operators.NOT_EQ);
+	return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> more(EntityField<T, F> field1, EntityField<T, F> field2) {
+	oppField(field1, field2, Operators.MORE);
+	return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> less(EntityField<T, F> field1, EntityField<T, F> field2) {
+	oppField(field1, field2, Operators.LESS);
+	return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> moreOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
+	oppField(field1, field2, Operators.MORE_OR_EQ);
+	return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> lessOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
+	oppField(field1, field2, Operators.LESS_OR_EQ);
+	return this;
+    }
+
+    @Override
+    public QueryStream<T> startsWith(EntityField<T, String> field1, EntityField<T, String> field2) {
+	oppField(field1, field2, Operators.LIKE);
+	return this;
+    }
+
+    @Override
+    public QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2) {
+	oppField(field1, field2, Operators.LIKE);
+	return this;
+    }
+
+    @Override
+    public QueryStream<T> endsWith(EntityField<T, String> field1, EntityField<T, String> field2) {
+	oppField(field1, field2, Operators.LIKE);
+	return this;
+    }
+
+    @Override
+    public QueryStream<T> contains(EntityField<T, String> field1, EntityField<T, String> field2) {
+	oppField(field1, field2, Operators.LIKE);
+	return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> in(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
+	oppCollectionField(field1, field2, Operators.IN);
+	return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> notIn(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
+	oppCollectionField(field1, field2, Operators.NOT_IN);
+	return this;
+    }
+
     // =========================Sub queries ===============//
 
     public <S extends Serializable> SubQueryStream<S, T> subQuery(Class<S> subType) {

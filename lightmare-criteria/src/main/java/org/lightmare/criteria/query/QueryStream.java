@@ -58,6 +58,7 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     Class<T> getEntityType();
 
     // ========================= Entity method composers ====================//
+
     <F> QueryStream<T> operate(EntityField<T, F> field, String operator);
 
     <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator);
@@ -102,6 +103,34 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     QueryStream<T> isNull(EntityField<T, ?> field);
 
     QueryStream<T> notNull(EntityField<T, ?> field);
+
+    // ========================= Entity self method composers ===============//
+
+    <F> QueryStream<T> operate(EntityField<T, F> field1, EntityField<T, F> field2, String operator);
+
+    <F> QueryStream<T> equals(EntityField<T, F> field1, EntityField<T, F> field2);
+
+    <F> QueryStream<T> notEquals(EntityField<T, F> field1, EntityField<T, F> field2);
+
+    <F> QueryStream<T> more(EntityField<T, F> field1, EntityField<T, F> field2);
+
+    <F> QueryStream<T> less(EntityField<T, F> field1, EntityField<T, F> field2);
+
+    <F> QueryStream<T> moreOrEquals(EntityField<T, F> field1, EntityField<T, F> field2);
+
+    <F> QueryStream<T> lessOrEquals(EntityField<T, F> field1, EntityField<T, F> field2);
+
+    QueryStream<T> startsWith(EntityField<T, String> field1, EntityField<T, String> field2);
+
+    QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2);
+
+    QueryStream<T> endsWith(EntityField<T, String> field1, EntityField<T, String> field2);
+
+    QueryStream<T> contains(EntityField<T, String> field1, EntityField<T, String> field2);
+
+    <F> QueryStream<T> in(EntityField<T, F> field1, EntityField<T, Collection<F>> field2);
+
+    <F> QueryStream<T> notIn(EntityField<T, F> field1, EntityField<T, Collection<F>> field2);
 
     // =========================sub=queries==================================//
     /**
@@ -176,9 +205,11 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     }
 
     // =========================order=by=====================================//
+
     QueryStream<T> orderBy(EntityField<T, ?> field);
 
     QueryStream<T> orderByDesc(EntityField<T, ?> field);
+
     // ======================================================================//
 
     /**
