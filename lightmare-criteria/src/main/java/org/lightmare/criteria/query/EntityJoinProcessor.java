@@ -38,8 +38,25 @@ import org.lightmare.criteria.query.jpa.AbstractQueryStream;
  */
 class EntityJoinProcessor<S extends Serializable, T extends Serializable> extends EntitySubQueryStream<S, T> {
 
+    private boolean parentOperator;
+
     protected EntityJoinProcessor(AbstractQueryStream<T> parent, Class<S> entityType) {
 	super(parent, entityType);
+    }
+
+    @Override
+    public boolean validateOperator() {
+
+	boolean valid;
+
+	if (parentOperator) {
+	    valid = super.validateOperator();
+	} else {
+	    valid = parent.validateOperator();
+	    parentOperator = Boolean.TRUE;
+	}
+
+	return valid;
     }
 
     @Override

@@ -267,13 +267,25 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	oppCollection(field, values, Operators.IN);
     }
 
+    private boolean validForOperator(String... operators) {
+	return (StringUtils.valid(body) && StringUtils.notEndsWithAll(body, operators));
+    }
+
+    /**
+     * Validates query body to be append by logical operators
+     * 
+     * @return <code>boolean</code> validation result
+     */
+    public boolean validateOperator() {
+	return validForOperator(Clauses.AND, Clauses.OR, Clauses.WHERE, Operators.OPEN_BRACKET);
+    }
+
     /**
      * Append default boolean operator
      */
     protected void appendOperator() {
 
-	if (StringUtils.valid(body)
-		&& StringUtils.notEndsWithAll(body, Clauses.AND, Clauses.OR, Clauses.WHERE, Operators.OPEN_BRACKET)) {
+	if (validateOperator()) {
 	    and();
 	}
     }

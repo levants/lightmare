@@ -29,6 +29,7 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
+import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.jpa.JoinQueryStream;
@@ -299,28 +300,36 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * 
      * @return {@link QueryStream} current instance
      */
-    QueryStream<T> and();
+    default QueryStream<T> and() {
+	return appendBody(Clauses.AND);
+    }
 
     /**
      * OR part appender
      * 
      * @return {@link QueryStream} current instance
      */
-    QueryStream<T> or();
+    default QueryStream<T> or() {
+	return appendBody(Clauses.OR);
+    }
 
     /**
      * Opens bracket in query body
      * 
      * @return {@link QueryStream} current instance
      */
-    QueryStream<T> openBracket();
+    default QueryStream<T> openBracket() {
+	return appendBody(Operators.OPEN_BRACKET);
+    }
 
     /**
      * Closes bracket in query body
      * 
      * @return {@link QueryStream} current instance
      */
-    QueryStream<T> closeBracket();
+    default QueryStream<T> closeBracket() {
+	return appendBody(Operators.CLOSE_BRACKET);
+    }
 
     /**
      * Creates query part in brackets

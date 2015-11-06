@@ -51,6 +51,7 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
     }
 
     // ================= entity QL methods ===================================//
+
     @Override
     public <F> SubQueryStream<S, T> operate(EntityField<S, F> field, String operator) {
 	super.operate(field, operator);

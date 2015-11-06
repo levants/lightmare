@@ -30,6 +30,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.ParentField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
+import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
@@ -392,7 +393,9 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
      * @return {@link SubQueryStream} current instance
      */
     @Override
-    SubQueryStream<S, T> and();
+    default SubQueryStream<S, T> and() {
+	return appendBody(Clauses.AND);
+    }
 
     /**
      * OR part appender
@@ -400,7 +403,9 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
      * @return {@link SubQueryStream} current instance
      */
     @Override
-    SubQueryStream<S, T> or();
+    default SubQueryStream<S, T> or() {
+	return appendBody(Clauses.OR);
+    }
 
     /**
      * Opens bracket in query body
@@ -408,7 +413,9 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
      * @return {@link SubQueryStream} current instance
      */
     @Override
-    SubQueryStream<S, T> openBracket();
+    default SubQueryStream<S, T> openBracket() {
+	return appendBody(Operators.OPEN_BRACKET);
+    }
 
     /**
      * Closes bracket in query body
@@ -416,7 +423,9 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
      * @return {@link SubQueryStream} current instance
      */
     @Override
-    SubQueryStream<S, T> closeBracket();
+    default SubQueryStream<S, T> closeBracket() {
+	return appendBody(Operators.CLOSE_BRACKET);
+    }
 
     /**
      * Creates query part in brackets
