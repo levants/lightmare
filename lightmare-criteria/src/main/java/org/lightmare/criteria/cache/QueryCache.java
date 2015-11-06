@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.lightmare.criteria.lambda.LambdaData;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * To cache queries by resolved lambda parameters
@@ -54,7 +55,7 @@ public class QueryCache {
 	String type = lambda.getImplClass();
 	String method = lambda.getImplMethodName();
 	String sign = lambda.getImplMethodSignature();
-	key = PREFIX.concat(type).concat(DELIM).concat(method).concat(DELIM).concat(sign);
+	key = StringUtils.concat(PREFIX, type, DELIM, method, DELIM, sign);
 
 	return key;
     }

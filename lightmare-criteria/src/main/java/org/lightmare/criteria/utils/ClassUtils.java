@@ -279,13 +279,13 @@ public class ClassUtils {
      * @return {@link Method}
      * @throws IOException
      */
-    public static Method getDeclaredMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes)
+    public static Method getDeclaredMethod(Class<?> type, String methodName, Class<?>... parameterTypes)
 	    throws IOException {
 
 	Method method;
 
 	try {
-	    method = clazz.getDeclaredMethod(methodName, parameterTypes);
+	    method = type.getDeclaredMethod(methodName, parameterTypes);
 	} catch (NoSuchMethodException ex) {
 	    throw new IOException(ex);
 	} catch (SecurityException ex) {
@@ -304,12 +304,12 @@ public class ClassUtils {
      * @return {@link Method}
      * @throws IOException
      */
-    public static Method[] getDeclaredMethods(Class<?> clazz) throws IOException {
+    public static Method[] getDeclaredMethods(Class<?> type) throws IOException {
 
 	Method[] methods;
 
 	try {
-	    methods = clazz.getDeclaredMethods();
+	    methods = type.getDeclaredMethods();
 	} catch (SecurityException ex) {
 	    throw new IOException(ex);
 	}
@@ -343,17 +343,17 @@ public class ClassUtils {
      * Finds if passed {@link Class} has declared public {@link Method} with
      * appropriated name
      *
-     * @param clazz
+     * @param type
      * @param modifiers
      * @param methodName
      * @return <code>boolean</code>
      * @throws IOException
      */
-    private static boolean classHasMethod(Class<?> clazz, String methodName, int... modifiers) throws IOException {
+    private static boolean classHasMethod(Class<?> type, String methodName, int... modifiers) throws IOException {
 
 	boolean found = Boolean.FALSE;
 
-	Method[] methods = getDeclaredMethods(clazz);
+	Method[] methods = getDeclaredMethods(type);
 	int length = methods.length;
 	int modifier = calculateModifier(modifiers);
 	Method method;
@@ -372,17 +372,17 @@ public class ClassUtils {
      * Finds if passed {@link Class} has {@link Method} with appropriated name
      * and modifiers
      *
-     * @param clazz
+     * @param type
      * @param methodName
      * @param modifiers
      * @return <code>boolean</code>
      * @throws IOException
      */
-    public static boolean hasMethod(Class<?> clazz, String methodName, int... modifiers) throws IOException {
+    public static boolean hasMethod(Class<?> type, String methodName, int... modifiers) throws IOException {
 
 	boolean found = Boolean.FALSE;
 
-	Class<?> superClass = clazz;
+	Class<?> superClass = type;
 	while (Objects.nonNull(superClass) && ObjectUtils.notTrue(found)) {
 	    found = ClassUtils.classHasMethod(superClass, methodName, modifiers);
 	    if (ObjectUtils.notTrue(found)) {
@@ -391,6 +391,34 @@ public class ClassUtils {
 	}
 
 	return found;
+    }
+
+    /**
+     * Finds passed {@link Class}'s or one of th's superclass {@link Method}
+     * with appropriated name and parameters
+     * 
+     * @param type
+     * @param methodName
+     * @param parameters
+     * @return {@link Method} for type
+     * @throws IOException
+     */
+    public static Method findMethod(Class<?> type, String methodName, Class<?>... parameters) throws IOException {
+
+	Method method = null;
+
+	Class<?> superClass = type;
+	while (Objects.nonNull(superClass) && (method == null)) {
+	    try {
+		method = superClass.getDeclaredMethod(methodName, parameters);
+	    } catch (NoSuchMethodException ex) {
+		superClass = superClass.getSuperclass();
+	    } catch (SecurityException ex) {
+		throw new IOException(ex);
+	    }
+	}
+
+	return method;
     }
 
     /**

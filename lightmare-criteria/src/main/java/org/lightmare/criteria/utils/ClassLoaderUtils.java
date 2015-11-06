@@ -82,6 +82,22 @@ public class ClassLoaderUtils {
     }
 
     /**
+     * Loads class by name to passed {@link ClassLoader} instance
+     * 
+     * @param className
+     * @param loader
+     * @throws IOException
+     */
+    private static void loadClass(String className, ClassLoader loader) throws IOException {
+
+	try {
+	    loader.loadClass(className);
+	} catch (ClassNotFoundException ex) {
+	    throw new IOException(ex);
+	}
+    }
+
+    /**
      * Loads passed classes to specified {@link ClassLoader} instance
      *
      * @param classes
@@ -91,11 +107,7 @@ public class ClassLoaderUtils {
 
 	if (CollectionUtils.valid(classes) && Objects.nonNull(loader)) {
 	    for (String className : classes) {
-		try {
-		    loader.loadClass(className);
-		} catch (ClassNotFoundException ex) {
-		    throw new IOException(ex);
-		}
+		loadClass(className, loader);
 	    }
 	}
     }

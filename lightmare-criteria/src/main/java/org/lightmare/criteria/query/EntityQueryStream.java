@@ -37,6 +37,7 @@ import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.query.jpa.AbstractSelectStatements;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Query builder from setter method references
@@ -121,7 +122,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     @Override
     public QueryStream<T> contains(EntityField<T, String> field, String value) {
-	String enrich = Filters.LIKE_SIGN.concat(value).concat(Filters.LIKE_SIGN);
+	String enrich = StringUtils.concat(Filters.LIKE_SIGN, value, Filters.LIKE_SIGN);
 	oppLine(field, enrich, Operators.LIKE);
 	return this;
     }

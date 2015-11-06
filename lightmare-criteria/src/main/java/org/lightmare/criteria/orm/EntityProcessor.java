@@ -61,7 +61,7 @@ public class EntityProcessor {
 
 	String methodName = tuple.getMethodName();
 	Class<?> entityType = tuple.getEntityType();
-	Method method = ClassUtils.getDeclaredMethod(entityType, methodName);
+	Method method = ClassUtils.findMethod(entityType, methodName);
 	tuple.setMethod(method);
 	setField(tuple);
     }
