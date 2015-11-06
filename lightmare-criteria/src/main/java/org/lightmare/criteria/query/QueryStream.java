@@ -130,6 +130,9 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     QueryStream<T> contains(EntityField<T, String> field1, EntityField<T, String> field2);
 
+    <F> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
+	    String operator);
+
     <F> QueryStream<T> in(EntityField<T, F> field1, EntityField<T, Collection<F>> field2);
 
     <F> QueryStream<T> notIn(EntityField<T, F> field1, EntityField<T, Collection<F>> field2);

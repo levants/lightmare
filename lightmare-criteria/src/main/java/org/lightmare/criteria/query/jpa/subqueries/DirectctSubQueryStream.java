@@ -30,7 +30,6 @@ import javax.persistence.EntityManager;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
-import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.EntityQueryStream;
 import org.lightmare.criteria.query.SubQueryStream;
 
@@ -125,6 +124,12 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
     }
 
     @Override
+    public <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> field, Collection<F> values, String operator) {
+	super.oppCollection(field, values, operator);
+	return this;
+    }
+
+    @Override
     public <F> SubQueryStream<S, T> in(EntityField<S, F> field, Collection<F> values) {
 	super.in(field, values);
 	return this;
@@ -152,79 +157,79 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
 
     @Override
     public <F> SubQueryStream<S, T> operate(EntityField<S, F> field1, EntityField<S, F> field2, String operator) {
-	super.oppField(field1, field2, operator);
+	super.operate(field1, field2, operator);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> equals(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.oppField(field1, field2, Operators.EQ);
+	super.equals(field1, field2);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.oppField(field1, field2, Operators.NOT_EQ);
+	super.notEquals(field1, field2);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> more(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.oppField(field1, field2, Operators.MORE);
+	super.more(field1, field2);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> less(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.oppField(field1, field2, Operators.LESS);
+	super.less(field1, field2);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.oppField(field1, field2, Operators.MORE_OR_EQ);
+	super.moreOrEquals(field1, field2);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.oppField(field1, field2, Operators.LESS_OR_EQ);
+	super.lessOrEquals(field1, field2);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> startsWith(EntityField<S, String> field1, EntityField<S, String> field2) {
-	super.oppField(field1, field2, Operators.LIKE);
+	super.startsWith(field1, field2);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> like(EntityField<S, String> field1, EntityField<S, String> field2) {
-	super.oppField(field1, field2, Operators.LIKE);
+	super.like(field1, field2);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> endsWith(EntityField<S, String> field1, EntityField<S, String> field2) {
-	super.oppField(field1, field2, Operators.LIKE);
+	super.endsWith(field1, field2);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> contains(EntityField<S, String> field1, EntityField<S, String> field2) {
-	super.oppField(field1, field2, Operators.LIKE);
+	super.contains(field1, field2);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> in(EntityField<S, F> field1, EntityField<S, Collection<F>> field2) {
-	super.oppCollectionField(field1, field2, Operators.IN);
+	super.in(field1, field2);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> notIn(EntityField<S, F> field1, EntityField<S, Collection<F>> field2) {
-	super.oppCollectionField(field1, field2, Operators.NOT_IN);
+	super.notIn(field1, field2);
 	return this;
     }
 
