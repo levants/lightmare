@@ -158,8 +158,10 @@ public class JoinQueryTest extends SubQueryTest {
 	try {
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
 		    .notEquals(Person::getLastName, "lname").and().like(Person::getAddrress, "address")
-		    .fetchJoin(Person::getPhones, c -> c.equals(Phone::getPhoneNumber, "100100").and()
-			    .notEquals(Phone::getOperatorId, Person::getPersonId));
+		    .fetchJoin(Person::getPhones,
+			    c -> c.equals(Phone::getPhoneNumber, "100100")
+				    .notEquals(Phone::getOperatorId, Person::getPersonId).or()
+				    .equals(Phone::getOperatorId, Phone::getProneId));
 	    String sql = stream.sql();
 	    System.out.println(sql);
 	} catch (Throwable ex) {

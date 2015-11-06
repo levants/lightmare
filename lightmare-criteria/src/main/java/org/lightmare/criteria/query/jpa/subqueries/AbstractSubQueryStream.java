@@ -203,5 +203,6 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 
     @Override
     public void close() {
+	// Swallows close method
     }
 }

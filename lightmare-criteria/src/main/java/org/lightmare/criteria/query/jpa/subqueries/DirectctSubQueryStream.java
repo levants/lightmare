@@ -146,30 +146,6 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
     }
 
     @Override
-    public SubQueryStream<S, T> and() {
-	super.and();
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> or() {
-	super.or();
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> openBracket() {
-	super.openBracket();
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> closeBracket() {
-	super.closeBracket();
-	return this;
-    }
-
-    @Override
     public SubQueryStream<S, T> brackets(QueryConsumer<S> consumer) {
 	super.brackets(consumer);
 	return this;

@@ -516,30 +516,6 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
     }
 
     @Override
-    public QueryStream<T> and() {
-	body.append(Clauses.AND);
-	return this;
-    }
-
-    @Override
-    public QueryStream<T> or() {
-	body.append(Clauses.OR);
-	return this;
-    }
-
-    @Override
-    public QueryStream<T> openBracket() {
-	body.append(Operators.OPEN_BRACKET);
-	return this;
-    }
-
-    @Override
-    public QueryStream<T> closeBracket() {
-	body.append(Operators.CLOSE_BRACKET);
-	return this;
-    }
-
-    @Override
     public QueryStream<T> brackets(QueryConsumer<T> consumer) {
 
 	openBracket();

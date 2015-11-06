@@ -20,7 +20,7 @@ public class Phone implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.linq.entities.Person")
     @TableGenerator(name = "org.lightmare.linq.entities.Person", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "PERSONS", valueColumnName = "KEY_VALUE", allocationSize = 20)
     @Column(name = "PHONE_ID")
-    private Long proneId;
+    private Long phoneId;
 
     @Column(name = "PERATOR_ID")
     private Long operatorId;
@@ -28,12 +28,12 @@ public class Phone implements Serializable {
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
-    public Long getProneId() {
-	return proneId;
+    public Long getPhoneId() {
+	return phoneId;
     }
 
-    public void setProneId(Long proneId) {
-	this.proneId = proneId;
+    public void setPhoneId(Long phoneId) {
+	this.phoneId = phoneId;
     }
 
     public Long getOperatorId() {
