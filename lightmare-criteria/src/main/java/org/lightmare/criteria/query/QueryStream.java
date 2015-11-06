@@ -88,6 +88,8 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 	return contains(field, value).closeBracket();
     }
 
+    <F> QueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
+
     <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values);
 
     <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values);

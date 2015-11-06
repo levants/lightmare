@@ -134,14 +134,22 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
+    public <F> QueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator) {
+	appendOperator();
+	oppCollection(field, values, operator);
+
+	return this;
+    }
+
+    @Override
     public <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
-	oppCollection(field, values);
+	operateCollection(field, values, Operators.IN);
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) {
-	oppCollection(field, values, Operators.NOT_IN);
+	operateCollection(field, values, Operators.NOT_IN);
 	return this;
     }
 
