@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * Utility class to help with general object checks / lock / modification
@@ -53,15 +52,8 @@ public abstract class ObjectUtils {
      * @param datas
      * @return <code>boolean</code> validation result
      */
-    public static boolean notNullAll(Object... datas) {
-
-	boolean valid = Objects.nonNull(datas);
-
-	if (valid) {
-	    valid = Stream.of(datas).allMatch(data -> Objects.nonNull(data));
-	}
-
-	return valid;
+    public static boolean notNullAll(Object... values) {
+	return CollectionUtils.validAll(values, Objects::nonNull);
     }
 
     /**

@@ -34,6 +34,8 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Utility class to use reflection {@link Method}, {@link Constructor} or any
@@ -581,6 +583,18 @@ public class ClassUtils {
     }
 
     /**
+     * Gets {@link List} of {@link AccessibleObject}s with instant annotation
+     * 
+     * @param array
+     * @param annotationType
+     * @return
+     */
+    private static <T extends AccessibleObject> List<T> filterByAnnotation(T[] array,
+	    Class<? extends Annotation> annotationType) {
+	return Stream.of(array).filter(c -> c.isAnnotationPresent(annotationType)).collect(Collectors.toList());
+    }
+
+    /**
      * Gets {@link List} of all {@link Method}s from passed class annotated with
      * specified annotation
      *
@@ -589,17 +603,13 @@ public class ClassUtils {
      * @return {@link List}<Method>
      * @throws IOException
      */
-    public static List<Method> getAnnotatedMethods(Class<?> clazz, Class<? extends Annotation> annotationClass)
+    public static List<Method> getAnnotatedMethods(Class<?> type, Class<? extends Annotation> annotationType)
 	    throws IOException {
 
 	List<Method> methods = new ArrayList<Method>();
 
-	Method[] allMethods = getDeclaredMethods(clazz);
-	for (Method method : allMethods) {
-	    if (method.isAnnotationPresent(annotationClass)) {
-		methods.add(method);
-	    }
-	}
+	Method[] allMethods = getDeclaredMethods(type);
+	methods = filterByAnnotation(allMethods, annotationType);
 
 	return methods;
     }
@@ -613,17 +623,13 @@ public class ClassUtils {
      * @return {@link List}<Field>
      * @throws IOException
      */
-    public static List<Field> getAnnotatedFields(Class<?> clazz, Class<? extends Annotation> annotationClass)
+    public static List<Field> getAnnotatedFields(Class<?> type, Class<? extends Annotation> annotationType)
 	    throws IOException {
 
 	List<Field> fields = new ArrayList<Field>();
 
-	Field[] allFields = clazz.getDeclaredFields();
-	for (Field field : allFields) {
-	    if (field.isAnnotationPresent(annotationClass)) {
-		fields.add(field);
-	    }
-	}
+	Field[] allFields = type.getDeclaredFields();
+	fields = filterByAnnotation(allFields, annotationType);
 
 	return fields;
     }
