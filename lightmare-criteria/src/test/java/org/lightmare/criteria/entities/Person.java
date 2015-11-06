@@ -24,7 +24,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "PERSONS")
-public class Person implements Serializable {
+public class Person extends GeneralInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

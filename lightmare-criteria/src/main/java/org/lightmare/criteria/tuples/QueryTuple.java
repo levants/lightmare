@@ -42,6 +42,8 @@ public class QueryTuple implements Serializable {
 
     private final String methodName;
 
+    private final String[] arguments;
+
     private final String fieldName;
 
     private Class<?> entityType;
@@ -60,9 +62,11 @@ public class QueryTuple implements Serializable {
 
     private static final String FORMATTER = "%s %s %s";
 
-    public QueryTuple(final String entityName, final String methodName, final String fieldName) {
+    public QueryTuple(final String entityName, final String methodName, final String[] arguments,
+	    final String fieldName) {
 	this.entityName = entityName;
 	this.methodName = methodName;
+	this.arguments = arguments;
 	this.fieldName = fieldName;
     }
 
@@ -72,6 +76,10 @@ public class QueryTuple implements Serializable {
 
     public String getMethodName() {
 	return methodName;
+    }
+
+    public String[] getArguments() {
+	return arguments;
     }
 
     public String getFieldName() {

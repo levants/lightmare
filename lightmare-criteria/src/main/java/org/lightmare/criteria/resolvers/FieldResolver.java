@@ -94,6 +94,47 @@ public class FieldResolver {
     }
 
     /**
+     * Generate type names array from argument types
+     * 
+     * @param argumentTypes
+     * @return {@link String} array of argument type names
+     * @throws IOException
+     */
+    private static String[] mapToNames(Type[] argumentTypes) throws IOException {
+
+	String[] arguments;
+
+	if (argumentTypes == null) {
+	    arguments = null;
+	} else if (CollectionUtils.isEmpty(argumentTypes)) {
+	    arguments = new String[] {};
+	} else {
+	    arguments = new String[argumentTypes.length];
+	    CollectionUtils.map(argumentTypes, arguments, Type::getClassName);
+	}
+
+	return arguments;
+    }
+
+    /**
+     * resolves argument {@link Type}s for method descriptor
+     * 
+     * @param desc
+     * @return {@link Type}[] array of argument {@link Type}s
+     * @throws IOException
+     */
+    private static String[] resolveArgumentsTypes(String desc) throws IOException {
+
+	String[] arguments;
+
+	Type methodType = Type.getMethodType(desc);
+	Type[] argumentTypes = methodType.getArgumentTypes();
+	arguments = mapToNames(argumentTypes);
+
+	return arguments;
+    }
+
+    /**
      * Validates setter method by name, arguments and return type
      * 
      * @param returnType
@@ -169,7 +210,8 @@ public class FieldResolver {
 	if (valid(node)) {
 	    String fieldName = resolveFieldName(node.name);
 	    String entityName = resolveEntityName(node.owner);
-	    tuple = new QueryTuple(entityName, node.name, fieldName);
+	    String[] arguments = resolveArgumentsTypes(node.desc);
+	    tuple = new QueryTuple(entityName, node.name, arguments, fieldName);
 	    setMetaData(tuple);
 	} else {
 	    tuple = null;

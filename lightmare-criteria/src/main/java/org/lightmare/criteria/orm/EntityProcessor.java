@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ClassUtils;
+import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
  * Adds reflection meta data to {@link QueryTuple} instance
@@ -36,6 +37,28 @@ import org.lightmare.criteria.utils.ClassUtils;
  *
  */
 public class EntityProcessor {
+
+    /**
+     * Resolves argument types for method
+     * 
+     * @param tuple
+     * @return {@link Class} array of argument types
+     * @throws IOException
+     */
+    private static Class<?>[] getArgumentTypes(QueryTuple tuple) throws IOException {
+
+	Class<?>[] argumentTypes;
+
+	String[] names = tuple.getArguments();
+	if (CollectionUtils.isEmpty(names)) {
+	    argumentTypes = new Class<?>[] {};
+	} else {
+	    argumentTypes = new Class<?>[names.length];
+	    CollectionUtils.map(names, argumentTypes, ClassUtils::classForName);
+	}
+
+	return argumentTypes;
+    }
 
     /**
      * Sets {@link Field} by name to passed wrapper
@@ -47,7 +70,7 @@ public class EntityProcessor {
 
 	String fieldName = tuple.getFieldName();
 	Class<?> entityType = tuple.getEntityType();
-	Field field = ClassUtils.getDeclaredField(entityType, fieldName);
+	Field field = ClassUtils.findField(entityType, fieldName);
 	tuple.setField(field);
     }
 
@@ -61,7 +84,8 @@ public class EntityProcessor {
 
 	String methodName = tuple.getMethodName();
 	Class<?> entityType = tuple.getEntityType();
-	Method method = ClassUtils.findMethod(entityType, methodName);
+	Class<?>[] argumentTypes = getArgumentTypes(tuple);
+	Method method = ClassUtils.findMethod(entityType, methodName, argumentTypes);
 	tuple.setMethod(method);
 	setField(tuple);
     }

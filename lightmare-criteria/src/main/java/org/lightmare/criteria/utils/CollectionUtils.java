@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.utils;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,17 @@ public abstract class CollectionUtils {
 
     // Empty array of objects
     public static final Object[] EMPTY_ARRAY = {};
+
+    /**
+     * Functional interface with exceptions on method
+     * 
+     * @author Levan Tsinadze
+     *
+     */
+    @FunctionalInterface
+    public static interface Mapper<T, R> {
+	R apply(T value) throws IOException;
+    }
 
     /**
      * Checks if passed {@link Collection} instance is not empty
@@ -310,5 +322,25 @@ public abstract class CollectionUtils {
      */
     public static <T> T getFirst(T[] values) {
 	return getFirst(values, null);
+    }
+
+    /**
+     * Copies passed array's each element after mapped call to other array
+     * 
+     * @param from
+     * @param to
+     * @param mapper
+     * @throws IOException
+     */
+    public static <T, R> void map(T[] from, R[] to, Mapper<? super T, ? extends R> mapper) throws IOException {
+
+	int length = from.length;
+	T value;
+	R mapped;
+	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
+	    value = from[i];
+	    mapped = mapper.apply(value);
+	    to[i] = mapped;
+	}
     }
 }

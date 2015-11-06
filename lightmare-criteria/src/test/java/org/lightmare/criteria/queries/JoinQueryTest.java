@@ -157,7 +157,7 @@ public class JoinQueryTest extends SubQueryTest {
 	EntityManager em = emf.createEntityManager();
 	try {
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-		    .notEquals(Person::getLastName, "lname")
+		    .notEquals(Person::getLastName, "lname").and().like(Person::getAddrress, "address")
 		    .fetchJoin(Person::getPhones, c -> c.equals(Phone::getPhoneNumber, "100100").and()
 			    .notEquals(Phone::getOperatorId, Person::getPersonId));
 	    String sql = stream.sql();

@@ -422,6 +422,33 @@ public class ClassUtils {
     }
 
     /**
+     * Finds passed {@link Class}'s or one of th's superclass {@link Field} with
+     * appropriated name
+     * 
+     * @param type
+     * @param fieldName
+     * @return {@link Field} for type
+     * @throws IOException
+     */
+    public static Field findField(Class<?> type, String fieldName) throws IOException {
+
+	Field field = null;
+
+	Class<?> superClass = type;
+	while (Objects.nonNull(superClass) && (field == null)) {
+	    try {
+		field = superClass.getDeclaredField(fieldName);
+	    } catch (NoSuchFieldException ex) {
+		superClass = superClass.getSuperclass();
+	    } catch (SecurityException ex) {
+		throw new IOException(ex);
+	    }
+	}
+
+	return field;
+    }
+
+    /**
      * Finds if passed {@link Class} has public {@link Method} with appropriated
      * name
      *
