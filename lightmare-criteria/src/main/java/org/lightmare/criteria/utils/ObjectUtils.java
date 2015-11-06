@@ -76,17 +76,6 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Checks if passed {@link Object}s are not null and not equals each other
-     *
-     * @param data1
-     * @param data2
-     * @return <code>boolean</code>
-     */
-    public static boolean notNullNotEquals(Object data1, Object data2) {
-	return notNullAll(data1, data2) && notEquals(data1, data2);
-    }
-
-    /**
      * Casts passed {@link Object} to generic parameter
      *
      * @param data

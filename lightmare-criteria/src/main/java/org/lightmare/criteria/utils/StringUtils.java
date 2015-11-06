@@ -22,7 +22,7 @@
  */
 package org.lightmare.criteria.utils;
 
-import java.lang.reflect.Array;
+import java.util.stream.Stream;
 
 /**
  * Utility class for {@link String} and {@link CharSequence} operations
@@ -70,13 +70,7 @@ public abstract class StringUtils {
 	boolean valid = CollectionUtils.valid(lines);
 
 	if (valid) {
-	    int length = lines.length;
-	    CharSequence line;
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length && valid; i++) {
-		line = lines[i];
-		// TODO Think only second part of && is needed
-		valid = valid && valid(line);
-	    }
+	    valid = Stream.of(lines).allMatch(c -> valid(c));
 	}
 
 	return valid;
@@ -92,53 +86,11 @@ public abstract class StringUtils {
 	return !valid(chars);
     }
 
-    /**
-     * Appends contents of passed array to passed {@link StringBuilder} and for
-     * each content if it is instance of array then append its content
-     * recursively
-     *
-     * @param tockens
-     * @param builder
-     */
-    private static void append(Object tocken, StringBuilder builder) {
+    private static void appendAll(StringBuilder text, Object... parts) {
 
-	if (CollectionUtils.isObjectArray(tocken)) {
-	    Object[] tockens = ObjectUtils.cast(tocken);
-	    for (Object subTocken : tockens) {
-		append(subTocken, builder);
-	    }
-	} else if (CollectionUtils.isPrimitiveArray(tocken)) {
-	    int length = Array.getLength(tocken);
-	    Object subTocken;
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-		subTocken = Array.get(tocken, i);
-		append(subTocken, builder);
-	    }
-	} else {
-	    builder.append(tocken);
+	for (Object part : parts) {
+	    text.append(part);
 	}
-    }
-
-    /**
-     * Creates concatenates passed objects in one text and if one of them is
-     * array then concatenates contents of this array recursively
-     *
-     * @param tockens
-     * @return {@link String}
-     */
-    public static String concatRecursively(Object... tockens) {
-
-	String concat;
-
-	if (CollectionUtils.valid(tockens)) {
-	    StringBuilder builder = new StringBuilder();
-	    append(tockens, builder);
-	    concat = builder.toString();
-	} else {
-	    concat = null;
-	}
-
-	return concat;
     }
 
     /**
@@ -151,14 +103,14 @@ public abstract class StringUtils {
 
 	String resultText;
 
-	if (CollectionUtils.valid(parts)) {
-	    StringBuilder resultBuider = new StringBuilder();
-	    for (Object part : parts) {
-		resultBuider.append(part);
-	    }
-	    resultText = resultBuider.toString();
-	} else {
+	if (parts == null) {
 	    resultText = null;
+	} else if (CollectionUtils.isEmpty(parts)) {
+	    resultText = EMPTY_STRING;
+	} else {
+	    StringBuilder text = new StringBuilder();
+	    appendAll(text, parts);
+	    resultText = text.toString();
 	}
 
 	return resultText;
@@ -173,6 +125,6 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean notContains(String text, CharSequence item) {
-	return (text == null || Boolean.FALSE.equals(text.contains(item)));
+	return (text == null || ObjectUtils.notTrue(text.contains(item)));
     }
 }

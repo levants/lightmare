@@ -37,7 +37,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  */
 public class LambdaCache {
 
-    private static final ConcurrentMap<Class<?>, QueryTuple> LAMBDAS = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, QueryTuple> LAMBDAS = new ConcurrentHashMap<>();
 
     /**
      * Adds passed lambda {@link Class} and {@link QueryTuple} to cache
@@ -45,11 +45,12 @@ public class LambdaCache {
      * @param key
      * @param value
      */
-    public static void putLambda(Class<?> key, QueryTuple value) {
+    public static void putLambda(Class<?> lambdaType, QueryTuple value) {
 
+	String key = lambdaType.getName();
 	QueryTuple existed = LAMBDAS.putIfAbsent(key, value);
 	if (Objects.equals(value, existed)) {
-	    LambdaReferences.INSTANCE.trace(key);
+	    LambdaReferences.INSTANCE.trace(lambdaType);
 	}
     }
 
@@ -71,8 +72,14 @@ public class LambdaCache {
      * @param key
      * @return {@link QueryTuple} for this lambda {@link Class}
      */
-    public static QueryTuple getLambda(Class<?> key) {
-	return LAMBDAS.get(key);
+    public static QueryTuple getLambda(Class<?> lambdaType) {
+
+	QueryTuple value;
+
+	String key = lambdaType.getName();
+	value = LAMBDAS.get(key);
+
+	return value;
     }
 
     /**
@@ -98,7 +105,8 @@ public class LambdaCache {
      * 
      * @param key
      */
-    public static void remove(Class<?> key) {
+    public static void remove(Class<?> lambdaType) {
+	String key = lambdaType.getName();
 	LAMBDAS.remove(key);
     }
 }
