@@ -50,7 +50,9 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
     // ========================= Entity and parent method composers =========//
     @Override
     public <F> SubQueryStream<S, T> operate(EntityField<S, F> sfield, ParentField<T, F> field, String operator) {
+	appendOperator();
 	oppField(sfield, field, operator);
+
 	return this;
     }
 
@@ -115,15 +117,22 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
     }
 
     @Override
-    public <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
-	oppCollectionField(sfield, field, Operators.IN);
+    public <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> sfield, ParentField<T, Collection<F>> field,
+	    String operator) {
+	appendOperator();
+	oppCollectionField(sfield, field, operator);
+
 	return this;
     }
 
     @Override
+    public <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
+	return operateCollection(sfield, field, Operators.IN);
+    }
+
+    @Override
     public <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
-	oppCollectionField(sfield, field, Operators.NOT_IN);
-	return this;
+	return operateCollection(sfield, field, Operators.NOT_IN);
     }
 
     // ========================= select method composers ====================//

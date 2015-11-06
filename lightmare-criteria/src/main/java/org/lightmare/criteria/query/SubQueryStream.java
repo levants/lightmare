@@ -169,6 +169,9 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
 
     SubQueryStream<S, T> contains(EntityField<S, String> sfield, ParentField<T, String> field);
 
+    <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> sfield, ParentField<T, Collection<F>> field,
+	    String operator);
+
     <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, ParentField<T, Collection<F>> field);
 
     <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, ParentField<T, Collection<F>> field);

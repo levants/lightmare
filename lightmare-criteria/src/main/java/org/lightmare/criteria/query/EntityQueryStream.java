@@ -214,6 +214,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     @Override
     public <F> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
 	    String operator) {
+	appendOperator();
 	oppCollectionField(field1, field2, operator);
 	return this;
     }
@@ -286,6 +287,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     @Override
     public <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
 	    SubQueryConsumer<S, T> consumer) {
+	appendOperator();
 	appSubQuery(field, Operators.IN);
 	initSubQuery(subType, consumer);
 
@@ -295,6 +297,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     @Override
     public <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType,
 	    SubQueryConsumer<S, T> consumer) {
+	appendOperator();
 	appSubQuery(field, Operators.NOT_IN);
 	initSubQuery(subType, consumer);
 
@@ -304,6 +307,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     @Override
     public <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer) {
 
+	appendOperator();
 	appendBody(Operators.EXISTS);
 	openBracket();
 	initSubQuery(subType, consumer);
@@ -314,6 +318,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     @Override
     public <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer) {
 
+	appendOperator();
 	appendBody(Operators.NOT_EXISTS);
 	openBracket();
 	initSubQuery(subType, consumer);
