@@ -30,7 +30,10 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.ParentField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
+import org.lightmare.criteria.links.Filters;
+import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation of {@link QueryStream} for sub queries and joins
@@ -53,40 +56,82 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
     // ========================= Entity method composers ====================//
 
     @Override
-    <F> SubQueryStream<S, T> equals(EntityField<S, F> field, F value);
+    <F> SubQueryStream<S, T> operate(EntityField<S, F> field, String operator);
 
     @Override
-    <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field, F value);
+    <F> SubQueryStream<S, T> operate(EntityField<S, F> field, F value, String operator);
 
     @Override
-    <F> SubQueryStream<S, T> more(EntityField<S, F> field, F value);
+    default <F> SubQueryStream<S, T> equals(EntityField<S, F> field, F value) {
+	return operate(field, value, Operators.EQ);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> less(EntityField<S, F> field, F value);
+    default <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field, F value) {
+	return operate(field, value, Operators.NOT_EQ);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field, F value);
+    default <F> SubQueryStream<S, T> more(EntityField<S, F> field, F value) {
+	return operate(field, value, Operators.MORE);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field, F value);
+    default <F> SubQueryStream<S, T> less(EntityField<S, F> field, F value) {
+	return operate(field, value, Operators.LESS);
+    }
 
     @Override
-    SubQueryStream<S, T> startsWith(EntityField<S, String> field, String value);
+    default <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field, F value) {
+	return operate(field, value, Operators.MORE_OR_EQ);
+    }
 
     @Override
-    SubQueryStream<S, T> like(EntityField<S, String> field, String value);
+    default <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field, F value) {
+	return operate(field, value, Operators.LESS_OR_EQ);
+    }
 
     @Override
-    SubQueryStream<S, T> endsWith(EntityField<S, String> field, String value);
+    default SubQueryStream<S, T> startsWith(EntityField<S, String> field, String value) {
+	String enrich = StringUtils.concat(value, Filters.LIKE_SIGN);
+	return operate(field, enrich, Operators.LIKE);
+    }
 
     @Override
-    SubQueryStream<S, T> contains(EntityField<S, String> field, String value);
+    default SubQueryStream<S, T> like(EntityField<S, String> field, String value) {
+	return startsWith(field, value);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> in(EntityField<S, F> field, Collection<F> values);
+    default SubQueryStream<S, T> endsWith(EntityField<S, String> field, String value) {
+	String enrich = Filters.LIKE_SIGN.concat(value);
+	return operate(field, enrich, Operators.LIKE);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> notIn(EntityField<S, F> field, Collection<F> values);
+    default SubQueryStream<S, T> contains(EntityField<S, String> field, String value) {
+	String enrich = StringUtils.concat(Filters.LIKE_SIGN, value, Filters.LIKE_SIGN);
+	return operate(field, enrich, Operators.LIKE);
+    }
+
+    @Override
+    default SubQueryStream<S, T> notContains(EntityField<S, String> field, String value) {
+	openBracket().appendBody(Operators.NO);
+	return contains(field, value).closeBracket();
+    }
+
+    @Override
+    <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> field, Collection<F> values, String operator);
+
+    @Override
+    default <F> SubQueryStream<S, T> in(EntityField<S, F> field, Collection<F> values) {
+	return operateCollection(field, values, Operators.IN);
+    }
+
+    @Override
+    default <F> SubQueryStream<S, T> notIn(EntityField<S, F> field, Collection<F> values) {
+	return operateCollection(field, values, Operators.NOT_IN);
+    }
 
     @Override
     default <F> SubQueryStream<S, T> in(EntityField<S, F> field, F[] values) {
@@ -99,10 +144,14 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
     }
 
     @Override
-    SubQueryStream<S, T> isNull(EntityField<S, ?> field);
+    default SubQueryStream<S, T> isNull(EntityField<S, ?> field) {
+	return operate(field, Operators.IS_NULL);
+    }
 
     @Override
-    SubQueryStream<S, T> notNull(EntityField<S, ?> field);
+    default SubQueryStream<S, T> notNull(EntityField<S, ?> field) {
+	return operate(field, Operators.NOT_NULL);
+    }
 
     // ========================= Entity self method composers ===============//
 

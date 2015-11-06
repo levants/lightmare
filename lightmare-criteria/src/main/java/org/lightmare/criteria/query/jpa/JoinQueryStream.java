@@ -39,6 +39,10 @@ import org.lightmare.criteria.query.QueryStream;
  */
 public interface JoinQueryStream<T extends Serializable> {
 
+    
+    <E extends Serializable, C extends Collection<E>> void procesJoin(EntityField<T, C> field,
+	    String expression, SubQueryConsumer<E, T> consumer);
+    
     /**
      * Method for INNER JOIN function call
      * 

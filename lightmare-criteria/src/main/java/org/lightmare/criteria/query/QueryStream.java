@@ -29,10 +29,12 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
+import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.jpa.JoinQueryStream;
 import org.lightmare.criteria.query.jpa.ResultStream;
 import org.lightmare.criteria.query.jpa.SelectStatements;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Main interface with query construction methods
@@ -63,25 +65,48 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator);
 
-    <F> QueryStream<T> equals(EntityField<T, F> field, F value);
+    default <F> QueryStream<T> equals(EntityField<T, F> field, F value) {
+	return operate(field, value, Operators.EQ);
+    }
 
-    <F> QueryStream<T> notEquals(EntityField<T, F> field, F value);
+    default <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) {
+	return operate(field, value, Operators.NOT_EQ);
+    }
 
-    <F> QueryStream<T> more(EntityField<T, F> field, F value);
+    default <F> QueryStream<T> more(EntityField<T, F> field, F value) {
+	return operate(field, value, Operators.MORE);
+    }
 
-    <F> QueryStream<T> less(EntityField<T, F> field, F value);
+    default <F> QueryStream<T> less(EntityField<T, F> field, F value) {
+	return operate(field, value, Operators.LESS);
+    }
 
-    <F> QueryStream<T> moreOrEquals(EntityField<T, F> field, F value);
+    default <F> QueryStream<T> moreOrEquals(EntityField<T, F> field, F value) {
+	return operate(field, value, Operators.MORE_OR_EQ);
+    }
 
-    <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value);
+    default <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value) {
+	return operate(field, value, Operators.LESS_OR_EQ);
+    }
 
-    QueryStream<T> startsWith(EntityField<T, String> field, String value);
+    default QueryStream<T> startsWith(EntityField<T, String> field, String value) {
+	String enrich = StringUtils.concat(value, Filters.LIKE_SIGN);
+	return operate(field, enrich, Operators.LIKE);
+    }
 
-    QueryStream<T> like(EntityField<T, String> field, String value);
+    default QueryStream<T> like(EntityField<T, String> field, String value) {
+	return startsWith(field, value);
+    }
 
-    QueryStream<T> endsWith(EntityField<T, String> field, String value);
+    default QueryStream<T> endsWith(EntityField<T, String> field, String value) {
+	String enrich = Filters.LIKE_SIGN.concat(value);
+	return operate(field, enrich, Operators.LIKE);
+    }
 
-    QueryStream<T> contains(EntityField<T, String> field, String value);
+    default QueryStream<T> contains(EntityField<T, String> field, String value) {
+	String enrich = StringUtils.concat(Filters.LIKE_SIGN, value, Filters.LIKE_SIGN);
+	return operate(field, enrich, Operators.LIKE);
+    }
 
     default QueryStream<T> notContains(EntityField<T, String> field, String value) {
 	openBracket().appendBody(Operators.NO);
@@ -90,52 +115,84 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     <F> QueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
 
-    <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values);
-
-    <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values);
-
-    default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) {
-	return in(field, Arrays.asList(values));
+    default <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
+	return operateCollection(field, values, Operators.IN);
     }
 
-    default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) {
-	return notIn(field, Arrays.asList(values));
+    default <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) {
+	return operateCollection(field, values, Operators.NOT_IN);
     }
 
-    QueryStream<T> isNull(EntityField<T, ?> field);
+    default QueryStream<T> isNull(EntityField<T, ?> field) {
+	return operate(field, Operators.IS_NULL);
+    }
 
-    QueryStream<T> notNull(EntityField<T, ?> field);
+    default QueryStream<T> notNull(EntityField<T, ?> field) {
+	return operate(field, Operators.NOT_NULL);
+    }
 
     // ========================= Entity self method composers ===============//
 
     <F> QueryStream<T> operate(EntityField<T, F> field1, EntityField<T, F> field2, String operator);
 
-    <F> QueryStream<T> equals(EntityField<T, F> field1, EntityField<T, F> field2);
+    default <F> QueryStream<T> equals(EntityField<T, F> field1, EntityField<T, F> field2) {
+	return operate(field1, field2, Operators.EQ);
+    }
 
-    <F> QueryStream<T> notEquals(EntityField<T, F> field1, EntityField<T, F> field2);
+    default <F> QueryStream<T> notEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
+	return operate(field1, field2, Operators.NOT_EQ);
+    }
 
-    <F> QueryStream<T> more(EntityField<T, F> field1, EntityField<T, F> field2);
+    default <F> QueryStream<T> more(EntityField<T, F> field1, EntityField<T, F> field2) {
+	return operate(field1, field2, Operators.MORE);
+    }
 
-    <F> QueryStream<T> less(EntityField<T, F> field1, EntityField<T, F> field2);
+    default <F> QueryStream<T> less(EntityField<T, F> field1, EntityField<T, F> field2) {
+	return operate(field1, field2, Operators.LESS);
+    }
 
-    <F> QueryStream<T> moreOrEquals(EntityField<T, F> field1, EntityField<T, F> field2);
+    default <F> QueryStream<T> moreOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
+	return operate(field1, field2, Operators.MORE_OR_EQ);
+    }
 
-    <F> QueryStream<T> lessOrEquals(EntityField<T, F> field1, EntityField<T, F> field2);
+    default <F> QueryStream<T> lessOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
+	return operate(field1, field2, Operators.LESS_OR_EQ);
+    }
 
-    QueryStream<T> startsWith(EntityField<T, String> field1, EntityField<T, String> field2);
+    default QueryStream<T> startsWith(EntityField<T, String> field1, EntityField<T, String> field2) {
+	return operate(field1, field2, Operators.LIKE);
+    }
 
-    QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2);
+    default QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2) {
+	return operate(field1, field2, Operators.LIKE);
+    }
 
-    QueryStream<T> endsWith(EntityField<T, String> field1, EntityField<T, String> field2);
+    default QueryStream<T> endsWith(EntityField<T, String> field1, EntityField<T, String> field2) {
+	return operate(field1, field2, Operators.LIKE);
+    }
 
-    QueryStream<T> contains(EntityField<T, String> field1, EntityField<T, String> field2);
+    default QueryStream<T> contains(EntityField<T, String> field1, EntityField<T, String> field2) {
+	return operate(field1, field2, Operators.LIKE);
+    }
 
     <F> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
 	    String operator);
 
-    <F> QueryStream<T> in(EntityField<T, F> field1, EntityField<T, Collection<F>> field2);
+    default <F> QueryStream<T> in(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
+	return operateCollection(field1, field2, Operators.IN);
+    }
 
-    <F> QueryStream<T> notIn(EntityField<T, F> field1, EntityField<T, Collection<F>> field2);
+    default <F> QueryStream<T> notIn(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
+	return operateCollection(field1, field2, Operators.NOT_IN);
+    }
+
+    default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) {
+	return this.in(field, Arrays.asList(values));
+    }
+
+    default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) {
+	return this.notIn(field, Arrays.asList(values));
+    }
 
     // =========================sub=queries==================================//
     /**
