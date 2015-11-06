@@ -12,11 +12,18 @@
 	<name>lightmare-criteria</name>
 	<packaging>jar</packaging>
 
+	<prerequisites>
+		<maven.compiler.plugin>3.3</maven.compiler.plugin>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
+	</prerequisites>
+
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>${maven.compiler.plugin}</version>
 				<executions>
 					<execution>
 						<id>default-testCompile</id>
@@ -34,8 +41,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
 				</configuration>
 			</plugin>
 		</plugins>
