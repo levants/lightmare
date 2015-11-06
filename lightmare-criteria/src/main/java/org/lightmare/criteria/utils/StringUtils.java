@@ -122,9 +122,55 @@ public abstract class StringUtils {
      *
      * @param text
      * @param item
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean notContains(String text, CharSequence item) {
 	return (text == null || ObjectUtils.notTrue(text.contains(item)));
+    }
+
+    /**
+     * Validates if passed {@link CharSequence} ends with specific part
+     * 
+     * @param item
+     * @param text
+     * @return <code>boolean</code> validation result
+     */
+    public static boolean endsWith(CharSequence item, CharSequence text) {
+
+	boolean valid;
+
+	int length = item.length();
+	int start = length - text.length();
+	if (start > CollectionUtils.EMPTY) {
+	    CharSequence sub = item.subSequence(start, length);
+	    valid = sub.equals(text);
+	} else {
+	    valid = Boolean.FALSE;
+	}
+
+	return valid;
+    }
+
+    /**
+     * Validates if passed {@link CharSequence} not ends with specific part
+     * 
+     * @param item
+     * @param text
+     * @return <code>boolean</code> validation result
+     */
+    public static boolean notEndsWith(CharSequence item, CharSequence text) {
+	return ObjectUtils.notTrue(endsWith(item, text));
+    }
+
+    /**
+     * Validates if passed {@link CharSequence} not ends with any of specific
+     * parts
+     * 
+     * @param item
+     * @param texts
+     * @return <code>boolean</code> validation result
+     */
+    public static boolean notEndsWithAll(CharSequence item, CharSequence... texts) {
+	return CollectionUtils.validAll(texts, c -> notEndsWith(item, c));
     }
 }

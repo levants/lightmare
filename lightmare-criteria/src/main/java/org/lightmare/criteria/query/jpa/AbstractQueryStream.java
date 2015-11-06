@@ -268,6 +268,16 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
     }
 
     /**
+     * Append default boolean operator
+     */
+    protected void appendOperator() {
+
+	if (StringUtils.notEndsWithAll(body, Clauses.AND, Clauses.OR, Clauses.WHERE)) {
+	    and();
+	}
+    }
+
+    /**
      * Appends column (field) name with alias
      * 
      * @param tuple

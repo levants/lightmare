@@ -56,61 +56,61 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
 
     @Override
     public <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, ParentField<T, F> field) {
-	oppField(sfield, field, Operators.EQ);
+	operate(sfield, field, Operators.EQ);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
-	oppField(sfield, field, Operators.NOT_EQ);
+	operate(sfield, field, Operators.NOT_EQ);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, ParentField<T, F> field) {
-	oppField(sfield, field, Operators.MORE);
+	operate(sfield, field, Operators.MORE);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, ParentField<T, F> field) {
-	oppField(sfield, field, Operators.LESS);
+	operate(sfield, field, Operators.LESS);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
-	oppField(sfield, field, Operators.MORE_OR_EQ);
+	operate(sfield, field, Operators.MORE_OR_EQ);
 	return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
-	oppField(sfield, field, Operators.LESS_OR_EQ);
+	operate(sfield, field, Operators.LESS_OR_EQ);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, ParentField<T, String> field) {
-	oppField(sfield, field, Operators.LIKE);
+	operate(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> like(EntityField<S, String> sfield, ParentField<T, String> field) {
-	oppField(sfield, field, Operators.LIKE);
+	operate(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, ParentField<T, String> field) {
-	oppField(sfield, field, Operators.LIKE);
+	operate(sfield, field, Operators.LIKE);
 	return this;
     }
 
     @Override
     public SubQueryStream<S, T> contains(EntityField<S, String> sfield, ParentField<T, String> field) {
-	oppField(sfield, field, Operators.LIKE);
+	operate(sfield, field, Operators.LIKE);
 	return this;
     }
 

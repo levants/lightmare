@@ -61,50 +61,55 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     @Override
     public <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator) {
+	appendOperator();
 	oppLine(field, value, operator);
+
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> equals(EntityField<T, F> field, F value) {
-	oppLine(field, value, Operators.EQ);
+	appendOperator();
+	operate(field, value, Operators.EQ);
+
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) {
-	oppLine(field, value, Operators.NOT_EQ);
+	operate(field, value, Operators.NOT_EQ);
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> more(EntityField<T, F> field, F value) {
-	oppLine(field, value, Operators.MORE);
+	operate(field, value, Operators.MORE);
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> less(EntityField<T, F> field, F value) {
-	oppLine(field, value, Operators.LESS);
+	operate(field, value, Operators.LESS);
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> moreOrEquals(EntityField<T, F> field, F value) {
-	oppLine(field, value, Operators.MORE_OR_EQ);
+	operate(field, value, Operators.MORE_OR_EQ);
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value) {
-	oppLine(field, value, Operators.LESS_OR_EQ);
+	operate(field, value, Operators.LESS_OR_EQ);
 	return this;
     }
 
     @Override
     public QueryStream<T> startsWith(EntityField<T, String> field, String value) {
-	String enrich = value.concat(Filters.LIKE_SIGN);
-	oppLine(field, enrich, Operators.LIKE);
+	String enrich = StringUtils.concat(value, Filters.LIKE_SIGN);
+	operate(field, enrich, Operators.LIKE);
+
 	return this;
     }
 
@@ -116,14 +121,15 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     @Override
     public QueryStream<T> endsWith(EntityField<T, String> field, String value) {
 	String enrich = Filters.LIKE_SIGN.concat(value);
-	oppLine(field, enrich, Operators.LIKE);
+	operate(field, enrich, Operators.LIKE);
+
 	return this;
     }
 
     @Override
     public QueryStream<T> contains(EntityField<T, String> field, String value) {
 	String enrich = StringUtils.concat(Filters.LIKE_SIGN, value, Filters.LIKE_SIGN);
-	oppLine(field, enrich, Operators.LIKE);
+	operate(field, enrich, Operators.LIKE);
 	return this;
     }
 
@@ -141,13 +147,13 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     @Override
     public QueryStream<T> isNull(EntityField<T, ?> field) {
-	oppLine(field, Operators.IS_NULL);
+	operate(field, Operators.IS_NULL);
 	return this;
     }
 
     @Override
     public QueryStream<T> notNull(EntityField<T, ?> field) {
-	oppLine(field, Operators.NOT_NULL);
+	operate(field, Operators.NOT_NULL);
 	return this;
     }
 
@@ -155,67 +161,69 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     @Override
     public <F> QueryStream<T> operate(EntityField<T, F> field1, EntityField<T, F> field2, String operator) {
+	appendOperator();
 	oppField(field1, field2, operator);
+
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> equals(EntityField<T, F> field1, EntityField<T, F> field2) {
-	oppField(field1, field2, Operators.EQ);
+	operate(field1, field2, Operators.EQ);
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> notEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
-	oppField(field1, field2, Operators.NOT_EQ);
+	operate(field1, field2, Operators.NOT_EQ);
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> more(EntityField<T, F> field1, EntityField<T, F> field2) {
-	oppField(field1, field2, Operators.MORE);
+	operate(field1, field2, Operators.MORE);
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> less(EntityField<T, F> field1, EntityField<T, F> field2) {
-	oppField(field1, field2, Operators.LESS);
+	operate(field1, field2, Operators.LESS);
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> moreOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
-	oppField(field1, field2, Operators.MORE_OR_EQ);
+	operate(field1, field2, Operators.MORE_OR_EQ);
 	return this;
     }
 
     @Override
     public <F> QueryStream<T> lessOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
-	oppField(field1, field2, Operators.LESS_OR_EQ);
+	operate(field1, field2, Operators.LESS_OR_EQ);
 	return this;
     }
 
     @Override
     public QueryStream<T> startsWith(EntityField<T, String> field1, EntityField<T, String> field2) {
-	oppField(field1, field2, Operators.LIKE);
+	operate(field1, field2, Operators.LIKE);
 	return this;
     }
 
     @Override
     public QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2) {
-	oppField(field1, field2, Operators.LIKE);
+	operate(field1, field2, Operators.LIKE);
 	return this;
     }
 
     @Override
     public QueryStream<T> endsWith(EntityField<T, String> field1, EntityField<T, String> field2) {
-	oppField(field1, field2, Operators.LIKE);
+	operate(field1, field2, Operators.LIKE);
 	return this;
     }
 
     @Override
     public QueryStream<T> contains(EntityField<T, String> field1, EntityField<T, String> field2) {
-	oppField(field1, field2, Operators.LIKE);
+	operate(field1, field2, Operators.LIKE);
 	return this;
     }
 

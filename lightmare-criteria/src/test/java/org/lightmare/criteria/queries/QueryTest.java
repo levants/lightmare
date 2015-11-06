@@ -272,8 +272,8 @@ public class QueryTest {
 	try {
 	    // ============= Query construction ============== //
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-		    .equals(Person::getPersonalNo, Person::getAddrress).and()
-		    .like(Person::getFirstName, Person::getFullName).and().startsWith(Person::getLastName, "lname");
+		    .equals(Person::getPersonalNo, Person::getAddrress).like(Person::getFirstName, Person::getFullName)
+		    .and().startsWith(Person::getLastName, "lname");
 	    // =============================================//
 	    System.out.println();
 	    System.out.println("-------Entity----");
