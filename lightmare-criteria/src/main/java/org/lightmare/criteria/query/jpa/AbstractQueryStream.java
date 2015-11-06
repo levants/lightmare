@@ -272,7 +272,8 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
      */
     protected void appendOperator() {
 
-	if (StringUtils.valid(body) && StringUtils.notEndsWithAll(body, Clauses.AND, Clauses.OR, Clauses.WHERE)) {
+	if (StringUtils.valid(body)
+		&& StringUtils.notEndsWithAll(body, Clauses.AND, Clauses.OR, Clauses.WHERE, Operators.OPEN_BRACKET)) {
 	    and();
 	}
     }

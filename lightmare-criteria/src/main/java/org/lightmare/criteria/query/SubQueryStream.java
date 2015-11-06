@@ -159,71 +159,123 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
     <F> SubQueryStream<S, T> operate(EntityField<S, F> field1, EntityField<S, F> field2, String operator);
 
     @Override
-    <F> SubQueryStream<S, T> equals(EntityField<S, F> field1, EntityField<S, F> field2);
+    default <F> SubQueryStream<S, T> equals(EntityField<S, F> field1, EntityField<S, F> field2) {
+	return operate(field1, field2, Operators.EQ);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field1, EntityField<S, F> field2);
+    default <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
+	return operate(field1, field2, Operators.NOT_EQ);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> more(EntityField<S, F> field1, EntityField<S, F> field2);
+    default <F> SubQueryStream<S, T> more(EntityField<S, F> field1, EntityField<S, F> field2) {
+	return operate(field1, field2, Operators.MORE);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> less(EntityField<S, F> field1, EntityField<S, F> field2);
+    default <F> SubQueryStream<S, T> less(EntityField<S, F> field1, EntityField<S, F> field2) {
+	return operate(field1, field2, Operators.LESS);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field1, EntityField<S, F> field2);
+    default <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
+	return operate(field1, field2, Operators.MORE_OR_EQ);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field1, EntityField<S, F> field2);
+    default <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
+	return operate(field1, field2, Operators.LESS_OR_EQ);
+    }
 
     @Override
-    SubQueryStream<S, T> startsWith(EntityField<S, String> field1, EntityField<S, String> field2);
+    default SubQueryStream<S, T> startsWith(EntityField<S, String> field1, EntityField<S, String> field2) {
+	return operate(field1, field2, Operators.LIKE);
+    }
 
     @Override
-    SubQueryStream<S, T> like(EntityField<S, String> field1, EntityField<S, String> field2);
+    default SubQueryStream<S, T> like(EntityField<S, String> field1, EntityField<S, String> field2) {
+	return operate(field1, field2, Operators.LIKE);
+    }
 
     @Override
-    SubQueryStream<S, T> endsWith(EntityField<S, String> field1, EntityField<S, String> field2);
+    default SubQueryStream<S, T> endsWith(EntityField<S, String> field1, EntityField<S, String> field2) {
+	return operate(field1, field2, Operators.LIKE);
+    }
 
     @Override
-    SubQueryStream<S, T> contains(EntityField<S, String> field1, EntityField<S, String> field2);
+    default SubQueryStream<S, T> contains(EntityField<S, String> field1, EntityField<S, String> field2) {
+	return operate(field1, field2, Operators.LIKE);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> in(EntityField<S, F> field1, EntityField<S, Collection<F>> field2);
+    <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> field1, EntityField<S, Collection<F>> field2,
+	    String operator);
 
     @Override
-    <F> SubQueryStream<S, T> notIn(EntityField<S, F> field1, EntityField<S, Collection<F>> field2);
+    default <F> SubQueryStream<S, T> in(EntityField<S, F> field1, EntityField<S, Collection<F>> field2) {
+	return operateCollection(field1, field2, Operators.IN);
+    }
+
+    @Override
+    default <F> SubQueryStream<S, T> notIn(EntityField<S, F> field1, EntityField<S, Collection<F>> field2) {
+	return operateCollection(field1, field2, Operators.NOT);
+    }
 
     // ========================= Entity and parent method composers =========//
 
     <F> SubQueryStream<S, T> operate(EntityField<S, F> sfield, ParentField<T, F> field, String operator);
 
-    <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, ParentField<T, F> field);
+    default <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, ParentField<T, F> field) {
+	return operate(sfield, field, Operators.EQ);
+    }
 
-    <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, ParentField<T, F> field);
+    default <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
+	return operate(sfield, field, Operators.NOT_EQ);
+    }
 
-    <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, ParentField<T, F> field);
+    default <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, ParentField<T, F> field) {
+	return operate(sfield, field, Operators.MORE);
+    }
 
-    <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, ParentField<T, F> field);
+    default <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, ParentField<T, F> field) {
+	return operate(sfield, field, Operators.LESS);
+    }
 
-    <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, ParentField<T, F> field);
+    default <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
+	return operate(sfield, field, Operators.MORE_OR_EQ);
+    }
 
-    <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, ParentField<T, F> field);
+    default <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
+	return operate(sfield, field, Operators.LESS_OR_EQ);
+    }
 
-    SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, ParentField<T, String> field);
+    default SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, ParentField<T, String> field) {
+	return operate(sfield, field, Operators.LIKE);
+    }
 
-    SubQueryStream<S, T> like(EntityField<S, String> sfield, ParentField<T, String> field);
+    default SubQueryStream<S, T> like(EntityField<S, String> sfield, ParentField<T, String> field) {
+	return operate(sfield, field, Operators.LIKE);
+    }
 
-    SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, ParentField<T, String> field);
+    default SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, ParentField<T, String> field) {
+	return operate(sfield, field, Operators.LIKE);
+    }
 
-    SubQueryStream<S, T> contains(EntityField<S, String> sfield, ParentField<T, String> field);
+    default SubQueryStream<S, T> contains(EntityField<S, String> sfield, ParentField<T, String> field) {
+	return operate(sfield, field, Operators.LIKE);
+    }
 
     <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> sfield, ParentField<T, Collection<F>> field,
 	    String operator);
 
-    <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, ParentField<T, Collection<F>> field);
+    default <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
+	return operateCollection(sfield, field, Operators.IN);
+    }
 
-    <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, ParentField<T, Collection<F>> field);
+    default <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
+	return operateCollection(sfield, field, Operators.NOT_IN);
+    }
 
     // =========================sub=queries==================================//
 

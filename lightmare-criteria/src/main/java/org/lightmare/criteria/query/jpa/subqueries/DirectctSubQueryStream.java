@@ -78,74 +78,11 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
     }
 
     @Override
-    public <F> SubQueryStream<S, T> equals(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.equals(field1, field2);
-	return this;
-    }
+    public <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> field1, EntityField<S, Collection<F>> field2,
+	    String operator) {
+	appendOperator();
+	oppCollectionField(field1, field2, operator);
 
-    @Override
-    public <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.notEquals(field1, field2);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> more(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.more(field1, field2);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> less(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.less(field1, field2);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.moreOrEquals(field1, field2);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
-	super.lessOrEquals(field1, field2);
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> startsWith(EntityField<S, String> field1, EntityField<S, String> field2) {
-	super.startsWith(field1, field2);
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> like(EntityField<S, String> field1, EntityField<S, String> field2) {
-	super.like(field1, field2);
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> endsWith(EntityField<S, String> field1, EntityField<S, String> field2) {
-	super.endsWith(field1, field2);
-	return this;
-    }
-
-    @Override
-    public SubQueryStream<S, T> contains(EntityField<S, String> field1, EntityField<S, String> field2) {
-	super.contains(field1, field2);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> in(EntityField<S, F> field1, EntityField<S, Collection<F>> field2) {
-	super.in(field1, field2);
-	return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> notIn(EntityField<S, F> field1, EntityField<S, Collection<F>> field2) {
-	super.notIn(field1, field2);
 	return this;
     }
 
