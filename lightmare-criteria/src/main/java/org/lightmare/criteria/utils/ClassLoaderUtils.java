@@ -32,7 +32,6 @@ import java.util.Objects;
  * Class for load jar or class files from specified path
  *
  * @author Levan Tsinadze
- * @since 0.0.15
  */
 public class ClassLoaderUtils {
 

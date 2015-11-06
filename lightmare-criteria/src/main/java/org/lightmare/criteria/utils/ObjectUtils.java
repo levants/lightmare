@@ -28,9 +28,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Stream;
 
 /**
@@ -101,66 +98,6 @@ public abstract class ObjectUtils {
 	T value = (T) data;
 
 	return value;
-    }
-
-    /**
-     * Simply locks passed {@link Lock} object
-     *
-     * @param lock
-     */
-    public static void lock(Lock lock) {
-	lock.lock();
-    }
-
-    /**
-     * Locks passed {@link Lock} object for passed time in appropriate
-     * {@link TimeUnit} instance
-     *
-     * @param lock
-     * @return <code>boolean</code>
-     * @throws InterruptedException
-     */
-    public static boolean tryLock(Lock lock, Long time, TimeUnit unit) throws IOException {
-
-	boolean locked;
-
-	try {
-	    locked = lock.tryLock(time, unit);
-	} catch (InterruptedException ex) {
-	    throw new IOException(ex);
-	}
-
-	return locked;
-    }
-
-    /**
-     * Locks passed {@link Lock} object
-     *
-     * @param lock
-     * @return <code>boolean</code>
-     * @throws IOException
-     */
-    public static boolean tryLock(Lock lock) {
-	return lock.tryLock();
-    }
-
-    /**
-     * Unlocks passed {@link Lock} instance
-     *
-     * @param lock
-     */
-    public static void unlock(Lock lock) {
-
-	if (lock instanceof ReentrantLock) {
-	    // if passed lock instance of ReentrantLock then first defines if
-	    // locked by current thread
-	    ReentrantLock reentrantLock = ObjectUtils.cast(lock);
-	    if (reentrantLock.isHeldByCurrentThread()) {
-		lock.unlock();
-	    }
-	} else {
-	    lock.unlock();
-	}
     }
 
     /**

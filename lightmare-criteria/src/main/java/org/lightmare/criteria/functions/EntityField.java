@@ -26,12 +26,12 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 /**
- * Interface for getter method reference call with entities
+ * Interface for getter method reference
  * 
  * @author Levan Tsinadze
  *
  * @param <T,F>
- *            entity and field type parameters respectively
+ *            entity and field type parameters
  */
 @FunctionalInterface
 public interface EntityField<T, F> extends Function<T, F>, Serializable {

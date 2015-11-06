@@ -34,23 +34,17 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Utility class to use reflection {@link Method}, {@link Constructor} or any
  * {@link AccessibleObject} calls and get / set / modify {@link Field} value
  *
  * @author Levan Tsinadze
- * @since 0.0.26-SNAPSHOT
  */
 public class ClassUtils {
 
     // default value for modifier
     private static final int DEFAULT_MODIFIER = 0;
-
-    // Lock to modify accessible mode of AccessibleObject instances
-    private static final Lock ACCESSOR_LOCK = new ReentrantLock();
 
     /**
      * Gets target {@link Throwable} from passed
@@ -84,44 +78,27 @@ public class ClassUtils {
     }
 
     /**
-     * Sets object accessible flag as true if it is not
-     *
+     * Sets accessible flag to {@link AccessibleObject} instance
+     * 
      * @param accessibleObject
-     * @param accessible
      */
-    private static void setAccessible(AccessibleObject accessibleObject, boolean accessible) {
+    private static void makeAccessible(AccessibleObject accessibleObject) {
 
-	if (ObjectUtils.notTrue(accessible)) {
-	    try {
-		// Should I use synchronized(accessibleObject) block
-		ObjectUtils.lock(ACCESSOR_LOCK);
-		if (notAccessible(accessibleObject)) {
-		    accessibleObject.setAccessible(Boolean.TRUE);
-		}
-	    } finally {
-		ObjectUtils.unlock(ACCESSOR_LOCK);
-	    }
+	if (notAccessible(accessibleObject)) {
+	    accessibleObject.setAccessible(Boolean.TRUE);
 	}
     }
 
     /**
-     * Sets passed {@link AccessibleObject}'s accessible flag as passed
-     * accessible boolean value if the last one is false
+     * Sets object accessible flag as true if it is not
      *
      * @param accessibleObject
-     * @param accessible
      */
-    private static void resetAccessible(AccessibleObject accessibleObject, boolean accessible) {
+    private static void setAccessible(AccessibleObject accessibleObject) {
 
-	if (ObjectUtils.notTrue(accessible)) {
-	    try {
-		// Should I use synchronized(accessibleObject) block
-		ObjectUtils.lock(ACCESSOR_LOCK);
-		if (accessibleObject.isAccessible()) {
-		    accessibleObject.setAccessible(accessible);
-		}
-	    } finally {
-		ObjectUtils.unlock(ACCESSOR_LOCK);
+	if (notAccessible(accessibleObject)) {
+	    synchronized (accessibleObject) {
+		makeAccessible(accessibleObject);
 	    }
 	}
     }
@@ -139,9 +116,8 @@ public class ClassUtils {
 
 	T instance;
 
-	boolean accessible = constructor.isAccessible();
 	try {
-	    setAccessible(constructor, accessible);
+	    setAccessible(constructor);
 	    instance = constructor.newInstance(parameters);
 	} catch (InstantiationException ex) {
 	    throw new IOException(ex);
@@ -151,8 +127,6 @@ public class ClassUtils {
 	    throw new IOException(ex);
 	} catch (InvocationTargetException ex) {
 	    throw unwrap(ex);
-	} finally {
-	    resetAccessible(constructor, accessible);
 	}
 
 	return instance;
@@ -464,17 +438,6 @@ public class ClassUtils {
     }
 
     /**
-     * Returns type of passed {@link Field} invoking {@link Field#getType()}
-     * method
-     *
-     * @param field
-     * @return {@link Class}<?>
-     */
-    public static Class<?> getType(Field field) {
-	return field.getType();
-    }
-
-    /**
      * Common method to invoke {@link Method} with reflection
      *
      * @param method
@@ -513,13 +476,8 @@ public class ClassUtils {
 
 	Object value;
 
-	boolean accessible = method.isAccessible();
-	try {
-	    setAccessible(method, accessible);
-	    value = invoke(method, data, arguments);
-	} finally {
-	    resetAccessible(method, accessible);
-	}
+	setAccessible(method);
+	value = invoke(method, data, arguments);
 
 	return value;
     }
@@ -561,13 +519,8 @@ public class ClassUtils {
 
 	Object value;
 
-	boolean accessible = method.isAccessible();
-	try {
-	    setAccessible(method, accessible);
-	    value = invokeStatic(method, arguments);
-	} finally {
-	    resetAccessible(method, accessible);
-	}
+	setAccessible(method);
+	value = invokeStatic(method, arguments);
 
 	return value;
     }
@@ -582,17 +535,13 @@ public class ClassUtils {
      */
     public static void setFieldValue(Field field, Object data, Object value) throws IOException {
 
-	boolean accessible = field.isAccessible();
-
 	try {
-	    setAccessible(field, accessible);
+	    setAccessible(field);
 	    field.set(data, value);
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
 	} catch (IllegalAccessException ex) {
 	    throw new IOException(ex);
-	} finally {
-	    resetAccessible(field, accessible);
 	}
     }
 
@@ -608,17 +557,13 @@ public class ClassUtils {
 
 	Object value;
 
-	boolean accessible = field.isAccessible();
-
 	try {
-	    setAccessible(field, accessible);
+	    setAccessible(field);
 	    value = field.get(data);
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
 	} catch (IllegalAccessException ex) {
 	    throw new IOException(ex);
-	} finally {
-	    resetAccessible(field, accessible);
 	}
 
 	return value;

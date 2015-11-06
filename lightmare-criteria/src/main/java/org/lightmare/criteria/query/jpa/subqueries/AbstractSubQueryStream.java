@@ -235,4 +235,8 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	    switchState();
 	}
     }
+
+    @Override
+    public void close() {
+    }
 }

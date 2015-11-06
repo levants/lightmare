@@ -45,7 +45,7 @@ public class QueryCache {
      * Generates key from {@link LambdaData} fields
      * 
      * @param lambda
-     * @return
+     * @return {@link String} generated key
      */
     private static String generateKey(LambdaData lambda) {
 

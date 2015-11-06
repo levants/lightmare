@@ -24,7 +24,7 @@ public enum LambdaReferences {
     private Thread cleaner;
 
     // Name of finalize daemon thread
-    private static final String REFERENCE_THREAD_NAME = "custom-finalizer-thread-";
+    private static final String REFERENCE_THREAD_NAME = "lambda-finalizer-thread-";
 
     private static final Logger LOG = Logger.getLogger(LambdaReferences.class);
 
@@ -60,7 +60,8 @@ public enum LambdaReferences {
 	    CleanerTask task = new CleanerTask();
 	    cleaner = new Thread(task);
 	    cleaner.setPriority(Thread.MAX_PRIORITY);
-	    cleaner.setName(StringUtils.concat(REFERENCE_THREAD_NAME, cleaner.getId()));
+	    String threadName = StringUtils.concat(REFERENCE_THREAD_NAME, cleaner.getId());
+	    cleaner.setName(threadName);
 	    cleaner.setDaemon(Boolean.TRUE);
 	    cleaner.start();
 	}
