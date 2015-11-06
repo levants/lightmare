@@ -161,7 +161,7 @@ public class JoinQueryTest extends SubQueryTest {
 		    .fetchJoin(Person::getPhones,
 			    c -> c.equals(Phone::getPhoneNumber, "100100")
 				    .notEquals(Phone::getOperatorId, Person::getPersonId).or()
-				    .equals(Phone::getOperatorId, Phone::getProneId));
+				    .equals(Phone::getOperatorId, Phone::getPhoneId));
 	    String sql = stream.sql();
 	    System.out.println(sql);
 	} catch (Throwable ex) {

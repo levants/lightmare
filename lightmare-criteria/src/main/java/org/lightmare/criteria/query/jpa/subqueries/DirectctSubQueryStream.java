@@ -39,9 +39,9 @@ import org.lightmare.criteria.query.SubQueryStream;
  * @author Levan Tsinadze
  *
  * @param <S>
- *            entity type for generated (sub) query
+ *            entity type parameter for generated (sub) query
  * @param <T>
- *            entity type for generated query
+ *            entity type parameter for generated query
  */
 abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializable> extends EntityQueryStream<S>
 	implements SubQueryStream<S, T> {

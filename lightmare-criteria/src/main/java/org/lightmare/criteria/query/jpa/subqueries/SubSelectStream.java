@@ -34,7 +34,7 @@ import org.lightmare.criteria.utils.CollectionUtils;
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type for generated query
+ *            entity type parameter for generated query
  */
 class SubSelectStream<T extends Serializable> extends SelectStream<T> {
 
