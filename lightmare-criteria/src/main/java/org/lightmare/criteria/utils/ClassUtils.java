@@ -84,7 +84,7 @@ public class ClassUtils {
      * 
      * @param accessibleObject
      */
-    private static void makeAccessible(AccessibleObject accessibleObject) {
+    private static void setAccessibleFlag(AccessibleObject accessibleObject) {
 
 	if (notAccessible(accessibleObject)) {
 	    accessibleObject.setAccessible(Boolean.TRUE);
@@ -96,11 +96,11 @@ public class ClassUtils {
      *
      * @param accessibleObject
      */
-    private static void setAccessible(AccessibleObject accessibleObject) {
+    private static void makeAccessible(AccessibleObject accessibleObject) {
 
 	if (notAccessible(accessibleObject)) {
 	    synchronized (accessibleObject) {
-		makeAccessible(accessibleObject);
+		setAccessibleFlag(accessibleObject);
 	    }
 	}
     }
@@ -119,7 +119,7 @@ public class ClassUtils {
 	T instance;
 
 	try {
-	    setAccessible(constructor);
+	    makeAccessible(constructor);
 	    instance = constructor.newInstance(parameters);
 	} catch (InstantiationException ex) {
 	    throw new IOException(ex);
@@ -544,7 +544,7 @@ public class ClassUtils {
 
 	Object value;
 
-	setAccessible(method);
+	makeAccessible(method);
 	value = invoke(method, data, arguments);
 
 	return value;
@@ -587,7 +587,7 @@ public class ClassUtils {
 
 	Object value;
 
-	setAccessible(method);
+	makeAccessible(method);
 	value = invokeStatic(method, arguments);
 
 	return value;
@@ -604,7 +604,7 @@ public class ClassUtils {
     public static void setFieldValue(Field field, Object data, Object value) throws IOException {
 
 	try {
-	    setAccessible(field);
+	    makeAccessible(field);
 	    field.set(data, value);
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
@@ -626,7 +626,7 @@ public class ClassUtils {
 	Object value;
 
 	try {
-	    setAccessible(field);
+	    makeAccessible(field);
 	    value = field.get(data);
 	} catch (IllegalArgumentException ex) {
 	    throw new IOException(ex);
@@ -704,7 +704,7 @@ public class ClassUtils {
      * Gets wrapper class if passed class is a primitive type
      *
      * @param type
-     * @return {@link Class}<T>
+     * @return {@link Class}<T> wrapper class for type
      */
     public static <T> Class<T> getWrapper(Class<?> type) {
 	return Primitives.getWrapper(type);

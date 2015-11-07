@@ -94,12 +94,12 @@ public abstract class ObjectUtils {
 	byte[] data;
 
 	ByteArrayOutputStream stream = new ByteArrayOutputStream();
-	ObjectOutputStream objectStream = new ObjectOutputStream(stream);
+	ObjectOutputStream out = new ObjectOutputStream(stream);
 	try {
-	    objectStream.writeObject(value);
+	    out.writeObject(value);
 	    data = stream.toByteArray();
 	} finally {
-	    IOUtils.closeAll(stream, objectStream);
+	    IOUtils.closeAll(stream, out);
 	}
 
 	return data;

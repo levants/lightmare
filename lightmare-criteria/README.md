@@ -33,6 +33,7 @@ Query can be composed by org.lightmare.criteria.query.QueryProvider.select metho
   			.equals(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().startsWith(Person::getFirstName, "fname")
+		    .and().startsWith(Person::getFillName, Person::getLastName)
 		    .or().moreOrEqual(Person::getBirthDate, new Date()).
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
@@ -120,6 +121,7 @@ Implementations of sub queries are by calling exits or in functions:
 # Joins
 
 Joins are similar to sub queries. There are three types of joins:
+
 inner join:
 ```java
   List<Person> persons = QueryProvider.query(em, Person.class).where()

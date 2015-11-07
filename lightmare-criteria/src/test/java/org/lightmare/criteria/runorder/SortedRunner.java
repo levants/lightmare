@@ -38,7 +38,9 @@ import org.junit.runners.model.InitializationError;
  */
 public class SortedRunner extends BlockJUnit4ClassRunner {
 
-    private static final int MORE = -1;
+    private static final int EQUALS = 0;
+
+    private static final int MORE = 1;
 
     private static final int LESS = -1;
 
@@ -52,7 +54,9 @@ public class SortedRunner extends BlockJUnit4ClassRunner {
 
 	RunOrder order1 = method1.getAnnotation(RunOrder.class);
 	RunOrder order2 = method2.getAnnotation(RunOrder.class);
-	if (Objects.nonNull(order1) && order2 == null) {
+	if (order1 == null && order2 == null) {
+	    comp = EQUALS;
+	} else if (Objects.nonNull(order1) && order2 == null) {
 	    comp = MORE;
 	} else if (order1 == null && Objects.nonNull(order2)) {
 	    comp = LESS;

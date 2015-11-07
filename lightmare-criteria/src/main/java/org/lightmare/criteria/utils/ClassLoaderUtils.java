@@ -42,15 +42,11 @@ public class ClassLoaderUtils {
      */
     public static ClassLoader getContextClassLoader() {
 
-	/**
-	 * Implementation of PrivilegedAction to get current thread's class
-	 * loader
-	 *
-	 * @author Levan Tsinadze
-	 *
-	 */
-	PrivilegedAction<ClassLoader> action = () -> Thread.currentThread().getContextClassLoader();
-	ClassLoader loader = AccessController.doPrivileged(action);
+	ClassLoader loader;
+
+	Thread current = Thread.currentThread();
+	PrivilegedAction<ClassLoader> action = current::getContextClassLoader;
+	loader = AccessController.doPrivileged(action);
 
 	return loader;
     }
