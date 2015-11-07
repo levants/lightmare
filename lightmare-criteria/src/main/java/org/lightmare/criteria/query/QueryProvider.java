@@ -98,6 +98,17 @@ public class QueryProvider {
     }
 
     /**
+     * Generates SELECT statements with default alias
+     * 
+     * @param em
+     * @param entityType
+     * @return {@link JPAQueryStream} with select statement
+     */
+    public static <T extends Serializable> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
+	return JPAQueryStream.query(em, entityType, QueryStream.DEFAULT_ALIAS);
+    }
+
+    /**
      * Generates SELECT statements with custom alias
      * 
      * @param em
@@ -108,17 +119,6 @@ public class QueryProvider {
     public static <T extends Serializable> QueryStream<T> query(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
 	return select(em, entityType, entityAlias);
-    }
-
-    /**
-     * Generates SELECT statements with default alias
-     * 
-     * @param em
-     * @param entityType
-     * @return {@link JPAQueryStream} with select statement
-     */
-    public static <T extends Serializable> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
-	return JPAQueryStream.query(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**

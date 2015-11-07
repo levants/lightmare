@@ -1,7 +1,5 @@
 package org.lightmare.criteria.entities;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +10,7 @@ import javax.persistence.TableGenerator;
 
 @Entity
 @Table(name = "PHONES")
-public class Phone implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Phone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.linq.entities.Person")

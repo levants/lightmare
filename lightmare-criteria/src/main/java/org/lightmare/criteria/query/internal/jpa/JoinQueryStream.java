@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.internal.jpa;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
@@ -39,7 +38,7 @@ import org.lightmare.criteria.query.internal.QueryStream;
  */
 public interface JoinQueryStream<T> {
 
-    <E extends Serializable, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
+    <E, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
 	    SubQueryConsumer<E, T> consumer);
 
     /**
@@ -49,7 +48,7 @@ public interface JoinQueryStream<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field,
+    <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field,
 	    SubQueryConsumer<E, T> consumer);
 
     /**
@@ -58,7 +57,7 @@ public interface JoinQueryStream<T> {
      * @param field
      * @return {@link QueryStream} current instance
      */
-    default <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field) {
+    default <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field) {
 	return join(field, null);
     }
 
@@ -69,7 +68,7 @@ public interface JoinQueryStream<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
+    <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
 	    SubQueryConsumer<E, T> consumer);
 
     /**
@@ -78,7 +77,7 @@ public interface JoinQueryStream<T> {
      * @param field
      * @return {@link QueryStream} current instance
      */
-    default <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field) {
+    default <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field) {
 	return leftJoin(field, null);
     }
 
@@ -89,7 +88,7 @@ public interface JoinQueryStream<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
+    <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
 	    SubQueryConsumer<E, T> consumer);
 
     /**
@@ -98,7 +97,7 @@ public interface JoinQueryStream<T> {
      * @param field
      * @return {@link QueryStream} current instance
      */
-    default <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field) {
+    default <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field) {
 	return fetchJoin(field, null);
     }
 }

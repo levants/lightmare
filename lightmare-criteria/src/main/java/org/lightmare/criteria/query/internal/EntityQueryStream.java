@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.internal;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Objects;
@@ -113,11 +112,11 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
 	return new EntitySubQueryStream<S, T>(this, subType);
     }
 
-    public <S extends Serializable> SubQueryStream<S, T> joinStream(Class<S> subType) {
+    public <S> SubQueryStream<S, T> joinStream(Class<S> subType) {
 	return new EntityJoinProcessor<S, T>(this, subType);
     }
 
-    public <S extends Serializable> SubQueryStream<S, T> joinStream(QueryTuple tuple) {
+    public <S> SubQueryStream<S, T> joinStream(QueryTuple tuple) {
 
 	SubQueryStream<S, T> joinStream;
 
@@ -216,7 +215,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     // ===============================Joins==================================//
 
     @Override
-    public <E extends Serializable, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
+    public <E, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
 	    SubQueryConsumer<E, T> consumer) {
 
 	QueryTuple tuple = oppJoin(field, expression);
@@ -227,21 +226,20 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public <E extends Serializable, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer) {
+    public <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field, SubQueryConsumer<E, T> consumer) {
 	procesJoin(field, Joins.JOIN, consumer);
 	return this;
     }
 
     @Override
-    public <E extends Serializable, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
+    public <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
 	    SubQueryConsumer<E, T> consumer) {
 	procesJoin(field, Joins.LEFT, consumer);
 	return this;
     }
 
     @Override
-    public <E extends Serializable, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
+    public <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
 	    SubQueryConsumer<E, T> consumer) {
 	procesJoin(field, Joins.FETCH, consumer);
 	return this;
