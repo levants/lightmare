@@ -173,7 +173,10 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
 	return tuple;
     }
 
-    private void incrementParameterCounter() {
+    /**
+     * Increments parameters counter
+     */
+    public void incrementParameterCounter() {
 	parameter_counter++;
     }
 
@@ -242,7 +245,6 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
     }
 
     protected <F> void opp(Object field, F value, String expression) {
-
 	QueryTuple tuple = opp(field, expression);
 	oppWithParameter(tuple, value, body);
     }

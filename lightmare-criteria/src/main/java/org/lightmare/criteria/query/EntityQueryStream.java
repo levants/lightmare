@@ -100,7 +100,8 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	QueryTuple tuple = compose(field);
 	Field member = tuple.getField();
 	Class<F> type = ObjectUtils.cast(member.getType());
-	EntityEmbeddedStream<F, T> embeddedQuery = new EntityEmbeddedStream<>(this, type);
+	String embeddedName = tuple.getFieldName();
+	EntityEmbeddedStream<F, T> embeddedQuery = new EntityEmbeddedStream<>(this, type, embeddedName);
 	acceptAndCall(consumer, embeddedQuery);
 
 	return this;
