@@ -223,6 +223,10 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
 	return operateCollection(field1, field2, Operators.NOT);
     }
 
+    // =========================embedded=field=queries=======================//
+
+    <F extends Serializable> SubQueryStream<S, T> embedded(EntityField<S, F> field, SubQueryConsumer<F, S> consumer);
+
     // ========================= Entity and parent method composers =========//
 
     <F> SubQueryStream<S, T> operate(EntityField<S, F> sfield, ParentField<T, F> field, String operator);

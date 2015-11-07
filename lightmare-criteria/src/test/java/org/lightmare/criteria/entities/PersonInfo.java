@@ -1,10 +1,14 @@
 package org.lightmare.criteria.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class PersonInfo {
+public class PersonInfo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "CARD_NUMBER")
     private String cardNumber;

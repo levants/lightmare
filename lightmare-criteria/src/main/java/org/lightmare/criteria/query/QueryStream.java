@@ -195,6 +195,10 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 	return this.notIn(field, Arrays.asList(values));
     }
 
+    // =========================embedded=field=queries=======================//
+
+    <F extends Serializable> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer);
+
     // =========================sub=queries==================================//
 
     /**

@@ -57,7 +57,7 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
     private boolean preparedState = Boolean.TRUE;
 
     protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, String alias, Class<S> entityType) {
-	super(parent.getEntityManager(), entityType, parent.getAliasTuple().generate());
+	super(parent.getEntityManager(), entityType, alias);
 	parentAlias = parent.getAlias();
 	this.parent = parent;
     }

@@ -87,6 +87,15 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
 	return this;
     }
 
+    // =========================embedded=field=queries=======================//
+
+    @Override
+    public <F extends Serializable> SubQueryStream<S, T> embedded(EntityField<S, F> field,
+	    SubQueryConsumer<F, S> consumer) {
+	super.embedded(field, consumer);
+	return this;
+    }
+
     // =========================sub=queries==================================//
 
     @Override

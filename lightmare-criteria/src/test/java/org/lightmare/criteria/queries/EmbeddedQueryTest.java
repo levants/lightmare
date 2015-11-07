@@ -1,0 +1,31 @@
+package org.lightmare.criteria.queries;
+
+import javax.persistence.EntityManager;
+
+import org.junit.Test;
+import org.lightmare.criteria.entities.Person;
+import org.lightmare.criteria.entities.PersonInfo;
+import org.lightmare.criteria.query.QueryProvider;
+import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.runorder.RunOrder;
+
+public class EmbeddedQueryTest extends JoinQueryTest {
+
+    @Test
+    @RunOrder(300)
+    public void innerJoinTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+		    .like(Person::getLastName, "lname")
+		    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, "100100"));
+	    String sql = stream.sql();
+	    System.out.println(sql);
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	} finally {
+	    em.close();
+	}
+    }
+}

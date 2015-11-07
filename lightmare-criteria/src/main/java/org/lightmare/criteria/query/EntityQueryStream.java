@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -91,6 +92,20 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	return this;
     }
 
+    // =========================embedded=field=queries=======================//
+
+    @Override
+    public <F extends Serializable> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer) {
+
+	QueryTuple tuple = compose(field);
+	Field member = tuple.getField();
+	Class<F> type = ObjectUtils.cast(member.getType());
+	EntityEmbeddedStream<F, T> embeddedQuery = new EntityEmbeddedStream<>(this, type);
+	acceptAndCall(consumer, embeddedQuery);
+
+	return this;
+    }
+
     // =========================Sub queries ===============//
 
     public <S extends Serializable> SubQueryStream<S, T> subQuery(Class<S> subType) {
@@ -112,7 +127,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     /**
-     * Validates and calls sub query tream methods
+     * Validates and calls sub query stream methods
      * 
      * @param consumer
      * @param subQuery
@@ -125,13 +140,25 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 	}
     }
 
+    /**
+     * Validates and calls sub query stream methods
+     * 
+     * @param consumer
+     * @param subQuery
+     */
+    private <S extends Serializable> void acceptAndCall(SubQueryConsumer<S, T> consumer,
+	    SubQueryStream<S, T> subQuery) {
+
+	acceptConsumer(consumer, subQuery);
+	subQuery.call();
+    }
+
     private <S extends Serializable> SubQueryStream<S, T> initSubQuery(Class<S> subType,
 	    SubQueryConsumer<S, T> consumer) {
 
 	SubQueryStream<S, T> subQuery = subQuery(subType);
 
-	acceptConsumer(consumer, subQuery);
-	subQuery.call();
+	acceptAndCall(consumer, subQuery);
 	closeBracket();
 	newLine();
 
@@ -189,17 +216,16 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     // ===============================Joins==================================//
-    
+
     @Override
-    public <E extends Serializable, C extends Collection<E>> void procesJoin(EntityField<T, C> field,
-	    String expression, SubQueryConsumer<E, T> consumer) {
+    public <E extends Serializable, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
+	    SubQueryConsumer<E, T> consumer) {
 
 	QueryTuple tuple = oppJoin(field, expression);
 	SubQueryStream<E, T> joinQuery = joinStream(tuple);
 	appendJoin(joinQuery.getAlias());
 	appendJoin(NEW_LINE);
-	acceptConsumer(consumer, joinQuery);
-	joinQuery.call();
+	acceptAndCall(consumer, joinQuery);
     }
 
     @Override
