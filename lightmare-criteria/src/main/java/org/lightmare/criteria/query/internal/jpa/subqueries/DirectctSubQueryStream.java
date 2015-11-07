@@ -20,9 +20,8 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa.subqueries;
+package org.lightmare.criteria.query.internal.jpa.subqueries;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
@@ -30,8 +29,8 @@ import javax.persistence.EntityManager;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
-import org.lightmare.criteria.query.EntityQueryStream;
-import org.lightmare.criteria.query.SubQueryStream;
+import org.lightmare.criteria.query.internal.EntityQueryStream;
+import org.lightmare.criteria.query.internal.SubQueryStream;
 
 /**
  * Main class to operate on sub queries and generate query clauses
@@ -43,8 +42,7 @@ import org.lightmare.criteria.query.SubQueryStream;
  * @param <T>
  *            entity type parameter for generated query
  */
-abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializable> extends EntityQueryStream<S>
-	implements SubQueryStream<S, T> {
+abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> implements SubQueryStream<S, T> {
 
     protected DirectctSubQueryStream(EntityManager em, Class<S> entityType, String alias) {
 	super(em, entityType, alias);
@@ -90,8 +88,7 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
     // =========================embedded=field=queries=======================//
 
     @Override
-    public <F extends Serializable> SubQueryStream<S, T> embedded(EntityField<S, F> field,
-	    SubQueryConsumer<F, S> consumer) {
+    public <F> SubQueryStream<S, T> embedded(EntityField<S, F> field, SubQueryConsumer<F, S> consumer) {
 	super.embedded(field, consumer);
 	return this;
     }
@@ -99,34 +96,32 @@ abstract class DirectctSubQueryStream<S extends Serializable, T extends Serializ
     // =========================sub=queries==================================//
 
     @Override
-    public <K extends Serializable> SubQueryStream<S, T> subQuery(Class<K> subType, SubQueryConsumer<K, S> consumer) {
+    public <K> SubQueryStream<S, T> subQuery(Class<K> subType, SubQueryConsumer<K, S> consumer) {
 	super.subQuery(subType, consumer);
 	return this;
     }
 
     @Override
-    public <F, K extends Serializable> SubQueryStream<S, T> in(EntityField<S, F> field, Class<K> subType,
-	    SubQueryConsumer<K, S> consumer) {
+    public <F, K> SubQueryStream<S, T> in(EntityField<S, F> field, Class<K> subType, SubQueryConsumer<K, S> consumer) {
 	super.in(field, subType, consumer);
 	return this;
     }
 
     @Override
-    public <F, K extends Serializable> SubQueryStream<S, T> notIn(EntityField<S, F> field, Class<K> subType,
+    public <F, K> SubQueryStream<S, T> notIn(EntityField<S, F> field, Class<K> subType,
 	    SubQueryConsumer<K, S> consumer) {
 	super.notIn(field, subType, consumer);
 	return this;
     }
 
     @Override
-    public <F, K extends Serializable> SubQueryStream<S, T> exists(Class<K> subType, SubQueryConsumer<K, S> consumer) {
+    public <F, K> SubQueryStream<S, T> exists(Class<K> subType, SubQueryConsumer<K, S> consumer) {
 	super.exists(subType, consumer);
 	return this;
     }
 
     @Override
-    public <F, K extends Serializable> SubQueryStream<S, T> notExists(Class<K> subType,
-	    SubQueryConsumer<K, S> consumer) {
+    public <F, K> SubQueryStream<S, T> notExists(Class<K> subType, SubQueryConsumer<K, S> consumer) {
 	super.notExists(subType, consumer);
 	return this;
     }

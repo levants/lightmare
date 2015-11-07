@@ -20,9 +20,8 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
+package org.lightmare.criteria.query.internal.jpa;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -31,7 +30,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.Query;
 
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.QueryStream;
 import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
@@ -42,7 +41,7 @@ import org.lightmare.criteria.utils.CollectionUtils;
  * @param <T>
  *            entity type for generated query
  */
-abstract class AbstractJPAQueryWrapper<T extends Serializable> implements JPAQueryWrapper<T> {
+abstract class AbstractJPAQueryWrapper<T> implements JPAQueryWrapper<T> {
 
     private Integer maxResult;
 

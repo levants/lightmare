@@ -20,46 +20,46 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
+package org.lightmare.criteria.query.internal.jpa;
 
-import java.io.Serializable;
+import java.util.Collection;
 
-import org.lightmare.criteria.query.FullQueryStream;
+import javax.persistence.EntityManager;
+
+import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Utility class to construct SELECT by fields
+ * Implementation for JOIN clause query generation
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type for generated query
+ *            entity type parameter for generated query
  */
-public class SelectStream<T extends Serializable> extends FullQueryStream<Object[]> {
+abstract class AbstractJoinStream<T> extends AbstractQueryStream<T> {
 
-    // Real entity type before select statement
-    private final Class<?> realEntityType;
-
-    protected SelectStream(AbstractQueryStream<T> stream) {
-	super(stream.getEntityManager(), Object[].class, stream.getAlias());
-	this.realEntityType = stream.entityType;
-	this.columns.append(stream.columns);
-	this.body.append(stream.body);
-	this.orderBy.append(stream.orderBy);
-	this.parameters.addAll(stream.parameters);
+    protected AbstractJoinStream(EntityManager em, Class<T> entityType, String alias) {
+	super(em, entityType, alias);
     }
 
-    @Override
-    public String sql() {
+    /**
+     * Processes join statement for passed collection field
+     * 
+     * @param field
+     * @param expression
+     * @return {@link QueryTuple} for field and expression
+     */
+    protected <C extends Collection<?>> QueryTuple oppJoin(EntityField<T, C> field, String expression) {
 
-	String value;
+	QueryTuple tuple;
 
-	sql.delete(START, sql.length());
-	appendFromClause(realEntityType, alias, columns);
-	generateBody(columns);
-	sql.append(orderBy);
-	sql.append(suffix);
-	value = sql.toString();
+	appendJoin(expression);
+	tuple = compose(field);
+	appendJoin(tuple.getFieldName());
+	appendJoin(StringUtils.SPACE);
 
-	return value;
+	return tuple;
     }
 }

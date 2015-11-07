@@ -20,9 +20,8 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
+package org.lightmare.criteria.query.internal.jpa;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +39,7 @@ import org.lightmare.criteria.tuples.ParameterTuple;
  * @param <T>
  *            entity type for generated query
  */
-abstract class AbstractResultStream<T extends Serializable> extends AbstractJoinStream<T> {
+abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
     protected AbstractResultStream(EntityManager em, Class<T> entityType, String alias) {
 	super(em, entityType, alias);

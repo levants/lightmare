@@ -20,9 +20,8 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
+package org.lightmare.criteria.query.internal.jpa;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -41,7 +40,7 @@ import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.links.Parts;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.QueryStream;
 import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -56,8 +55,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter for generated query
  */
-public abstract class AbstractQueryStream<T extends Serializable> extends AbstractJPAQueryWrapper<T>
-	implements QueryStream<T> {
+public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> implements QueryStream<T> {
 
     protected final EntityManager em;
 
@@ -102,7 +100,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
      * 
      * @param stream
      */
-    protected static <T extends Serializable> void appendSelect(AbstractQueryStream<T> stream) {
+    protected static <T> void appendSelect(AbstractQueryStream<T> stream) {
 	stream.appendPrefix(Filters.SELECT).appendPrefix(stream.alias).appendPrefix(Filters.FROM);
     }
 
@@ -111,7 +109,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
      * 
      * @param stream
      */
-    protected static <T extends Serializable> void appendEntityPart(AbstractQueryStream<T> stream) {
+    protected static <T> void appendEntityPart(AbstractQueryStream<T> stream) {
 
 	stream.appendPrefix(stream.entityType.getName());
 	stream.appendPrefix(Filters.AS);
@@ -124,7 +122,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
      * 
      * @param stream
      */
-    protected static <T extends Serializable> void startsSelect(AbstractQueryStream<T> stream) {
+    protected static <T> void startsSelect(AbstractQueryStream<T> stream) {
 	appendSelect(stream);
 	appendEntityPart(stream);
     }

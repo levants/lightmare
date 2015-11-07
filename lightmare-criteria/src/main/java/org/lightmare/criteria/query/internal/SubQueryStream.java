@@ -20,9 +20,8 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.internal;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -33,7 +32,7 @@ import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
+import org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -45,7 +44,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type for generated query
  */
-public interface SubQueryStream<S extends Serializable, T extends Serializable> extends QueryStream<S> {
+public interface SubQueryStream<S, T> extends QueryStream<S> {
 
     /**
      * Gets entity alias for custom sub queries
@@ -225,7 +224,7 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
 
     // =========================embedded=field=queries=======================//
 
-    <F extends Serializable> SubQueryStream<S, T> embedded(EntityField<S, F> field, SubQueryConsumer<F, S> consumer);
+    <F> SubQueryStream<S, T> embedded(EntityField<S, F> field, SubQueryConsumer<F, S> consumer);
 
     // ========================= Entity and parent method composers =========//
 
@@ -292,7 +291,7 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
      * @return {@link SubQueryStream} similar stream for sub query
      */
     @Override
-    <K extends Serializable> SubQueryStream<S, T> subQuery(Class<K> subType, SubQueryConsumer<K, S> consumer);
+    <K> SubQueryStream<S, T> subQuery(Class<K> subType, SubQueryConsumer<K, S> consumer);
 
     /**
      * Generates {@link SubQueryStream} for S type without conditions
@@ -306,20 +305,18 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
     }
 
     @Override
-    <F, K extends Serializable> SubQueryStream<S, T> in(EntityField<S, F> field, Class<K> subType,
-	    SubQueryConsumer<K, S> consumer);
+    <F, K> SubQueryStream<S, T> in(EntityField<S, F> field, Class<K> subType, SubQueryConsumer<K, S> consumer);
 
     @Override
-    <F, K extends Serializable> SubQueryStream<S, T> notIn(EntityField<S, F> field, Class<K> subType,
-	    SubQueryConsumer<K, S> consumer);
+    <F, K> SubQueryStream<S, T> notIn(EntityField<S, F> field, Class<K> subType, SubQueryConsumer<K, S> consumer);
 
     @Override
-    default <F, K extends Serializable> SubQueryStream<S, T> in(EntityField<S, F> field, Class<K> subType) {
+    default <F, K> SubQueryStream<S, T> in(EntityField<S, F> field, Class<K> subType) {
 	return this.in(field, subType, null);
     }
 
     @Override
-    default <F, K extends Serializable> SubQueryStream<S, T> notIn(EntityField<S, F> field, Class<K> subType) {
+    default <F, K> SubQueryStream<S, T> notIn(EntityField<S, F> field, Class<K> subType) {
 	return this.notIn(field, subType, null);
     }
 
@@ -346,18 +343,18 @@ public interface SubQueryStream<S extends Serializable, T extends Serializable> 
     }
 
     @Override
-    <F, K extends Serializable> SubQueryStream<S, T> exists(Class<K> subType, SubQueryConsumer<K, S> consumer);
+    <F, K> SubQueryStream<S, T> exists(Class<K> subType, SubQueryConsumer<K, S> consumer);
 
     @Override
-    <F, K extends Serializable> SubQueryStream<S, T> notExists(Class<K> subType, SubQueryConsumer<K, S> consumer);
+    <F, K> SubQueryStream<S, T> notExists(Class<K> subType, SubQueryConsumer<K, S> consumer);
 
     @Override
-    default <F, K extends Serializable> SubQueryStream<S, T> exists(Class<K> subType) {
+    default <F, K> SubQueryStream<S, T> exists(Class<K> subType) {
 	return this.exists(subType, null);
     }
 
     @Override
-    default <F, K extends Serializable> SubQueryStream<S, T> notExists(Class<K> subType) {
+    default <F, K> SubQueryStream<S, T> notExists(Class<K> subType) {
 	return this.notExists(subType, null);
     }
 

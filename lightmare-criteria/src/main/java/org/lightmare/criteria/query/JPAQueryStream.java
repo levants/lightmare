@@ -27,6 +27,7 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.links.Filters;
+import org.lightmare.criteria.query.internal.EntityQueryStream;
 
 /**
  * Main class for lambda expression analyze and JPA query generator
@@ -36,9 +37,9 @@ import org.lightmare.criteria.links.Filters;
  * @param <T>
  *            entity type for generated query
  */
-public class FullQueryStream<T extends Serializable> extends EntityQueryStream<T> {
+public class JPAQueryStream<T> extends EntityQueryStream<T> {
 
-    protected FullQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
+    protected JPAQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
 	super(em, entityType, alias);
     }
 
@@ -48,12 +49,12 @@ public class FullQueryStream<T extends Serializable> extends EntityQueryStream<T
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
-    protected static <T extends Serializable> FullQueryStream<T> delete(final EntityManager em,
+    protected static <T extends Serializable> JPAQueryStream<T> delete(final EntityManager em,
 	    final Class<T> entityType, final String alias) {
 
-	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType, alias);
+	JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
 
 	stream.appendPrefix(Filters.DELETE).appendPrefix(Filters.FROM);
 	appendEntityPart(stream);
@@ -66,9 +67,9 @@ public class FullQueryStream<T extends Serializable> extends EntityQueryStream<T
      * 
      * @param em
      * @param entityType
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
-    protected static <T extends Serializable> FullQueryStream<T> delete(final EntityManager em, Class<T> entityType) {
+    protected static <T extends Serializable> JPAQueryStream<T> delete(final EntityManager em, Class<T> entityType) {
 	return delete(em, entityType, DEFAULT_ALIAS);
     }
 
@@ -78,12 +79,12 @@ public class FullQueryStream<T extends Serializable> extends EntityQueryStream<T
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
-    protected static <T extends Serializable> FullQueryStream<T> update(final EntityManager em,
+    protected static <T extends Serializable> JPAQueryStream<T> update(final EntityManager em,
 	    final Class<T> entityType, final String alias) {
 
-	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType, alias);
+	JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
 
 	stream.appendPrefix(Filters.UPDATE);
 	appendEntityPart(stream);
@@ -96,9 +97,9 @@ public class FullQueryStream<T extends Serializable> extends EntityQueryStream<T
      * 
      * @param em
      * @param entityType
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
-    protected static <T extends Serializable> FullQueryStream<T> update(final EntityManager em, Class<T> entityType) {
+    protected static <T extends Serializable> JPAQueryStream<T> update(final EntityManager em, Class<T> entityType) {
 	return update(em, entityType, DEFAULT_ALIAS);
     }
 
@@ -108,11 +109,11 @@ public class FullQueryStream<T extends Serializable> extends EntityQueryStream<T
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
-    protected static <T extends Serializable> FullQueryStream<T> query(final EntityManager em,
-	    final Class<T> entityType, final String alias) {
-	FullQueryStream<T> stream = new FullQueryStream<T>(em, entityType, alias);
+    protected static <T extends Serializable> JPAQueryStream<T> query(final EntityManager em, final Class<T> entityType,
+	    final String alias) {
+	JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
 	startsSelect(stream);
 
 	return stream;
@@ -123,9 +124,9 @@ public class FullQueryStream<T extends Serializable> extends EntityQueryStream<T
      * 
      * @param em
      * @param entityType
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
-    protected static <T extends Serializable> FullQueryStream<T> query(final EntityManager em, Class<T> entityType) {
+    protected static <T extends Serializable> JPAQueryStream<T> query(final EntityManager em, Class<T> entityType) {
 	return query(em, entityType, DEFAULT_ALIAS);
     }
 }

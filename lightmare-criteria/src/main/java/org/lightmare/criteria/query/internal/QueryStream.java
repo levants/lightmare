@@ -20,9 +20,8 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.internal;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -32,9 +31,9 @@ import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.query.jpa.JoinQueryStream;
-import org.lightmare.criteria.query.jpa.ResultStream;
-import org.lightmare.criteria.query.jpa.SelectStatements;
+import org.lightmare.criteria.query.internal.jpa.JoinQueryStream;
+import org.lightmare.criteria.query.internal.jpa.ResultStream;
+import org.lightmare.criteria.query.internal.jpa.SelectStatements;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -45,7 +44,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface QueryStream<T extends Serializable> extends SelectStatements<T>, JoinQueryStream<T>, ResultStream<T> {
+public interface QueryStream<T> extends SelectStatements<T>, JoinQueryStream<T>, ResultStream<T> {
 
     String DEFAULT_ALIAS = "c";
 
@@ -197,7 +196,7 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 
     // =========================embedded=field=queries=======================//
 
-    <F extends Serializable> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer);
+    <F> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer);
 
     // =========================sub=queries==================================//
 
@@ -208,7 +207,7 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
      * @param consumer
      * @return {@link SubQueryStream} similar stream for sub query
      */
-    <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer);
+    <S> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer);
 
     /**
      * Generates {@link SubQueryStream} for S type without conditions
@@ -220,17 +219,15 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 	return subQuery(getEntityType(), consumer);
     }
 
-    <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
-	    SubQueryConsumer<S, T> consumer);
+    <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer);
 
-    <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType,
-	    SubQueryConsumer<S, T> consumer);
+    <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer);
 
-    default <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType) {
+    default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType) {
 	return in(field, subType, null);
     }
 
-    default <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType) {
+    default <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType) {
 	return notIn(field, subType, null);
     }
 
@@ -252,15 +249,15 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
 	return notIn(field, consumer);
     }
 
-    <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer);
+    <F, S> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer);
 
-    <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer);
+    <F, S> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer);
 
-    default <F, S extends Serializable> QueryStream<T> exists(Class<S> subType) {
+    default <F, S> QueryStream<T> exists(Class<S> subType) {
 	return exists(subType, null);
     }
 
-    default <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType) {
+    default <F, S> QueryStream<T> notExists(Class<S> subType) {
 	return notExists(subType, null);
     }
 

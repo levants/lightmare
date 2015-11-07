@@ -20,9 +20,8 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
+package org.lightmare.criteria.query.internal.jpa;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -30,7 +29,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.QueryStream;
 
 /**
  * Interface for JPA query parameters
@@ -39,7 +38,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param T
  *            entity type for appropriated query
  */
-interface JPAQueryWrapper<T extends Serializable> extends QueryStream<T> {
+interface JPAQueryWrapper<T> extends QueryStream<T> {
 
     /**
      * Adds custom parameter to composed query

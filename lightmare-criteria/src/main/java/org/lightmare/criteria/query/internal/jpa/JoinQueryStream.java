@@ -20,14 +20,14 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
+package org.lightmare.criteria.query.internal.jpa;
 
 import java.io.Serializable;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.SubQueryConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.QueryStream;
 
 /**
  * Interface for [INNER, LEFT, FETCH] JOIN implementations
@@ -37,12 +37,11 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type for generated query
  */
-public interface JoinQueryStream<T extends Serializable> {
+public interface JoinQueryStream<T> {
 
-    
-    <E extends Serializable, C extends Collection<E>> void procesJoin(EntityField<T, C> field,
-	    String expression, SubQueryConsumer<E, T> consumer);
-    
+    <E extends Serializable, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
+	    SubQueryConsumer<E, T> consumer);
+
     /**
      * Method for INNER JOIN function call
      * 

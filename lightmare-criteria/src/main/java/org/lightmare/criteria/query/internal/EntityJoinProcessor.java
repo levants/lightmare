@@ -20,47 +20,51 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
+package org.lightmare.criteria.query.internal;
 
-import java.io.Serializable;
-import java.util.Collection;
-
-import javax.persistence.EntityManager;
-
-import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.criteria.utils.StringUtils;
+import org.lightmare.criteria.query.internal.jpa.AbstractQueryStream;
 
 /**
- * Implementation for JOIN clause query generation
+ * Implementation of {@link SubQueryStream} to process JOIN statements
  * 
- * @author Levan Tsinadze
+ * @author Levan Tsiadze
  *
+ * @param <S>
+ *            join entity type parameter for generated query
  * @param <T>
  *            entity type parameter for generated query
  */
-abstract class AbstractJoinStream<T extends Serializable> extends AbstractQueryStream<T> {
+class EntityJoinProcessor<S, T> extends EntitySubQueryStream<S, T> {
 
-    protected AbstractJoinStream(EntityManager em, Class<T> entityType, String alias) {
-	super(em, entityType, alias);
+    private boolean parentOperator;
+
+    protected EntityJoinProcessor(AbstractQueryStream<T> parent, Class<S> entityType) {
+	super(parent, entityType);
     }
 
-    /**
-     * Processes join statement for passed collection field
-     * 
-     * @param field
-     * @param expression
-     * @return {@link QueryTuple} for field and expression
-     */
-    protected <C extends Collection<?>> QueryTuple oppJoin(EntityField<T, C> field, String expression) {
+    @Override
+    public boolean validateOperator() {
 
-	QueryTuple tuple;
+	boolean valid;
 
-	appendJoin(expression);
-	tuple = compose(field);
-	appendJoin(tuple.getFieldName());
-	appendJoin(StringUtils.SPACE);
+	if (parentOperator) {
+	    valid = super.validateOperator();
+	} else {
+	    valid = parent.validateOperator();
+	    parentOperator = Boolean.TRUE;
+	}
 
-	return tuple;
+	return valid;
+    }
+
+    @Override
+    public String sql() {
+
+	String value;
+
+	sql.append(body);
+	value = sql.toString();
+
+	return value;
     }
 }

@@ -20,12 +20,10 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
-
-import java.io.Serializable;
+package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.QueryStream;
 
 /**
  * Interface to generate SELECT for instant fields
@@ -35,7 +33,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>entity
  *            type for generated query
  */
-public interface SelectStatements<T extends Serializable> {
+public interface SelectStatements<T> {
 
     QueryStream<Object[]> select(EntityField<T, ?> field);
 

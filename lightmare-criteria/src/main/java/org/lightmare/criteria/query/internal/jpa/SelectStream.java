@@ -20,59 +20,44 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa.subqueries;
+package org.lightmare.criteria.query.internal.jpa;
 
-import java.io.Serializable;
-import java.util.List;
-
-import org.lightmare.criteria.query.jpa.SelectStream;
-import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.query.JPAQueryStream;
 
 /**
- * Processes SELECT statements for sub queries
+ * Utility class to construct SELECT by fields
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type parameter for generated query
+ *            entity type for generated query
  */
-class SubSelectStream<T extends Serializable> extends SelectStream<T> {
+public class SelectStream<T> extends JPAQueryStream<Object[]> {
 
-    private final AbstractSubQueryStream<T, ?> stream;
+    // Real entity type before select statement
+    private final Class<?> realEntityType;
 
-    protected SubSelectStream(AbstractSubQueryStream<T, ?> stream) {
-	super(stream);
-	this.stream = stream;
-    }
-
-    /**
-     * Appends SQL part to original query and switches prepare state to called
-     */
-    private void appendOriginal() {
-	String query = super.sql();
-	stream.appendToParent(query);
-	stream.switchState();
+    protected SelectStream(AbstractQueryStream<T> stream) {
+	super(stream.getEntityManager(), Object[].class, stream.getAlias());
+	this.realEntityType = stream.entityType;
+	this.columns.append(stream.columns);
+	this.body.append(stream.body);
+	this.orderBy.append(stream.orderBy);
+	this.parameters.addAll(stream.parameters);
     }
 
     @Override
-    public Object[] get() {
-	appendOriginal();
-	return null;
-    }
+    public String sql() {
 
-    @Override
-    public List<Object[]> toList() {
-	appendOriginal();
-	return null;
-    }
+	String value;
 
-    @Override
-    public Long count() {
-	return null;
-    }
+	sql.delete(START, sql.length());
+	appendFromClause(realEntityType, alias, columns);
+	generateBody(columns);
+	sql.append(orderBy);
+	sql.append(suffix);
+	value = sql.toString();
 
-    @Override
-    public int execute() {
-	return CollectionUtils.EMPTY;
+	return value;
     }
 }

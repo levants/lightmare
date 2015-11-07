@@ -20,9 +20,8 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa;
+package org.lightmare.criteria.query.internal.jpa;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -37,7 +36,7 @@ import org.lightmare.criteria.utils.CollectionUtils;
  * @param <T>
  *            entity type for generated query
  */
-public interface ResultStream<T extends Serializable> {
+public interface ResultStream<T> {
 
     /**
      * Gets query parameters

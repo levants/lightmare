@@ -20,15 +20,14 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.internal;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.ParentField;
-import org.lightmare.criteria.query.jpa.AbstractQueryStream;
-import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
+import org.lightmare.criteria.query.internal.jpa.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream;
 
 /**
  * Implementation of {@link AbstractSubQueryStream} for sub query generation
@@ -40,7 +39,7 @@ import org.lightmare.criteria.query.jpa.subqueries.AbstractSubQueryStream;
  * @param <T>
  *            parent entity type for generated query
  */
-class EntitySubQueryStream<S extends Serializable, T extends Serializable> extends AbstractSubQueryStream<S, T> {
+class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
 
     protected EntitySubQueryStream(AbstractQueryStream<T> parent, Class<S> type) {
 	super(parent, type);

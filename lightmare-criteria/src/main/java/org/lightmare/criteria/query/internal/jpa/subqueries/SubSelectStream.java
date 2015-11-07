@@ -20,53 +20,58 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.internal.jpa.subqueries;
 
-import java.io.Serializable;
+import java.util.List;
 
-import org.lightmare.criteria.query.jpa.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.jpa.SelectStream;
+import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
- * Implementation of {@link SubQueryStream} to process JOIN statements
+ * Processes SELECT statements for sub queries
  * 
- * @author Levan Tsiadze
+ * @author Levan Tsinadze
  *
- * @param <S>
- *            join entity type parameter for generated query
  * @param <T>
  *            entity type parameter for generated query
  */
-class EntityJoinProcessor<S extends Serializable, T extends Serializable> extends EntitySubQueryStream<S, T> {
+class SubSelectStream<T> extends SelectStream<T> {
 
-    private boolean parentOperator;
+    private final AbstractSubQueryStream<T, ?> stream;
 
-    protected EntityJoinProcessor(AbstractQueryStream<T> parent, Class<S> entityType) {
-	super(parent, entityType);
+    protected SubSelectStream(AbstractSubQueryStream<T, ?> stream) {
+	super(stream);
+	this.stream = stream;
+    }
+
+    /**
+     * Appends SQL part to original query and switches prepare state to called
+     */
+    private void appendOriginal() {
+	String query = super.sql();
+	stream.appendToParent(query);
+	stream.switchState();
     }
 
     @Override
-    public boolean validateOperator() {
-
-	boolean valid;
-
-	if (parentOperator) {
-	    valid = super.validateOperator();
-	} else {
-	    valid = parent.validateOperator();
-	    parentOperator = Boolean.TRUE;
-	}
-
-	return valid;
+    public Object[] get() {
+	appendOriginal();
+	return null;
     }
 
     @Override
-    public String sql() {
+    public List<Object[]> toList() {
+	appendOriginal();
+	return null;
+    }
 
-	String value;
+    @Override
+    public Long count() {
+	return null;
+    }
 
-	sql.append(body);
-	value = sql.toString();
-
-	return value;
+    @Override
+    public int execute() {
+	return CollectionUtils.EMPTY;
     }
 }

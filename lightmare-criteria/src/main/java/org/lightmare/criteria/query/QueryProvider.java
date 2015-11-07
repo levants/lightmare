@@ -26,6 +26,8 @@ import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 
+import org.lightmare.criteria.query.internal.QueryStream;
+
 /**
  * Provider class to initialize {@link QueryStream} by clause for entity type
  * 
@@ -40,11 +42,11 @@ public class QueryProvider {
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
     public static <T extends Serializable> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
-	return FullQueryStream.delete(em, entityType, entityAlias);
+	return JPAQueryStream.delete(em, entityType, entityAlias);
     }
 
     /**
@@ -52,10 +54,10 @@ public class QueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
     public static <T extends Serializable> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
-	return FullQueryStream.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
+	return JPAQueryStream.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**
@@ -64,11 +66,11 @@ public class QueryProvider {
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
     public static <T extends Serializable> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
-	return FullQueryStream.update(em, entityType, entityAlias);
+	return JPAQueryStream.update(em, entityType, entityAlias);
     }
 
     /**
@@ -76,10 +78,10 @@ public class QueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
     public static <T extends Serializable> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
-	return FullQueryStream.update(em, entityType, QueryStream.DEFAULT_ALIAS);
+	return JPAQueryStream.update(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**
@@ -88,11 +90,24 @@ public class QueryProvider {
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
     public static <T extends Serializable> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
-	return FullQueryStream.query(em, entityType, entityAlias);
+	return JPAQueryStream.query(em, entityType, entityAlias);
+    }
+
+    /**
+     * Generates SELECT statements with custom alias
+     * 
+     * @param em
+     * @param entityType
+     * @param entityAlias
+     * @return {@link JPAQueryStream} with select statement
+     */
+    public static <T extends Serializable> QueryStream<T> query(final EntityManager em, final Class<T> entityType,
+	    final String entityAlias) {
+	return select(em, entityType, entityAlias);
     }
 
     /**
@@ -100,9 +115,20 @@ public class QueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link FullQueryStream} with select statement
+     * @return {@link JPAQueryStream} with select statement
      */
     public static <T extends Serializable> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
-	return FullQueryStream.query(em, entityType, QueryStream.DEFAULT_ALIAS);
+	return JPAQueryStream.query(em, entityType, QueryStream.DEFAULT_ALIAS);
+    }
+
+    /**
+     * Generates SELECT statements with default alias
+     * 
+     * @param em
+     * @param entityType
+     * @return {@link JPAQueryStream} with select statement
+     */
+    public static <T extends Serializable> QueryStream<T> query(final EntityManager em, Class<T> entityType) {
+	return select(em, entityType);
     }
 }

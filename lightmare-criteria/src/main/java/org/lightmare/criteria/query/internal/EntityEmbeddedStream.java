@@ -20,11 +20,9 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.internal;
 
-import java.io.Serializable;
-
-import org.lightmare.criteria.query.jpa.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.jpa.AbstractQueryStream;
 import org.lightmare.criteria.tuples.EmbeddedTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 
@@ -38,7 +36,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @param <T>
  *            query type parameter
  */
-public class EntityEmbeddedStream<S extends Serializable, T extends Serializable> extends EntitySubQueryStream<S, T> {
+public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
 
     private final String embeddedName;
 

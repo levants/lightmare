@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.internal;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -34,7 +34,7 @@ import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Joins;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
-import org.lightmare.criteria.query.jpa.AbstractSelectStatements;
+import org.lightmare.criteria.query.internal.jpa.AbstractSelectStatements;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 
@@ -46,7 +46,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class EntityQueryStream<T extends Serializable> extends AbstractSelectStatements<T> {
+public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
 
     protected EntityQueryStream(EntityManager em, Class<T> entityType, final String alias) {
 	super(em, entityType, alias);
@@ -95,7 +95,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     // =========================embedded=field=queries=======================//
 
     @Override
-    public <F extends Serializable> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer) {
+    public <F> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer) {
 
 	QueryTuple tuple = compose(field);
 	Field member = tuple.getField();
@@ -109,7 +109,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
 
     // =========================Sub queries ===============//
 
-    public <S extends Serializable> SubQueryStream<S, T> subQuery(Class<S> subType) {
+    public <S> SubQueryStream<S, T> subQuery(Class<S> subType) {
 	return new EntitySubQueryStream<S, T>(this, subType);
     }
 
@@ -133,8 +133,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
      * @param consumer
      * @param subQuery
      */
-    private <S extends Serializable> void acceptConsumer(SubQueryConsumer<S, T> consumer,
-	    SubQueryStream<S, T> subQuery) {
+    private <S> void acceptConsumer(SubQueryConsumer<S, T> consumer, SubQueryStream<S, T> subQuery) {
 
 	if (Objects.nonNull(consumer)) {
 	    consumer.accept(subQuery);
@@ -147,15 +146,13 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
      * @param consumer
      * @param subQuery
      */
-    private <S extends Serializable> void acceptAndCall(SubQueryConsumer<S, T> consumer,
-	    SubQueryStream<S, T> subQuery) {
+    private <S> void acceptAndCall(SubQueryConsumer<S, T> consumer, SubQueryStream<S, T> subQuery) {
 
 	acceptConsumer(consumer, subQuery);
 	subQuery.call();
     }
 
-    private <S extends Serializable> SubQueryStream<S, T> initSubQuery(Class<S> subType,
-	    SubQueryConsumer<S, T> consumer) {
+    private <S> SubQueryStream<S, T> initSubQuery(Class<S> subType, SubQueryConsumer<S, T> consumer) {
 
 	SubQueryStream<S, T> subQuery = subQuery(subType);
 
@@ -167,7 +164,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <S extends Serializable> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer) {
+    public <S> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer) {
 	openBracket();
 	initSubQuery(subType, consumer);
 
@@ -175,8 +172,8 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F, S extends Serializable> QueryStream<T> in(EntityField<T, F> field, Class<S> subType,
-	    SubQueryConsumer<S, T> consumer) {
+    public <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer) {
+
 	appendOperator();
 	appSubQuery(field, Operators.IN);
 	initSubQuery(subType, consumer);
@@ -185,8 +182,8 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F, S extends Serializable> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType,
-	    SubQueryConsumer<S, T> consumer) {
+    public <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer) {
+
 	appendOperator();
 	appSubQuery(field, Operators.NOT_IN);
 	initSubQuery(subType, consumer);
@@ -195,7 +192,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F, S extends Serializable> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer) {
+    public <F, S> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer) {
 
 	appendOperator();
 	appendBody(Operators.EXISTS);
@@ -206,7 +203,7 @@ public abstract class EntityQueryStream<T extends Serializable> extends Abstract
     }
 
     @Override
-    public <F, S extends Serializable> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer) {
+    public <F, S> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer) {
 
 	appendOperator();
 	appendBody(Operators.NOT_EXISTS);

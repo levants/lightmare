@@ -20,17 +20,16 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.jpa.subqueries;
+package org.lightmare.criteria.query.internal.jpa.subqueries;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.jpa.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.AbstractQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 
@@ -44,8 +43,7 @@ import org.lightmare.criteria.utils.CollectionUtils;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class AbstractSubQueryStream<S extends Serializable, T extends Serializable>
-	extends DirectctSubQueryStream<S, T> {
+public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStream<S, T> {
 
     // Parent entity alias
     protected final String parentAlias;
