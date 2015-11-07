@@ -58,8 +58,10 @@ public class EmbeddedQueryTest extends JoinQueryTest {
 		    .like(Person::getLastName, "lname")
 		    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPersonalNo)
 			    .equals(PersonInfo::getNote, PersonInfo::getCardNumber));
+	    Person person = stream.getFirst();
 	    String sql = stream.sql();
 	    System.out.println(sql);
+	    System.out.println(person);
 	} catch (Throwable ex) {
 	    ex.printStackTrace();
 	} finally {

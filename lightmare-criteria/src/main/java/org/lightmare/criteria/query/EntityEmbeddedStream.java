@@ -34,7 +34,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @author Levan Tsinadze
  *
  * @param <S>
- *            embedded type parameter
+ *            embedded entity type parameter
  * @param <T>
  *            query type parameter
  */
@@ -54,15 +54,18 @@ public class EntityEmbeddedStream<S extends Serializable, T extends Serializable
     }
 
     @Override
-    protected QueryTuple opp(Object field, String expression) {
+    protected QueryTuple compose(Object field) {
 
-	QueryTuple tuple = compose(field);
+	QueryTuple tuple;
 
-	EmbeddedTuple embedded = new EmbeddedTuple(tuple, embeddedName);
-	appendFieldName(embedded, body);
-	appendBody(expression);
+	QueryTuple temp = super.compose(field);
+	if (parent.getEntityType().equals(temp.getEntityType())) {
+	    tuple = temp;
+	} else {
+	    tuple = new EmbeddedTuple(temp, embeddedName);
+	}
 
-	return embedded;
+	return tuple;
     }
 
     @Override

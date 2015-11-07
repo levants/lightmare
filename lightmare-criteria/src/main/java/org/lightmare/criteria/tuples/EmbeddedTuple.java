@@ -16,6 +16,9 @@ public class EmbeddedTuple extends QueryTuple {
 
     public EmbeddedTuple(final QueryTuple tuple, final String embeddedName) {
 	super(tuple.getEntityName(), tuple.getMethodName(), tuple.getArguments(), tuple.getFieldName());
+	setEntityType(tuple.getEntityType());
+	setMethod(tuple.getMethod());
+	setField(tuple.getField());
 	setAlias(tuple.getAlias());
 	this.embeddedName = embeddedName;
     }

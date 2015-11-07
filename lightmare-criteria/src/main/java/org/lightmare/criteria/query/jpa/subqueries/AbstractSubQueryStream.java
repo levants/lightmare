@@ -93,11 +93,6 @@ public abstract class AbstractSubQueryStream<S extends Serializable, T extends S
 	parent.addParameter(key, tuple, value);
     }
 
-    @Override
-    public void incrementParameterCounter() {
-	parent.incrementParameterCounter();
-    }
-
     /**
      * Appends column (field) name with parent alias
      * 

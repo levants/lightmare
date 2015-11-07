@@ -176,7 +176,7 @@ public abstract class AbstractQueryStream<T extends Serializable> extends Abstra
     /**
      * Increments parameters counter
      */
-    public void incrementParameterCounter() {
+    private void incrementParameterCounter() {
 	parameter_counter++;
     }
 
