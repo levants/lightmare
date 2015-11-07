@@ -12,9 +12,10 @@ Name implies from similarity with JPA criteria query style.
 
 # Get it!
 =========
-```xml
+
 Get lightmare-criteria from maven central repository
 
+```xml
     <dependency>
       <groupId>com.github.levants</groupId>
       <artifactId>lightmare-criteria</artifactId>

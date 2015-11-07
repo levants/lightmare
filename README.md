@@ -13,11 +13,13 @@ Lightmare is lightweight library to run ejb project in any type application with
 
 Get lightmare from maven central repository
 
+```xml
     <dependency>
       <groupId>com.github.levants</groupId>
       <artifactId>lightmare</artifactId>
       <version>0.1.3-SNAPSHOT</version>
     </dependency>
+```
     
 or download it from [Central Maven repository](https://oss.sonatype.org/content/repositories/snapshots/com/github/levants/lightmare/)
 
