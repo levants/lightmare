@@ -37,6 +37,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  */
 public class LambdaCache {
 
+    // Cache for query parts by lambda parameters
     private static final ConcurrentMap<String, QueryTuple> LAMBDAS = new ConcurrentHashMap<>();
 
     /**

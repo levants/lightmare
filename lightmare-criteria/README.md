@@ -27,7 +27,7 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 =========
 
 # Query API
-Query can be composed by org.lightmare.criteria.query.QueryProvider.select method call:
+Query can be composed by org.lightmare.criteria.query.QueryProvider.select or query method call:
 ```java
   List<Person> persons = QueryProvider.select(em, Person.class).where()
   			.equals(Person::getPrivatNumber, "10010010011")
@@ -53,6 +53,9 @@ and second is with "brackets" method call
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .firstOrDefault(new Person()); 
 ```
+operators "where" and "and" are optional, "where" will be set before first query parameter 
+and "and" is default boolean operator if other is not called
+
 # Embedded entities
 
 For embedded entity there is method "embedded" with embedded getter method and appropriated query
@@ -99,8 +102,12 @@ Query can be linked dynamically:
 ```java
   QueryStream<Person> stream = QueryProvider.select(em, Person.class);
   			 stream.where().equal(Person::getPrivatNumber, "10010010011");
-		     stream.and().like(Person::getLastName, "lname");
-		     stream.and().startsWith(Person::getFirstName, "fname");
+  			 if(lnameParamter != null){
+		     	stream.and().like(Person::getLastName, lnameParamter);
+		     }
+		     if(fnameParameter != null){
+		     	stream.and().startsWith(Person::getFirstName, fnameParameter);
+		     }
 		     stream.or().moreOrEquals(Person::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
 ```

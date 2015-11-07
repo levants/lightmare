@@ -32,7 +32,7 @@ public class LambdaReference extends PhantomReference<Class<?>> {
     public void clear() {
 
 	try {
-	    Class<?> lambdaType = this.get();
+	    Class<?> lambdaType = get();
 	    removeFromCache(lambdaType);
 	} finally {
 	    super.clear();
