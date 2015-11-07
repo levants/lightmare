@@ -30,12 +30,12 @@ import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.query.internal.EntityQueryStream;
 
 /**
- * Main class for lambda expression analyze and JPA query generator
+ * Main class for lambda expression analyze and JPA query build and run
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type for generated query
+ *            entity type parameter for generated query
  */
 public class JPAQueryStream<T> extends EntityQueryStream<T> {
 

@@ -12,12 +12,12 @@
 	<name>lightmare-criteria</name>
 	<packaging>jar</packaging>
 
-	<prerequisites>
+	<properties>
 		<maven.compiler.plugin>3.3</maven.compiler.plugin>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
-	</prerequisites>
+	</properties>
 
 	<build>
 		<plugins>

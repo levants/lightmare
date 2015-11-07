@@ -48,8 +48,7 @@ public interface JoinQueryStream<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer);
+    <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field, SubQueryConsumer<E, T> consumer);
 
     /**
      * Method for INNER JOIN function call without conditions
@@ -68,8 +67,7 @@ public interface JoinQueryStream<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer);
+    <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field, SubQueryConsumer<E, T> consumer);
 
     /**
      * Method for LEFT JOIN function call without conditions
@@ -88,8 +86,7 @@ public interface JoinQueryStream<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
-	    SubQueryConsumer<E, T> consumer);
+    <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field, SubQueryConsumer<E, T> consumer);
 
     /**
      * Method for FETCH JOIN function call without conditions

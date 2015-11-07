@@ -82,8 +82,8 @@ public interface ResultStream<T> {
     int execute();
 
     /**
-     * Runs generated query {@link javax.persistence.Query#getSingleResult()}
-     * and retrieves first or passed default result if no element was found
+     * Calls {@link ResultStream#toList()} and retrieves first or passed default
+     * result if no element was found
      * 
      * @param defaultValue
      * @return T query first or passed default result
@@ -99,8 +99,8 @@ public interface ResultStream<T> {
     }
 
     /**
-     * Runs generated query {@link javax.persistence.Query#getSingleResult()}
-     * and retrieves first result
+     * Calls {@link ResultStream#toList()} and retrieves first result or null if
+     * no element was found
      * 
      * @return T query first result
      */
