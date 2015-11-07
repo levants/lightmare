@@ -67,7 +67,7 @@ public class SortedRunner extends BlockJUnit4ClassRunner {
     protected List<FrameworkMethod> computeTestMethods() {
 
 	List<FrameworkMethod> list = super.computeTestMethods();
-	Collections.sort(list, (o1, o2) -> compare(o1, o2));
+	Collections.sort(list, SortedRunner::compare);
 
 	return list;
     }

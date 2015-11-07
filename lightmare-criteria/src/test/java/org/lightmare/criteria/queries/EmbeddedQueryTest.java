@@ -17,6 +17,7 @@ public class EmbeddedQueryTest extends JoinQueryTest {
 
 	EntityManager em = emf.createEntityManager();
 	try {
+	    // ============= Query construction ============== //
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
 		    .like(Person::getLastName, "lname")
 		    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, "100100"));
@@ -35,6 +36,7 @@ public class EmbeddedQueryTest extends JoinQueryTest {
 
 	EntityManager em = emf.createEntityManager();
 	try {
+	    // ============= Query construction ============== //
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
 		    .like(Person::getLastName, "lname")
 		    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPersonalNo)
@@ -54,6 +56,7 @@ public class EmbeddedQueryTest extends JoinQueryTest {
 
 	EntityManager em = emf.createEntityManager();
 	try {
+	    // ============= Query construction ============== //
 	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
 		    .like(Person::getLastName, "lname")
 		    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPersonalNo)

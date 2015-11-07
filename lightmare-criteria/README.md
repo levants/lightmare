@@ -29,15 +29,47 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 # Query API
 Query can be composed by org.lightmare.criteria.query.QueryProvider.select method call:
 ```java
-  List<Person> persons = QueryProvider.query(em, Person.class).where()
+  List<Person> persons = QueryProvider.select(em, Person.class).where()
   			.equals(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .or().moreOrEqual(Person::getBirthDate, new Date()).
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
-```	
-or for bulk update by org.lightmare.criteria.query.QueryProvider.update method call:
+```
+for brackets there is two ways first is by opening and closing brackets with "openBracket" and "closeBracket" methods call respectively
+and second is with "brackets" method call
+```java
+  Person person = QueryProvider.select(em, Person.class)
+  			.set(Person::getMiddName, "newMiddName")
+  			.set(Person::getFirstName, "newFName")
+  			.where()
+  			.equal(Person::getPrivatNumber, "10010010011")
+		    .and().like(Person::getLastName, "lname").and()
+		    .brackets(c -> c.startsWith(Person::getFirstName, "fname")
+		    	.		  .or()
+		    			  .moreOrEqual(Person::getBirthDate, new Date()))
+		    .and().startsWith(Person::getFirstName, "fname")
+		    .firstOrDefault(new Person()); 
+```
+# Embedded entities
+
+For embedded entity there is method "embedded" with embedded getter method and appropriated query
+```java
+  Person person = QueryProvider.select(em, Person.class)
+  			.set(Person::getMiddName, "newMiddName")
+  			.set(Person::getFirstName, "newFName")
+  			.where()
+  			.equal(Person::getPrivatNumber, "10010010011")
+		    .and().like(Person::getLastName, "lname").and()
+		    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPrivatNumber)
+			    					  .equals(PersonInfo::getNote, "This is note"))
+		    .and().startsWith(Person::getFirstName, "fname")
+		    .firstOrDefault(new Person()); 
+```
+# Bulk update and delete
+
+For bulk update there is org.lightmare.criteria.query.QueryProvider.update method:
 ```java
   int rows = QueryProvider.update(em, Person.class)
   			.set(Person::getMiddName, "newMiddName")
@@ -50,22 +82,7 @@ or for bulk update by org.lightmare.criteria.query.QueryProvider.update method c
 		    .or().moreOrEqual(Person::getBirthDate, new Date())
 		    .closeBracket().execute(); 
 ```
-for brackets there is two ways first is by opening and closing brackets with "openBracket" and "closeBracket" methods call respectively
-and second is with "brackets" method call
-```java
-  int rows = QueryProvider.update(em, Person.class)
-  			.set(Person::getMiddName, "newMiddName")
-  			.set(Person::getFirstName, "newFName")
-  			.where()
-  			.equal(Person::getPrivatNumber, "10010010011")
-		    .and().like(Person::getLastName, "lname").and()
-		    .brackets(c -> c.startsWith(Person::getFirstName, "fname")
-		    	.		  .or()
-		    			  .moreOrEqual(Person::getBirthDate, new Date()))
-		    .and().startsWith(Person::getFirstName, "fname")
-		    .execute(); 
-```
-or for bulk delete by org.lightmare.criteria.query.QueryProvider.delete method call:
+and for bulk delete org.lightmare.criteria.query.QueryProvider.delete method:
 ```java
   int rows = QueryProvider.delete(em, Person.class)
   			.set(Person::getMiddName, "newMiddName")
@@ -75,7 +92,9 @@ or for bulk delete by org.lightmare.criteria.query.QueryProvider.delete method c
 		    .and().like(Person::getLastName, "lname")
 		    .execute(); 
 ```	
-Query also can be linked dynamically:
+# Dynamic linking
+
+Query can be linked dynamically:
 ```java
   QueryStream<Person> stream = QueryProvider.select(em, Person.class);
   			 stream.where().equal(Person::getPrivatNumber, "10010010011");
