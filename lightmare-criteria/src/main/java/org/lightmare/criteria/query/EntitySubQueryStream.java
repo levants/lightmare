@@ -46,6 +46,10 @@ class EntitySubQueryStream<S extends Serializable, T extends Serializable> exten
 	super(parent, type);
     }
 
+    protected EntitySubQueryStream(AbstractQueryStream<T> parent, String alias, Class<S> type) {
+	super(parent, alias, type);
+    }
+
     // ========================= Entity and parent method composers =========//
     @Override
     public <F> SubQueryStream<S, T> operate(EntityField<S, F> sfield, ParentField<T, F> field, String operator) {

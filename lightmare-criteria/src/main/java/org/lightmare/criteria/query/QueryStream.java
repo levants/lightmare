@@ -196,6 +196,7 @@ public interface QueryStream<T extends Serializable> extends SelectStatements<T>
     }
 
     // =========================sub=queries==================================//
+
     /**
      * Generates {@link SubQueryStream} for S type
      * 

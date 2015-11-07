@@ -36,5 +36,6 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface EntityField<T, F> extends Function<T, F>, Serializable {
 
+    @Override
     F apply(T value);
 }
