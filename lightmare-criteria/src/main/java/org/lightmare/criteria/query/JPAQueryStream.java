@@ -48,7 +48,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * 
      * @param em
      * @param entityType
-     * @param entityAlias
+     * @param alias
      * @return {@link JPAQueryStream} with select statement
      */
     protected static <T extends Serializable> JPAQueryStream<T> delete(final EntityManager em,
@@ -78,7 +78,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * 
      * @param em
      * @param entityType
-     * @param entityAlias
+     * @param alias
      * @return {@link JPAQueryStream} with select statement
      */
     protected static <T extends Serializable> JPAQueryStream<T> update(final EntityManager em,
@@ -108,7 +108,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * 
      * @param em
      * @param entityType
-     * @param entityAlias
+     * @param alias
      * @return {@link JPAQueryStream} with select statement
      */
     protected static <T extends Serializable> JPAQueryStream<T> query(final EntityManager em, final Class<T> entityType,

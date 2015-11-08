@@ -215,19 +215,19 @@ public class ClassUtils {
      */
     public static Class<?> classForName(String className, boolean initialize, ClassLoader loader) throws IOException {
 
-	Class<?> clazz;
+	Class<?> type;
 
 	try {
 	    if (loader == null) {
-		clazz = Class.forName(className);
+		type = Class.forName(className);
 	    } else {
-		clazz = Class.forName(className, initialize, loader);
+		type = Class.forName(className, initialize, loader);
 	    }
 	} catch (ClassNotFoundException ex) {
 	    throw new IOException(ex);
 	}
 
-	return clazz;
+	return type;
     }
 
     /**
@@ -235,32 +235,31 @@ public class ClassUtils {
      * initializes it
      *
      * @param className
-     * @param loader
      * @return {@link Class}
      * @throws IOException
      */
     public static Class<?> initClassForName(String className) throws IOException {
 
-	Class<?> clazz;
+	Class<?> type;
 
 	ClassLoader loader = ClassLoaderUtils.getContextClassLoader();
-	clazz = classForName(className, Boolean.TRUE, loader);
+	type = classForName(className, Boolean.TRUE, loader);
 
-	return clazz;
+	return type;
     }
 
     /**
      * Creates {@link Class} instance by {@link Class#newInstance()} method call
      *
-     * @param clazz
-     * @return
+     * @param type
+     * @return T instance of passed {@link Class}
      */
-    public static <T> T instantiate(Class<T> clazz) throws IOException {
+    public static <T> T instantiate(Class<T> type) throws IOException {
 
 	T instance;
 
 	try {
-	    instance = clazz.newInstance();
+	    instance = type.newInstance();
 	} catch (InstantiationException ex) {
 	    throw new IOException(ex);
 	} catch (IllegalAccessException ex) {
@@ -273,7 +272,7 @@ public class ClassUtils {
     /**
      * Gets declared method from class
      *
-     * @param clazz
+     * @param type
      * @param methodName
      * @param parameterTypes
      * @return {@link Method}
@@ -298,10 +297,8 @@ public class ClassUtils {
     /**
      * Gets all declared methods from class
      *
-     * @param clazz
-     * @param methodName
-     * @param parameterTypes
-     * @return {@link Method}
+     * @param type
+     * @return array of {@link Method}s
      * @throws IOException
      */
     public static Method[] getDeclaredMethods(Class<?> type) throws IOException {
@@ -463,29 +460,29 @@ public class ClassUtils {
      * Finds if passed {@link Class} has public {@link Method} with appropriated
      * name
      *
-     * @param clazz
+     * @param type
      * @param methodName
      * @return <code>boolean</code>
      * @throws IOException
      */
-    public static boolean hasPublicMethod(Class<?> clazz, String methodName) throws IOException {
-	return ClassUtils.hasMethod(clazz, methodName, Modifier.PUBLIC);
+    public static boolean hasPublicMethod(Class<?> type, String methodName) throws IOException {
+	return ClassUtils.hasMethod(type, methodName, Modifier.PUBLIC);
     }
 
     /**
      * Gets declared field from passed class with specified name
      *
-     * @param clazz
+     * @param type
      * @param name
      * @return {@link Field}
      * @throws IOException
      */
-    public static Field getDeclaredField(Class<?> clazz, String name) throws IOException {
+    public static Field getDeclaredField(Class<?> type, String name) throws IOException {
 
 	Field field;
 
 	try {
-	    field = clazz.getDeclaredField(name);
+	    field = type.getDeclaredField(name);
 	} catch (NoSuchFieldException ex) {
 	    throw new IOException(ex);
 	} catch (SecurityException ex) {
@@ -555,7 +552,7 @@ public class ClassUtils {
      *
      * @param method
      * @param arguments
-     * @return
+     * @return {@link Object} returned value by static method
      * @throws IOException
      */
     public static Object invokeStatic(Method method, Object... arguments) throws IOException {
@@ -576,11 +573,11 @@ public class ClassUtils {
     }
 
     /**
-     * Common method to invoke private static {@link Method}
+     * Common method to invoke private static {@link Method} with parameters
      *
      * @param method
      * @param arguments
-     * @return
+     * @return {@link Object} returned value by private static method
      * @throws IOException
      */
     public static Object invokePrivateStatic(Method method, Object... arguments) throws IOException {
@@ -664,8 +661,8 @@ public class ClassUtils {
      * Gets {@link List} of all {@link Method}s from passed class annotated with
      * specified annotation
      *
-     * @param clazz
-     * @param annotationClass
+     * @param type
+     * @param annotationType
      * @return {@link List}<Method>
      * @throws IOException
      */
@@ -684,8 +681,8 @@ public class ClassUtils {
      * Gets {@link List} of all {@link Field}s from passed class annotated with
      * specified annotation
      *
-     * @param clazz
-     * @param annotationClass
+     * @param type
+     * @param annotationType
      * @return {@link List}<Field>
      * @throws IOException
      */
@@ -713,7 +710,7 @@ public class ClassUtils {
     /**
      * Returns default values if passed class is primitive else returns null
      *
-     * @param clazz
+     * @param type
      * @return Object
      */
     public static Object getDefault(Class<?> type) {

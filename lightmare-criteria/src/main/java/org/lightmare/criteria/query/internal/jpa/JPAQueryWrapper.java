@@ -47,7 +47,7 @@ public interface JPAQueryWrapper<T> {
     /**
      * Adds custom parameter to composed query
      * 
-     * @param tuple
+     * @param key
      * @param value
      */
     void addParameter(String key, Object value);

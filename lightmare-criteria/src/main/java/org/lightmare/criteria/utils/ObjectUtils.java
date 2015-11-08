@@ -49,7 +49,7 @@ public abstract class ObjectUtils {
     /**
      * Checks if not a single object passed objects is not null
      *
-     * @param datas
+     * @param values
      * @return <code>boolean</code> validation result
      */
     public static boolean notNullAll(Object... values) {

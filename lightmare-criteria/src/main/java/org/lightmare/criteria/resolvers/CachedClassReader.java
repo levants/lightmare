@@ -50,7 +50,7 @@ public class CachedClassReader extends ClassReader {
      * Gets {@link ClassReader} from cache or initializes and caches
      * 
      * @param name
-     * @return
+     * @return {@link ClassReader} from cache
      * @throws IOException
      */
     public static ClassReader get(String name) throws IOException {

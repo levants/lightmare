@@ -130,7 +130,7 @@ public enum LambdaReferences {
     /**
      * Adds {@link LambdaReference} instance to be watched for finalization
      * 
-     * @param context
+     * @param lambdaType
      */
     public void trace(Class<?> lambdaType) {
 

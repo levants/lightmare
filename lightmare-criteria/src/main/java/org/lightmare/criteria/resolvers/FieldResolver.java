@@ -287,7 +287,6 @@ public class FieldResolver {
      * argument
      * 
      * @param lambda
-     * @param verbose
      * @return {@link QueryTuple} for resolved field and query part
      */
     public static QueryTuple resolve(LambdaData lambda) {

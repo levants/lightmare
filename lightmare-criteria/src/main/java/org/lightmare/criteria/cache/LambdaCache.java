@@ -43,7 +43,7 @@ public class LambdaCache {
     /**
      * Adds passed lambda {@link Class} and {@link QueryTuple} to cache
      * 
-     * @param key
+     * @param lambdaType
      * @param value
      */
     public static void putLambda(Class<?> lambdaType, QueryTuple value) {
@@ -68,9 +68,10 @@ public class LambdaCache {
     }
 
     /**
-     * Gets {@link QueryTuple} from cache by passed lambda {@link Class} as key
+     * Gets {@link QueryTuple} from cache by passed lambda {@link Class} name as
+     * key
      * 
-     * @param key
+     * @param lambdaType
      * @return {@link QueryTuple} for this lambda {@link Class}
      */
     public static QueryTuple getLambda(Class<?> lambdaType) {
@@ -84,8 +85,8 @@ public class LambdaCache {
     }
 
     /**
-     * Gets {@link QueryTuple} from cache by lambda {@link Class} from passed
-     * lambda instance as key
+     * Gets {@link QueryTuple} from cache by lambda {@link Class} name from
+     * passed lambda instance as key
      * 
      * @param lambda
      * @return {@link QueryTuple} for this lambda {@link Class}

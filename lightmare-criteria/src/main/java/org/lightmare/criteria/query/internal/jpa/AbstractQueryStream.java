@@ -301,7 +301,7 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
     /**
      * Appends column (field) name with alias
      * 
-     * @param tuple
+     * @param columnAlias
      * @param tuple
      */
     protected void appendColumn(String columnAlias, QueryTuple tuple) {
@@ -323,8 +323,8 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
     /**
      * Processes query part with other field
      * 
-     * @param sfield
-     * @param field
+     * @param field1
+     * @param field2
      * @param expression
      */
     protected void oppField(Object field1, Object field2, String expression) {
@@ -338,8 +338,8 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
     /**
      * Processes query part with other field with {@link Collection} type
      * 
-     * @param sfield
-     * @param field
+     * @param field1
+     * @param field2
      * @param expression
      */
     protected void oppCollectionField(Object field1, Object field2, String expression) {
