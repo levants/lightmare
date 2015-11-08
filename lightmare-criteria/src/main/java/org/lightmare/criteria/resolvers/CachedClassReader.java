@@ -47,7 +47,7 @@ public class CachedClassReader extends ClassReader {
     }
 
     /**
-     * Gets {@link ClassReader} from cache or initializes and caches
+     * Gets {@link ClassReader} from cache or initializes new instance
      * 
      * @param name
      * @return {@link ClassReader} from cache

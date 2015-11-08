@@ -6,9 +6,10 @@ JPA-QL query generator using lambda expressions
 # Overview
 ==========
 
-Lightmare-criteria is lightweight library to construct and run JPA queries by method reference instead of raw String composition.
+Lightmare-criteria is lightweight library to construct and run JPA queries by method reference, more LINQ style, 
+instead of raw String composition.
 
-Name implies from similarity with JPA criteria query style.
+Name implies from similarity with JPA criteria query API.
 
 # Get it!
 =========
