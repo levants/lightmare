@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.internal.QueryStream;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Interface to generate SELECT for instant fields

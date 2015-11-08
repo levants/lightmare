@@ -74,8 +74,7 @@ public class EarFileReaderTest {
 		for (Map.Entry<Object, Object> entry : attributes.entrySet()) {
 		    key = entry.getKey();
 		    value = entry.getValue();
-		    System.out.format("keyClass %s : valueClass %s\n",
-			    key.getClass(), value.getClass());
+		    System.out.format("keyClass %s : valueClass %s\n", key.getClass(), value.getClass());
 		    System.out.format("key %s : value %s\n", key, value);
 		}
 	    }
@@ -98,11 +97,9 @@ public class EarFileReaderTest {
 	    while (entries.hasMoreElements()) {
 		libEntry = entries.nextElement();
 		libPath = libEntry.toString();
-		if ((libPath.startsWith("lib/") && !libPath.endsWith("lib/"))
-			|| libPath.endsWith(".jar")) {
+		if ((libPath.startsWith("lib/") && !libPath.endsWith("lib/")) || libPath.endsWith(".jar")) {
 		    System.out.println(libPath);
-		    earPath = String.format("%s!/%s", earURL.toString(),
-			    libPath);
+		    earPath = String.format("%s!/%s", earURL.toString(), libPath);
 		    URL url = new URL("jar", "", earPath);
 		    urlList.add(url);
 		    System.out.println(url);
@@ -110,10 +107,8 @@ public class EarFileReaderTest {
 	    }
 	    URL[] urls = urlList.toArray(new URL[urlList.size()]);
 	    System.out.println(urls.length);
-	    ClassLoader currentLoader = Thread.currentThread()
-		    .getContextClassLoader();
-	    ClassLoader loader = URLClassLoader
-		    .newInstance(urls, currentLoader);
+	    ClassLoader currentLoader = Thread.currentThread().getContextClassLoader();
+	    ClassLoader loader = URLClassLoader.newInstance(urls, currentLoader);
 	    System.out.println(loader);
 	} catch (IOException ex) {
 	    ex.printStackTrace();
@@ -126,12 +121,10 @@ public class EarFileReaderTest {
 	try {
 	    File realFile = new File(EAR_PATH);
 	    URL earURL = realFile.toURI().toURL();
-	    String jarFileParh = String.format("%s!/%s", earURL.toString(),
-		    JAR_IN_EAR_PATH);
+	    String jarFileParh = String.format("%s!/%s", earURL.toString(), JAR_IN_EAR_PATH);
 	    URL jarInEarURL = new URL("jar", "", jarFileParh);
 	    System.out.println(jarInEarURL);
-	    String manifestPath = String.format("%s!/%s", jarInEarURL,
-		    XMLInitializer.XML_PATH);
+	    String manifestPath = String.format("%s!/%s", jarInEarURL, XMLInitializer.XML_PATH);
 	    URL url = new URL(manifestPath);
 	    System.out.println(url);
 
@@ -182,8 +175,7 @@ public class EarFileReaderTest {
 	    String filePath = file.getPath();
 	    System.out.println(filePath);
 	    URL jarURL = file.toURI().toURL();
-	    String jarPath = String.format("%s!/%s", jarURL.toString(),
-		    XMLInitializer.XML_PATH);
+	    String jarPath = String.format("%s!/%s", jarURL.toString(), XMLInitializer.XML_PATH);
 	    System.out.println(jarPath);
 	    URL url = new URL("jar", "", jarPath);
 	    System.out.println(url);
@@ -215,8 +207,7 @@ public class EarFileReaderTest {
 	try {
 	    InputStream stream = ioUtils.earReader();
 	    Set<String> apps = ioUtils.appXmlParser(stream);
-	    Assert.assertTrue("could not find ejb applications",
-		    apps.size() > 0);
+	    Assert.assertTrue("could not find ejb applications", apps.size() > 0);
 	    for (String app : apps) {
 		System.out.println(app);
 	    }
@@ -231,8 +222,7 @@ public class EarFileReaderTest {
 	try {
 	    ioUtils.getEjbLibs();
 	    URL[] urls = ioUtils.getLibs();
-	    Assert.assertTrue("could not find ejb applications", urls != null
-		    && urls.length > 0);
+	    Assert.assertTrue("could not find ejb applications", urls != null && urls.length > 0);
 	    for (URL url : urls) {
 		System.out.println(url);
 	    }
@@ -245,18 +235,16 @@ public class EarFileReaderTest {
     public void extractEjbJarTest() {
 
 	try {
-	    ArchiveUtils ioUtils = ArchiveUtils
-		    .getAppropriatedType(new File(EAR_PATH).toURI().toURL());
+	    File file = new File(EAR_PATH);
+	    ArchiveUtils ioUtils = ArchiveUtils.getAppropriatedType(file.toURI().toURL());
 	    ioUtils.setXmlFromJar(true);
 	    ioUtils.scan();
 	    InputStream stream = ioUtils.earReader();
 	    Set<String> apps = ioUtils.appXmlParser(stream);
-	    Assert.assertTrue("could not find ejb applications",
-		    apps.size() > 0);
+	    Assert.assertTrue("could not find ejb applications", apps.size() > 0);
 	    ioUtils.extractEjbJars(apps);
 	    List<File> tmpFiles = ioUtils.getTmpFiles();
-	    Assert.assertTrue("could not extract jar files",
-		    tmpFiles.size() > 0);
+	    Assert.assertTrue("could not extract jar files", tmpFiles.size() > 0);
 	    Map<URL, URL> xmls = ioUtils.getXmlURLs();
 	    Scanner scanner;
 	    for (Map.Entry<URL, URL> entry : xmls.entrySet()) {
@@ -288,10 +276,8 @@ public class EarFileReaderTest {
     @Test
     public void getAppropriateTypeTest() {
 	try {
-	    ArchiveUtils ioUtils = ArchiveUtils
-		    .getAppropriatedType(new File(EAR_PATH).toURI().toURL());
-	    Assert.assertTrue("Could not get appropriate type",
-		    ioUtils instanceof ExtUtils);
+	    ArchiveUtils ioUtils = ArchiveUtils.getAppropriatedType(new File(EAR_PATH).toURI().toURL());
+	    Assert.assertTrue("Could not get appropriate type", ioUtils instanceof ExtUtils);
 	    System.out.println(ioUtils);
 	} catch (Exception ex) {
 	    ex.printStackTrace();

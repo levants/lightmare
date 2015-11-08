@@ -4,13 +4,13 @@
 	<parent>
 		<groupId>com.github.levants</groupId>
 		<artifactId>lightmare</artifactId>
-		<version>${project.version}</version>
+		<version>0.1.4</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>lightmare-utils</artifactId>
-	<name>lightmare-ejb</name>
+	<name>lightmare-utils</name>
 	<packaging>jar</packaging>
 
 	<build>

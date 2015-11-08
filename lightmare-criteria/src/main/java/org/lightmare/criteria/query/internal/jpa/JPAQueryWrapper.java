@@ -29,7 +29,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
-import org.lightmare.criteria.query.internal.QueryStream;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Interface for JPA query parameters
@@ -38,7 +38,11 @@ import org.lightmare.criteria.query.internal.QueryStream;
  * @param T
  *            entity type for appropriated query
  */
-interface JPAQueryWrapper<T> extends QueryStream<T> {
+public interface JPAQueryWrapper<T> {
+
+    String DEFAULT_ALIAS = "c";
+
+    // int START = 0;
 
     /**
      * Adds custom parameter to composed query

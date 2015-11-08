@@ -26,8 +26,6 @@ import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 
-import org.lightmare.criteria.query.internal.QueryStream;
-
 /**
  * Provider or factory class to initialize {@link QueryStream} by SELECT, UPDATE
  * or DELETE clause for entity type

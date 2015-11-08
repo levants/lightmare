@@ -26,6 +26,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.ParentField;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream;
 

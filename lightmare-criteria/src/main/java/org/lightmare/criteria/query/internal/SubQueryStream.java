@@ -32,6 +32,7 @@ import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 

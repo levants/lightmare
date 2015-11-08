@@ -101,8 +101,8 @@
 
 	<modules>
 		<module>lightmare-ejb</module>
-		<module>lightmare-criteria</module>
 		<module>lightmare-utils</module>
+		<module>lightmare-criteria</module>
 		<module>lightmare-tester</module>
 	</modules>
 

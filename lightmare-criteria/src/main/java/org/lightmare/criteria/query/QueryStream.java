@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal;
+package org.lightmare.criteria.query;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,6 +31,8 @@ import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
+import org.lightmare.criteria.query.internal.SubQueryStream;
+import org.lightmare.criteria.query.internal.jpa.JPAQueryWrapper;
 import org.lightmare.criteria.query.internal.jpa.JoinQueryStream;
 import org.lightmare.criteria.query.internal.jpa.ResultStream;
 import org.lightmare.criteria.query.internal.jpa.SelectStatements;
@@ -44,13 +46,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface QueryStream<T> extends SelectStatements<T>, JoinQueryStream<T>, ResultStream<T> {
-
-    String DEFAULT_ALIAS = "c";
-
-    char NEW_LINE = '\n';
-
-    int START = 0;
+public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>, JoinQueryStream<T>, ResultStream<T> {
 
     /**
      * Gets wrapped entity {@link Class} instance

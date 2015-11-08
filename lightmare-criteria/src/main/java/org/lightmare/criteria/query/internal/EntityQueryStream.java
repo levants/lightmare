@@ -33,9 +33,11 @@ import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Joins;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.AbstractSelectStatements;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Query builder from setter method references
@@ -221,7 +223,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
 	QueryTuple tuple = oppJoin(field, expression);
 	SubQueryStream<E, T> joinQuery = joinStream(tuple);
 	appendJoin(joinQuery.getAlias());
-	appendJoin(NEW_LINE);
+	appendJoin(StringUtils.NEWLINE);
 	acceptAndCall(consumer, joinQuery);
     }
 

@@ -117,6 +117,18 @@ public abstract class StringUtils {
     }
 
     /**
+     * Deletes all characters from passed {@link StringBuilder} instance
+     * 
+     * @param text
+     */
+    public static void clear(StringBuilder text) {
+
+	if (valid(text)) {
+	    text.delete(CollectionUtils.FIRST_INDEX, text.length());
+	}
+    }
+
+    /**
      * Checks if passed {@link String} instance not contains passed
      * {@link CharSequence} instance
      *

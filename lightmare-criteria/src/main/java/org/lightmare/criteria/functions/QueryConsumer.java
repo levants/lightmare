@@ -24,7 +24,7 @@ package org.lightmare.criteria.functions;
 
 import java.io.Serializable;
 
-import org.lightmare.criteria.query.internal.QueryStream;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Query parts generator

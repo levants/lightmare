@@ -26,7 +26,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.SubQueryConsumer;
-import org.lightmare.criteria.query.internal.QueryStream;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Interface for [INNER, LEFT, FETCH] JOIN implementations

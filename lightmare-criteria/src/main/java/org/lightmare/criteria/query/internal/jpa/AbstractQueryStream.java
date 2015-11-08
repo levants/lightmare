@@ -40,7 +40,7 @@ import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.links.Parts;
-import org.lightmare.criteria.query.internal.QueryStream;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -114,7 +114,7 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 	stream.appendPrefix(stream.entityType.getName());
 	stream.appendPrefix(Filters.AS);
 	stream.appendPrefix(stream.alias);
-	stream.appendPrefix(NEW_LINE);
+	stream.appendPrefix(StringUtils.NEWLINE);
     }
 
     /**
@@ -131,13 +131,21 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 	buffer.append(alias).append(Parts.COLUMN_PREFIX).append(field);
     }
 
+    protected static void newLine(StringBuilder buff) {
+	buff.append(StringUtils.NEWLINE);
+    }
+
+    protected void newLine() {
+	newLine(body);
+    }
+
     protected static void appendFromClause(String typeName, String alias, StringBuilder buff) {
 
 	buff.append(Filters.FROM);
 	buff.append(typeName);
 	buff.append(Filters.AS);
 	buff.append(alias);
-	buff.append(NEW_LINE);
+	newLine(buff);
     }
 
     protected static void appendFromClause(Class<?> type, String alias, StringBuilder buff) {
@@ -324,7 +332,7 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 	opp(field1, expression);
 	QueryTuple tuple = compose(field2);
 	appendColumn(tuple);
-	body.append(NEW_LINE);
+	newLine();
     }
 
     /**
@@ -341,14 +349,14 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 	openBracket();
 	appendColumn(tuple);
 	closeBracket();
-	appendBody(NEW_LINE);
+	newLine();
     }
 
     private void appendSetClause() {
 
 	if (StringUtils.valid(updateSet)) {
 	    updateSet.append(Parts.COMMA);
-	    updateSet.append(NEW_LINE);
+	    newLine(updateSet);
 	    updateSet.append(Clauses.SET_SPACE);
 	} else {
 	    updateSet.append(Clauses.SET);
@@ -437,10 +445,6 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 
     protected void setOrder(Object[] fields) {
 	setOrder(null, fields);
-    }
-
-    protected void newLine() {
-	body.append(NEW_LINE);
     }
 
     protected void removeNewLine() {
@@ -546,7 +550,7 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
     private void prepareSetClause() {
 
 	if (StringUtils.valid(updateSet)) {
-	    updateSet.append(NEW_LINE);
+	    newLine(updateSet);
 	}
     }
 
@@ -557,9 +561,13 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 	}
     }
 
+    protected void clearSql() {
+	StringUtils.clear(sql);
+    }
+
     protected void generateBody(CharSequence startSql) {
 
-	sql.delete(START, sql.length());
+	clearSql();
 	sql.append(startSql);
 	sql.append(joins);
 	prepareSetClause();
@@ -573,7 +581,7 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 
 	String value;
 
-	sql.delete(START, sql.length());
+	clearSql();
 	generateBody(prefix);
 	sql.append(orderBy);
 	sql.append(suffix);
@@ -588,7 +596,7 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 
     private void countPrefix() {
 
-	count.delete(START, count.length());
+	StringUtils.clear(count);
 	count.append(Filters.SELECT);
 	count.append(Filters.COUNT);
 	count.append(alias);
@@ -602,7 +610,7 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 	String value;
 
 	countPrefix();
-	sql.delete(START, sql.length());
+	clearSql();
 	generateBody(count);
 	value = sql.toString();
 

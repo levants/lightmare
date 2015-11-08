@@ -51,7 +51,7 @@ public class SelectStream<T> extends JPAQueryStream<Object[]> {
 
 	String value;
 
-	sql.delete(START, sql.length());
+	clearSql();
 	appendFromClause(realEntityType, alias, columns);
 	generateBody(columns);
 	sql.append(orderBy);
