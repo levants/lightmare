@@ -57,11 +57,8 @@ public class XMLInitializer {
     /**
      * Converts passed to {@link Enumeration} to build persistence configuration
      *
-     * @see Ejb3ConfigurationImpl#configure(String, java.util.Map)
-     *
-     * @param path
-     * @return Enumeration<{@link URL}>
-     * @throws IOException
+     * @param url
+     * @return {@link List} of {@link URL}s
      */
     public List<URL> readURL(final URL url) {
 
@@ -92,10 +89,9 @@ public class XMLInitializer {
      * Reads {@link URL} from passed path {@link String} for build persistence
      * configuration
      *
-     * @see Ejb3ConfigurationImpl#configure(String, java.util.Map)
      *
      * @param path
-     * @return Enumeration<{@link URL} >
+     * @return {@link List} of {@link URL}s
      * @throws IOException
      */
     public List<URL> readFile(String path) throws IOException {

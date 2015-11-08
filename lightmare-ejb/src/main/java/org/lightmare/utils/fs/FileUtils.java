@@ -160,7 +160,7 @@ public class FileUtils {
     /**
      * Check whether passed path is extracted ear directory path
      *
-     * @param file
+     * @param path
      * @return boolean
      */
     public static boolean checkOnEarDir(String path) {

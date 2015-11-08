@@ -166,9 +166,7 @@ public abstract class Initializer {
      * Initializes and registers {@link DataSource} object in JNDI by
      * {@link Properties} {@link Context}
      *
-     * @param poolingProperties
-     * @param dataSource
-     * @param jndiName
+     * @param properties
      * @throws IOException
      */
     public static void registerDataSource(Properties properties) throws IOException {

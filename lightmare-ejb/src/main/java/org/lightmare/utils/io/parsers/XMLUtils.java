@@ -46,8 +46,7 @@ public class XMLUtils {
      * @return {@link DocumentBuilder} initialized from {@link InputStream}
      * @throws ParserConfigurationException
      */
-    private static DocumentBuilder initDocumentBuilder(InputStream stream)
-	    throws ParserConfigurationException {
+    private static DocumentBuilder initDocumentBuilder(InputStream stream) throws ParserConfigurationException {
 
 	DocumentBuilder builder;
 
@@ -107,15 +106,14 @@ public class XMLUtils {
      * Validates passed {@link NodeList} length
      * 
      * @param nodeList
-     * @return
+     * @return <code>boolean</code> validation result
      */
     public static boolean validate(NodeList nodeList) {
 
 	boolean valid;
 
 	int elementLength = nodeList.getLength();
-	valid = ObjectUtils.notEquals(elementLength,
-		CollectionUtils.EMPTY_ARRAY_LENGTH);
+	valid = ObjectUtils.notEquals(elementLength, CollectionUtils.EMPTY_ARRAY_LENGTH);
 
 	return valid;
     }

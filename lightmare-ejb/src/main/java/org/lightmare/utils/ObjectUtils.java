@@ -148,8 +148,8 @@ public abstract class ObjectUtils {
      * {@link TimeUnit} instance
      *
      * @param lock
-     * @return <code>boolean</code>
-     * @throws InterruptedException
+     * @return <code>boolean</code> locking result
+     * @throws IOException
      */
     public static boolean tryLock(Lock lock, Long time, TimeUnit unit) throws IOException {
 
@@ -168,8 +168,7 @@ public abstract class ObjectUtils {
      * Locks passed {@link Lock} object
      *
      * @param lock
-     * @return <code>boolean</code>
-     * @throws IOException
+     * @return <code>boolean</code> locking result
      */
     public static boolean tryLock(Lock lock) {
 	return lock.tryLock();

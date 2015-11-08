@@ -97,7 +97,6 @@ public class HibernatePersistenceProviderExt extends HibernatePersistenceProvide
 
     /**
      * Enriches and configures passed {@link PersistenceUnitInfo} wrapper
-     * {@inheritDoc}
      *
      * @param info
      * @return {@link PersistenceUnitDescriptor}

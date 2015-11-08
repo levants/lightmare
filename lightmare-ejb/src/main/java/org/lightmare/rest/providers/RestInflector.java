@@ -50,8 +50,7 @@ import org.lightmare.utils.collections.CollectionUtils;
  * @since 0.0.50-SNAPSHOT
  * @see Inflector
  */
-public class RestInflector implements
-	Inflector<ContainerRequestContext, Response> {
+public class RestInflector implements Inflector<ContainerRequestContext, Response> {
 
     // Appropriated java Method for REST service
     private Method method;
@@ -80,8 +79,7 @@ public class RestInflector implements
      * @param type
      * @param parameters
      */
-    public RestInflector(Method method, MetaData metaData, MediaType type,
-	    List<Parameter> parameters) {
+    public RestInflector(Method method, MetaData metaData, MediaType type, List<Parameter> parameters) {
 	this.method = method;
 	this.metaData = metaData;
 	this.type = type;
@@ -91,7 +89,7 @@ public class RestInflector implements
     /**
      * Gets appropriated bean {@link Class} instance
      * 
-     * @return
+     * @return {@link Class} for bean
      */
     public Class<?> getBeanClass() {
 
@@ -133,14 +131,12 @@ public class RestInflector implements
      * @return {@link Object}[]
      * @throws IOException
      */
-    private Object[] extraxtParameters(ContainerRequestContext request)
-	    throws IOException {
+    private Object[] extraxtParameters(ContainerRequestContext request) throws IOException {
 
 	Object[] params;
 
 	MediaType mediaType = getMediaType(request);
-	ParamBuilder builder = new ParamBuilder.Builder()
-		.setMediaType(mediaType).setParameters(parameters)
+	ParamBuilder builder = new ParamBuilder.Builder().setMediaType(mediaType).setParameters(parameters)
 		.setWorkers(workers).setRequest(request).build();
 	List<Object> paramsList = builder.extractParams();
 	params = paramsList.toArray();
@@ -156,8 +152,7 @@ public class RestInflector implements
      * @return {@link Object}[]
      * @throws IOException
      */
-    private Object[] getParameters(ContainerRequestContext request)
-	    throws IOException {
+    private Object[] getParameters(ContainerRequestContext request) throws IOException {
 
 	Object[] params;
 

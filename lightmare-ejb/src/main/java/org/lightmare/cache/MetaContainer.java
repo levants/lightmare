@@ -105,8 +105,7 @@ public class MetaContainer {
      * @return {@link Configuration} cloned
      * @throws IOException
      */
-    public static Configuration clone(Configuration configuration)
-	    throws IOException {
+    public static Configuration clone(Configuration configuration) throws IOException {
 
 	Configuration clone;
 
@@ -144,7 +143,6 @@ public class MetaContainer {
      * Gets {@link Configuration} from cache for specific {@link URL} array
      *
      * @param archives
-     * @param hinbernateConfig
      */
     public static Configuration getConfig(URL[] archives) {
 
@@ -167,7 +165,7 @@ public class MetaContainer {
      *
      * @param beanName
      * @param metaData
-     * @return
+     * @return {@link MetaData} added to cache
      */
     public static MetaData addMetaData(String beanName, MetaData metaData) {
 	return EJBS.putIfAbsent(beanName, metaData);
@@ -181,8 +179,7 @@ public class MetaContainer {
      * @param metaData
      * @throws BeanInUseException
      */
-    public static void checkAndAddMetaData(String beanName, MetaData metaData)
-	    throws BeanInUseException {
+    public static void checkAndAddMetaData(String beanName, MetaData metaData) throws BeanInUseException {
 
 	MetaData tmpMeta = addMetaData(beanName, metaData);
 	if (ObjectUtils.notNull(tmpMeta)) {
@@ -227,8 +224,7 @@ public class MetaContainer {
      * @param metaData
      * @throws IOException
      */
-    private static void awaitProgress(boolean inProgress, MetaData metaData)
-	    throws IOException {
+    private static void awaitProgress(boolean inProgress, MetaData metaData) throws IOException {
 
 	while (inProgress) {
 	    try {
@@ -241,8 +237,7 @@ public class MetaContainer {
     }
 
     /**
-     * Waits while {@link MetaData#isInProgress()} is true (and if it is calls
-     * {@link MetaContainer#awaitProgress(boolean, MetaData)} method)
+     * Waits while {@link MetaData#isInProgress()} is true
      *
      * @param metaData
      * @throws IOException
@@ -382,8 +377,7 @@ public class MetaContainer {
 		    semaphore = ConnectionContainer.getConnection(unitName);
 		}
 		// Clears connection from cache
-		if (ObjectUtils.notNull(semaphore) && semaphore
-			.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS) {
+		if (ObjectUtils.notNull(semaphore) && semaphore.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS) {
 		    ConnectionContainer.removeConnection(unitName);
 		}
 	    }
@@ -404,8 +398,7 @@ public class MetaContainer {
 	try {
 	    metaData = getSyncMetaData(beanName);
 	} catch (IOException ex) {
-	    LogUtils.error(LOG, ex, "Could not get bean resources %s cause %s",
-		    beanName, ex.getMessage());
+	    LogUtils.error(LOG, ex, "Could not get bean resources %s cause %s", beanName, ex.getMessage());
 	    metaData = null;
 	}
 	// Removes MetaData from cache

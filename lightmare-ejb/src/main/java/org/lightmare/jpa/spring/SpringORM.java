@@ -141,7 +141,6 @@ public class SpringORM {
     /**
      * Gets {@link DataSource} by its JNDI name for Spring data configuration
      *
-     * @return {@link DataSource}
      * @throws IOException
      */
     private void initAndLookUpDataSource() throws IOException {

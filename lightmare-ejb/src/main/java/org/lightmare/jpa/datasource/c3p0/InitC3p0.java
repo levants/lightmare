@@ -82,7 +82,6 @@ public class InitC3p0 extends InitDataSource {
     /**
      * Initializes appropriated driver and {@link DataSource} objects
      *
-     * @param properties
      * @return {@link DataSource}
      * @throws IOException
      */

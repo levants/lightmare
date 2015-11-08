@@ -122,8 +122,7 @@ public class RestConfig extends ResourceConfig {
     }
 
     /**
-     * Registers {@link Resource}s from passed {@link RestConfig} as
-     * {@link RestConfig#preResources} cache
+     * Registers {@link Resource}s from passed {@link RestConfig} to cache
      * 
      * @param oldConfig
      */
@@ -203,8 +202,7 @@ public class RestConfig extends ResourceConfig {
      * @param oldConfig
      * @throws IOException
      */
-    public void registerClass(Class<?> resourceClass, RestConfig oldConfig)
-	    throws IOException {
+    public void registerClass(Class<?> resourceClass, RestConfig oldConfig) throws IOException {
 
 	Resource.Builder builder = Resource.builder(resourceClass);
 	Resource preResource = builder.build();

@@ -68,8 +68,8 @@ For embedded entity there is method "embedded" with embedded getter method and a
   			.where()
   			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname").and()
-		    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPrivatNumber)
-			    					  .equals(PersonInfo::getNote, "This is note"))
+		    .embedded(Person::getInfo, c -> .equals(PersonInfo::getNote, "This is note")
+		    					   .equals(PersonInfo::getCardNumber, Person::getPrivatNumber))
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .firstOrDefault(new Person()); 
 ```
@@ -121,9 +121,9 @@ Implementations of sub queries are by calling exits or in functions:
   			.equals(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().exists(Phone.class, c -> c.where()
-		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
-		                               .and()
-		                               .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
+		    					   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
+		                           .and()
+		                           .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```

@@ -25,8 +25,6 @@ package org.lightmare.utils.io.serialization;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.lightmare.utils.remote.RpcUtils;
-
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,15 +56,13 @@ public abstract class JsonSerializer {
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 
 	private JsonMapper() {
-	    objectMapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-		    .registerModule(new AfterburnerModule())
+	    objectMapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).registerModule(new AfterburnerModule())
 		    .registerModule(new Hibernate4Module());
 	}
     }
 
     /**
-     * Configures {@link ObjectMapper} if {@link RpcUtils#mapperConfigured} is
-     * <code>false</code>
+     * Configures {@link ObjectMapper} if it is not configured
      * 
      * @return {@link ObjectMapper}
      */
@@ -75,8 +71,8 @@ public abstract class JsonSerializer {
     }
 
     /**
-     * Serializes {@link Object} to JSON {@link String} with <a
-     * href="https://github.com/FasterXML/jackson-databind">jackson API</a>
+     * Serializes {@link Object} to JSON {@link String} with
+     * <a href="https://github.com/FasterXML/jackson-databind">jackson API</a>
      * 
      * @param value
      * @return {@link String}
@@ -100,16 +96,15 @@ public abstract class JsonSerializer {
     }
 
     /**
-     * For deserialization of JSON {@link String} to {@link Object} with <a
-     * href="https://github.com/FasterXML/jackson-databind">jackson api</a>
+     * For deserialization of JSON {@link String} to {@link Object} with
+     * <a href="https://github.com/FasterXML/jackson-databind">jackson api</a>
      * 
      * @param data
      * @param valueClass
      * @return T
      * @throws IOException
      */
-    public static <T> T read(String data, Class<T> valueClass)
-	    throws IOException {
+    public static <T> T read(String data, Class<T> valueClass) throws IOException {
 
 	T value;
 
@@ -127,16 +122,15 @@ public abstract class JsonSerializer {
     }
 
     /**
-     * For deserialization of JSON {@link InputStream} to {@link Object} with <a
-     * href="https://github.com/FasterXML/jackson-databind">jackson API</a>
+     * For deserialization of JSON {@link InputStream} to {@link Object} with
+     * <a href="https://github.com/FasterXML/jackson-databind">jackson API</a>
      * 
-     * @param data
+     * @param stream
      * @param valueClass
-     * @return T
+     * @return T from JSON
      * @throws IOException
      */
-    public static <T> T read(InputStream stream, Class<T> valueClass)
-	    throws IOException {
+    public static <T> T read(InputStream stream, Class<T> valueClass) throws IOException {
 	return getMapper().readValue(stream, valueClass);
     }
 
@@ -144,13 +138,12 @@ public abstract class JsonSerializer {
      * For deserialization of JSON (<code>byte[]</code>) to {@link Object} with
      * <a href="https://github.com/FasterXML/jackson-databind">jackson API</a>
      * 
-     * @param data
+     * @param bytes
      * @param valueClass
-     * @return T
+     * @return T value from JSON
      * @throws IOException
      */
-    public static <T> T read(byte[] bytes, Class<T> valueClass)
-	    throws IOException {
+    public static <T> T read(byte[] bytes, Class<T> valueClass) throws IOException {
 	return getMapper().readValue(bytes, valueClass);
     }
 }

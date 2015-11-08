@@ -35,7 +35,7 @@ import org.lightmare.criteria.query.QueryStream;
  * Interface for JPA query parameters
  * 
  * @author Levan Tsinadze
- * @param T
+ * @param <T>
  *            entity type for appropriated query
  */
 public interface JPAQueryWrapper<T> {

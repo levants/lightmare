@@ -545,8 +545,8 @@ public abstract class CollectionUtils {
     /**
      * Peaks first element from array
      *
-     * @param collection
-     * @return T
+     * @param values
+     * @return T first value
      */
     public static <T> T getFirst(T[] values) {
 

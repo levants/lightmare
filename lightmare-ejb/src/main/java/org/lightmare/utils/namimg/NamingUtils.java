@@ -92,7 +92,7 @@ public class NamingUtils {
      * Creates JNDI name prefixes for JPA objects
      * 
      * @param jndiName
-     * @return
+     * @return {@link String} JNDI name
      */
     public static String createJpaJndiName(String jndiName) {
 	return StringUtils.concat(JPA_NAME_PREF, jndiName);
@@ -145,8 +145,7 @@ public class NamingUtils {
 	String clearName;
 
 	if (StringUtils.valid(jndiName) && jndiName.startsWith(DS_JNDI_FREFIX)) {
-	    clearName = jndiName.replace(DS_JNDI_FREFIX,
-		    StringUtils.EMPTY_STRING);
+	    clearName = jndiName.replace(DS_JNDI_FREFIX, StringUtils.EMPTY_STRING);
 	} else {
 	    clearName = jndiName;
 	}

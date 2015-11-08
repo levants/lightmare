@@ -113,9 +113,6 @@ public abstract class InitDataSource {
      * Initializes and registers {@link DataSource} object in JNDI
      * {@link javax.naming.Context}
      *
-     * @param poolingProperties
-     * @param dataSource
-     * @param jndiName
      * @throws IOException
      */
     public void create() throws IOException {

@@ -277,7 +277,7 @@ public class PoolConfig {
      * Gets property as <code>int</code> value
      *
      * @param properties
-     * @param name
+     * @param config
      * @return <code>int</code>
      */
     public static Integer asInt(Map<Object, Object> properties, Defaults config) {
@@ -319,7 +319,6 @@ public class PoolConfig {
     /**
      * Loads {@link Properties} from specific path
      *
-     * @param path
      * @return {@link Properties}
      * @throws IOException
      */

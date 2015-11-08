@@ -115,7 +115,7 @@ public class BeanTransactions {
     /**
      * Gets existing transaction from cache
      *
-     * @param entityTransactions
+     * @param ems
      * @return {@link UserTransaction}
      */
     public static UserTransaction getTransaction(Collection<EntityManager> ems) {
@@ -317,7 +317,7 @@ public class BeanTransactions {
      *
      * @param handler
      * @param method
-     * @param entityTransaction
+     * @param ems
      * @throws IOException
      */
     public static TransactionAttributeType addTransaction(BeanHandler handler, Method method,

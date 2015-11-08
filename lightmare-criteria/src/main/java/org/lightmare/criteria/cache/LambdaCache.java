@@ -105,7 +105,7 @@ public class LambdaCache {
      * Removes passed lambda {@link Class} and associated {@link QueryTuple}
      * from cache
      * 
-     * @param key
+     * @param lambdaType
      */
     public static void remove(Class<?> lambdaType) {
 	String key = lambdaType.getName();

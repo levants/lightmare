@@ -179,7 +179,7 @@ public class MetaData {
     }
 
     /**
-     * Adds {@link javax.ejb.PersistenceUnit} annotated field to
+     * Adds {@link javax.persistence.PersistenceUnit} annotated field to
      * {@link MetaData} for cache
      *
      * @param unitFields
@@ -189,8 +189,7 @@ public class MetaData {
 	if (CollectionUtils.validAll(connections, unitFields)) {
 	    String unitName;
 	    for (Field unitField : unitFields) {
-		unitName = unitField.getAnnotation(PersistenceUnit.class)
-			.unitName();
+		unitName = unitField.getAnnotation(PersistenceUnit.class).unitName();
 		addUnitField(unitName, unitField);
 	    }
 	    // Caches connection EJB bean fields meta data
@@ -226,8 +225,7 @@ public class MetaData {
 	return transactionAttrType;
     }
 
-    public void setTransactionAttrType(
-	    TransactionAttributeType transactionAttrType) {
+    public void setTransactionAttrType(TransactionAttributeType transactionAttrType) {
 	this.transactionAttrType = transactionAttrType;
     }
 
@@ -235,8 +233,7 @@ public class MetaData {
 	return transactionManType;
     }
 
-    public void setTransactionManType(
-	    TransactionManagementType transactionManType) {
+    public void setTransactionManType(TransactionManagementType transactionManType) {
 	this.transactionManType = transactionManType;
     }
 

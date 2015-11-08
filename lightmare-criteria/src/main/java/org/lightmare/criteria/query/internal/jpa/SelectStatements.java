@@ -30,8 +30,8 @@ import org.lightmare.criteria.query.QueryStream;
  * 
  * @author Levan Tsinadze
  *
- * @param <T>entity
- *            type for generated query
+ * @param <T>
+ *            entity type for generated query
  */
 public interface SelectStatements<T> {
 

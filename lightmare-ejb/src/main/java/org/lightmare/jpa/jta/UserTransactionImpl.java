@@ -125,7 +125,7 @@ public class UserTransactionImpl implements UserTransaction {
      * Adds {@link EntityManager}'s to collection to close after transactions
      * processing
      *
-     * @param em
+     * @param ems
      */
     public void addEntityManagers(Collection<EntityManager> ems) {
 

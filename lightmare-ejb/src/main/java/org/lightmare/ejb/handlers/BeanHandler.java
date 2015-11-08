@@ -120,8 +120,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @return {@link Object}
      * @throws IOException
      */
-    private Object invokeMethod(Method method, Object... arguments)
-	    throws IOException {
+    private Object invokeMethod(Method method, Object... arguments) throws IOException {
 	return ClassUtils.invoke(method, bean, arguments);
     }
 
@@ -132,8 +131,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @param em
      * @throws IOException
      */
-    private void setConnection(Field connectionField, EntityManager em)
-	    throws IOException {
+    private void setConnection(Field connectionField, EntityManager em) throws IOException {
 	setFieldValue(connectionField, em);
     }
 
@@ -164,8 +162,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @return {@link MetaData} for injected EJB bean
      * @throws IOException
      */
-    private MetaData initInjection(InjectionData injectionData)
-	    throws IOException {
+    private MetaData initInjection(InjectionData injectionData) throws IOException {
 
 	MetaData injectMetaData = injectionData.getMetaData();
 
@@ -173,8 +170,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    String beanName = getJnjectBeanName(injectionData);
 	    // Fills injection meta data parameters
 	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
-	    injectMetaData
-		    .setInterfaceClasses(injectionData.getInterfaceClasses());
+	    injectMetaData.setInterfaceClasses(injectionData.getInterfaceClasses());
 	    injectionData.setMetaData(injectMetaData);
 	}
 
@@ -187,8 +183,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      *
      * @throws IOException
      */
-    private void configureInjection(InjectionData injectionData)
-	    throws IOException {
+    private void configureInjection(InjectionData injectionData) throws IOException {
 
 	MetaData injectMetaData = injectionData.getMetaData();
 	if (injectMetaData == null) {
@@ -258,8 +253,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @param ems
      * @throws IOException
      */
-    private void setTransactionField(Collection<EntityManager> ems)
-	    throws IOException {
+    private void setTransactionField(Collection<EntityManager> ems) throws IOException {
 
 	if (ObjectUtils.notNull(transactionField)) {
 	    UserTransaction transaction = getTransaction(ems);
@@ -275,8 +269,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @return {@link EntityManager}
      * @throws IOException
      */
-    private EntityManager createEntityManager(EntityManagerFactory emf,
-	    Field unitField) throws IOException {
+    private EntityManager createEntityManager(EntityManagerFactory emf, Field unitField) throws IOException {
 
 	EntityManager em = emf.createEntityManager();
 
@@ -294,8 +287,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @return {@link EntityManager}
      * @throws IOException
      */
-    private EntityManager createEntityManager(ConnectionData connection)
-	    throws IOException {
+    private EntityManager createEntityManager(ConnectionData connection) throws IOException {
 
 	EntityManager em;
 
@@ -337,8 +329,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @return {@link Collection}<code><EntityManager></code>
      * @throws IOException
      */
-    private Collection<EntityManager> createEntityManagers()
-	    throws IOException {
+    private Collection<EntityManager> createEntityManagers() throws IOException {
 
 	Collection<EntityManager> ems;
 
@@ -386,9 +377,8 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     /**
-     * Calls {@link BeanTransactions#rollbackTransaction(BeanHandler, Method))}
-     * is case of {@link Throwable} is thrown at passed {@link Method} execution
-     * time
+     * Discards transaction in case of {@link Throwable} is thrown at passed
+     * {@link Method} execution time
      *
      * @param method
      * @throws IOException
@@ -412,8 +402,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @param method
      * @throws IOException
      */
-    private void addTransactionField(final Collection<EntityManager> ems,
-	    final Method method) throws IOException {
+    private void addTransactionField(final Collection<EntityManager> ems, final Method method) throws IOException {
 
 	if (transactionField == null) {
 	    BeanTransactions.addTransaction(this, method, ems);
@@ -431,13 +420,12 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @return Object
      * @throws IOException
      */
-    private Object invokeBeanMethod(final Collection<EntityManager> ems,
-	    final Method method, Object[] arguments) throws IOException {
+    private Object invokeBeanMethod(final Collection<EntityManager> ems, final Method method, Object[] arguments)
+	    throws IOException {
 
 	addTransactionField(ems, method);
 	// Calls interceptors for this method or bean instance
-	Object[] intercepteds = interceptorHandel.callInterceptors(method,
-		arguments);
+	Object[] intercepteds = interceptorHandel.callInterceptors(method, arguments);
 	// Calls for bean method with "intercepted" parameters
 	Object value = invokeMethod(method, intercepteds);
 
@@ -445,8 +433,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     }
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] arguments)
-	    throws Throwable {
+    public Object invoke(Object proxy, Method method, Object[] arguments) throws Throwable {
 
 	Object value;
 
@@ -456,8 +443,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
 	    String methodName = method.getName();
 	    Class<?>[] parameterTypes = method.getParameterTypes();
 	    // Gets real method of bean class
-	    realMethod = ClassUtils.getDeclaredMethod(beanClass, methodName,
-		    parameterTypes);
+	    realMethod = ClassUtils.getDeclaredMethod(beanClass, methodName, parameterTypes);
 	    value = invokeBeanMethod(ems, realMethod, arguments);
 	} catch (Throwable th) {
 	    rollback(realMethod);

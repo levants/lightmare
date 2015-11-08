@@ -112,10 +112,8 @@ public class LibraryLoader {
      */
     private static void initURLMethod() throws IOException {
 
-	if (addURLMethod == null && ClassUtils.hasMethod(URLClassLoader.class,
-		ADD_URL_METHOD_NAME)) {
-	    addURLMethod = ClassUtils.getDeclaredMethod(URLClassLoader.class,
-		    ADD_URL_METHOD_NAME, URL.class);
+	if (addURLMethod == null && ClassUtils.hasMethod(URLClassLoader.class, ADD_URL_METHOD_NAME)) {
+	    addURLMethod = ClassUtils.getDeclaredMethod(URLClassLoader.class, ADD_URL_METHOD_NAME, URL.class);
 	}
     }
 
@@ -152,8 +150,7 @@ public class LibraryLoader {
 	URL[] urls;
 
 	if (loader instanceof URLClassLoader) {
-	    URLClassLoader urlLoader = ObjectUtils.cast(loader,
-		    URLClassLoader.class);
+	    URLClassLoader urlLoader = ObjectUtils.cast(loader, URLClassLoader.class);
 	    urls = urlLoader.getURLs();
 	} else {
 	    urls = CollectionUtils.emptyArray(URL.class);
@@ -170,8 +167,7 @@ public class LibraryLoader {
      */
     public static File classFile(Class<?> executing) {
 
-	final File file = new File(executing.getProtectionDomain()
-		.getCodeSource().getLocation().getPath());
+	final File file = new File(executing.getProtectionDomain().getCodeSource().getLocation().getPath());
 
 	return file;
     }
@@ -184,8 +180,7 @@ public class LibraryLoader {
      * @return {@link ClassLoader}
      * @throws IOException
      */
-    public static ClassLoader initializeLoader(final URL[] urls)
-	    throws IOException {
+    public static ClassLoader initializeLoader(final URL[] urls) throws IOException {
 
 	ClassLoader ejbLoader;
 
@@ -253,8 +248,7 @@ public class LibraryLoader {
 	URL classURL;
 
 	ClassLoader loader = getContextClassLoader();
-	String fileName = className.replace(StringUtils.DOT,
-		File.pathSeparatorChar);
+	String fileName = className.replace(StringUtils.DOT, File.pathSeparatorChar);
 	String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
 	classURL = loader.getResource(classFile);
 
@@ -273,8 +267,7 @@ public class LibraryLoader {
 	boolean valid;
 
 	ClassLoader loader = getContextClassLoader();
-	String fileName = className.replace(StringUtils.DOT,
-		File.separatorChar);
+	String fileName = className.replace(StringUtils.DOT, File.separatorChar);
 	String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
 	URL classURL = loader.getResource(classFile);
 	valid = ObjectUtils.notNull(classURL);
@@ -290,10 +283,8 @@ public class LibraryLoader {
      * @param urls
      * @param parent
      * @return {@link ClassLoader}
-     * @throws IOException
      */
-    public static ClassLoader getEnrichedLoader(URL[] urls,
-	    ClassLoader parent) {
+    public static ClassLoader getEnrichedLoader(URL[] urls, ClassLoader parent) {
 
 	ClassLoader enrichedLoader;
 
@@ -318,8 +309,7 @@ public class LibraryLoader {
      * @return {@link ClassLoader}
      * @throws IOException
      */
-    public static ClassLoader getEnrichedLoader(File file, Set<URL> urls)
-	    throws IOException {
+    public static ClassLoader getEnrichedLoader(File file, Set<URL> urls) throws IOException {
 
 	ClassLoader enrichedLoader;
 
@@ -339,13 +329,11 @@ public class LibraryLoader {
      * @return {@link ClassLoader}
      * @throws IOException
      */
-    public static ClassLoader cloneContextClassLoader(final URL[] urls,
-	    ClassLoader parent) throws IOException {
+    public static ClassLoader cloneContextClassLoader(final URL[] urls, ClassLoader parent) throws IOException {
 
 	ClassLoader clone;
 
-	URLClassLoader loader = (URLClassLoader) getEnrichedLoader(urls,
-		parent);
+	URLClassLoader loader = (URLClassLoader) getEnrichedLoader(urls, parent);
 	try {
 	    // get all resources for cloning
 	    URL[] urlArray = loader.getURLs();
@@ -371,8 +359,7 @@ public class LibraryLoader {
      * @param oldLoader
      * @return {@link ClassLoader}
      */
-    public static ClassLoader createCommon(ClassLoader newLoader,
-	    ClassLoader oldLoader) {
+    public static ClassLoader createCommon(ClassLoader newLoader, ClassLoader oldLoader) {
 
 	ClassLoader commonLoader;
 
@@ -418,8 +405,7 @@ public class LibraryLoader {
      * @param urlLoader
      * @throws IOException
      */
-    public static void loadURLToSystem(URL[] urls, Method method,
-	    URLClassLoader urlLoader) throws IOException {
+    public static void loadURLToSystem(URL[] urls, Method method, URLClassLoader urlLoader) throws IOException {
 
 	for (URL url : urls) {
 	    ClassUtils.invokePrivate(method, urlLoader, url);
@@ -472,8 +458,7 @@ public class LibraryLoader {
      * @param libraryPath
      * @throws IOException
      */
-    private static void loadLibraryFromPath(String libraryPath)
-	    throws IOException {
+    private static void loadLibraryFromPath(String libraryPath) throws IOException {
 
 	File file = new File(libraryPath);
 	loadLibraryFromFile(file);
@@ -486,8 +471,7 @@ public class LibraryLoader {
      * @param libraryPaths
      * @throws IOException
      */
-    public static void loadLibraries(String... libraryPaths)
-	    throws IOException {
+    public static void loadLibraries(String... libraryPaths) throws IOException {
 
 	if (CollectionUtils.valid(libraryPaths)) {
 	    for (String libraryPath : libraryPaths) {
@@ -502,8 +486,7 @@ public class LibraryLoader {
      * @param classes
      * @param loader
      */
-    public static void loadClasses(Collection<String> classes,
-	    ClassLoader loader) throws IOException {
+    public static void loadClasses(Collection<String> classes, ClassLoader loader) throws IOException {
 
 	if (CollectionUtils.valid(classes) && ObjectUtils.notNull(loader)) {
 	    for (String className : classes) {
@@ -522,8 +505,7 @@ public class LibraryLoader {
      *
      * @param classes
      */
-    public static void loadClasses(Collection<String> classes)
-	    throws IOException {
+    public static void loadClasses(Collection<String> classes) throws IOException {
 
 	ClassLoader loader = getContextClassLoader();
 	loadClasses(classes, loader);
@@ -536,12 +518,10 @@ public class LibraryLoader {
      * @param loader
      * @throws IOException
      */
-    private static void hasCloseMethod(Class<URLClassLoader> loaderClass)
-	    throws IOException {
+    private static void hasCloseMethod(Class<URLClassLoader> loaderClass) throws IOException {
 
 	if (hasCloseMethod == null) {
-	    hasCloseMethod = ClassUtils.hasPublicMethod(loaderClass,
-		    CLOSE_METHOD_NAME);
+	    hasCloseMethod = ClassUtils.hasPublicMethod(loaderClass, CLOSE_METHOD_NAME);
 	}
     }
 
@@ -552,8 +532,7 @@ public class LibraryLoader {
      * @param loader
      * @throws IOException
      */
-    private static void checkOnClose(Class<URLClassLoader> loaderClass)
-	    throws IOException {
+    private static void checkOnClose(Class<URLClassLoader> loaderClass) throws IOException {
 
 	if (hasCloseMethod == null) {
 	    synchronized (LibraryLoader.class) {
@@ -573,8 +552,7 @@ public class LibraryLoader {
 
 	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
 	    try {
-		URLClassLoader urlClassLoader = ObjectUtils.cast(loader,
-			URLClassLoader.class);
+		URLClassLoader urlClassLoader = ObjectUtils.cast(loader, URLClassLoader.class);
 		urlClassLoader.clearAssertionStatus();
 		// Finds if loader associated class or superclass has "close"
 		// method

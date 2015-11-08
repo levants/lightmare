@@ -67,8 +67,6 @@ public class InitDataSourceFactory {
     /**
      * Constructs appropriate {@link InitDataSource} instance to close or
      * destroy appropriate {@link DataSource} instance
-     *
-     * @return {@link InitDataSource}
      */
     public static void destroy(DataSource dataSource) {
 	InitDataSource initDataSource = get(null);

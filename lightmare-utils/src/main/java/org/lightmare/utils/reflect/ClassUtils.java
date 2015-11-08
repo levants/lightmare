@@ -261,7 +261,6 @@ public class ClassUtils {
      * initializes it
      *
      * @param className
-     * @param loader
      * @return {@link Class}
      * @throws IOException
      */
@@ -279,7 +278,7 @@ public class ClassUtils {
      * Creates {@link Class} instance by {@link Class#newInstance()} method call
      *
      * @param clazz
-     * @return
+     * @return T {@link Class} instance
      */
     public static <T> T instantiate(Class<T> clazz) throws IOException {
 
@@ -325,8 +324,6 @@ public class ClassUtils {
      * Gets all declared methods from class
      *
      * @param clazz
-     * @param methodName
-     * @param parameterTypes
      * @return {@link Method}
      * @throws IOException
      */
@@ -531,7 +528,7 @@ public class ClassUtils {
      *
      * @param method
      * @param arguments
-     * @return
+     * @return {@link Object} returned by static method
      * @throws IOException
      */
     public static Object invokeStatic(Method method, Object... arguments) throws IOException {
@@ -556,7 +553,7 @@ public class ClassUtils {
      *
      * @param method
      * @param arguments
-     * @return
+     * @return {@link Object} returned by private static method
      * @throws IOException
      */
     public static Object invokePrivateStatic(Method method, Object... arguments) throws IOException {
@@ -698,7 +695,7 @@ public class ClassUtils {
     /**
      * Returns default values if passed class is primitive else returns null
      *
-     * @param clazz
+     * @param type
      * @return Object
      */
     public static Object getDefault(Class<?> type) {

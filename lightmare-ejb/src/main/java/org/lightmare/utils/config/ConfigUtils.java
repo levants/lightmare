@@ -98,7 +98,7 @@ public class ConfigUtils {
     /**
      * Gets paths of instant EJB module from configuration
      *
-     * @param configModule
+     * @param value
      * @return String[] path of EJB modules
      */
     public static String[] getModule(Object value) {

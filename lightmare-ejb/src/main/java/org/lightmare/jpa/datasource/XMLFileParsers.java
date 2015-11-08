@@ -308,7 +308,7 @@ public class XMLFileParsers {
      * Retrieves data source JNDI names from passed file
      *
      * @param dataSourcePath
-     * @return
+     * @return {@link Collection} of {@link String}s
      * @throws IOException
      */
     public static Collection<String> dataSourceNames(String dataSourcePath) throws IOException {

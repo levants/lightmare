@@ -548,7 +548,6 @@ public abstract class CollectionUtils {
      * Peaks first element from collection
      *
      * @param collection
-     * @param defaultValue
      * @return T first element or default value
      */
     public static <T> T getFirst(Collection<T> collection) {
@@ -559,7 +558,8 @@ public abstract class CollectionUtils {
      * Peaks first element from array or passed default value if array is null
      * or empty
      *
-     * @param collection
+     * @param values
+     * @param defaultValue
      * @return T first element or default value
      */
     public static <T> T getFirst(T[] values, T defaultValue) {
@@ -578,7 +578,7 @@ public abstract class CollectionUtils {
     /**
      * Peaks first element from array
      *
-     * @param collection
+     * @param values
      * @return T first element
      */
     public static <T> T getFirst(T[] values) {

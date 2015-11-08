@@ -77,11 +77,9 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
      * @param resourceName
      * @param loader
      */
-    public void loadFromResource(String resourceName, ClassLoader loader)
-	    throws IOException {
+    public void loadFromResource(String resourceName, ClassLoader loader) throws IOException {
 
-	InputStream resourceStream = loader.getResourceAsStream(
-		StringUtils.concat(META_INF_PATH, resourceName));
+	InputStream resourceStream = loader.getResourceAsStream(StringUtils.concat(META_INF_PATH, resourceName));
 	if (resourceStream == null) {
 	    LOG.error(RESOURCE_NOT_EXISTS_ERROR);
 	} else {
@@ -98,8 +96,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
      */
     public <V> V getPersistenceConfigValue(Object key, V defaultValue) {
 
-	V value = CollectionUtils.getSubValue(config,
-		ConfigKeys.DEPLOY_CONFIG.key, ConfigKeys.PERSISTENCE_CONFIG.key,
+	V value = CollectionUtils.getSubValue(config, ConfigKeys.DEPLOY_CONFIG.key, ConfigKeys.PERSISTENCE_CONFIG.key,
 		key);
 
 	if (value == null) {
@@ -141,8 +138,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
      */
     public <V> V getPoolConfigValue(Object key, V defaultValue) {
 
-	V value = CollectionUtils.getSubValue(config,
-		ConfigKeys.DEPLOY_CONFIG.key, ConfigKeys.POOL_CONFIG.key, key);
+	V value = CollectionUtils.getSubValue(config, ConfigKeys.DEPLOY_CONFIG.key, ConfigKeys.POOL_CONFIG.key, key);
 
 	if (value == null) {
 	    value = defaultValue;
@@ -181,8 +177,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
      */
     private void configurePool() {
 
-	Map<Object, Object> poolProperties = getPoolConfigValue(
-		ConfigKeys.POOL_PROPERTIES.key);
+	Map<Object, Object> poolProperties = getPoolConfigValue(ConfigKeys.POOL_PROPERTIES.key);
 	if (CollectionUtils.valid(poolProperties)) {
 	    setPoolProperties(poolProperties);
 	}
@@ -216,8 +211,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 	    setConfigValue(ConfigKeys.WORKER_POOL.key, workerProperty);
 	}
 
-	setIfContains(ConfigKeys.CONNECTION_TIMEOUT.key,
-		ConfigKeys.CONNECTION_TIMEOUT.value);
+	setIfContains(ConfigKeys.CONNECTION_TIMEOUT.key, ConfigKeys.CONNECTION_TIMEOUT.value);
     }
 
     /**
@@ -246,8 +240,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
      */
     private void mergeDeployPath() {
 
-	Set<DeploymentDirectory> deploymentPaths = getConfigValue(
-		ConfigKeys.DEMPLOYMENT_PATH.key);
+	Set<DeploymentDirectory> deploymentPaths = getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
 	if (deploymentPaths == null) {
 	    deploymentPaths = ConfigKeys.DEMPLOYMENT_PATH.getValue();
 	    setConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key, deploymentPaths);
@@ -291,7 +284,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
     /**
      * Reads configuration from passed file path
      *
-     * @param configuration
+     * @param path
      */
     public void configure(String path) throws IOException {
 
@@ -302,8 +295,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 		Yaml yaml = new Yaml();
 		Object configuration = yaml.load(stream);
 		if (configuration instanceof Map) {
-		    Map<Object, Object> innerConfig = ObjectUtils
-			    .cast(configuration);
+		    Map<Object, Object> innerConfig = ObjectUtils.cast(configuration);
 		    configure(innerConfig);
 		}
 	    } finally {
@@ -378,8 +370,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
      */
     public void addDeploymentPath(String path, boolean scan) {
 
-	Set<DeploymentDirectory> deploymentPaths = getConfigValue(
-		ConfigKeys.DEMPLOYMENT_PATH.key);
+	Set<DeploymentDirectory> deploymentPaths = getConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key);
 	if (deploymentPaths == null) {
 	    deploymentPaths = new HashSet<DeploymentDirectory>();
 	    setConfigValue(ConfigKeys.DEMPLOYMENT_PATH.key, deploymentPaths);
@@ -395,8 +386,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
      */
     public void addDataSourcePath(String path) {
 
-	Set<String> dataSourcePaths = getConfigValue(
-		ConfigKeys.DATA_SOURCE_PATH.key);
+	Set<String> dataSourcePaths = getConfigValue(ConfigKeys.DATA_SOURCE_PATH.key);
 	if (dataSourcePaths == null) {
 	    dataSourcePaths = new HashSet<String>();
 	    setConfigValue(ConfigKeys.DATA_SOURCE_PATH.key, dataSourcePaths);
@@ -477,7 +467,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
     /**
      * Gets datasources from configuration
      *
-     * @return
+     * @return {@link List} of {@link Map}s for data source configuration
      */
     public List<Map<Object, Object>> getDataSources() {
 
@@ -523,8 +513,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 
 	boolean answer;
 
-	Object value = getConfigValue(ConfigKeys.HOT_DEPLOYMENT.key,
-		Boolean.FALSE);
+	Object value = getConfigValue(ConfigKeys.HOT_DEPLOYMENT.key, Boolean.FALSE);
 	answer = ConfigUtils.getBoolean(value);
 
 	return answer;
@@ -538,8 +527,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 
 	boolean answer;
 
-	Object value = getConfigValue(ConfigKeys.WATCH_STATUS.key,
-		Boolean.FALSE);
+	Object value = getConfigValue(ConfigKeys.WATCH_STATUS.key, Boolean.FALSE);
 	answer = ConfigUtils.getBoolean(value);
 
 	return answer;
@@ -558,21 +546,18 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 
 	boolean answer;
 
-	Object value = getPersistenceConfigValue(
-		ConfigKeys.SCAN_FOR_ENTITIES.key, Boolean.FALSE);
+	Object value = getPersistenceConfigValue(ConfigKeys.SCAN_FOR_ENTITIES.key, Boolean.FALSE);
 	answer = ConfigUtils.getBoolean(value);
 
 	return answer;
     }
 
     public void setSpringPersistence(boolean springPersistence) {
-	setPersistenceConfigValue(ConfigKeys.SPRING_PERSISTENCE.key,
-		springPersistence);
+	setPersistenceConfigValue(ConfigKeys.SPRING_PERSISTENCE.key, springPersistence);
     }
 
     public boolean isSpringPersistence() {
-	return getPersistenceConfigValue(ConfigKeys.SPRING_PERSISTENCE.key,
-		Boolean.FALSE);
+	return getPersistenceConfigValue(ConfigKeys.SPRING_PERSISTENCE.key, Boolean.FALSE);
     }
 
     /**
@@ -586,8 +571,8 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 
 	String dataSourceName;
 
-	Map<Object, Object> datasourceNames = getPersistenceConfigValue(
-		ConfigKeys.UNIT_DATASOURCES.key, Collections.emptyMap());
+	Map<Object, Object> datasourceNames = getPersistenceConfigValue(ConfigKeys.UNIT_DATASOURCES.key,
+		Collections.emptyMap());
 	Object value = datasourceNames.get(unitName);
 	dataSourceName = ObjectUtils.cast(value, String.class);
 
@@ -595,8 +580,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
     }
 
     public void setScanForEntities(boolean scanForEntities) {
-	setPersistenceConfigValue(ConfigKeys.SCAN_FOR_ENTITIES.key,
-		scanForEntities);
+	setPersistenceConfigValue(ConfigKeys.SCAN_FOR_ENTITIES.key, scanForEntities);
     }
 
     public String getAnnotatedUnitName() {
@@ -604,8 +588,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
     }
 
     public void setAnnotatedUnitName(String annotatedUnitName) {
-	setPersistenceConfigValue(ConfigKeys.ANNOTATED_UNIT_NAME.key,
-		annotatedUnitName);
+	setPersistenceConfigValue(ConfigKeys.ANNOTATED_UNIT_NAME.key, annotatedUnitName);
     }
 
     public String getPersXmlPath() {
@@ -613,42 +596,36 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
     }
 
     public void setPersXmlPath(String persXmlPath) {
-	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_PATH.key,
-		persXmlPath);
+	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_PATH.key, persXmlPath);
     }
 
     public boolean isPersXmlFromJar() {
 
 	boolean answer;
 
-	Object value = getPersistenceConfigValue(
-		ConfigKeys.PERSISTENCE_XML_FROM_JAR.key, Boolean.FALSE);
+	Object value = getPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_FROM_JAR.key, Boolean.FALSE);
 	answer = ConfigUtils.getBoolean(value);
 
 	return answer;
     }
 
     public void setPersXmlFromJar(boolean persXmlFromJar) {
-	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_FROM_JAR.key,
-		persXmlFromJar);
+	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_XML_FROM_JAR.key, persXmlFromJar);
     }
 
     public boolean isSwapDataSource() {
-	return getPersistenceConfigValue(ConfigKeys.SWAP_DATASOURCE.key,
-		Boolean.FALSE);
+	return getPersistenceConfigValue(ConfigKeys.SWAP_DATASOURCE.key, Boolean.FALSE);
     }
 
     public void setSwapDataSource(boolean swapDataSource) {
-	setPersistenceConfigValue(ConfigKeys.SWAP_DATASOURCE.key,
-		swapDataSource);
+	setPersistenceConfigValue(ConfigKeys.SWAP_DATASOURCE.key, swapDataSource);
     }
 
     public boolean isScanArchives() {
 
 	boolean answer;
 
-	Object value = getPersistenceConfigValue(ConfigKeys.SCAN_ARCHIVES.key,
-		Boolean.FALSE);
+	Object value = getPersistenceConfigValue(ConfigKeys.SCAN_ARCHIVES.key, Boolean.FALSE);
 	answer = ConfigUtils.getBoolean(value);
 
 	return answer;
@@ -662,26 +639,22 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 
 	boolean answer;
 
-	Object value = getPersistenceConfigValue(
-		ConfigKeys.POOLED_DATA_SOURCE.key, Boolean.FALSE);
+	Object value = getPersistenceConfigValue(ConfigKeys.POOLED_DATA_SOURCE.key, Boolean.FALSE);
 	answer = ConfigUtils.getBoolean(value);
 
 	return answer;
     }
 
     public void setPooledDataSource(boolean pooledDataSource) {
-	setPersistenceConfigValue(ConfigKeys.POOLED_DATA_SOURCE.key,
-		pooledDataSource);
+	setPersistenceConfigValue(ConfigKeys.POOLED_DATA_SOURCE.key, pooledDataSource);
     }
 
     public Map<Object, Object> getPersistenceProperties() {
 	return getPersistenceConfigValue(ConfigKeys.PERSISTENCE_PROPERTIES.key);
     }
 
-    public void setPersistenceProperties(
-	    Map<Object, Object> persistenceProperties) {
-	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_PROPERTIES.key,
-		persistenceProperties);
+    public void setPersistenceProperties(Map<Object, Object> persistenceProperties) {
+	setPersistenceConfigValue(ConfigKeys.PERSISTENCE_PROPERTIES.key, persistenceProperties);
     }
 
     /**
@@ -703,8 +676,7 @@ public class Configuration extends AbstractConfiguration implements Cloneable {
 	poolConfig.setPoolPath(path);
     }
 
-    public static void setPoolProperties(
-	    Map<? extends Object, ? extends Object> properties) {
+    public static void setPoolProperties(Map<? extends Object, ? extends Object> properties) {
 	PoolConfig poolConfig = getPoolConfig();
 	poolConfig.getPoolProperties().putAll(properties);
     }
