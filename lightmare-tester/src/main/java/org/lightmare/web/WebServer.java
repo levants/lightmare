@@ -28,8 +28,7 @@ public class WebServer implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(WebServer.class);
 
-    private static final ExecutorService POOL = Executors
-	    .newSingleThreadExecutor();
+    private static final ExecutorService POOL = Executors.newSingleThreadExecutor();
 
     @Override
     public void run() {
@@ -39,8 +38,8 @@ public class WebServer implements Runnable {
 	    ContextHandlerCollection contexts = new ContextHandlerCollection();
 	    jettyServer.setHandler(contexts);
 
-	    ServletContextHandler ctxRest = new ServletContextHandler(contexts,
-		    "/rest", ServletContextHandler.SESSIONS);
+	    ServletContextHandler ctxRest = new ServletContextHandler(contexts, "/rest",
+		    ServletContextHandler.SESSIONS);
 
 	    ServletContainer container = new ServletContainer();
 	    ServletHolder restHolder = new ServletHolder();
@@ -51,12 +50,10 @@ public class WebServer implements Runnable {
 	    restHolder.setServlet(container);
 	    ctxRest.addServlet(restHolder, "/*");
 
-	    WebServlet webServlet = DeployManager.class
-		    .getAnnotation(WebServlet.class);
-	    String deployManagerName = CollectionUtils.getFirst(webServlet
-		    .value());
-	    ServletContextHandler ctxManager = new ServletContextHandler(
-		    contexts, deployManagerName, ServletContextHandler.SESSIONS);
+	    WebServlet webServlet = DeployManager.class.getAnnotation(WebServlet.class);
+	    String deployManagerName = CollectionUtils.getFirst(webServlet.value());
+	    ServletContextHandler ctxManager = new ServletContextHandler(contexts, deployManagerName,
+		    ServletContextHandler.SESSIONS);
 
 	    DeployManager deploy = new DeployManager();
 	    ServletHolder managerHolder = new ServletHolder();
@@ -64,8 +61,8 @@ public class WebServer implements Runnable {
 	    managerHolder.setServlet(deploy);
 	    ctxManager.addServlet(managerHolder, "/*");
 
-	    ServletContextHandler ctxPerson = new ServletContextHandler(
-		    contexts, "/persons", ServletContextHandler.SESSIONS);
+	    ServletContextHandler ctxPerson = new ServletContextHandler(contexts, "/persons",
+		    ServletContextHandler.SESSIONS);
 	    ctxPerson.addEventListener(new LoaderListener());
 
 	    PersonManager manager = new PersonManager();

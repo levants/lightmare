@@ -21,7 +21,7 @@ import org.lightmare.utils.PersonUtils;
 /**
  * REST client class
  * 
- * @author levan
+ * @author Levan Tsinadze
  * 
  */
 @Ignore
@@ -46,10 +46,8 @@ public class RestClientTest {
 	    config.register(JacksonFXmlFeature.class);
 	    Client client = ClientBuilder.newClient(config);
 	    WebTarget webTarget = client.target(REST_URL);
-	    Invocation.Builder builder = webTarget
-		    .request(MediaType.APPLICATION_JSON_TYPE);
-	    Invocation invocation = builder.buildPut(Entity.entity(person,
-		    MediaType.APPLICATION_JSON_TYPE));
+	    Invocation.Builder builder = webTarget.request(MediaType.APPLICATION_JSON_TYPE);
+	    Invocation invocation = builder.buildPut(Entity.entity(person, MediaType.APPLICATION_JSON_TYPE));
 	    Response response = invocation.invoke();
 	    System.out.println(response.getStatus());
 	} catch (Exception ex) {
@@ -64,11 +62,9 @@ public class RestClientTest {
 	    config.register(ObjectMapperProvider.class);
 	    config.register(JacksonFXmlFeature.class);
 	    Client client = ClientBuilder.newClient(config);
-	    WebTarget webTarget = client.target(REST_URL).queryParam(
-		    QUERY_PERSON_ID, 1);
+	    WebTarget webTarget = client.target(REST_URL).queryParam(QUERY_PERSON_ID, 1);
 
-	    Invocation.Builder builder = webTarget
-		    .request(MediaType.APPLICATION_JSON_TYPE);
+	    Invocation.Builder builder = webTarget.request(MediaType.APPLICATION_JSON_TYPE);
 	    Invocation invocation = builder.buildGet();
 	    Response response = invocation.invoke();
 	    Person person = response.readEntity(Person.class);
@@ -86,16 +82,13 @@ public class RestClientTest {
 	    config.register(ObjectMapperProvider.class);
 	    config.register(JacksonFXmlFeature.class);
 	    Client client = ClientBuilder.newClient(config);
-	    WebTarget webTarget = client.target(REST_URL).path(REST_URL_LIST)
-		    .queryParam(QUERY_LIST_LAST, "last")
+	    WebTarget webTarget = client.target(REST_URL).path(REST_URL_LIST).queryParam(QUERY_LIST_LAST, "last")
 		    .queryParam(QUERY_LIST_FIRST, "first");
-	    Invocation.Builder builder = webTarget
-		    .request(MediaType.APPLICATION_JSON_TYPE);
+	    Invocation.Builder builder = webTarget.request(MediaType.APPLICATION_JSON_TYPE);
 	    Invocation invocation = builder.buildGet();
 	    Response response = invocation.invoke();
 	    @SuppressWarnings("unchecked")
-	    List<Person> persons = (List<Person>) response
-		    .readEntity(List.class);
+	    List<Person> persons = (List<Person>) response.readEntity(List.class);
 	    System.out.println(response.getStatus());
 	    System.out.println(persons);
 	} catch (Exception ex) {

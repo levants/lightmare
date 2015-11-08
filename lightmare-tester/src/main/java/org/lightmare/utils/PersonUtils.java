@@ -19,8 +19,7 @@ public class PersonUtils {
 	person.setAddressLine1("30 Umber Fown Cave");
 	person.setAddressLine2("30 Umber Fown 30N30");
 	try {
-	    person.setBirthDate(new SimpleDateFormat("yyyy-MM-dd")
-		    .parse("1930-11-30"));
+	    person.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse("1930-11-30"));
 	} catch (ParseException ex) {
 	    throw new IOException(ex);
 	}
