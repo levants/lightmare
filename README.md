@@ -17,7 +17,7 @@ Get lightmare from maven central repository
     <dependency>
       <groupId>com.github.levants</groupId>
       <artifactId>lightmare</artifactId>
-      <version>0.1.3-SNAPSHOT</version>
+      <version>0.1.4</version>
     </dependency>
 ```
     
