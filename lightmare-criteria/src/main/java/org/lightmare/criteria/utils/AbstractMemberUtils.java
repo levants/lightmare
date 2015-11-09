@@ -23,13 +23,10 @@
 package org.lightmare.criteria.utils;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,6 +36,26 @@ import java.util.Objects;
  *
  */
 abstract class AbstractMemberUtils extends AbstractClassUtils {
+
+    /**
+     * Gets all declared methods from class
+     *
+     * @param type
+     * @return array of {@link Method}s
+     * @throws IOException
+     */
+    public static Method[] getDeclaredMethods(Class<?> type) throws IOException {
+
+	Method[] methods;
+
+	try {
+	    methods = type.getDeclaredMethods();
+	} catch (SecurityException ex) {
+	    throw new IOException(ex);
+	}
+
+	return methods;
+    }
 
     /**
      * Validates for next iteration class member search methods
@@ -120,94 +137,14 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
 	Object value;
 
 	try {
+	    makeAccessible(method);
 	    value = method.invoke(data, arguments);
-	} catch (IllegalAccessException ex) {
-	    throw new IOException(ex);
-	} catch (IllegalArgumentException ex) {
+	} catch (IllegalAccessException | IllegalArgumentException ex) {
 	    throw new IOException(ex);
 	} catch (InvocationTargetException ex) {
 	    throw unwrap(ex);
 	}
 
 	return value;
-    }
-
-    /**
-     * Common method to invoke {@link Method} with reflection
-     *
-     * @param method
-     * @param data
-     * @param arguments
-     * @return {@link Object}
-     * @throws IOException
-     */
-    public static Object invokePrivate(Method method, Object data, Object... arguments) throws IOException {
-
-	Object value;
-
-	makeAccessible(method);
-	value = invoke(method, data, arguments);
-
-	return value;
-    }
-
-    /**
-     * Gets all declared methods from class
-     *
-     * @param type
-     * @return array of {@link Method}s
-     * @throws IOException
-     */
-    public static Method[] getDeclaredMethods(Class<?> type) throws IOException {
-
-	Method[] methods;
-
-	try {
-	    methods = type.getDeclaredMethods();
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	}
-
-	return methods;
-    }
-
-    /**
-     * Gets {@link List} of all {@link Method}s from passed class annotated with
-     * specified annotation
-     *
-     * @param type
-     * @param annotationType
-     * @return {@link List}<Method>
-     * @throws IOException
-     */
-    public static List<Method> getAnnotatedMethods(Class<?> type, Class<? extends Annotation> annotationType)
-	    throws IOException {
-
-	List<Method> methods = new ArrayList<Method>();
-
-	Method[] allMethods = getDeclaredMethods(type);
-	methods = filterByAnnotation(allMethods, annotationType);
-
-	return methods;
-    }
-
-    /**
-     * Gets {@link List} of all {@link Field}s from passed class annotated with
-     * specified annotation
-     *
-     * @param type
-     * @param annotationType
-     * @return {@link List}<Field>
-     * @throws IOException
-     */
-    public static List<Field> getAnnotatedFields(Class<?> type, Class<? extends Annotation> annotationType)
-	    throws IOException {
-
-	List<Field> fields = new ArrayList<Field>();
-
-	Field[] allFields = type.getDeclaredFields();
-	fields = filterByAnnotation(allFields, annotationType);
-
-	return fields;
     }
 }

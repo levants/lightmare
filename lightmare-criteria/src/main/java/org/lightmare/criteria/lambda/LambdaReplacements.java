@@ -139,7 +139,7 @@ public class LambdaReplacements {
 	try {
 	    Class<?> parent = field.getClass();
 	    Method method = getMethod(parent);
-	    Object raw = ClassUtils.invokePrivate(method, field);
+	    Object raw = ClassUtils.invoke(method, field);
 	    SerializedLambda serialized = ObjectUtils.cast(raw);
 	    lambda = new LambdaData(serialized);
 	} catch (NoSuchMethodException ex) {

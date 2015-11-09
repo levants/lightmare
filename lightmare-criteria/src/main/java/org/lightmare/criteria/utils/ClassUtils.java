@@ -37,6 +37,29 @@ import java.lang.reflect.Method;
 public class ClassUtils extends AbstractMemberUtils {
 
     /**
+     * Initializes and / or loads class by name
+     * 
+     * @param className
+     * @param initialize
+     * @param loader
+     * @return {@link Class} by name
+     * @throws ClassNotFoundException
+     */
+    private static Class<?> forName(String className, boolean initialize, ClassLoader loader)
+	    throws ClassNotFoundException {
+
+	Class<?> type;
+
+	if (loader == null) {
+	    type = Class.forName(className);
+	} else {
+	    type = Class.forName(className, initialize, loader);
+	}
+
+	return type;
+    }
+
+    /**
      * Loads and if initialize parameter is true initializes class by name with
      * specific {@link ClassLoader} if it is not <code>null</code>
      *
@@ -51,11 +74,7 @@ public class ClassUtils extends AbstractMemberUtils {
 	Class<?> type;
 
 	try {
-	    if (loader == null) {
-		type = Class.forName(className);
-	    } else {
-		type = Class.forName(className, initialize, loader);
-	    }
+	    type = forName(className, initialize, loader);
 	} catch (ClassNotFoundException ex) {
 	    throw new IOException(ex);
 	}
