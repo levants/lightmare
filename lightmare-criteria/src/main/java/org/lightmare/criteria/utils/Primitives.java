@@ -28,7 +28,7 @@ package org.lightmare.criteria.utils;
  * @author Levan Tsinadze
  *
  */
-public class Primitives {
+abstract class Primitives {
 
     // default values for primitives
     public static final byte BYTE_DEF = 0;

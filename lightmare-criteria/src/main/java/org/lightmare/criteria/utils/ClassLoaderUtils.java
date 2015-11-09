@@ -52,32 +52,6 @@ public class ClassLoaderUtils {
     }
 
     /**
-     * Sets passed {@link Thread}'s context class loader appropriated
-     * {@link ClassLoader} instance
-     *
-     * @param thread
-     * @param loader
-     */
-    public static void loadCurrentLibraries(Thread thread, ClassLoader loader) {
-
-	if (Objects.nonNull(loader)) {
-	    thread.setContextClassLoader(loader);
-	}
-    }
-
-    /**
-     * Sets passed {@link ClassLoader} instance as current {@link Thread}'s
-     * context class loader
-     *
-     * @param loader
-     */
-    public static void loadCurrentLibraries(ClassLoader loader) {
-
-	Thread thread = Thread.currentThread();
-	loadCurrentLibraries(thread, loader);
-    }
-
-    /**
      * Loads class by name to passed {@link ClassLoader} instance
      * 
      * @param className
