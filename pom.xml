@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 
 	<name>lightmare</name>
-	<version>0.1.4</version>
+	<version>0.1.5-SNAPSHOT</version>
 	<description>Embeddable and remote EJB container for Stateless session beans and JPA / Hibernate ORM support</description>
 	<url>https://github.com/levants/lightmare</url>
 
