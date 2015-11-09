@@ -28,7 +28,7 @@ import java.lang.invoke.SerializedLambda;
  * Lambda expression meta information container class
  * 
  * @author Levan Tsinadze
- *
+ * @see java.lang.invoke.SerializedLambda
  */
 public class LambdaData {
 

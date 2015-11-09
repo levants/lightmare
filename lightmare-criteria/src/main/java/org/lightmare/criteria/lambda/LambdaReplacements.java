@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -112,17 +113,8 @@ public class LambdaReplacements {
      * @throws IOException
      * @throws NoSuchMethodException
      */
-    private static <T> Method getMethod(Class<?> parent) throws IOException, NoSuchMethodException {
-
-	Method method;
-
-	try {
-	    method = parent.getDeclaredMethod(METHOD);
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	}
-
-	return method;
+    private static <T> Method getMethod(Class<?> parent) throws IOException {
+	return ClassUtils.findMethod(parent, METHOD);
     }
 
     /**
@@ -136,13 +128,13 @@ public class LambdaReplacements {
 
 	LambdaData lambda;
 
-	try {
-	    Class<?> parent = field.getClass();
-	    Method method = getMethod(parent);
+	Class<?> parent = field.getClass();
+	Method method = getMethod(parent);
+	if (Objects.nonNull(method)) {
 	    Object raw = ClassUtils.invoke(method, field);
 	    SerializedLambda serialized = ObjectUtils.cast(raw);
 	    lambda = new LambdaData(serialized);
-	} catch (NoSuchMethodException ex) {
+	} else {
 	    lambda = translate(field);
 	}
 

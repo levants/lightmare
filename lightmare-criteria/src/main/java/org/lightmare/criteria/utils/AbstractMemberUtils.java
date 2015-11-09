@@ -69,7 +69,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     }
 
     /**
-     * Finds passed {@link Class}'s or one of th's superclass {@link Method}
+     * Finds passed {@link Class}'s or one of it's super-classes {@link Method}
      * with appropriated name and parameters
      * 
      * @param type

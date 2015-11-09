@@ -1,5 +1,5 @@
 deployConfiguration: 
               persistenceConfig: 
-                          persistenceProperties: {"hibernate.show_sql": "true"}
+                          persistenceProperties: {"hibernate.show_sql": "true", "hibernate.format_sql":"true"}
               poolConfig: 
                           poolProperties: {"checkoutTimeout":"10000", "numHelperThreads":"20", "maxAdministrativeTaskTime":"5000", "maxConnectionAge":"1200"}

@@ -22,8 +22,6 @@
  */
 package org.lightmare.criteria.query;
 
-import java.io.Serializable;
-
 import javax.persistence.EntityManager;
 
 /**
@@ -43,7 +41,7 @@ public class QueryProvider {
      * @param entityAlias
      * @return {@link JPAQueryStream} with select statement
      */
-    public static <T extends Serializable> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
+    public static <T> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
 	return JPAQueryStream.delete(em, entityType, entityAlias);
     }
@@ -55,7 +53,7 @@ public class QueryProvider {
      * @param entityType
      * @return {@link JPAQueryStream} with select statement
      */
-    public static <T extends Serializable> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
+    public static <T> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
 	return JPAQueryStream.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
@@ -67,7 +65,7 @@ public class QueryProvider {
      * @param entityAlias
      * @return {@link JPAQueryStream} with select statement
      */
-    public static <T extends Serializable> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
+    public static <T> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
 	return JPAQueryStream.update(em, entityType, entityAlias);
     }
@@ -79,7 +77,7 @@ public class QueryProvider {
      * @param entityType
      * @return {@link JPAQueryStream} with select statement
      */
-    public static <T extends Serializable> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
+    public static <T> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
 	return JPAQueryStream.update(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
@@ -91,7 +89,7 @@ public class QueryProvider {
      * @param entityAlias
      * @return {@link JPAQueryStream} with select statement
      */
-    public static <T extends Serializable> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
+    public static <T> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
 	return JPAQueryStream.query(em, entityType, entityAlias);
     }
@@ -103,7 +101,7 @@ public class QueryProvider {
      * @param entityType
      * @return {@link JPAQueryStream} with select statement
      */
-    public static <T extends Serializable> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
+    public static <T> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
 	return JPAQueryStream.query(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
@@ -115,7 +113,7 @@ public class QueryProvider {
      * @param entityAlias
      * @return {@link JPAQueryStream} with select statement
      */
-    public static <T extends Serializable> QueryStream<T> query(final EntityManager em, final Class<T> entityType,
+    public static <T> QueryStream<T> query(final EntityManager em, final Class<T> entityType,
 	    final String entityAlias) {
 	return select(em, entityType, entityAlias);
     }
@@ -127,7 +125,7 @@ public class QueryProvider {
      * @param entityType
      * @return {@link JPAQueryStream} with select statement
      */
-    public static <T extends Serializable> QueryStream<T> query(final EntityManager em, Class<T> entityType) {
+    public static <T> QueryStream<T> query(final EntityManager em, Class<T> entityType) {
 	return select(em, entityType);
     }
 }

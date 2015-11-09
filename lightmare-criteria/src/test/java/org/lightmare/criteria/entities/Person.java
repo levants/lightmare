@@ -1,6 +1,5 @@
 package org.lightmare.criteria.entities;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -24,9 +23,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "PERSONS")
-public class Person extends GeneralInfo implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Person extends GeneralInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.linq.entities.Person")
