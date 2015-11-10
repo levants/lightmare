@@ -12,6 +12,10 @@
 	<name>lightmare-criteria</name>
 	<packaging>jar</packaging>
 
+	<properties>
+		<plexus-compiler-eclipse.version>2.6</plexus-compiler-eclipse.version>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -37,42 +41,18 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven.compiler.plugin}</version>
-				<executions>
-					<execution>
-						<id>default-testCompile</id>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-						<configuration>
-							<showDeprecation>true</showDeprecation>
-							<showWarnings>true</showWarnings>
-							<compilerArguments>
-								<source>${maven.compiler.testTarget}</source>
-								<target>${maven.compiler.testSource}</target>
-							</compilerArguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>default-compile</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<showDeprecation>true</showDeprecation>
-							<showWarnings>true</showWarnings>
-							<compilerArguments>
-								<source>${maven.compiler.target}</source>
-								<target>${maven.compiler.source}</target>
-							</compilerArguments>
-						</configuration>
-					</execution>
-				</executions>
 				<configuration>
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.target}</target>
+					<compilerId>eclipse</compilerId>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.plexus</groupId>
+						<artifactId>plexus-compiler-eclipse</artifactId>
+						<version>${plexus-compiler-eclipse.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

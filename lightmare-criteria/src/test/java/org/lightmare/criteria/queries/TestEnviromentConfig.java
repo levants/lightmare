@@ -7,11 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
 import org.lightmare.criteria.db.TestDBUtils;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.runorder.SortedRunner;
 
+@RunWith(SortedRunner.class)
 public class TestEnviromentConfig {
 
     protected static final String PERSONAL_NO1 = "10100100100";

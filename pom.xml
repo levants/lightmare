@@ -42,6 +42,9 @@
 		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
 		<maven.compiler.testSource>1.8</maven.compiler.testSource>
 		<maven.enforcer.version>1.4.1</maven.enforcer.version>
+		<maven.source.plugin>2.4</maven.source.plugin>
+		<maven.javadoc.plugin>2.10.3</maven.javadoc.plugin>
+		<maven.gpg.plugin>1.6</maven.gpg.plugin>
 		<maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
 		<!-- java ee components versions -->
 		<ejb.version>3.2</ejb.version>
@@ -140,7 +143,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<!--version>2.9</version -->
+				<version>${maven.javadoc.plugin}</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -156,7 +159,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<!--version>2.9</version -->
+				<version>${maven.source.plugin}</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -170,6 +173,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
+				<version>${maven.gpg.plugin}</version>
 				<executions>
 					<execution>
 						<id>sign-artifacts</id>
