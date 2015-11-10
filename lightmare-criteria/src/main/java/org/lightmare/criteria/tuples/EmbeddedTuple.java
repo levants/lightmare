@@ -37,16 +37,16 @@ public class EmbeddedTuple extends QueryTuple {
     private final String embeddedName;
 
     public EmbeddedTuple(final QueryTuple tuple, final String embeddedName) {
-	super(tuple.getEntityName(), tuple.getMethodName(), tuple.getArguments(), tuple.getFieldName());
-	setEntityType(tuple.getEntityType());
-	setMethod(tuple.getMethod());
-	setField(tuple.getField());
-	setAlias(tuple.getAlias());
-	this.embeddedName = embeddedName;
+        super(tuple.getEntityName(), tuple.getMethodName(), tuple.getArguments(), tuple.getFieldName());
+        setEntityType(tuple.getEntityType());
+        setMethod(tuple.getMethod());
+        setField(tuple.getField());
+        setAlias(tuple.getAlias());
+        this.embeddedName = embeddedName;
     }
 
     @Override
     public String getFieldName() {
-	return StringUtils.concat(embeddedName, StringUtils.DOT, super.getFieldName());
+        return StringUtils.concat(embeddedName, StringUtils.DOT, super.getFieldName());
     }
 }

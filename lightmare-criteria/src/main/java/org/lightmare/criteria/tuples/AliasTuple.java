@@ -36,19 +36,19 @@ public class AliasTuple {
     private final int counter;
 
     public AliasTuple(final String alias, final int counter) {
-	this.alias = alias;
-	this.counter = counter;
+        this.alias = alias;
+        this.counter = counter;
     }
 
     public String getAlias() {
-	return alias;
+        return alias;
     }
 
     public int getCounter() {
-	return counter;
+        return counter;
     }
 
     public String generate() {
-	return alias.concat(String.valueOf(counter));
+        return alias.concat(String.valueOf(counter));
     }
 }

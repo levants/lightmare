@@ -41,29 +41,29 @@ public class ParameterTuple {
     private static final String TO_TEXT_FORMAT = "%s : %s";
 
     public ParameterTuple(final String name, final Object value, final TemporalType temporalType) {
-	this.name = name;
-	this.value = value;
-	this.temporalType = temporalType;
+        this.name = name;
+        this.value = value;
+        this.temporalType = temporalType;
     }
 
     public ParameterTuple(final String name, final Object value) {
-	this(name, value, null);
+        this(name, value, null);
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public Object getValue() {
-	return value;
+        return value;
     }
 
     public TemporalType getTemporalType() {
-	return temporalType;
+        return temporalType;
     }
 
     @Override
     public String toString() {
-	return String.format(TO_TEXT_FORMAT, name, value);
+        return String.format(TO_TEXT_FORMAT, name, value);
     }
 }

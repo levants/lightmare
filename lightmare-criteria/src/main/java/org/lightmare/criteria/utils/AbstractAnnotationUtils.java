@@ -47,14 +47,14 @@ abstract class AbstractAnnotationUtils extends AbstractMemberUtils {
      * @throws IOException
      */
     public static List<Method> getAnnotatedMethods(Class<?> type, Class<? extends Annotation> annotationType)
-	    throws IOException {
+            throws IOException {
 
-	List<Method> methods = new ArrayList<Method>();
+        List<Method> methods = new ArrayList<Method>();
 
-	Method[] allMethods = getDeclaredMethods(type);
-	methods = filterByAnnotation(allMethods, annotationType);
+        Method[] allMethods = getDeclaredMethods(type);
+        methods = filterByAnnotation(allMethods, annotationType);
 
-	return methods;
+        return methods;
     }
 
     /**
@@ -67,13 +67,13 @@ abstract class AbstractAnnotationUtils extends AbstractMemberUtils {
      * @throws IOException
      */
     public static List<Field> getAnnotatedFields(Class<?> type, Class<? extends Annotation> annotationType)
-	    throws IOException {
+            throws IOException {
 
-	List<Field> fields = new ArrayList<Field>();
+        List<Field> fields = new ArrayList<Field>();
 
-	Field[] allFields = type.getDeclaredFields();
-	fields = filterByAnnotation(allFields, annotationType);
+        Field[] allFields = type.getDeclaredFields();
+        fields = filterByAnnotation(allFields, annotationType);
 
-	return fields;
+        return fields;
     }
 }

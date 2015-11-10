@@ -63,90 +63,90 @@ public class QueryTuple implements Serializable {
     private static final String FORMATTER = "%s %s %s";
 
     public QueryTuple(final String entityName, final String methodName, final String[] arguments,
-	    final String fieldName) {
-	this.entityName = entityName;
-	this.methodName = methodName;
-	this.arguments = arguments;
-	this.fieldName = fieldName;
+            final String fieldName) {
+        this.entityName = entityName;
+        this.methodName = methodName;
+        this.arguments = arguments;
+        this.fieldName = fieldName;
     }
 
     public String getEntityName() {
-	return entityName;
+        return entityName;
     }
 
     public String getMethodName() {
-	return methodName;
+        return methodName;
     }
 
     public String[] getArguments() {
-	return arguments;
+        return arguments;
     }
 
     public String getFieldName() {
-	return fieldName;
+        return fieldName;
     }
 
     public Class<?> getEntityType() {
-	return entityType;
+        return entityType;
     }
 
     public void setEntityType(Class<?> entityType) {
-	this.entityType = entityType;
+        this.entityType = entityType;
     }
 
     public Method getMethod() {
-	return method;
+        return method;
     }
 
     public void setMethod(Method method) {
-	this.method = method;
+        this.method = method;
     }
 
     public Field getField() {
-	return field;
+        return field;
     }
 
     public void setField(Field field) {
-	this.field = field;
+        this.field = field;
     }
 
     public TemporalType getTemporalType() {
-	return temporalType;
+        return temporalType;
     }
 
     public void setTemporalType(TemporalType temporalType) {
-	this.temporalType = temporalType;
+        this.temporalType = temporalType;
     }
 
     public Class<?> getGenericType() {
-	return genericType;
+        return genericType;
     }
 
     public void setGenericType(Class<?> genericType) {
-	this.genericType = genericType;
+        this.genericType = genericType;
     }
 
     public String getAlias() {
-	return alias;
+        return alias;
     }
 
     public void setAlias(String alias) {
-	this.alias = alias;
+        this.alias = alias;
     }
 
     public boolean hasNoAlias() {
-	return (this.alias == null || this.alias.isEmpty());
+        return (this.alias == null || this.alias.isEmpty());
     }
 
     public void setAlias(int index) {
 
-	if (this.alias == null || this.alias.isEmpty()) {
-	    this.alias = ALIAS_PREFIX.concat(String.valueOf(index));
-	}
+        if (this.alias == null || this.alias.isEmpty()) {
+            this.alias = ALIAS_PREFIX.concat(String.valueOf(index));
+        }
     }
 
     @Override
     public String toString() {
-	return String.format(FORMATTER, entityName, methodName, fieldName);
+        return String.format(FORMATTER, entityName, methodName, fieldName);
     }
 }
