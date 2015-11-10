@@ -55,34 +55,34 @@ abstract class Primitives {
      */
     public static Object getDefault(Class<?> clazz) {
 
-	Object value;
+        Object value;
 
-	if (clazz.isPrimitive()) {
+        if (clazz.isPrimitive()) {
 
-	    if (clazz.equals(byte.class)) {
-		value = BYTE_DEF;
-	    } else if (clazz.equals(boolean.class)) {
-		value = BOOLEAN_DEF;
-	    } else if (clazz.equals(char.class)) {
-		value = CHAR_DEF;
-	    } else if (clazz.equals(short.class)) {
-		value = SHORT_DEF;
-	    } else if (clazz.equals(int.class)) {
-		value = INT_DEF;
-	    } else if (clazz.equals(long.class)) {
-		value = LONG_DEF;
-	    } else if (clazz.equals(float.class)) {
-		value = FLOAT_DEF;
-	    } else if (clazz.equals(double.class)) {
-		value = DOUBLE_DEF;
-	    } else {
-		value = null;
-	    }
-	} else {
-	    value = null;
-	}
+            if (clazz.equals(byte.class)) {
+                value = BYTE_DEF;
+            } else if (clazz.equals(boolean.class)) {
+                value = BOOLEAN_DEF;
+            } else if (clazz.equals(char.class)) {
+                value = CHAR_DEF;
+            } else if (clazz.equals(short.class)) {
+                value = SHORT_DEF;
+            } else if (clazz.equals(int.class)) {
+                value = INT_DEF;
+            } else if (clazz.equals(long.class)) {
+                value = LONG_DEF;
+            } else if (clazz.equals(float.class)) {
+                value = FLOAT_DEF;
+            } else if (clazz.equals(double.class)) {
+                value = DOUBLE_DEF;
+            } else {
+                value = null;
+            }
+        } else {
+            value = null;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -93,32 +93,32 @@ abstract class Primitives {
      */
     public static <T> Class<T> getWrapper(Class<?> type) {
 
-	Class<T> wrapper;
+        Class<T> wrapper;
 
-	if (type.isPrimitive()) {
-	    if (type.equals(byte.class)) {
-		wrapper = ObjectUtils.cast(Byte.class);
-	    } else if (type.equals(boolean.class)) {
-		wrapper = ObjectUtils.cast(Boolean.class);
-	    } else if (type.equals(char.class)) {
-		wrapper = ObjectUtils.cast(Character.class);
-	    } else if (type.equals(short.class)) {
-		wrapper = ObjectUtils.cast(Short.class);
-	    } else if (type.equals(int.class)) {
-		wrapper = ObjectUtils.cast(Integer.class);
-	    } else if (type.equals(long.class)) {
-		wrapper = ObjectUtils.cast(Long.class);
-	    } else if (type.equals(float.class)) {
-		wrapper = ObjectUtils.cast(Float.class);
-	    } else if (type.equals(double.class)) {
-		wrapper = ObjectUtils.cast(Double.class);
-	    } else {
-		wrapper = ObjectUtils.cast(type);
-	    }
-	} else {
-	    wrapper = ObjectUtils.cast(type);
-	}
+        if (type.isPrimitive()) {
+            if (type.equals(byte.class)) {
+                wrapper = ObjectUtils.cast(Byte.class);
+            } else if (type.equals(boolean.class)) {
+                wrapper = ObjectUtils.cast(Boolean.class);
+            } else if (type.equals(char.class)) {
+                wrapper = ObjectUtils.cast(Character.class);
+            } else if (type.equals(short.class)) {
+                wrapper = ObjectUtils.cast(Short.class);
+            } else if (type.equals(int.class)) {
+                wrapper = ObjectUtils.cast(Integer.class);
+            } else if (type.equals(long.class)) {
+                wrapper = ObjectUtils.cast(Long.class);
+            } else if (type.equals(float.class)) {
+                wrapper = ObjectUtils.cast(Float.class);
+            } else if (type.equals(double.class)) {
+                wrapper = ObjectUtils.cast(Double.class);
+            } else {
+                wrapper = ObjectUtils.cast(type);
+            }
+        } else {
+            wrapper = ObjectUtils.cast(type);
+        }
 
-	return wrapper;
+        return wrapper;
     }
 }

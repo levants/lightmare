@@ -66,7 +66,7 @@ public abstract class CollectionUtils {
      */
     @FunctionalInterface
     public static interface Mapper<T, R> {
-	R apply(T value) throws IOException;
+        R apply(T value) throws IOException;
     }
 
     /**
@@ -76,7 +76,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean notEmpty(Collection<?> collection) {
-	return !collection.isEmpty();
+        return !collection.isEmpty();
     }
 
     /**
@@ -87,7 +87,7 @@ public abstract class CollectionUtils {
      * @return <code></code>
      */
     public static boolean valid(Collection<?> collection) {
-	return (collection != null && !collection.isEmpty());
+        return (collection != null && !collection.isEmpty());
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(Map<?, ?> map) {
-	return (map != null && !map.isEmpty());
+        return (map != null && !map.isEmpty());
     }
 
     /**
@@ -108,7 +108,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(Map<?, ?> map) {
-	return !valid(map);
+        return !valid(map);
     }
 
     /**
@@ -118,7 +118,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(Collection<?> collection) {
-	return !valid(collection);
+        return !valid(collection);
     }
 
     /**
@@ -129,7 +129,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalidAll(Collection<?>... collections) {
-	return !valid(collections);
+        return !valid(collections);
     }
 
     /**
@@ -141,13 +141,13 @@ public abstract class CollectionUtils {
      */
     public static <T> boolean validAll(T[] array, Predicate<T> validator) {
 
-	boolean valid = Objects.nonNull(array);
+        boolean valid = Objects.nonNull(array);
 
-	if (valid) {
-	    valid = Stream.of(array).allMatch(validator);
-	}
+        if (valid) {
+            valid = Stream.of(array).allMatch(validator);
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -158,7 +158,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean validAll(Map<?, ?>... maps) {
-	return validAll(maps, CollectionUtils::valid);
+        return validAll(maps, CollectionUtils::valid);
     }
 
     /**
@@ -169,7 +169,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(Object[] array) {
-	return (array != null && array.length > EMPTY_ARRAY_LENGTH);
+        return (array != null && array.length > EMPTY_ARRAY_LENGTH);
     }
 
     /**
@@ -179,7 +179,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(Object[] array) {
-	return !valid(array);
+        return !valid(array);
     }
 
     /**
@@ -189,7 +189,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static <T> boolean isEmpty(T[] array) {
-	return array == null || array.length == EMPTY;
+        return array == null || array.length == EMPTY;
     }
 
     /**
@@ -200,7 +200,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean validAll(Collection<?>... collections) {
-	return validAll(collections, CollectionUtils::valid);
+        return validAll(collections, CollectionUtils::valid);
     }
 
     /**
@@ -211,7 +211,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean validAll(Object[]... arrays) {
-	return validAll(arrays, CollectionUtils::valid);
+        return validAll(arrays, CollectionUtils::valid);
     }
 
     /**
@@ -223,7 +223,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static <K, V> boolean notContains(Map<K, V> map, K key) {
-	return (key == null || invalid(map) || Boolean.FALSE.equals(map.containsKey(key)));
+        return (key == null || invalid(map) || Boolean.FALSE.equals(map.containsKey(key)));
     }
 
     /**
@@ -235,8 +235,8 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static <E> boolean notContains(Collection<E> collection, E element) {
-	return ((element == null || invalid(collection))
-		|| (valid(collection) && ObjectUtils.notTrue(collection.contains(element))));
+        return ((element == null || invalid(collection))
+                || (valid(collection) && ObjectUtils.notTrue(collection.contains(element))));
     }
 
     /**
@@ -249,15 +249,15 @@ public abstract class CollectionUtils {
      */
     private static <T> T getFirstFromList(List<T> list, T defaultValue) {
 
-	T value;
+        T value;
 
-	if (valid(list)) {
-	    value = list.get(FIRST_INDEX);
-	} else {
-	    value = defaultValue;
-	}
+        if (valid(list)) {
+            value = list.get(FIRST_INDEX);
+        } else {
+            value = defaultValue;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -268,19 +268,19 @@ public abstract class CollectionUtils {
      */
     public static <T> T getFirst(Collection<T> collection, T defaultValue) {
 
-	T value;
+        T value;
 
-	if (valid(collection)) {
-	    if (collection instanceof List) {
-		value = getFirstFromList(((List<T>) collection), defaultValue);
-	    } else {
-		value = collection.iterator().next();
-	    }
-	} else {
-	    value = defaultValue;
-	}
+        if (valid(collection)) {
+            if (collection instanceof List) {
+                value = getFirstFromList(((List<T>) collection), defaultValue);
+            } else {
+                value = collection.iterator().next();
+            }
+        } else {
+            value = defaultValue;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -290,7 +290,7 @@ public abstract class CollectionUtils {
      * @return T first element or default value
      */
     public static <T> T getFirst(Collection<T> collection) {
-	return getFirst(collection, null);
+        return getFirst(collection, null);
     }
 
     /**
@@ -303,15 +303,15 @@ public abstract class CollectionUtils {
      */
     public static <T> T getFirst(T[] values, T defaultValue) {
 
-	T value;
+        T value;
 
-	if (valid(values)) {
-	    value = values[FIRST_INDEX];
-	} else {
-	    value = defaultValue;
-	}
+        if (valid(values)) {
+            value = values[FIRST_INDEX];
+        } else {
+            value = defaultValue;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -321,7 +321,7 @@ public abstract class CollectionUtils {
      * @return T first element of array
      */
     public static <T> T getFirst(T[] values) {
-	return getFirst(values, null);
+        return getFirst(values, null);
     }
 
     /**
@@ -334,14 +334,14 @@ public abstract class CollectionUtils {
      */
     public static <T, R> void map(T[] from, R[] to, Mapper<? super T, ? extends R> mapper) throws IOException {
 
-	int length = from.length;
-	T value;
-	R mapped;
-	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-	    value = from[i];
-	    mapped = mapper.apply(value);
-	    to[i] = mapped;
-	}
+        int length = from.length;
+        T value;
+        R mapped;
+        for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
+            value = from[i];
+            mapped = mapper.apply(value);
+            to[i] = mapped;
+        }
     }
 
     /**
@@ -353,6 +353,6 @@ public abstract class CollectionUtils {
      * @return E first chosen element by {@link Predicate}
      */
     public static <E> E getFirstValid(Collection<E> collection, Predicate<E> predicate) {
-	return collection.stream().filter(c -> predicate.test(c)).findFirst().get();
+        return collection.stream().filter(c -> predicate.test(c)).findFirst().get();
     }
 }

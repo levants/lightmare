@@ -50,16 +50,16 @@ abstract class AbstractClassUtils extends Primitives {
      */
     protected static IOException unwrap(InvocationTargetException ex) {
 
-	IOException exception;
+        IOException exception;
 
-	Throwable targetException = ex.getTargetException();
-	if (targetException == null) {
-	    exception = new IOException(ex.getMessage(), ex);
-	} else {
-	    exception = new IOException(targetException.getMessage(), targetException);
-	}
+        Throwable targetException = ex.getTargetException();
+        if (targetException == null) {
+            exception = new IOException(ex.getMessage(), ex);
+        } else {
+            exception = new IOException(targetException.getMessage(), targetException);
+        }
 
-	return exception;
+        return exception;
     }
 
     /**
@@ -69,7 +69,7 @@ abstract class AbstractClassUtils extends Primitives {
      * @return <code>boolean</code>
      */
     private static boolean notAccessible(AccessibleObject accessibleObject) {
-	return ObjectUtils.notTrue(accessibleObject.isAccessible());
+        return ObjectUtils.notTrue(accessibleObject.isAccessible());
     }
 
     /**
@@ -79,9 +79,9 @@ abstract class AbstractClassUtils extends Primitives {
      */
     private static void setAccessibleFlag(AccessibleObject accessibleObject) {
 
-	if (notAccessible(accessibleObject)) {
-	    accessibleObject.setAccessible(Boolean.TRUE);
-	}
+        if (notAccessible(accessibleObject)) {
+            accessibleObject.setAccessible(Boolean.TRUE);
+        }
     }
 
     /**
@@ -91,11 +91,11 @@ abstract class AbstractClassUtils extends Primitives {
      */
     protected static void makeAccessible(AccessibleObject accessibleObject) {
 
-	if (notAccessible(accessibleObject)) {
-	    synchronized (accessibleObject) {
-		setAccessibleFlag(accessibleObject);
-	    }
-	}
+        if (notAccessible(accessibleObject)) {
+            synchronized (accessibleObject) {
+                setAccessibleFlag(accessibleObject);
+            }
+        }
     }
 
     /**
@@ -106,7 +106,7 @@ abstract class AbstractClassUtils extends Primitives {
      * @return
      */
     protected static <T extends AccessibleObject> List<T> filterByAnnotation(T[] array,
-	    Class<? extends Annotation> annotationType) {
-	return Stream.of(array).filter(c -> c.isAnnotationPresent(annotationType)).collect(Collectors.toList());
+            Class<? extends Annotation> annotationType) {
+        return Stream.of(array).filter(c -> c.isAnnotationPresent(annotationType)).collect(Collectors.toList());
     }
 }

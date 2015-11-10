@@ -43,7 +43,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static boolean notTrue(boolean statement) {
-	return !statement;
+        return !statement;
     }
 
     /**
@@ -53,7 +53,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean notNullAll(Object... values) {
-	return CollectionUtils.validAll(values, Objects::nonNull);
+        return CollectionUtils.validAll(values, Objects::nonNull);
     }
 
     /**
@@ -64,7 +64,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static <X, Y> boolean notEquals(X x, Y y) {
-	return (!Objects.equals(x, y));
+        return (!Objects.equals(x, y));
     }
 
     /**
@@ -75,10 +75,10 @@ public abstract class ObjectUtils {
      */
     public static <T> T cast(Object data) {
 
-	@SuppressWarnings("unchecked")
-	T value = (T) data;
+        @SuppressWarnings("unchecked")
+        T value = (T) data;
 
-	return value;
+        return value;
     }
 
     /**
@@ -91,18 +91,18 @@ public abstract class ObjectUtils {
      */
     public static byte[] serialize(Object value) throws IOException {
 
-	byte[] data;
+        byte[] data;
 
-	ByteArrayOutputStream stream = new ByteArrayOutputStream();
-	ObjectOutputStream out = new ObjectOutputStream(stream);
-	try {
-	    out.writeObject(value);
-	    data = stream.toByteArray();
-	} finally {
-	    IOUtils.closeAll(stream, out);
-	}
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(stream);
+        try {
+            out.writeObject(value);
+            data = stream.toByteArray();
+        } finally {
+            IOUtils.closeAll(stream, out);
+        }
 
-	return data;
+        return data;
     }
 
     /**
@@ -115,14 +115,14 @@ public abstract class ObjectUtils {
      */
     public static Object deserialize(byte[] data) throws IOException {
 
-	Object value;
+        Object value;
 
-	try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data))) {
-	    value = in.readObject();
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	}
+        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data))) {
+            value = in.readObject();
+        } catch (ClassNotFoundException ex) {
+            throw new IOException(ex);
+        }
 
-	return value;
+        return value;
     }
 }

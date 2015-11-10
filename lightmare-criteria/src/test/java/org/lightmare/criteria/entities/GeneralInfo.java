@@ -13,18 +13,18 @@ public class GeneralInfo {
     private String addrress;
 
     public String getFullName() {
-	return fullName;
+        return fullName;
     }
 
     public void setFullName(String fullName) {
-	this.fullName = fullName;
+        this.fullName = fullName;
     }
 
     public String getAddrress() {
-	return addrress;
+        return addrress;
     }
 
     public void setAddrress(String addrress) {
-	this.addrress = addrress;
+        this.addrress = addrress;
     }
 }

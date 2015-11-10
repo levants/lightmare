@@ -45,34 +45,34 @@ public class SortedRunner extends BlockJUnit4ClassRunner {
     private static final int LESS = -1;
 
     public SortedRunner(Class<?> testClass) throws InitializationError {
-	super(testClass);
+        super(testClass);
     }
 
     private static int compare(FrameworkMethod method1, FrameworkMethod method2) {
 
-	int comp;
+        int comp;
 
-	RunOrder order1 = method1.getAnnotation(RunOrder.class);
-	RunOrder order2 = method2.getAnnotation(RunOrder.class);
-	if (order1 == null && order2 == null) {
-	    comp = EQUALS;
-	} else if (Objects.nonNull(order1) && order2 == null) {
-	    comp = MORE;
-	} else if (order1 == null && Objects.nonNull(order2)) {
-	    comp = LESS;
-	} else {
-	    comp = Double.compare(order1.value(), order2.value());
-	}
+        RunOrder order1 = method1.getAnnotation(RunOrder.class);
+        RunOrder order2 = method2.getAnnotation(RunOrder.class);
+        if (order1 == null && order2 == null) {
+            comp = EQUALS;
+        } else if (Objects.nonNull(order1) && order2 == null) {
+            comp = MORE;
+        } else if (order1 == null && Objects.nonNull(order2)) {
+            comp = LESS;
+        } else {
+            comp = Double.compare(order1.value(), order2.value());
+        }
 
-	return comp;
+        return comp;
     }
 
     @Override
     protected List<FrameworkMethod> computeTestMethods() {
 
-	List<FrameworkMethod> list = super.computeTestMethods();
-	Collections.sort(list, SortedRunner::compare);
+        List<FrameworkMethod> list = super.computeTestMethods();
+        Collections.sort(list, SortedRunner::compare);
 
-	return list;
+        return list;
     }
 }

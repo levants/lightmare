@@ -30,62 +30,62 @@ public class TestEnviromentConfig {
 
     protected static Date getDateValue(int before) {
 
-	Date date;
+        Date date;
 
-	Calendar calendar = Calendar.getInstance();
-	calendar.setTime(defaultDate);
-	calendar.add(Calendar.YEAR, -before);
-	date = calendar.getTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(defaultDate);
+        calendar.add(Calendar.YEAR, -before);
+        date = calendar.getTime();
 
-	return date;
+        return date;
     }
 
     protected static Date getDateValue() {
-	return getDateValue(100);
+        return getDateValue(100);
     }
 
     @BeforeClass
     public static void config() {
 
-	try {
-	    emf = TestDBUtils.create();
-	} catch (Exception ex) {
-	    ex.printStackTrace();
-	}
+        try {
+            emf = TestDBUtils.create();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     protected QueryStream<Person> createQueryStream(final EntityManager em) {
 
-	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
+        QueryStream<Person> stream = QueryProvider.select(em, Person.class);
 
-	stream.where().moreOrEquals(c -> c.getBirthDate(), getDateValue()).and();
-	stream.like(Person::getLastName, "lname");
-	stream.and().brackets(
-		part -> part.like(Person::getFirstName, "fname").or().equals(Person::getPersonalNo, PERSONAL_NO1));
-	stream.or().isNull(Person::getInfo);
-	stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
-	stream.orderBy(Person::getPersonId);
-	stream.in(Person::getPersonId, IDENTIFIERS);
+        stream.where().moreOrEquals(c -> c.getBirthDate(), getDateValue()).and();
+        stream.like(Person::getLastName, "lname");
+        stream.and().brackets(
+                part -> part.like(Person::getFirstName, "fname").or().equals(Person::getPersonalNo, PERSONAL_NO1));
+        stream.or().isNull(Person::getInfo);
+        stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
+        stream.orderBy(Person::getPersonId);
+        stream.in(Person::getPersonId, IDENTIFIERS);
 
-	return stream;
+        return stream;
     }
 
     @Test
     public void queryStreamTest() {
 
-	EntityManager em = emf.createEntityManager();
-	try {
-	    QueryStream<Person> stream = createQueryStream(em);
-	    String sql = stream.sql();
-	    System.out.println();
-	    System.out.println("===============FIRST=TEST===================");
-	    System.out.println(sql);
-	    System.out.println("============================================");
-	    System.out.println();
-	} catch (Throwable ex) {
-	    ex.printStackTrace();
-	} finally {
-	    em.close();
-	}
+        EntityManager em = emf.createEntityManager();
+        try {
+            QueryStream<Person> stream = createQueryStream(em);
+            String sql = stream.sql();
+            System.out.println();
+            System.out.println("===============FIRST=TEST===================");
+            System.out.println(sql);
+            System.out.println("============================================");
+            System.out.println();
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 }

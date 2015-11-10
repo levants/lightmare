@@ -13,18 +13,18 @@ public class PersonInfo {
     private String note;
 
     public String getCardNumber() {
-	return cardNumber;
+        return cardNumber;
     }
 
     public void setCardNumber(String cardNumber) {
-	this.cardNumber = cardNumber;
+        this.cardNumber = cardNumber;
     }
 
     public String getNote() {
-	return note;
+        return note;
     }
 
     public void setNote(String note) {
-	this.note = note;
+        this.note = note;
     }
 }

@@ -58,85 +58,85 @@ public class Person extends GeneralInfo {
     private PersonInfo info;
 
     public Long getPersonId() {
-	return personId;
+        return personId;
     }
 
     public void setPersonId(Long personId) {
-	this.personId = personId;
+        this.personId = personId;
     }
 
     public String getPersonalNo() {
-	return personalNo;
+        return personalNo;
     }
 
     public void setPersonalNo(String personalNo) {
-	this.personalNo = personalNo;
+        this.personalNo = personalNo;
     }
 
     public String getLastName() {
-	return lastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-	this.lastName = lastName;
+        this.lastName = lastName;
     }
 
     public String getFirstName() {
-	return firstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-	this.firstName = firstName;
+        this.firstName = firstName;
     }
 
     public Date getBirthDate() {
-	return birthDate;
+        return birthDate;
     }
 
     public void setBirthDate(Date birthDate) {
-	this.birthDate = birthDate;
+        this.birthDate = birthDate;
     }
 
     public String getMiddName() {
-	return middName;
+        return middName;
     }
 
     public void setMiddName(String middName) {
-	this.middName = middName;
+        this.middName = middName;
     }
 
     public Set<Phone> getPhones() {
-	return phones;
+        return phones;
     }
 
     public void setPhones(Set<Phone> phones) {
-	this.phones = phones;
+        this.phones = phones;
     }
 
     public Collection<Long> getIdentifiers() {
 
-	if (identifiers == null) {
-	    identifiers = new HashSet<>(
-		    Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L));
-	}
+        if (identifiers == null) {
+            identifiers = new HashSet<>(
+                    Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L));
+        }
 
-	return identifiers;
+        return identifiers;
     }
 
     public void setIdentifiers(Collection<Long> identifiers) {
-	this.identifiers = identifiers;
+        this.identifiers = identifiers;
     }
 
     public PersonInfo getInfo() {
-	return info;
+        return info;
     }
 
     public void setInfo(PersonInfo info) {
-	this.info = info;
+        this.info = info;
     }
 
     @Override
     public String toString() {
-	return String.format("%s %s %s %s %s %s", personId, personalNo, lastName, firstName, birthDate, middName);
+        return String.format("%s %s %s %s %s %s", personId, personalNo, lastName, firstName, birthDate, middName);
     }
 }

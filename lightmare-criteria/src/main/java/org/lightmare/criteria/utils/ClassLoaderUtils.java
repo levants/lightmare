@@ -46,7 +46,7 @@ public class ClassLoaderUtils {
      * @return {@link String} class file name
      */
     public static String getAsResource(String name) {
-	return name.replace(StringUtils.DOT, File.separatorChar).concat(CLASS);
+        return name.replace(StringUtils.DOT, File.separatorChar).concat(CLASS);
     }
 
     /**
@@ -56,13 +56,13 @@ public class ClassLoaderUtils {
      */
     public static ClassLoader getContextClassLoader() {
 
-	ClassLoader loader;
+        ClassLoader loader;
 
-	Thread current = Thread.currentThread();
-	PrivilegedAction<ClassLoader> action = current::getContextClassLoader;
-	loader = AccessController.doPrivileged(action);
+        Thread current = Thread.currentThread();
+        PrivilegedAction<ClassLoader> action = current::getContextClassLoader;
+        loader = AccessController.doPrivileged(action);
 
-	return loader;
+        return loader;
     }
 
     /**
@@ -74,12 +74,12 @@ public class ClassLoaderUtils {
      */
     public static InputStream getResourceAsStream(String resource) {
 
-	InputStream is;
+        InputStream is;
 
-	ClassLoader loader = getContextClassLoader();
-	is = loader.getResourceAsStream(resource);
+        ClassLoader loader = getContextClassLoader();
+        is = loader.getResourceAsStream(resource);
 
-	return is;
+        return is;
     }
 
     /**
@@ -93,12 +93,12 @@ public class ClassLoaderUtils {
      */
     private static InputStream getClassResourceAsStream(String name, String resource) throws IOException {
 
-	InputStream is;
+        InputStream is;
 
-	Class<?> type = ClassUtils.classForName(name);
-	is = type.getResourceAsStream(resource);
+        Class<?> type = ClassUtils.classForName(name);
+        is = type.getResourceAsStream(resource);
 
-	return is;
+        return is;
     }
 
     /**
@@ -110,12 +110,12 @@ public class ClassLoaderUtils {
      */
     public static InputStream getClassResourceAsStream(String name) throws IOException {
 
-	InputStream is;
+        InputStream is;
 
-	String resource = getAsResource(name);
-	is = getClassResourceAsStream(name, resource);
+        String resource = getAsResource(name);
+        is = getClassResourceAsStream(name, resource);
 
-	return is;
+        return is;
     }
 
     /**
@@ -127,15 +127,15 @@ public class ClassLoaderUtils {
      */
     public static InputStream getClassAsStream(String name) throws IOException {
 
-	InputStream is;
+        InputStream is;
 
-	String resource = getAsResource(name);
-	is = getResourceAsStream(resource);
-	if (is == null) {
-	    is = getClassResourceAsStream(name, resource);
-	}
+        String resource = getAsResource(name);
+        is = getResourceAsStream(resource);
+        if (is == null) {
+            is = getClassResourceAsStream(name, resource);
+        }
 
-	return is;
+        return is;
     }
 
     /**
@@ -147,11 +147,11 @@ public class ClassLoaderUtils {
      */
     private static void loadClass(String className, ClassLoader loader) throws IOException {
 
-	try {
-	    loader.loadClass(className);
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            loader.loadClass(className);
+        } catch (ClassNotFoundException ex) {
+            throw new IOException(ex);
+        }
     }
 
     /**
@@ -162,11 +162,11 @@ public class ClassLoaderUtils {
      */
     public static void loadClasses(Collection<String> classes, ClassLoader loader) throws IOException {
 
-	if (CollectionUtils.valid(classes) && Objects.nonNull(loader)) {
-	    for (String className : classes) {
-		loadClass(className, loader);
-	    }
-	}
+        if (CollectionUtils.valid(classes) && Objects.nonNull(loader)) {
+            for (String className : classes) {
+                loadClass(className, loader);
+            }
+        }
     }
 
     /**
@@ -177,7 +177,7 @@ public class ClassLoaderUtils {
      */
     public static void loadClasses(Collection<String> classes) throws IOException {
 
-	ClassLoader loader = getContextClassLoader();
-	loadClasses(classes, loader);
+        ClassLoader loader = getContextClassLoader();
+        loadClasses(classes, loader);
     }
 }

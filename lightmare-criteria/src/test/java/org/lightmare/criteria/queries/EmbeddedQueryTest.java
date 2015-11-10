@@ -18,60 +18,60 @@ public class EmbeddedQueryTest extends JoinQueryTest {
     @RunOrder(300)
     public void embeddedQueryTest() {
 
-	EntityManager em = emf.createEntityManager();
-	try {
-	    // ============= Query construction ============== //
-	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-		    .like(Person::getLastName, "lname")
-		    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, "100100"));
-	    String sql = stream.sql();
-	    System.out.println(sql);
-	} catch (Throwable ex) {
-	    ex.printStackTrace();
-	} finally {
-	    em.close();
-	}
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .like(Person::getLastName, "lname")
+                    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, "100100"));
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Test
     @RunOrder(301)
     public void embeddedWithParentTest() {
 
-	EntityManager em = emf.createEntityManager();
-	try {
-	    // ============= Query construction ============== //
-	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-		    .like(Person::getLastName, "lname")
-		    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPersonalNo)
-			    .equals(PersonInfo::getNote, "100100"));
-	    String sql = stream.sql();
-	    System.out.println(sql);
-	} catch (Throwable ex) {
-	    ex.printStackTrace();
-	} finally {
-	    em.close();
-	}
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .like(Person::getLastName, "lname")
+                    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPersonalNo)
+                            .equals(PersonInfo::getNote, "100100"));
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Test
     @RunOrder(302)
     public void embeddedWithParentAndSelfTest() {
 
-	EntityManager em = emf.createEntityManager();
-	try {
-	    // ============= Query construction ============== //
-	    QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-		    .like(Person::getLastName, "lname")
-		    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPersonalNo)
-			    .equals(PersonInfo::getNote, PersonInfo::getCardNumber));
-	    Person person = stream.getFirst();
-	    String sql = stream.sql();
-	    System.out.println(sql);
-	    System.out.println(person);
-	} catch (Throwable ex) {
-	    ex.printStackTrace();
-	} finally {
-	    em.close();
-	}
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .like(Person::getLastName, "lname")
+                    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPersonalNo)
+                            .equals(PersonInfo::getNote, PersonInfo::getCardNumber));
+            Person person = stream.getFirst();
+            String sql = stream.sql();
+            System.out.println(sql);
+            System.out.println(person);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 }

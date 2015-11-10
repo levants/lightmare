@@ -25,26 +25,26 @@ public class Phone {
     private String phoneNumber;
 
     public Long getPhoneId() {
-	return phoneId;
+        return phoneId;
     }
 
     public void setPhoneId(Long phoneId) {
-	this.phoneId = phoneId;
+        this.phoneId = phoneId;
     }
 
     public Long getOperatorId() {
-	return operatorId;
+        return operatorId;
     }
 
     public void setOperatorId(Long operatorId) {
-	this.operatorId = operatorId;
+        this.operatorId = operatorId;
     }
 
     public String getPhoneNumber() {
-	return phoneNumber;
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-	this.phoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 }

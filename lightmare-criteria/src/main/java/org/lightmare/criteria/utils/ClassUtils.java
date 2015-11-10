@@ -46,17 +46,17 @@ public class ClassUtils extends AbstractMemberUtils {
      * @throws ClassNotFoundException
      */
     private static Class<?> forName(String className, boolean initialize, ClassLoader loader)
-	    throws ClassNotFoundException {
+            throws ClassNotFoundException {
 
-	Class<?> type;
+        Class<?> type;
 
-	if (loader == null) {
-	    type = Class.forName(className);
-	} else {
-	    type = Class.forName(className, initialize, loader);
-	}
+        if (loader == null) {
+            type = Class.forName(className);
+        } else {
+            type = Class.forName(className, initialize, loader);
+        }
 
-	return type;
+        return type;
     }
 
     /**
@@ -71,15 +71,15 @@ public class ClassUtils extends AbstractMemberUtils {
      */
     public static Class<?> classForName(String className, boolean initialize, ClassLoader loader) throws IOException {
 
-	Class<?> type;
+        Class<?> type;
 
-	try {
-	    type = forName(className, initialize, loader);
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            type = forName(className, initialize, loader);
+        } catch (ClassNotFoundException ex) {
+            throw new IOException(ex);
+        }
 
-	return type;
+        return type;
     }
 
     /**
@@ -92,7 +92,7 @@ public class ClassUtils extends AbstractMemberUtils {
      * @throws IOException
      */
     public static Class<?> classForName(String className, ClassLoader loader) throws IOException {
-	return classForName(className, Boolean.TRUE, loader);
+        return classForName(className, Boolean.TRUE, loader);
     }
 
     /**
@@ -103,6 +103,6 @@ public class ClassUtils extends AbstractMemberUtils {
      * @throws IOException
      */
     public static Class<?> classForName(String className) throws IOException {
-	return classForName(className, null);
+        return classForName(className, null);
     }
 }

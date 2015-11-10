@@ -55,7 +55,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(CharSequence chars) {
-	return chars != null && chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
+        return chars != null && chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
     }
 
     /**
@@ -67,13 +67,13 @@ public abstract class StringUtils {
      */
     public static boolean validAll(CharSequence... lines) {
 
-	boolean valid = CollectionUtils.valid(lines);
+        boolean valid = CollectionUtils.valid(lines);
 
-	if (valid) {
-	    valid = Stream.of(lines).allMatch(c -> valid(c));
-	}
+        if (valid) {
+            valid = Stream.of(lines).allMatch(c -> valid(c));
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -83,14 +83,14 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(CharSequence chars) {
-	return !valid(chars);
+        return !valid(chars);
     }
 
     private static void appendAll(StringBuilder text, Object... parts) {
 
-	for (Object part : parts) {
-	    text.append(part);
-	}
+        for (Object part : parts) {
+            text.append(part);
+        }
     }
 
     /**
@@ -101,19 +101,19 @@ public abstract class StringUtils {
      */
     public static String concat(Object... parts) {
 
-	String resultText;
+        String resultText;
 
-	if (parts == null) {
-	    resultText = null;
-	} else if (CollectionUtils.isEmpty(parts)) {
-	    resultText = EMPTY_STRING;
-	} else {
-	    StringBuilder text = new StringBuilder();
-	    appendAll(text, parts);
-	    resultText = text.toString();
-	}
+        if (parts == null) {
+            resultText = null;
+        } else if (CollectionUtils.isEmpty(parts)) {
+            resultText = EMPTY_STRING;
+        } else {
+            StringBuilder text = new StringBuilder();
+            appendAll(text, parts);
+            resultText = text.toString();
+        }
 
-	return resultText;
+        return resultText;
     }
 
     /**
@@ -123,9 +123,9 @@ public abstract class StringUtils {
      */
     public static void clear(StringBuilder text) {
 
-	if (valid(text)) {
-	    text.delete(CollectionUtils.FIRST_INDEX, text.length());
-	}
+        if (valid(text)) {
+            text.delete(CollectionUtils.FIRST_INDEX, text.length());
+        }
     }
 
     /**
@@ -137,7 +137,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean notContains(String text, CharSequence item) {
-	return (text == null || ObjectUtils.notTrue(text.contains(item)));
+        return (text == null || ObjectUtils.notTrue(text.contains(item)));
     }
 
     /**
@@ -149,18 +149,18 @@ public abstract class StringUtils {
      */
     public static boolean endsWith(CharSequence item, CharSequence text) {
 
-	boolean valid;
+        boolean valid;
 
-	int length = item.length();
-	int start = length - text.length();
-	if (start > CollectionUtils.EMPTY) {
-	    CharSequence sub = item.subSequence(start, length);
-	    valid = sub.equals(text);
-	} else {
-	    valid = Boolean.FALSE;
-	}
+        int length = item.length();
+        int start = length - text.length();
+        if (start > CollectionUtils.EMPTY) {
+            CharSequence sub = item.subSequence(start, length);
+            valid = sub.equals(text);
+        } else {
+            valid = Boolean.FALSE;
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -171,7 +171,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean notEndsWith(CharSequence item, CharSequence text) {
-	return ObjectUtils.notTrue(endsWith(item, text));
+        return ObjectUtils.notTrue(endsWith(item, text));
     }
 
     /**
@@ -183,6 +183,6 @@ public abstract class StringUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean notEndsWithAll(CharSequence item, CharSequence... texts) {
-	return CollectionUtils.validAll(texts, c -> notEndsWith(item, c));
+        return CollectionUtils.validAll(texts, c -> notEndsWith(item, c));
     }
 }

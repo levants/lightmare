@@ -57,9 +57,9 @@ public class IOUtils {
      */
     public static void close(Closeable closeable) throws IOException {
 
-	if (Objects.nonNull(closeable)) {
-	    closeable.close();
-	}
+        if (Objects.nonNull(closeable)) {
+            closeable.close();
+        }
     }
 
     /**
@@ -71,11 +71,11 @@ public class IOUtils {
      */
     public static void closeAll(Closeable... closeables) throws IOException {
 
-	if (CollectionUtils.valid(closeables)) {
-	    for (Closeable closeable : closeables) {
-		close(closeable);
-	    }
-	}
+        if (CollectionUtils.valid(closeables)) {
+            for (Closeable closeable : closeables) {
+                close(closeable);
+            }
+        }
     }
 
     /**
@@ -86,7 +86,7 @@ public class IOUtils {
      * @throws IOException
      */
     public static boolean notAvailable(InputStream stream) throws IOException {
-	return ((stream == null) || (stream.available() == ZERO_AVAILABLE_STREAM));
+        return ((stream == null) || (stream.available() == ZERO_AVAILABLE_STREAM));
     }
 
     /**
@@ -97,7 +97,7 @@ public class IOUtils {
      * @throws IOException
      */
     public static boolean available(InputStream stream) throws IOException {
-	return Objects.nonNull(stream) && stream.available() > ZERO_AVAILABLE_STREAM;
+        return Objects.nonNull(stream) && stream.available() > ZERO_AVAILABLE_STREAM;
     }
 
     /**
@@ -110,15 +110,15 @@ public class IOUtils {
      */
     public static void write(InputStream in, OutputStream out) throws IOException {
 
-	try {
-	    byte[] buffer = new byte[BUFFER_SIZE];
-	    int len = in.read(buffer);
-	    while (ObjectUtils.notEquals(len, NOT_EXISTING_INDEX)) {
-		out.write(buffer, ZERO_OFFSET, len);
-		len = in.read(buffer);
-	    }
-	} finally {
-	    closeAll(in, out);
-	}
+        try {
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int len = in.read(buffer);
+            while (ObjectUtils.notEquals(len, NOT_EXISTING_INDEX)) {
+                out.write(buffer, ZERO_OFFSET, len);
+                len = in.read(buffer);
+            }
+        } finally {
+            closeAll(in, out);
+        }
     }
 }
