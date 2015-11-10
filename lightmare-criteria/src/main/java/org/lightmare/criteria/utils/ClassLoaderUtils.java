@@ -23,6 +23,7 @@
 package org.lightmare.criteria.utils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Collection;
@@ -49,6 +50,23 @@ public class ClassLoaderUtils {
 	loader = AccessController.doPrivileged(action);
 
 	return loader;
+    }
+
+    /**
+     * Gets resource as {@link InputStream} by name from current {@link Thread}
+     * 's context class loader
+     * 
+     * @param resource
+     * @return {@link InputStream} from current {@link ClassLoader}
+     */
+    public static InputStream getResourceAsStream(String resource) {
+
+	InputStream is;
+
+	ClassLoader loader = getContextClassLoader();
+	is = loader.getResourceAsStream(resource);
+
+	return is;
     }
 
     /**

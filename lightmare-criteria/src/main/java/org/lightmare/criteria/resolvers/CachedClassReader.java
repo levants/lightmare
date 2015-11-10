@@ -22,10 +22,15 @@
  */
 package org.lightmare.criteria.resolvers;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.lightmare.criteria.utils.ClassLoaderUtils;
+import org.lightmare.criteria.utils.IOUtils;
+import org.lightmare.criteria.utils.StringUtils;
 import org.objectweb.asm.ClassReader;
 
 /**
@@ -38,12 +43,46 @@ public class CachedClassReader extends ClassReader {
 
     private static final ConcurrentMap<String, ClassReader> CLASS_FILES = new ConcurrentHashMap<>();
 
+    private static final String CLASS = ".class";
+
     public CachedClassReader(byte[] buff) {
 	super(buff);
     }
 
-    public CachedClassReader(String name) throws IOException {
-	super(name);
+    public CachedClassReader(InputStream is) throws IOException {
+	super(is);
+    }
+
+    /**
+     * Generates class file name from class name
+     * 
+     * @param name
+     * @return {@link String} class file name
+     */
+    private static String getResource(String name) {
+	return name.replace(StringUtils.DOT, File.separatorChar).concat(CLASS);
+    }
+
+    /**
+     * Initializes {@link org.objectweb.asm.ClassReader} from class name
+     * 
+     * @param name
+     * @return {@link org.objectweb.asm.ClassReader} by class name
+     * @throws IOException
+     */
+    private static ClassReader initClassReader(String name) throws IOException {
+
+	ClassReader classReader;
+
+	String resource = getResource(name);
+	InputStream is = ClassLoaderUtils.getResourceAsStream(resource);
+	try {
+	    classReader = new CachedClassReader(is);
+	} finally {
+	    IOUtils.close(is);
+	}
+
+	return classReader;
     }
 
     /**
@@ -58,7 +97,7 @@ public class CachedClassReader extends ClassReader {
 	ClassReader classReader = CLASS_FILES.get(name);
 
 	if (classReader == null) {
-	    classReader = new CachedClassReader(name);
+	    classReader = initClassReader(name);
 	    CLASS_FILES.putIfAbsent(name, classReader);
 	}
 

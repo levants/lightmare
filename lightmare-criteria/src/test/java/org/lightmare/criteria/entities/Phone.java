@@ -13,8 +13,8 @@ import javax.persistence.TableGenerator;
 public class Phone {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.linq.entities.Person")
-    @TableGenerator(name = "org.lightmare.linq.entities.Person", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "PERSONS", valueColumnName = "KEY_VALUE", allocationSize = 20)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.linq.entities.Phone")
+    @TableGenerator(name = "org.lightmare.linq.entities.Phone", table = "ID_GENERATORS", pkColumnName = "TABLE_NAME", pkColumnValue = "PERSONS", valueColumnName = "KEY_VALUE", allocationSize = 20)
     @Column(name = "PHONE_ID")
     private Long phoneId;
 

@@ -12,14 +12,28 @@
 	<name>lightmare-criteria</name>
 	<packaging>jar</packaging>
 
-	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
-	</properties>
-
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>${maven.enforcer.version}</version>
+				<executions>
+					<execution>
+						<id>enforce-java</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireJavaVersion>
+									<version>${maven.compiler.target}</version>
+								</requireJavaVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven.compiler.plugin}</version>
@@ -30,6 +44,14 @@
 						<goals>
 							<goal>testCompile</goal>
 						</goals>
+						<configuration>
+							<showDeprecation>true</showDeprecation>
+							<showWarnings>true</showWarnings>
+							<compilerArguments>
+								<source>${maven.compiler.testTarget}</source>
+								<target>${maven.compiler.testSource}</target>
+							</compilerArguments>
+						</configuration>
 					</execution>
 					<execution>
 						<id>default-compile</id>
@@ -37,6 +59,14 @@
 						<goals>
 							<goal>compile</goal>
 						</goals>
+						<configuration>
+							<showDeprecation>true</showDeprecation>
+							<showWarnings>true</showWarnings>
+							<compilerArguments>
+								<source>${maven.compiler.target}</source>
+								<target>${maven.compiler.source}</target>
+							</compilerArguments>
+						</configuration>
 					</execution>
 				</executions>
 				<configuration>
