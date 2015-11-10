@@ -74,8 +74,7 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
 
         SubSelectStream<S, F> stream;
 
-        QueryTuple tuple = compose(field);
-        Class<F> fieldType = tuple.getFieldType();
+        Class<F> fieldType = getFieldType(field);
         stream = new SubSelectStream<>(this, fieldType);
         subSelect = stream;
 

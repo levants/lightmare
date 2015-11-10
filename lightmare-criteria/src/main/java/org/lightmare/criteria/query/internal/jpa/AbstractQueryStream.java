@@ -180,6 +180,23 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
     }
 
     /**
+     * Gets appropriated entity {@link Class} for {@link EntityField} lambda
+     * expression
+     * 
+     * @param field
+     * @return {@link Class} field type for entity
+     */
+    protected <F> Class<F> getFieldType(EntityField<T, F> field) {
+
+        Class<F> fieldType;
+
+        QueryTuple tuple = compose(field);
+        fieldType = tuple.getFieldType();
+
+        return fieldType;
+    }
+
+    /**
      * Increments parameters counter
      */
     private void incrementParameterCounter() {

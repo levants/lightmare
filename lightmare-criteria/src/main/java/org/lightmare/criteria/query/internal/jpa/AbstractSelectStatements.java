@@ -26,7 +26,6 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
  * Implementation of {@link SelectStatements} to generate SELECT for instant
@@ -48,8 +47,7 @@ public abstract class AbstractSelectStatements<T> extends AbstractResultStream<T
 
         SelectStream<T, F> stream;
 
-        QueryTuple tuple = compose(field);
-        Class<F> fieldType = tuple.getFieldType();
+        Class<F> fieldType = getFieldType(field);
         stream = new SelectStream<>(this, fieldType);
 
         return stream;

@@ -54,8 +54,6 @@ public class QueryTuple implements Serializable {
 
     private Field field;
 
-    private Class<?> rawType;
-
     private TemporalType temporalType;
 
     private Class<?> genericType;
@@ -114,22 +112,8 @@ public class QueryTuple implements Serializable {
         this.field = field;
     }
 
-    private Class<?> getRawType() {
-
-        if (rawType == null) {
-            rawType = field.getType();
-        }
-
-        return rawType;
-    }
-
     public <F> Class<F> getFieldType() {
-
-        Class<F> fieldType;
-
-        Class<?> raw = getRawType();
-        fieldType = ObjectUtils.cast(raw);
-
+        Class<F> fieldType = ObjectUtils.cast(genericType);
         return fieldType;
     }
 

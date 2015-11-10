@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.internal;
 
-import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -36,7 +35,6 @@ import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.AbstractSelectStatements;
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -99,8 +97,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     public <F> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer) {
 
         QueryTuple tuple = compose(field);
-        Field member = tuple.getField();
-        Class<F> type = ObjectUtils.cast(member.getType());
+        Class<F> type = tuple.getFieldType();
         String embeddedName = tuple.getFieldName();
         EntityEmbeddedStream<F, T> embeddedQuery = new EntityEmbeddedStream<>(this, type, embeddedName);
         acceptAndCall(consumer, embeddedQuery);
@@ -122,7 +119,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
 
         SubQueryStream<S, T> joinStream;
 
-        Class<S> subType = ObjectUtils.cast(tuple.getGenericType());
+        Class<S> subType = tuple.getFieldType();
         joinStream = joinStream(subType);
 
         return joinStream;
