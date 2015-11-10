@@ -93,10 +93,14 @@ public class RestClient {
 	}
     }
 
-    public static void main(String[] args) {
+    private static void doAllRest() {
 
-	RestClientTest.getList();
-	RestClientTest.get();
-	RestClientTest.put();
+	getList();
+	get();
+	put();
+    }
+
+    public static void main(String[] args) {
+	doAllRest();
     }
 }

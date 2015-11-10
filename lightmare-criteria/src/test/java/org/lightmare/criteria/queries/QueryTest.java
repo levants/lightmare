@@ -27,7 +27,7 @@ public class QueryTest extends TestEnviromentConfig {
 	try {
 	    System.out.println();
 	    System.out.println("==========Entity============");
-	    QueryStream<Person> stream = createSetterStream(em);
+	    QueryStream<Person> stream = createQueryStream(em);
 	    System.out.println("===========JPA-QL==========");
 	    System.out.println();
 	    System.out.println(stream.sql());

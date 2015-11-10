@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lightmare.criteria.db.TestDBUtils;
 import org.lightmare.criteria.entities.Person;
@@ -53,7 +54,7 @@ public class TestEnviromentConfig {
 	}
     }
 
-    protected QueryStream<Person> createSetterStream(final EntityManager em) {
+    protected QueryStream<Person> createQueryStream(final EntityManager em) {
 
 	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
 
@@ -67,5 +68,24 @@ public class TestEnviromentConfig {
 	stream.in(Person::getPersonId, IDENTIFIERS);
 
 	return stream;
+    }
+
+    @Test
+    public void queryStreamTest() {
+
+	EntityManager em = emf.createEntityManager();
+	try {
+	    QueryStream<Person> stream = createQueryStream(em);
+	    String sql = stream.sql();
+	    System.out.println();
+	    System.out.println("===============FIRST=TEST===================");
+	    System.out.println(sql);
+	    System.out.println("============================================");
+	    System.out.println();
+	} catch (Throwable ex) {
+	    ex.printStackTrace();
+	} finally {
+	    em.close();
+	}
     }
 }
