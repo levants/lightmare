@@ -3,12 +3,15 @@ package org.lightmare.criteria.queries;
 import javax.persistence.EntityManager;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.PersonInfo;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.runorder.RunOrder;
+import org.lightmare.criteria.runorder.SortedRunner;
 
+@RunWith(SortedRunner.class)
 public class EmbeddedQueryTest extends JoinQueryTest {
 
     @Test

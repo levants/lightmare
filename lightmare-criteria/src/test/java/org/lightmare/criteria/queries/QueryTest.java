@@ -9,11 +9,14 @@ import javax.persistence.EntityTransaction;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.runorder.RunOrder;
+import org.lightmare.criteria.runorder.SortedRunner;
 
+@RunWith(SortedRunner.class)
 public class QueryTest extends TestEnviromentConfig {
 
     @Test
