@@ -50,36 +50,36 @@ public class QueryCache {
      */
     private static String generateKey(LambdaData lambda) {
 
-	String key;
+        String key;
 
-	String type = lambda.getImplClass();
-	String method = lambda.getImplMethodName();
-	String sign = lambda.getImplMethodSignature();
-	key = StringUtils.concat(PREFIX, type, DELIM, method, DELIM, sign);
+        String type = lambda.getImplClass();
+        String method = lambda.getImplMethodName();
+        String sign = lambda.getImplMethodSignature();
+        key = StringUtils.concat(PREFIX, type, DELIM, method, DELIM, sign);
 
-	return key;
+        return key;
     }
 
     public static QueryTuple getQuery(String key) {
-	return QUERIES.get(key);
+        return QUERIES.get(key);
     }
 
     public static QueryTuple getQuery(LambdaData lambda) {
 
-	QueryTuple tuple;
+        QueryTuple tuple;
 
-	String key = generateKey(lambda);
-	tuple = getQuery(key);
+        String key = generateKey(lambda);
+        tuple = getQuery(key);
 
-	return tuple;
+        return tuple;
     }
 
     public static void putQuery(String key, QueryTuple value) {
-	QUERIES.putIfAbsent(key, value);
+        QUERIES.putIfAbsent(key, value);
     }
 
     public static void putQuery(LambdaData lambda, QueryTuple value) {
-	String key = generateKey(lambda);
-	putQuery(key, value);
+        String key = generateKey(lambda);
+        putQuery(key, value);
     }
 }

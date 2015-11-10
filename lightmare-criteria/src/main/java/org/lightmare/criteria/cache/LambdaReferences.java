@@ -59,18 +59,18 @@ public enum LambdaReferences {
      */
     private class CleanerTask implements Runnable {
 
-	@Override
-	public void run() {
+        @Override
+        public void run() {
 
-	    try {
-		Reference<? extends Class<?>> reference = references.remove();
-		if (Objects.nonNull(reference)) {
-		    reference.clear();
-		}
-	    } catch (Throwable ex) {
-		LOG.error(ex.getMessage(), ex);
-	    }
-	}
+            try {
+                Reference<? extends Class<?>> reference = references.remove();
+                if (Objects.nonNull(reference)) {
+                    reference.clear();
+                }
+            } catch (Throwable ex) {
+                LOG.error(ex.getMessage(), ex);
+            }
+        }
     }
 
     /**
@@ -81,12 +81,12 @@ public enum LambdaReferences {
      */
     private static String generateName(Thread cleaner) {
 
-	String threadName;
+        String threadName;
 
-	Long threadId = cleaner.getId();
-	threadName = StringUtils.concat(REFERENCE_THREAD_NAME, threadId);
+        Long threadId = cleaner.getId();
+        threadName = StringUtils.concat(REFERENCE_THREAD_NAME, threadId);
 
-	return threadName;
+        return threadName;
     }
 
     /**
@@ -96,8 +96,8 @@ public enum LambdaReferences {
      */
     private static void setName(Thread cleaner) {
 
-	String threadName = generateName(cleaner);
-	cleaner.setName(threadName);
+        String threadName = generateName(cleaner);
+        cleaner.setName(threadName);
     }
 
     /**
@@ -105,14 +105,14 @@ public enum LambdaReferences {
      */
     private void initCleaner() {
 
-	if (cleaner == null) {
-	    CleanerTask task = new CleanerTask();
-	    cleaner = new Thread(task);
-	    cleaner.setPriority(Thread.MAX_PRIORITY);
-	    setName(cleaner);
-	    cleaner.setDaemon(Boolean.TRUE);
-	    cleaner.start();
-	}
+        if (cleaner == null) {
+            CleanerTask task = new CleanerTask();
+            cleaner = new Thread(task);
+            cleaner.setPriority(Thread.MAX_PRIORITY);
+            setName(cleaner);
+            cleaner.setDaemon(Boolean.TRUE);
+            cleaner.start();
+        }
     }
 
     /**
@@ -120,11 +120,11 @@ public enum LambdaReferences {
      */
     private void startCleaner() {
 
-	if (cleaner == null) {
-	    synchronized (LambdaReferences.class) {
-		initCleaner();
-	    }
-	}
+        if (cleaner == null) {
+            synchronized (LambdaReferences.class) {
+                initCleaner();
+            }
+        }
     }
 
     /**
@@ -134,9 +134,9 @@ public enum LambdaReferences {
      */
     public void trace(Class<?> lambdaType) {
 
-	startCleaner();
-	LambdaReference reference = new LambdaReference(lambdaType, references);
-	reference.enqueue();
+        startCleaner();
+        LambdaReference reference = new LambdaReference(lambdaType, references);
+        reference.enqueue();
     }
 
     /**
@@ -145,6 +145,6 @@ public enum LambdaReferences {
      * @param lambda
      */
     public void traceByInstance(Object lambda) {
-	trace(lambda.getClass());
+        trace(lambda.getClass());
     }
 }

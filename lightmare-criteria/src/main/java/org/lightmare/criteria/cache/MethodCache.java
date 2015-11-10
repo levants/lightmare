@@ -57,18 +57,18 @@ public class MethodCache {
 
     private static List<MethodNode> resolveMethods(String typeName) {
 
-	List<MethodNode> methods;
+        List<MethodNode> methods;
 
-	try {
-	    ClassReader reader = CachedClassReader.get(typeName);
-	    ClassNode node = new ClassNode(Opcodes.ASM5);
-	    reader.accept(node, ZERO_FLAGS);
-	    methods = ObjectUtils.cast(node.methods);
-	} catch (IOException ex) {
-	    throw new RuntimeException(ex);
-	}
+        try {
+            ClassReader reader = CachedClassReader.get(typeName);
+            ClassNode node = new ClassNode(Opcodes.ASM5);
+            reader.accept(node, ZERO_FLAGS);
+            methods = ObjectUtils.cast(node.methods);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
 
-	return methods;
+        return methods;
     }
 
     /**
@@ -80,16 +80,16 @@ public class MethodCache {
      */
     public static List<MethodNode> getMethods(String typeName) {
 
-	List<MethodNode> methods;
+        List<MethodNode> methods;
 
-	if (METHOD_NODES.containsKey(typeName)) {
-	    methods = METHOD_NODES.get(typeName);
-	} else {
-	    methods = resolveMethods(typeName);
-	    METHOD_NODES.putIfAbsent(typeName, methods);
-	}
+        if (METHOD_NODES.containsKey(typeName)) {
+            methods = METHOD_NODES.get(typeName);
+        } else {
+            methods = resolveMethods(typeName);
+            METHOD_NODES.putIfAbsent(typeName, methods);
+        }
 
-	return methods;
+        return methods;
     }
 
     /**
@@ -101,11 +101,11 @@ public class MethodCache {
      */
     public static List<MethodNode> getMethods(LambdaData lambda) {
 
-	List<MethodNode> methods;
+        List<MethodNode> methods;
 
-	String typeName = lambda.getImplClass();
-	methods = getMethods(typeName);
+        String typeName = lambda.getImplClass();
+        methods = getMethods(typeName);
 
-	return methods;
+        return methods;
     }
 }

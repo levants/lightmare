@@ -48,11 +48,11 @@ public class LambdaCache {
      */
     public static void putLambda(Class<?> lambdaType, QueryTuple value) {
 
-	String key = lambdaType.getName();
-	QueryTuple existed = LAMBDAS.putIfAbsent(key, value);
-	if (Objects.equals(value, existed)) {
-	    LambdaReferences.INSTANCE.trace(lambdaType);
-	}
+        String key = lambdaType.getName();
+        QueryTuple existed = LAMBDAS.putIfAbsent(key, value);
+        if (Objects.equals(value, existed)) {
+            LambdaReferences.INSTANCE.trace(lambdaType);
+        }
     }
 
     /**
@@ -63,8 +63,8 @@ public class LambdaCache {
      * @param value
      */
     public static void putByInstance(Object lambda, QueryTuple value) {
-	Class<?> key = lambda.getClass();
-	putLambda(key, value);
+        Class<?> key = lambda.getClass();
+        putLambda(key, value);
     }
 
     /**
@@ -76,12 +76,12 @@ public class LambdaCache {
      */
     public static QueryTuple getLambda(Class<?> lambdaType) {
 
-	QueryTuple value;
+        QueryTuple value;
 
-	String key = lambdaType.getName();
-	value = LAMBDAS.get(key);
+        String key = lambdaType.getName();
+        value = LAMBDAS.get(key);
 
-	return value;
+        return value;
     }
 
     /**
@@ -93,12 +93,12 @@ public class LambdaCache {
      */
     public static QueryTuple getByInstance(Object lambda) {
 
-	QueryTuple tuple;
+        QueryTuple tuple;
 
-	Class<?> key = lambda.getClass();
-	tuple = getLambda(key);
+        Class<?> key = lambda.getClass();
+        tuple = getLambda(key);
 
-	return tuple;
+        return tuple;
     }
 
     /**
@@ -108,7 +108,7 @@ public class LambdaCache {
      * @param lambdaType
      */
     public static void remove(Class<?> lambdaType) {
-	String key = lambdaType.getName();
-	LAMBDAS.remove(key);
+        String key = lambdaType.getName();
+        LAMBDAS.remove(key);
     }
 }

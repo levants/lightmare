@@ -35,7 +35,7 @@ import java.util.Objects;
 public class LambdaReference extends PhantomReference<Class<?>> {
 
     public LambdaReference(Class<?> referent, ReferenceQueue<? super Class<?>> queue) {
-	super(referent, queue);
+        super(referent, queue);
     }
 
     /**
@@ -45,19 +45,19 @@ public class LambdaReference extends PhantomReference<Class<?>> {
      */
     public void removeFromCache(Class<?> lambdaType) {
 
-	if (Objects.nonNull(lambdaType)) {
-	    LambdaCache.remove(lambdaType);
-	}
+        if (Objects.nonNull(lambdaType)) {
+            LambdaCache.remove(lambdaType);
+        }
     }
 
     @Override
     public void clear() {
 
-	try {
-	    Class<?> lambdaType = get();
-	    removeFromCache(lambdaType);
-	} finally {
-	    super.clear();
-	}
+        try {
+            Class<?> lambdaType = get();
+            removeFromCache(lambdaType);
+        } finally {
+            super.clear();
+        }
     }
 }
