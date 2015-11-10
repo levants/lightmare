@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.AccessController;
@@ -35,6 +36,18 @@ import java.util.Objects;
  * @author Levan Tsinadze
  */
 public class ClassLoaderUtils {
+
+    private static final String CLASS = ".class";
+
+    /**
+     * Generates class file name from class name
+     * 
+     * @param name
+     * @return {@link String} class file name
+     */
+    public static String getAsResource(String name) {
+	return name.replace(StringUtils.DOT, File.separatorChar).concat(CLASS);
+    }
 
     /**
      * Gets current {@link Thread}'s context {@link ClassLoader} object
@@ -65,6 +78,62 @@ public class ClassLoaderUtils {
 
 	ClassLoader loader = getContextClassLoader();
 	is = loader.getResourceAsStream(resource);
+
+	return is;
+    }
+
+    /**
+     * Gets resource as {@link InputStream} by name from {@link Class}'s class
+     * loader
+     * 
+     * @param name
+     * @param resource
+     * @return {@link InputStream} from current {@link ClassLoader}
+     * @throws IOException
+     */
+    private static InputStream getClassResourceAsStream(String name, String resource) throws IOException {
+
+	InputStream is;
+
+	Class<?> type = ClassUtils.classForName(name);
+	is = type.getResourceAsStream(resource);
+
+	return is;
+    }
+
+    /**
+     * Gets resource as {@link InputStream} by name from {@link Class}'s class
+     * loader
+     * 
+     * @param name
+     * @return {@link InputStream} from current {@link ClassLoader}
+     */
+    public static InputStream getClassResourceAsStream(String name) throws IOException {
+
+	InputStream is;
+
+	String resource = getAsResource(name);
+	is = getClassResourceAsStream(name, resource);
+
+	return is;
+    }
+
+    /**
+     * Gets class file {@link InputStream} by name from current class loader
+     * 
+     * @param name
+     * @return {@link InputStream} from current {@link ClassLoader}
+     * @throws IOException
+     */
+    public static InputStream getClassAsStream(String name) throws IOException {
+
+	InputStream is;
+
+	String resource = getAsResource(name);
+	is = getResourceAsStream(resource);
+	if (is == null) {
+	    is = getClassResourceAsStream(name, resource);
+	}
 
 	return is;
     }

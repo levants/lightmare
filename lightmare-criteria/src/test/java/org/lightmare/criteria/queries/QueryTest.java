@@ -1,19 +1,15 @@
 package org.lightmare.criteria.queries;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.lightmare.criteria.db.TestDBUtils;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
@@ -21,59 +17,7 @@ import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
 
 @RunWith(SortedRunner.class)
-public class QueryTest {
-
-    private static final String PERSONAL_NO1 = "10100100100";
-
-    private static final String PERSONAL_NO2 = "10100100111";
-
-    protected static final Long[] IDENTIFIERS = { 1L, 2L, 3L, 4L, 5L };
-
-    protected static EntityManagerFactory emf;
-
-    private static Date defaultDate = new Date();
-
-    private static Date getDateValue(int before) {
-
-	Date date;
-
-	Calendar calendar = Calendar.getInstance();
-	calendar.setTime(defaultDate);
-	calendar.add(Calendar.YEAR, -before);
-	date = calendar.getTime();
-
-	return date;
-    }
-
-    private static Date getDateValue() {
-	return getDateValue(100);
-    }
-
-    @BeforeClass
-    public static void config() {
-
-	try {
-	    emf = TestDBUtils.create();
-	} catch (Exception ex) {
-	    ex.printStackTrace();
-	}
-    }
-
-    private QueryStream<Person> createSetterStream(final EntityManager em) {
-
-	QueryStream<Person> stream = QueryProvider.select(em, Person.class);
-
-	stream.where().moreOrEquals(c -> c.getBirthDate(), getDateValue()).and();
-	stream.like(Person::getLastName, "lname");
-	stream.and().brackets(
-		part -> part.like(Person::getFirstName, "fname").or().equals(Person::getPersonalNo, PERSONAL_NO1));
-	stream.or().isNull(Person::getInfo);
-	stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
-	stream.orderBy(Person::getPersonId);
-	stream.in(Person::getPersonId, IDENTIFIERS);
-
-	return stream;
-    }
+public class QueryTest extends TestEnviromentConfig {
 
     @Test
     @RunOrder(1)

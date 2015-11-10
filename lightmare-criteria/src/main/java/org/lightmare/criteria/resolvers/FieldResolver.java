@@ -295,7 +295,7 @@ public class FieldResolver {
 
 	List<MethodNode> methods = MethodCache.getMethods(lambda);
 	if (Objects.nonNull(methods)) {
-	    MethodNode methodNode = methods.stream().filter(c -> validate(c, lambda)).findFirst().get();
+	    MethodNode methodNode = CollectionUtils.getFirstValid(methods, c -> validate(c, lambda));
 	    methodNode.visitCode();
 	    InsnList instructions = methodNode.instructions;
 	    tuple = resolveQuietly(instructions);

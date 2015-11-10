@@ -343,4 +343,16 @@ public abstract class CollectionUtils {
 	    to[i] = mapped;
 	}
     }
+
+    /**
+     * Gets first valid element from {@link Collection} for which
+     * {@link Predicate} holds
+     * 
+     * @param collection
+     * @param predicate
+     * @return E first chosen element by {@link Predicate}
+     */
+    public static <E> E getFirstValid(Collection<E> collection, Predicate<E> predicate) {
+	return collection.stream().filter(c -> predicate.test(c)).findFirst().get();
+    }
 }
