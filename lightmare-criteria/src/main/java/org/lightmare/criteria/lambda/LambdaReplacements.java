@@ -58,12 +58,12 @@ public class LambdaReplacements {
      */
     private static SLambda toLambda(byte[] buff) throws IOException {
 
-	SLambda lambda;
+        SLambda lambda;
 
-	Object raw = ObjectUtils.deserialize(buff);
-	lambda = ObjectUtils.cast(raw);
+        Object raw = ObjectUtils.deserialize(buff);
+        lambda = ObjectUtils.cast(raw);
 
-	return lambda;
+        return lambda;
     }
 
     /**
@@ -75,13 +75,13 @@ public class LambdaReplacements {
      */
     private static byte[] replace(byte[] value) throws UnsupportedEncodingException {
 
-	byte[] translated;
+        byte[] translated;
 
-	String buffText = new String(value, CHARSET);
-	String replText = buffText.replace(NATIVE_NAME, LINQ_NAME);
-	translated = replText.getBytes(CHARSET);
+        String buffText = new String(value, CHARSET);
+        String replText = buffText.replace(NATIVE_NAME, LINQ_NAME);
+        translated = replText.getBytes(CHARSET);
 
-	return translated;
+        return translated;
     }
 
     /**
@@ -94,14 +94,14 @@ public class LambdaReplacements {
      */
     private static LambdaData translate(Object field) throws IOException {
 
-	LambdaData lambda;
+        LambdaData lambda;
 
-	byte[] value = ObjectUtils.serialize(field);
-	byte[] translated = replace(value);
-	SLambda slambda = toLambda(translated);
-	lambda = new LambdaData(slambda);
+        byte[] value = ObjectUtils.serialize(field);
+        byte[] translated = replace(value);
+        SLambda slambda = toLambda(translated);
+        lambda = new LambdaData(slambda);
 
-	return lambda;
+        return lambda;
     }
 
     /**
@@ -114,7 +114,7 @@ public class LambdaReplacements {
      * @throws NoSuchMethodException
      */
     private static <T> Method getMethod(Class<?> parent) throws IOException {
-	return ClassUtils.findMethod(parent, METHOD);
+        return ClassUtils.findMethod(parent, METHOD);
     }
 
     /**
@@ -126,19 +126,19 @@ public class LambdaReplacements {
      */
     private static <T> LambdaData getReplacement(Object field) throws IOException {
 
-	LambdaData lambda;
+        LambdaData lambda;
 
-	Class<?> parent = field.getClass();
-	Method method = getMethod(parent);
-	if (Objects.nonNull(method)) {
-	    Object raw = ClassUtils.invoke(method, field);
-	    SerializedLambda serialized = ObjectUtils.cast(raw);
-	    lambda = new LambdaData(serialized);
-	} else {
-	    lambda = translate(field);
-	}
+        Class<?> parent = field.getClass();
+        Method method = getMethod(parent);
+        if (Objects.nonNull(method)) {
+            Object raw = ClassUtils.invoke(method, field);
+            SerializedLambda serialized = ObjectUtils.cast(raw);
+            lambda = new LambdaData(serialized);
+        } else {
+            lambda = translate(field);
+        }
 
-	return lambda;
+        return lambda;
     }
 
     /**
@@ -149,14 +149,14 @@ public class LambdaReplacements {
      */
     public static <T> LambdaData getReplacementQuietly(Object field) {
 
-	LambdaData lambda;
+        LambdaData lambda;
 
-	try {
-	    lambda = getReplacement(field);
-	} catch (IOException ex) {
-	    throw new RuntimeException(ex);
-	}
+        try {
+            lambda = getReplacement(field);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
 
-	return lambda;
+        return lambda;
     }
 }

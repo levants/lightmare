@@ -50,17 +50,17 @@ public class LambdaUtils {
      */
     private static QueryTuple getByLambda(Object method) {
 
-	QueryTuple tuple;
+        QueryTuple tuple;
 
-	LambdaData lambda = LambdaReplacements.getReplacementQuietly(method);
-	tuple = QueryCache.getQuery(lambda);
-	if (tuple == null) {
-	    tuple = FieldResolver.resolve(lambda);
-	    QueryCache.putQuery(lambda, tuple);
-	    LOG.debug(String.format(DEBUG_MESSAGE_FORMAT, lambda));
-	}
+        LambdaData lambda = LambdaReplacements.getReplacementQuietly(method);
+        tuple = QueryCache.getQuery(lambda);
+        if (tuple == null) {
+            tuple = FieldResolver.resolve(lambda);
+            QueryCache.putQuery(lambda, tuple);
+            LOG.debug(String.format(DEBUG_MESSAGE_FORMAT, lambda));
+        }
 
-	return tuple;
+        return tuple;
     }
 
     /**
@@ -72,13 +72,13 @@ public class LambdaUtils {
      */
     public static QueryTuple getOrInit(Object method) {
 
-	QueryTuple tuple = LambdaCache.getByInstance(method);
+        QueryTuple tuple = LambdaCache.getByInstance(method);
 
-	if (tuple == null) {
-	    tuple = getByLambda(method);
-	    LambdaCache.putByInstance(method, tuple);
-	}
+        if (tuple == null) {
+            tuple = getByLambda(method);
+            LambdaCache.putByInstance(method, tuple);
+        }
 
-	return tuple;
+        return tuple;
     }
 }

@@ -42,20 +42,20 @@ public class LambdaData {
     private final String implMethodSignature;
 
     private static final String TO_TEXT_FORMAT = "SerializedLambda[implClass=%s,".concat(" implMethodName=%s,")
-	    .concat(" implMethodSignature=%s]");
+            .concat(" implMethodSignature=%s]");
 
     public LambdaData(final String implClass, final String implMethodName, final String implMethodSignature) {
-	this.implClass = implClass;
-	this.implMethodName = implMethodName;
-	this.implMethodSignature = implMethodSignature;
+        this.implClass = implClass;
+        this.implMethodName = implMethodName;
+        this.implMethodSignature = implMethodSignature;
     }
 
     public LambdaData(SerializedLambda serialized) {
-	this(serialized.getImplClass(), serialized.getImplMethodName(), serialized.getImplMethodSignature());
+        this(serialized.getImplClass(), serialized.getImplMethodName(), serialized.getImplMethodSignature());
     }
 
     public LambdaData(SLambda slambda) {
-	this(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature);
+        this(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature);
     }
 
     /**
@@ -64,7 +64,7 @@ public class LambdaData {
      * @return the name of the class containing the implementation method
      */
     public String getImplClass() {
-	return implClass;
+        return implClass;
     }
 
     /**
@@ -73,7 +73,7 @@ public class LambdaData {
      * @return the name of the implementation method
      */
     public String getImplMethodName() {
-	return implMethodName;
+        return implMethodName;
     }
 
     /**
@@ -82,11 +82,11 @@ public class LambdaData {
      * @return the signature of the implementation method
      */
     public String getImplMethodSignature() {
-	return implMethodSignature;
+        return implMethodSignature;
     }
 
     @Override
     public String toString() {
-	return String.format(TO_TEXT_FORMAT, implClass, implMethodName, implMethodSignature);
+        return String.format(TO_TEXT_FORMAT, implClass, implMethodName, implMethodSignature);
     }
 }
