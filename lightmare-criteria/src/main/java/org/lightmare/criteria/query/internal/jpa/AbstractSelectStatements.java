@@ -43,6 +43,7 @@ public abstract class AbstractSelectStatements<T> extends AbstractResultStream<T
         super(em, entityType, alias);
     }
 
+    @Override
     public <F> QueryStream<F> selectOne(EntityField<T, F> field) {
 
         SelectStream<T, F> stream;

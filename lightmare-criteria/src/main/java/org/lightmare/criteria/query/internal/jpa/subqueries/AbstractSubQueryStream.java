@@ -64,6 +64,24 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
         this(parent, parent.getAliasTuple().generate(), entityType);
     }
 
+    /**
+     * Processes sub select statement for sub queries
+     * 
+     * @param field
+     * @return {@link QueryStream} for instant field
+     */
+    protected final <F> QueryStream<F> subSelectOne(EntityField<S, F> field) {
+
+        SubSelectStream<S, F> stream;
+
+        QueryTuple tuple = compose(field);
+        Class<F> fieldType = tuple.getFieldType();
+        stream = new SubSelectStream<>(this, fieldType);
+        subSelect = stream;
+
+        return stream;
+    }
+
     @SafeVarargs
     protected final QueryStream<Object[]> subSelectAll(EntityField<S, ?>... fields) {
 
