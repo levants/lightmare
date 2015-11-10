@@ -39,7 +39,7 @@ import org.lightmare.criteria.query.QueryStream;
 public interface JoinQueryStream<T> {
 
     <E, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
-	    SubQueryConsumer<E, T> consumer);
+            SubQueryConsumer<E, T> consumer);
 
     /**
      * Method for INNER JOIN function call
@@ -57,7 +57,7 @@ public interface JoinQueryStream<T> {
      * @return {@link QueryStream} current instance
      */
     default <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field) {
-	return join(field, null);
+        return join(field, null);
     }
 
     /**
@@ -76,7 +76,7 @@ public interface JoinQueryStream<T> {
      * @return {@link QueryStream} current instance
      */
     default <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field) {
-	return leftJoin(field, null);
+        return leftJoin(field, null);
     }
 
     /**
@@ -95,6 +95,6 @@ public interface JoinQueryStream<T> {
      * @return {@link QueryStream} current instance
      */
     default <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field) {
-	return fetchJoin(field, null);
+        return fetchJoin(field, null);
     }
 }

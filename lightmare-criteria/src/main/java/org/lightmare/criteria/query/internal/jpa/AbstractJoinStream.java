@@ -41,7 +41,7 @@ import org.lightmare.criteria.utils.StringUtils;
 abstract class AbstractJoinStream<T> extends AbstractQueryStream<T> {
 
     protected AbstractJoinStream(EntityManager em, Class<T> entityType, String alias) {
-	super(em, entityType, alias);
+        super(em, entityType, alias);
     }
 
     /**
@@ -53,13 +53,13 @@ abstract class AbstractJoinStream<T> extends AbstractQueryStream<T> {
      */
     protected <C extends Collection<?>> QueryTuple oppJoin(EntityField<T, C> field, String expression) {
 
-	QueryTuple tuple;
+        QueryTuple tuple;
 
-	appendJoin(expression);
-	tuple = compose(field);
-	appendJoin(tuple.getFieldName());
-	appendJoin(StringUtils.SPACE);
+        appendJoin(expression);
+        tuple = compose(field);
+        appendJoin(tuple.getFieldName());
+        appendJoin(StringUtils.SPACE);
 
-	return tuple;
+        return tuple;
     }
 }

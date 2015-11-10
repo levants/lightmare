@@ -55,82 +55,82 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
 
     @Override
     public QueryStream<T> setMaxResults(int maxResult) {
-	this.maxResult = maxResult;
-	return this;
+        this.maxResult = maxResult;
+        return this;
     }
 
     @Override
     public int getMaxResults() {
-	return maxResult;
+        return maxResult;
     }
 
     private void putMaxResult(Query query) {
 
-	if (Objects.nonNull(maxResult)) {
-	    query.setMaxResults(maxResult);
-	}
+        if (Objects.nonNull(maxResult)) {
+            query.setMaxResults(maxResult);
+        }
     }
 
     @Override
     public QueryStream<T> setFirstResult(int startPosition) {
-	this.startPosition = startPosition;
-	return this;
+        this.startPosition = startPosition;
+        return this;
     }
 
     @Override
     public int getFirstResult() {
-	return startPosition;
+        return startPosition;
     }
 
     private void putFirstResult(Query query) {
 
-	if (Objects.nonNull(startPosition)) {
-	    query.setFirstResult(startPosition);
-	}
+        if (Objects.nonNull(startPosition)) {
+            query.setFirstResult(startPosition);
+        }
     }
 
     @Override
     public QueryStream<T> setHint(String hintName, Object value) {
-	hints.put(hintName, value);
-	return this;
+        hints.put(hintName, value);
+        return this;
     }
 
     @Override
     public Map<String, Object> getHints() {
-	return hints;
+        return hints;
     }
 
     private void putHints(Query query) {
 
-	if (CollectionUtils.valid(hints)) {
-	    hints.forEach((key, value) -> query.setHint(key, value));
-	}
+        if (CollectionUtils.valid(hints)) {
+            hints.forEach((key, value) -> query.setHint(key, value));
+        }
     }
 
     @Override
     public QueryStream<T> setFlushMode(FlushModeType flushMode) {
-	this.flushMode = flushMode;
-	return this;
+        this.flushMode = flushMode;
+        return this;
     }
 
     private void putFlushMode(Query query) {
 
-	if (Objects.nonNull(flushMode)) {
-	    query.setFlushMode(flushMode);
-	}
+        if (Objects.nonNull(flushMode)) {
+            query.setFlushMode(flushMode);
+        }
     }
 
     @Override
     public QueryStream<T> setLockMode(LockModeType lockMode) {
-	this.lockMode = lockMode;
-	return this;
+        this.lockMode = lockMode;
+        return this;
     }
 
     private void setLockMode(Query query) {
 
-	if (Objects.nonNull(lockMode)) {
-	    query.setLockMode(lockMode);
-	}
+        if (Objects.nonNull(lockMode)) {
+            query.setLockMode(lockMode);
+        }
     }
 
     /**
@@ -140,15 +140,15 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
      */
     protected void setJPAConfiguration(Query query) {
 
-	putFirstResult(query);
-	putMaxResult(query);
-	putHints(query);
-	putFlushMode(query);
-	setLockMode(query);
+        putFirstResult(query);
+        putMaxResult(query);
+        putHints(query);
+        putFlushMode(query);
+        setLockMode(query);
     }
 
     @Override
     public void close() {
-	getEntityManager().close();
+        getEntityManager().close();
     }
 }

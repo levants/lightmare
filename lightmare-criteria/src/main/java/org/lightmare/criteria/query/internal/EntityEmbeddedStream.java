@@ -41,39 +41,39 @@ public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
     private final String embeddedName;
 
     protected EntityEmbeddedStream(final AbstractQueryStream<T> parent, final Class<S> type,
-	    final String embeddedName) {
-	super(parent, parent.getAlias(), type);
-	this.embeddedName = embeddedName;
+            final String embeddedName) {
+        super(parent, parent.getAlias(), type);
+        this.embeddedName = embeddedName;
     }
 
     @Override
     public boolean validateOperator() {
-	return parent.validateOperator();
+        return parent.validateOperator();
     }
 
     @Override
     protected QueryTuple compose(Object field) {
 
-	QueryTuple tuple;
+        QueryTuple tuple;
 
-	QueryTuple temp = super.compose(field);
-	if (parent.getEntityType().equals(temp.getEntityType())) {
-	    tuple = temp;
-	} else {
-	    tuple = new EmbeddedTuple(temp, embeddedName);
-	}
+        QueryTuple temp = super.compose(field);
+        if (parent.getEntityType().equals(temp.getEntityType())) {
+            tuple = temp;
+        } else {
+            tuple = new EmbeddedTuple(temp, embeddedName);
+        }
 
-	return tuple;
+        return tuple;
     }
 
     @Override
     public String sql() {
 
-	String value;
+        String value;
 
-	sql.append(body);
-	value = sql.toString();
+        sql.append(body);
+        value = sql.toString();
 
-	return value;
+        return value;
     }
 }

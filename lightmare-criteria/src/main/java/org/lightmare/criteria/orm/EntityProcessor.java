@@ -47,17 +47,17 @@ public class EntityProcessor {
      */
     private static Class<?>[] getArgumentTypes(QueryTuple tuple) throws IOException {
 
-	Class<?>[] argumentTypes;
+        Class<?>[] argumentTypes;
 
-	String[] names = tuple.getArguments();
-	if (CollectionUtils.isEmpty(names)) {
-	    argumentTypes = new Class<?>[] {};
-	} else {
-	    argumentTypes = new Class<?>[names.length];
-	    CollectionUtils.map(names, argumentTypes, ClassUtils::classForName);
-	}
+        String[] names = tuple.getArguments();
+        if (CollectionUtils.isEmpty(names)) {
+            argumentTypes = new Class<?>[] {};
+        } else {
+            argumentTypes = new Class<?>[names.length];
+            CollectionUtils.map(names, argumentTypes, ClassUtils::classForName);
+        }
 
-	return argumentTypes;
+        return argumentTypes;
     }
 
     /**
@@ -68,10 +68,10 @@ public class EntityProcessor {
      */
     private static void setField(QueryTuple tuple) throws IOException {
 
-	String fieldName = tuple.getFieldName();
-	Class<?> entityType = tuple.getEntityType();
-	Field field = ClassUtils.findField(entityType, fieldName);
-	tuple.setField(field);
+        String fieldName = tuple.getFieldName();
+        Class<?> entityType = tuple.getEntityType();
+        Field field = ClassUtils.findField(entityType, fieldName);
+        tuple.setField(field);
     }
 
     /**
@@ -82,12 +82,12 @@ public class EntityProcessor {
      */
     private static void setMethodAndField(QueryTuple tuple) throws IOException {
 
-	String methodName = tuple.getMethodName();
-	Class<?> entityType = tuple.getEntityType();
-	Class<?>[] argumentTypes = getArgumentTypes(tuple);
-	Method method = ClassUtils.findMethod(entityType, methodName, argumentTypes);
-	tuple.setMethod(method);
-	setField(tuple);
+        String methodName = tuple.getMethodName();
+        Class<?> entityType = tuple.getEntityType();
+        Class<?>[] argumentTypes = getArgumentTypes(tuple);
+        Method method = ClassUtils.findMethod(entityType, methodName, argumentTypes);
+        tuple.setMethod(method);
+        setField(tuple);
     }
 
     /**
@@ -98,9 +98,9 @@ public class EntityProcessor {
      */
     public static void setMetaData(QueryTuple tuple) throws IOException {
 
-	String className = tuple.getEntityName();
-	Class<?> entityType = ClassUtils.classForName(className);
-	tuple.setEntityType(entityType);
-	setMethodAndField(tuple);
+        String className = tuple.getEntityName();
+        Class<?> entityType = ClassUtils.classForName(className);
+        tuple.setEntityType(entityType);
+        setMethodAndField(tuple);
     }
 }

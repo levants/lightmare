@@ -49,14 +49,14 @@ public class ColumnProcessor {
      */
     private static Temporal getTemporal(Field field, Method method) {
 
-	Temporal temporal;
+        Temporal temporal;
 
-	temporal = field.getAnnotation(Temporal.class);
-	if (temporal == null) {
-	    temporal = method.getAnnotation(Temporal.class);
-	}
+        temporal = field.getAnnotation(Temporal.class);
+        if (temporal == null) {
+            temporal = method.getAnnotation(Temporal.class);
+        }
 
-	return temporal;
+        return temporal;
     }
 
     /**
@@ -68,9 +68,9 @@ public class ColumnProcessor {
      */
     private static void setTemporalType(Temporal temporal, QueryTuple tuple) {
 
-	if (Objects.nonNull(temporal)) {
-	    tuple.setTemporalType(temporal.value());
-	}
+        if (Objects.nonNull(temporal)) {
+            tuple.setTemporalType(temporal.value());
+        }
     }
 
     /**
@@ -81,9 +81,9 @@ public class ColumnProcessor {
      */
     public static void setTemporalType(QueryTuple tuple) {
 
-	Field field = tuple.getField();
-	Method method = tuple.getMethod();
-	Temporal temporal = getTemporal(field, method);
-	setTemporalType(temporal, tuple);
+        Field field = tuple.getField();
+        Method method = tuple.getMethod();
+        Temporal temporal = getTemporal(field, method);
+        setTemporalType(temporal, tuple);
     }
 }

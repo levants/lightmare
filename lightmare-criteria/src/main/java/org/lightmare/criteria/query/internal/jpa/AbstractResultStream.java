@@ -42,61 +42,61 @@ import org.lightmare.criteria.tuples.ParameterTuple;
 abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
     protected AbstractResultStream(EntityManager em, Class<T> entityType, String alias) {
-	super(em, entityType, alias);
+        super(em, entityType, alias);
     }
 
     @Override
     public Long count() {
 
-	Long result;
+        Long result;
 
-	TypedQuery<Long> query = initCountQuery();
-	result = query.getSingleResult();
+        TypedQuery<Long> query = initCountQuery();
+        result = query.getSingleResult();
 
-	return result;
+        return result;
     }
 
     @Override
     public List<T> toList() {
 
-	List<T> results;
+        List<T> results;
 
-	TypedQuery<T> query = initTypedQuery();
-	results = query.getResultList();
+        TypedQuery<T> query = initTypedQuery();
+        results = query.getResultList();
 
-	return results;
+        return results;
     }
 
     @Override
     public T get() {
 
-	T result;
+        T result;
 
-	TypedQuery<T> query = initTypedQuery();
-	result = query.getSingleResult();
+        TypedQuery<T> query = initTypedQuery();
+        result = query.getSingleResult();
 
-	return result;
+        return result;
     }
 
     @Override
     public int execute() {
 
-	int result;
+        int result;
 
-	Query query = initBulkQuery();
-	result = query.executeUpdate();
+        Query query = initBulkQuery();
+        result = query.executeUpdate();
 
-	return result;
+        return result;
     }
 
     @Override
     public Set<ParameterTuple> getParameters() {
-	return parameters;
+        return parameters;
     }
 
     @Override
     public String toString() {
-	String value = sql();
-	return value;
+        String value = sql();
+        return value;
     }
 }

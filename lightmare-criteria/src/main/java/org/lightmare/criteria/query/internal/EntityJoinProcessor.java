@@ -39,32 +39,32 @@ class EntityJoinProcessor<S, T> extends EntitySubQueryStream<S, T> {
     private boolean parentOperator;
 
     protected EntityJoinProcessor(AbstractQueryStream<T> parent, Class<S> entityType) {
-	super(parent, entityType);
+        super(parent, entityType);
     }
 
     @Override
     public boolean validateOperator() {
 
-	boolean valid;
+        boolean valid;
 
-	if (parentOperator) {
-	    valid = super.validateOperator();
-	} else {
-	    valid = parent.validateOperator();
-	    parentOperator = Boolean.TRUE;
-	}
+        if (parentOperator) {
+            valid = super.validateOperator();
+        } else {
+            valid = parent.validateOperator();
+            parentOperator = Boolean.TRUE;
+        }
 
-	return valid;
+        return valid;
     }
 
     @Override
     public String sql() {
 
-	String value;
+        String value;
 
-	sql.append(body);
-	value = sql.toString();
+        sql.append(body);
+        value = sql.toString();
 
-	return value;
+        return value;
     }
 }

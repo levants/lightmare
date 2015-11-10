@@ -125,6 +125,6 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * @return {@link JPAQueryStream} with select statement
      */
     protected static <T> JPAQueryStream<T> query(final EntityManager em, Class<T> entityType) {
-	return query(em, entityType, DEFAULT_ALIAS);
+        return query(em, entityType, DEFAULT_ALIAS);
     }
 }

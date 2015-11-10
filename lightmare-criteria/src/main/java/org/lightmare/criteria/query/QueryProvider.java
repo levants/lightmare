@@ -42,8 +42,8 @@ public class QueryProvider {
      * @return {@link JPAQueryStream} with select statement
      */
     public static <T> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
-	    final String entityAlias) {
-	return JPAQueryStream.delete(em, entityType, entityAlias);
+            final String entityAlias) {
+        return JPAQueryStream.delete(em, entityType, entityAlias);
     }
 
     /**
@@ -54,7 +54,7 @@ public class QueryProvider {
      * @return {@link JPAQueryStream} with select statement
      */
     public static <T> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
-	return JPAQueryStream.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
+        return JPAQueryStream.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**
@@ -66,8 +66,8 @@ public class QueryProvider {
      * @return {@link JPAQueryStream} with select statement
      */
     public static <T> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
-	    final String entityAlias) {
-	return JPAQueryStream.update(em, entityType, entityAlias);
+            final String entityAlias) {
+        return JPAQueryStream.update(em, entityType, entityAlias);
     }
 
     /**
@@ -78,7 +78,7 @@ public class QueryProvider {
      * @return {@link JPAQueryStream} with select statement
      */
     public static <T> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
-	return JPAQueryStream.update(em, entityType, QueryStream.DEFAULT_ALIAS);
+        return JPAQueryStream.update(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**
@@ -90,8 +90,8 @@ public class QueryProvider {
      * @return {@link JPAQueryStream} with select statement
      */
     public static <T> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
-	    final String entityAlias) {
-	return JPAQueryStream.query(em, entityType, entityAlias);
+            final String entityAlias) {
+        return JPAQueryStream.query(em, entityType, entityAlias);
     }
 
     /**
@@ -102,7 +102,7 @@ public class QueryProvider {
      * @return {@link JPAQueryStream} with select statement
      */
     public static <T> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
-	return JPAQueryStream.query(em, entityType, QueryStream.DEFAULT_ALIAS);
+        return JPAQueryStream.query(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**
@@ -114,8 +114,8 @@ public class QueryProvider {
      * @return {@link JPAQueryStream} with select statement
      */
     public static <T> QueryStream<T> query(final EntityManager em, final Class<T> entityType,
-	    final String entityAlias) {
-	return select(em, entityType, entityAlias);
+            final String entityAlias) {
+        return select(em, entityType, entityAlias);
     }
 
     /**
@@ -126,6 +126,6 @@ public class QueryProvider {
      * @return {@link JPAQueryStream} with select statement
      */
     public static <T> QueryStream<T> query(final EntityManager em, Class<T> entityType) {
-	return select(em, entityType);
+        return select(em, entityType);
     }
 }

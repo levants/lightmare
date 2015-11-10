@@ -38,26 +38,26 @@ public class SelectStream<T> extends JPAQueryStream<Object[]> {
     private final Class<?> realEntityType;
 
     protected SelectStream(AbstractQueryStream<T> stream) {
-	super(stream.getEntityManager(), Object[].class, stream.getAlias());
-	this.realEntityType = stream.entityType;
-	this.columns.append(stream.columns);
-	this.body.append(stream.body);
-	this.orderBy.append(stream.orderBy);
-	this.parameters.addAll(stream.parameters);
+        super(stream.getEntityManager(), Object[].class, stream.getAlias());
+        this.realEntityType = stream.entityType;
+        this.columns.append(stream.columns);
+        this.body.append(stream.body);
+        this.orderBy.append(stream.orderBy);
+        this.parameters.addAll(stream.parameters);
     }
 
     @Override
     public String sql() {
 
-	String value;
+        String value;
 
-	clearSql();
-	appendFromClause(realEntityType, alias, columns);
-	generateBody(columns);
-	sql.append(orderBy);
-	sql.append(suffix);
-	value = sql.toString();
+        clearSql();
+        appendFromClause(realEntityType, alias, columns);
+        generateBody(columns);
+        sql.append(orderBy);
+        sql.append(suffix);
+        value = sql.toString();
 
-	return value;
+        return value;
     }
 }

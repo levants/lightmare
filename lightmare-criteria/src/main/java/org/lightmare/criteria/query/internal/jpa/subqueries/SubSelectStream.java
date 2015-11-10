@@ -40,38 +40,38 @@ class SubSelectStream<T> extends SelectStream<T> {
     private final AbstractSubQueryStream<T, ?> stream;
 
     protected SubSelectStream(AbstractSubQueryStream<T, ?> stream) {
-	super(stream);
-	this.stream = stream;
+        super(stream);
+        this.stream = stream;
     }
 
     /**
      * Appends SQL part to original query and switches prepare state to called
      */
     private void appendOriginal() {
-	String query = super.sql();
-	stream.appendToParent(query);
-	stream.switchState();
+        String query = super.sql();
+        stream.appendToParent(query);
+        stream.switchState();
     }
 
     @Override
     public Object[] get() {
-	appendOriginal();
-	return null;
+        appendOriginal();
+        return null;
     }
 
     @Override
     public List<Object[]> toList() {
-	appendOriginal();
-	return null;
+        appendOriginal();
+        return null;
     }
 
     @Override
     public Long count() {
-	return null;
+        return null;
     }
 
     @Override
     public int execute() {
-	return CollectionUtils.EMPTY;
+        return CollectionUtils.EMPTY;
     }
 }

@@ -43,35 +43,35 @@ import org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStre
 class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
 
     protected EntitySubQueryStream(AbstractQueryStream<T> parent, Class<S> type) {
-	super(parent, type);
+        super(parent, type);
     }
 
     protected EntitySubQueryStream(AbstractQueryStream<T> parent, String alias, Class<S> type) {
-	super(parent, alias, type);
+        super(parent, alias, type);
     }
 
     // ========================= Entity and parent method composers =========//
     @Override
     public <F> SubQueryStream<S, T> operate(EntityField<S, F> sfield, ParentField<T, F> field, String operator) {
-	appendOperator();
-	oppField(sfield, field, operator);
+        appendOperator();
+        oppField(sfield, field, operator);
 
-	return this;
+        return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> sfield, ParentField<T, Collection<F>> field,
-	    String operator) {
-	appendOperator();
-	oppCollectionField(sfield, field, operator);
+            String operator) {
+        appendOperator();
+        oppCollectionField(sfield, field, operator);
 
-	return this;
+        return this;
     }
 
     // ========================= select method composers ====================//
 
     @Override
     public QueryStream<Object[]> select(EntityField<S, ?> field) {
-	return subSelectAll(field);
+        return subSelectAll(field);
     }
 }

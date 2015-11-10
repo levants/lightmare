@@ -90,12 +90,12 @@ public interface ResultStream<T> {
      */
     default T firstOrDefault(T defaultValue) {
 
-	T result;
+        T result;
 
-	List<T> results = toList();
-	result = CollectionUtils.getFirst(results, defaultValue);
+        List<T> results = toList();
+        result = CollectionUtils.getFirst(results, defaultValue);
 
-	return result;
+        return result;
     }
 
     /**
@@ -105,6 +105,6 @@ public interface ResultStream<T> {
      * @return T query first result
      */
     default T getFirst() {
-	return firstOrDefault(null);
+        return firstOrDefault(null);
     }
 }

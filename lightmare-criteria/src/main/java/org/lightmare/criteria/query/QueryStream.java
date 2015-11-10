@@ -62,69 +62,69 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
     <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator);
 
     default <F> QueryStream<T> equals(EntityField<T, F> field, F value) {
-	return operate(field, value, Operators.EQ);
+        return operate(field, value, Operators.EQ);
     }
 
     default <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) {
-	return operate(field, value, Operators.NOT_EQ);
+        return operate(field, value, Operators.NOT_EQ);
     }
 
     default <F> QueryStream<T> more(EntityField<T, F> field, F value) {
-	return operate(field, value, Operators.MORE);
+        return operate(field, value, Operators.MORE);
     }
 
     default <F> QueryStream<T> less(EntityField<T, F> field, F value) {
-	return operate(field, value, Operators.LESS);
+        return operate(field, value, Operators.LESS);
     }
 
     default <F> QueryStream<T> moreOrEquals(EntityField<T, F> field, F value) {
-	return operate(field, value, Operators.MORE_OR_EQ);
+        return operate(field, value, Operators.MORE_OR_EQ);
     }
 
     default <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value) {
-	return operate(field, value, Operators.LESS_OR_EQ);
+        return operate(field, value, Operators.LESS_OR_EQ);
     }
 
     default QueryStream<T> startsWith(EntityField<T, String> field, String value) {
-	String enrich = StringUtils.concat(value, Filters.LIKE_SIGN);
-	return operate(field, enrich, Operators.LIKE);
+        String enrich = StringUtils.concat(value, Filters.LIKE_SIGN);
+        return operate(field, enrich, Operators.LIKE);
     }
 
     default QueryStream<T> like(EntityField<T, String> field, String value) {
-	return startsWith(field, value);
+        return startsWith(field, value);
     }
 
     default QueryStream<T> endsWith(EntityField<T, String> field, String value) {
-	String enrich = Filters.LIKE_SIGN.concat(value);
-	return operate(field, enrich, Operators.LIKE);
+        String enrich = Filters.LIKE_SIGN.concat(value);
+        return operate(field, enrich, Operators.LIKE);
     }
 
     default QueryStream<T> contains(EntityField<T, String> field, String value) {
-	String enrich = StringUtils.concat(Filters.LIKE_SIGN, value, Filters.LIKE_SIGN);
-	return operate(field, enrich, Operators.LIKE);
+        String enrich = StringUtils.concat(Filters.LIKE_SIGN, value, Filters.LIKE_SIGN);
+        return operate(field, enrich, Operators.LIKE);
     }
 
     default QueryStream<T> notContains(EntityField<T, String> field, String value) {
-	openBracket().appendBody(Operators.NO);
-	return contains(field, value).closeBracket();
+        openBracket().appendBody(Operators.NO);
+        return contains(field, value).closeBracket();
     }
 
     <F> QueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
 
     default <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
-	return operateCollection(field, values, Operators.IN);
+        return operateCollection(field, values, Operators.IN);
     }
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) {
-	return operateCollection(field, values, Operators.NOT_IN);
+        return operateCollection(field, values, Operators.NOT_IN);
     }
 
     default QueryStream<T> isNull(EntityField<T, ?> field) {
-	return operate(field, Operators.IS_NULL);
+        return operate(field, Operators.IS_NULL);
     }
 
     default QueryStream<T> notNull(EntityField<T, ?> field) {
-	return operate(field, Operators.NOT_NULL);
+        return operate(field, Operators.NOT_NULL);
     }
 
     // ========================= Entity self method composers ===============//
@@ -132,62 +132,62 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
     <F> QueryStream<T> operate(EntityField<T, F> field1, EntityField<T, F> field2, String operator);
 
     default <F> QueryStream<T> equals(EntityField<T, F> field1, EntityField<T, F> field2) {
-	return operate(field1, field2, Operators.EQ);
+        return operate(field1, field2, Operators.EQ);
     }
 
     default <F> QueryStream<T> notEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
-	return operate(field1, field2, Operators.NOT_EQ);
+        return operate(field1, field2, Operators.NOT_EQ);
     }
 
     default <F> QueryStream<T> more(EntityField<T, F> field1, EntityField<T, F> field2) {
-	return operate(field1, field2, Operators.MORE);
+        return operate(field1, field2, Operators.MORE);
     }
 
     default <F> QueryStream<T> less(EntityField<T, F> field1, EntityField<T, F> field2) {
-	return operate(field1, field2, Operators.LESS);
+        return operate(field1, field2, Operators.LESS);
     }
 
     default <F> QueryStream<T> moreOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
-	return operate(field1, field2, Operators.MORE_OR_EQ);
+        return operate(field1, field2, Operators.MORE_OR_EQ);
     }
 
     default <F> QueryStream<T> lessOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
-	return operate(field1, field2, Operators.LESS_OR_EQ);
+        return operate(field1, field2, Operators.LESS_OR_EQ);
     }
 
     default QueryStream<T> startsWith(EntityField<T, String> field1, EntityField<T, String> field2) {
-	return operate(field1, field2, Operators.LIKE);
+        return operate(field1, field2, Operators.LIKE);
     }
 
     default QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2) {
-	return operate(field1, field2, Operators.LIKE);
+        return operate(field1, field2, Operators.LIKE);
     }
 
     default QueryStream<T> endsWith(EntityField<T, String> field1, EntityField<T, String> field2) {
-	return operate(field1, field2, Operators.LIKE);
+        return operate(field1, field2, Operators.LIKE);
     }
 
     default QueryStream<T> contains(EntityField<T, String> field1, EntityField<T, String> field2) {
-	return operate(field1, field2, Operators.LIKE);
+        return operate(field1, field2, Operators.LIKE);
     }
 
     <F> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
-	    String operator);
+            String operator);
 
     default <F> QueryStream<T> in(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
-	return operateCollection(field1, field2, Operators.IN);
+        return operateCollection(field1, field2, Operators.IN);
     }
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
-	return operateCollection(field1, field2, Operators.NOT_IN);
+        return operateCollection(field1, field2, Operators.NOT_IN);
     }
 
     default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) {
-	return this.in(field, Arrays.asList(values));
+        return this.in(field, Arrays.asList(values));
     }
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) {
-	return this.notIn(field, Arrays.asList(values));
+        return this.notIn(field, Arrays.asList(values));
     }
 
     // =========================embedded=field=queries=======================//
@@ -212,7 +212,7 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
      * @return {@link SubQueryStream} similar stream for sub query
      */
     default QueryStream<T> subQuery(SubQueryConsumer<T, T> consumer) {
-	return subQuery(getEntityType(), consumer);
+        return subQuery(getEntityType(), consumer);
     }
 
     <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer);
@@ -220,29 +220,29 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
     <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer);
 
     default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType) {
-	return in(field, subType, null);
+        return in(field, subType, null);
     }
 
     default <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType) {
-	return notIn(field, subType, null);
+        return notIn(field, subType, null);
     }
 
     default <F> QueryStream<T> in(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) {
-	return in(field, getEntityType(), consumer);
+        return in(field, getEntityType(), consumer);
     }
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field, SubQueryConsumer<T, T> consumer) {
-	return notIn(field, getEntityType(), consumer);
+        return notIn(field, getEntityType(), consumer);
     }
 
     default <F> QueryStream<T> in(EntityField<T, F> field) {
-	SubQueryConsumer<T, T> consumer = null;
-	return in(field, consumer);
+        SubQueryConsumer<T, T> consumer = null;
+        return in(field, consumer);
     }
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field) {
-	SubQueryConsumer<T, T> consumer = null;
-	return notIn(field, consumer);
+        SubQueryConsumer<T, T> consumer = null;
+        return notIn(field, consumer);
     }
 
     <F, S> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer);
@@ -250,19 +250,19 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
     <F, S> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer);
 
     default <F, S> QueryStream<T> exists(Class<S> subType) {
-	return exists(subType, null);
+        return exists(subType, null);
     }
 
     default <F, S> QueryStream<T> notExists(Class<S> subType) {
-	return notExists(subType, null);
+        return notExists(subType, null);
     }
 
     default <F> QueryStream<T> exists(SubQueryConsumer<T, T> consumer) {
-	return exists(getEntityType(), consumer);
+        return exists(getEntityType(), consumer);
     }
 
     default <F> QueryStream<T> notExists(SubQueryConsumer<T, T> consumer) {
-	return notExists(getEntityType(), consumer);
+        return notExists(getEntityType(), consumer);
     }
 
     // =========================order=by=====================================//
@@ -290,7 +290,7 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
      * @return {@link QueryStream} current instance
      */
     default QueryStream<T> where() {
-	return this;
+        return this;
     }
 
     /**
@@ -299,7 +299,7 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
      * @return {@link QueryStream} current instance
      */
     default QueryStream<T> and() {
-	return appendBody(Clauses.AND);
+        return appendBody(Clauses.AND);
     }
 
     /**
@@ -308,7 +308,7 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
      * @return {@link QueryStream} current instance
      */
     default QueryStream<T> or() {
-	return appendBody(Clauses.OR);
+        return appendBody(Clauses.OR);
     }
 
     /**
@@ -317,7 +317,7 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
      * @return {@link QueryStream} current instance
      */
     default QueryStream<T> openBracket() {
-	return appendBody(Operators.OPEN_BRACKET);
+        return appendBody(Operators.OPEN_BRACKET);
     }
 
     /**
@@ -326,7 +326,7 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
      * @return {@link QueryStream} current instance
      */
     default QueryStream<T> closeBracket() {
-	return appendBody(Operators.CLOSE_BRACKET);
+        return appendBody(Operators.CLOSE_BRACKET);
     }
 
     /**

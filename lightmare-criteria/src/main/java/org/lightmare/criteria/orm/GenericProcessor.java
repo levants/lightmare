@@ -47,10 +47,10 @@ public class GenericProcessor {
      */
     private static void validateAndSetType(Type parameterType, QueryTuple tuple) {
 
-	if (parameterType instanceof Class<?>) {
-	    Class<?> genericType = ObjectUtils.cast(parameterType);
-	    tuple.setGenericType(genericType);
-	}
+        if (parameterType instanceof Class<?>) {
+            Class<?> genericType = ObjectUtils.cast(parameterType);
+            tuple.setGenericType(genericType);
+        }
     }
 
     /**
@@ -61,12 +61,12 @@ public class GenericProcessor {
      */
     private static void setGenericType(Field field, QueryTuple tuple) {
 
-	Type type = field.getGenericType();
-	if (type instanceof ParameterizedType) {
-	    ParameterizedType parametrizedType = ObjectUtils.cast(type);
-	    Type parameterType = CollectionUtils.getFirst(parametrizedType.getActualTypeArguments());
-	    validateAndSetType(parameterType, tuple);
-	}
+        Type type = field.getGenericType();
+        if (type instanceof ParameterizedType) {
+            ParameterizedType parametrizedType = ObjectUtils.cast(type);
+            Type parameterType = CollectionUtils.getFirst(parametrizedType.getActualTypeArguments());
+            validateAndSetType(parameterType, tuple);
+        }
     }
 
     /**
@@ -75,7 +75,7 @@ public class GenericProcessor {
      * @param tuple
      */
     public static void setGenericType(QueryTuple tuple) {
-	Field field = tuple.getField();
-	setGenericType(field, tuple);
+        Field field = tuple.getField();
+        setGenericType(field, tuple);
     }
 }

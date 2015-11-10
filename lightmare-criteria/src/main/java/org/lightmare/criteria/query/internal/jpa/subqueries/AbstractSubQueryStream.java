@@ -55,40 +55,40 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
     private boolean preparedState = Boolean.TRUE;
 
     protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, String alias, Class<S> entityType) {
-	super(parent.getEntityManager(), entityType, alias);
-	parentAlias = parent.getAlias();
-	this.parent = parent;
+        super(parent.getEntityManager(), entityType, alias);
+        parentAlias = parent.getAlias();
+        this.parent = parent;
     }
 
     protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, Class<S> entityType) {
-	this(parent, parent.getAliasTuple().generate(), entityType);
+        this(parent, parent.getAliasTuple().generate(), entityType);
     }
 
     @SafeVarargs
     protected final QueryStream<Object[]> subSelectAll(EntityField<S, ?>... fields) {
 
-	SubSelectStream<S> stream;
+        SubSelectStream<S> stream;
 
-	oppSelect(fields);
-	stream = new SubSelectStream<>(this);
-	subSelect = stream;
+        oppSelect(fields);
+        stream = new SubSelectStream<>(this);
+        subSelect = stream;
 
-	return stream;
+        return stream;
     }
 
     @Override
     public void addParameter(String key, Object value) {
-	parent.addParameter(key, value);
+        parent.addParameter(key, value);
     }
 
     @Override
     public void addParameter(String key, Object value, TemporalType temporalType) {
-	parent.addParameter(key, value, temporalType);
+        parent.addParameter(key, value, temporalType);
     }
 
     @Override
     public <F> void addParameter(String key, QueryTuple tuple, F value) {
-	parent.addParameter(key, tuple, value);
+        parent.addParameter(key, tuple, value);
     }
 
     /**
@@ -99,11 +99,11 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
     @Override
     protected void appendColumn(QueryTuple tuple) {
 
-	if (tuple.getEntityType().equals(parent.getEntityType())) {
-	    super.appendColumn(parentAlias, tuple);
-	} else {
-	    super.appendColumn(tuple);
-	}
+        if (tuple.getEntityType().equals(parent.getEntityType())) {
+            super.appendColumn(parentAlias, tuple);
+        } else {
+            super.appendColumn(tuple);
+        }
     }
 
     /**
@@ -112,23 +112,23 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
      * @param clause
      */
     protected void appendToParent(CharSequence clause) {
-	parent.appendBody(clause);
+        parent.appendBody(clause);
     }
 
     /**
      * Generates sub query and appends to parent
      */
     private void appendToParent() {
-	startsSelect(this);
-	String query = sql();
-	appendToParent(query);
+        startsSelect(this);
+        String query = sql();
+        appendToParent(query);
     }
 
     /**
      * Switches prepared state to called
      */
     protected void switchState() {
-	preparedState = Boolean.FALSE;
+        preparedState = Boolean.FALSE;
     }
 
     /**
@@ -139,10 +139,10 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
      */
     private void callState(CharSequence clause) {
 
-	if (preparedState) {
-	    appendToParent(clause);
-	    switchState();
-	}
+        if (preparedState) {
+            appendToParent(clause);
+            switchState();
+        }
     }
 
     /**
@@ -150,35 +150,35 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
      */
     private void callState() {
 
-	if (preparedState) {
-	    appendToParent();
-	    switchState();
-	}
+        if (preparedState) {
+            appendToParent();
+            switchState();
+        }
     }
 
     @Override
     public List<S> toList() {
-	callState();
-	return null;
+        callState();
+        return null;
     }
 
     @Override
     public S get() {
-	toList();
-	return null;
+        toList();
+        return null;
     }
 
     @Override
     public Long count() {
-	String query = countSql();
-	callState(query);
-	return null;
+        String query = countSql();
+        callState(query);
+        return null;
     }
 
     @Override
     public int execute() {
-	get();
-	return CollectionUtils.EMPTY;
+        get();
+        return CollectionUtils.EMPTY;
     }
 
     /**
@@ -187,24 +187,24 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
      */
     private void chectStateAndCall() {
 
-	if (Objects.nonNull(subSelect)) {
-	    subSelect.get();
-	} else {
-	    get();
-	}
+        if (Objects.nonNull(subSelect)) {
+            subSelect.get();
+        } else {
+            get();
+        }
     }
 
     @Override
     public void call() {
 
-	if (preparedState) {
-	    chectStateAndCall();
-	    switchState();
-	}
+        if (preparedState) {
+            chectStateAndCall();
+            switchState();
+        }
     }
 
     @Override
     public void close() {
-	// Swallows close method
+        // Swallows close method
     }
 }

@@ -45,85 +45,85 @@ import org.lightmare.criteria.query.internal.SubQueryStream;
 abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> implements SubQueryStream<S, T> {
 
     protected DirectctSubQueryStream(EntityManager em, Class<S> entityType, String alias) {
-	super(em, entityType, alias);
+        super(em, entityType, alias);
     }
 
     // ================= entity QL methods ===================================//
 
     @Override
     public <F> SubQueryStream<S, T> operate(EntityField<S, F> field, String operator) {
-	super.operate(field, operator);
-	return this;
+        super.operate(field, operator);
+        return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> operate(EntityField<S, F> field, F value, String operator) {
-	super.operate(field, value, operator);
-	return this;
+        super.operate(field, value, operator);
+        return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> field, Collection<F> values, String operator) {
-	super.oppCollection(field, values, operator);
-	return this;
+        super.oppCollection(field, values, operator);
+        return this;
     }
 
     // ========================= Entity self method composers ===============//
 
     @Override
     public <F> SubQueryStream<S, T> operate(EntityField<S, F> field1, EntityField<S, F> field2, String operator) {
-	super.operate(field1, field2, operator);
-	return this;
+        super.operate(field1, field2, operator);
+        return this;
     }
 
     @Override
     public <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> field1, EntityField<S, Collection<F>> field2,
-	    String operator) {
-	appendOperator();
-	oppCollectionField(field1, field2, operator);
+            String operator) {
+        appendOperator();
+        oppCollectionField(field1, field2, operator);
 
-	return this;
+        return this;
     }
 
     // =========================embedded=field=queries=======================//
 
     @Override
     public <F> SubQueryStream<S, T> embedded(EntityField<S, F> field, SubQueryConsumer<F, S> consumer) {
-	super.embedded(field, consumer);
-	return this;
+        super.embedded(field, consumer);
+        return this;
     }
 
     // =========================sub=queries==================================//
 
     @Override
     public <K> SubQueryStream<S, T> subQuery(Class<K> subType, SubQueryConsumer<K, S> consumer) {
-	super.subQuery(subType, consumer);
-	return this;
+        super.subQuery(subType, consumer);
+        return this;
     }
 
     @Override
     public <F, K> SubQueryStream<S, T> in(EntityField<S, F> field, Class<K> subType, SubQueryConsumer<K, S> consumer) {
-	super.in(field, subType, consumer);
-	return this;
+        super.in(field, subType, consumer);
+        return this;
     }
 
     @Override
     public <F, K> SubQueryStream<S, T> notIn(EntityField<S, F> field, Class<K> subType,
-	    SubQueryConsumer<K, S> consumer) {
-	super.notIn(field, subType, consumer);
-	return this;
+            SubQueryConsumer<K, S> consumer) {
+        super.notIn(field, subType, consumer);
+        return this;
     }
 
     @Override
     public <F, K> SubQueryStream<S, T> exists(Class<K> subType, SubQueryConsumer<K, S> consumer) {
-	super.exists(subType, consumer);
-	return this;
+        super.exists(subType, consumer);
+        return this;
     }
 
     @Override
     public <F, K> SubQueryStream<S, T> notExists(Class<K> subType, SubQueryConsumer<K, S> consumer) {
-	super.notExists(subType, consumer);
-	return this;
+        super.notExists(subType, consumer);
+        return this;
     }
 
     // =========================sub=queries==================================//
@@ -131,28 +131,28 @@ abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> impleme
     // =========================order=by=====================================//
     @Override
     public SubQueryStream<S, T> orderBy(EntityField<S, ?> field) {
-	super.orderBy(field);
-	return this;
+        super.orderBy(field);
+        return this;
     }
 
     @Override
     public SubQueryStream<S, T> orderByDesc(EntityField<S, ?> field) {
-	super.orderByDesc(field);
-	return this;
+        super.orderByDesc(field);
+        return this;
     }
     // ======================================================================//
 
     // ================= entity QL Filters ===================================//
     @Override
     public SubQueryStream<S, T> where() {
-	super.where();
-	return this;
+        super.where();
+        return this;
     }
 
     @Override
     public SubQueryStream<S, T> brackets(QueryConsumer<S> consumer) {
-	super.brackets(consumer);
-	return this;
+        super.brackets(consumer);
+        return this;
     }
 
     // ================= entity QL Filters ==================================//
@@ -161,13 +161,13 @@ abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> impleme
 
     @Override
     public SubQueryStream<S, T> appendPrefix(Object clause) {
-	super.appendPrefix(clause);
-	return this;
+        super.appendPrefix(clause);
+        return this;
     }
 
     @Override
     public SubQueryStream<S, T> appendBody(Object clause) {
-	super.appendBody(clause);
-	return this;
+        super.appendBody(clause);
+        return this;
     }
 }
