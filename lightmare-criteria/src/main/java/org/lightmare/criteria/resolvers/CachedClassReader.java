@@ -41,11 +41,11 @@ public class CachedClassReader extends ClassReader {
     private static final ConcurrentMap<String, ClassReader> CLASS_FILES = new ConcurrentHashMap<>();
 
     public CachedClassReader(byte[] buff) {
-	super(buff);
+        super(buff);
     }
 
     public CachedClassReader(InputStream is) throws IOException {
-	super(is);
+        super(is);
     }
 
     /**
@@ -57,13 +57,13 @@ public class CachedClassReader extends ClassReader {
      */
     private static ClassReader initClassReader(String name) throws IOException {
 
-	ClassReader classReader;
+        ClassReader classReader;
 
-	try (InputStream is = ClassLoaderUtils.getClassAsStream(name)) {
-	    classReader = new CachedClassReader(is);
-	}
+        try (InputStream is = ClassLoaderUtils.getClassAsStream(name)) {
+            classReader = new CachedClassReader(is);
+        }
 
-	return classReader;
+        return classReader;
     }
 
     /**
@@ -75,13 +75,13 @@ public class CachedClassReader extends ClassReader {
      */
     public static ClassReader get(String name) throws IOException {
 
-	ClassReader classReader = CLASS_FILES.get(name);
+        ClassReader classReader = CLASS_FILES.get(name);
 
-	if (classReader == null) {
-	    classReader = initClassReader(name);
-	    CLASS_FILES.putIfAbsent(name, classReader);
-	}
+        if (classReader == null) {
+            classReader = initClassReader(name);
+            CLASS_FILES.putIfAbsent(name, classReader);
+        }
 
-	return classReader;
+        return classReader;
     }
 }

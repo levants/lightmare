@@ -69,12 +69,12 @@ public class FieldResolver {
      */
     private static String resolveFieldName(String methodName) {
 
-	String fieldName = methodName.substring(BEGIN_INDEX);
+        String fieldName = methodName.substring(BEGIN_INDEX);
 
-	String first = String.valueOf(fieldName.charAt(FIRST));
-	fieldName = fieldName.replaceFirst(first, first.toLowerCase());
+        String first = String.valueOf(fieldName.charAt(FIRST));
+        fieldName = fieldName.replaceFirst(first, first.toLowerCase());
 
-	return fieldName;
+        return fieldName;
     }
 
     /**
@@ -85,12 +85,12 @@ public class FieldResolver {
      */
     private static String resolveEntityName(String owner) {
 
-	String entityName;
+        String entityName;
 
-	Type entityType = Type.getObjectType(owner);
-	entityName = entityType.getClassName();
+        Type entityType = Type.getObjectType(owner);
+        entityName = entityType.getClassName();
 
-	return entityName;
+        return entityName;
     }
 
     /**
@@ -102,18 +102,18 @@ public class FieldResolver {
      */
     private static String[] mapToNames(Type[] argumentTypes) throws IOException {
 
-	String[] arguments;
+        String[] arguments;
 
-	if (argumentTypes == null) {
-	    arguments = null;
-	} else if (CollectionUtils.isEmpty(argumentTypes)) {
-	    arguments = new String[] {};
-	} else {
-	    arguments = new String[argumentTypes.length];
-	    CollectionUtils.map(argumentTypes, arguments, Type::getClassName);
-	}
+        if (argumentTypes == null) {
+            arguments = null;
+        } else if (CollectionUtils.isEmpty(argumentTypes)) {
+            arguments = new String[] {};
+        } else {
+            arguments = new String[argumentTypes.length];
+            CollectionUtils.map(argumentTypes, arguments, Type::getClassName);
+        }
 
-	return arguments;
+        return arguments;
     }
 
     /**
@@ -125,13 +125,13 @@ public class FieldResolver {
      */
     private static String[] resolveArgumentsTypes(String desc) throws IOException {
 
-	String[] arguments;
+        String[] arguments;
 
-	Type methodType = Type.getMethodType(desc);
-	Type[] argumentTypes = methodType.getArgumentTypes();
-	arguments = mapToNames(argumentTypes);
+        Type methodType = Type.getMethodType(desc);
+        Type[] argumentTypes = methodType.getArgumentTypes();
+        arguments = mapToNames(argumentTypes);
 
-	return arguments;
+        return arguments;
     }
 
     /**
@@ -142,8 +142,8 @@ public class FieldResolver {
      * @return <code>boolean</code> validation result
      */
     private static boolean validSetter(Type returnType, Type[] argumentTypes) {
-	return (Objects.nonNull(argumentTypes) && argumentTypes.length == SINGLE_ARG
-		&& Type.VOID_TYPE.equals(returnType));
+        return (Objects.nonNull(argumentTypes) && argumentTypes.length == SINGLE_ARG
+                && Type.VOID_TYPE.equals(returnType));
     }
 
     /**
@@ -154,7 +154,7 @@ public class FieldResolver {
      * @return <code>boolean</code> validation result
      */
     private static boolean validGetter(Type returnType, Type[] argumentTypes) {
-	return (CollectionUtils.isEmpty(argumentTypes) && ObjectUtils.notEquals(Type.VOID_TYPE, returnType));
+        return (CollectionUtils.isEmpty(argumentTypes) && ObjectUtils.notEquals(Type.VOID_TYPE, returnType));
     }
 
     /**
@@ -165,21 +165,21 @@ public class FieldResolver {
      */
     private static boolean valid(MethodInsnNode node) {
 
-	boolean valid;
+        boolean valid;
 
-	Type methodType = Type.getMethodType(node.desc);
-	Type returnType = methodType.getReturnType();
-	Type[] argumentTypes = methodType.getArgumentTypes();
-	String name = node.name;
-	if (name.startsWith(GET)) {
-	    valid = validGetter(returnType, argumentTypes);
-	} else if (name.startsWith(SET)) {
-	    valid = validSetter(returnType, argumentTypes);
-	} else {
-	    valid = Boolean.FALSE;
-	}
+        Type methodType = Type.getMethodType(node.desc);
+        Type returnType = methodType.getReturnType();
+        Type[] argumentTypes = methodType.getArgumentTypes();
+        String name = node.name;
+        if (name.startsWith(GET)) {
+            valid = validGetter(returnType, argumentTypes);
+        } else if (name.startsWith(SET)) {
+            valid = validSetter(returnType, argumentTypes);
+        } else {
+            valid = Boolean.FALSE;
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -190,9 +190,9 @@ public class FieldResolver {
      */
     private static void setMetaData(QueryTuple tuple) throws IOException {
 
-	EntityProcessor.setMetaData(tuple);
-	ColumnProcessor.setTemporalType(tuple);
-	GenericProcessor.setGenericType(tuple);
+        EntityProcessor.setMetaData(tuple);
+        ColumnProcessor.setTemporalType(tuple);
+        GenericProcessor.setGenericType(tuple);
     }
 
     /**
@@ -205,19 +205,19 @@ public class FieldResolver {
      */
     private static QueryTuple resolve(MethodInsnNode node) throws IOException {
 
-	QueryTuple tuple;
+        QueryTuple tuple;
 
-	if (valid(node)) {
-	    String fieldName = resolveFieldName(node.name);
-	    String entityName = resolveEntityName(node.owner);
-	    String[] arguments = resolveArgumentsTypes(node.desc);
-	    tuple = new QueryTuple(entityName, node.name, arguments, fieldName);
-	    setMetaData(tuple);
-	} else {
-	    tuple = null;
-	}
+        if (valid(node)) {
+            String fieldName = resolveFieldName(node.name);
+            String entityName = resolveEntityName(node.owner);
+            String[] arguments = resolveArgumentsTypes(node.desc);
+            tuple = new QueryTuple(entityName, node.name, arguments, fieldName);
+            setMetaData(tuple);
+        } else {
+            tuple = null;
+        }
 
-	return tuple;
+        return tuple;
     }
 
     /**
@@ -230,18 +230,18 @@ public class FieldResolver {
      */
     private static QueryTuple resolve(InsnList instructions) throws IOException {
 
-	QueryTuple tuple = null;
+        QueryTuple tuple = null;
 
-	int size = instructions.size();
-	for (int i = FIRST; (i < size && tuple == null); ++i) {
-	    AbstractInsnNode instruction = instructions.get(i);
-	    if (instruction instanceof MethodInsnNode) {
-		MethodInsnNode node = ObjectUtils.cast(instruction);
-		tuple = resolve(node);
-	    }
-	}
+        int size = instructions.size();
+        for (int i = FIRST; (i < size && tuple == null); ++i) {
+            AbstractInsnNode instruction = instructions.get(i);
+            if (instruction instanceof MethodInsnNode) {
+                MethodInsnNode node = ObjectUtils.cast(instruction);
+                tuple = resolve(node);
+            }
+        }
 
-	return tuple;
+        return tuple;
     }
 
     /**
@@ -253,15 +253,15 @@ public class FieldResolver {
      */
     private static QueryTuple resolveQuietly(InsnList instructions) {
 
-	QueryTuple tuple;
+        QueryTuple tuple;
 
-	try {
-	    tuple = resolve(instructions);
-	} catch (IOException ex) {
-	    throw new RuntimeException(ex);
-	}
+        try {
+            tuple = resolve(instructions);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
 
-	return tuple;
+        return tuple;
     }
 
     /**
@@ -273,13 +273,13 @@ public class FieldResolver {
      */
     public static boolean validate(MethodNode methodNode, LambdaData lambda) {
 
-	boolean valid;
+        boolean valid;
 
-	String lambdaName = lambda.getImplMethodName();
-	String lambdaSignature = lambda.getImplMethodSignature();
-	valid = (methodNode.name.equals(lambdaName) && methodNode.desc.equals(lambdaSignature));
+        String lambdaName = lambda.getImplMethodName();
+        String lambdaSignature = lambda.getImplMethodSignature();
+        valid = (methodNode.name.equals(lambdaName) && methodNode.desc.equals(lambdaSignature));
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -291,18 +291,18 @@ public class FieldResolver {
      */
     public static QueryTuple resolve(LambdaData lambda) {
 
-	QueryTuple tuple;
+        QueryTuple tuple;
 
-	List<MethodNode> methods = MethodCache.getMethods(lambda);
-	if (Objects.nonNull(methods)) {
-	    MethodNode methodNode = CollectionUtils.getFirstValid(methods, c -> validate(c, lambda));
-	    methodNode.visitCode();
-	    InsnList instructions = methodNode.instructions;
-	    tuple = resolveQuietly(instructions);
-	} else {
-	    throw new RuntimeException(UNRESOLVABLE_ERROR);
-	}
+        List<MethodNode> methods = MethodCache.getMethods(lambda);
+        if (Objects.nonNull(methods)) {
+            MethodNode methodNode = CollectionUtils.getFirstValid(methods, c -> validate(c, lambda));
+            methodNode.visitCode();
+            InsnList instructions = methodNode.instructions;
+            tuple = resolveQuietly(instructions);
+        } else {
+            throw new RuntimeException(UNRESOLVABLE_ERROR);
+        }
 
-	return tuple;
+        return tuple;
     }
 }
