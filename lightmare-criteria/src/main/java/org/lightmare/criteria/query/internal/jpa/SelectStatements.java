@@ -35,6 +35,8 @@ import org.lightmare.criteria.query.QueryStream;
  */
 public interface SelectStatements<T> {
 
+    <F> QueryStream<F> selectOne(EntityField<T, F> field);
+
     QueryStream<Object[]> select(EntityField<T, ?> field);
 
     QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2);

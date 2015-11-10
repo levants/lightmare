@@ -32,13 +32,13 @@ import org.lightmare.criteria.query.JPAQueryStream;
  * @param <T>
  *            entity type for generated query
  */
-public class SelectStream<T> extends JPAQueryStream<Object[]> {
+public class SelectStream<T, E> extends JPAQueryStream<E> {
 
     // Real entity type before select statement
     private final Class<?> realEntityType;
 
-    protected SelectStream(AbstractQueryStream<T> stream) {
-        super(stream.getEntityManager(), Object[].class, stream.getAlias());
+    protected SelectStream(AbstractQueryStream<T> stream, Class<E> type) {
+        super(stream.getEntityManager(), type, stream.getAlias());
         this.realEntityType = stream.entityType;
         this.columns.append(stream.columns);
         this.body.append(stream.body);

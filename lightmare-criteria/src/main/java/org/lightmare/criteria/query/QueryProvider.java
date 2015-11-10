@@ -31,7 +31,11 @@ import javax.persistence.EntityManager;
  * @author Levan Tsinadze
  *
  */
-public class QueryProvider {
+public abstract class QueryProvider {
+
+    private QueryProvider() {
+        throw new IllegalAccessError();
+    }
 
     /**
      * Generates DELETE statements with custom alias

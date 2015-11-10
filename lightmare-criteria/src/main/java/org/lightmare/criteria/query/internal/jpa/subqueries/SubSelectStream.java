@@ -35,12 +35,12 @@ import org.lightmare.criteria.utils.CollectionUtils;
  * @param <T>
  *            entity type parameter for generated query
  */
-class SubSelectStream<T> extends SelectStream<T> {
+class SubSelectStream<T, E> extends SelectStream<T, E> {
 
     private final AbstractSubQueryStream<T, ?> stream;
 
-    protected SubSelectStream(AbstractSubQueryStream<T, ?> stream) {
-        super(stream);
+    protected SubSelectStream(AbstractSubQueryStream<T, ?> stream, Class<E> type) {
+        super(stream, type);
         this.stream = stream;
     }
 
@@ -54,13 +54,13 @@ class SubSelectStream<T> extends SelectStream<T> {
     }
 
     @Override
-    public Object[] get() {
+    public E get() {
         appendOriginal();
         return null;
     }
 
     @Override
-    public List<Object[]> toList() {
+    public List<E> toList() {
         appendOriginal();
         return null;
     }

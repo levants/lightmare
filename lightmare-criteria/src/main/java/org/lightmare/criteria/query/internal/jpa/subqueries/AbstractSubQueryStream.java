@@ -50,7 +50,7 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
 
     protected final AbstractQueryStream<T> parent;
 
-    private SubSelectStream<S> subSelect;
+    private SubSelectStream<S, ?> subSelect;
 
     private boolean preparedState = Boolean.TRUE;
 
@@ -67,10 +67,10 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
     @SafeVarargs
     protected final QueryStream<Object[]> subSelectAll(EntityField<S, ?>... fields) {
 
-        SubSelectStream<S> stream;
+        SubSelectStream<S, Object[]> stream;
 
         oppSelect(fields);
-        stream = new SubSelectStream<>(this);
+        stream = new SubSelectStream<>(this, Object[].class);
         subSelect = stream;
 
         return stream;

@@ -28,6 +28,8 @@ import java.lang.reflect.Method;
 
 import javax.persistence.TemporalType;
 
+import org.lightmare.criteria.utils.ObjectUtils;
+
 /**
  * Query field and entity type container class
  * 
@@ -51,6 +53,8 @@ public class QueryTuple implements Serializable {
     private Method method;
 
     private Field field;
+
+    private Class<?> rawType;
 
     private TemporalType temporalType;
 
@@ -108,6 +112,25 @@ public class QueryTuple implements Serializable {
 
     public void setField(Field field) {
         this.field = field;
+    }
+
+    private Class<?> getRawType() {
+
+        if (rawType == null) {
+            rawType = field.getType();
+        }
+
+        return rawType;
+    }
+
+    public <F> Class<F> getFieldType() {
+
+        Class<F> fieldType;
+
+        Class<?> raw = getRawType();
+        fieldType = ObjectUtils.cast(raw);
+
+        return fieldType;
     }
 
     public TemporalType getTemporalType() {
