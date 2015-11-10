@@ -38,6 +38,7 @@ import org.objectweb.asm.ClassReader;
  */
 public class CachedClassReader extends ClassReader {
 
+    // Cache for class readers
     private static final ConcurrentMap<String, ClassReader> CLASS_FILES = new ConcurrentHashMap<>();
 
     public CachedClassReader(byte[] buff) {

@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.runorder;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -48,6 +49,13 @@ public class SortedRunner extends BlockJUnit4ClassRunner {
         super(testClass);
     }
 
+    /**
+     * Compares test methods by annotation for run order
+     * 
+     * @param method1
+     * @param method2
+     * @return <code>int</code> compare result
+     */
     private static int compare(FrameworkMethod method1, FrameworkMethod method2) {
 
         int comp;
@@ -70,9 +78,12 @@ public class SortedRunner extends BlockJUnit4ClassRunner {
     @Override
     protected List<FrameworkMethod> computeTestMethods() {
 
-        List<FrameworkMethod> list = super.computeTestMethods();
-        Collections.sort(list, SortedRunner::compare);
+        List<FrameworkMethod> methods;
 
-        return list;
+        List<FrameworkMethod> list = super.computeTestMethods();
+        methods = new ArrayList<>(list);
+        Collections.sort(methods, SortedRunner::compare);
+
+        return methods;
     }
 }
