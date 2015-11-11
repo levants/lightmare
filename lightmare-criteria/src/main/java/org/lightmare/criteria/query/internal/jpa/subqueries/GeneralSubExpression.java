@@ -39,7 +39,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <S>
  *            entity type parameter
  */
-interface GeneralSubQueryStream<T, S> extends QueryStream<S> {
+interface GeneralSubExpression<T, S> extends QueryStream<S> {
 
     // =========================sub=queries==================================//
 

@@ -39,7 +39,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter
  */
-public interface FieldStream<T> {
+public interface Expression<T> {
 
     /**
      * Opens bracket in query body
@@ -69,28 +69,36 @@ public interface FieldStream<T> {
      */
     <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator);
 
-    default <F> QueryStream<T> equals(EntityField<T, F> field, F value) {
+    default <F> QueryStream<T> equal(EntityField<T, F> field, F value) {
         return operate(field, value, Operators.EQ);
     }
 
-    default <F> QueryStream<T> notEquals(EntityField<T, F> field, F value) {
+    default <F> QueryStream<T> notEqual(EntityField<T, F> field, F value) {
         return operate(field, value, Operators.NOT_EQ);
     }
 
-    default <F> QueryStream<T> greater(EntityField<T, F> field, F value) {
+    default <F> QueryStream<T> gt(EntityField<T, F> field, F value) {
         return operate(field, value, Operators.MORE);
     }
 
-    default <F> QueryStream<T> less(EntityField<T, F> field, F value) {
+    default <F> QueryStream<T> lt(EntityField<T, F> field, F value) {
         return operate(field, value, Operators.LESS);
     }
 
-    default <F> QueryStream<T> greaterOrEquals(EntityField<T, F> field, F value) {
+    default <F> QueryStream<T> ge(EntityField<T, F> field, F value) {
         return operate(field, value, Operators.MORE_OR_EQ);
     }
 
-    default <F> QueryStream<T> lessOrEquals(EntityField<T, F> field, F value) {
+    default <F> QueryStream<T> le(EntityField<T, F> field, F value) {
         return operate(field, value, Operators.LESS_OR_EQ);
+    }
+
+    default <F> QueryStream<T> between(EntityField<T, F> field, F value1, F value2) {
+        return operate(field, Operators.BETWEEN);
+    }
+
+    default <F> QueryStream<T> notBetween(EntityField<T, F> field, F value1, F value2) {
+        return operate(field, Operators.BETWEEN);
     }
 
     default QueryStream<T> startsWith(EntityField<T, String> field, String value) {

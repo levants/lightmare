@@ -42,6 +42,10 @@ public interface Operators {
 
     String LESS_OR_EQ = " <= ";
 
+    String BETWEEN = " between ";
+
+    String NOT_BETWEEN = " between ";
+
     String LIKE = " like ";
 
     String IS_NULL = " is null ";

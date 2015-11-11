@@ -40,7 +40,7 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type for generated query
  */
 public interface SubQueryStream<S, T>
-        extends GeneralSubQueryStream<T, S>, SubFieldStream<T, S>, SubFieldValueStream<T, S> {
+        extends GeneralSubExpression<T, S>, SubExpression<T, S>, SubFieldExpression<T, S> {
 
     // =========================embedded=field=queries=======================//
 
@@ -58,46 +58,34 @@ public interface SubQueryStream<S, T>
      * @param operator
      * @return {@link SubQueryStream} current instance
      */
-    <F> SubQueryStream<S, T> operate(EntityField<S, F> sfield, ParentField<T, F> field, String operator);
+    <F> SubQueryStream<S, T> operatePr(EntityField<S, F> sfield, ParentField<T, F> field, String operator);
 
-    default <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, ParentField<T, F> field) {
-        return operate(sfield, field, Operators.EQ);
+    default <F> SubQueryStream<S, T> equalPr(EntityField<S, F> sfield, ParentField<T, F> field) {
+        return operatePr(sfield, field, Operators.EQ);
     }
 
-    default <F> SubQueryStream<S, T> notEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
-        return operate(sfield, field, Operators.NOT_EQ);
+    default <F> SubQueryStream<S, T> notEqualPr(EntityField<S, F> sfield, ParentField<T, F> field) {
+        return operatePr(sfield, field, Operators.NOT_EQ);
     }
 
-    default <F> SubQueryStream<S, T> greater(EntityField<S, F> sfield, ParentField<T, F> field) {
-        return operate(sfield, field, Operators.MORE);
+    default <F> SubQueryStream<S, T> gtPr(EntityField<S, F> sfield, ParentField<T, F> field) {
+        return operatePr(sfield, field, Operators.MORE);
     }
 
-    default <F> SubQueryStream<S, T> less(EntityField<S, F> sfield, ParentField<T, F> field) {
-        return operate(sfield, field, Operators.LESS);
+    default <F> SubQueryStream<S, T> ltPr(EntityField<S, F> sfield, ParentField<T, F> field) {
+        return operatePr(sfield, field, Operators.LESS);
     }
 
-    default <F> SubQueryStream<S, T> greaterOrEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
-        return operate(sfield, field, Operators.MORE_OR_EQ);
+    default <F> SubQueryStream<S, T> gePr(EntityField<S, F> sfield, ParentField<T, F> field) {
+        return operatePr(sfield, field, Operators.MORE_OR_EQ);
     }
 
-    default <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
-        return operate(sfield, field, Operators.LESS_OR_EQ);
+    default <F> SubQueryStream<S, T> lePr(EntityField<S, F> sfield, ParentField<T, F> field) {
+        return operatePr(sfield, field, Operators.LESS_OR_EQ);
     }
 
-    default SubQueryStream<S, T> startsWith(EntityField<S, String> sfield, ParentField<T, String> field) {
-        return operate(sfield, field, Operators.LIKE);
-    }
-
-    default SubQueryStream<S, T> like(EntityField<S, String> sfield, ParentField<T, String> field) {
-        return operate(sfield, field, Operators.LIKE);
-    }
-
-    default SubQueryStream<S, T> endsWith(EntityField<S, String> sfield, ParentField<T, String> field) {
-        return operate(sfield, field, Operators.LIKE);
-    }
-
-    default SubQueryStream<S, T> contains(EntityField<S, String> sfield, ParentField<T, String> field) {
-        return operate(sfield, field, Operators.LIKE);
+    default SubQueryStream<S, T> likePr(EntityField<S, String> sfield, ParentField<T, String> field) {
+        return operatePr(sfield, field, Operators.LIKE);
     }
 
     /**
@@ -109,14 +97,14 @@ public interface SubQueryStream<S, T>
      * @param operator
      * @return {@link SubQueryStream} current instance
      */
-    <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> sfield, ParentField<T, Collection<F>> field,
+    <F> SubQueryStream<S, T> operateCollectionPr(EntityField<S, F> sfield, ParentField<T, Collection<F>> field,
             String operator);
 
-    default <F> SubQueryStream<S, T> in(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
-        return operateCollection(sfield, field, Operators.IN);
+    default <F> SubQueryStream<S, T> inPr(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
+        return operateCollectionPr(sfield, field, Operators.IN);
     }
 
-    default <F> SubQueryStream<S, T> notIn(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
-        return operateCollection(sfield, field, Operators.NOT_IN);
+    default <F> SubQueryStream<S, T> notInPr(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
+        return operateCollectionPr(sfield, field, Operators.NOT_IN);
     }
 }

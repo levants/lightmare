@@ -70,13 +70,13 @@ abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> impleme
     // ========================= Entity self method composers ===============//
 
     @Override
-    public <F> SubQueryStream<S, T> operate(EntityField<S, F> field1, EntityField<S, F> field2, String operator) {
-        super.operate(field1, field2, operator);
+    public <F> SubQueryStream<S, T> operateFl(EntityField<S, F> field1, EntityField<S, F> field2, String operator) {
+        super.operateFl(field1, field2, operator);
         return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> field1, EntityField<S, Collection<F>> field2,
+    public <F> SubQueryStream<S, T> operateCollectionFl(EntityField<S, F> field1, EntityField<S, Collection<F>> field2,
             String operator) {
         appendOperator();
         oppCollectionField(field1, field2, operator);

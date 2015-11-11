@@ -24,9 +24,9 @@ package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.SubQueryConsumer;
-import org.lightmare.criteria.query.internal.GeneralQueryStream;
-import org.lightmare.criteria.query.internal.jpa.FieldStream;
-import org.lightmare.criteria.query.internal.jpa.FieldValueStream;
+import org.lightmare.criteria.query.internal.GeneralExpresson;
+import org.lightmare.criteria.query.internal.jpa.Expression;
+import org.lightmare.criteria.query.internal.jpa.FieldExpression;
 
 /**
  * Main interface with query construction methods
@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.internal.jpa.FieldValueStream;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface QueryStream<T> extends GeneralQueryStream<T>, FieldStream<T>, FieldValueStream<T> {
+public interface QueryStream<T> extends GeneralExpresson<T>, Expression<T>, FieldExpression<T> {
 
     /**
      * Generates query part for embedded entity fields
@@ -54,6 +54,6 @@ public interface QueryStream<T> extends GeneralQueryStream<T>, FieldStream<T>, F
 
     @Override
     default QueryStream<T> openBracket() {
-        return GeneralQueryStream.super.openBracket();
+        return GeneralExpresson.super.openBracket();
     }
 }

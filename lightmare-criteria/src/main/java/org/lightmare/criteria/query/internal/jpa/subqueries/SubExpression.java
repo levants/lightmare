@@ -26,9 +26,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Sub query field types
@@ -40,7 +38,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <S>
  *            entity type parameter
  */
-interface SubFieldStream<T, S> extends GeneralSubQueryStream<T, S> {
+interface SubExpression<T, S> extends GeneralSubExpression<T, S> {
 
     // ========================= Entity method composers ====================//
 
@@ -51,68 +49,48 @@ interface SubFieldStream<T, S> extends GeneralSubQueryStream<T, S> {
     <F> SubQueryStream<S, T> operate(EntityField<S, F> field, F value, String operator);
 
     @Override
-    default <F> SubQueryStream<S, T> equals(EntityField<S, F> field, F value) {
+    default <F> SubQueryStream<S, T> equal(EntityField<S, F> field, F value) {
         return operate(field, value, Operators.EQ);
     }
 
     @Override
-    default <F> SubQueryStream<S, T> notEquals(EntityField<S, F> field, F value) {
+    default <F> SubQueryStream<S, T> notEqual(EntityField<S, F> field, F value) {
         return operate(field, value, Operators.NOT_EQ);
     }
 
     @Override
-    default <F> SubQueryStream<S, T> greater(EntityField<S, F> field, F value) {
+    default <F> SubQueryStream<S, T> gt(EntityField<S, F> field, F value) {
         return operate(field, value, Operators.MORE);
     }
 
     @Override
-    default <F> SubQueryStream<S, T> less(EntityField<S, F> field, F value) {
+    default <F> SubQueryStream<S, T> lt(EntityField<S, F> field, F value) {
         return operate(field, value, Operators.LESS);
     }
 
     @Override
-    default <F> SubQueryStream<S, T> greaterOrEquals(EntityField<S, F> field, F value) {
+    default <F> SubQueryStream<S, T> ge(EntityField<S, F> field, F value) {
         return operate(field, value, Operators.MORE_OR_EQ);
     }
 
     @Override
-    default <F> SubQueryStream<S, T> lessOrEquals(EntityField<S, F> field, F value) {
+    default <F> SubQueryStream<S, T> le(EntityField<S, F> field, F value) {
         return operate(field, value, Operators.LESS_OR_EQ);
     }
 
     @Override
-    default SubQueryStream<S, T> startsWith(EntityField<S, String> field, String value) {
-        String enrich = StringUtils.concat(value, Filters.LIKE_SIGN);
-        return operate(field, enrich, Operators.LIKE);
+    default <F> SubQueryStream<S, T> between(EntityField<S, F> field, F value1, F value2) {
+        return operate(field, Operators.BETWEEN);
+    }
+
+    @Override
+    default <F> SubQueryStream<S, T> notBetween(EntityField<S, F> field, F value1, F value2) {
+        return operate(field, Operators.BETWEEN);
     }
 
     @Override
     default SubQueryStream<S, T> like(EntityField<S, String> field, String value) {
-        return startsWith(field, value);
-    }
-
-    @Override
-    default SubQueryStream<S, T> endsWith(EntityField<S, String> field, String value) {
-        String enrich = Filters.LIKE_SIGN.concat(value);
-        return operate(field, enrich, Operators.LIKE);
-    }
-
-    @Override
-    default SubQueryStream<S, T> contains(EntityField<S, String> field, String value) {
-        String enrich = StringUtils.concat(Filters.LIKE_SIGN, value, Filters.LIKE_SIGN);
-        return operate(field, enrich, Operators.LIKE);
-    }
-
-    @Override
-    default SubQueryStream<S, T> notContains(EntityField<S, String> field, String value) {
-
-        SubQueryStream<S, T> stream;
-
-        openBracket().appendBody(Operators.NO);
-        stream = contains(field, value);
-        stream = GeneralSubQueryStream.super.closeBracket();
-
-        return stream;
+        return operate(field, Operators.LIKE);
     }
 
     @Override

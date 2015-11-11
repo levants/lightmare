@@ -29,7 +29,7 @@ import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.JPAQueryWrapper;
-import org.lightmare.criteria.query.internal.jpa.JoinQueryStream;
+import org.lightmare.criteria.query.internal.jpa.JoinExpressions;
 import org.lightmare.criteria.query.internal.jpa.ResultStream;
 import org.lightmare.criteria.query.internal.jpa.SelectStatements;
 
@@ -41,7 +41,7 @@ import org.lightmare.criteria.query.internal.jpa.SelectStatements;
  * @param <T>
  *            entity type parameter
  */
-public interface GeneralQueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>, JoinQueryStream<T>,
+public interface GeneralExpresson<T> extends JPAQueryWrapper<T>, SelectStatements<T>, JoinExpressions<T>,
         ResultStream<T>, GeneralSubQueryProcessor<T> {
 
     /**

@@ -54,7 +54,7 @@ class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
     // ========================= Entity and parent method composers =========//
 
     @Override
-    public <F> SubQueryStream<S, T> operate(EntityField<S, F> sfield, ParentField<T, F> field, String operator) {
+    public <F> SubQueryStream<S, T> operatePr(EntityField<S, F> sfield, ParentField<T, F> field, String operator) {
         appendOperator();
         oppField(sfield, field, operator);
 
@@ -62,7 +62,7 @@ class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
     }
 
     @Override
-    public <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> sfield, ParentField<T, Collection<F>> field,
+    public <F> SubQueryStream<S, T> operateCollectionPr(EntityField<S, F> sfield, ParentField<T, Collection<F>> field,
             String operator) {
         appendOperator();
         oppCollectionField(sfield, field, operator);

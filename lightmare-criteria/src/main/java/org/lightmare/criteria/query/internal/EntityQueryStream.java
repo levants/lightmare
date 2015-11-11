@@ -77,7 +77,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     // ========================= Entity self method composers ===============//
 
     @Override
-    public <F> QueryStream<T> operate(EntityField<T, F> field1, EntityField<T, F> field2, String operator) {
+    public <F> QueryStream<T> operateFl(EntityField<T, F> field1, EntityField<T, F> field2, String operator) {
         appendOperator();
         oppField(field1, field2, operator);
 
@@ -85,7 +85,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
+    public <F> QueryStream<T> operateCollectionFl(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
             String operator) {
         appendOperator();
         oppCollectionField(field1, field2, operator);

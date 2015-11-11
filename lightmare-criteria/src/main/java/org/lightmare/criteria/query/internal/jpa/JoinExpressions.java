@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type for generated query
  */
-public interface JoinQueryStream<T> {
+public interface JoinExpressions<T> {
 
     <E, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
             SubQueryConsumer<E, T> consumer);
