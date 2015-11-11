@@ -40,7 +40,7 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type for generated query
  */
 public interface SubQueryStream<S, T>
-        extends QueryStream<S>, GeneralSubExpression<S, T>, SubExpression<S, T>, SubFieldExpression<S, T> {
+        extends QueryStream<S>, GeneralSubExpression<S, T>, SubExpression<S, T>, SubColumnExpression<S, T> {
 
     // =========================embedded=field=queries=======================//
 

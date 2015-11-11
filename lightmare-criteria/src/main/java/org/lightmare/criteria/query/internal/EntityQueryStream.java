@@ -93,7 +93,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     // ========================= Entity self method composers ===============//
 
     @Override
-    public <F> QueryStream<T> operateFl(EntityField<T, F> field1, EntityField<T, F> field2, String operator) {
+    public <F> QueryStream<T> operateCl(EntityField<T, F> field1, EntityField<T, F> field2, String operator) {
         appendOperator();
         oppField(field1, field2, operator);
 
@@ -101,7 +101,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operateCollectionFl(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
+    public <F> QueryStream<T> operateCollectionCl(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
             String operator) {
         appendOperator();
         oppCollectionField(field1, field2, operator);
@@ -109,7 +109,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public <F> QueryStream<T> betweenFl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3) {
+    public <F> QueryStream<T> betweenCl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3) {
         appendOperator();
         oppLine(field1, field2, field3, Operators.BETWEEN);
 
@@ -117,7 +117,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public <F> QueryStream<T> notBetweenFl(EntityField<T, F> field1, EntityField<T, F> field2,
+    public <F> QueryStream<T> notBetweenCl(EntityField<T, F> field1, EntityField<T, F> field2,
             EntityField<T, F> field3) {
 
         appendOperator();

@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type parameter
  */
-public interface FieldExpression<T> {
+public interface ColumnExpression<T> {
 
     // ========================= Entity self method composers ===============//
 
@@ -48,38 +48,38 @@ public interface FieldExpression<T> {
      * @param operator
      * @return {@link QueryStream} current instance
      */
-    <F> QueryStream<T> operateFl(EntityField<T, F> field1, EntityField<T, F> field2, String operator);
+    <F> QueryStream<T> operateCl(EntityField<T, F> field1, EntityField<T, F> field2, String operator);
 
-    default <F> QueryStream<T> equalFl(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operateFl(field1, field2, Operators.EQ);
+    default <F> QueryStream<T> equalCl(EntityField<T, F> field1, EntityField<T, F> field2) {
+        return operateCl(field1, field2, Operators.EQ);
     }
 
-    default <F> QueryStream<T> notEqualFl(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operateFl(field1, field2, Operators.NOT_EQ);
+    default <F> QueryStream<T> notEqualCl(EntityField<T, F> field1, EntityField<T, F> field2) {
+        return operateCl(field1, field2, Operators.NOT_EQ);
     }
 
-    default <F> QueryStream<T> gtFl(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operateFl(field1, field2, Operators.GREATER);
+    default <F> QueryStream<T> gtCl(EntityField<T, F> field1, EntityField<T, F> field2) {
+        return operateCl(field1, field2, Operators.GREATER);
     }
 
-    default <F> QueryStream<T> ltFl(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operateFl(field1, field2, Operators.LESS);
+    default <F> QueryStream<T> ltCl(EntityField<T, F> field1, EntityField<T, F> field2) {
+        return operateCl(field1, field2, Operators.LESS);
     }
 
-    default <F> QueryStream<T> geFl(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operateFl(field1, field2, Operators.GREATER_OR_EQ);
+    default <F> QueryStream<T> geCl(EntityField<T, F> field1, EntityField<T, F> field2) {
+        return operateCl(field1, field2, Operators.GREATER_OR_EQ);
     }
 
-    default <F> QueryStream<T> leFl(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operateFl(field1, field2, Operators.LESS_OR_EQ);
+    default <F> QueryStream<T> leCl(EntityField<T, F> field1, EntityField<T, F> field2) {
+        return operateCl(field1, field2, Operators.LESS_OR_EQ);
     }
 
-    <F> QueryStream<T> betweenFl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3);
+    <F> QueryStream<T> betweenCl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3);
 
-    <F> QueryStream<T> notBetweenFl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3);
+    <F> QueryStream<T> notBetweenCl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3);
 
-    default QueryStream<T> likeFl(EntityField<T, String> field1, EntityField<T, String> field2) {
-        return operateFl(field1, field2, Operators.LIKE);
+    default QueryStream<T> likeCl(EntityField<T, String> field1, EntityField<T, String> field2) {
+        return operateCl(field1, field2, Operators.LIKE);
     }
 
     /**
@@ -90,14 +90,14 @@ public interface FieldExpression<T> {
      * @param operator
      * @return {@link QueryStream} current instance
      */
-    <F> QueryStream<T> operateCollectionFl(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
+    <F> QueryStream<T> operateCollectionCl(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
             String operator);
 
-    default <F> QueryStream<T> inFl(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
-        return operateCollectionFl(field1, field2, Operators.IN);
+    default <F> QueryStream<T> inCl(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
+        return operateCollectionCl(field1, field2, Operators.IN);
     }
 
-    default <F> QueryStream<T> notInFl(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
-        return operateCollectionFl(field1, field2, Operators.NOT_IN);
+    default <F> QueryStream<T> notInCl(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
+        return operateCollectionCl(field1, field2, Operators.NOT_IN);
     }
 }

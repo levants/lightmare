@@ -63,7 +63,7 @@ public class EmbeddedQueryTest extends JoinQueryTest {
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname")
                     .embedded(Person::getInfo, c -> c.equalPr(PersonInfo::getCardNumber, Person::getPersonalNo)
-                            .equalFl(PersonInfo::getNote, PersonInfo::getCardNumber));
+                            .equalCl(PersonInfo::getNote, PersonInfo::getCardNumber));
             Person person = stream.getFirst();
             String sql = stream.sql();
             System.out.println(sql);

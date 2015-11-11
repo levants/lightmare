@@ -82,13 +82,13 @@ abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> impleme
     // ========================= Entity self method composers ===============//
 
     @Override
-    public <F> SubQueryStream<S, T> operateFl(EntityField<S, F> field1, EntityField<S, F> field2, String operator) {
-        super.operateFl(field1, field2, operator);
+    public <F> SubQueryStream<S, T> operateCl(EntityField<S, F> field1, EntityField<S, F> field2, String operator) {
+        super.operateCl(field1, field2, operator);
         return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> operateCollectionFl(EntityField<S, F> field1, EntityField<S, Collection<F>> field2,
+    public <F> SubQueryStream<S, T> operateCollectionCl(EntityField<S, F> field1, EntityField<S, Collection<F>> field2,
             String operator) {
         appendOperator();
         oppCollectionField(field1, field2, operator);
@@ -97,16 +97,16 @@ abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> impleme
     }
 
     @Override
-    public <F> SubQueryStream<S, T> betweenFl(EntityField<S, F> field1, EntityField<S, F> field2,
+    public <F> SubQueryStream<S, T> betweenCl(EntityField<S, F> field1, EntityField<S, F> field2,
             EntityField<S, F> field3) {
-        super.betweenFl(field1, field2, field3);
+        super.betweenCl(field1, field2, field3);
         return this;
     }
 
     @Override
-    public <F> SubQueryStream<S, T> notBetweenFl(EntityField<S, F> field1, EntityField<S, F> field2,
+    public <F> SubQueryStream<S, T> notBetweenCl(EntityField<S, F> field1, EntityField<S, F> field2,
             EntityField<S, F> field3) {
-        super.notBetweenFl(field1, field2, field3);
+        super.notBetweenCl(field1, field2, field3);
         return this;
     }
 
