@@ -66,7 +66,7 @@ public class ClassUtils extends AbstractMemberUtils {
      * @param className
      * @param initialize
      * @param loader
-     * @return {@link Class}
+     * @return {@link Class} by name
      * @throws IOException
      */
     public static Class<?> classForName(String className, boolean initialize, ClassLoader loader) throws IOException {
@@ -88,7 +88,7 @@ public class ClassUtils extends AbstractMemberUtils {
      *
      * @param className
      * @param loader
-     * @return {@link Class}
+     * @return {@link Class} by name
      * @throws IOException
      */
     public static Class<?> classForName(String className, ClassLoader loader) throws IOException {
@@ -99,7 +99,7 @@ public class ClassUtils extends AbstractMemberUtils {
      * Loads class by name
      *
      * @param className
-     * @return {@link Class}
+     * @return {@link Class} by name
      * @throws IOException
      */
     public static Class<?> classForName(String className) throws IOException {

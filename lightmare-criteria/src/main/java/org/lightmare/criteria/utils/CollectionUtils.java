@@ -73,7 +73,7 @@ public abstract class CollectionUtils {
      * Checks if passed {@link Collection} instance is not empty
      *
      * @param collection
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean notEmpty(Collection<?> collection) {
         return !collection.isEmpty();
@@ -84,7 +84,7 @@ public abstract class CollectionUtils {
      * returns true if it is not null and is not empty
      *
      * @param collection
-     * @return <code></code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean valid(Collection<?> collection) {
         return (collection != null && !collection.isEmpty());
@@ -95,7 +95,7 @@ public abstract class CollectionUtils {
      * it is not null and is not empty
      *
      * @param map
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean valid(Map<?, ?> map) {
         return (map != null && !map.isEmpty());
@@ -105,7 +105,7 @@ public abstract class CollectionUtils {
      * Checks if passed {@link Map} instance is null or is empty
      *
      * @param map
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean invalid(Map<?, ?> map) {
         return !valid(map);
@@ -115,7 +115,7 @@ public abstract class CollectionUtils {
      * Checks if passed {@link Collection} instance is null or is empty
      *
      * @param collection
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean invalid(Collection<?> collection) {
         return !valid(collection);
@@ -126,7 +126,7 @@ public abstract class CollectionUtils {
      * collections
      *
      * @param collections
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean invalidAll(Collection<?>... collections) {
         return !valid(collections);
@@ -155,7 +155,7 @@ public abstract class CollectionUtils {
      * empty
      *
      * @param maps
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean validAll(Map<?, ?>... maps) {
         return validAll(maps, CollectionUtils::valid);
@@ -166,7 +166,7 @@ public abstract class CollectionUtils {
      * not empty
      *
      * @param array
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean valid(Object[] array) {
         return (array != null && array.length > EMPTY_ARRAY_LENGTH);
@@ -176,14 +176,14 @@ public abstract class CollectionUtils {
      * Checks if passed {@link Object} array is null or is empty
      *
      * @param array
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean invalid(Object[] array) {
         return !valid(array);
     }
 
     /**
-     * Checks if passed array is null ro empty
+     * Checks if passed array is null or empty
      *
      * @param array
      * @return <code>boolean</code> validation result
@@ -197,7 +197,7 @@ public abstract class CollectionUtils {
      * not empty
      *
      * @param collections
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean validAll(Collection<?>... collections) {
         return validAll(collections, CollectionUtils::valid);
@@ -208,7 +208,7 @@ public abstract class CollectionUtils {
      * is not empty
      *
      * @param arrays
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean validAll(Object[]... arrays) {
         return validAll(arrays, CollectionUtils::valid);
@@ -220,7 +220,7 @@ public abstract class CollectionUtils {
      *
      * @param map
      * @param key
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static <K, V> boolean notContains(Map<K, V> map, K key) {
         return (key == null || invalid(map) || Boolean.FALSE.equals(map.containsKey(key)));
@@ -232,7 +232,7 @@ public abstract class CollectionUtils {
      *
      * @param collection
      * @param element
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static <E> boolean notContains(Collection<E> collection, E element) {
         return ((element == null || invalid(collection))
@@ -264,7 +264,7 @@ public abstract class CollectionUtils {
      * Peaks first element from collection
      *
      * @param collection
-     * @return T
+     * @return T first element from {@link Collection} of default
      */
     public static <T> T getFirst(Collection<T> collection, T defaultValue) {
 
