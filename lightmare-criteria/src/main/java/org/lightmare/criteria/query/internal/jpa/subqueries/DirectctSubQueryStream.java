@@ -129,6 +129,7 @@ abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> impleme
     // =========================sub=queries==================================//
 
     // =========================order=by=====================================//
+
     @Override
     public SubQueryStream<S, T> orderBy(EntityField<S, ?> field) {
         super.orderBy(field);
@@ -140,9 +141,11 @@ abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> impleme
         super.orderByDesc(field);
         return this;
     }
+
     // ======================================================================//
 
     // ================= entity QL Filters ===================================//
+
     @Override
     public SubQueryStream<S, T> where() {
         super.where();

@@ -127,14 +127,29 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         appendEntityPart(stream);
     }
 
+    /**
+     * Adds field name to query
+     * 
+     * @param alias
+     * @param field
+     * @param buffer
+     */
     protected static void appendFieldName(String alias, String field, StringBuilder buffer) {
         buffer.append(alias).append(Parts.COLUMN_PREFIX).append(field);
     }
 
+    /**
+     * Adds new line to parameter
+     * 
+     * @param buff
+     */
     protected static void newLine(StringBuilder buff) {
         buff.append(StringUtils.NEWLINE);
     }
 
+    /**
+     * Adds new line to query body
+     */
     protected void newLine() {
         newLine(body);
     }

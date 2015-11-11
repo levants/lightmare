@@ -64,6 +64,11 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
         return maxResult;
     }
 
+    /**
+     * Sets max results to query
+     * 
+     * @param query
+     */
     private void putMaxResult(Query query) {
 
         if (Objects.nonNull(maxResult)) {
@@ -82,6 +87,11 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
         return startPosition;
     }
 
+    /**
+     * Sets first result flag to query
+     * 
+     * @param query
+     */
     private void putFirstResult(Query query) {
 
         if (Objects.nonNull(startPosition)) {
@@ -100,6 +110,11 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
         return hints;
     }
 
+    /**
+     * Sets query hints
+     * 
+     * @param query
+     */
     private void putHints(Query query) {
 
         if (CollectionUtils.valid(hints)) {
