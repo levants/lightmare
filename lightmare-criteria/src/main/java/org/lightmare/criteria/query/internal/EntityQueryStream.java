@@ -74,6 +74,22 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
         return this;
     }
 
+    @Override
+    public <F> QueryStream<T> between(EntityField<T, F> field, F value1, F value2) {
+        appendOperator();
+        oppLine(field, value1, value2, Operators.BETWEEN);
+
+        return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> notBetween(EntityField<T, F> field, F value1, F value2) {
+        appendOperator();
+        oppLine(field, value1, value2, Operators.NOT_BETWEEN);
+
+        return this;
+    }
+
     // ========================= Entity self method composers ===============//
 
     @Override
@@ -89,6 +105,24 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
             String operator) {
         appendOperator();
         oppCollectionField(field1, field2, operator);
+        return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> betweenFl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3) {
+        appendOperator();
+        oppLine(field1, field2, field3, Operators.BETWEEN);
+
+        return this;
+    }
+
+    @Override
+    public <F> QueryStream<T> notBetweenFl(EntityField<T, F> field1, EntityField<T, F> field2,
+            EntityField<T, F> field3) {
+
+        appendOperator();
+        oppLine(field1, field2, field3, Operators.NOT_BETWEEN);
+
         return this;
     }
 

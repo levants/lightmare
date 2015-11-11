@@ -27,6 +27,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.links.Operators;
+import org.lightmare.criteria.query.internal.jpa.Expression;
 
 /**
  * Sub query field types
@@ -38,7 +39,7 @@ import org.lightmare.criteria.links.Operators;
  * @param <S>
  *            entity type parameter
  */
-interface SubExpression<T, S> extends GeneralSubExpression<T, S> {
+interface SubExpression<S, T> extends Expression<S> {
 
     // ========================= Entity method composers ====================//
 
@@ -79,14 +80,10 @@ interface SubExpression<T, S> extends GeneralSubExpression<T, S> {
     }
 
     @Override
-    default <F> SubQueryStream<S, T> between(EntityField<S, F> field, F value1, F value2) {
-        return operate(field, Operators.BETWEEN);
-    }
+    <F> SubQueryStream<S, T> between(EntityField<S, F> field, F value1, F value2);
 
     @Override
-    default <F> SubQueryStream<S, T> notBetween(EntityField<S, F> field, F value1, F value2) {
-        return operate(field, Operators.BETWEEN);
-    }
+    <F> SubQueryStream<S, T> notBetween(EntityField<S, F> field, F value1, F value2);
 
     @Override
     default SubQueryStream<S, T> like(EntityField<S, String> field, String value) {

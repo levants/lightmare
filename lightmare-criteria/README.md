@@ -32,11 +32,11 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 Query can be composed by org.lightmare.criteria.query.QueryProvider.select or query method call:
 ```java
   List<Person> persons = QueryProvider.select(em, Person.class).where()
-  			.equals(Person::getPrivatNumber, "10010010011")
+  			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().startsWith(Person::getFirstName, "fname")
-		    .and().startsWith(Person::getFillName, Person::getLastName)
-		    .or().greaterOrEqual(Person::getBirthDate, new Date()).
+		    .and().equalFl(Person::getFillName, Person::getLastName)
+		    .or().ge(Person::getBirthDate, new Date()).
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
@@ -51,7 +51,7 @@ and second is with "brackets" method call
 		    .and().like(Person::getLastName, "lname").and()
 		    .brackets(c -> c.startsWith(Person::getFirstName, "fname")
 		    	.		  .or()
-		    			  .greaterOrEqual(Person::getBirthDate, new Date()))
+		    			  .ge(Person::getBirthDate, new Date()))
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .firstOrDefault(new Person()); 
 ```
@@ -68,8 +68,8 @@ For embedded entity there is method "embedded" with embedded getter method and a
   			.where()
   			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname").and()
-		    .embedded(Person::getInfo, c -> .equals(PersonInfo::getNote, "This is note")
-		    					   .equals(PersonInfo::getCardNumber, Person::getPrivatNumber))
+		    .embedded(Person::getInfo, c -> .equal(PersonInfo::getNote, "This is note")
+		    					   .equalPr(PersonInfo::getCardNumber, Person::getPrivatNumber))
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .firstOrDefault(new Person()); 
 ```
@@ -85,7 +85,7 @@ For bulk update there is org.lightmare.criteria.query.QueryProvider.update metho
 		    .and().like(Person::getLastName, "lname")
 		    .openBracket()
 		    .and().startsWith(Person::getFirstName, "fname")
-		    .or().greaterOrEqual(Person::getBirthDate, new Date())
+		    .or().ge(Person::getBirthDate, new Date())
 		    .closeBracket().execute(); 
 ```
 and for bulk delete org.lightmare.criteria.query.QueryProvider.delete method:
@@ -118,12 +118,12 @@ Query can be linked dynamically:
 Implementations of sub queries are by calling exits or in functions:
 ```java
   List<Person> persons = QueryProvider.query(em, Person.class).where()
-  			.equals(Person::getPrivatNumber, "10010010011")
+  			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().exists(Phone.class, c -> c.where()
 		    					   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
 		                           .and()
-		                           .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
+		                           .equalPr(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
@@ -134,36 +134,36 @@ Joins are similar to sub queries. There are three types of joins:
 inner join:
 ```java
   List<Person> persons = QueryProvider.query(em, Person.class).where()
-  			.equals(Person::getPrivatNumber, "10010010011")
+  			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().join(Person::getPhones, c -> c.where()
 		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
 		                               .and()
-		                               .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
+		                               .equalPr(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
 lefts join:
 ```java
   List<Person> persons = QueryProvider.query(em, Person.class).where()
-  			.equals(Person::getPrivatNumber, "10010010011")
+  			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().leftJoin(Person::getPhones, c -> c.where()
 		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
 		                               .and()
-		                               .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
+		                               .equalPr(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
 and fetch join:
 ```java
   List<Person> persons = QueryProvider.query(em, Person.class).where()
-  			.equals(Person::getPrivatNumber, "10010010011")
+  			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().fetchJoin(Person::getPhones, c -> c.where()
 		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
 		                               .and()
-		                               .equals(Phone::getPhoneNumber, Person::getPhoneNumber))
+		                               .equalPr(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```

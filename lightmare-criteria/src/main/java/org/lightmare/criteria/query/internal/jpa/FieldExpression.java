@@ -74,14 +74,9 @@ public interface FieldExpression<T> {
         return operateFl(field1, field2, Operators.LESS_OR_EQ);
     }
 
-    default <F> QueryStream<T> betweenFl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3) {
-        return operateFl(field1, field2, Operators.BETWEEN);
-    }
+    <F> QueryStream<T> betweenFl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3);
 
-    default <F> QueryStream<T> notBetweenFl(EntityField<T, F> field1, EntityField<T, F> field2,
-            EntityField<T, F> field3) {
-        return operateFl(field1, field2, Operators.BETWEEN);
-    }
+    <F> QueryStream<T> notBetweenFl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3);
 
     default QueryStream<T> likeFl(EntityField<T, String> field1, EntityField<T, String> field2) {
         return operateFl(field1, field2, Operators.LIKE);

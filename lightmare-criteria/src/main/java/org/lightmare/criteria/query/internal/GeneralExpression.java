@@ -41,7 +41,7 @@ import org.lightmare.criteria.query.internal.jpa.SelectStatements;
  * @param <T>
  *            entity type parameter
  */
-public interface GeneralExpresson<T> extends JPAQueryWrapper<T>, SelectStatements<T>, JoinExpressions<T>,
+public interface GeneralExpression<T> extends JPAQueryWrapper<T>, SelectStatements<T>, JoinExpressions<T>,
         ResultStream<T>, GeneralSubQueryProcessor<T> {
 
     /**

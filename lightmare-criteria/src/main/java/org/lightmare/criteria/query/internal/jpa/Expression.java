@@ -93,13 +93,9 @@ public interface Expression<T> {
         return operate(field, value, Operators.LESS_OR_EQ);
     }
 
-    default <F> QueryStream<T> between(EntityField<T, F> field, F value1, F value2) {
-        return operate(field, Operators.BETWEEN);
-    }
+    <F> QueryStream<T> between(EntityField<T, F> field, F value1, F value2);
 
-    default <F> QueryStream<T> notBetween(EntityField<T, F> field, F value1, F value2) {
-        return operate(field, Operators.BETWEEN);
-    }
+    <F> QueryStream<T> notBetween(EntityField<T, F> field, F value1, F value2);
 
     default QueryStream<T> startsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(value, Filters.LIKE_SIGN);

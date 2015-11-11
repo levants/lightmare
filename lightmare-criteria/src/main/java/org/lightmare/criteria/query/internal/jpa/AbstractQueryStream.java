@@ -317,6 +317,21 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
     }
 
     /**
+     * Generates query part by tuple and adds appropriated parameters
+     * 
+     * @param tuple
+     * @param value1
+     * @param value2
+     * @param sqlPart
+     */
+    protected void oppWithParameter(QueryTuple tuple, Object value1, Object value2, StringBuilder sqlPart) {
+
+        oppWithParameter(tuple, value1, sqlPart);
+        appendBody(Clauses.AND);
+        oppWithParameter(tuple, value2, sqlPart);
+    }
+
+    /**
      * Generates query part for field and expression
      * 
      * @param field
@@ -343,6 +358,18 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
     protected <F> void opp(Object field, F value, String expression) {
         QueryTuple tuple = opp(field, expression);
         oppWithParameter(tuple, value, body);
+    }
+
+    /**
+     * Generates query part for field and expression and adds parameter
+     * 
+     * @param field
+     * @param value
+     * @param expression
+     */
+    protected <F> void opp(Object field, F value1, F value2, String expression) {
+        QueryTuple tuple = opp(field, expression);
+        oppWithParameter(tuple, value1, body);
     }
 
     /**
@@ -620,6 +647,11 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 
     protected <F> void oppLine(Object field, F value, String expression) {
         opp(field, value, expression);
+        newLine();
+    }
+
+    protected <F> void oppLine(Object field, F value1, F value2, String expression) {
+        opp(field, value1, value2, expression);
         newLine();
     }
 

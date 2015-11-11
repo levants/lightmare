@@ -27,7 +27,7 @@ import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.GeneralExpression;
 
 /**
  * general query processor for sub queries
@@ -39,7 +39,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <S>
  *            entity type parameter
  */
-interface GeneralSubExpression<T, S> extends QueryStream<S> {
+interface GeneralSubExpression<S, T> extends GeneralExpression<S> {
 
     // =========================sub=queries==================================//
 

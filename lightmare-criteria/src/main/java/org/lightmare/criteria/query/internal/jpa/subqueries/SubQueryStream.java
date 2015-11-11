@@ -40,7 +40,7 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type for generated query
  */
 public interface SubQueryStream<S, T>
-        extends GeneralSubExpression<T, S>, SubExpression<T, S>, SubFieldExpression<T, S> {
+        extends QueryStream<S>, GeneralSubExpression<S, T>, SubExpression<S, T>, SubFieldExpression<S, T> {
 
     // =========================embedded=field=queries=======================//
 
@@ -106,5 +106,18 @@ public interface SubQueryStream<S, T>
 
     default <F> SubQueryStream<S, T> notInPr(EntityField<S, F> sfield, ParentField<T, Collection<F>> field) {
         return operateCollectionPr(sfield, field, Operators.NOT_IN);
+    }
+
+    // =======================================================================//
+
+    @Override
+    default SubQueryStream<S, T> openBracket() {
+        return GeneralSubExpression.super.openBracket();
+    }
+
+    @Override
+    default SubQueryStream<S, T> where() {
+        QueryStream.super.where();
+        return this;
     }
 }

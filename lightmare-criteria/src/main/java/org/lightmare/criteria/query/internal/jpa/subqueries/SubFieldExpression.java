@@ -26,7 +26,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.FieldExpression;
 
 /**
  * Query stream for entity fields and appropriated values
@@ -38,7 +38,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <S>
  *            entity type parameter
  */
-interface SubFieldExpression<T, S> extends QueryStream<S> {
+interface SubFieldExpression<S, T> extends FieldExpression<S> {
 
     // ========================= Entity self method composers ===============//
 
@@ -76,16 +76,10 @@ interface SubFieldExpression<T, S> extends QueryStream<S> {
     }
 
     @Override
-    default <F> SubQueryStream<S, T> betweenFl(EntityField<S, F> field1, EntityField<S, F> field2,
-            EntityField<S, F> field3) {
-        return operateFl(field1, field2, Operators.BETWEEN);
-    }
+    <F> SubQueryStream<S, T> betweenFl(EntityField<S, F> field1, EntityField<S, F> field2, EntityField<S, F> field3);
 
     @Override
-    default <F> SubQueryStream<S, T> notBetweenFl(EntityField<S, F> field1, EntityField<S, F> field2,
-            EntityField<S, F> field3) {
-        return operateFl(field1, field2, Operators.NOT_BETWEEN);
-    }
+    <F> SubQueryStream<S, T> notBetweenFl(EntityField<S, F> field1, EntityField<S, F> field2, EntityField<S, F> field3);
 
     @Override
     default SubQueryStream<S, T> likeFl(EntityField<S, String> field1, EntityField<S, String> field2) {
