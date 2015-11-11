@@ -243,10 +243,22 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         parameter_counter++;
     }
 
+    /**
+     * Generates parameter name for JPA query
+     * 
+     * @param column
+     * @return {@link String} parameter name
+     */
     private String generateParameterName(String column) {
         return column.concat(String.valueOf(parameter_counter));
     }
 
+    /**
+     * Generates parameter name for JPA query
+     * 
+     * @param tuple
+     * @return {@link String} parameter name
+     */
     private String generateParameterName(QueryTuple tuple) {
 
         String parameterName;
@@ -373,6 +385,12 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         oppCollection(field, values, Operators.IN);
     }
 
+    /**
+     * Validates if body needs boolean operator before clause
+     * 
+     * @param operators
+     * @return <code>boolean</code> validation result
+     */
     private boolean validForOperator(String... operators) {
         return (StringUtils.valid(body) && StringUtils.notEndsWithAll(body, operators));
     }
@@ -450,6 +468,9 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         newLine();
     }
 
+    /**
+     * Appends to SET clause for UPDATE query
+     */
     private void appendSetClause() {
 
         if (StringUtils.valid(updateSet)) {

@@ -35,6 +35,12 @@ import org.lightmare.criteria.query.QueryStream;
  */
 public interface SelectStatements<T> {
 
+    /**
+     * Gets instant field by type
+     * 
+     * @param field
+     * @return {@link QueryStream} for field type
+     */
     <F> QueryStream<F> selectOne(EntityField<T, F> field);
 
     <F> QueryStream<Object[]> select(EntityField<T, F> field);
