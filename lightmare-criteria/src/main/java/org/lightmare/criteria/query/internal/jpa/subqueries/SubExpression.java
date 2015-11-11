@@ -71,7 +71,7 @@ interface SubExpression<S, T> extends Expression<S> {
 
     @Override
     default <F> SubQueryStream<S, T> ge(EntityField<S, F> field, F value) {
-        return operate(field, value, Operators.MORE_OR_EQ);
+        return operate(field, value, Operators.GREATER_OR_EQ);
     }
 
     @Override

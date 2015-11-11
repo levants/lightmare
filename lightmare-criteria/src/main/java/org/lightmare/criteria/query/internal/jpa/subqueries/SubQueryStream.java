@@ -77,7 +77,7 @@ public interface SubQueryStream<S, T>
     }
 
     default <F> SubQueryStream<S, T> gePr(EntityField<S, F> sfield, ParentField<T, F> field) {
-        return operatePr(sfield, field, Operators.MORE_OR_EQ);
+        return operatePr(sfield, field, Operators.GREATER_OR_EQ);
     }
 
     default <F> SubQueryStream<S, T> lePr(EntityField<S, F> sfield, ParentField<T, F> field) {

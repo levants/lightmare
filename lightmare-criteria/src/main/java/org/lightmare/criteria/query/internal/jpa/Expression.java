@@ -86,7 +86,7 @@ public interface Expression<T> {
     }
 
     default <F> QueryStream<T> ge(EntityField<T, F> field, F value) {
-        return operate(field, value, Operators.MORE_OR_EQ);
+        return operate(field, value, Operators.GREATER_OR_EQ);
     }
 
     default <F> QueryStream<T> le(EntityField<T, F> field, F value) {

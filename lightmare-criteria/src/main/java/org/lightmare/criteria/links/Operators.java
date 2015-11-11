@@ -38,7 +38,7 @@ public interface Operators {
 
     String LESS = " < ";
 
-    String MORE_OR_EQ = " >= ";
+    String GREATER_OR_EQ = " >= ";
 
     String LESS_OR_EQ = " <= ";
 

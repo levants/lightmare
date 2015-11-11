@@ -67,7 +67,7 @@ interface SubFieldExpression<S, T> extends FieldExpression<S> {
 
     @Override
     default <F> SubQueryStream<S, T> geFl(EntityField<S, F> field1, EntityField<S, F> field2) {
-        return operateFl(field1, field2, Operators.MORE_OR_EQ);
+        return operateFl(field1, field2, Operators.GREATER_OR_EQ);
     }
 
     @Override

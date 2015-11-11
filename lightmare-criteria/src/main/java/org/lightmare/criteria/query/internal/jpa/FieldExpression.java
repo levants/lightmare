@@ -67,7 +67,7 @@ public interface FieldExpression<T> {
     }
 
     default <F> QueryStream<T> geFl(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operateFl(field1, field2, Operators.MORE_OR_EQ);
+        return operateFl(field1, field2, Operators.GREATER_OR_EQ);
     }
 
     default <F> QueryStream<T> leFl(EntityField<T, F> field1, EntityField<T, F> field2) {
