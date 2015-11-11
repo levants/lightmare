@@ -64,8 +64,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param member
      * @return <code>boolean</code> validation result
      */
-    private static boolean validate(Class<?> type, Member member) {
-        return (Objects.nonNull(type) && (member == null));
+    private static boolean validate(Member member, Class<?> type) {
+        return ((member == null) && Objects.nonNull(type));
     }
 
     /**
@@ -82,12 +82,12 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
 
         Method method = null;
 
-        Class<?> superClass = type;
-        while (validate(superClass, method)) {
+        Class<?> superType = type;
+        while (validate(method, superType)) {
             try {
-                method = superClass.getDeclaredMethod(methodName, parameters);
+                method = superType.getDeclaredMethod(methodName, parameters);
             } catch (NoSuchMethodException ex) {
-                superClass = superClass.getSuperclass();
+                superType = superType.getSuperclass();
             } catch (SecurityException ex) {
                 throw new IOException(ex);
             }
@@ -109,12 +109,12 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
 
         Field field = null;
 
-        Class<?> superClass = type;
-        while (validate(superClass, field)) {
+        Class<?> superType = type;
+        while (validate(field, superType)) {
             try {
-                field = superClass.getDeclaredField(fieldName);
+                field = superType.getDeclaredField(fieldName);
             } catch (NoSuchFieldException ex) {
-                superClass = superClass.getSuperclass();
+                superType = superType.getSuperclass();
             } catch (SecurityException ex) {
                 throw new IOException(ex);
             }

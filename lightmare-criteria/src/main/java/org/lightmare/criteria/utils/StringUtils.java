@@ -86,6 +86,12 @@ public abstract class StringUtils {
         return !valid(chars);
     }
 
+    /**
+     * Appends all parameters to single {@link StringBuilder} instance
+     * 
+     * @param text
+     * @param parts
+     */
     private static void appendAll(StringBuilder text, Object... parts) {
 
         for (Object part : parts) {

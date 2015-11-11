@@ -271,8 +271,9 @@ public abstract class CollectionUtils {
         T value;
 
         if (valid(collection)) {
-            if (collection instanceof List) {
-                value = getFirstFromList(((List<T>) collection), defaultValue);
+            if (collection instanceof List<?>) {
+                List<T> list = ObjectUtils.cast(collection);
+                value = getFirstFromList(list, defaultValue);
             } else {
                 value = collection.iterator().next();
             }
