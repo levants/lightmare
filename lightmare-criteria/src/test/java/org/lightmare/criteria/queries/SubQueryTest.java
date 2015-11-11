@@ -96,7 +96,7 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
-                    c -> c.where().equals(Phone::getPhoneNumber, "100100").and().moreOrEquals(Phone::getOperatorId,
+                    c -> c.where().equals(Phone::getPhoneNumber, "100100").and().greaterOrEquals(Phone::getOperatorId,
                             Person::getPersonId));
             String sql = stream.sql();
             System.out.println(sql);

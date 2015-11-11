@@ -143,7 +143,7 @@ public class JoinQueryTest extends SubQueryTest {
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname")
                     .fetchJoin(Person::getPhones, c -> c.equals(Phone::getPhoneNumber, "100100").and()
-                            .moreOrEquals(Phone::getOperatorId, Person::getPersonId));
+                            .greaterOrEquals(Phone::getOperatorId, Person::getPersonId));
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {

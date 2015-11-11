@@ -36,7 +36,7 @@ Query can be composed by org.lightmare.criteria.query.QueryProvider.select or qu
 		    .and().like(Person::getLastName, "lname")
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .and().startsWith(Person::getFillName, Person::getLastName)
-		    .or().moreOrEqual(Person::getBirthDate, new Date()).
+		    .or().greaterOrEqual(Person::getBirthDate, new Date()).
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
@@ -51,7 +51,7 @@ and second is with "brackets" method call
 		    .and().like(Person::getLastName, "lname").and()
 		    .brackets(c -> c.startsWith(Person::getFirstName, "fname")
 		    	.		  .or()
-		    			  .moreOrEqual(Person::getBirthDate, new Date()))
+		    			  .greaterOrEqual(Person::getBirthDate, new Date()))
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .firstOrDefault(new Person()); 
 ```
@@ -85,7 +85,7 @@ For bulk update there is org.lightmare.criteria.query.QueryProvider.update metho
 		    .and().like(Person::getLastName, "lname")
 		    .openBracket()
 		    .and().startsWith(Person::getFirstName, "fname")
-		    .or().moreOrEqual(Person::getBirthDate, new Date())
+		    .or().greaterOrEqual(Person::getBirthDate, new Date())
 		    .closeBracket().execute(); 
 ```
 and for bulk delete org.lightmare.criteria.query.QueryProvider.delete method:
@@ -110,7 +110,7 @@ Query can be linked dynamically:
 		     if(fnameParameter != null){
 		     	stream.and().startsWith(Person::getFirstName, fnameParameter);
 		     }
-		     stream.or().moreOrEquals(Person::getBirthDate, Calendar.getInstance());
+		     stream.or().greaterOrEquals(Person::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
 ```
 # Subqueries

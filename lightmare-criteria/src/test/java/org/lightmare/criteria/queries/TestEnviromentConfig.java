@@ -58,7 +58,7 @@ public class TestEnviromentConfig {
 
         QueryStream<Person> stream = QueryProvider.select(em, Person.class);
 
-        stream.where().moreOrEquals(c -> c.getBirthDate(), getDateValue()).and();
+        stream.where().greaterOrEquals(c -> c.getBirthDate(), getDateValue()).and();
         stream.like(Person::getLastName, "lname");
         stream.and().brackets(
                 part -> part.like(Person::getFirstName, "fname").or().equals(Person::getPersonalNo, PERSONAL_NO1));
