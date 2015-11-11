@@ -38,7 +38,7 @@ import org.lightmare.criteria.query.internal.EntityQueryStream;
 public class JPAQueryStream<T> extends EntityQueryStream<T> {
 
     protected JPAQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
-	super(em, entityType, alias);
+        super(em, entityType, alias);
     }
 
     /**
@@ -50,14 +50,14 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * @return {@link JPAQueryStream} with select statement
      */
     protected static <T> JPAQueryStream<T> delete(final EntityManager em, final Class<T> entityType,
-	    final String alias) {
+            final String alias) {
 
-	JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
+        JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
 
-	stream.appendPrefix(Filters.DELETE).appendPrefix(Filters.FROM);
-	appendEntityPart(stream);
+        stream.appendPrefix(Filters.DELETE).appendPrefix(Filters.FROM);
+        appendEntityPart(stream);
 
-	return stream;
+        return stream;
     }
 
     /**
@@ -68,7 +68,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * @return {@link JPAQueryStream} with select statement
      */
     protected static <T> JPAQueryStream<T> delete(final EntityManager em, Class<T> entityType) {
-	return delete(em, entityType, DEFAULT_ALIAS);
+        return delete(em, entityType, DEFAULT_ALIAS);
     }
 
     /**
@@ -80,14 +80,14 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * @return {@link JPAQueryStream} with select statement
      */
     protected static <T> JPAQueryStream<T> update(final EntityManager em, final Class<T> entityType,
-	    final String alias) {
+            final String alias) {
 
-	JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
+        JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
 
-	stream.appendPrefix(Filters.UPDATE);
-	appendEntityPart(stream);
+        stream.appendPrefix(Filters.UPDATE);
+        appendEntityPart(stream);
 
-	return stream;
+        return stream;
     }
 
     /**
@@ -98,7 +98,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * @return {@link JPAQueryStream} with select statement
      */
     protected static <T> JPAQueryStream<T> update(final EntityManager em, Class<T> entityType) {
-	return update(em, entityType, DEFAULT_ALIAS);
+        return update(em, entityType, DEFAULT_ALIAS);
     }
 
     /**
@@ -110,11 +110,11 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * @return {@link JPAQueryStream} with select statement
      */
     protected static <T> JPAQueryStream<T> query(final EntityManager em, final Class<T> entityType,
-	    final String alias) {
-	JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
-	startsSelect(stream);
+            final String alias) {
+        JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
+        startsSelect(stream);
 
-	return stream;
+        return stream;
     }
 
     /**
