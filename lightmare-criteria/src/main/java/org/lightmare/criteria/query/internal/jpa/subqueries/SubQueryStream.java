@@ -144,12 +144,12 @@ public interface SubQueryStream<S, T> extends QueryStream<S> {
     }
 
     @Override
-    default SubQueryStream<S, T> isNull(EntityField<S, ?> field) {
+    default <F> SubQueryStream<S, T> isNull(EntityField<S, F> field) {
         return operate(field, Operators.IS_NULL);
     }
 
     @Override
-    default SubQueryStream<S, T> notNull(EntityField<S, ?> field) {
+    default <F> SubQueryStream<S, T> notNull(EntityField<S, F> field) {
         return operate(field, Operators.NOT_NULL);
     }
 
@@ -224,10 +224,20 @@ public interface SubQueryStream<S, T> extends QueryStream<S> {
 
     // =========================embedded=field=queries=======================//
 
+    @Override
     <F> SubQueryStream<S, T> embedded(EntityField<S, F> field, SubQueryConsumer<F, S> consumer);
 
     // ========================= Entity and parent method composers =========//
 
+    /**
+     * Generates query part for instant field and parent entity query field with
+     * and operator
+     * 
+     * @param sfield
+     * @param field
+     * @param operator
+     * @return {@link SubQueryStream} current instance
+     */
     <F> SubQueryStream<S, T> operate(EntityField<S, F> sfield, ParentField<T, F> field, String operator);
 
     default <F> SubQueryStream<S, T> equals(EntityField<S, F> sfield, ParentField<T, F> field) {
@@ -270,6 +280,15 @@ public interface SubQueryStream<S, T> extends QueryStream<S> {
         return operate(sfield, field, Operators.LIKE);
     }
 
+    /**
+     * Generates query part for instant field and parent entity query field with
+     * {@link Collection} type
+     * 
+     * @param sfield
+     * @param field
+     * @param operator
+     * @return {@link SubQueryStream} current instance
+     */
     <F> SubQueryStream<S, T> operateCollection(EntityField<S, F> sfield, ParentField<T, Collection<F>> field,
             String operator);
 

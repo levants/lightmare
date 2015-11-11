@@ -259,6 +259,7 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     }
 
     // =======================================================================//
+
     @Override
     public <F> QueryStream<T> set(EntityField<T, F> field, F value) {
         setOpp(field, value);

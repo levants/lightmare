@@ -143,11 +143,19 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
         return operateCollection(field, values, Operators.NOT_IN);
     }
 
-    default QueryStream<T> isNull(EntityField<T, ?> field) {
+    default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) {
+        return this.in(field, Arrays.asList(values));
+    }
+
+    default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) {
+        return this.notIn(field, Arrays.asList(values));
+    }
+
+    default <F> QueryStream<T> isNull(EntityField<T, F> field) {
         return operate(field, Operators.IS_NULL);
     }
 
-    default QueryStream<T> notNull(EntityField<T, ?> field) {
+    default <F> QueryStream<T> notNull(EntityField<T, F> field) {
         return operate(field, Operators.NOT_NULL);
     }
 
@@ -221,15 +229,6 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
     default <F> QueryStream<T> notIn(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
         return operateCollection(field1, field2, Operators.NOT_IN);
     }
-
-    default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) {
-        return this.in(field, Arrays.asList(values));
-    }
-
-    default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) {
-        return this.notIn(field, Arrays.asList(values));
-    }
-
     // =========================embedded=field=queries=======================//
 
     /**
