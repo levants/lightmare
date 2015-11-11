@@ -41,8 +41,8 @@ import org.lightmare.criteria.query.internal.jpa.SelectStatements;
  * @param <T>
  *            entity type parameter
  */
-public interface GeneralQueryStream<T>
-        extends JPAQueryWrapper<T>, SelectStatements<T>, JoinQueryStream<T>, ResultStream<T> {
+public interface GeneralQueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>, JoinQueryStream<T>,
+        ResultStream<T>, GeneralSubQueryProcessor<T> {
 
     /**
      * Gets wrapped entity {@link Class} instance
