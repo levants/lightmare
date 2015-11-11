@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.internal.jpa.FieldValueStream;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface QueryStream<T> extends GeneralQueryStream<T>, FieldValueStream<T>, FieldStream<T> {
+public interface QueryStream<T> extends GeneralQueryStream<T>, FieldStream<T>, FieldValueStream<T> {
 
     /**
      * Generates query part for embedded entity fields

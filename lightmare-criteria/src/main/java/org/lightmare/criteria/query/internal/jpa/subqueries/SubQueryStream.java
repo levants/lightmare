@@ -68,7 +68,7 @@ public interface SubQueryStream<S, T>
         return operate(sfield, field, Operators.NOT_EQ);
     }
 
-    default <F> SubQueryStream<S, T> more(EntityField<S, F> sfield, ParentField<T, F> field) {
+    default <F> SubQueryStream<S, T> greater(EntityField<S, F> sfield, ParentField<T, F> field) {
         return operate(sfield, field, Operators.MORE);
     }
 
@@ -76,7 +76,7 @@ public interface SubQueryStream<S, T>
         return operate(sfield, field, Operators.LESS);
     }
 
-    default <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
+    default <F> SubQueryStream<S, T> greaterOrEquals(EntityField<S, F> sfield, ParentField<T, F> field) {
         return operate(sfield, field, Operators.MORE_OR_EQ);
     }
 

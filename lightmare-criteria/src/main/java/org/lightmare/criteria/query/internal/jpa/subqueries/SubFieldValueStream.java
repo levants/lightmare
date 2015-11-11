@@ -56,7 +56,7 @@ interface SubFieldValueStream<T, S> extends QueryStream<S> {
     }
 
     @Override
-    default <F> SubQueryStream<S, T> more(EntityField<S, F> field1, EntityField<S, F> field2) {
+    default <F> SubQueryStream<S, T> greater(EntityField<S, F> field1, EntityField<S, F> field2) {
         return operate(field1, field2, Operators.MORE);
     }
 
@@ -66,7 +66,7 @@ interface SubFieldValueStream<T, S> extends QueryStream<S> {
     }
 
     @Override
-    default <F> SubQueryStream<S, T> moreOrEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
+    default <F> SubQueryStream<S, T> greaterOrEquals(EntityField<S, F> field1, EntityField<S, F> field2) {
         return operate(field1, field2, Operators.MORE_OR_EQ);
     }
 

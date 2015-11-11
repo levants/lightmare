@@ -58,7 +58,7 @@ public interface FieldValueStream<T> {
         return operate(field1, field2, Operators.NOT_EQ);
     }
 
-    default <F> QueryStream<T> more(EntityField<T, F> field1, EntityField<T, F> field2) {
+    default <F> QueryStream<T> greater(EntityField<T, F> field1, EntityField<T, F> field2) {
         return operate(field1, field2, Operators.MORE);
     }
 
@@ -66,7 +66,7 @@ public interface FieldValueStream<T> {
         return operate(field1, field2, Operators.LESS);
     }
 
-    default <F> QueryStream<T> moreOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
+    default <F> QueryStream<T> greaterOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
         return operate(field1, field2, Operators.MORE_OR_EQ);
     }
 
