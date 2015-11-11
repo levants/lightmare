@@ -38,11 +38,8 @@ import java.util.stream.Stream;
  */
 abstract class AbstractClassUtils extends Primitives {
 
-    // default value for modifier
-    protected static final int DEFAULT_MODIFIER = 0;
-
     /**
-     * Gets target {@link Throwable} from passed
+     * Unwraps target {@link Throwable} from passed
      * {@link InvocationTargetException} instance
      *
      * @param ex

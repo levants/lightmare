@@ -36,6 +36,7 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 public class QueryCache {
 
+    // Cache for query containers
     private static final ConcurrentHashMap<String, QueryTuple> QUERIES = new ConcurrentHashMap<>();
 
     private static final String PREFIX = "LAMBDA:";

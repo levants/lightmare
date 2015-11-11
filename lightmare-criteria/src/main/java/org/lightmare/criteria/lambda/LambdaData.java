@@ -24,6 +24,8 @@ package org.lightmare.criteria.lambda;
 
 import java.lang.invoke.SerializedLambda;
 
+import org.lightmare.criteria.utils.StringUtils;
+
 /**
  * Lambda expression meta information container class
  * 
@@ -41,8 +43,8 @@ public class LambdaData {
     // Method signature
     private final String implMethodSignature;
 
-    private static final String TO_TEXT_FORMAT = "SerializedLambda[implClass=%s,".concat(" implMethodName=%s,")
-            .concat(" implMethodSignature=%s]");
+    private static final String TO_TEXT_FORMAT = StringUtils.concat("SerializedLambda[implClass=%s,",
+            " implMethodName=%s,", " implMethodSignature=%s]");
 
     public LambdaData(final String implClass, final String implMethodName, final String implMethodSignature) {
         this.implClass = implClass;

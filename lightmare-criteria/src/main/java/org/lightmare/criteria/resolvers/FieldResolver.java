@@ -52,8 +52,10 @@ public class FieldResolver {
 
     private static final int FIRST = 0;
 
+    // Getter method prefix
     private static final String GET = "get";
 
+    // Setter method prefix
     private static final String SET = "set";
 
     private static final int BEGIN_INDEX = GET.length();

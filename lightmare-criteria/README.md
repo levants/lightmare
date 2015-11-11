@@ -29,13 +29,14 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 =========
 
 # Query API
-Query can be composed by org.lightmare.criteria.query.QueryProvider.select or query method call:
+Query can be composed by org.lightmare.criteria.query.QueryProvider.select or org.lightmare.criteria.query.QueryProvider.query 
+method call:
 ```java
   List<Person> persons = QueryProvider.select(em, Person.class).where()
   			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().startsWith(Person::getFirstName, "fname")
-		    .and().equalFl(Person::getFillName, Person::getLastName)
+		    .and().equalCl(Person::getFillName, Person::getLastName)
 		    .or().ge(Person::getBirthDate, new Date()).
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
