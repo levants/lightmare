@@ -22,7 +22,7 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().subQuery(Phone.class,
-                    c -> c.where().equals(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
+                    c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -40,8 +40,8 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().subQuery(Phone.class,
-                    c -> c.where().equals(Phone::getPhoneNumber, "100100").and()
-                            .equals(Phone::getOperatorId, Person::getPersonId).select(Phone::getPhoneNumber));
+                    c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
+                            .equalPr(Phone::getOperatorId, Person::getPersonId).select(Phone::getPhoneNumber));
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -60,7 +60,7 @@ public class SubQueryTest extends QueryTest {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
                     Phone.class,
-                    c -> c.where().equals(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
+                    c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -78,7 +78,7 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
-                    c -> c.where().equals(Phone::getPhoneNumber, "100100").get());
+                    c -> c.where().equal(Phone::getPhoneNumber, "100100").get());
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -96,7 +96,7 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
-                    c -> c.where().equals(Phone::getPhoneNumber, "100100").and().greaterOrEquals(Phone::getOperatorId,
+                    c -> c.where().equal(Phone::getPhoneNumber, "100100").and().gePr(Phone::getOperatorId,
                             Person::getPersonId));
             String sql = stream.sql();
             System.out.println(sql);
@@ -132,7 +132,7 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
-                    c -> c.where().equals(Phone::getPhoneNumber, "100100").toList());
+                    c -> c.where().equal(Phone::getPhoneNumber, "100100").toList());
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -150,7 +150,7 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
-                    Phone.class, c -> c.where().equals(Phone::getPhoneNumber, "100100").count());
+                    Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").count());
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -168,8 +168,8 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
-                    Phone.class, c -> c.where().equals(Phone::getPhoneNumber, "100100").and()
-                            .lessOrEquals(Phone::getOperatorId, Person::getPersonId).count());
+                    Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
+                            .lePr(Phone::getOperatorId, Person::getPersonId).count());
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -187,8 +187,8 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
-                    Phone.class, c -> c.where().equals(Phone::getPhoneNumber, "100100").and()
-                            .in(Phone::getOperatorId, Person::getIdentifiers).count());
+                    Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
+                            .inPr(Phone::getOperatorId, Person::getIdentifiers).count());
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {

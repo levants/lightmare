@@ -58,10 +58,10 @@ public class TestEnviromentConfig {
 
         QueryStream<Person> stream = QueryProvider.select(em, Person.class);
 
-        stream.where().greaterOrEquals(c -> c.getBirthDate(), getDateValue()).and();
+        stream.where().ge(c -> c.getBirthDate(), getDateValue()).and();
         stream.like(Person::getLastName, "lname");
         stream.and().brackets(
-                part -> part.like(Person::getFirstName, "fname").or().equals(Person::getPersonalNo, PERSONAL_NO1));
+                part -> part.like(Person::getFirstName, "fname").or().equal(Person::getPersonalNo, PERSONAL_NO1));
         stream.or().isNull(Person::getInfo);
         stream.orderByDesc(Person::getLastName).orderBy(Person::getBirthDate);
         stream.orderBy(Person::getPersonId);

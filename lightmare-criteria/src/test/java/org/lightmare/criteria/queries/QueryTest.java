@@ -49,8 +49,8 @@ public class QueryTest extends TestEnviromentConfig {
             Date date = getDateValue();
             // ============= Query construction ============== //
             List<Person> persons = QueryProvider.select(em, Person.class).where()
-                    .equals(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
-                    .startsWith(Person::getFirstName, "fname").or().greaterOrEquals(Person::getBirthDate, date).and()
+                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+                    .startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date).and()
                     .in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).toList();
             // =============================================//
             System.out.println();
@@ -73,9 +73,9 @@ public class QueryTest extends TestEnviromentConfig {
             Date date = getDateValue();
             // ============= Query construction ============== //
             List<Object[]> persons = QueryProvider.select(em, Person.class).where()
-                    .equals(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
-                    .brackets(stream -> stream.startsWith(Person::getFirstName, "fname").or()
-                            .greaterOrEquals(Person::getBirthDate, date))
+                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+                    .brackets(stream -> stream.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate,
+                            date))
                     .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS))
                     .select(Person::getPersonalNo, Person::getFirstName, Person::getLastName).toList();
             // =============================================//
@@ -98,10 +98,9 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             Date date = getDateValue();
             // ============= Query construction ============== //
-            Long count = QueryProvider.select(em, Person.class).where().equals(Person::getPersonalNo, PERSONAL_NO1)
-                    .and().like(Person::getLastName, "lname").and().startsWith(Person::getFirstName, "fname").or()
-                    .greaterOrEquals(Person::getBirthDate, date).and()
-                    .in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).count();
+            Long count = QueryProvider.select(em, Person.class).where().equal(Person::getPersonalNo, PERSONAL_NO1).and()
+                    .like(Person::getLastName, "lname").and().startsWith(Person::getFirstName, "fname").or()
+                    .ge(Person::getBirthDate, date).and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).count();
             // =============================================//
             System.out.println();
             System.out.println("-------Entity----");
@@ -125,9 +124,9 @@ public class QueryTest extends TestEnviromentConfig {
             transaction.begin();
             // ============= Query construction ============== //
             int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "middName").where()
-                    .equals(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
-                    .openBracket().startsWith(Person::getFirstName, "fname").or()
-                    .greaterOrEquals(Person::getBirthDate, date).closeBracket().execute();
+                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+                    .openBracket().startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date)
+                    .closeBracket().execute();
             // =============================================//
             transaction.commit();
             System.out.println();
@@ -155,9 +154,9 @@ public class QueryTest extends TestEnviromentConfig {
             transaction.begin();
             // ============= Query construction ============== //
             int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "newMiddName")
-                    .set(Person::getBirthDate, newBirthDate).where().equals(Person::getPersonalNo, PERSONAL_NO1).and()
+                    .set(Person::getBirthDate, newBirthDate).where().equal(Person::getPersonalNo, PERSONAL_NO1).and()
                     .like(Person::getLastName, "lname").and().openBracket().startsWith(Person::getFirstName, "fname")
-                    .or().greaterOrEquals(Person::getBirthDate, date).closeBracket().execute();
+                    .or().ge(Person::getBirthDate, date).closeBracket().execute();
             // =============================================//
             transaction.commit();
             System.out.println();
@@ -183,7 +182,7 @@ public class QueryTest extends TestEnviromentConfig {
             transaction.begin();
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.delete(em, Person.class).where()
-                    .equals(Person::getPersonalNo, PERSONAL_NO2).and().like(Person::getLastName, "lname").and()
+                    .equal(Person::getPersonalNo, PERSONAL_NO2).and().like(Person::getLastName, "lname").and()
                     .startsWith(Person::getFirstName, "fname");
             int rows = stream.execute();
             // =============================================//
@@ -216,8 +215,8 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .equals(Person::getPersonalNo, Person::getAddrress).like(Person::getFirstName, Person::getFullName)
-                    .and().startsWith(Person::getLastName, "lname");
+                    .equalFl(Person::getPersonalNo, Person::getAddrress)
+                    .likeFl(Person::getFirstName, Person::getFullName).and().startsWith(Person::getLastName, "lname");
             // =============================================//
             System.out.println();
             System.out.println("-------Entity----");
@@ -238,8 +237,8 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             // ============= Query construction ============== //
             Person person = QueryProvider.select(em, Person.class).where()
-                    .equals(Person::getPersonalNo, Person::getAddrress).and()
-                    .like(Person::getLastName, Person::getFullName).and().startsWith(Person::getLastName, "lname")
+                    .equalFl(Person::getPersonalNo, Person::getAddrress).and()
+                    .likeFl(Person::getLastName, Person::getFullName).and().startsWith(Person::getLastName, "lname")
                     .firstOrDefault(new Person());
             // =============================================//
             System.out.println();

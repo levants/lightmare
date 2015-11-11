@@ -23,7 +23,7 @@ public class EmbeddedQueryTest extends JoinQueryTest {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname")
-                    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, "100100"));
+                    .embedded(Person::getInfo, c -> c.equal(PersonInfo::getCardNumber, "100100"));
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -42,8 +42,8 @@ public class EmbeddedQueryTest extends JoinQueryTest {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname")
-                    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPersonalNo)
-                            .equals(PersonInfo::getNote, "100100"));
+                    .embedded(Person::getInfo, c -> c.equalPr(PersonInfo::getCardNumber, Person::getPersonalNo)
+                            .equal(PersonInfo::getNote, "100100"));
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -62,8 +62,8 @@ public class EmbeddedQueryTest extends JoinQueryTest {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname")
-                    .embedded(Person::getInfo, c -> c.equals(PersonInfo::getCardNumber, Person::getPersonalNo)
-                            .equals(PersonInfo::getNote, PersonInfo::getCardNumber));
+                    .embedded(Person::getInfo, c -> c.equalPr(PersonInfo::getCardNumber, Person::getPersonalNo)
+                            .equalFl(PersonInfo::getNote, PersonInfo::getCardNumber));
             Person person = stream.getFirst();
             String sql = stream.sql();
             System.out.println(sql);
