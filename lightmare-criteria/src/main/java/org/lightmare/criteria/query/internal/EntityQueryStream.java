@@ -108,10 +108,22 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
 
     // =========================Sub queries ===============//
 
+    /**
+     * Generates {@link SubQueryStream} for entity type
+     * 
+     * @param subType
+     * @return {@link SubQueryStream} for entity {@link Class}
+     */
     public <S> SubQueryStream<S, T> subQuery(Class<S> subType) {
         return new EntitySubQueryStream<S, T>(this, subType);
     }
 
+    /**
+     * Generates {@link SubQueryStream} for JOIN query
+     * 
+     * @param subType
+     * @return {@link SubQueryStream} for JOIN query
+     */
     public <S> SubQueryStream<S, T> joinStream(Class<S> subType) {
         return new EntityJoinProcessor<S, T>(this, subType);
     }

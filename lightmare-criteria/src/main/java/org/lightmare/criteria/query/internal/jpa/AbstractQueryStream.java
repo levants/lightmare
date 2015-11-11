@@ -506,6 +506,19 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         oppWithParameter(tuple, value, updateSet);
     }
 
+    private void addSelectField(EntityField<T, ?> field) {
+
+        QueryTuple tuple = compose(field);
+        appendFieldName(tuple, columns);
+    }
+
+    private void appendComma(int index, int length, StringBuilder buff) {
+
+        if (index < length) {
+            buff.append(Parts.COMMA).append(StringUtils.SPACE);
+        }
+    }
+
     /**
      * Appends to SELECT statement
      * 
@@ -515,15 +528,10 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
 
         int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
         EntityField<T, ?> field;
-        QueryTuple tuple;
         for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
             field = fields[i];
-            tuple = compose(field);
-            appendFieldName(tuple, columns);
-            if (i < length) {
-                columns.append(Parts.COMMA);
-                columns.append(StringUtils.SPACE);
-            }
+            addSelectField(field);
+            appendComma(i, length, columns);
         }
     }
 
@@ -555,18 +563,20 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         }
     }
 
+    private void addOrderByField(String dir, Object field) {
+
+        QueryTuple tuple = compose(field);
+        appendOrderBy(tuple, dir);
+    }
+
     private void iterateAndAppendOrders(String dir, Object[] fields) {
 
         Object field;
-        QueryTuple tuple;
         int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
         for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
             field = fields[i];
-            tuple = compose(field);
-            appendOrderBy(tuple, dir);
-            if (i < length) {
-                orderBy.append(Parts.COMMA).append(StringUtils.SPACE);
-            }
+            addOrderByField(dir, field);
+            appendComma(i, length, orderBy);
         }
     }
 
@@ -725,10 +735,16 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         return value;
     }
 
+    /**
+     * Generates COUNT query body
+     */
     private void countBody() {
         appendFromClause(entityType, alias, count);
     }
 
+    /**
+     * Generates COUNT query prefix
+     */
     private void countPrefix() {
 
         StringUtils.clear(count);

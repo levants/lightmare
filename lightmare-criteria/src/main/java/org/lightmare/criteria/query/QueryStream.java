@@ -26,15 +26,10 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
-import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.query.internal.jpa.JPAQueryWrapper;
-import org.lightmare.criteria.query.internal.jpa.JoinQueryStream;
-import org.lightmare.criteria.query.internal.jpa.ResultStream;
-import org.lightmare.criteria.query.internal.jpa.SelectStatements;
+import org.lightmare.criteria.query.internal.GeneralQueryStream;
 import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -46,14 +41,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>, JoinQueryStream<T>, ResultStream<T> {
-
-    /**
-     * Gets wrapped entity {@link Class} instance
-     * 
-     * @return {@link Class} of entity type T
-     */
-    Class<T> getEntityType();
+public interface QueryStream<T> extends GeneralQueryStream<T> {
 
     // ========================= Entity method composers ====================//
 
@@ -159,76 +147,6 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
         return operate(field, Operators.NOT_NULL);
     }
 
-    // ========================= Entity self method composers ===============//
-
-    /**
-     * Generates query part for instant fields with and operator
-     * 
-     * @param field1
-     * @param field2
-     * @param operator
-     * @return {@link QueryStream} current instance
-     */
-    <F> QueryStream<T> operate(EntityField<T, F> field1, EntityField<T, F> field2, String operator);
-
-    default <F> QueryStream<T> equals(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operate(field1, field2, Operators.EQ);
-    }
-
-    default <F> QueryStream<T> notEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operate(field1, field2, Operators.NOT_EQ);
-    }
-
-    default <F> QueryStream<T> more(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operate(field1, field2, Operators.MORE);
-    }
-
-    default <F> QueryStream<T> less(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operate(field1, field2, Operators.LESS);
-    }
-
-    default <F> QueryStream<T> moreOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operate(field1, field2, Operators.MORE_OR_EQ);
-    }
-
-    default <F> QueryStream<T> lessOrEquals(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operate(field1, field2, Operators.LESS_OR_EQ);
-    }
-
-    default QueryStream<T> startsWith(EntityField<T, String> field1, EntityField<T, String> field2) {
-        return operate(field1, field2, Operators.LIKE);
-    }
-
-    default QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2) {
-        return operate(field1, field2, Operators.LIKE);
-    }
-
-    default QueryStream<T> endsWith(EntityField<T, String> field1, EntityField<T, String> field2) {
-        return operate(field1, field2, Operators.LIKE);
-    }
-
-    default QueryStream<T> contains(EntityField<T, String> field1, EntityField<T, String> field2) {
-        return operate(field1, field2, Operators.LIKE);
-    }
-
-    /**
-     * Generates query part for instant fields with {@link Collection} types
-     * 
-     * @param field1
-     * @param field2
-     * @param operator
-     * @return {@link QueryStream} current instance
-     */
-    <F> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
-            String operator);
-
-    default <F> QueryStream<T> in(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
-        return operateCollection(field1, field2, Operators.IN);
-    }
-
-    default <F> QueryStream<T> notIn(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
-        return operateCollection(field1, field2, Operators.NOT_IN);
-    }
     // =========================embedded=field=queries=======================//
 
     /**
@@ -340,120 +258,4 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
     default <F> QueryStream<T> notExists(SubQueryConsumer<T, T> consumer) {
         return notExists(getEntityType(), consumer);
     }
-
-    // =========================order=by=====================================//
-
-    /**
-     * Generates ORDER BY part for field
-     * 
-     * @param field
-     * @return {@link QueryStream} current instance
-     */
-    <F> QueryStream<T> orderBy(EntityField<T, F> field);
-
-    /**
-     * Generates ORDER BY with DESC for field
-     * 
-     * @param field
-     * @return {@link QueryStream} current instance
-     */
-    <F> QueryStream<T> orderByDesc(EntityField<T, F> field);
-
-    // ======================================================================//
-
-    /**
-     * Set clause for bulk UPDATE query
-     * 
-     * @param field
-     * @param value
-     * @return {@link QueryStream} current instance
-     */
-    <F> QueryStream<T> set(EntityField<T, F> field, F value);
-
-    // ======================================================================//
-
-    /**
-     * WHERE clause appender
-     * 
-     * @return {@link QueryStream} current instance
-     */
-    default QueryStream<T> where() {
-        return this;
-    }
-
-    /**
-     * AND part appender
-     * 
-     * @return {@link QueryStream} current instance
-     */
-    default QueryStream<T> and() {
-        return appendBody(Clauses.AND);
-    }
-
-    /**
-     * OR part appender
-     * 
-     * @return {@link QueryStream} current instance
-     */
-    default QueryStream<T> or() {
-        return appendBody(Clauses.OR);
-    }
-
-    /**
-     * Opens bracket in query body
-     * 
-     * @return {@link QueryStream} current instance
-     */
-    default QueryStream<T> openBracket() {
-        return appendBody(Operators.OPEN_BRACKET);
-    }
-
-    /**
-     * Closes bracket in query body
-     * 
-     * @return {@link QueryStream} current instance
-     */
-    default QueryStream<T> closeBracket() {
-        return appendBody(Operators.CLOSE_BRACKET);
-    }
-
-    /**
-     * Creates query part in brackets
-     * 
-     * @param consumer
-     * @return {@link QueryStream} current instance
-     */
-    QueryStream<T> brackets(QueryConsumer<T> consumer);
-
-    // ======================================================================//
-
-    /**
-     * Appends to generated query prefix custom clause
-     * 
-     * @param clause
-     * @return {@link QueryStream} current instance
-     */
-    QueryStream<T> appendPrefix(Object clause);
-
-    /**
-     * Appends to generated query body custom clause
-     * 
-     * @param clause
-     * @return {@link QueryStream} current instance
-     */
-    QueryStream<T> appendBody(Object clause);
-
-    /**
-     * Gets generated JPA query
-     * 
-     * @return {@link String} JPA query
-     */
-    String sql();
-
-    /**
-     * Gets generated JPA query for element count
-     * 
-     * @return {@link String} JPA query
-     */
-    String countSql();
 }
