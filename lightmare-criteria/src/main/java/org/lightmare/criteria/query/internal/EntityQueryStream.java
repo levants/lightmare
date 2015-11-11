@@ -115,6 +115,12 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
         return new EntityJoinProcessor<S, T>(this, subType);
     }
 
+    /**
+     * Generates {@link SubQueryStream} for JOIN query
+     * 
+     * @param tuple
+     * @return {@link SubQueryStream} for JOIN query
+     */
     public <S> SubQueryStream<S, T> joinStream(QueryTuple tuple) {
 
         SubQueryStream<S, T> joinStream;
@@ -150,6 +156,13 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
         subQuery.call();
     }
 
+    /**
+     * Creates {@link SubQueryStream} for instant {@link Class} entity type
+     * 
+     * @param subType
+     * @param consumer
+     * @return {@link SubQueryStream} for entity type
+     */
     private <S> SubQueryStream<S, T> initSubQuery(Class<S> subType, SubQueryConsumer<S, T> consumer) {
 
         SubQueryStream<S, T> subQuery = subQuery(subType);

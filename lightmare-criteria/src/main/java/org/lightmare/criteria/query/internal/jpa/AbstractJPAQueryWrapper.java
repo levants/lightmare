@@ -128,6 +128,11 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
         return this;
     }
 
+    /**
+     * Sets flush mode to query
+     * 
+     * @param query
+     */
     private void putFlushMode(Query query) {
 
         if (Objects.nonNull(flushMode)) {

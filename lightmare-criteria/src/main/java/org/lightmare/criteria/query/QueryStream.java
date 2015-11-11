@@ -57,8 +57,23 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
 
     // ========================= Entity method composers ====================//
 
+    /**
+     * Generates query part for instant field and operator
+     * 
+     * @param field
+     * @param operator
+     * @return {@link QueryStream} current instance
+     */
     <F> QueryStream<T> operate(EntityField<T, F> field, String operator);
 
+    /**
+     * Generates query part for instant field with parameter and operator
+     * 
+     * @param field
+     * @param value
+     * @param operator
+     * @return {@link QueryStream} current instance
+     */
     <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator);
 
     default <F> QueryStream<T> equals(EntityField<T, F> field, F value) {
@@ -109,6 +124,15 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
         return contains(field, value).closeBracket();
     }
 
+    /**
+     * Generates query part for instant field with {@link Collection} parameter
+     * and operator
+     * 
+     * @param field
+     * @param values
+     * @param operator
+     * @return {@link QueryStream} current instance
+     */
     <F> QueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
 
     default <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
@@ -129,6 +153,14 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
 
     // ========================= Entity self method composers ===============//
 
+    /**
+     * Generates query part for instant fields with and operator
+     * 
+     * @param field1
+     * @param field2
+     * @param operator
+     * @return {@link QueryStream} current instance
+     */
     <F> QueryStream<T> operate(EntityField<T, F> field1, EntityField<T, F> field2, String operator);
 
     default <F> QueryStream<T> equals(EntityField<T, F> field1, EntityField<T, F> field2) {
@@ -171,6 +203,14 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
         return operate(field1, field2, Operators.LIKE);
     }
 
+    /**
+     * Generates query part for instant fields with {@link Collection} types
+     * 
+     * @param field1
+     * @param field2
+     * @param operator
+     * @return {@link QueryStream} current instance
+     */
     <F> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
             String operator);
 
@@ -192,6 +232,13 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
 
     // =========================embedded=field=queries=======================//
 
+    /**
+     * Generates query part for embedded entity fields
+     * 
+     * @param field
+     * @param consumer
+     * @return {@link QueryStream} current instance
+     */
     <F> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer);
 
     // =========================sub=queries==================================//
