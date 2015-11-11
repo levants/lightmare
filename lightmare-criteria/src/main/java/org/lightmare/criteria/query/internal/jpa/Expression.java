@@ -78,19 +78,35 @@ public interface Expression<T> {
     }
 
     default <F> QueryStream<T> gt(EntityField<T, F> field, F value) {
-        return operate(field, value, Operators.MORE);
+        return operate(field, value, Operators.GREATER);
+    }
+
+    default <F> QueryStream<T> greaterThen(EntityField<T, F> field, F value) {
+        return gt(field, value);
     }
 
     default <F> QueryStream<T> lt(EntityField<T, F> field, F value) {
         return operate(field, value, Operators.LESS);
     }
 
+    default <F> QueryStream<T> lessThen(EntityField<T, F> field, F value) {
+        return lt(field, value);
+    }
+
     default <F> QueryStream<T> ge(EntityField<T, F> field, F value) {
         return operate(field, value, Operators.GREATER_OR_EQ);
     }
 
+    default <F> QueryStream<T> greaterThenOrEqual(EntityField<T, F> field, F value) {
+        return ge(field, value);
+    }
+
     default <F> QueryStream<T> le(EntityField<T, F> field, F value) {
         return operate(field, value, Operators.LESS_OR_EQ);
+    }
+
+    default <F> QueryStream<T> lessThenOrEqual(EntityField<T, F> field, F value) {
+        return le(field, value);
     }
 
     <F> QueryStream<T> between(EntityField<T, F> field, F value1, F value2);

@@ -59,7 +59,7 @@ public interface FieldExpression<T> {
     }
 
     default <F> QueryStream<T> gtFl(EntityField<T, F> field1, EntityField<T, F> field2) {
-        return operateFl(field1, field2, Operators.MORE);
+        return operateFl(field1, field2, Operators.GREATER);
     }
 
     default <F> QueryStream<T> ltFl(EntityField<T, F> field1, EntityField<T, F> field2) {

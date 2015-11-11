@@ -69,7 +69,7 @@ public interface SubQueryStream<S, T>
     }
 
     default <F> SubQueryStream<S, T> gtPr(EntityField<S, F> sfield, ParentField<T, F> field) {
-        return operatePr(sfield, field, Operators.MORE);
+        return operatePr(sfield, field, Operators.GREATER);
     }
 
     default <F> SubQueryStream<S, T> ltPr(EntityField<S, F> sfield, ParentField<T, F> field) {

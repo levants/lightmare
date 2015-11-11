@@ -61,7 +61,12 @@ interface SubExpression<S, T> extends Expression<S> {
 
     @Override
     default <F> SubQueryStream<S, T> gt(EntityField<S, F> field, F value) {
-        return operate(field, value, Operators.MORE);
+        return operate(field, value, Operators.GREATER);
+    }
+
+    @Override
+    default <F> SubQueryStream<S, T> greaterThen(EntityField<S, F> field, F value) {
+        return gt(field, value);
     }
 
     @Override
@@ -70,13 +75,28 @@ interface SubExpression<S, T> extends Expression<S> {
     }
 
     @Override
+    default <F> SubQueryStream<S, T> lessThen(EntityField<S, F> field, F value) {
+        return lt(field, value);
+    }
+
+    @Override
     default <F> SubQueryStream<S, T> ge(EntityField<S, F> field, F value) {
         return operate(field, value, Operators.GREATER_OR_EQ);
     }
 
     @Override
+    default <F> SubQueryStream<S, T> greaterThenOrEqual(EntityField<S, F> field, F value) {
+        return ge(field, value);
+    }
+
+    @Override
     default <F> SubQueryStream<S, T> le(EntityField<S, F> field, F value) {
         return operate(field, value, Operators.LESS_OR_EQ);
+    }
+
+    @Override
+    default <F> SubQueryStream<S, T> lessThenOrEqual(EntityField<S, F> field, F value) {
+        return le(field, value);
     }
 
     @Override
