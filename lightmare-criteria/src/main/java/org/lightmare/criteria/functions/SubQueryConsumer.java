@@ -24,7 +24,7 @@ package org.lightmare.criteria.functions;
 
 import java.io.Serializable;
 
-import org.lightmare.criteria.query.internal.SubQueryStream;
+import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 
 /**
  * Functional interface for sub query generation

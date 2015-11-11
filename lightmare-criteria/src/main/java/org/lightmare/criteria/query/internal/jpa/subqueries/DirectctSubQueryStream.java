@@ -30,7 +30,6 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.query.internal.EntityQueryStream;
-import org.lightmare.criteria.query.internal.SubQueryStream;
 
 /**
  * Main class to operate on sub queries and generate query clauses
@@ -131,13 +130,13 @@ abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> impleme
     // =========================order=by=====================================//
 
     @Override
-    public SubQueryStream<S, T> orderBy(EntityField<S, ?> field) {
+    public <F> SubQueryStream<S, T> orderBy(EntityField<S, F> field) {
         super.orderBy(field);
         return this;
     }
 
     @Override
-    public SubQueryStream<S, T> orderByDesc(EntityField<S, ?> field) {
+    public <F> SubQueryStream<S, T> orderByDesc(EntityField<S, F> field) {
         super.orderByDesc(field);
         return this;
     }

@@ -31,11 +31,11 @@ import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.query.internal.SubQueryStream;
 import org.lightmare.criteria.query.internal.jpa.JPAQueryWrapper;
 import org.lightmare.criteria.query.internal.jpa.JoinQueryStream;
 import org.lightmare.criteria.query.internal.jpa.ResultStream;
 import org.lightmare.criteria.query.internal.jpa.SelectStatements;
+import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -350,7 +350,7 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
      * @param field
      * @return {@link QueryStream} current instance
      */
-    QueryStream<T> orderBy(EntityField<T, ?> field);
+    <F> QueryStream<T> orderBy(EntityField<T, F> field);
 
     /**
      * Generates ORDER BY with DESC for field
@@ -358,7 +358,7 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
      * @param field
      * @return {@link QueryStream} current instance
      */
-    QueryStream<T> orderByDesc(EntityField<T, ?> field);
+    <F> QueryStream<T> orderByDesc(EntityField<T, F> field);
 
     // ======================================================================//
 

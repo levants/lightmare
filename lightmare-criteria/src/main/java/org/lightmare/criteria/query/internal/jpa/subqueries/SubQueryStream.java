@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal;
+package org.lightmare.criteria.query.internal.jpa.subqueries;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,7 +33,6 @@ import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -374,10 +373,10 @@ public interface SubQueryStream<S, T> extends QueryStream<S> {
     // =========================order=by=====================================//
 
     @Override
-    SubQueryStream<S, T> orderBy(EntityField<S, ?> field);
+    <F> SubQueryStream<S, T> orderBy(EntityField<S, F> field);
 
     @Override
-    SubQueryStream<S, T> orderByDesc(EntityField<S, ?> field);
+    <F> SubQueryStream<S, T> orderByDesc(EntityField<S, F> field);
 
     // ======================================================================//
 

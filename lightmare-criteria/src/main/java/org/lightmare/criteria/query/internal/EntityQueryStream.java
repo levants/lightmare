@@ -34,6 +34,7 @@ import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.AbstractSelectStatements;
+import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -265,13 +266,13 @@ public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public QueryStream<T> orderBy(EntityField<T, ?> field) {
+    public <F> QueryStream<T> orderBy(EntityField<T, F> field) {
         setOrder(new EntityField[] { field });
         return this;
     }
 
     @Override
-    public QueryStream<T> orderByDesc(EntityField<T, ?> field) {
+    public <F> QueryStream<T> orderByDesc(EntityField<T, F> field) {
         setOrder(Orders.DESC, new EntityField[] { field });
         return this;
     }

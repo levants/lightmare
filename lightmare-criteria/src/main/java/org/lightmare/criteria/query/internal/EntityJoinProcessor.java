@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.internal;
 
 import org.lightmare.criteria.query.internal.jpa.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 
 /**
  * Implementation of {@link SubQueryStream} to process JOIN statements
