@@ -262,8 +262,24 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
         return subQuery(getEntityType(), consumer);
     }
 
+    /**
+     * Generates sub query for IN clause
+     * 
+     * @param field
+     * @param subType
+     * @param consumer
+     * @return {@link QueryStream} current instance
+     */
     <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer);
 
+    /**
+     * Generates sub query part for NOT IN clause
+     * 
+     * @param field
+     * @param subType
+     * @param consumer
+     * @return {@link QueryStream} current instance
+     */
     <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer);
 
     default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType) {
@@ -292,8 +308,22 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
         return notIn(field, consumer);
     }
 
+    /**
+     * Generates sub query part for EXISTS clause
+     * 
+     * @param subType
+     * @param consumer
+     * @return {@link QueryStream} current instance
+     */
     <F, S> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer);
 
+    /**
+     * Generates sub query part for NOT EXISTS clause
+     * 
+     * @param subType
+     * @param consumer
+     * @return {@link QueryStream} current instance
+     */
     <F, S> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer);
 
     default <F, S> QueryStream<T> exists(Class<S> subType) {
@@ -314,8 +344,20 @@ public interface QueryStream<T> extends JPAQueryWrapper<T>, SelectStatements<T>,
 
     // =========================order=by=====================================//
 
+    /**
+     * Generates ORDER BY part for field
+     * 
+     * @param field
+     * @return {@link QueryStream} current instance
+     */
     QueryStream<T> orderBy(EntityField<T, ?> field);
 
+    /**
+     * Generates ORDER BY with DESC for field
+     * 
+     * @param field
+     * @return {@link QueryStream} current instance
+     */
     QueryStream<T> orderByDesc(EntityField<T, ?> field);
 
     // ======================================================================//

@@ -113,7 +113,12 @@ public class QueryTuple implements Serializable {
     }
 
     public <F> Class<F> getFieldType() {
-        Class<F> fieldType = ObjectUtils.cast(genericType);
+
+        Class<F> fieldType;
+
+        Class<?> raw = getGenericType();
+        fieldType = ObjectUtils.cast(raw);
+
         return fieldType;
     }
 
@@ -126,6 +131,11 @@ public class QueryTuple implements Serializable {
     }
 
     public Class<?> getGenericType() {
+
+        if (genericType == null) {
+            genericType = field.getType();
+        }
+
         return genericType;
     }
 

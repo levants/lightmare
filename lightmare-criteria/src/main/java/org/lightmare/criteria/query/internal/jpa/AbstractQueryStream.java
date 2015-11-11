@@ -154,6 +154,13 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         newLine(body);
     }
 
+    /**
+     * Adds query part to from clause
+     * 
+     * @param typeName
+     * @param alias
+     * @param buff
+     */
     protected static void appendFromClause(String typeName, String alias, StringBuilder buff) {
 
         buff.append(Filters.FROM);
@@ -163,14 +170,32 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         newLine(buff);
     }
 
+    /**
+     * Adds query part to from clause
+     * 
+     * @param type
+     * @param alias
+     * @param buff
+     */
     protected static void appendFromClause(Class<?> type, String alias, StringBuilder buff) {
         appendFromClause(type.getName(), alias, buff);
     }
 
+    /**
+     * Adds query part to from clause
+     * 
+     * @param tuple
+     * @param buffer
+     */
     protected static void appendFieldName(QueryTuple tuple, StringBuilder buffer) {
         appendFieldName(tuple.getAlias(), tuple.getFieldName(), buffer);
     }
 
+    /**
+     * Sets alias to query part
+     * 
+     * @param tuple
+     */
     protected void setAlias(QueryTuple tuple) {
 
         if (tuple.hasNoAlias()) {
@@ -265,6 +290,13 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         incrementParameterCounter();
     }
 
+    /**
+     * Generates query part by tuple and adds appropriated parameter
+     * 
+     * @param tuple
+     * @param value
+     * @param sqlPart
+     */
     protected void oppWithParameter(QueryTuple tuple, Object value, StringBuilder sqlPart) {
 
         String parameterName = generateParameterName(tuple);
@@ -272,6 +304,13 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         addParameter(parameterName, tuple, value);
     }
 
+    /**
+     * Generates query part for field and expression
+     * 
+     * @param field
+     * @param expression
+     * @return {@link QueryTuple} for field
+     */
     protected QueryTuple opp(Object field, String expression) {
 
         QueryTuple tuple = compose(field);
@@ -282,11 +321,25 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         return tuple;
     }
 
+    /**
+     * Generates query part for field and expression and adds parameter
+     * 
+     * @param field
+     * @param value
+     * @param expression
+     */
     protected <F> void opp(Object field, F value, String expression) {
         QueryTuple tuple = opp(field, expression);
         oppWithParameter(tuple, value, body);
     }
 
+    /**
+     * Generates sub query part with appropriated expression
+     * 
+     * @param field
+     * @param expression
+     * @return {@link QueryTuple} for sub query field
+     */
     protected QueryTuple appSubQuery(Object field, String expression) {
 
         QueryTuple tuple = opp(field, expression);
@@ -295,6 +348,13 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         return tuple;
     }
 
+    /**
+     * Generates query part for {@link Collection} parameter
+     * 
+     * @param field
+     * @param value
+     * @param expression
+     */
     protected void oppCollection(Object field, Collection<?> value, String expression) {
 
         QueryTuple tuple = appSubQuery(field, expression);
@@ -303,6 +363,12 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         newLine();
     }
 
+    /**
+     * Generates query part for {@link Collection} parameter
+     * 
+     * @param field
+     * @param values
+     */
     protected void oppCollection(Object field, Collection<?> values) {
         oppCollection(field, values, Operators.IN);
     }
