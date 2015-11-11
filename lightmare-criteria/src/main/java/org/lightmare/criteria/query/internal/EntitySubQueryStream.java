@@ -73,7 +73,7 @@ class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
     // ========================= select method composers ====================//
 
     @Override
-    public QueryStream<Object[]> select(EntityField<S, ?> field) {
+    public <F> QueryStream<Object[]> select(EntityField<S, F> field) {
         return subSelectAll(field);
     }
 

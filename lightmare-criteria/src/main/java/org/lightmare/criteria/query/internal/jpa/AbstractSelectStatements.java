@@ -70,259 +70,116 @@ public abstract class AbstractSelectStatements<T> extends AbstractResultStream<T
         return stream;
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field) {
+    @Override
+    public <F> QueryStream<Object[]> select(EntityField<T, F> field) {
         return selectAll(field);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2) {
+    @Override
+    public <F1, F2> QueryStream<Object[]> select(EntityField<T, F1> field1, EntityField<T, F1> field2) {
         return selectAll(field1, field2);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3) {
+    @Override
+    public <F1, F2, F3> QueryStream<Object[]> select(EntityField<T, F1> field1, EntityField<T, F2> field2,
+            EntityField<T, F3> field3) {
         return selectAll(field1, field2, field3);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4) {
+    @Override
+    public <F1, F2, F3, F4> QueryStream<Object[]> select(EntityField<T, F1> field1, EntityField<T, F2> field2,
+            EntityField<T, F3> field3, EntityField<T, F4> field4) {
         return selectAll(field1, field2, field3, field4);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5) {
+    @Override
+    public <F1, F2, F3, F4, F5> QueryStream<Object[]> select(EntityField<T, F1> field1, EntityField<T, F2> field2,
+            EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5) {
         return selectAll(field1, field2, field3, field4, field5);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6) {
+    @Override
+    public <F1, F2, F3, F4, F5, F6> QueryStream<Object[]> select(EntityField<T, F1> field1, EntityField<T, F2> field2,
+            EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
+            EntityField<T, F6> field6) {
         return selectAll(field1, field2, field3, field4, field5, field6);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7) {
+    @Override
+    public <F1, F2, F3, F4, F5, F6, F7> QueryStream<Object[]> select(EntityField<T, F1> field1,
+            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
+            EntityField<T, F6> field6, EntityField<T, F7> field7) {
         return selectAll(field1, field2, field3, field4, field5, field6, field7);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8) {
+    @Override
+    public <F1, F2, F3, F4, F5, F6, F7, F8> QueryStream<Object[]> select(EntityField<T, F1> field1,
+            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
+            EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8) {
         return selectAll(field1, field2, field3, field4, field5, field6, field7, field8);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9) {
+    @Override
+    public <F1, F2, F3, F4, F5, F6, F7, F8, F9> QueryStream<Object[]> select(EntityField<T, F1> field1,
+            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
+            EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8,
+            EntityField<T, F9> field9) {
         return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10) {
+    @Override
+    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10> QueryStream<Object[]> select(EntityField<T, F1> field1,
+            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
+            EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8, EntityField<T, F9> field9,
+            EntityField<T, F10> field10) {
         return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11) {
+    @Override
+    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11> QueryStream<Object[]> select(EntityField<T, F1> field1,
+            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
+            EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8, EntityField<T, F9> field9,
+            EntityField<T, F10> field10, EntityField<T, F11> field11) {
         return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12) {
+    @Override
+    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12> QueryStream<Object[]> select(EntityField<T, F1> field1,
+            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
+            EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8, EntityField<T, F9> field9,
+            EntityField<T, F10> field10, EntityField<T, F11> field11, EntityField<T, F12> field12) {
         return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
                 field12);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13) {
+    @Override
+    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13> QueryStream<Object[]> select(
+            EntityField<T, F1> field1, EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4,
+            EntityField<T, F5> field5, EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8,
+            EntityField<T, F9> field9, EntityField<T, F10> field10, EntityField<T, F11> field11,
+            EntityField<T, F12> field12, EntityField<T, F13> field13) {
         return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
                 field12, field13);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14) {
+    @Override
+    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14> QueryStream<Object[]> select(
+            EntityField<T, F1> field1, EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4,
+            EntityField<T, F5> field5, EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8,
+            EntityField<T, F9> field9, EntityField<T, F10> field10, EntityField<T, F11> field11,
+            EntityField<T, F12> field12, EntityField<T, F13> field13, EntityField<T, F14> field14) {
         return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
                 field12, field13, field14);
     }
 
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14,
-            EntityField<T, ?> field15) {
+    @Override
+    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15> QueryStream<Object[]> select(
+            EntityField<T, F1> field1, EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4,
+            EntityField<T, F5> field5, EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8,
+            EntityField<T, F9> field9, EntityField<T, F10> field10, EntityField<T, F11> field11,
+            EntityField<T, F12> field12, EntityField<T, F13> field13, EntityField<T, F14> field14,
+            EntityField<T, F15> field15) {
         return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
                 field12, field13, field14, field15);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18,
-            EntityField<T, ?> field19) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20, EntityField<T, ?> field21) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20, EntityField<T, ?> field21, EntityField<T, ?> field22) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20, EntityField<T, ?> field21, EntityField<T, ?> field22,
-            EntityField<T, ?> field23) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22,
-                field23);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20, EntityField<T, ?> field21, EntityField<T, ?> field22, EntityField<T, ?> field23,
-            EntityField<T, ?> field24) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22,
-                field23, field24);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20, EntityField<T, ?> field21, EntityField<T, ?> field22, EntityField<T, ?> field23,
-            EntityField<T, ?> field24, EntityField<T, ?> field25) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22,
-                field23, field24, field25);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20, EntityField<T, ?> field21, EntityField<T, ?> field22, EntityField<T, ?> field23,
-            EntityField<T, ?> field24, EntityField<T, ?> field25, EntityField<T, ?> field26) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22,
-                field23, field24, field25, field26);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20, EntityField<T, ?> field21, EntityField<T, ?> field22, EntityField<T, ?> field23,
-            EntityField<T, ?> field24, EntityField<T, ?> field25, EntityField<T, ?> field26,
-            EntityField<T, ?> field27) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22,
-                field23, field24, field25, field26, field27);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20, EntityField<T, ?> field21, EntityField<T, ?> field22, EntityField<T, ?> field23,
-            EntityField<T, ?> field24, EntityField<T, ?> field25, EntityField<T, ?> field26, EntityField<T, ?> field27,
-            EntityField<T, ?> field28) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22,
-                field23, field24, field25, field26, field27, field28);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20, EntityField<T, ?> field21, EntityField<T, ?> field22, EntityField<T, ?> field23,
-            EntityField<T, ?> field24, EntityField<T, ?> field25, EntityField<T, ?> field26, EntityField<T, ?> field27,
-            EntityField<T, ?> field28, EntityField<T, ?> field29) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22,
-                field23, field24, field25, field26, field27, field28, field29);
-    }
-
-    public QueryStream<Object[]> select(EntityField<T, ?> field1, EntityField<T, ?> field2, EntityField<T, ?> field3,
-            EntityField<T, ?> field4, EntityField<T, ?> field5, EntityField<T, ?> field6, EntityField<T, ?> field7,
-            EntityField<T, ?> field8, EntityField<T, ?> field9, EntityField<T, ?> field10, EntityField<T, ?> field11,
-            EntityField<T, ?> field12, EntityField<T, ?> field13, EntityField<T, ?> field14, EntityField<T, ?> field15,
-            EntityField<T, ?> field16, EntityField<T, ?> field17, EntityField<T, ?> field18, EntityField<T, ?> field19,
-            EntityField<T, ?> field20, EntityField<T, ?> field21, EntityField<T, ?> field22, EntityField<T, ?> field23,
-            EntityField<T, ?> field24, EntityField<T, ?> field25, EntityField<T, ?> field26, EntityField<T, ?> field27,
-            EntityField<T, ?> field28, EntityField<T, ?> field29, EntityField<T, ?> field30) {
-        return selectAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22,
-                field23, field24, field25, field26, field27, field28, field29, field30);
     }
 }
