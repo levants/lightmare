@@ -506,12 +506,24 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         oppWithParameter(tuple, value, updateSet);
     }
 
+    /**
+     * Appends SELECT expression
+     * 
+     * @param field
+     */
     private void addSelectField(EntityField<T, ?> field) {
 
         QueryTuple tuple = compose(field);
         appendFieldName(tuple, columns);
     }
 
+    /**
+     * Adds comma to passed query part
+     * 
+     * @param index
+     * @param length
+     * @param buff
+     */
     private void appendComma(int index, int length, StringBuilder buff) {
 
         if (index < length) {
