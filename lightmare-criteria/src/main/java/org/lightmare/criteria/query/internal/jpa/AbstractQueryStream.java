@@ -482,11 +482,22 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         }
     }
 
+    /**
+     * Appends to SET clause for UPDATE query
+     * 
+     * @param tuple
+     */
     private void appendSetClause(QueryTuple tuple) {
         appendFieldName(tuple, updateSet);
         updateSet.append(Operators.EQ);
     }
 
+    /**
+     * Processes SET clause
+     * 
+     * @param field
+     * @param value
+     */
     protected <F> void setOpp(Object field, F value) {
 
         QueryTuple tuple = compose(field);
@@ -495,6 +506,11 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         oppWithParameter(tuple, value, updateSet);
     }
 
+    /**
+     * Appends to SELECT statement
+     * 
+     * @param fields
+     */
     private void appendSelect(EntityField<T, ?>[] fields) {
 
         int length = fields.length - CollectionUtils.SINGLTON_LENGTH;

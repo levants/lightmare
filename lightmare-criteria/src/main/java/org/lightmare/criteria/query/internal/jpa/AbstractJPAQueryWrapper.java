@@ -146,6 +146,11 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
         return this;
     }
 
+    /**
+     * Sets lock mode to query
+     * 
+     * @param query
+     */
     private void setLockMode(Query query) {
 
         if (Objects.nonNull(lockMode)) {

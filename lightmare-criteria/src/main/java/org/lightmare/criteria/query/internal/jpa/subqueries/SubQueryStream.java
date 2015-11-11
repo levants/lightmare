@@ -51,6 +51,7 @@ public interface SubQueryStream<S, T> extends QueryStream<S> {
      * 
      * @return {@link String} entity alias
      */
+    @Override
     String getAlias();
 
     // ========================= Entity method composers ====================//
