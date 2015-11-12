@@ -58,14 +58,14 @@ public class ResourceBuilder {
      */
     private static MetaData getMetaData(Resource resource) throws IOException {
 
-	MetaData metaData;
+        MetaData metaData;
 
-	Collection<Class<?>> handlers = resource.getHandlerClasses();
-	Class<?> beanClass = CollectionUtils.getFirst(handlers);
-	String beanEjbName = BeanUtils.beanName(beanClass);
-	metaData = MetaContainer.getSyncMetaData(beanEjbName);
+        Collection<Class<?>> handlers = resource.getHandlerClasses();
+        Class<?> beanClass = CollectionUtils.getFirst(handlers);
+        String beanEjbName = BeanUtils.beanName(beanClass);
+        metaData = MetaContainer.getSyncMetaData(beanEjbName);
 
-	return metaData;
+        return metaData;
     }
 
     /**
@@ -75,36 +75,34 @@ public class ResourceBuilder {
      * @param method
      * @param metaData
      */
-    private static void addMethod(Resource.Builder builder,
-	    ResourceMethod method, MetaData metaData) {
+    private static void addMethod(Resource.Builder builder, ResourceMethod method, MetaData metaData) {
 
-	List<MediaType> consumedTypes = method.getConsumedTypes();
-	List<MediaType> producedTypes = method.getProducedTypes();
-	Invocable invocable = method.getInvocable();
-	Method realMethod = invocable.getHandlingMethod();
-	List<Parameter> parameters = invocable.getParameters();
+        List<MediaType> consumedTypes = method.getConsumedTypes();
+        List<MediaType> producedTypes = method.getProducedTypes();
+        Invocable invocable = method.getInvocable();
+        Method realMethod = invocable.getHandlingMethod();
+        List<Parameter> parameters = invocable.getParameters();
 
-	// Defines media type
-	MediaType type;
-	if (CollectionUtils.valid(consumedTypes)) {
-	    type = CollectionUtils.getFirst(consumedTypes);
-	} else {
-	    type = null;
-	}
-	// Implementation of framework defined "Inflector" interface to define
-	// bean
-	// methods
-	Inflector<ContainerRequestContext, Response> inflector = new RestInflector(
-		realMethod, metaData, type, parameters);
+        // Defines media type
+        MediaType type;
+        if (CollectionUtils.valid(consumedTypes)) {
+            type = CollectionUtils.getFirst(consumedTypes);
+        } else {
+            type = null;
+        }
+        // Implementation of framework defined "Inflector" interface to define
+        // bean
+        // methods
+        Inflector<ContainerRequestContext, Response> inflector = new RestInflector(realMethod, metaData, type,
+                parameters);
 
-	// Builds new method for resource
-	ResourceMethod.Builder methodBuilder = builder.addMethod(method
-		.getHttpMethod());
-	methodBuilder.consumes(consumedTypes);
-	methodBuilder.produces(producedTypes);
-	methodBuilder.nameBindings(method.getNameBindings());
-	methodBuilder.handledBy(inflector);
-	methodBuilder.build();
+        // Builds new method for resource
+        ResourceMethod.Builder methodBuilder = builder.addMethod(method.getHttpMethod());
+        methodBuilder.consumes(consumedTypes);
+        methodBuilder.produces(producedTypes);
+        methodBuilder.nameBindings(method.getNameBindings());
+        methodBuilder.handledBy(inflector);
+        methodBuilder.build();
     }
 
     /**
@@ -115,18 +113,17 @@ public class ResourceBuilder {
      * @param builder
      * @throws IOException
      */
-    private static void registerChildren(Resource resource,
-	    Resource.Builder builder) throws IOException {
+    private static void registerChildren(Resource resource, Resource.Builder builder) throws IOException {
 
-	// Registers children resources recursively
-	List<Resource> children = resource.getChildResources();
-	if (CollectionUtils.valid(children)) {
-	    Resource child;
-	    for (Resource preChild : children) {
-		child = rebuildResource(preChild);
-		builder.addChildResource(child);
-	    }
-	}
+        // Registers children resources recursively
+        List<Resource> children = resource.getChildResources();
+        if (CollectionUtils.valid(children)) {
+            Resource child;
+            for (Resource preChild : children) {
+                child = rebuildResource(preChild);
+                builder.addChildResource(child);
+            }
+        }
     }
 
     /**
@@ -138,23 +135,22 @@ public class ResourceBuilder {
      * @return {@link Resource}
      * @throws IOException
      */
-    public static Resource rebuildResource(Resource resource)
-	    throws IOException {
+    public static Resource rebuildResource(Resource resource) throws IOException {
 
-	Resource rebuiltResource;
+        Resource rebuiltResource;
 
-	Resource.Builder builder = Resource.builder(resource.getPath());
-	builder.name(resource.getName());
-	MetaData metaData = getMetaData(resource);
+        Resource.Builder builder = Resource.builder(resource.getPath());
+        builder.name(resource.getName());
+        MetaData metaData = getMetaData(resource);
 
-	List<ResourceMethod> methods = resource.getAllMethods();
-	for (ResourceMethod method : methods) {
-	    addMethod(builder, method, metaData);
-	}
-	// Registers children resources recursively
-	registerChildren(resource, builder);
-	rebuiltResource = builder.build();
+        List<ResourceMethod> methods = resource.getAllMethods();
+        for (ResourceMethod method : methods) {
+            addMethod(builder, method, metaData);
+        }
+        // Registers children resources recursively
+        registerChildren(resource, builder);
+        rebuiltResource = builder.build();
 
-	return rebuiltResource;
+        return rebuiltResource;
     }
 }

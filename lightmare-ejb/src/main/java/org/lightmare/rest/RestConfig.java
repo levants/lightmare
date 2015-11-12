@@ -66,37 +66,37 @@ public class RestConfig extends ResourceConfig {
      * @param changeCache
      */
     public RestConfig(boolean changeCache) {
-	super();
-	RestConfig config = RestContainer.getRestConfig();
-	register(ObjectMapperProvider.class);
-	register(JacksonFXmlFeature.class);
-	ObjectUtils.lock(LOCK);
-	try {
-	    if (reloader == null) {
-		reloader = new RestReloader();
-	    }
-	    this.registerInstances(reloader);
+        super();
+        RestConfig config = RestContainer.getRestConfig();
+        register(ObjectMapperProvider.class);
+        register(JacksonFXmlFeature.class);
+        ObjectUtils.lock(LOCK);
+        try {
+            if (reloader == null) {
+                reloader = new RestReloader();
+            }
+            this.registerInstances(reloader);
 
-	    if (ObjectUtils.notNull(config)) {
-		// Adds resources to pre-resources from existing cached
-		// configuration
-		this.addPreResources(config);
-		Map<String, Object> properties = config.getProperties();
-		if (CollectionUtils.valid(properties)) {
-		    addProperties(properties);
-		}
-	    }
+            if (ObjectUtils.notNull(config)) {
+                // Adds resources to pre-resources from existing cached
+                // configuration
+                this.addPreResources(config);
+                Map<String, Object> properties = config.getProperties();
+                if (CollectionUtils.valid(properties)) {
+                    addProperties(properties);
+                }
+            }
 
-	    if (changeCache) {
-		RestContainer.setRestConfig(this);
-	    }
-	} finally {
-	    ObjectUtils.unlock(LOCK);
-	}
+            if (changeCache) {
+                RestContainer.setRestConfig(this);
+            }
+        } finally {
+            ObjectUtils.unlock(LOCK);
+        }
     }
 
     public RestConfig() {
-	this(Boolean.TRUE);
+        this(Boolean.TRUE);
     }
 
     /**
@@ -104,10 +104,10 @@ public class RestConfig extends ResourceConfig {
      */
     public void cache() {
 
-	RestConfig config = RestContainer.getRestConfig();
-	if (ObjectUtils.notEquals(this, config)) {
-	    RestContainer.setRestConfig(this);
-	}
+        RestConfig config = RestContainer.getRestConfig();
+        if (ObjectUtils.notEquals(this, config)) {
+            RestContainer.setRestConfig(this);
+        }
     }
 
     /**
@@ -115,10 +115,10 @@ public class RestConfig extends ResourceConfig {
      */
     private void clearResources() {
 
-	Set<Resource> resources = getResources();
-	if (CollectionUtils.valid(resources)) {
-	    getResources().clear();
-	}
+        Set<Resource> resources = getResources();
+        if (CollectionUtils.valid(resources)) {
+            getResources().clear();
+        }
     }
 
     /**
@@ -128,16 +128,16 @@ public class RestConfig extends ResourceConfig {
      */
     public void registerAll(RestConfig oldConfig) {
 
-	clearResources();
-	Set<Resource> newResources = new HashSet<Resource>();
-	if (ObjectUtils.notNull(oldConfig)) {
-	    Set<Resource> olds = oldConfig.getResources();
-	    if (CollectionUtils.valid(olds)) {
-		newResources.addAll(olds);
-	    }
-	}
+        clearResources();
+        Set<Resource> newResources = new HashSet<Resource>();
+        if (ObjectUtils.notNull(oldConfig)) {
+            Set<Resource> olds = oldConfig.getResources();
+            if (CollectionUtils.valid(olds)) {
+                newResources.addAll(olds);
+            }
+        }
 
-	registerResources(newResources);
+        registerResources(newResources);
     }
 
     /**
@@ -148,12 +148,12 @@ public class RestConfig extends ResourceConfig {
      */
     public void addPreResources(Collection<Resource> toAdd) {
 
-	if (CollectionUtils.valid(toAdd)) {
-	    if (this.preResources == null || this.preResources.isEmpty()) {
-		this.preResources = new HashSet<Resource>();
-	    }
-	    this.preResources.addAll(toAdd);
-	}
+        if (CollectionUtils.valid(toAdd)) {
+            if (this.preResources == null || this.preResources.isEmpty()) {
+                this.preResources = new HashSet<Resource>();
+            }
+            this.preResources.addAll(toAdd);
+        }
     }
 
     /**
@@ -163,8 +163,8 @@ public class RestConfig extends ResourceConfig {
      */
     public void addPreResource(Resource resource) {
 
-	Collection<Resource> resources = Collections.singleton(resource);
-	addPreResources(resources);
+        Collection<Resource> resources = Collections.singleton(resource);
+        addPreResources(resources);
     }
 
     /**
@@ -175,10 +175,10 @@ public class RestConfig extends ResourceConfig {
      */
     public void addPreResources(RestConfig oldConfig) {
 
-	if (ObjectUtils.notNull(oldConfig)) {
-	    addPreResources(oldConfig.getResources());
-	    addPreResources(oldConfig.preResources);
-	}
+        if (ObjectUtils.notNull(oldConfig)) {
+            addPreResources(oldConfig.getResources());
+            addPreResources(oldConfig.preResources);
+        }
 
     }
 
@@ -189,9 +189,9 @@ public class RestConfig extends ResourceConfig {
      */
     private void removePreResource(Resource resource) {
 
-	if (CollectionUtils.valid(preResources)) {
-	    preResources.remove(resource);
-	}
+        if (CollectionUtils.valid(preResources)) {
+            preResources.remove(resource);
+        }
     }
 
     /**
@@ -204,10 +204,10 @@ public class RestConfig extends ResourceConfig {
      */
     public void registerClass(Class<?> resourceClass, RestConfig oldConfig) throws IOException {
 
-	Resource.Builder builder = Resource.builder(resourceClass);
-	Resource preResource = builder.build();
-	Resource resource = ResourceBuilder.rebuildResource(preResource);
-	addPreResource(resource);
+        Resource.Builder builder = Resource.builder(resourceClass);
+        Resource preResource = builder.build();
+        Resource resource = ResourceBuilder.rebuildResource(preResource);
+        addPreResource(resource);
     }
 
     /**
@@ -218,8 +218,8 @@ public class RestConfig extends ResourceConfig {
      */
     public void unregister(Class<?> resourceClass) {
 
-	Resource resource = RestContainer.getResource(resourceClass);
-	removePreResource(resource);
+        Resource resource = RestContainer.getResource(resourceClass);
+        removePreResource(resource);
     }
 
     /**
@@ -228,9 +228,9 @@ public class RestConfig extends ResourceConfig {
      */
     public void registerPreResources() {
 
-	if (CollectionUtils.valid(preResources)) {
-	    RestContainer.putResources(preResources);
-	    registerResources(preResources);
-	}
+        if (CollectionUtils.valid(preResources)) {
+            RestContainer.putResources(preResources);
+            registerResources(preResources);
+        }
     }
 }

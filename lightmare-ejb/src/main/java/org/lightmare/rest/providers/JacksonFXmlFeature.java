@@ -32,8 +32,8 @@ import org.lightmare.utils.StringUtils;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 /**
- * Class to register new JSON <a
- * href="https://github.com/FasterXML/jackson-databind">Jackson</a> provider
+ * Class to register new JSON
+ * <a href="https://github.com/FasterXML/jackson-databind">Jackson</a> provider
  * instead of old for REST services
  * 
  * @author Levan Tsinadze
@@ -47,16 +47,14 @@ public class JacksonFXmlFeature implements Feature {
     @Override
     public boolean configure(FeatureContext context) {
 
-	boolean valid = Boolean.TRUE;
+        boolean valid = Boolean.TRUE;
 
-	String runtimeType = context.getConfiguration().getRuntimeType().name()
-		.toLowerCase();
-	String disableMoxy = StringUtils.concat(DISABLE_JSON_KEY, runtimeType);
-	context.property(disableMoxy, valid);
-	Class<?>[] ios = new Class[] { MessageBodyReader.class,
-		MessageBodyWriter.class };
-	context.register(JacksonJaxbJsonProvider.class, ios);
+        String runtimeType = context.getConfiguration().getRuntimeType().name().toLowerCase();
+        String disableMoxy = StringUtils.concat(DISABLE_JSON_KEY, runtimeType);
+        context.property(disableMoxy, valid);
+        Class<?>[] ios = new Class[] { MessageBodyReader.class, MessageBodyWriter.class };
+        context.register(JacksonJaxbJsonProvider.class, ios);
 
-	return valid;
+        return valid;
     }
 }

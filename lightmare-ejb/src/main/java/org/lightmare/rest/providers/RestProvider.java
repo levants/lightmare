@@ -56,23 +56,23 @@ public class RestProvider {
 
     private static void getConfig() {
 
-	if (newConfig == null) {
-	    newConfig = new RestConfig(Boolean.FALSE);
-	}
+        if (newConfig == null) {
+            newConfig = new RestConfig(Boolean.FALSE);
+        }
     }
 
     private static RestConfig get() {
 
-	if (newConfig == null) {
-	    ObjectUtils.lock(LOCK);
-	    try {
-		getConfig();
-	    } finally {
-		ObjectUtils.unlock(LOCK);
-	    }
-	}
+        if (newConfig == null) {
+            ObjectUtils.lock(LOCK);
+            try {
+                getConfig();
+            } finally {
+                ObjectUtils.unlock(LOCK);
+            }
+        }
 
-	return newConfig;
+        return newConfig;
     }
 
     /**
@@ -83,16 +83,15 @@ public class RestProvider {
      * @return <code>T</code>
      * @throws IOException
      */
-    public static <T> T convert(String json, Class<T> valueClass)
-	    throws IOException {
+    public static <T> T convert(String json, Class<T> valueClass) throws IOException {
 
-	T value = JsonSerializer.read(json, valueClass);
+        T value = JsonSerializer.read(json, valueClass);
 
-	return value;
+        return value;
     }
 
     public static String json(Object data) throws IOException {
-	return JsonSerializer.write(data);
+        return JsonSerializer.write(data);
     }
 
     /**
@@ -103,10 +102,9 @@ public class RestProvider {
      */
     private static boolean isAcceptable(Class<?> resourceClass) {
 
-	boolean valid = Resource.isAcceptable(resourceClass)
-		&& resourceClass.isAnnotationPresent(Path.class);
+        boolean valid = Resource.isAcceptable(resourceClass) && resourceClass.isAnnotationPresent(Path.class);
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -119,15 +117,15 @@ public class RestProvider {
      */
     public static void add(Class<?> beanClass) throws IOException {
 
-	boolean valid = isAcceptable(beanClass);
-	if (valid) {
-	    RestReloader reloader = RestReloader.get();
-	    if (ObjectUtils.notNull(reloader)) {
-		RestConfig conf = get();
-		RestConfig existingConfig = RestContainer.getRestConfig();
-		conf.registerClass(beanClass, existingConfig);
-	    }
-	}
+        boolean valid = isAcceptable(beanClass);
+        if (valid) {
+            RestReloader reloader = RestReloader.get();
+            if (ObjectUtils.notNull(reloader)) {
+                RestConfig conf = get();
+                RestConfig existingConfig = RestContainer.getRestConfig();
+                conf.registerClass(beanClass, existingConfig);
+            }
+        }
     }
 
     /**
@@ -139,11 +137,11 @@ public class RestProvider {
      */
     public static void remove(Class<?> beanClass) {
 
-	RestReloader reloader = RestReloader.get();
-	if (ObjectUtils.notNull(reloader)) {
-	    RestConfig conf = get();
-	    conf.unregister(beanClass);
-	}
+        RestReloader reloader = RestReloader.get();
+        if (ObjectUtils.notNull(reloader)) {
+            RestConfig conf = get();
+            conf.unregister(beanClass);
+        }
     }
 
     /**
@@ -154,26 +152,25 @@ public class RestProvider {
      */
     public static ClassLoader getCommonLoader() {
 
-	ClassLoader commonLoader = null;
+        ClassLoader commonLoader = null;
 
-	Iterator<MetaData> iterator = MetaContainer.getBeanClasses();
-	MetaData metaData;
-	ClassLoader newLoader;
-	ClassLoader oldLoader = null;
+        Iterator<MetaData> iterator = MetaContainer.getBeanClasses();
+        MetaData metaData;
+        ClassLoader newLoader;
+        ClassLoader oldLoader = null;
 
-	while (iterator.hasNext()) {
-	    metaData = iterator.next();
-	    newLoader = metaData.getLoader();
+        while (iterator.hasNext()) {
+            metaData = iterator.next();
+            newLoader = metaData.getLoader();
 
-	    if (ObjectUtils.notNull(oldLoader)
-		    && ObjectUtils.notNull(newLoader)) {
-		commonLoader = LibraryLoader.createCommon(newLoader, oldLoader);
-	    }
+            if (ObjectUtils.notNull(oldLoader) && ObjectUtils.notNull(newLoader)) {
+                commonLoader = LibraryLoader.createCommon(newLoader, oldLoader);
+            }
 
-	    oldLoader = newLoader;
-	}
+            oldLoader = newLoader;
+        }
 
-	return commonLoader;
+        return commonLoader;
     }
 
     /**
@@ -182,28 +179,27 @@ public class RestProvider {
      */
     public static void reload() {
 
-	try {
-	    RestReloader reloader = RestReloader.get();
-	    RestConfig conf = get();
-	    if (ObjectUtils.notNullAll(conf, reloader)) {
-		if (RestContainer.hasRest()) {
-		    RestConfig existingConfig = RestContainer.getRestConfig();
-		    Set<Resource> existingResources = existingConfig
-			    .getResources();
-		    RestContainer.removeResources(existingResources);
-		}
+        try {
+            RestReloader reloader = RestReloader.get();
+            RestConfig conf = get();
+            if (ObjectUtils.notNullAll(conf, reloader)) {
+                if (RestContainer.hasRest()) {
+                    RestConfig existingConfig = RestContainer.getRestConfig();
+                    Set<Resource> existingResources = existingConfig.getResources();
+                    RestContainer.removeResources(existingResources);
+                }
 
-		ClassLoader commonLoader = getCommonLoader();
-		if (ObjectUtils.notNull(commonLoader)) {
-		    conf.setClassLoader(commonLoader);
-		}
+                ClassLoader commonLoader = getCommonLoader();
+                if (ObjectUtils.notNull(commonLoader)) {
+                    conf.setClassLoader(commonLoader);
+                }
 
-		conf.registerPreResources();
-		reloader.reload(conf);
-		conf.cache();
-	    }
-	} finally {
-	    newConfig = null;
-	}
+                conf.registerPreResources();
+                reloader.reload(conf);
+                conf.cache();
+            }
+        } finally {
+            newConfig = null;
+        }
     }
 }

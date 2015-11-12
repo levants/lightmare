@@ -89,12 +89,12 @@ public class ParamBuilder {
     private ParamBuilder() {
     }
 
-    public ParamBuilder(MediaType mediaType, List<Parameter> parameters,
-	    MessageBodyWorkers workers, ContainerRequestContext request) {
-	this.mediaType = mediaType;
-	this.parameters = parameters;
-	this.workers = workers;
-	this.request = request;
+    public ParamBuilder(MediaType mediaType, List<Parameter> parameters, MessageBodyWorkers workers,
+            ContainerRequestContext request) {
+        this.mediaType = mediaType;
+        this.parameters = parameters;
+        this.workers = workers;
+        this.request = request;
     }
 
     /**
@@ -105,31 +105,30 @@ public class ParamBuilder {
      */
     private String errorOnBuild() throws IOException {
 
-	String errorMessage;
+        String errorMessage;
 
-	String errorPrefix = "Could not initialize ";
-	String errorClass = this.getClass().getName();
-	String errorReasonPrefix = " caouse";
-	String errorReasonSuffix = "is null";
+        String errorPrefix = "Could not initialize ";
+        String errorClass = this.getClass().getName();
+        String errorReasonPrefix = " caouse";
+        String errorReasonSuffix = "is null";
 
-	String errorMessageBody;
-	if (mediaType == null) {
-	    errorMessageBody = "mediaType";
-	} else if (parameters == null) {
-	    errorMessageBody = "parameters";
-	} else if (workers == null) {
-	    errorMessageBody = "workers";
-	} else if (request == null) {
-	    errorMessageBody = "request";
-	} else {
-	    throw new IOException("Could not find null value");
-	}
+        String errorMessageBody;
+        if (mediaType == null) {
+            errorMessageBody = "mediaType";
+        } else if (parameters == null) {
+            errorMessageBody = "parameters";
+        } else if (workers == null) {
+            errorMessageBody = "workers";
+        } else if (request == null) {
+            errorMessageBody = "request";
+        } else {
+            throw new IOException("Could not find null value");
+        }
 
-	errorMessage = new StringBuilder().append(errorPrefix)
-		.append(errorClass).append(errorReasonPrefix)
-		.append(errorMessageBody).append(errorReasonSuffix).toString();
+        errorMessage = new StringBuilder().append(errorPrefix).append(errorClass).append(errorReasonPrefix)
+                .append(errorMessageBody).append(errorReasonSuffix).toString();
 
-	return errorMessage;
+        return errorMessage;
     }
 
     /**
@@ -141,15 +140,14 @@ public class ParamBuilder {
      */
     private boolean checkOnBuild() throws IOException {
 
-	boolean valid = ObjectUtils.notNullAll(mediaType, parameters, workers,
-		request);
+        boolean valid = ObjectUtils.notNullAll(mediaType, parameters, workers, request);
 
-	if (Boolean.FALSE.equals(valid)) {
-	    String errorMessage = errorOnBuild();
-	    throw new IOException(errorMessage);
-	}
+        if (Boolean.FALSE.equals(valid)) {
+            String errorMessage = errorOnBuild();
+            throw new IOException(errorMessage);
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -160,8 +158,7 @@ public class ParamBuilder {
      * @throws IOException
      */
     private boolean check() throws IOException {
-	return Boolean.FALSE.equals(request.hasEntity())
-		&& IOUtils.notAvailable(request.getEntityStream());
+        return Boolean.FALSE.equals(request.hasEntity()) && IOUtils.notAvailable(request.getEntityStream());
     }
 
     /**
@@ -171,12 +168,11 @@ public class ParamBuilder {
      * @param from
      * @param to
      */
-    private void copyAll(MultivaluedMap<String, String> from,
-	    MultivaluedMap<String, String> to) {
+    private void copyAll(MultivaluedMap<String, String> from, MultivaluedMap<String, String> to) {
 
-	for (Map.Entry<String, List<String>> entry : from.entrySet()) {
-	    to.addAll(entry.getKey(), entry.getValue());
-	}
+        for (Map.Entry<String, List<String>> entry : from.entrySet()) {
+            to.addAll(entry.getKey(), entry.getValue());
+        }
     }
 
     /**
@@ -186,12 +182,11 @@ public class ParamBuilder {
      * @param from
      * @param to
      */
-    private void addAll(MultivaluedMap<String, String> from,
-	    MultivaluedMap<String, String> to) {
+    private void addAll(MultivaluedMap<String, String> from, MultivaluedMap<String, String> to) {
 
-	if (CollectionUtils.valid(from)) {
-	    copyAll(from, to);
-	}
+        if (CollectionUtils.valid(from)) {
+            copyAll(from, to);
+        }
     }
 
     /**
@@ -200,28 +195,27 @@ public class ParamBuilder {
      * @param request
      * @return {@link MultivaluedMap}<String, String>
      */
-    private MultivaluedMap<String, String> extractParameters(
-	    ContainerRequestContext request) {
+    private MultivaluedMap<String, String> extractParameters(ContainerRequestContext request) {
 
-	MultivaluedMap<String, String> params = new MultivaluedStringMap();
+        MultivaluedMap<String, String> params = new MultivaluedStringMap();
 
-	MultivaluedMap<String, String> exts;
-	boolean decode = Boolean.TRUE;
-	UriInfo uriInfo = request.getUriInfo();
-	exts = request.getHeaders();
-	addAll(exts, params);
-	exts = uriInfo.getPathParameters(decode);
-	addAll(exts, params);
-	exts = uriInfo.getQueryParameters(decode);
-	addAll(exts, params);
-	Map<String, Cookie> cookies = request.getCookies();
-	if (CollectionUtils.valid(cookies)) {
-	    for (Map.Entry<String, Cookie> entry : cookies.entrySet()) {
-		params.putSingle(entry.getKey(), entry.getValue().toString());
-	    }
-	}
+        MultivaluedMap<String, String> exts;
+        boolean decode = Boolean.TRUE;
+        UriInfo uriInfo = request.getUriInfo();
+        exts = request.getHeaders();
+        addAll(exts, params);
+        exts = uriInfo.getPathParameters(decode);
+        addAll(exts, params);
+        exts = uriInfo.getQueryParameters(decode);
+        addAll(exts, params);
+        Map<String, Cookie> cookies = request.getCookies();
+        if (CollectionUtils.valid(cookies)) {
+            for (Map.Entry<String, Cookie> entry : cookies.entrySet()) {
+                params.putSingle(entry.getKey(), entry.getValue().toString());
+            }
+        }
 
-	return params;
+        return params;
     }
 
     /**
@@ -233,22 +227,22 @@ public class ParamBuilder {
      */
     private Object getEntityStream(Parameter parameter) {
 
-	Object stream;
+        Object stream;
 
-	List<String> paramValues = uriParams.get(parameter.getSourceName());
-	String value;
-	if (CollectionUtils.valid(paramValues)) {
-	    if (paramValues.size() == PARAM_VALIES_LENGTH) {
-		value = CollectionUtils.getFirst(paramValues);
-		stream = RequestUtils.textToStream(value);
-	    } else {
-		stream = RequestUtils.textsToStreams(paramValues);
-	    }
-	} else {
-	    stream = null;
-	}
+        List<String> paramValues = uriParams.get(parameter.getSourceName());
+        String value;
+        if (CollectionUtils.valid(paramValues)) {
+            if (paramValues.size() == PARAM_VALIES_LENGTH) {
+                value = CollectionUtils.getFirst(paramValues);
+                stream = RequestUtils.textToStream(value);
+            } else {
+                stream = RequestUtils.textsToStreams(paramValues);
+            }
+        } else {
+            stream = null;
+        }
 
-	return stream;
+        return stream;
     }
 
     /**
@@ -259,18 +253,17 @@ public class ParamBuilder {
      * @param parameter
      * @return {@link Object}
      */
-    private Object getEntityStream(ContainerRequestContext request,
-	    Parameter parameter) {
+    private Object getEntityStream(ContainerRequestContext request, Parameter parameter) {
 
-	Object entityStream;
+        Object entityStream;
 
-	if (check) {
-	    entityStream = getEntityStream(parameter);
-	} else {
-	    entityStream = request.getEntityStream();
-	}
+        if (check) {
+            entityStream = getEntityStream(parameter);
+        } else {
+            entityStream = request.getEntityStream();
+        }
 
-	return entityStream;
+        return entityStream;
     }
 
     /**
@@ -282,10 +275,8 @@ public class ParamBuilder {
      * @return <code>boolean</code>
      */
     private boolean available(InputStream entityStream, Parameter parameter) {
-	return ObjectUtils.notNullAll(reader, entityStream)
-		&& reader.isReadable(parameter.getRawType(),
-			parameter.getType(), parameter.getAnnotations(),
-			mediaType);
+        return ObjectUtils.notNullAll(reader, entityStream) && reader.isReadable(parameter.getRawType(),
+                parameter.getType(), parameter.getAnnotations(), mediaType);
     }
 
     /**
@@ -296,9 +287,9 @@ public class ParamBuilder {
      */
     private void close(InputStream entityStream) throws IOException {
 
-	if (check) {
-	    IOUtils.close(entityStream);
-	}
+        if (check) {
+            IOUtils.close(entityStream);
+        }
     }
 
     /**
@@ -311,28 +302,25 @@ public class ParamBuilder {
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
-    private Object extractParam(Parameter parameter, InputStream entityStream)
-	    throws IOException {
+    private Object extractParam(Parameter parameter, InputStream entityStream) throws IOException {
 
-	Object param;
+        Object param;
 
-	try {
-	    param = reader.readFrom(
-		    ObjectUtils.cast(parameter.getRawType(), Class.class),
-		    parameter.getType(), parameter.getAnnotations(), mediaType,
-		    httpHeaders, entityStream);
-	} finally {
-	    close(entityStream);
-	}
+        try {
+            param = reader.readFrom(ObjectUtils.cast(parameter.getRawType(), Class.class), parameter.getType(),
+                    parameter.getAnnotations(), mediaType, httpHeaders, entityStream);
+        } finally {
+            close(entityStream);
+        }
 
-	return param;
+        return param;
     }
 
     private void addParam(Object param) {
 
-	if (ObjectUtils.notNull(param)) {
-	    paramsList.add(param);
-	}
+        if (ObjectUtils.notNull(param)) {
+            paramsList.add(param);
+        }
     }
 
     /**
@@ -342,15 +330,15 @@ public class ParamBuilder {
      */
     private void addNullParam(Parameter parameter) {
 
-	Class<?> paramType = parameter.getRawType();
-	Object nullParam;
-	if (paramType.isPrimitive()) {
-	    nullParam = ClassUtils.getDefault(paramType);
-	} else {
-	    nullParam = null;
-	}
+        Class<?> paramType = parameter.getRawType();
+        Object nullParam;
+        if (paramType.isPrimitive()) {
+            nullParam = ClassUtils.getDefault(paramType);
+        } else {
+            nullParam = null;
+        }
 
-	paramsList.add(nullParam);
+        paramsList.add(nullParam);
     }
 
     /**
@@ -360,14 +348,13 @@ public class ParamBuilder {
      * @param parameter
      * @throws IOException
      */
-    private void readFromStream(InputStream entityStream, Parameter parameter)
-	    throws IOException {
+    private void readFromStream(InputStream entityStream, Parameter parameter) throws IOException {
 
-	boolean valid = available(entityStream, parameter);
-	if (valid) {
-	    Object param = extractParam(parameter, entityStream);
-	    addParam(param);
-	}
+        boolean valid = available(entityStream, parameter);
+        if (valid) {
+            Object param = extractParam(parameter, entityStream);
+            addParam(param);
+        }
     }
 
     /**
@@ -378,22 +365,21 @@ public class ParamBuilder {
      * @param parameter
      * @throws IOException
      */
-    private void fillParamList(Object stream, Parameter parameter)
-	    throws IOException {
+    private void fillParamList(Object stream, Parameter parameter) throws IOException {
 
-	InputStream entityStream;
+        InputStream entityStream;
 
-	if (stream instanceof InputStream) {
-	    entityStream = ObjectUtils.cast(stream, InputStream.class);
-	    readFromStream(entityStream, parameter);
-	} else if (stream instanceof List) {
-	    List<InputStream> streamsList = ObjectUtils.cast(stream);
-	    Iterator<InputStream> streams = streamsList.iterator();
-	    while (streams.hasNext()) {
-		entityStream = streams.next();
-		readFromStream(entityStream, parameter);
-	    }
-	}
+        if (stream instanceof InputStream) {
+            entityStream = ObjectUtils.cast(stream, InputStream.class);
+            readFromStream(entityStream, parameter);
+        } else if (stream instanceof List) {
+            List<InputStream> streamsList = ObjectUtils.cast(stream);
+            Iterator<InputStream> streams = streamsList.iterator();
+            while (streams.hasNext()) {
+                entityStream = streams.next();
+                readFromStream(entityStream, parameter);
+            }
+        }
     }
 
     /**
@@ -404,23 +390,23 @@ public class ParamBuilder {
      */
     public List<Object> extractParams() throws IOException {
 
-	paramsList = new ArrayList<Object>();
+        paramsList = new ArrayList<Object>();
 
-	check = check();
-	httpHeaders = request.getHeaders();
-	uriParams = extractParameters(request);
-	Object stream;
-	for (Parameter parameter : parameters) {
-	    reader = RequestUtils.getReader(workers, parameter, mediaType);
-	    stream = getEntityStream(request, parameter);
-	    if (ObjectUtils.notNull(stream)) {
-		fillParamList(stream, parameter);
-	    } else {
-		addNullParam(parameter);
-	    }
-	}
+        check = check();
+        httpHeaders = request.getHeaders();
+        uriParams = extractParameters(request);
+        Object stream;
+        for (Parameter parameter : parameters) {
+            reader = RequestUtils.getReader(workers, parameter, mediaType);
+            stream = getEntityStream(request, parameter);
+            if (ObjectUtils.notNull(stream)) {
+                fillParamList(stream, parameter);
+            } else {
+                addNullParam(parameter);
+            }
+        }
 
-	return paramsList;
+        return paramsList;
     }
 
     /**
@@ -431,74 +417,74 @@ public class ParamBuilder {
      */
     public static final class Builder {
 
-	// Instance of initialized ParamBuilder class for configuration
-	private ParamBuilder target;
+        // Instance of initialized ParamBuilder class for configuration
+        private ParamBuilder target;
 
-	public Builder() {
-	    target = new ParamBuilder();
-	}
+        public Builder() {
+            target = new ParamBuilder();
+        }
 
-	/**
-	 * Adds {@link MediaType} necessary parameter
-	 * 
-	 * @param mediaType
-	 * @return {@link Builder}
-	 */
-	public ParamBuilder.Builder setMediaType(MediaType mediaType) {
+        /**
+         * Adds {@link MediaType} necessary parameter
+         * 
+         * @param mediaType
+         * @return {@link Builder}
+         */
+        public ParamBuilder.Builder setMediaType(MediaType mediaType) {
 
-	    target.mediaType = mediaType;
+            target.mediaType = mediaType;
 
-	    return this;
-	}
+            return this;
+        }
 
-	/**
-	 * Adds {@link List}<Parameter> necessary parameter
-	 * 
-	 * @param parameters
-	 * @return {@link Builder}
-	 */
-	public ParamBuilder.Builder setParameters(List<Parameter> parameters) {
+        /**
+         * Adds {@link List}<Parameter> necessary parameter
+         * 
+         * @param parameters
+         * @return {@link Builder}
+         */
+        public ParamBuilder.Builder setParameters(List<Parameter> parameters) {
 
-	    target.parameters = parameters;
+            target.parameters = parameters;
 
-	    return this;
-	}
+            return this;
+        }
 
-	/**
-	 * Adds {@link MessageBodyWorkers} necessary parameter
-	 * 
-	 * @param workers
-	 * @return {@link Builder}
-	 */
-	public ParamBuilder.Builder setWorkers(MessageBodyWorkers workers) {
+        /**
+         * Adds {@link MessageBodyWorkers} necessary parameter
+         * 
+         * @param workers
+         * @return {@link Builder}
+         */
+        public ParamBuilder.Builder setWorkers(MessageBodyWorkers workers) {
 
-	    target.workers = workers;
+            target.workers = workers;
 
-	    return this;
-	}
+            return this;
+        }
 
-	/**
-	 * Adds {@link ContainerRequestContext} necessary parameter
-	 * 
-	 * @param request
-	 * @return {@link Builder}
-	 */
-	public ParamBuilder.Builder setRequest(ContainerRequestContext request) {
+        /**
+         * Adds {@link ContainerRequestContext} necessary parameter
+         * 
+         * @param request
+         * @return {@link Builder}
+         */
+        public ParamBuilder.Builder setRequest(ContainerRequestContext request) {
 
-	    target.request = request;
+            target.request = request;
 
-	    return this;
-	}
+            return this;
+        }
 
-	public ParamBuilder build() throws IOException {
+        public ParamBuilder build() throws IOException {
 
-	    // TODO Check if there is a another way to create ParamBuilder
-	    // instance or
+            // TODO Check if there is a another way to create ParamBuilder
+            // instance or
 
-	    // checks all parameters not to be null
-	    target.checkOnBuild();
+            // checks all parameters not to be null
+            target.checkOnBuild();
 
-	    return target;
-	}
+            return target;
+        }
     }
 }

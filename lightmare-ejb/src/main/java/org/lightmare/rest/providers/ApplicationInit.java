@@ -42,11 +42,11 @@ public enum ApplicationInit {
     public String value;
 
     private ApplicationInit(String key) {
-	this.key = key;
+        this.key = key;
     }
 
     private ApplicationInit(String key, String value) {
-	this(key);
-	this.value = value;
+        this(key);
+        this.value = value;
     }
 }

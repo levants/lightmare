@@ -50,41 +50,41 @@ public class RestReloader implements ContainerLifecycleListener {
 
     public RestReloader() {
 
-	ObjectUtils.lock(LOCK);
-	try {
-	    reloader = this;
-	} finally {
-	    ObjectUtils.unlock(LOCK);
-	}
+        ObjectUtils.lock(LOCK);
+        try {
+            reloader = this;
+        } finally {
+            ObjectUtils.unlock(LOCK);
+        }
     }
 
     public static RestReloader get() {
 
-	RestReloader restReloader;
+        RestReloader restReloader;
 
-	ObjectUtils.lock(LOCK);
-	try {
-	    restReloader = reloader;
-	} finally {
-	    ObjectUtils.unlock(LOCK);
-	}
+        ObjectUtils.lock(LOCK);
+        try {
+            restReloader = reloader;
+        } finally {
+            ObjectUtils.unlock(LOCK);
+        }
 
-	return restReloader;
+        return restReloader;
     }
 
     private Container container;
 
     public void reload() {
-	container.reload();
+        container.reload();
     }
 
     public void reload(ResourceConfig config) {
-	container.reload(config);
+        container.reload(config);
     }
 
     @Override
     public void onStartup(Container container) {
-	this.container = container;
+        this.container = container;
     }
 
     @Override

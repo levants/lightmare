@@ -45,7 +45,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static boolean notTrue(boolean statement) {
-	return !statement;
+        return !statement;
     }
 
     /**
@@ -55,7 +55,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static boolean notNull(Object data) {
-	return (data != null);
+        return (data != null);
     }
 
     /**
@@ -66,18 +66,18 @@ public abstract class ObjectUtils {
      */
     public static boolean notNullAll(Object... datas) {
 
-	boolean valid = notNull(datas);
+        boolean valid = notNull(datas);
 
-	if (valid) {
-	    int length = datas.length;
-	    Object data;
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length && valid; i++) {
-		data = datas[i];
-		valid = notNull(data);
-	    }
-	}
+        if (valid) {
+            int length = datas.length;
+            Object data;
+            for (int i = CollectionUtils.FIRST_INDEX; i < length && valid; i++) {
+                data = datas[i];
+                valid = notNull(data);
+            }
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -88,7 +88,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static <X, Y> boolean notEquals(X x, Y y) {
-	return (!x.equals(y));
+        return (!x.equals(y));
     }
 
     /**
@@ -99,7 +99,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code>
      */
     public static boolean notNullNotEquals(Object data1, Object data2) {
-	return notNullAll(data1, data2) && notEquals(data1, data2);
+        return notNullAll(data1, data2) && notEquals(data1, data2);
     }
 
     /**
@@ -110,10 +110,10 @@ public abstract class ObjectUtils {
      */
     public static <T> T cast(Object data) {
 
-	@SuppressWarnings("unchecked")
-	T value = (T) data;
+        @SuppressWarnings("unchecked")
+        T value = (T) data;
 
-	return value;
+        return value;
     }
 
     /**
@@ -126,12 +126,12 @@ public abstract class ObjectUtils {
      */
     public static <T> T cast(Object data, Class<T> castClass) {
 
-	T value;
+        T value;
 
-	Class<T> wrapper = ClassUtils.getWrapper(castClass);
-	value = wrapper.cast(data);
+        Class<T> wrapper = ClassUtils.getWrapper(castClass);
+        value = wrapper.cast(data);
 
-	return value;
+        return value;
     }
 
     /**
@@ -140,7 +140,7 @@ public abstract class ObjectUtils {
      * @param lock
      */
     public static void lock(Lock lock) {
-	lock.lock();
+        lock.lock();
     }
 
     /**
@@ -153,15 +153,15 @@ public abstract class ObjectUtils {
      */
     public static boolean tryLock(Lock lock, Long time, TimeUnit unit) throws IOException {
 
-	boolean locked;
+        boolean locked;
 
-	try {
-	    locked = lock.tryLock(time, unit);
-	} catch (InterruptedException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            locked = lock.tryLock(time, unit);
+        } catch (InterruptedException ex) {
+            throw new IOException(ex);
+        }
 
-	return locked;
+        return locked;
     }
 
     /**
@@ -171,7 +171,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code> locking result
      */
     public static boolean tryLock(Lock lock) {
-	return lock.tryLock();
+        return lock.tryLock();
     }
 
     /**
@@ -181,15 +181,15 @@ public abstract class ObjectUtils {
      */
     public static void unlock(Lock lock) {
 
-	if (lock instanceof ReentrantLock) {
-	    // if passed lock instance of ReentrantLock then first defines if
-	    // locked by current thread
-	    ReentrantLock reentrantLock = ObjectUtils.cast(lock, ReentrantLock.class);
-	    if (reentrantLock.isHeldByCurrentThread()) {
-		lock.unlock();
-	    }
-	} else {
-	    lock.unlock();
-	}
+        if (lock instanceof ReentrantLock) {
+            // if passed lock instance of ReentrantLock then first defines if
+            // locked by current thread
+            ReentrantLock reentrantLock = ObjectUtils.cast(lock, ReentrantLock.class);
+            if (reentrantLock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        } else {
+            lock.unlock();
+        }
     }
 }

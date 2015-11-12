@@ -55,7 +55,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(CharSequence chars) {
-	return chars != null && chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
+        return chars != null && chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
     }
 
     /**
@@ -63,23 +63,23 @@ public abstract class StringUtils {
      * empty
      *
      * @param lines
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean validAll(CharSequence... lines) {
 
-	boolean valid = CollectionUtils.valid(lines);
+        boolean valid = CollectionUtils.valid(lines);
 
-	if (valid) {
-	    int length = lines.length;
-	    CharSequence line;
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length && valid; i++) {
-		line = lines[i];
-		// TODO Think only second part of && is needed
-		valid = valid && valid(line);
-	    }
-	}
+        if (valid) {
+            int length = lines.length;
+            CharSequence line;
+            for (int i = CollectionUtils.FIRST_INDEX; i < length && valid; i++) {
+                line = lines[i];
+                // TODO Think only second part of && is needed
+                valid = valid && valid(line);
+            }
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -89,7 +89,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(CharSequence chars) {
-	return !valid(chars);
+        return !valid(chars);
     }
 
     /**
@@ -102,21 +102,21 @@ public abstract class StringUtils {
      */
     private static void append(Object tocken, StringBuilder builder) {
 
-	if (CollectionUtils.isObjectArray(tocken)) {
-	    Object[] tockens = ObjectUtils.cast(tocken);
-	    for (Object subTocken : tockens) {
-		append(subTocken, builder);
-	    }
-	} else if (CollectionUtils.isPrimitiveArray(tocken)) {
-	    int length = Array.getLength(tocken);
-	    Object subTocken;
-	    for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-		subTocken = Array.get(tocken, i);
-		append(subTocken, builder);
-	    }
-	} else {
-	    builder.append(tocken);
-	}
+        if (CollectionUtils.isObjectArray(tocken)) {
+            Object[] tockens = ObjectUtils.cast(tocken);
+            for (Object subTocken : tockens) {
+                append(subTocken, builder);
+            }
+        } else if (CollectionUtils.isPrimitiveArray(tocken)) {
+            int length = Array.getLength(tocken);
+            Object subTocken;
+            for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
+                subTocken = Array.get(tocken, i);
+                append(subTocken, builder);
+            }
+        } else {
+            builder.append(tocken);
+        }
     }
 
     /**
@@ -128,17 +128,17 @@ public abstract class StringUtils {
      */
     public static String concatRecursively(Object... tockens) {
 
-	String concat;
+        String concat;
 
-	if (CollectionUtils.valid(tockens)) {
-	    StringBuilder builder = new StringBuilder();
-	    append(tockens, builder);
-	    concat = builder.toString();
-	} else {
-	    concat = null;
-	}
+        if (CollectionUtils.valid(tockens)) {
+            StringBuilder builder = new StringBuilder();
+            append(tockens, builder);
+            concat = builder.toString();
+        } else {
+            concat = null;
+        }
 
-	return concat;
+        return concat;
     }
 
     /**
@@ -149,19 +149,19 @@ public abstract class StringUtils {
      */
     public static String concat(Object... parts) {
 
-	String resultText;
+        String resultText;
 
-	if (CollectionUtils.valid(parts)) {
-	    StringBuilder resultBuider = new StringBuilder();
-	    for (Object part : parts) {
-		resultBuider.append(part);
-	    }
-	    resultText = resultBuider.toString();
-	} else {
-	    resultText = null;
-	}
+        if (CollectionUtils.valid(parts)) {
+            StringBuilder resultBuider = new StringBuilder();
+            for (Object part : parts) {
+                resultBuider.append(part);
+            }
+            resultText = resultBuider.toString();
+        } else {
+            resultText = null;
+        }
 
-	return resultText;
+        return resultText;
     }
 
     /**
@@ -173,6 +173,6 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean notContains(String text, CharSequence item) {
-	return (text == null || Boolean.FALSE.equals(text.contains(item)));
+        return (text == null || Boolean.FALSE.equals(text.contains(item)));
     }
 }

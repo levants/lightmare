@@ -80,10 +80,10 @@ public class RestInflector implements Inflector<ContainerRequestContext, Respons
      * @param parameters
      */
     public RestInflector(Method method, MetaData metaData, MediaType type, List<Parameter> parameters) {
-	this.method = method;
-	this.metaData = metaData;
-	this.type = type;
-	this.parameters = parameters;
+        this.method = method;
+        this.metaData = metaData;
+        this.type = type;
+        this.parameters = parameters;
     }
 
     /**
@@ -93,15 +93,15 @@ public class RestInflector implements Inflector<ContainerRequestContext, Respons
      */
     public Class<?> getBeanClass() {
 
-	Class<?> beanClass;
+        Class<?> beanClass;
 
-	if (metaData == null) {
-	    beanClass = null;
-	} else {
-	    beanClass = metaData.getBeanClass();
-	}
+        if (metaData == null) {
+            beanClass = null;
+        } else {
+            beanClass = metaData.getBeanClass();
+        }
 
-	return beanClass;
+        return beanClass;
     }
 
     /**
@@ -112,15 +112,15 @@ public class RestInflector implements Inflector<ContainerRequestContext, Respons
      */
     private MediaType getMediaType(ContainerRequestContext request) {
 
-	MediaType mediaType = request.getMediaType();
+        MediaType mediaType = request.getMediaType();
 
-	if (mediaType == null && type == null) {
-	    mediaType = MediaType.APPLICATION_OCTET_STREAM_TYPE;
-	} else if (mediaType == null && ObjectUtils.notNull(type)) {
-	    mediaType = type;
-	}
+        if (mediaType == null && type == null) {
+            mediaType = MediaType.APPLICATION_OCTET_STREAM_TYPE;
+        } else if (mediaType == null && ObjectUtils.notNull(type)) {
+            mediaType = type;
+        }
 
-	return mediaType;
+        return mediaType;
     }
 
     /**
@@ -133,15 +133,15 @@ public class RestInflector implements Inflector<ContainerRequestContext, Respons
      */
     private Object[] extraxtParameters(ContainerRequestContext request) throws IOException {
 
-	Object[] params;
+        Object[] params;
 
-	MediaType mediaType = getMediaType(request);
-	ParamBuilder builder = new ParamBuilder.Builder().setMediaType(mediaType).setParameters(parameters)
-		.setWorkers(workers).setRequest(request).build();
-	List<Object> paramsList = builder.extractParams();
-	params = paramsList.toArray();
+        MediaType mediaType = getMediaType(request);
+        ParamBuilder builder = new ParamBuilder.Builder().setMediaType(mediaType).setParameters(parameters)
+                .setWorkers(workers).setRequest(request).build();
+        List<Object> paramsList = builder.extractParams();
+        params = paramsList.toArray();
 
-	return params;
+        return params;
     }
 
     /**
@@ -154,35 +154,35 @@ public class RestInflector implements Inflector<ContainerRequestContext, Respons
      */
     private Object[] getParameters(ContainerRequestContext request) throws IOException {
 
-	Object[] params;
+        Object[] params;
 
-	if (CollectionUtils.valid(parameters)) {
-	    params = extraxtParameters(request);
-	} else {
-	    params = CollectionUtils.EMPTY_ARRAY;
-	}
+        if (CollectionUtils.valid(parameters)) {
+            params = extraxtParameters(request);
+        } else {
+            params = CollectionUtils.EMPTY_ARRAY;
+        }
 
-	return params;
+        return params;
     }
 
     @Override
     public Response apply(ContainerRequestContext data) {
 
-	Response response;
+        Response response;
 
-	try {
-	    EjbConnector connector = new EjbConnector();
-	    RestHandler<?> handler = connector.createRestHandler(metaData);
-	    Object[] params = getParameters(data);
-	    Object value = handler.invoke(method, params);
-	    response = Response.ok(value).build();
-	} catch (Throwable ex) {
-	    LOG.error(ex.getMessage(), ex);
-	    WebApplicationException webEx = new WebApplicationException(ex);
-	    webEx.fillInStackTrace();
-	    response = webEx.getResponse();
-	}
+        try {
+            EjbConnector connector = new EjbConnector();
+            RestHandler<?> handler = connector.createRestHandler(metaData);
+            Object[] params = getParameters(data);
+            Object value = handler.invoke(method, params);
+            response = Response.ok(value).build();
+        } catch (Throwable ex) {
+            LOG.error(ex.getMessage(), ex);
+            WebApplicationException webEx = new WebApplicationException(ex);
+            webEx.fillInStackTrace();
+            response = webEx.getResponse();
+        }
 
-	return response;
+        return response;
     }
 }
