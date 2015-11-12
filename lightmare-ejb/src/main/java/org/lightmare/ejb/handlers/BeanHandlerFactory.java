@@ -41,10 +41,9 @@ public class BeanHandlerFactory {
      * @param bean
      * @throws IOException
      */
-    private static void configure(final BeanHandler handler, final Object bean)
-	    throws IOException {
-	handler.setBean(bean);
-	handler.configure();
+    private static void configure(final BeanHandler handler, final Object bean) throws IOException {
+        handler.setBean(bean);
+        handler.configure();
     }
 
     /**
@@ -54,18 +53,17 @@ public class BeanHandlerFactory {
      * @return {@link BeanHandler}
      * @throws IOException
      */
-    private static BeanHandler cloneHandler(BeanHandler handler)
-	    throws IOException {
+    private static BeanHandler cloneHandler(BeanHandler handler) throws IOException {
 
-	BeanHandler cloneHandler;
+        BeanHandler cloneHandler;
 
-	try {
-	    cloneHandler = (BeanHandler) handler.clone();
-	} catch (CloneNotSupportedException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            cloneHandler = (BeanHandler) handler.clone();
+        } catch (CloneNotSupportedException ex) {
+            throw new IOException(ex);
+        }
 
-	return cloneHandler;
+        return cloneHandler;
     }
 
     /**
@@ -76,14 +74,14 @@ public class BeanHandlerFactory {
      */
     private static BeanHandler initAndGetHandler(MetaData metaData) {
 
-	BeanHandler handler = metaData.getHandler();
+        BeanHandler handler = metaData.getHandler();
 
-	if (handler == null) {
-	    handler = new BeanHandler(metaData);
-	    metaData.setHandler(handler);
-	}
+        if (handler == null) {
+            handler = new BeanHandler(metaData);
+            metaData.setHandler(handler);
+        }
 
-	return handler;
+        return handler;
     }
 
     /**
@@ -95,16 +93,15 @@ public class BeanHandlerFactory {
      * @return {@link BeanHandler}
      * @throws IOException
      */
-    public static BeanHandler get(MetaData metaData, Object bean)
-	    throws IOException {
+    public static BeanHandler get(MetaData metaData, Object bean) throws IOException {
 
-	BeanHandler cloneHandler;
+        BeanHandler cloneHandler;
 
-	BeanHandler handler = initAndGetHandler(metaData);
-	// Clones EJB bean handler
-	cloneHandler = cloneHandler(handler);
-	configure(cloneHandler, bean);
+        BeanHandler handler = initAndGetHandler(metaData);
+        // Clones EJB bean handler
+        cloneHandler = cloneHandler(handler);
+        configure(cloneHandler, bean);
 
-	return cloneHandler;
+        return cloneHandler;
     }
 }

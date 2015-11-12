@@ -23,6 +23,8 @@
 package org.lightmare.ejb.handlers;
 
 import org.lightmare.remote.rpc.RPCall;
+import org.lightmare.utils.ObjectUtils;
+import org.lightmare.utils.collections.CollectionUtils;
 
 /**
  * Factory class to initialize {@link BeanLocalHandler} class instance
@@ -32,6 +34,26 @@ import org.lightmare.remote.rpc.RPCall;
  */
 public class BeanLocalHandlerFactory {
 
+    private static String getHost(Object... rpcArgs) {
+
+        String host;
+
+        Object raw = CollectionUtils.getFirst(rpcArgs);
+        host = ObjectUtils.cast(raw);
+
+        return host;
+    }
+
+    private static int getPort(Object... rpcArgs) {
+
+        int port;
+
+        Object raw = CollectionUtils.getSecond(rpcArgs);
+        port = ObjectUtils.cast(raw);
+
+        return port;
+    }
+
     /**
      * Initializes {@link RPCall} class instance by passed RPC arguments
      *
@@ -40,13 +62,13 @@ public class BeanLocalHandlerFactory {
      */
     private static RPCall createRPCall(Object... rpcArgs) {
 
-	RPCall call;
+        RPCall call;
 
-	String host = (String) rpcArgs[0];
-	int port = (Integer) rpcArgs[1];
-	call = new RPCall(host, port);
+        String host = getHost(rpcArgs);
+        int port = getPort(rpcArgs);
+        call = new RPCall(host, port);
 
-	return call;
+        return call;
     }
 
     /**
@@ -57,11 +79,11 @@ public class BeanLocalHandlerFactory {
      */
     public static BeanLocalHandler get(Object... rpcArgs) {
 
-	BeanLocalHandler handler;
+        BeanLocalHandler handler;
 
-	RPCall call = createRPCall(rpcArgs);
-	handler = new BeanLocalHandler(call);
+        RPCall call = createRPCall(rpcArgs);
+        handler = new BeanLocalHandler(call);
 
-	return handler;
+        return handler;
     }
 }

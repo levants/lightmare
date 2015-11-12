@@ -38,7 +38,7 @@ public class RestHandlerFactory {
      * @return {@link RestHandler}
      */
     public static <T> RestHandler<T> get(BeanHandler handler, T bean) {
-	RestHandler<T> restHandler = new RestHandler<T>(handler, bean);
-	return restHandler;
+        RestHandler<T> restHandler = new RestHandler<T>(handler, bean);
+        return restHandler;
     }
 }

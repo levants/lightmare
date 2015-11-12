@@ -71,7 +71,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean notEmpty(Collection<?> collection) {
-	return !collection.isEmpty();
+        return !collection.isEmpty();
     }
 
     /**
@@ -82,7 +82,7 @@ public abstract class CollectionUtils {
      * @return <code></code>
      */
     public static boolean valid(Collection<?> collection) {
-	return (collection != null && !collection.isEmpty());
+        return (collection != null && !collection.isEmpty());
     }
 
     /**
@@ -93,7 +93,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(Map<?, ?> map) {
-	return (map != null && !map.isEmpty());
+        return (map != null && !map.isEmpty());
     }
 
     /**
@@ -103,7 +103,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(Map<?, ?> map) {
-	return !valid(map);
+        return !valid(map);
     }
 
     /**
@@ -113,7 +113,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(Collection<?> collection) {
-	return !valid(collection);
+        return !valid(collection);
     }
 
     /**
@@ -124,7 +124,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalidAll(Collection<?>... collections) {
-	return !valid(collections);
+        return !valid(collections);
     }
 
     /**
@@ -136,18 +136,18 @@ public abstract class CollectionUtils {
      */
     public static boolean validAll(Map<?, ?>... maps) {
 
-	boolean avaliable = ObjectUtils.notNull(maps);
+        boolean avaliable = ObjectUtils.notNull(maps);
 
-	if (avaliable) {
-	    Map<?, ?> map;
-	    int length = maps.length;
-	    for (int i = FIRST_INDEX; i < length && avaliable; i++) {
-		map = maps[i];
-		avaliable = avaliable && valid(map);
-	    }
-	}
+        if (avaliable) {
+            Map<?, ?> map;
+            int length = maps.length;
+            for (int i = FIRST_INDEX; i < length && avaliable; i++) {
+                map = maps[i];
+                avaliable = avaliable && valid(map);
+            }
+        }
 
-	return avaliable;
+        return avaliable;
     }
 
     /**
@@ -158,7 +158,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(Object[] array) {
-	return (array != null && array.length > EMPTY_ARRAY_LENGTH);
+        return (array != null && array.length > EMPTY_ARRAY_LENGTH);
     }
 
     /**
@@ -168,7 +168,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean invalid(Object[] array) {
-	return !valid(array);
+        return !valid(array);
     }
 
     /**
@@ -178,7 +178,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static <T> boolean isEmpty(T[] array) {
-	return array == null || array.length == EMPTY;
+        return array == null || array.length == EMPTY;
     }
 
     /**
@@ -190,18 +190,18 @@ public abstract class CollectionUtils {
      */
     public static boolean validAll(Collection<?>... collections) {
 
-	boolean avaliable = ObjectUtils.notNull(collections);
+        boolean avaliable = ObjectUtils.notNull(collections);
 
-	if (avaliable) {
-	    Collection<?> collection;
-	    int length = collections.length;
-	    for (int i = FIRST_INDEX; i < length && avaliable; i++) {
-		collection = collections[i];
-		avaliable = avaliable && valid(collection);
-	    }
-	}
+        if (avaliable) {
+            Collection<?> collection;
+            int length = collections.length;
+            for (int i = FIRST_INDEX; i < length && avaliable; i++) {
+                collection = collections[i];
+                avaliable = avaliable && valid(collection);
+            }
+        }
 
-	return avaliable;
+        return avaliable;
     }
 
     /**
@@ -213,18 +213,18 @@ public abstract class CollectionUtils {
      */
     public static boolean validAll(Object[]... arrays) {
 
-	boolean avaliable = ObjectUtils.notNull(arrays);
+        boolean avaliable = ObjectUtils.notNull(arrays);
 
-	if (avaliable) {
-	    Object[] collection;
-	    int length = arrays.length;
-	    for (int i = FIRST_INDEX; i < length && avaliable; i++) {
-		collection = arrays[i];
-		avaliable = avaliable && valid(collection);
-	    }
-	}
+        if (avaliable) {
+            Object[] collection;
+            int length = arrays.length;
+            for (int i = FIRST_INDEX; i < length && avaliable; i++) {
+                collection = arrays[i];
+                avaliable = avaliable && valid(collection);
+            }
+        }
 
-	return avaliable;
+        return avaliable;
     }
 
     /**
@@ -236,7 +236,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static <K, V> boolean notContains(Map<K, V> map, K key) {
-	return (key == null || invalid(map) || Boolean.FALSE.equals(map.containsKey(key)));
+        return (key == null || invalid(map) || Boolean.FALSE.equals(map.containsKey(key)));
     }
 
     /**
@@ -248,8 +248,8 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static <E> boolean notContains(Collection<E> collection, E element) {
-	return ((element == null || invalid(collection))
-		|| (valid(collection) && Boolean.FALSE.equals(collection.contains(element))));
+        return ((element == null || invalid(collection))
+                || (valid(collection) && Boolean.FALSE.equals(collection.contains(element))));
     }
 
     /**
@@ -261,20 +261,20 @@ public abstract class CollectionUtils {
      */
     public static <K, V> Map<K, V> getAsMap(Object key, Map<?, ?> from) {
 
-	Map<K, V> result;
+        Map<K, V> result;
 
-	if (valid(from)) {
-	    Object objectValue = from.get(key);
-	    if (objectValue instanceof Map) {
-		result = ObjectUtils.cast(objectValue);
-	    } else {
-		result = null;
-	    }
-	} else {
-	    result = null;
-	}
+        if (valid(from)) {
+            Object objectValue = from.get(key);
+            if (objectValue instanceof Map) {
+                result = ObjectUtils.cast(objectValue);
+            } else {
+                result = null;
+            }
+        } else {
+            result = null;
+        }
 
-	return result;
+        return result;
     }
 
     /**
@@ -287,16 +287,16 @@ public abstract class CollectionUtils {
      */
     public static Map<?, ?> getAsMap(Map<?, ?> from, Object... keys) {
 
-	Map<?, ?> result = from;
+        Map<?, ?> result = from;
 
-	int length = keys.length;
-	Object key;
-	for (int i = FIRST_INDEX; i < length && ObjectUtils.notNull(result); i++) {
-	    key = keys[i];
-	    result = getAsMap(key, result);
-	}
+        int length = keys.length;
+        Object key;
+        for (int i = FIRST_INDEX; i < length && ObjectUtils.notNull(result); i++) {
+            key = keys[i];
+            result = getAsMap(key, result);
+        }
 
-	return result;
+        return result;
     }
 
     /**
@@ -310,23 +310,23 @@ public abstract class CollectionUtils {
      */
     public static <V> V getSubValue(Map<?, ?> from, Object... keys) {
 
-	V value;
+        V value;
 
-	int length = keys.length - SECOND_INDEX;
-	Object[] subKeys = new Object[length];
-	Object key = keys[length];
-	for (int i = FIRST_INDEX; i < length; i++) {
-	    subKeys[i] = keys[i];
-	}
-	// Gets intermediate Map type value
-	Map<?, ?> result = getAsMap(from, subKeys);
-	if (valid(result)) {
-	    value = ObjectUtils.cast(result.get(key));
-	} else {
-	    value = null;
-	}
+        int length = keys.length - SECOND_INDEX;
+        Object[] subKeys = new Object[length];
+        Object key = keys[length];
+        for (int i = FIRST_INDEX; i < length; i++) {
+            subKeys[i] = keys[i];
+        }
+        // Gets intermediate Map type value
+        Map<?, ?> result = getAsMap(from, subKeys);
+        if (valid(result)) {
+            value = ObjectUtils.cast(result.get(key));
+        } else {
+            value = null;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -339,10 +339,10 @@ public abstract class CollectionUtils {
      */
     public static <K, V> void putIfAbscent(Map<K, V> map, K key, V value) {
 
-	boolean contained = map.containsKey(key);
-	if (Boolean.FALSE.equals(contained)) {
-	    map.put(key, value);
-	}
+        boolean contained = map.containsKey(key);
+        if (Boolean.FALSE.equals(contained)) {
+            map.put(key, value);
+        }
     }
 
     /**
@@ -355,10 +355,10 @@ public abstract class CollectionUtils {
      */
     public static <K, V> void checkAndAdd(Map<K, V> map, K key, V value) {
 
-	boolean contained = map.containsKey(key) && value.equals(map.get(key));
-	if (Boolean.FALSE.equals(contained)) {
-	    map.put(key, value);
-	}
+        boolean contained = map.containsKey(key) && value.equals(map.get(key));
+        if (Boolean.FALSE.equals(contained)) {
+            map.put(key, value);
+        }
     }
 
     /**
@@ -369,15 +369,15 @@ public abstract class CollectionUtils {
      */
     public static <T> Set<T> translateToSet(Collection<T> collection) {
 
-	Set<T> set;
+        Set<T> set;
 
-	if (valid(collection)) {
-	    set = new HashSet<T>(collection);
-	} else {
-	    set = Collections.emptySet();
-	}
+        if (valid(collection)) {
+            set = new HashSet<T>(collection);
+        } else {
+            set = Collections.emptySet();
+        }
 
-	return set;
+        return set;
     }
 
     /**
@@ -388,15 +388,15 @@ public abstract class CollectionUtils {
      */
     public static <T> Set<T> translateToSet(T[] array) {
 
-	List<T> collection;
+        List<T> collection;
 
-	if (valid(array)) {
-	    collection = Arrays.asList(array);
-	} else {
-	    collection = null;
-	}
+        if (valid(array)) {
+            collection = Arrays.asList(array);
+        } else {
+            collection = null;
+        }
 
-	return translateToSet(collection);
+        return translateToSet(collection);
     }
 
     /**
@@ -407,15 +407,15 @@ public abstract class CollectionUtils {
      */
     public static <T> List<T> translateToList(Collection<T> collection) {
 
-	List<T> list;
+        List<T> list;
 
-	if (valid(collection)) {
-	    list = new ArrayList<T>(collection);
-	} else {
-	    list = Collections.emptyList();
-	}
+        if (valid(collection)) {
+            list = new ArrayList<T>(collection);
+        } else {
+            list = Collections.emptyList();
+        }
 
-	return list;
+        return list;
     }
 
     /**
@@ -427,12 +427,12 @@ public abstract class CollectionUtils {
      */
     private static <T> T[] toArray(Class<T> type, int size) {
 
-	T[] array;
+        T[] array;
 
-	Object arrayObject = Array.newInstance(type, size);
-	array = ObjectUtils.cast(arrayObject);
+        Object arrayObject = Array.newInstance(type, size);
+        array = ObjectUtils.cast(arrayObject);
 
-	return array;
+        return array;
     }
 
     /**
@@ -442,7 +442,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean isObjectArray(final Object data) {
-	return (data instanceof Object[]);
+        return (data instanceof Object[]);
     }
 
     /**
@@ -452,9 +452,9 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean isPrimitiveArray(final Object data) {
-	return (data instanceof boolean[] || data instanceof byte[] || data instanceof short[] || data instanceof char[]
-		|| data instanceof int[] || data instanceof long[] || data instanceof float[]
-		|| data instanceof double[]);
+        return (data instanceof boolean[] || data instanceof byte[] || data instanceof short[] || data instanceof char[]
+                || data instanceof int[] || data instanceof long[] || data instanceof float[]
+                || data instanceof double[]);
     }
 
     /**
@@ -464,7 +464,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code>
      */
     public static boolean isArray(final Object data) {
-	return (isObjectArray(data) || isPrimitiveArray(data));
+        return (isObjectArray(data) || isPrimitiveArray(data));
     }
 
     /**
@@ -477,16 +477,16 @@ public abstract class CollectionUtils {
      */
     public static <T> T[] toArray(Collection<T> collection, Class<T> type) {
 
-	T[] array;
+        T[] array;
 
-	if (ObjectUtils.notNull(collection)) {
-	    array = toArray(type, collection.size());
-	    array = collection.toArray(array);
-	} else {
-	    array = null;
-	}
+        if (ObjectUtils.notNull(collection)) {
+            array = toArray(type, collection.size());
+            array = collection.toArray(array);
+        } else {
+            array = null;
+        }
 
-	return array;
+        return array;
     }
 
     /**
@@ -496,7 +496,7 @@ public abstract class CollectionUtils {
      * @return <code>T[]</code>
      */
     public static <T> T[] emptyArray(Class<T> type) {
-	return toArray(type, EMPTY_ARRAY_LENGTH);
+        return toArray(type, EMPTY_ARRAY_LENGTH);
     }
 
     /**
@@ -507,15 +507,15 @@ public abstract class CollectionUtils {
      */
     private static <T> T getFirstFromList(List<T> list) {
 
-	T value;
+        T value;
 
-	if (valid(list)) {
-	    value = list.get(FIRST_INDEX);
-	} else {
-	    value = null;
-	}
+        if (valid(list)) {
+            value = list.get(FIRST_INDEX);
+        } else {
+            value = null;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -526,20 +526,20 @@ public abstract class CollectionUtils {
      */
     public static <T> T getFirst(Collection<T> collection) {
 
-	T value;
+        T value;
 
-	if (valid(collection)) {
-	    if (collection instanceof List) {
-		value = getFirstFromList(((List<T>) collection));
-	    } else {
-		Iterator<T> iterator = collection.iterator();
-		value = iterator.next();
-	    }
-	} else {
-	    value = null;
-	}
+        if (valid(collection)) {
+            if (collection instanceof List) {
+                value = getFirstFromList(((List<T>) collection));
+            } else {
+                Iterator<T> iterator = collection.iterator();
+                value = iterator.next();
+            }
+        } else {
+            value = null;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -550,14 +550,33 @@ public abstract class CollectionUtils {
      */
     public static <T> T getFirst(T[] values) {
 
-	T value;
+        T value;
 
-	if (valid(values)) {
-	    value = values[FIRST_INDEX];
-	} else {
-	    value = null;
-	}
+        if (valid(values)) {
+            value = values[FIRST_INDEX];
+        } else {
+            value = null;
+        }
 
-	return value;
+        return value;
+    }
+
+    /**
+     * Peaks first element from array
+     *
+     * @param values
+     * @return T first value
+     */
+    public static <T> T getSecond(T[] values) {
+
+        T value;
+
+        if (valid(values)) {
+            value = values[SECOND_INDEX];
+        } else {
+            value = null;
+        }
+
+        return value;
     }
 }

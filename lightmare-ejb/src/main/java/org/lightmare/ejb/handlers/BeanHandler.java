@@ -76,20 +76,20 @@ public class BeanHandler implements InvocationHandler, Cloneable {
     private final MetaData metaData;
 
     protected BeanHandler(final MetaData metaData) {
-	this.beanClass = metaData.getBeanClass();
-	this.transactionField = metaData.getTransactionField();
-	this.connectionDatas = metaData.getConnections();
-	this.injectionDatas = metaData.getInjects();
-	this.interceptorHandel = new InterceptorHandler(metaData);
-	this.metaData = metaData;
+        this.beanClass = metaData.getBeanClass();
+        this.transactionField = metaData.getTransactionField();
+        this.connectionDatas = metaData.getConnections();
+        this.injectionDatas = metaData.getInjects();
+        this.interceptorHandel = new InterceptorHandler(metaData);
+        this.metaData = metaData;
     }
 
     public MetaData getMetaData() {
-	return metaData;
+        return metaData;
     }
 
     public Object getBean() {
-	return bean;
+        return bean;
     }
 
     /**
@@ -98,7 +98,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @param bean
      */
     protected void setBean(final Object bean) {
-	this.bean = bean;
+        this.bean = bean;
     }
 
     /**
@@ -109,7 +109,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     private void setFieldValue(Field field, Object value) throws IOException {
-	ClassUtils.setFieldValue(field, bean, value);
+        ClassUtils.setFieldValue(field, bean, value);
     }
 
     /**
@@ -121,7 +121,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     private Object invokeMethod(Method method, Object... arguments) throws IOException {
-	return ClassUtils.invoke(method, bean, arguments);
+        return ClassUtils.invoke(method, bean, arguments);
     }
 
     /**
@@ -132,7 +132,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     private void setConnection(Field connectionField, EntityManager em) throws IOException {
-	setFieldValue(connectionField, em);
+        setFieldValue(connectionField, em);
     }
 
     /**
@@ -143,16 +143,16 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private static String getJnjectBeanName(InjectionData injectionData) {
 
-	String beanName;
+        String beanName;
 
-	String mappedName = injectionData.getMappedName();
-	if (mappedName == null || mappedName.isEmpty()) {
-	    beanName = injectionData.getName();
-	} else {
-	    beanName = injectionData.getMappedName();
-	}
+        String mappedName = injectionData.getMappedName();
+        if (mappedName == null || mappedName.isEmpty()) {
+            beanName = injectionData.getName();
+        } else {
+            beanName = injectionData.getMappedName();
+        }
 
-	return beanName;
+        return beanName;
     }
 
     /**
@@ -164,17 +164,17 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private MetaData initInjection(InjectionData injectionData) throws IOException {
 
-	MetaData injectMetaData = injectionData.getMetaData();
+        MetaData injectMetaData = injectionData.getMetaData();
 
-	if (injectMetaData == null) {
-	    String beanName = getJnjectBeanName(injectionData);
-	    // Fills injection meta data parameters
-	    injectMetaData = MetaContainer.getSyncMetaData(beanName);
-	    injectMetaData.setInterfaceClasses(injectionData.getInterfaceClasses());
-	    injectionData.setMetaData(injectMetaData);
-	}
+        if (injectMetaData == null) {
+            String beanName = getJnjectBeanName(injectionData);
+            // Fills injection meta data parameters
+            injectMetaData = MetaContainer.getSyncMetaData(beanName);
+            injectMetaData.setInterfaceClasses(injectionData.getInterfaceClasses());
+            injectionData.setMetaData(injectMetaData);
+        }
 
-	return injectMetaData;
+        return injectMetaData;
     }
 
     /**
@@ -185,15 +185,15 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void configureInjection(InjectionData injectionData) throws IOException {
 
-	MetaData injectMetaData = injectionData.getMetaData();
-	if (injectMetaData == null) {
-	    injectMetaData = initInjection(injectionData);
-	}
+        MetaData injectMetaData = injectionData.getMetaData();
+        if (injectMetaData == null) {
+            injectMetaData = initInjection(injectionData);
+        }
 
-	EjbConnector ejbConnector = new EjbConnector();
-	Object injectBean = ejbConnector.connectToBean(injectMetaData);
+        EjbConnector ejbConnector = new EjbConnector();
+        Object injectBean = ejbConnector.connectToBean(injectMetaData);
 
-	setFieldValue(injectionData.getField(), injectBean);
+        setFieldValue(injectionData.getField(), injectBean);
     }
 
     /**
@@ -204,11 +204,11 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void configureInjects() throws IOException {
 
-	if (CollectionUtils.valid(injectionDatas)) {
-	    for (InjectionData inject : injectionDatas) {
-		configureInjection(inject);
-	    }
-	}
+        if (CollectionUtils.valid(injectionDatas)) {
+            for (InjectionData inject : injectionDatas) {
+                configureInjection(inject);
+            }
+        }
     }
 
     /**
@@ -219,8 +219,8 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     public void configure() throws IOException {
-	// TODO Add other configurations
-	configureInjects();
+        // TODO Add other configurations
+        configureInjects();
     }
 
     /**
@@ -232,8 +232,8 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     public void configure(final Object bean) throws IOException {
-	setBean(bean);
-	configure();
+        setBean(bean);
+        configure();
     }
 
     /**
@@ -243,7 +243,7 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @return {@link UserTransaction}
      */
     private UserTransaction getTransaction(Collection<EntityManager> ems) {
-	return BeanTransactions.getTransaction(ems);
+        return BeanTransactions.getTransaction(ems);
     }
 
     /**
@@ -255,10 +255,10 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void setTransactionField(Collection<EntityManager> ems) throws IOException {
 
-	if (ObjectUtils.notNull(transactionField)) {
-	    UserTransaction transaction = getTransaction(ems);
-	    setFieldValue(transactionField, transaction);
-	}
+        if (ObjectUtils.notNull(transactionField)) {
+            UserTransaction transaction = getTransaction(ems);
+            setFieldValue(transactionField, transaction);
+        }
     }
 
     /**
@@ -271,13 +271,13 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private EntityManager createEntityManager(EntityManagerFactory emf, Field unitField) throws IOException {
 
-	EntityManager em = emf.createEntityManager();
+        EntityManager em = emf.createEntityManager();
 
-	if (ObjectUtils.notNull(unitField)) {
-	    setFieldValue(unitField, emf);
-	}
+        if (ObjectUtils.notNull(unitField)) {
+            setFieldValue(unitField, emf);
+        }
 
-	return em;
+        return em;
     }
 
     /**
@@ -289,19 +289,19 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private EntityManager createEntityManager(ConnectionData connection) throws IOException {
 
-	EntityManager em;
+        EntityManager em;
 
-	EntityManagerFactory emf = connection.getEmf();
-	Field connectionField = connection.getConnectionField();
-	Field unitField = connection.getUnitField();
-	if (ObjectUtils.notNull(emf)) {
-	    em = createEntityManager(emf, unitField);
-	    setConnection(connectionField, em);
-	} else {
-	    em = null;
-	}
+        EntityManagerFactory emf = connection.getEmf();
+        Field connectionField = connection.getConnectionField();
+        Field unitField = connection.getUnitField();
+        if (ObjectUtils.notNull(emf)) {
+            em = createEntityManager(emf, unitField);
+            setConnection(connectionField, em);
+        } else {
+            em = null;
+        }
 
-	return em;
+        return em;
     }
 
     /**
@@ -312,14 +312,14 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private Collection<EntityManager> initEntityManagers() throws IOException {
 
-	Collection<EntityManager> ems = new ArrayList<EntityManager>();
+        Collection<EntityManager> ems = new ArrayList<EntityManager>();
 
-	for (ConnectionData connection : connectionDatas) {
-	    EntityManager em = createEntityManager(connection);
-	    ems.add(em);
-	}
+        for (ConnectionData connection : connectionDatas) {
+            EntityManager em = createEntityManager(connection);
+            ems.add(em);
+        }
 
-	return ems;
+        return ems;
     }
 
     /**
@@ -331,15 +331,15 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private Collection<EntityManager> createEntityManagers() throws IOException {
 
-	Collection<EntityManager> ems;
+        Collection<EntityManager> ems;
 
-	if (CollectionUtils.valid(connectionDatas)) {
-	    ems = initEntityManagers();
-	} else {
-	    ems = null;
-	}
+        if (CollectionUtils.valid(connectionDatas)) {
+            ems = initEntityManagers();
+        } else {
+            ems = null;
+        }
 
-	return ems;
+        return ems;
     }
 
     /**
@@ -350,11 +350,11 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void closeTransaction(Method method) throws IOException {
 
-	if (transactionField == null) {
-	    BeanTransactions.commitTransaction(this, method);
-	} else {
-	    BeanTransactions.closeEntityManagers();
-	}
+        if (transactionField == null) {
+            BeanTransactions.commitTransaction(this, method);
+        } else {
+            BeanTransactions.closeEntityManagers();
+        }
     }
 
     /**
@@ -367,13 +367,13 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void close(Method method) throws IOException {
 
-	try {
-	    if (ObjectUtils.notNull(method)) {
-		closeTransaction(method);
-	    }
-	} finally {
-	    BeanTransactions.remove(this, method);
-	}
+        try {
+            if (ObjectUtils.notNull(method)) {
+                closeTransaction(method);
+            }
+        } finally {
+            BeanTransactions.remove(this, method);
+        }
     }
 
     /**
@@ -385,14 +385,14 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void rollback(Method method) throws IOException {
 
-	try {
-	    if (ObjectUtils.notNull(method)) {
-		BeanTransactions.rollbackTransaction(this, method);
-	    }
-	} catch (Throwable th) {
-	    close(method);
-	    throw new IOException(th);
-	}
+        try {
+            if (ObjectUtils.notNull(method)) {
+                BeanTransactions.rollbackTransaction(this, method);
+            }
+        } catch (Throwable th) {
+            close(method);
+            throw new IOException(th);
+        }
     }
 
     /**
@@ -404,11 +404,11 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      */
     private void addTransactionField(final Collection<EntityManager> ems, final Method method) throws IOException {
 
-	if (transactionField == null) {
-	    BeanTransactions.addTransaction(this, method, ems);
-	} else {
-	    setTransactionField(ems);
-	}
+        if (transactionField == null) {
+            BeanTransactions.addTransaction(this, method, ems);
+        } else {
+            setTransactionField(ems);
+        }
     }
 
     /**
@@ -421,42 +421,42 @@ public class BeanHandler implements InvocationHandler, Cloneable {
      * @throws IOException
      */
     private Object invokeBeanMethod(final Collection<EntityManager> ems, final Method method, Object[] arguments)
-	    throws IOException {
+            throws IOException {
 
-	addTransactionField(ems, method);
-	// Calls interceptors for this method or bean instance
-	Object[] intercepteds = interceptorHandel.callInterceptors(method, arguments);
-	// Calls for bean method with "intercepted" parameters
-	Object value = invokeMethod(method, intercepteds);
+        addTransactionField(ems, method);
+        // Calls interceptors for this method or bean instance
+        Object[] intercepteds = interceptorHandel.callInterceptors(method, arguments);
+        // Calls for bean method with "intercepted" parameters
+        Object value = invokeMethod(method, intercepteds);
 
-	return value;
+        return value;
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] arguments) throws Throwable {
 
-	Object value;
+        Object value;
 
-	Collection<EntityManager> ems = createEntityManagers();
-	Method realMethod = null;
-	try {
-	    String methodName = method.getName();
-	    Class<?>[] parameterTypes = method.getParameterTypes();
-	    // Gets real method of bean class
-	    realMethod = ClassUtils.getDeclaredMethod(beanClass, methodName, parameterTypes);
-	    value = invokeBeanMethod(ems, realMethod, arguments);
-	} catch (Throwable th) {
-	    rollback(realMethod);
-	    throw th;
-	} finally {
-	    close(realMethod);
-	}
+        Collection<EntityManager> ems = createEntityManagers();
+        Method realMethod = null;
+        try {
+            String methodName = method.getName();
+            Class<?>[] parameterTypes = method.getParameterTypes();
+            // Gets real method of bean class
+            realMethod = ClassUtils.getDeclaredMethod(beanClass, methodName, parameterTypes);
+            value = invokeBeanMethod(ems, realMethod, arguments);
+        } catch (Throwable th) {
+            rollback(realMethod);
+            throw th;
+        } finally {
+            close(realMethod);
+        }
 
-	return value;
+        return value;
     }
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-	return super.clone();
+        return super.clone();
     }
 }
