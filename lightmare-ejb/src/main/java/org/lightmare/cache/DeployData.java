@@ -45,18 +45,18 @@ public class DeployData {
     private URL url;
 
     public FileType getType() {
-	return type;
+        return type;
     }
 
     public void setType(FileType type) {
-	this.type = type;
+        this.type = type;
     }
 
     public URL getUrl() {
-	return url;
+        return url;
     }
 
     public void setUrl(URL url) {
-	this.url = url;
+        this.url = url;
     }
 }

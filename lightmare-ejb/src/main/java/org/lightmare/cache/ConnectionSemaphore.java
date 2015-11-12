@@ -70,66 +70,66 @@ public class ConnectionSemaphore {
     public static final int MINIMAL_USERS = 1;
 
     public boolean isInProgress() {
-	return inProgress.get();
+        return inProgress.get();
     }
 
     public void setInProgress(boolean inProgress) {
-	this.inProgress.getAndSet(inProgress);
+        this.inProgress.getAndSet(inProgress);
     }
 
     public String getUnitName() {
-	return unitName;
+        return unitName;
     }
 
     public void setUnitName(String unitName) {
-	this.unitName = unitName;
+        this.unitName = unitName;
     }
 
     public String getJndiName() {
-	return jndiName;
+        return jndiName;
     }
 
     public void setJndiName(String jndiName) {
-	this.jndiName = jndiName;
+        this.jndiName = jndiName;
     }
 
     public boolean isCached() {
-	return cached;
+        return cached;
     }
 
     public void setCached(boolean cached) {
-	this.cached = cached;
+        this.cached = cached;
     }
 
     public boolean isBound() {
-	return bound;
+        return bound;
     }
 
     public void setBound(boolean bound) {
-	this.bound = bound;
+        this.bound = bound;
     }
 
     public EntityManagerFactory getEmf() {
-	return emf;
+        return emf;
     }
 
     public void setEmf(EntityManagerFactory emf) {
-	this.emf = emf;
+        this.emf = emf;
     }
 
     public int incrementUser() {
-	return users.incrementAndGet();
+        return users.incrementAndGet();
     }
 
     public int decrementUser() {
-	return users.decrementAndGet();
+        return users.decrementAndGet();
     }
 
     public int getUsers() {
-	return users.get();
+        return users.get();
     }
 
     public boolean isCheck() {
-	return check.getAndSet(Boolean.TRUE);
+        return check.getAndSet(Boolean.TRUE);
     }
 }

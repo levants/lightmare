@@ -39,27 +39,27 @@ public class DeploymentDirectory {
     private boolean scan;
 
     public DeploymentDirectory(String path) {
-	this.path = path;
+        this.path = path;
     }
 
     public DeploymentDirectory(String path, boolean scan) {
-	this(path);
-	this.scan = scan;
+        this(path);
+        this.scan = scan;
     }
 
     public boolean isScan() {
-	return scan;
+        return scan;
     }
 
     public void setScan(boolean scan) {
-	this.scan = scan;
+        this.scan = scan;
     }
 
     public String getPath() {
-	return path;
+        return path;
     }
 
     public void setPath(String path) {
-	this.path = path;
+        this.path = path;
     }
 }

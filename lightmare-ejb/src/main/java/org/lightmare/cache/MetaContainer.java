@@ -78,13 +78,13 @@ public class MetaContainer {
      */
     public static MetaCreator getCreator() {
 
-	MetaCreator syncCreator;
+        MetaCreator syncCreator;
 
-	synchronized (MetaContainer.class) {
-	    syncCreator = creator;
-	}
+        synchronized (MetaContainer.class) {
+            syncCreator = creator;
+        }
 
-	return syncCreator;
+        return syncCreator;
     }
 
     /**
@@ -93,9 +93,9 @@ public class MetaContainer {
      * @param metaCreator
      */
     public static void setCreator(MetaCreator metaCreator) {
-	synchronized (MetaContainer.class) {
-	    creator = metaCreator;
-	}
+        synchronized (MetaContainer.class) {
+            creator = metaCreator;
+        }
     }
 
     /**
@@ -107,15 +107,15 @@ public class MetaContainer {
      */
     public static Configuration clone(Configuration configuration) throws IOException {
 
-	Configuration clone;
+        Configuration clone;
 
-	try {
-	    clone = configuration.clone();
-	} catch (CloneNotSupportedException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            clone = configuration.clone();
+        } catch (CloneNotSupportedException ex) {
+            throw new IOException(ex);
+        }
 
-	return clone;
+        return clone;
 
     }
 
@@ -127,16 +127,16 @@ public class MetaContainer {
      */
     public static void putConfig(URL[] archives, Configuration config) {
 
-	if (CollectionUtils.valid(archives)) {
-	    boolean containsPath;
-	    for (URL archive : archives) {
-		String path = WatchUtils.clearPath(archive.getFile());
-		containsPath = CONFIGS.containsKey(path);
-		if (Boolean.FALSE.equals(containsPath)) {
-		    CONFIGS.put(path, config);
-		}
-	    }
-	}
+        if (CollectionUtils.valid(archives)) {
+            boolean containsPath;
+            for (URL archive : archives) {
+                String path = WatchUtils.clearPath(archive.getFile());
+                containsPath = CONFIGS.containsKey(path);
+                if (Boolean.FALSE.equals(containsPath)) {
+                    CONFIGS.put(path, config);
+                }
+            }
+        }
     }
 
     /**
@@ -146,17 +146,17 @@ public class MetaContainer {
      */
     public static Configuration getConfig(URL[] archives) {
 
-	Configuration config;
+        Configuration config;
 
-	URL archive = CollectionUtils.getFirst(archives);
-	if (ObjectUtils.notNull(archive)) {
-	    String path = WatchUtils.clearPath(archive.getFile());
-	    config = CONFIGS.get(path);
-	} else {
-	    config = null;
-	}
+        URL archive = CollectionUtils.getFirst(archives);
+        if (ObjectUtils.notNull(archive)) {
+            String path = WatchUtils.clearPath(archive.getFile());
+            config = CONFIGS.get(path);
+        } else {
+            config = null;
+        }
 
-	return config;
+        return config;
     }
 
     /**
@@ -168,7 +168,7 @@ public class MetaContainer {
      * @return {@link MetaData} added to cache
      */
     public static MetaData addMetaData(String beanName, MetaData metaData) {
-	return EJBS.putIfAbsent(beanName, metaData);
+        return EJBS.putIfAbsent(beanName, metaData);
     }
 
     /**
@@ -181,10 +181,10 @@ public class MetaContainer {
      */
     public static void checkAndAddMetaData(String beanName, MetaData metaData) throws BeanInUseException {
 
-	MetaData tmpMeta = addMetaData(beanName, metaData);
-	if (ObjectUtils.notNull(tmpMeta)) {
-	    throw BeanInUseException.get(beanName);
-	}
+        MetaData tmpMeta = addMetaData(beanName, metaData);
+        if (ObjectUtils.notNull(tmpMeta)) {
+            throw BeanInUseException.get(beanName);
+        }
     }
 
     /**
@@ -196,15 +196,15 @@ public class MetaContainer {
      */
     public static boolean checkMetaData(String beanName) {
 
-	boolean check;
+        boolean check;
 
-	MetaData metaData = EJBS.get(beanName);
-	check = metaData == null;
-	if (Boolean.FALSE.equals(check)) {
-	    check = metaData.isInProgress();
-	}
+        MetaData metaData = EJBS.get(beanName);
+        check = metaData == null;
+        if (Boolean.FALSE.equals(check)) {
+            check = metaData.isInProgress();
+        }
 
-	return check;
+        return check;
     }
 
     /**
@@ -214,7 +214,7 @@ public class MetaContainer {
      * @return boolean
      */
     public boolean checkBean(String beanName) {
-	return EJBS.containsKey(beanName);
+        return EJBS.containsKey(beanName);
     }
 
     /**
@@ -226,14 +226,14 @@ public class MetaContainer {
      */
     private static void awaitProgress(boolean inProgress, MetaData metaData) throws IOException {
 
-	while (inProgress) {
-	    try {
-		metaData.wait();
-		inProgress = metaData.isInProgress();
-	    } catch (InterruptedException ex) {
-		throw new IOException(ex);
-	    }
-	}
+        while (inProgress) {
+            try {
+                metaData.wait();
+                inProgress = metaData.isInProgress();
+            } catch (InterruptedException ex) {
+                throw new IOException(ex);
+            }
+        }
     }
 
     /**
@@ -244,12 +244,12 @@ public class MetaContainer {
      */
     public static void awaitMetaData(MetaData metaData) throws IOException {
 
-	boolean inProgress = metaData.isInProgress();
-	if (inProgress) {
-	    synchronized (metaData) {
-		awaitProgress(inProgress, metaData);
-	    }
-	}
+        boolean inProgress = metaData.isInProgress();
+        if (inProgress) {
+            synchronized (metaData) {
+                awaitProgress(inProgress, metaData);
+            }
+        }
     }
 
     /**
@@ -260,7 +260,7 @@ public class MetaContainer {
      * @return {@link MetaData}
      */
     public static MetaData getMetaData(String beanName) {
-	return EJBS.get(beanName);
+        return EJBS.get(beanName);
     }
 
     /**
@@ -273,15 +273,15 @@ public class MetaContainer {
      */
     public static MetaData getSyncMetaData(String beanName) throws IOException {
 
-	MetaData metaData = getMetaData(beanName);
+        MetaData metaData = getMetaData(beanName);
 
-	if (metaData == null) {
-	    throw BeanNotDeployedException.get(beanName);
-	}
-	// Locks until initialization is complete
-	awaitMetaData(metaData);
+        if (metaData == null) {
+            throw BeanNotDeployedException.get(beanName);
+        }
+        // Locks until initialization is complete
+        awaitMetaData(metaData);
 
-	return metaData;
+        return metaData;
     }
 
     /**
@@ -292,13 +292,13 @@ public class MetaContainer {
      */
     public static Collection<String> getBeanNames(URL url) {
 
-	Collection<String> urls;
+        Collection<String> urls;
 
-	synchronized (MetaContainer.class) {
-	    urls = EJB_URLS.get(url);
-	}
+        synchronized (MetaContainer.class) {
+            urls = EJB_URLS.get(url);
+        }
 
-	return urls;
+        return urls;
     }
 
     /**
@@ -309,13 +309,13 @@ public class MetaContainer {
      */
     public static boolean chackDeployment(URL url) {
 
-	boolean containsKey;
+        boolean containsKey;
 
-	synchronized (MetaContainer.class) {
-	    containsKey = EJB_URLS.containsKey(url);
-	}
+        synchronized (MetaContainer.class) {
+            containsKey = EJB_URLS.containsKey(url);
+        }
 
-	return containsKey;
+        return containsKey;
     }
 
     /**
@@ -326,9 +326,9 @@ public class MetaContainer {
      */
     public static void removeBeanNames(URL url) {
 
-	synchronized (MetaContainer.class) {
-	    EJB_URLS.remove(url);
-	}
+        synchronized (MetaContainer.class) {
+            EJB_URLS.remove(url);
+        }
     }
 
     /**
@@ -338,15 +338,15 @@ public class MetaContainer {
      */
     public static void addBeanName(URL url, String beanName) {
 
-	synchronized (MetaContainer.class) {
-	    Collection<String> beanNames = EJB_URLS.get(url);
-	    if (CollectionUtils.invalid(beanNames)) {
-		beanNames = new HashSet<String>();
-		EJB_URLS.put(url, beanNames);
-	    }
-	    // Caches EJB bean name
-	    beanNames.add(beanName);
-	}
+        synchronized (MetaContainer.class) {
+            Collection<String> beanNames = EJB_URLS.get(url);
+            if (CollectionUtils.invalid(beanNames)) {
+                beanNames = new HashSet<String>();
+                EJB_URLS.put(url, beanNames);
+            }
+            // Caches EJB bean name
+            beanNames.add(beanName);
+        }
     }
 
     /**
@@ -355,8 +355,8 @@ public class MetaContainer {
      * @return {@link Set}<URL>
      */
     public static Set<URL> listApplications() {
-	Set<URL> apps = EJB_URLS.keySet();
-	return apps;
+        Set<URL> apps = EJB_URLS.keySet();
+        return apps;
     }
 
     /**
@@ -367,21 +367,21 @@ public class MetaContainer {
      */
     private static void clearConnection(MetaData metaData) throws IOException {
 
-	Collection<ConnectionData> connections = metaData.getConnections();
-	if (CollectionUtils.valid(connections)) {
-	    for (ConnectionData connection : connections) {
-		// Gets connection to clear
-		String unitName = connection.getUnitName();
-		ConnectionSemaphore semaphore = connection.getConnection();
-		if (semaphore == null) {
-		    semaphore = ConnectionContainer.getConnection(unitName);
-		}
-		// Clears connection from cache
-		if (ObjectUtils.notNull(semaphore) && semaphore.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS) {
-		    ConnectionContainer.removeConnection(unitName);
-		}
-	    }
-	}
+        Collection<ConnectionData> connections = metaData.getConnections();
+        if (CollectionUtils.valid(connections)) {
+            for (ConnectionData connection : connections) {
+                // Gets connection to clear
+                String unitName = connection.getUnitName();
+                ConnectionSemaphore semaphore = connection.getConnection();
+                if (semaphore == null) {
+                    semaphore = ConnectionContainer.getConnection(unitName);
+                }
+                // Clears connection from cache
+                if (ObjectUtils.notNull(semaphore) && semaphore.decrementUser() <= ConnectionSemaphore.MINIMAL_USERS) {
+                    ConnectionContainer.removeConnection(unitName);
+                }
+            }
+        }
     }
 
     /**
@@ -393,28 +393,28 @@ public class MetaContainer {
      */
     public static void undeployBean(String beanName) throws IOException {
 
-	MetaData metaData;
+        MetaData metaData;
 
-	try {
-	    metaData = getSyncMetaData(beanName);
-	} catch (IOException ex) {
-	    LogUtils.error(LOG, ex, "Could not get bean resources %s cause %s", beanName, ex.getMessage());
-	    metaData = null;
-	}
-	// Removes MetaData from cache
-	removeMeta(beanName);
-	// Clears REST services and connections
-	if (ObjectUtils.notNull(metaData)) {
-	    // Removes appropriated resource class from REST service
-	    if (RestContainer.hasRest()) {
-		RestProvider.remove(metaData.getBeanClass());
-	    }
-	    // Clears connection and unloads classes
-	    clearConnection(metaData);
-	    ClassLoader loader = metaData.getLoader();
-	    LibraryLoader.closeClassLoader(loader);
-	    metaData = null;
-	}
+        try {
+            metaData = getSyncMetaData(beanName);
+        } catch (IOException ex) {
+            LogUtils.error(LOG, ex, "Could not get bean resources %s cause %s", beanName, ex.getMessage());
+            metaData = null;
+        }
+        // Removes MetaData from cache
+        removeMeta(beanName);
+        // Clears REST services and connections
+        if (ObjectUtils.notNull(metaData)) {
+            // Removes appropriated resource class from REST service
+            if (RestContainer.hasRest()) {
+                RestProvider.remove(metaData.getBeanClass());
+            }
+            // Clears connection and unloads classes
+            clearConnection(metaData);
+            ClassLoader loader = metaData.getLoader();
+            LibraryLoader.closeClassLoader(loader);
+            metaData = null;
+        }
     }
 
     /**
@@ -426,21 +426,21 @@ public class MetaContainer {
      */
     public static boolean undeploy(URL url) throws IOException {
 
-	boolean valid;
+        boolean valid;
 
-	synchronized (MetaContainer.class) {
-	    Collection<String> beanNames = getBeanNames(url);
-	    valid = CollectionUtils.valid(beanNames);
-	    if (valid) {
-		for (String beanName : beanNames) {
-		    undeployBean(beanName);
-		}
-	    }
-	    // Clears EJB bean names
-	    removeBeanNames(url);
-	}
+        synchronized (MetaContainer.class) {
+            Collection<String> beanNames = getBeanNames(url);
+            valid = CollectionUtils.valid(beanNames);
+            if (valid) {
+                for (String beanName : beanNames) {
+                    undeployBean(beanName);
+                }
+            }
+            // Clears EJB bean names
+            removeBeanNames(url);
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -452,12 +452,12 @@ public class MetaContainer {
      */
     public static boolean undeploy(File file) throws IOException {
 
-	boolean valid;
+        boolean valid;
 
-	URL url = file.toURI().toURL();
-	valid = undeploy(url);
+        URL url = file.toURI().toURL();
+        valid = undeploy(url);
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -469,12 +469,12 @@ public class MetaContainer {
      */
     public static boolean undeploy(String path) throws IOException {
 
-	boolean valid;
+        boolean valid;
 
-	File file = new File(path);
-	valid = undeploy(file);
+        File file = new File(path);
+        valid = undeploy(file);
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -483,7 +483,7 @@ public class MetaContainer {
      * @param beanName
      */
     public static void removeMeta(String beanName) {
-	EJBS.remove(beanName);
+        EJBS.remove(beanName);
     }
 
     /**
@@ -493,7 +493,7 @@ public class MetaContainer {
      * @return {@link java.util.Iterator}<MetaData>
      */
     public static Iterator<MetaData> getBeanClasses() {
-	return EJBS.values().iterator();
+        return EJBS.values().iterator();
     }
 
     /**
@@ -501,10 +501,10 @@ public class MetaContainer {
      */
     private static void clearMetaCreator() {
 
-	if (ObjectUtils.notNull(creator)) {
-	    creator.clear();
-	    creator = null;
-	}
+        if (ObjectUtils.notNull(creator)) {
+            creator.clear();
+            creator = null;
+        }
     }
 
     /**
@@ -512,14 +512,14 @@ public class MetaContainer {
      */
     public static void clear() {
 
-	if (ObjectUtils.notNull(creator)) {
-	    synchronized (MetaContainer.class) {
-		clearMetaCreator();
-	    }
-	}
-	// Clears caches
-	CONFIGS.clear();
-	EJBS.clear();
-	EJB_URLS.clear();
+        if (ObjectUtils.notNull(creator)) {
+            synchronized (MetaContainer.class) {
+                clearMetaCreator();
+            }
+        }
+        // Clears caches
+        CONFIGS.clear();
+        EJBS.clear();
+        EJB_URLS.clear();
     }
 }

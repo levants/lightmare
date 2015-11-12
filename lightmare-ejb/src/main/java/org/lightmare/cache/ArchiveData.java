@@ -41,18 +41,18 @@ public class ArchiveData {
     private ClassLoader loader;
 
     public ArchiveUtils getIoUtils() {
-	return ioUtils;
+        return ioUtils;
     }
 
     public void setIoUtils(ArchiveUtils ioUtils) {
-	this.ioUtils = ioUtils;
+        this.ioUtils = ioUtils;
     }
 
     public ClassLoader getLoader() {
-	return loader;
+        return loader;
     }
 
     public void setLoader(ClassLoader loader) {
-	this.loader = loader;
+        this.loader = loader;
     }
 }

@@ -60,54 +60,54 @@ public class ConnectionData {
     private ConnectionSemaphore connection;
 
     public Field getConnectionField() {
-	return connectionField;
+        return connectionField;
     }
 
     public void setConnectionField(Field connectionField) {
-	this.connectionField = connectionField;
+        this.connectionField = connectionField;
     }
 
     public Field getUnitField() {
-	return unitField;
+        return unitField;
     }
 
     public void setUnitField(Field unitField) {
-	this.unitField = unitField;
+        this.unitField = unitField;
     }
 
     public EntityManagerFactory getEmf() {
-	return emf;
+        return emf;
     }
 
     public void setEmf(EntityManagerFactory emf) {
-	this.emf = emf;
+        this.emf = emf;
     }
 
     public String getUnitName() {
-	return unitName;
+        return unitName;
     }
 
     public void setUnitName(String unitName) {
-	this.unitName = unitName;
+        this.unitName = unitName;
     }
 
     public String getJndiName() {
-	return jndiName;
+        return jndiName;
     }
 
     public void setJndiName(String jndiName) {
-	this.jndiName = jndiName;
+        this.jndiName = jndiName;
     }
 
     public ConnectionSemaphore getConnection() {
-	return connection;
+        return connection;
     }
 
     public void setConnection(ConnectionSemaphore connection) {
 
-	this.connection = connection;
-	if (ObjectUtils.notNull(connection)) {
-	    emf = connection.getEmf();
-	}
+        this.connection = connection;
+        if (ObjectUtils.notNull(connection)) {
+            emf = connection.getEmf();
+        }
     }
 }

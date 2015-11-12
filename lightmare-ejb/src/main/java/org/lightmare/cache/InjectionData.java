@@ -53,58 +53,58 @@ public class InjectionData {
     private Field field;
 
     public Class<?> getBeanClass() {
-	return beanClass;
+        return beanClass;
     }
 
     public void setBeanClass(Class<?> beanClass) {
-	this.beanClass = beanClass;
+        this.beanClass = beanClass;
     }
 
     public Class<?>[] getInterfaceClasses() {
-	return interfaceClasses;
+        return interfaceClasses;
     }
 
     public void setInterfaceClasses(Class<?>[] interfaceClasses) {
-	this.interfaceClasses = interfaceClasses;
+        this.interfaceClasses = interfaceClasses;
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     public String getDescription() {
-	return description;
+        return description;
     }
 
     public void setDescription(String description) {
-	this.description = description;
+        this.description = description;
     }
 
     public String getMappedName() {
-	return mappedName;
+        return mappedName;
     }
 
     public void setMappedName(String mappedName) {
-	this.mappedName = mappedName;
+        this.mappedName = mappedName;
     }
 
     public MetaData getMetaData() {
-	return metaData;
+        return metaData;
     }
 
     public void setMetaData(MetaData metaData) {
-	this.metaData = metaData;
+        this.metaData = metaData;
     }
 
     public Field getField() {
-	return field;
+        return field;
     }
 
     public void setField(Field field) {
-	this.field = field;
+        this.field = field;
     }
 }
