@@ -57,7 +57,7 @@ public class RestContainer {
      * @param resource
      */
     public static void putResource(Class<?> handlerClass, Resource resource) {
-	REST_RESOURCES.putIfAbsent(handlerClass, resource);
+        REST_RESOURCES.putIfAbsent(handlerClass, resource);
     }
 
     /**
@@ -69,23 +69,23 @@ public class RestContainer {
      */
     private static Class<?> getFromHandlerInstance(Resource resource) {
 
-	Class<?> handlerClass = null;
+        Class<?> handlerClass = null;
 
-	Set<Object> handlers = resource.getHandlerInstances();
-	if (CollectionUtils.valid(handlers)) {
-	    Iterator<Object> iterator = handlers.iterator();
-	    Object handler;
-	    RestInflector inflector;
-	    while (iterator.hasNext() && handlerClass == null) {
-		handler = iterator.next();
-		if (handler instanceof RestInflector) {
-		    inflector = ObjectUtils.cast(handler, RestInflector.class);
-		    handlerClass = inflector.getBeanClass();
-		}
-	    }
-	}
+        Set<Object> handlers = resource.getHandlerInstances();
+        if (CollectionUtils.valid(handlers)) {
+            Iterator<Object> iterator = handlers.iterator();
+            Object handler;
+            RestInflector inflector;
+            while (iterator.hasNext() && handlerClass == null) {
+                handler = iterator.next();
+                if (handler instanceof RestInflector) {
+                    inflector = ObjectUtils.cast(handler, RestInflector.class);
+                    handlerClass = inflector.getBeanClass();
+                }
+            }
+        }
 
-	return handlerClass;
+        return handlerClass;
     }
 
     /**
@@ -97,16 +97,16 @@ public class RestContainer {
      */
     private static Class<?> getHandlerClass(Resource resource) {
 
-	Class<?> handlerClass;
+        Class<?> handlerClass;
 
-	Set<Class<?>> handlerClasses = resource.getHandlerClasses();
-	if (CollectionUtils.valid(handlerClasses)) {
-	    handlerClass = CollectionUtils.getFirst(handlerClasses);
-	} else {
-	    handlerClass = getFromHandlerInstance(resource);
-	}
+        Set<Class<?>> handlerClasses = resource.getHandlerClasses();
+        if (CollectionUtils.valid(handlerClasses)) {
+            handlerClass = CollectionUtils.getFirst(handlerClasses);
+        } else {
+            handlerClass = getFromHandlerInstance(resource);
+        }
 
-	return handlerClass;
+        return handlerClass;
     }
 
     /**
@@ -117,10 +117,10 @@ public class RestContainer {
      */
     public static void putResource(Resource resource) {
 
-	Class<?> handlerClass = getHandlerClass(resource);
-	if (ObjectUtils.notNull(handlerClass)) {
-	    putResource(handlerClass, resource);
-	}
+        Class<?> handlerClass = getHandlerClass(resource);
+        if (ObjectUtils.notNull(handlerClass)) {
+            putResource(handlerClass, resource);
+        }
     }
 
     /**
@@ -131,11 +131,11 @@ public class RestContainer {
      */
     public static void putResources(Collection<Resource> resources) {
 
-	if (CollectionUtils.valid(resources)) {
-	    for (Resource resource : resources) {
-		putResource(resource);
-	    }
-	}
+        if (CollectionUtils.valid(resources)) {
+            for (Resource resource : resources) {
+                putResource(resource);
+            }
+        }
     }
 
     /**
@@ -145,7 +145,7 @@ public class RestContainer {
      * @return {@link Resource}
      */
     public static Resource getResource(Class<?> resourceClass) {
-	return REST_RESOURCES.get(resourceClass);
+        return REST_RESOURCES.get(resourceClass);
     }
 
     /**
@@ -154,7 +154,7 @@ public class RestContainer {
      * @param resourceClass
      */
     public static void removeResource(Class<?> resourceClass) {
-	REST_RESOURCES.remove(resourceClass);
+        REST_RESOURCES.remove(resourceClass);
     }
 
     /**
@@ -164,10 +164,10 @@ public class RestContainer {
      */
     public static void removeResource(Resource resource) {
 
-	Class<?> handlerClass = getHandlerClass(resource);
-	if (ObjectUtils.notNull(handlerClass)) {
-	    REST_RESOURCES.remove(handlerClass);
-	}
+        Class<?> handlerClass = getHandlerClass(resource);
+        if (ObjectUtils.notNull(handlerClass)) {
+            REST_RESOURCES.remove(handlerClass);
+        }
     }
 
     /**
@@ -176,7 +176,7 @@ public class RestContainer {
      * @return <code>int</code>
      */
     public static int size() {
-	return REST_RESOURCES.size();
+        return REST_RESOURCES.size();
     }
 
     /**
@@ -186,11 +186,11 @@ public class RestContainer {
      */
     public static void removeResources(Set<Resource> existingResources) {
 
-	if (CollectionUtils.valid(existingResources)) {
-	    for (Resource existingResource : existingResources) {
-		removeResource(existingResource);
-	    }
-	}
+        if (CollectionUtils.valid(existingResources)) {
+            for (Resource existingResource : existingResources) {
+                removeResource(existingResource);
+            }
+        }
     }
 
     /**
@@ -199,21 +199,21 @@ public class RestContainer {
      * @return <code>boolean</code>
      */
     public static boolean hasRest() {
-	return ObjectUtils.notNull(restConfig);
+        return ObjectUtils.notNull(restConfig);
     }
 
     public static void setRestConfig(RestConfig newConfig) {
-	restConfig = newConfig;
+        restConfig = newConfig;
     }
 
     public static RestConfig getRestConfig() {
-	return restConfig;
+        return restConfig;
     }
 
     /**
      * Clears cached rest resources
      */
     public static void clear() {
-	REST_RESOURCES.clear();
+        REST_RESOURCES.clear();
     }
 }

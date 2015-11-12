@@ -50,11 +50,11 @@ public class TmpResources {
      */
     public void addFile(List<File> files) {
 
-	for (File file : files) {
-	    file.deleteOnExit();
-	}
-	// Caches temporal files
-	tmpFiles.add(files);
+        for (File file : files) {
+            file.deleteOnExit();
+        }
+        // Caches temporal files
+        tmpFiles.add(files);
     }
 
     /**
@@ -64,11 +64,11 @@ public class TmpResources {
      */
     public void removeTempFiles() throws IOException {
 
-	for (List<File> files : tmpFiles) {
-	    BeanLoader.removeResources(files);
-	}
-	// Clears temporal files cache
-	tmpFiles.clear();
+        for (List<File> files : tmpFiles) {
+            BeanLoader.removeResources(files);
+        }
+        // Clears temporal files cache
+        tmpFiles.clear();
     }
 
     /**
@@ -77,6 +77,6 @@ public class TmpResources {
      * @return <code>int</code>
      */
     public int size() {
-	return tmpFiles.size();
+        return tmpFiles.size();
     }
 }

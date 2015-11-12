@@ -47,8 +47,8 @@ public class TransactionHolder {
      * @return {@link UserTransaction}
      */
     public static UserTransaction getTransaction() {
-	UserTransaction transaction = TRANSACTION_HOLDER.get();
-	return transaction;
+        UserTransaction transaction = TRANSACTION_HOLDER.get();
+        return transaction;
     }
 
     /**
@@ -57,7 +57,7 @@ public class TransactionHolder {
      * @param transaction
      */
     public static void setTransaction(UserTransaction transaction) {
-	TRANSACTION_HOLDER.set(transaction);
+        TRANSACTION_HOLDER.set(transaction);
     }
 
     /**
@@ -65,6 +65,6 @@ public class TransactionHolder {
      * thread
      */
     public static void removeTransaction() {
-	TRANSACTION_HOLDER.remove();
+        TRANSACTION_HOLDER.remove();
     }
 }

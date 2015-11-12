@@ -101,51 +101,51 @@ public class MetaData {
     private BeanHandler handler;
 
     public Class<?> getBeanClass() {
-	return beanClass;
+        return beanClass;
     }
 
     public void setBeanClass(Class<?> beanClass) {
-	this.beanClass = beanClass;
+        this.beanClass = beanClass;
     }
 
     public Class<?>[] getInterfaceClasses() {
-	return interfaceClasses;
+        return interfaceClasses;
     }
 
     public void setInterfaceClasses(Class<?>[] interfaceClasses) {
-	this.interfaceClasses = interfaceClasses;
+        this.interfaceClasses = interfaceClasses;
     }
 
     public Class<?>[] getLocalInterfaces() {
-	return localInterfaces;
+        return localInterfaces;
     }
 
     public void setLocalInterfaces(Class<?>[] localInterfaces) {
-	this.localInterfaces = localInterfaces;
+        this.localInterfaces = localInterfaces;
     }
 
     public Class<?>[] getRemoteInterfaces() {
-	return remoteInterfaces;
+        return remoteInterfaces;
     }
 
     public void setRemoteInterfaces(Class<?>[] remoteInterfaces) {
-	this.remoteInterfaces = remoteInterfaces;
+        this.remoteInterfaces = remoteInterfaces;
     }
 
     public Field getTransactionField() {
-	return transactionField;
+        return transactionField;
     }
 
     public void setTransactionField(Field transactionField) {
-	this.transactionField = transactionField;
+        this.transactionField = transactionField;
     }
 
     public Collection<ConnectionData> getConnections() {
-	return connections;
+        return connections;
     }
 
     public void setConnections(Collection<ConnectionData> connections) {
-	this.connections = connections;
+        this.connections = connections;
     }
 
     /**
@@ -155,11 +155,11 @@ public class MetaData {
      */
     public void addConnection(ConnectionData connection) {
 
-	if (connections == null) {
-	    connections = new ArrayList<ConnectionData>();
-	}
-	// Caches connection meta data
-	connections.add(connection);
+        if (connections == null) {
+            connections = new ArrayList<ConnectionData>();
+        }
+        // Caches connection meta data
+        connections.add(connection);
     }
 
     /**
@@ -171,11 +171,11 @@ public class MetaData {
      */
     private void addUnitField(String unitName, Field unitField) {
 
-	for (ConnectionData connection : connections) {
-	    if (unitName.equals(connection.getUnitName())) {
-		connection.setUnitField(unitField);
-	    }
-	}
+        for (ConnectionData connection : connections) {
+            if (unitName.equals(connection.getUnitName())) {
+                connection.setUnitField(unitField);
+            }
+        }
     }
 
     /**
@@ -186,59 +186,59 @@ public class MetaData {
      */
     public void addUnitFields(Collection<Field> unitFields) {
 
-	if (CollectionUtils.validAll(connections, unitFields)) {
-	    String unitName;
-	    for (Field unitField : unitFields) {
-		unitName = unitField.getAnnotation(PersistenceUnit.class).unitName();
-		addUnitField(unitName, unitField);
-	    }
-	    // Caches connection EJB bean fields meta data
-	    this.unitFields = unitFields;
-	}
+        if (CollectionUtils.validAll(connections, unitFields)) {
+            String unitName;
+            for (Field unitField : unitFields) {
+                unitName = unitField.getAnnotation(PersistenceUnit.class).unitName();
+                addUnitField(unitName, unitField);
+            }
+            // Caches connection EJB bean fields meta data
+            this.unitFields = unitFields;
+        }
     }
 
     public ClassLoader getLoader() {
-	return loader;
+        return loader;
     }
 
     public void setLoader(ClassLoader loader) {
-	this.loader = loader;
+        this.loader = loader;
     }
 
     public boolean isInProgress() {
-	return inProgress.get();
+        return inProgress.get();
     }
 
     public void setInProgress(boolean inProgress) {
-	this.inProgress.getAndSet(inProgress);
+        this.inProgress.getAndSet(inProgress);
     }
 
     public boolean isTransactional() {
-	return transactional;
+        return transactional;
     }
 
     public void setTransactional(boolean transactional) {
-	this.transactional = transactional;
+        this.transactional = transactional;
     }
 
     public TransactionAttributeType getTransactionAttrType() {
-	return transactionAttrType;
+        return transactionAttrType;
     }
 
     public void setTransactionAttrType(TransactionAttributeType transactionAttrType) {
-	this.transactionAttrType = transactionAttrType;
+        this.transactionAttrType = transactionAttrType;
     }
 
     public TransactionManagementType getTransactionManType() {
-	return transactionManType;
+        return transactionManType;
     }
 
     public void setTransactionManType(TransactionManagementType transactionManType) {
-	this.transactionManType = transactionManType;
+        this.transactionManType = transactionManType;
     }
 
     public List<InjectionData> getInjects() {
-	return injects;
+        return injects;
     }
 
     /**
@@ -248,15 +248,15 @@ public class MetaData {
      */
     public void addInject(InjectionData inject) {
 
-	if (injects == null) {
-	    injects = new ArrayList<InjectionData>();
-	}
-	// Caches EJB injection meta data
-	injects.add(inject);
+        if (injects == null) {
+            injects = new ArrayList<InjectionData>();
+        }
+        // Caches EJB injection meta data
+        injects.add(inject);
     }
 
     public Collection<Field> getUnitFields() {
-	return this.unitFields;
+        return this.unitFields;
     }
 
     /**
@@ -267,22 +267,22 @@ public class MetaData {
      */
     public void addInterceptor(InterceptorData interceptor) {
 
-	if (interceptors == null) {
-	    interceptors = new LinkedList<InterceptorData>();
-	}
-	// Caches EJB intercept meta data
-	interceptors.offer(interceptor);
+        if (interceptors == null) {
+            interceptors = new LinkedList<InterceptorData>();
+        }
+        // Caches EJB intercept meta data
+        interceptors.offer(interceptor);
     }
 
     public Collection<InterceptorData> getInterceptors() {
-	return interceptors;
+        return interceptors;
     }
 
     public BeanHandler getHandler() {
-	return handler;
+        return handler;
     }
 
     public void setHandler(BeanHandler handler) {
-	this.handler = handler;
+        this.handler = handler;
     }
 }

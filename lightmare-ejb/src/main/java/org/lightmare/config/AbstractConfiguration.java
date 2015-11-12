@@ -40,15 +40,15 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     private Map<Object, Object> checkAndGetFrom(Map<Object, Object> from) {
 
-	Map<Object, Object> value;
+        Map<Object, Object> value;
 
-	if (from == null) {
-	    value = config;
-	} else {
-	    value = from;
-	}
+        if (from == null) {
+            value = config;
+        } else {
+            value = from;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -61,13 +61,13 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     private <K, V> Map<K, V> getAsMap(Object key, Map<Object, Object> from) {
 
-	Map<K, V> value;
+        Map<K, V> value;
 
-	Map<Object, Object> source = checkAndGetFrom(from);
-	// Gets value associated with key as map
-	value = CollectionUtils.getAsMap(key, source);
+        Map<Object, Object> source = checkAndGetFrom(from);
+        // Gets value associated with key as map
+        value = CollectionUtils.getAsMap(key, source);
 
-	return value;
+        return value;
     }
 
     /**
@@ -78,7 +78,7 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @return {@link Map}<code><K, V></code>
      */
     private <K, V> Map<K, V> getAsMap(Object key) {
-	return getAsMap(key, null);
+        return getAsMap(key, null);
     }
 
     /**
@@ -91,14 +91,14 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     private <K, V> Map<K, V> checkAndGetSubConfig(Object key, K subKey, V value) {
 
-	Map<K, V> subConfig = getAsMap(key);
+        Map<K, V> subConfig = getAsMap(key);
 
-	if (subConfig == null) {
-	    subConfig = new HashMap<K, V>();
-	    config.put(key, subConfig);
-	}
+        if (subConfig == null) {
+            subConfig = new HashMap<K, V>();
+            config.put(key, subConfig);
+        }
 
-	return subConfig;
+        return subConfig;
     }
 
     /**
@@ -110,8 +110,8 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @param value
      */
     private <K, V> void setSubConfigValue(Object key, K subKey, V value) {
-	Map<K, V> subConfig = checkAndGetSubConfig(key, subKey, value);
-	subConfig.put(subKey, value);
+        Map<K, V> subConfig = checkAndGetSubConfig(key, subKey, value);
+        subConfig.put(subKey, value);
     }
 
     /**
@@ -125,19 +125,19 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     private <K, V> V getSubConfigValue(Object key, K subKey, V defaultValue) {
 
-	V def;
+        V def;
 
-	Map<K, V> subConfig = getAsMap(key);
-	if (CollectionUtils.valid(subConfig)) {
-	    def = subConfig.get(subKey);
-	    if (def == null) {
-		def = defaultValue;
-	    }
-	} else {
-	    def = defaultValue;
-	}
+        Map<K, V> subConfig = getAsMap(key);
+        if (CollectionUtils.valid(subConfig)) {
+            def = subConfig.get(subKey);
+            if (def == null) {
+                def = defaultValue;
+            }
+        } else {
+            def = defaultValue;
+        }
 
-	return def;
+        return def;
     }
 
     /**
@@ -150,15 +150,15 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     private <K> boolean containsSubConfigKey(Object key, K subKey) {
 
-	boolean valid;
+        boolean valid;
 
-	Map<K, ?> subConfig = getAsMap(key);
-	valid = CollectionUtils.valid(subConfig);
-	if (valid) {
-	    valid = subConfig.containsKey(subKey);
-	}
+        Map<K, ?> subConfig = getAsMap(key);
+        valid = CollectionUtils.valid(subConfig);
+        if (valid) {
+            valid = subConfig.containsKey(subKey);
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -168,7 +168,7 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @return <code>boolean</code>
      */
     protected <K> boolean containsConfigKey(K key) {
-	return containsSubConfigKey(ConfigKeys.DEPLOY_CONFIG.key, key);
+        return containsSubConfigKey(ConfigKeys.DEPLOY_CONFIG.key, key);
     }
 
     /**
@@ -180,7 +180,7 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @return <coder>V</code>
      */
     private <K, V> V getSubConfigValue(Object key, K subKey) {
-	return getSubConfigValue(key, subKey, null);
+        return getSubConfigValue(key, subKey, null);
     }
 
     /**
@@ -191,7 +191,7 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @param value
      */
     protected <K, V> void setConfigValue(K subKey, V value) {
-	setSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey, value);
+        setSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey, value);
     }
 
     /**
@@ -204,7 +204,7 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @return <coder>V</code>
      */
     protected <K, V> V getConfigValue(K subKey, V defaultValue) {
-	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey, defaultValue);
+        return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey, defaultValue);
     }
 
     /**
@@ -216,7 +216,7 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @return <coder>V</code>
      */
     protected <K, V> V getConfigValue(K subKey) {
-	return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey);
+        return getSubConfigValue(ConfigKeys.DEPLOY_CONFIG.key, subKey);
     }
 
     /**
@@ -228,14 +228,14 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     private <K, V> Map<K, V> getWithInitialization(Object key) {
 
-	Map<K, V> result = getConfigValue(key);
+        Map<K, V> result = getConfigValue(key);
 
-	if (result == null) {
-	    result = new HashMap<K, V>();
-	    setConfigValue(key, result);
-	}
+        if (result == null) {
+            result = new HashMap<K, V>();
+            setConfigValue(key, result);
+        }
 
-	return result;
+        return result;
     }
 
     /**
@@ -247,16 +247,16 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @param value
      */
     protected <K, V> void setWithInitialization(Object key, K subKey, V value) {
-	Map<K, V> result = getWithInitialization(key);
-	result.put(subKey, value);
+        Map<K, V> result = getWithInitialization(key);
+        result.put(subKey, value);
     }
 
     protected <K, V> void setIfContains(K key, V value) {
 
-	boolean contains = containsConfigKey(key);
-	if (Boolean.FALSE.equals(contains)) {
-	    setConfigValue(key, value);
-	}
+        boolean contains = containsConfigKey(key);
+        if (Boolean.FALSE.equals(contains)) {
+            setConfigValue(key, value);
+        }
     }
 
     /**
@@ -268,20 +268,20 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     private void deepMerge(Map<Object, Object> map, Map.Entry<Object, Object> entry) {
 
-	Object key = entry.getKey();
-	Object value2 = entry.getValue();
-	Object mergedValue;
-	if (value2 instanceof Map) {
-	    Map<Object, Object> value1 = CollectionUtils.getAsMap(key, map);
-	    Map<Object, Object> mapValue2 = ObjectUtils.cast(value2);
-	    mergedValue = deepMerge(value1, mapValue2);
-	} else {
-	    mergedValue = value2;
-	}
-	// Caches merged value
-	if (ObjectUtils.notNull(mergedValue)) {
-	    map.put(key, mergedValue);
-	}
+        Object key = entry.getKey();
+        Object value2 = entry.getValue();
+        Object mergedValue;
+        if (value2 instanceof Map) {
+            Map<Object, Object> value1 = CollectionUtils.getAsMap(key, map);
+            Map<Object, Object> mapValue2 = ObjectUtils.cast(value2);
+            mergedValue = deepMerge(value1, mapValue2);
+        } else {
+            mergedValue = value2;
+        }
+        // Caches merged value
+        if (ObjectUtils.notNull(mergedValue)) {
+            map.put(key, mergedValue);
+        }
     }
 
     /**
@@ -294,16 +294,16 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     protected Map<Object, Object> deepMerge(Map<Object, Object> map1, Map<Object, Object> map2) {
 
-	if (map1 == null) {
-	    map1 = map2;
-	} else {
-	    Set<Map.Entry<Object, Object>> entries2 = map2.entrySet();
-	    for (Map.Entry<Object, Object> entry2 : entries2) {
-		deepMerge(map1, entry2);
-	    }
-	}
+        if (map1 == null) {
+            map1 = map2;
+        } else {
+            Set<Map.Entry<Object, Object>> entries2 = map2.entrySet();
+            for (Map.Entry<Object, Object> entry2 : entries2) {
+                deepMerge(map1, entry2);
+            }
+        }
 
-	return map1;
+        return map1;
     }
 
     /**
@@ -312,7 +312,7 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @param configuration
      */
     public void configure(Map<Object, Object> configuration) {
-	deepMerge(config, configuration);
+        deepMerge(config, configuration);
     }
 
     /**
@@ -323,16 +323,16 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     public String getStringValue(String key) {
 
-	String textValue;
+        String textValue;
 
-	Object value = config.get(key);
-	if (value == null) {
-	    textValue = null;
-	} else {
-	    textValue = value.toString();
-	}
+        Object value = config.get(key);
+        if (value == null) {
+            textValue = null;
+        } else {
+            textValue = value.toString();
+        }
 
-	return textValue;
+        return textValue;
     }
 
     /**
@@ -342,8 +342,8 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @return {@link String}
      */
     public int getIntValue(String key) {
-	String value = getStringValue(key);
-	return Integer.parseInt(value);
+        String value = getStringValue(key);
+        return Integer.parseInt(value);
     }
 
     /**
@@ -353,8 +353,8 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @return {@link String}
      */
     public long getLongValue(String key) {
-	String value = getStringValue(key);
-	return Long.parseLong(value);
+        String value = getStringValue(key);
+        return Long.parseLong(value);
     }
 
     /**
@@ -365,8 +365,8 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @return {@link String}
      */
     public boolean getBooleanValue(String key) {
-	String value = getStringValue(key);
-	return Boolean.parseBoolean(value);
+        String value = getStringValue(key);
+        return Boolean.parseBoolean(value);
     }
 
     /**
@@ -376,7 +376,7 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @param value
      */
     public void putValue(String key, String value) {
-	config.put(key, value);
+        config.put(key, value);
     }
 
     /**
@@ -387,18 +387,18 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     public void loadFromStream(InputStream propertiesStream) throws IOException {
 
-	try {
-	    Properties props = new Properties();
-	    props.load(propertiesStream);
-	    Set<String> names = props.stringPropertyNames();
-	    for (String name : names) {
-		config.put(name, props.getProperty(name));
-	    }
-	} catch (IOException ex) {
-	    LOG.error(COULD_NOT_LOAD_CONFIG_ERROR, ex);
-	} finally {
-	    IOUtils.close(propertiesStream);
-	}
+        try {
+            Properties props = new Properties();
+            props.load(propertiesStream);
+            Set<String> names = props.stringPropertyNames();
+            for (String name : names) {
+                config.put(name, props.getProperty(name));
+            }
+        } catch (IOException ex) {
+            LOG.error(COULD_NOT_LOAD_CONFIG_ERROR, ex);
+        } finally {
+            IOUtils.close(propertiesStream);
+        }
     }
 
     /**
@@ -408,19 +408,19 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     public void loadFromFile() throws IOException {
 
-	String configFilePath = ConfigKeys.CONFIG_FILE.getValue();
+        String configFilePath = ConfigKeys.CONFIG_FILE.getValue();
 
-	try {
-	    File configFile = new File(configFilePath);
-	    if (configFile.exists()) {
-		InputStream propertiesStream = new FileInputStream(configFile);
-		loadFromStream(propertiesStream);
-	    } else {
-		configFile.mkdirs();
-	    }
-	} catch (IOException ex) {
-	    LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
-	}
+        try {
+            File configFile = new File(configFilePath);
+            if (configFile.exists()) {
+                InputStream propertiesStream = new FileInputStream(configFile);
+                loadFromStream(propertiesStream);
+            } else {
+                configFile.mkdirs();
+            }
+        } catch (IOException ex) {
+            LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
+        }
     }
 
     /**
@@ -431,13 +431,13 @@ public abstract class AbstractConfiguration implements Cloneable {
      */
     public void loadFromFile(String configFilename) throws IOException {
 
-	try {
-	    File propertiesFile = new File(configFilename);
-	    InputStream propertiesStream = new FileInputStream(propertiesFile);
-	    loadFromStream(propertiesStream);
-	} catch (IOException ex) {
-	    LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
-	}
+        try {
+            File propertiesFile = new File(configFilename);
+            InputStream propertiesStream = new FileInputStream(propertiesFile);
+            loadFromStream(propertiesStream);
+        } catch (IOException ex) {
+            LOG.error(COULD_NOT_OPEN_FILE_ERROR, ex);
+        }
     }
 
     /**
@@ -446,31 +446,31 @@ public abstract class AbstractConfiguration implements Cloneable {
      * @return {@link Map} copy of existed configuration
      */
     protected Map<Object, Object> copy() {
-	return new HashMap<Object, Object>(config);
+        return new HashMap<Object, Object>(config);
     }
 
     /**
      * Clears existed configuration parameters
      */
     protected void clear() {
-	config.clear();
+        config.clear();
     }
 
     @Override
     public Configuration clone() throws CloneNotSupportedException {
 
-	// Deep clone for configuration
-	Configuration cloneConfig;
+        // Deep clone for configuration
+        Configuration cloneConfig;
 
-	Object raw = super.clone();
-	// Casting cloned object to the appropriated type
-	cloneConfig = ObjectUtils.cast(raw, Configuration.class);
-	// Coping configuration for cloned data
-	Map<Object, Object> copy = copy();
-	// copyConfig.putAll(this.config);
-	cloneConfig.clear();
-	cloneConfig.configure(copy);
+        Object raw = super.clone();
+        // Casting cloned object to the appropriated type
+        cloneConfig = ObjectUtils.cast(raw, Configuration.class);
+        // Coping configuration for cloned data
+        Map<Object, Object> copy = copy();
+        // copyConfig.putAll(this.config);
+        cloneConfig.clear();
+        cloneConfig.configure(copy);
 
-	return cloneConfig;
+        return cloneConfig;
     }
 }
