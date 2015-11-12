@@ -24,8 +24,8 @@ package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.SubQueryConsumer;
-import org.lightmare.criteria.query.internal.GeneralExpression;
 import org.lightmare.criteria.query.internal.jpa.Expression;
+import org.lightmare.criteria.query.internal.jpa.GeneralExpression;
 import org.lightmare.criteria.query.internal.jpa.ColumnExpression;
 
 /**

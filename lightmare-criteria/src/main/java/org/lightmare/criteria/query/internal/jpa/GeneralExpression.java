@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal;
+package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
@@ -28,10 +28,6 @@ import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.JPAQueryWrapper;
-import org.lightmare.criteria.query.internal.jpa.JoinExpressions;
-import org.lightmare.criteria.query.internal.jpa.ResultStream;
-import org.lightmare.criteria.query.internal.jpa.SelectStatements;
 
 /**
  * General query components

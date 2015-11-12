@@ -27,7 +27,7 @@ import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.query.internal.GeneralExpression;
+import org.lightmare.criteria.query.internal.jpa.GeneralExpression;
 
 /**
  * general query processor for sub queries
