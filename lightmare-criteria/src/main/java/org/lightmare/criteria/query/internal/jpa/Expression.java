@@ -69,6 +69,17 @@ public interface Expression<T> {
      */
     <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator);
 
+    /**
+     * Generates query part for instant field with parameters and operator
+     * 
+     * @param field
+     * @param value1
+     * @param value2
+     * @param operator
+     * @return {@link QueryStream} current instance
+     */
+    <F> QueryStream<T> operate(EntityField<T, F> field, F value1, F value2, String operator);
+
     default <F> QueryStream<T> equal(EntityField<T, F> field, F value) {
         return operate(field, value, Operators.EQ);
     }
@@ -109,9 +120,13 @@ public interface Expression<T> {
         return le(field, value);
     }
 
-    <F> QueryStream<T> between(EntityField<T, F> field, F value1, F value2);
+    default <F> QueryStream<T> between(EntityField<T, F> field, F value1, F value2) {
+        return operate(field, value1, value2, Operators.BETWEEN);
+    }
 
-    <F> QueryStream<T> notBetween(EntityField<T, F> field, F value1, F value2);
+    default <F> QueryStream<T> notBetween(EntityField<T, F> field, F value1, F value2) {
+        return operate(field, value1, value2, Operators.NOT_BETWEEN);
+    }
 
     default QueryStream<T> startsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(value, Filters.LIKE_SIGN);

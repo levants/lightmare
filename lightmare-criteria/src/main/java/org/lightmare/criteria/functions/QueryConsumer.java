@@ -23,6 +23,7 @@
 package org.lightmare.criteria.functions;
 
 import java.io.Serializable;
+import java.util.function.Consumer;
 
 import org.lightmare.criteria.query.QueryStream;
 
@@ -35,7 +36,8 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type parameter
  */
 @FunctionalInterface
-public interface QueryConsumer<T> extends Serializable {
+public interface QueryConsumer<T> extends Consumer<QueryStream<T>>, Serializable {
 
+    @Override
     void accept(QueryStream<T> stream);
 }

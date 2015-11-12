@@ -50,6 +50,9 @@ interface SubExpression<S, T> extends Expression<S> {
     <F> SubQueryStream<S, T> operate(EntityField<S, F> field, F value, String operator);
 
     @Override
+    <F> SubQueryStream<S, T> operate(EntityField<S, F> field, F value1, F value2, String operator);
+
+    @Override
     default <F> SubQueryStream<S, T> equal(EntityField<S, F> field, F value) {
         return operate(field, value, Operators.EQ);
     }
@@ -100,10 +103,14 @@ interface SubExpression<S, T> extends Expression<S> {
     }
 
     @Override
-    <F> SubQueryStream<S, T> between(EntityField<S, F> field, F value1, F value2);
+    default <F> SubQueryStream<S, T> between(EntityField<S, F> field, F value1, F value2) {
+        return operate(field, value1, value2, Operators.BETWEEN);
+    }
 
     @Override
-    <F> SubQueryStream<S, T> notBetween(EntityField<S, F> field, F value1, F value2);
+    default <F> SubQueryStream<S, T> notBetween(EntityField<S, F> field, F value1, F value2) {
+        return operate(field, value1, value2, Operators.BETWEEN);
+    }
 
     @Override
     default SubQueryStream<S, T> like(EntityField<S, String> field, String value) {

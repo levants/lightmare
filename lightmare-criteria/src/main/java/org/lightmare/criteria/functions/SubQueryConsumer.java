@@ -23,6 +23,7 @@
 package org.lightmare.criteria.functions;
 
 import java.io.Serializable;
+import java.util.function.Consumer;
 
 import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 
@@ -37,7 +38,8 @@ import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
  *            entity type parameter
  */
 @FunctionalInterface
-public interface SubQueryConsumer<S, T> extends Serializable {
+public interface SubQueryConsumer<S, T> extends Consumer<SubQueryStream<S, T>>, Serializable {
 
+    @Override
     void accept(SubQueryStream<S, T> subQuery);
 }
