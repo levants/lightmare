@@ -46,12 +46,11 @@ public class TimerHandleImpl implements TimerHandle {
      * @param timer
      */
     public TimerHandleImpl(Timer timer) {
-	this.timer = timer;
+        this.timer = timer;
     }
 
     @Override
-    public Timer getTimer() throws IllegalStateException,
-	    NoSuchObjectLocalException, EJBException {
-	return timer;
+    public Timer getTimer() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+        return timer;
     }
 }

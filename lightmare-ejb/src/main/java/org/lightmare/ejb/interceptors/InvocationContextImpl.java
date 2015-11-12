@@ -66,11 +66,10 @@ public class InvocationContextImpl implements InvocationContext {
      * @param targets
      * @param parameters
      */
-    public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets,
-	    Object[] parameters) {
-	this.methods = methods;
-	this.targets = targets;
-	this.parameters = parameters;
+    public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets, Object[] parameters) {
+        this.methods = methods;
+        this.targets = targets;
+        this.parameters = parameters;
     }
 
     /**
@@ -83,59 +82,58 @@ public class InvocationContextImpl implements InvocationContext {
      * @param parameters
      * @param timer
      */
-    public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets,
-	    Object[] parameters, Timer timer) {
-	this(methods, targets, parameters);
-	this.timer = timer;
+    public InvocationContextImpl(Queue<Method> methods, Queue<Object> targets, Object[] parameters, Timer timer) {
+        this(methods, targets, parameters);
+        this.timer = timer;
     }
 
     @Override
     public Object getTarget() {
 
-	Object target = targets.peek();
+        Object target = targets.peek();
 
-	return target;
+        return target;
     }
 
     @Override
     public Method getMethod() {
-	return methods.peek();
+        return methods.peek();
     }
 
     @Override
     public Object[] getParameters() {
-	return parameters;
+        return parameters;
     }
 
     @Override
     public void setParameters(Object[] parameters) {
-	this.parameters = parameters;
+        this.parameters = parameters;
     }
 
     @Override
     public Map<String, Object> getContextData() {
-	return contextData;
+        return contextData;
     }
 
     @Override
     public Object getTimer() {
-	// TODO find out usage of this method and write implementation
-	return timer;
+        // TODO find out usage of this method and write implementation
+        return timer;
     }
 
     @Override
     public Object proceed() throws Exception {
 
-	Object value;
+        Object value;
 
-	Method method = methods.poll();
-	Object target = targets.poll();
-	if (ObjectUtils.notNull(method) && ObjectUtils.notNull(target)) {
-	    value = ClassUtils.invokePrivate(method, target, this);
-	} else {
-	    value = null;
-	}
+        Method method = methods.poll();
+        Object target = targets.poll();
+        if (ObjectUtils.notNull(method) && ObjectUtils.notNull(target)) {
+            value = ClassUtils.invokePrivate(method, target, this);
+        } else {
+            value = null;
+        }
 
-	return value;
+        return value;
     }
 }

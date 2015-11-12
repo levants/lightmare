@@ -56,54 +56,48 @@ public class TimerImpl implements Timer {
     private static long ZERO_TIME = 0L;
 
     private TimerImpl() {
-	handle = new TimerHandleImpl(this);
+        handle = new TimerHandleImpl(this);
     }
 
     @Override
-    public void cancel() throws IllegalStateException,
-	    NoSuchObjectLocalException, EJBException {
+    public void cancel() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
 
     }
 
     @Override
-    public long getTimeRemaining() throws IllegalStateException,
-	    NoSuchObjectLocalException, NoMoreTimeoutsException, EJBException {
-	return ZERO_TIME;
+    public long getTimeRemaining()
+            throws IllegalStateException, NoSuchObjectLocalException, NoMoreTimeoutsException, EJBException {
+        return ZERO_TIME;
     }
 
     @Override
-    public Date getNextTimeout() throws IllegalStateException,
-	    NoSuchObjectLocalException, NoMoreTimeoutsException, EJBException {
-	return nextTimeout;
+    public Date getNextTimeout()
+            throws IllegalStateException, NoSuchObjectLocalException, NoMoreTimeoutsException, EJBException {
+        return nextTimeout;
     }
 
     @Override
-    public ScheduleExpression getSchedule() throws IllegalStateException,
-	    NoSuchObjectLocalException, EJBException {
-	return schedule;
+    public ScheduleExpression getSchedule() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+        return schedule;
     }
 
     @Override
-    public boolean isPersistent() throws IllegalStateException,
-	    NoSuchObjectLocalException, EJBException {
-	return persistent;
+    public boolean isPersistent() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+        return persistent;
     }
 
     @Override
-    public boolean isCalendarTimer() throws IllegalStateException,
-	    NoSuchObjectLocalException, EJBException {
-	return calendarTimer;
+    public boolean isCalendarTimer() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+        return calendarTimer;
     }
 
     @Override
-    public Serializable getInfo() throws IllegalStateException,
-	    NoSuchObjectLocalException, EJBException {
-	return info;
+    public Serializable getInfo() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+        return info;
     }
 
     @Override
-    public TimerHandle getHandle() throws IllegalStateException,
-	    NoSuchObjectLocalException, EJBException {
-	return handle;
+    public TimerHandle getHandle() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+        return handle;
     }
 }

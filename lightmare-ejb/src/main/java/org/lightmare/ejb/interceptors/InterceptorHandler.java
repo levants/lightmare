@@ -33,7 +33,7 @@ public class InterceptorHandler {
      * @param metaData
      */
     public InterceptorHandler(MetaData metaData) {
-	this.interceptorDatas = metaData.getInterceptors();
+        this.interceptorDatas = metaData.getInterceptors();
     }
 
     /**
@@ -46,13 +46,13 @@ public class InterceptorHandler {
      * @throws IOException
      */
     private void fillInterceptor(InterceptorData interceptorData, Queue<Method> methods, Queue<Object> targets)
-	    throws IOException {
+            throws IOException {
 
-	Class<?> interceptorClass = interceptorData.getInterceptorClass();
-	Object interceptor = ClassUtils.instantiate(interceptorClass);
-	Method method = interceptorData.getInterceptorMethod();
-	methods.offer(method);
-	targets.offer(interceptor);
+        Class<?> interceptorClass = interceptorData.getInterceptorClass();
+        Object interceptor = ClassUtils.instantiate(interceptorClass);
+        Method method = interceptorData.getInterceptorMethod();
+        methods.offer(method);
+        targets.offer(interceptor);
     }
 
     /**
@@ -66,16 +66,16 @@ public class InterceptorHandler {
      */
     private void fillInterceptors(Method method, Queue<Method> methods, Queue<Object> targets) throws IOException {
 
-	Iterator<InterceptorData> interceptors = interceptorDatas.iterator();
-	InterceptorData interceptor;
-	boolean valid;
-	while (interceptors.hasNext()) {
-	    interceptor = interceptors.next();
-	    valid = checkInterceptor(interceptor, method);
-	    if (valid) {
-		fillInterceptor(interceptor, methods, targets);
-	    }
-	}
+        Iterator<InterceptorData> interceptors = interceptorDatas.iterator();
+        InterceptorData interceptor;
+        boolean valid;
+        while (interceptors.hasNext()) {
+            interceptor = interceptors.next();
+            valid = checkInterceptor(interceptor, method);
+            if (valid) {
+                fillInterceptor(interceptor, methods, targets);
+            }
+        }
     }
 
     /**
@@ -88,16 +88,16 @@ public class InterceptorHandler {
      */
     private boolean checkInterceptor(InterceptorData interceptor, Method method) {
 
-	boolean valid;
+        boolean valid;
 
-	Method beanMethod = interceptor.getBeanMethod();
-	if (ObjectUtils.notNull(beanMethod)) {
-	    valid = beanMethod.equals(method);
-	} else {
-	    valid = Boolean.TRUE;
-	}
+        Method beanMethod = interceptor.getBeanMethod();
+        if (ObjectUtils.notNull(beanMethod)) {
+            valid = beanMethod.equals(method);
+        } else {
+            valid = Boolean.TRUE;
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -110,21 +110,21 @@ public class InterceptorHandler {
      */
     private Object[] callInterceptorContext(Method method, Object[] parameters) throws IOException {
 
-	Object[] intercepteds;
+        Object[] intercepteds;
 
-	Queue<Method> methods = new LinkedList<Method>();
-	Queue<Object> targets = new LinkedList<Object>();
-	fillInterceptors(method, methods, targets);
-	// Initializes invocation context
-	InvocationContext context = new InvocationContextImpl(methods, targets, parameters);
-	try {
-	    context.proceed();
-	    intercepteds = context.getParameters();
-	} catch (Exception ex) {
-	    throw new IOException(ex);
-	}
+        Queue<Method> methods = new LinkedList<Method>();
+        Queue<Object> targets = new LinkedList<Object>();
+        fillInterceptors(method, methods, targets);
+        // Initializes invocation context
+        InvocationContext context = new InvocationContextImpl(methods, targets, parameters);
+        try {
+            context.proceed();
+            intercepteds = context.getParameters();
+        } catch (Exception ex) {
+            throw new IOException(ex);
+        }
 
-	return intercepteds;
+        return intercepteds;
     }
 
     /**
@@ -137,14 +137,14 @@ public class InterceptorHandler {
      */
     public Object[] callInterceptors(Method method, Object[] parameters) throws IOException {
 
-	Object[] intercepteds;
+        Object[] intercepteds;
 
-	if (CollectionUtils.valid(interceptorDatas)) {
-	    intercepteds = callInterceptorContext(method, parameters);
-	} else {
-	    intercepteds = parameters;
-	}
+        if (CollectionUtils.valid(interceptorDatas)) {
+            intercepteds = callInterceptorContext(method, parameters);
+        } else {
+            intercepteds = parameters;
+        }
 
-	return intercepteds;
+        return intercepteds;
     }
 }
