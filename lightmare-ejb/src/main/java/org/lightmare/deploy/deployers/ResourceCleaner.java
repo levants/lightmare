@@ -45,7 +45,7 @@ public class ResourceCleaner implements Callable<Boolean> {
     private static final Logger LOG = Logger.getLogger(ResourceCleaner.class);
 
     public ResourceCleaner(List<File> tmpFiles) {
-	this.tmpFiles = tmpFiles;
+        this.tmpFiles = tmpFiles;
     }
 
     /**
@@ -55,33 +55,32 @@ public class ResourceCleaner implements Callable<Boolean> {
      */
     private void clearTmpData() throws InterruptedException {
 
-	synchronized (tmpFiles) {
-	    tmpFiles.wait();
-	}
+        synchronized (tmpFiles) {
+            tmpFiles.wait();
+        }
 
-	for (File tmpFile : tmpFiles) {
-	    FileUtils.deleteFile(tmpFile);
-	    LogUtils.info(LOG, "Cleaning temporal resource %s done",
-		    tmpFile.getName());
-	}
+        for (File tmpFile : tmpFiles) {
+            FileUtils.deleteFile(tmpFile);
+            LogUtils.info(LOG, "Cleaning temporal resource %s done", tmpFile.getName());
+        }
     }
 
     @Override
     public Boolean call() throws Exception {
 
-	boolean result;
+        boolean result;
 
-	ClassLoader loader = LoaderPoolManager.getCurrent();
-	try {
-	    clearTmpData();
-	    result = Boolean.TRUE;
-	} catch (InterruptedException ex) {
-	    result = Boolean.FALSE;
-	    LOG.error("Coluld not clean temporary resources", ex);
-	} finally {
-	    LibraryLoader.loadCurrentLibraries(loader);
-	}
+        ClassLoader loader = LoaderPoolManager.getCurrent();
+        try {
+            clearTmpData();
+            result = Boolean.TRUE;
+        } catch (InterruptedException ex) {
+            result = Boolean.FALSE;
+            LOG.error("Coluld not clean temporary resources", ex);
+        } finally {
+            LibraryLoader.loadCurrentLibraries(loader);
+        }
 
-	return result;
+        return result;
     }
 }

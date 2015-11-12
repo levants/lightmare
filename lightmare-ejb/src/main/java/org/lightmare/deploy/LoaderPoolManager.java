@@ -65,17 +65,17 @@ public abstract class LoaderPoolManager {
      */
     private static ClassLoader getCurrent(MetaCreator creator) {
 
-	ClassLoader current;
+        ClassLoader current;
 
-	// Gets class loader for this deployment
-	ClassLoader existing = creator.getCurrent();
-	if (existing == null) {
-	    current = LibraryLoader.getContextClassLoader();
-	} else {
-	    current = existing;
-	}
+        // Gets class loader for this deployment
+        ClassLoader existing = creator.getCurrent();
+        if (existing == null) {
+            current = LibraryLoader.getContextClassLoader();
+        } else {
+            current = existing;
+        }
 
-	return current;
+        return current;
     }
 
     /**
@@ -86,17 +86,17 @@ public abstract class LoaderPoolManager {
      */
     public static ClassLoader getCurrent() {
 
-	ClassLoader current;
+        ClassLoader current;
 
-	MetaCreator creator = MetaContainer.getCreator();
-	if (creator == null) {
-	    current = LibraryLoader.getContextClassLoader();
-	} else {
-	    // Gets default, context class loader for current thread
-	    current = getCurrent(creator);
-	}
+        MetaCreator creator = MetaContainer.getCreator();
+        if (creator == null) {
+            current = LibraryLoader.getContextClassLoader();
+        } else {
+            // Gets default, context class loader for current thread
+            current = getCurrent(creator);
+        }
 
-	return current;
+        return current;
     }
 
     /**
@@ -106,8 +106,7 @@ public abstract class LoaderPoolManager {
      * @return <code>boolean</code> validation result
      */
     private static boolean invalid() {
-	return (LOADER_POOL == null || LOADER_POOL.isShutdown()
-		|| LOADER_POOL.isTerminated());
+        return (LOADER_POOL == null || LOADER_POOL.isShutdown() || LOADER_POOL.isTerminated());
     }
 
     /**
@@ -118,7 +117,7 @@ public abstract class LoaderPoolManager {
      * @throws IOException
      */
     private static boolean tryLock() throws IOException {
-	return ObjectUtils.tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
+        return ObjectUtils.tryLock(LOCK, LOCK_TIME, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -128,12 +127,12 @@ public abstract class LoaderPoolManager {
      */
     private static ExecutorService createLoaderPool() {
 
-	ExecutorService pool;
+        ExecutorService pool;
 
-	ThreadFactory factory = new LoaderThreadFactory();
-	pool = Executors.newFixedThreadPool(LOADER_POOL_SIZE, factory);
+        ThreadFactory factory = new LoaderThreadFactory();
+        pool = Executors.newFixedThreadPool(LOADER_POOL_SIZE, factory);
 
-	return pool;
+        return pool;
     }
 
     /**
@@ -141,9 +140,9 @@ public abstract class LoaderPoolManager {
      */
     private static void checkAndInitLoaderPool() {
 
-	if (invalid()) {
-	    LOADER_POOL = createLoaderPool();
-	}
+        if (invalid()) {
+            LOADER_POOL = createLoaderPool();
+        }
     }
 
     /**
@@ -151,11 +150,11 @@ public abstract class LoaderPoolManager {
      */
     private static void initLoaderPool() {
 
-	try {
-	    checkAndInitLoaderPool();
-	} finally {
-	    ObjectUtils.unlock(LOCK);
-	}
+        try {
+            checkAndInitLoaderPool();
+        } finally {
+            ObjectUtils.unlock(LOCK);
+        }
     }
 
     /**
@@ -166,12 +165,12 @@ public abstract class LoaderPoolManager {
      */
     private static boolean initAndUnlock() throws IOException {
 
-	boolean locked = tryLock();
-	if (locked) {
-	    initLoaderPool();
-	}
+        boolean locked = tryLock();
+        if (locked) {
+            initLoaderPool();
+        }
 
-	return locked;
+        return locked;
     }
 
     /**
@@ -182,15 +181,15 @@ public abstract class LoaderPoolManager {
      */
     protected static ExecutorService getLoaderPool() throws IOException {
 
-	if (invalid()) {
-	    boolean locked = Boolean.FALSE;
-	    while (Boolean.FALSE.equals(locked)) {
-		// Locks the object to avoid shut down and submit in parallel
-		locked = initAndUnlock();
-	    }
-	}
+        if (invalid()) {
+            boolean locked = Boolean.FALSE;
+            while (Boolean.FALSE.equals(locked)) {
+                // Locks the object to avoid shut down and submit in parallel
+                locked = initAndUnlock();
+            }
+        }
 
-	return LOADER_POOL;
+        return LOADER_POOL;
     }
 
     /**
@@ -200,8 +199,8 @@ public abstract class LoaderPoolManager {
      * @throws IOException
      */
     public static void submit(Runnable runnable) throws IOException {
-	ExecutorService pool = getLoaderPool();
-	pool.submit(runnable);
+        ExecutorService pool = getLoaderPool();
+        pool.submit(runnable);
     }
 
     /**
@@ -212,15 +211,14 @@ public abstract class LoaderPoolManager {
      *         instance
      * @throws IOException
      */
-    public static <T> Future<T> submit(Callable<T> callable)
-	    throws IOException {
+    public static <T> Future<T> submit(Callable<T> callable) throws IOException {
 
-	Future<T> future;
+        Future<T> future;
 
-	ExecutorService pool = getLoaderPool();
-	future = pool.submit(callable);
+        ExecutorService pool = getLoaderPool();
+        future = pool.submit(callable);
 
-	return future;
+        return future;
     }
 
     /**
@@ -228,10 +226,10 @@ public abstract class LoaderPoolManager {
      */
     private static void shutDownPool() {
 
-	if (ObjectUtils.notNull(LOADER_POOL)) {
-	    LOADER_POOL.shutdown();
-	    LOADER_POOL = null;
-	}
+        if (ObjectUtils.notNull(LOADER_POOL)) {
+            LOADER_POOL.shutdown();
+            LOADER_POOL = null;
+        }
     }
 
     /**
@@ -241,11 +239,11 @@ public abstract class LoaderPoolManager {
      */
     private static void reloadAndUnlock() throws IOException {
 
-	try {
-	    shutDownPool();
-	} finally {
-	    ObjectUtils.unlock(LOCK);
-	}
+        try {
+            shutDownPool();
+        } finally {
+            ObjectUtils.unlock(LOCK);
+        }
     }
 
     /**
@@ -255,13 +253,13 @@ public abstract class LoaderPoolManager {
      */
     public static void reload() throws IOException {
 
-	boolean locked = Boolean.FALSE;
-	while (Boolean.FALSE.equals(locked)) {
-	    // Locks the object to avoid shut down and submit in parallel
-	    locked = tryLock();
-	    if (locked) {
-		reloadAndUnlock();
-	    }
-	}
+        boolean locked = Boolean.FALSE;
+        while (Boolean.FALSE.equals(locked)) {
+            // Locks the object to avoid shut down and submit in parallel
+            locked = tryLock();
+            if (locked) {
+                reloadAndUnlock();
+            }
+        }
     }
 }

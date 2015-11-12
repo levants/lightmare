@@ -63,9 +63,9 @@ public class ORMCreator {
     private Configuration configClone;
 
     private ORMCreator(MetaCreator creator) {
-	Map<String, ArchiveUtils> aggregateds = creator.getAggregateds();
-	this.aggregateds = new WeakHashMap<String, ArchiveUtils>(aggregateds);
-	this.annotationFinder = creator.getAnnotationFinder();
+        Map<String, ArchiveUtils> aggregateds = creator.getAggregateds();
+        this.aggregateds = new WeakHashMap<String, ArchiveUtils>(aggregateds);
+        this.annotationFinder = creator.getAnnotationFinder();
     }
 
     /**
@@ -78,14 +78,14 @@ public class ORMCreator {
      */
     private boolean checkForUnitName(String className) throws IOException {
 
-	boolean isValid;
+        boolean isValid;
 
-	Class<?> entityClass;
-	entityClass = ClassUtils.initClassForName(className);
-	UnitName annotation = entityClass.getAnnotation(UnitName.class);
-	isValid = annotation.value().equals(configClone.getAnnotatedUnitName());
+        Class<?> entityClass;
+        entityClass = ClassUtils.initClassForName(className);
+        UnitName annotation = entityClass.getAnnotation(UnitName.class);
+        isValid = annotation.value().equals(configClone.getAnnotatedUnitName());
 
-	return isValid;
+        return isValid;
     }
 
     /**
@@ -97,17 +97,17 @@ public class ORMCreator {
      */
     private void filterEntitiesForJar(Set<String> classSet, String fileNameForBean) {
 
-	Map<String, String> classOwnersFiles = annotationFinder.getClassOwnersFiles();
+        Map<String, String> classOwnersFiles = annotationFinder.getClassOwnersFiles();
 
-	String fileNameForEntity;
-	boolean toBeRemoved;
-	for (String entityName : classSet) {
-	    fileNameForEntity = classOwnersFiles.get(entityName);
-	    toBeRemoved = ObjectUtils.notNullNotEquals(fileNameForEntity, fileNameForBean);
-	    if (toBeRemoved) {
-		classSet.remove(entityName);
-	    }
-	}
+        String fileNameForEntity;
+        boolean toBeRemoved;
+        for (String entityName : classSet) {
+            fileNameForEntity = classOwnersFiles.get(entityName);
+            toBeRemoved = ObjectUtils.notNullNotEquals(fileNameForEntity, fileNameForBean);
+            if (toBeRemoved) {
+                classSet.remove(entityName);
+            }
+        }
     }
 
     /**
@@ -119,15 +119,15 @@ public class ORMCreator {
      */
     private Set<String> filterUnitEntities(Set<String> classes) throws IOException {
 
-	Set<String> filtereds = new HashSet<String>();
+        Set<String> filtereds = new HashSet<String>();
 
-	for (String className : classes) {
-	    if (checkForUnitName(className)) {
-		filtereds.add(className);
-	    }
-	}
+        for (String className : classes) {
+            if (checkForUnitName(className)) {
+                filtereds.add(className);
+            }
+        }
 
-	return filtereds;
+        return filtereds;
     }
 
     /**
@@ -140,16 +140,16 @@ public class ORMCreator {
      */
     private List<String> filterEntities(Set<String> classSet) throws IOException {
 
-	List<String> classes;
+        List<String> classes;
 
-	if (configClone.getAnnotatedUnitName() == null) {
-	    classes = CollectionUtils.translateToList(classSet);
-	} else {
-	    Set<String> filtereds = filterUnitEntities(classSet);
-	    classes = CollectionUtils.translateToList(filtereds);
-	}
+        if (configClone.getAnnotatedUnitName() == null) {
+            classes = CollectionUtils.translateToList(classSet);
+        } else {
+            Set<String> filtereds = filterUnitEntities(classSet);
+            classes = CollectionUtils.translateToList(filtereds);
+        }
 
-	return classes;
+        return classes;
     }
 
     /**
@@ -159,20 +159,20 @@ public class ORMCreator {
      */
     private Set<String> scanEntities() {
 
-	Set<String> classSet;
+        Set<String> classSet;
 
-	Map<String, Set<String>> annotationIndex = annotationFinder.getAnnotationIndex();
-	classSet = annotationIndex.get(Entity.class.getName());
-	String annotatedUnitName = configClone.getAnnotatedUnitName();
-	if (annotatedUnitName == null) {
-	    classSet = annotationIndex.get(Entity.class.getName());
-	} else if (annotatedUnitName.equals(unitName)) {
-	    Set<String> unitNamedSet = annotationIndex.get(UnitName.class.getName());
-	    // Intersects entities with unit name annotated classes
-	    classSet.retainAll(unitNamedSet);
-	}
+        Map<String, Set<String>> annotationIndex = annotationFinder.getAnnotationIndex();
+        classSet = annotationIndex.get(Entity.class.getName());
+        String annotatedUnitName = configClone.getAnnotatedUnitName();
+        if (annotatedUnitName == null) {
+            classSet = annotationIndex.get(Entity.class.getName());
+        } else if (annotatedUnitName.equals(unitName)) {
+            Set<String> unitNamedSet = annotationIndex.get(UnitName.class.getName());
+            // Intersects entities with unit name annotated classes
+            classSet.retainAll(unitNamedSet);
+        }
 
-	return classSet;
+        return classSet;
     }
 
     /**
@@ -184,14 +184,14 @@ public class ORMCreator {
      */
     private Set<String> scanAndFilterEntities(ArchiveUtils ioUtils, Map<String, String> classOwnersFiles) {
 
-	Set<String> classSet = scanEntities();
+        Set<String> classSet = scanEntities();
 
-	if (ObjectUtils.notNull(ioUtils)) {
-	    String fileNameForBean = classOwnersFiles.get(beanName);
-	    filterEntitiesForJar(classSet, fileNameForBean);
-	}
+        if (ObjectUtils.notNull(ioUtils)) {
+            String fileNameForBean = classOwnersFiles.get(beanName);
+            filterEntitiesForJar(classSet, fileNameForBean);
+        }
 
-	return classSet;
+        return classSet;
     }
 
     /**
@@ -203,11 +203,11 @@ public class ORMCreator {
      * @throws IOException
      */
     private void scanEntities(ArchiveUtils ioUtils, Map<String, String> classOwnersFiles, JpaManager.Builder builder)
-	    throws IOException {
+            throws IOException {
 
-	Set<String> classSet = scanAndFilterEntities(ioUtils, classOwnersFiles);
-	List<String> classes = filterEntities(classSet);
-	builder.setClasses(classes);
+        Set<String> classSet = scanAndFilterEntities(ioUtils, classOwnersFiles);
+        List<String> classes = filterEntities(classSet);
+        builder.setClasses(classes);
     }
 
     /**
@@ -218,12 +218,12 @@ public class ORMCreator {
      * @param classOwnersFiles
      */
     private void chackAndSetURL(JpaManager.Builder builder, ArchiveUtils ioUtils,
-	    Map<String, String> classOwnersFiles) {
+            Map<String, String> classOwnersFiles) {
 
-	if (ObjectUtils.notNull(ioUtils)) {
-	    URL jarURL = ioUtils.getAppropriatedURL(classOwnersFiles, beanName);
-	    builder.setURL(jarURL);
-	}
+        if (ObjectUtils.notNull(ioUtils)) {
+            URL jarURL = ioUtils.getAppropriatedURL(classOwnersFiles, beanName);
+            builder.setURL(jarURL);
+        }
     }
 
     /**
@@ -235,11 +235,11 @@ public class ORMCreator {
      * @throws IOException
      */
     private void scanEntities(JpaManager.Builder builder, ArchiveUtils ioUtils, Map<String, String> classOwnersFiles)
-	    throws IOException {
+            throws IOException {
 
-	if (configClone.isScanForEntities()) {
-	    scanEntities(ioUtils, classOwnersFiles, builder);
-	}
+        if (configClone.isScanForEntities()) {
+            scanEntities(ioUtils, classOwnersFiles, builder);
+        }
     }
 
     /**
@@ -250,16 +250,16 @@ public class ORMCreator {
      */
     public void configureConnection() throws IOException {
 
-	JpaManager.Builder builder = new JpaManager.Builder();
-	Map<String, String> classOwnersFiles = annotationFinder.getClassOwnersFiles();
-	ArchiveUtils ioUtils = aggregateds.get(beanName);
-	chackAndSetURL(builder, ioUtils, classOwnersFiles);
-	scanEntities(builder, ioUtils, classOwnersFiles);
-	// Find data source name for thins unit name
-	String dataSourceName = configClone.getDataSourceName(unitName);
-	builder.dataSourceName(dataSourceName);
-	// Builds connection for appropriated persistence unit name
-	builder.configure(configClone).setClassLoader(loader).build().create(unitName);
+        JpaManager.Builder builder = new JpaManager.Builder();
+        Map<String, String> classOwnersFiles = annotationFinder.getClassOwnersFiles();
+        ArchiveUtils ioUtils = aggregateds.get(beanName);
+        chackAndSetURL(builder, ioUtils, classOwnersFiles);
+        scanEntities(builder, ioUtils, classOwnersFiles);
+        // Find data source name for thins unit name
+        String dataSourceName = configClone.getDataSourceName(unitName);
+        builder.dataSourceName(dataSourceName);
+        // Builds connection for appropriated persistence unit name
+        builder.configure(configClone).setClassLoader(loader).build().create(unitName);
     }
 
     /**
@@ -271,69 +271,69 @@ public class ORMCreator {
      */
     public static class Builder {
 
-	// ORMCreator instance to initialize
-	private ORMCreator creator;
+        // ORMCreator instance to initialize
+        private ORMCreator creator;
 
-	/**
-	 * Constructor with necessary {@link MetaCreator} instance
-	 *
-	 * @param creator
-	 */
-	public Builder(MetaCreator creator) {
-	    this.creator = new ORMCreator(creator);
-	}
+        /**
+         * Constructor with necessary {@link MetaCreator} instance
+         *
+         * @param creator
+         */
+        public Builder(MetaCreator creator) {
+            this.creator = new ORMCreator(creator);
+        }
 
-	/**
-	 * Sets unit name for connection
-	 *
-	 * @param unitName
-	 * @return {@link Builder}
-	 */
-	public Builder setUnitName(String unitName) {
-	    creator.unitName = unitName;
-	    return this;
-	}
+        /**
+         * Sets unit name for connection
+         *
+         * @param unitName
+         * @return {@link Builder}
+         */
+        public Builder setUnitName(String unitName) {
+            creator.unitName = unitName;
+            return this;
+        }
 
-	/**
-	 * Sets EJB bean name
-	 *
-	 * @param beanName
-	 * @return {@link Builder}
-	 */
-	public Builder setBeanName(String beanName) {
-	    creator.beanName = beanName;
-	    return this;
-	}
+        /**
+         * Sets EJB bean name
+         *
+         * @param beanName
+         * @return {@link Builder}
+         */
+        public Builder setBeanName(String beanName) {
+            creator.beanName = beanName;
+            return this;
+        }
 
-	/**
-	 * Sets {@link ClassLoader} for this bean initialization and use
-	 *
-	 * @param loader
-	 * @return {@link Builder}
-	 */
-	public Builder setClassLoader(ClassLoader loader) {
-	    creator.loader = loader;
-	    return this;
-	}
+        /**
+         * Sets {@link ClassLoader} for this bean initialization and use
+         *
+         * @param loader
+         * @return {@link Builder}
+         */
+        public Builder setClassLoader(ClassLoader loader) {
+            creator.loader = loader;
+            return this;
+        }
 
-	/**
-	 * Sets clone for {@link Configuration} instance
-	 *
-	 * @param configClone
-	 * @return {@link Builder}
-	 */
-	public Builder setConfiguration(Configuration configClone) {
-	    creator.configClone = configClone;
-	    return this;
-	}
+        /**
+         * Sets clone for {@link Configuration} instance
+         *
+         * @param configClone
+         * @return {@link Builder}
+         */
+        public Builder setConfiguration(Configuration configClone) {
+            creator.configClone = configClone;
+            return this;
+        }
 
-	/**
-	 * Returns initialized instance of {@link ORMCreator} class
-	 *
-	 * @return {@link ORMCreator} instance
-	 */
-	public ORMCreator build() {
-	    return this.creator;
-	}
+        /**
+         * Returns initialized instance of {@link ORMCreator} class
+         *
+         * @return {@link ORMCreator} instance
+         */
+        public ORMCreator build() {
+            return this.creator;
+        }
     }
 }

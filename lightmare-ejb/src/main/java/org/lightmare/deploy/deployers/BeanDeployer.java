@@ -128,15 +128,15 @@ public class BeanDeployer implements Callable<String> {
      * @param parameters
      */
     public BeanDeployer(BeanParameters parameters) {
-	this.creator = parameters.creator;
-	this.beanName = parameters.beanName;
-	this.className = parameters.className;
-	this.loader = parameters.loader;
-	this.tmpFiles = parameters.tmpFiles;
-	this.metaData = parameters.metaData;
-	this.blocker = parameters.blocker;
-	this.deployData = parameters.deployData;
-	this.configuration = parameters.configuration;
+        this.creator = parameters.creator;
+        this.beanName = parameters.beanName;
+        this.className = parameters.className;
+        this.loader = parameters.loader;
+        this.tmpFiles = parameters.tmpFiles;
+        this.metaData = parameters.metaData;
+        this.blocker = parameters.blocker;
+        this.deployData = parameters.deployData;
+        this.configuration = parameters.configuration;
     }
 
     /**
@@ -146,11 +146,11 @@ public class BeanDeployer implements Callable<String> {
      */
     private void addAccessibleField(AccessibleObject accessibleObject) {
 
-	if (accessibleFields == null) {
-	    accessibleFields = new ArrayList<AccessibleObject>();
-	}
+        if (accessibleFields == null) {
+            accessibleFields = new ArrayList<AccessibleObject>();
+        }
 
-	accessibleFields.add(accessibleObject);
+        accessibleFields.add(accessibleObject);
     }
 
     /**
@@ -161,9 +161,9 @@ public class BeanDeployer implements Callable<String> {
      */
     private void initOrmCreator(ConnectionSemaphore semaphore) throws IOException {
 
-	ORMCreator orm = new ORMCreator.Builder(creator).setUnitName(semaphore.getUnitName()).setBeanName(beanName)
-		.setClassLoader(loader).setConfiguration(configuration).build();
-	orm.configureConnection();
+        ORMCreator orm = new ORMCreator.Builder(creator).setUnitName(semaphore.getUnitName()).setBeanName(beanName)
+                .setClassLoader(loader).setConfiguration(configuration).build();
+        orm.configureConnection();
     }
 
     /**
@@ -176,15 +176,15 @@ public class BeanDeployer implements Callable<String> {
      */
     private void lockSemaphore(ConnectionSemaphore semaphore) throws IOException {
 
-	synchronized (semaphore) {
-	    if (Boolean.FALSE.equals(semaphore.isCheck())) {
-		try {
-		    initOrmCreator(semaphore);
-		} finally {
-		    semaphore.notifyAll();
-		}
-	    }
-	}
+        synchronized (semaphore) {
+            if (Boolean.FALSE.equals(semaphore.isCheck())) {
+                try {
+                    initOrmCreator(semaphore);
+                } finally {
+                    semaphore.notifyAll();
+                }
+            }
+        }
     }
 
     /**
@@ -193,10 +193,10 @@ public class BeanDeployer implements Callable<String> {
      */
     private void releaseBlocker() {
 
-	if (Boolean.FALSE.equals(countedDown)) {
-	    blocker.countDown();
-	    countedDown = Boolean.TRUE;
-	}
+        if (Boolean.FALSE.equals(countedDown)) {
+            blocker.countDown();
+            countedDown = Boolean.TRUE;
+        }
     }
 
     /**
@@ -209,12 +209,12 @@ public class BeanDeployer implements Callable<String> {
      */
     private void checkAndSetBean(String beanEjbName) throws BeanInUseException {
 
-	try {
-	    MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
-	} catch (BeanInUseException ex) {
-	    releaseBlocker();
-	    throw ex;
-	}
+        try {
+            MetaContainer.checkAndAddMetaData(beanEjbName, metaData);
+        } catch (BeanInUseException ex) {
+            releaseBlocker();
+            throw ex;
+        }
     }
 
     /**
@@ -224,11 +224,11 @@ public class BeanDeployer implements Callable<String> {
      */
     private void addUnitField(Field unitField) {
 
-	if (unitFields == null) {
-	    unitFields = new ArrayList<Field>();
-	}
+        if (unitFields == null) {
+            unitFields = new ArrayList<Field>();
+        }
 
-	unitFields.add(unitField);
+        unitFields.add(unitField);
     }
 
     /**
@@ -240,14 +240,14 @@ public class BeanDeployer implements Callable<String> {
      */
     private boolean checkOnEmf(String unitName, String jndiName) {
 
-	boolean checkForEmf = ConnectionContainer.checkForEmf(unitName);
+        boolean checkForEmf = ConnectionContainer.checkForEmf(unitName);
 
-	if (StringUtils.valid(jndiName)) {
-	    jndiName = NamingUtils.createJpaJndiName(jndiName);
-	    checkForEmf = checkForEmf && ConnectionContainer.checkForEmf(jndiName);
-	}
+        if (StringUtils.valid(jndiName)) {
+            jndiName = NamingUtils.createJpaJndiName(jndiName);
+            checkForEmf = checkForEmf && ConnectionContainer.checkForEmf(jndiName);
+        }
 
-	return checkForEmf;
+        return checkForEmf;
     }
 
     /**
@@ -258,23 +258,23 @@ public class BeanDeployer implements Callable<String> {
      */
     private void configConnection(ConnectionData connection) throws IOException {
 
-	String unitName = connection.getUnitName();
-	String jndiName = connection.getJndiName();
-	ConnectionSemaphore semaphore;
-	boolean checkForEmf = checkOnEmf(unitName, jndiName);
-	if (checkForEmf) {
-	    releaseBlocker();
-	    semaphore = ConnectionContainer.getSemaphore(unitName);
-	    connection.setConnection(semaphore);
-	} else {
-	    // Sets connection semaphore for this connection
-	    semaphore = ConnectionContainer.cacheSemaphore(unitName, jndiName);
-	    connection.setConnection(semaphore);
-	    releaseBlocker();
-	    if (ObjectUtils.notNull(semaphore)) {
-		lockSemaphore(semaphore);
-	    }
-	}
+        String unitName = connection.getUnitName();
+        String jndiName = connection.getJndiName();
+        ConnectionSemaphore semaphore;
+        boolean checkForEmf = checkOnEmf(unitName, jndiName);
+        if (checkForEmf) {
+            releaseBlocker();
+            semaphore = ConnectionContainer.getSemaphore(unitName);
+            connection.setConnection(semaphore);
+        } else {
+            // Sets connection semaphore for this connection
+            semaphore = ConnectionContainer.cacheSemaphore(unitName, jndiName);
+            connection.setConnection(semaphore);
+            releaseBlocker();
+            if (ObjectUtils.notNull(semaphore)) {
+                lockSemaphore(semaphore);
+            }
+        }
     }
 
     /**
@@ -285,10 +285,10 @@ public class BeanDeployer implements Callable<String> {
      */
     private void setConnectionNames(ConnectionData connection, PersistenceContext context) {
 
-	String unitName = context.unitName();
-	String jndiName = context.name();
-	connection.setUnitName(unitName);
-	connection.setJndiName(jndiName);
+        String unitName = context.unitName();
+        String jndiName = context.name();
+        connection.setUnitName(unitName);
+        connection.setJndiName(jndiName);
     }
 
     /**
@@ -300,11 +300,11 @@ public class BeanDeployer implements Callable<String> {
      */
     private void identifyConnections(PersistenceContext context, Field connectionField) throws IOException {
 
-	ConnectionData connection = new ConnectionData();
-	connection.setConnectionField(connectionField);
-	setConnectionNames(connection, context);
-	configConnection(connection);
-	metaData.addConnection(connection);
+        ConnectionData connection = new ConnectionData();
+        connection.setConnectionField(connectionField);
+        setConnectionNames(connection, context);
+        configConnection(connection);
+        metaData.addConnection(connection);
     }
 
     /**
@@ -314,27 +314,27 @@ public class BeanDeployer implements Callable<String> {
      */
     private void cacheInjectFields(Field field) {
 
-	EJB ejb = field.getAnnotation(EJB.class);
-	Class<?> interfaceClass = ejb.beanInterface();
-	if (interfaceClass == null || interfaceClass.equals(Object.class)) {
-	    interfaceClass = field.getType();
-	}
+        EJB ejb = field.getAnnotation(EJB.class);
+        Class<?> interfaceClass = ejb.beanInterface();
+        if (interfaceClass == null || interfaceClass.equals(Object.class)) {
+            interfaceClass = field.getType();
+        }
 
-	String name = ejb.beanName();
-	if (name == null || name.isEmpty()) {
-	    name = BeanUtils.nameFromInterface(interfaceClass);
-	}
+        String name = ejb.beanName();
+        if (name == null || name.isEmpty()) {
+            name = BeanUtils.nameFromInterface(interfaceClass);
+        }
 
-	String description = ejb.description();
-	String mappedName = ejb.mappedName();
-	Class<?>[] interfaceClasses = { interfaceClass };
-	InjectionData injectionData = new InjectionData();
-	injectionData.setField(field);
-	injectionData.setInterfaceClasses(interfaceClasses);
-	injectionData.setName(name);
-	injectionData.setDescription(description);
-	injectionData.setMappedName(mappedName);
-	metaData.addInject(injectionData);
+        String description = ejb.description();
+        String mappedName = ejb.mappedName();
+        Class<?>[] interfaceClasses = { interfaceClass };
+        InjectionData injectionData = new InjectionData();
+        injectionData.setField(field);
+        injectionData.setInterfaceClasses(interfaceClasses);
+        injectionData.setName(name);
+        injectionData.setDescription(description);
+        injectionData.setMappedName(mappedName);
+        metaData.addInject(injectionData);
     }
 
     /**
@@ -345,24 +345,24 @@ public class BeanDeployer implements Callable<String> {
      */
     private void retriveConnection(Field field) throws IOException {
 
-	PersistenceContext context = field.getAnnotation(PersistenceContext.class);
-	Resource resource = field.getAnnotation(Resource.class);
-	PersistenceUnit unit = field.getAnnotation(PersistenceUnit.class);
-	EJB ejbAnnot = field.getAnnotation(EJB.class);
-	if (ObjectUtils.notNull(context)) {
-	    identifyConnections(context, field);
-	    addAccessibleField(field);
-	} else if (ObjectUtils.notNull(resource)) {
-	    metaData.setTransactionField(field);
-	    addAccessibleField(field);
-	} else if (ObjectUtils.notNull(unit)) {
-	    addUnitField(field);
-	    addAccessibleField(field);
-	} else if (ObjectUtils.notNull(ejbAnnot)) {
-	    // caches EJB annotated fields
-	    cacheInjectFields(field);
-	    addAccessibleField(field);
-	}
+        PersistenceContext context = field.getAnnotation(PersistenceContext.class);
+        Resource resource = field.getAnnotation(Resource.class);
+        PersistenceUnit unit = field.getAnnotation(PersistenceUnit.class);
+        EJB ejbAnnot = field.getAnnotation(EJB.class);
+        if (ObjectUtils.notNull(context)) {
+            identifyConnections(context, field);
+            addAccessibleField(field);
+        } else if (ObjectUtils.notNull(resource)) {
+            metaData.setTransactionField(field);
+            addAccessibleField(field);
+        } else if (ObjectUtils.notNull(unit)) {
+            addUnitField(field);
+            addAccessibleField(field);
+        } else if (ObjectUtils.notNull(ejbAnnot)) {
+            // caches EJB annotated fields
+            cacheInjectFields(field);
+            addAccessibleField(field);
+        }
     }
 
     /**
@@ -375,26 +375,26 @@ public class BeanDeployer implements Callable<String> {
      */
     private void retrieveConnections() throws IOException {
 
-	Class<?> beanClass = metaData.getBeanClass();
-	Field[] fields = beanClass.getDeclaredFields();
-	if (CollectionUtils.invalid(fields)) {
-	    releaseBlocker();
-	}
+        Class<?> beanClass = metaData.getBeanClass();
+        Field[] fields = beanClass.getDeclaredFields();
+        if (CollectionUtils.invalid(fields)) {
+            releaseBlocker();
+        }
 
-	for (Field field : fields) {
-	    retriveConnection(field);
-	}
+        for (Field field : fields) {
+            retriveConnection(field);
+        }
 
-	if (CollectionUtils.valid(unitFields)) {
-	    metaData.addUnitFields(unitFields);
-	}
+        if (CollectionUtils.valid(unitFields)) {
+            metaData.addUnitFields(unitFields);
+        }
 
-	// Sets fields for injection (PersistenceContext, PersistenceUnit,
-	// Resource, EJB) as accessible
-	if (CollectionUtils.valid(accessibleFields)) {
-	    AccessibleObject[] accessibleObjects = CollectionUtils.toArray(accessibleFields, AccessibleObject.class);
-	    AccessibleObject.setAccessible(accessibleObjects, Boolean.TRUE);
-	}
+        // Sets fields for injection (PersistenceContext, PersistenceUnit,
+        // Resource, EJB) as accessible
+        if (CollectionUtils.valid(accessibleFields)) {
+            AccessibleObject[] accessibleObjects = CollectionUtils.toArray(accessibleFields, AccessibleObject.class);
+            AccessibleObject.setAccessible(accessibleObjects, Boolean.TRUE);
+        }
     }
 
     /**
@@ -405,13 +405,13 @@ public class BeanDeployer implements Callable<String> {
      */
     private void createMeta(Class<?> beanClass) throws IOException {
 
-	metaData.setBeanClass(beanClass);
-	if (Configuration.isServer()) {
-	    retrieveConnections();
-	} else {
-	    releaseBlocker();
-	}
-	metaData.setLoader(loader);
+        metaData.setBeanClass(beanClass);
+        if (Configuration.isServer()) {
+            retrieveConnections();
+        } else {
+            releaseBlocker();
+        }
+        metaData.setLoader(loader);
     }
 
     /**
@@ -424,26 +424,26 @@ public class BeanDeployer implements Callable<String> {
      */
     private void checkOnTransactional(Class<?> beanClass) {
 
-	TransactionAttribute transactionAttribute = beanClass.getAnnotation(TransactionAttribute.class);
-	TransactionManagement transactionManagement = beanClass.getAnnotation(TransactionManagement.class);
-	boolean transactional = Boolean.FALSE;
-	TransactionAttributeType transactionAttrType;
-	TransactionManagementType transactionManType;
-	if (transactionAttribute == null) {
-	    transactional = Boolean.TRUE;
-	    transactionAttrType = TransactionAttributeType.REQUIRED;
-	    transactionManType = TransactionManagementType.CONTAINER;
-	} else if (transactionManagement == null) {
-	    transactionAttrType = transactionAttribute.value();
-	    transactionManType = TransactionManagementType.CONTAINER;
-	} else {
-	    transactionAttrType = transactionAttribute.value();
-	    transactionManType = transactionManagement.value();
-	}
+        TransactionAttribute transactionAttribute = beanClass.getAnnotation(TransactionAttribute.class);
+        TransactionManagement transactionManagement = beanClass.getAnnotation(TransactionManagement.class);
+        boolean transactional = Boolean.FALSE;
+        TransactionAttributeType transactionAttrType;
+        TransactionManagementType transactionManType;
+        if (transactionAttribute == null) {
+            transactional = Boolean.TRUE;
+            transactionAttrType = TransactionAttributeType.REQUIRED;
+            transactionManType = TransactionManagementType.CONTAINER;
+        } else if (transactionManagement == null) {
+            transactionAttrType = transactionAttribute.value();
+            transactionManType = TransactionManagementType.CONTAINER;
+        } else {
+            transactionAttrType = transactionAttribute.value();
+            transactionManType = transactionManagement.value();
+        }
 
-	metaData.setTransactional(transactional);
-	metaData.setTransactionAttrType(transactionAttrType);
-	metaData.setTransactionManType(transactionManType);
+        metaData.setTransactional(transactional);
+        metaData.setTransactionAttrType(transactionAttrType);
+        metaData.setTransactionManType(transactionManType);
     }
 
     /**
@@ -454,23 +454,23 @@ public class BeanDeployer implements Callable<String> {
      * @throws IOException
      */
     private void cacheInterceptors(Class<?> beanClass, Class<?>[] interceptorClasses, Method beanMethod)
-	    throws IOException {
+            throws IOException {
 
-	int length = interceptorClasses.length;
-	Class<?> interceptorClass;
-	List<Method> interceptorMethods;
-	Method interceptorMethod;
-	for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
-	    interceptorClass = interceptorClasses[i];
-	    interceptorMethods = ClassUtils.getAnnotatedMethods(beanClass, AroundInvoke.class);
-	    interceptorMethod = CollectionUtils.getFirst(interceptorMethods);
-	    InterceptorData data = new InterceptorData();
-	    data.setBeanClass(beanClass);
-	    data.setBeanMethod(beanMethod);
-	    data.setInterceptorClass(interceptorClass);
-	    data.setInterceptorMethod(interceptorMethod);
-	    metaData.addInterceptor(data);
-	}
+        int length = interceptorClasses.length;
+        Class<?> interceptorClass;
+        List<Method> interceptorMethods;
+        Method interceptorMethod;
+        for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
+            interceptorClass = interceptorClasses[i];
+            interceptorMethods = ClassUtils.getAnnotatedMethods(beanClass, AroundInvoke.class);
+            interceptorMethod = CollectionUtils.getFirst(interceptorMethods);
+            InterceptorData data = new InterceptorData();
+            data.setBeanClass(beanClass);
+            data.setBeanMethod(beanMethod);
+            data.setInterceptorClass(interceptorClass);
+            data.setInterceptorMethod(interceptorMethod);
+            metaData.addInterceptor(data);
+        }
     }
 
     /**
@@ -483,13 +483,13 @@ public class BeanDeployer implements Callable<String> {
      * @throws IOException
      */
     private void cacheInterceptors(Interceptors interceptors, Class<?> beanClass, Method... beanMethods)
-	    throws IOException {
+            throws IOException {
 
-	Class<?>[] interceptorClasses = interceptors.value();
-	if (CollectionUtils.valid(interceptorClasses)) {
-	    Method beanMethod = CollectionUtils.getFirst(beanMethods);
-	    cacheInterceptors(beanClass, interceptorClasses, beanMethod);
-	}
+        Class<?>[] interceptorClasses = interceptors.value();
+        if (CollectionUtils.valid(interceptorClasses)) {
+            Method beanMethod = CollectionUtils.getFirst(beanMethods);
+            cacheInterceptors(beanClass, interceptorClasses, beanMethod);
+        }
     }
 
     /**
@@ -499,22 +499,22 @@ public class BeanDeployer implements Callable<String> {
      */
     private void identifyInterceptors(Class<?> beanClass) throws IOException {
 
-	Interceptors interceptors = beanClass.getAnnotation(Interceptors.class);
-	if (ObjectUtils.notNull(interceptors)) {
-	    cacheInterceptors(interceptors, beanClass);
-	}
+        Interceptors interceptors = beanClass.getAnnotation(Interceptors.class);
+        if (ObjectUtils.notNull(interceptors)) {
+            cacheInterceptors(interceptors, beanClass);
+        }
 
-	List<Method> beanMethods = ClassUtils.getAnnotatedMethods(beanClass, Interceptors.class);
-	if (CollectionUtils.valid(beanMethods)) {
-	    for (Method beanMethod : beanMethods) {
-		interceptors = beanMethod.getAnnotation(Interceptors.class);
-		cacheInterceptors(interceptors, beanClass, beanMethod);
-	    }
-	}
+        List<Method> beanMethods = ClassUtils.getAnnotatedMethods(beanClass, Interceptors.class);
+        if (CollectionUtils.valid(beanMethods)) {
+            for (Method beanMethod : beanMethods) {
+                interceptors = beanMethod.getAnnotation(Interceptors.class);
+                cacheInterceptors(interceptors, beanClass, beanMethod);
+            }
+        }
     }
 
     private Class<?>[] toArray(Set<Class<?>> interfacesSet) {
-	return interfacesSet.toArray(new Class<?>[interfacesSet.size()]);
+        return interfacesSet.toArray(new Class<?>[interfacesSet.size()]);
     }
 
     /**
@@ -526,17 +526,17 @@ public class BeanDeployer implements Callable<String> {
      */
     private Class<?>[] ejbInterfaces(Annotation annotation) {
 
-	Class<?>[] interfaces;
+        Class<?>[] interfaces;
 
-	if (annotation instanceof Remote) {
-	    interfaces = ObjectUtils.cast(annotation, Remote.class).value();
-	} else if (annotation instanceof Local) {
-	    interfaces = ObjectUtils.cast(annotation, Local.class).value();
-	} else {
-	    interfaces = null;
-	}
+        if (annotation instanceof Remote) {
+            interfaces = ObjectUtils.cast(annotation, Remote.class).value();
+        } else if (annotation instanceof Local) {
+            interfaces = ObjectUtils.cast(annotation, Local.class).value();
+        } else {
+            interfaces = null;
+        }
 
-	return interfaces;
+        return interfaces;
     }
 
     /**
@@ -547,31 +547,31 @@ public class BeanDeployer implements Callable<String> {
      */
     private void initInterfaces(Class<?> beanClass, Class<? extends Annotation> type) {
 
-	Class<?>[] interfaces = null;
-	Set<Class<?>> interfacesSet = new HashSet<Class<?>>();
-	Annotation ejbAnnotation = beanClass.getAnnotation(type);
-	Class<?>[] ejbInterfaces = beanClass.getInterfaces();
+        Class<?>[] interfaces = null;
+        Set<Class<?>> interfacesSet = new HashSet<Class<?>>();
+        Annotation ejbAnnotation = beanClass.getAnnotation(type);
+        Class<?>[] ejbInterfaces = beanClass.getInterfaces();
 
-	if (ObjectUtils.notNull(ejbAnnotation)) {
-	    interfaces = ejbInterfaces(ejbAnnotation);
-	    if (CollectionUtils.valid(interfaces)) {
-		interfacesSet.addAll(Arrays.asList(interfaces));
-	    }
-	}
+        if (ObjectUtils.notNull(ejbAnnotation)) {
+            interfaces = ejbInterfaces(ejbAnnotation);
+            if (CollectionUtils.valid(interfaces)) {
+                interfacesSet.addAll(Arrays.asList(interfaces));
+            }
+        }
 
-	for (Class<?> interfaceClass : ejbInterfaces) {
-	    if (interfaceClass.isAnnotationPresent(type))
-		interfacesSet.add(interfaceClass);
-	}
+        for (Class<?> interfaceClass : ejbInterfaces) {
+            if (interfaceClass.isAnnotationPresent(type))
+                interfacesSet.add(interfaceClass);
+        }
 
-	if (CollectionUtils.valid(interfacesSet)) {
-	    interfaces = toArray(interfacesSet);
-	    if (ejbAnnotation instanceof Local) {
-		metaData.setRemoteInterfaces(interfaces);
-	    } else if (ejbAnnotation instanceof Remote) {
-		metaData.setRemoteInterfaces(interfaces);
-	    }
-	}
+        if (CollectionUtils.valid(interfacesSet)) {
+            interfaces = toArray(interfacesSet);
+            if (ejbAnnotation instanceof Local) {
+                metaData.setRemoteInterfaces(interfaces);
+            } else if (ejbAnnotation instanceof Remote) {
+                metaData.setRemoteInterfaces(interfaces);
+            }
+        }
     }
 
     /**
@@ -580,8 +580,8 @@ public class BeanDeployer implements Callable<String> {
      * @param beanClass
      */
     private void indentifyInterfaces(Class<?> beanClass) {
-	initInterfaces(beanClass, Local.class);
-	initInterfaces(beanClass, Remote.class);
+        initInterfaces(beanClass, Local.class);
+        initInterfaces(beanClass, Remote.class);
     }
 
     /**
@@ -591,13 +591,13 @@ public class BeanDeployer implements Callable<String> {
      */
     private void prepareRestBean(Class<?> beanClass) {
 
-	if (RestCheck.check(beanClass)) {
-	    try {
-		RestProvider.add(beanClass);
-	    } catch (Throwable ex) {
-		LOG.error(ex.getMessage(), ex);
-	    }
-	}
+        if (RestCheck.check(beanClass)) {
+            try {
+                RestProvider.add(beanClass);
+            } catch (Throwable ex) {
+                LOG.error(ex.getMessage(), ex);
+            }
+        }
     }
 
     /**
@@ -608,24 +608,24 @@ public class BeanDeployer implements Callable<String> {
      */
     private String createBeanClass() throws IOException {
 
-	String beanEjbName;
+        String beanEjbName;
 
-	try {
-	    Class<?> beanClass = ClassUtils.classForName(className, Boolean.FALSE, loader);
-	    checkOnTransactional(beanClass);
-	    beanEjbName = BeanUtils.beanName(beanClass);
-	    checkAndSetBean(beanEjbName);
-	    prepareRestBean(beanClass);
-	    createMeta(beanClass);
-	    indentifyInterfaces(beanClass);
-	    identifyInterceptors(beanClass);
-	    metaData.setInProgress(Boolean.FALSE);
-	} catch (IOException ex) {
-	    releaseBlocker();
-	    throw ex;
-	}
+        try {
+            Class<?> beanClass = ClassUtils.classForName(className, Boolean.FALSE, loader);
+            checkOnTransactional(beanClass);
+            beanEjbName = BeanUtils.beanName(beanClass);
+            checkAndSetBean(beanEjbName);
+            prepareRestBean(beanClass);
+            createMeta(beanClass);
+            indentifyInterfaces(beanClass);
+            identifyInterceptors(beanClass);
+            metaData.setInProgress(Boolean.FALSE);
+        } catch (IOException ex) {
+            releaseBlocker();
+            throw ex;
+        }
 
-	return beanEjbName;
+        return beanEjbName;
     }
 
     /**
@@ -635,26 +635,26 @@ public class BeanDeployer implements Callable<String> {
      */
     private String deployFile() {
 
-	String deployed = beanName;
+        String deployed = beanName;
 
-	ClassLoader currentLoader = LoaderPoolManager.getCurrent();
-	try {
-	    LibraryLoader.loadCurrentLibraries(loader);
-	    deployed = createBeanClass();
-	    chekcWatch = WatchUtils.checkForWatch(deployData);
-	    if (chekcWatch) {
-		URL url = deployData.getUrl();
-		url = WatchUtils.clearURL(url);
-		MetaContainer.addBeanName(url, deployed);
-	    }
-	    LogUtils.info(LOG, DEPLOYED_MESSAGE, beanName);
-	} catch (IOException ex) {
-	    LogUtils.error(LOG, ex, COULD_NOT_DEPLOY_MESSAGE, beanName, ex.getMessage());
-	} finally {
-	    LibraryLoader.loadCurrentLibraries(currentLoader);
-	}
+        ClassLoader currentLoader = LoaderPoolManager.getCurrent();
+        try {
+            LibraryLoader.loadCurrentLibraries(loader);
+            deployed = createBeanClass();
+            chekcWatch = WatchUtils.checkForWatch(deployData);
+            if (chekcWatch) {
+                URL url = deployData.getUrl();
+                url = WatchUtils.clearURL(url);
+                MetaContainer.addBeanName(url, deployed);
+            }
+            LogUtils.info(LOG, DEPLOYED_MESSAGE, beanName);
+        } catch (IOException ex) {
+            LogUtils.error(LOG, ex, COULD_NOT_DEPLOY_MESSAGE, beanName, ex.getMessage());
+        } finally {
+            LibraryLoader.loadCurrentLibraries(currentLoader);
+        }
 
-	return deployed;
+        return deployed;
     }
 
     /**
@@ -664,17 +664,17 @@ public class BeanDeployer implements Callable<String> {
      */
     private String deployExtracted() {
 
-	String deployed;
+        String deployed;
 
-	synchronized (tmpFiles) {
-	    try {
-		deployed = deployFile();
-	    } finally {
-		tmpFiles.notifyAll();
-	    }
-	}
+        synchronized (tmpFiles) {
+            try {
+                deployed = deployFile();
+            } finally {
+                tmpFiles.notifyAll();
+            }
+        }
 
-	return deployed;
+        return deployed;
     }
 
     /**
@@ -684,15 +684,15 @@ public class BeanDeployer implements Callable<String> {
      */
     private String deployBean() {
 
-	String deployed;
+        String deployed;
 
-	if (ObjectUtils.notNull(tmpFiles)) {
-	    deployed = deployExtracted();
-	} else {
-	    deployed = deployFile();
-	}
+        if (ObjectUtils.notNull(tmpFiles)) {
+            deployed = deployExtracted();
+        } else {
+            deployed = deployFile();
+        }
 
-	return deployed;
+        return deployed;
     }
 
     /**
@@ -702,25 +702,25 @@ public class BeanDeployer implements Callable<String> {
      */
     private String deploy() {
 
-	String deployed;
+        String deployed;
 
-	synchronized (metaData) {
-	    try {
-		deployed = deployBean();
-	    } catch (Exception ex) {
-		LOG.error(ex.getMessage(), ex);
-		deployed = null;
-	    } finally {
-		releaseBlocker();
-		metaData.notifyAll();
-	    }
-	}
+        synchronized (metaData) {
+            try {
+                deployed = deployBean();
+            } catch (Exception ex) {
+                LOG.error(ex.getMessage(), ex);
+                deployed = null;
+            } finally {
+                releaseBlocker();
+                metaData.notifyAll();
+            }
+        }
 
-	return deployed;
+        return deployed;
     }
 
     @Override
     public String call() throws Exception {
-	return deploy();
+        return deploy();
     }
 }

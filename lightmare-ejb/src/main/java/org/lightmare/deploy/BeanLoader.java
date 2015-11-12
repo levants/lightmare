@@ -64,20 +64,19 @@ public class BeanLoader {
      * @param <T>
      * @since 0.0.45
      */
-    private static class ContextLoaderAction<T>
-	    implements PrivilegedAction<Callable<T>> {
+    private static class ContextLoaderAction<T> implements PrivilegedAction<Callable<T>> {
 
-	private final Callable<T> current;
+        private final Callable<T> current;
 
-	public ContextLoaderAction(Callable<T> current) {
-	    this.current = current;
-	}
+        public ContextLoaderAction(Callable<T> current) {
+            this.current = current;
+        }
 
-	@Override
-	public Callable<T> run() {
-	    Callable<T> privileged = Executors.privilegedCallable(current);
-	    return privileged;
-	}
+        @Override
+        public Callable<T> run() {
+            Callable<T> privileged = Executors.privilegedCallable(current);
+            return privileged;
+        }
     }
 
     /**
@@ -88,25 +87,25 @@ public class BeanLoader {
      */
     public static class BeanParameters {
 
-	public MetaCreator creator;
+        public MetaCreator creator;
 
-	public String className;
+        public String className;
 
-	public String beanName;
+        public String beanName;
 
-	public ClassLoader loader;
+        public ClassLoader loader;
 
-	public List<File> tmpFiles;
+        public List<File> tmpFiles;
 
-	public CountDownLatch blocker;
+        public CountDownLatch blocker;
 
-	public MetaData metaData;
+        public MetaData metaData;
 
-	public DeployData deployData;
+        public DeployData deployData;
 
-	public boolean server;
+        public boolean server;
 
-	public Configuration configuration;
+        public Configuration configuration;
     }
 
     /**
@@ -117,13 +116,13 @@ public class BeanLoader {
      */
     public static class DataSourceParameters {
 
-	public Properties properties;
+        public Properties properties;
 
-	public Properties poolProperties;
+        public Properties poolProperties;
 
-	public String poolPath;
+        public String poolPath;
 
-	public CountDownLatch blocker;
+        public CountDownLatch blocker;
     }
 
     /**
@@ -133,18 +132,17 @@ public class BeanLoader {
      * @return {@link Future}
      * @throws IOException
      */
-    public static Future<String> loadBean(BeanParameters parameters)
-	    throws IOException {
+    public static Future<String> loadBean(BeanParameters parameters) throws IOException {
 
-	Future<String> future;
+        Future<String> future;
 
-	parameters.metaData = new MetaData();
-	String beanName = BeanUtils.parseName(parameters.className);
-	parameters.beanName = beanName;
-	final BeanDeployer beanDeployer = new BeanDeployer(parameters);
-	future = LoaderPoolManager.submit(beanDeployer);
+        parameters.metaData = new MetaData();
+        String beanName = BeanUtils.parseName(parameters.className);
+        parameters.beanName = beanName;
+        final BeanDeployer beanDeployer = new BeanDeployer(parameters);
+        future = LoaderPoolManager.submit(beanDeployer);
 
-	return future;
+        return future;
     }
 
     /**
@@ -152,14 +150,12 @@ public class BeanLoader {
      *
      * @param parameters
      */
-    public static void initializeDatasource(DataSourceParameters parameters)
-	    throws IOException {
+    public static void initializeDatasource(DataSourceParameters parameters) throws IOException {
 
-	final ConnectionDeployer conn = new ConnectionDeployer(parameters);
-	ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(
-		conn);
-	Callable<Boolean> privileged = AccessController.doPrivileged(action);
-	LoaderPoolManager.submit(privileged);
+        final ConnectionDeployer conn = new ConnectionDeployer(parameters);
+        ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(conn);
+        Callable<Boolean> privileged = AccessController.doPrivileged(action);
+        LoaderPoolManager.submit(privileged);
     }
 
     /**
@@ -169,14 +165,13 @@ public class BeanLoader {
      */
     public static void removeResources(List<File> tmpFiles) throws IOException {
 
-	ResourceCleaner cleaner = new ResourceCleaner(tmpFiles);
-	ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(
-		cleaner);
-	Callable<Boolean> privileged = AccessController.doPrivileged(action);
-	try {
-	    LoaderPoolManager.submit(privileged);
-	} catch (IOException ex) {
-	    LOG.error(ex.getMessage(), ex);
-	}
+        ResourceCleaner cleaner = new ResourceCleaner(tmpFiles);
+        ContextLoaderAction<Boolean> action = new ContextLoaderAction<Boolean>(cleaner);
+        Callable<Boolean> privileged = AccessController.doPrivileged(action);
+        try {
+            LoaderPoolManager.submit(privileged);
+        } catch (IOException ex) {
+            LOG.error(ex.getMessage(), ex);
+        }
     }
 }

@@ -61,13 +61,12 @@ public enum ConfigKeys {
     MODULES(EJBContainer.MODULES, CollectionUtils.EMPTY_ARRAY), // Sets modules
 
     // Properties for data source path and deployment path
-    DEMPLOYMENT_PATH("deploymentPath", new HashSet<DeploymentDirectory>(
-	    Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
+    DEMPLOYMENT_PATH("deploymentPath",
+            new HashSet<DeploymentDirectory>(Arrays.asList(new DeploymentDirectory("./deploy", Boolean.TRUE)))),
 
-    DATA_SOURCE_PATH("dataSourcePath",
-	    new HashSet<String>(Arrays.asList("./ds"))), // Data
-							 // source
-							 // path
+    DATA_SOURCE_PATH("dataSourcePath", new HashSet<String>(Arrays.asList("./ds"))), // Data
+                                                                                    // source
+                                                                                    // path
 
     // Properties for data sources
     DATASOURCES("datasources"), // Collection of data sources
@@ -97,10 +96,10 @@ public enum ConfigKeys {
     SPRING_PERSISTENCE("spring"), // Spring data JPA configuration
 
     SPRING_DS_NAME_KEY("dataSource"), // Data source name for Spring JPA
-				      // configuration
+                                      // configuration
 
     UNIT_DATASOURCES("dataSourceForUnits"), // Data source names for persistence
-					    // units
+                                            // units
 
     SCAN_FOR_ENTITIES("scanForEntities"), // Scan for entities
 
@@ -109,7 +108,7 @@ public enum ConfigKeys {
     PERSISTENCE_XML_PATH("persistanceXmlPath"), // Persistence XML
 
     PERSISTENCE_XML_FROM_JAR("persistenceXmlFromJar"), // Persistence XML from
-						       // jar
+                                                       // jar
 
     SWAP_DATASOURCE("swapDataSource"), // Swap data source
 
@@ -138,16 +137,16 @@ public enum ConfigKeys {
     public Object value;
 
     private ConfigKeys(String key) {
-	this.key = key;
+        this.key = key;
     }
 
     private ConfigKeys(String key, Object value) {
-	this(key);
-	this.value = value;
+        this(key);
+        this.value = value;
     }
 
     public String getKey() {
-	return key;
+        return key;
     }
 
     /**
@@ -156,7 +155,7 @@ public enum ConfigKeys {
      * @return <code>T</code>
      */
     public <T> T getValue() {
-	T typedValue = ObjectUtils.cast(value);
-	return typedValue;
+        T typedValue = ObjectUtils.cast(value);
+        return typedValue;
     }
 }

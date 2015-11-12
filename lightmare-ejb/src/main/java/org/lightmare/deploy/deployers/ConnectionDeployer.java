@@ -49,39 +49,38 @@ public class ConnectionDeployer implements Callable<Boolean> {
 
     private boolean countedDown;
 
-    private static final Logger LOG = Logger
-	    .getLogger(ConnectionDeployer.class);
+    private static final Logger LOG = Logger.getLogger(ConnectionDeployer.class);
 
     public ConnectionDeployer(DataSourceParameters parameters) {
-	this.properties = parameters.properties;
-	this.blocker = parameters.blocker;
+        this.properties = parameters.properties;
+        this.blocker = parameters.blocker;
     }
 
     private void releaseBlocker() {
 
-	if (Boolean.FALSE.equals(countedDown)) {
-	    blocker.countDown();
-	    countedDown = Boolean.TRUE;
-	}
+        if (Boolean.FALSE.equals(countedDown)) {
+            blocker.countDown();
+            countedDown = Boolean.TRUE;
+        }
     }
 
     @Override
     public Boolean call() throws Exception {
 
-	boolean result;
+        boolean result;
 
-	ClassLoader loader = LoaderPoolManager.getCurrent();
-	try {
-	    Initializer.registerDataSource(properties);
-	    result = Boolean.TRUE;
-	} catch (IOException ex) {
-	    result = Boolean.FALSE;
-	    LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
-	} finally {
-	    releaseBlocker();
-	    LibraryLoader.loadCurrentLibraries(loader);
-	}
+        ClassLoader loader = LoaderPoolManager.getCurrent();
+        try {
+            Initializer.registerDataSource(properties);
+            result = Boolean.TRUE;
+        } catch (IOException ex) {
+            result = Boolean.FALSE;
+            LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
+        } finally {
+            releaseBlocker();
+            LibraryLoader.loadCurrentLibraries(loader);
+        }
 
-	return result;
+        return result;
     }
 }

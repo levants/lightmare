@@ -81,7 +81,7 @@ public class Watcher implements Runnable {
 
     // Thread pool for watch service threads
     private static final ExecutorService DEPLOY_POOL = Executors
-	    .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME, DEPLOY_POOL_PRIORITY));
+            .newSingleThreadExecutor(new ThreadFactoryUtil(DEPLOY_THREAD_NAME, DEPLOY_POOL_PRIORITY));
 
     // Sets of directories of application deployments
     private Set<DeploymentDirectory> deployments;
@@ -112,7 +112,7 @@ public class Watcher implements Runnable {
      */
     private static enum WatchFileType {
 
-	DATA_SOURCE, DEPLOYMENT, NONE;
+        DATA_SOURCE, DEPLOYMENT, NONE;
     }
 
     /**
@@ -123,30 +123,30 @@ public class Watcher implements Runnable {
      */
     private static class DeployFiletr implements FileFilter {
 
-	@Override
-	public boolean accept(File file) {
+        @Override
+        public boolean accept(File file) {
 
-	    boolean accept;
+            boolean accept;
 
-	    try {
-		URL url = file.toURI().toURL();
-		url = WatchUtils.clearURL(url);
-		accept = MetaContainer.chackDeployment(url);
-	    } catch (MalformedURLException ex) {
-		LOG.error(ex.getMessage(), ex);
-		accept = false;
-	    } catch (IOException ex) {
-		LOG.error(ex.getMessage(), ex);
-		accept = false;
-	    }
+            try {
+                URL url = file.toURI().toURL();
+                url = WatchUtils.clearURL(url);
+                accept = MetaContainer.chackDeployment(url);
+            } catch (MalformedURLException ex) {
+                LOG.error(ex.getMessage(), ex);
+                accept = false;
+            } catch (IOException ex) {
+                LOG.error(ex.getMessage(), ex);
+                accept = false;
+            }
 
-	    return accept;
-	}
+            return accept;
+        }
     }
 
     private Watcher() {
-	deployments = getDeployDirectories();
-	dataSources = getDataSourcePaths();
+        deployments = getDeployDirectories();
+        dataSources = getDataSourcePaths();
     }
 
     /**
@@ -158,13 +158,13 @@ public class Watcher implements Runnable {
      */
     private static URL getAppropriateURL(String fileName) throws IOException {
 
-	URL url;
+        URL url;
 
-	File file = new File(fileName);
-	url = file.toURI().toURL();
-	url = WatchUtils.clearURL(url);
+        File file = new File(fileName);
+        url = file.toURI().toURL();
+        url = WatchUtils.clearURL(url);
 
-	return url;
+        return url;
     }
 
     /**
@@ -175,18 +175,18 @@ public class Watcher implements Runnable {
      */
     private static Set<DeploymentDirectory> getDeployDirectories() {
 
-	Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
+        Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
 
-	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
-	Set<DeploymentDirectory> deploymetDirssCurrent;
-	for (Configuration config : configs) {
-	    deploymetDirssCurrent = config.getDeploymentPath();
-	    if (config.isWatchStatus() && CollectionUtils.valid(deploymetDirssCurrent)) {
-		deploymetDirss.addAll(deploymetDirssCurrent);
-	    }
-	}
+        Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+        Set<DeploymentDirectory> deploymetDirssCurrent;
+        for (Configuration config : configs) {
+            deploymetDirssCurrent = config.getDeploymentPath();
+            if (config.isWatchStatus() && CollectionUtils.valid(deploymetDirssCurrent)) {
+                deploymetDirss.addAll(deploymetDirssCurrent);
+            }
+        }
 
-	return deploymetDirss;
+        return deploymetDirss;
     }
 
     /**
@@ -196,41 +196,41 @@ public class Watcher implements Runnable {
      */
     private static Set<String> getDataSourcePaths() {
 
-	Set<String> paths = new HashSet<String>();
+        Set<String> paths = new HashSet<String>();
 
-	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
-	Set<String> pathsCurrent;
-	for (Configuration config : configs) {
-	    pathsCurrent = config.getDataSourcePath();
-	    if (config.isWatchStatus() && CollectionUtils.valid(pathsCurrent)) {
-		paths.addAll(pathsCurrent);
-	    }
-	}
+        Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+        Set<String> pathsCurrent;
+        for (Configuration config : configs) {
+            pathsCurrent = config.getDataSourcePath();
+            if (config.isWatchStatus() && CollectionUtils.valid(pathsCurrent)) {
+                paths.addAll(pathsCurrent);
+            }
+        }
 
-	return paths;
+        return paths;
     }
 
     private static WatchFileType checkType(Set<DeploymentDirectory> apps, String parentPath) {
 
-	WatchFileType type;
+        WatchFileType type;
 
-	String deploymantPath;
-	Iterator<DeploymentDirectory> iterator = apps.iterator();
-	boolean notDeployment = Boolean.TRUE;
-	DeploymentDirectory deployment;
-	while (iterator.hasNext() && notDeployment) {
-	    deployment = iterator.next();
-	    deploymantPath = deployment.getPath();
-	    notDeployment = ObjectUtils.notEquals(deploymantPath, parentPath);
-	}
+        String deploymantPath;
+        Iterator<DeploymentDirectory> iterator = apps.iterator();
+        boolean notDeployment = Boolean.TRUE;
+        DeploymentDirectory deployment;
+        while (iterator.hasNext() && notDeployment) {
+            deployment = iterator.next();
+            deploymantPath = deployment.getPath();
+            notDeployment = ObjectUtils.notEquals(deploymantPath, parentPath);
+        }
 
-	if (notDeployment) {
-	    type = WatchFileType.NONE;
-	} else {
-	    type = WatchFileType.DEPLOYMENT;
-	}
+        if (notDeployment) {
+            type = WatchFileType.NONE;
+        } else {
+            type = WatchFileType.DEPLOYMENT;
+        }
 
-	return type;
+        return type;
     }
 
     /**
@@ -241,25 +241,25 @@ public class Watcher implements Runnable {
      */
     private static WatchFileType checkType(String fileName) {
 
-	WatchFileType type;
+        WatchFileType type;
 
-	File file = new File(fileName);
-	String path = file.getPath();
-	String filePath = WatchUtils.clearPath(path);
-	path = file.getParent();
-	String parentPath = WatchUtils.clearPath(path);
+        File file = new File(fileName);
+        String path = file.getPath();
+        String filePath = WatchUtils.clearPath(path);
+        path = file.getParent();
+        String parentPath = WatchUtils.clearPath(path);
 
-	Set<DeploymentDirectory> apps = getDeployDirectories();
-	Set<String> dss = getDataSourcePaths();
-	if (CollectionUtils.valid(apps)) {
-	    type = checkType(apps, parentPath);
-	} else if (CollectionUtils.valid(dss) && dss.contains(filePath)) {
-	    type = WatchFileType.DATA_SOURCE;
-	} else {
-	    type = WatchFileType.NONE;
-	}
+        Set<DeploymentDirectory> apps = getDeployDirectories();
+        Set<String> dss = getDataSourcePaths();
+        if (CollectionUtils.valid(apps)) {
+            type = checkType(apps, parentPath);
+        } else if (CollectionUtils.valid(dss) && dss.contains(filePath)) {
+            type = WatchFileType.DATA_SOURCE;
+        } else {
+            type = WatchFileType.NONE;
+        }
 
-	return type;
+        return type;
     }
 
     /**
@@ -270,11 +270,11 @@ public class Watcher implements Runnable {
      */
     private static void fillFileList(File[] files, List<File> list) {
 
-	if (CollectionUtils.valid(files)) {
-	    for (File file : files) {
-		list.add(file);
-	    }
-	}
+        if (CollectionUtils.valid(files)) {
+            for (File file : files) {
+                list.add(file);
+            }
+        }
     }
 
     /**
@@ -284,30 +284,30 @@ public class Watcher implements Runnable {
      */
     public static List<File> listDeployments() {
 
-	List<File> list = new ArrayList<File>();
+        List<File> list = new ArrayList<File>();
 
-	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
-	Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
-	Set<DeploymentDirectory> deploymetDirssCurrent;
-	for (Configuration config : configs) {
-	    deploymetDirssCurrent = config.getDeploymentPath();
-	    if (CollectionUtils.valid(deploymetDirssCurrent)) {
-		deploymetDirss.addAll(deploymetDirssCurrent);
-	    }
-	}
+        Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+        Set<DeploymentDirectory> deploymetDirss = new HashSet<DeploymentDirectory>();
+        Set<DeploymentDirectory> deploymetDirssCurrent;
+        for (Configuration config : configs) {
+            deploymetDirssCurrent = config.getDeploymentPath();
+            if (CollectionUtils.valid(deploymetDirssCurrent)) {
+                deploymetDirss.addAll(deploymetDirssCurrent);
+            }
+        }
 
-	File[] files;
-	if (CollectionUtils.valid(deploymetDirss)) {
-	    String path;
-	    DeployFiletr filter = new DeployFiletr();
-	    for (DeploymentDirectory deployment : deploymetDirss) {
-		path = deployment.getPath();
-		files = new File(path).listFiles(filter);
-		fillFileList(files, list);
-	    }
-	}
+        File[] files;
+        if (CollectionUtils.valid(deploymetDirss)) {
+            String path;
+            DeployFiletr filter = new DeployFiletr();
+            for (DeploymentDirectory deployment : deploymetDirss) {
+                path = deployment.getPath();
+                files = new File(path).listFiles(filter);
+                fillFileList(files, list);
+            }
+        }
 
-	return list;
+        return list;
     }
 
     /**
@@ -317,27 +317,27 @@ public class Watcher implements Runnable {
      */
     public static List<File> listDataSources() {
 
-	List<File> list = new ArrayList<File>();
+        List<File> list = new ArrayList<File>();
 
-	Collection<Configuration> configs = MetaContainer.CONFIGS.values();
-	Set<String> paths = new HashSet<String>();
-	Set<String> pathsCurrent;
-	for (Configuration config : configs) {
-	    pathsCurrent = config.getDataSourcePath();
-	    if (CollectionUtils.valid(pathsCurrent)) {
-		paths.addAll(pathsCurrent);
-	    }
-	}
+        Collection<Configuration> configs = MetaContainer.CONFIGS.values();
+        Set<String> paths = new HashSet<String>();
+        Set<String> pathsCurrent;
+        for (Configuration config : configs) {
+            pathsCurrent = config.getDataSourcePath();
+            if (CollectionUtils.valid(pathsCurrent)) {
+                paths.addAll(pathsCurrent);
+            }
+        }
 
-	File file;
-	if (CollectionUtils.valid(paths)) {
-	    for (String path : paths) {
-		file = new File(path);
-		list.add(file);
-	    }
-	}
+        File file;
+        if (CollectionUtils.valid(paths)) {
+            for (String path : paths) {
+                file = new File(path);
+                list.add(file);
+            }
+        }
 
-	return list;
+        return list;
     }
 
     /**
@@ -348,13 +348,13 @@ public class Watcher implements Runnable {
      */
     public static void deployFile(String fileName) throws IOException {
 
-	WatchFileType type = checkType(fileName);
-	if (type.equals(WatchFileType.DATA_SOURCE)) {
-	    FileParsers.parseDataSources(fileName);
-	} else if (type.equals(WatchFileType.DEPLOYMENT)) {
-	    URL url = getAppropriateURL(fileName);
-	    deployFile(url);
-	}
+        WatchFileType type = checkType(fileName);
+        if (type.equals(WatchFileType.DATA_SOURCE)) {
+            FileParsers.parseDataSources(fileName);
+        } else if (type.equals(WatchFileType.DEPLOYMENT)) {
+            URL url = getAppropriateURL(fileName);
+            deployFile(url);
+        }
     }
 
     /**
@@ -364,8 +364,8 @@ public class Watcher implements Runnable {
      * @throws IOException
      */
     public static void deployFile(URL url) throws IOException {
-	URL[] archives = { url };
-	MetaContainer.getCreator().scanForBeans(archives);
+        URL[] archives = { url };
+        MetaContainer.getCreator().scanForBeans(archives);
     }
 
     /**
@@ -377,10 +377,10 @@ public class Watcher implements Runnable {
      */
     public static void undeployFile(URL url) throws IOException {
 
-	boolean valid = MetaContainer.undeploy(url);
-	if (valid && RestContainer.hasRest()) {
-	    RestProvider.reload();
-	}
+        boolean valid = MetaContainer.undeploy(url);
+        if (valid && RestContainer.hasRest()) {
+            RestProvider.reload();
+        }
     }
 
     /**
@@ -392,13 +392,13 @@ public class Watcher implements Runnable {
      */
     public static void undeployFile(String fileName) throws IOException {
 
-	WatchFileType type = checkType(fileName);
-	if (type.equals(WatchFileType.DATA_SOURCE)) {
-	    Initializer.undeploy(fileName);
-	} else if (type.equals(WatchFileType.DEPLOYMENT)) {
-	    URL url = getAppropriateURL(fileName);
-	    undeployFile(url);
-	}
+        WatchFileType type = checkType(fileName);
+        if (type.equals(WatchFileType.DATA_SOURCE)) {
+            Initializer.undeploy(fileName);
+        } else if (type.equals(WatchFileType.DEPLOYMENT)) {
+            URL url = getAppropriateURL(fileName);
+            undeployFile(url);
+        }
     }
 
     /**
@@ -409,8 +409,8 @@ public class Watcher implements Runnable {
      * @throws IOException
      */
     public static void redeployFile(String fileName) throws IOException {
-	undeployFile(fileName);
-	deployFile(fileName);
+        undeployFile(fileName);
+        deployFile(fileName);
     }
 
     /**
@@ -422,68 +422,68 @@ public class Watcher implements Runnable {
      */
     private void handleEvent(Path dir, WatchEvent<Path> event) throws IOException {
 
-	if (ObjectUtils.notNull(event)) {
-	    Path prePath = event.context();
-	    Path path = dir.resolve(prePath);
-	    String fileName = path.toString();
-	    int count = event.count();
-	    Kind<?> kind = event.kind();
-	    if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-		LogUtils.info(LOG, MODIFY_MESSAGE, fileName, count);
-		redeployFile(fileName);
-	    } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
-		LogUtils.info(LOG, DELETE_MESSAGE, fileName, count);
-		undeployFile(fileName);
-	    } else if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
-		LogUtils.info(LOG, CREATE_MESSAGE, fileName, count);
-		redeployFile(fileName);
-	    }
-	}
+        if (ObjectUtils.notNull(event)) {
+            Path prePath = event.context();
+            Path path = dir.resolve(prePath);
+            String fileName = path.toString();
+            int count = event.count();
+            Kind<?> kind = event.kind();
+            if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
+                LogUtils.info(LOG, MODIFY_MESSAGE, fileName, count);
+                redeployFile(fileName);
+            } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
+                LogUtils.info(LOG, DELETE_MESSAGE, fileName, count);
+                undeployFile(fileName);
+            } else if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                LogUtils.info(LOG, CREATE_MESSAGE, fileName, count);
+                redeployFile(fileName);
+            }
+        }
     }
 
     private void handleEvent(WatchEvent<?> event, Path dir) throws InterruptedException, IOException {
 
-	Thread.sleep(SLEEP_TIME);
-	WatchEvent<Path> typedEvent = ObjectUtils.cast(event);
-	handleEvent(dir, typedEvent);
+        Thread.sleep(SLEEP_TIME);
+        WatchEvent<Path> typedEvent = ObjectUtils.cast(event);
+        handleEvent(dir, typedEvent);
     }
 
     private boolean handleEvent(WatchKey key, WatchEvent<?> event, Path dir) throws InterruptedException, IOException {
 
-	boolean run = key.reset() && key.isValid();
+        boolean run = key.reset() && key.isValid();
 
-	if (run) {
-	    handleEvent(event, dir);
-	}
+        if (run) {
+            handleEvent(event, dir);
+        }
 
-	return run;
+        return run;
     }
 
     private boolean validate(WatchEvent<?> event) {
-	return (event.kind() != StandardWatchEventKinds.OVERFLOW);
+        return (event.kind() != StandardWatchEventKinds.OVERFLOW);
     }
 
     private boolean watchService(WatchService watch) throws InterruptedException, IOException {
 
-	boolean run = Boolean.FALSE;
+        boolean run = Boolean.FALSE;
 
-	WatchKey key = watch.take();
-	List<WatchEvent<?>> events = key.pollEvents();
-	WatchEvent<?> currentEvent = null;
-	int times = ZERO_WATCH_STATUS;
-	Path dir = ObjectUtils.cast(key.watchable(), Path.class);
-	for (WatchEvent<?> event : events) {
-	    if (validate(event)) {
-		if (times == ZERO_WATCH_STATUS || event.count() > currentEvent.count()) {
-		    currentEvent = event;
-		}
+        WatchKey key = watch.take();
+        List<WatchEvent<?>> events = key.pollEvents();
+        WatchEvent<?> currentEvent = null;
+        int times = ZERO_WATCH_STATUS;
+        Path dir = ObjectUtils.cast(key.watchable(), Path.class);
+        for (WatchEvent<?> event : events) {
+            if (validate(event)) {
+                if (times == ZERO_WATCH_STATUS || event.count() > currentEvent.count()) {
+                    currentEvent = event;
+                }
 
-		times++;
-		run = handleEvent(key, currentEvent, dir);
-	    }
-	}
+                times++;
+                run = handleEvent(key, currentEvent, dir);
+            }
+        }
 
-	return run;
+        return run;
     }
 
     /**
@@ -494,14 +494,14 @@ public class Watcher implements Runnable {
      */
     private void runService(WatchService watch) throws IOException {
 
-	boolean run = Boolean.TRUE;
-	while (run) {
-	    try {
-		run = watchService(watch);
-	    } catch (InterruptedException ex) {
-		throw new IOException(ex);
-	    }
-	}
+        boolean run = Boolean.TRUE;
+        while (run) {
+            try {
+                run = watchService(watch);
+            } catch (InterruptedException ex) {
+                throw new IOException(ex);
+            }
+        }
     }
 
     /**
@@ -514,10 +514,10 @@ public class Watcher implements Runnable {
      */
     private void registerPath(FileSystem fs, String path, WatchService watch) throws IOException {
 
-	Path deployPath = fs.getPath(path);
-	deployPath.register(watch, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY,
-		StandardWatchEventKinds.OVERFLOW, StandardWatchEventKinds.ENTRY_DELETE);
-	runService(watch);
+        Path deployPath = fs.getPath(path);
+        deployPath.register(watch, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY,
+                StandardWatchEventKinds.OVERFLOW, StandardWatchEventKinds.ENTRY_DELETE);
+        runService(watch);
     }
 
     /**
@@ -530,11 +530,11 @@ public class Watcher implements Runnable {
      */
     private void registerPaths(File[] files, FileSystem fs, WatchService watch) throws IOException {
 
-	String path;
-	for (File file : files) {
-	    path = file.getPath();
-	    registerPath(fs, path, watch);
-	}
+        String path;
+        for (File file : files) {
+            path = file.getPath();
+            registerPath(fs, path, watch);
+        }
     }
 
     /**
@@ -546,26 +546,26 @@ public class Watcher implements Runnable {
      * @throws IOException
      */
     private void registerPaths(Collection<DeploymentDirectory> deploymentDirss, FileSystem fs, WatchService watch)
-	    throws IOException {
+            throws IOException {
 
-	String path;
-	boolean scan;
-	File directory;
-	File[] files;
-	for (DeploymentDirectory deployment : deploymentDirss) {
-	    path = deployment.getPath();
-	    scan = deployment.isScan();
-	    if (scan) {
-		directory = new File(path);
-		files = directory.listFiles();
+        String path;
+        boolean scan;
+        File directory;
+        File[] files;
+        for (DeploymentDirectory deployment : deploymentDirss) {
+            path = deployment.getPath();
+            scan = deployment.isScan();
+            if (scan) {
+                directory = new File(path);
+                files = directory.listFiles();
 
-		if (CollectionUtils.valid(files)) {
-		    registerPaths(files, fs, watch);
-		}
-	    } else {
-		registerPath(fs, path, watch);
-	    }
-	}
+                if (CollectionUtils.valid(files)) {
+                    registerPaths(files, fs, watch);
+                }
+            } else {
+                registerPath(fs, path, watch);
+            }
+        }
     }
 
     /**
@@ -578,51 +578,51 @@ public class Watcher implements Runnable {
      */
     private void registerDsPaths(Collection<String> paths, FileSystem fs, WatchService watch) throws IOException {
 
-	for (String path : paths) {
-	    registerPath(fs, path, watch);
-	}
+        for (String path : paths) {
+            registerPath(fs, path, watch);
+        }
     }
 
     @Override
     public void run() {
 
-	try {
-	    FileSystem fs = FileSystems.getDefault();
-	    WatchService watch = null;
+        try {
+            FileSystem fs = FileSystems.getDefault();
+            WatchService watch = null;
 
-	    try {
-		watch = fs.newWatchService();
-	    } catch (IOException ex) {
-		LOG.error(ex.getMessage(), ex);
-		throw ex;
-	    }
+            try {
+                watch = fs.newWatchService();
+            } catch (IOException ex) {
+                LOG.error(ex.getMessage(), ex);
+                throw ex;
+            }
 
-	    if (CollectionUtils.valid(deployments)) {
-		registerPaths(deployments, fs, watch);
-	    }
+            if (CollectionUtils.valid(deployments)) {
+                registerPaths(deployments, fs, watch);
+            }
 
-	    if (CollectionUtils.valid(dataSources)) {
-		registerDsPaths(dataSources, fs, watch);
-	    }
-	} catch (IOException ex) {
-	    LOG.fatal(ex.getMessage(), ex);
-	    LOG.fatal("system going to shut down cause of hot deployment");
-	    try {
-		ConnectionContainer.closeConnections();
-	    } catch (IOException iex) {
-		LOG.fatal(iex.getMessage(), iex);
-	    }
-	    System.exit(ERROR_EXIT);
-	} finally {
-	    DEPLOY_POOL.shutdown();
-	}
+            if (CollectionUtils.valid(dataSources)) {
+                registerDsPaths(dataSources, fs, watch);
+            }
+        } catch (IOException ex) {
+            LOG.fatal(ex.getMessage(), ex);
+            LOG.fatal("system going to shut down cause of hot deployment");
+            try {
+                ConnectionContainer.closeConnections();
+            } catch (IOException iex) {
+                LOG.fatal(iex.getMessage(), iex);
+            }
+            System.exit(ERROR_EXIT);
+        } finally {
+            DEPLOY_POOL.shutdown();
+        }
     }
 
     /**
      * Starts watch service for application and data source files
      */
     public static void startWatch() {
-	Watcher watcher = new Watcher();
-	DEPLOY_POOL.submit(watcher);
+        Watcher watcher = new Watcher();
+        DEPLOY_POOL.submit(watcher);
     }
 }

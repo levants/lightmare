@@ -23,8 +23,8 @@ public class LoaderThreadFactory implements ThreadFactory {
      * @param thread
      */
     private void nameThread(Thread thread) {
-	String name = StringUtils.concat(LOADER_THREAD_NAME, thread.getId());
-	thread.setName(name);
+        String name = StringUtils.concat(LOADER_THREAD_NAME, thread.getId());
+        thread.setName(name);
     }
 
     /**
@@ -33,7 +33,7 @@ public class LoaderThreadFactory implements ThreadFactory {
      * @param thread
      */
     private void setPriority(Thread thread) {
-	thread.setPriority(Thread.MAX_PRIORITY);
+        thread.setPriority(Thread.MAX_PRIORITY);
     }
 
     /**
@@ -42,8 +42,8 @@ public class LoaderThreadFactory implements ThreadFactory {
      * @param thread
      */
     private void setContextClassLoader(Thread thread) {
-	ClassLoader parent = LoaderPoolManager.getCurrent();
-	LibraryLoader.loadCurrentLibraries(thread, parent);
+        ClassLoader parent = LoaderPoolManager.getCurrent();
+        LibraryLoader.loadCurrentLibraries(thread, parent);
     }
 
     /**
@@ -54,17 +54,17 @@ public class LoaderThreadFactory implements ThreadFactory {
      */
     private void configureThread(Thread thread) {
 
-	nameThread(thread);
-	setPriority(thread);
-	setContextClassLoader(thread);
+        nameThread(thread);
+        setPriority(thread);
+        setContextClassLoader(thread);
     }
 
     @Override
     public Thread newThread(Runnable runnable) {
 
-	Thread thread = new Thread(runnable);
-	configureThread(thread);
+        Thread thread = new Thread(runnable);
+        configureThread(thread);
 
-	return thread;
+        return thread;
     }
 }

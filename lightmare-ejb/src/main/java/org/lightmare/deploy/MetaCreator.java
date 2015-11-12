@@ -118,10 +118,10 @@ public class MetaCreator {
     private static final Logger LOG = Logger.getLogger(MetaCreator.class);
 
     private MetaCreator() {
-	tmpResources = new TmpResources();
-	ShutDown.setHook(tmpResources);
-	// Configures JNDI properties
-	JndiManager.loadContext();
+        tmpResources = new TmpResources();
+        ShutDown.setHook(tmpResources);
+        // Configures JNDI properties
+        JndiManager.loadContext();
     }
 
     /**
@@ -131,14 +131,14 @@ public class MetaCreator {
      */
     private static MetaCreator initCreator() {
 
-	MetaCreator creator = MetaContainer.getCreator();
+        MetaCreator creator = MetaContainer.getCreator();
 
-	if (creator == null) {
-	    creator = new MetaCreator();
-	    MetaContainer.setCreator(creator);
-	}
+        if (creator == null) {
+            creator = new MetaCreator();
+            MetaContainer.setCreator(creator);
+        }
 
-	return creator;
+        return creator;
     }
 
     /**
@@ -148,19 +148,19 @@ public class MetaCreator {
      */
     private static MetaCreator get() {
 
-	MetaCreator creator = MetaContainer.getCreator();
+        MetaCreator creator = MetaContainer.getCreator();
 
-	if (creator == null) {
-	    // Locks to provide singularity of MetaCreator instance
-	    ObjectUtils.lock(LOCK);
-	    try {
-		creator = initCreator();
-	    } finally {
-		ObjectUtils.unlock(LOCK);
-	    }
-	}
+        if (creator == null) {
+            // Locks to provide singularity of MetaCreator instance
+            ObjectUtils.lock(LOCK);
+            try {
+                creator = initCreator();
+            } finally {
+                ObjectUtils.unlock(LOCK);
+            }
+        }
 
-	return creator;
+        return creator;
     }
 
     /**
@@ -171,26 +171,26 @@ public class MetaCreator {
      */
     private void configure(URL[] archives) {
 
-	if (configuration == null && CollectionUtils.valid(archives)) {
-	    configuration = MetaContainer.getConfig(archives);
-	}
+        if (configuration == null && CollectionUtils.valid(archives)) {
+            configuration = MetaContainer.getConfig(archives);
+        }
     }
 
     public AnnotationFinder getAnnotationFinder() {
-	return annotationFinder;
+        return annotationFinder;
     }
 
     public Map<String, ArchiveUtils> getAggregateds() {
 
-	Map<String, ArchiveUtils> clone = new HashMap<String, ArchiveUtils>();
+        Map<String, ArchiveUtils> clone = new HashMap<String, ArchiveUtils>();
 
-	if (CollectionUtils.valid(aggregateds)) {
-	    synchronized (aggregateds) {
-		clone.putAll(aggregateds);
-	    }
-	}
+        if (CollectionUtils.valid(aggregateds)) {
+            synchronized (aggregateds) {
+                clone.putAll(aggregateds);
+            }
+        }
 
-	return clone;
+        return clone;
     }
 
     /**
@@ -201,10 +201,10 @@ public class MetaCreator {
      */
     private void fillArchiveURLs(Collection<URL> ejbURLs, ArchiveData archiveData, DeployData deployData) {
 
-	for (URL ejbURL : ejbURLs) {
-	    archivesURLs.put(ejbURL, archiveData);
-	    realURL.put(ejbURL, deployData);
-	}
+        for (URL ejbURL : ejbURLs) {
+            archivesURLs.put(ejbURL, archiveData);
+            realURL.put(ejbURL, deployData);
+        }
     }
 
     /**
@@ -218,23 +218,23 @@ public class MetaCreator {
      */
     private void fillArchiveURLs(URL archive, List<URL> modifiedArchives) throws IOException {
 
-	ArchiveUtils ioUtils = ArchiveUtils.getAppropriatedType(archive);
-	if (ObjectUtils.notNull(ioUtils)) {
-	    ioUtils.scan(configuration.isPersXmlFromJar());
-	    List<URL> ejbURLs = ioUtils.getEjbURLs();
-	    modifiedArchives.addAll(ejbURLs);
-	    ArchiveData archiveData = new ArchiveData();
-	    archiveData.setIoUtils(ioUtils);
-	    DeployData deployData = new DeployData();
-	    deployData.setType(ioUtils.getType());
-	    deployData.setUrl(archive);
-	    if (ejbURLs.isEmpty()) {
-		archivesURLs.put(archive, archiveData);
-		realURL.put(archive, deployData);
-	    } else {
-		fillArchiveURLs(ejbURLs, archiveData, deployData);
-	    }
-	}
+        ArchiveUtils ioUtils = ArchiveUtils.getAppropriatedType(archive);
+        if (ObjectUtils.notNull(ioUtils)) {
+            ioUtils.scan(configuration.isPersXmlFromJar());
+            List<URL> ejbURLs = ioUtils.getEjbURLs();
+            modifiedArchives.addAll(ejbURLs);
+            ArchiveData archiveData = new ArchiveData();
+            archiveData.setIoUtils(ioUtils);
+            DeployData deployData = new DeployData();
+            deployData.setType(ioUtils.getType());
+            deployData.setUrl(archive);
+            if (ejbURLs.isEmpty()) {
+                archivesURLs.put(archive, archiveData);
+                realURL.put(archive, deployData);
+            } else {
+                fillArchiveURLs(ejbURLs, archiveData, deployData);
+            }
+        }
     }
 
     /**
@@ -247,12 +247,12 @@ public class MetaCreator {
      */
     private URL[] getFullArchives(URL[] archives) throws IOException {
 
-	List<URL> modifiedArchives = new ArrayList<URL>();
-	for (URL archive : archives) {
-	    fillArchiveURLs(archive, modifiedArchives);
-	}
+        List<URL> modifiedArchives = new ArrayList<URL>();
+        for (URL archive : archives) {
+            fillArchiveURLs(archive, modifiedArchives);
+        }
 
-	return CollectionUtils.toArray(modifiedArchives, URL.class);
+        return CollectionUtils.toArray(modifiedArchives, URL.class);
     }
 
     /**
@@ -262,16 +262,16 @@ public class MetaCreator {
      */
     private void awaitDeployment(Future<String> future) {
 
-	if (await) {
-	    try {
-		String nameFromFuture = future.get();
-		LogUtils.info(LOG, "Deploy processing of %s finished", nameFromFuture);
-	    } catch (InterruptedException ex) {
-		LOG.error(ex.getMessage(), ex);
-	    } catch (ExecutionException ex) {
-		LOG.error(ex.getMessage(), ex);
-	    }
-	}
+        if (await) {
+            try {
+                String nameFromFuture = future.get();
+                LogUtils.info(LOG, "Deploy processing of %s finished", nameFromFuture);
+            } catch (InterruptedException ex) {
+                LOG.error(ex.getMessage(), ex);
+            } catch (ExecutionException ex) {
+                LOG.error(ex.getMessage(), ex);
+            }
+        }
     }
 
     /**
@@ -279,11 +279,11 @@ public class MetaCreator {
      */
     private void awaitDeployments() {
 
-	try {
-	    blocker.await();
-	} catch (InterruptedException ex) {
-	    LOG.error(ex);
-	}
+        try {
+            blocker.await();
+        } catch (InterruptedException ex) {
+            LOG.error(ex);
+        }
     }
 
     /**
@@ -294,13 +294,13 @@ public class MetaCreator {
      */
     private ArchiveData initArchiveData(URL currentURL) {
 
-	ArchiveData archiveData = archivesURLs.get(currentURL);
+        ArchiveData archiveData = archivesURLs.get(currentURL);
 
-	if (archiveData == null) {
-	    archiveData = new ArchiveData();
-	}
+        if (archiveData == null) {
+            archiveData = new ArchiveData();
+        }
 
-	return archiveData;
+        return archiveData;
     }
 
     /**
@@ -314,14 +314,14 @@ public class MetaCreator {
      */
     private ArchiveUtils initArchiveUtils(ArchiveData archiveData, URL currentURL) throws IOException {
 
-	ArchiveUtils ioUtils = archiveData.getIoUtils();
+        ArchiveUtils ioUtils = archiveData.getIoUtils();
 
-	if (ioUtils == null) {
-	    ioUtils = ArchiveUtils.getAppropriatedType(currentURL);
-	    archiveData.setIoUtils(ioUtils);
-	}
+        if (ioUtils == null) {
+            ioUtils = ArchiveUtils.getAppropriatedType(currentURL);
+            archiveData.setIoUtils(ioUtils);
+        }
 
-	return ioUtils;
+        return ioUtils;
     }
 
     /**
@@ -335,16 +335,16 @@ public class MetaCreator {
      */
     private ClassLoader initClassLoader(ArchiveData archiveData, ArchiveUtils ioUtils) throws IOException {
 
-	ClassLoader loader;
+        ClassLoader loader;
 
-	if (ioUtils.notExecuted()) {
-	    ioUtils.scan(configuration.isPersXmlFromJar());
-	}
-	URL[] libURLs = ioUtils.getURLs();
-	loader = LibraryLoader.initializeLoader(libURLs);
-	archiveData.setLoader(loader);
+        if (ioUtils.notExecuted()) {
+            ioUtils.scan(configuration.isPersXmlFromJar());
+        }
+        URL[] libURLs = ioUtils.getURLs();
+        loader = LibraryLoader.initializeLoader(libURLs);
+        archiveData.setLoader(loader);
 
-	return loader;
+        return loader;
     }
 
     /**
@@ -356,13 +356,13 @@ public class MetaCreator {
      */
     private List<File> cacheArchives(String beanName, ArchiveUtils ioUtils) {
 
-	List<File> tmpFiles = ioUtils.getTmpFiles();
+        List<File> tmpFiles = ioUtils.getTmpFiles();
 
-	synchronized (aggregateds) {
-	    aggregateds.put(beanName, ioUtils);
-	}
+        synchronized (aggregateds) {
+            aggregateds.put(beanName, ioUtils);
+        }
 
-	return tmpFiles;
+        return tmpFiles;
     }
 
     /**
@@ -373,15 +373,15 @@ public class MetaCreator {
      */
     private DeployData initDeploydata(URL currentURL) {
 
-	DeployData deployData;
+        DeployData deployData;
 
-	if (CollectionUtils.valid(realURL)) {
-	    deployData = realURL.get(currentURL);
-	} else {
-	    deployData = null;
-	}
+        if (CollectionUtils.valid(realURL)) {
+            deployData = realURL.get(currentURL);
+        } else {
+            deployData = null;
+        }
 
-	return deployData;
+        return deployData;
     }
 
     /**
@@ -391,13 +391,13 @@ public class MetaCreator {
      */
     private BeanParameters initDeployParameters() {
 
-	BeanParameters parameters = new BeanParameters();
+        BeanParameters parameters = new BeanParameters();
 
-	parameters.creator = this;
-	parameters.blocker = blocker;
-	parameters.configuration = configuration;
+        parameters.creator = this;
+        parameters.blocker = blocker;
+        parameters.configuration = configuration;
 
-	return parameters;
+        return parameters;
     }
 
     /**
@@ -410,20 +410,20 @@ public class MetaCreator {
      */
     private void setLoader(URL currentURL, BeanParameters parameters) throws IOException {
 
-	ArchiveData archiveData = initArchiveData(currentURL);
-	ArchiveUtils ioUtils = initArchiveUtils(archiveData, currentURL);
-	ClassLoader loader = archiveData.getLoader();
-	// Finds appropriated ClassLoader if needed and or creates new one
-	List<File> tmpFiles = null;
-	if (ObjectUtils.notNull(ioUtils)) {
-	    if (loader == null) {
-		loader = initClassLoader(archiveData, ioUtils);
-	    }
-	    // Caches appropriated archive
-	    tmpFiles = cacheArchives(parameters.className, ioUtils);
-	}
-	parameters.loader = loader;
-	parameters.tmpFiles = tmpFiles;
+        ArchiveData archiveData = initArchiveData(currentURL);
+        ArchiveUtils ioUtils = initArchiveUtils(archiveData, currentURL);
+        ClassLoader loader = archiveData.getLoader();
+        // Finds appropriated ClassLoader if needed and or creates new one
+        List<File> tmpFiles = null;
+        if (ObjectUtils.notNull(ioUtils)) {
+            if (loader == null) {
+                loader = initClassLoader(archiveData, ioUtils);
+            }
+            // Caches appropriated archive
+            tmpFiles = cacheArchives(parameters.className, ioUtils);
+        }
+        parameters.loader = loader;
+        parameters.tmpFiles = tmpFiles;
     }
 
     /**
@@ -434,9 +434,9 @@ public class MetaCreator {
      * @param parameters
      */
     private void setDeployData(URL currentURL, BeanParameters parameters) {
-	// Archive file URL which contains this bean
-	DeployData deployData = initDeploydata(currentURL);
-	parameters.deployData = deployData;
+        // Archive file URL which contains this bean
+        DeployData deployData = initDeploydata(currentURL);
+        parameters.deployData = deployData;
     }
 
     /**
@@ -447,8 +447,8 @@ public class MetaCreator {
      * @throws IOException
      */
     private void fillBeanParameters(URL currentURL, BeanParameters parameters) throws IOException {
-	setLoader(currentURL, parameters);
-	setDeployData(currentURL, parameters);
+        setLoader(currentURL, parameters);
+        setDeployData(currentURL, parameters);
     }
 
     /**
@@ -459,13 +459,13 @@ public class MetaCreator {
      */
     private BeanParameters initDeployParameters(String beanName) throws IOException {
 
-	BeanParameters parameters = initDeployParameters();
+        BeanParameters parameters = initDeployParameters();
 
-	parameters.className = beanName;
-	URL currentURL = classOwnersURL.get(beanName);
-	fillBeanParameters(currentURL, parameters);
+        parameters.className = beanName;
+        URL currentURL = classOwnersURL.get(beanName);
+        fillBeanParameters(currentURL, parameters);
 
-	return parameters;
+        return parameters;
     }
 
     /**
@@ -476,14 +476,14 @@ public class MetaCreator {
      */
     private void deployBean(String beanName) throws IOException {
 
-	// Initializes and fills BeanParameters class to deploy EJB bean
-	BeanLoader.BeanParameters parameters = initDeployParameters(beanName);
-	Future<String> future = BeanLoader.loadBean(parameters);
-	awaitDeployment(future);
-	List<File> tmpFiles = parameters.tmpFiles;
-	if (CollectionUtils.valid(tmpFiles)) {
-	    tmpResources.addFile(tmpFiles);
-	}
+        // Initializes and fills BeanParameters class to deploy EJB bean
+        BeanLoader.BeanParameters parameters = initDeployParameters(beanName);
+        Future<String> future = BeanLoader.loadBean(parameters);
+        awaitDeployment(future);
+        List<File> tmpFiles = parameters.tmpFiles;
+        if (CollectionUtils.valid(tmpFiles)) {
+            tmpResources.addFile(tmpFiles);
+        }
     }
 
     /**
@@ -493,23 +493,23 @@ public class MetaCreator {
      */
     private void blockAndDeployBeans(Set<String> beanNames) {
 
-	for (String beanName : beanNames) {
-	    LogUtils.info(LOG, "Deploing bean %s", beanName);
-	    try {
-		deployBean(beanName);
-	    } catch (IOException ex) {
-		LogUtils.error(LOG, ex, "Could not deploy bean %s cause", beanName, ex.getMessage());
-	    }
-	}
+        for (String beanName : beanNames) {
+            LogUtils.info(LOG, "Deploing bean %s", beanName);
+            try {
+                deployBean(beanName);
+            } catch (IOException ex) {
+                LogUtils.error(LOG, ex, "Could not deploy bean %s cause", beanName, ex.getMessage());
+            }
+        }
     }
 
     /**
      * Reboots REST application server
      */
     private void realoadRestServer() {
-	if (RestContainer.hasRest()) {
-	    RestProvider.reload();
-	}
+        if (RestContainer.hasRest()) {
+            RestProvider.reload();
+        }
     }
 
     /**
@@ -519,18 +519,18 @@ public class MetaCreator {
      */
     private void deployBeans(Set<String> beanNames) {
 
-	blocker = new CountDownLatch(beanNames.size());
-	blockAndDeployBeans(beanNames);
-	// Locks until deployments are finished
-	awaitDeployments();
-	realoadRestServer();
-	// Process post deployment procedures
-	boolean hotDeployment = configuration.isHotDeployment();
-	boolean watchStatus = configuration.isWatchStatus();
-	if (hotDeployment && Boolean.FALSE.equals(watchStatus)) {
-	    Watcher.startWatch();
-	    watchStatus = Boolean.TRUE;
-	}
+        blocker = new CountDownLatch(beanNames.size());
+        blockAndDeployBeans(beanNames);
+        // Locks until deployments are finished
+        awaitDeployments();
+        realoadRestServer();
+        // Process post deployment procedures
+        boolean hotDeployment = configuration.isHotDeployment();
+        boolean watchStatus = configuration.isWatchStatus();
+        if (hotDeployment && Boolean.FALSE.equals(watchStatus)) {
+            Watcher.startWatch();
+            watchStatus = Boolean.TRUE;
+        }
     }
 
     /**
@@ -538,11 +538,11 @@ public class MetaCreator {
      */
     private void readRemoteProperties() {
 
-	if (configuration.isRemote() && Configuration.isServer()) {
-	    RpcListener.startServer(configuration);
-	} else if (configuration.isRemote()) {
-	    RPCall.configure(configuration);
-	}
+        if (configuration.isRemote() && Configuration.isServer()) {
+            RpcListener.startServer(configuration);
+        } else if (configuration.isRemote()) {
+            RPCall.configure(configuration);
+        }
     }
 
     /**
@@ -552,10 +552,10 @@ public class MetaCreator {
      */
     private void initLibraries() throws IOException {
 
-	String[] libraryPaths = configuration.getLibraryPaths();
-	if (ObjectUtils.notNull(libraryPaths)) {
-	    LibraryLoader.loadLibraries(libraryPaths);
-	}
+        String[] libraryPaths = configuration.getLibraryPaths();
+        if (ObjectUtils.notNull(libraryPaths)) {
+            LibraryLoader.loadLibraries(libraryPaths);
+        }
     }
 
     /**
@@ -565,11 +565,11 @@ public class MetaCreator {
      */
     private void initClassLoader(URL[] archives) {
 
-	current = LibraryLoader.getContextClassLoader();
-	archivesURLs = new WeakHashMap<URL, ArchiveData>();
-	if (CollectionUtils.valid(archives)) {
-	    realURL = new WeakHashMap<URL, DeployData>();
-	}
+        current = LibraryLoader.getContextClassLoader();
+        archivesURLs = new WeakHashMap<URL, ArchiveData>();
+        if (CollectionUtils.valid(archives)) {
+            realURL = new WeakHashMap<URL, DeployData>();
+        }
     }
 
     /**
@@ -581,18 +581,18 @@ public class MetaCreator {
      */
     private Set<String> readBeanNames(URL[] archives) throws IOException {
 
-	Set<String> beanNames;
+        Set<String> beanNames;
 
-	URL[] fullArchives = getFullArchives(archives);
-	annotationFinder = new AnnotationFinder();
-	annotationFinder.setScanFieldAnnotations(Boolean.FALSE);
-	annotationFinder.setScanParameterAnnotations(Boolean.FALSE);
-	annotationFinder.setScanMethodAnnotations(Boolean.FALSE);
-	annotationFinder.scanArchives(fullArchives);
-	beanNames = annotationFinder.getAnnotationIndex().get(Stateless.class.getName());
-	classOwnersURL = annotationFinder.getClassOwnersURLs();
+        URL[] fullArchives = getFullArchives(archives);
+        annotationFinder = new AnnotationFinder();
+        annotationFinder.setScanFieldAnnotations(Boolean.FALSE);
+        annotationFinder.setScanParameterAnnotations(Boolean.FALSE);
+        annotationFinder.setScanMethodAnnotations(Boolean.FALSE);
+        annotationFinder.scanArchives(fullArchives);
+        beanNames = annotationFinder.getAnnotationIndex().get(Stateless.class.getName());
+        classOwnersURL = annotationFinder.getClassOwnersURLs();
 
-	return beanNames;
+        return beanNames;
     }
 
     /**
@@ -604,18 +604,18 @@ public class MetaCreator {
      */
     private void deploy(URL[] archives) throws IOException {
 
-	configure(archives);
-	// Starts RPC server if configured as remote and server
-	readRemoteProperties();
-	// Loads libraries from specified path
-	initLibraries();
-	// Gets and caches class loader
-	initClassLoader(archives);
-	Set<String> beanNames = readBeanNames(archives);
-	Initializer.initializeDataSources(configuration);
-	if (CollectionUtils.valid(beanNames)) {
-	    deployBeans(beanNames);
-	}
+        configure(archives);
+        // Starts RPC server if configured as remote and server
+        readRemoteProperties();
+        // Loads libraries from specified path
+        initLibraries();
+        // Gets and caches class loader
+        initClassLoader(archives);
+        Set<String> beanNames = readBeanNames(archives);
+        Initializer.initializeDataSources(configuration);
+        if (CollectionUtils.valid(beanNames)) {
+            deployBeans(beanNames);
+        }
     }
 
     /**
@@ -626,12 +626,12 @@ public class MetaCreator {
      */
     private void postDepoloy(URL[] archives) throws IOException {
 
-	// Caches configuration
-	MetaContainer.putConfig(archives, configuration);
-	// clears cached resources
-	clear();
-	// gets rid from all created temporary files
-	tmpResources.removeTempFiles();
+        // Caches configuration
+        MetaContainer.putConfig(archives, configuration);
+        // clears cached resources
+        clear();
+        // gets rid from all created temporary files
+        tmpResources.removeTempFiles();
     }
 
     /**
@@ -643,13 +643,13 @@ public class MetaCreator {
      */
     public void scanForBeans(URL[] archives) throws IOException {
 
-	ObjectUtils.lock(scannerLock);
-	try {
-	    deploy(archives);
-	} finally {
-	    postDepoloy(archives);
-	    ObjectUtils.unlock(scannerLock);
-	}
+        ObjectUtils.lock(scannerLock);
+        try {
+            deploy(archives);
+        } finally {
+            postDepoloy(archives);
+            ObjectUtils.unlock(scannerLock);
+        }
     }
 
     /**
@@ -660,14 +660,14 @@ public class MetaCreator {
      */
     public void scanForBeans(File[] jars) throws IOException {
 
-	List<URL> urlList = new ArrayList<URL>();
-	URL url;
-	for (File file : jars) {
-	    url = file.toURI().toURL();
-	    urlList.add(url);
-	}
-	URL[] archives = CollectionUtils.toArray(urlList, URL.class);
-	scanForBeans(archives);
+        List<URL> urlList = new ArrayList<URL>();
+        URL url;
+        for (File file : jars) {
+            url = file.toURI().toURL();
+            urlList.add(url);
+        }
+        URL[] archives = CollectionUtils.toArray(urlList, URL.class);
+        scanForBeans(archives);
     }
 
     /**
@@ -678,13 +678,13 @@ public class MetaCreator {
      */
     private void scanDeployPath(List<String> pathList, DeploymentDirectory deployment) {
 
-	File deployFile = new File(deployment.getPath());
-	if (deployment.isScan()) {
-	    String[] subDeployments = deployFile.list();
-	    if (CollectionUtils.valid(subDeployments)) {
-		pathList.addAll(Arrays.asList(subDeployments));
-	    }
-	}
+        File deployFile = new File(deployment.getPath());
+        if (deployment.isScan()) {
+            String[] subDeployments = deployFile.list();
+            if (CollectionUtils.valid(subDeployments)) {
+                pathList.addAll(Arrays.asList(subDeployments));
+            }
+        }
     }
 
     /**
@@ -695,26 +695,26 @@ public class MetaCreator {
      */
     private void deployPaths(String... paths) throws IOException {
 
-	if (CollectionUtils.invalid(paths)) {
-	    if (CollectionUtils.valid(configuration.getDeploymentPath())) {
-		Set<DeploymentDirectory> deployments = configuration.getDeploymentPath();
-		List<String> pathList = new ArrayList<String>();
-		for (DeploymentDirectory deployment : deployments) {
-		    scanDeployPath(pathList, deployment);
-		}
-		paths = CollectionUtils.toArray(pathList, String.class);
-	    }
-	}
+        if (CollectionUtils.invalid(paths)) {
+            if (CollectionUtils.valid(configuration.getDeploymentPath())) {
+                Set<DeploymentDirectory> deployments = configuration.getDeploymentPath();
+                List<String> pathList = new ArrayList<String>();
+                for (DeploymentDirectory deployment : deployments) {
+                    scanDeployPath(pathList, deployment);
+                }
+                paths = CollectionUtils.toArray(pathList, String.class);
+            }
+        }
 
-	List<URL> urlList = new ArrayList<URL>();
-	List<URL> archive;
-	for (String path : paths) {
-	    archive = FileUtils.toURLWithClasspath(path);
-	    urlList.addAll(archive);
-	}
+        List<URL> urlList = new ArrayList<URL>();
+        List<URL> archive;
+        for (String path : paths) {
+            archive = FileUtils.toURLWithClasspath(path);
+            urlList.addAll(archive);
+        }
 
-	URL[] archives = CollectionUtils.toArray(urlList, URL.class);
-	scanForBeans(archives);
+        URL[] archives = CollectionUtils.toArray(urlList, URL.class);
+        scanForBeans(archives);
     }
 
     /**
@@ -725,24 +725,24 @@ public class MetaCreator {
      */
     public void scanForBeans(String... paths) throws IOException {
 
-	if (CollectionUtils.invalid(paths)) {
-	    List<String[]> modules = configuration.getDeploymentModules();
-	    if (CollectionUtils.valid(modules)) {
-		// Clones configuration for next module
-		Configuration cloneConfig = MetaContainer.clone(configuration);
-		for (String[] module : modules) {
-		    scanForBeans(module);
-		    this.configuration = cloneConfig;
-		}
-		this.configuration = null;
-	    }
-	} else {
-	    deployPaths(paths);
-	}
+        if (CollectionUtils.invalid(paths)) {
+            List<String[]> modules = configuration.getDeploymentModules();
+            if (CollectionUtils.valid(modules)) {
+                // Clones configuration for next module
+                Configuration cloneConfig = MetaContainer.clone(configuration);
+                for (String[] module : modules) {
+                    scanForBeans(module);
+                    this.configuration = cloneConfig;
+                }
+                this.configuration = null;
+            }
+        } else {
+            deployPaths(paths);
+        }
     }
 
     public ClassLoader getCurrent() {
-	return current;
+        return current;
     }
 
     /**
@@ -750,29 +750,29 @@ public class MetaCreator {
      */
     private void clearresources() {
 
-	// Real URL
-	if (CollectionUtils.valid(realURL)) {
-	    realURL.clear();
-	    realURL = null;
-	}
-	// Aggregated URLs
-	if (CollectionUtils.valid(aggregateds)) {
-	    synchronized (aggregateds) {
-		aggregateds.clear();
-	    }
-	}
-	// Archive URLs
-	if (CollectionUtils.valid(archivesURLs)) {
-	    archivesURLs.clear();
-	    archivesURLs = null;
-	}
-	// Class owner URLs
-	if (CollectionUtils.valid(classOwnersURL)) {
-	    classOwnersURL.clear();
-	    classOwnersURL = null;
-	}
-	// Configuration
-	configuration = null;
+        // Real URL
+        if (CollectionUtils.valid(realURL)) {
+            realURL.clear();
+            realURL = null;
+        }
+        // Aggregated URLs
+        if (CollectionUtils.valid(aggregateds)) {
+            synchronized (aggregateds) {
+                aggregateds.clear();
+            }
+        }
+        // Archive URLs
+        if (CollectionUtils.valid(archivesURLs)) {
+            archivesURLs.clear();
+            archivesURLs = null;
+        }
+        // Class owner URLs
+        if (CollectionUtils.valid(classOwnersURL)) {
+            classOwnersURL.clear();
+            classOwnersURL = null;
+        }
+        // Configuration
+        configuration = null;
     }
 
     /**
@@ -780,19 +780,19 @@ public class MetaCreator {
      */
     public void clear() {
 
-	boolean locked = Boolean.FALSE;
+        boolean locked = Boolean.FALSE;
 
-	while (Boolean.FALSE.equals(locked)) {
-	    // Tries to lock for avoid concurrent modification
-	    locked = ObjectUtils.tryLock(scannerLock);
-	    if (locked) {
-		try {
-		    clearresources();
-		} finally {
-		    ObjectUtils.unlock(scannerLock);
-		}
-	    }
-	}
+        while (Boolean.FALSE.equals(locked)) {
+            // Tries to lock for avoid concurrent modification
+            locked = ObjectUtils.tryLock(scannerLock);
+            if (locked) {
+                try {
+                    clearresources();
+                } finally {
+                    ObjectUtils.unlock(scannerLock);
+                }
+            }
+        }
     }
 
     /**
@@ -801,7 +801,7 @@ public class MetaCreator {
      * @throws IOException
      */
     public static void close() throws IOException {
-	ShutDown.clearAll();
+        ShutDown.clearAll();
     }
 
     /**
@@ -813,486 +813,486 @@ public class MetaCreator {
      */
     public static class Builder {
 
-	private MetaCreator creator;
+        private MetaCreator creator;
 
-	public Builder(boolean cloneConf) throws IOException {
+        public Builder(boolean cloneConf) throws IOException {
 
-	    creator = MetaCreator.get();
-	    Configuration config = creator.configuration;
-	    if (cloneConf && ObjectUtils.notNull(config)) {
-		try {
-		    creator.configuration = config.clone();
-		} catch (CloneNotSupportedException ex) {
-		    throw new IOException(ex);
-		}
-	    } else {
-		creator.configuration = new Configuration();
-	    }
-	}
+            creator = MetaCreator.get();
+            Configuration config = creator.configuration;
+            if (cloneConf && ObjectUtils.notNull(config)) {
+                try {
+                    creator.configuration = config.clone();
+                } catch (CloneNotSupportedException ex) {
+                    throw new IOException(ex);
+                }
+            } else {
+                creator.configuration = new Configuration();
+            }
+        }
 
-	public Builder() throws IOException {
-	    this(Boolean.FALSE);
-	}
+        public Builder() throws IOException {
+            this(Boolean.FALSE);
+        }
 
-	public Builder(Map<Object, Object> configuration) throws IOException {
-	    this();
-	    creator.configuration.configure(configuration);
-	}
+        public Builder(Map<Object, Object> configuration) throws IOException {
+            this();
+            creator.configuration.configure(configuration);
+        }
 
-	public Builder(String path) throws IOException {
-	    this();
-	    creator.configuration.configure(path);
-	}
+        public Builder(String path) throws IOException {
+            this();
+            creator.configuration.configure(path);
+        }
 
-	/**
-	 * Configures persistence for cached properties
-	 *
-	 * @return {@link Map}<code><Object, Object></code>
-	 */
-	private Map<Object, Object> initPersistenceProperties() {
+        /**
+         * Configures persistence for cached properties
+         *
+         * @return {@link Map}<code><Object, Object></code>
+         */
+        private Map<Object, Object> initPersistenceProperties() {
 
-	    Map<Object, Object> persistenceProperties = creator.configuration.getPersistenceProperties();
-	    if (persistenceProperties == null) {
-		persistenceProperties = new HashMap<Object, Object>();
-		creator.configuration.setPersistenceProperties(persistenceProperties);
-	    }
+            Map<Object, Object> persistenceProperties = creator.configuration.getPersistenceProperties();
+            if (persistenceProperties == null) {
+                persistenceProperties = new HashMap<Object, Object>();
+                creator.configuration.setPersistenceProperties(persistenceProperties);
+            }
 
-	    return persistenceProperties;
-	}
+            return persistenceProperties;
+        }
 
-	/**
-	 * Sets additional persistence properties
-	 *
-	 * @param properties
-	 * @return {@link Builder}
-	 */
-	public Builder setPersistenceProperties(Map<String, String> properties) {
+        /**
+         * Sets additional persistence properties
+         *
+         * @param properties
+         * @return {@link Builder}
+         */
+        public Builder setPersistenceProperties(Map<String, String> properties) {
 
-	    if (CollectionUtils.valid(properties)) {
-		Map<Object, Object> persistenceProperties = initPersistenceProperties();
-		persistenceProperties.putAll(properties);
-	    }
+            if (CollectionUtils.valid(properties)) {
+                Map<Object, Object> persistenceProperties = initPersistenceProperties();
+                persistenceProperties.putAll(properties);
+            }
 
-	    return this;
-	}
+            return this;
+        }
 
-	/**
-	 * Adds instant persistence property
-	 *
-	 * @param key
-	 * @param property
-	 * @return {@link Builder}
-	 */
-	public Builder addPersistenceProperty(String key, String property) {
+        /**
+         * Adds instant persistence property
+         *
+         * @param key
+         * @param property
+         * @return {@link Builder}
+         */
+        public Builder addPersistenceProperty(String key, String property) {
 
-	    Map<Object, Object> persistenceProperties = initPersistenceProperties();
-	    persistenceProperties.put(key, property);
+            Map<Object, Object> persistenceProperties = initPersistenceProperties();
+            persistenceProperties.put(key, property);
 
-	    return this;
-	}
+            return this;
+        }
 
-	/**
-	 * Adds property to scan for {@link javax.persistence.Entity} annotated
-	 * classes from deployed archives
-	 *
-	 * @param scanForEnt
-	 * @return {@link Builder}
-	 */
-	public Builder setScanForEntities(boolean scanForEnt) {
-	    creator.configuration.setScanForEntities(scanForEnt);
-	    return this;
-	}
+        /**
+         * Adds property to scan for {@link javax.persistence.Entity} annotated
+         * classes from deployed archives
+         *
+         * @param scanForEnt
+         * @return {@link Builder}
+         */
+        public Builder setScanForEntities(boolean scanForEnt) {
+            creator.configuration.setScanForEntities(scanForEnt);
+            return this;
+        }
 
-	/**
-	 * Adds property to use only {@link org.lightmare.annotations.UnitName}
-	 * annotated entities for which
-	 * {@link org.lightmare.annotations.UnitName#value()} matches passed
-	 * unit name
-	 *
-	 * @param unitName
-	 * @return {@link Builder}
-	 */
-	public Builder setUnitName(String unitName) {
-	    creator.configuration.setAnnotatedUnitName(unitName);
-	    return this;
-	}
+        /**
+         * Adds property to use only {@link org.lightmare.annotations.UnitName}
+         * annotated entities for which
+         * {@link org.lightmare.annotations.UnitName#value()} matches passed
+         * unit name
+         *
+         * @param unitName
+         * @return {@link Builder}
+         */
+        public Builder setUnitName(String unitName) {
+            creator.configuration.setAnnotatedUnitName(unitName);
+            return this;
+        }
 
-	/**
-	 * Sets path for persistence.xml file
-	 *
-	 * @param path
-	 * @return {@link Builder}
-	 */
-	public Builder setPersXmlPath(String path) {
+        /**
+         * Sets path for persistence.xml file
+         *
+         * @param path
+         * @return {@link Builder}
+         */
+        public Builder setPersXmlPath(String path) {
 
-	    creator.configuration.setPersXmlPath(path);
-	    creator.configuration.setScanArchives(Boolean.FALSE);
+            creator.configuration.setPersXmlPath(path);
+            creator.configuration.setScanArchives(Boolean.FALSE);
 
-	    return this;
-	}
+            return this;
+        }
 
-	/**
-	 * Adds path for additional libraries to load at start time
-	 *
-	 * @param libPaths
-	 * @return {@link Builder}
-	 */
-	public Builder setLibraryPath(String... libPaths) {
-	    creator.configuration.setLibraryPaths(libPaths);
-	    return this;
-	}
+        /**
+         * Adds path for additional libraries to load at start time
+         *
+         * @param libPaths
+         * @return {@link Builder}
+         */
+        public Builder setLibraryPath(String... libPaths) {
+            creator.configuration.setLibraryPaths(libPaths);
+            return this;
+        }
 
-	/**
-	 * Sets boolean checker to scan persistence.xml files from appropriated
-	 * jar files
-	 *
-	 * @param xmlFromJar
-	 * @return {@link Builder}
-	 */
-	public Builder setXmlFromJar(boolean xmlFromJar) {
-	    creator.configuration.setPersXmlFromJar(xmlFromJar);
-	    return this;
-	}
+        /**
+         * Sets boolean checker to scan persistence.xml files from appropriated
+         * jar files
+         *
+         * @param xmlFromJar
+         * @return {@link Builder}
+         */
+        public Builder setXmlFromJar(boolean xmlFromJar) {
+            creator.configuration.setPersXmlFromJar(xmlFromJar);
+            return this;
+        }
 
-	/**
-	 * Sets boolean checker to swap jta data source value with non jta data
-	 * source value
-	 *
-	 * @param swapDataSource
-	 * @return {@link Builder}
-	 */
-	public Builder setSwapDataSource(boolean swapDataSource) {
-	    creator.configuration.setSwapDataSource(swapDataSource);
-	    return this;
-	}
+        /**
+         * Sets boolean checker to swap jta data source value with non jta data
+         * source value
+         *
+         * @param swapDataSource
+         * @return {@link Builder}
+         */
+        public Builder setSwapDataSource(boolean swapDataSource) {
+            creator.configuration.setSwapDataSource(swapDataSource);
+            return this;
+        }
 
-	/**
-	 * Adds path for data source file
-	 *
-	 * @param dataSourcePath
-	 * @return {@link Builder}
-	 */
-	public Builder addDataSourcePath(String dataSourcePath) {
-	    creator.configuration.addDataSourcePath(dataSourcePath);
-	    return this;
-	}
+        /**
+         * Adds path for data source file
+         *
+         * @param dataSourcePath
+         * @return {@link Builder}
+         */
+        public Builder addDataSourcePath(String dataSourcePath) {
+            creator.configuration.addDataSourcePath(dataSourcePath);
+            return this;
+        }
 
-	/**
-	 * This method is deprecated should use
-	 * {@link MetaCreator.Builder#addDataSourcePath(String)} instead
-	 *
-	 * @param dataSourcePath
-	 * @return {@link MetaCreator.Builder}
-	 */
-	@Deprecated
-	public Builder setDataSourcePath(String dataSourcePath) {
-	    creator.configuration.addDataSourcePath(dataSourcePath);
-	    return this;
-	}
+        /**
+         * This method is deprecated should use
+         * {@link MetaCreator.Builder#addDataSourcePath(String)} instead
+         *
+         * @param dataSourcePath
+         * @return {@link MetaCreator.Builder}
+         */
+        @Deprecated
+        public Builder setDataSourcePath(String dataSourcePath) {
+            creator.configuration.addDataSourcePath(dataSourcePath);
+            return this;
+        }
 
-	/**
-	 * Sets single data source configuration
-	 *
-	 * @param datasource
-	 * @return {@link MetaCreator.Builder}
-	 */
-	public Builder setDataSource(Map<Object, Object> datasource) {
-	    creator.configuration.setDataSource(datasource);
-	    return this;
-	}
+        /**
+         * Sets single data source configuration
+         *
+         * @param datasource
+         * @return {@link MetaCreator.Builder}
+         */
+        public Builder setDataSource(Map<Object, Object> datasource) {
+            creator.configuration.setDataSource(datasource);
+            return this;
+        }
 
-	/**
-	 * Adds passed data source to configuration
-	 *
-	 * @param datasource
-	 * @return {@link MetaCreator.Builder}
-	 */
-	public Builder addDataSource(Map<Object, Object> datasource) {
-	    creator.configuration.addDataSource(datasource);
-	    return this;
-	}
+        /**
+         * Adds passed data source to configuration
+         *
+         * @param datasource
+         * @return {@link MetaCreator.Builder}
+         */
+        public Builder addDataSource(Map<Object, Object> datasource) {
+            creator.configuration.addDataSource(datasource);
+            return this;
+        }
 
-	/**
-	 * Sets collection of data sources configuration
-	 *
-	 * @param datasources
-	 * @return {@link MetaCreator.Builder}
-	 */
-	public Builder setDataSources(List<Map<Object, Object>> datasources) {
-	    creator.configuration.setDataSources(datasources);
-	    return this;
-	}
+        /**
+         * Sets collection of data sources configuration
+         *
+         * @param datasources
+         * @return {@link MetaCreator.Builder}
+         */
+        public Builder setDataSources(List<Map<Object, Object>> datasources) {
+            creator.configuration.setDataSources(datasources);
+            return this;
+        }
 
-	/**
-	 * Sets boolean checker to scan {@link javax.persistence.Entity}
-	 * annotated classes from appropriated deployed archive files
-	 *
-	 * @param scanArchives
-	 * @return {@link Builder}
-	 */
-	public Builder setScanArchives(boolean scanArchives) {
-	    creator.configuration.setScanArchives(scanArchives);
-	    return this;
-	}
+        /**
+         * Sets boolean checker to scan {@link javax.persistence.Entity}
+         * annotated classes from appropriated deployed archive files
+         *
+         * @param scanArchives
+         * @return {@link Builder}
+         */
+        public Builder setScanArchives(boolean scanArchives) {
+            creator.configuration.setScanArchives(scanArchives);
+            return this;
+        }
 
-	/**
-	 * Sets boolean checker to block deployment processes
-	 *
-	 * @param await
-	 * @return {@link Builder}
-	 */
-	public Builder setAwaitDeploiment(boolean await) {
-	    creator.await = await;
-	    return this;
-	}
+        /**
+         * Sets boolean checker to block deployment processes
+         *
+         * @param await
+         * @return {@link Builder}
+         */
+        public Builder setAwaitDeploiment(boolean await) {
+            creator.await = await;
+            return this;
+        }
 
-	/**
-	 * Sets property is server or not in embedded mode
-	 *
-	 * @param remote
-	 * @return {@link Builder}
-	 */
-	public Builder setRemote(boolean remote) {
-	    creator.configuration.setRemote(remote);
-	    return this;
-	}
+        /**
+         * Sets property is server or not in embedded mode
+         *
+         * @param remote
+         * @return {@link Builder}
+         */
+        public Builder setRemote(boolean remote) {
+            creator.configuration.setRemote(remote);
+            return this;
+        }
 
-	/**
-	 * Sets property is application server or just client for other remote
-	 * server
-	 *
-	 * @param server
-	 * @return {@link Builder}
-	 */
-	public Builder setServer(boolean server) {
+        /**
+         * Sets property is application server or just client for other remote
+         * server
+         *
+         * @param server
+         * @return {@link Builder}
+         */
+        public Builder setServer(boolean server) {
 
-	    Configuration.setServer(server);
-	    creator.configuration.setClient(Boolean.FALSE.equals(server));
+            Configuration.setServer(server);
+            creator.configuration.setClient(Boolean.FALSE.equals(server));
 
-	    return this;
-	}
+            return this;
+        }
 
-	/**
-	 * Sets boolean check is application in just client mode or not
-	 *
-	 * @param client
-	 * @return {@link Builder}
-	 */
-	public Builder setClient(boolean client) {
+        /**
+         * Sets boolean check is application in just client mode or not
+         *
+         * @param client
+         * @return {@link Builder}
+         */
+        public Builder setClient(boolean client) {
 
-	    creator.configuration.setClient(client);
-	    Configuration.setServer(Boolean.FALSE.equals(client));
+            creator.configuration.setClient(client);
+            Configuration.setServer(Boolean.FALSE.equals(client));
 
-	    return this;
-	}
+            return this;
+        }
 
-	/**
-	 * To add any additional property
-	 *
-	 * @param key
-	 * @param property
-	 * @return {@link Builder}
-	 */
-	public Builder setProperty(String key, String property) {
-	    creator.configuration.putValue(key, property);
-	    return this;
-	}
+        /**
+         * To add any additional property
+         *
+         * @param key
+         * @param property
+         * @return {@link Builder}
+         */
+        public Builder setProperty(String key, String property) {
+            creator.configuration.putValue(key, property);
+            return this;
+        }
 
-	/**
-	 * To add remote control check
-	 *
-	 * @param remoteControl
-	 * @return {@link Builder}
-	 */
-	public Builder setRemoteControl(boolean remoteControl) {
-	    Configuration.setRemoteControl(remoteControl);
-	    return this;
-	}
+        /**
+         * To add remote control check
+         *
+         * @param remoteControl
+         * @return {@link Builder}
+         */
+        public Builder setRemoteControl(boolean remoteControl) {
+            Configuration.setRemoteControl(remoteControl);
+            return this;
+        }
 
-	/**
-	 * File path for administrator user name and password
-	 *
-	 * @param property
-	 * @return {@link Builder}
-	 */
-	public Builder setAdminUsersPth(String property) {
-	    Configuration.setAdminUsersPath(property);
-	    return this;
-	}
+        /**
+         * File path for administrator user name and password
+         *
+         * @param property
+         * @return {@link Builder}
+         */
+        public Builder setAdminUsersPth(String property) {
+            Configuration.setAdminUsersPath(property);
+            return this;
+        }
 
-	/**
-	 * Sets specific IP address in case when application is in remote server
-	 * mode
-	 *
-	 * @param property
-	 * @return {@link Builder}
-	 */
-	public Builder setIpAddress(String property) {
-	    creator.configuration.putValue(ConfigKeys.IP_ADDRESS.key, property);
-	    return this;
-	}
+        /**
+         * Sets specific IP address in case when application is in remote server
+         * mode
+         *
+         * @param property
+         * @return {@link Builder}
+         */
+        public Builder setIpAddress(String property) {
+            creator.configuration.putValue(ConfigKeys.IP_ADDRESS.key, property);
+            return this;
+        }
 
-	/**
-	 * Sets specific port in case when application is in remote server mode
-	 *
-	 * @param property
-	 * @return {@link Builder}
-	 */
-	public Builder setPort(String property) {
-	    creator.configuration.putValue(ConfigKeys.PORT.key, property);
-	    return this;
-	}
+        /**
+         * Sets specific port in case when application is in remote server mode
+         *
+         * @param property
+         * @return {@link Builder}
+         */
+        public Builder setPort(String property) {
+            creator.configuration.putValue(ConfigKeys.PORT.key, property);
+            return this;
+        }
 
-	/**
-	 * Sets amount for network master threads in case when application is in
-	 * remote server mode
-	 *
-	 * @param property
-	 * @return {@link Builder}
-	 */
-	public Builder setMasterThreads(String property) {
-	    creator.configuration.putValue(ConfigKeys.BOSS_POOL.key, property);
-	    return this;
-	}
+        /**
+         * Sets amount for network master threads in case when application is in
+         * remote server mode
+         *
+         * @param property
+         * @return {@link Builder}
+         */
+        public Builder setMasterThreads(String property) {
+            creator.configuration.putValue(ConfigKeys.BOSS_POOL.key, property);
+            return this;
+        }
 
-	/**
-	 * Sets amount of worker threads in case when application is in remote
-	 * server mode
-	 *
-	 * @param property
-	 * @return {@link Builder}
-	 */
-	public Builder setWorkerThreads(String property) {
-	    creator.configuration.putValue(ConfigKeys.WORKER_POOL.key, property);
-	    return this;
-	}
+        /**
+         * Sets amount of worker threads in case when application is in remote
+         * server mode
+         *
+         * @param property
+         * @return {@link Builder}
+         */
+        public Builder setWorkerThreads(String property) {
+            creator.configuration.putValue(ConfigKeys.WORKER_POOL.key, property);
+            return this;
+        }
 
-	/**
-	 * Adds deploy file path to application with boolean checker if file is
-	 * directory to scan this directory for deployment files list
-	 *
-	 * @param deploymentPath
-	 * @param scan
-	 * @return {@link Builder}
-	 */
-	public Builder addDeploymentPath(String deploymentPath, boolean scan) {
+        /**
+         * Adds deploy file path to application with boolean checker if file is
+         * directory to scan this directory for deployment files list
+         *
+         * @param deploymentPath
+         * @param scan
+         * @return {@link Builder}
+         */
+        public Builder addDeploymentPath(String deploymentPath, boolean scan) {
 
-	    String clearPath = WatchUtils.clearPath(deploymentPath);
-	    creator.configuration.addDeploymentPath(clearPath, scan);
+            String clearPath = WatchUtils.clearPath(deploymentPath);
+            creator.configuration.addDeploymentPath(clearPath, scan);
 
-	    return this;
-	}
+            return this;
+        }
 
-	/**
-	 * Adds deploy file path to application
-	 *
-	 * @param deploymentPath
-	 * @return {@link Builder}
-	 */
-	public Builder addDeploymentPath(String deploymentPath) {
-	    addDeploymentPath(deploymentPath, Boolean.FALSE);
-	    return this;
-	}
+        /**
+         * Adds deploy file path to application
+         *
+         * @param deploymentPath
+         * @return {@link Builder}
+         */
+        public Builder addDeploymentPath(String deploymentPath) {
+            addDeploymentPath(deploymentPath, Boolean.FALSE);
+            return this;
+        }
 
-	/**
-	 * Adds timeout for connection in case when application is in remote
-	 * server or client mode
-	 *
-	 * @param property
-	 * @return {@link Builder}
-	 */
-	public Builder setTimeout(String property) {
-	    creator.configuration.putValue(ConfigKeys.CONNECTION_TIMEOUT.key, property);
-	    return this;
-	}
+        /**
+         * Adds timeout for connection in case when application is in remote
+         * server or client mode
+         *
+         * @param property
+         * @return {@link Builder}
+         */
+        public Builder setTimeout(String property) {
+            creator.configuration.putValue(ConfigKeys.CONNECTION_TIMEOUT.key, property);
+            return this;
+        }
 
-	/**
-	 * Adds boolean check if application is using pooled data source
-	 *
-	 * @param dsPooledType
-	 * @return {@link Builder}
-	 */
-	public Builder setDataSourcePooledType(boolean dsPooledType) {
-	    Configuration.setDataSourcePooledType(dsPooledType);
-	    return this;
-	}
+        /**
+         * Adds boolean check if application is using pooled data source
+         *
+         * @param dsPooledType
+         * @return {@link Builder}
+         */
+        public Builder setDataSourcePooledType(boolean dsPooledType) {
+            Configuration.setDataSourcePooledType(dsPooledType);
+            return this;
+        }
 
-	/**
-	 * Sets which data source pool provider should use application by
-	 * {@link PoolProviderType} parameter
-	 *
-	 * @param poolProviderType
-	 * @return {@link Builder}
-	 */
-	public Builder setPoolProviderType(PoolProviderType poolProviderType) {
-	    Configuration.setPoolProviderType(poolProviderType);
-	    return this;
-	}
+        /**
+         * Sets which data source pool provider should use application by
+         * {@link PoolProviderType} parameter
+         *
+         * @param poolProviderType
+         * @return {@link Builder}
+         */
+        public Builder setPoolProviderType(PoolProviderType poolProviderType) {
+            Configuration.setPoolProviderType(poolProviderType);
+            return this;
+        }
 
-	/**
-	 * Sets path for data source pool additional properties
-	 *
-	 * @param path
-	 * @return {@link Builder}
-	 */
-	public Builder setPoolPropertiesPath(String path) {
-	    Configuration.setPoolPropertiesPath(path);
-	    return this;
-	}
+        /**
+         * Sets path for data source pool additional properties
+         *
+         * @param path
+         * @return {@link Builder}
+         */
+        public Builder setPoolPropertiesPath(String path) {
+            Configuration.setPoolPropertiesPath(path);
+            return this;
+        }
 
-	/**
-	 * Sets data source pool additional properties
-	 *
-	 * @param properties
-	 * @return {@link Builder}
-	 */
-	public Builder setPoolProperties(Map<? extends Object, ? extends Object> properties) {
-	    Configuration.setPoolProperties(properties);
-	    return this;
-	}
+        /**
+         * Sets data source pool additional properties
+         *
+         * @param properties
+         * @return {@link Builder}
+         */
+        public Builder setPoolProperties(Map<? extends Object, ? extends Object> properties) {
+            Configuration.setPoolProperties(properties);
+            return this;
+        }
 
-	/**
-	 * Adds instance property for pooled data source
-	 *
-	 * @param key
-	 * @param value
-	 * @return {@link Builder}
-	 */
-	public Builder addPoolProperty(Object key, Object value) {
-	    Configuration.addPoolProperty(key, value);
-	    return this;
-	}
+        /**
+         * Adds instance property for pooled data source
+         *
+         * @param key
+         * @param value
+         * @return {@link Builder}
+         */
+        public Builder addPoolProperty(Object key, Object value) {
+            Configuration.addPoolProperty(key, value);
+            return this;
+        }
 
-	/**
-	 * Sets boolean check is application in hot deployment (with watch
-	 * service on deployment directories) or not
-	 *
-	 * @param hotDeployment
-	 * @return {@link Builder}
-	 */
-	public Builder setHotDeployment(boolean hotDeployment) {
-	    creator.configuration.setHotDeployment(hotDeployment);
-	    return this;
-	}
+        /**
+         * Sets boolean check is application in hot deployment (with watch
+         * service on deployment directories) or not
+         *
+         * @param hotDeployment
+         * @return {@link Builder}
+         */
+        public Builder setHotDeployment(boolean hotDeployment) {
+            creator.configuration.setHotDeployment(hotDeployment);
+            return this;
+        }
 
-	/**
-	 * Adds additional parameters from passed {@link Map} to existing
-	 * configuration
-	 *
-	 * @param configuration
-	 * @return {@link Builder}
-	 */
-	public Builder addConfiguration(Map<Object, Object> configuration) {
-	    creator.configuration.configure(configuration);
-	    return this;
-	}
+        /**
+         * Adds additional parameters from passed {@link Map} to existing
+         * configuration
+         *
+         * @param configuration
+         * @return {@link Builder}
+         */
+        public Builder addConfiguration(Map<Object, Object> configuration) {
+            creator.configuration.configure(configuration);
+            return this;
+        }
 
-	public MetaCreator build() throws IOException {
+        public MetaCreator build() throws IOException {
 
-	    creator.configuration.configure();
-	    LOG.info("Lightmare application starts working");
+            creator.configuration.configure();
+            LOG.info("Lightmare application starts working");
 
-	    return creator;
-	}
+            return creator;
+        }
     }
 }
