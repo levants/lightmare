@@ -46,7 +46,7 @@ public abstract class UserTransactionFactory {
      * Private constructor to avoid class initialization
      */
     private UserTransactionFactory() {
-	throw new InstantiationError(ISNANTIATING_ERROR);
+        throw new InstantiationError(ISNANTIATING_ERROR);
     }
 
     /**
@@ -56,7 +56,7 @@ public abstract class UserTransactionFactory {
      * @return {@link UserTransaction}
      */
     public static UserTransaction get(EntityTransaction... transactions) {
-	return new UserTransactionImpl(transactions);
+        return new UserTransactionImpl(transactions);
     }
 
     /**
@@ -68,9 +68,9 @@ public abstract class UserTransactionFactory {
      */
     protected static void join(UserTransaction userTransaction, EntityTransaction... entityTransactions) {
 
-	if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(entityTransactions)) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    transaction.addTransactions(entityTransactions);
-	}
+        if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(entityTransactions)) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            transaction.addTransactions(entityTransactions);
+        }
     }
 }

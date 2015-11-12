@@ -47,7 +47,7 @@ public enum HibernateConfig {
     public final String value;
 
     private HibernateConfig(String key, String value) {
-	this.key = key;
-	this.value = value;
+        this.key = key;
+        this.value = value;
     }
 }

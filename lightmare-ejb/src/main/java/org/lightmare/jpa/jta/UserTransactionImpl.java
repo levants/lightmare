@@ -78,11 +78,11 @@ public class UserTransactionImpl implements UserTransaction {
 
     protected UserTransactionImpl(EntityTransaction... transactions) {
 
-	this.transactions = new Stack<EntityTransaction>();
+        this.transactions = new Stack<EntityTransaction>();
 
-	if (CollectionUtils.valid(transactions)) {
-	    addTransactions(transactions);
-	}
+        if (CollectionUtils.valid(transactions)) {
+            addTransactions(transactions);
+        }
     }
 
     /**
@@ -92,7 +92,7 @@ public class UserTransactionImpl implements UserTransaction {
      * @param transaction
      */
     public void addTransaction(EntityTransaction transaction) {
-	transactions.add(transaction);
+        transactions.add(transaction);
     }
 
     /**
@@ -102,7 +102,7 @@ public class UserTransactionImpl implements UserTransaction {
      * @param transactions
      */
     public void addTransactions(EntityTransaction... transactions) {
-	Collections.addAll(this.transactions, transactions);
+        Collections.addAll(this.transactions, transactions);
     }
 
     /**
@@ -113,12 +113,12 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void addEntityManager(EntityManager em) {
 
-	if (ObjectUtils.notNull(em)) {
-	    if (ems == null) {
-		ems = new Stack<EntityManager>();
-	    }
-	    ems.push(em);
-	}
+        if (ObjectUtils.notNull(em)) {
+            if (ems == null) {
+                ems = new Stack<EntityManager>();
+            }
+            ems.push(em);
+        }
     }
 
     /**
@@ -129,38 +129,38 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void addEntityManagers(Collection<EntityManager> ems) {
 
-	if (CollectionUtils.valid(ems)) {
-	    for (EntityManager em : ems) {
-		addEntityManager(em);
-	    }
-	}
+        if (CollectionUtils.valid(ems)) {
+            for (EntityManager em : ems) {
+                addEntityManager(em);
+            }
+        }
     }
 
     private Stack<EntityTransaction> getNews() {
 
-	if (requareNews == null) {
-	    requareNews = new Stack<EntityTransaction>();
-	}
+        if (requareNews == null) {
+            requareNews = new Stack<EntityTransaction>();
+        }
 
-	return requareNews;
+        return requareNews;
     }
 
     private Stack<EntityManager> getNewEms() {
 
-	if (requareNewEms == null) {
-	    requareNewEms = new Stack<EntityManager>();
-	}
+        if (requareNewEms == null) {
+            requareNewEms = new Stack<EntityManager>();
+        }
 
-	return requareNewEms;
+        return requareNewEms;
     }
 
     private Stack<EntityManager> getFreeEntityManagers() {
 
-	if (freeEms == null) {
-	    freeEms = new Stack<EntityManager>();
-	}
+        if (freeEms == null) {
+            freeEms = new Stack<EntityManager>();
+        }
 
-	return freeEms;
+        return freeEms;
     }
 
     /**
@@ -171,7 +171,7 @@ public class UserTransactionImpl implements UserTransaction {
      * @param entityTransaction
      */
     public void pushReqNew(EntityTransaction entityTransaction) {
-	getNews().push(entityTransaction);
+        getNews().push(entityTransaction);
     }
 
     /**
@@ -182,7 +182,7 @@ public class UserTransactionImpl implements UserTransaction {
      * @param em
      */
     public void pushReqNewEm(EntityManager em) {
-	getNewEms().push(em);
+        getNewEms().push(em);
     }
 
     /**
@@ -192,7 +192,7 @@ public class UserTransactionImpl implements UserTransaction {
      * @param em
      */
     public void pushFreeEntityManager(EntityManager em) {
-	getFreeEntityManagers().push(em);
+        getFreeEntityManagers().push(em);
     }
 
     /**
@@ -202,13 +202,13 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private void close(Stack<EntityManager> entityManagers) {
 
-	if (CollectionUtils.valid(entityManagers)) {
-	    EntityManager em;
-	    while (CollectionUtils.notEmpty(entityManagers)) {
-		em = entityManagers.pop();
-		JpaManager.closeEntityManager(em);
-	    }
-	}
+        if (CollectionUtils.valid(entityManagers)) {
+            EntityManager em;
+            while (CollectionUtils.notEmpty(entityManagers)) {
+                em = entityManagers.pop();
+                JpaManager.closeEntityManager(em);
+            }
+        }
     }
 
     /**
@@ -220,9 +220,9 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private void setRollbackOnly(EntityTransaction transaction) throws IllegalStateException, SystemException {
 
-	if (transaction.isActive()) {
-	    transaction.setRollbackOnly();
-	}
+        if (transaction.isActive()) {
+            transaction.setRollbackOnly();
+        }
     }
 
     /**
@@ -233,13 +233,13 @@ public class UserTransactionImpl implements UserTransaction {
      * @throws SystemException
      */
     private void setRollbackOnly(Collection<EntityTransaction> entityTransactions)
-	    throws IllegalStateException, SystemException {
+            throws IllegalStateException, SystemException {
 
-	if (CollectionUtils.valid(entityTransactions)) {
-	    for (EntityTransaction entityTransaction : entityTransactions) {
-		setRollbackOnly(entityTransaction);
-	    }
-	}
+        if (CollectionUtils.valid(entityTransactions)) {
+            for (EntityTransaction entityTransaction : entityTransactions) {
+                setRollbackOnly(entityTransaction);
+            }
+        }
     }
 
     /**
@@ -251,10 +251,10 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private void begin(Collection<EntityTransaction> entityTransactions) throws NotSupportedException, SystemException {
 
-	if (CollectionUtils.valid(entityTransactions))
-	    for (EntityTransaction transaction : entityTransactions) {
-		transaction.begin();
-	    }
+        if (CollectionUtils.valid(entityTransactions))
+            for (EntityTransaction transaction : entityTransactions) {
+                transaction.begin();
+            }
     }
 
     /**
@@ -269,11 +269,11 @@ public class UserTransactionImpl implements UserTransaction {
      * @throws SystemException
      */
     private void commit(EntityTransaction transaction) throws RollbackException, HeuristicMixedException,
-	    HeuristicRollbackException, SecurityException, IllegalStateException, SystemException {
+            HeuristicRollbackException, SecurityException, IllegalStateException, SystemException {
 
-	if (transaction.isActive()) {
-	    transaction.commit();
-	}
+        if (transaction.isActive()) {
+            transaction.commit();
+        }
     }
 
     /**
@@ -287,15 +287,15 @@ public class UserTransactionImpl implements UserTransaction {
      * @throws SystemException
      */
     private void commit(Stack<EntityTransaction> entityTransactions) throws SecurityException, IllegalStateException,
-	    RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException {
+            RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException {
 
-	if (CollectionUtils.valid(entityTransactions)) {
-	    EntityTransaction entityTransaction;
-	    while (CollectionUtils.notEmpty(entityTransactions)) {
-		entityTransaction = entityTransactions.pop();
-		commit(entityTransaction);
-	    }
-	}
+        if (CollectionUtils.valid(entityTransactions)) {
+            EntityTransaction entityTransaction;
+            while (CollectionUtils.notEmpty(entityTransactions)) {
+                entityTransaction = entityTransactions.pop();
+                commit(entityTransaction);
+            }
+        }
     }
 
     /**
@@ -305,9 +305,9 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private void rollback(EntityTransaction transaction) {
 
-	if (transaction.isActive()) {
-	    transaction.rollback();
-	}
+        if (transaction.isActive()) {
+            transaction.rollback();
+        }
     }
 
     /**
@@ -317,34 +317,34 @@ public class UserTransactionImpl implements UserTransaction {
      */
     private void rollback(Stack<EntityTransaction> entityTransactions) {
 
-	if (CollectionUtils.valid(entityTransactions)) {
-	    EntityTransaction entityTransaction;
-	    while (CollectionUtils.notEmpty(entityTransactions)) {
-		entityTransaction = entityTransactions.pop();
-		rollback(entityTransaction);
-	    }
-	}
+        if (CollectionUtils.valid(entityTransactions)) {
+            EntityTransaction entityTransaction;
+            while (CollectionUtils.notEmpty(entityTransactions)) {
+                entityTransaction = entityTransactions.pop();
+                rollback(entityTransaction);
+            }
+        }
     }
 
     /**
      * Closes all cached immediate {@link EntityManager} instances
      */
     protected void closeReqNew() {
-	close(requareNewEms);
+        close(requareNewEms);
     }
 
     /**
      * Closes all contained {@link EntityManager}s
      */
     public void closeEntityManagers() {
-	close(ems);
+        close(ems);
     }
 
     /**
      * Closes all not in transaction {@link EntityManager} instances
      */
     public void closeFreeEntityManagers() {
-	close(freeEms);
+        close(freeEms);
     }
 
     /**
@@ -355,17 +355,17 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void beginReqNews() throws NotSupportedException, SystemException {
 
-	if (CollectionUtils.valid(requareNews)) {
-	    begin(requareNews);
-	}
+        if (CollectionUtils.valid(requareNews)) {
+            begin(requareNews);
+        }
     }
 
     @Override
     public void begin() throws NotSupportedException, SystemException {
 
-	if (CollectionUtils.valid(transactions)) {
-	    begin(transactions);
-	}
+        if (CollectionUtils.valid(transactions)) {
+            begin(transactions);
+        }
     }
 
     /**
@@ -381,26 +381,26 @@ public class UserTransactionImpl implements UserTransaction {
      * @throws SecurityException
      */
     public void commitReqNew() throws SecurityException, IllegalStateException, RollbackException,
-	    HeuristicMixedException, HeuristicRollbackException, SystemException {
+            HeuristicMixedException, HeuristicRollbackException, SystemException {
 
-	try {
-	    commit(requareNews);
-	} finally {
-	    closeReqNew();
-	}
+        try {
+            commit(requareNews);
+        } finally {
+            closeReqNew();
+        }
     }
 
     @Override
     public void commit() throws RollbackException, HeuristicMixedException, HeuristicRollbackException,
-	    SecurityException, IllegalStateException, SystemException {
+            SecurityException, IllegalStateException, SystemException {
 
-	try {
-	    if (CollectionUtils.valid(transactions)) {
-		commit(transactions);
-	    }
-	} finally {
-	    closeEntityManagers();
-	}
+        try {
+            if (CollectionUtils.valid(transactions)) {
+                commit(transactions);
+            }
+        } finally {
+            closeEntityManagers();
+        }
     }
 
     /**
@@ -410,53 +410,53 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void rollbackReqNews() throws IllegalStateException, SecurityException, SystemException {
 
-	try {
-	    rollback(requareNews);
-	} finally {
-	    closeReqNew();
-	}
+        try {
+            rollback(requareNews);
+        } finally {
+            closeReqNew();
+        }
     }
 
     @Override
     public void rollback() throws IllegalStateException, SecurityException, SystemException {
 
-	try {
-	    rollback(transactions);
-	} finally {
-	    closeEntityManagers();
-	}
+        try {
+            rollback(transactions);
+        } finally {
+            closeEntityManagers();
+        }
     }
 
     @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
-	setRollbackOnly(transactions);
+        setRollbackOnly(transactions);
     }
 
     @Override
     public int getStatus() throws SystemException {
 
-	int active = INACTIVE;
+        int active = INACTIVE;
 
-	if (CollectionUtils.valid(transactions)) {
-	    for (EntityTransaction transaction : transactions) {
-		boolean isActive = transaction.isActive();
-		active += isActive ? ACTIVE : INACTIVE;
-	    }
-	}
+        if (CollectionUtils.valid(transactions)) {
+            for (EntityTransaction transaction : transactions) {
+                boolean isActive = transaction.isActive();
+                active += isActive ? ACTIVE : INACTIVE;
+            }
+        }
 
-	if (CollectionUtils.valid(requareNews)) {
-	    for (EntityTransaction transaction : requareNews) {
-		boolean isActive = transaction.isActive();
-		active += isActive ? ACTIVE : INACTIVE;
-	    }
-	}
+        if (CollectionUtils.valid(requareNews)) {
+            for (EntityTransaction transaction : requareNews) {
+                boolean isActive = transaction.isActive();
+                active += isActive ? ACTIVE : INACTIVE;
+            }
+        }
 
-	return active;
+        return active;
     }
 
     @Override
     public void setTransactionTimeout(int time) throws SystemException {
-	throw new UnsupportedOperationException(TIMEOUT_NOT_SUPPORTED_ERROR);
+        throw new UnsupportedOperationException(TIMEOUT_NOT_SUPPORTED_ERROR);
     }
 
     /**
@@ -467,21 +467,21 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public boolean checkCaller(BeanHandler handler) {
 
-	boolean check = ObjectUtils.notNull(caller);
+        boolean check = ObjectUtils.notNull(caller);
 
-	if (check) {
-	    check = caller.equals(handler.getBean());
-	}
+        if (check) {
+            check = caller.equals(handler.getBean());
+        }
 
-	return check;
+        return check;
     }
 
     public void setCaller(BeanHandler handler) {
-	caller = handler.getBean();
+        caller = handler.getBean();
     }
 
     public Object getCaller() {
-	return caller;
+        return caller;
     }
 
     /**
@@ -489,8 +489,8 @@ public class UserTransactionImpl implements UserTransaction {
      */
     public void close() {
 
-	closeEntityManagers();
-	closeReqNew();
-	closeFreeEntityManagers();
+        closeEntityManagers();
+        closeReqNew();
+        closeFreeEntityManagers();
     }
 }

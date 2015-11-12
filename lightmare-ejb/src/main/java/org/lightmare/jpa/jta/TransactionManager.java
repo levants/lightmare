@@ -51,7 +51,7 @@ public class TransactionManager {
     private static final String ISNANTIATING_ERROR = "Class TransactionManager can not be instntiate";
 
     private TransactionManager() {
-	throw new InstantiationError(ISNANTIATING_ERROR);
+        throw new InstantiationError(ISNANTIATING_ERROR);
     }
 
     /**
@@ -61,8 +61,8 @@ public class TransactionManager {
      * @return <code>boolean</code>
      */
     protected static boolean isTransactionalType(TransactionAttributeType type) {
-	return type.equals(TransactionAttributeType.REQUIRED) || type.equals(TransactionAttributeType.MANDATORY)
-		|| type.equals(TransactionAttributeType.SUPPORTS);
+        return type.equals(TransactionAttributeType.REQUIRED) || type.equals(TransactionAttributeType.MANDATORY)
+                || type.equals(TransactionAttributeType.SUPPORTS);
     }
 
     /**
@@ -73,7 +73,7 @@ public class TransactionManager {
      * @return <code>boolean</code>
      */
     protected static boolean isFreeType(TransactionAttributeType type) {
-	return type.equals(TransactionAttributeType.NOT_SUPPORTED) || type.equals(TransactionAttributeType.NEVER);
+        return type.equals(TransactionAttributeType.NOT_SUPPORTED) || type.equals(TransactionAttributeType.NEVER);
     }
 
     /**
@@ -84,9 +84,9 @@ public class TransactionManager {
      */
     private static void addTransaction(EntityTransaction entityTransaction, UserTransactionImpl transaction) {
 
-	if (ObjectUtils.notNull(entityTransaction)) {
-	    transaction.addTransaction(entityTransaction);
-	}
+        if (ObjectUtils.notNull(entityTransaction)) {
+            transaction.addTransaction(entityTransaction);
+        }
     }
 
     /**
@@ -97,9 +97,9 @@ public class TransactionManager {
      */
     private static void addEntityManager(EntityManager em, UserTransactionImpl transaction) {
 
-	if (ObjectUtils.notNull(em)) {
-	    transaction.addEntityManager(em);
-	}
+        if (ObjectUtils.notNull(em)) {
+            transaction.addEntityManager(em);
+        }
     }
 
     /**
@@ -110,13 +110,13 @@ public class TransactionManager {
      * @param em
      */
     protected static void addEntityTransaction(UserTransaction userTransaction, EntityTransaction entityTransaction,
-	    EntityManager em) {
+            EntityManager em) {
 
-	if (userTransaction instanceof UserTransactionImpl) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    addTransaction(entityTransaction, transaction);
-	    addEntityManager(em, transaction);
-	}
+        if (userTransaction instanceof UserTransactionImpl) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            addTransaction(entityTransaction, transaction);
+            addEntityManager(em, transaction);
+        }
     }
 
     /**
@@ -128,14 +128,14 @@ public class TransactionManager {
      * @param entityTransactions
      */
     protected static void addEntityTransactions(UserTransaction userTransaction,
-	    Collection<BeanTransactions.TransactionData> entityTransactions) {
+            Collection<BeanTransactions.TransactionData> entityTransactions) {
 
-	if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(entityTransactions)) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    for (BeanTransactions.TransactionData transactionData : entityTransactions) {
-		addEntityTransaction(transaction, transactionData.entityTransaction, transactionData.em);
-	    }
-	}
+        if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(entityTransactions)) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            for (BeanTransactions.TransactionData transactionData : entityTransactions) {
+                addEntityTransaction(transaction, transactionData.entityTransaction, transactionData.em);
+            }
+        }
     }
 
     /**
@@ -146,10 +146,10 @@ public class TransactionManager {
      */
     protected static void addEntityManager(UserTransaction userTransaction, EntityManager em) {
 
-	if (userTransaction instanceof UserTransactionImpl && ObjectUtils.notNull(em)) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    transaction.addEntityManager(em);
-	}
+        if (userTransaction instanceof UserTransactionImpl && ObjectUtils.notNull(em)) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            transaction.addEntityManager(em);
+        }
     }
 
     /**
@@ -161,12 +161,12 @@ public class TransactionManager {
      */
     protected static void addEntityManagers(UserTransaction userTransaction, Collection<EntityManager> ems) {
 
-	if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(ems)) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    for (EntityManager em : ems) {
-		addEntityManager(transaction, em);
-	    }
-	}
+        if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(ems)) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            for (EntityManager em : ems) {
+                addEntityManager(transaction, em);
+            }
+        }
     }
 
     /**
@@ -177,12 +177,12 @@ public class TransactionManager {
      */
     protected static void addFreeEntityManagers(UserTransaction userTransaction, Collection<EntityManager> ems) {
 
-	if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(ems)) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    for (EntityManager em : ems) {
-		transaction.pushFreeEntityManager(em);
-	    }
-	}
+        if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(ems)) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            for (EntityManager em : ems) {
+                transaction.pushFreeEntityManager(em);
+            }
+        }
 
     }
 
@@ -194,9 +194,9 @@ public class TransactionManager {
      */
     private static void checkAndAddEntityManager(UserTransactionImpl transaction, EntityManager em) {
 
-	if (ObjectUtils.notNull(em)) {
-	    transaction.pushReqNewEm(em);
-	}
+        if (ObjectUtils.notNull(em)) {
+            transaction.pushReqNewEm(em);
+        }
     }
 
     /**
@@ -208,9 +208,9 @@ public class TransactionManager {
      */
     private static void checkAndAddTransactiuon(UserTransactionImpl transaction, EntityTransaction entityTransaction) {
 
-	if (ObjectUtils.notNull(entityTransaction)) {
-	    transaction.pushReqNew(entityTransaction);
-	}
+        if (ObjectUtils.notNull(entityTransaction)) {
+            transaction.pushReqNew(entityTransaction);
+        }
     }
 
     /**
@@ -222,9 +222,9 @@ public class TransactionManager {
      * @param em
      */
     private static void addReqNewTransaction(UserTransactionImpl transaction, EntityTransaction entityTransaction,
-	    EntityManager em) {
-	checkAndAddTransactiuon(transaction, entityTransaction);
-	checkAndAddEntityManager(transaction, em);
+            EntityManager em) {
+        checkAndAddTransactiuon(transaction, entityTransaction);
+        checkAndAddEntityManager(transaction, em);
     }
 
     /**
@@ -236,14 +236,14 @@ public class TransactionManager {
      * @param entityTransactions
      */
     protected static void addReqNewTransactions(UserTransaction userTransaction,
-	    Collection<BeanTransactions.TransactionData> entityTransactions) {
+            Collection<BeanTransactions.TransactionData> entityTransactions) {
 
-	if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(entityTransactions)) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    for (BeanTransactions.TransactionData transactionData : entityTransactions) {
-		addReqNewTransaction(transaction, transactionData.entityTransaction, transactionData.em);
-	    }
-	}
+        if (userTransaction instanceof UserTransactionImpl && CollectionUtils.valid(entityTransactions)) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            for (BeanTransactions.TransactionData transactionData : entityTransactions) {
+                addReqNewTransaction(transaction, transactionData.entityTransaction, transactionData.em);
+            }
+        }
     }
 
     /**
@@ -254,13 +254,13 @@ public class TransactionManager {
      */
     protected static void addCaller(UserTransaction userTransaction, BeanHandler handler) {
 
-	if (userTransaction instanceof UserTransactionImpl) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    Object caller = transaction.getCaller();
-	    if (caller == null) {
-		transaction.setCaller(handler);
-	    }
-	}
+        if (userTransaction instanceof UserTransactionImpl) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            Object caller = transaction.getCaller();
+            if (caller == null) {
+                transaction.setCaller(handler);
+            }
+        }
     }
 
     /**
@@ -273,14 +273,14 @@ public class TransactionManager {
      */
     protected static boolean checkCaller(UserTransaction userTransaction, BeanHandler handler) {
 
-	boolean check = (userTransaction instanceof UserTransactionImpl);
+        boolean check = (userTransaction instanceof UserTransactionImpl);
 
-	if (check) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    check = transaction.checkCaller(handler);
-	}
+        if (check) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            check = transaction.checkCaller(handler);
+        }
 
-	return check;
+        return check;
     }
 
     /**
@@ -291,21 +291,21 @@ public class TransactionManager {
      */
     protected static void commit(UserTransaction transaction) throws IOException {
 
-	try {
-	    transaction.commit();
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	} catch (IllegalStateException ex) {
-	    throw new IOException(ex);
-	} catch (RollbackException ex) {
-	    throw new IOException(ex);
-	} catch (HeuristicMixedException ex) {
-	    throw new IOException(ex);
-	} catch (HeuristicRollbackException ex) {
-	    throw new IOException(ex);
-	} catch (SystemException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            transaction.commit();
+        } catch (SecurityException ex) {
+            throw new IOException(ex);
+        } catch (IllegalStateException ex) {
+            throw new IOException(ex);
+        } catch (RollbackException ex) {
+            throw new IOException(ex);
+        } catch (HeuristicMixedException ex) {
+            throw new IOException(ex);
+        } catch (HeuristicRollbackException ex) {
+            throw new IOException(ex);
+        } catch (SystemException ex) {
+            throw new IOException(ex);
+        }
     }
 
     /**
@@ -318,24 +318,24 @@ public class TransactionManager {
      */
     protected static void commitReqNew(UserTransaction userTransaction) throws IOException {
 
-	if (userTransaction instanceof UserTransactionImpl) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    try {
-		transaction.commitReqNew();
-	    } catch (SecurityException ex) {
-		throw new IOException(ex);
-	    } catch (IllegalStateException ex) {
-		throw new IOException(ex);
-	    } catch (RollbackException ex) {
-		throw new IOException(ex);
-	    } catch (HeuristicMixedException ex) {
-		throw new IOException(ex);
-	    } catch (HeuristicRollbackException ex) {
-		throw new IOException(ex);
-	    } catch (SystemException ex) {
-		throw new IOException(ex);
-	    }
-	}
+        if (userTransaction instanceof UserTransactionImpl) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            try {
+                transaction.commitReqNew();
+            } catch (SecurityException ex) {
+                throw new IOException(ex);
+            } catch (IllegalStateException ex) {
+                throw new IOException(ex);
+            } catch (RollbackException ex) {
+                throw new IOException(ex);
+            } catch (HeuristicMixedException ex) {
+                throw new IOException(ex);
+            } catch (HeuristicRollbackException ex) {
+                throw new IOException(ex);
+            } catch (SystemException ex) {
+                throw new IOException(ex);
+            }
+        }
     }
 
     /**
@@ -346,15 +346,15 @@ public class TransactionManager {
      */
     protected static void rollback(UserTransaction transaction) throws IOException {
 
-	try {
-	    transaction.rollback();
-	} catch (IllegalStateException ex) {
-	    throw new IOException(ex);
-	} catch (SecurityException ex) {
-	    throw new IOException(ex);
-	} catch (SystemException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            transaction.rollback();
+        } catch (IllegalStateException ex) {
+            throw new IOException(ex);
+        } catch (SecurityException ex) {
+            throw new IOException(ex);
+        } catch (SystemException ex) {
+            throw new IOException(ex);
+        }
     }
 
     /**
@@ -367,26 +367,26 @@ public class TransactionManager {
      */
     protected static void rollbackReqNew(UserTransaction userTransaction) throws IOException {
 
-	if (userTransaction instanceof UserTransactionImpl) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    try {
-		transaction.rollbackReqNews();
-	    } catch (IllegalStateException ex) {
-		throw new IOException(ex);
-	    } catch (SecurityException ex) {
-		throw new IOException(ex);
-	    } catch (SystemException ex) {
-		throw new IOException(ex);
-	    }
-	}
+        if (userTransaction instanceof UserTransactionImpl) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            try {
+                transaction.rollbackReqNews();
+            } catch (IllegalStateException ex) {
+                throw new IOException(ex);
+            } catch (SecurityException ex) {
+                throw new IOException(ex);
+            } catch (SystemException ex) {
+                throw new IOException(ex);
+            }
+        }
     }
 
     protected static void closeReqNewEntityManagers(UserTransaction userTransaction) {
 
-	if (userTransaction instanceof UserTransactionImpl) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    transaction.closeReqNew();
-	}
+        if (userTransaction instanceof UserTransactionImpl) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            transaction.closeReqNew();
+        }
     }
 
     /**
@@ -397,10 +397,10 @@ public class TransactionManager {
      */
     protected static void closeEntityManagers(UserTransaction userTransaction) {
 
-	if (userTransaction instanceof UserTransactionImpl) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    transaction.closeEntityManagers();
-	}
+        if (userTransaction instanceof UserTransactionImpl) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            transaction.closeEntityManagers();
+        }
     }
 
     /**
@@ -411,10 +411,10 @@ public class TransactionManager {
      */
     protected static void closeFreeEntityManagers(UserTransaction userTransaction) {
 
-	if (userTransaction instanceof UserTransactionImpl) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    transaction.closeFreeEntityManagers();
-	}
+        if (userTransaction instanceof UserTransactionImpl) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            transaction.closeFreeEntityManagers();
+        }
     }
 
     /**
@@ -424,10 +424,10 @@ public class TransactionManager {
      */
     protected static void close(UserTransaction userTransaction) {
 
-	if (userTransaction instanceof UserTransactionImpl) {
-	    UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
-	    transaction.close();
-	}
+        if (userTransaction instanceof UserTransactionImpl) {
+            UserTransactionImpl transaction = ObjectUtils.cast(userTransaction, UserTransactionImpl.class);
+            transaction.close();
+        }
     }
 
     /**
@@ -437,10 +437,10 @@ public class TransactionManager {
      */
     protected static void remove(UserTransaction transaction) {
 
-	try {
-	    close(transaction);
-	} finally {
-	    TransactionHolder.removeTransaction();
-	}
+        try {
+            close(transaction);
+        } finally {
+            TransactionHolder.removeTransaction();
+        }
     }
 }

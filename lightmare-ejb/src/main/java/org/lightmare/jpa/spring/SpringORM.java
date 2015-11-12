@@ -66,9 +66,9 @@ public class SpringORM {
     private PersistenceUnitDescriptor persistenceUnit;
 
     private SpringORM(String dataSourceName, PersistenceProvider persistenceProvider, String unitName) {
-	this.dataSourceName = dataSourceName;
-	this.persistenceProvider = persistenceProvider;
-	this.unitName = unitName;
+        this.dataSourceName = dataSourceName;
+        this.persistenceProvider = persistenceProvider;
+        this.unitName = unitName;
     }
 
     /**
@@ -76,12 +76,12 @@ public class SpringORM {
      */
     private void initDataSourceName() {
 
-	if (dataSourceName == null || dataSourceName.isEmpty()) {
-	    Properties nameProperties = new Properties();
-	    nameProperties.putAll(properties);
-	    dataSourceName = nameProperties.getProperty(ConfigKeys.SPRING_DS_NAME_KEY.key);
-	    properties.remove(ConfigKeys.SPRING_DS_NAME_KEY.key);
-	}
+        if (dataSourceName == null || dataSourceName.isEmpty()) {
+            Properties nameProperties = new Properties();
+            nameProperties.putAll(properties);
+            dataSourceName = nameProperties.getProperty(ConfigKeys.SPRING_DS_NAME_KEY.key);
+            properties.remove(ConfigKeys.SPRING_DS_NAME_KEY.key);
+        }
     }
 
     /**
@@ -91,15 +91,15 @@ public class SpringORM {
      */
     private Object initDtaSourceValue() {
 
-	Object dataSourceValue;
+        Object dataSourceValue;
 
-	if (swapDataSources) {
-	    dataSourceValue = persistenceUnit.getNonJtaDataSource();
-	} else {
-	    dataSourceValue = persistenceUnit.getJtaDataSource();
-	}
+        if (swapDataSources) {
+            dataSourceValue = persistenceUnit.getNonJtaDataSource();
+        } else {
+            dataSourceValue = persistenceUnit.getJtaDataSource();
+        }
 
-	return dataSourceValue;
+        return dataSourceValue;
     }
 
     /**
@@ -107,15 +107,15 @@ public class SpringORM {
      */
     private void initDataSourceFromUnit() {
 
-	Object dataSourceValue = initDtaSourceValue();
+        Object dataSourceValue = initDtaSourceValue();
 
-	if (dataSourceValue == null) {
-	    dataSourceName = null;
-	} else if (dataSourceValue instanceof String) {
-	    dataSourceName = ObjectUtils.cast(dataSourceValue);
-	} else {
-	    dataSourceName = dataSourceValue.toString();
-	}
+        if (dataSourceValue == null) {
+            dataSourceName = null;
+        } else if (dataSourceValue instanceof String) {
+            dataSourceName = ObjectUtils.cast(dataSourceValue);
+        } else {
+            dataSourceName = dataSourceValue.toString();
+        }
     }
 
     /**
@@ -123,19 +123,19 @@ public class SpringORM {
      */
     private void initDataSourceType() {
 
-	if (dataSourceName == null || dataSourceName.isEmpty()) {
-	    if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
-		initDataSourceFromUnit();
-	    }
-	}
+        if (dataSourceName == null || dataSourceName.isEmpty()) {
+            if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
+                initDataSourceFromUnit();
+            }
+        }
     }
 
     /**
      * Initializes data source name and type
      */
     private void initDataSource() {
-	initDataSourceName();
-	initDataSourceType();
+        initDataSourceName();
+        initDataSourceType();
     }
 
     /**
@@ -145,8 +145,8 @@ public class SpringORM {
      */
     private void initAndLookUpDataSource() throws IOException {
 
-	initDataSource();
-	dataSource = JndiManager.lookup(dataSourceName);
+        initDataSource();
+        dataSource = JndiManager.lookup(dataSourceName);
     }
 
     /**
@@ -154,11 +154,11 @@ public class SpringORM {
      */
     private void initProperties() {
 
-	if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
-	    HibernatePersistenceProviderExt descriptor = ObjectUtils.cast(persistenceProvider);
-	    persistenceUnit = descriptor.getPersistenceUnitDescriptor(unitName, properties);
-	    properties.putAll(persistenceUnit.getProperties());
-	}
+        if (persistenceProvider instanceof HibernatePersistenceProviderExt) {
+            HibernatePersistenceProviderExt descriptor = ObjectUtils.cast(persistenceProvider);
+            persistenceUnit = descriptor.getPersistenceUnitDescriptor(unitName, properties);
+            properties.putAll(persistenceUnit.getProperties());
+        }
     }
 
     /**
@@ -166,8 +166,8 @@ public class SpringORM {
      * sources
      */
     private void addTransactionManager() {
-	CollectionUtils.putIfAbscent(properties, HibernateConfig.FACTORY.key, HibernateConfig.FACTORY.value);
-	CollectionUtils.putIfAbscent(properties, HibernateConfig.PLATFORM.key, JtaTransactionManager.class.getName());
+        CollectionUtils.putIfAbscent(properties, HibernateConfig.FACTORY.key, HibernateConfig.FACTORY.value);
+        CollectionUtils.putIfAbscent(properties, HibernateConfig.PLATFORM.key, JtaTransactionManager.class.getName());
     }
 
     /**
@@ -176,8 +176,8 @@ public class SpringORM {
      * @param entityManagerFactoryBean
      */
     private void addJtaDatasource(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
-	addTransactionManager();
-	entityManagerFactoryBean.setJtaDataSource(dataSource);
+        addTransactionManager();
+        entityManagerFactoryBean.setJtaDataSource(dataSource);
     }
 
     /**
@@ -187,11 +187,11 @@ public class SpringORM {
      */
     private void setWrapeDataSource(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
 
-	if (swapDataSources) {
-	    entityManagerFactoryBean.setDataSource(dataSource);
-	} else {
-	    addJtaDatasource(entityManagerFactoryBean);
-	}
+        if (swapDataSources) {
+            entityManagerFactoryBean.setDataSource(dataSource);
+        } else {
+            addJtaDatasource(entityManagerFactoryBean);
+        }
     }
 
     /**
@@ -201,9 +201,9 @@ public class SpringORM {
      */
     private void setClassLoader(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
 
-	if (ObjectUtils.notNull(loader)) {
-	    entityManagerFactoryBean.setBeanClassLoader(loader);
-	}
+        if (ObjectUtils.notNull(loader)) {
+            entityManagerFactoryBean.setBeanClassLoader(loader);
+        }
     }
 
     /**
@@ -213,9 +213,9 @@ public class SpringORM {
      */
     private void setAdditionalProperties(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
 
-	if (CollectionUtils.valid(properties)) {
-	    entityManagerFactoryBean.setJpaProperties(properties);
-	}
+        if (CollectionUtils.valid(properties)) {
+            entityManagerFactoryBean.setJpaProperties(properties);
+        }
     }
 
     /**
@@ -225,15 +225,15 @@ public class SpringORM {
      */
     private void configureDataSource(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
 
-	entityManagerFactoryBean.setPersistenceUnitName(unitName);
-	// Checks data source type
-	setWrapeDataSource(entityManagerFactoryBean);
-	// Sets class loader
-	setClassLoader(entityManagerFactoryBean);
-	// entityManagerFactoryBean.setPackagesToScan();
-	entityManagerFactoryBean.setPersistenceProvider(persistenceProvider);
-	// Sets additional properties
-	setAdditionalProperties(entityManagerFactoryBean);
+        entityManagerFactoryBean.setPersistenceUnitName(unitName);
+        // Checks data source type
+        setWrapeDataSource(entityManagerFactoryBean);
+        // Sets class loader
+        setClassLoader(entityManagerFactoryBean);
+        // entityManagerFactoryBean.setPackagesToScan();
+        entityManagerFactoryBean.setPersistenceProvider(persistenceProvider);
+        // Sets additional properties
+        setAdditionalProperties(entityManagerFactoryBean);
     }
 
     /**
@@ -244,13 +244,13 @@ public class SpringORM {
      */
     private LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
-	LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
-	configureDataSource(entityManagerFactoryBean);
-	// Configures JPA ORM system for use
-	entityManagerFactoryBean.afterPropertiesSet();
+        configureDataSource(entityManagerFactoryBean);
+        // Configures JPA ORM system for use
+        entityManagerFactoryBean.afterPropertiesSet();
 
-	return entityManagerFactoryBean;
+        return entityManagerFactoryBean;
     }
 
     /**
@@ -260,13 +260,13 @@ public class SpringORM {
      */
     private JpaTransactionManager transactionManager() {
 
-	JpaTransactionManager transactionManager = new JpaTransactionManager();
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
 
-	LocalContainerEntityManagerFactoryBean emfBean = entityManagerFactory();
-	EntityManagerFactory emf = emfBean.getObject();
-	transactionManager.setEntityManagerFactory(emf);
+        LocalContainerEntityManagerFactoryBean emfBean = entityManagerFactory();
+        EntityManagerFactory emf = emfBean.getObject();
+        transactionManager.setEntityManagerFactory(emf);
 
-	return transactionManager;
+        return transactionManager;
     }
 
     /**
@@ -277,14 +277,14 @@ public class SpringORM {
      */
     public EntityManagerFactory getEmf() throws IOException {
 
-	EntityManagerFactory emf;
+        EntityManagerFactory emf;
 
-	initProperties();
-	initAndLookUpDataSource();
-	JpaTransactionManager transactionManager = transactionManager();
-	emf = transactionManager.getEntityManagerFactory();
+        initProperties();
+        initAndLookUpDataSource();
+        JpaTransactionManager transactionManager = transactionManager();
+        emf = transactionManager.getEntityManagerFactory();
 
-	return emf;
+        return emf;
     }
 
     /**
@@ -295,39 +295,39 @@ public class SpringORM {
      */
     public static class Builder {
 
-	private SpringORM springORM;
+        private SpringORM springORM;
 
-	public Builder(String dataSourceName, PersistenceProvider persistenceProvider, String unitName) {
-	    this.springORM = new SpringORM(dataSourceName, persistenceProvider, unitName);
-	}
+        public Builder(String dataSourceName, PersistenceProvider persistenceProvider, String unitName) {
+            this.springORM = new SpringORM(dataSourceName, persistenceProvider, unitName);
+        }
 
-	public Builder properties(Properties properties) {
-	    springORM.properties = properties;
-	    return this;
-	}
+        public Builder properties(Properties properties) {
+            springORM.properties = properties;
+            return this;
+        }
 
-	public Builder properties(Map<Object, Object> properties) {
+        public Builder properties(Map<Object, Object> properties) {
 
-	    if (CollectionUtils.valid(properties)) {
-		springORM.properties = new Properties();
-		springORM.properties.putAll(properties);
-	    }
+            if (CollectionUtils.valid(properties)) {
+                springORM.properties = new Properties();
+                springORM.properties.putAll(properties);
+            }
 
-	    return this;
-	}
+            return this;
+        }
 
-	public Builder classLoader(ClassLoader loader) {
-	    springORM.loader = loader;
-	    return this;
-	}
+        public Builder classLoader(ClassLoader loader) {
+            springORM.loader = loader;
+            return this;
+        }
 
-	public Builder swapDataSource(boolean swapDataSources) {
-	    springORM.swapDataSources = swapDataSources;
-	    return this;
-	}
+        public Builder swapDataSource(boolean swapDataSources) {
+            springORM.swapDataSources = swapDataSources;
+            return this;
+        }
 
-	public SpringORM build() {
-	    return this.springORM;
-	}
+        public SpringORM build() {
+            return this.springORM;
+        }
     }
 }

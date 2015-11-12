@@ -67,9 +67,9 @@ public class BeanTransactions {
      */
     protected static class TransactionData {
 
-	EntityManager em;
+        EntityManager em;
 
-	EntityTransaction entityTransaction;
+        EntityTransaction entityTransaction;
     }
 
     /**
@@ -82,12 +82,12 @@ public class BeanTransactions {
      */
     private static TransactionData createTransactionData(EntityTransaction entityTransaction, EntityManager em) {
 
-	TransactionData transactionData = new TransactionData();
+        TransactionData transactionData = new TransactionData();
 
-	transactionData.em = em;
-	transactionData.entityTransaction = entityTransaction;
+        transactionData.em = em;
+        transactionData.entityTransaction = entityTransaction;
 
-	return transactionData;
+        return transactionData;
     }
 
     /**
@@ -98,18 +98,18 @@ public class BeanTransactions {
      */
     public static UserTransaction getTransaction(EntityTransaction... entityTransactions) {
 
-	UserTransaction transaction = TransactionHolder.getTransaction();
+        UserTransaction transaction = TransactionHolder.getTransaction();
 
-	if (transaction == null) {
-	    transaction = UserTransactionFactory.get(entityTransactions);
-	    TransactionHolder.setTransaction(transaction);
-	} else {
-	    // If entityTransactions array is available then adds it to
-	    // UserTransaction object
-	    UserTransactionFactory.join(transaction, entityTransactions);
-	}
+        if (transaction == null) {
+            transaction = UserTransactionFactory.get(entityTransactions);
+            TransactionHolder.setTransaction(transaction);
+        } else {
+            // If entityTransactions array is available then adds it to
+            // UserTransaction object
+            UserTransactionFactory.join(transaction, entityTransactions);
+        }
 
-	return transaction;
+        return transaction;
     }
 
     /**
@@ -120,17 +120,17 @@ public class BeanTransactions {
      */
     public static UserTransaction getTransaction(Collection<EntityManager> ems) {
 
-	UserTransaction transaction = TransactionHolder.getTransaction();
+        UserTransaction transaction = TransactionHolder.getTransaction();
 
-	if (transaction == null) {
-	    transaction = UserTransactionFactory.get();
-	    TransactionHolder.setTransaction(transaction);
-	}
+        if (transaction == null) {
+            transaction = UserTransactionFactory.get();
+            TransactionHolder.setTransaction(transaction);
+        }
 
-	Collection<TransactionData> entityTransactions = getEntityTransactions(ems);
-	TransactionManager.addEntityTransactions(transaction, entityTransactions);
+        Collection<TransactionData> entityTransactions = getEntityTransactions(ems);
+        TransactionManager.addEntityTransactions(transaction, entityTransactions);
 
-	return transaction;
+        return transaction;
     }
 
     /**
@@ -142,17 +142,17 @@ public class BeanTransactions {
      * @return {@link TransactionAttributeType} for annotation
      */
     private static TransactionAttributeType getTransactionType(TransactionAttribute attr,
-	    TransactionAttributeType attrType) {
+            TransactionAttributeType attrType) {
 
-	TransactionAttributeType type;
+        TransactionAttributeType type;
 
-	if (attr == null) {
-	    type = attrType;
-	} else {
-	    type = attr.value();
-	}
+        if (attr == null) {
+            type = attrType;
+        } else {
+            type = attr.value();
+        }
 
-	return type;
+        return type;
     }
 
     /**
@@ -165,22 +165,22 @@ public class BeanTransactions {
      */
     public static TransactionAttributeType getTransactionType(MetaData metaData, Method method) {
 
-	TransactionAttributeType type;
+        TransactionAttributeType type;
 
-	if (method == null) {
-	    type = null;
-	} else {
-	    TransactionAttributeType attrType = metaData.getTransactionAttrType();
-	    TransactionManagementType manType = metaData.getTransactionManType();
-	    TransactionAttribute attr = method.getAnnotation(TransactionAttribute.class);
-	    if (manType.equals(TransactionManagementType.CONTAINER)) {
-		type = getTransactionType(attr, attrType);
-	    } else {
-		type = null;
-	    }
-	}
+        if (method == null) {
+            type = null;
+        } else {
+            TransactionAttributeType attrType = metaData.getTransactionAttrType();
+            TransactionManagementType manType = metaData.getTransactionManType();
+            TransactionAttribute attr = method.getAnnotation(TransactionAttribute.class);
+            if (manType.equals(TransactionManagementType.CONTAINER)) {
+                type = getTransactionType(attr, attrType);
+            } else {
+                type = null;
+            }
+        }
 
-	return type;
+        return type;
     }
 
     /**
@@ -193,15 +193,15 @@ public class BeanTransactions {
      */
     private static int getStatus(UserTransaction transaction) throws IOException {
 
-	int status;
+        int status;
 
-	try {
-	    status = transaction.getStatus();
-	} catch (SystemException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            status = transaction.getStatus();
+        } catch (SystemException ex) {
+            throw new IOException(ex);
+        }
 
-	return status;
+        return status;
     }
 
     /**
@@ -211,9 +211,9 @@ public class BeanTransactions {
      */
     private static void beginEntityTransaction(EntityTransaction entityTransaction) {
 
-	if (Boolean.FALSE.equals(entityTransaction.isActive())) {
-	    entityTransaction.begin();
-	}
+        if (Boolean.FALSE.equals(entityTransaction.isActive())) {
+            entityTransaction.begin();
+        }
     }
 
     /**
@@ -225,16 +225,16 @@ public class BeanTransactions {
      */
     private static EntityTransaction getEntityTransaction(EntityManager em) {
 
-	EntityTransaction entityTransaction;
+        EntityTransaction entityTransaction;
 
-	if (em == null) {
-	    entityTransaction = null;
-	} else {
-	    entityTransaction = em.getTransaction();
-	    beginEntityTransaction(entityTransaction);
-	}
+        if (em == null) {
+            entityTransaction = null;
+        } else {
+            entityTransaction = em.getTransaction();
+            beginEntityTransaction(entityTransaction);
+        }
 
-	return entityTransaction;
+        return entityTransaction;
     }
 
     /**
@@ -246,20 +246,20 @@ public class BeanTransactions {
      */
     private static Collection<TransactionData> getEntityTransactions(Collection<EntityManager> ems) {
 
-	Collection<TransactionData> entityTransactions;
+        Collection<TransactionData> entityTransactions;
 
-	if (CollectionUtils.valid(ems)) {
-	    entityTransactions = new ArrayList<TransactionData>();
-	    for (EntityManager em : ems) {
-		EntityTransaction entityTransaction = getEntityTransaction(em);
-		TransactionData transactionData = createTransactionData(entityTransaction, em);
-		entityTransactions.add(transactionData);
-	    }
-	} else {
-	    entityTransactions = null;
-	}
+        if (CollectionUtils.valid(ems)) {
+            entityTransactions = new ArrayList<TransactionData>();
+            for (EntityManager em : ems) {
+                EntityTransaction entityTransaction = getEntityTransaction(em);
+                TransactionData transactionData = createTransactionData(entityTransaction, em);
+                entityTransactions.add(transactionData);
+            }
+        } else {
+            entityTransactions = null;
+        }
 
-	return entityTransactions;
+        return entityTransactions;
     }
 
     /**
@@ -273,41 +273,41 @@ public class BeanTransactions {
      * @throws IOException
      */
     private static void addTransaction(BeanHandler handler, TransactionAttributeType type, UserTransaction transaction,
-	    Collection<EntityManager> ems) throws IOException {
+            Collection<EntityManager> ems) throws IOException {
 
-	Collection<TransactionData> entityTransactions;
-	TransactionManager.addCaller(transaction, handler);
+        Collection<TransactionData> entityTransactions;
+        TransactionManager.addCaller(transaction, handler);
 
-	if (type.equals(TransactionAttributeType.NOT_SUPPORTED)) {
-	    TransactionManager.addFreeEntityManagers(transaction, ems);
-	} else if (type.equals(TransactionAttributeType.REQUIRED)) {
-	    entityTransactions = getEntityTransactions(ems);
-	    TransactionManager.addEntityTransactions(transaction, entityTransactions);
-	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
-	    entityTransactions = getEntityTransactions(ems);
-	    TransactionManager.addReqNewTransactions(transaction, entityTransactions);
-	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
-	    int status = getStatus(transaction);
-	    if (status == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
-		TransactionManager.addEntityManagers(transaction, ems);
-		throw new EJBException(MANDATORY_ERROR);
-	    } else {
-		entityTransactions = getEntityTransactions(ems);
-		TransactionManager.addEntityTransactions(transaction, entityTransactions);
-	    }
-	} else if (type.equals(TransactionAttributeType.NEVER)) {
-	    try {
-		int status = getStatus(transaction);
-		if (status > UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
-		    throw new EJBException(NEVER_ERROR);
-		}
-	    } finally {
-		TransactionManager.addFreeEntityManagers(transaction, ems);
-	    }
-	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
-	    entityTransactions = getEntityTransactions(ems);
-	    TransactionManager.addEntityTransactions(transaction, entityTransactions);
-	}
+        if (type.equals(TransactionAttributeType.NOT_SUPPORTED)) {
+            TransactionManager.addFreeEntityManagers(transaction, ems);
+        } else if (type.equals(TransactionAttributeType.REQUIRED)) {
+            entityTransactions = getEntityTransactions(ems);
+            TransactionManager.addEntityTransactions(transaction, entityTransactions);
+        } else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
+            entityTransactions = getEntityTransactions(ems);
+            TransactionManager.addReqNewTransactions(transaction, entityTransactions);
+        } else if (type.equals(TransactionAttributeType.MANDATORY)) {
+            int status = getStatus(transaction);
+            if (status == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
+                TransactionManager.addEntityManagers(transaction, ems);
+                throw new EJBException(MANDATORY_ERROR);
+            } else {
+                entityTransactions = getEntityTransactions(ems);
+                TransactionManager.addEntityTransactions(transaction, entityTransactions);
+            }
+        } else if (type.equals(TransactionAttributeType.NEVER)) {
+            try {
+                int status = getStatus(transaction);
+                if (status > UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
+                    throw new EJBException(NEVER_ERROR);
+                }
+            } finally {
+                TransactionManager.addFreeEntityManagers(transaction, ems);
+            }
+        } else if (type.equals(TransactionAttributeType.SUPPORTS)) {
+            entityTransactions = getEntityTransactions(ems);
+            TransactionManager.addEntityTransactions(transaction, entityTransactions);
+        }
     }
 
     /**
@@ -321,21 +321,21 @@ public class BeanTransactions {
      * @throws IOException
      */
     public static TransactionAttributeType addTransaction(BeanHandler handler, Method method,
-	    Collection<EntityManager> ems) throws IOException {
+            Collection<EntityManager> ems) throws IOException {
 
-	TransactionAttributeType type;
+        TransactionAttributeType type;
 
-	MetaData metaData = handler.getMetaData();
-	type = getTransactionType(metaData, method);
-	UserTransaction transaction = getTransaction();
+        MetaData metaData = handler.getMetaData();
+        type = getTransactionType(metaData, method);
+        UserTransaction transaction = getTransaction();
 
-	if (ObjectUtils.notNull(type)) {
-	    addTransaction(handler, type, transaction, ems);
-	} else {
-	    TransactionManager.addEntityManagers(transaction, ems);
-	}
+        if (ObjectUtils.notNull(type)) {
+            addTransaction(handler, type, transaction, ems);
+        } else {
+            TransactionManager.addEntityManagers(transaction, ems);
+        }
 
-	return type;
+        return type;
     }
 
     /**
@@ -350,15 +350,15 @@ public class BeanTransactions {
      */
     private static void rollbackTransaction(TransactionAttributeType type) throws IOException {
 
-	UserTransaction transaction = getTransaction();
+        UserTransaction transaction = getTransaction();
 
-	if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
-	    TransactionManager.rollbackReqNew(transaction);
-	} else if (TransactionManager.isFreeType(type)) {
-	    TransactionManager.closeFreeEntityManagers(transaction);
-	} else {
-	    TransactionManager.rollback(transaction);
-	}
+        if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
+            TransactionManager.rollbackReqNew(transaction);
+        } else if (TransactionManager.isFreeType(type)) {
+            TransactionManager.closeFreeEntityManagers(transaction);
+        } else {
+            TransactionManager.rollback(transaction);
+        }
     }
 
     /**
@@ -371,12 +371,12 @@ public class BeanTransactions {
      */
     public static void rollbackTransaction(BeanHandler handler, Method method) throws IOException {
 
-	TransactionAttributeType type = getTransactionType(handler.getMetaData(), method);
-	if (ObjectUtils.notNull(type)) {
-	    rollbackTransaction(type);
-	} else {
-	    closeEntityManagers();
-	}
+        TransactionAttributeType type = getTransactionType(handler.getMetaData(), method);
+        if (ObjectUtils.notNull(type)) {
+            rollbackTransaction(type);
+        } else {
+            closeEntityManagers();
+        }
     }
 
     /**
@@ -388,20 +388,20 @@ public class BeanTransactions {
      */
     private static void commitScoped(TransactionAttributeType type, UserTransaction transaction) throws IOException {
 
-	if (type.equals(TransactionAttributeType.REQUIRED)) {
-	    TransactionManager.commit(transaction);
-	} else if (type.equals(TransactionAttributeType.SUPPORTS)) {
-	    int status = getStatus(transaction);
-	    if (status == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
-		TransactionManager.remove(transaction);
-	    } else {
-		TransactionManager.remove(transaction);
-		throw new EJBException(SUPPORTS_ERROR);
-	    }
-	} else if (type.equals(TransactionAttributeType.MANDATORY)) {
-	    TransactionManager.remove(transaction);
-	    throw new EJBException(MANDATORY_ERROR);
-	}
+        if (type.equals(TransactionAttributeType.REQUIRED)) {
+            TransactionManager.commit(transaction);
+        } else if (type.equals(TransactionAttributeType.SUPPORTS)) {
+            int status = getStatus(transaction);
+            if (status == UserTransactionFactory.INACTIVE_TRANSACTION_STATE) {
+                TransactionManager.remove(transaction);
+            } else {
+                TransactionManager.remove(transaction);
+                throw new EJBException(SUPPORTS_ERROR);
+            }
+        } else if (type.equals(TransactionAttributeType.MANDATORY)) {
+            TransactionManager.remove(transaction);
+            throw new EJBException(MANDATORY_ERROR);
+        }
     }
 
     /**
@@ -414,20 +414,20 @@ public class BeanTransactions {
      */
     private static void commitTransaction(TransactionAttributeType type, BeanHandler handler) throws IOException {
 
-	UserTransaction transaction = getTransaction();
+        UserTransaction transaction = getTransaction();
 
-	if (TransactionManager.isTransactionalType(type)) {
-	    boolean check = TransactionManager.checkCaller(transaction, handler);
-	    if (check) {
-		commitScoped(type, transaction);
-	    }
-	} else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
-	    TransactionManager.commitReqNew(transaction);
-	} else if (TransactionManager.isFreeType(type)) {
-	    TransactionManager.closeFreeEntityManagers(transaction);
-	} else {
-	    TransactionManager.closeEntityManagers(transaction);
-	}
+        if (TransactionManager.isTransactionalType(type)) {
+            boolean check = TransactionManager.checkCaller(transaction, handler);
+            if (check) {
+                commitScoped(type, transaction);
+            }
+        } else if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
+            TransactionManager.commitReqNew(transaction);
+        } else if (TransactionManager.isFreeType(type)) {
+            TransactionManager.closeFreeEntityManagers(transaction);
+        } else {
+            TransactionManager.closeEntityManagers(transaction);
+        }
     }
 
     /**
@@ -440,12 +440,12 @@ public class BeanTransactions {
      */
     public static void commitTransaction(BeanHandler handler, Method method) throws IOException {
 
-	TransactionAttributeType type = getTransactionType(handler.getMetaData(), method);
-	if (ObjectUtils.notNull(type)) {
-	    commitTransaction(type, handler);
-	} else {
-	    closeEntityManagers();
-	}
+        TransactionAttributeType type = getTransactionType(handler.getMetaData(), method);
+        if (ObjectUtils.notNull(type)) {
+            commitTransaction(type, handler);
+        } else {
+            closeEntityManagers();
+        }
     }
 
     /**
@@ -453,10 +453,10 @@ public class BeanTransactions {
      */
     public static void closeEntityManagers() {
 
-	UserTransaction transaction = TransactionHolder.getTransaction();
-	if (ObjectUtils.notNull(transaction)) {
-	    TransactionManager.close(transaction);
-	}
+        UserTransaction transaction = TransactionHolder.getTransaction();
+        if (ObjectUtils.notNull(transaction)) {
+            TransactionManager.close(transaction);
+        }
     }
 
     /**
@@ -468,22 +468,22 @@ public class BeanTransactions {
      */
     private static void remove(BeanHandler handler, TransactionAttributeType type) {
 
-	UserTransaction transaction = TransactionHolder.getTransaction();
+        UserTransaction transaction = TransactionHolder.getTransaction();
 
-	if (ObjectUtils.notNull(transaction)) {
-	    if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
-		TransactionManager.closeReqNewEntityManagers(transaction);
-	    } else if (TransactionManager.isFreeType(type)) {
-		TransactionManager.closeFreeEntityManagers(transaction);
-	    }
+        if (ObjectUtils.notNull(transaction)) {
+            if (type.equals(TransactionAttributeType.REQUIRES_NEW)) {
+                TransactionManager.closeReqNewEntityManagers(transaction);
+            } else if (TransactionManager.isFreeType(type)) {
+                TransactionManager.closeFreeEntityManagers(transaction);
+            }
 
-	    boolean check = TransactionManager.checkCaller(transaction, handler);
-	    if (check) {
-		TransactionManager.remove(transaction);
-	    }
-	} else {
-	    TransactionHolder.removeTransaction();
-	}
+            boolean check = TransactionManager.checkCaller(transaction, handler);
+            if (check) {
+                TransactionManager.remove(transaction);
+            }
+        } else {
+            TransactionHolder.removeTransaction();
+        }
     }
 
     /**
@@ -496,16 +496,16 @@ public class BeanTransactions {
      */
     public static void remove(BeanHandler handler, Method method) {
 
-	TransactionAttributeType type = getTransactionType(handler.getMetaData(), method);
-	if (ObjectUtils.notNull(type)) {
-	    remove(handler, type);
-	} else {
-	    UserTransaction transaction = TransactionHolder.getTransaction();
-	    if (ObjectUtils.notNull(transaction)) {
-		TransactionManager.remove(transaction);
-	    } else {
-		TransactionHolder.removeTransaction();
-	    }
-	}
+        TransactionAttributeType type = getTransactionType(handler.getMetaData(), method);
+        if (ObjectUtils.notNull(type)) {
+            remove(handler, type);
+        } else {
+            UserTransaction transaction = TransactionHolder.getTransaction();
+            if (ObjectUtils.notNull(transaction)) {
+                TransactionManager.remove(transaction);
+            } else {
+                TransactionHolder.removeTransaction();
+            }
+        }
     }
 }
