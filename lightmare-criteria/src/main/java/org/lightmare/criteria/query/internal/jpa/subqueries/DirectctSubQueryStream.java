@@ -153,6 +153,31 @@ abstract class DirectctSubQueryStream<S, T> extends EntityQueryStream<S> impleme
 
     // =========================sub=queries==================================//
 
+    // ===============================Joins==================================//
+
+    @Override
+    public <E, C extends Collection<E>> SubQueryStream<S, T> join(EntityField<S, C> field,
+            SubQueryConsumer<E, S> consumer) {
+        super.join(field, consumer);
+        return this;
+    }
+
+    @Override
+    public <E, C extends Collection<E>> SubQueryStream<S, T> leftJoin(EntityField<S, C> field,
+            SubQueryConsumer<E, S> consumer) {
+        super.leftJoin(field, consumer);
+        return this;
+    }
+
+    @Override
+    public <E, C extends Collection<E>> SubQueryStream<S, T> fetchJoin(EntityField<S, C> field,
+            SubQueryConsumer<E, S> consumer) {
+        super.fetchJoin(field, consumer);
+        return this;
+    }
+
+    // ===============================Joins==================================//
+
     // =========================order=by=====================================//
 
     @Override

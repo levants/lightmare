@@ -39,7 +39,7 @@ import org.lightmare.criteria.query.internal.jpa.GeneralExpression;
  * @param <S>
  *            entity type parameter
  */
-interface GeneralSubExpression<S, T> extends GeneralExpression<S> {
+interface GeneralSubExpression<S, T> extends GeneralExpression<S>, SubJoinExpression<S, T> {
 
     // =========================embedded=field=queries=======================//
 

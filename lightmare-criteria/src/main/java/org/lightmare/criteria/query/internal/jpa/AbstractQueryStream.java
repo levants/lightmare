@@ -22,7 +22,9 @@
  */
 package org.lightmare.criteria.query.internal.jpa;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -45,6 +47,7 @@ import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -640,24 +643,83 @@ public abstract class AbstractQueryStream<T> extends AbstractJPAQueryWrapper<T> 
         }
     }
 
+    /**
+     * Appends query appropriated expression and new line
+     * 
+     * @param field
+     * @param expression
+     */
     protected void oppLine(Object field, String expression) {
         opp(field, expression);
         newLine();
     }
 
+    /**
+     * Appends query appropriated expression and new line
+     * 
+     * @param field
+     * @param value
+     * @param expression
+     */
     protected <F> void oppLine(Object field, F value, String expression) {
         opp(field, value, expression);
         newLine();
     }
 
+    /**
+     * Appends query appropriated expression and new line
+     * 
+     * @param field
+     * @param value1
+     * @param value2
+     * @param expression
+     */
     protected <F> void oppLine(Object field, F value1, F value2, String expression) {
         opp(field, value1, value2, expression);
         newLine();
     }
 
+    /**
+     * Sets date parameter to query
+     * 
+     * @param parameter
+     * @param query
+     */
+    private void setDateParameter(ParameterTuple parameter, Query query) {
+
+        String name = parameter.getName();
+        Object value = parameter.getValue();
+        TemporalType temporalType = parameter.getTemporalType();
+        if (value instanceof Calendar) {
+            Calendar dateValue = ObjectUtils.cast(value);
+            query.setParameter(name, dateValue, temporalType);
+        } else if (value instanceof Date) {
+            Date dateValue = ObjectUtils.cast(value);
+            query.setParameter(name, dateValue, temporalType);
+        }
+    }
+
+    /**
+     * Sets parameter to query
+     * 
+     * @param parameter
+     * @param query
+     */
+    private void setParameter(ParameterTuple parameter, Query query) {
+
+        String name = parameter.getName();
+        Object value = parameter.getValue();
+        TemporalType temporalType = parameter.getTemporalType();
+        if (temporalType == null) {
+            query.setParameter(name, value);
+        } else {
+            setDateParameter(parameter, query);
+        }
+    }
+
     private void setParameters(Query query) {
         setJPAConfiguration(query);
-        parameters.forEach(c -> query.setParameter(c.getName(), c.getValue()));
+        parameters.forEach(parameter -> setParameter(parameter, query));
     }
 
     /**

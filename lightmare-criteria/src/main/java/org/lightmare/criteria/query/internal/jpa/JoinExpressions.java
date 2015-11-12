@@ -38,6 +38,13 @@ import org.lightmare.criteria.query.QueryStream;
  */
 public interface JoinExpressions<T> {
 
+    /**
+     * Processes JOIN statement
+     * 
+     * @param field
+     * @param expression
+     * @param consumer
+     */
     <E, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
             SubQueryConsumer<E, T> consumer);
 
