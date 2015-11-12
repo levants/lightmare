@@ -35,18 +35,18 @@ public class RcpWrapper {
     private Object value;
 
     public boolean isValid() {
-	return valid;
+        return valid;
     }
 
     public void setValid(boolean valid) {
-	this.valid = valid;
+        this.valid = valid;
     }
 
     public Object getValue() {
-	return value;
+        return value;
     }
 
     public void setValue(Object value) {
-	this.value = value;
+        this.value = value;
     }
 }

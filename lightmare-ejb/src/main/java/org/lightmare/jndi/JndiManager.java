@@ -60,72 +60,72 @@ public class JndiManager {
      */
     protected static enum JNDIParameters {
 
-	// Name of InitialContextFactory implementation class
-	FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY, LightmareContextFactory.class.getName()),
-	// Name of InitialContextFactory implementation class package
-	PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES, LightmareContextFactory.class.getPackage().getName()),
-	// Additional parameter to share JNDI cache
-	SHARED_PARAMETER("org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
+        // Name of InitialContextFactory implementation class
+        FACTORY_CLASS_NAME(Context.INITIAL_CONTEXT_FACTORY, LightmareContextFactory.class.getName()),
+        // Name of InitialContextFactory implementation class package
+        PACKAGE_PREFIXES(Context.URL_PKG_PREFIXES, LightmareContextFactory.class.getPackage().getName()),
+        // Additional parameter to share JNDI cache
+        SHARED_PARAMETER("org.osjava.sj.jndi.shared", Boolean.TRUE.toString());
 
-	// Cache of JNDI configuration key value pairs
-	private static final Properties CONFIG = new Properties();
+        // Cache of JNDI configuration key value pairs
+        private static final Properties CONFIG = new Properties();
 
-	// Cache of JNDI configuration key value pairs
-	private static final Map<String, String> HIBERNATE_CONFIG = new HashMap<String, String>();
+        // Cache of JNDI configuration key value pairs
+        private static final Map<String, String> HIBERNATE_CONFIG = new HashMap<String, String>();
 
-	public final String key;
+        public final String key;
 
-	public final String value;
+        public final String value;
 
-	/**
-	 * Constructor with key and value
-	 *
-	 * @param key
-	 * @param value
-	 */
-	private JNDIParameters(String key, String value) {
-	    this.key = key;
-	    this.value = value;
-	}
+        /**
+         * Constructor with key and value
+         *
+         * @param key
+         * @param value
+         */
+        private JNDIParameters(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
 
-	/**
-	 * Gets {@link Properties} of all key value pairs of this enumeration
-	 */
-	protected static Properties getConfig() {
+        /**
+         * Gets {@link Properties} of all key value pairs of this enumeration
+         */
+        protected static Properties getConfig() {
 
-	    if (CONFIG.isEmpty()) {
-		// Gathers configuration instances
-		JNDIParameters[] parameters = JNDIParameters.values();
-		for (JNDIParameters parameter : parameters) {
-		    CONFIG.put(parameter.key, parameter.value);
-		}
-	    }
+            if (CONFIG.isEmpty()) {
+                // Gathers configuration instances
+                JNDIParameters[] parameters = JNDIParameters.values();
+                for (JNDIParameters parameter : parameters) {
+                    CONFIG.put(parameter.key, parameter.value);
+                }
+            }
 
-	    return CONFIG;
-	}
+            return CONFIG;
+        }
 
-	private static String getORMKey(JNDIParameters parameter) {
-	    return StringUtils.concat(AvailableSettings.JNDI_PREFIX, StringUtils.DOT, parameter.key);
-	}
+        private static String getORMKey(JNDIParameters parameter) {
+            return StringUtils.concat(AvailableSettings.JNDI_PREFIX, StringUtils.DOT, parameter.key);
+        }
 
-	/**
-	 * Gets {@link Map} of all key value pairs of this enumeration prefixed
-	 * with as JPA configuration prefix
-	 */
-	protected static Map<String, String> getHibreanteConfig() {
+        /**
+         * Gets {@link Map} of all key value pairs of this enumeration prefixed
+         * with as JPA configuration prefix
+         */
+        protected static Map<String, String> getHibreanteConfig() {
 
-	    if (HIBERNATE_CONFIG.isEmpty()) {
-		// Gathers JPA configuration
-		JNDIParameters[] parameters = JNDIParameters.values();
-		String hibernateKey;
-		for (JNDIParameters parameter : parameters) {
-		    hibernateKey = getORMKey(parameter);
-		    HIBERNATE_CONFIG.put(hibernateKey, parameter.value);
-		}
-	    }
+            if (HIBERNATE_CONFIG.isEmpty()) {
+                // Gathers JPA configuration
+                JNDIParameters[] parameters = JNDIParameters.values();
+                String hibernateKey;
+                for (JNDIParameters parameter : parameters) {
+                    hibernateKey = getORMKey(parameter);
+                    HIBERNATE_CONFIG.put(hibernateKey, parameter.value);
+                }
+            }
 
-	    return HIBERNATE_CONFIG;
-	}
+            return HIBERNATE_CONFIG;
+        }
     }
 
     /**
@@ -136,16 +136,16 @@ public class JndiManager {
      */
     public static enum JNDIConfigs {
 
-	INIT; // Initialization to read JNDI parameters
+        INIT; // Initialization to read JNDI parameters
 
-	public final Properties config;
+        public final Properties config;
 
-	public final Map<String, String> hinbernateConfig;
+        public final Map<String, String> hinbernateConfig;
 
-	private JNDIConfigs() {
-	    config = JNDIParameters.getConfig();
-	    hinbernateConfig = JNDIParameters.getHibreanteConfig();
-	}
+        private JNDIConfigs() {
+            config = JNDIParameters.getConfig();
+            hinbernateConfig = JNDIParameters.getHibreanteConfig();
+        }
     }
 
     /**
@@ -155,7 +155,7 @@ public class JndiManager {
      * @throws IOException
      */
     public static Context getContext() throws IOException {
-	return NamingContext.getContext();
+        return NamingContext.getContext();
     }
 
     /**
@@ -163,7 +163,7 @@ public class JndiManager {
      * built yet
      */
     public static void loadContext() {
-	NamingContext.configure();
+        NamingContext.configure();
     }
 
     /**
@@ -176,16 +176,16 @@ public class JndiManager {
      */
     public static <T> T lookup(String name) throws IOException {
 
-	T value;
+        T value;
 
-	try {
-	    Object data = getContext().lookup(name);
-	    value = ObjectUtils.cast(data);
-	} catch (NamingException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            Object data = getContext().lookup(name);
+            value = ObjectUtils.cast(data);
+        } catch (NamingException ex) {
+            throw new IOException(ex);
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -198,13 +198,13 @@ public class JndiManager {
      */
     public static void rebind(String name, Object data) throws IOException {
 
-	try {
-	    getContext().rebind(name, data);
-	} catch (NamingException ex) {
-	    throw new IOException(ex);
-	} catch (IOException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            getContext().rebind(name, data);
+        } catch (NamingException ex) {
+            throw new IOException(ex);
+        } catch (IOException ex) {
+            throw new IOException(ex);
+        }
     }
 
     /**
@@ -216,13 +216,13 @@ public class JndiManager {
      */
     public static void bind(String name, Object data) throws IOException {
 
-	try {
-	    getContext().bind(name, data);
-	} catch (NamingException ex) {
-	    throw new IOException(ex);
-	} catch (IOException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            getContext().bind(name, data);
+        } catch (NamingException ex) {
+            throw new IOException(ex);
+        } catch (IOException ex) {
+            throw new IOException(ex);
+        }
     }
 
     /**
@@ -234,13 +234,13 @@ public class JndiManager {
      */
     public static void unbind(String name) throws IOException {
 
-	try {
-	    getContext().unbind(name);
-	} catch (NamingException ex) {
-	    throw new IOException(ex);
-	} catch (IOException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            getContext().unbind(name);
+        } catch (NamingException ex) {
+            throw new IOException(ex);
+        } catch (IOException ex) {
+            throw new IOException(ex);
+        }
     }
 }
 
@@ -269,15 +269,15 @@ class NamingContext {
      */
     private void configure(Properties properties) {
 
-	Set<Map.Entry<Object, Object>> entries = properties.entrySet();
-	Object key;
-	Object value;
-	Properties systemProperties = System.getProperties();
-	for (Map.Entry<Object, Object> entry : entries) {
-	    key = entry.getKey();
-	    value = entry.getValue();
-	    CollectionUtils.checkAndAdd(systemProperties, key, value);
-	}
+        Set<Map.Entry<Object, Object>> entries = properties.entrySet();
+        Object key;
+        Object value;
+        Properties systemProperties = System.getProperties();
+        for (Map.Entry<Object, Object> entry : entries) {
+            key = entry.getKey();
+            value = entry.getValue();
+            CollectionUtils.checkAndAdd(systemProperties, key, value);
+        }
     }
 
     /**
@@ -286,20 +286,20 @@ class NamingContext {
      */
     protected static void configure() {
 
-	if (Boolean.FALSE.equals(JNDI_IS_SET.getAndSet(Boolean.TRUE))) {
-	    ClassLoader loader = LibraryLoader.getContextClassLoader();
-	    Thread thread = Thread.currentThread();
-	    try {
-		thread.setContextClassLoader(ClassLoader.getSystemClassLoader());
-		// Gets system properties
-		Properties properties = JNDIConfigs.INIT.config;
-		// Registers properties as system properties
-		NamingContext namingContext = new NamingContext();
-		namingContext.configure(properties);
-	    } finally {
-		thread.setContextClassLoader(loader);
-	    }
-	}
+        if (Boolean.FALSE.equals(JNDI_IS_SET.getAndSet(Boolean.TRUE))) {
+            ClassLoader loader = LibraryLoader.getContextClassLoader();
+            Thread thread = Thread.currentThread();
+            try {
+                thread.setContextClassLoader(ClassLoader.getSystemClassLoader());
+                // Gets system properties
+                Properties properties = JNDIConfigs.INIT.config;
+                // Registers properties as system properties
+                NamingContext namingContext = new NamingContext();
+                namingContext.configure(properties);
+            } finally {
+                thread.setContextClassLoader(loader);
+            }
+        }
     }
 
     /**
@@ -308,17 +308,17 @@ class NamingContext {
      */
     protected static Context getContext() throws IOException {
 
-	InitialContext context;
+        InitialContext context;
 
-	try {
-	    configure();
-	    Properties propertis = JNDIConfigs.INIT.config;
-	    context = new InitialContext(propertis);
-	} catch (NamingException ex) {
-	    LOG.error(ex.getMessage(), ex);
-	    throw new IOException(NOT_INITIALIZED_ERROR, ex);
-	}
+        try {
+            configure();
+            Properties propertis = JNDIConfigs.INIT.config;
+            context = new InitialContext(propertis);
+        } catch (NamingException ex) {
+            LOG.error(ex.getMessage(), ex);
+            throw new IOException(NOT_INITIALIZED_ERROR, ex);
+        }
 
-	return context;
+        return context;
     }
 }

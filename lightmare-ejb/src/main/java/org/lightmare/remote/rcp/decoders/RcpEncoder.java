@@ -22,11 +22,6 @@
  */
 package org.lightmare.remote.rcp.decoders;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelOutboundHandlerAdapter;
-import io.netty.channel.ChannelPromise;
-
 import java.io.IOException;
 
 import org.lightmare.remote.rcp.wrappers.RcpWrapper;
@@ -34,9 +29,14 @@ import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.io.serialization.NativeSerializer;
 import org.lightmare.utils.remote.RpcUtils;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelOutboundHandlerAdapter;
+import io.netty.channel.ChannelPromise;
+
 /**
- * Encoder (extends {@link ChannelOutboundHandlerAdapter}) class @see <a
- * href="http://static.netty.io/3.6/guide/">io.netty</a> for serialize
+ * Encoder (extends {@link ChannelOutboundHandlerAdapter}) class @see
+ * <a href="http://static.netty.io/3.6/guide/">io.netty</a> for serialize
  * {@link RcpWrapper} <a href="io.netty"/>netty></a> RPC server response
  * 
  * @author Levan Tsinadze
@@ -52,44 +52,43 @@ public class RcpEncoder extends ChannelOutboundHandlerAdapter {
      */
     protected static enum BooleanNumber {
 
-	TRUE(1), FALSE(0);
+        TRUE(1), FALSE(0);
 
-	private final int value;
+        private final int value;
 
-	private BooleanNumber(int value) {
-	    this.value = value;
-	}
+        private BooleanNumber(int value) {
+            this.value = value;
+        }
 
-	public static int getValue(boolean key) {
+        public static int getValue(boolean key) {
 
-	    int num;
+            int num;
 
-	    if (key) {
-		num = TRUE.value;
-	    } else {
-		num = FALSE.value;
-	    }
+            if (key) {
+                num = TRUE.value;
+            } else {
+                num = FALSE.value;
+            }
 
-	    return num;
-	}
+            return num;
+        }
     }
 
     @Override
-    public void write(ChannelHandlerContext ctx, Object msg,
-	    ChannelPromise promise) throws IOException {
+    public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws IOException {
 
-	RcpWrapper wrapper = ObjectUtils.cast(msg, RcpWrapper.class);
-	boolean valid = wrapper.isValid();
-	int validNum = BooleanNumber.getValue(valid);
-	Object value = wrapper.getValue();
-	byte[] valueBt = NativeSerializer.serialize(value);
-	int valueSize = valueBt.length;
-	int protSize = (RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE + valueSize);
-	ByteBuf buffer = ctx.alloc().buffer(protSize);
-	buffer.writeInt(valueSize);
-	buffer.writeByte(validNum);
-	buffer.writeBytes(valueBt);
+        RcpWrapper wrapper = ObjectUtils.cast(msg, RcpWrapper.class);
+        boolean valid = wrapper.isValid();
+        int validNum = BooleanNumber.getValue(valid);
+        Object value = wrapper.getValue();
+        byte[] valueBt = NativeSerializer.serialize(value);
+        int valueSize = valueBt.length;
+        int protSize = (RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE + valueSize);
+        ByteBuf buffer = ctx.alloc().buffer(protSize);
+        buffer.writeInt(valueSize);
+        buffer.writeByte(validNum);
+        buffer.writeBytes(valueBt);
 
-	ctx.write(buffer);
+        ctx.write(buffer);
     }
 }

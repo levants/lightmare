@@ -41,8 +41,7 @@ import org.lightmare.utils.reflect.ClassUtils;
  * @author Levan Tsinadze
  * @since 0.0.60
  */
-public class LightmareContextFactoryBuilder
-	implements InitialContextFactoryBuilder {
+public class LightmareContextFactoryBuilder implements InitialContextFactoryBuilder {
 
     // Error message
     private static final String COULD_NOT_FIND_ERROR = "Could not find initial cotext";
@@ -55,24 +54,23 @@ public class LightmareContextFactoryBuilder
      * @return {@link InitialContextFactory}
      * @throws NoInitialContextException
      */
-    private InitialContextFactory simulateBuilderLessNamingManager(
-	    String requestedFactory) throws NoInitialContextException {
+    private InitialContextFactory simulateBuilderLessNamingManager(String requestedFactory)
+            throws NoInitialContextException {
 
-	InitialContextFactory factory;
+        InitialContextFactory factory;
 
-	Class<?> requestedClass;
-	try {
-	    requestedClass = ClassUtils.initClassForName(requestedFactory);
-	    Object instance = ClassUtils.instantiate(requestedClass);
-	    factory = ObjectUtils.cast(instance, InitialContextFactory.class);
-	} catch (IOException ex) {
-	    NoInitialContextException nex = new NoInitialContextException(
-		    COULD_NOT_FIND_ERROR);
-	    nex.setRootCause(ex);
-	    throw nex;
-	}
+        Class<?> requestedClass;
+        try {
+            requestedClass = ClassUtils.initClassForName(requestedFactory);
+            Object instance = ClassUtils.instantiate(requestedClass);
+            factory = ObjectUtils.cast(instance, InitialContextFactory.class);
+        } catch (IOException ex) {
+            NoInitialContextException nex = new NoInitialContextException(COULD_NOT_FIND_ERROR);
+            nex.setRootCause(ex);
+            throw nex;
+        }
 
-	return factory;
+        return factory;
     }
 
     /**
@@ -83,16 +81,16 @@ public class LightmareContextFactoryBuilder
      */
     private String getRequestedFactory(Hashtable<?, ?> env) {
 
-	String requestedFactory;
+        String requestedFactory;
 
-	if (env == null) {
-	    requestedFactory = null;
-	} else {
-	    Object factory = env.get(Context.INITIAL_CONTEXT_FACTORY);
-	    requestedFactory = ObjectUtils.cast(factory, String.class);
-	}
+        if (env == null) {
+            requestedFactory = null;
+        } else {
+            Object factory = env.get(Context.INITIAL_CONTEXT_FACTORY);
+            requestedFactory = ObjectUtils.cast(factory, String.class);
+        }
 
-	return requestedFactory;
+        return requestedFactory;
     }
 
     /**
@@ -102,19 +100,17 @@ public class LightmareContextFactoryBuilder
      * @return {@link InitialContextFactory} instance from factory class name
      * @throws NoInitialContextException
      */
-    private InitialContextFactory instantiateFromName(String requestedFactory)
-	    throws NoInitialContextException {
+    private InitialContextFactory instantiateFromName(String requestedFactory) throws NoInitialContextException {
 
-	InitialContextFactory initialContextFactory;
+        InitialContextFactory initialContextFactory;
 
-	if (requestedFactory == null) {
-	    initialContextFactory = new LightmareContextFactory();
-	} else {
-	    initialContextFactory = simulateBuilderLessNamingManager(
-		    requestedFactory);
-	}
+        if (requestedFactory == null) {
+            initialContextFactory = new LightmareContextFactory();
+        } else {
+            initialContextFactory = simulateBuilderLessNamingManager(requestedFactory);
+        }
 
-	return initialContextFactory;
+        return initialContextFactory;
     }
 
     /**
@@ -122,14 +118,13 @@ public class LightmareContextFactoryBuilder
      * parameters
      */
     @Override
-    public InitialContextFactory createInitialContextFactory(
-	    Hashtable<?, ?> env) throws NamingException {
+    public InitialContextFactory createInitialContextFactory(Hashtable<?, ?> env) throws NamingException {
 
-	InitialContextFactory initialContextFactory;
+        InitialContextFactory initialContextFactory;
 
-	String requestedFactory = getRequestedFactory(env);
-	initialContextFactory = instantiateFromName(requestedFactory);
+        String requestedFactory = getRequestedFactory(env);
+        initialContextFactory = instantiateFromName(requestedFactory);
 
-	return initialContextFactory;
+        return initialContextFactory;
     }
 }

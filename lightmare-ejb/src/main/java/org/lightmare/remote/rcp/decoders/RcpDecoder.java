@@ -22,10 +22,6 @@
  */
 package org.lightmare.remote.rcp.decoders;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoder;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -34,10 +30,14 @@ import org.lightmare.utils.collections.CollectionUtils;
 import org.lightmare.utils.io.serialization.NativeSerializer;
 import org.lightmare.utils.remote.RpcUtils;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageDecoder;
+
 /**
- * Decoder (extends {@link ByteToMessageDecoder}) class @see <a
- * href="http://static.netty.io/3.6/guide/">io.netty</a> for response on <a
- * href="io.netty"/>netty></a> RCP returns {@link RcpWrapper}
+ * Decoder (extends {@link ByteToMessageDecoder}) class @see
+ * <a href="http://static.netty.io/3.6/guide/">io.netty</a> for response on
+ * <a href="io.netty"/>netty></a> RCP returns {@link RcpWrapper}
  * 
  * @author Levan Tsinadze
  * @since 0.0.21-SNAPSHOT
@@ -53,29 +53,28 @@ public class RcpDecoder extends ByteToMessageDecoder {
      */
     private void decode(ByteBuf buffer, List<Object> out) throws IOException {
 
-	boolean valid = buffer.readByte() > CollectionUtils.EMPTY_ARRAY_LENGTH;
-	int dataSize = buffer.readInt();
-	if (buffer.readableBytes() < dataSize) {
-	    buffer.resetReaderIndex();
-	} else {
-	    byte[] data = new byte[dataSize];
-	    Object value = NativeSerializer.deserialize(data);
-	    RcpWrapper rcp = new RcpWrapper();
-	    rcp.setValid(valid);
-	    rcp.setValue(value);
-	    out.add(rcp);
-	}
+        boolean valid = buffer.readByte() > CollectionUtils.EMPTY_ARRAY_LENGTH;
+        int dataSize = buffer.readInt();
+        if (buffer.readableBytes() < dataSize) {
+            buffer.resetReaderIndex();
+        } else {
+            byte[] data = new byte[dataSize];
+            Object value = NativeSerializer.deserialize(data);
+            RcpWrapper rcp = new RcpWrapper();
+            rcp.setValid(valid);
+            rcp.setValue(value);
+            out.add(rcp);
+        }
     }
 
     @Override
-    protected void decode(ChannelHandlerContext context, ByteBuf buffer,
-	    List<Object> out) throws IOException {
+    protected void decode(ChannelHandlerContext context, ByteBuf buffer, List<Object> out) throws IOException {
 
-	int validSize = RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE;
-	if (buffer.readableBytes() < validSize) {
-	    buffer.resetReaderIndex();
-	} else {
-	    decode(buffer, out);
-	}
+        int validSize = RpcUtils.INT_SIZE + RpcUtils.BYTE_SIZE;
+        if (buffer.readableBytes() < validSize) {
+            buffer.resetReaderIndex();
+        } else {
+            decode(buffer, out);
+        }
     }
 }

@@ -85,24 +85,24 @@ public class LibraryLoader {
      */
     private static class LibraryLoaderInit implements Callable<ClassLoader> {
 
-	// Classes URL array
-	private URL[] urls;
+        // Classes URL array
+        private URL[] urls;
 
-	// Parent class loader
-	private ClassLoader parent;
+        // Parent class loader
+        private ClassLoader parent;
 
-	public LibraryLoaderInit(final URL[] urls, final ClassLoader parent) {
-	    this.urls = urls;
-	    this.parent = parent;
-	}
+        public LibraryLoaderInit(final URL[] urls, final ClassLoader parent) {
+            this.urls = urls;
+            this.parent = parent;
+        }
 
-	@Override
-	public ClassLoader call() throws Exception {
+        @Override
+        public ClassLoader call() throws Exception {
 
-	    ClassLoader loader = cloneContextClassLoader(urls, parent);
+            ClassLoader loader = cloneContextClassLoader(urls, parent);
 
-	    return loader;
-	}
+            return loader;
+        }
     }
 
     /**
@@ -112,9 +112,9 @@ public class LibraryLoader {
      */
     private static void initURLMethod() throws IOException {
 
-	if (addURLMethod == null && ClassUtils.hasMethod(URLClassLoader.class, ADD_URL_METHOD_NAME)) {
-	    addURLMethod = ClassUtils.getDeclaredMethod(URLClassLoader.class, ADD_URL_METHOD_NAME, URL.class);
-	}
+        if (addURLMethod == null && ClassUtils.hasMethod(URLClassLoader.class, ADD_URL_METHOD_NAME)) {
+            addURLMethod = ClassUtils.getDeclaredMethod(URLClassLoader.class, ADD_URL_METHOD_NAME, URL.class);
+        }
     }
 
     /**
@@ -125,16 +125,16 @@ public class LibraryLoader {
      */
     private static Method getURLMethod() throws IOException {
 
-	if (addURLMethod == null) {
-	    ObjectUtils.lock(LOCK);
-	    try {
-		initURLMethod();
-	    } finally {
-		ObjectUtils.unlock(LOCK);
-	    }
-	}
+        if (addURLMethod == null) {
+            ObjectUtils.lock(LOCK);
+            try {
+                initURLMethod();
+            } finally {
+                ObjectUtils.unlock(LOCK);
+            }
+        }
 
-	return addURLMethod;
+        return addURLMethod;
     }
 
     /**
@@ -147,16 +147,16 @@ public class LibraryLoader {
      */
     private static URL[] getURLs(ClassLoader loader) {
 
-	URL[] urls;
+        URL[] urls;
 
-	if (loader instanceof URLClassLoader) {
-	    URLClassLoader urlLoader = ObjectUtils.cast(loader, URLClassLoader.class);
-	    urls = urlLoader.getURLs();
-	} else {
-	    urls = CollectionUtils.emptyArray(URL.class);
-	}
+        if (loader instanceof URLClassLoader) {
+            URLClassLoader urlLoader = ObjectUtils.cast(loader, URLClassLoader.class);
+            urls = urlLoader.getURLs();
+        } else {
+            urls = CollectionUtils.emptyArray(URL.class);
+        }
 
-	return urls;
+        return urls;
     }
 
     /**
@@ -167,9 +167,9 @@ public class LibraryLoader {
      */
     public static File classFile(Class<?> executing) {
 
-	final File file = new File(executing.getProtectionDomain().getCodeSource().getLocation().getPath());
+        final File file = new File(executing.getProtectionDomain().getCodeSource().getLocation().getPath());
 
-	return file;
+        return file;
     }
 
     /**
@@ -182,25 +182,25 @@ public class LibraryLoader {
      */
     public static ClassLoader initializeLoader(final URL[] urls) throws IOException {
 
-	ClassLoader ejbLoader;
+        ClassLoader ejbLoader;
 
-	ClassLoader parent = getContextClassLoader();
-	LibraryLoaderInit initializer = new LibraryLoaderInit(urls, parent);
-	FutureTask<ClassLoader> task = new FutureTask<ClassLoader>(initializer);
-	Thread thread = new Thread(task);
-	thread.setName(LOADER_THREAD_NAME);
-	thread.setPriority(Thread.MAX_PRIORITY);
-	thread.start();
+        ClassLoader parent = getContextClassLoader();
+        LibraryLoaderInit initializer = new LibraryLoaderInit(urls, parent);
+        FutureTask<ClassLoader> task = new FutureTask<ClassLoader>(initializer);
+        Thread thread = new Thread(task);
+        thread.setName(LOADER_THREAD_NAME);
+        thread.setPriority(Thread.MAX_PRIORITY);
+        thread.start();
 
-	try {
-	    ejbLoader = task.get();
-	} catch (InterruptedException ex) {
-	    throw new IOException(ex);
-	} catch (ExecutionException ex) {
-	    throw new IOException(ex);
-	}
+        try {
+            ejbLoader = task.get();
+        } catch (InterruptedException ex) {
+            throw new IOException(ex);
+        } catch (ExecutionException ex) {
+            throw new IOException(ex);
+        }
 
-	return ejbLoader;
+        return ejbLoader;
     }
 
     /**
@@ -210,30 +210,30 @@ public class LibraryLoader {
      */
     public static ClassLoader getContextClassLoader() {
 
-	/**
-	 * Implementation of PrivilegedAction to get current thread's class
-	 * loader
-	 *
-	 * @author Levan Tsinadze
-	 *
-	 */
-	PrivilegedAction<ClassLoader> action = new PrivilegedAction<ClassLoader>() {
+        /**
+         * Implementation of PrivilegedAction to get current thread's class
+         * loader
+         *
+         * @author Levan Tsinadze
+         *
+         */
+        PrivilegedAction<ClassLoader> action = new PrivilegedAction<ClassLoader>() {
 
-	    @Override
-	    public ClassLoader run() {
+            @Override
+            public ClassLoader run() {
 
-		ClassLoader classLoader;
+                ClassLoader classLoader;
 
-		Thread currentThread = Thread.currentThread();
-		classLoader = currentThread.getContextClassLoader();
+                Thread currentThread = Thread.currentThread();
+                classLoader = currentThread.getContextClassLoader();
 
-		return classLoader;
-	    }
-	};
+                return classLoader;
+            }
+        };
 
-	ClassLoader loader = AccessController.doPrivileged(action);
+        ClassLoader loader = AccessController.doPrivileged(action);
 
-	return loader;
+        return loader;
     }
 
     /**
@@ -245,14 +245,14 @@ public class LibraryLoader {
      */
     public static URL finadClass(String className) {
 
-	URL classURL;
+        URL classURL;
 
-	ClassLoader loader = getContextClassLoader();
-	String fileName = className.replace(StringUtils.DOT, File.pathSeparatorChar);
-	String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
-	classURL = loader.getResource(classFile);
+        ClassLoader loader = getContextClassLoader();
+        String fileName = className.replace(StringUtils.DOT, File.pathSeparatorChar);
+        String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
+        classURL = loader.getResource(classFile);
 
-	return classURL;
+        return classURL;
     }
 
     /**
@@ -264,15 +264,15 @@ public class LibraryLoader {
      */
     public static boolean isClass(String className) {
 
-	boolean valid;
+        boolean valid;
 
-	ClassLoader loader = getContextClassLoader();
-	String fileName = className.replace(StringUtils.DOT, File.separatorChar);
-	String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
-	URL classURL = loader.getResource(classFile);
-	valid = ObjectUtils.notNull(classURL);
+        ClassLoader loader = getContextClassLoader();
+        String fileName = className.replace(StringUtils.DOT, File.separatorChar);
+        String classFile = StringUtils.concat(fileName, CLASS_EXTENSION);
+        URL classURL = loader.getResource(classFile);
+        valid = ObjectUtils.notNull(classURL);
 
-	return valid;
+        return valid;
 
     }
 
@@ -286,18 +286,18 @@ public class LibraryLoader {
      */
     public static ClassLoader getEnrichedLoader(URL[] urls, ClassLoader parent) {
 
-	ClassLoader enrichedLoader;
+        ClassLoader enrichedLoader;
 
-	if (CollectionUtils.valid(urls)) {
-	    if (parent == null) {
-		parent = getContextClassLoader();
-	    }
-	    enrichedLoader = EjbClassLoader.newInstance(urls, parent);
-	} else {
-	    enrichedLoader = null;
-	}
+        if (CollectionUtils.valid(urls)) {
+            if (parent == null) {
+                parent = getContextClassLoader();
+            }
+            enrichedLoader = EjbClassLoader.newInstance(urls, parent);
+        } else {
+            enrichedLoader = null;
+        }
 
-	return enrichedLoader;
+        return enrichedLoader;
     }
 
     /**
@@ -311,14 +311,14 @@ public class LibraryLoader {
      */
     public static ClassLoader getEnrichedLoader(File file, Set<URL> urls) throws IOException {
 
-	ClassLoader enrichedLoader;
+        ClassLoader enrichedLoader;
 
-	FileUtils.getSubfiles(file, urls);
-	URL[] paths = CollectionUtils.toArray(urls, URL.class);
-	ClassLoader parent = getContextClassLoader();
-	enrichedLoader = getEnrichedLoader(paths, parent);
+        FileUtils.getSubfiles(file, urls);
+        URL[] paths = CollectionUtils.toArray(urls, URL.class);
+        ClassLoader parent = getContextClassLoader();
+        enrichedLoader = getEnrichedLoader(paths, parent);
 
-	return enrichedLoader;
+        return enrichedLoader;
     }
 
     /**
@@ -331,25 +331,25 @@ public class LibraryLoader {
      */
     public static ClassLoader cloneContextClassLoader(final URL[] urls, ClassLoader parent) throws IOException {
 
-	ClassLoader clone;
+        ClassLoader clone;
 
-	URLClassLoader loader = (URLClassLoader) getEnrichedLoader(urls, parent);
-	try {
-	    // get all resources for cloning
-	    URL[] urlArray = loader.getURLs();
-	    URL[] urlClone = urlArray.clone();
+        URLClassLoader loader = (URLClassLoader) getEnrichedLoader(urls, parent);
+        try {
+            // get all resources for cloning
+            URL[] urlArray = loader.getURLs();
+            URL[] urlClone = urlArray.clone();
 
-	    if (parent == null) {
-		parent = getContextClassLoader();
-	    }
-	    clone = EjbClassLoader.newInstance(urlClone, parent);
-	} finally {
-	    closeClassLoader(loader);
-	    // dereference cloned class loader instance
-	    loader = null;
-	}
+            if (parent == null) {
+                parent = getContextClassLoader();
+            }
+            clone = EjbClassLoader.newInstance(urlClone, parent);
+        } finally {
+            closeClassLoader(loader);
+            // dereference cloned class loader instance
+            loader = null;
+        }
 
-	return clone;
+        return clone;
     }
 
     /**
@@ -361,14 +361,14 @@ public class LibraryLoader {
      */
     public static ClassLoader createCommon(ClassLoader newLoader, ClassLoader oldLoader) {
 
-	ClassLoader commonLoader;
+        ClassLoader commonLoader;
 
-	URL[] urls = getURLs(oldLoader);
-	commonLoader = URLClassLoader.newInstance(urls, oldLoader);
-	urls = getURLs(newLoader);
-	commonLoader = getEnrichedLoader(urls, newLoader);
+        URL[] urls = getURLs(oldLoader);
+        commonLoader = URLClassLoader.newInstance(urls, oldLoader);
+        urls = getURLs(newLoader);
+        commonLoader = getEnrichedLoader(urls, newLoader);
 
-	return commonLoader;
+        return commonLoader;
     }
 
     /**
@@ -380,9 +380,9 @@ public class LibraryLoader {
      */
     public static void loadCurrentLibraries(Thread thread, ClassLoader loader) {
 
-	if (ObjectUtils.notNull(loader)) {
-	    thread.setContextClassLoader(loader);
-	}
+        if (ObjectUtils.notNull(loader)) {
+            thread.setContextClassLoader(loader);
+        }
     }
 
     /**
@@ -393,8 +393,8 @@ public class LibraryLoader {
      */
     public static void loadCurrentLibraries(ClassLoader loader) {
 
-	Thread thread = Thread.currentThread();
-	loadCurrentLibraries(thread, loader);
+        Thread thread = Thread.currentThread();
+        loadCurrentLibraries(thread, loader);
     }
 
     /**
@@ -407,9 +407,9 @@ public class LibraryLoader {
      */
     public static void loadURLToSystem(URL[] urls, Method method, URLClassLoader urlLoader) throws IOException {
 
-	for (URL url : urls) {
-	    ClassUtils.invokePrivate(method, urlLoader, url);
-	}
+        for (URL url : urls) {
+            ClassUtils.invokePrivate(method, urlLoader, url);
+        }
     }
 
     /**
@@ -420,12 +420,12 @@ public class LibraryLoader {
      */
     public static void loadLibraryClass(String className) throws IOException {
 
-	ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
-	try {
-	    systemLoader.loadClass(className);
-	} catch (ClassNotFoundException ex) {
-	    throw new IOException(ex);
-	}
+        ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
+        try {
+            systemLoader.loadClass(className);
+        } catch (ClassNotFoundException ex) {
+            throw new IOException(ex);
+        }
     }
 
     /**
@@ -436,20 +436,20 @@ public class LibraryLoader {
      */
     public static void loadLibraryFromFile(File file) throws IOException {
 
-	if (file.exists()) {
-	    Set<URL> urls = new HashSet<URL>();
-	    FileUtils.getSubfiles(file, urls);
-	    URL[] paths = CollectionUtils.toArray(urls, URL.class);
-	    ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
-	    if (systemLoader instanceof URLClassLoader) {
-		URLClassLoader urlLoader = (URLClassLoader) systemLoader;
+        if (file.exists()) {
+            Set<URL> urls = new HashSet<URL>();
+            FileUtils.getSubfiles(file, urls);
+            URL[] paths = CollectionUtils.toArray(urls, URL.class);
+            ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
+            if (systemLoader instanceof URLClassLoader) {
+                URLClassLoader urlLoader = (URLClassLoader) systemLoader;
 
-		Method method = getURLMethod();
-		if (ObjectUtils.notNull(method)) {
-		    loadURLToSystem(paths, method, urlLoader);
-		}
-	    }
-	}
+                Method method = getURLMethod();
+                if (ObjectUtils.notNull(method)) {
+                    loadURLToSystem(paths, method, urlLoader);
+                }
+            }
+        }
     }
 
     /**
@@ -460,8 +460,8 @@ public class LibraryLoader {
      */
     private static void loadLibraryFromPath(String libraryPath) throws IOException {
 
-	File file = new File(libraryPath);
-	loadLibraryFromFile(file);
+        File file = new File(libraryPath);
+        loadLibraryFromFile(file);
     }
 
     /**
@@ -473,11 +473,11 @@ public class LibraryLoader {
      */
     public static void loadLibraries(String... libraryPaths) throws IOException {
 
-	if (CollectionUtils.valid(libraryPaths)) {
-	    for (String libraryPath : libraryPaths) {
-		loadLibraryFromPath(libraryPath);
-	    }
-	}
+        if (CollectionUtils.valid(libraryPaths)) {
+            for (String libraryPath : libraryPaths) {
+                loadLibraryFromPath(libraryPath);
+            }
+        }
     }
 
     /**
@@ -488,15 +488,15 @@ public class LibraryLoader {
      */
     public static void loadClasses(Collection<String> classes, ClassLoader loader) throws IOException {
 
-	if (CollectionUtils.valid(classes) && ObjectUtils.notNull(loader)) {
-	    for (String className : classes) {
-		try {
-		    loader.loadClass(className);
-		} catch (ClassNotFoundException ex) {
-		    throw new IOException(ex);
-		}
-	    }
-	}
+        if (CollectionUtils.valid(classes) && ObjectUtils.notNull(loader)) {
+            for (String className : classes) {
+                try {
+                    loader.loadClass(className);
+                } catch (ClassNotFoundException ex) {
+                    throw new IOException(ex);
+                }
+            }
+        }
     }
 
     /**
@@ -507,8 +507,8 @@ public class LibraryLoader {
      */
     public static void loadClasses(Collection<String> classes) throws IOException {
 
-	ClassLoader loader = getContextClassLoader();
-	loadClasses(classes, loader);
+        ClassLoader loader = getContextClassLoader();
+        loadClasses(classes, loader);
     }
 
     /**
@@ -520,9 +520,9 @@ public class LibraryLoader {
      */
     private static void hasCloseMethod(Class<URLClassLoader> loaderClass) throws IOException {
 
-	if (hasCloseMethod == null) {
-	    hasCloseMethod = ClassUtils.hasPublicMethod(loaderClass, CLOSE_METHOD_NAME);
-	}
+        if (hasCloseMethod == null) {
+            hasCloseMethod = ClassUtils.hasPublicMethod(loaderClass, CLOSE_METHOD_NAME);
+        }
     }
 
     /**
@@ -534,11 +534,11 @@ public class LibraryLoader {
      */
     private static void checkOnClose(Class<URLClassLoader> loaderClass) throws IOException {
 
-	if (hasCloseMethod == null) {
-	    synchronized (LibraryLoader.class) {
-		hasCloseMethod(loaderClass);
-	    }
-	}
+        if (hasCloseMethod == null) {
+            synchronized (LibraryLoader.class) {
+                hasCloseMethod(loaderClass);
+            }
+        }
     }
 
     /**
@@ -550,20 +550,20 @@ public class LibraryLoader {
      */
     public static void closeClassLoader(ClassLoader loader) throws IOException {
 
-	if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
-	    try {
-		URLClassLoader urlClassLoader = ObjectUtils.cast(loader, URLClassLoader.class);
-		urlClassLoader.clearAssertionStatus();
-		// Finds if loader associated class or superclass has "close"
-		// method
-		checkOnClose(URLClassLoader.class);
+        if (ObjectUtils.notNull(loader) && loader instanceof URLClassLoader) {
+            try {
+                URLClassLoader urlClassLoader = ObjectUtils.cast(loader, URLClassLoader.class);
+                urlClassLoader.clearAssertionStatus();
+                // Finds if loader associated class or superclass has "close"
+                // method
+                checkOnClose(URLClassLoader.class);
 
-		if (hasCloseMethod) {
-		    urlClassLoader.close();
-		}
-	    } catch (Throwable th) {
-		LOG.error(th.getMessage(), th);
-	    }
-	}
+                if (hasCloseMethod) {
+                    urlClassLoader.close();
+                }
+            } catch (Throwable th) {
+                LOG.error(th.getMessage(), th);
+            }
+        }
     }
 }

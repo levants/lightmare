@@ -51,7 +51,7 @@ public class XMLInitializer {
     private static final String COULD_NOT_FIND_ERROR = "Could not find persistence.xml file on path ";
 
     public String getShortPath() {
-	return shortPath;
+        return shortPath;
     }
 
     /**
@@ -62,27 +62,27 @@ public class XMLInitializer {
      */
     public List<URL> readURL(final URL url) {
 
-	List<URL> xmls = new ArrayList<URL>();
-	shortPath = StringUtils.concat(ArchiveUtils.ARCHIVE_URL_DELIM, XML_PATH);
+        List<URL> xmls = new ArrayList<URL>();
+        shortPath = StringUtils.concat(ArchiveUtils.ARCHIVE_URL_DELIM, XML_PATH);
 
-	return xmls;
+        return xmls;
     }
 
     private static File createFile(String path) throws IOException {
 
-	File file;
+        File file;
 
-	if (path == null || path.isEmpty()) {
-	    throw new IOException(PATH_NOT_PROVIDED_ERROR);
-	}
+        if (path == null || path.isEmpty()) {
+            throw new IOException(PATH_NOT_PROVIDED_ERROR);
+        }
 
-	file = new File(path);
-	if (Boolean.FALSE.equals(file.exists())) {
-	    String error = StringUtils.concat(COULD_NOT_FIND_ERROR, path);
-	    throw new IOException(error);
-	}
+        file = new File(path);
+        if (Boolean.FALSE.equals(file.exists())) {
+            String error = StringUtils.concat(COULD_NOT_FIND_ERROR, path);
+            throw new IOException(error);
+        }
 
-	return file;
+        return file;
     }
 
     /**
@@ -96,13 +96,13 @@ public class XMLInitializer {
      */
     public List<URL> readFile(String path) throws IOException {
 
-	List<URL> xmls;
+        List<URL> xmls;
 
-	File file = createFile(path);
-	shortPath = file.getName();
-	final URL url = file.toURI().toURL();
-	xmls = readURL(url);
+        File file = createFile(path);
+        shortPath = file.getName();
+        final URL url = file.toURI().toURL();
+        xmls = readURL(url);
 
-	return xmls;
+        return xmls;
     }
 }

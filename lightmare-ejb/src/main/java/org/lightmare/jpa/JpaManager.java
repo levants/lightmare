@@ -107,18 +107,18 @@ public class JpaManager {
      */
     private Map<Object, Object> getProperties() {
 
-	if (properties == null) {
-	    properties = new HashMap<Object, Object>();
-	}
+        if (properties == null) {
+            properties = new HashMap<Object, Object>();
+        }
 
-	return properties;
+        return properties;
     }
 
     /**
      * Adds JPA JNDI properties to additional configuration
      */
     private void addJndiProperties() {
-	getProperties().putAll(JndiManager.JNDIConfigs.INIT.hinbernateConfig);
+        getProperties().putAll(JndiManager.JNDIConfigs.INIT.hinbernateConfig);
     }
 
     /**
@@ -129,16 +129,16 @@ public class JpaManager {
      */
     private Object getKeyWithPerfix(Object key) {
 
-	Object validKey;
+        Object validKey;
 
-	if (key instanceof String) {
-	    String textKey = ObjectUtils.cast(key, String.class);
-	    validKey = HibernatePrefixes.validKey(textKey);
-	} else {
-	    validKey = key;
-	}
+        if (key instanceof String) {
+            String textKey = ObjectUtils.cast(key, String.class);
+            validKey = HibernatePrefixes.validKey(textKey);
+        } else {
+            validKey = key;
+        }
 
-	return validKey;
+        return validKey;
     }
 
     /**
@@ -149,10 +149,10 @@ public class JpaManager {
      */
     private void configure(Map.Entry<Object, Object> entry, Map<Object, Object> config) {
 
-	Object key = entry.getKey();
-	Object value = entry.getValue();
-	Object validKey = getKeyWithPerfix(key);
-	config.put(validKey, value);
+        Object key = entry.getKey();
+        Object value = entry.getValue();
+        Object validKey = getKeyWithPerfix(key);
+        config.put(validKey, value);
     }
 
     /**
@@ -162,19 +162,19 @@ public class JpaManager {
      */
     private Map<Object, Object> configure(Map<Object, Object> properties) {
 
-	Map<Object, Object> config;
+        Map<Object, Object> config;
 
-	if (properties == null || properties.isEmpty()) {
-	    config = properties;
-	} else {
-	    config = new HashMap<Object, Object>();
-	    Set<Map.Entry<Object, Object>> entries = properties.entrySet();
-	    for (Map.Entry<Object, Object> entry : entries) {
-		configure(entry, config);
-	    }
-	}
+        if (properties == null || properties.isEmpty()) {
+            config = properties;
+        } else {
+            config = new HashMap<Object, Object>();
+            Set<Map.Entry<Object, Object>> entries = properties.entrySet();
+            for (Map.Entry<Object, Object> entry : entries) {
+                configure(entry, config);
+            }
+        }
 
-	return config;
+        return config;
     }
 
     /**
@@ -183,7 +183,7 @@ public class JpaManager {
      * @return boolean
      */
     private boolean checkForURL() {
-	return ObjectUtils.notNull(url) && StringUtils.valid(url.toString());
+        return ObjectUtils.notNull(url) && StringUtils.valid(url.toString());
     }
 
     /**
@@ -191,11 +191,11 @@ public class JpaManager {
      */
     private void addTransactionManager() {
 
-	HibernateConfig[] hibernateConfigs = HibernateConfig.values();
-	Map<Object, Object> configMap = getProperties();
-	for (HibernateConfig hibernateConfig : hibernateConfigs) {
-	    CollectionUtils.putIfAbscent(configMap, hibernateConfig.key, hibernateConfig.value);
-	}
+        HibernateConfig[] hibernateConfigs = HibernateConfig.values();
+        Map<Object, Object> configMap = getProperties();
+        for (HibernateConfig hibernateConfig : hibernateConfigs) {
+            CollectionUtils.putIfAbscent(configMap, hibernateConfig.key, hibernateConfig.value);
+        }
     }
 
     /**
@@ -208,8 +208,8 @@ public class JpaManager {
      * @throws IOException
      */
     private SpringORM getSpringORM(PersistenceProvider provider, String unitName) throws IOException {
-	return new SpringORM.Builder(dataSourceName, provider, unitName).properties(properties).classLoader(loader)
-		.swapDataSource(swapDataSource).build();
+        return new SpringORM.Builder(dataSourceName, provider, unitName).properties(properties).classLoader(loader)
+                .swapDataSource(swapDataSource).build();
     }
 
     /**
@@ -222,12 +222,12 @@ public class JpaManager {
      */
     private EntityManagerFactory getFromSpring(PersistenceProvider provider, String unitName) throws IOException {
 
-	EntityManagerFactory emf;
+        EntityManagerFactory emf;
 
-	SpringORM springORM = getSpringORM(provider, unitName);
-	emf = springORM.getEmf();
+        SpringORM springORM = getSpringORM(provider, unitName);
+        emf = springORM.getEmf();
 
-	return emf;
+        return emf;
     }
 
     /**
@@ -240,15 +240,15 @@ public class JpaManager {
      */
     private List<URL> readFromPath(boolean pathCheck, XMLInitializer configLoader) throws IOException {
 
-	List<URL> xmls;
+        List<URL> xmls;
 
-	if (pathCheck) {
-	    xmls = configLoader.readFile(path);
-	} else {
-	    xmls = configLoader.readURL(url);
-	}
+        if (pathCheck) {
+            xmls = configLoader.readFile(path);
+        } else {
+            xmls = configLoader.readURL(url);
+        }
 
-	return xmls;
+        return xmls;
     }
 
     /**
@@ -259,16 +259,16 @@ public class JpaManager {
      */
     private void initPersisteceXmlPath(HibernatePersistenceProviderExt.Builder builder) throws IOException {
 
-	boolean pathCheck = StringUtils.valid(path);
-	boolean urlCheck = checkForURL();
-	if (pathCheck || urlCheck) {
-	    List<URL> xmls;
-	    XMLInitializer configLoader = new XMLInitializer();
-	    xmls = readFromPath(pathCheck, configLoader);
-	    builder.setXmls(xmls);
-	    String shortPath = configLoader.getShortPath();
-	    builder.setShortPath(shortPath);
-	}
+        boolean pathCheck = StringUtils.valid(path);
+        boolean urlCheck = checkForURL();
+        if (pathCheck || urlCheck) {
+            List<URL> xmls;
+            XMLInitializer configLoader = new XMLInitializer();
+            xmls = readFromPath(pathCheck, configLoader);
+            builder.setXmls(xmls);
+            String shortPath = configLoader.getShortPath();
+            builder.setShortPath(shortPath);
+        }
     }
 
     /**
@@ -278,11 +278,11 @@ public class JpaManager {
      */
     private ClassLoader getLoader() {
 
-	if (loader == null) {
-	    loader = LibraryLoader.getContextClassLoader();
-	}
+        if (loader == null) {
+            loader = LibraryLoader.getContextClassLoader();
+        }
 
-	return loader;
+        return loader;
     }
 
     /**
@@ -294,11 +294,11 @@ public class JpaManager {
      */
     private void loadEntities(HibernatePersistenceProviderExt.Builder builder, ClassLoader loader) throws IOException {
 
-	if (CollectionUtils.valid(classes)) {
-	    builder.setClasses(classes);
-	    // Loads entity classes to current ClassLoader instance
-	    LibraryLoader.loadClasses(classes, loader);
-	}
+        if (CollectionUtils.valid(classes)) {
+            builder.setClasses(classes);
+            // Loads entity classes to current ClassLoader instance
+            LibraryLoader.loadClasses(classes, loader);
+        }
     }
 
     /**
@@ -313,14 +313,14 @@ public class JpaManager {
      */
     private void configureProvider(HibernatePersistenceProviderExt.Builder builder) throws IOException {
 
-	ClassLoader overriden = getLoader();
-	loadEntities(builder, overriden);
-	// configureProvider
-	initPersisteceXmlPath(builder);
-	// Sets additional parameters
-	builder.setSwapDataSource(swapDataSource);
-	builder.setScanArchives(scanArchives);
-	builder.setOverridenClassLoader(overriden);
+        ClassLoader overriden = getLoader();
+        loadEntities(builder, overriden);
+        // configureProvider
+        initPersisteceXmlPath(builder);
+        // Sets additional parameters
+        builder.setSwapDataSource(swapDataSource);
+        builder.setScanArchives(scanArchives);
+        builder.setOverridenClassLoader(overriden);
     }
 
     /**
@@ -328,9 +328,9 @@ public class JpaManager {
      */
     private void configureTransactionManager() {
 
-	if (Boolean.FALSE.equals(swapDataSource)) {
-	    addTransactionManager();
-	}
+        if (Boolean.FALSE.equals(swapDataSource)) {
+            addTransactionManager();
+        }
     }
 
     /**
@@ -347,22 +347,22 @@ public class JpaManager {
      */
     private EntityManagerFactory buildEntityManagerFactory(String unitName) throws IOException {
 
-	EntityManagerFactory emf;
+        EntityManagerFactory emf;
 
-	HibernatePersistenceProvider provider;
-	HibernatePersistenceProviderExt.Builder builder = new HibernatePersistenceProviderExt.Builder();
-	configureProvider(builder);
-	provider = builder.build();
-	configureTransactionManager();
-	// Adds JNDI properties
-	addJndiProperties();
-	if (springPersistence) {
-	    emf = getFromSpring(provider, unitName);
-	} else {
-	    emf = provider.createEntityManagerFactory(unitName, properties);
-	}
+        HibernatePersistenceProvider provider;
+        HibernatePersistenceProviderExt.Builder builder = new HibernatePersistenceProviderExt.Builder();
+        configureProvider(builder);
+        provider = builder.build();
+        configureTransactionManager();
+        // Adds JNDI properties
+        addJndiProperties();
+        if (springPersistence) {
+            emf = getFromSpring(provider, unitName);
+        } else {
+            emf = provider.createEntityManagerFactory(unitName, properties);
+        }
 
-	return emf;
+        return emf;
     }
 
     /**
@@ -376,8 +376,8 @@ public class JpaManager {
      * @throws IOException
      */
     private EntityManagerFactory createEntityManagerFactory(String unitName) throws IOException {
-	EntityManagerFactory emf = buildEntityManagerFactory(unitName);
-	return emf;
+        EntityManagerFactory emf = buildEntityManagerFactory(unitName);
+        return emf;
     }
 
     /**
@@ -389,9 +389,9 @@ public class JpaManager {
      */
     private void rebindJNDIName(ConnectionSemaphore semaphore, String fullJndiName) throws IOException {
 
-	if (JndiManager.lookup(fullJndiName) == null) {
-	    JndiManager.rebind(fullJndiName, semaphore.getEmf());
-	}
+        if (JndiManager.lookup(fullJndiName) == null) {
+            JndiManager.rebind(fullJndiName, semaphore.getEmf());
+        }
     }
 
     /**
@@ -404,14 +404,14 @@ public class JpaManager {
      */
     private void bindJndiName(String jndiName, ConnectionSemaphore semaphore) throws IOException {
 
-	try {
-	    String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
-	    rebindJNDIName(semaphore, fullJndiName);
-	} catch (IOException ex) {
-	    LOG.error(ex.getMessage(), ex);
-	    String errorMessage = StringUtils.concat(COULD_NOT_BIND_JNDI_ERROR, semaphore.getUnitName());
-	    throw new IOException(errorMessage, ex);
-	}
+        try {
+            String fullJndiName = NamingUtils.createJpaJndiName(jndiName);
+            rebindJNDIName(semaphore, fullJndiName);
+        } catch (IOException ex) {
+            LOG.error(ex.getMessage(), ex);
+            String errorMessage = StringUtils.concat(COULD_NOT_BIND_JNDI_ERROR, semaphore.getUnitName());
+            throw new IOException(errorMessage, ex);
+        }
     }
 
     /**
@@ -423,12 +423,12 @@ public class JpaManager {
      */
     private void checkAndBindJNDIName(ConnectionSemaphore semaphore, boolean bound) throws IOException {
 
-	if (Boolean.FALSE.equals(bound)) {
-	    String jndiName = semaphore.getJndiName();
-	    if (StringUtils.valid(jndiName)) {
-		bindJndiName(jndiName, semaphore);
-	    }
-	}
+        if (Boolean.FALSE.equals(bound)) {
+            String jndiName = semaphore.getJndiName();
+            if (StringUtils.valid(jndiName)) {
+                bindJndiName(jndiName, semaphore);
+            }
+        }
     }
 
     /**
@@ -439,9 +439,9 @@ public class JpaManager {
      */
     private void bindJndiName(ConnectionSemaphore semaphore) throws IOException {
 
-	boolean bound = semaphore.isBound();
-	checkAndBindJNDIName(semaphore, bound);
-	semaphore.setBound(Boolean.TRUE);
+        boolean bound = semaphore.isBound();
+        checkAndBindJNDIName(semaphore, bound);
+        semaphore.setBound(Boolean.TRUE);
     }
 
     /**
@@ -453,18 +453,18 @@ public class JpaManager {
      */
     public void create(String unitName) throws IOException {
 
-	ConnectionSemaphore semaphore = ConnectionContainer.getSemaphore(unitName);
-	if (semaphore.isInProgress()) {
-	    EntityManagerFactory emf = createEntityManagerFactory(unitName);
-	    semaphore.setEmf(emf);
-	    semaphore.setInProgress(Boolean.FALSE);
-	    bindJndiName(semaphore);
-	} else if (semaphore.getEmf() == null) {
-	    String errorMessage = String.format(NOT_IN_PROG_ERROR, unitName);
-	    throw new IOException(errorMessage);
-	} else {
-	    bindJndiName(semaphore);
-	}
+        ConnectionSemaphore semaphore = ConnectionContainer.getSemaphore(unitName);
+        if (semaphore.isInProgress()) {
+            EntityManagerFactory emf = createEntityManagerFactory(unitName);
+            semaphore.setEmf(emf);
+            semaphore.setInProgress(Boolean.FALSE);
+            bindJndiName(semaphore);
+        } else if (semaphore.getEmf() == null) {
+            String errorMessage = String.format(NOT_IN_PROG_ERROR, unitName);
+            throw new IOException(errorMessage);
+        } else {
+            bindJndiName(semaphore);
+        }
     }
 
     /**
@@ -474,9 +474,9 @@ public class JpaManager {
      */
     public static void closeEntityManagerFactory(EntityManagerFactory emf) {
 
-	if (ObjectUtils.notNull(emf) && emf.isOpen()) {
-	    emf.close();
-	}
+        if (ObjectUtils.notNull(emf) && emf.isOpen()) {
+            emf.close();
+        }
     }
 
     /**
@@ -487,9 +487,9 @@ public class JpaManager {
      */
     public static void closeEntityManager(EntityManager em) {
 
-	if (ObjectUtils.notNull(em) && em.isOpen()) {
-	    em.close();
-	}
+        if (ObjectUtils.notNull(em) && em.isOpen()) {
+            em.close();
+        }
     }
 
     /**
@@ -500,131 +500,131 @@ public class JpaManager {
      */
     public static class Builder {
 
-	private JpaManager manager;
+        private JpaManager manager;
 
-	public Builder() {
-	    manager = new JpaManager();
-	    manager.scanArchives = Boolean.TRUE;
-	}
+        public Builder() {
+            manager = new JpaManager();
+            manager.scanArchives = Boolean.TRUE;
+        }
 
-	/**
-	 * Sets {@link javax.persistence.Entity} class names to initialize
-	 *
-	 * @param classes
-	 * @return {@link Builder}
-	 */
-	public Builder setClasses(List<String> classes) {
-	    manager.classes = classes;
-	    return this;
-	}
+        /**
+         * Sets {@link javax.persistence.Entity} class names to initialize
+         *
+         * @param classes
+         * @return {@link Builder}
+         */
+        public Builder setClasses(List<String> classes) {
+            manager.classes = classes;
+            return this;
+        }
 
-	/**
-	 * Sets {@link URL} for persistence.xml file
-	 *
-	 * @param url
-	 * @return {@link Builder}
-	 */
-	public Builder setURL(URL url) {
-	    manager.url = url;
-	    return this;
-	}
+        /**
+         * Sets {@link URL} for persistence.xml file
+         *
+         * @param url
+         * @return {@link Builder}
+         */
+        public Builder setURL(URL url) {
+            manager.url = url;
+            return this;
+        }
 
-	/**
-	 * Sets path for persistence.xml file
-	 *
-	 * @param path
-	 * @return {@link Builder}
-	 */
-	public Builder setPath(String path) {
-	    manager.path = path;
-	    return this;
-	}
+        /**
+         * Sets path for persistence.xml file
+         *
+         * @param path
+         * @return {@link Builder}
+         */
+        public Builder setPath(String path) {
+            manager.path = path;
+            return this;
+        }
 
-	/**
-	 * Sets additional persistence properties
-	 *
-	 * @param properties
-	 * @return {@link Builder}
-	 */
-	public Builder setProperties(Map<Object, Object> properties) {
-	    manager.properties = manager.configure(properties);
-	    return this;
-	}
+        /**
+         * Sets additional persistence properties
+         *
+         * @param properties
+         * @return {@link Builder}
+         */
+        public Builder setProperties(Map<Object, Object> properties) {
+            manager.properties = manager.configure(properties);
+            return this;
+        }
 
-	/**
-	 * Sets boolean check property to swap JTA data source value with non
-	 * JTA data source value
-	 *
-	 * @param swapDataSource
-	 * @return {@link Builder}
-	 */
-	public Builder setSwapDataSource(boolean swapDataSource) {
-	    manager.swapDataSource = swapDataSource;
-	    return this;
-	}
+        /**
+         * Sets boolean check property to swap JTA data source value with non
+         * JTA data source value
+         *
+         * @param swapDataSource
+         * @return {@link Builder}
+         */
+        public Builder setSwapDataSource(boolean swapDataSource) {
+            manager.swapDataSource = swapDataSource;
+            return this;
+        }
 
-	/**
-	 * Sets boolean check to scan deployed archive files for
-	 * {@link javax.persistence.Entity} annotated classes
-	 *
-	 * @param scanArchives
-	 * @return {@link Builder}
-	 */
-	public Builder setScanArchives(boolean scanArchives) {
-	    manager.scanArchives = scanArchives;
-	    return this;
-	}
+        /**
+         * Sets boolean check to scan deployed archive files for
+         * {@link javax.persistence.Entity} annotated classes
+         *
+         * @param scanArchives
+         * @return {@link Builder}
+         */
+        public Builder setScanArchives(boolean scanArchives) {
+            manager.scanArchives = scanArchives;
+            return this;
+        }
 
-	/**
-	 * Sets {@link ClassLoader} for persistence classes
-	 *
-	 * @param loader
-	 * @return {@link Builder}
-	 */
-	public Builder setClassLoader(ClassLoader loader) {
-	    manager.loader = loader;
-	    return this;
-	}
+        /**
+         * Sets {@link ClassLoader} for persistence classes
+         *
+         * @param loader
+         * @return {@link Builder}
+         */
+        public Builder setClassLoader(ClassLoader loader) {
+            manager.loader = loader;
+            return this;
+        }
 
-	/**
-	 * Sets if JPA is configured over Spring data
-	 *
-	 * @param springPersistence
-	 * @return {@link Builder}
-	 */
-	public Builder springPersistence(boolean springPersistence) {
-	    manager.springPersistence = springPersistence;
-	    return this;
-	}
+        /**
+         * Sets if JPA is configured over Spring data
+         *
+         * @param springPersistence
+         * @return {@link Builder}
+         */
+        public Builder springPersistence(boolean springPersistence) {
+            manager.springPersistence = springPersistence;
+            return this;
+        }
 
-	/**
-	 * Sets data source name for Spring data configuration
-	 *
-	 * @param dataSourceName
-	 * @return {@link Builder}
-	 */
-	public Builder dataSourceName(String dataSourceName) {
-	    manager.dataSourceName = dataSourceName;
-	    return this;
-	}
+        /**
+         * Sets data source name for Spring data configuration
+         *
+         * @param dataSourceName
+         * @return {@link Builder}
+         */
+        public Builder dataSourceName(String dataSourceName) {
+            manager.dataSourceName = dataSourceName;
+            return this;
+        }
 
-	/**
-	 * Sets all parameters from passed {@link Configuration} instance
-	 *
-	 * @param configuration
-	 * @return {@link Builder}
-	 */
-	public Builder configure(Configuration configuration) {
-	    // Sets all parameters from Configuration class
-	    setPath(configuration.getPersXmlPath()).setProperties(configuration.getPersistenceProperties())
-		    .setSwapDataSource(configuration.isSwapDataSource()).setScanArchives(configuration.isScanArchives())
-		    .springPersistence(configuration.isSpringPersistence());
-	    return this;
-	}
+        /**
+         * Sets all parameters from passed {@link Configuration} instance
+         *
+         * @param configuration
+         * @return {@link Builder}
+         */
+        public Builder configure(Configuration configuration) {
+            // Sets all parameters from Configuration class
+            setPath(configuration.getPersXmlPath()).setProperties(configuration.getPersistenceProperties())
+                    .setSwapDataSource(configuration.isSwapDataSource()).setScanArchives(configuration.isScanArchives())
+                    .springPersistence(configuration.isSpringPersistence());
+            return this;
+        }
 
-	public JpaManager build() {
-	    return manager;
-	}
+        public JpaManager build() {
+            return manager;
+        }
     }
 }
 
@@ -652,58 +652,58 @@ enum HibernatePrefixes {
      */
     private static class KeyValidator {
 
-	String text;
+        String text;
 
-	HibernatePrefixes prefix;
+        HibernatePrefixes prefix;
 
-	boolean modified;
+        boolean modified;
 
-	String key;
+        String key;
 
-	public KeyValidator(String text) {
-	    this.text = text;
-	    this.key = text;
-	}
+        public KeyValidator(String text) {
+            this.text = text;
+            this.key = text;
+        }
 
-	public String getPrefix() {
-	    return this.prefix.prefix;
-	}
+        public String getPrefix() {
+            return this.prefix.prefix;
+        }
 
-	public boolean hibernateKey() {
-	    return Boolean.FALSE.equals(modified) && Boolean.FALSE.equals(text.startsWith(HIBERNATE));
-	}
+        public boolean hibernateKey() {
+            return Boolean.FALSE.equals(modified) && Boolean.FALSE.equals(text.startsWith(HIBERNATE));
+        }
     }
 
     private HibernatePrefixes(String prefix) {
-	this.prefix = prefix;
+        this.prefix = prefix;
     }
 
     private static String replacePrefix(KeyValidator validator) {
 
-	String key;
+        String key;
 
-	String text = validator.text;
-	if (validator.modified) {
-	    String prefix = validator.getPrefix();
-	    key = text.replace(prefix, HIBERNATE);
-	} else {
-	    key = text;
-	}
+        String text = validator.text;
+        if (validator.modified) {
+            String prefix = validator.getPrefix();
+            key = text.replace(prefix, HIBERNATE);
+        } else {
+            key = text;
+        }
 
-	return key;
+        return key;
     }
 
     private static void validateKey(KeyValidator validator) {
 
-	HibernatePrefixes[] prefixes = HibernatePrefixes.values();
-	int length = prefixes.length;
-	String prefix;
-	for (int i = CollectionUtils.FIRST_INDEX; i < length && Boolean.FALSE.equals(validator.modified); i++) {
-	    validator.prefix = prefixes[i];
-	    prefix = validator.getPrefix();
-	    validator.modified = validator.text.startsWith(prefix);
-	    validator.key = replacePrefix(validator);
-	}
+        HibernatePrefixes[] prefixes = HibernatePrefixes.values();
+        int length = prefixes.length;
+        String prefix;
+        for (int i = CollectionUtils.FIRST_INDEX; i < length && Boolean.FALSE.equals(validator.modified); i++) {
+            validator.prefix = prefixes[i];
+            prefix = validator.getPrefix();
+            validator.modified = validator.text.startsWith(prefix);
+            validator.key = replacePrefix(validator);
+        }
     }
 
     /**
@@ -715,15 +715,15 @@ enum HibernatePrefixes {
      */
     public static String validKey(String text) {
 
-	String key;
+        String key;
 
-	KeyValidator validator = new KeyValidator(text);
-	validateKey(validator);
-	key = validator.key;
-	if (validator.hibernateKey()) {
-	    key = StringUtils.concat(HIBERNATE, text);
-	}
+        KeyValidator validator = new KeyValidator(text);
+        validateKey(validator);
+        key = validator.key;
+        if (validator.hibernateKey()) {
+            key = StringUtils.concat(HIBERNATE, text);
+        }
 
-	return key;
+        return key;
     }
 }

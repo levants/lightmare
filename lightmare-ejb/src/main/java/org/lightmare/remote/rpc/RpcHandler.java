@@ -22,11 +22,6 @@
  */
 package org.lightmare.remote.rpc;
 
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -34,6 +29,11 @@ import org.lightmare.remote.rcp.wrappers.RcpWrapper;
 import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.ObjectUtils;
 import org.lightmare.utils.remote.RpcUtils;
+
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  * Handler @see {@link ChannelInboundHandlerAdapter} for RPC request
@@ -46,35 +46,34 @@ public class RpcHandler extends ChannelInboundHandlerAdapter {
     private static final Logger LOG = Logger.getLogger(RpcHandler.class);
 
     @Override
-    public void channelRead(final ChannelHandlerContext ctx, Object msg)
-	    throws IOException {
+    public void channelRead(final ChannelHandlerContext ctx, Object msg) throws IOException {
 
-	RpcWrapper wrapper = ObjectUtils.cast(msg, RpcWrapper.class);
+        RpcWrapper wrapper = ObjectUtils.cast(msg, RpcWrapper.class);
 
-	RcpWrapper rcp = new RcpWrapper();
-	Object value;
-	try {
-	    value = RpcUtils.callBeanMethod(wrapper);
-	    rcp.setValid(Boolean.TRUE);
-	} catch (Exception ex) {
-	    LOG.error(ex.getMessage(), ex);
-	    value = ex;
-	}
+        RcpWrapper rcp = new RcpWrapper();
+        Object value;
+        try {
+            value = RpcUtils.callBeanMethod(wrapper);
+            rcp.setValid(Boolean.TRUE);
+        } catch (Exception ex) {
+            LOG.error(ex.getMessage(), ex);
+            value = ex;
+        }
 
-	rcp.setValue(value);
+        rcp.setValue(value);
 
-	final ChannelFuture future = ctx.writeAndFlush(rcp);
+        final ChannelFuture future = ctx.writeAndFlush(rcp);
 
-	future.addListener(new ChannelFutureListener() {
-	    @Override
-	    public void operationComplete(ChannelFuture lisFuture) {
+        future.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture lisFuture) {
 
-		try {
-		    assert (future == lisFuture);
-		} finally {
-		    ctx.close();
-		}
-	    }
-	});
+                try {
+                    assert (future == lisFuture);
+                } finally {
+                    ctx.close();
+                }
+            }
+        });
     }
 }

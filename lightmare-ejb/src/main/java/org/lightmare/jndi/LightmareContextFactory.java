@@ -47,33 +47,30 @@ public class LightmareContextFactory implements InitialContextFactory {
      * @param sharingEnv
      * @param parameter
      */
-    private void putToEnv(Hashtable<Object, Object> sharingEnv,
-	    JNDIParameters parameter) {
+    private void putToEnv(Hashtable<Object, Object> sharingEnv, JNDIParameters parameter) {
 
-	String key = parameter.key;
-	String value = parameter.value;
-	// all instances will share stored data
-	boolean notContainsKey = CollectionUtils.notContains(sharingEnv, key);
-	if (notContainsKey) {
-	    sharingEnv.put(key, value);
-	}
+        String key = parameter.key;
+        String value = parameter.value;
+        // all instances will share stored data
+        boolean notContainsKey = CollectionUtils.notContains(sharingEnv, key);
+        if (notContainsKey) {
+            sharingEnv.put(key, value);
+        }
     }
 
     /**
      * Initializes {@link Context} implementation instance for passed properties
      */
     @Override
-    public Context getInitialContext(Hashtable<?, ?> properties)
-	    throws NamingException {
+    public Context getInitialContext(Hashtable<?, ?> properties) throws NamingException {
 
-	Context lightmareContext;
+        Context lightmareContext;
 
-	// clone the environment
-	Hashtable<Object, Object> sharingEnv = ObjectUtils
-		.cast(properties.clone());
-	putToEnv(sharingEnv, JNDIParameters.SHARED_PARAMETER);
-	lightmareContext = new LightmareContext(sharingEnv);
+        // clone the environment
+        Hashtable<Object, Object> sharingEnv = ObjectUtils.cast(properties.clone());
+        putToEnv(sharingEnv, JNDIParameters.SHARED_PARAMETER);
+        lightmareContext = new LightmareContext(sharingEnv);
 
-	return lightmareContext;
+        return lightmareContext;
     }
 }

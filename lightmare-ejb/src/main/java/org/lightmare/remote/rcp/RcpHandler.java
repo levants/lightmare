@@ -22,11 +22,6 @@
  */
 package org.lightmare.remote.rcp;
 
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -35,6 +30,10 @@ import org.lightmare.remote.rpc.wrappers.RpcWrapper;
 import org.lightmare.utils.ObjectUtils;
 
 import antlr.debug.MessageEvent;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  * Handler @see {@link ChannelInboundHandlerAdapter} for RPC response
@@ -56,47 +55,45 @@ public class RcpHandler extends ChannelInboundHandlerAdapter {
      */
     protected static class ResponseListener implements ChannelFutureListener {
 
-	private final BlockingQueue<RcpWrapper> answer;
+        private final BlockingQueue<RcpWrapper> answer;
 
-	private final MessageEvent ev;
+        private final MessageEvent ev;
 
-	public ResponseListener(final BlockingQueue<RcpWrapper> answer,
-		final MessageEvent ev) {
-	    this.answer = answer;
-	    this.ev = ev;
-	}
+        public ResponseListener(final BlockingQueue<RcpWrapper> answer, final MessageEvent ev) {
+            this.answer = answer;
+            this.ev = ev;
+        }
 
-	@Override
-	public void operationComplete(ChannelFuture future) throws Exception {
+        @Override
+        public void operationComplete(ChannelFuture future) throws Exception {
 
-	    RcpWrapper rcpWrapper = ObjectUtils.cast(ev.getSource(),
-		    RcpWrapper.class);
-	    boolean offered = answer.offer(rcpWrapper);
-	    assert offered;
-	}
+            RcpWrapper rcpWrapper = ObjectUtils.cast(ev.getSource(), RcpWrapper.class);
+            boolean offered = answer.offer(rcpWrapper);
+            assert offered;
+        }
     }
 
     public RcpHandler() {
-	answer = new LinkedBlockingQueue<RcpWrapper>();
+        answer = new LinkedBlockingQueue<RcpWrapper>();
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
 
-	try {
-	    RcpWrapper wrapper = ObjectUtils.cast(msg, RcpWrapper.class);
-	    boolean offered = answer.offer(wrapper);
-	    assert offered;
-	} finally {
-	    ctx.close();
-	}
+        try {
+            RcpWrapper wrapper = ObjectUtils.cast(msg, RcpWrapper.class);
+            boolean offered = answer.offer(wrapper);
+            assert offered;
+        } finally {
+            ctx.close();
+        }
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 
-	cause.printStackTrace();
-	ctx.close();
+        cause.printStackTrace();
+        ctx.close();
     }
 
     /**
@@ -106,20 +103,20 @@ public class RcpHandler extends ChannelInboundHandlerAdapter {
      */
     public RcpWrapper getWrapper() {
 
-	RcpWrapper responce;
+        RcpWrapper responce;
 
-	boolean interrupted = Boolean.TRUE;
-	for (;;) {
-	    try {
-		responce = answer.take();
-		if (interrupted) {
-		    Thread.currentThread().interrupt();
-		}
+        boolean interrupted = Boolean.TRUE;
+        for (;;) {
+            try {
+                responce = answer.take();
+                if (interrupted) {
+                    Thread.currentThread().interrupt();
+                }
 
-		return responce;
-	    } catch (InterruptedException ex) {
-		interrupted = Boolean.FALSE;
-	    }
-	}
+                return responce;
+            } catch (InterruptedException ex) {
+                interrupted = Boolean.FALSE;
+            }
+        }
     }
 }

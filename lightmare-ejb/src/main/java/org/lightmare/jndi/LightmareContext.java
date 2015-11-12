@@ -65,7 +65,7 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      * constructor
      */
     public LightmareContext() {
-	super();
+        super();
     }
 
     /**
@@ -74,8 +74,8 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      * @param env
      */
     public LightmareContext(Hashtable<?, ?> env) {
-	super(env);
-	FinalizationUtils.add(this);
+        super(env);
+        FinalizationUtils.add(this);
     }
 
     /**
@@ -86,13 +86,11 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      */
     private void cacheResource(Object resource) {
 
-	if (ObjectUtils.notNull(resource)
-		&& resource instanceof EntityManager) {
-	    EntityManager em = ObjectUtils.cast(resource, EntityManager.class);
-	    WeakReference<EntityManager> ref = new WeakReference<EntityManager>(
-		    em);
-	    ems.add(ref);
-	}
+        if (ObjectUtils.notNull(resource) && resource instanceof EntityManager) {
+            EntityManager em = ObjectUtils.cast(resource, EntityManager.class);
+            WeakReference<EntityManager> ref = new WeakReference<EntityManager>(em);
+            ems.add(ref);
+        }
     }
 
     /**
@@ -104,27 +102,26 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      */
     private Object lookupJpa(String jndiName) throws NamingException {
 
-	Object value;
+        Object value;
 
-	// Checks if it is request for entity manager
-	String name = NamingUtils.formatJpaJndiName(jndiName);
-	// Checks if connection is in progress and waits for finish
-	ConnectionContainer.isInProgress(name);
+        // Checks if it is request for entity manager
+        String name = NamingUtils.formatJpaJndiName(jndiName);
+        // Checks if connection is in progress and waits for finish
+        ConnectionContainer.isInProgress(name);
 
-	// Gets EntityManagerFactory from parent
-	Object candidate = super.lookup(jndiName);
-	if (candidate == null) {
-	    value = candidate;
-	} else if (candidate instanceof EntityManagerFactory) {
-	    EntityManagerFactory emf = ObjectUtils.cast(candidate,
-		    EntityManagerFactory.class);
-	    EntityManager em = emf.createEntityManager();
-	    value = em;
-	} else {
-	    value = candidate;
-	}
+        // Gets EntityManagerFactory from parent
+        Object candidate = super.lookup(jndiName);
+        if (candidate == null) {
+            value = candidate;
+        } else if (candidate instanceof EntityManagerFactory) {
+            EntityManagerFactory emf = ObjectUtils.cast(candidate, EntityManagerFactory.class);
+            EntityManager em = emf.createEntityManager();
+            value = em;
+        } else {
+            value = candidate;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -136,20 +133,19 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      */
     private Object lookupEjb(String jndiName) throws NamingException {
 
-	Object value;
+        Object value;
 
-	NamingUtils.BeanDescriptor descriptor = NamingUtils
-		.parseEjbJndiName(jndiName);
-	EjbConnector ejbConnection = new EjbConnector();
-	try {
-	    String beanName = descriptor.getBeanName();
-	    String interfaceName = descriptor.getInterfaceName();
-	    value = ejbConnection.connectToBean(beanName, interfaceName);
-	} catch (IOException ex) {
-	    throw new NamingException(ex.getMessage());
-	}
+        NamingUtils.BeanDescriptor descriptor = NamingUtils.parseEjbJndiName(jndiName);
+        EjbConnector ejbConnection = new EjbConnector();
+        try {
+            String beanName = descriptor.getBeanName();
+            String interfaceName = descriptor.getInterfaceName();
+            value = ejbConnection.connectToBean(beanName, interfaceName);
+        } catch (IOException ex) {
+            throw new NamingException(ex.getMessage());
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -161,31 +157,31 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      */
     private Object findValue(String jndiName) throws NamingException {
 
-	Object value;
+        Object value;
 
-	// Retrieves JTA UserTransaction object from thread cache
-	if (jndiName.equals(NamingUtils.USER_TRANSACTION_NAME)) {
-	    UserTransaction transaction = TransactionHolder.getTransaction();
-	    value = transaction;
-	} else if (jndiName.startsWith(NamingUtils.JPA_NAME_PREF)) {
-	    value = lookupJpa(jndiName);
-	    // Retrieves EJB bean object from lookup
-	} else if (jndiName.startsWith(NamingUtils.EJB_NAME_PREF)) {
-	    value = lookupEjb(jndiName);
-	} else {
-	    value = super.lookup(jndiName);
-	}
+        // Retrieves JTA UserTransaction object from thread cache
+        if (jndiName.equals(NamingUtils.USER_TRANSACTION_NAME)) {
+            UserTransaction transaction = TransactionHolder.getTransaction();
+            value = transaction;
+        } else if (jndiName.startsWith(NamingUtils.JPA_NAME_PREF)) {
+            value = lookupJpa(jndiName);
+            // Retrieves EJB bean object from lookup
+        } else if (jndiName.startsWith(NamingUtils.EJB_NAME_PREF)) {
+            value = lookupEjb(jndiName);
+        } else {
+            value = super.lookup(jndiName);
+        }
 
-	return value;
+        return value;
     }
 
     @Override
     public Object lookup(String jndiName) throws NamingException {
 
-	Object value = findValue(jndiName);
-	cacheResource(value);
+        Object value = findValue(jndiName);
+        cacheResource(value);
 
-	return value;
+        return value;
     }
 
     /**
@@ -193,18 +189,18 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      */
     private void clearResources() {
 
-	// Closes existing EntityManagers from cache
-	if (CollectionUtils.valid(ems)) {
-	    try {
-		EntityManager em;
-		for (WeakReference<EntityManager> ref : ems) {
-		    em = ref.get();
-		    JpaManager.closeEntityManager(em);
-		}
-	    } finally {
-		ems.clear();
-	    }
-	}
+        // Closes existing EntityManagers from cache
+        if (CollectionUtils.valid(ems)) {
+            try {
+                EntityManager em;
+                for (WeakReference<EntityManager> ref : ems) {
+                    em = ref.get();
+                    JpaManager.closeEntityManager(em);
+                }
+            } finally {
+                ems.clear();
+            }
+        }
     }
 
     /**
@@ -214,9 +210,9 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      */
     @Override
     public void close() throws NamingException {
-	clearResources();
-	// TODO: Must check if needed super.close() method call
-	// super.close();
+        clearResources();
+        // TODO: Must check if needed super.close() method call
+        // super.close();
     }
 
     /**
@@ -224,6 +220,6 @@ public class LightmareContext extends MemoryContext implements Cleanable {
      */
     @Override
     public void clean() throws IOException {
-	clearResources();
+        clearResources();
     }
 }

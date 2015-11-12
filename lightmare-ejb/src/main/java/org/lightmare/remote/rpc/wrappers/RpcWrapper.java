@@ -44,42 +44,42 @@ public class RpcWrapper {
     }
 
     public String getBeanName() {
-	return beanName;
+        return beanName;
     }
 
     public void setBeanName(String beanName) {
-	this.beanName = beanName;
+        this.beanName = beanName;
     }
 
     public String getMethodName() {
-	return methodName;
+        return methodName;
     }
 
     public void setMethodName(String methodName) {
-	this.methodName = methodName;
+        this.methodName = methodName;
     }
 
     public Class<?>[] getParamTypes() {
-	return paramTypes;
+        return paramTypes;
     }
 
     public void setParamTypes(Class<?>[] paramTypes) {
-	this.paramTypes = paramTypes;
+        this.paramTypes = paramTypes;
     }
 
     public Class<?> getInterfaceClass() {
-	return interfaceClass;
+        return interfaceClass;
     }
 
     public void setInterfaceClass(Class<?> interfaceClass) {
-	this.interfaceClass = interfaceClass;
+        this.interfaceClass = interfaceClass;
     }
 
     public Object[] getParams() {
-	return params;
+        return params;
     }
 
     public void setParams(Object[] params) {
-	this.params = params;
+        this.params = params;
     }
 }

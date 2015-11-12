@@ -56,53 +56,53 @@ public class MetaConfig {
      */
     public static ClassLoader getOverridenClassLoader(MetaConfig metaConfig) {
 
-	ClassLoader loader;
+        ClassLoader loader;
 
-	if (metaConfig == null) {
-	    loader = null;
-	} else {
-	    loader = metaConfig.overridenClassLoader;
-	}
+        if (metaConfig == null) {
+            loader = null;
+        } else {
+            loader = metaConfig.overridenClassLoader;
+        }
 
-	return loader;
+        return loader;
     }
 
     public void setOverridenClassLoader(ClassLoader overridenClassLoader) {
-	this.overridenClassLoader = overridenClassLoader;
+        this.overridenClassLoader = overridenClassLoader;
     }
 
     public static List<String> getClasses(MetaConfig metaConfig) {
 
-	List<String> entities;
+        List<String> entities;
 
-	if (metaConfig == null) {
-	    entities = null;
-	} else {
-	    entities = metaConfig.classes;
-	}
+        if (metaConfig == null) {
+            entities = null;
+        } else {
+            entities = metaConfig.classes;
+        }
 
-	return entities;
+        return entities;
     }
 
     public void setClasses(List<String> classes) {
-	this.classes = classes;
+        this.classes = classes;
     }
 
     public static List<URL> getXmls(MetaConfig metaConfig) {
 
-	List<URL> urls;
+        List<URL> urls;
 
-	if (metaConfig == null) {
-	    urls = null;
-	} else {
-	    urls = metaConfig.xmls;
-	}
+        if (metaConfig == null) {
+            urls = null;
+        } else {
+            urls = metaConfig.xmls;
+        }
 
-	return urls;
+        return urls;
     }
 
     public void setXmls(List<URL> xmls) {
-	this.xmls = xmls;
+        this.xmls = xmls;
     }
 
     /**
@@ -113,15 +113,15 @@ public class MetaConfig {
      */
     public static boolean isSwapDataSource(MetaConfig metaConfig) {
 
-	boolean valid;
+        boolean valid;
 
-	if (metaConfig == null) {
-	    valid = Boolean.FALSE;
-	} else {
-	    valid = metaConfig.swapDataSource;
-	}
+        if (metaConfig == null) {
+            valid = Boolean.FALSE;
+        } else {
+            valid = metaConfig.swapDataSource;
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -130,7 +130,7 @@ public class MetaConfig {
      * @param swapDataSource
      */
     public void setSwapDataSource(boolean swapDataSource) {
-	this.swapDataSource = swapDataSource;
+        this.swapDataSource = swapDataSource;
     }
 
     /**
@@ -141,15 +141,15 @@ public class MetaConfig {
      */
     public static boolean isScanArchives(MetaConfig metaConfig) {
 
-	boolean valid;
+        boolean valid;
 
-	if (metaConfig == null) {
-	    valid = Boolean.FALSE;
-	} else {
-	    valid = metaConfig.scanArchives;
-	}
+        if (metaConfig == null) {
+            valid = Boolean.FALSE;
+        } else {
+            valid = metaConfig.scanArchives;
+        }
 
-	return valid;
+        return valid;
     }
 
     /**
@@ -158,23 +158,23 @@ public class MetaConfig {
      * @param scanArchives
      */
     public void setScanArchives(boolean scanArchives) {
-	this.scanArchives = scanArchives;
+        this.scanArchives = scanArchives;
     }
 
     public static String getShortPath(MetaConfig metaConfig) {
 
-	String path;
+        String path;
 
-	if (metaConfig == null) {
-	    path = null;
-	} else {
-	    path = metaConfig.shortPath;
-	}
+        if (metaConfig == null) {
+            path = null;
+        } else {
+            path = metaConfig.shortPath;
+        }
 
-	return path;
+        return path;
     }
 
     public void setShortPath(String shortPath) {
-	this.shortPath = shortPath;
+        this.shortPath = shortPath;
     }
 }

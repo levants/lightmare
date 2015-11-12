@@ -22,15 +22,6 @@
  */
 package org.lightmare.remote.rpc;
 
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -41,6 +32,15 @@ import org.lightmare.config.Configuration;
 import org.lightmare.remote.rcp.decoders.RcpEncoder;
 import org.lightmare.remote.rpc.decoders.RpcDecoder;
 import org.lightmare.utils.concurrent.ThreadFactoryUtil;
+
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
  * Registers and starts RPC server @see <a href="netty.io"/>netty.io</a>
@@ -73,14 +73,14 @@ public class RpcListener {
      */
     protected static class ChannelInitializerImpl extends ChannelInitializer<SocketChannel> {
 
-	@Override
-	public void initChannel(SocketChannel ch) throws Exception {
+        @Override
+        public void initChannel(SocketChannel ch) throws Exception {
 
-	    RcpEncoder rcpEncoder = new RcpEncoder();
-	    RpcDecoder rpcDecoder = new RpcDecoder();
-	    RpcHandler rpcHandler = new RpcHandler();
-	    ch.pipeline().addLast(rcpEncoder, rpcDecoder, rpcHandler);
-	}
+            RcpEncoder rcpEncoder = new RcpEncoder();
+            RpcDecoder rpcDecoder = new RpcDecoder();
+            RpcHandler rpcHandler = new RpcHandler();
+            ch.pipeline().addLast(rcpEncoder, rpcDecoder, rpcHandler);
+        }
     }
 
     /**
@@ -88,10 +88,10 @@ public class RpcListener {
      */
     private static void setNettyPools(Configuration config) {
 
-	Integer bossCount = config.getIntValue(ConfigKeys.BOSS_POOL.key);
-	Integer workerCount = config.getIntValue(ConfigKeys.WORKER_POOL.key);
-	boss = new NioEventLoopGroup(bossCount, new ThreadFactoryUtil(BOSS_THREAD_NAME, Thread.MAX_PRIORITY));
-	worker = new NioEventLoopGroup(workerCount, new ThreadFactoryUtil(WORKER_THREAD_NAME, WORKER_THEAD_PRIORITY));
+        Integer bossCount = config.getIntValue(ConfigKeys.BOSS_POOL.key);
+        Integer workerCount = config.getIntValue(ConfigKeys.WORKER_POOL.key);
+        boss = new NioEventLoopGroup(bossCount, new ThreadFactoryUtil(BOSS_THREAD_NAME, Thread.MAX_PRIORITY));
+        worker = new NioEventLoopGroup(workerCount, new ThreadFactoryUtil(WORKER_THREAD_NAME, WORKER_THEAD_PRIORITY));
     }
 
     /**
@@ -100,26 +100,26 @@ public class RpcListener {
      */
     public static void startServer(Configuration config) {
 
-	setNettyPools(config);
+        setNettyPools(config);
 
-	try {
-	    ServerBootstrap bootstrap = new ServerBootstrap();
-	    bootstrap.group(boss, worker).channel(NioServerSocketChannel.class)
-		    .childHandler(new ChannelInitializerImpl());
-	    // Sets server options
-	    bootstrap.option(ChannelOption.SO_BACKLOG, 500);
-	    bootstrap.childOption(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
-	    bootstrap.childOption(ChannelOption.SO_TIMEOUT, config.getIntValue(ConfigKeys.CONNECTION_TIMEOUT.key));
-	    // Initializes and sets address
-	    InetSocketAddress address = new InetSocketAddress(
-		    Inet4Address.getByName(config.getStringValue("listening_ip")),
-		    config.getIntValue("listening_port"));
-	    ChannelFuture future = bootstrap.bind(address).sync();
-	    LOG.info(future);
-	} catch (UnknownHostException ex) {
-	    LOG.error(ex.getMessage(), ex);
-	} catch (InterruptedException ex) {
-	    LOG.error(ex.getMessage(), ex);
-	}
+        try {
+            ServerBootstrap bootstrap = new ServerBootstrap();
+            bootstrap.group(boss, worker).channel(NioServerSocketChannel.class)
+                    .childHandler(new ChannelInitializerImpl());
+            // Sets server options
+            bootstrap.option(ChannelOption.SO_BACKLOG, 500);
+            bootstrap.childOption(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
+            bootstrap.childOption(ChannelOption.SO_TIMEOUT, config.getIntValue(ConfigKeys.CONNECTION_TIMEOUT.key));
+            // Initializes and sets address
+            InetSocketAddress address = new InetSocketAddress(
+                    Inet4Address.getByName(config.getStringValue("listening_ip")),
+                    config.getIntValue("listening_port"));
+            ChannelFuture future = bootstrap.bind(address).sync();
+            LOG.info(future);
+        } catch (UnknownHostException ex) {
+            LOG.error(ex.getMessage(), ex);
+        } catch (InterruptedException ex) {
+            LOG.error(ex.getMessage(), ex);
+        }
     }
 }
