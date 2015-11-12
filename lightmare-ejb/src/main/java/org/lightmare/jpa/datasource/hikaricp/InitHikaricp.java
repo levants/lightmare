@@ -36,77 +36,77 @@ public class InitHikaricp extends InitDataSource {
      */
     private static enum HikariDefault {
 
-	MAX_LIFETIME("maxLifetime", 1800000), // Lifetime
-	LEAK_DETECTION("leakDetectionThreshold", 0), // Leak detection
-	INIT_FAIL_FAST("initializationFailFast", Boolean.TRUE); // Initialization
-								// fail
+        MAX_LIFETIME("maxLifetime", 1800000), // Lifetime
+        LEAK_DETECTION("leakDetectionThreshold", 0), // Leak detection
+        INIT_FAIL_FAST("initializationFailFast", Boolean.TRUE); // Initialization
+                                                                // fail
 
-	private final String key;
+        private final String key;
 
-	private final Object value;
+        private final Object value;
 
-	private HikariDefault(final String key, final Object value) {
-	    this.key = key;
-	    this.value = value;
-	}
+        private HikariDefault(final String key, final Object value) {
+            this.key = key;
+            this.value = value;
+        }
 
-	/**
-	 * Casts {@link HikariDefault#value} to {@link Integer} type
-	 * 
-	 * @return {@link Integer}
-	 */
-	public Integer asInt() {
-	    return ObjectUtils.cast(value, Integer.class);
-	}
+        /**
+         * Casts {@link HikariDefault#value} to {@link Integer} type
+         * 
+         * @return {@link Integer}
+         */
+        public Integer asInt() {
+            return ObjectUtils.cast(value, Integer.class);
+        }
 
-	/**
-	 * Casts {@link HikariDefault#value} to {@link Boolean} type
-	 * 
-	 * @return {@link Boolean}
-	 */
-	public Boolean asBoolean() {
-	    return ObjectUtils.cast(value, Boolean.class);
-	}
+        /**
+         * Casts {@link HikariDefault#value} to {@link Boolean} type
+         * 
+         * @return {@link Boolean}
+         */
+        public Boolean asBoolean() {
+            return ObjectUtils.cast(value, Boolean.class);
+        }
 
-	/**
-	 * Gets value from passed {@link Map} or if it is not present
-	 * appropriated {@link HikariDefault#value} as {@link Integer} type
-	 * 
-	 * @param properties
-	 * @return {@link Integer} value
-	 */
-	public Integer asInt(Map<Object, Object> properties) {
+        /**
+         * Gets value from passed {@link Map} or if it is not present
+         * appropriated {@link HikariDefault#value} as {@link Integer} type
+         * 
+         * @param properties
+         * @return {@link Integer} value
+         */
+        public Integer asInt(Map<Object, Object> properties) {
 
-	    Integer property = PoolConfig.asInt(properties, key);
+            Integer property = PoolConfig.asInt(properties, key);
 
-	    if (property == null) {
-		property = asInt();
-	    }
+            if (property == null) {
+                property = asInt();
+            }
 
-	    return property;
-	}
+            return property;
+        }
 
-	/**
-	 * Gets value from passed {@link Map} or if it is not present
-	 * appropriated {@link HikariDefault#value} as {@link Boolean} type
-	 * 
-	 * @param properties
-	 * @return {@link Boolean} value
-	 */
-	public Boolean asBoolean(Map<Object, Object> properties) {
+        /**
+         * Gets value from passed {@link Map} or if it is not present
+         * appropriated {@link HikariDefault#value} as {@link Boolean} type
+         * 
+         * @param properties
+         * @return {@link Boolean} value
+         */
+        public Boolean asBoolean(Map<Object, Object> properties) {
 
-	    Boolean property = PoolConfig.asBoolean(properties, key);
+            Boolean property = PoolConfig.asBoolean(properties, key);
 
-	    if (property == null) {
-		property = asBoolean();
-	    }
+            if (property == null) {
+                property = asBoolean();
+            }
 
-	    return property;
-	}
+            return property;
+        }
     }
 
     public InitHikaricp(Properties properties) {
-	super(properties);
+        super(properties);
     }
 
     /**
@@ -115,10 +115,9 @@ public class InitHikaricp extends InitDataSource {
      * @param configMap
      * @param config
      */
-    private void setAutoCommit(Map<Object, Object> configMap,
-	    HikariConfig config) {
-	config.setAutoCommit(Boolean.FALSE);
-	config.setIsolateInternalQueries(Boolean.TRUE);
+    private void setAutoCommit(Map<Object, Object> configMap, HikariConfig config) {
+        config.setAutoCommit(Boolean.FALSE);
+        config.setIsolateInternalQueries(Boolean.TRUE);
     }
 
     /**
@@ -127,16 +126,14 @@ public class InitHikaricp extends InitDataSource {
      * @param configMap
      * @param config
      */
-    private void setConnection(Map<Object, Object> configMap,
-	    HikariConfig config) {
+    private void setConnection(Map<Object, Object> configMap, HikariConfig config) {
 
-	config.setUsername(user);
-	config.setPassword(password);
-	config.setJdbcUrl(url);
-	String name = PoolConfig.asText(configMap,
-		Defaults.DATA_SOURCE_NAME.key);
-	config.setPoolName(name);
-	config.setDriverClassName(driver);
+        config.setUsername(user);
+        config.setPassword(password);
+        config.setJdbcUrl(url);
+        String name = PoolConfig.asText(configMap, Defaults.DATA_SOURCE_NAME.key);
+        config.setPoolName(name);
+        config.setDriverClassName(driver);
     }
 
     /**
@@ -147,16 +144,14 @@ public class InitHikaricp extends InitDataSource {
      */
     private void setTimeouts(Map<Object, Object> configMap, HikariConfig config) {
 
-	config.setConnectionTimeout(CONNECTION_TIMEOUT);
-	config.setIdleTimeout(PoolConfig.asInt(configMap,
-		Defaults.MAX_IDLE_TIMEOUT.key));
-	Integer maxLifetime = HikariDefault.MAX_LIFETIME.asInt(configMap);
-	config.setMaxLifetime(maxLifetime);
-	Integer leakDetection = HikariDefault.LEAK_DETECTION.asInt(configMap);
-	config.setLeakDetectionThreshold(leakDetection);
-	Boolean initFaulFast = HikariDefault.INIT_FAIL_FAST
-		.asBoolean(configMap);
-	config.setInitializationFailFast(initFaulFast);
+        config.setConnectionTimeout(CONNECTION_TIMEOUT);
+        config.setIdleTimeout(PoolConfig.asInt(configMap, Defaults.MAX_IDLE_TIMEOUT.key));
+        Integer maxLifetime = HikariDefault.MAX_LIFETIME.asInt(configMap);
+        config.setMaxLifetime(maxLifetime);
+        Integer leakDetection = HikariDefault.LEAK_DETECTION.asInt(configMap);
+        config.setLeakDetectionThreshold(leakDetection);
+        Boolean initFaulFast = HikariDefault.INIT_FAIL_FAST.asBoolean(configMap);
+        config.setInitializationFailFast(initFaulFast);
     }
 
     /**
@@ -167,38 +162,36 @@ public class InitHikaricp extends InitDataSource {
      */
     private void setPoolSize(Map<Object, Object> configMap, HikariConfig config) {
 
-	config.setMinimumIdle(PoolConfig.asInt(configMap,
-		Defaults.MIN_POOL_SIZE.key));
-	config.setMaximumPoolSize(PoolConfig.asInt(configMap,
-		Defaults.MAX_POOL_SIZE.key));
+        config.setMinimumIdle(PoolConfig.asInt(configMap, Defaults.MIN_POOL_SIZE.key));
+        config.setMaximumPoolSize(PoolConfig.asInt(configMap, Defaults.MAX_POOL_SIZE.key));
     }
 
     @Override
     protected DataSource initializeDataSource() throws IOException {
 
-	HikariDataSource hikariDataSource;
+        HikariDataSource hikariDataSource;
 
-	Map<Object, Object> configMap = poolConfig.merge(properties);
-	HikariConfig config = new HikariConfig();
+        Map<Object, Object> configMap = poolConfig.merge(properties);
+        HikariConfig config = new HikariConfig();
 
-	// Auto commit
-	setAutoCommit(configMap, config);
-	// Connection properties
-	setConnection(configMap, config);
-	// timeouts
-	setTimeouts(configMap, config);
-	// Pool size
-	setPoolSize(configMap, config);
+        // Auto commit
+        setAutoCommit(configMap, config);
+        // Connection properties
+        setConnection(configMap, config);
+        // timeouts
+        setTimeouts(configMap, config);
+        // Pool size
+        setPoolSize(configMap, config);
 
-	// initializes data source with configuration
-	hikariDataSource = new HikariDataSource(config);
+        // initializes data source with configuration
+        hikariDataSource = new HikariDataSource(config);
 
-	return hikariDataSource;
+        return hikariDataSource;
     }
 
     @Override
     protected boolean checkInstance(DataSource dataSource) {
-	return (dataSource instanceof HikariDataSource);
+        return (dataSource instanceof HikariDataSource);
     }
 
     /**
@@ -209,10 +202,9 @@ public class InitHikaricp extends InitDataSource {
     @Override
     public void cleanUp(DataSource dataSource) {
 
-	if (checkInstance(dataSource)) {
-	    HikariDataSource hikariDataSource = ObjectUtils.cast(dataSource,
-		    HikariDataSource.class);
-	    hikariDataSource.close();
-	}
+        if (checkInstance(dataSource)) {
+            HikariDataSource hikariDataSource = ObjectUtils.cast(dataSource, HikariDataSource.class);
+            hikariDataSource.close();
+        }
     }
 }

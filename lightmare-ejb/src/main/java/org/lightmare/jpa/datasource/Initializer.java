@@ -67,34 +67,34 @@ public abstract class Initializer {
      */
     public static enum ConnectionConfig {
 
-	DRIVER_PROPERTY("driver"), // driver
-	USER_PROPERTY("user"), // user
-	PASSWORD_PROPERTY("password"), // password
-	URL_PROPERTY("url"), // URL
-	JNDI_NAME_PROPERTY("jndiname"), // JNDI name
-	NAME_PROPERTY("name");// data source name
+        DRIVER_PROPERTY("driver"), // driver
+        USER_PROPERTY("user"), // user
+        PASSWORD_PROPERTY("password"), // password
+        URL_PROPERTY("url"), // URL
+        JNDI_NAME_PROPERTY("jndiname"), // JNDI name
+        NAME_PROPERTY("name");// data source name
 
-	public String name;
+        public String name;
 
-	private ConnectionConfig(String name) {
-	    this.name = name;
-	}
+        private ConnectionConfig(String name) {
+            this.name = name;
+        }
     }
 
     public static void setDsAsInitialized(String datasourcePath) {
-	INITIALIZED_SOURCES.add(datasourcePath);
+        INITIALIZED_SOURCES.add(datasourcePath);
     }
 
     public static void removeInitialized(String datasourcePath) {
-	INITIALIZED_SOURCES.remove(datasourcePath);
+        INITIALIZED_SOURCES.remove(datasourcePath);
     }
 
     public static boolean checkDSPath(String datasourcePath) {
-	return INITIALIZED_SOURCES.contains(datasourcePath);
+        return INITIALIZED_SOURCES.contains(datasourcePath);
     }
 
     private static boolean validate(String datasourcePath) {
-	return StringUtils.valid(datasourcePath) && Boolean.FALSE.equals(checkDSPath(datasourcePath));
+        return StringUtils.valid(datasourcePath) && Boolean.FALSE.equals(checkDSPath(datasourcePath));
     }
 
     /**
@@ -105,8 +105,8 @@ public abstract class Initializer {
      * @return {@link String}
      */
     public static String getJndiName(Properties properties) {
-	String jndiName = properties.getProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name);
-	return jndiName;
+        String jndiName = properties.getProperty(ConnectionConfig.JNDI_NAME_PROPERTY.name);
+        return jndiName;
     }
 
     /**
@@ -116,17 +116,17 @@ public abstract class Initializer {
      */
     public static void initializeDriver(String driver) throws IOException {
 
-	boolean locked = Boolean.FALSE;
-	while (Boolean.FALSE.equals(locked)) {
-	    locked = ObjectUtils.tryLock(DRIVER_LOCK);
-	    if (locked) {
-		try {
-		    ClassUtils.initClassForName(driver);
-		} finally {
-		    ObjectUtils.unlock(DRIVER_LOCK);
-		}
-	    }
-	}
+        boolean locked = Boolean.FALSE;
+        while (Boolean.FALSE.equals(locked)) {
+            locked = ObjectUtils.tryLock(DRIVER_LOCK);
+            if (locked) {
+                try {
+                    ClassUtils.initClassForName(driver);
+                } finally {
+                    ObjectUtils.unlock(DRIVER_LOCK);
+                }
+            }
+        }
     }
 
     /**
@@ -137,17 +137,17 @@ public abstract class Initializer {
      */
     private static Collection<String> initializeDataSources(Collection<String> paths) {
 
-	Collection<String> values = new HashSet<String>();
+        Collection<String> values = new HashSet<String>();
 
-	if (CollectionUtils.valid(paths)) {
-	    for (String value : paths) {
-		if (validate(value)) {
-		    values.add(value);
-		}
-	    }
-	}
+        if (CollectionUtils.valid(paths)) {
+            for (String value : paths) {
+                if (validate(value)) {
+                    values.add(value);
+                }
+            }
+        }
 
-	return values;
+        return values;
     }
 
     /**
@@ -157,9 +157,9 @@ public abstract class Initializer {
      */
     public static void initializeDataSources(Configuration config) throws IOException {
 
-	Collection<String> paths = config.getDataSourcePath();
-	Collection<String> values = initializeDataSources(paths);
-	FileParsers.parseDataSources(values, config);
+        Collection<String> paths = config.getDataSourcePath();
+        Collection<String> values = initializeDataSources(paths);
+        FileParsers.parseDataSources(values, config);
     }
 
     /**
@@ -171,11 +171,11 @@ public abstract class Initializer {
      */
     public static void registerDataSource(Properties properties) throws IOException {
 
-	InitDataSource initDataSource = InitDataSourceFactory.get(properties);
-	initDataSource.create();
-	// Caches jndiName for data source
-	String jndiName = getJndiName(properties);
-	INITIALIZED_NAMES.add(jndiName);
+        InitDataSource initDataSource = InitDataSourceFactory.get(properties);
+        initDataSource.create();
+        // Caches jndiName for data source
+        String jndiName = getJndiName(properties);
+        INITIALIZED_NAMES.add(jndiName);
     }
 
     /**
@@ -185,9 +185,9 @@ public abstract class Initializer {
      */
     private static void checkAndClear(DataSource dataSource) {
 
-	if (ObjectUtils.notNull(dataSource)) {
-	    cleanUp(dataSource);
-	}
+        if (ObjectUtils.notNull(dataSource)) {
+            cleanUp(dataSource);
+        }
     }
 
     /**
@@ -199,11 +199,11 @@ public abstract class Initializer {
      */
     public static void close(String jndiName) throws IOException {
 
-	DataSource dataSource = JndiManager.lookup(jndiName);
-	checkAndClear(dataSource);
-	dataSource = null;
-	JndiManager.unbind(jndiName);
-	INITIALIZED_NAMES.remove(jndiName);
+        DataSource dataSource = JndiManager.lookup(jndiName);
+        checkAndClear(dataSource);
+        dataSource = null;
+        JndiManager.unbind(jndiName);
+        INITIALIZED_NAMES.remove(jndiName);
     }
 
     /**
@@ -214,10 +214,10 @@ public abstract class Initializer {
      */
     public static void closeAll() throws IOException {
 
-	Set<String> dataSources = new HashSet<String>(INITIALIZED_NAMES);
-	for (String jndiName : dataSources) {
-	    close(jndiName);
-	}
+        Set<String> dataSources = new HashSet<String>(INITIALIZED_NAMES);
+        for (String jndiName : dataSources) {
+            close(jndiName);
+        }
     }
 
     /**
@@ -229,11 +229,11 @@ public abstract class Initializer {
      */
     private static void checkAndUndeploy(String dataSourcePath, Collection<String> jndiNames) throws IOException {
 
-	if (StringUtils.valid(dataSourcePath)) {
-	    for (String jndiName : jndiNames) {
-		close(jndiName);
-	    }
-	}
+        if (StringUtils.valid(dataSourcePath)) {
+            for (String jndiName : jndiNames) {
+                close(jndiName);
+            }
+        }
     }
 
     /**
@@ -245,9 +245,9 @@ public abstract class Initializer {
      */
     public static void undeploy(String dataSourcePath) throws IOException {
 
-	Collection<String> jndiNames = XMLFileParsers.dataSourceNames(dataSourcePath);
-	checkAndUndeploy(dataSourcePath, jndiNames);
-	removeInitialized(dataSourcePath);
+        Collection<String> jndiNames = XMLFileParsers.dataSourceNames(dataSourcePath);
+        checkAndUndeploy(dataSourcePath, jndiNames);
+        removeInitialized(dataSourcePath);
     }
 
     /**
@@ -256,6 +256,6 @@ public abstract class Initializer {
      * @param dataSource
      */
     public static void cleanUp(DataSource dataSource) {
-	InitDataSourceFactory.destroy(dataSource);
+        InitDataSourceFactory.destroy(dataSource);
     }
 }

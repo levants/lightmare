@@ -54,60 +54,60 @@ public class PoolConfig {
      */
     public static enum Defaults {
 
-	// Data source name property
-	DATA_SOURCE_NAME("dataSourceName"),
+        // Data source name property
+        DATA_SOURCE_NAME("dataSourceName"),
 
-	// ===========================================//
-	// ====== Data Source properties =============//
-	// ===========================================//
+        // ===========================================//
+        // ====== Data Source properties =============//
+        // ===========================================//
 
-	// Class loader properties
-	CONTEXT_CLASS_LOADER_SOURCE("contextClassLoaderSource", "library"), // loader
-	PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", Boolean.TRUE), // threads
+        // Class loader properties
+        CONTEXT_CLASS_LOADER_SOURCE("contextClassLoaderSource", "library"), // loader
+        PRIVILEGED_SPAWNED_THREADS("privilegeSpawnedThreads", Boolean.TRUE), // threads
 
-	// Pool properties
-	MAX_POOL_SIZE("maxPoolSize", 15), // max pool size
-	INITIAL_POOL_SIZE("initialPoolSize", 5), // initial
-	MIN_POOL_SIZE("minPoolSize", 5), // minimal pool size
-	MAX_STATEMENTS("maxStatements", 50), // statements
-	AQUIRE_INCREMENT("acquireIncrement", 5), // increment
+        // Pool properties
+        MAX_POOL_SIZE("maxPoolSize", 15), // max pool size
+        INITIAL_POOL_SIZE("initialPoolSize", 5), // initial
+        MIN_POOL_SIZE("minPoolSize", 5), // minimal pool size
+        MAX_STATEMENTS("maxStatements", 50), // statements
+        AQUIRE_INCREMENT("acquireIncrement", 5), // increment
 
-	// Pool timeout properties
-	MAX_IDLE_TIMEOUT("maxIdleTime", 1200), // idle
-	MAX_IDLE_TIME_EXCESS_CONN("maxIdleTimeExcessConnections", 60), // excess
-	CHECK_OUT_TIMEOUT("checkoutTimeout", 5000), // checkout
+        // Pool timeout properties
+        MAX_IDLE_TIMEOUT("maxIdleTime", 1200), // idle
+        MAX_IDLE_TIME_EXCESS_CONN("maxIdleTimeExcessConnections", 60), // excess
+        CHECK_OUT_TIMEOUT("checkoutTimeout", 5000), // checkout
 
-	// Controller properties
-	STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads", 1),
+        // Controller properties
+        STAT_CACHE_NUM_DEFF_THREADS("statementCacheNumDeferredCloseThreads", 1),
 
-	// Transaction properties
-	AUTOCOMMIT("autoCommit", Boolean.FALSE), // auto commit
-	AUTOCOMMIT_ON_CLOSE("autoCommitOnClose", Boolean.FALSE), // on close
-	URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions", Boolean.TRUE), // ignore
-										   // unresolved
-										   // transactions
+        // Transaction properties
+        AUTOCOMMIT("autoCommit", Boolean.FALSE), // auto commit
+        AUTOCOMMIT_ON_CLOSE("autoCommitOnClose", Boolean.FALSE), // on close
+        URESOLVED_TRANSACTIONS("forceIgnoreUnresolvedTransactions", Boolean.TRUE), // ignore
+                                                                                   // unresolved
+                                                                                   // transactions
 
-	// Connection recovery properties
-	ACQUIRE_RETRY_ATTEMPTS("acquireRetryAttempts", 0), // retry
-	ACQUIRE_RETRY_DELAY("acquireRetryDelay", 1000), // delay
-	BREACK_AFTER_ACQUIRE_FAILURE("breakAfterAcquireFailure", Boolean.FALSE); // break
+        // Connection recovery properties
+        ACQUIRE_RETRY_ATTEMPTS("acquireRetryAttempts", 0), // retry
+        ACQUIRE_RETRY_DELAY("acquireRetryDelay", 1000), // delay
+        BREACK_AFTER_ACQUIRE_FAILURE("breakAfterAcquireFailure", Boolean.FALSE); // break
 
-	public String key;
+        public String key;
 
-	public String value;
+        public String value;
 
-	private Defaults(String key) {
-	    this.key = key;
-	}
+        private Defaults(String key) {
+            this.key = key;
+        }
 
-	private Defaults(String key, Object value) {
-	    this(key);
-	    if (value instanceof String) {
-		this.value = (String) value;
-	    } else {
-		this.value = String.valueOf(value);
-	    }
-	}
+        private Defaults(String key, Object value) {
+            this(key);
+            if (value instanceof String) {
+                this.value = (String) value;
+            } else {
+                this.value = String.valueOf(value);
+            }
+        }
     }
 
     // Data source name property
@@ -131,7 +131,7 @@ public class PoolConfig {
      */
     public static enum PoolProviderType {
 
-	DBCP, C3P0, TOMCAT;
+        DBCP, C3P0, TOMCAT;
     }
 
     // Default pool provider type
@@ -144,20 +144,20 @@ public class PoolConfig {
      */
     public Map<Object, Object> getDefaultPooling() {
 
-	Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
+        Map<Object, Object> c3p0Properties = new HashMap<Object, Object>();
 
-	Defaults[] defaults = Defaults.values();
-	String key;
-	String value;
-	for (Defaults config : defaults) {
-	    key = config.key;
-	    value = config.value;
-	    if (StringUtils.validAll(key, value)) {
-		c3p0Properties.put(key, value);
-	    }
-	}
+        Defaults[] defaults = Defaults.values();
+        String key;
+        String value;
+        for (Defaults config : defaults) {
+            key = config.key;
+            value = config.value;
+            if (StringUtils.validAll(key, value)) {
+                c3p0Properties.put(key, value);
+            }
+        }
 
-	return c3p0Properties;
+        return c3p0Properties;
     }
 
     /**
@@ -169,18 +169,18 @@ public class PoolConfig {
      */
     private Set<Object> unsopportedKeys() throws IOException {
 
-	Set<Object> keys = new HashSet<Object>();
+        Set<Object> keys = new HashSet<Object>();
 
-	ConnectionConfig[] usdKeys = ConnectionConfig.values();
-	String key;
-	for (ConnectionConfig usdKey : usdKeys) {
-	    key = usdKey.name;
-	    if (StringUtils.valid(key)) {
-		keys.add(key);
-	    }
-	}
+        ConnectionConfig[] usdKeys = ConnectionConfig.values();
+        String key;
+        for (ConnectionConfig usdKey : usdKeys) {
+            key = usdKey.name;
+            if (StringUtils.valid(key)) {
+                keys.add(key);
+            }
+        }
 
-	return keys;
+        return keys;
     }
 
     /**
@@ -190,7 +190,7 @@ public class PoolConfig {
      * @param initial
      */
     private void fillDefaults(Map<Object, Object> defaults, Map<Object, Object> initial) {
-	defaults.putAll(initial);
+        defaults.putAll(initial);
     }
 
     /**
@@ -202,25 +202,25 @@ public class PoolConfig {
      */
     private Map<Object, Object> configProperties(Map<Object, Object> initial) throws IOException {
 
-	Map<Object, Object> propertiesMap = getDefaultPooling();
+        Map<Object, Object> propertiesMap = getDefaultPooling();
 
-	fillDefaults(propertiesMap, initial);
-	Set<Object> keys = unsopportedKeys();
-	String dataSourceName = null;
-	String property;
-	for (Object key : keys) {
-	    property = ConnectionConfig.NAME_PROPERTY.name;
-	    if (key.equals(property)) {
-		dataSourceName = (String) propertiesMap.get(property);
-	    }
-	    propertiesMap.remove(key);
-	}
+        fillDefaults(propertiesMap, initial);
+        Set<Object> keys = unsopportedKeys();
+        String dataSourceName = null;
+        String property;
+        for (Object key : keys) {
+            property = ConnectionConfig.NAME_PROPERTY.name;
+            if (key.equals(property)) {
+                dataSourceName = (String) propertiesMap.get(property);
+            }
+            propertiesMap.remove(key);
+        }
 
-	if (StringUtils.valid(dataSourceName)) {
-	    propertiesMap.put(DATA_SOURCE_NAME, dataSourceName);
-	}
+        if (StringUtils.valid(dataSourceName)) {
+            propertiesMap.put(DATA_SOURCE_NAME, dataSourceName);
+        }
 
-	return propertiesMap;
+        return propertiesMap;
     }
 
     /**
@@ -232,19 +232,19 @@ public class PoolConfig {
      */
     public static String asText(Map<Object, Object> properties, Object key) {
 
-	String value;
+        String value;
 
-	Object property = properties.get(key);
+        Object property = properties.get(key);
 
-	if (property == null) {
-	    value = null;
-	} else if (property instanceof String) {
-	    value = ObjectUtils.cast(property, String.class);
-	} else {
-	    value = property.toString();
-	}
+        if (property == null) {
+            value = null;
+        } else if (property instanceof String) {
+            value = ObjectUtils.cast(property, String.class);
+        } else {
+            value = property.toString();
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -256,21 +256,21 @@ public class PoolConfig {
      */
     public static Integer asInt(Map<Object, Object> properties, Object key) {
 
-	Integer value;
+        Integer value;
 
-	Object property = properties.get(key);
-	if (property == null) {
-	    value = null;
-	} else if (property instanceof Integer) {
-	    value = ObjectUtils.cast(property, Integer.class);
-	} else if (property instanceof String) {
-	    String text = ObjectUtils.cast(property, String.class);
-	    value = Integer.valueOf(text);
-	} else {
-	    value = null;
-	}
+        Object property = properties.get(key);
+        if (property == null) {
+            value = null;
+        } else if (property instanceof Integer) {
+            value = ObjectUtils.cast(property, Integer.class);
+        } else if (property instanceof String) {
+            String text = ObjectUtils.cast(property, String.class);
+            value = Integer.valueOf(text);
+        } else {
+            value = null;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -282,12 +282,12 @@ public class PoolConfig {
      */
     public static Integer asInt(Map<Object, Object> properties, Defaults config) {
 
-	Integer propertyInt;
+        Integer propertyInt;
 
-	String key = config.key;
-	propertyInt = asInt(properties, key);
+        String key = config.key;
+        propertyInt = asInt(properties, key);
 
-	return propertyInt;
+        return propertyInt;
     }
 
     /**
@@ -299,21 +299,21 @@ public class PoolConfig {
      */
     public static Boolean asBoolean(Map<Object, Object> properties, Object key) {
 
-	Boolean value;
+        Boolean value;
 
-	Object property = properties.get(key);
-	if (property == null) {
-	    value = null;
-	} else if (property instanceof Boolean) {
-	    value = ObjectUtils.cast(property, Boolean.class);
-	} else if (property instanceof String) {
-	    String text = ObjectUtils.cast(property, String.class);
-	    value = Boolean.valueOf(text);
-	} else {
-	    value = null;
-	}
+        Object property = properties.get(key);
+        if (property == null) {
+            value = null;
+        } else if (property instanceof Boolean) {
+            value = ObjectUtils.cast(property, Boolean.class);
+        } else if (property instanceof String) {
+            String text = ObjectUtils.cast(property, String.class);
+            value = Boolean.valueOf(text);
+        } else {
+            value = null;
+        }
 
-	return value;
+        return value;
     }
 
     /**
@@ -324,32 +324,32 @@ public class PoolConfig {
      */
     public Map<Object, Object> load() throws IOException {
 
-	Map<Object, Object> properties;
+        Map<Object, Object> properties;
 
-	InputStream stream;
-	if (StringUtils.invalid(poolPath)) {
-	    ClassLoader loader = LibraryLoader.getContextClassLoader();
-	    stream = loader.getResourceAsStream(POOL_PATH_DEF_VALUE);
-	} else {
-	    File file = new File(poolPath);
-	    stream = new FileInputStream(file);
-	}
+        InputStream stream;
+        if (StringUtils.invalid(poolPath)) {
+            ClassLoader loader = LibraryLoader.getContextClassLoader();
+            stream = loader.getResourceAsStream(POOL_PATH_DEF_VALUE);
+        } else {
+            File file = new File(poolPath);
+            stream = new FileInputStream(file);
+        }
 
-	try {
-	    Properties propertiesToLoad;
-	    if (ObjectUtils.notNull(stream)) {
-		propertiesToLoad = new Properties();
-		propertiesToLoad.load(stream);
-		properties = new HashMap<Object, Object>();
-		properties.putAll(propertiesToLoad);
-	    } else {
-		properties = null;
-	    }
-	} finally {
-	    IOUtils.close(stream);
-	}
+        try {
+            Properties propertiesToLoad;
+            if (ObjectUtils.notNull(stream)) {
+                propertiesToLoad = new Properties();
+                propertiesToLoad.load(stream);
+                properties = new HashMap<Object, Object>();
+                properties.putAll(propertiesToLoad);
+            } else {
+                properties = null;
+            }
+        } finally {
+            IOUtils.close(stream);
+        }
 
-	return properties;
+        return properties;
     }
 
     /**
@@ -362,46 +362,46 @@ public class PoolConfig {
      */
     public Map<Object, Object> merge(Map<Object, Object> properties) throws IOException {
 
-	Map<Object, Object> configMap = configProperties(properties);
+        Map<Object, Object> configMap = configProperties(properties);
 
-	Map<Object, Object> loaded = load();
-	if (ObjectUtils.notNull(loaded)) {
-	    fillDefaults(configMap, loaded);
-	}
+        Map<Object, Object> loaded = load();
+        if (ObjectUtils.notNull(loaded)) {
+            fillDefaults(configMap, loaded);
+        }
 
-	if (ObjectUtils.notNull(poolProperties)) {
-	    fillDefaults(configMap, poolProperties);
-	}
+        if (ObjectUtils.notNull(poolProperties)) {
+            fillDefaults(configMap, poolProperties);
+        }
 
-	return configMap;
+        return configMap;
     }
 
     public String getPoolPath() {
-	return poolPath;
+        return poolPath;
     }
 
     public void setPoolPath(String poolPath) {
-	this.poolPath = poolPath;
+        this.poolPath = poolPath;
     }
 
     public Map<Object, Object> getPoolProperties() {
-	return poolProperties;
+        return poolProperties;
     }
 
     public void setPoolProperties(Map<Object, Object> poolProperties) {
-	this.poolProperties = poolProperties;
+        this.poolProperties = poolProperties;
     }
 
     public boolean isPooledDataSource() {
-	return pooledDataSource;
+        return pooledDataSource;
     }
 
     public void setPooledDataSource(boolean pooledDataSource) {
-	this.pooledDataSource = pooledDataSource;
+        this.pooledDataSource = pooledDataSource;
     }
 
     public PoolProviderType getPoolProviderType() {
-	return poolProviderType;
+        return poolProviderType;
     }
 
     /**
@@ -411,9 +411,9 @@ public class PoolConfig {
      */
     public void setPoolProviderType(PoolProviderType poolProviderType) {
 
-	if (ObjectUtils.notNull(poolProviderType)) {
-	    this.poolProviderType = poolProviderType;
-	}
+        if (ObjectUtils.notNull(poolProviderType)) {
+            this.poolProviderType = poolProviderType;
+        }
     }
 
     /**
@@ -423,16 +423,16 @@ public class PoolConfig {
      */
     public void setPoolProviderType(String poolProviderTypeName) {
 
-	PoolProviderType[] types = PoolProviderType.values();
-	int length = types.length;
-	boolean typeNotSet = Boolean.TRUE;
-	PoolProviderType type;
-	for (int i = 0; i < length && typeNotSet; i++) {
-	    type = types[i];
-	    if (type.toString().equalsIgnoreCase(poolProviderTypeName)) {
-		this.poolProviderType = type;
-		typeNotSet = Boolean.FALSE;
-	    }
-	}
+        PoolProviderType[] types = PoolProviderType.values();
+        int length = types.length;
+        boolean typeNotSet = Boolean.TRUE;
+        PoolProviderType type;
+        for (int i = 0; i < length && typeNotSet; i++) {
+            type = types[i];
+            if (type.toString().equalsIgnoreCase(poolProviderTypeName)) {
+                this.poolProviderType = type;
+                typeNotSet = Boolean.FALSE;
+            }
+        }
     }
 }

@@ -47,6 +47,6 @@ public enum InitMessages {
     public final String message;
 
     private InitMessages(final String message) {
-	this.message = message;
+        this.message = message;
     }
 }

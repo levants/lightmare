@@ -64,7 +64,7 @@ public class FileParsers {
      * @return <code>boolean</code>
      */
     private static boolean valid(String jndiName, Map<String, Properties> container) {
-	return StringUtils.valid(jndiName) && (container.isEmpty() || CollectionUtils.notContains(container, jndiName));
+        return StringUtils.valid(jndiName) && (container.isEmpty() || CollectionUtils.notContains(container, jndiName));
     }
 
     /**
@@ -75,17 +75,17 @@ public class FileParsers {
      * @throws IOException
      */
     private static void fillFromXml(Collection<String> paths, Map<String, List<Properties>> datasources)
-	    throws IOException {
+            throws IOException {
 
-	if (CollectionUtils.valid(paths)) {
-	    List<Properties> xmlDatasources;
-	    for (String dataSourcePath : paths) {
-		xmlDatasources = XMLFileParsers.getPropertiesFromJBoss(dataSourcePath);
-		if (CollectionUtils.valid(xmlDatasources)) {
-		    datasources.put(dataSourcePath, xmlDatasources);
-		}
-	    }
-	}
+        if (CollectionUtils.valid(paths)) {
+            List<Properties> xmlDatasources;
+            for (String dataSourcePath : paths) {
+                xmlDatasources = XMLFileParsers.getPropertiesFromJBoss(dataSourcePath);
+                if (CollectionUtils.valid(xmlDatasources)) {
+                    datasources.put(dataSourcePath, xmlDatasources);
+                }
+            }
+        }
     }
 
     /**
@@ -96,14 +96,14 @@ public class FileParsers {
      * @throws IOException
      */
     private static void fillFromYaml(Configuration config, Map<String, List<Properties>> datasources)
-	    throws IOException {
+            throws IOException {
 
-	if (ObjectUtils.notNull(config)) {
-	    List<Properties> yamlDatasources = YamlParsers.parseYaml(config);
-	    if (CollectionUtils.valid(yamlDatasources)) {
-		datasources.put(DEFAULT_KEY, yamlDatasources);
-	    }
-	}
+        if (ObjectUtils.notNull(config)) {
+            List<Properties> yamlDatasources = YamlParsers.parseYaml(config);
+            if (CollectionUtils.valid(yamlDatasources)) {
+                datasources.put(DEFAULT_KEY, yamlDatasources);
+            }
+        }
     }
 
     /**
@@ -115,11 +115,11 @@ public class FileParsers {
      */
     private static void put(Properties properties, Map<String, Properties> container) {
 
-	String property = ConnectionConfig.JNDI_NAME_PROPERTY.name;
-	String jndiName = properties.getProperty(property);
-	if (valid(jndiName, container)) {
-	    container.put(jndiName, properties);
-	}
+        String property = ConnectionConfig.JNDI_NAME_PROPERTY.name;
+        String jndiName = properties.getProperty(property);
+        if (valid(jndiName, container)) {
+            container.put(jndiName, properties);
+        }
     }
 
     /**
@@ -130,19 +130,19 @@ public class FileParsers {
      */
     private static List<Properties> shrink(List<Properties> datasources) {
 
-	List<Properties> shrinked;
+        List<Properties> shrinked;
 
-	if (CollectionUtils.valid(datasources)) {
-	    Map<String, Properties> container = new HashMap<String, Properties>();
-	    for (Properties properties : datasources) {
-		put(properties, container);
-	    }
-	    shrinked = new ArrayList<Properties>(container.values());
-	} else {
-	    shrinked = Collections.emptyList();
-	}
+        if (CollectionUtils.valid(datasources)) {
+            Map<String, Properties> container = new HashMap<String, Properties>();
+            for (Properties properties : datasources) {
+                put(properties, container);
+            }
+            shrinked = new ArrayList<Properties>(container.values());
+        } else {
+            shrinked = Collections.emptyList();
+        }
 
-	return shrinked;
+        return shrinked;
     }
 
     /**
@@ -154,22 +154,22 @@ public class FileParsers {
      */
     private static Map<String, List<Properties>> shrink(Map<String, List<Properties>> datasources) {
 
-	Map<String, List<Properties>> shrinked = new HashMap<String, List<Properties>>();
+        Map<String, List<Properties>> shrinked = new HashMap<String, List<Properties>>();
 
-	if (CollectionUtils.valid(datasources)) {
-	    Set<Map.Entry<String, List<Properties>>> entrySet = datasources.entrySet();
-	    String key;
-	    List<Properties> value;
-	    List<Properties> fine;
-	    for (Map.Entry<String, List<Properties>> entry : entrySet) {
-		key = entry.getKey();
-		value = entry.getValue();
-		fine = shrink(value);
-		shrinked.put(key, fine);
-	    }
-	}
+        if (CollectionUtils.valid(datasources)) {
+            Set<Map.Entry<String, List<Properties>>> entrySet = datasources.entrySet();
+            String key;
+            List<Properties> value;
+            List<Properties> fine;
+            for (Map.Entry<String, List<Properties>> entry : entrySet) {
+                key = entry.getKey();
+                value = entry.getValue();
+                fine = shrink(value);
+                shrinked.put(key, fine);
+            }
+        }
 
-	return shrinked;
+        return shrinked;
     }
 
     /**
@@ -182,16 +182,16 @@ public class FileParsers {
      */
     private static int calculateSize(Map<String, List<Properties>> datasources) {
 
-	int size = CollectionUtils.EMPTY_ARRAY_LENGTH;
+        int size = CollectionUtils.EMPTY_ARRAY_LENGTH;
 
-	if (CollectionUtils.valid(datasources)) {
-	    Collection<List<Properties>> values = datasources.values();
-	    for (List<Properties> value : values) {
-		size += value.size();
-	    }
-	}
+        if (CollectionUtils.valid(datasources)) {
+            Collection<List<Properties>> values = datasources.values();
+            for (List<Properties> value : values) {
+                size += value.size();
+            }
+        }
 
-	return size;
+        return size;
     }
 
     /**
@@ -202,16 +202,16 @@ public class FileParsers {
      */
     private static void initDatasource(Properties properties, CountDownLatch blocker) {
 
-	try {
-	    // Initializes and fills BeanLoader.DataSourceParameters class
-	    // to deploy data source
-	    BeanLoader.DataSourceParameters parameters = new BeanLoader.DataSourceParameters();
-	    parameters.properties = properties;
-	    parameters.blocker = blocker;
-	    BeanLoader.initializeDatasource(parameters);
-	} catch (IOException ex) {
-	    LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
-	}
+        try {
+            // Initializes and fills BeanLoader.DataSourceParameters class
+            // to deploy data source
+            BeanLoader.DataSourceParameters parameters = new BeanLoader.DataSourceParameters();
+            parameters.properties = properties;
+            parameters.blocker = blocker;
+            BeanLoader.initializeDatasource(parameters);
+        } catch (IOException ex) {
+            LOG.error(InitMessages.INITIALIZING_ERROR.message, ex);
+        }
     }
 
     /**
@@ -222,11 +222,11 @@ public class FileParsers {
      */
     private static void initDatasources(List<Properties> datasources, CountDownLatch blocker) {
 
-	if (CollectionUtils.valid(datasources)) {
-	    for (Properties properties : datasources) {
-		initDatasource(properties, blocker);
-	    }
-	}
+        if (CollectionUtils.valid(datasources)) {
+            for (Properties properties : datasources) {
+                initDatasource(properties, blocker);
+            }
+        }
     }
 
     /**
@@ -239,33 +239,33 @@ public class FileParsers {
      */
     public static void parseDataSources(Collection<String> paths, Configuration config) throws IOException {
 
-	Map<String, List<Properties>> datasources = new HashMap<String, List<Properties>>();
+        Map<String, List<Properties>> datasources = new HashMap<String, List<Properties>>();
 
-	fillFromYaml(config, datasources);
-	fillFromXml(paths, datasources);
-	datasources = shrink(datasources);
-	int size = calculateSize(datasources);
-	// Blocking semaphore before all data source initialization finished
-	CountDownLatch blocker = new CountDownLatch(size);
-	Set<Map.Entry<String, List<Properties>>> entrySet = datasources.entrySet();
-	String key;
-	List<Properties> value;
-	for (Map.Entry<String, List<Properties>> entry : entrySet) {
-	    key = entry.getKey();
-	    value = entry.getValue();
-	    initDatasources(value, blocker);
-	    Initializer.setDsAsInitialized(key);
-	}
-	// Tries to lock until operation is complete
-	try {
-	    blocker.await();
-	} catch (InterruptedException ex) {
-	    throw new IOException(ex);
-	}
+        fillFromYaml(config, datasources);
+        fillFromXml(paths, datasources);
+        datasources = shrink(datasources);
+        int size = calculateSize(datasources);
+        // Blocking semaphore before all data source initialization finished
+        CountDownLatch blocker = new CountDownLatch(size);
+        Set<Map.Entry<String, List<Properties>>> entrySet = datasources.entrySet();
+        String key;
+        List<Properties> value;
+        for (Map.Entry<String, List<Properties>> entry : entrySet) {
+            key = entry.getKey();
+            value = entry.getValue();
+            initDatasources(value, blocker);
+            Initializer.setDsAsInitialized(key);
+        }
+        // Tries to lock until operation is complete
+        try {
+            blocker.await();
+        } catch (InterruptedException ex) {
+            throw new IOException(ex);
+        }
     }
 
     public static void parseDataSources(String path) throws IOException {
-	Collection<String> paths = Collections.singleton(path);
-	parseDataSources(paths, null);
+        Collection<String> paths = Collections.singleton(path);
+        parseDataSources(paths, null);
     }
 }

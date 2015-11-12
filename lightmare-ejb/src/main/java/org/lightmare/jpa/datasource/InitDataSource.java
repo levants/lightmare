@@ -64,15 +64,15 @@ public abstract class InitDataSource {
      */
     public InitDataSource(Properties properties) {
 
-	if (CollectionUtils.valid(properties)) {
-	    this.properties = properties;
-	    this.poolConfig = Configuration.getPoolConfig();
+        if (CollectionUtils.valid(properties)) {
+            this.properties = properties;
+            this.poolConfig = Configuration.getPoolConfig();
 
-	    driver = properties.getProperty(ConnectionConfig.DRIVER_PROPERTY.name).trim();
-	    url = properties.getProperty(ConnectionConfig.URL_PROPERTY.name).trim();
-	    user = properties.getProperty(ConnectionConfig.USER_PROPERTY.name).trim();
-	    password = properties.getProperty(ConnectionConfig.PASSWORD_PROPERTY.name).trim();
-	}
+            driver = properties.getProperty(ConnectionConfig.DRIVER_PROPERTY.name).trim();
+            url = properties.getProperty(ConnectionConfig.URL_PROPERTY.name).trim();
+            user = properties.getProperty(ConnectionConfig.USER_PROPERTY.name).trim();
+            password = properties.getProperty(ConnectionConfig.PASSWORD_PROPERTY.name).trim();
+        }
     }
 
     /**
@@ -100,13 +100,13 @@ public abstract class InitDataSource {
      */
     private void bindDataSource(DataSource dataSource, String jndiName) throws IOException {
 
-	boolean valid = checkInstance(dataSource);
-	if (valid) {
-	    JndiManager.rebind(jndiName, dataSource);
-	} else {
-	    String message = String.format(InitMessages.NOT_APPR_INSTANCE_ERROR.message, jndiName);
-	    throw new IOException(message);
-	}
+        boolean valid = checkInstance(dataSource);
+        if (valid) {
+            JndiManager.rebind(jndiName, dataSource);
+        } else {
+            String message = String.format(InitMessages.NOT_APPR_INSTANCE_ERROR.message, jndiName);
+            throw new IOException(message);
+        }
     }
 
     /**
@@ -117,17 +117,17 @@ public abstract class InitDataSource {
      */
     public void create() throws IOException {
 
-	String jndiName = Initializer.getJndiName(properties);
-	LogUtils.info(LOG, InitMessages.INITIALIZING_MESSAGE.message, jndiName);
-	try {
-	    DataSource dataSource = initializeDataSource();
-	    bindDataSource(dataSource, jndiName);
-	    LogUtils.info(LOG, InitMessages.INITIALIZED_MESSAGE.message, jndiName);
-	} catch (IOException ex) {
-	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR.message, jndiName);
-	} catch (Exception ex) {
-	    LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR.message, jndiName);
-	}
+        String jndiName = Initializer.getJndiName(properties);
+        LogUtils.info(LOG, InitMessages.INITIALIZING_MESSAGE.message, jndiName);
+        try {
+            DataSource dataSource = initializeDataSource();
+            bindDataSource(dataSource, jndiName);
+            LogUtils.info(LOG, InitMessages.INITIALIZED_MESSAGE.message, jndiName);
+        } catch (IOException ex) {
+            LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR.message, jndiName);
+        } catch (Exception ex) {
+            LogUtils.error(LOG, ex, InitMessages.COULD_NOT_INIT_ERROR.message, jndiName);
+        }
     }
 
     /**

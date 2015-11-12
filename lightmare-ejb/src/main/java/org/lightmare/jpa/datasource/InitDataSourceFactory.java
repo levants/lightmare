@@ -47,21 +47,21 @@ public class InitDataSourceFactory {
      */
     public static InitDataSource get(Properties properties) {
 
-	InitDataSource initDataSource;
+        InitDataSource initDataSource;
 
-	PoolConfig poolConfig = Configuration.getPoolConfig();
+        PoolConfig poolConfig = Configuration.getPoolConfig();
 
-	if (poolConfig.getPoolProviderType().equals(PoolProviderType.C3P0)) {
-	    initDataSource = new InitC3p0(properties);
-	} else if (poolConfig.getPoolProviderType().equals(PoolProviderType.TOMCAT)) {
-	    initDataSource = new InitTomcat(properties);
-	} else if (poolConfig.getPoolProviderType().equals(PoolProviderType.DBCP)) {
-	    initDataSource = new InitDBCP(properties);
-	} else {
-	    initDataSource = null;
-	}
+        if (poolConfig.getPoolProviderType().equals(PoolProviderType.C3P0)) {
+            initDataSource = new InitC3p0(properties);
+        } else if (poolConfig.getPoolProviderType().equals(PoolProviderType.TOMCAT)) {
+            initDataSource = new InitTomcat(properties);
+        } else if (poolConfig.getPoolProviderType().equals(PoolProviderType.DBCP)) {
+            initDataSource = new InitDBCP(properties);
+        } else {
+            initDataSource = null;
+        }
 
-	return initDataSource;
+        return initDataSource;
     }
 
     /**
@@ -69,7 +69,7 @@ public class InitDataSourceFactory {
      * destroy appropriate {@link DataSource} instance
      */
     public static void destroy(DataSource dataSource) {
-	InitDataSource initDataSource = get(null);
-	initDataSource.cleanUp(dataSource);
+        InitDataSource initDataSource = get(null);
+        initDataSource.cleanUp(dataSource);
     }
 }
