@@ -24,7 +24,7 @@ package org.lightmare.criteria.query.internal.jpa.subqueries;
 
 import java.util.List;
 
-import org.lightmare.criteria.query.internal.jpa.SelectStream;
+import org.lightmare.criteria.query.internal.jpa.builders.SelectStream;
 import org.lightmare.criteria.utils.CollectionUtils;
 
 /**

@@ -29,7 +29,7 @@ import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 

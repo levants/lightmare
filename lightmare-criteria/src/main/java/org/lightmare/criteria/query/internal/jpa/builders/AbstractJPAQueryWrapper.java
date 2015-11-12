@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.jpa;
+package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +31,7 @@ import javax.persistence.LockModeType;
 import javax.persistence.Query;
 
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.JPAQueryWrapper;
 import org.lightmare.criteria.utils.CollectionUtils;
 
 /**

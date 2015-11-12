@@ -22,7 +22,7 @@
  */
 package org.lightmare.criteria.query.internal;
 
-import org.lightmare.criteria.query.internal.jpa.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 import org.lightmare.criteria.tuples.EmbeddedTuple;
 import org.lightmare.criteria.tuples.QueryTuple;

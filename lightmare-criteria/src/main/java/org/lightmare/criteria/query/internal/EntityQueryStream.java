@@ -33,7 +33,7 @@ import org.lightmare.criteria.links.Joins;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.AbstractSelectStatements;
+import org.lightmare.criteria.query.internal.jpa.builders.AbstractSelectStatements;
 import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.StringUtils;

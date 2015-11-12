@@ -20,12 +20,13 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.jpa;
+package org.lightmare.criteria.query.internal.jpa.builders;
 
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.SelectStatements;
 
 /**
  * Implementation of {@link SelectStatements} to generate SELECT for instant
