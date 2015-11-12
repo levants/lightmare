@@ -41,6 +41,11 @@ import org.lightmare.criteria.query.internal.GeneralExpression;
  */
 interface GeneralSubExpression<S, T> extends GeneralExpression<S> {
 
+    // =========================embedded=field=queries=======================//
+
+    @Override
+    <F> SubQueryStream<S, T> embedded(EntityField<S, F> field, SubQueryConsumer<F, S> consumer);
+
     // =========================sub=queries==================================//
 
     /**
