@@ -38,8 +38,7 @@ import javax.ejb.spi.EJBContainerProvider;
 public class EmbeddableContainerProvider implements EJBContainerProvider {
 
     @Override
-    public EJBContainer createEJBContainer(Map<?, ?> properties)
-	    throws EJBException {
-	return new EmbeddableContainer(properties);
+    public EJBContainer createEJBContainer(Map<?, ?> properties) throws EJBException {
+        return new EmbeddableContainer(properties);
     }
 }

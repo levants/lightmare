@@ -12,19 +12,19 @@ public class BeanNotDeployedException extends IOException {
     private static final String ERROR_MESSAGE_FORMAT = "Bean %s is not deployed";
 
     public BeanNotDeployedException() {
-	super();
+        super();
     }
 
     public BeanNotDeployedException(String message) {
-	super(message);
+        super(message);
     }
 
     public BeanNotDeployedException(Throwable thr) {
-	super(thr);
+        super(thr);
     }
 
     public BeanNotDeployedException(String message, Throwable thr) {
-	super(message, thr);
+        super(message, thr);
     }
 
     /**
@@ -36,12 +36,12 @@ public class BeanNotDeployedException extends IOException {
      */
     public static BeanNotDeployedException get(String message, Object... formats) {
 
-	BeanNotDeployedException exception;
+        BeanNotDeployedException exception;
 
-	String errorMessage = LogUtils.logMessage(message, formats);
-	exception = new BeanNotDeployedException(errorMessage);
+        String errorMessage = LogUtils.logMessage(message, formats);
+        exception = new BeanNotDeployedException(errorMessage);
 
-	return exception;
+        return exception;
     }
 
     /**
@@ -52,6 +52,6 @@ public class BeanNotDeployedException extends IOException {
      * @return {@link BeanInUseException}
      */
     public static BeanNotDeployedException get(Object bean) {
-	return get(ERROR_MESSAGE_FORMAT, bean);
+        return get(ERROR_MESSAGE_FORMAT, bean);
     }
 }

@@ -50,8 +50,7 @@ public class EmbeddableContainer extends EJBContainer {
 
     private static final String CONTEXT_ERROR = "Could not initialize Context";
 
-    private static final Logger LOG = Logger
-	    .getLogger(EmbeddableContainer.class);
+    private static final Logger LOG = Logger.getLogger(EmbeddableContainer.class);
 
     /**
      * Initializes {@link MetaCreator.Builder} for passed properties
@@ -60,19 +59,18 @@ public class EmbeddableContainer extends EJBContainer {
      * @return
      * @throws IOException
      */
-    private MetaCreator.Builder initBuilder(Map<?, ?> properties)
-	    throws IOException {
+    private MetaCreator.Builder initBuilder(Map<?, ?> properties) throws IOException {
 
-	MetaCreator.Builder builder;
+        MetaCreator.Builder builder;
 
-	if (properties == null || properties.isEmpty()) {
-	    builder = new MetaCreator.Builder();
-	} else {
-	    Map<Object, Object> configuration = ObjectUtils.cast(properties);
-	    builder = new MetaCreator.Builder(configuration);
-	}
+        if (properties == null || properties.isEmpty()) {
+            builder = new MetaCreator.Builder();
+        } else {
+            Map<Object, Object> configuration = ObjectUtils.cast(properties);
+            builder = new MetaCreator.Builder(configuration);
+        }
 
-	return builder;
+        return builder;
     }
 
     /**
@@ -82,35 +80,35 @@ public class EmbeddableContainer extends EJBContainer {
      */
     protected EmbeddableContainer(Map<?, ?> properties) {
 
-	try {
-	    MetaCreator.Builder builder = initBuilder(properties);
-	    this.creator = builder.build();
-	    this.creator.scanForBeans();
-	} catch (IOException ex) {
-	    LOG.error(CONTAINER_ERROR, ex);
-	}
+        try {
+            MetaCreator.Builder builder = initBuilder(properties);
+            this.creator = builder.build();
+            this.creator.scanForBeans();
+        } catch (IOException ex) {
+            LOG.error(CONTAINER_ERROR, ex);
+        }
     }
 
     /**
      * Default constructor without specified properties
      */
     protected EmbeddableContainer() {
-	this(null);
+        this(null);
     }
 
     @Override
     public Context getContext() {
 
-	Context context;
+        Context context;
 
-	try {
-	    context = JndiManager.getContext();
-	} catch (IOException ex) {
-	    context = null;
-	    LOG.error(CONTEXT_ERROR, ex);
-	}
+        try {
+            context = JndiManager.getContext();
+        } catch (IOException ex) {
+            context = null;
+            LOG.error(CONTEXT_ERROR, ex);
+        }
 
-	return context;
+        return context;
     }
 
     /**
@@ -118,19 +116,19 @@ public class EmbeddableContainer extends EJBContainer {
      */
     private void clearData() {
 
-	if (ObjectUtils.notNull(creator)) {
-	    creator.clear();
-	}
+        if (ObjectUtils.notNull(creator)) {
+            creator.clear();
+        }
     }
 
     @Override
     public void close() {
 
-	try {
-	    clearData();
-	    MetaCreator.close();
-	} catch (IOException ex) {
-	    LOG.fatal(ex.getMessage(), ex);
-	}
+        try {
+            clearData();
+            MetaCreator.close();
+        } catch (IOException ex) {
+            LOG.fatal(ex.getMessage(), ex);
+        }
     }
 }

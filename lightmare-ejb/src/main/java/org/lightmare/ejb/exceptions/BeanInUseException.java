@@ -41,19 +41,19 @@ public class BeanInUseException extends IOException {
     private static final String ERROR_MESSAGE_FORMAT = "bean %s is alredy in use";
 
     public BeanInUseException() {
-	super();
+        super();
     }
 
     public BeanInUseException(String message) {
-	super(message);
+        super(message);
     }
 
     public BeanInUseException(Throwable thr) {
-	super(thr);
+        super(thr);
     }
 
     public BeanInUseException(String message, Throwable thr) {
-	super(message, thr);
+        super(message, thr);
     }
 
     /**
@@ -65,9 +65,12 @@ public class BeanInUseException extends IOException {
      */
     public static BeanInUseException get(String message, Object... formats) {
 
-	String errorMessage = LogUtils.logMessage(message, formats);
+        BeanInUseException error;
 
-	return new BeanInUseException(errorMessage);
+        String errorMessage = LogUtils.logMessage(message, formats);
+        error = new BeanInUseException(errorMessage);
+
+        return error;
     }
 
     /**
@@ -78,6 +81,6 @@ public class BeanInUseException extends IOException {
      * @return {@link BeanInUseException}
      */
     public static BeanInUseException get(Object bean) {
-	return get(ERROR_MESSAGE_FORMAT, bean);
+        return get(ERROR_MESSAGE_FORMAT, bean);
     }
 }
