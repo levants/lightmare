@@ -62,16 +62,32 @@ public interface ColumnExpression<T> {
         return operateCl(field1, field2, Operators.GREATER);
     }
 
+    default <F> QueryStream<T> greaterThenCl(EntityField<T, F> field1, EntityField<T, F> field2) {
+        return gtCl(field1, field2);
+    }
+
     default <F> QueryStream<T> ltCl(EntityField<T, F> field1, EntityField<T, F> field2) {
         return operateCl(field1, field2, Operators.LESS);
+    }
+
+    default <F> QueryStream<T> lowerThenCl(EntityField<T, F> field1, EntityField<T, F> field2) {
+        return ltCl(field1, field2);
     }
 
     default <F> QueryStream<T> geCl(EntityField<T, F> field1, EntityField<T, F> field2) {
         return operateCl(field1, field2, Operators.GREATER_OR_EQ);
     }
 
+    default <F> QueryStream<T> greaterThenOrEqualCl(EntityField<T, F> field1, EntityField<T, F> field2) {
+        return geCl(field1, field2);
+    }
+
     default <F> QueryStream<T> leCl(EntityField<T, F> field1, EntityField<T, F> field2) {
         return operateCl(field1, field2, Operators.LESS_OR_EQ);
+    }
+
+    default <F> QueryStream<T> lowerThenOrEqualCl(EntityField<T, F> field1, EntityField<T, F> field2) {
+        return leCl(field1, field2);
     }
 
     <F> QueryStream<T> betweenCl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3);

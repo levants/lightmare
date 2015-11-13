@@ -61,8 +61,18 @@ interface SubColumnExpression<S, T> extends ColumnExpression<S> {
     }
 
     @Override
+    default <F> SubQueryStream<S, T> greaterThenCl(EntityField<S, F> field1, EntityField<S, F> field2) {
+        return gtCl(field1, field2);
+    }
+
+    @Override
     default <F> SubQueryStream<S, T> ltCl(EntityField<S, F> field1, EntityField<S, F> field2) {
         return operateCl(field1, field2, Operators.LESS);
+    }
+
+    @Override
+    default <F> SubQueryStream<S, T> lowerThenCl(EntityField<S, F> field1, EntityField<S, F> field2) {
+        return ltCl(field1, field2);
     }
 
     @Override
@@ -71,8 +81,18 @@ interface SubColumnExpression<S, T> extends ColumnExpression<S> {
     }
 
     @Override
+    default <F> SubQueryStream<S, T> greaterThenOrEqualCl(EntityField<S, F> field1, EntityField<S, F> field2) {
+        return geCl(field1, field2);
+    }
+
+    @Override
     default <F> SubQueryStream<S, T> leCl(EntityField<S, F> field1, EntityField<S, F> field2) {
         return operateCl(field1, field2, Operators.LESS_OR_EQ);
+    }
+
+    @Override
+    default <F> SubQueryStream<S, T> lowerThenOrEqualCl(EntityField<S, F> field1, EntityField<S, F> field2) {
+        return leCl(field1, field2);
     }
 
     @Override

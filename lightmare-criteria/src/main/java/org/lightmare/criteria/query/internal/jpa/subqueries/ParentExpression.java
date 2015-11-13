@@ -65,16 +65,32 @@ interface ParentExpression<S, T> {
         return operatePr(sfield, field, Operators.GREATER);
     }
 
+    default <F> SubQueryStream<S, T> greaterThenPr(EntityField<S, F> sfield, ParentField<T, F> field) {
+        return gtPr(sfield, field);
+    }
+
     default <F> SubQueryStream<S, T> ltPr(EntityField<S, F> sfield, ParentField<T, F> field) {
         return operatePr(sfield, field, Operators.LESS);
+    }
+
+    default <F> SubQueryStream<S, T> lowerThenPr(EntityField<S, F> sfield, ParentField<T, F> field) {
+        return ltPr(sfield, field);
     }
 
     default <F> SubQueryStream<S, T> gePr(EntityField<S, F> sfield, ParentField<T, F> field) {
         return operatePr(sfield, field, Operators.GREATER_OR_EQ);
     }
 
+    default <F> SubQueryStream<S, T> greaterThenOrEqualPr(EntityField<S, F> sfield, ParentField<T, F> field) {
+        return gePr(sfield, field);
+    }
+
     default <F> SubQueryStream<S, T> lePr(EntityField<S, F> sfield, ParentField<T, F> field) {
         return operatePr(sfield, field, Operators.LESS_OR_EQ);
+    }
+
+    default <F> SubQueryStream<S, T> lowerThenOrEqualPr(EntityField<S, F> sfield, ParentField<T, F> field) {
+        return lePr(sfield, field);
     }
 
     default SubQueryStream<S, T> likePr(EntityField<S, String> sfield, ParentField<T, String> field) {

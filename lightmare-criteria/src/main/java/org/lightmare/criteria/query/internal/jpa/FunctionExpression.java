@@ -1,4 +1,4 @@
-package org.lightmare.criteria.query.internal;
+package org.lightmare.criteria.query.internal.jpa;
 
 /**
  * JPA functions
