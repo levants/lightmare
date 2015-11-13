@@ -33,7 +33,7 @@ import org.lightmare.criteria.links.Joins;
 import org.lightmare.criteria.links.Operators;
 import org.lightmare.criteria.links.Orders;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.builders.AbstractSelectStatements;
+import org.lightmare.criteria.query.internal.jpa.builders.AbstractGroupByStream;
 import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.StringUtils;
@@ -46,7 +46,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
+public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
 
     protected EntityQueryStream(EntityManager em, Class<T> entityType, final String alias) {
         super(em, entityType, alias);

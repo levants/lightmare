@@ -26,7 +26,6 @@ import java.util.Collection;
 
 import javax.persistence.EntityManager;
 
-import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.links.Clauses;
 import org.lightmare.criteria.links.Filters;
@@ -312,7 +311,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * 
      * @param field
      */
-    private void addSelectField(EntityField<T, ?> field) {
+    private void addSelectField(Object field) {
 
         QueryTuple tuple = compose(field);
         appendFieldName(tuple, columns);
@@ -337,10 +336,10 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * 
      * @param fields
      */
-    private void appendSelect(EntityField<T, ?>[] fields) {
+    private void appendSelect(Object[] fields) {
 
         int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
-        EntityField<T, ?> field;
+        Object field;
         for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
             field = fields[i];
             addSelectField(field);
@@ -349,7 +348,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     }
 
     @SafeVarargs
-    protected final void oppSelect(EntityField<T, ?>... fields) {
+    protected final void oppSelect(Object... fields) {
 
         if (CollectionUtils.valid(fields)) {
             columns.append(Filters.SELECT);
@@ -433,11 +432,17 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
             field = fields[i];
             addGroupByField(field, i, length);
-            appendComma(i, length, orderBy);
+            appendComma(i, length, groupBy);
         }
     }
 
-    protected void setGroup(Object[] fields) {
+    /**
+     * Prepares GROUP BY clause
+     * 
+     * @param fields
+     */
+    @SafeVarargs
+    protected final void oppGroups(Object... fields) {
 
         if (CollectionUtils.valid(fields)) {
             prepareGroupBy();

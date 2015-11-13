@@ -43,6 +43,7 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         this.columns.append(stream.columns);
         this.body.append(stream.body);
         this.orderBy.append(stream.orderBy);
+        this.groupBy.append(stream.groupBy);
         this.parameters.addAll(stream.parameters);
     }
 
@@ -54,6 +55,7 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         clearSql();
         appendFromClause(realEntityType, alias, columns);
         generateBody(columns);
+        sql.append(groupBy);
         sql.append(orderBy);
         sql.append(suffix);
         value = sql.toString();

@@ -82,7 +82,7 @@ public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStrea
     }
 
     @SafeVarargs
-    protected final QueryStream<Object[]> subSelectAll(EntityField<S, ?>... fields) {
+    protected final QueryStream<Object[]> subSelectAll(Object... fields) {
 
         SubSelectStream<S, Object[]> stream;
 

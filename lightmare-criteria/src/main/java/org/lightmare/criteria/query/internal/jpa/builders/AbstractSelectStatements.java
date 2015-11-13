@@ -37,7 +37,7 @@ import org.lightmare.criteria.query.internal.jpa.SelectExpression;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
+abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
 
     protected AbstractSelectStatements(EntityManager em, Class<T> entityType, String alias) {
         super(em, entityType, alias);
@@ -48,6 +48,7 @@ public abstract class AbstractSelectStatements<T> extends AbstractResultStream<T
 
         SelectStream<T, F> stream;
 
+        oppSelect(field);
         Class<F> fieldType = getFieldType(field);
         stream = new SelectStream<>(this, fieldType);
 
@@ -61,7 +62,7 @@ public abstract class AbstractSelectStatements<T> extends AbstractResultStream<T
      * @return {@link QueryStream} for select method
      */
     @SafeVarargs
-    private final QueryStream<Object[]> selectAll(EntityField<T, ?>... fields) {
+    private final QueryStream<Object[]> selectAll(Object... fields) {
 
         SelectStream<T, Object[]> stream;
 
