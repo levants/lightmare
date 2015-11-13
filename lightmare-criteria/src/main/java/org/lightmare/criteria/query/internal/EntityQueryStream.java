@@ -30,7 +30,7 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
-import org.lightmare.criteria.functions.SubQueryConsumer;
+import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractGroupByStream;
 import org.lightmare.criteria.query.internal.jpa.links.Joins;
@@ -38,6 +38,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Orders;
 import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -87,7 +88,7 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     // ========================= Entity self method composers ===============//
 
     @Override
-    public <F> QueryStream<T> operateCl(EntityField<T, F> field1, EntityField<T, F> field2, String operator) {
+    public <F, S> QueryStream<T> operateCl(EntityField<T, F> field1, EntityField<S, F> field2, String operator) {
         appendOperator();
         oppField(field1, field2, operator);
 
@@ -95,10 +96,11 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operateCollectionCl(EntityField<T, F> field1, EntityField<T, Collection<F>> field2,
+    public <F, S> QueryStream<T> operateCollectionCl(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
             String operator) {
         appendOperator();
         oppCollectionField(field1, field2, operator);
+
         return this;
     }
 
@@ -120,15 +122,36 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
         return this;
     }
 
+    // ========================= Entity parent method composers =============//
+
+    // @Override
+    // public <F, S> QueryStream<T> operatePr(EntityField<S, F> sfield,
+    // ParentField<T, F> field, String operator) {
+    // appendOperator();
+    // oppField(sfield, field, operator);
+    //
+    // return this;
+    // }
+    //
+    // @Override
+    // public <F, S> QueryStream<T> operateCollectionPr(EntityField<S, F>
+    // sfield, ParentField<T, Collection<F>> field,
+    // String operator) {
+    // appendOperator();
+    // oppCollectionField(sfield, field, operator);
+    //
+    // return this;
+    // }
+
     // =========================embedded=field=queries=======================//
 
     @Override
-    public <F> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer) {
+    public <F> QueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F> consumer) {
 
         QueryTuple tuple = compose(field);
         Class<F> type = tuple.getFieldType();
         String embeddedName = tuple.getFieldName();
-        EntityEmbeddedStream<F, T> embeddedQuery = new EntityEmbeddedStream<>(this, type, embeddedName);
+        QueryStream<F> embeddedQuery = new EntityEmbeddedStream<>(this, type, embeddedName);
         acceptAndCall(consumer, embeddedQuery);
 
         return this;
@@ -158,24 +181,24 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     }
 
     /**
-     * Generates {@link SubQueryStream} for JOIN query
+     * Generates {@link QueryStream} for JOIN query
      * 
      * @param subType
-     * @return {@link SubQueryStream} for JOIN query
+     * @return {@link QueryStream} for JOIN query
      */
     public <S> SubQueryStream<S, T> joinStream(Class<S> subType) {
         return new EntityJoinProcessor<S, T>(this, subType);
     }
 
     /**
-     * Generates {@link SubQueryStream} for JOIN query
+     * Generates {@link QueryStream} for JOIN query
      * 
      * @param tuple
-     * @return {@link SubQueryStream} for JOIN query
+     * @return {@link QueryStream} for JOIN query
      */
-    public <S> SubQueryStream<S, T> joinStream(QueryTuple tuple) {
+    public <S> QueryStream<S> joinStream(QueryTuple tuple) {
 
-        SubQueryStream<S, T> joinStream;
+        QueryStream<S> joinStream;
 
         Class<S> subType = tuple.getFieldType();
         joinStream = joinStream(subType);
@@ -202,10 +225,13 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
      * @param consumer
      * @param subQuery
      */
-    private <S> void acceptAndCall(SubQueryConsumer<S, T> consumer, SubQueryStream<S, T> subQuery) {
+    private <S> void acceptAndCall(QueryConsumer<S> consumer, QueryStream<S> query) {
 
-        acceptConsumer(consumer, subQuery);
-        subQuery.call();
+        acceptConsumer(consumer, query);
+        if (query instanceof SubQueryStream<?, ?>) {
+            SubQueryStream<S, T> subQuery = ObjectUtils.cast(query);
+            subQuery.call();
+        }
     }
 
     /**
@@ -215,19 +241,19 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
      * @param consumer
      * @return {@link SubQueryStream} for entity type
      */
-    private <S> SubQueryStream<S, T> initSubQuery(Class<S> subType, SubQueryConsumer<S, T> consumer) {
+    private <S> QueryStream<S> initSubQuery(Class<S> subType, QueryConsumer<S> consumer) {
 
-        SubQueryStream<S, T> subQuery = subQuery(subType);
+        QueryStream<S> query = subQuery(subType);
 
-        acceptAndCall(consumer, subQuery);
+        acceptAndCall(consumer, query);
         closeBracket();
         newLine();
 
-        return subQuery;
+        return query;
     }
 
     @Override
-    public <S> QueryStream<T> subQuery(Class<S> subType, SubQueryConsumer<S, T> consumer) {
+    public <S> QueryStream<T> subQuery(Class<S> subType, QueryConsumer<S> consumer) {
         openBracket();
         initSubQuery(subType, consumer);
 
@@ -235,7 +261,7 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer) {
+    public <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
 
         appendOperator();
         appSubQuery(field, Operators.IN);
@@ -245,7 +271,7 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, SubQueryConsumer<S, T> consumer) {
+    public <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
 
         appendOperator();
         appSubQuery(field, Operators.NOT_IN);
@@ -255,7 +281,7 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> exists(Class<S> subType, SubQueryConsumer<S, T> consumer) {
+    public <F, S> QueryStream<T> exists(Class<S> subType, QueryConsumer<S> consumer) {
 
         appendOperator();
         appendBody(Operators.EXISTS);
@@ -266,7 +292,7 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> notExists(Class<S> subType, SubQueryConsumer<S, T> consumer) {
+    public <F, S> QueryStream<T> notExists(Class<S> subType, QueryConsumer<S> consumer) {
 
         appendOperator();
         appendBody(Operators.NOT_EXISTS);
@@ -280,31 +306,29 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
 
     @Override
     public <E, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
-            SubQueryConsumer<E, T> consumer) {
+            QueryConsumer<E> consumer) {
 
         QueryTuple tuple = oppJoin(field, expression);
-        SubQueryStream<E, T> joinQuery = joinStream(tuple);
+        QueryStream<E> joinQuery = joinStream(tuple);
         appendJoin(joinQuery.getAlias());
         appendJoin(StringUtils.NEWLINE);
         acceptAndCall(consumer, joinQuery);
     }
 
     @Override
-    public <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field, SubQueryConsumer<E, T> consumer) {
+    public <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field, QueryConsumer<E> consumer) {
         procesJoin(field, Joins.JOIN, consumer);
         return this;
     }
 
     @Override
-    public <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field,
-            SubQueryConsumer<E, T> consumer) {
+    public <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field, QueryConsumer<E> consumer) {
         procesJoin(field, Joins.LEFT, consumer);
         return this;
     }
 
     @Override
-    public <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field,
-            SubQueryConsumer<E, T> consumer) {
+    public <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field, QueryConsumer<E> consumer) {
         procesJoin(field, Joins.FETCH, consumer);
         return this;
     }

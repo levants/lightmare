@@ -1,13 +1,13 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 /**
- * JPA functions
+ * Covers HAVING clause
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
  *            entity type parameter
  */
-class FunctionExpression<T> {
+class HavingExpression<T> {
 
 }

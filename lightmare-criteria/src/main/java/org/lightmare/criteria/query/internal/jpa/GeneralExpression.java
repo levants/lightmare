@@ -25,7 +25,6 @@ package org.lightmare.criteria.query.internal.jpa;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
@@ -47,17 +46,6 @@ public interface GeneralExpression<T> extends JPAQueryWrapper<T>, SelectExpressi
      * @return {@link Class} of entity type T
      */
     Class<T> getEntityType();
-
-    // =========================embedded=field=queries=======================//
-
-    /**
-     * Generates query part for embedded entity fields
-     * 
-     * @param field
-     * @param consumer
-     * @return {@link QueryStream} current instance
-     */
-    <F> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer);
 
     // =========================group by=====================================//
 

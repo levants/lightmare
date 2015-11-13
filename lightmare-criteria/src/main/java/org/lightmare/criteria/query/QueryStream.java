@@ -23,10 +23,10 @@
 package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.functions.SubQueryConsumer;
+import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.internal.jpa.ColumnExpression;
 import org.lightmare.criteria.query.internal.jpa.Expression;
 import org.lightmare.criteria.query.internal.jpa.GeneralExpression;
-import org.lightmare.criteria.query.internal.jpa.ColumnExpression;
 
 /**
  * Main interface with query construction methods
@@ -38,6 +38,8 @@ import org.lightmare.criteria.query.internal.jpa.ColumnExpression;
  */
 public interface QueryStream<T> extends GeneralExpression<T>, Expression<T>, ColumnExpression<T> {
 
+    // =========================embedded=field=queries=======================//
+
     /**
      * Generates query part for embedded entity fields
      * 
@@ -45,7 +47,7 @@ public interface QueryStream<T> extends GeneralExpression<T>, Expression<T>, Col
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <F> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer);
+    <F> QueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F> consumer);
 
     @Override
     default QueryStream<T> where() {

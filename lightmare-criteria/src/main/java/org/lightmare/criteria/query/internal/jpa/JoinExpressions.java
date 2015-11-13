@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.internal.jpa;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.functions.SubQueryConsumer;
+import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 
 /**
@@ -45,8 +45,7 @@ public interface JoinExpressions<T> {
      * @param expression
      * @param consumer
      */
-    <E, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
-            SubQueryConsumer<E, T> consumer);
+    <E, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression, QueryConsumer<E> consumer);
 
     /**
      * Method for INNER JOIN function call
@@ -55,7 +54,7 @@ public interface JoinExpressions<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field, SubQueryConsumer<E, T> consumer);
+    <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field, QueryConsumer<E> consumer);
 
     /**
      * Method for INNER JOIN function call without conditions
@@ -74,7 +73,7 @@ public interface JoinExpressions<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field, SubQueryConsumer<E, T> consumer);
+    <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field, QueryConsumer<E> consumer);
 
     /**
      * Method for LEFT JOIN function call without conditions
@@ -93,7 +92,7 @@ public interface JoinExpressions<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field, SubQueryConsumer<E, T> consumer);
+    <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field, QueryConsumer<E> consumer);
 
     /**
      * Method for FETCH JOIN function call without conditions

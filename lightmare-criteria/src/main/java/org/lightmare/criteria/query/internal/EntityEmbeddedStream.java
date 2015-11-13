@@ -22,13 +22,13 @@
  */
 package org.lightmare.criteria.query.internal;
 
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
-import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 import org.lightmare.criteria.tuples.EmbeddedTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
- * Implementation of {@link SubQueryStream} to process embedded field statements
+ * Implementation of {@link QueryStream} to process embedded field statements
  * 
  * @author Levan Tsinadze
  *

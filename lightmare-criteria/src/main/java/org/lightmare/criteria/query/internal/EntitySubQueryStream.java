@@ -22,14 +22,10 @@
  */
 package org.lightmare.criteria.query.internal;
 
-import java.util.Collection;
-
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.functions.ParentField;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream;
-import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 
 /**
  * Implementation of {@link AbstractSubQueryStream} for sub query generation
@@ -49,25 +45,6 @@ class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
 
     protected EntitySubQueryStream(AbstractQueryStream<T> parent, String alias, Class<S> type) {
         super(parent, alias, type);
-    }
-
-    // ========================= Entity and parent method composers =========//
-
-    @Override
-    public <F> SubQueryStream<S, T> operatePr(EntityField<S, F> sfield, ParentField<T, F> field, String operator) {
-        appendOperator();
-        oppField(sfield, field, operator);
-
-        return this;
-    }
-
-    @Override
-    public <F> SubQueryStream<S, T> operateCollectionPr(EntityField<S, F> sfield, ParentField<T, Collection<F>> field,
-            String operator) {
-        appendOperator();
-        oppCollectionField(sfield, field, operator);
-
-        return this;
     }
 
     // ========================= select method composers ====================//

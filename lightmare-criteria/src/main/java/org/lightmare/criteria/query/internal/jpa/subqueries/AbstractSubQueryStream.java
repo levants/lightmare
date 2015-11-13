@@ -29,6 +29,7 @@ import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -38,19 +39,17 @@ import org.lightmare.criteria.utils.CollectionUtils;
  * 
  * @author Levan Tsinadze
  *
- * @param <S>
- *            entity type for generated (sub) query
  * @param <T>
  *            entity type for generated query
  */
-public abstract class AbstractSubQueryStream<S, T> extends DirectctSubQueryStream<S, T> {
+public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> implements SubQueryStream<S, T> {
 
     // Parent entity alias
     protected final String parentAlias;
 
     protected final AbstractQueryStream<T> parent;
 
-    private SubSelectStream<S, ?> subSelect;
+    private SubSelectStream<?, ?> subSelect;
 
     private boolean preparedState = Boolean.TRUE;
 
