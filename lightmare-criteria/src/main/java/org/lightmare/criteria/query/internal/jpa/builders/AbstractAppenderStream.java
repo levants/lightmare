@@ -23,6 +23,8 @@
 package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -66,6 +68,8 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     protected final StringBuilder orderBy = new StringBuilder();
 
     protected final StringBuilder sql = new StringBuilder();
+
+    protected Set<String> countFields;
 
     protected AbstractAppenderStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
@@ -450,6 +454,22 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
+    private void clearCountFields() {
+
+        if (countFields == null) {
+            countFields = new HashSet<>();
+        } else {
+            countFields.clear();
+        }
+    }
+
+    protected void oppCount(Object field) {
+
+        QueryTuple tuple = compose(field);
+        clearCountFields();
+        countFields.add(tuple.getFieldName());
+    }
+
     protected void removeNewLine() {
 
         int last = body.length();
@@ -541,9 +561,27 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         StringUtils.clear(sql);
     }
 
+    /**
+     * Generates COUNT query prefix
+     */
+    private void appendCount(StringBuilder buffer) {
+
+        if (CollectionUtils.valid(countFields)) {
+            String countField = CollectionUtils.getFirst(countFields);
+            StringUtils.clear(buffer);
+            buffer.append(Filters.SELECT);
+            buffer.append(Filters.COUNT);
+            buffer.append(alias);
+            buffer.append(StringUtils.DOT);
+            buffer.append(countField);
+            buffer.append(Filters.CLOSE_COUNT);
+        }
+    }
+
     protected void generateBody(CharSequence startSql) {
 
         clearSql();
+        appendCount(sql);
         sql.append(startSql);
         sql.append(joins);
         prepareSetClause();

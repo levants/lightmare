@@ -11,7 +11,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type parameter
  */
-interface GroupExpression<T> {
+public interface GroupExpression<T> {
 
     /**
      * Gets instant field by type

@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Clauses;
@@ -58,7 +59,9 @@ public interface GeneralExpression<T> extends JPAQueryWrapper<T>, SelectExpressi
      */
     <F> QueryStream<T> embedded(EntityField<T, F> field, SubQueryConsumer<F, T> consumer);
 
-    // =========================embedded=field=queries=======================//
+    // =========================group by=====================================//
+
+    <F> QueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer);
 
     // =========================order=by=====================================//
 

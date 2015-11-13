@@ -41,5 +41,5 @@ import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 public interface SubQueryConsumer<S, T> extends Consumer<SubQueryStream<S, T>>, Serializable {
 
     @Override
-    void accept(SubQueryStream<S, T> subQuery);
+    void accept(SubQueryStream<S, T> stream);
 }

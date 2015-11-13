@@ -15,6 +15,8 @@ import org.lightmare.criteria.query.QueryStream;
  */
 public abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
 
+    protected SelectStream<T, Object[]> selectStream;
+
     protected AbstractGroupByStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
     }
@@ -28,12 +30,10 @@ public abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<
     @SafeVarargs
     private final QueryStream<Object[]> groupByAll(Object... fields) {
 
-        SelectStream<T, Object[]> stream;
-
         oppGroups(fields);
-        stream = new SelectStream<>(this, Object[].class);
+        selectStream = new SelectStream<>(this, Object[].class);
 
-        return stream;
+        return selectStream;
     }
 
     @Override

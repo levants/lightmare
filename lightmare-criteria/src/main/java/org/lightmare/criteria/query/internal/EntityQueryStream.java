@@ -24,10 +24,12 @@ package org.lightmare.criteria.query.internal;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.functions.SubQueryConsumer;
 import org.lightmare.criteria.links.Joins;
 import org.lightmare.criteria.links.Operators;
@@ -132,6 +134,17 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
         return this;
     }
 
+    // =========================group by=====================================//
+
+    @Override
+    public <F> QueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer) {
+
+        oppCount(field);
+        acceptConsumer(consumer, this);
+
+        return this.selectStream;
+    }
+
     // =========================Sub queries ===============//
 
     /**
@@ -176,10 +189,10 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
      * @param consumer
      * @param subQuery
      */
-    private <S> void acceptConsumer(SubQueryConsumer<S, T> consumer, SubQueryStream<S, T> subQuery) {
+    private <S> void acceptConsumer(Consumer<S> consumer, S value) {
 
         if (Objects.nonNull(consumer)) {
-            consumer.accept(subQuery);
+            consumer.accept(value);
         }
     }
 
