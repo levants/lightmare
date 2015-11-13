@@ -37,7 +37,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type parameter
  */
-public interface GeneralExpression<T> extends JPAQueryWrapper<T>, SelectStatements<T>, JoinExpressions<T>,
+public interface GeneralExpression<T> extends JPAQueryWrapper<T>, SelectExpression<T>, JoinExpressions<T>,
         ResultStream<T>, GeneralSubQueryProcessor<T> {
 
     /**

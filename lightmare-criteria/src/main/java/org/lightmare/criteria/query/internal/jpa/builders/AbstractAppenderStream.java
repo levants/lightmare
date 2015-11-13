@@ -62,6 +62,8 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
     protected final StringBuilder suffix = new StringBuilder();
 
+    protected final StringBuilder groupBy = new StringBuilder();
+
     protected final StringBuilder orderBy = new StringBuilder();
 
     protected final StringBuilder sql = new StringBuilder();
@@ -355,14 +357,18 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
-    private void prepareOrderBy() {
+    private static void prepareGroup(StringBuilder buffer) {
 
-        if (StringUtils.valid(orderBy)) {
-            orderBy.append(Parts.COMMA);
-            orderBy.append(StringUtils.SPACE);
+        if (StringUtils.valid(buffer)) {
+            buffer.append(Parts.COMMA);
+            buffer.append(StringUtils.SPACE);
         } else {
-            orderBy.append(Orders.ORDER);
+            buffer.append(Orders.ORDER);
         }
+    }
+
+    private void prepareOrderBy() {
+        prepareGroup(orderBy);
     }
 
     private void appendOrderBy(QueryTuple tuple, String dir) {
@@ -401,6 +407,42 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
     protected void setOrder(Object[] fields) {
         setOrder(null, fields);
+    }
+
+    private void appendGroupBy(QueryTuple tuple) {
+        groupBy.append(alias);
+        groupBy.append(Parts.COLUMN_PREFIX).append(tuple.getFieldName());
+    }
+
+    private void prepareGroupBy() {
+        prepareGroup(groupBy);
+    }
+
+    private void addGroupByField(Object field, int index, int length) {
+
+        QueryTuple tuple = compose(field);
+        appendGroupBy(tuple);
+        appendFieldName(tuple, columns);
+        appendComma(index, length, columns);
+    }
+
+    private void iterateAndAppendGroups(Object[] fields) {
+
+        Object field;
+        int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
+        for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
+            field = fields[i];
+            addGroupByField(field, i, length);
+            appendComma(i, length, orderBy);
+        }
+    }
+
+    protected void setGroup(Object[] fields) {
+
+        if (CollectionUtils.valid(fields)) {
+            prepareGroupBy();
+            iterateAndAppendGroups(fields);
+        }
     }
 
     protected void removeNewLine() {
