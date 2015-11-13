@@ -39,8 +39,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
 public class ColumnProcessor {
 
     /**
-     * Finds {@link javax.persistence.Temporal} annotation on field or on getter
-     * method
+     * Finds {@link javax.persistence.Temporal} annotated field or getter method
      * 
      * @param entityType
      * @param fieldName

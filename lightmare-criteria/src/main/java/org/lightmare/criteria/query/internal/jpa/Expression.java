@@ -26,8 +26,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.links.Filters;
 import org.lightmare.criteria.links.Operators;
+import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -129,7 +129,7 @@ public interface Expression<T> {
     }
 
     default QueryStream<T> startsWith(EntityField<T, String> field, String value) {
-        String enrich = StringUtils.concat(value, Filters.LIKE_SIGN);
+        String enrich = StringUtils.concat(value, Parts.LIKE_SIGN);
         return operate(field, enrich, Operators.LIKE);
     }
 
@@ -138,18 +138,18 @@ public interface Expression<T> {
     }
 
     default QueryStream<T> endsWith(EntityField<T, String> field, String value) {
-        String enrich = Filters.LIKE_SIGN.concat(value);
+        String enrich = StringUtils.concat(Parts.LIKE_SIGN, value);
         return operate(field, enrich, Operators.LIKE);
     }
 
     default QueryStream<T> contains(EntityField<T, String> field, String value) {
-        String enrich = StringUtils.concat(Filters.LIKE_SIGN, value, Filters.LIKE_SIGN);
+        String enrich = StringUtils.concat(Parts.LIKE_SIGN, value, Parts.LIKE_SIGN);
         return operate(field, enrich, Operators.LIKE);
     }
 
     default QueryStream<T> notContains(EntityField<T, String> field, String value) {
-        openBracket().appendBody(Operators.NO);
-        return contains(field, value).closeBracket();
+        String enrich = StringUtils.concat(Parts.LIKE_SIGN, value, Parts.LIKE_SIGN);
+        return operate(field, enrich, Operators.NOT_LIKE);
     }
 
     /**

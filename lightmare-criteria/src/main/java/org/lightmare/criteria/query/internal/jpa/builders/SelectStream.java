@@ -22,7 +22,9 @@
  */
 package org.lightmare.criteria.query.internal.jpa.builders;
 
+import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.JPAQueryStream;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Utility class to construct SELECT by fields
@@ -44,7 +46,18 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         this.body.append(stream.body);
         this.orderBy.append(stream.orderBy);
         this.groupBy.append(stream.groupBy);
+        this.countFields = stream.countFields;
         this.parameters.addAll(stream.parameters);
+    }
+
+    /**
+     * Appends comma to GROUP BY clause if it is not empty
+     */
+    private void validateAndCommaCount() {
+
+        if (StringUtils.validAll(count, columns)) {
+            count.append(Parts.COMMA).append(StringUtils.SPACE);
+        }
     }
 
     @Override
@@ -53,8 +66,11 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         String value;
 
         clearSql();
+        appendCount(count);
         appendFromClause(realEntityType, alias, columns);
-        generateBody(columns);
+        validateAndCommaCount();
+        count.append(columns);
+        generateBody(count);
         sql.append(groupBy);
         sql.append(orderBy);
         sql.append(suffix);

@@ -48,6 +48,8 @@ public interface Operators {
 
     String LIKE = " like ";
 
+    String NOT_LIKE = " is not like ";
+
     String IS_NULL = " is null ";
 
     String NOT_NULL = " is not null ";

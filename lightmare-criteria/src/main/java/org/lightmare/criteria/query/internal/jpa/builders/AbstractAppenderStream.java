@@ -360,18 +360,18 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
-    private static void prepareGroup(StringBuilder buffer) {
+    private static void prepareGroup(StringBuilder buffer, String clause) {
 
         if (StringUtils.valid(buffer)) {
             buffer.append(Parts.COMMA);
             buffer.append(StringUtils.SPACE);
         } else {
-            buffer.append(Orders.ORDER);
+            buffer.append(clause);
         }
     }
 
-    private void prepareOrderBy() {
-        prepareGroup(orderBy);
+    private void prepareOrderBy(String clause) {
+        prepareGroup(orderBy, clause);
     }
 
     private void appendOrderBy(QueryTuple tuple, String dir) {
@@ -403,7 +403,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     protected void setOrder(String dir, Object[] fields) {
 
         if (CollectionUtils.valid(fields)) {
-            prepareOrderBy();
+            prepareOrderBy(Orders.ORDER);
             iterateAndAppendOrders(dir, fields);
         }
     }
@@ -418,7 +418,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     }
 
     private void prepareGroupBy() {
-        prepareGroup(groupBy);
+        prepareGroup(groupBy, Clauses.GROUP);
     }
 
     private void addGroupByField(Object field, int index, int length) {
@@ -564,7 +564,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     /**
      * Generates COUNT query prefix
      */
-    private void appendCount(StringBuilder buffer) {
+    protected void appendCount(StringBuilder buffer) {
 
         if (CollectionUtils.valid(countFields)) {
             String countField = CollectionUtils.getFirst(countFields);
@@ -578,10 +578,9 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
-    protected void generateBody(CharSequence startSql) {
+    protected void generateBody(StringBuilder startSql) {
 
         clearSql();
-        appendCount(sql);
         sql.append(startSql);
         sql.append(joins);
         prepareSetClause();

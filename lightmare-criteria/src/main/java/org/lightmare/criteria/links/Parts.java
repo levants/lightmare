@@ -35,4 +35,6 @@ public interface Parts {
     char PARAM_PREFIX = ':';
 
     char COMMA = ',';
+
+    char LIKE_SIGN = '%';
 }

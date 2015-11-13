@@ -43,6 +43,4 @@ public interface Filters {
     String UPDATE = "update ";
 
     String DELETE = "delete";
-
-    String LIKE_SIGN = "%";
 }

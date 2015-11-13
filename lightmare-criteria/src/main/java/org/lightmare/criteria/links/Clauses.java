@@ -39,4 +39,6 @@ public interface Clauses {
     String AND = "and ";
 
     String OR = "or ";
+
+    String GROUP = " group by ";
 }
