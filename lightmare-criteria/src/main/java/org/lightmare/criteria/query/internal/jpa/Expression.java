@@ -26,9 +26,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Operators;
+import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**

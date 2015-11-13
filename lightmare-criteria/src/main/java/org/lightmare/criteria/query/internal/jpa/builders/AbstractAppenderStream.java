@@ -29,12 +29,12 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.links.Clauses;
-import org.lightmare.criteria.links.Filters;
-import org.lightmare.criteria.links.Operators;
-import org.lightmare.criteria.links.Orders;
-import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Clauses;
+import org.lightmare.criteria.query.internal.jpa.links.Filters;
+import org.lightmare.criteria.query.internal.jpa.links.Operators;
+import org.lightmare.criteria.query.internal.jpa.links.Orders;
+import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.StringUtils;

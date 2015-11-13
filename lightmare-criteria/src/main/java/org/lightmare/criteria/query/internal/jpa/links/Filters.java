@@ -20,25 +20,27 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.links;
+package org.lightmare.criteria.query.internal.jpa.links;
 
 /**
- * Query clause keywords
+ * Query filter keywords
  * 
  * @author Levan Tsinadze
  *
  */
-public interface Clauses {
+public interface Filters {
 
-    String WHERE = "where ";
+    String SELECT = "select ";
 
-    String SET = "set ";
+    String COUNT = "count(";
 
-    String SET_SPACE = "    ";
+    String CLOSE_COUNT = ")";
 
-    String AND = "and ";
+    String FROM = " from ";
 
-    String OR = "or ";
+    String AS = " as ";
 
-    String GROUP = " group by ";
+    String UPDATE = "update ";
+
+    String DELETE = "delete";
 }

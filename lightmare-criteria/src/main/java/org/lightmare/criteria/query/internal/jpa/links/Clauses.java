@@ -20,21 +20,25 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.links;
+package org.lightmare.criteria.query.internal.jpa.links;
 
 /**
- * Query parts for JPA-QL expression
+ * Query clause keywords
  * 
  * @author Levan Tsinadze
  *
  */
-public interface Parts {
+public interface Clauses {
 
-    char COLUMN_PREFIX = '.';
+    String WHERE = "where ";
 
-    char PARAM_PREFIX = ':';
+    String SET = "set ";
 
-    char COMMA = ',';
+    String SET_SPACE = "    ";
 
-    char LIKE_SIGN = '%';
+    String AND = "and ";
+
+    String OR = "or ";
+
+    String GROUP = " group by ";
 }

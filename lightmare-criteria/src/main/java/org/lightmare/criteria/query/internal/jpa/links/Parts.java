@@ -20,53 +20,21 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.links;
+package org.lightmare.criteria.query.internal.jpa.links;
 
 /**
- * Query operators keywords
+ * Query parts for JPA-QL expression
  * 
  * @author Levan Tsinadze
  *
  */
-public interface Operators {
+public interface Parts {
 
-    String EQ = " = ";
+    char COLUMN_PREFIX = '.';
 
-    String NOT_EQ = " != ";
+    char PARAM_PREFIX = ':';
 
-    String GREATER = " > ";
+    char COMMA = ',';
 
-    String LESS = " < ";
-
-    String GREATER_OR_EQ = " >= ";
-
-    String LESS_OR_EQ = " <= ";
-
-    String BETWEEN = " between ";
-
-    String NOT_BETWEEN = " between ";
-
-    String LIKE = " like ";
-
-    String NOT_LIKE = " is not like ";
-
-    String IS_NULL = " is null ";
-
-    String NOT_NULL = " is not null ";
-
-    String IN = " in";
-
-    String NOT_IN = " not in";
-
-    String EXISTS = " exists ";
-
-    String NOT_EXISTS = " not exists ";
-
-    String OPEN_BRACKET = " (";
-
-    String CLOSE_BRACKET = ") ";
-
-    String NOT = " not ";
-
-    String NO = " !";
+    char LIKE_SIGN = '%';
 }

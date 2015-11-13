@@ -26,7 +26,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.ParentField;
-import org.lightmare.criteria.links.Operators;
+import org.lightmare.criteria.query.internal.jpa.links.Operators;
 
 /**
  * Sub query stream for entity fields and parent entity fields

@@ -22,8 +22,8 @@
  */
 package org.lightmare.criteria.query.internal.jpa.builders;
 
-import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.JPAQueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**

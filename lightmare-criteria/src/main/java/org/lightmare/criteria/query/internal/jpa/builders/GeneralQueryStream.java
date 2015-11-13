@@ -34,10 +34,10 @@ import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.lambda.LambdaUtils;
-import org.lightmare.criteria.links.Clauses;
-import org.lightmare.criteria.links.Filters;
-import org.lightmare.criteria.links.Parts;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Clauses;
+import org.lightmare.criteria.query.internal.jpa.links.Filters;
+import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;

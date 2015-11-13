@@ -20,27 +20,53 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.links;
+package org.lightmare.criteria.query.internal.jpa.links;
 
 /**
- * Query filter keywords
+ * Query operators keywords
  * 
  * @author Levan Tsinadze
  *
  */
-public interface Filters {
+public interface Operators {
 
-    String SELECT = "select ";
+    String EQ = " = ";
 
-    String COUNT = "count(";
+    String NOT_EQ = " != ";
 
-    String CLOSE_COUNT = ")";
+    String GREATER = " > ";
 
-    String FROM = " from ";
+    String LESS = " < ";
 
-    String AS = " as ";
+    String GREATER_OR_EQ = " >= ";
 
-    String UPDATE = "update ";
+    String LESS_OR_EQ = " <= ";
 
-    String DELETE = "delete";
+    String BETWEEN = " between ";
+
+    String NOT_BETWEEN = " between ";
+
+    String LIKE = " like ";
+
+    String NOT_LIKE = " not like ";
+
+    String IS_NULL = " is null ";
+
+    String NOT_NULL = " is not null ";
+
+    String IN = " in";
+
+    String NOT_IN = " not in";
+
+    String EXISTS = " exists ";
+
+    String NOT_EXISTS = " not exists ";
+
+    String OPEN_BRACKET = " (";
+
+    String CLOSE_BRACKET = ") ";
+
+    String NOT = " not ";
+
+    String NO = " !";
 }
