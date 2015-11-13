@@ -23,7 +23,7 @@
 package org.lightmare.criteria.links;
 
 /**
- * Query operators
+ * Query operators keywords
  * 
  * @author Levan Tsinadze
  *

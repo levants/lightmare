@@ -578,6 +578,11 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
+    /**
+     * Generates query by passed {@link StringBuilder} as prefix
+     * 
+     * @param startSql
+     */
     protected void generateBody(StringBuilder startSql) {
 
         clearSql();

@@ -31,7 +31,7 @@ import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
- * Adds reflection meta data to {@link QueryTuple} instance
+ * Adds reflection data to {@link QueryTuple} instance
  * 
  * @author Levan Tsinadze
  *

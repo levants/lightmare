@@ -45,7 +45,7 @@ abstract class AbstractJoinStream<T> extends AbstractQueryStream<T> {
     }
 
     /**
-     * Processes join statement for passed collection field
+     * Processes join statement for collection field
      * 
      * @param field
      * @param expression
