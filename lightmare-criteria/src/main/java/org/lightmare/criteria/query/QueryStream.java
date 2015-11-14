@@ -26,7 +26,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.jpa.ColumnExpression;
 import org.lightmare.criteria.query.internal.jpa.Expression;
-import org.lightmare.criteria.query.internal.jpa.GeneralExpression;
+import org.lightmare.criteria.query.internal.jpa.QueryExpression;
 
 /**
  * Main interface with query construction methods
@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.internal.jpa.GeneralExpression;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface QueryStream<T> extends GeneralExpression<T>, Expression<T>, ColumnExpression<T> {
+public interface QueryStream<T> extends QueryExpression<T>, Expression<T>, ColumnExpression<T> {
 
     // =========================embedded=field=queries=======================//
 
@@ -56,6 +56,6 @@ public interface QueryStream<T> extends GeneralExpression<T>, Expression<T>, Col
 
     @Override
     default QueryStream<T> openBracket() {
-        return GeneralExpression.super.openBracket();
+        return QueryExpression.super.openBracket();
     }
 }

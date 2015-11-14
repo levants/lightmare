@@ -86,7 +86,7 @@ public interface ColumnExpression<T> {
         return operate(field1, field2, Operators.LESS);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lowerThen(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> lessThen(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
         return lt(field1, field2);
     }
@@ -96,7 +96,7 @@ public interface ColumnExpression<T> {
         return operate(field1, field2, Operators.GREATER_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenOrEqual(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenOrEqualTo(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
         return ge(field1, field2);
     }
@@ -106,7 +106,7 @@ public interface ColumnExpression<T> {
         return operate(field1, field2, Operators.LESS_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lowerThenOrEqual(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> lessThenOrEqualTo(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
         return le(field1, field2);
     }

@@ -34,7 +34,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type parameter
  */
-public interface GeneralSubQueryProcessor<T> {
+public interface SubQueryProcessor<T> {
 
     Class<T> getEntityType();
 

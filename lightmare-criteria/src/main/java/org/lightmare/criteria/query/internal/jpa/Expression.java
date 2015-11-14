@@ -113,7 +113,7 @@ public interface Expression<T> {
         return operate(field, value, Operators.GREATER_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> greaterThenOrEqual(EntityField<T, ? extends F> field,
+    default <F extends Comparable<? super F>> QueryStream<T> greaterThenOrEqualTo(EntityField<T, ? extends F> field,
             Comparable<? super F> value) {
         return ge(field, value);
     }
@@ -123,7 +123,7 @@ public interface Expression<T> {
         return operate(field, value, Operators.LESS_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> lessThenOrEqual(EntityField<T, ? extends F> field,
+    default <F extends Comparable<? super F>> QueryStream<T> lessThenOrEqualTo(EntityField<T, ? extends F> field,
             Comparable<? super F> value) {
         return le(field, value);
     }

@@ -14,6 +14,7 @@
 
 	<properties>
 		<plexus-compiler-eclipse.version>2.6</plexus-compiler-eclipse.version>
+		<jpa-api.version>1.0.0.Final</jpa-api.version>
 	</properties>
 
 	<build>
@@ -96,15 +97,15 @@
 		<!-- ASM -->
 		<!-- hibernate -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>${jpa-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>${jpa-api.version}</version>
 			<classifier>sources</classifier>
 			<scope>provided</scope>
 		</dependency>
@@ -128,7 +129,7 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- junit -->
-		<!-- hibernate-core -->
+		<!-- hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -136,7 +137,20 @@
 			<classifier>sources</classifier>
 			<scope>test</scope>
 		</dependency>
-		<!-- hibernate-core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<!-- hibernate -->
 		<!-- H2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
