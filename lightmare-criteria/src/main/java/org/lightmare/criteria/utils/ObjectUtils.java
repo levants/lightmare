@@ -52,7 +52,7 @@ public abstract class ObjectUtils {
      * @param values
      * @return <code>boolean</code> validation result
      */
-    public static boolean notNullAll(Object... values) {
+    public static boolean nonNullAll(Object... values) {
         return CollectionUtils.validAll(values, Objects::nonNull);
     }
 

@@ -84,7 +84,7 @@ public class ClassUtils extends AbstractMemberUtils {
 
     /**
      * Loads class by name with specific {@link ClassLoader} if it is not
-     * <code>null</code>
+     * <code>null</code> or empty
      *
      * @param className
      * @param loader

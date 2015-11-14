@@ -156,6 +156,20 @@ public class ClassLoaderUtils {
 
     /**
      * Loads passed classes to specified {@link ClassLoader} instance
+     * 
+     * @param classes
+     * @param loader
+     * @throws IOException
+     */
+    private static void loadAll(Collection<String> classes, ClassLoader loader) throws IOException {
+
+        for (String className : classes) {
+            loadClass(className, loader);
+        }
+    }
+
+    /**
+     * Loads passed classes to specified {@link ClassLoader} instance
      *
      * @param classes
      * @param loader
@@ -163,9 +177,7 @@ public class ClassLoaderUtils {
     public static void loadClasses(Collection<String> classes, ClassLoader loader) throws IOException {
 
         if (CollectionUtils.valid(classes) && Objects.nonNull(loader)) {
-            for (String className : classes) {
-                loadClass(className, loader);
-            }
+            loadAll(classes, loader);
         }
     }
 
