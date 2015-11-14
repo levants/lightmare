@@ -67,7 +67,7 @@ public interface Expression<T> {
      * @param operator
      * @return {@link QueryStream} current instance
      */
-    <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator);
+    <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator);
 
     /**
      * Generates query part for instant field with parameters and operator
@@ -78,53 +78,57 @@ public interface Expression<T> {
      * @param operator
      * @return {@link QueryStream} current instance
      */
-    <F> QueryStream<T> operate(EntityField<T, F> field, F value1, F value2, String operator);
+    <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2, String operator);
 
-    default <F> QueryStream<T> equal(EntityField<T, F> field, F value) {
+    default <F> QueryStream<T> equal(EntityField<T, F> field, Object value) {
         return operate(field, value, Operators.EQ);
     }
 
-    default <F> QueryStream<T> notEqual(EntityField<T, F> field, F value) {
+    default <F> QueryStream<T> notEqual(EntityField<T, F> field, Object value) {
         return operate(field, value, Operators.NOT_EQ);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> gt(EntityField<T, F> field, F value) {
+    default <F extends Comparable<? super F>> QueryStream<T> gt(EntityField<T, ? extends F> field, F value) {
         return operate(field, value, Operators.GREATER);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> greaterThen(EntityField<T, F> field, F value) {
+    default <F extends Comparable<? super F>> QueryStream<T> greaterThen(EntityField<T, ? extends F> field, F value) {
         return gt(field, value);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> lt(EntityField<T, F> field, F value) {
+    default <F extends Comparable<? super F>> QueryStream<T> lt(EntityField<T, ? extends F> field, F value) {
         return operate(field, value, Operators.LESS);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> lessThen(EntityField<T, F> field, F value) {
+    default <F extends Comparable<? super F>> QueryStream<T> lessThen(EntityField<T, ? extends F> field, F value) {
         return lt(field, value);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> ge(EntityField<T, F> field, F value) {
+    default <F extends Comparable<? super F>> QueryStream<T> ge(EntityField<T, ? extends F> field, F value) {
         return operate(field, value, Operators.GREATER_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> greaterThenOrEqual(EntityField<T, F> field, F value) {
+    default <F extends Comparable<? super F>> QueryStream<T> greaterThenOrEqual(EntityField<T, ? extends F> field,
+            F value) {
         return ge(field, value);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> le(EntityField<T, F> field, F value) {
+    default <F extends Comparable<? super F>> QueryStream<T> le(EntityField<T, ? extends F> field, F value) {
         return operate(field, value, Operators.LESS_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> lessThenOrEqual(EntityField<T, F> field, F value) {
+    default <F extends Comparable<? super F>> QueryStream<T> lessThenOrEqual(EntityField<T, ? extends F> field,
+            F value) {
         return le(field, value);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> between(EntityField<T, F> field, F value1, F value2) {
+    default <F extends Comparable<? super F>> QueryStream<T> between(EntityField<T, ? extends F> field, F value1,
+            F value2) {
         return operate(field, value1, value2, Operators.BETWEEN);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> notBetween(EntityField<T, F> field, F value1, F value2) {
+    default <F extends Comparable<? super F>> QueryStream<T> notBetween(EntityField<T, ? extends F> field, F value1,
+            F value2) {
         return operate(field, value1, value2, Operators.NOT_BETWEEN);
     }
 
@@ -133,13 +137,27 @@ public interface Expression<T> {
         return operate(field, enrich, Operators.LIKE);
     }
 
+    default QueryStream<T> notStartsWith(EntityField<T, String> field, String value) {
+        String enrich = StringUtils.concat(value, Parts.LIKE_SIGN);
+        return operate(field, enrich, Operators.NOT_LIKE);
+    }
+
     default QueryStream<T> like(EntityField<T, String> field, String value) {
-        return startsWith(field, value);
+        return operate(field, value, Operators.LIKE);
+    }
+
+    default QueryStream<T> notLike(EntityField<T, String> field, String value) {
+        return operate(field, value, Operators.NOT_LIKE);
     }
 
     default QueryStream<T> endsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(Parts.LIKE_SIGN, value);
         return operate(field, enrich, Operators.LIKE);
+    }
+
+    default QueryStream<T> notEndsWith(EntityField<T, String> field, String value) {
+        String enrich = StringUtils.concat(Parts.LIKE_SIGN, value);
+        return operate(field, enrich, Operators.NOT_LIKE);
     }
 
     default QueryStream<T> contains(EntityField<T, String> field, String value) {
@@ -183,7 +201,7 @@ public interface Expression<T> {
         return operate(field, Operators.IS_NULL);
     }
 
-    default <F> QueryStream<T> notNull(EntityField<T, F> field) {
+    default <F> QueryStream<T> isNotNull(EntityField<T, F> field) {
         return operate(field, Operators.NOT_NULL);
     }
 }

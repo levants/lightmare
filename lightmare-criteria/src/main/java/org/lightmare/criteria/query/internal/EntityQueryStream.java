@@ -62,7 +62,7 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operate(EntityField<T, F> field, F value, String operator) {
+    public <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator) {
         appendOperator();
         oppLine(field, value, operator);
 
@@ -70,7 +70,7 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operate(EntityField<T, F> field, F value1, F value2, String operator) {
+    public <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2, String operator) {
         appendOperator();
         oppLine(field, value1, value2, Operators.BETWEEN);
 
@@ -88,7 +88,7 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     // ========================= Entity self method composers ===============//
 
     @Override
-    public <F, S> QueryStream<T> operateCl(EntityField<T, F> field1, EntityField<S, F> field2, String operator) {
+    public <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2, String operator) {
         appendOperator();
         oppField(field1, field2, operator);
 
@@ -96,7 +96,7 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> operateCollectionCl(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
+    public <F, S> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
             String operator) {
         appendOperator();
         oppCollectionField(field1, field2, operator);

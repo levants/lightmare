@@ -40,6 +40,10 @@ public abstract class StringUtils {
 
     public static final char DOT = '.';
 
+    public static final char SEMICOLON = ';';
+
+    public static final String SEMICOLON_TEXT = ";";
+
     public static final String TAB = "\t";
 
     public static final String NEWLINE = "\n";

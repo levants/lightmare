@@ -215,8 +215,8 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .equalCl(Person::getPersonalNo, Person::getAddrress)
-                    .likeCl(Person::getFirstName, Person::getFullName).and().startsWith(Person::getLastName, "lname");
+                    .equal(Person::getPersonalNo, Person::getAddrress).like(Person::getFirstName, Person::getFullName)
+                    .and().startsWith(Person::getLastName, "lname");
             // =============================================//
             System.out.println();
             System.out.println("-------Entity----");
@@ -237,8 +237,8 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             // ============= Query construction ============== //
             Person person = QueryProvider.select(em, Person.class).where()
-                    .equalCl(Person::getPersonalNo, Person::getAddrress).and()
-                    .likeCl(Person::getLastName, Person::getFullName).and().startsWith(Person::getLastName, "lname")
+                    .equal(Person::getPersonalNo, Person::getAddrress).and()
+                    .like(Person::getLastName, Person::getFullName).and().startsWith(Person::getLastName, "lname")
                     .firstOrDefault(new Person());
             // =============================================//
             System.out.println();

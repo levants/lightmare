@@ -48,45 +48,54 @@ public interface ColumnExpression<T> {
      * @param operator
      * @return {@link QueryStream} current instance
      */
-    <F, S> QueryStream<T> operateCl(EntityField<T, F> field1, EntityField<S, F> field2, String operator);
+    <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
+            String operator);
 
-    default <F, S> QueryStream<T> equalCl(EntityField<T, F> field1, EntityField<S, F> field2) {
-        return operateCl(field1, field2, Operators.EQ);
+    default <F, S> QueryStream<T> equal(EntityField<T, F> field1, EntityField<S, F> field2) {
+        return operate(field1, field2, Operators.EQ);
     }
 
-    default <F, S> QueryStream<T> notEqualCl(EntityField<T, F> field1, EntityField<S, F> field2) {
-        return operateCl(field1, field2, Operators.NOT_EQ);
+    default <F, S> QueryStream<T> notEqual(EntityField<T, F> field1, EntityField<S, F> field2) {
+        return operate(field1, field2, Operators.NOT_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> gt(EntityField<T, F> field1, EntityField<S, F> field2) {
-        return operateCl(field1, field2, Operators.GREATER);
+    default <F extends Comparable<? super F>, S> QueryStream<T> gtCl(EntityField<T, ? extends F> field1,
+            EntityField<S, ? extends F> field2) {
+        return operate(field1, field2, Operators.GREATER);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenCl(EntityField<T, F> field1, EntityField<S, F> field2) {
-        return gt(field1, field2);
+    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenCl(EntityField<T, ? extends F> field1,
+            EntityField<S, ? extends F> field2) {
+        return gtCl(field1, field2);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> ltCl(EntityField<T, F> field1, EntityField<S, F> field2) {
-        return operateCl(field1, field2, Operators.LESS);
+    default <F extends Comparable<? super F>, S> QueryStream<T> ltCl(EntityField<T, ? extends F> field1,
+            EntityField<S, ? extends F> field2) {
+        return operate(field1, field2, Operators.LESS);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lowerThenCl(EntityField<T, F> field1, EntityField<S, F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> lowerThenCl(EntityField<T, ? extends F> field1,
+            EntityField<S, ? extends F> field2) {
         return ltCl(field1, field2);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> geCl(EntityField<T, F> field1, EntityField<S, F> field2) {
-        return operateCl(field1, field2, Operators.GREATER_OR_EQ);
+    default <F extends Comparable<? super F>, S> QueryStream<T> geCl(EntityField<T, ? extends F> field1,
+            EntityField<S, ? extends F> field2) {
+        return operate(field1, field2, Operators.GREATER_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenOrEqualCl(EntityField<T, F> field1, EntityField<S, F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenOrEqualCl(EntityField<T, ? extends F> field1,
+            EntityField<S, ? extends F> field2) {
         return geCl(field1, field2);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> leCl(EntityField<T, F> field1, EntityField<S, F> field2) {
-        return operateCl(field1, field2, Operators.LESS_OR_EQ);
+    default <F extends Comparable<? super F>, S> QueryStream<T> leCl(EntityField<T, ? extends F> field1,
+            EntityField<S, ? extends F> field2) {
+        return operate(field1, field2, Operators.LESS_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lowerThenOrEqualCl(EntityField<T, F> field1, EntityField<S, F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> lowerThenOrEqualCl(EntityField<T, ? extends F> field1,
+            EntityField<S, ? extends F> field2) {
         return leCl(field1, field2);
     }
 
@@ -94,8 +103,8 @@ public interface ColumnExpression<T> {
 
     <F> QueryStream<T> notBetweenCl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3);
 
-    default QueryStream<T> likeCl(EntityField<T, String> field1, EntityField<T, String> field2) {
-        return operateCl(field1, field2, Operators.LIKE);
+    default QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2) {
+        return operate(field1, field2, Operators.LIKE);
     }
 
     /**
@@ -106,14 +115,14 @@ public interface ColumnExpression<T> {
      * @param operator
      * @return {@link QueryStream} current instance
      */
-    <F, S> QueryStream<T> operateCollectionCl(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
+    <F, S> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
             String operator);
 
-    default <F, S> QueryStream<T> inCl(EntityField<T, F> field1, EntityField<S, Collection<F>> field2) {
-        return operateCollectionCl(field1, field2, Operators.IN);
+    default <F, S> QueryStream<T> in(EntityField<T, F> field1, EntityField<S, Collection<F>> field2) {
+        return operateCollection(field1, field2, Operators.IN);
     }
 
-    default <F, S> QueryStream<T> notInCl(EntityField<T, F> field1, EntityField<S, Collection<F>> field2) {
-        return operateCollectionCl(field1, field2, Operators.NOT_IN);
+    default <F, S> QueryStream<T> notIn(EntityField<T, F> field1, EntityField<S, Collection<F>> field2) {
+        return operateCollection(field1, field2, Operators.NOT_IN);
     }
 }

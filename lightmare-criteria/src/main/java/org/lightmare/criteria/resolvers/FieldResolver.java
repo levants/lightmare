@@ -37,6 +37,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.InsnList;
+import org.objectweb.asm.tree.LocalVariableNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -51,6 +52,8 @@ public class FieldResolver {
     private static final int SINGLE_ARG = 1;
 
     private static final int FIRST = 0;
+
+    private static final String THIS_PT = "this";
 
     // Getter method prefix
     private static final String GET = "get";
@@ -162,17 +165,17 @@ public class FieldResolver {
     /**
      * Validates if resolved method is setter or getter for entity field
      * 
-     * @param node
+     * @param desc
+     * @param name
      * @return <code>boolean</code> validation result
      */
-    private static boolean valid(MethodInsnNode node) {
+    private static boolean valid(String desc, String name) {
 
         boolean valid;
 
-        Type methodType = Type.getMethodType(node.desc);
+        Type methodType = Type.getMethodType(desc);
         Type returnType = methodType.getReturnType();
         Type[] argumentTypes = methodType.getArgumentTypes();
-        String name = node.name;
         if (name.startsWith(GET)) {
             valid = validGetter(returnType, argumentTypes);
         } else if (name.startsWith(SET)) {
@@ -209,11 +212,97 @@ public class FieldResolver {
 
         QueryTuple tuple;
 
-        if (valid(node)) {
-            String fieldName = resolveFieldName(node.name);
+        String desc = node.desc;
+        String name = node.name;
+        if (valid(desc, name)) {
+            String fieldName = resolveFieldName(name);
             String entityName = resolveEntityName(node.owner);
-            String[] arguments = resolveArgumentsTypes(node.desc);
-            tuple = new QueryTuple(entityName, node.name, arguments, fieldName);
+            String[] arguments = resolveArgumentsTypes(desc);
+            tuple = new QueryTuple(entityName, name, arguments, fieldName);
+            setMetaData(tuple);
+        } else {
+            tuple = null;
+        }
+
+        return tuple;
+    }
+
+    /**
+     * Removes semicolons from entity name
+     * 
+     * @param name
+     * @return {@link String} entity name
+     */
+    private static String clearEntityName(String name) {
+
+        String validName;
+
+        Type type = Type.getType(name);
+        validName = type.getClassName();
+
+        return validName;
+    }
+
+    /**
+     * Resolves entity name from local variable
+     * 
+     * @param variable
+     * @return {@link String} entity name
+     */
+    private static String resolveEntityName(LocalVariableNode variable) {
+
+        String entityName;
+
+        if (THIS_PT.equals(variable.name)) {
+            String raw = variable.desc;
+            entityName = clearEntityName(raw);
+        } else {
+            entityName = null;
+        }
+
+        return entityName;
+    }
+
+    /**
+     * Gets entity name from {@link MethodNode} es its first variable
+     * 
+     * @param node
+     * @return {@link String} entity name
+     */
+    private static String resolveEntityName(MethodNode node) {
+
+        String entityName;
+
+        List<LocalVariableNode> variables = ObjectUtils.cast(node.localVariables);
+        if (variables == null || variables.isEmpty()) {
+            entityName = null;
+        } else {
+            LocalVariableNode variable = CollectionUtils.getFirst(variables);
+            entityName = resolveEntityName(variable);
+        }
+
+        return entityName;
+    }
+
+    /**
+     * Resolves field name from instruction instance
+     * 
+     * @param instruction
+     * @param verbose
+     * @return {@link QueryTuple} for resolved field and query part
+     * @throws IOException
+     */
+    private static QueryTuple resolve(MethodNode node) throws IOException {
+
+        QueryTuple tuple;
+
+        String desc = node.desc;
+        String name = node.name;
+        if (valid(desc, name)) {
+            String fieldName = resolveFieldName(name);
+            String entityName = resolveEntityName(node);
+            String[] arguments = resolveArgumentsTypes(desc);
+            tuple = new QueryTuple(entityName, name, arguments, fieldName);
             setMetaData(tuple);
         } else {
             tuple = null;
@@ -247,26 +336,6 @@ public class FieldResolver {
     }
 
     /**
-     * Resolves appropriated instructions for field recognition swallowing
-     * errors
-     * 
-     * @param instructions
-     * @return {@link QueryTuple} for resolved field and query part
-     */
-    private static QueryTuple resolveQuietly(InsnList instructions) {
-
-        QueryTuple tuple;
-
-        try {
-            tuple = resolve(instructions);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        return tuple;
-    }
-
-    /**
      * Validates method and signature for field resolver
      * 
      * @param methodNode
@@ -285,6 +354,45 @@ public class FieldResolver {
     }
 
     /**
+     * Resolves entity parameters from {@link MethodNode} and instructions
+     * 
+     * @param methodNode
+     * @return {@link QueryTuple} from method
+     * @throws IOException
+     */
+    private static QueryTuple resolveMethod(MethodNode methodNode) throws IOException {
+
+        QueryTuple tuple = resolve(methodNode);
+
+        if (tuple == null) {
+            methodNode.visitCode();
+            InsnList instructions = methodNode.instructions;
+            tuple = resolve(instructions);
+        }
+
+        return tuple;
+    }
+
+    /**
+     * Resolves entity parameters from {@link MethodNode} and instructions
+     * 
+     * @param methodNode
+     * @return {@link QueryTuple} from method
+     */
+    private static QueryTuple resolveRecursively(MethodNode methodNode) {
+
+        QueryTuple tuple;
+
+        try {
+            tuple = resolveMethod(methodNode);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return tuple;
+    }
+
+    /**
      * Resolved field name, getter method name and entity type from lambda
      * argument
      * 
@@ -298,9 +406,7 @@ public class FieldResolver {
         List<MethodNode> methods = MethodCache.getMethods(lambda);
         if (Objects.nonNull(methods)) {
             MethodNode methodNode = CollectionUtils.getFirstValid(methods, c -> validate(c, lambda));
-            methodNode.visitCode();
-            InsnList instructions = methodNode.instructions;
-            tuple = resolveQuietly(instructions);
+            tuple = resolveRecursively(methodNode);
         } else {
             throw new RuntimeException(UNRESOLVABLE_ERROR);
         }

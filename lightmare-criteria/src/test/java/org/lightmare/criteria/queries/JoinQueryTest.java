@@ -40,7 +40,7 @@ public class JoinQueryTest extends SubQueryTest {
         try {
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname")
-                    .leftJoin(Person::getPhones, c -> c.equalCl(Phone::getPhoneNumber, Person::getPersonalNo));
+                    .leftJoin(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, Person::getPersonalNo));
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -57,7 +57,7 @@ public class JoinQueryTest extends SubQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).leftJoin(Person::getPhones,
-                    c -> c.equalCl(Phone::getPhoneNumber, Person::getPersonalNo));
+                    c -> c.equal(Phone::getPhoneNumber, Person::getPersonalNo));
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -74,7 +74,7 @@ public class JoinQueryTest extends SubQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).leftJoin(Person::getPhones,
-                    c -> c.where().equalCl(Phone::getPhoneNumber, Person::getPersonalNo));
+                    c -> c.where().equal(Phone::getPhoneNumber, Person::getPersonalNo));
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -163,8 +163,8 @@ public class JoinQueryTest extends SubQueryTest {
                     .notEqual(Person::getLastName, "lname").and().like(Person::getAddrress, "address")
                     .fetchJoin(Person::getPhones,
                             c -> c.equal(Phone::getPhoneNumber, "100100")
-                                    .notEqualCl(Phone::getOperatorId, Person::getPersonId).or()
-                                    .equalCl(Phone::getOperatorId, Phone::getPhoneId));
+                                    .notEqual(Phone::getOperatorId, Person::getPersonId).or()
+                                    .equal(Phone::getOperatorId, Phone::getPhoneId));
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
