@@ -19,6 +19,13 @@ import org.lightmare.criteria.runorder.SortedRunner;
 @RunWith(SortedRunner.class)
 public class QueryTest extends TestEnviromentConfig {
 
+    private static void rollback(EntityTransaction transaction) {
+
+        if (transaction.isActive()) {
+            transaction.rollback();
+        }
+    }
+
     @Test
     @RunOrder(1)
     public void supplierEntityTest() {
@@ -49,7 +56,7 @@ public class QueryTest extends TestEnviromentConfig {
             Date date = getDateValue();
             // ============= Query construction ============== //
             List<Person> persons = QueryProvider.select(em, Person.class).where()
-                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
                     .startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date).and()
                     .in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).toList();
             // =============================================//
@@ -73,7 +80,7 @@ public class QueryTest extends TestEnviromentConfig {
             Date date = getDateValue();
             // ============= Query construction ============== //
             List<Object[]> persons = QueryProvider.select(em, Person.class).where()
-                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
                     .brackets(stream -> stream.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate,
                             date))
                     .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS))
@@ -99,7 +106,7 @@ public class QueryTest extends TestEnviromentConfig {
             Date date = getDateValue();
             // ============= Query construction ============== //
             Long count = QueryProvider.select(em, Person.class).where().equal(Person::getPersonalNo, PERSONAL_NO1).and()
-                    .like(Person::getLastName, "lname").and().startsWith(Person::getFirstName, "fname").or()
+                    .like(Person::getLastName, "lname%").and().startsWith(Person::getFirstName, "fname").or()
                     .ge(Person::getBirthDate, date).and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).count();
             // =============================================//
             System.out.println();
@@ -124,7 +131,7 @@ public class QueryTest extends TestEnviromentConfig {
             transaction.begin();
             // ============= Query construction ============== //
             int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "middName").where()
-                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname").and()
+                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
                     .openBracket().startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date)
                     .closeBracket().execute();
             // =============================================//
@@ -135,8 +142,8 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.format("updated %s rows\n", rows);
             Assert.assertEquals("No expected row number was updated", rows, 1);
         } catch (Throwable ex) {
-            transaction.rollback();
             ex.printStackTrace();
+            rollback(transaction);
         } finally {
             em.close();
         }
@@ -155,7 +162,7 @@ public class QueryTest extends TestEnviromentConfig {
             // ============= Query construction ============== //
             int rows = QueryProvider.update(em, Person.class).set(Person::getMiddName, "newMiddName")
                     .set(Person::getBirthDate, newBirthDate).where().equal(Person::getPersonalNo, PERSONAL_NO1).and()
-                    .like(Person::getLastName, "lname").and().openBracket().startsWith(Person::getFirstName, "fname")
+                    .like(Person::getLastName, "lname%").and().openBracket().startsWith(Person::getFirstName, "fname")
                     .or().ge(Person::getBirthDate, date).closeBracket().execute();
             // =============================================//
             transaction.commit();
@@ -165,8 +172,8 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.format("updated %s rows\n", rows);
             Assert.assertEquals("No expected row number was updated", rows, 1);
         } catch (Throwable ex) {
-            transaction.rollback();
             ex.printStackTrace();
+            rollback(transaction);
         } finally {
             em.close();
         }
@@ -182,7 +189,7 @@ public class QueryTest extends TestEnviromentConfig {
             transaction.begin();
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.delete(em, Person.class).where()
-                    .equal(Person::getPersonalNo, PERSONAL_NO2).and().like(Person::getLastName, "lname").and()
+                    .equal(Person::getPersonalNo, PERSONAL_NO2).and().like(Person::getLastName, "lname%").and()
                     .startsWith(Person::getFirstName, "fname");
             int rows = stream.execute();
             // =============================================//
@@ -193,8 +200,8 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.format("deleted %s rows\n", rows);
             Assert.assertEquals("No expected row number was updated", rows, 1);
         } catch (Throwable ex) {
-            transaction.rollback();
             ex.printStackTrace();
+            rollback(transaction);
         } finally {
             em.close();
         }
@@ -215,8 +222,8 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .equal(Person::getPersonalNo, Person::getAddrress).like(Person::getFirstName, Person::getFullName)
-                    .and().startsWith(Person::getLastName, "lname");
+                    .equal(Person::getPersonalNo, Person::getAddrress).equal(Person::getFullName, "fullName")
+                    .like(Person::getFirstName, Person::getFullName).and().startsWith(Person::getLastName, "lname");
             // =============================================//
             System.out.println();
             System.out.println("-------Entity----");

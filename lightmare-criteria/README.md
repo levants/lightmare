@@ -36,7 +36,7 @@ method call:
   			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname")
 		    .and().startsWith(Person::getFirstName, "fname")
-		    .and().equalCl(Person::getFillName, Person::getLastName)
+		    .and().equal(Person::getFillName, Person::getLastName)
 		    .or().ge(Person::getBirthDate, new Date()).
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
@@ -70,7 +70,7 @@ For embedded entity there is method "embedded" with embedded getter method and a
   			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname").and()
 		    .embedded(Person::getInfo, c -> .equal(PersonInfo::getNote, "This is note")
-		    					   .equalPr(PersonInfo::getCardNumber, Person::getPrivatNumber))
+		    					   .equal(PersonInfo::getCardNumber, Person::getPrivatNumber))
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .firstOrDefault(new Person()); 
 ```
@@ -124,7 +124,7 @@ Implementations of sub queries are by calling exits or in functions:
 		    .and().exists(Phone.class, c -> c.where()
 		    					   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
 		                           .and()
-		                           .equalPr(Phone::getPhoneNumber, Person::getPhoneNumber))
+		                           .equal(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
@@ -140,7 +140,7 @@ inner join:
 		    .and().join(Person::getPhones, c -> c.where()
 		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
 		                               .and()
-		                               .equalPr(Phone::getPhoneNumber, Person::getPhoneNumber))
+		                               .equal(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
@@ -152,7 +152,7 @@ lefts join:
 		    .and().leftJoin(Person::getPhones, c -> c.where()
 		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
 		                               .and()
-		                               .equalPr(Phone::getPhoneNumber, Person::getPhoneNumber))
+		                               .equal(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
@@ -164,7 +164,7 @@ and fetch join:
 		    .and().fetchJoin(Person::getPhones, c -> c.where()
 		    						   .in(Phone::getOperatorId, Arrays.asList(1L, 2L, 3L))
 		                               .and()
-		                               .equalPr(Phone::getPhoneNumber, Person::getPhoneNumber))
+		                               .equal(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```

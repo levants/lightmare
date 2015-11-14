@@ -70,7 +70,8 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2, String operator) {
+    public <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2,
+            String operator) {
         appendOperator();
         oppLine(field, value1, value2, Operators.BETWEEN);
 
@@ -88,9 +89,19 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     // ========================= Entity self method composers ===============//
 
     @Override
-    public <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2, String operator) {
+    public <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
+            String operator) {
         appendOperator();
         oppField(field1, field2, operator);
+
+        return this;
+    }
+
+    @Override
+    public <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
+            EntityField<S, ? extends F> field3, String operator) {
+        appendOperator();
+        oppLine(field1, field2, field3, operator);
 
         return this;
     }
@@ -103,45 +114,6 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
 
         return this;
     }
-
-    @Override
-    public <F> QueryStream<T> betweenCl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3) {
-        appendOperator();
-        oppLine(field1, field2, field3, Operators.BETWEEN);
-
-        return this;
-    }
-
-    @Override
-    public <F> QueryStream<T> notBetweenCl(EntityField<T, F> field1, EntityField<T, F> field2,
-            EntityField<T, F> field3) {
-
-        appendOperator();
-        oppLine(field1, field2, field3, Operators.NOT_BETWEEN);
-
-        return this;
-    }
-
-    // ========================= Entity parent method composers =============//
-
-    // @Override
-    // public <F, S> QueryStream<T> operatePr(EntityField<S, F> sfield,
-    // ParentField<T, F> field, String operator) {
-    // appendOperator();
-    // oppField(sfield, field, operator);
-    //
-    // return this;
-    // }
-    //
-    // @Override
-    // public <F, S> QueryStream<T> operateCollectionPr(EntityField<S, F>
-    // sfield, ParentField<T, Collection<F>> field,
-    // String operator) {
-    // appendOperator();
-    // oppCollectionField(sfield, field, operator);
-    //
-    // return this;
-    // }
 
     // =========================embedded=field=queries=======================//
 

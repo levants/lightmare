@@ -1,5 +1,3 @@
-package org.lightmare.criteria.query.internal.jpa;
-
 /*
  * Lightmare-criteria, JPA-QL query generator using lambda expressions
  *
@@ -22,6 +20,8 @@ package org.lightmare.criteria.query.internal.jpa;
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
+package org.lightmare.criteria.query.internal.jpa;
+
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
@@ -51,6 +51,18 @@ public interface ColumnExpression<T> {
     <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
             String operator);
 
+    /**
+     * Generates query part for fields and operator
+     * 
+     * @param field1
+     * @param field2
+     * @param field3
+     * @param operator
+     * @return {@link QueryStream} current instance
+     */
+    <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
+            EntityField<S, ? extends F> field3, String operator);
+
     default <F, S> QueryStream<T> equal(EntityField<T, F> field1, EntityField<S, F> field2) {
         return operate(field1, field2, Operators.EQ);
     }
@@ -59,49 +71,55 @@ public interface ColumnExpression<T> {
         return operate(field1, field2, Operators.NOT_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> gtCl(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> gt(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
         return operate(field1, field2, Operators.GREATER);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenCl(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThen(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
-        return gtCl(field1, field2);
+        return gt(field1, field2);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> ltCl(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> lt(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
         return operate(field1, field2, Operators.LESS);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lowerThenCl(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> lowerThen(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
-        return ltCl(field1, field2);
+        return lt(field1, field2);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> geCl(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> ge(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
         return operate(field1, field2, Operators.GREATER_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenOrEqualCl(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenOrEqual(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
-        return geCl(field1, field2);
+        return ge(field1, field2);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> leCl(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> le(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
         return operate(field1, field2, Operators.LESS_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lowerThenOrEqualCl(EntityField<T, ? extends F> field1,
+    default <F extends Comparable<? super F>, S> QueryStream<T> lowerThenOrEqual(EntityField<T, ? extends F> field1,
             EntityField<S, ? extends F> field2) {
-        return leCl(field1, field2);
+        return le(field1, field2);
     }
 
-    <F> QueryStream<T> betweenCl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3);
+    default <F extends Comparable<? super F>> QueryStream<T> between(EntityField<T, ? extends F> field1,
+            EntityField<T, ? extends F> field2, EntityField<T, F> field3) {
+        return operate(field1, field2, field3, Operators.BETWEEN);
+    }
 
-    <F> QueryStream<T> notBetweenCl(EntityField<T, F> field1, EntityField<T, F> field2, EntityField<T, F> field3);
+    default <F> QueryStream<T> notBetween(EntityField<T, ? extends F> field1, EntityField<T, ? extends F> field2,
+            EntityField<T, F> field3) {
+        return operate(field1, field2, field3, Operators.NOT_BETWEEN);
+    }
 
     default QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2) {
         return operate(field1, field2, Operators.LIKE);

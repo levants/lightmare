@@ -60,7 +60,7 @@
 				<configuration>
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.target}</target>
-					<!-- compilerId>eclipse</compilerId-->
+					<compilerId>eclipse</compilerId>
 				</configuration>
 				<dependencies>
 					<dependency>
