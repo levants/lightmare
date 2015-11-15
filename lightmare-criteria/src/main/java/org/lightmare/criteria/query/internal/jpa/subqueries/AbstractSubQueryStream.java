@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.query.internal.jpa.subqueries;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -81,7 +82,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     }
 
     @SafeVarargs
-    protected final QueryStream<Object[]> subSelectAll(Object... fields) {
+    protected final QueryStream<Object[]> subSelectAll(Serializable... fields) {
 
         SubSelectStream<S, Object[]> stream;
 

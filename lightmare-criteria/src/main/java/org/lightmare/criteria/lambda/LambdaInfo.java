@@ -32,7 +32,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @author Levan Tsinadze
  * @see java.lang.invoke.SerializedLambda
  */
-public class LambdaData {
+public class LambdaInfo {
 
     // Class file name
     private final String implClass;
@@ -46,17 +46,17 @@ public class LambdaData {
     private static final String TO_TEXT_FORMAT = StringUtils.concat("SerializedLambda[implClass=%s,",
             " implMethodName=%s,", " implMethodSignature=%s]");
 
-    public LambdaData(final String implClass, final String implMethodName, final String implMethodSignature) {
+    public LambdaInfo(final String implClass, final String implMethodName, final String implMethodSignature) {
         this.implClass = implClass;
         this.implMethodName = implMethodName;
         this.implMethodSignature = implMethodSignature;
     }
 
-    public LambdaData(SerializedLambda serialized) {
+    public LambdaInfo(SerializedLambda serialized) {
         this(serialized.getImplClass(), serialized.getImplMethodName(), serialized.getImplMethodSignature());
     }
 
-    public LambdaData(SLambda slambda) {
+    public LambdaInfo(SLambda slambda) {
         this(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature);
     }
 

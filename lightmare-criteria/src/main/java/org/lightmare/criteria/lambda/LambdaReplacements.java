@@ -86,20 +86,20 @@ public class LambdaReplacements {
 
     /**
      * Serializes object and translates it and wraps it's field to
-     * {@link LambdaData} object
+     * {@link LambdaInfo} object
      * 
      * @param field
-     * @return {@link LambdaData} from lambda expression
+     * @return {@link LambdaInfo} from lambda expression
      * @throws IOException
      */
-    private static LambdaData translate(Object field) throws IOException {
+    private static LambdaInfo translate(Object field) throws IOException {
 
-        LambdaData lambda;
+        LambdaInfo lambda;
 
         byte[] value = ObjectUtils.serialize(field);
         byte[] translated = replace(value);
         SLambda slambda = toLambda(translated);
-        lambda = new LambdaData(slambda);
+        lambda = new LambdaInfo(slambda);
 
         return lambda;
     }
@@ -118,22 +118,22 @@ public class LambdaReplacements {
     }
 
     /**
-     * Gets {@link LambdaData} instance from passed lambda argument
+     * Gets {@link LambdaInfo} instance from passed lambda argument
      * 
      * @param field
-     * @return {@link LambdaData} replacement
+     * @return {@link LambdaInfo} replacement
      * @throws IOException
      */
-    private static <T> LambdaData getReplacement(Object field) throws IOException {
+    private static <T> LambdaInfo getReplacement(Serializable field) throws IOException {
 
-        LambdaData lambda;
+        LambdaInfo lambda;
 
         Class<?> parent = field.getClass();
         Method method = getMethod(parent);
         if (Objects.nonNull(method)) {
             Object raw = ClassUtils.invoke(method, field);
             SerializedLambda serialized = ObjectUtils.cast(raw);
-            lambda = new LambdaData(serialized);
+            lambda = new LambdaInfo(serialized);
         } else {
             lambda = translate(field);
         }
@@ -142,14 +142,14 @@ public class LambdaReplacements {
     }
 
     /**
-     * Gets {@link LambdaData} instance from passed lambda argument
+     * Gets {@link LambdaInfo} instance from passed lambda argument
      * 
      * @param field
-     * @return {@link LambdaData} replacement
+     * @return {@link LambdaInfo} replacement
      */
-    public static <T> LambdaData getReplacementQuietly(Object field) {
+    public static <T> LambdaInfo getReplacementQuietly(Serializable field) {
 
-        LambdaData lambda;
+        LambdaInfo lambda;
 
         try {
             lambda = getReplacement(field);

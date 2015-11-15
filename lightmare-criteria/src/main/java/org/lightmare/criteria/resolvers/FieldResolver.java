@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.lightmare.criteria.cache.MethodCache;
-import org.lightmare.criteria.lambda.LambdaData;
+import org.lightmare.criteria.lambda.LambdaInfo;
 import org.lightmare.criteria.orm.ColumnProcessor;
 import org.lightmare.criteria.orm.EntityProcessor;
 import org.lightmare.criteria.orm.GenericProcessor;
@@ -342,7 +342,7 @@ public class FieldResolver {
      * @param lambda
      * @return </code>boolean</code> validation result
      */
-    public static boolean validate(MethodNode methodNode, LambdaData lambda) {
+    public static boolean validate(MethodNode methodNode, LambdaInfo lambda) {
 
         boolean valid;
 
@@ -399,7 +399,7 @@ public class FieldResolver {
      * @param lambda
      * @return {@link QueryTuple} for resolved field and query part
      */
-    public static QueryTuple resolve(LambdaData lambda) {
+    public static QueryTuple resolve(LambdaInfo lambda) {
 
         QueryTuple tuple;
 

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.lightmare.criteria.lambda.LambdaData;
+import org.lightmare.criteria.lambda.LambdaInfo;
 import org.lightmare.criteria.resolvers.CachedClassReader;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.objectweb.asm.ClassReader;
@@ -94,12 +94,12 @@ public class MethodCache {
 
     /**
      * Gets {@link List} of resolved {@link MethodNode}s from cache by class
-     * file name from passed {@link LambdaData} or if absent resolves and caches
+     * file name from passed {@link LambdaInfo} or if absent resolves and caches
      * 
      * @param lambda
      * @return {@link List} of {@link MethodNode} methods
      */
-    public static List<MethodNode> getMethods(LambdaData lambda) {
+    public static List<MethodNode> getMethods(LambdaInfo lambda) {
 
         List<MethodNode> methods;
 

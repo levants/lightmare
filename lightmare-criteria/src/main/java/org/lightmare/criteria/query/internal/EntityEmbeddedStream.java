@@ -22,6 +22,8 @@
  */
 package org.lightmare.criteria.query.internal;
 
+import java.io.Serializable;
+
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 import org.lightmare.criteria.tuples.EmbeddedTuple;
@@ -53,7 +55,7 @@ public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
     }
 
     @Override
-    protected QueryTuple compose(Object field) {
+    protected QueryTuple compose(Serializable field) {
 
         QueryTuple tuple;
 

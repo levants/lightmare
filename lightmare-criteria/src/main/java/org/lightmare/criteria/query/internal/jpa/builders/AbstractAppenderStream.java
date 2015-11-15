@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.query.internal.jpa.builders;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -116,7 +117,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param expression
      * @return {@link QueryTuple} for field
      */
-    protected QueryTuple opp(Object field, String expression) {
+    protected QueryTuple opp(Serializable field, String expression) {
 
         QueryTuple tuple = compose(field);
 
@@ -133,7 +134,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param value
      * @param expression
      */
-    protected <F> void opp(Object field, F value, String expression) {
+    protected <F> void opp(Serializable field, F value, String expression) {
         QueryTuple tuple = opp(field, expression);
         oppWithParameter(tuple, value, body);
     }
@@ -145,7 +146,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param value
      * @param expression
      */
-    protected <F> void opp(Object field, F value1, F value2, String expression) {
+    protected <F> void opp(Serializable field, F value1, F value2, String expression) {
         QueryTuple tuple = opp(field, expression);
         oppWithParameter(tuple, value1, body);
     }
@@ -157,7 +158,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param expression
      * @return {@link QueryTuple} for sub query field
      */
-    protected QueryTuple appSubQuery(Object field, String expression) {
+    protected QueryTuple appSubQuery(Serializable field, String expression) {
         QueryTuple tuple = opp(field, expression);
         openBracket();
 
@@ -171,7 +172,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param value
      * @param expression
      */
-    protected void oppCollection(Object field, Collection<?> value, String expression) {
+    protected void oppCollection(Serializable field, Collection<?> value, String expression) {
 
         QueryTuple tuple = appSubQuery(field, expression);
         oppWithParameter(tuple, value, body);
@@ -185,7 +186,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param field
      * @param values
      */
-    protected void oppCollection(Object field, Collection<?> values) {
+    protected void oppCollection(Serializable field, Collection<?> values) {
         oppCollection(field, values, Operators.IN);
     }
 
@@ -247,7 +248,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param field2
      * @param expression
      */
-    protected void oppField(Object field1, Object field2, String expression) {
+    protected void oppField(Serializable field1, Serializable field2, String expression) {
 
         opp(field1, expression);
         QueryTuple tuple = compose(field2);
@@ -262,7 +263,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param field2
      * @param expression
      */
-    protected void oppCollectionField(Object field1, Object field2, String expression) {
+    protected void oppCollectionField(Serializable field1, Serializable field2, String expression) {
 
         opp(field1, expression);
         QueryTuple tuple = compose(field2);
@@ -302,7 +303,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param field
      * @param value
      */
-    protected <F> void setOpp(Object field, F value) {
+    protected <F> void setOpp(Serializable field, F value) {
 
         QueryTuple tuple = compose(field);
         appendSetClause();
@@ -315,7 +316,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * 
      * @param field
      */
-    private void addSelectField(Object field) {
+    private void addSelectField(Serializable field) {
 
         QueryTuple tuple = compose(field);
         appendFieldName(tuple, columns);
@@ -340,10 +341,10 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * 
      * @param fields
      */
-    private void appendSelect(Object[] fields) {
+    private void appendSelect(Serializable[] fields) {
 
         int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
-        Object field;
+        Serializable field;
         for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
             field = fields[i];
             addSelectField(field);
@@ -352,7 +353,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     }
 
     @SafeVarargs
-    protected final void oppSelect(Object... fields) {
+    protected final void oppSelect(Serializable... fields) {
 
         if (CollectionUtils.valid(fields)) {
             columns.append(Filters.SELECT);
@@ -383,15 +384,15 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
-    private void addOrderByField(String dir, Object field) {
+    private void addOrderByField(String dir, Serializable field) {
 
         QueryTuple tuple = compose(field);
         appendOrderBy(tuple, dir);
     }
 
-    private void iterateAndAppendOrders(String dir, Object[] fields) {
+    private void iterateAndAppendOrders(String dir, Serializable[] fields) {
 
-        Object field;
+        Serializable field;
         int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
         for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
             field = fields[i];
@@ -400,7 +401,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
-    protected void setOrder(String dir, Object[] fields) {
+    protected void setOrder(String dir, Serializable[] fields) {
 
         if (CollectionUtils.valid(fields)) {
             prepareOrderBy(Orders.ORDER);
@@ -408,7 +409,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
-    protected void setOrder(Object[] fields) {
+    protected void setOrder(Serializable[] fields) {
         setOrder(null, fields);
     }
 
@@ -421,7 +422,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         prepareGroup(groupBy, Clauses.GROUP);
     }
 
-    private void addGroupByField(Object field, int index, int length) {
+    private void addGroupByField(Serializable field, int index, int length) {
 
         QueryTuple tuple = compose(field);
         appendGroupBy(tuple);
@@ -429,9 +430,9 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         appendComma(index, length, columns);
     }
 
-    private void iterateAndAppendGroups(Object[] fields) {
+    private void iterateAndAppendGroups(Serializable[] fields) {
 
-        Object field;
+        Serializable field;
         int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
         for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
             field = fields[i];
@@ -446,7 +447,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param fields
      */
     @SafeVarargs
-    protected final void oppGroups(Object... fields) {
+    protected final void oppGroups(Serializable... fields) {
 
         if (CollectionUtils.valid(fields)) {
             prepareGroupBy();
@@ -463,7 +464,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
-    protected void oppCount(Object field) {
+    protected void oppCount(Serializable field) {
 
         QueryTuple tuple = compose(field);
         clearCountFields();
@@ -485,7 +486,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param field
      * @param expression
      */
-    protected void oppLine(Object field, String expression) {
+    protected void oppLine(Serializable field, String expression) {
         opp(field, expression);
         newLine();
     }
@@ -497,7 +498,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param value
      * @param expression
      */
-    protected <F> void oppLine(Object field, F value, String expression) {
+    protected <F> void oppLine(Serializable field, F value, String expression) {
         opp(field, value, expression);
         newLine();
     }
@@ -510,7 +511,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param value2
      * @param expression
      */
-    protected <F> void oppLine(Object field, F value1, F value2, String expression) {
+    protected <F> void oppLine(Serializable field, F value1, F value2, String expression) {
         opp(field, value1, value2, expression);
         newLine();
     }

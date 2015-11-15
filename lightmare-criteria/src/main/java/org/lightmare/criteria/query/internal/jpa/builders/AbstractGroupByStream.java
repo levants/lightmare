@@ -22,6 +22,8 @@
  */
 package org.lightmare.criteria.query.internal.jpa.builders;
 
+import java.io.Serializable;
+
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
@@ -50,7 +52,7 @@ public abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<
      * @return {@link QueryStream} for select method
      */
     @SafeVarargs
-    private final QueryStream<Object[]> groupByAll(Object... fields) {
+    private final QueryStream<Object[]> groupByAll(Serializable... fields) {
 
         oppGroups(fields);
         selectStream = new SelectStream<>(this, Object[].class);

@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.query.internal.jpa.builders;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -162,7 +163,7 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
      * @param field
      * @return {@link QueryTuple} for passed lambda function
      */
-    protected QueryTuple compose(Object field) {
+    protected QueryTuple compose(Serializable field) {
 
         QueryTuple tuple = LambdaUtils.getOrInit(field);
         tuple.setAlias(alias);

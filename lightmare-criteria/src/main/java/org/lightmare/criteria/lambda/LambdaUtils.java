@@ -22,6 +22,8 @@
  */
 package org.lightmare.criteria.lambda;
 
+import java.io.Serializable;
+
 import org.apache.log4j.Logger;
 import org.lightmare.criteria.cache.LambdaCache;
 import org.lightmare.criteria.cache.QueryCache;
@@ -48,11 +50,11 @@ public class LambdaUtils {
      * @param field
      * @return {@link QueryTuple} from cache
      */
-    private static QueryTuple getByLambda(Object method) {
+    private static QueryTuple getByLambda(Serializable method) {
 
         QueryTuple tuple;
 
-        LambdaData lambda = LambdaReplacements.getReplacementQuietly(method);
+        LambdaInfo lambda = LambdaReplacements.getReplacementQuietly(method);
         tuple = QueryCache.getQuery(lambda);
         if (tuple == null) {
             tuple = FieldResolver.resolve(lambda);
@@ -70,7 +72,7 @@ public class LambdaUtils {
      * @param method
      * @return {@link QueryTuple} from cache
      */
-    public static QueryTuple getOrInit(Object method) {
+    public static QueryTuple getOrInit(Serializable method) {
 
         QueryTuple tuple = LambdaCache.getByInstance(method);
 

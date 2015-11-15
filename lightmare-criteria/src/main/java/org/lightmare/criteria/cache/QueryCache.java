@@ -24,7 +24,7 @@ package org.lightmare.criteria.cache;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.lightmare.criteria.lambda.LambdaData;
+import org.lightmare.criteria.lambda.LambdaInfo;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -44,12 +44,12 @@ public class QueryCache {
     private static final String DELIM = ":";
 
     /**
-     * Generates key from {@link LambdaData} fields
+     * Generates key from {@link LambdaInfo} fields
      * 
      * @param lambda
      * @return {@link String} generated key
      */
-    private static String generateKey(LambdaData lambda) {
+    private static String generateKey(LambdaInfo lambda) {
 
         String key;
 
@@ -65,7 +65,7 @@ public class QueryCache {
         return QUERIES.get(key);
     }
 
-    public static QueryTuple getQuery(LambdaData lambda) {
+    public static QueryTuple getQuery(LambdaInfo lambda) {
 
         QueryTuple tuple;
 
@@ -79,7 +79,7 @@ public class QueryCache {
         QUERIES.putIfAbsent(key, value);
     }
 
-    public static void putQuery(LambdaData lambda, QueryTuple value) {
+    public static void putQuery(LambdaInfo lambda, QueryTuple value) {
         String key = generateKey(lambda);
         putQuery(key, value);
     }

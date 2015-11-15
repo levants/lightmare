@@ -22,6 +22,8 @@
  */
 package org.lightmare.criteria.query.internal.jpa.builders;
 
+import java.io.Serializable;
+
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
@@ -62,7 +64,7 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
      * @return {@link QueryStream} for select method
      */
     @SafeVarargs
-    private final QueryStream<Object[]> selectAll(Object... fields) {
+    private final QueryStream<Object[]> selectAll(Serializable... fields) {
 
         SelectStream<T, Object[]> stream;
 
