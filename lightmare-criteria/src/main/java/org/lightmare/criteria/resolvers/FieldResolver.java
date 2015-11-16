@@ -83,7 +83,7 @@ public class FieldResolver {
     }
 
     /**
-     * Resolves entity name
+     * Resolves entity name from method owner
      * 
      * @param owner
      * @return {@link String} entity name
@@ -122,10 +122,11 @@ public class FieldResolver {
     }
 
     /**
-     * resolves argument {@link Type}s for method descriptor
+     * resolves argument {@link org.objectweb.asm.Type}s for method descriptor
      * 
      * @param desc
-     * @return {@link Type}[] array of argument {@link Type}s
+     * @return {@link org.objectweb.asm.Type}[] array of argument
+     *         {@link org.objectweb.asm.Type}s
      * @throws IOException
      */
     private static String[] resolveArgumentsTypes(String desc) throws IOException {
@@ -188,7 +189,8 @@ public class FieldResolver {
     }
 
     /**
-     * Sets reflection meta data to passed tuple
+     * Sets reflection data ( {@link java.lang.reflect.Method},
+     * {@link java.lang.reflect.Field} etc ) to tuple
      * 
      * @param tuple
      * @throws IOException
@@ -264,7 +266,8 @@ public class FieldResolver {
     }
 
     /**
-     * Gets entity name from {@link MethodNode} es its first variable
+     * Gets entity name from {@link org.objectweb.asm.tree.MethodNode} as its
+     * first variable
      * 
      * @param node
      * @return {@link String} entity name
@@ -285,7 +288,8 @@ public class FieldResolver {
     }
 
     /**
-     * Resolves field name from instruction instance
+     * Resolves field name from {@link org.objectweb.asm.tree.MethodNode}
+     * instance
      * 
      * @param instruction
      * @param verbose
@@ -312,9 +316,9 @@ public class FieldResolver {
     }
 
     /**
-     * Validates if {@link AbstractInsnNode} is instance of
-     * {@link MethodInsnNode} then resolves appropriated {@link QueryTuple} from
-     * it
+     * Validates if {@link org.objectweb.asm.tree.AbstractInsnNode} is instance
+     * of {@link MethodInsnNode} then resolves appropriated {@link QueryTuple}
+     * from it
      * 
      * @param instruction
      * @return
@@ -349,7 +353,7 @@ public class FieldResolver {
         int size = instructions.size();
         for (int i = FIRST; (i < size && tuple == null); ++i) {
             AbstractInsnNode instruction = instructions.get(i);
-            validateAndResolve(instruction);
+            tuple = validateAndResolve(instruction);
         }
 
         return tuple;
@@ -374,7 +378,8 @@ public class FieldResolver {
     }
 
     /**
-     * Resolves entity parameters from {@link MethodNode} and instructions
+     * Resolves entity parameters from {@link org.objectweb.asm.tree.MethodNode}
+     * and instructions
      * 
      * @param methodNode
      * @return {@link QueryTuple} from method

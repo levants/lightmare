@@ -40,10 +40,10 @@ abstract class AbstractClassUtils extends Primitives {
 
     /**
      * Unwraps target {@link Throwable} from passed
-     * {@link InvocationTargetException} instance
+     * {@link java.lang.reflect.InvocationTargetException} instance
      *
      * @param ex
-     * @return {@link IOException} wrapped
+     * @return {@link java.io.IOException} wrapped
      */
     protected static IOException unwrap(InvocationTargetException ex) {
 
@@ -60,17 +60,19 @@ abstract class AbstractClassUtils extends Primitives {
     }
 
     /**
-     * Checks if passed {@link AccessibleObject} instance is not accessible
+     * Validates if passed {@link java.lang.reflect.AccessibleObject} instance
+     * is not accessible
      *
      * @param accessibleObject
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     private static boolean notAccessible(AccessibleObject accessibleObject) {
         return ObjectUtils.notTrue(accessibleObject.isAccessible());
     }
 
     /**
-     * Sets accessible flag to {@link AccessibleObject} instance
+     * Sets accessible flag to {@link java.lang.reflect.AccessibleObject}
+     * instance
      * 
      * @param accessibleObject
      */
@@ -96,11 +98,13 @@ abstract class AbstractClassUtils extends Primitives {
     }
 
     /**
-     * Gets {@link List} of {@link AccessibleObject}s with instant annotation
+     * Gets {@link java.util.List} of {@link java.lang.reflect.AccessibleObject}
+     * s with instant annotation
      * 
      * @param array
      * @param annotationType
-     * @return
+     * @return {@link java.util.List} of
+     *         {@link java.lang.reflect.AccessibleObject}s by annotation
      */
     protected static <T extends AccessibleObject> List<T> filterByAnnotation(T[] array,
             Class<? extends Annotation> annotationType) {

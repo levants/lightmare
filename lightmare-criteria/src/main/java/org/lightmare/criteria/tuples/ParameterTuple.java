@@ -48,7 +48,7 @@ public class ParameterTuple {
 
     /**
      * Initializes {@link ParameterTuple} by parameter name, value and
-     * {@link TemporalType} instance
+     * {@link javax.persistence.TemporalType} instance
      * 
      * @param name
      * @param value

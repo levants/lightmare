@@ -25,7 +25,8 @@ package org.lightmare.criteria.tuples;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Extension of {@link QueryTuple} for embedded entity fields resolving
+ * Extension of {@link org.lightmare.criteria.tuples.QueryTuple} for embedded
+ * entity fields resolving
  * 
  * @author Levan Tsinadze
  *
@@ -46,8 +47,9 @@ public class EmbeddedTuple extends QueryTuple {
     }
 
     /**
-     * Initializes {@link EmbeddedTuple} by {@link QueryTuple} and embedded or
-     * related entity field name
+     * Initializes {@link EmbeddedTuple} by
+     * {@link org.lightmare.criteria.tuples.QueryTuple} and embedded or related
+     * entity field name
      * 
      * @param tuple
      * @param embeddedName

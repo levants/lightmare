@@ -59,8 +59,9 @@ public class ColumnProcessor {
     }
 
     /**
-     * Sets {@link Temporal#value()} to passed {@link QueryTuple} if
-     * {@link Temporal} is not null
+     * Sets {@link javax.persistence.Temporal#value()} to passed
+     * {@link org.lightmare.criteria.tuples.QueryTuple} if
+     * {@link javax.persistence.Temporal} is not null
      * 
      * @param temporal
      * @param tuple

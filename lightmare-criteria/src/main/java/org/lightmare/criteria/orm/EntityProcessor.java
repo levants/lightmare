@@ -61,7 +61,7 @@ public class EntityProcessor {
     }
 
     /**
-     * Sets {@link Field} by name to passed wrapper
+     * Sets {@link java.lang.reflect.Field} by name to passed wrapper
      * 
      * @param tuple
      * @throws IOException
@@ -75,7 +75,8 @@ public class EntityProcessor {
     }
 
     /**
-     * Sets {@link Method} and {@link Field} by names to passed wrapper
+     * Sets {@link java.lang.reflect.Method} and {@link java.lang.reflect.Field}
+     * by names to passed wrapper
      * 
      * @param tuple
      * @throws IOException
@@ -91,7 +92,8 @@ public class EntityProcessor {
     }
 
     /**
-     * Sets {@link Class}, {@link Method} and {@link Field} by names to wrapper
+     * Sets {@link Class}, {@link java.lang.reflect.Method} and
+     * {@link java.lang.reflect.Field} by names to wrapper
      * 
      * @param tuple
      * @throws IOException
