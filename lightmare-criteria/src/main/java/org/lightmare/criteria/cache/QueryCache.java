@@ -39,8 +39,10 @@ public class QueryCache {
     // Cache for query containers
     private static final ConcurrentHashMap<String, QueryTuple> QUERIES = new ConcurrentHashMap<>();
 
+    // Cache key prefix for lambda expression
     private static final String PREFIX = "LAMBDA:";
 
+    // Cache key delimiter for lambda expression
     private static final String DELIM = ":";
 
     /**
@@ -61,6 +63,12 @@ public class QueryCache {
         return key;
     }
 
+    /**
+     * Gets appropriated {@link QueryTuple} from cache by key
+     * 
+     * @param key
+     * @return {@link QueryTuple} from cache
+     */
     public static QueryTuple getQuery(String key) {
         return QUERIES.get(key);
     }
@@ -75,10 +83,22 @@ public class QueryCache {
         return tuple;
     }
 
+    /**
+     * Caches {@link QueryTuple} by key
+     * 
+     * @param key
+     * @param value
+     */
     public static void putQuery(String key, QueryTuple value) {
         QUERIES.putIfAbsent(key, value);
     }
 
+    /**
+     * Caches {@link QueryTuple} by {@link LambdaInfo} instance
+     * 
+     * @param lambda
+     * @param value
+     */
     public static void putQuery(LambdaInfo lambda, QueryTuple value) {
         String key = generateKey(lambda);
         putQuery(key, value);

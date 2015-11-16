@@ -46,6 +46,7 @@ public class MethodCache {
     // Cache for method instructions
     private static final ConcurrentMap<String, List<MethodNode>> METHOD_NODES = new ConcurrentHashMap<>();
 
+    // Flags for method visitors
     private static final int ZERO_FLAGS = 0;
 
     /**

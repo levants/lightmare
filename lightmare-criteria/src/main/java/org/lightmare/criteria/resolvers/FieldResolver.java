@@ -83,7 +83,7 @@ public class FieldResolver {
     }
 
     /**
-     * Resolves entity name
+     * Resolves entity name from method owner
      * 
      * @param owner
      * @return {@link String} entity name
@@ -122,10 +122,11 @@ public class FieldResolver {
     }
 
     /**
-     * resolves argument {@link Type}s for method descriptor
+     * resolves argument {@link org.objectweb.asm.Type}s for method descriptor
      * 
      * @param desc
-     * @return {@link Type}[] array of argument {@link Type}s
+     * @return {@link org.objectweb.asm.Type}[] array of argument
+     *         {@link org.objectweb.asm.Type}s
      * @throws IOException
      */
     private static String[] resolveArgumentsTypes(String desc) throws IOException {
@@ -169,16 +170,16 @@ public class FieldResolver {
      * @param name
      * @return <code>boolean</code> validation result
      */
-    private static boolean valid(String desc, String name) {
+    private static boolean valid(String desc, String methodName) {
 
         boolean valid;
 
         Type methodType = Type.getMethodType(desc);
         Type returnType = methodType.getReturnType();
         Type[] argumentTypes = methodType.getArgumentTypes();
-        if (name.startsWith(GET)) {
+        if (methodName.startsWith(GET)) {
             valid = validGetter(returnType, argumentTypes);
-        } else if (name.startsWith(SET)) {
+        } else if (methodName.startsWith(SET)) {
             valid = validSetter(returnType, argumentTypes);
         } else {
             valid = Boolean.FALSE;
@@ -188,7 +189,8 @@ public class FieldResolver {
     }
 
     /**
-     * Sets reflection meta data to passed tuple
+     * Sets reflection data ( {@link java.lang.reflect.Method},
+     * {@link java.lang.reflect.Field} etc ) to tuple
      * 
      * @param tuple
      * @throws IOException
@@ -213,12 +215,12 @@ public class FieldResolver {
         QueryTuple tuple;
 
         String desc = node.desc;
-        String name = node.name;
-        if (valid(desc, name)) {
-            String fieldName = resolveFieldName(name);
+        String methodName = node.name;
+        if (valid(desc, methodName)) {
+            String fieldName = resolveFieldName(methodName);
             String entityName = resolveEntityName(node.owner);
             String[] arguments = resolveArgumentsTypes(desc);
-            tuple = new QueryTuple(entityName, name, arguments, fieldName);
+            tuple = QueryTuple.of(entityName, methodName, arguments, fieldName);
             setMetaData(tuple);
         } else {
             tuple = null;
@@ -264,7 +266,8 @@ public class FieldResolver {
     }
 
     /**
-     * Gets entity name from {@link MethodNode} es its first variable
+     * Gets entity name from {@link org.objectweb.asm.tree.MethodNode} as its
+     * first variable
      * 
      * @param node
      * @return {@link String} entity name
@@ -285,7 +288,8 @@ public class FieldResolver {
     }
 
     /**
-     * Resolves field name from instruction instance
+     * Resolves field name from {@link org.objectweb.asm.tree.MethodNode}
+     * instance
      * 
      * @param instruction
      * @param verbose
@@ -302,8 +306,31 @@ public class FieldResolver {
             String fieldName = resolveFieldName(name);
             String entityName = resolveEntityName(node);
             String[] arguments = resolveArgumentsTypes(desc);
-            tuple = new QueryTuple(entityName, name, arguments, fieldName);
+            tuple = QueryTuple.of(entityName, name, arguments, fieldName);
             setMetaData(tuple);
+        } else {
+            tuple = null;
+        }
+
+        return tuple;
+    }
+
+    /**
+     * Validates if {@link org.objectweb.asm.tree.AbstractInsnNode} is instance
+     * of {@link MethodInsnNode} then resolves appropriated {@link QueryTuple}
+     * from it
+     * 
+     * @param instruction
+     * @return
+     * @throws IOException
+     */
+    private static QueryTuple validateAndResolve(AbstractInsnNode instruction) throws IOException {
+
+        QueryTuple tuple;
+
+        if (instruction instanceof MethodInsnNode) {
+            MethodInsnNode node = ObjectUtils.cast(instruction);
+            tuple = resolve(node);
         } else {
             tuple = null;
         }
@@ -326,10 +353,7 @@ public class FieldResolver {
         int size = instructions.size();
         for (int i = FIRST; (i < size && tuple == null); ++i) {
             AbstractInsnNode instruction = instructions.get(i);
-            if (instruction instanceof MethodInsnNode) {
-                MethodInsnNode node = ObjectUtils.cast(instruction);
-                tuple = resolve(node);
-            }
+            tuple = validateAndResolve(instruction);
         }
 
         return tuple;
@@ -354,7 +378,8 @@ public class FieldResolver {
     }
 
     /**
-     * Resolves entity parameters from {@link MethodNode} and instructions
+     * Resolves entity parameters from {@link org.objectweb.asm.tree.MethodNode}
+     * and instructions
      * 
      * @param methodNode
      * @return {@link QueryTuple} from method

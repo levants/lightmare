@@ -64,12 +64,26 @@ public class QueryTuple implements Serializable {
 
     private static final String FORMATTER = "%s %s %s";
 
-    public QueryTuple(final String entityName, final String methodName, final String[] arguments,
+    protected QueryTuple(final String entityName, final String methodName, final String[] arguments,
             final String fieldName) {
         this.entityName = entityName;
         this.methodName = methodName;
         this.arguments = arguments;
         this.fieldName = fieldName;
+    }
+
+    /**
+     * Initializes {@link QueryTuple} by method description
+     * 
+     * @param entityName
+     * @param methodName
+     * @param arguments
+     * @param fieldName
+     * @return {@link QueryTuple} instance
+     */
+    public static QueryTuple of(final String entityName, final String methodName, final String[] arguments,
+            final String fieldName) {
+        return new QueryTuple(entityName, methodName, arguments, fieldName);
     }
 
     public String getEntityName() {

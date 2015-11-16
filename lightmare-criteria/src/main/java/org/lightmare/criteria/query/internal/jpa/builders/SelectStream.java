@@ -27,7 +27,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Utility class to construct SELECT by fields
+ * Utility class to construct SELECT clause by fields
  * 
  * @author Levan Tsinadze
  *
@@ -46,7 +46,7 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         this.body.append(stream.body);
         this.orderBy.append(stream.orderBy);
         this.groupBy.append(stream.groupBy);
-        this.countFields = stream.countFields;
+        this.aggregateFields = stream.aggregateFields;
         this.parameters.addAll(stream.parameters);
     }
 

@@ -40,10 +40,23 @@ public class ParameterTuple {
 
     private static final String TO_TEXT_FORMAT = "%s : %s";
 
-    public ParameterTuple(final String name, final Object value, final TemporalType temporalType) {
+    protected ParameterTuple(final String name, final Object value, final TemporalType temporalType) {
         this.name = name;
         this.value = value;
         this.temporalType = temporalType;
+    }
+
+    /**
+     * Initializes {@link ParameterTuple} by parameter name, value and
+     * {@link javax.persistence.TemporalType} instance
+     * 
+     * @param name
+     * @param value
+     * @param temporalType
+     * @return {@link ParameterTuple} instance
+     */
+    public static ParameterTuple of(final String name, final Object value, final TemporalType temporalType) {
+        return new ParameterTuple(name, value, temporalType);
     }
 
     public ParameterTuple(final String name, final Object value) {

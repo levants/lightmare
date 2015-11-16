@@ -38,12 +38,12 @@ import java.util.List;
 abstract class AbstractAnnotationUtils extends AbstractMemberUtils {
 
     /**
-     * Gets {@link List} of all {@link Method}s from passed class annotated with
-     * specified annotation
+     * Gets {@link java.util.List} of all {@link java.lang.reflect.Method}s from
+     * passed class annotated with specified annotation
      *
      * @param type
      * @param annotationType
-     * @return {@link List}<Method>
+     * @return {@link java.util.List}<Method>
      * @throws IOException
      */
     public static List<Method> getAnnotatedMethods(Class<?> type, Class<? extends Annotation> annotationType)
@@ -58,12 +58,12 @@ abstract class AbstractAnnotationUtils extends AbstractMemberUtils {
     }
 
     /**
-     * Gets {@link List} of all {@link Field}s from passed class annotated with
-     * specified annotation
+     * Gets {@link java.util.List} of all {@link java.lang.reflect.Field}s from
+     * passed class annotated with specified annotation
      *
      * @param type
      * @param annotationType
-     * @return {@link List}<Field>
+     * @return {@link java.util.List}<Field>
      * @throws IOException
      */
     public static List<Field> getAnnotatedFields(Class<?> type, Class<? extends Annotation> annotationType)

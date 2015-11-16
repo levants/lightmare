@@ -25,7 +25,8 @@ package org.lightmare.criteria.tuples;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Extension of {@link QueryTuple} for embedded entity fields resolving
+ * Extension of {@link org.lightmare.criteria.tuples.QueryTuple} for embedded
+ * entity fields resolving
  * 
  * @author Levan Tsinadze
  *
@@ -36,13 +37,26 @@ public class EmbeddedTuple extends QueryTuple {
 
     private final String embeddedName;
 
-    public EmbeddedTuple(final QueryTuple tuple, final String embeddedName) {
+    protected EmbeddedTuple(final QueryTuple tuple, final String embeddedName) {
         super(tuple.getEntityName(), tuple.getMethodName(), tuple.getArguments(), tuple.getFieldName());
         setEntityType(tuple.getEntityType());
         setMethod(tuple.getMethod());
         setField(tuple.getField());
         setAlias(tuple.getAlias());
         this.embeddedName = embeddedName;
+    }
+
+    /**
+     * Initializes {@link EmbeddedTuple} by
+     * {@link org.lightmare.criteria.tuples.QueryTuple} and embedded or related
+     * entity field name
+     * 
+     * @param tuple
+     * @param embeddedName
+     * @return {@link EmbeddedTuple} instance
+     */
+    public static EmbeddedTuple of(final QueryTuple tuple, final String embeddedName) {
+        return new EmbeddedTuple(tuple, embeddedName);
     }
 
     @Override

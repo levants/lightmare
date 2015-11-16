@@ -25,14 +25,13 @@ package org.lightmare.criteria.orm;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Collection;
 
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Resolves generic type of {@link Collection} field
+ * Resolves generic type from {@link java.util.Collection} field
  * 
  * @author Levan Tsinadze
  *

@@ -70,7 +70,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
     protected final StringBuilder sql = new StringBuilder();
 
-    protected Set<String> countFields;
+    protected Set<String> aggregateFields;
 
     protected AbstractAppenderStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
@@ -317,7 +317,6 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param field
      */
     private void addSelectField(Serializable field) {
-
         QueryTuple tuple = compose(field);
         appendFieldName(tuple, columns);
     }
@@ -385,7 +384,6 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     }
 
     private void addOrderByField(String dir, Serializable field) {
-
         QueryTuple tuple = compose(field);
         appendOrderBy(tuple, dir);
     }
@@ -457,10 +455,10 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
     private void clearCountFields() {
 
-        if (countFields == null) {
-            countFields = new HashSet<>();
+        if (aggregateFields == null) {
+            aggregateFields = new HashSet<>();
         } else {
-            countFields.clear();
+            aggregateFields.clear();
         }
     }
 
@@ -468,7 +466,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
         QueryTuple tuple = compose(field);
         clearCountFields();
-        countFields.add(tuple.getFieldName());
+        aggregateFields.add(tuple.getFieldName());
     }
 
     protected void removeNewLine() {
@@ -567,8 +565,8 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      */
     protected void appendCount(StringBuilder buffer) {
 
-        if (CollectionUtils.valid(countFields)) {
-            String countField = CollectionUtils.getFirst(countFields);
+        if (CollectionUtils.valid(aggregateFields)) {
+            String countField = CollectionUtils.getFirst(aggregateFields);
             StringUtils.clear(buffer);
             buffer.append(Filters.SELECT);
             buffer.append(Filters.COUNT);
