@@ -1,14 +1,13 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 /**
- * Text function methods
+ * Date and time function expressions
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
  *            entity type parameter
  */
-public interface TextFunction<T> {
+public interface DateFunction<T> {
 
-    
 }
