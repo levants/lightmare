@@ -27,7 +27,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Utility class to construct SELECT by fields
+ * Utility class to construct SELECT clause by fields
  * 
  * @author Levan Tsinadze
  *

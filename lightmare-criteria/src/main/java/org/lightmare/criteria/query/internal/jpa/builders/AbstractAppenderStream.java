@@ -317,7 +317,6 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param field
      */
     private void addSelectField(Serializable field) {
-
         QueryTuple tuple = compose(field);
         appendFieldName(tuple, columns);
     }
@@ -385,7 +384,6 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     }
 
     private void addOrderByField(String dir, Serializable field) {
-
         QueryTuple tuple = compose(field);
         appendOrderBy(tuple, dir);
     }

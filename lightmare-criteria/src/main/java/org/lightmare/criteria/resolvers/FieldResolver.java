@@ -312,6 +312,29 @@ public class FieldResolver {
     }
 
     /**
+     * Validates if {@link AbstractInsnNode} is instance of
+     * {@link MethodInsnNode} then resolves appropriated {@link QueryTuple} from
+     * it
+     * 
+     * @param instruction
+     * @return
+     * @throws IOException
+     */
+    private static QueryTuple validateAndResolve(AbstractInsnNode instruction) throws IOException {
+
+        QueryTuple tuple;
+
+        if (instruction instanceof MethodInsnNode) {
+            MethodInsnNode node = ObjectUtils.cast(instruction);
+            tuple = resolve(node);
+        } else {
+            tuple = null;
+        }
+
+        return tuple;
+    }
+
+    /**
      * Resolves appropriated instructions for field recognition
      * 
      * @param instructions
@@ -326,10 +349,7 @@ public class FieldResolver {
         int size = instructions.size();
         for (int i = FIRST; (i < size && tuple == null); ++i) {
             AbstractInsnNode instruction = instructions.get(i);
-            if (instruction instanceof MethodInsnNode) {
-                MethodInsnNode node = ObjectUtils.cast(instruction);
-                tuple = resolve(node);
-            }
+            validateAndResolve(instruction);
         }
 
         return tuple;
