@@ -45,8 +45,6 @@ for brackets there is two ways first is by opening and closing brackets with "op
 and second is with "brackets" method call
 ```java
   Person person = QueryProvider.select(em, Person.class)
-  			.set(Person::getMiddName, "newMiddName")
-  			.set(Person::getFirstName, "newFName")
   			.where()
   			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname").and()

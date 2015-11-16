@@ -46,7 +46,7 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         this.body.append(stream.body);
         this.orderBy.append(stream.orderBy);
         this.groupBy.append(stream.groupBy);
-        this.countFields = stream.countFields;
+        this.aggregateFields = stream.aggregateFields;
         this.parameters.addAll(stream.parameters);
     }
 
