@@ -105,7 +105,6 @@ public enum LambdaReferences {
      * @param cleaner
      */
     private static void setName(Thread cleaner) {
-
         String threadName = generateName(cleaner);
         cleaner.setName(threadName);
     }
@@ -142,7 +141,7 @@ public enum LambdaReferences {
      * 
      * @param lambdaType
      */
-    public void trace(Class<?> lambdaType) {
+    public void traceByType(Class<?> lambdaType) {
 
         startCleaner();
         LambdaReference reference = new LambdaReference(lambdaType, references);
@@ -152,9 +151,18 @@ public enum LambdaReferences {
     /**
      * Adds {@link LambdaReference} instance to be watched for finalization
      * 
+     * @param lambdaType
+     */
+    public static void trace(Class<?> lambdaType) {
+        INSTANCE.traceByType(lambdaType);
+    }
+
+    /**
+     * Adds {@link LambdaReference} instance to be watched for finalization
+     * 
      * @param lambda
      */
     public void traceByInstance(Object lambda) {
-        trace(lambda.getClass());
+        traceByType(lambda.getClass());
     }
 }

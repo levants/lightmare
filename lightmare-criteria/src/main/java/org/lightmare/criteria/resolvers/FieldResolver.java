@@ -169,16 +169,16 @@ public class FieldResolver {
      * @param name
      * @return <code>boolean</code> validation result
      */
-    private static boolean valid(String desc, String name) {
+    private static boolean valid(String desc, String methodName) {
 
         boolean valid;
 
         Type methodType = Type.getMethodType(desc);
         Type returnType = methodType.getReturnType();
         Type[] argumentTypes = methodType.getArgumentTypes();
-        if (name.startsWith(GET)) {
+        if (methodName.startsWith(GET)) {
             valid = validGetter(returnType, argumentTypes);
-        } else if (name.startsWith(SET)) {
+        } else if (methodName.startsWith(SET)) {
             valid = validSetter(returnType, argumentTypes);
         } else {
             valid = Boolean.FALSE;
@@ -213,12 +213,12 @@ public class FieldResolver {
         QueryTuple tuple;
 
         String desc = node.desc;
-        String name = node.name;
-        if (valid(desc, name)) {
-            String fieldName = resolveFieldName(name);
+        String methodName = node.name;
+        if (valid(desc, methodName)) {
+            String fieldName = resolveFieldName(methodName);
             String entityName = resolveEntityName(node.owner);
             String[] arguments = resolveArgumentsTypes(desc);
-            tuple = new QueryTuple(entityName, name, arguments, fieldName);
+            tuple = QueryTuple.of(entityName, methodName, arguments, fieldName);
             setMetaData(tuple);
         } else {
             tuple = null;
@@ -302,7 +302,7 @@ public class FieldResolver {
             String fieldName = resolveFieldName(name);
             String entityName = resolveEntityName(node);
             String[] arguments = resolveArgumentsTypes(desc);
-            tuple = new QueryTuple(entityName, name, arguments, fieldName);
+            tuple = QueryTuple.of(entityName, name, arguments, fieldName);
             setMetaData(tuple);
         } else {
             tuple = null;

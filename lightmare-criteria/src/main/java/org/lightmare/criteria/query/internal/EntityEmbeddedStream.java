@@ -63,7 +63,7 @@ public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
         if (parent.getEntityType().equals(temp.getEntityType())) {
             tuple = temp;
         } else {
-            tuple = new EmbeddedTuple(temp, embeddedName);
+            tuple = EmbeddedTuple.of(temp, embeddedName);
         }
 
         return tuple;

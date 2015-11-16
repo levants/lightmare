@@ -51,7 +51,7 @@ public class LambdaCache {
         String key = lambdaType.getName();
         QueryTuple existed = LAMBDAS.putIfAbsent(key, value);
         if (Objects.equals(value, existed)) {
-            LambdaReferences.INSTANCE.trace(lambdaType);
+            LambdaReferences.trace(lambdaType);
         }
     }
 

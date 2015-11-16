@@ -35,9 +35,20 @@ public class AliasTuple {
 
     private final int counter;
 
-    public AliasTuple(final String alias, final int counter) {
+    protected AliasTuple(final String alias, final int counter) {
         this.alias = alias;
         this.counter = counter;
+    }
+
+    /**
+     * Initializes {@link AliasTuple} by alias name and counter to keep unique
+     * 
+     * @param alias
+     * @param counter
+     * @return {@link AliasTuple} instance
+     */
+    public static AliasTuple of(final String alias, final int counter) {
+        return new AliasTuple(alias, counter);
     }
 
     public String getAlias() {

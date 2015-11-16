@@ -223,8 +223,7 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
 
     @Override
     public void addParameter(String key, Object value, TemporalType temporalType) {
-
-        ParameterTuple parameter = new ParameterTuple(key, value, temporalType);
+        ParameterTuple parameter = ParameterTuple.of(key, value, temporalType);
         parameters.add(parameter);
     }
 
@@ -361,7 +360,7 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
         AliasTuple tuple;
 
         alias_counter++;
-        tuple = new AliasTuple(alias, alias_counter);
+        tuple = AliasTuple.of(alias, alias_counter);
 
         return tuple;
     }

@@ -36,13 +36,25 @@ public class EmbeddedTuple extends QueryTuple {
 
     private final String embeddedName;
 
-    public EmbeddedTuple(final QueryTuple tuple, final String embeddedName) {
+    protected EmbeddedTuple(final QueryTuple tuple, final String embeddedName) {
         super(tuple.getEntityName(), tuple.getMethodName(), tuple.getArguments(), tuple.getFieldName());
         setEntityType(tuple.getEntityType());
         setMethod(tuple.getMethod());
         setField(tuple.getField());
         setAlias(tuple.getAlias());
         this.embeddedName = embeddedName;
+    }
+
+    /**
+     * Initializes {@link EmbeddedTuple} by {@link QueryTuple} and embedded or
+     * related entity field name
+     * 
+     * @param tuple
+     * @param embeddedName
+     * @return {@link EmbeddedTuple} instance
+     */
+    public static EmbeddedTuple of(final QueryTuple tuple, final String embeddedName) {
+        return new EmbeddedTuple(tuple, embeddedName);
     }
 
     @Override
