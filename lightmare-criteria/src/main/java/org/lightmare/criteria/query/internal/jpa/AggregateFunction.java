@@ -23,6 +23,8 @@ public interface AggregateFunction<T> {
      */
     <N extends Number> QueryStream<Double> avg(EntityField<T, N> field);
 
+    <N extends Number> QueryStream<Object[]> avg(EntityField<T, N> field, GroupByConsumer<T> consumer);
+
     /**
      * Create an aggregate expression applying the SUM operation.
      *
@@ -32,6 +34,8 @@ public interface AggregateFunction<T> {
      * @return sum expression
      */
     <N extends Number> QueryStream<N> sum(EntityField<T, N> field);
+
+    <N extends Number> QueryStream<Object[]> sum(EntityField<T, N> field, GroupByConsumer<T> consumer);
 
     /**
      * Create an aggregate expression applying the sum operation to an
@@ -65,6 +69,8 @@ public interface AggregateFunction<T> {
      */
     <N extends Number> QueryStream<N> max(EntityField<T, N> field);
 
+    <N extends Number> QueryStream<Object[]> max(EntityField<T, N> field, GroupByConsumer<T> consumer);
+
     /**
      * Create an aggregate expression applying the numerical min operation.
      *
@@ -74,6 +80,8 @@ public interface AggregateFunction<T> {
      * @return min expression
      */
     <N extends Number> QueryStream<N> min(EntityField<T, N> field);
+
+    <N extends Number> QueryStream<Object[]> min(EntityField<T, N> field, GroupByConsumer<T> consumer);
 
     /**
      * Create an aggregate expression for finding the greatest of the values
@@ -86,6 +94,8 @@ public interface AggregateFunction<T> {
      */
     <C extends Comparable<? super C>> QueryStream<C> greatest(EntityField<T, C> field);
 
+    <N extends Number> QueryStream<Object[]> greatest(EntityField<T, N> field, GroupByConsumer<T> consumer);
+
     /**
      * Create an aggregate expression for finding the least of the values
      * (strings, dates, etc).
@@ -96,6 +106,8 @@ public interface AggregateFunction<T> {
      * @return least expression
      */
     <C extends Comparable<? super C>> QueryStream<C> least(EntityField<T, C> field);
+
+    <N extends Number> QueryStream<Object[]> least(EntityField<T, N> field, GroupByConsumer<T> consumer);
 
     /**
      * Create an aggregate expression applying the count operation.
