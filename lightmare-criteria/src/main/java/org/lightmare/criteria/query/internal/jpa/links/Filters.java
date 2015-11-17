@@ -32,10 +32,6 @@ public interface Filters {
 
     String SELECT = "select ";
 
-    String COUNT = "count(";
-
-    String CLOSE_COUNT = ")";
-
     String FROM = " from ";
 
     String AS = " as ";

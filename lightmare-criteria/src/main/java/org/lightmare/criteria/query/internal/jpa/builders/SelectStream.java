@@ -66,7 +66,7 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         String value;
 
         clearSql();
-        appendCount(count);
+        appendAggregate(count);
         appendFromClause(realEntityType, alias, columns);
         validateAndCommaCount();
         count.append(columns);

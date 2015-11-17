@@ -33,6 +33,7 @@ import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractGroupByStream;
+import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.query.internal.jpa.links.Joins;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Orders;
@@ -134,7 +135,7 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
     @Override
     public <F> QueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer) {
 
-        oppCount(field);
+        oppAggregate(field, Aggregates.COUNT);
         acceptConsumer(consumer, this);
 
         return this.selectStream;

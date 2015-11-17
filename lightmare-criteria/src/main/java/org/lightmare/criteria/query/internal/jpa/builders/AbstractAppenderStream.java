@@ -24,18 +24,19 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Stack;
 
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Filters;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Orders;
 import org.lightmare.criteria.query.internal.jpa.links.Parts;
+import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -70,7 +71,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
     protected final StringBuilder sql = new StringBuilder();
 
-    protected Set<String> aggregateFields;
+    protected Stack<AggregateTuple> aggregateFields;
 
     protected AbstractAppenderStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
@@ -456,17 +457,17 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     private void clearCountFields() {
 
         if (aggregateFields == null) {
-            aggregateFields = new HashSet<>();
+            aggregateFields = new Stack<>();
         } else {
             aggregateFields.clear();
         }
     }
 
-    protected void oppCount(Serializable field) {
+    protected void oppAggregate(Serializable field, Aggregates aggregate) {
 
         QueryTuple tuple = compose(field);
         clearCountFields();
-        aggregateFields.add(tuple.getFieldName());
+        aggregateFields.push(AggregateTuple.of(tuple.getFieldName(), aggregate));
     }
 
     protected void removeNewLine() {
@@ -561,19 +562,17 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     }
 
     /**
-     * Generates COUNT query prefix
+     * Generates aggregate query prefix
      */
-    protected void appendCount(StringBuilder buffer) {
+    protected void appendAggregate(StringBuilder buffer) {
 
         if (CollectionUtils.valid(aggregateFields)) {
-            String countField = CollectionUtils.getFirst(aggregateFields);
+            AggregateTuple tuple = aggregateFields.peek();
+            String expression = tuple.expression();
             StringUtils.clear(buffer);
             buffer.append(Filters.SELECT);
-            buffer.append(Filters.COUNT);
-            buffer.append(alias);
-            buffer.append(StringUtils.DOT);
-            buffer.append(countField);
-            buffer.append(Filters.CLOSE_COUNT);
+            buffer.append(expression);
+            buffer.append(StringUtils.SPACE);
         }
     }
 
@@ -621,9 +620,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
         StringUtils.clear(count);
         count.append(Filters.SELECT);
-        count.append(Filters.COUNT);
-        count.append(alias);
-        count.append(Filters.CLOSE_COUNT);
+        count.append(Aggregates.COUNT.expression(alias));
         countBody();
     }
 

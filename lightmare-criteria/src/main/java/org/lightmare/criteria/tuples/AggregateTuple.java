@@ -24,6 +24,7 @@ package org.lightmare.criteria.tuples;
 
 import java.util.Objects;
 
+import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -36,23 +37,27 @@ public class AggregateTuple {
 
     private final String fieldName;
 
-    private final String expression;
+    private final Aggregates aggregate;
 
-    private AggregateTuple(final String fieldName, final String expression) {
+    private AggregateTuple(final String fieldName, final Aggregates aggregate) {
         this.fieldName = fieldName;
-        this.expression = expression;
+        this.aggregate = aggregate;
     }
 
-    public static AggregateTuple of(final String fieldName, final String expression) {
-        return new AggregateTuple(fieldName, expression);
+    public static AggregateTuple of(final String fieldName, final Aggregates aggregate) {
+        return new AggregateTuple(fieldName, aggregate);
     }
 
     public String getFieldName() {
         return fieldName;
     }
 
-    public String getExpression() {
-        return expression;
+    public Aggregates getAggregate() {
+        return aggregate;
+    }
+
+    public String expression() {
+        return aggregate.expression(fieldName);
     }
 
     /**
@@ -62,7 +67,7 @@ public class AggregateTuple {
      * @return <code>boolean</code> validation result
      */
     private boolean compareFields(AggregateTuple other) {
-        return (this.fieldName.equals(other.fieldName) && this.expression.equals(other.expression));
+        return (this.fieldName.equals(other.fieldName) && this.aggregate.key.equals(other.aggregate.key));
     }
 
     @Override
@@ -80,6 +85,6 @@ public class AggregateTuple {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.fieldName, this.expression);
+        return Objects.hash(this.fieldName, this.aggregate.key);
     }
 }
