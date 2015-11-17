@@ -27,11 +27,9 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.builders.AbstractGroupByStream;
-import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
+import org.lightmare.criteria.query.internal.jpa.builders.AbstractAggregateStream;
 import org.lightmare.criteria.query.internal.jpa.links.Joins;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Orders;
@@ -48,7 +46,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
+public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
     protected EntityQueryStream(EntityManager em, Class<T> entityType, final String alias) {
         super(em, entityType, alias);
@@ -130,14 +128,15 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
 
     // =========================group by=====================================//
 
-    @Override
-    public <F> QueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer) {
-
-        oppAggregate(field, Aggregates.COUNT);
-        acceptConsumer(consumer, this);
-
-        return this.selectStream;
-    }
+    // @Override
+    // public <F> QueryStream<Object[]> count(EntityField<T, F> field,
+    // GroupByConsumer<T> consumer) {
+    //
+    // oppAggregate(field, Aggregates.COUNT);
+    // acceptConsumer(consumer, this);
+    //
+    // return this.selectStream;
+    // }
 
     // =========================Sub queries ===============//
 

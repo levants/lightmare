@@ -38,7 +38,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type parameter
  */
-public abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
+abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
 
     protected SelectStream<T, Object[]> selectStream;
 

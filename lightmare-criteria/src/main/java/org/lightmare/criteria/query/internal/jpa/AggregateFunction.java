@@ -39,7 +39,9 @@ public interface AggregateFunction<T> {
 
     <F> QueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function, GroupByConsumer<T> consumer);
 
-    <F, R extends Number> QueryStream<R> aggregate(EntityField<T, F> field, Aggregates function);
+    <F, R extends Number> QueryStream<R> aggregate(EntityField<T, F> field, Aggregates function, Class<R> type);
+
+    <N extends Number> QueryStream<N> aggregate(EntityField<T, N> field, Aggregates function);
 
     /**
      * Create an aggregate expression applying the AVG operation.
@@ -49,7 +51,7 @@ public interface AggregateFunction<T> {
      * @return AVG expression
      */
     default <N extends Number> QueryStream<Double> avg(EntityField<T, N> field) {
-        return aggregate(field, Aggregates.AVG);
+        return aggregate(field, Aggregates.AVG, Double.class);
     }
 
     default <N extends Number> QueryStream<Object[]> avg(EntityField<T, N> field, GroupByConsumer<T> consumer) {
@@ -147,10 +149,8 @@ public interface AggregateFunction<T> {
      * @return count expression
      */
     default <F> QueryStream<Long> count(EntityField<T, F> field) {
-        return aggregate(field, Aggregates.COUNT);
+        return aggregate(field, Aggregates.COUNT, Long.class);
     }
-
-    QueryStream<Long> count();
 
     /**
      * Create an aggregate expression applying the count distinct operation.
@@ -162,7 +162,7 @@ public interface AggregateFunction<T> {
      * @return count distinct expression
      */
     default <F> QueryStream<Long> countDistinct(EntityField<T, F> field) {
-        return aggregate(field, Aggregates.COUNT);
+        return aggregate(field, Aggregates.COUNT, Long.class);
     }
 
     default <F> QueryStream<Object[]> countDistinct(EntityField<T, F> field, GroupByConsumer<T> consumer) {

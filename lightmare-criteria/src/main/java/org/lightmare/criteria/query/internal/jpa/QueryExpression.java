@@ -23,7 +23,6 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
@@ -38,7 +37,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  *            entity type parameter
  */
 public interface QueryExpression<T> extends JPAQueryWrapper<T>, SelectExpression<T>, GroupExpression<T>,
-        JoinExpressions<T>, ResultStream<T>, SubQueryProcessor<T> {
+        JoinExpressions<T>, ResultStream<T>, SubQueryProcessor<T>, AggregateFunction<T> {
 
     /**
      * Gets wrapped entity {@link Class} instance
@@ -46,10 +45,6 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, SelectExpression
      * @return {@link Class} of entity type T
      */
     Class<T> getEntityType();
-
-    // =========================group by=====================================//
-
-    <F> QueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer);
 
     // =========================order=by=====================================//
 

@@ -21,7 +21,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @param <T>
  *            entity type parameter
  */
-abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T> {
+public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T> {
 
     protected Set<AggregateTuple> aggregateFields;
 
@@ -36,18 +36,60 @@ abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T> {
         }
     }
 
-    protected void oppAggregate(Serializable field, Aggregates aggregate) {
+    private void aggregateTuple(QueryTuple tuple, Aggregates aggregate) {
 
-        QueryTuple tuple = compose(field);
         initAggregateFields();
         AggregateTuple aggregateTuple = AggregateTuple.of(tuple, aggregate);
         aggregateFields.add(aggregateTuple);
     }
-    
-    @Override
-    public <F> QueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer) {
 
-        oppAggregate(field, Aggregates.COUNT);
+    protected void oppAggregate(Serializable field, Aggregates aggregate) {
+
+        QueryTuple tuple = compose(field);
+        aggregateTuple(tuple, aggregate);
+    }
+
+    private static <C> Class<C> getAggregateType(Class<C> type, QueryTuple tuple) {
+
+        Class<C> resulType;
+
+        if (type == null) {
+            resulType = tuple.getFieldType();
+        } else {
+            resulType = type;
+        }
+
+        return resulType;
+    }
+
+    @Override
+    public <F, R extends Number> QueryStream<R> aggregate(EntityField<T, F> field, Aggregates function, Class<R> type) {
+
+        QueryStream<R> stream;
+
+        QueryTuple tuple = compose(field);
+        aggregateTuple(tuple, function);
+        Class<R> selectType = getAggregateType(type, tuple);
+        stream = new SelectStream<>(this, selectType);
+
+        return stream;
+    }
+
+    @Override
+    public <N extends Number> QueryStream<N> aggregate(EntityField<T, N> field, Aggregates function) {
+
+        QueryStream<N> stream;
+
+        Class<N> type = null;
+        stream = aggregate(field, function, type);
+
+        return stream;
+    }
+
+    @Override
+    public <F> QueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function,
+            GroupByConsumer<T> consumer) {
+        oppAggregate(field, function);
         acceptConsumer(consumer, this);
 
         return this.selectStream;
