@@ -22,6 +22,10 @@
  */
 package org.lightmare.criteria.tuples;
 
+import java.util.Objects;
+
+import org.lightmare.criteria.utils.ObjectUtils;
+
 /**
  * Tuple for aggregate functions for GROUP and HAVING clauses
  * 
@@ -49,5 +53,33 @@ public class AggregateTuple {
 
     public String getExpression() {
         return expression;
+    }
+
+    /**
+     * Compares other {@link AggregateTuple} fields to current instance
+     * 
+     * @param other
+     * @return <code>boolean</code> validation result
+     */
+    private boolean compareFields(AggregateTuple other) {
+        return (this.fieldName.equals(other.fieldName) && this.expression.equals(other.expression));
+    }
+
+    @Override
+    public boolean equals(Object raw) {
+
+        boolean valid = (Objects.nonNull(raw) && (raw instanceof AggregateTuple));
+
+        if (valid) {
+            AggregateTuple other = ObjectUtils.cast(raw);
+            valid = (super.equals(raw) || (compareFields(other)));
+        }
+
+        return valid;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.fieldName, this.expression);
     }
 }

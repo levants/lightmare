@@ -88,53 +88,53 @@ public interface Expression<T> {
         return operate(field, value, Operators.NOT_EQ);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> gt(EntityField<T, ? extends F> field,
+    default <F extends Comparable<? super F>> QueryStream<T> gt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return operate(field, value, Operators.GREATER);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> greaterThen(EntityField<T, ? extends F> field,
+    default <F extends Comparable<? super F>> QueryStream<T> greaterThen(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return gt(field, value);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> lt(EntityField<T, ? extends F> field,
+    default <F extends Comparable<? super F>> QueryStream<T> lt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return operate(field, value, Operators.LESS);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> lessThen(EntityField<T, ? extends F> field,
+    default <F extends Comparable<? super F>> QueryStream<T> lessThen(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return lt(field, value);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> ge(EntityField<T, ? extends F> field,
+    default <F extends Comparable<? super F>> QueryStream<T> ge(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return operate(field, value, Operators.GREATER_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> greaterThenOrEqualTo(EntityField<T, ? extends F> field,
-            Comparable<? super F> value) {
+    default <F extends Comparable<? super F>> QueryStream<T> greaterThenOrEqualTo(
+            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
         return ge(field, value);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> le(EntityField<T, ? extends F> field,
+    default <F extends Comparable<? super F>> QueryStream<T> le(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return operate(field, value, Operators.LESS_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> lessThenOrEqualTo(EntityField<T, ? extends F> field,
-            Comparable<? super F> value) {
+    default <F extends Comparable<? super F>> QueryStream<T> lessThenOrEqualTo(
+            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
         return le(field, value);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> between(EntityField<T, ? extends F> field,
+    default <F extends Comparable<? super F>> QueryStream<T> between(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value1, Comparable<? super F> value2) {
         return operate(field, value1, value2, Operators.BETWEEN);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> notBetween(EntityField<T, ? extends F> field, F value1,
-            F value2) {
+    default <F extends Comparable<? super F>> QueryStream<T> notBetween(EntityField<T, Comparable<? super F>> field,
+            F value1, F value2) {
         return operate(field, value1, value2, Operators.NOT_BETWEEN);
     }
 

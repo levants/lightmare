@@ -71,53 +71,53 @@ public interface ColumnExpression<T> {
         return operate(field1, field2, Operators.NOT_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> gt(EntityField<T, ? extends F> field1,
-            EntityField<S, ? extends F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> gt(EntityField<T, Comparable<? super F>> field1,
+            EntityField<S, Comparable<? super F>> field2) {
         return operate(field1, field2, Operators.GREATER);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThen(EntityField<T, ? extends F> field1,
-            EntityField<S, ? extends F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThen(
+            EntityField<T, Comparable<? super F>> field1, EntityField<S, Comparable<? super F>> field2) {
         return gt(field1, field2);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lt(EntityField<T, ? extends F> field1,
-            EntityField<S, ? extends F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> lt(EntityField<T, Comparable<? super F>> field1,
+            EntityField<S, Comparable<? super F>> field2) {
         return operate(field1, field2, Operators.LESS);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lessThen(EntityField<T, ? extends F> field1,
-            EntityField<S, ? extends F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> lessThen(EntityField<T, Comparable<? super F>> field1,
+            EntityField<S, Comparable<? super F>> field2) {
         return lt(field1, field2);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> ge(EntityField<T, ? extends F> field1,
-            EntityField<S, ? extends F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> ge(EntityField<T, Comparable<? super F>> field1,
+            EntityField<S, Comparable<? super F>> field2) {
         return operate(field1, field2, Operators.GREATER_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenOrEqualTo(EntityField<T, ? extends F> field1,
-            EntityField<S, ? extends F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenOrEqualTo(
+            EntityField<T, Comparable<? super F>> field1, EntityField<S, Comparable<? super F>> field2) {
         return ge(field1, field2);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> le(EntityField<T, ? extends F> field1,
-            EntityField<S, ? extends F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> le(EntityField<T, Comparable<? super F>> field1,
+            EntityField<S, Comparable<? super F>> field2) {
         return operate(field1, field2, Operators.LESS_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lessThenOrEqualTo(EntityField<T, ? extends F> field1,
-            EntityField<S, ? extends F> field2) {
+    default <F extends Comparable<? super F>, S> QueryStream<T> lessThenOrEqualTo(
+            EntityField<T, Comparable<? super F>> field1, EntityField<S, Comparable<? super F>> field2) {
         return le(field1, field2);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> between(EntityField<T, ? extends F> field1,
-            EntityField<T, ? extends F> field2, EntityField<T, F> field3) {
+    default <F extends Comparable<? super F>> QueryStream<T> between(EntityField<T, Comparable<? super F>> field1,
+            EntityField<T, Comparable<? super F>> field2, EntityField<T, F> field3) {
         return operate(field1, field2, field3, Operators.BETWEEN);
     }
 
-    default <F> QueryStream<T> notBetween(EntityField<T, ? extends F> field1, EntityField<T, ? extends F> field2,
-            EntityField<T, F> field3) {
+    default <F> QueryStream<T> notBetween(EntityField<T, Comparable<? super F>> field1,
+            EntityField<T, Comparable<? super F>> field2, EntityField<T, F> field3) {
         return operate(field1, field2, field3, Operators.NOT_BETWEEN);
     }
 
