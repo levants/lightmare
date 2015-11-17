@@ -24,7 +24,8 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Stack;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -71,10 +72,19 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
     protected final StringBuilder sql = new StringBuilder();
 
-    protected Stack<AggregateTuple> aggregateFields;
+    protected Set<AggregateTuple> aggregateFields;
 
     protected AbstractAppenderStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
+    }
+
+    /**
+     * Adds new line to parameter
+     * 
+     * @param buff
+     */
+    protected static void newLine(StringBuilder buff) {
+        buff.append(StringUtils.NEWLINE);
     }
 
     /**
@@ -454,20 +464,19 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
-    private void clearCountFields() {
+    private void initAggregateFields() {
 
         if (aggregateFields == null) {
-            aggregateFields = new Stack<>();
-        } else {
-            aggregateFields.clear();
+            aggregateFields = new HashSet<>();
         }
     }
 
     protected void oppAggregate(Serializable field, Aggregates aggregate) {
 
         QueryTuple tuple = compose(field);
-        clearCountFields();
-        aggregateFields.push(AggregateTuple.of(tuple.getFieldName(), aggregate));
+        initAggregateFields();
+        AggregateTuple aggregateTuple = AggregateTuple.of(tuple.getFieldName(), aggregate);
+        aggregateFields.add(aggregateTuple);
     }
 
     protected void removeNewLine() {
@@ -563,16 +572,25 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
     /**
      * Generates aggregate query prefix
+     * 
+     * @param buffer
+     */
+    private void appendAggregateFields(AggregateTuple tuple, StringBuilder buffer) {
+
+        String expression = tuple.expression();
+        StringUtils.clear(buffer);
+        buffer.append(Filters.SELECT);
+        buffer.append(expression);
+        buffer.append(StringUtils.SPACE);
+    }
+
+    /**
+     * Generates aggregate query prefix
      */
     protected void appendAggregate(StringBuilder buffer) {
 
         if (CollectionUtils.valid(aggregateFields)) {
-            AggregateTuple tuple = aggregateFields.peek();
-            String expression = tuple.expression();
-            StringUtils.clear(buffer);
-            buffer.append(Filters.SELECT);
-            buffer.append(expression);
-            buffer.append(StringUtils.SPACE);
+            aggregateFields.forEach(tuple -> appendAggregateFields(tuple, buffer));
         }
     }
 

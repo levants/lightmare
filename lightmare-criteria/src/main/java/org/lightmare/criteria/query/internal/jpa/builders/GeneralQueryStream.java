@@ -125,15 +125,6 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
     }
 
     /**
-     * Adds new line to parameter
-     * 
-     * @param buff
-     */
-    protected static void newLine(StringBuilder buff) {
-        buff.append(StringUtils.NEWLINE);
-    }
-
-    /**
      * Adds query part to from clause
      * 
      * @param tuple
