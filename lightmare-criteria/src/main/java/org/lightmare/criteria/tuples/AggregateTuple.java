@@ -35,17 +35,20 @@ import org.lightmare.criteria.utils.ObjectUtils;
  */
 public class AggregateTuple {
 
+    private final QueryTuple tuple;
+
     private final String fieldName;
 
     private final Aggregates aggregate;
 
-    private AggregateTuple(final String fieldName, final Aggregates aggregate) {
-        this.fieldName = fieldName;
+    private AggregateTuple(final QueryTuple tuple, final Aggregates aggregate) {
+        this.tuple = tuple;
+        this.fieldName = tuple.getFieldName();
         this.aggregate = aggregate;
     }
 
-    public static AggregateTuple of(final String fieldName, final Aggregates aggregate) {
-        return new AggregateTuple(fieldName, aggregate);
+    public static AggregateTuple of(final QueryTuple tuple, final Aggregates aggregate) {
+        return new AggregateTuple(tuple, aggregate);
     }
 
     public String getFieldName() {

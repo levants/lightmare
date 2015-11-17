@@ -27,7 +27,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -271,6 +273,21 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
         oppWithParameter(tuple, value1, buffer);
         appendBody(Clauses.AND);
         oppWithParameter(tuple, value2, buffer);
+    }
+
+    // ============================= Consumer=Operators======================//
+
+    /**
+     * Validates and calls sub query stream methods
+     * 
+     * @param consumer
+     * @param subQuery
+     */
+    protected <S> void acceptConsumer(Consumer<S> consumer, S value) {
+
+        if (Objects.nonNull(consumer)) {
+            consumer.accept(value);
+        }
     }
 
     // ============================= Query parameters =======================//

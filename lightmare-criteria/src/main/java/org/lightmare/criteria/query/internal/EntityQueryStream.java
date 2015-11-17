@@ -23,8 +23,6 @@
 package org.lightmare.criteria.query.internal;
 
 import java.util.Collection;
-import java.util.Objects;
-import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
 
@@ -177,19 +175,6 @@ public abstract class EntityQueryStream<T> extends AbstractGroupByStream<T> {
         joinStream = joinStream(subType);
 
         return joinStream;
-    }
-
-    /**
-     * Validates and calls sub query stream methods
-     * 
-     * @param consumer
-     * @param subQuery
-     */
-    private <S> void acceptConsumer(Consumer<S> consumer, S value) {
-
-        if (Objects.nonNull(consumer)) {
-            consumer.accept(value);
-        }
     }
 
     /**

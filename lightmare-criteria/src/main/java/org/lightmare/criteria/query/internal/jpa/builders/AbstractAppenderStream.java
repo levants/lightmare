@@ -494,7 +494,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
         QueryTuple tuple = compose(field);
         initAggregateFields();
-        AggregateTuple aggregateTuple = AggregateTuple.of(tuple.getFieldName(), aggregate);
+        AggregateTuple aggregateTuple = AggregateTuple.of(tuple, aggregate);
         aggregateFields.add(aggregateTuple);
     }
 
