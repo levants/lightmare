@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.query.QueryStream;
 
 /**
@@ -34,6 +35,13 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type parameter
  */
 public interface GroupExpression<T> {
+
+    /**
+     * Generates HAVING clause for appropriated group by expression
+     * 
+     * @param consumer
+     */
+    void having(HavingConsumer<T> consumer);
 
     /**
      * Gets instant field by type

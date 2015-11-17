@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.query.internal.jpa;
 
+import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 
 /**
@@ -85,4 +86,14 @@ public interface HavingExpression<T> {
     default <N extends Number> HavingExpression<T> notBetween(N value1, N value2) {
         return operate(Operators.NOT_BETWEEN, value1, value2);
     }
+
+    HavingExpression<T> and();
+
+    HavingExpression<T> or();
+
+    HavingExpression<T> openBracket();
+
+    HavingExpression<T> closeBracket();
+
+    HavingExpression<T> brackets(HavingConsumer<T> consumer);
 }

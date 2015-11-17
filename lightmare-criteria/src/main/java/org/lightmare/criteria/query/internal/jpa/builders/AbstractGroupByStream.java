@@ -27,6 +27,7 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.query.QueryStream;
 
 /**
@@ -43,6 +44,11 @@ public abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<
 
     protected AbstractGroupByStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
+    }
+
+    @Override
+    public void having(HavingConsumer<T> consumer) {
+
     }
 
     /**

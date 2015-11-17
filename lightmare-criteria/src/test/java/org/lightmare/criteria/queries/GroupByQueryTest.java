@@ -28,4 +28,24 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             em.close();
         }
     }
+
+    @Test
+    @RunOrder(401)
+    public void groupWithHavingQueryTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Object[]> stream = QueryProvider.select(em, Person.class).where()
+                    .like(Person::getLastName, "lname")
+                    .count(Person::getPersonalNo, c -> c.groupBy(Person::getLastName, Person::getFirstName)
+                            .having(h -> h.greaterThenOrEqualTo(100)));
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
 }
