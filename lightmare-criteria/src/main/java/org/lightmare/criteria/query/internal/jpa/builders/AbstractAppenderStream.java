@@ -70,6 +70,8 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
     protected final StringBuilder orderBy = new StringBuilder();
 
+    protected final StringBuilder having = new StringBuilder();
+
     protected final StringBuilder sql = new StringBuilder();
 
     protected Set<AggregateTuple> aggregateFields;
@@ -207,8 +209,8 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param operators
      * @return <code>boolean</code> validation result
      */
-    private boolean validForOperator(String... operators) {
-        return (StringUtils.valid(body) && StringUtils.notEndsWithAll(body, operators));
+    private static boolean validForOperator(StringBuilder buffer, String... operators) {
+        return (StringUtils.valid(buffer) && StringUtils.notEndsWithAll(buffer, operators));
     }
 
     /**
@@ -216,18 +218,35 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * 
      * @return <code>boolean</code> validation result
      */
+    public boolean validateOperator(StringBuilder buffer) {
+        return validForOperator(buffer, Clauses.AND, Clauses.OR, Clauses.WHERE, Operators.OPEN_BRACKET);
+    }
+
     public boolean validateOperator() {
-        return validForOperator(Clauses.AND, Clauses.OR, Clauses.WHERE, Operators.OPEN_BRACKET);
+        return validateOperator(body);
+    }
+
+    protected static void appendAndOperator(StringBuilder buffer) {
+        buffer.append(Clauses.AND);
     }
 
     /**
-     * Append default boolean operator
+     * Appends default boolean operator to passed buffer
+     * 
+     * @param buffer
+     */
+    protected void appendOperator(StringBuilder buffer) {
+
+        if (validateOperator(buffer)) {
+            appendAndOperator(buffer);
+        }
+    }
+
+    /**
+     * Appends default boolean operator to query body
      */
     protected void appendOperator() {
-
-        if (validateOperator()) {
-            and();
-        }
+        appendOperator(body);
     }
 
     /**

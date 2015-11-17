@@ -33,6 +33,7 @@ import org.lightmare.criteria.utils.StringUtils;
 public enum Aggregates {
 
     COUNT("count"), // COUNT clause
+    COUNT_DISTINCT("count"), // COUNT DISTINCT clause
     AVG("avg"), // AVG clause
     GREATEST("greatest"), // GREATEST clause
     LEAST("least"), // LEAST clause
@@ -50,7 +51,22 @@ public enum Aggregates {
         this.key = key;
     }
 
+    /**
+     * Generates query expression for aggregate function
+     * 
+     * @param field
+     * @return {@link String} aggregate function on field name
+     */
     public String expression(String field) {
-        return StringUtils.concat(key, OPEN, field, CLOSE);
+
+        String value;
+
+        if (this.key.equals(COUNT_DISTINCT.key)) {
+            value = StringUtils.concat(key, OPEN, Filters.DISTINCT, field, CLOSE);
+        } else {
+            value = StringUtils.concat(key, OPEN, field, CLOSE);
+        }
+
+        return value;
     }
 }

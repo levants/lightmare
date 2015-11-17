@@ -32,6 +32,8 @@ public interface Filters {
 
     String SELECT = "select ";
 
+    String DISTINCT = "distinct ";
+
     String FROM = " from ";
 
     String AS = " as ";

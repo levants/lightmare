@@ -25,6 +25,7 @@ package org.lightmare.criteria.query.internal.jpa;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 
 /**
  * Aggregate functions for JPA query language
@@ -36,6 +37,10 @@ import org.lightmare.criteria.query.QueryStream;
  */
 public interface AggregateFunction<T> {
 
+    <F> QueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function, GroupByConsumer<T> consumer);
+
+    <F, R extends Number> QueryStream<R> aggregate(EntityField<T, F> field, Aggregates function);
+
     /**
      * Create an aggregate expression applying the AVG operation.
      *
@@ -43,9 +48,13 @@ public interface AggregateFunction<T> {
      *
      * @return AVG expression
      */
-    <N extends Number> QueryStream<Double> avg(EntityField<T, N> field);
+    default <N extends Number> QueryStream<Double> avg(EntityField<T, N> field) {
+        return aggregate(field, Aggregates.AVG);
+    }
 
-    <N extends Number> QueryStream<Object[]> avg(EntityField<T, N> field, GroupByConsumer<T> consumer);
+    default <N extends Number> QueryStream<Object[]> avg(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+        return aggregate(field, Aggregates.AVG, consumer);
+    }
 
     /**
      * Create an aggregate expression applying the SUM operation.
@@ -55,31 +64,13 @@ public interface AggregateFunction<T> {
      *
      * @return sum expression
      */
-    <N extends Number> QueryStream<N> sum(EntityField<T, N> field);
+    default <N extends Number> QueryStream<N> sum(EntityField<T, N> field) {
+        return aggregate(field, Aggregates.SUM);
+    }
 
-    <N extends Number> QueryStream<Object[]> sum(EntityField<T, N> field, GroupByConsumer<T> consumer);
-
-    /**
-     * Create an aggregate expression applying the sum operation to an
-     * Integer-valued expression, returning a Long result.
-     *
-     * @param x
-     *            expression representing input value to sum operation
-     *
-     * @return sum expression
-     */
-    QueryStream<Long> sumAsLong(EntityField<T, Integer> field);
-
-    /**
-     * Create an aggregate expression applying the sum operation to a
-     * Float-valued expression, returning a Double result.
-     *
-     * @param x
-     *            expression representing input value to sum operation
-     *
-     * @return sum expression
-     */
-    QueryStream<Double> sumAsDouble(EntityField<T, Float> field);
+    default <N extends Number> QueryStream<Object[]> sum(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+        return aggregate(field, Aggregates.SUM, consumer);
+    }
 
     /**
      * Create an aggregate expression applying the numerical max operation.
@@ -89,9 +80,13 @@ public interface AggregateFunction<T> {
      *
      * @return max expression
      */
-    <N extends Number> QueryStream<N> max(EntityField<T, N> field);
+    default <N extends Number> QueryStream<N> max(EntityField<T, N> field) {
+        return aggregate(field, Aggregates.MAX);
+    }
 
-    <N extends Number> QueryStream<Object[]> max(EntityField<T, N> field, GroupByConsumer<T> consumer);
+    default <N extends Number> QueryStream<Object[]> max(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+        return aggregate(field, Aggregates.MAX, consumer);
+    }
 
     /**
      * Create an aggregate expression applying the numerical min operation.
@@ -101,9 +96,13 @@ public interface AggregateFunction<T> {
      *
      * @return min expression
      */
-    <N extends Number> QueryStream<N> min(EntityField<T, N> field);
+    default <N extends Number> QueryStream<N> min(EntityField<T, N> field) {
+        return aggregate(field, Aggregates.MIN);
+    }
 
-    <N extends Number> QueryStream<Object[]> min(EntityField<T, N> field, GroupByConsumer<T> consumer);
+    default <N extends Number> QueryStream<Object[]> min(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+        return aggregate(field, Aggregates.MIN, consumer);
+    }
 
     /**
      * Create an aggregate expression for finding the greatest of the values
@@ -114,9 +113,13 @@ public interface AggregateFunction<T> {
      *
      * @return greatest expression
      */
-    <C extends Comparable<? super C>> QueryStream<C> greatest(EntityField<T, C> field);
+    default <N extends Number> QueryStream<N> greatest(EntityField<T, N> field) {
+        return aggregate(field, Aggregates.GREATEST);
+    }
 
-    <N extends Number> QueryStream<Object[]> greatest(EntityField<T, N> field, GroupByConsumer<T> consumer);
+    default <N extends Number> QueryStream<Object[]> greatest(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+        return aggregate(field, Aggregates.GREATEST, consumer);
+    }
 
     /**
      * Create an aggregate expression for finding the least of the values
@@ -127,9 +130,13 @@ public interface AggregateFunction<T> {
      *
      * @return least expression
      */
-    <C extends Comparable<? super C>> QueryStream<C> least(EntityField<T, C> field);
+    default <N extends Number> QueryStream<N> least(EntityField<T, N> field) {
+        return aggregate(field, Aggregates.LEAST);
+    }
 
-    <N extends Number> QueryStream<Object[]> least(EntityField<T, N> field, GroupByConsumer<T> consumer);
+    default <N extends Number> QueryStream<Object[]> least(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+        return aggregate(field, Aggregates.LEAST, consumer);
+    }
 
     /**
      * Create an aggregate expression applying the count operation.
@@ -139,9 +146,11 @@ public interface AggregateFunction<T> {
      *
      * @return count expression
      */
-    <F> QueryStream<Long> count(EntityField<T, F> field);
+    default <F> QueryStream<Long> count(EntityField<T, F> field) {
+        return aggregate(field, Aggregates.COUNT);
+    }
 
-    QueryStream<T> count();
+    QueryStream<Long> count();
 
     /**
      * Create an aggregate expression applying the count distinct operation.
@@ -152,7 +161,15 @@ public interface AggregateFunction<T> {
      *
      * @return count distinct expression
      */
-    <F> QueryStream<Long> countDistinct(EntityField<T, F> field);
+    default <F> QueryStream<Long> countDistinct(EntityField<T, F> field) {
+        return aggregate(field, Aggregates.COUNT);
+    }
 
-    <F> QueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer);
+    default <F> QueryStream<Object[]> countDistinct(EntityField<T, F> field, GroupByConsumer<T> consumer) {
+        return aggregate(field, Aggregates.COUNT_DISTINCT, consumer);
+    }
+
+    default <F> QueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer) {
+        return aggregate(field, Aggregates.COUNT, consumer);
+    }
 }
