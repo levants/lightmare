@@ -37,10 +37,36 @@ import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
  */
 public interface AggregateFunction<T> {
 
+    /**
+     * Operates with aggregate function and generates {@link QueryStream} for
+     * {@link Object} array as result
+     * 
+     * @param field
+     * @param function
+     * @param consumer
+     * @return {@link QueryStream} with grouping
+     */
     <F> QueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function, GroupByConsumer<T> consumer);
 
+    /**
+     * Operates with aggregate function and generates {@link QueryStream} for
+     * instant result type
+     * 
+     * @param field
+     * @param function
+     * @param type
+     * @return {@link QueryStream} with instant result type
+     */
     <F, R extends Number> QueryStream<R> aggregate(EntityField<T, F> field, Aggregates function, Class<R> type);
 
+    /**
+     * Operates with aggregate function and generates {@link QueryStream} for
+     * {@link Number} result type
+     * 
+     * @param field
+     * @param function
+     * @return {@link QueryStream} with {@link Number} result type
+     */
     <N extends Number> QueryStream<N> aggregate(EntityField<T, N> field, Aggregates function);
 
     /**

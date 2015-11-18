@@ -203,21 +203,31 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         return this;
     }
 
-    @Override
-    public <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
+    public <F, S> QueryStream<T> processComparator(EntityField<T, F> field, Class<S> subType, String operator,
+            QueryConsumer<S> consumer) {
 
         appendOperator();
-        appSubQuery(field, Operators.IN);
+        appSubQuery(field, operator);
         initSubQuery(subType, consumer);
 
         return this;
     }
 
     @Override
+    public <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
+        return processComparator(field, subType, Operators.IN, consumer);
+    }
+
+    @Override
     public <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
+        return processComparator(field, subType, Operators.NOT_IN, consumer);
+    }
+
+    private <F, S> QueryStream<T> processExists(Class<S> subType, String operator, QueryConsumer<S> consumer) {
 
         appendOperator();
-        appSubQuery(field, Operators.NOT_IN);
+        appendBody(operator);
+        openBracket();
         initSubQuery(subType, consumer);
 
         return this;
@@ -225,24 +235,12 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
     @Override
     public <F, S> QueryStream<T> exists(Class<S> subType, QueryConsumer<S> consumer) {
-
-        appendOperator();
-        appendBody(Operators.EXISTS);
-        openBracket();
-        initSubQuery(subType, consumer);
-
-        return this;
+        return processExists(subType, Operators.EXISTS, consumer);
     }
 
     @Override
     public <F, S> QueryStream<T> notExists(Class<S> subType, QueryConsumer<S> consumer) {
-
-        appendOperator();
-        appendBody(Operators.NOT_EXISTS);
-        openBracket();
-        initSubQuery(subType, consumer);
-
-        return this;
+        return processExists(subType, Operators.NOT_EXISTS, consumer);
     }
 
     // ===============================Joins==================================//
