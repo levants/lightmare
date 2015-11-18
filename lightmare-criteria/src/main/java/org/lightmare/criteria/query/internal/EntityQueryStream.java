@@ -126,20 +126,6 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         return this;
     }
 
-    // =========================group by=====================================//
-
-    // @Override
-    // public <F> QueryStream<Object[]> count(EntityField<T, F> field,
-    // GroupByConsumer<T> consumer) {
-    //
-    // oppAggregate(field, Aggregates.COUNT);
-    // acceptConsumer(consumer, this);
-    //
-    // return this.selectStream;
-    // }
-
-    // =========================Sub queries ===============//
-
     /**
      * Generates {@link SubQueryStream} for entity type
      * 

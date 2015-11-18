@@ -61,7 +61,7 @@ public enum Aggregates {
 
         String value;
 
-        if (this.key.equals(COUNT_DISTINCT.key)) {
+        if (this.equals(COUNT_DISTINCT)) {
             value = StringUtils.concat(key, OPEN, Filters.DISTINCT, field, CLOSE);
         } else {
             value = StringUtils.concat(key, OPEN, field, CLOSE);

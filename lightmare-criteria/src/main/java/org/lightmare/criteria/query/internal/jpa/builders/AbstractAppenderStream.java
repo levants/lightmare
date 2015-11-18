@@ -24,8 +24,6 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -37,7 +35,6 @@ import org.lightmare.criteria.query.internal.jpa.links.Filters;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Orders;
 import org.lightmare.criteria.query.internal.jpa.links.Parts;
-import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -73,8 +70,6 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     protected final StringBuilder having = new StringBuilder();
 
     protected final StringBuilder sql = new StringBuilder();
-
-    protected Set<AggregateTuple> aggregateFields;
 
     protected AbstractAppenderStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
@@ -209,8 +204,8 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param operators
      * @return <code>boolean</code> validation result
      */
-    private static boolean validForOperator(StringBuilder buffer, String... operators) {
-        return (StringUtils.valid(buffer) && StringUtils.notEndsWithAll(buffer, operators));
+    private boolean validForOperator(String... operators) {
+        return (StringUtils.valid(body) && StringUtils.notEndsWithAll(body, operators));
     }
 
     /**
@@ -218,35 +213,18 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * 
      * @return <code>boolean</code> validation result
      */
-    public boolean validateOperator(StringBuilder buffer) {
-        return validForOperator(buffer, Clauses.AND, Clauses.OR, Clauses.WHERE, Operators.OPEN_BRACKET);
-    }
-
     public boolean validateOperator() {
-        return validateOperator(body);
-    }
-
-    protected static void appendAndOperator(StringBuilder buffer) {
-        buffer.append(Clauses.AND);
+        return validForOperator(Clauses.AND, Clauses.OR, Clauses.WHERE, Operators.OPEN_BRACKET);
     }
 
     /**
      * Appends default boolean operator to passed buffer
-     * 
-     * @param buffer
-     */
-    protected void appendOperator(StringBuilder buffer) {
-
-        if (validateOperator(buffer)) {
-            appendAndOperator(buffer);
-        }
-    }
-
-    /**
-     * Appends default boolean operator to query body
      */
     protected void appendOperator() {
-        appendOperator(body);
+
+        if (validateOperator()) {
+            and();
+        }
     }
 
     /**
@@ -483,21 +461,6 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
-    private void initAggregateFields() {
-
-        if (aggregateFields == null) {
-            aggregateFields = new HashSet<>();
-        }
-    }
-
-    protected void oppAggregate(Serializable field, Aggregates aggregate) {
-
-        QueryTuple tuple = compose(field);
-        initAggregateFields();
-        AggregateTuple aggregateTuple = AggregateTuple.of(tuple, aggregate);
-        aggregateFields.add(aggregateTuple);
-    }
-
     protected void removeNewLine() {
 
         int last = body.length();
@@ -587,30 +550,6 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
     protected void clearSql() {
         StringUtils.clear(sql);
-    }
-
-    /**
-     * Generates aggregate query prefix
-     * 
-     * @param buffer
-     */
-    private void appendAggregateFields(AggregateTuple tuple, StringBuilder buffer) {
-
-        String expression = tuple.expression();
-        StringUtils.clear(buffer);
-        buffer.append(Filters.SELECT);
-        buffer.append(expression);
-        buffer.append(StringUtils.SPACE);
-    }
-
-    /**
-     * Generates aggregate query prefix
-     */
-    protected void appendAggregate(StringBuilder buffer) {
-
-        if (CollectionUtils.valid(aggregateFields)) {
-            aggregateFields.forEach(tuple -> appendAggregateFields(tuple, buffer));
-        }
     }
 
     /**

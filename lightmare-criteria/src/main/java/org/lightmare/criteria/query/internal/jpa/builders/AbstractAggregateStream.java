@@ -10,8 +10,11 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
+import org.lightmare.criteria.query.internal.jpa.links.Filters;
 import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Abstract class for aggregate functions
@@ -27,6 +30,10 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
 
     protected AbstractAggregateStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
+    }
+
+    protected Set<AggregateTuple> getAggregateFields() {
+        return aggregateFields;
     }
 
     private void initAggregateFields() {
@@ -60,6 +67,29 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
         }
 
         return resulType;
+    }
+
+    /**
+     * Generates aggregate query prefix
+     * 
+     * @param buffer
+     */
+    private void appendAggregateFields(AggregateTuple tuple, StringBuilder buffer) {
+
+        String expression = tuple.expression();
+        StringUtils.clear(buffer);
+        buffer.append(Filters.SELECT);
+        buffer.append(expression);
+    }
+
+    /**
+     * Generates aggregate query prefix
+     */
+    protected void appendAggregate(StringBuilder buffer) {
+
+        if (CollectionUtils.valid(aggregateFields)) {
+            aggregateFields.forEach(tuple -> appendAggregateFields(tuple, buffer));
+        }
     }
 
     @Override

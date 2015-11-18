@@ -25,6 +25,7 @@ public class EmbeddedQueryTest extends JoinQueryTest {
                     .like(Person::getLastName, "lname")
                     .embedded(Person::getInfo, c -> c.equal(PersonInfo::getCardNumber, "100100"));
             String sql = stream.sql();
+            System.out.println("===========JPA-QL==========");
             System.out.println(sql);
         } catch (Throwable ex) {
             ex.printStackTrace();
@@ -41,10 +42,11 @@ public class EmbeddedQueryTest extends JoinQueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .like(Person::getLastName, "lname")
+                    .like(Person::getLastName, "lname").or()
                     .embedded(Person::getInfo, c -> c.equal(PersonInfo::getCardNumber, Person::getPersonalNo)
                             .equal(PersonInfo::getNote, "100100"));
             String sql = stream.sql();
+            System.out.println("===========JPA-QL==========");
             System.out.println(sql);
         } catch (Throwable ex) {
             ex.printStackTrace();
@@ -66,6 +68,7 @@ public class EmbeddedQueryTest extends JoinQueryTest {
                             .equal(PersonInfo::getNote, PersonInfo::getCardNumber));
             Person person = stream.getFirst();
             String sql = stream.sql();
+            System.out.println("===========JPA-QL==========");
             System.out.println(sql);
             System.out.println(person);
         } catch (Throwable ex) {

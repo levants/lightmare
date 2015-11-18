@@ -22,9 +22,13 @@
  */
 package org.lightmare.criteria.query.internal.jpa.builders;
 
+import java.util.Set;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
+import org.lightmare.criteria.tuples.AggregateTuple;
 
 /**
  * Abstract class for lambda expression analyze and JPA query generator
@@ -39,6 +43,8 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
     protected AbstractQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
     }
+
+    protected abstract Set<AggregateTuple> getAggregateFields();
 
     /**
      * Creates {@link TypedQuery} from generated SQL for SELECT statements
