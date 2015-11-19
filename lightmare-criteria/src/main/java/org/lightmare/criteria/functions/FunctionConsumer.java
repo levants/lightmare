@@ -23,21 +23,21 @@
 package org.lightmare.criteria.functions;
 
 import java.io.Serializable;
-import java.util.function.Function;
+import java.util.function.Consumer;
+
+import org.lightmare.criteria.query.internal.jpa.JPAFunction;
 
 /**
- * Interface for entity getter method reference
+ * Consumer to process JPA query functional expressions
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
  *            entity type parameter
- * @param <F>
- *            field type parameter
  */
 @FunctionalInterface
-public interface EntityField<T, F> extends Function<T, F>, Serializable {
+public interface FunctionConsumer<T> extends Consumer<JPAFunction<T>>, Serializable {
 
     @Override
-    F apply(T value);
+    void accept(JPAFunction<T> function);
 }

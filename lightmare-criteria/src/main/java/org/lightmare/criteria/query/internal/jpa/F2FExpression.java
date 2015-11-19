@@ -20,24 +20,20 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.functions;
+package org.lightmare.criteria.query.internal.jpa;
 
-import java.io.Serializable;
-import java.util.function.Function;
+import org.lightmare.criteria.functions.FunctionConsumer;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
- * Interface for entity getter method reference
+ * Functional expression with other field functionlan expression
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
  *            entity type parameter
- * @param <F>
- *            field type parameter
  */
-@FunctionalInterface
-public interface EntityField<T, F> extends Function<T, F>, Serializable {
+interface F2FExpression<T> {
 
-    @Override
-    F apply(T value);
+    <S, F> QueryStream<T> operate(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String function);
 }

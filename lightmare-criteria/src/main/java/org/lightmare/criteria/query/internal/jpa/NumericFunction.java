@@ -33,7 +33,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type parameter
  */
-public interface NumericFunction<T> {
+interface NumericFunction<T> {
 
     /**
      * Create an expression that returns the arithmetic negation of its

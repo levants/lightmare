@@ -1,13 +1,13 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 /**
- * Date and time function expressions
+ * Processes functional expressions in JPA query
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
  *            entity type parameter
  */
-interface DateFunction<T> {
+public interface FunctionExpression<T> extends F2OExpression<T>, F2FExpression<T> {
 
 }

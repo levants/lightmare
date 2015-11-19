@@ -1,0 +1,84 @@
+/*
+ * Lightmare-criteria, JPA-QL query generator using lambda expressions
+ *
+ * Copyright (c) 2013, Levan Tsinadze, or third-party contributors as
+ * indicated by the @author tags or express copyright attribution
+ * statements applied by the authors.
+ *
+ * This copyrighted material is made available to anyone wishing to use, modify,
+ * copy, or redistribute it subject to the terms and conditions of the GNU
+ * Lesser General Public License, as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this distribution; if not, write to:
+ * Free Software Foundation, Inc.
+ * 51 Franklin Street, Fifth Floor
+ * Boston, MA  02110-1301  USA
+ */
+package org.lightmare.criteria.query.internal.jpa;
+
+import org.lightmare.criteria.functions.FunctionConsumer;
+import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Operators;
+
+/**
+ * Functional expression for JPA query
+ * 
+ * @author Levan Tsinadze
+ *
+ * @param <T>
+ *            entity type parameter
+ */
+interface F2OExpression<T> {
+
+    /**
+     * Operates with functional expression and parameter
+     * 
+     * @param function
+     * @param operator
+     * @param value
+     * @return {@link QueryStream} for current entity type
+     */
+    QueryStream<T> operate(FunctionConsumer<T> function, String operator, Object value);
+
+    default <F> QueryStream<T> equal(FunctionConsumer<T> function, Object value) {
+        return operate(function, Operators.EQ, value);
+    }
+
+    default <F> QueryStream<T> gt(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return operate(function, Operators.GREATER, value);
+    }
+
+    default <F> QueryStream<T> greaterThen(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return gt(function, value);
+    }
+
+    default <F> QueryStream<T> lt(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return operate(function, Operators.LESS, value);
+    }
+
+    default <F> QueryStream<T> lessThen(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return le(function, value);
+    }
+
+    default <F> QueryStream<T> ge(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return operate(function, Operators.GREATER_OR_EQ, value);
+    }
+
+    default <F> QueryStream<T> greaterThenOrEqualTo(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return ge(function, value);
+    }
+
+    default <F> QueryStream<T> le(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return operate(function, Operators.LESS_OR_EQ, value);
+    }
+
+    default <F> QueryStream<T> lessThenOrEqualTo(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return operate(function, Operators.EQ, value);
+    }
+}

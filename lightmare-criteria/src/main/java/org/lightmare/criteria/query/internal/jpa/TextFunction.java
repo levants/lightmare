@@ -30,6 +30,6 @@ package org.lightmare.criteria.query.internal.jpa;
  * @param <T>
  *            entity type parameter
  */
-public interface TextFunction<T> {
+interface TextFunction<T> {
 
 }

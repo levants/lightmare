@@ -20,24 +20,18 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.functions;
+package org.lightmare.criteria.query.internal.jpa;
 
 import java.io.Serializable;
-import java.util.function.Function;
 
 /**
- * Interface for entity getter method reference
+ * Functional expressions for JPA query
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
  *            entity type parameter
- * @param <F>
- *            field type parameter
  */
-@FunctionalInterface
-public interface EntityField<T, F> extends Function<T, F>, Serializable {
+public interface JPAFunction<T> extends NumericFunction<T>, TextFunction<T>, DateFunction<T>, Serializable {
 
-    @Override
-    F apply(T value);
 }
