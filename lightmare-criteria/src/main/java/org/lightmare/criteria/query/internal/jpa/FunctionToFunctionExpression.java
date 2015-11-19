@@ -24,9 +24,10 @@ package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Operators;
 
 /**
- * Functional expression with other field functionlan expression
+ * Functional expression with other field functional expression
  * 
  * @author Levan Tsinadze
  *
@@ -35,6 +36,41 @@ import org.lightmare.criteria.query.QueryStream;
  */
 interface FunctionToFunctionExpression<T> {
 
-    <S, F> QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2,
-            String function);
+    QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
+
+    default <F> QueryStream<T> equal(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+        return operateFunctions(function1, function2, Operators.EQ);
+    }
+
+    default QueryStream<T> gtFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+        return operateFunctions(function1, function2, Operators.GREATER);
+    }
+
+    default QueryStream<T> greaterThenFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+        return operateFunctions(function1, function2, Operators.GREATER);
+    }
+
+    default QueryStream<T> ltFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+        return operateFunctions(function1, function2, Operators.LESS);
+    }
+
+    default QueryStream<T> lessThenFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+        return operateFunctions(function1, function2, Operators.LESS);
+    }
+
+    default QueryStream<T> geFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+        return operateFunctions(function1, function2, Operators.GREATER_OR_EQ);
+    }
+
+    default QueryStream<T> greaterThenOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+        return operateFunctions(function1, function2, Operators.GREATER_OR_EQ);
+    }
+
+    default QueryStream<T> leFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+        return operateFunctions(function1, function2, Operators.LESS_OR_EQ);
+    }
+
+    default QueryStream<T> lessThenOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+        return operateFunctions(function1, function2, Operators.EQ);
+    }
 }

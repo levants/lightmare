@@ -50,35 +50,43 @@ interface FuntionToObjectExpression<T> {
         return operateFunction(function, Operators.EQ, value);
     }
 
-    default <F> QueryStream<T> gt(FunctionConsumer<T> function, Comparable<? super F> value) {
+    default <F extends Comparable<? super F>> QueryStream<T> gtParam(FunctionConsumer<T> function,
+            Comparable<? super F> value) {
         return operateFunction(function, Operators.GREATER, value);
     }
 
-    default <F> QueryStream<T> greaterThen(FunctionConsumer<T> function, Comparable<? super F> value) {
-        return gt(function, value);
+    default <F extends Comparable<? super F>> QueryStream<T> greaterThenParam(FunctionConsumer<T> function,
+            Comparable<? super F> value) {
+        return operateFunction(function, Operators.GREATER, value);
     }
 
-    default <F> QueryStream<T> lt(FunctionConsumer<T> function, Comparable<? super F> value) {
+    default <F extends Comparable<? super F>> QueryStream<T> ltParam(FunctionConsumer<T> function,
+            Comparable<? super F> value) {
         return operateFunction(function, Operators.LESS, value);
     }
 
-    default <F> QueryStream<T> lessThen(FunctionConsumer<T> function, Comparable<? super F> value) {
-        return le(function, value);
+    default <F extends Comparable<? super F>> QueryStream<T> lessThenParam(FunctionConsumer<T> function,
+            Comparable<? super F> value) {
+        return operateFunction(function, Operators.LESS, value);
     }
 
-    default <F> QueryStream<T> ge(FunctionConsumer<T> function, Comparable<? super F> value) {
+    default <F extends Comparable<? super F>> QueryStream<T> geParam(FunctionConsumer<T> function,
+            Comparable<? super F> value) {
         return operateFunction(function, Operators.GREATER_OR_EQ, value);
     }
 
-    default <F> QueryStream<T> greaterThenOrEqualTo(FunctionConsumer<T> function, Comparable<? super F> value) {
-        return ge(function, value);
+    default <F extends Comparable<? super F>> QueryStream<T> greaterThenOrEqualToParam(FunctionConsumer<T> function,
+            Comparable<? super F> value) {
+        return operateFunction(function, Operators.GREATER_OR_EQ, value);
     }
 
-    default <F> QueryStream<T> le(FunctionConsumer<T> function, Comparable<? super F> value) {
+    default <F extends Comparable<? super F>> QueryStream<T> leParam(FunctionConsumer<T> function,
+            Comparable<? super F> value) {
         return operateFunction(function, Operators.LESS_OR_EQ, value);
     }
 
-    default <F> QueryStream<T> lessThenOrEqualTo(FunctionConsumer<T> function, Comparable<? super F> value) {
+    default <F extends Comparable<? super F>> QueryStream<T> lessThenOrEqualToParam(FunctionConsumer<T> function,
+            Comparable<? super F> value) {
         return operateFunction(function, Operators.EQ, value);
     }
 }

@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa.links;
 
 /**
- * Query operators keywords
+ * Query operator keywords
  * 
  * @author Levan Tsinadze
  *

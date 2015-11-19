@@ -22,51 +22,27 @@
  */
 package org.lightmare.criteria.query.internal.jpa.links;
 
-import org.lightmare.criteria.utils.StringUtils;
-
 /**
- * Aggregate function JPA query names
+ * Numeric functions for JPA query
  * 
  * @author Levan Tsinadze
  *
  */
-public enum Aggregates {
+public interface Numerics {
 
-    COUNT("count"), // COUNT clause
-    COUNT_DISTINCT("count"), // COUNT DISTINCT clause
-    AVG("avg"), // AVG clause
-    GREATEST("greatest"), // GREATEST clause
-    LEAST("least"), // LEAST clause
-    MAX("max"), // MAX clause
-    MIN("min"), // MIN clause
-    SUM("sum"); // SUM clause
+    String ABS = "abs";
 
-    public final String key;
+    String DIFF = "diff";
 
-    private static final char OPEN = '(';
+    String MOD = "mod";
 
-    private static final char CLOSE = ')';
+    String NEG = "neg";
 
-    private Aggregates(final String key) {
-        this.key = key;
-    }
+    String PROD = "prod";
 
-    /**
-     * Generates query expression for aggregate function
-     * 
-     * @param field
-     * @return {@link String} aggregate function on field name
-     */
-    public String expression(String field) {
+    String QUOT = "quot";
 
-        String value;
+    String SQRT = "sqrt";
 
-        if (this.equals(COUNT_DISTINCT)) {
-            value = StringUtils.concat(key, OPEN, Filters.DISTINCT, field, CLOSE);
-        } else {
-            value = StringUtils.concat(key, OPEN, field, CLOSE);
-        }
-
-        return value;
-    }
+    String SUM = "sum";
 }

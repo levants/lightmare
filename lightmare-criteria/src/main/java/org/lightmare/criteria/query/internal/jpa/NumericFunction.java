@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Numerics;
 
 /**
  * Numeric functions methods
@@ -35,6 +35,10 @@ import org.lightmare.criteria.query.QueryStream;
  */
 interface NumericFunction<T> {
 
+    <S, F> JPAFunction<T> operateNumeric(EntityField<S, F> x, String operator);
+
+    JPAFunction<T> operateNumeric(Object x, Object y, String operator);
+
     /**
      * Create an expression that returns the arithmetic negation of its
      * argument.
@@ -42,7 +46,9 @@ interface NumericFunction<T> {
      * @param x
      * @return arithmetic negation
      */
-    <N extends Number> QueryStream<T> neg(EntityField<T, N> x);
+    default <S, N extends Number> JPAFunction<T> neg(EntityField<S, N> x) {
+        return operateNumeric(x, Numerics.NEG);
+    }
 
     /**
      * Create an expression that returns the absolute value of its argument.
@@ -50,7 +56,9 @@ interface NumericFunction<T> {
      * @param x
      * @return absolute value
      */
-    <N extends Number> QueryStream<T> abs(EntityField<T, N> x);
+    default <S, N extends Number> JPAFunction<T> abs(EntityField<S, N> x) {
+        return operateNumeric(x, Numerics.ABS);
+    }
 
     /**
      * Create an expression that returns the sum of its arguments.
@@ -59,7 +67,9 @@ interface NumericFunction<T> {
      * @param y
      * @return sum
      */
-    <N extends Number> QueryStream<T> sum(EntityField<T, ? extends N> x, EntityField<T, ? extends N> y);
+    default <S, U, N extends Number> JPAFunction<T> sum(EntityField<S, ? extends N> x, EntityField<U, ? extends N> y) {
+        return operateNumeric(x, y, Numerics.SUM);
+    }
 
     /**
      * Create an expression that returns the sum of its arguments.
@@ -68,7 +78,9 @@ interface NumericFunction<T> {
      * @param y
      * @return sum
      */
-    <N extends Number> QueryStream<T> sum(EntityField<T, ? extends N> x, N y);
+    default <S, N extends Number> JPAFunction<T> sum(EntityField<S, ? extends N> x, N y) {
+        return operateNumeric(x, y, Numerics.SUM);
+    }
 
     /**
      * Create an expression that returns the sum of its arguments.
@@ -80,7 +92,9 @@ interface NumericFunction<T> {
      *
      * @return sum
      */
-    <N extends Number> QueryStream<T> sum(N x, EntityField<T, ? extends N> y);
+    default <S, N extends Number> JPAFunction<T> sum(N x, EntityField<S, ? extends N> y) {
+        return operateNumeric(x, y, Numerics.SUM);
+    }
 
     /**
      * Create an expression that returns the product of its arguments.
@@ -89,7 +103,9 @@ interface NumericFunction<T> {
      * @param y
      * @return product
      */
-    <N extends Number> QueryStream<T> prod(EntityField<T, ? extends N> x, EntityField<T, ? extends N> y);
+    default <S, U, N extends Number> JPAFunction<T> prod(EntityField<S, ? extends N> x, EntityField<U, ? extends N> y) {
+        return operateNumeric(x, y, Numerics.PROD);
+    }
 
     /**
      * Create an expression that returns the product of its arguments.
@@ -98,7 +114,9 @@ interface NumericFunction<T> {
      * @param y
      * @return product
      */
-    <N extends Number> QueryStream<T> prod(EntityField<T, ? extends N> x, N y);
+    default <S, N extends Number> JPAFunction<T> prod(EntityField<S, ? extends N> x, N y) {
+        return operateNumeric(x, y, Numerics.PROD);
+    }
 
     /**
      * Create an expression that returns the product of its arguments.
@@ -107,7 +125,9 @@ interface NumericFunction<T> {
      * @param y
      * @return product
      */
-    <N extends Number> QueryStream<T> prod(N x, EntityField<T, ? extends N> y);
+    default <S, N extends Number> JPAFunction<T> prod(N x, EntityField<S, ? extends N> y) {
+        return operateNumeric(x, y, Numerics.PROD);
+    }
 
     /**
      * Create an expression that returns the difference between its arguments.
@@ -116,7 +136,9 @@ interface NumericFunction<T> {
      * @param y
      * @return difference
      */
-    <N extends Number> QueryStream<T> diff(EntityField<T, ? extends N> x, Expression<? extends N> y);
+    default <S, U, N extends Number> JPAFunction<T> diff(EntityField<S, ? extends N> x, EntityField<U, ? extends N> y) {
+        return operateNumeric(x, y, Numerics.DIFF);
+    }
 
     /**
      * Create an expression that returns the difference between its arguments.
@@ -125,7 +147,9 @@ interface NumericFunction<T> {
      * @param y
      * @return difference
      */
-    <N extends Number> QueryStream<T> diff(EntityField<T, ? extends N> x, N y);
+    default <S, N extends Number> JPAFunction<T> diff(EntityField<S, ? extends N> x, N y) {
+        return operateNumeric(x, y, Numerics.DIFF);
+    }
 
     /**
      * Create an expression that returns the difference between its arguments.
@@ -134,7 +158,9 @@ interface NumericFunction<T> {
      * @param y
      * @return difference
      */
-    <N extends Number> QueryStream<T> diff(N x, EntityField<T, ? extends N> y);
+    default <S, N extends Number> JPAFunction<T> diff(N x, EntityField<S, ? extends N> y) {
+        return operateNumeric(x, y, Numerics.DIFF);
+    }
 
     /**
      * Create an expression that returns the quotient of its arguments.
@@ -143,7 +169,9 @@ interface NumericFunction<T> {
      * @param y
      * @return quotient
      */
-    QueryStream<T> quot(EntityField<T, ? extends Number> x, EntityField<T, ? extends Number> y);
+    default <S, U> JPAFunction<T> quot(EntityField<S, ? extends Number> x, EntityField<U, ? extends Number> y) {
+        return operateNumeric(x, y, Numerics.QUOT);
+    }
 
     /**
      * Create an expression that returns the quotient of its arguments.
@@ -152,7 +180,9 @@ interface NumericFunction<T> {
      * @param y
      * @return quotient
      */
-    QueryStream<T> quot(EntityField<T, ? extends Number> x, Number y);
+    default <S> JPAFunction<T> quot(EntityField<S, ? extends Number> x, Number y) {
+        return operateNumeric(x, y, Numerics.QUOT);
+    }
 
     /**
      * Create an expression that returns the quotient of its arguments.
@@ -161,7 +191,9 @@ interface NumericFunction<T> {
      * @param y
      * @return quotient
      */
-    QueryStream<T> quot(Number x, EntityField<T, ? extends Number> y);
+    default <S> JPAFunction<T> quot(Number x, EntityField<S, ? extends Number> y) {
+        return operateNumeric(x, y, Numerics.QUOT);
+    }
 
     /**
      * Create an expression that returns the modulus of its arguments.
@@ -170,7 +202,9 @@ interface NumericFunction<T> {
      * @param y
      * @return modulus
      */
-    QueryStream<T> mod(QueryStream<T> x, EntityField<T, Integer> y);
+    default <S, U> JPAFunction<T> mod(EntityField<S, Integer> x, EntityField<U, Integer> y) {
+        return operateNumeric(x, y, Numerics.MOD);
+    }
 
     /**
      * Create an expression that returns the modulus of its arguments.
@@ -179,7 +213,9 @@ interface NumericFunction<T> {
      * @param y
      * @return modulus
      */
-    QueryStream<T> mod(EntityField<T, Integer> x, Integer y);
+    default <S> JPAFunction<T> mod(EntityField<S, Integer> x, Integer y) {
+        return operateNumeric(x, y, Numerics.MOD);
+    }
 
     /**
      * Create an expression that returns the modulus of its arguments.
@@ -188,7 +224,9 @@ interface NumericFunction<T> {
      * @param y
      * @return modulus
      */
-    QueryStream<T> mod(Integer x, EntityField<T, Integer> y);
+    default <S> JPAFunction<T> mod(Integer x, EntityField<S, Integer> y) {
+        return operateNumeric(x, y, Numerics.MOD);
+    }
 
     /**
      * Create an expression that returns the square root of its argument.
@@ -196,63 +234,7 @@ interface NumericFunction<T> {
      * @param x
      * @return square root
      */
-    QueryStream<T> sqrt(EntityField<T, ? extends Number> x);
-
-    // typecasts:
-
-    /**
-     * Typecast. Returns same expression object.
-     *
-     * @param number
-     * @return QueryStream&#060;Long&#062;
-     */
-    QueryStream<Long> toLong(EntityField<T, ? extends Number> number);
-
-    /**
-     * Typecast. Returns same expression object.
-     *
-     * @param number
-     * @return QueryStream&#060;Integer&#062;
-     */
-    QueryStream<T> toInteger(EntityField<T, ? extends Number> number);
-
-    /**
-     * Typecast. Returns same expression object.
-     *
-     * @param number
-     * @return QueryStream&#060;Float&#062;
-     */
-    QueryStream<T> toFloat(EntityField<T, ? extends Number> number);
-
-    /**
-     * Typecast. Returns same expression object.
-     *
-     * @param number
-     * @return QueryStream&#060;Double&#062;
-     */
-    QueryStream<T> toDouble(EntityField<T, ? extends Number> number);
-
-    /**
-     * Typecast. Returns same expression object.
-     *
-     * @param number
-     * @return QueryStream&#060;BigDecimal&#062;
-     */
-    QueryStream<T> toBigDecimal(EntityField<T, ? extends Number> number);
-
-    /**
-     * Typecast. Returns same expression object.
-     *
-     * @param number
-     * @return QueryStream&#060;BigInteger&#062;
-     */
-    QueryStream<T> toBigInteger(EntityField<T, ? extends Number> number);
-
-    /**
-     * Typecast. Returns same expression object.
-     *
-     * @param character
-     * @return QueryStream&#060;String&#062;
-     */
-    QueryStream<T> toString(EntityField<T, Character> character);
+    default <S> JPAFunction<T> sqrt(EntityField<S, ? extends Number> x) {
+        return operateNumeric(x, Numerics.SQRT);
+    }
 }
