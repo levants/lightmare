@@ -8,6 +8,6 @@ package org.lightmare.criteria.query.internal.jpa;
  * @param <T>
  *            entity type parameter
  */
-public interface FunctionExpression<T> extends F2OExpression<T>, F2FExpression<T> {
+public interface FunctionExpression<T> extends FuntionToObjectExpression<T>, FunctionToFunctionExpression<T> {
 
 }

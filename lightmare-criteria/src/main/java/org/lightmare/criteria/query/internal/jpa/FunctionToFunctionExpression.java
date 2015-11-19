@@ -33,7 +33,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type parameter
  */
-interface F2FExpression<T> {
+interface FunctionToFunctionExpression<T> {
 
     <S, F> QueryStream<T> operate(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String function);
 }

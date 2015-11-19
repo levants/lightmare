@@ -34,7 +34,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  * @param <T>
  *            entity type parameter
  */
-interface F2OExpression<T> {
+interface FuntionToObjectExpression<T> {
 
     /**
      * Operates with functional expression and parameter
