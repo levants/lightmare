@@ -255,5 +255,4 @@ interface NumericFunction<T> {
      * @return QueryStream&#060;String&#062;
      */
     QueryStream<T> toString(EntityField<T, Character> character);
-
 }

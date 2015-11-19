@@ -38,7 +38,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter for generated query
  */
-abstract class AbstractJoinStream<T> extends AbstractQueryStream<T> {
+abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
 
     protected AbstractJoinStream(EntityManager em, Class<T> entityType, String alias) {
         super(em, entityType, alias);

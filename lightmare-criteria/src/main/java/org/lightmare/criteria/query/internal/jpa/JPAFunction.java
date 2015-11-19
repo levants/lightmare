@@ -22,8 +22,6 @@
  */
 package org.lightmare.criteria.query.internal.jpa;
 
-import java.io.Serializable;
-
 /**
  * Functional expressions for JPA query
  * 
@@ -32,6 +30,6 @@ import java.io.Serializable;
  * @param <T>
  *            entity type parameter
  */
-public interface JPAFunction<T> extends NumericFunction<T>, TextFunction<T>, DateFunction<T>, Serializable {
+public interface JPAFunction<T> extends NumericFunction<T>, TextFunction<T>, DateFunction<T> {
 
 }

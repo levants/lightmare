@@ -44,14 +44,14 @@ interface FuntionToObjectExpression<T> {
      * @param value
      * @return {@link QueryStream} for current entity type
      */
-    QueryStream<T> operate(FunctionConsumer<T> function, String operator, Object value);
+    QueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value);
 
     default <F> QueryStream<T> equal(FunctionConsumer<T> function, Object value) {
-        return operate(function, Operators.EQ, value);
+        return operateFunction(function, Operators.EQ, value);
     }
 
     default <F> QueryStream<T> gt(FunctionConsumer<T> function, Comparable<? super F> value) {
-        return operate(function, Operators.GREATER, value);
+        return operateFunction(function, Operators.GREATER, value);
     }
 
     default <F> QueryStream<T> greaterThen(FunctionConsumer<T> function, Comparable<? super F> value) {
@@ -59,7 +59,7 @@ interface FuntionToObjectExpression<T> {
     }
 
     default <F> QueryStream<T> lt(FunctionConsumer<T> function, Comparable<? super F> value) {
-        return operate(function, Operators.LESS, value);
+        return operateFunction(function, Operators.LESS, value);
     }
 
     default <F> QueryStream<T> lessThen(FunctionConsumer<T> function, Comparable<? super F> value) {
@@ -67,7 +67,7 @@ interface FuntionToObjectExpression<T> {
     }
 
     default <F> QueryStream<T> ge(FunctionConsumer<T> function, Comparable<? super F> value) {
-        return operate(function, Operators.GREATER_OR_EQ, value);
+        return operateFunction(function, Operators.GREATER_OR_EQ, value);
     }
 
     default <F> QueryStream<T> greaterThenOrEqualTo(FunctionConsumer<T> function, Comparable<? super F> value) {
@@ -75,10 +75,10 @@ interface FuntionToObjectExpression<T> {
     }
 
     default <F> QueryStream<T> le(FunctionConsumer<T> function, Comparable<? super F> value) {
-        return operate(function, Operators.LESS_OR_EQ, value);
+        return operateFunction(function, Operators.LESS_OR_EQ, value);
     }
 
     default <F> QueryStream<T> lessThenOrEqualTo(FunctionConsumer<T> function, Comparable<? super F> value) {
-        return operate(function, Operators.EQ, value);
+        return operateFunction(function, Operators.EQ, value);
     }
 }

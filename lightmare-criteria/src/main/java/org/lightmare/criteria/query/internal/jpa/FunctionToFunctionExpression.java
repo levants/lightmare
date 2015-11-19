@@ -35,5 +35,6 @@ import org.lightmare.criteria.query.QueryStream;
  */
 interface FunctionToFunctionExpression<T> {
 
-    <S, F> QueryStream<T> operate(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String function);
+    <S, F> QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2,
+            String function);
 }
