@@ -45,7 +45,7 @@ abstract class AbstractFunctionExpression<T> extends AbstractQueryStream<T> {
     @Override
     public QueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value) {
 
-        JPAFunctionProcessor<T> processor = new JPAFunctionProcessor<T>();
+        JPAFunctionProcessor<T> processor = new JPAFunctionProcessor<T>(this);
         function.accept(processor);
 
         return this;
@@ -55,9 +55,9 @@ abstract class AbstractFunctionExpression<T> extends AbstractQueryStream<T> {
     public QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2,
             String function) {
 
-        JPAFunctionProcessor<T> processor1 = new JPAFunctionProcessor<T>();
+        JPAFunctionProcessor<T> processor1 = new JPAFunctionProcessor<T>(this);
         function1.accept(processor1);
-        JPAFunctionProcessor<T> processor2 = new JPAFunctionProcessor<T>();
+        JPAFunctionProcessor<T> processor2 = new JPAFunctionProcessor<T>(this);
         function1.accept(processor2);
 
         return this;

@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.internal.jpa.functions;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.jpa.JPAFunction;
+import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 
 /**
  * Implementation of {@link JPAFunction} for functional expression processing
@@ -34,6 +35,12 @@ import org.lightmare.criteria.query.internal.jpa.JPAFunction;
  *            entity type parameter
  */
 public class JPAFunctionProcessor<T> implements JPAFunction<T> {
+
+    private final AbstractQueryStream<T> stream;
+
+    public JPAFunctionProcessor(final AbstractQueryStream<T> stream) {
+        this.stream = stream;
+    }
 
     @Override
     public <S, F> JPAFunction<T> operateNumeric(EntityField<S, F> x, String operator) {
