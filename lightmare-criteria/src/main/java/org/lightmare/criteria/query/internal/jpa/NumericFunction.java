@@ -78,7 +78,7 @@ interface NumericFunction<T> {
      * @param y
      * @return sum
      */
-    default <S, N extends Number> JPAFunction<T> sum(EntityField<S, ? extends N> x, N y) {
+    default <S, N extends Number> JPAFunction<T> sum(EntityField<S, ? extends N> x, Number y) {
         return operateNumeric(x, y, Numerics.SUM);
     }
 
@@ -92,7 +92,7 @@ interface NumericFunction<T> {
      *
      * @return sum
      */
-    default <S, N extends Number> JPAFunction<T> sum(N x, EntityField<S, ? extends N> y) {
+    default <S, N extends Number> JPAFunction<T> sum(Number x, EntityField<S, ? extends N> y) {
         return operateNumeric(x, y, Numerics.SUM);
     }
 
