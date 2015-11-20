@@ -114,7 +114,7 @@ interface NumericFunction<T> {
      * @param y
      * @return product
      */
-    default <S, N extends Number> JPAFunction<T> prod(EntityField<S, ? extends N> x, N y) {
+    default <S, N extends Number> JPAFunction<T> prod(EntityField<S, ? extends N> x, Number y) {
         return operateNumeric(x, y, Numerics.PROD);
     }
 
@@ -125,7 +125,7 @@ interface NumericFunction<T> {
      * @param y
      * @return product
      */
-    default <S, N extends Number> JPAFunction<T> prod(N x, EntityField<S, ? extends N> y) {
+    default <S, N extends Number> JPAFunction<T> prod(Number x, EntityField<S, ? extends N> y) {
         return operateNumeric(x, y, Numerics.PROD);
     }
 
@@ -147,7 +147,7 @@ interface NumericFunction<T> {
      * @param y
      * @return difference
      */
-    default <S, N extends Number> JPAFunction<T> diff(EntityField<S, ? extends N> x, N y) {
+    default <S, N extends Number> JPAFunction<T> diff(EntityField<S, ? extends N> x, Number y) {
         return operateNumeric(x, y, Numerics.DIFF);
     }
 
@@ -158,7 +158,7 @@ interface NumericFunction<T> {
      * @param y
      * @return difference
      */
-    default <S, N extends Number> JPAFunction<T> diff(N x, EntityField<S, ? extends N> y) {
+    default <S, N extends Number> JPAFunction<T> diff(Number x, EntityField<S, ? extends N> y) {
         return operateNumeric(x, y, Numerics.DIFF);
     }
 
