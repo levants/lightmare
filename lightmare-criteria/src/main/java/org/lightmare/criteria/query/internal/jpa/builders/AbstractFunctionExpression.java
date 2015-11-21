@@ -43,16 +43,28 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
 
     @Override
     public QueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value) {
+
+        newLine();
         function.accept(this);
+        appendBody(operator);
+        if (functionTuple == null) {
+            appendBody(value);
+        } else {
+            oppWithParameter(functionTuple, value, body);
+
+        }
+
         return this;
     }
 
     @Override
     public QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2,
-            String function) {
+            String operator) {
 
+        newLine();
         function1.accept(this);
-        function1.accept(this);
+        appendBody(operator);
+        function2.accept(this);
 
         return this;
     }

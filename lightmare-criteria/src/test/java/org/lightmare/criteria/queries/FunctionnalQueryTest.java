@@ -38,8 +38,8 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
-                    .like(Person::getLastName, "lname")
-                    .gtFunction(c -> c.abs(Phone::getOperatorId), s -> s.sum(Person::getPersonId, Phone::getPhoneId));
+                    .like(Person::getLastName, "lname").gtFunction(c -> c.abs(Person::getFunctionalId),
+                            s -> s.sum(Person::getPersonId, Person::getComparatorId));
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);

@@ -88,7 +88,10 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * Adds new line to query body
      */
     public void newLine() {
-        newLine(body);
+
+        if (StringUtils.notEndsWith(body, StringUtils.NEWLINE)) {
+            newLine(body);
+        }
     }
 
     /**

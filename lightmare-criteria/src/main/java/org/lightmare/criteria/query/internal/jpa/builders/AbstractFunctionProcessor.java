@@ -42,20 +42,38 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T> implements JPAFunction<T> {
 
+    protected QueryTuple functionTuple;
+
+    private static final char OPEN_PRACKET = '(';
+
     protected AbstractFunctionProcessor(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
     }
 
+    /**
+     * Generates {@link QueryTuple} by field name
+     * 
+     * @param field
+     */
     private void generateByField(Serializable field) {
-
-        QueryTuple tuple = compose(field);
-        appendFieldName(tuple);
+        functionTuple = compose(field);
+        appendFieldName(functionTuple);
     }
 
+    /**
+     * Generates function al expression from value
+     * 
+     * @param value
+     */
     private void generateByValue(Object value) {
         appendBody(value);
     }
 
+    /**
+     * Generates functional expression
+     * 
+     * @param value
+     */
     private void generate(Object value) {
 
         if (value instanceof EntityField<?, ?>) {
@@ -66,13 +84,21 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
         }
     }
 
+    /**
+     * Starts functional expression
+     * 
+     * @param operator
+     */
     private void startFunction(String operator) {
-
-        newLine();
-        appendBody(operator);
-        openBracket();
+        appendBody(operator).appendBody(OPEN_PRACKET);
     }
 
+    /**
+     * Adds numeric function body
+     * 
+     * @param x
+     * @param operator
+     */
     private void appendNumericFunction(Object x, String operator) {
 
         startFunction(operator);
@@ -80,6 +106,13 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
         closeBracket();
     }
 
+    /**
+     * Adds numeric function
+     * 
+     * @param x
+     * @param y
+     * @param operator
+     */
     private void appendNumericFunction(Object x, Object y, String operator) {
 
         startFunction(operator);
