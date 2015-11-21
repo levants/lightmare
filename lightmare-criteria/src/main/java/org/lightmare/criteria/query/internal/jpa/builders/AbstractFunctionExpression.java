@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.internal.jpa.functions.JPAFunctionProcessor;
  * @param <T>
  *            entity type parameter
  */
-abstract class AbstractFunctionExpression<T> extends AbstractQueryStream<T> {
+abstract class AbstractFunctionExpression<T> extends JPAFunctionProcessor<T> {
 
     protected AbstractFunctionExpression(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
@@ -44,10 +44,7 @@ abstract class AbstractFunctionExpression<T> extends AbstractQueryStream<T> {
 
     @Override
     public QueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value) {
-
-        JPAFunctionProcessor<T> processor = new JPAFunctionProcessor<T>(this);
-        function.accept(processor);
-
+        function.accept(this);
         return this;
     }
 
@@ -55,10 +52,8 @@ abstract class AbstractFunctionExpression<T> extends AbstractQueryStream<T> {
     public QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2,
             String function) {
 
-        JPAFunctionProcessor<T> processor1 = new JPAFunctionProcessor<T>(this);
-        function1.accept(processor1);
-        JPAFunctionProcessor<T> processor2 = new JPAFunctionProcessor<T>(this);
-        function1.accept(processor2);
+        function1.accept(this);
+        function1.accept(this);
 
         return this;
     }

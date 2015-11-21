@@ -22,9 +22,16 @@
  */
 package org.lightmare.criteria.query.internal.jpa.functions;
 
+import java.io.Serializable;
+
+import javax.persistence.EntityManager;
+
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.jpa.JPAFunction;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
+import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation of {@link JPAFunction} for functional expression processing
@@ -34,21 +41,64 @@ import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
  * @param <T>
  *            entity type parameter
  */
-public class JPAFunctionProcessor<T> implements JPAFunction<T> {
+public abstract class JPAFunctionProcessor<T> extends AbstractQueryStream<T> implements JPAFunction<T> {
 
-    private final AbstractQueryStream<T> stream;
+    protected JPAFunctionProcessor(final EntityManager em, final Class<T> entityType, final String alias) {
+        super(em, entityType, alias);
+    }
 
-    public JPAFunctionProcessor(final AbstractQueryStream<T> stream) {
-        this.stream = stream;
+    private void generateByField(Serializable field) {
+
+        QueryTuple tuple = compose(field);
+        appendFieldName(tuple);
+    }
+
+    private void generateByValue(Object value) {
+        appendBody(value);
+    }
+
+    private void generate(Object value) {
+
+        if (value instanceof EntityField<?, ?>) {
+            Serializable field = ObjectUtils.cast(value);
+            generateByField(field);
+        } else {
+            generateByValue(value);
+        }
+    }
+
+    private void startFunction(String operator) {
+
+        newLine();
+        appendBody(operator);
+        openBracket();
+    }
+
+    private void appendNumericFunction(Object x, String operator) {
+
+        startFunction(operator);
+        generate(x);
+        closeBracket();
+    }
+
+    private void appendNumericFunction(Object x, Object y, String operator) {
+
+        startFunction(operator);
+        generate(x);
+        appendBody(StringUtils.COMMA).appendBody(StringUtils.SPACE);
+        generate(y);
+        closeBracket();
     }
 
     @Override
     public <S, F> JPAFunction<T> operateNumeric(EntityField<S, F> x, String operator) {
+        appendNumericFunction(x, operator);
         return this;
     }
 
     @Override
     public JPAFunction<T> operateNumeric(Object x, Object y, String operator) {
+        appendNumericFunction(x, y, operator);
         return this;
     }
 }

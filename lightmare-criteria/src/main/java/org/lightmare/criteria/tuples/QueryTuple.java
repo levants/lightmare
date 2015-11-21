@@ -86,6 +86,16 @@ public class QueryTuple implements Serializable {
         return new QueryTuple(entityName, methodName, arguments, fieldName);
     }
 
+    /**
+     * Initializes {@link QueryTuple} by field name
+     * 
+     * @param fieldName
+     * @return {@link QueryTuple} instance
+     */
+    public static QueryTuple of(final String fieldName) {
+        return new QueryTuple(null, null, null, fieldName);
+    }
+
     public String getEntityName() {
         return entityName;
     }

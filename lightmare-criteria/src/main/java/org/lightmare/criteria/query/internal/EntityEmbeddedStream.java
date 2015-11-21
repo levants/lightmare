@@ -56,7 +56,7 @@ public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
     }
 
     @Override
-    protected QueryTuple compose(Serializable field) {
+    public QueryTuple compose(Serializable field) {
 
         QueryTuple tuple;
 

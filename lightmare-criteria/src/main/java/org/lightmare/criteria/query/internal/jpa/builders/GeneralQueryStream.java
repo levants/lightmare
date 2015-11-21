@@ -194,7 +194,7 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
      * @param column
      * @return {@link String} parameter name
      */
-    private String generateParameterName(String column) {
+    public String generateParameterName(String column) {
         return column.concat(String.valueOf(parameter_counter));
     }
 
@@ -251,9 +251,9 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
      * 
      * @param tuple
      * @param value
-     * @param sqlPart
+     * @param buffer
      */
-    protected void oppWithParameter(QueryTuple tuple, Object value, StringBuilder buffer) {
+    public void oppWithParameter(QueryTuple tuple, Object value, StringBuilder buffer) {
 
         String parameterName = generateParameterName(tuple);
         buffer.append(Parts.PARAM_PREFIX).append(parameterName);

@@ -87,7 +87,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     /**
      * Adds new line to query body
      */
-    protected void newLine() {
+    public void newLine() {
         newLine(body);
     }
 
@@ -116,6 +116,15 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      */
     protected static void appendFromClause(Class<?> type, String alias, StringBuilder buff) {
         appendFromClause(type.getName(), alias, buff);
+    }
+
+    /**
+     * Adds query part to from clause
+     * 
+     * @param tuple
+     */
+    protected void appendFieldName(QueryTuple tuple) {
+        appendFieldName(tuple.getAlias(), tuple.getFieldName(), body);
     }
 
     /**
