@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.jpa.functions;
+package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
 
@@ -28,7 +28,6 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.jpa.JPAFunction;
-import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -41,9 +40,9 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter
  */
-public abstract class JPAFunctionProcessor<T> extends AbstractQueryStream<T> implements JPAFunction<T> {
+public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T> implements JPAFunction<T> {
 
-    protected JPAFunctionProcessor(final EntityManager em, final Class<T> entityType, final String alias) {
+    protected AbstractFunctionProcessor(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
     }
 

@@ -26,7 +26,6 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.functions.JPAFunctionProcessor;
 
 /**
  * Abstract class to process functional expression
@@ -36,7 +35,7 @@ import org.lightmare.criteria.query.internal.jpa.functions.JPAFunctionProcessor;
  * @param <T>
  *            entity type parameter
  */
-abstract class AbstractFunctionExpression<T> extends JPAFunctionProcessor<T> {
+abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T> {
 
     protected AbstractFunctionExpression(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
