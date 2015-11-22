@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.lightmare.criteria.entities.GeneralInfo;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.QueryProvider;
@@ -21,7 +22,7 @@ public class JoinQueryTest extends SubQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .like(Person::getLastName, "lname")
+                    .equal(GeneralInfo::getAddrress, "address").like(Person::getLastName, "lname")
                     .join(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, "100100"));
             String sql = stream.sql();
             System.out.println(sql);

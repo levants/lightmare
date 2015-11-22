@@ -10,6 +10,7 @@ import javax.persistence.EntityTransaction;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.lightmare.criteria.entities.GeneralInfo;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
@@ -245,7 +246,7 @@ public class QueryTest extends TestEnviromentConfig {
             // ============= Query construction ============== //
             Person person = QueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, Person::getAddrress).and()
-                    .like(Person::getLastName, Person::getFullName).and().startsWith(Person::getLastName, "lname")
+                    .like(Person::getLastName, GeneralInfo::getFullName).and().startsWith(Person::getLastName, "lname")
                     .firstOrDefault(new Person());
             // =============================================//
             System.out.println();
