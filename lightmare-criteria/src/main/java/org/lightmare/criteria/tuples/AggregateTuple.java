@@ -39,13 +39,16 @@ public class AggregateTuple {
 
     private final Aggregates aggregate;
 
-    private AggregateTuple(final QueryTuple tuple, final Aggregates aggregate) {
+    private final String alias;
+
+    private AggregateTuple(final QueryTuple tuple, final Aggregates aggregate, final String alias) {
         this.fieldName = tuple.getFieldName();
         this.aggregate = aggregate;
+        this.alias = alias;
     }
 
-    public static AggregateTuple of(final QueryTuple tuple, final Aggregates aggregate) {
-        return new AggregateTuple(tuple, aggregate);
+    public static AggregateTuple of(final QueryTuple tuple, final Aggregates aggregate, final String alias) {
+        return new AggregateTuple(tuple, aggregate, alias);
     }
 
     public String getFieldName() {
@@ -56,8 +59,12 @@ public class AggregateTuple {
         return aggregate;
     }
 
+    public String getAlias() {
+        return alias;
+    }
+
     public String expression() {
-        return aggregate.expression(fieldName);
+        return aggregate.expression(fieldName, alias);
     }
 
     /**

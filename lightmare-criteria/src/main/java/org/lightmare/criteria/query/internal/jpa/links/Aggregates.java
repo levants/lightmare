@@ -47,26 +47,54 @@ public enum Aggregates {
 
     private static final char CLOSE = ')';
 
+    private static final char DOT = '.';
+
+    private static final char EMPTY_CHAR = '\0';
+
     private Aggregates(final String key) {
         this.key = key;
     }
 
+    protected static char getConnector(String alias) {
+
+        char connector;
+
+        if (alias == null || alias.isEmpty()) {
+            connector = EMPTY_CHAR;
+        } else {
+            connector = DOT;
+        }
+
+        return connector;
+    }
+
     /**
-     * Generates query expression for aggregate function
+     * Generates query expression for aggregate function with alias
+     * 
+     * @param field
+     * @return {@link String} aggregate function on field name
+     */
+    public String expression(String field, String alias) {
+
+        String value;
+
+        char connector = getConnector(alias);
+        if (this.equals(COUNT_DISTINCT)) {
+            value = StringUtils.concat(key, OPEN, Filters.DISTINCT, alias, connector, field, CLOSE);
+        } else {
+            value = StringUtils.concat(key, OPEN, alias, connector, field, CLOSE);
+        }
+
+        return value;
+    }
+
+    /**
+     * Generates query expression for aggregate function without alias
      * 
      * @param field
      * @return {@link String} aggregate function on field name
      */
     public String expression(String field) {
-
-        String value;
-
-        if (this.equals(COUNT_DISTINCT)) {
-            value = StringUtils.concat(key, OPEN, Filters.DISTINCT, field, CLOSE);
-        } else {
-            value = StringUtils.concat(key, OPEN, field, CLOSE);
-        }
-
-        return value;
+        return expression(field, null);
     }
 }

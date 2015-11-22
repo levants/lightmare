@@ -93,6 +93,16 @@ public abstract class StringUtils {
     }
 
     /**
+     * Checks if passed {@link CharSequence} is null or is empty
+     *
+     * @param chars
+     * @return <code>boolean</code>
+     */
+    public static boolean isEmpty(CharSequence chars) {
+        return !valid(chars);
+    }
+
+    /**
      * Appends all parameters to single {@link StringBuilder} instance
      * 
      * @param text

@@ -22,8 +22,12 @@
  */
 package org.lightmare.criteria.query.internal.jpa;
 
+import java.util.Objects;
+
 import org.lightmare.criteria.functions.HavingConsumer;
+import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Covers HAVING clause
@@ -35,9 +39,18 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  */
 public interface HavingExpression<T> {
 
+    HavingExpression<T> appendHaving(Object operator);
+
     <N extends Number> HavingExpression<T> operate(String operator, N value);
 
-    <N extends Number> HavingExpression<T> operate(String operator, N value1, N value2);
+    default <N extends Number> HavingExpression<T> operate(String operator, N value1, N value2) {
+
+        operate(operator, value1);
+        appendHaving(Clauses.AND).appendHaving(value2);
+        appendHaving(StringUtils.NEWLINE);
+
+        return this;
+    }
 
     default <N extends Number> HavingExpression<T> equal(N value) {
         return operate(Operators.EQ, value);
@@ -87,13 +100,30 @@ public interface HavingExpression<T> {
         return operate(Operators.NOT_BETWEEN, value1, value2);
     }
 
-    HavingExpression<T> and();
+    default HavingExpression<T> and() {
+        return appendHaving(Clauses.AND);
+    }
 
-    HavingExpression<T> or();
+    default HavingExpression<T> or() {
+        return appendHaving(Clauses.OR);
+    }
 
-    HavingExpression<T> openBracket();
+    default HavingExpression<T> openBracket() {
+        return appendHaving(Operators.OPEN_BRACKET);
+    }
 
-    HavingExpression<T> closeBracket();
+    default HavingExpression<T> closeBracket() {
+        return appendHaving(Operators.CLOSE_BRACKET);
+    }
 
-    HavingExpression<T> brackets(HavingConsumer<T> consumer);
+    default HavingExpression<T> brackets(HavingConsumer<T> consumer) {
+
+        if (Objects.nonNull(consumer)) {
+            openBracket();
+            consumer.accept(this);
+            closeBracket();
+        }
+
+        return this;
+    }
 }

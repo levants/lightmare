@@ -61,7 +61,7 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             QueryStream<Object[]> stream = QueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname")
                     .count(Person::getPersonalNo, c -> c.groupBy(Person::getLastName, Person::getFirstName)
-                            .having(h -> h.greaterThenOrEqualTo(100)));
+                            .having(h -> h.greaterThenOrEqualTo(100).and().lessThenOrEqualTo(1000)));
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);

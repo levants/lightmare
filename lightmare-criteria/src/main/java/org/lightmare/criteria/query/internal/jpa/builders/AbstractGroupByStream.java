@@ -23,12 +23,21 @@
 package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Objects;
+import java.util.Queue;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
+import org.lightmare.criteria.tuples.AggregateTuple;
+import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
  * Abstract utility class for GROUP BY processing
@@ -42,13 +51,57 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
 
     protected SelectStream<T, Object[]> selectStream;
 
+    protected Set<AggregateTuple> aggregateFields;
+
+    protected Queue<AggregateTuple> aggregateQueue;
+
     protected AbstractGroupByStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
     }
 
     @Override
+    protected Set<AggregateTuple> getAggregateFields() {
+        return aggregateFields;
+    }
+
+    @Override
+    protected Queue<AggregateTuple> getAggregateQueue() {
+        return aggregateQueue;
+    }
+
+    private void initQueue() {
+
+        if (aggregateQueue == null) {
+            aggregateQueue = new LinkedList<>();
+        }
+    }
+
+    private void initAggregateFields() {
+
+        if (aggregateFields == null) {
+            aggregateFields = new HashSet<>();
+        }
+    }
+
+    protected void aggregateTuple(QueryTuple tuple, Aggregates aggregate) {
+
+        initAggregateFields();
+        AggregateTuple aggregateTuple = AggregateTuple.of(tuple, aggregate, alias);
+        boolean added = aggregateFields.add(aggregateTuple);
+        if (added) {
+            initQueue();
+            aggregateQueue.offer(aggregateTuple);
+        }
+    }
+
+    @Override
     public void having(HavingConsumer<T> consumer) {
 
+        if (Objects.nonNull(consumer) && CollectionUtils.valid(aggregateQueue)) {
+            AggregateTuple havingTuple = aggregateQueue.poll();
+            HavingProcessor<T> havingProcessor = new HavingProcessor<T>(having, havingTuple);
+            consumer.accept(havingProcessor);
+        }
     }
 
     /**

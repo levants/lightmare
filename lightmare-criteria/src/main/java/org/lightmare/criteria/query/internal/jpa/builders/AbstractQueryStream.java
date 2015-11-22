@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.query.internal.jpa.builders;
 
+import java.util.Queue;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -44,7 +45,19 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
         super(em, entityType, alias);
     }
 
+    /**
+     * Gets {@link Set} of {@link AggregateTuple} for GROUP BY processing
+     * 
+     * @return {@link Set} of {@link AggregateTuple}
+     */
     protected abstract Set<AggregateTuple> getAggregateFields();
+
+    /**
+     * Gets {@link Queue} of {@link AggregateTuple} for HAVING processing
+     * 
+     * @return {@link Queue} of {@link AggregateTuple}
+     */
+    protected abstract Queue<AggregateTuple> getAggregateQueue();
 
     /**
      * Creates {@link TypedQuery} from generated SQL for SELECT statements

@@ -47,6 +47,7 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         this.orderBy.append(stream.orderBy);
         this.groupBy.append(stream.groupBy);
         this.aggregateFields = stream.getAggregateFields();
+        this.aggregateQueue = stream.getAggregateQueue();
         this.parameters.addAll(stream.parameters);
     }
 
@@ -71,8 +72,9 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         validateAndCommaCount();
         count.append(columns);
         generateBody(count);
-        sql.append(groupBy);
         sql.append(orderBy);
+        sql.append(groupBy);
+        sql.append(having);
         sql.append(suffix);
         value = sql.toString();
 

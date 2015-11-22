@@ -41,4 +41,6 @@ public interface Clauses {
     String OR = "or ";
 
     String GROUP = " group by ";
+
+    String HAVING = " having ";
 }

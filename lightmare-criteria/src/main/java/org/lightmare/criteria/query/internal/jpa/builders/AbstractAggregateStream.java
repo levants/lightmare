@@ -1,8 +1,6 @@
 package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -26,28 +24,8 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T> {
 
-    protected Set<AggregateTuple> aggregateFields;
-
     protected AbstractAggregateStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
-    }
-
-    protected Set<AggregateTuple> getAggregateFields() {
-        return aggregateFields;
-    }
-
-    private void initAggregateFields() {
-
-        if (aggregateFields == null) {
-            aggregateFields = new HashSet<>();
-        }
-    }
-
-    private void aggregateTuple(QueryTuple tuple, Aggregates aggregate) {
-
-        initAggregateFields();
-        AggregateTuple aggregateTuple = AggregateTuple.of(tuple, aggregate);
-        aggregateFields.add(aggregateTuple);
     }
 
     protected void oppAggregate(Serializable field, Aggregates aggregate) {
