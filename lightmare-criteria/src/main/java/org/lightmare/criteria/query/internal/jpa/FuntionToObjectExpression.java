@@ -50,6 +50,10 @@ interface FuntionToObjectExpression<T> {
         return operateFunction(function, Operators.EQ, value);
     }
 
+    default <F> QueryStream<T> notEqual(FunctionConsumer<T> function, Object value) {
+        return operateFunction(function, Operators.NOT_EQ, value);
+    }
+
     default <F extends Comparable<? super F>> QueryStream<T> gtParam(FunctionConsumer<T> function,
             Comparable<? super F> value) {
         return operateFunction(function, Operators.GREATER, value);

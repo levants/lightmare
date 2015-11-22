@@ -24,8 +24,10 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 
 import javax.persistence.EntityManager;
 
+import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
  * Abstract class to process functional expression
@@ -41,12 +43,34 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
         super(em, entityType, alias);
     }
 
+    /**
+     * Starts function expression
+     * 
+     * @param function
+     * @param operator
+     */
+    private void startFunctionExpression(FunctionConsumer<T> function, String operator) {
+
+        newLine();
+        appendOperator();
+        function.accept(this);
+        appendBody(operator);
+    }
+
+    @Override
+    public <F> QueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field) {
+
+        startFunctionExpression(function, operator);
+        QueryTuple tuple = compose(field);
+        appendColumn(tuple);
+
+        return this;
+    }
+
     @Override
     public QueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value) {
 
-        newLine();
-        function.accept(this);
-        appendBody(operator);
+        startFunctionExpression(function, operator);
         if (functionTuple == null) {
             appendBody(value);
         } else {
@@ -61,9 +85,7 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
     public QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2,
             String operator) {
 
-        newLine();
-        function1.accept(this);
-        appendBody(operator);
+        startFunctionExpression(function1, operator);
         function2.accept(this);
 
         return this;
