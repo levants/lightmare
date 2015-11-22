@@ -123,6 +123,12 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
     }
 
     @Override
+    public JPAFunction<T> operateDate(String operator) {
+        appendBody(operator);
+        return this;
+    }
+
+    @Override
     public <S, F> JPAFunction<T> operateNumeric(EntityField<S, F> x, String operator) {
         appendNumericFunction(x, operator);
         return this;
