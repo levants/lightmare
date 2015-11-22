@@ -27,7 +27,7 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 
 /**
- * Functional expression with other field functional expression
+ * Functional expression with other column functional expression
  * 
  * @author Levan Tsinadze
  *

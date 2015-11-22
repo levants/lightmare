@@ -6,7 +6,7 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 
 /**
- * Functional expression for JPA query
+ * Functional expression and column comparators
  * 
  * @author Levan Tsinadze
  *

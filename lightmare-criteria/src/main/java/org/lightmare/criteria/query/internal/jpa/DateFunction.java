@@ -12,30 +12,36 @@ import org.lightmare.criteria.query.internal.jpa.links.Dates;
  */
 interface DateFunction<T> {
 
+    /**
+     * Generates appropriate date and time function expression
+     * 
+     * @param operator
+     * @return {@link JPAFunction} current instance
+     */
     JPAFunction<T> operateDate(String operator);
 
     /**
-     * Create expression to return current date.
+     * Create expression to return current date function.
      *
-     * @return current date
+     * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> currentDate() {
         return operateDate(Dates.CURRENT_DATE);
     }
 
     /**
-     * Create expression to return current timestamp.
+     * Create expression to return current TIMESTAMP function.
      *
-     * @return current timestamp
+     * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> currentTimestamp() {
         return operateDate(Dates.CURRENT_TIMESTAMP);
     }
 
     /**
-     * Create expression to return current time.
+     * Create expression to return current time function.
      *
-     * @return current time
+     * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> currentTime() {
         return operateDate(Dates.CURRENT_TIME);
