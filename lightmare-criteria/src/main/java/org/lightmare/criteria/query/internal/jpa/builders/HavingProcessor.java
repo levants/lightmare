@@ -52,6 +52,9 @@ class HavingProcessor<T> implements HavingExpression<T> {
         }
     }
 
+    /**
+     * Appends HAVING clause query part with new line character
+     */
     private void newLine() {
 
         if (StringUtils.notEndsWith(having, StringUtils.LINE)) {
@@ -59,6 +62,9 @@ class HavingProcessor<T> implements HavingExpression<T> {
         }
     }
 
+    /**
+     * Validates and starts HAVINC clause query part
+     */
     private void startHaving() {
 
         if (StringUtils.isEmpty(having)) {
@@ -69,12 +75,33 @@ class HavingProcessor<T> implements HavingExpression<T> {
         }
     }
 
-    @Override
-    public <N extends Number> HavingExpression<T> operate(String operator, N value) {
+    /**
+     * Generates operator for HAVING clause
+     * 
+     * @param operator
+     * @param value
+     */
+    private <N extends Number> void operateHaving(String operator, N value) {
 
         startHaving();
         appendHaving(aggregateTuple.expression());
         appendHaving(operator).appendHaving(value);
+    }
+
+    @Override
+    public <N extends Number> HavingExpression<T> operate(String operator, N value) {
+
+        operateHaving(operator, value);
+        newLine();
+
+        return this;
+    }
+
+    @Override
+    public <N extends Number> HavingExpression<T> operate(String operator, N value1, N value2) {
+
+        operateHaving(operator, value1);
+        appendHaving(StringUtils.SPACE).appendHaving(Clauses.AND).appendHaving(value2);
         newLine();
 
         return this;

@@ -226,7 +226,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @return <code>boolean</code> validation result
      */
     public boolean validateOperator() {
-        return validForOperator(Clauses.AND, Clauses.OR, Clauses.WHERE, Operators.OPEN_BRACKET);
+        return validForOperator(Clauses.VALIDS);
     }
 
     /**

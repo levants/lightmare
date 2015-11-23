@@ -27,7 +27,6 @@ import java.util.Objects;
 import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
-import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Covers HAVING clause
@@ -43,14 +42,7 @@ public interface HavingExpression<T> {
 
     <N extends Number> HavingExpression<T> operate(String operator, N value);
 
-    default <N extends Number> HavingExpression<T> operate(String operator, N value1, N value2) {
-
-        operate(operator, value1);
-        appendHaving(Clauses.AND).appendHaving(value2);
-        appendHaving(StringUtils.NEWLINE);
-
-        return this;
-    }
+    <N extends Number> HavingExpression<T> operate(String operator, N value1, N value2);
 
     default <N extends Number> HavingExpression<T> equal(N value) {
         return operate(Operators.EQ, value);
