@@ -81,7 +81,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param buff
      */
     protected static void newLine(StringBuilder buff) {
-        buff.append(StringUtils.NEWLINE);
+        buff.append(StringUtils.LINE);
     }
 
     /**
@@ -89,7 +89,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      */
     public void newLine() {
 
-        if (StringUtils.notEndsWith(body, StringUtils.NEWLINE)) {
+        if (StringUtils.notEndsWith(body, StringUtils.LINE)) {
             newLine(body);
         }
     }
@@ -476,9 +476,9 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     protected void removeNewLine() {
 
         int last = body.length();
-        int first = last - CollectionUtils.SINGLTON_LENGTH;
-        if (body.charAt(first) == StringUtils.LINE) {
-            body.delete(first, last);
+        int index = last - CollectionUtils.SINGLTON_LENGTH;
+        if (body.charAt(index) == StringUtils.LINE) {
+            body.delete(index, last);
         }
     }
 

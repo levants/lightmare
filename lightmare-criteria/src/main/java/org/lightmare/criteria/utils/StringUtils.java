@@ -52,6 +52,8 @@ public abstract class StringUtils {
 
     public static final char LINE = '\n';
 
+    public static final int SINGLE_STEP = 1;
+
     public static final int NOT_EXISTING_INDEX = -1;
 
     /**
@@ -160,6 +162,36 @@ public abstract class StringUtils {
      */
     public static boolean notContains(String text, CharSequence item) {
         return (text == null || ObjectUtils.notTrue(text.contains(item)));
+    }
+
+    /**
+     * Validates if passed {@link CharSequence} ends with instant character
+     * 
+     * @param item
+     * @param element
+     * @return <code>boolean</code> validation result
+     */
+    public static boolean endsWith(CharSequence item, char element) {
+
+        boolean valid = valid(item);
+
+        if (valid) {
+            int index = (item.length() - SINGLE_STEP);
+            valid = (item.charAt(index) == element);
+        }
+
+        return valid;
+    }
+
+    /**
+     * Validates if passed {@link CharSequence} not ends with instant character
+     * 
+     * @param item
+     * @param element
+     * @return <code>boolean</code> validation result
+     */
+    public static boolean notEndsWith(CharSequence item, char element) {
+        return ObjectUtils.notTrue(endsWith(item, element));
     }
 
     /**
