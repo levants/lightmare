@@ -71,4 +71,26 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             em.close();
         }
     }
+
+    @Test
+    @RunOrder(403)
+    public void groupWithHavingBracketsTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Object[]> stream = QueryProvider.select(em, Person.class).where()
+                    .like(Person::getLastName, "lname").count(Person::getPersonalNo,
+                            c -> c.groupBy(Person::getLastName, Person::getFirstName)
+                                    .having(h -> h.greaterThenOrEqualTo(100).lessThenOrEqualTo(1000).or()
+                                            .brackets(b -> b.notBetween(20000, 30000))));
+            String sql = stream.sql();
+            System.out.println("===========JPA-QL==========");
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
 }

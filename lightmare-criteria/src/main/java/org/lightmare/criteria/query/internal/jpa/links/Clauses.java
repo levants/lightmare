@@ -43,4 +43,6 @@ public interface Clauses {
     String GROUP = " group by ";
 
     String HAVING = " having ";
+
+    String[] VALIDS = { AND, OR, WHERE, HAVING, Operators.OPEN_BRACKET };
 }

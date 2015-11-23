@@ -44,7 +44,7 @@ public interface Operators {
 
     String BETWEEN = " between ";
 
-    String NOT_BETWEEN = " between ";
+    String NOT_BETWEEN = " not between ";
 
     String LIKE = " like ";
 
