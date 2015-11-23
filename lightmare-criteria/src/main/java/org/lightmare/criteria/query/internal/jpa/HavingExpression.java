@@ -40,55 +40,55 @@ public interface HavingExpression<T> {
 
     HavingExpression<T> appendHaving(Object operator);
 
-    <N extends Number> HavingExpression<T> operate(String operator, N value);
+    HavingExpression<T> operate(String operator, Number value);
 
-    <N extends Number> HavingExpression<T> operate(String operator, N value1, N value2);
+    HavingExpression<T> operate(String operator, Number value1, Number value2);
 
-    default <N extends Number> HavingExpression<T> equal(N value) {
+    default HavingExpression<T> equal(Number value) {
         return operate(Operators.EQ, value);
     }
 
-    default <N extends Number> HavingExpression<T> notEqual(N value) {
+    default HavingExpression<T> notEqual(Number value) {
         return operate(Operators.EQ, value);
     }
 
-    default <N extends Number> HavingExpression<T> gt(N value) {
+    default HavingExpression<T> gt(Number value) {
         return operate(Operators.GREATER, value);
     }
 
-    default <N extends Number> HavingExpression<T> greaterThen(N value) {
+    default HavingExpression<T> greaterThen(Number value) {
         return gt(value);
     }
 
-    default <N extends Number> HavingExpression<T> lt(N value) {
+    default HavingExpression<T> lt(Number value) {
         return operate(Operators.LESS, value);
     }
 
-    default <N extends Number> HavingExpression<T> lessThen(N value) {
+    default HavingExpression<T> lessThen(Number value) {
         return lt(value);
     }
 
-    default <N extends Number> HavingExpression<T> ge(N value) {
+    default HavingExpression<T> ge(Number value) {
         return operate(Operators.GREATER_OR_EQ, value);
     }
 
-    default <N extends Number> HavingExpression<T> greaterThenOrEqualTo(N value) {
+    default HavingExpression<T> greaterThenOrEqualTo(Number value) {
         return ge(value);
     }
 
-    default <N extends Number> HavingExpression<T> le(N value) {
+    default HavingExpression<T> le(Number value) {
         return operate(Operators.LESS_OR_EQ, value);
     }
 
-    default <N extends Number> HavingExpression<T> lessThenOrEqualTo(N value) {
+    default HavingExpression<T> lessThenOrEqualTo(Number value) {
         return le(value);
     }
 
-    default <N extends Number> HavingExpression<T> between(N value1, N value2) {
+    default HavingExpression<T> between(Number value1, Number value2) {
         return operate(Operators.BETWEEN, value1, value2);
     }
 
-    default <N extends Number> HavingExpression<T> notBetween(N value1, N value2) {
+    default HavingExpression<T> notBetween(Number value1, Number value2) {
         return operate(Operators.NOT_BETWEEN, value1, value2);
     }
 

@@ -54,6 +54,31 @@ public enum Aggregates {
     }
 
     /**
+     * Adds DISTINCT clause
+     * 
+     * @param sql
+     */
+    private void addDistinct(StringBuilder sql) {
+
+        if (this.equals(COUNT_DISTINCT)) {
+            sql.append(Filters.DISTINCT);
+        }
+    }
+
+    /**
+     * Adds alias prefix to query expression
+     * 
+     * @param alias
+     * @param sql
+     */
+    private void addAlias(String alias, StringBuilder sql) {
+
+        if (StringUtils.valid(alias)) {
+            sql.append(alias).append(DOT);
+        }
+    }
+
+    /**
      * Generates query expression for aggregate function with alias
      * 
      * @param field
@@ -63,11 +88,12 @@ public enum Aggregates {
 
         String value;
 
-        if (this.equals(COUNT_DISTINCT)) {
-            value = StringUtils.concat(key, OPEN, Filters.DISTINCT, alias, DOT, field, CLOSE);
-        } else {
-            value = StringUtils.concat(key, OPEN, alias, DOT, field, CLOSE);
-        }
+        StringBuilder sql = new StringBuilder();
+        sql.append(key).append(OPEN);
+        addDistinct(sql);
+        addAlias(alias, sql);
+        sql.append(field).append(CLOSE);
+        value = sql.toString();
 
         return value;
     }
@@ -75,19 +101,10 @@ public enum Aggregates {
     /**
      * Generates query expression for aggregate function without alias
      * 
-     * @param field
+     * @param alias
      * @return {@link String} aggregate function on field name
      */
-    public String expression(String field) {
-
-        String value;
-
-        if (this.equals(COUNT_DISTINCT)) {
-            value = StringUtils.concat(key, OPEN, Filters.DISTINCT, field, CLOSE);
-        } else {
-            value = StringUtils.concat(key, OPEN, field, CLOSE);
-        }
-
-        return value;
+    public String expression(String alias) {
+        return expression(alias, null);
     }
 }

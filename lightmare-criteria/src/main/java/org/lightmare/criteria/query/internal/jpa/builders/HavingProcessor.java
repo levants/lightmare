@@ -89,7 +89,7 @@ class HavingProcessor<T> implements HavingExpression<T> {
     }
 
     @Override
-    public <N extends Number> HavingExpression<T> operate(String operator, N value) {
+    public HavingExpression<T> operate(String operator, Number value) {
 
         operateHaving(operator, value);
         newLine();
@@ -98,7 +98,7 @@ class HavingProcessor<T> implements HavingExpression<T> {
     }
 
     @Override
-    public <N extends Number> HavingExpression<T> operate(String operator, N value1, N value2) {
+    public HavingExpression<T> operate(String operator, Number value1, Number value2) {
 
         operateHaving(operator, value1);
         appendHaving(StringUtils.SPACE).appendHaving(Clauses.AND).appendHaving(value2);
