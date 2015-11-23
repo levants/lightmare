@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa.links;
 
 /**
- * Defines ORDER BY clause
+ * Query ORDER BY clause keywords
  * 
  * @author Levan Tsinadze
  *

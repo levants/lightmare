@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.internal.jpa.links;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Aggregate function JPA query names
+ * Names of JPA query aggregate functions
  * 
  * @author Levan Tsinadze
  *
@@ -49,23 +49,8 @@ public enum Aggregates {
 
     private static final char DOT = '.';
 
-    private static final char EMPTY_CHAR = '\0';
-
     private Aggregates(final String key) {
         this.key = key;
-    }
-
-    protected static char getConnector(String alias) {
-
-        char connector;
-
-        if (alias == null || alias.isEmpty()) {
-            connector = EMPTY_CHAR;
-        } else {
-            connector = DOT;
-        }
-
-        return connector;
     }
 
     /**
@@ -78,11 +63,10 @@ public enum Aggregates {
 
         String value;
 
-        char connector = getConnector(alias);
         if (this.equals(COUNT_DISTINCT)) {
-            value = StringUtils.concat(key, OPEN, Filters.DISTINCT, alias, connector, field, CLOSE);
+            value = StringUtils.concat(key, OPEN, Filters.DISTINCT, alias, DOT, field, CLOSE);
         } else {
-            value = StringUtils.concat(key, OPEN, alias, connector, field, CLOSE);
+            value = StringUtils.concat(key, OPEN, alias, DOT, field, CLOSE);
         }
 
         return value;
@@ -95,6 +79,15 @@ public enum Aggregates {
      * @return {@link String} aggregate function on field name
      */
     public String expression(String field) {
-        return expression(field, null);
+
+        String value;
+
+        if (this.equals(COUNT_DISTINCT)) {
+            value = StringUtils.concat(key, OPEN, Filters.DISTINCT, field, CLOSE);
+        } else {
+            value = StringUtils.concat(key, OPEN, field, CLOSE);
+        }
+
+        return value;
     }
 }

@@ -1,7 +1,7 @@
 package org.lightmare.criteria.query.internal.jpa.links;
 
 /**
- * Date and time function operators
+ * Date and time JPA query functions
  * 
  * @author Levan Tsinadze
  *
