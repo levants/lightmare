@@ -1,5 +1,8 @@
 package org.lightmare.criteria.queries;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.junit.Test;
@@ -65,6 +68,8 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
+            List<Object[]> results = stream.toList();
+            results.forEach(result -> System.out.println(Arrays.asList(result)));
         } catch (Throwable ex) {
             ex.printStackTrace();
         } finally {
@@ -84,6 +89,8 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
                             c -> c.groupBy(Person::getLastName, Person::getFirstName)
                                     .having(h -> h.greaterThenOrEqualTo(100).lessThenOrEqualTo(1000).or()
                                             .brackets(b -> b.notBetween(20000, 30000))));
+            List<Object[]> results = stream.toList();
+            results.forEach(result -> System.out.println(Arrays.asList(result)));
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);

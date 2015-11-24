@@ -20,7 +20,7 @@ Get lightmare-criteria from maven central repository
     <dependency>
       <groupId>com.github.levants</groupId>
       <artifactId>lightmare-criteria</artifactId>
-      <version>0.1.4</version>
+      <version>0.1.5-SNAPSHOT</version>
     </dependency>
 ```    
 or download it from [Central Maven repository](https://oss.sonatype.org/content/repositories/snapshots/com/github/levants/lightmare/)
@@ -28,7 +28,8 @@ or download it from [Central Maven repository](https://oss.sonatype.org/content/
 # Use it!
 =========
 
-# Query API
+Query API
+---------
 Query can be composed by org.lightmare.criteria.query.QueryProvider.select or org.lightmare.criteria.query.QueryProvider.query 
 method call:
 ```java
@@ -57,7 +58,8 @@ and second is with "brackets" method call
 operators "where" and "and" are optional, "where" will be set before first query parameter 
 and "and" is default boolean operator if other is not called
 
-# Embedded entities
+Embedded entities
+---------
 
 For embedded entity there is method "embedded" with embedded getter method and appropriated query
 ```java
@@ -72,7 +74,9 @@ For embedded entity there is method "embedded" with embedded getter method and a
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .firstOrDefault(new Person()); 
 ```
-# Bulk update and delete
+
+Bulk update and delete
+---------
 
 For bulk update there is org.lightmare.criteria.query.QueryProvider.update method:
 ```java
@@ -97,7 +101,9 @@ and for bulk delete org.lightmare.criteria.query.QueryProvider.delete method:
 		    .and().like(Person::getLastName, "lname")
 		    .execute(); 
 ```	
-# Dynamic linking
+
+Dynamic linking
+---------
 
 Query can be linked dynamically:
 ```java
@@ -112,7 +118,9 @@ Query can be linked dynamically:
 		     stream.or().greaterOrEquals(Person::getBirthDate, Calendar.getInstance());
   List<Person> persons = stream.toList();
 ```
-# Subqueries
+
+Subqueries
+---------
 
 Implementations of sub queries are by calling exits or in functions:
 ```java
@@ -126,7 +134,9 @@ Implementations of sub queries are by calling exits or in functions:
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
-# Joins
+
+Joins
+---------
 
 Joins are similar to sub queries. There are three types of joins:
 
@@ -166,26 +176,28 @@ and fetch join:
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
-# Aggregated functions
 
-For aggregate use methods "avg, count, greatest, least, max, min, sum": 
+Aggregated functions
+---------
+
+For aggregate use methods - `avg, count, greatest, least, max, min, sum`: 
 ```java
   QueryStream.max(EntityField<T, N> field, GroupByConsumer<T> consumer)
 ```
-functions and GROUP BY clause there is consumer functional interface with org.lightmare.criteria.query.internal.jpa.GroupExpression 
-as a parameter:
+For functions and GROUP BY clause there is consumer functional interface with `GroupExpression` as a parameter:
 
 ```java
   QueryStream<Object[]> stream = QueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname%")
                     .max(Person::getPersonId, c -> c.groupBy(Person::getLastName, Person::getFirstName));
 ```
-and for HAVING clause there is a "having" method in org.lightmare.criteria.query.internal.jpa.GroupExpression with consumer functional interface and org.lightmare.criteria.query.internal.jpa.HavingExpression as parameter:
+and for HAVING clause there is a `having` method in `GroupExpression` with consumer functional interface and `HavingExpression` 
+as parameter:
 
 ```java
   QueryStream<Object[]> stream = QueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname%")
                     .min(Person::getPersonalNo, c -> c.groupBy(Person::getLastName, Person::getFirstName)
-                           .having(h -> h.greaterThenOrEqualTo(100).and().lessThenOrEqualTo(1000)));
+                    .having(h -> h.greaterThenOrEqualTo(100).and().lessThenOrEqualTo(1000)));
 ```
 enjoy :)

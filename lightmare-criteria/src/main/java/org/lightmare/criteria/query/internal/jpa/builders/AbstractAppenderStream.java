@@ -53,6 +53,8 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
     protected final StringBuilder count = new StringBuilder();
 
+    protected final StringBuilder from = new StringBuilder();
+
     protected final StringBuilder columns = new StringBuilder();
 
     protected final StringBuilder joins = new StringBuilder();
@@ -118,6 +120,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * @param buff
      */
     protected static void appendFromClause(Class<?> type, String alias, StringBuilder buff) {
+        StringUtils.clear(buff);
         appendFromClause(type.getName(), alias, buff);
     }
 
@@ -560,6 +563,9 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         }
     }
 
+    /**
+     * Clears generated SQL body
+     */
     protected void clearSql() {
         StringUtils.clear(sql);
     }
@@ -598,7 +604,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      * Generates COUNT query body
      */
     private void countBody() {
-        appendFromClause(entityType, alias, count);
+        appendFromClause(entityType, alias, from);
     }
 
     /**
@@ -610,6 +616,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         count.append(Filters.SELECT);
         count.append(Aggregates.COUNT.expression(alias));
         countBody();
+        count.append(from);
     }
 
     @Override

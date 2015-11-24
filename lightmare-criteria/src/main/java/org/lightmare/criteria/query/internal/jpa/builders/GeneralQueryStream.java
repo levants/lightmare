@@ -112,7 +112,7 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
         stream.appendPrefix(entityName);
         stream.appendPrefix(Filters.AS);
         stream.appendPrefix(alias);
-        stream.appendPrefix(StringUtils.NEWLINE);
+        stream.appendPrefix(StringUtils.LINE);
     }
 
     /**
