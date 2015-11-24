@@ -22,7 +22,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().subQuery(Phone.class,
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().operateSubQuery(Phone.class,
                     c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
             String sql = stream.sql();
             System.out.println(sql);
@@ -40,7 +40,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().subQuery(Phone.class,
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().operateSubQuery(Phone.class,
                     c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
                             .equal(Phone::getOperatorId, Person::getPersonId).select(Phone::getPhoneNumber));
             String sql = stream.sql();

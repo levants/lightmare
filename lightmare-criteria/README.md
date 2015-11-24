@@ -166,4 +166,26 @@ and fetch join:
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
+# Aggregated functions
+
+For aggregate use methods "avg, count, greatest, least, max, min, sum": 
+```java
+  QueryStream.max(EntityField<T, N> field, GroupByConsumer<T> consumer)
+```
+functions and GROUP BY clause there is consumer functional interface with org.lightmare.criteria.query.internal.jpa.GroupExpression 
+as a parameter:
+
+```java
+  QueryStream<Object[]> stream = QueryProvider.select(em, Person.class).where()
+                    .like(Person::getLastName, "lname%")
+                    .max(Person::getPersonId, c -> c.groupBy(Person::getLastName, Person::getFirstName));
+```
+and for HAVING clause there is a "having" method in org.lightmare.criteria.query.internal.jpa.GroupExpression with consumer functional interface and org.lightmare.criteria.query.internal.jpa.HavingExpression as parameter:
+
+```java
+  QueryStream<Object[]> stream = QueryProvider.select(em, Person.class).where()
+                    .like(Person::getLastName, "lname%")
+                    .min(Person::getPersonalNo, c -> c.groupBy(Person::getLastName, Person::getFirstName)
+                           .having(h -> h.greaterThenOrEqualTo(100).and().lessThenOrEqualTo(1000)));
+```
 enjoy :)

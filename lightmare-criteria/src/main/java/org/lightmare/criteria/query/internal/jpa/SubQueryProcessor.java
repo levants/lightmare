@@ -25,6 +25,7 @@ package org.lightmare.criteria.query.internal.jpa;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Operators;
 
 /**
  * Processes sub queries
@@ -47,7 +48,7 @@ public interface SubQueryProcessor<T> {
      * @param consumer
      * @return {@link QueryStream} similar stream for sub query
      */
-    <S> QueryStream<T> subQuery(Class<S> subType, QueryConsumer<S> consumer);
+    <S> QueryStream<T> operateSubQuery(Class<S> subType, QueryConsumer<S> consumer);
 
     /**
      * Generates {@link QueryStream} for S type without conditions
@@ -56,8 +57,13 @@ public interface SubQueryProcessor<T> {
      * @return {@link QueryStream} similar stream for sub query
      */
     default QueryStream<T> subQuery(QueryConsumer<T> consumer) {
-        return subQuery(getEntityType(), consumer);
+        return operateSubQuery(getEntityType(), consumer);
     }
+
+    <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> subType,
+            QueryConsumer<S> consumer);
+
+    <F, S> QueryStream<T> operateSubQuery(String operator, Class<S> subType, QueryConsumer<S> consumer);
 
     /**
      * Generates sub query for IN clause
@@ -67,7 +73,9 @@ public interface SubQueryProcessor<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer);
+    default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
+        return operateSubQuery(field, Operators.IN, subType, consumer);
+    }
 
     /**
      * Generates sub query part for NOT IN clause
@@ -77,7 +85,9 @@ public interface SubQueryProcessor<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer);
+    default <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
+        return operateSubQuery(field, Operators.NOT_IN, subType, consumer);
+    }
 
     default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType) {
         return in(field, subType, null);
@@ -112,7 +122,9 @@ public interface SubQueryProcessor<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <F, S> QueryStream<T> exists(Class<S> subType, QueryConsumer<S> consumer);
+    default <F, S> QueryStream<T> exists(Class<S> subType, QueryConsumer<S> consumer) {
+        return operateSubQuery(Operators.EXISTS, subType, consumer);
+    }
 
     /**
      * Generates sub query part for NOT EXISTS clause
@@ -121,7 +133,9 @@ public interface SubQueryProcessor<T> {
      * @param consumer
      * @return {@link QueryStream} current instance
      */
-    <F, S> QueryStream<T> notExists(Class<S> subType, QueryConsumer<S> consumer);
+    default <F, S> QueryStream<T> notExists(Class<S> subType, QueryConsumer<S> consumer) {
+        return operateSubQuery(Operators.NOT_EXISTS, subType, consumer);
+    }
 
     default <F, S> QueryStream<T> exists(Class<S> subType) {
         return exists(subType, null);

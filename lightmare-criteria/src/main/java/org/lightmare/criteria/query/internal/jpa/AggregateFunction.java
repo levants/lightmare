@@ -80,6 +80,14 @@ public interface AggregateFunction<T> {
         return aggregate(field, Aggregates.AVG, Double.class);
     }
 
+    /**
+     * Create an aggregate expression applying the AVG operation and group by
+     * clause
+     * 
+     * @param field
+     * @param consumer
+     * @return {@link QueryStream} with {@link Number} result type
+     */
     default <N extends Number> QueryStream<Object[]> avg(EntityField<T, N> field, GroupByConsumer<T> consumer) {
         return aggregate(field, Aggregates.AVG, consumer);
     }
@@ -96,12 +104,20 @@ public interface AggregateFunction<T> {
         return aggregate(field, Aggregates.SUM);
     }
 
+    /**
+     * Create an aggregate expression applying the numerical SUM operation and
+     * group by clause
+     * 
+     * @param field
+     * @param consumer
+     * @return {@link QueryStream} for {@link Object}[]
+     */
     default <N extends Number> QueryStream<Object[]> sum(EntityField<T, N> field, GroupByConsumer<T> consumer) {
         return aggregate(field, Aggregates.SUM, consumer);
     }
 
     /**
-     * Create an aggregate expression applying the numerical max operation.
+     * Create an aggregate expression applying the numerical MAX operation.
      *
      * @param x
      *            expression representing input value to max operation
@@ -112,15 +128,23 @@ public interface AggregateFunction<T> {
         return aggregate(field, Aggregates.MAX);
     }
 
+    /**
+     * Create an aggregate expression applying the numerical MAX operation and
+     * group by clause
+     * 
+     * @param field
+     * @param consumer
+     * @return {@link QueryStream} for {@link Object}[]
+     */
     default <N extends Number> QueryStream<Object[]> max(EntityField<T, N> field, GroupByConsumer<T> consumer) {
         return aggregate(field, Aggregates.MAX, consumer);
     }
 
     /**
-     * Create an aggregate expression applying the numerical min operation.
+     * Create an aggregate expression applying the numerical MIN operation.
      *
      * @param x
-     *            expression representing input value to min operation
+     *            expression representing input value to MIN operation
      *
      * @return min expression
      */
@@ -128,16 +152,24 @@ public interface AggregateFunction<T> {
         return aggregate(field, Aggregates.MIN);
     }
 
+    /**
+     * Create an aggregate expression applying the numerical MIN operation and
+     * group by clause
+     * 
+     * @param field
+     * @param consumer
+     * @return {@link QueryStream} for {@link Object}[]
+     */
     default <N extends Number> QueryStream<Object[]> min(EntityField<T, N> field, GroupByConsumer<T> consumer) {
         return aggregate(field, Aggregates.MIN, consumer);
     }
 
     /**
-     * Create an aggregate expression for finding the greatest of the values
+     * Create an aggregate expression for finding the GREATEST of the values
      * (strings, dates, etc).
      *
      * @param x
-     *            expression representing input value to greatest operation
+     *            expression representing input value to GREATEST operation
      *
      * @return greatest expression
      */
@@ -145,16 +177,24 @@ public interface AggregateFunction<T> {
         return aggregate(field, Aggregates.GREATEST);
     }
 
+    /**
+     * Create an aggregate expression for finding the GREATEST of the values
+     * (strings, dates, etc) and group by clause
+     * 
+     * @param field
+     * @param consumer
+     * @return {@link QueryStream} for {@link Object}[]
+     */
     default <N extends Number> QueryStream<Object[]> greatest(EntityField<T, N> field, GroupByConsumer<T> consumer) {
         return aggregate(field, Aggregates.GREATEST, consumer);
     }
 
     /**
-     * Create an aggregate expression for finding the least of the values
+     * Create an aggregate expression for finding the LEAST of the values
      * (strings, dates, etc).
      *
      * @param x
-     *            expression representing input value to least operation
+     *            expression representing input value to LEAST operation
      *
      * @return least expression
      */
@@ -162,12 +202,20 @@ public interface AggregateFunction<T> {
         return aggregate(field, Aggregates.LEAST);
     }
 
+    /**
+     * Create an aggregate expression for finding the LEAST of the values
+     * (strings, dates, etc) and group by clause
+     * 
+     * @param field
+     * @param consumer
+     * @return {@link QueryStream} for {@link Object}[]
+     */
     default <N extends Number> QueryStream<Object[]> least(EntityField<T, N> field, GroupByConsumer<T> consumer) {
         return aggregate(field, Aggregates.LEAST, consumer);
     }
 
     /**
-     * Create an aggregate expression applying the count operation.
+     * Create an aggregate expression applying the COUNT operation.
      *
      * @param x
      *            expression representing input value to count operation
@@ -179,7 +227,19 @@ public interface AggregateFunction<T> {
     }
 
     /**
-     * Create an aggregate expression applying the count distinct operation.
+     * Create an aggregate expression applying the COUNT operation and group by
+     * clause
+     * 
+     * @param field
+     * @param consumer
+     * @return {@link QueryStream} for {@link Object}[]
+     */
+    default <F> QueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer) {
+        return aggregate(field, Aggregates.COUNT, consumer);
+    }
+
+    /**
+     * Create an aggregate expression applying the COUNT DISTINCT operation.
      *
      * @param x
      *            expression representing input value to count distinct
@@ -191,11 +251,15 @@ public interface AggregateFunction<T> {
         return aggregate(field, Aggregates.COUNT, Long.class);
     }
 
+    /**
+     * Create an aggregate expression applying the COUNT DISTINCT operation and
+     * group by clause
+     * 
+     * @param field
+     * @param consumer
+     * @return {@link QueryStream} for {@link Object}[]
+     */
     default <F> QueryStream<Object[]> countDistinct(EntityField<T, F> field, GroupByConsumer<T> consumer) {
         return aggregate(field, Aggregates.COUNT_DISTINCT, consumer);
-    }
-
-    default <F> QueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer) {
-        return aggregate(field, Aggregates.COUNT, consumer);
     }
 }

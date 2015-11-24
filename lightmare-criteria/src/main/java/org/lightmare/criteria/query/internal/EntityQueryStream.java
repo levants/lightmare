@@ -162,6 +162,8 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         return joinStream;
     }
 
+    // =========================operate=sub=queries==========================//
+
     /**
      * Validates and calls sub query stream methods
      * 
@@ -196,14 +198,15 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <S> QueryStream<T> subQuery(Class<S> subType, QueryConsumer<S> consumer) {
+    public <S> QueryStream<T> operateSubQuery(Class<S> subType, QueryConsumer<S> consumer) {
         openBracket();
         initSubQuery(subType, consumer);
 
         return this;
     }
 
-    public <F, S> QueryStream<T> processComparator(EntityField<T, F> field, Class<S> subType, String operator,
+    @Override
+    public <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> subType,
             QueryConsumer<S> consumer) {
 
         appendOperator();
@@ -214,16 +217,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
-        return processComparator(field, subType, Operators.IN, consumer);
-    }
-
-    @Override
-    public <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
-        return processComparator(field, subType, Operators.NOT_IN, consumer);
-    }
-
-    private <F, S> QueryStream<T> processExists(Class<S> subType, String operator, QueryConsumer<S> consumer) {
+    public <F, S> QueryStream<T> operateSubQuery(String operator, Class<S> subType, QueryConsumer<S> consumer) {
 
         appendOperator();
         appendBody(operator);
@@ -231,16 +225,6 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         initSubQuery(subType, consumer);
 
         return this;
-    }
-
-    @Override
-    public <F, S> QueryStream<T> exists(Class<S> subType, QueryConsumer<S> consumer) {
-        return processExists(subType, Operators.EXISTS, consumer);
-    }
-
-    @Override
-    public <F, S> QueryStream<T> notExists(Class<S> subType, QueryConsumer<S> consumer) {
-        return processExists(subType, Operators.NOT_EXISTS, consumer);
     }
 
     // ===============================Joins==================================//
