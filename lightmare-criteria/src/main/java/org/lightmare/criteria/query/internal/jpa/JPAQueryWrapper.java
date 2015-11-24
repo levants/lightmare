@@ -42,8 +42,6 @@ public interface JPAQueryWrapper<T> {
 
     String DEFAULT_ALIAS = "c";
 
-    // int START = 0;
-
     /**
      * Adds custom parameter to composed query
      * 

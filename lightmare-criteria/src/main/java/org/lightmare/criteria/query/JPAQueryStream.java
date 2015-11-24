@@ -54,7 +54,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
 
         JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
 
-        stream.appendPrefix(Filters.DELETE).appendPrefix(Filters.FROM);
+        stream.appendPrefix(Filters.DELETE);
         appendEntityPart(stream);
 
         return stream;

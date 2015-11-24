@@ -35,8 +35,23 @@ import org.lightmare.criteria.query.internal.jpa.links.Numerics;
  */
 interface NumericFunction<T> {
 
+    /**
+     * Creates numeric function expression for JPA query
+     * 
+     * @param x
+     * @param operator
+     * @return {@link JPAFunction} current instance
+     */
     <S, F> JPAFunction<T> operateNumeric(EntityField<S, F> x, String operator);
 
+    /**
+     * Creates numeric function expression for JPA query
+     * 
+     * @param x
+     * @param y
+     * @param operator
+     * @return {@link JPAFunction} current instance
+     */
     JPAFunction<T> operateNumeric(Object x, Object y, String operator);
 
     /**
@@ -67,7 +82,7 @@ interface NumericFunction<T> {
      * @param y
      * @return sum
      */
-    default <S, U, N extends Number> JPAFunction<T> sum(EntityField<S, ? extends N> x, EntityField<U, ? extends N> y) {
+    default <S, U, N extends Number> JPAFunction<T> sum(EntityField<S, N> x, EntityField<U, N> y) {
         return operateNumeric(x, y, Numerics.SUM);
     }
 
@@ -78,7 +93,7 @@ interface NumericFunction<T> {
      * @param y
      * @return sum
      */
-    default <S, N extends Number> JPAFunction<T> sum(EntityField<S, ? extends N> x, Number y) {
+    default <S, N extends Number> JPAFunction<T> sum(EntityField<S, N> x, Number y) {
         return operateNumeric(x, y, Numerics.SUM);
     }
 
@@ -92,7 +107,7 @@ interface NumericFunction<T> {
      *
      * @return sum
      */
-    default <S, N extends Number> JPAFunction<T> sum(Number x, EntityField<S, ? extends N> y) {
+    default <S, N extends Number> JPAFunction<T> sum(Number x, EntityField<S, N> y) {
         return operateNumeric(x, y, Numerics.SUM);
     }
 
@@ -103,7 +118,7 @@ interface NumericFunction<T> {
      * @param y
      * @return product
      */
-    default <S, U, N extends Number> JPAFunction<T> prod(EntityField<S, ? extends N> x, EntityField<U, ? extends N> y) {
+    default <S, U, N extends Number> JPAFunction<T> prod(EntityField<S, N> x, EntityField<U, N> y) {
         return operateNumeric(x, y, Numerics.PROD);
     }
 
@@ -114,7 +129,7 @@ interface NumericFunction<T> {
      * @param y
      * @return product
      */
-    default <S, N extends Number> JPAFunction<T> prod(EntityField<S, ? extends N> x, Number y) {
+    default <S, N extends Number> JPAFunction<T> prod(EntityField<S, N> x, Number y) {
         return operateNumeric(x, y, Numerics.PROD);
     }
 
@@ -125,7 +140,7 @@ interface NumericFunction<T> {
      * @param y
      * @return product
      */
-    default <S, N extends Number> JPAFunction<T> prod(Number x, EntityField<S, ? extends N> y) {
+    default <S, N extends Number> JPAFunction<T> prod(Number x, EntityField<S, N> y) {
         return operateNumeric(x, y, Numerics.PROD);
     }
 
@@ -136,7 +151,7 @@ interface NumericFunction<T> {
      * @param y
      * @return difference
      */
-    default <S, U, N extends Number> JPAFunction<T> diff(EntityField<S, ? extends N> x, EntityField<U, ? extends N> y) {
+    default <S, U, N extends Number> JPAFunction<T> diff(EntityField<S, N> x, EntityField<U, N> y) {
         return operateNumeric(x, y, Numerics.DIFF);
     }
 
@@ -147,7 +162,7 @@ interface NumericFunction<T> {
      * @param y
      * @return difference
      */
-    default <S, N extends Number> JPAFunction<T> diff(EntityField<S, ? extends N> x, Number y) {
+    default <S, N extends Number> JPAFunction<T> diff(EntityField<S, N> x, Number y) {
         return operateNumeric(x, y, Numerics.DIFF);
     }
 
@@ -158,7 +173,7 @@ interface NumericFunction<T> {
      * @param y
      * @return difference
      */
-    default <S, N extends Number> JPAFunction<T> diff(Number x, EntityField<S, ? extends N> y) {
+    default <S, N extends Number> JPAFunction<T> diff(Number x, EntityField<S, N> y) {
         return operateNumeric(x, y, Numerics.DIFF);
     }
 
@@ -169,7 +184,7 @@ interface NumericFunction<T> {
      * @param y
      * @return quotient
      */
-    default <S, U> JPAFunction<T> quot(EntityField<S, ? extends Number> x, EntityField<U, ? extends Number> y) {
+    default <S, U, N extends Number> JPAFunction<T> quot(EntityField<S, N> x, EntityField<U, N> y) {
         return operateNumeric(x, y, Numerics.QUOT);
     }
 
@@ -180,7 +195,7 @@ interface NumericFunction<T> {
      * @param y
      * @return quotient
      */
-    default <S> JPAFunction<T> quot(EntityField<S, ? extends Number> x, Number y) {
+    default <S, N extends Number> JPAFunction<T> quot(EntityField<S, N> x, Number y) {
         return operateNumeric(x, y, Numerics.QUOT);
     }
 
@@ -191,7 +206,7 @@ interface NumericFunction<T> {
      * @param y
      * @return quotient
      */
-    default <S> JPAFunction<T> quot(Number x, EntityField<S, ? extends Number> y) {
+    default <S, N extends Number> JPAFunction<T> quot(Number x, EntityField<S, N> y) {
         return operateNumeric(x, y, Numerics.QUOT);
     }
 
@@ -234,7 +249,7 @@ interface NumericFunction<T> {
      * @param x
      * @return square root
      */
-    default <S> JPAFunction<T> sqrt(EntityField<S, ? extends Number> x) {
+    default <S, N extends Number> JPAFunction<T> sqrt(EntityField<S, N> x) {
         return operateNumeric(x, Numerics.SQRT);
     }
 }

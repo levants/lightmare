@@ -38,7 +38,7 @@ public interface Filters {
 
     String AS = " as ";
 
-    String UPDATE = "update ";
+    String UPDATE = "update";
 
     String DELETE = "delete";
 }

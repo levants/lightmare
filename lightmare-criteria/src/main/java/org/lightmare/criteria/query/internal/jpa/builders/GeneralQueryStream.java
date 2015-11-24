@@ -87,7 +87,7 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
      * @param stream
      */
     protected static <T> void appendSelect(QueryStream<T> stream) {
-        stream.appendPrefix(Filters.SELECT).appendPrefix(stream.getAlias()).appendPrefix(Filters.FROM);
+        stream.appendPrefix(Filters.SELECT).appendPrefix(stream.getAlias());
     }
 
     /**
@@ -109,10 +109,11 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
 
         String entityName = stream.getEntityType().getName();
         String alias = stream.getAlias();
-        stream.appendPrefix(entityName);
-        stream.appendPrefix(Filters.AS);
-        stream.appendPrefix(alias);
-        stream.appendPrefix(StringUtils.LINE);
+        stream.appendFrom(Filters.FROM);
+        stream.appendFrom(entityName);
+        stream.appendFrom(Filters.AS);
+        stream.appendFrom(alias);
+        stream.appendFrom(StringUtils.LINE);
     }
 
     /**

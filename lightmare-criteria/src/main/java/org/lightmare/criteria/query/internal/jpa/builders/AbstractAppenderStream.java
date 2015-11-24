@@ -543,6 +543,12 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         return this;
     }
 
+    @Override
+    public QueryStream<T> appendFrom(Object clause) {
+        from.append(clause);
+        return this;
+    }
+
     protected QueryStream<T> appendJoin(Object clause) {
         joins.append(clause);
         return this;
@@ -597,6 +603,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         String value;
 
         clearSql();
+        appendPrefix(from);
         generateBody(prefix);
         sql.append(orderBy);
         sql.append(suffix);

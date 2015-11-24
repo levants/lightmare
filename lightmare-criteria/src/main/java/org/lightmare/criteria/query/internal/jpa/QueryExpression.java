@@ -139,6 +139,14 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, SelectExpression
     QueryStream<T> appendPrefix(Object clause);
 
     /**
+     * Appends to generated FROM clause
+     * 
+     * @param clause
+     * @return {@link QueryStream} current instance
+     */
+    QueryStream<T> appendFrom(Object clause);
+
+    /**
      * Appends to generated query body custom clause
      * 
      * @param clause
