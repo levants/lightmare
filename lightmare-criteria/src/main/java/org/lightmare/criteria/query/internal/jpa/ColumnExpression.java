@@ -136,11 +136,11 @@ public interface ColumnExpression<T> {
     <F, S> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
             String operator);
 
-    default <F, S> QueryStream<T> in(EntityField<T, F> field1, EntityField<S, Collection<F>> field2) {
-        return operateCollection(field1, field2, Operators.IN);
+    default <F, S> QueryStream<T> isMember(EntityField<T, F> field1, EntityField<S, Collection<F>> field2) {
+        return operateCollection(field1, field2, Operators.MEMBER);
     }
 
-    default <F, S> QueryStream<T> notIn(EntityField<T, F> field1, EntityField<S, Collection<F>> field2) {
-        return operateCollection(field1, field2, Operators.NOT_IN);
+    default <F, S> QueryStream<T> isNotMember(EntityField<T, F> field1, EntityField<S, Collection<F>> field2) {
+        return operateCollection(field1, field2, Operators.NOT_MEMBER);
     }
 }

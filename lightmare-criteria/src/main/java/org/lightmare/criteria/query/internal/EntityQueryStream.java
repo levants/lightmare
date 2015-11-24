@@ -83,6 +83,14 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         return this;
     }
 
+    @Override
+    public <S, F> QueryStream<T> operateCollection(Object value, EntityField<S, Collection<F>> field, String operator) {
+        appendOperator();
+        oppCollection(value, field, operator);
+
+        return this;
+    }
+
     // ========================= Entity self method composers ===============//
 
     @Override

@@ -58,6 +58,10 @@ public interface Operators {
 
     String NOT_IN = " not in";
 
+    String MEMBER = " member of ";
+
+    String NOT_MEMBER = " not member of ";
+
     String EXISTS = " exists ";
 
     String NOT_EXISTS = " not exists ";

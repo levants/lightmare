@@ -203,6 +203,13 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         newLine();
     }
 
+    protected void oppCollection(Object value, Serializable field, String operator) {
+
+        appendBody(value).appendBody(operator);
+        QueryTuple tuple = compose(field);
+        appendColumn(tuple);
+    }
+
     /**
      * Generates query part for {@link Collection} parameter
      * 
@@ -290,9 +297,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
 
         opp(field1, expression);
         QueryTuple tuple = compose(field2);
-        openBracket();
         appendColumn(tuple);
-        closeBracket();
         newLine();
     }
 

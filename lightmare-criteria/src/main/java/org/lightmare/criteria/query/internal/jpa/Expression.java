@@ -187,6 +187,17 @@ public interface Expression<T> {
      */
     <F> QueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
 
+    /**
+     * Generates query part for instant field with {@link Collection} parameter
+     * and operator
+     * 
+     * @param object
+     * @param field
+     * @param operator
+     * @return {@link QueryStream} current instance
+     */
+    <S, F> QueryStream<T> operateCollection(Object value, EntityField<S, Collection<F>> field, String operator);
+
     default <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
         return operateCollection(field, values, Operators.IN);
     }
@@ -201,6 +212,14 @@ public interface Expression<T> {
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field, F[] values) {
         return this.notIn(field, Arrays.asList(values));
+    }
+
+    default <F, S> QueryStream<T> isMember(Object value, EntityField<S, Collection<F>> field) {
+        return operateCollection(value, field, Operators.MEMBER);
+    }
+
+    default <F, S> QueryStream<T> isNotMember(Object value, EntityField<T, Collection<F>> field) {
+        return operateCollection(value, field, Operators.NOT_MEMBER);
     }
 
     default <F> QueryStream<T> isNull(EntityField<T, F> field) {

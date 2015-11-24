@@ -43,6 +43,7 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         super(stream.getEntityManager(), type, stream.getAlias());
         this.realEntityType = stream.entityType;
         this.columns.append(stream.columns);
+        this.from.append(stream.from);
         this.body.append(stream.body);
         this.orderBy.append(stream.orderBy);
         this.groupBy.append(stream.groupBy);

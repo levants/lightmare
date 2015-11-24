@@ -190,7 +190,25 @@ public class SubQueryTest extends QueryTest {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
                     Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
-                            .in(Phone::getOperatorId, Person::getIdentifiers).count());
+                            .isMember(Phone::getOperatorId, Person::getIdentifiers).count());
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @RunOrder(101.3)
+    @Test
+    public void subQueryMemberWithParentInTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().isMember(100,
+                    Person::getIdentifiers);
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
