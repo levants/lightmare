@@ -46,7 +46,7 @@ public class LambdaInfo {
     private static final String TO_TEXT_FORMAT = StringUtils.concat("SerializedLambda[implClass=%s,",
             " implMethodName=%s,", " implMethodSignature=%s]");
 
-    public LambdaInfo(final String implClass, final String implMethodName, final String implMethodSignature) {
+    private LambdaInfo(final String implClass, final String implMethodName, final String implMethodSignature) {
         this.implClass = implClass;
         this.implMethodName = implMethodName;
         this.implMethodSignature = implMethodSignature;

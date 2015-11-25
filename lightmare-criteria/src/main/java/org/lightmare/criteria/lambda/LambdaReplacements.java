@@ -57,13 +57,7 @@ public class LambdaReplacements {
      * @throws IOException
      */
     private static SLambda toLambda(byte[] buff) throws IOException {
-
-        SLambda lambda;
-
-        Object raw = ObjectUtils.deserialize(buff);
-        lambda = ObjectUtils.cast(raw);
-
-        return lambda;
+        return ObjectUtils.deserializeToType(buff);
     }
 
     /**

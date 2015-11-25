@@ -49,6 +49,82 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     }
 
     /**
+     * Supplier for find member method
+     * 
+     * @author Levan Tsinadze
+     *
+     * @param <M>
+     *            member type
+     * @param <E>
+     *            exception type
+     */
+    @FunctionalInterface
+    private static interface MemberSupplier<M extends Member, E extends ReflectiveOperationException> {
+
+        /**
+         * Function method to get appropriated {@link Member} from {@link Class}
+         * by name
+         * 
+         * @param type
+         * @param memberName
+         * @return {@link Member} from {@link Class}
+         * @throws E
+         * @throws SecurityException
+         */
+        M getMember(Class<?> type, String memberName) throws E, SecurityException;
+    }
+
+    /**
+     * Gets super class for passed class for instant exception
+     * 
+     * @param type
+     * @param ex
+     * @return {@link Class} super class for passed class
+     * @throws IOException
+     */
+    private static <E extends ReflectiveOperationException> Class<?> getSuperType(Class<?> type, E ex)
+            throws IOException {
+
+        Class<?> superType;
+
+        if ((ex instanceof NoSuchMethodException) || (ex instanceof NoSuchFieldException)) {
+            superType = type.getSuperclass();
+        } else {
+            throw new IOException(ex);
+        }
+
+        return superType;
+    }
+
+    /**
+     * Field {@link Member} in passed {@link Class} or it's parents
+     * 
+     * @param type
+     * @param memberName
+     * @param supplier
+     * @return {@link Member} in type hierarchy
+     * @throws IOException
+     */
+    private static <T extends Member, E extends ReflectiveOperationException> T findMember(Class<?> type,
+            String memberName, MemberSupplier<T, E> supplier) throws IOException {
+
+        T member = null;
+
+        Class<?> superType = type;
+        while (validate(member, superType)) {
+            try {
+                member = supplier.getMember(type, memberName);
+            } catch (ReflectiveOperationException ex) {
+                superType = getSuperType(superType, ex);
+            } catch (SecurityException ex) {
+                throw new IOException(ex);
+            }
+        }
+
+        return member;
+    }
+
+    /**
      * Finds passed {@link Class}'s or one of it's super-classes {@link Method}
      * with appropriated name and parameters
      * 
@@ -59,21 +135,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @throws IOException
      */
     public static Method findMethod(Class<?> type, String methodName, Class<?>... parameters) throws IOException {
-
-        Method method = null;
-
-        Class<?> superType = type;
-        while (validate(method, superType)) {
-            try {
-                method = superType.getDeclaredMethod(methodName, parameters);
-            } catch (NoSuchMethodException ex) {
-                superType = superType.getSuperclass();
-            } catch (SecurityException ex) {
-                throw new IOException(ex);
-            }
-        }
-
-        return method;
+        return findMember(type, methodName, (t, m) -> t.getDeclaredMethod(m, parameters));
     }
 
     /**
@@ -86,39 +148,25 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @throws IOException
      */
     public static Field findField(Class<?> type, String fieldName) throws IOException {
-
-        Field field = null;
-
-        Class<?> superType = type;
-        while (validate(field, superType)) {
-            try {
-                field = superType.getDeclaredField(fieldName);
-            } catch (NoSuchFieldException ex) {
-                superType = superType.getSuperclass();
-            } catch (SecurityException ex) {
-                throw new IOException(ex);
-            }
-        }
-
-        return field;
+        return findMember(type, fieldName, (t, f) -> t.getDeclaredField(f));
     }
 
     /**
      * Common method to invoke {@link Method} with reflection
      *
      * @param method
-     * @param data
+     * @param instance
      * @param arguments
      * @return {@link Object}
      * @throws IOException
      */
-    public static Object invoke(Method method, Object data, Object... arguments) throws IOException {
+    public static Object invoke(Method method, Object instance, Object... arguments) throws IOException {
 
         Object value;
 
         try {
             makeAccessible(method);
-            value = method.invoke(data, arguments);
+            value = method.invoke(instance, arguments);
         } catch (IllegalAccessException | IllegalArgumentException ex) {
             throw new IOException(ex);
         } catch (InvocationTargetException ex) {

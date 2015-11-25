@@ -66,6 +66,14 @@ public abstract class CollectionUtils {
      */
     @FunctionalInterface
     public static interface Mapper<T, R> {
+
+        /**
+         * Function to supply type mapping
+         * 
+         * @param value
+         * @return R instance
+         * @throws IOException
+         */
         R apply(T value) throws IOException;
     }
 

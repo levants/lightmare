@@ -70,13 +70,13 @@ public abstract class ObjectUtils {
     /**
      * Casts passed {@link Object} to generic parameter
      *
-     * @param data
+     * @param instance
      * @return <code>T</code> casted to type instance
      */
-    public static <T> T cast(Object data) {
+    public static <T> T cast(Object instance) {
 
         @SuppressWarnings("unchecked")
-        T value = (T) data;
+        T value = (T) instance;
 
         return value;
     }
@@ -91,37 +91,52 @@ public abstract class ObjectUtils {
      */
     public static byte[] serialize(Object value) throws IOException {
 
-        byte[] data;
+        byte[] bytes;
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(stream);
-        try {
+        try (ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                ObjectOutputStream out = new ObjectOutputStream(stream)) {
             out.writeObject(value);
-            data = stream.toByteArray();
-        } finally {
-            IOUtils.closeAll(stream, out);
+            bytes = stream.toByteArray();
         }
 
-        return data;
+        return bytes;
     }
 
     /**
      * For de - serialization of byte array in java type ({@link Object}) with
-     * java native serialization API
+     * java native serialization API methods
      * 
-     * @param data
+     * @param bytes
      * @return {@link Object}
      * @throws IOException
      */
-    public static Object deserialize(byte[] data) throws IOException {
+    public static Object deserialize(byte[] bytes) throws IOException {
 
         Object value;
 
-        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data))) {
+        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
             value = in.readObject();
         } catch (ClassNotFoundException ex) {
             throw new IOException(ex);
         }
+
+        return value;
+    }
+
+    /**
+     * For de - serialization of byte array in java type appropriated type with
+     * java native serialization API methods
+     * 
+     * @param bytes
+     * @return {@link Object}
+     * @throws IOException
+     */
+    public static <T> T deserializeToType(byte[] bytes) throws IOException {
+
+        T value;
+
+        Object raw = deserialize(bytes);
+        value = cast(raw);
 
         return value;
     }
