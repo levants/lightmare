@@ -23,12 +23,8 @@
 package org.lightmare.criteria.utils;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * ABstract utility class for reflection
@@ -95,19 +91,5 @@ abstract class AbstractClassUtils extends Primitives {
                 setAccessibleFlag(accessibleObject);
             }
         }
-    }
-
-    /**
-     * Gets {@link java.util.List} of {@link java.lang.reflect.AccessibleObject}
-     * s with instant annotation
-     * 
-     * @param array
-     * @param annotationType
-     * @return {@link java.util.List} of
-     *         {@link java.lang.reflect.AccessibleObject}s by annotation
-     */
-    protected static <T extends AccessibleObject> List<T> filterByAnnotation(T[] array,
-            Class<? extends Annotation> annotationType) {
-        return Stream.of(array).filter(c -> c.isAnnotationPresent(annotationType)).collect(Collectors.toList());
     }
 }

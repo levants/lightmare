@@ -38,26 +38,6 @@ import java.util.Objects;
 abstract class AbstractMemberUtils extends AbstractClassUtils {
 
     /**
-     * Gets all declared methods from class
-     *
-     * @param type
-     * @return array of {@link Method}s
-     * @throws IOException
-     */
-    public static Method[] getDeclaredMethods(Class<?> type) throws IOException {
-
-        Method[] methods;
-
-        try {
-            methods = type.getDeclaredMethods();
-        } catch (SecurityException ex) {
-            throw new IOException(ex);
-        }
-
-        return methods;
-    }
-
-    /**
      * Validates for next iteration class member search methods
      * 
      * @param type
