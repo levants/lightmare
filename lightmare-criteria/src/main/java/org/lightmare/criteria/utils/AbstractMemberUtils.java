@@ -113,7 +113,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
         Class<?> superType = type;
         while (validate(member, superType)) {
             try {
-                member = supplier.getMember(type, memberName);
+                member = supplier.getMember(superType, memberName);
             } catch (ReflectiveOperationException ex) {
                 superType = getSuperType(superType, ex);
             } catch (SecurityException ex) {

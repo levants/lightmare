@@ -64,7 +64,7 @@ public class FieldResolver {
     private static final int BEGIN_INDEX = GET.length();
 
     // Error messages
-    private static final String UNRESOLVABLE_ERROR = "Unresolvable field name";
+    private static final String UNRESOLVABLE_FIELD_ERROR = "Unresolvable field name";
 
     /**
      * Resolves field name from method name
@@ -351,8 +351,9 @@ public class FieldResolver {
         QueryTuple tuple = null;
 
         int size = instructions.size();
+        AbstractInsnNode instruction;
         for (int i = FIRST; (i < size && tuple == null); ++i) {
-            AbstractInsnNode instruction = instructions.get(i);
+            instruction = instructions.get(i);
             tuple = validateAndResolve(instruction);
         }
 
@@ -433,7 +434,7 @@ public class FieldResolver {
             MethodNode methodNode = CollectionUtils.getFirstValid(methods, c -> validate(c, lambda));
             tuple = resolveRecursively(methodNode);
         } else {
-            throw new RuntimeException(UNRESOLVABLE_ERROR);
+            throw new RuntimeException(UNRESOLVABLE_FIELD_ERROR);
         }
 
         return tuple;

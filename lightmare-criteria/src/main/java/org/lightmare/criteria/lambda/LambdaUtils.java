@@ -39,7 +39,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
 public class LambdaUtils {
 
     // Debug messages
-    private static final String DEBUG_MESSAGE_FORMAT = "Key %s is not bound to cache";
+    private static final String MESSAGE_FORMAT = "Key %s is not bound to cache";
 
     private static final Logger LOG = Logger.getLogger(LambdaUtils.class);
 
@@ -47,7 +47,7 @@ public class LambdaUtils {
      * Gets appropriated {@link QueryTuple} from serialized lambda cache or
      * analyzes appropriated lambda expression from compiled class
      * 
-     * @param field
+     * @param method
      * @return {@link QueryTuple} from cache
      */
     private static QueryTuple getByLambda(Serializable method) {
@@ -59,7 +59,7 @@ public class LambdaUtils {
         if (tuple == null) {
             tuple = FieldResolver.resolve(lambda);
             QueryCache.putQuery(lambda, tuple);
-            LOG.debug(String.format(DEBUG_MESSAGE_FORMAT, lambda));
+            LOG.debug(String.format(MESSAGE_FORMAT, lambda));
         }
 
         return tuple;

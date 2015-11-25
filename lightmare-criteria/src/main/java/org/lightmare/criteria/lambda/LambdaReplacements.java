@@ -118,18 +118,18 @@ public class LambdaReplacements {
      * @return {@link LambdaInfo} replacement
      * @throws IOException
      */
-    private static <T> LambdaInfo getReplacement(Serializable field) throws IOException {
+    private static <T> LambdaInfo getReplacement(Serializable method) throws IOException {
 
         LambdaInfo lambda;
 
-        Class<?> parent = field.getClass();
-        Method method = getMethod(parent);
-        if (Objects.nonNull(method)) {
-            Object raw = ClassUtils.invoke(method, field);
+        Class<?> parent = method.getClass();
+        Method writeReplace = getMethod(parent);
+        if (Objects.nonNull(writeReplace)) {
+            Object raw = ClassUtils.invoke(writeReplace, method);
             SerializedLambda serialized = ObjectUtils.cast(raw);
             lambda = new LambdaInfo(serialized);
         } else {
-            lambda = translate(field);
+            lambda = translate(method);
         }
 
         return lambda;
@@ -138,15 +138,15 @@ public class LambdaReplacements {
     /**
      * Gets {@link LambdaInfo} instance from passed lambda argument
      * 
-     * @param field
+     * @param method
      * @return {@link LambdaInfo} replacement
      */
-    public static <T> LambdaInfo getReplacementQuietly(Serializable field) {
+    public static <T> LambdaInfo getReplacementQuietly(Serializable method) {
 
         LambdaInfo lambda;
 
         try {
-            lambda = getReplacement(field);
+            lambda = getReplacement(method);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
