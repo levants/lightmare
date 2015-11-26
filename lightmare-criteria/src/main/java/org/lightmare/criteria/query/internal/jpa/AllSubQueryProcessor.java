@@ -17,6 +17,14 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 interface AllSubQueryProcessor<T> extends SubQueryOperator<T> {
 
+    /**
+     * Provides method to process sub queries with ALL clause
+     * 
+     * @param field
+     * @param operator
+     * @param stream
+     * @return {@link QueryStream} current instance
+     */
     default <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, AllQueryStream<S> stream) {
         String composed = StringUtils.concat(operator, SubQueries.ALL);
         return operateSubQuery(field, composed, stream.getType(), stream.getConsumer());

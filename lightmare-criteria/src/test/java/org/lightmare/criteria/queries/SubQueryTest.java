@@ -205,7 +205,7 @@ public class SubQueryTest extends QueryTest {
 
     @RunOrder(101.3)
     @Test
-    public void subQueryMemberWithParentInTest() {
+    public void subQueryMemberWithParentTest() {
 
         EntityManager em = emf.createEntityManager();
         try {
