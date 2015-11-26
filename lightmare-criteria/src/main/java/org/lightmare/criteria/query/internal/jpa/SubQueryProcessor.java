@@ -35,7 +35,8 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  * @param <T>
  *            entity type parameter
  */
-public interface SubQueryProcessor<T> {
+public interface SubQueryProcessor<T>
+        extends AnySubQueryProcessor<T>, AllSubQueryProcessor<T>, SomeSubQueryProcessor<T> {
 
     Class<T> getEntityType();
 
@@ -59,9 +60,6 @@ public interface SubQueryProcessor<T> {
     default QueryStream<T> subQuery(QueryConsumer<T> consumer) {
         return operateSubQuery(getEntityType(), consumer);
     }
-
-    <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> subType,
-            QueryConsumer<S> consumer);
 
     <F, S> QueryStream<T> operateSubQuery(String operator, Class<S> subType, QueryConsumer<S> consumer);
 

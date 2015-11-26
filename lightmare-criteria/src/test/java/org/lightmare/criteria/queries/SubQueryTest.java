@@ -1,5 +1,7 @@
 package org.lightmare.criteria.queries;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.junit.Test;
@@ -9,6 +11,7 @@ import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryProvider;
 import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
 
@@ -209,6 +212,72 @@ public class SubQueryTest extends QueryTest {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().isMember(100,
                     Person::getIdentifiers);
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @RunOrder(102)
+    @Test
+    public void subQueryAnyTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(GeneralInfo::getAddrress, "address")
+                    .ge(Person::getLastName, SubQueryProvider.any(Phone.class,
+                            c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
+            List<Person> persons = stream.toList();
+            persons.forEach(System.out::println);
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @RunOrder(103)
+    @Test
+    public void subQueryAllTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(GeneralInfo::getAddrress, "address")
+                    .ge(Person::getLastName, SubQueryProvider.all(Phone.class,
+                            c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
+            List<Person> persons = stream.toList();
+            persons.forEach(System.out::println);
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @RunOrder(104)
+    @Test
+    public void subQuerySomeTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(GeneralInfo::getAddrress, "address")
+                    .ge(Person::getLastName, SubQueryProvider.some(Phone.class,
+                            c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
+            List<Person> persons = stream.toList();
+            persons.forEach(System.out::println);
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {

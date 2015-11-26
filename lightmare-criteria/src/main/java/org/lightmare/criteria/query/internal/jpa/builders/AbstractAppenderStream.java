@@ -197,9 +197,8 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      */
     protected void oppCollection(Serializable field, Collection<?> value, String expression) {
 
-        QueryTuple tuple = appSubQuery(field, expression);
+        QueryTuple tuple = opp(field, expression);
         oppWithParameter(tuple, value, body);
-        closeBracket();
         newLine();
     }
 
