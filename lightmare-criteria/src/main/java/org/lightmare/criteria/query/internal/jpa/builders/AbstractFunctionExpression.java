@@ -49,7 +49,7 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
      * @param function
      * @param operator
      */
-    private void startFunctionExpression(FunctionConsumer<T> function, String operator) {
+    protected void startFunctionExpression(FunctionConsumer<T> function, String operator) {
 
         newLine();
         appendOperator();

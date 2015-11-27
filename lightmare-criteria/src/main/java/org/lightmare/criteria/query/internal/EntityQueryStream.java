@@ -27,6 +27,7 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractAggregateStream;
@@ -219,6 +220,29 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
         appendOperator();
         appSubQuery(field, operator);
+        initSubQuery(subType, consumer);
+
+        return this;
+    }
+
+    @Override
+    public <F, S> QueryStream<T> operateSubQuery(Object value, String operator, Class<S> subType,
+            QueryConsumer<S> consumer) {
+
+        appendOperator();
+        appendBody(value).appendBody(StringUtils.SPACE).appendBody(operator);
+        openBracket();
+        initSubQuery(subType, consumer);
+
+        return this;
+    }
+
+    @Override
+    public <F, S> QueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator,
+            Class<S> subType, QueryConsumer<S> consumer) {
+
+        startFunctionExpression(function, operator);
+        openBracket();
         initSubQuery(subType, consumer);
 
         return this;

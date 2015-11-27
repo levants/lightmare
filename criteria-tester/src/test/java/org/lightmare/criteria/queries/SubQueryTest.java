@@ -263,16 +263,38 @@ public class SubQueryTest extends QueryTest {
         }
     }
 
-    @RunOrder(104)
+    @RunOrder(105)
     @Test
-    public void subQuerySomeTest() {
+    public void subQueryAllToObjectTest() {
 
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .equal(GeneralInfo::getAddrress, "address").ge(Person::getLastName, SubQuery.some(Phone.class,
+                    .equal(GeneralInfo::getAddrress, "address").ge("100", SubQuery.all(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
+            List<Person> persons = stream.toList();
+            persons.forEach(System.out::println);
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @RunOrder(106)
+    @Test
+    public void subQueryAllToFunctionTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(GeneralInfo::getAddrress, "address")
+                    .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.all(Phone.class,
+                            c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getOperatorId)));
             List<Person> persons = stream.toList();
             persons.forEach(System.out::println);
             String sql = stream.sql();
