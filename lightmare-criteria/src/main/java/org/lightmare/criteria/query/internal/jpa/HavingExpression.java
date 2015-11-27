@@ -25,7 +25,6 @@ package org.lightmare.criteria.query.internal.jpa;
 import java.util.Objects;
 
 import org.lightmare.criteria.functions.HavingConsumer;
-import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 
 /**
@@ -93,11 +92,11 @@ public interface HavingExpression<T> {
     }
 
     default HavingExpression<T> and() {
-        return appendHaving(Clauses.AND);
+        return appendHaving(Operators.AND);
     }
 
     default HavingExpression<T> or() {
-        return appendHaving(Clauses.OR);
+        return appendHaving(Operators.OR);
     }
 
     default HavingExpression<T> openBracket() {

@@ -30,19 +30,19 @@ package org.lightmare.criteria.query.internal.jpa.links;
  */
 public interface Clauses {
 
+    String SELECT = "select ";
+
+    String UPDATE = "update";
+
+    String DELETE = "delete";
+
     String WHERE = "where ";
 
     String SET = "set ";
-
-    String SET_SPACE = "    ";
-
-    String AND = "and ";
-
-    String OR = "or ";
 
     String GROUP = " group by ";
 
     String HAVING = " having ";
 
-    String[] VALIDS = { AND, OR, WHERE, HAVING, Operators.OPEN_BRACKET };
+    String[] VALIDS = { Operators.AND, Operators.OR, WHERE, HAVING, Operators.OPEN_BRACKET };
 }

@@ -30,6 +30,18 @@ package org.lightmare.criteria.query.internal.jpa.links;
  */
 public interface Operators {
 
+    // ==================boolean================//
+
+    String AND = "and ";
+
+    String OR = "or ";
+
+    String NOT = " not ";
+
+    String NO = " !";
+
+    // =================comparators=============//
+
     String EQ = " = ";
 
     String NOT_EQ = " != ";
@@ -62,15 +74,19 @@ public interface Operators {
 
     String NOT_MEMBER = " not member of ";
 
-    String EXISTS = " exists ";
-
-    String NOT_EXISTS = " not exists ";
-
     String OPEN_BRACKET = " (";
 
     String CLOSE_BRACKET = ") ";
 
-    String NOT = " not ";
+    // =================sub==queries============//
 
-    String NO = " !";
+    String ANY = "any";
+
+    String ALL = "all";
+
+    String SOME = "some";
+
+    String EXISTS = " exists ";
+
+    String NOT_EXISTS = " not exists ";
 }

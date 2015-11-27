@@ -11,7 +11,7 @@ import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryProvider;
+import org.lightmare.criteria.query.internal.jpa.SubQuery;
 import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
 
@@ -229,8 +229,7 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .equal(GeneralInfo::getAddrress, "address")
-                    .ge(Person::getLastName, SubQueryProvider.any(Phone.class,
+                    .equal(GeneralInfo::getAddrress, "address").ge(Person::getLastName, SubQuery.any(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
             List<Person> persons = stream.toList();
             persons.forEach(System.out::println);
@@ -251,8 +250,7 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .equal(GeneralInfo::getAddrress, "address")
-                    .ge(Person::getLastName, SubQueryProvider.all(Phone.class,
+                    .equal(GeneralInfo::getAddrress, "address").ge(Person::getLastName, SubQuery.all(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
             List<Person> persons = stream.toList();
             persons.forEach(System.out::println);
@@ -273,8 +271,7 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .equal(GeneralInfo::getAddrress, "address")
-                    .ge(Person::getLastName, SubQueryProvider.some(Phone.class,
+                    .equal(GeneralInfo::getAddrress, "address").ge(Person::getLastName, SubQuery.some(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
             List<Person> persons = stream.toList();
             persons.forEach(System.out::println);

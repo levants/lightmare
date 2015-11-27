@@ -61,7 +61,7 @@ public enum Aggregates {
     private void addDistinct(StringBuilder sql) {
 
         if (this.equals(COUNT_DISTINCT)) {
-            sql.append(Filters.DISTINCT);
+            sql.append(Parts.DISTINCT);
         }
     }
 

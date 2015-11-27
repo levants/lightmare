@@ -1,16 +1,16 @@
-package org.lightmare.criteria.query.internal.jpa.subqueries;
+package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.QueryConsumer;
 
 /**
- * Factory class for sub query provider
+ * Provider class for sub query types
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type parameter
+ *            entity type
  */
-public final class SubQueryProvider<T> {
+public interface SubQuery<T> {
 
     /**
      * Query for ALL clause
@@ -20,13 +20,13 @@ public final class SubQueryProvider<T> {
      * @param <T>
      *            entity type parameter
      */
-    public static final class AllQueryStream<T> {
+    public static final class All<T> {
 
         private final Class<T> type;
 
         private final QueryConsumer<T> consumer;
 
-        private AllQueryStream(final Class<T> type, final QueryConsumer<T> consumer) {
+        private All(final Class<T> type, final QueryConsumer<T> consumer) {
             this.type = type;
             this.consumer = consumer;
         }
@@ -48,13 +48,13 @@ public final class SubQueryProvider<T> {
      * @param <T>
      *            entity type parameter
      */
-    public static final class AnyQueryStream<T> {
+    public static final class Any<T> {
 
         private final Class<T> type;
 
         private final QueryConsumer<T> consumer;
 
-        private AnyQueryStream(final Class<T> type, final QueryConsumer<T> consumer) {
+        private Any(final Class<T> type, final QueryConsumer<T> consumer) {
             this.type = type;
             this.consumer = consumer;
         }
@@ -76,13 +76,13 @@ public final class SubQueryProvider<T> {
      * @param <T>
      *            entity type parameter
      */
-    public static final class SomeQueryStream<T> {
+    public static final class Some<T> {
 
         private final Class<T> type;
 
         private final QueryConsumer<T> consumer;
 
-        private SomeQueryStream(final Class<T> type, final QueryConsumer<T> consumer) {
+        private Some(final Class<T> type, final QueryConsumer<T> consumer) {
             this.type = type;
             this.consumer = consumer;
         }
@@ -96,18 +96,15 @@ public final class SubQueryProvider<T> {
         }
     }
 
-    private SubQueryProvider() {
-    }
-
     /**
      * Provides sub query for ANY clause
      * 
      * @param type
      * @param consumer
-     * @return {@link AllQueryStream} all sub query stream
+     * @return {@link All} all sub query stream
      */
-    public static <S> AllQueryStream<S> all(Class<S> type, QueryConsumer<S> consumer) {
-        return new AllQueryStream<S>(type, consumer);
+    static <S> All<S> all(Class<S> type, QueryConsumer<S> consumer) {
+        return new All<S>(type, consumer);
     }
 
     /**
@@ -115,10 +112,10 @@ public final class SubQueryProvider<T> {
      * 
      * @param type
      * @param consumer
-     * @return {@link AnyQueryStream} all sub query stream
+     * @return {@link Any} all sub query stream
      */
-    public static <S> AnyQueryStream<S> any(Class<S> type, QueryConsumer<S> consumer) {
-        return new AnyQueryStream<S>(type, consumer);
+    static <S> Any<S> any(Class<S> type, QueryConsumer<S> consumer) {
+        return new Any<S>(type, consumer);
     }
 
     /**
@@ -126,9 +123,9 @@ public final class SubQueryProvider<T> {
      * 
      * @param type
      * @param consumer
-     * @return {@link SomeQueryStream} all sub query stream
+     * @return {@link Some} all sub query stream
      */
-    public static <S> SomeQueryStream<S> some(Class<S> type, QueryConsumer<S> consumer) {
-        return new SomeQueryStream<S>(type, consumer);
+    static <S> Some<S> some(Class<S> type, QueryConsumer<S> consumer) {
+        return new Some<S>(type, consumer);
     }
 }

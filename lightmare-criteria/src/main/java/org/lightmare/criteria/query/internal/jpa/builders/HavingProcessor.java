@@ -5,6 +5,7 @@ import java.util.Objects;
 import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.query.internal.jpa.HavingExpression;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
+import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -101,7 +102,7 @@ class HavingProcessor<T> implements HavingExpression<T> {
     public HavingExpression<T> operate(String operator, Number value1, Number value2) {
 
         operateHaving(operator, value1);
-        appendHaving(StringUtils.SPACE).appendHaving(Clauses.AND).appendHaving(value2);
+        appendHaving(StringUtils.SPACE).appendHaving(Operators.AND).appendHaving(value2);
         newLine();
 
         return this;

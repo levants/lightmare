@@ -25,7 +25,6 @@ package org.lightmare.criteria.query.internal.jpa;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 
 /**
@@ -90,7 +89,7 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, SelectExpression
      * @return {@link QueryStream} current instance
      */
     default QueryStream<T> and() {
-        return appendBody(Clauses.AND);
+        return appendBody(Operators.AND);
     }
 
     /**
@@ -99,7 +98,7 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, SelectExpression
      * @return {@link QueryStream} current instance
      */
     default QueryStream<T> or() {
-        return appendBody(Clauses.OR);
+        return appendBody(Operators.OR);
     }
 
     /**

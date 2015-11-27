@@ -25,7 +25,7 @@ package org.lightmare.criteria.query;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.query.internal.EntityQueryStream;
-import org.lightmare.criteria.query.internal.jpa.links.Filters;
+import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 
 /**
  * Main class for lambda expression analyze and JPA query build and run
@@ -54,7 +54,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
 
         JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
 
-        stream.appendPrefix(Filters.DELETE);
+        stream.appendPrefix(Clauses.DELETE);
         appendEntityPart(stream);
 
         return stream;
@@ -84,7 +84,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
 
         JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
 
-        stream.appendPrefix(Filters.UPDATE);
+        stream.appendPrefix(Clauses.UPDATE);
         appendEntityPart(stream);
 
         return stream;

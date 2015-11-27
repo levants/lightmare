@@ -8,7 +8,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
-import org.lightmare.criteria.query.internal.jpa.links.Filters;
+import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -56,7 +56,7 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
 
         String expression = tuple.expression();
         StringUtils.clear(buffer);
-        buffer.append(Filters.SELECT);
+        buffer.append(Clauses.SELECT);
         buffer.append(expression);
     }
 

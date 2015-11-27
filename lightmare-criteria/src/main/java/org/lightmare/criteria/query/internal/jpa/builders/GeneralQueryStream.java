@@ -39,7 +39,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.lambda.LambdaUtils;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
-import org.lightmare.criteria.query.internal.jpa.links.Filters;
+import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.tuples.AliasTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;
@@ -87,7 +87,7 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
      * @param stream
      */
     protected static <T> void appendSelect(QueryStream<T> stream) {
-        stream.appendPrefix(Filters.SELECT).appendPrefix(stream.getAlias());
+        stream.appendPrefix(Clauses.SELECT).appendPrefix(stream.getAlias());
     }
 
     /**
@@ -109,9 +109,9 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
 
         String entityName = stream.getEntityType().getName();
         String alias = stream.getAlias();
-        stream.appendFrom(Filters.FROM);
+        stream.appendFrom(Parts.FROM);
         stream.appendFrom(entityName);
-        stream.appendFrom(Filters.AS);
+        stream.appendFrom(Parts.AS);
         stream.appendFrom(alias);
         stream.appendFrom(StringUtils.LINE);
     }
@@ -272,7 +272,7 @@ abstract class GeneralQueryStream<T> extends AbstractJPAQueryWrapper<T> implemen
     protected void oppWithParameter(QueryTuple tuple, Object value1, Object value2, StringBuilder buffer) {
 
         oppWithParameter(tuple, value1, buffer);
-        appendBody(Clauses.AND);
+        appendBody(Operators.AND);
         oppWithParameter(tuple, value2, buffer);
     }
 

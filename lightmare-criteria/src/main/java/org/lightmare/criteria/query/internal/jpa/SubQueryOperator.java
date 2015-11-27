@@ -12,8 +12,17 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type parameter
  */
-interface SubQueryOperator<T> {
+interface SubQueryOperator<T> extends SubQuery<T> {
 
+    /**
+     * Processes sub query for entity field instant operator
+     * 
+     * @param field
+     * @param operator
+     * @param subType
+     * @param consumer
+     * @return {@link QueryStream} current instance
+     */
     <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> subType,
             QueryConsumer<S> consumer);
 }

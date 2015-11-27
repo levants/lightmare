@@ -30,6 +30,14 @@ package org.lightmare.criteria.query.internal.jpa.links;
  */
 public interface Parts {
 
+    String FROM = " from ";
+
+    String AS = " as ";
+
+    String DISTINCT = "distinct ";
+
+    String SET_SPACE = "    ";
+
     char COLUMN_PREFIX = '.';
 
     char PARAM_PREFIX = ':';

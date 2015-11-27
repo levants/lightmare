@@ -31,7 +31,6 @@ import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
-import org.lightmare.criteria.query.internal.jpa.links.Filters;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Orders;
 import org.lightmare.criteria.query.internal.jpa.links.Parts;
@@ -105,9 +104,9 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
      */
     protected static void appendFromClause(String typeName, String alias, StringBuilder buff) {
 
-        buff.append(Filters.FROM);
+        buff.append(Parts.FROM);
         buff.append(typeName);
-        buff.append(Filters.AS);
+        buff.append(Parts.AS);
         buff.append(alias);
         newLine(buff);
     }
@@ -308,7 +307,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
         if (StringUtils.valid(updateSet)) {
             updateSet.append(Parts.COMMA);
             newLine(updateSet);
-            updateSet.append(Clauses.SET_SPACE);
+            updateSet.append(Parts.SET_SPACE);
         } else {
             updateSet.append(Clauses.SET);
         }
@@ -382,7 +381,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     protected final void oppSelect(Serializable... fields) {
 
         if (CollectionUtils.valid(fields)) {
-            columns.append(Filters.SELECT);
+            columns.append(Clauses.SELECT);
             appendSelect(fields);
         }
     }
@@ -624,7 +623,7 @@ abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
     private void countPrefix() {
 
         StringUtils.clear(count);
-        count.append(Filters.SELECT);
+        count.append(Clauses.SELECT);
         count.append(Aggregates.COUNT.expression(alias));
         countBody();
         count.append(from);
