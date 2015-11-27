@@ -286,6 +286,27 @@ public class SubQueryTest extends QueryTest {
 
     @RunOrder(106)
     @Test
+    public void subQueryAnyToObjectTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(GeneralInfo::getAddrress, "address").ge("100", SubQuery.any(Phone.class,
+                            c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
+            List<Person> persons = stream.toList();
+            persons.forEach(System.out::println);
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @RunOrder(107)
+    @Test
     public void subQueryAllToFunctionTest() {
 
         EntityManager em = emf.createEntityManager();
@@ -294,6 +315,28 @@ public class SubQueryTest extends QueryTest {
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                     .equal(GeneralInfo::getAddrress, "address")
                     .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.all(Phone.class,
+                            c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getOperatorId)));
+            List<Person> persons = stream.toList();
+            persons.forEach(System.out::println);
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @RunOrder(107)
+    @Test
+    public void subQueryAnyToFunctionTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(GeneralInfo::getAddrress, "address")
+                    .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.any(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getOperatorId)));
             List<Person> persons = stream.toList();
             persons.forEach(System.out::println);
