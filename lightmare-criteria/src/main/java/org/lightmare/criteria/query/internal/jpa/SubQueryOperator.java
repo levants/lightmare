@@ -11,7 +11,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type parameter
+ *            entity type parameter for sub query
  */
 interface SubQueryOperator<T> extends SubQuery<T> {
 

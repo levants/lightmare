@@ -10,7 +10,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type
+ *            entity type parameter for sub query
  */
 public interface SubQuery<T> {
 
@@ -55,7 +55,7 @@ public interface SubQuery<T> {
      * @author Levan Tsinadze
      *
      * @param <T>
-     *            entity type parameter
+     *            entity type parameter for sub query
      */
     static final class All<T> extends SubQueryType<T> {
 
@@ -70,7 +70,7 @@ public interface SubQuery<T> {
      * @author Levan Tsinadze
      *
      * @param <T>
-     *            entity type parameter
+     *            entity type parameter for sub query
      */
     static final class Any<T> extends SubQueryType<T> {
 
@@ -85,7 +85,7 @@ public interface SubQuery<T> {
      * @author Levan Tsinadze
      *
      * @param <T>
-     *            entity type parameter
+     *            entity type parameter for sub query
      */
     static final class Some<T> extends SubQueryType<T> {
 

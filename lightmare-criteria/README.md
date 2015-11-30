@@ -122,6 +122,9 @@ Query can be linked dynamically:
 Subqueries
 ---------
 
+In
+---------
+
 Implementations of sub queries are by calling exits or in functions:
 ```java
   List<Person> persons = QueryProvider.query(em, Person.class).where()
@@ -133,6 +136,100 @@ Implementations of sub queries are by calling exits or in functions:
 		                           .equal(Phone::getPhoneNumber, Person::getPhoneNumber))
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
+```
+for ALL, ANY and SOME clause SubQuery.all, SubQuery.any or SubQuery.some should be called 
+
+All
+---------
+
+```java
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                 .equal(GeneralInfo::getAddrress, "address")
+                 .ge(Person::getLastName, SubQuery.all(Phone.class, c -> c.where()
+                                                                    .equal(Phone::getPhoneNumber, "100100")
+                                                                    .select(Phone::getPhoneNumber)));
+```
+
+for arbitrary object
+
+```java
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                 .equal(GeneralInfo::getAddrress, "address")
+                 .ge(Person::getLastName, SubQuery.all("100", c -> c.where()
+                                                                    .equal(Phone::getPhoneNumber, "100100")
+                                                                    .select(Phone::getPhoneNumber)));
+```
+
+and for functions
+
+```java
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                 .equal(GeneralInfo::getAddrress, "address")
+                 .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.all("100", c -> c.where()
+                                                                    .equal(Phone::getPhoneNumber, "100100")
+                                                                    .select(Phone::getPhoneNumber)));
+```
+
+Any
+---------
+
+```java
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                 .equal(GeneralInfo::getAddrress, "address")
+                 .ge(Person::getLastName, SubQuery.any(Phone.class, c -> c.where()
+                                                                    .equal(Phone::getPhoneNumber, "100100")
+                                                                    .select(Phone::getPhoneNumber)));
+```
+
+for arbitrary object
+
+```java
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                 .equal(GeneralInfo::getAddrress, "address")
+                 .ge(Person::getLastName, SubQuery.any("100", c -> c.where()
+                                                                    .equal(Phone::getPhoneNumber, "100100")
+                                                                    .select(Phone::getPhoneNumber)));
+```
+
+and for functions
+
+```java
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                 .equal(GeneralInfo::getAddrress, "address")
+                 .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.any("100", c -> c.where()
+                                                                    .equal(Phone::getPhoneNumber, "100100")
+                                                                    .select(Phone::getPhoneNumber)));
+```
+
+Some
+---------
+
+```java
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                 .equal(GeneralInfo::getAddrress, "address")
+                 .ge(Person::getLastName, SubQuery.some(Phone.class, c -> c.where()
+                                                                    .equal(Phone::getPhoneNumber, "100100")
+                                                                    .select(Phone::getPhoneNumber)));
+```
+
+for arbitrary object
+
+```java
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                 .equal(GeneralInfo::getAddrress, "address")
+                 .ge(Person::getLastName, SubQuery.some("100", c -> c.where()
+                                                                    .equal(Phone::getPhoneNumber, "100100")
+                                                                    .select(Phone::getPhoneNumber)));
+```
+
+and for functions
+
+```java
+  QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                 .equal(GeneralInfo::getAddrress, "address")
+                 .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.some("100", c -> c.where()
+                                                                    .equal(Phone::getPhoneNumber, "100100")
+                                                                    .select(Phone::getPhoneNumber)));
 ```
 
 Joins
