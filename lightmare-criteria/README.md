@@ -146,8 +146,8 @@ All
   QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                  .equal(GeneralInfo::getAddrress, "address")
                  .ge(Person::getLastName, SubQuery.all(Phone.class, c -> c.where()
-                                                                    .equal(Phone::getPhoneNumber, "100100")
-                                                                    .select(Phone::getPhoneNumber)));
+                                                            .equal(Phone::getPhoneNumber, "100100")
+                                                            .select(Phone::getPhoneNumber)));
 ```
 
 for arbitrary object
@@ -156,8 +156,8 @@ for arbitrary object
   QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                  .equal(GeneralInfo::getAddrress, "address")
                  .ge(Person::getLastName, SubQuery.all("100", c -> c.where()
-                                                                    .equal(Phone::getPhoneNumber, "100100")
-                                                                    .select(Phone::getPhoneNumber)));
+                                                            .equal(Phone::getPhoneNumber, "100100")
+                                                            .select(Phone::getPhoneNumber)));
 ```
 
 and for functions
@@ -166,8 +166,8 @@ and for functions
   QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                  .equal(GeneralInfo::getAddrress, "address")
                  .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.all("100", c -> c.where()
-                                                                    .equal(Phone::getPhoneNumber, "100100")
-                                                                    .select(Phone::getPhoneNumber)));
+                                                            .equal(Phone::getPhoneNumber, "100100")
+                                                            .select(Phone::getPhoneNumber)));
 ```
 
 Any
@@ -177,8 +177,8 @@ Any
   QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                  .equal(GeneralInfo::getAddrress, "address")
                  .ge(Person::getLastName, SubQuery.any(Phone.class, c -> c.where()
-                                                                    .equal(Phone::getPhoneNumber, "100100")
-                                                                    .select(Phone::getPhoneNumber)));
+                                                            .equal(Phone::getPhoneNumber, "100100")
+                                                            .select(Phone::getPhoneNumber)));
 ```
 
 for arbitrary object
@@ -187,8 +187,8 @@ for arbitrary object
   QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                  .equal(GeneralInfo::getAddrress, "address")
                  .ge(Person::getLastName, SubQuery.any("100", c -> c.where()
-                                                                    .equal(Phone::getPhoneNumber, "100100")
-                                                                    .select(Phone::getPhoneNumber)));
+                                                            .equal(Phone::getPhoneNumber, "100100")
+                                                            .select(Phone::getPhoneNumber)));
 ```
 
 and for functions
@@ -197,8 +197,8 @@ and for functions
   QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                  .equal(GeneralInfo::getAddrress, "address")
                  .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.any("100", c -> c.where()
-                                                                    .equal(Phone::getPhoneNumber, "100100")
-                                                                    .select(Phone::getPhoneNumber)));
+                                                            .equal(Phone::getPhoneNumber, "100100")
+                                                            .select(Phone::getPhoneNumber)));
 ```
 
 Some
@@ -208,8 +208,8 @@ Some
   QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                  .equal(GeneralInfo::getAddrress, "address")
                  .ge(Person::getLastName, SubQuery.some(Phone.class, c -> c.where()
-                                                                    .equal(Phone::getPhoneNumber, "100100")
-                                                                    .select(Phone::getPhoneNumber)));
+                                                            .equal(Phone::getPhoneNumber, "100100")
+                                                            .select(Phone::getPhoneNumber)));
 ```
 
 for arbitrary object
@@ -218,8 +218,8 @@ for arbitrary object
   QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                  .equal(GeneralInfo::getAddrress, "address")
                  .ge(Person::getLastName, SubQuery.some("100", c -> c.where()
-                                                                    .equal(Phone::getPhoneNumber, "100100")
-                                                                    .select(Phone::getPhoneNumber)));
+                                                            .equal(Phone::getPhoneNumber, "100100")
+                                                            .select(Phone::getPhoneNumber)));
 ```
 
 and for functions
@@ -228,8 +228,8 @@ and for functions
   QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
                  .equal(GeneralInfo::getAddrress, "address")
                  .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.some("100", c -> c.where()
-                                                                    .equal(Phone::getPhoneNumber, "100100")
-                                                                    .select(Phone::getPhoneNumber)));
+                                                            .equal(Phone::getPhoneNumber, "100100")
+                                                            .select(Phone::getPhoneNumber)));
 ```
 
 Joins

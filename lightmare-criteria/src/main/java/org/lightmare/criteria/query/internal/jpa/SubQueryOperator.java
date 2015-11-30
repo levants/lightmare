@@ -16,7 +16,8 @@ import org.lightmare.criteria.query.QueryStream;
 interface SubQueryOperator<T> extends SubQuery<T> {
 
     /**
-     * Processes sub query for entity field instant operator
+     * Processes sub query for entity field instant operator and sub query
+     * consumer
      * 
      * @param field
      * @param operator
@@ -28,7 +29,8 @@ interface SubQueryOperator<T> extends SubQuery<T> {
             QueryConsumer<S> consumer);
 
     /**
-     * Processes sub query for entity field instant operator
+     * Processes sub query for entity field instant operator and sub query
+     * consumer
      * 
      * @param value
      * @param operator
@@ -39,7 +41,8 @@ interface SubQueryOperator<T> extends SubQuery<T> {
     <F, S> QueryStream<T> operateSubQuery(Object value, String operator, Class<S> subType, QueryConsumer<S> consumer);
 
     /**
-     * Processes sub query for entity field instant operator
+     * Processes sub query for entity field instant operator and sub query
+     * consumer
      * 
      * @param function
      * @param operator

@@ -10,7 +10,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type parameter
+ *            entity type parameter for sub query
  */
 interface TypedSubQueryProcessor<T> extends SubQueryOperator<T> {
 
