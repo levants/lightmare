@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Texts;
 interface TextFunction<T> {
 
     /**
-     * Operates text functions
+     * Generates functional expression
      * 
      * @param function
      * @param x
@@ -46,10 +46,25 @@ interface TextFunction<T> {
      */
     JPAFunction<T> operateText(String function, Object x, Object y, Object z);
 
+    /**
+     * Generates functional expression
+     * 
+     * @param function
+     * @param x
+     * @param y
+     * @return {@link JPAFunction} current instance
+     */
     default JPAFunction<T> operateText(String function, Object x, Object y) {
         return operateText(function, x, y, null);
     }
 
+    /**
+     * Generates text functional expression
+     * 
+     * @param function
+     * @param x
+     * @return {@link JPAFunction} current instance
+     */
     default JPAFunction<T> operateText(String function, Object x) {
         return operateText(function, x, null, null);
     }

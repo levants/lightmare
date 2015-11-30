@@ -1,7 +1,7 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 /**
- * Processes functional expressions in JPA query
+ * Processes functional expressions for JPA query
  * 
  * @author Levan Tsinadze
  *

@@ -81,6 +81,12 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
         return stream;
     }
 
+    /**
+     * Generates SELECT clause for sub query
+     * 
+     * @param fields
+     * @return {@link QueryStream} with {@link Object} array
+     */
     @SafeVarargs
     protected final QueryStream<Object[]> subSelectAll(Serializable... fields) {
 

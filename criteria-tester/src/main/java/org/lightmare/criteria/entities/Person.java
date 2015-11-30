@@ -47,6 +47,12 @@ public class Person extends GeneralInfo {
     @Column(name = "MIDD_NAME")
     private String middName;
 
+    @Column(name = "COMPARATOR_ID")
+    private Long comparatorId;
+
+    @Column(name = "FUNCTIONAL_ID")
+    private Integer functionalId;
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "PERSON_PHONES")
     private Set<Phone> phones;
@@ -103,6 +109,22 @@ public class Person extends GeneralInfo {
 
     public void setMiddName(String middName) {
         this.middName = middName;
+    }
+
+    public Long getComparatorId() {
+        return comparatorId;
+    }
+
+    public void setComparatorId(Long comparatorId) {
+        this.comparatorId = comparatorId;
+    }
+
+    public Integer getFunctionalId() {
+        return functionalId;
+    }
+
+    public void setFunctionalId(Integer functionalId) {
+        this.functionalId = functionalId;
     }
 
     public Set<Phone> getPhones() {
