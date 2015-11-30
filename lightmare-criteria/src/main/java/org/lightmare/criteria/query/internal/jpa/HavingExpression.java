@@ -37,10 +37,31 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  */
 public interface HavingExpression<T> {
 
+    /**
+     * Generates HAVING clause for JPA query
+     * 
+     * @param operator
+     * @return {@link HavingExpression} current instance
+     */
     HavingExpression<T> appendHaving(Object operator);
 
+    /**
+     * Generates HAVING clause for JPA query with parameter and operator
+     * 
+     * @param operator
+     * @param value
+     * @return {@link HavingExpression} current instance
+     */
     HavingExpression<T> operate(String operator, Number value);
 
+    /**
+     * Generates HAVING clause for JPA query with parameters and operator
+     * 
+     * @param operator
+     * @param value1
+     * @param value2
+     * @return {@link HavingExpression} current instance
+     */
     HavingExpression<T> operate(String operator, Number value1, Number value2);
 
     default HavingExpression<T> equal(Number value) {

@@ -96,4 +96,27 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             em.close();
         }
     }
+
+    @Test
+    @RunOrder(503)
+    public void functionTextColumnTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
+                    .like(Person::getLastName, "lname%")
+                    .gtFunction(c -> c.trim(Person::getPersonalNo),
+                            s -> s.concat(Person::getLastName, Person::getFirstName))
+                    .gtColumn(c -> c.currentDate(), Person::getBirthDate)
+                    .leColumn(c -> c.abs(Person::getPersonId), Person::getPersonId);
+            String sql = stream.sql();
+            System.out.println("===========JPA-QL==========");
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
 }

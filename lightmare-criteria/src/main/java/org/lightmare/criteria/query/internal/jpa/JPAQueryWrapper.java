@@ -40,6 +40,7 @@ import org.lightmare.criteria.query.QueryStream;
  */
 public interface JPAQueryWrapper<T> {
 
+    // Entity default alias
     String DEFAULT_ALIAS = "c";
 
     /**

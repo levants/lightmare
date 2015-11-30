@@ -46,7 +46,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter
  */
-abstract class AbstractAppenderStream<T> extends GeneralQueryStream<T> {
+abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
 
     protected final StringBuilder prefix = new StringBuilder();
 

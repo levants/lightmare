@@ -22,6 +22,9 @@
  */
 package org.lightmare.criteria.query.internal.jpa;
 
+import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.internal.jpa.links.Texts;
+
 /**
  * Text function methods
  * 
@@ -32,4 +35,261 @@ package org.lightmare.criteria.query.internal.jpa;
  */
 interface TextFunction<T> {
 
+    /**
+     * Operates text functions
+     * 
+     * @param function
+     * @param x
+     * @param y
+     * @param z
+     * @return {@link JPAFunction} current instance
+     */
+    JPAFunction<T> operateText(String function, Object x, Object y, Object z);
+
+    default JPAFunction<T> operateText(String function, Object x, Object y) {
+        return operateText(function, x, y, null);
+    }
+
+    default JPAFunction<T> operateText(String function, Object x) {
+        return operateText(function, x, null, null);
+    }
+
+    /**
+     * Create an expression for string concatenation.
+     *
+     * @param x
+     *            string expression
+     * @param y
+     *            string expression
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> concat(EntityField<T, String> x, EntityField<T, String> y) {
+        return operateText(Texts.CONCAT, x, y);
+    }
+
+    /**
+     * Create an expression for string concatenation.
+     *
+     * @param x
+     *            string expression
+     * @param y
+     *            string
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> concat(EntityField<T, String> x, String y) {
+        return operateText(Texts.CONCAT, x, y);
+    }
+
+    /**
+     * Create an expression for string concatenation.
+     *
+     * @param x
+     *            string
+     * @param y
+     *            string expression
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> concat(String x, EntityField<T, String> y) {
+        return operateText(Texts.CONCAT, x, y);
+    }
+
+    /**
+     * Create an expression for substring extraction. Extracts a substring
+     * starting at the specified position through to end of the string. First
+     * position is 1.
+     *
+     * @param x
+     *            string expression
+     * @param from
+     *            start position
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> substring(EntityField<T, String> x, int from) {
+        return operateText(Texts.SUBSTRING, x, from);
+    }
+
+    /**
+     * Create an expression for substring extraction. Extracts a substring of
+     * given length starting at the specified position. First position is 1.
+     *
+     * @param x
+     *            string expression
+     * @param from
+     *            start position
+     * @param len
+     *            length
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> substring(EntityField<T, String> x, int from, int len) {
+        return operateText(Texts.SUBSTRING, x, from, len);
+    }
+
+    /**
+     * Used to specify how strings are trimmed.
+     */
+    public static enum Trimspec {
+
+        /**
+         * Trim from leading end.
+         */
+        LEADING,
+
+        /**
+         * Trim from trailing end.
+         */
+        TRAILING,
+
+        /**
+         * Trim from both ends.
+         */
+        BOTH
+    }
+
+    /**
+     * Create expression to trim blanks from both ends of a string.
+     *
+     * @param x
+     *            expression for string to trim
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> trim(EntityField<T, String> x) {
+        return operateText(Texts.TRIM, x);
+    }
+
+    /**
+     * Create expression to trim blanks from a string.
+     *
+     * @param ts
+     *            trim specification
+     * @param x
+     *            expression for string to trim
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> trim(Trimspec ts, EntityField<T, String> x) {
+        return operateText(Texts.TRIM, x);
+    }
+
+    /**
+     * Create expression to trim character from both ends of a string.
+     *
+     * @param t
+     *            expression for character to be trimmed
+     * @param x
+     *            expression for string to trim
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> trim(EntityField<T, String> t, EntityField<T, String> x) {
+        return operateText(Texts.TRIM, t, x);
+    }
+
+    /**
+     * Create expression to trim character from both ends of a string.
+     *
+     * @param t
+     *            character to be trimmed
+     * @param x
+     *            expression for string to trim
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> trim(char t, EntityField<T, String> x) {
+        return operateText(Texts.TRIM, t, x);
+    }
+
+    /**
+     * Create expression for converting a string to lowercase.
+     *
+     * @param x
+     *            string expression
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> lower(EntityField<T, String> x) {
+        return operateText(Texts.LOWER, x);
+    }
+
+    /**
+     * Create expression for converting a string to uppercase.
+     *
+     * @param x
+     *            string expression
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> upper(EntityField<T, String> x) {
+        return operateText(Texts.UPPER, x);
+    }
+
+    /**
+     * Create expression to return length of a string.
+     *
+     * @param x
+     *            string expression
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> length(EntityField<T, String> x) {
+        return operateText(Texts.LENGTH, x);
+    }
+
+    /**
+     * Create expression to locate the position of one string within another,
+     * returning position of first character if found. The first position in a
+     * string is denoted by 1. If the string to be located is not found, 0 is
+     * returned.
+     *
+     * @param x
+     *            expression for string to be searched
+     * @param pattern
+     *            expression for string to be located
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> locate(EntityField<T, String> x, EntityField<T, String> pattern) {
+        return operateText(Texts.LOCATE, x, pattern);
+    }
+
+    /**
+     * Create expression to locate the position of one string within another,
+     * returning position of first character if found. The first position in a
+     * string is denoted by 1. If the string to be located is not found, 0 is
+     * returned.
+     *
+     * @param x
+     *            expression for string to be searched
+     * @param pattern
+     *            string to be located
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> locate(EntityField<T, String> x, String pattern) {
+        return operateText(Texts.LOCATE, x, pattern);
+    }
+
+    /**
+     * Create expression to locate the position of one string within another,
+     * returning position of first character if found. The first position in a
+     * string is denoted by 1. If the string to be located is not found, 0 is
+     * returned.
+     *
+     * @param x
+     *            expression for string to be searched
+     * @param pattern
+     *            expression for string to be located
+     * @param from
+     *            expression for position at which to start search
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> locate(EntityField<T, String> x, EntityField<T, String> pattern, int from) {
+        return operateText(Texts.LOCATE, pattern, x, from);
+    }
 }

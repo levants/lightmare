@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.EntityManager;
 
@@ -122,6 +123,36 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
         closeBracket();
     }
 
+    /**
+     * Validates and generates text function part
+     * 
+     * @param value
+     */
+    private void validateAndGenerate(Object value) {
+
+        if (Objects.nonNull(value)) {
+            appendBody(StringUtils.COMMA).appendBody(StringUtils.SPACE);
+            generate(value);
+        }
+    }
+
+    /**
+     * Adds text function
+     * 
+     * @param x
+     * @param y
+     * @param z
+     * @param operator
+     */
+    private void appendTextFunction(Object x, Object y, Object z, String operator) {
+
+        startFunction(operator);
+        generate(x);
+        validateAndGenerate(y);
+        validateAndGenerate(z);
+        closeBracket();
+    }
+
     @Override
     public JPAFunction<T> operateDate(String operator) {
         appendBody(operator);
@@ -137,6 +168,12 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
     @Override
     public JPAFunction<T> operateNumeric(Object x, Object y, String operator) {
         appendNumericFunction(x, y, operator);
+        return this;
+    }
+
+    @Override
+    public JPAFunction<T> operateText(String operator, Object x, Object y, Object z) {
+        appendTextFunction(x, y, z, operator);
         return this;
     }
 }

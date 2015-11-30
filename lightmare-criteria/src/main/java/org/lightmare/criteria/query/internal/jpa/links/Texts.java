@@ -12,17 +12,17 @@ public interface Texts {
 
     String NOT_LIKE = " not like ";
 
-    String CONCAT = " concat";
+    String CONCAT = "concat";
 
-    String SUBSTRING = " substring";
+    String SUBSTRING = "substring";
 
-    String TRIM = " trim";
+    String TRIM = "trim";
 
-    String LOWER = " lower";
+    String LOWER = "lower";
 
-    String UPPER = " upper";
+    String UPPER = "upper";
 
-    String LENGTH = " length";
+    String LENGTH = "length";
 
-    String LOCATE = " locate";
+    String LOCATE = "locate";
 }
