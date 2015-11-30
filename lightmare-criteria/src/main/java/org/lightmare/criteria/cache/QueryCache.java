@@ -73,6 +73,13 @@ public class QueryCache {
         return QUERIES.get(key);
     }
 
+    /**
+     * Gets appropriated {@link QueryTuple} from cache by appropriated
+     * {@link LambdaInfo} instance
+     * 
+     * @param lambda
+     * @return {@link QueryTuple} from cache
+     */
     public static QueryTuple getQuery(LambdaInfo lambda) {
 
         QueryTuple tuple;

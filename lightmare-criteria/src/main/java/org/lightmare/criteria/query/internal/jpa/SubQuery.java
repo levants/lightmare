@@ -1,6 +1,8 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.internal.jpa.links.Operators;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Provider class for sub query types
@@ -13,22 +15,25 @@ import org.lightmare.criteria.functions.QueryConsumer;
 public interface SubQuery<T> {
 
     /**
-     * Query for ALL clause
+     * Abstract class to generate ALL, ANY and SOME sub query clauses
      * 
      * @author Levan Tsinadze
      *
      * @param <T>
-     *            entity type parameter
+     *            entity type parameter for sub query
      */
-    public static final class All<T> {
+    static abstract class SubQueryType<T> {
 
         private final Class<T> type;
 
         private final QueryConsumer<T> consumer;
 
-        private All(final Class<T> type, final QueryConsumer<T> consumer) {
+        private final String operator;
+
+        private SubQueryType(final Class<T> type, final QueryConsumer<T> consumer, final String operator) {
             this.type = type;
             this.consumer = consumer;
+            this.operator = operator;
         }
 
         public Class<T> getType() {
@@ -37,6 +42,25 @@ public interface SubQuery<T> {
 
         public QueryConsumer<T> getConsumer() {
             return consumer;
+        }
+
+        public String getOperator(String other) {
+            return StringUtils.concat(other, operator);
+        }
+    }
+
+    /**
+     * Query for ALL clause
+     * 
+     * @author Levan Tsinadze
+     *
+     * @param <T>
+     *            entity type parameter
+     */
+    static final class All<T> extends SubQueryType<T> {
+
+        private All(final Class<T> type, final QueryConsumer<T> consumer) {
+            super(type, consumer, Operators.ALL);
         }
     }
 
@@ -48,23 +72,10 @@ public interface SubQuery<T> {
      * @param <T>
      *            entity type parameter
      */
-    public static final class Any<T> {
-
-        private final Class<T> type;
-
-        private final QueryConsumer<T> consumer;
+    static final class Any<T> extends SubQueryType<T> {
 
         private Any(final Class<T> type, final QueryConsumer<T> consumer) {
-            this.type = type;
-            this.consumer = consumer;
-        }
-
-        public Class<T> getType() {
-            return type;
-        }
-
-        public QueryConsumer<T> getConsumer() {
-            return consumer;
+            super(type, consumer, Operators.ANY);
         }
     }
 
@@ -76,23 +87,10 @@ public interface SubQuery<T> {
      * @param <T>
      *            entity type parameter
      */
-    public static final class Some<T> {
-
-        private final Class<T> type;
-
-        private final QueryConsumer<T> consumer;
+    static final class Some<T> extends SubQueryType<T> {
 
         private Some(final Class<T> type, final QueryConsumer<T> consumer) {
-            this.type = type;
-            this.consumer = consumer;
-        }
-
-        public Class<T> getType() {
-            return type;
-        }
-
-        public QueryConsumer<T> getConsumer() {
-            return consumer;
+            super(type, consumer, Operators.SOME);
         }
     }
 

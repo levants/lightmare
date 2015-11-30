@@ -36,9 +36,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  *            entity type parameter
  */
 public interface SubQueryProcessor<T>
-        extends AnySubQueryProcessor<T>, AnyToObjectSubQueryProcessor<T>, AnyToFunctionSubQueryProcessor<T>,
-        AllSubQueryProcessor<T>, AllToObjectSubQueryProcessor<T>, AllToFunctionSubQueryProcessor<T>,
-        SomeSubQueryProcessor<T>, SomeToObjectSubQueryProcessor<T>, SomeToFunctionSubQueryProcessor<T> {
+        extends TypedSubQueryProcessor<T>, TypedToObjectSubQueryProcessor<T>, TypedToFunctionSubQueryProcessor<T> {
 
     Class<T> getEntityType();
 
