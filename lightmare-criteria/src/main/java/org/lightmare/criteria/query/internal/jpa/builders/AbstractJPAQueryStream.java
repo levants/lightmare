@@ -305,11 +305,9 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
         Object value = parameter.getValue();
         TemporalType temporalType = parameter.getTemporalType();
         if (value instanceof Calendar) {
-            Calendar dateValue = ObjectUtils.cast(value);
-            query.setParameter(name, dateValue, temporalType);
+            ObjectUtils.cast(value, Calendar.class, c -> query.setParameter(name, c, temporalType));
         } else if (value instanceof Date) {
-            Date dateValue = ObjectUtils.cast(value);
-            query.setParameter(name, dateValue, temporalType);
+            ObjectUtils.cast(value, Date.class, c -> query.setParameter(name, c, temporalType));
         }
     }
 

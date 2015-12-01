@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
 
@@ -78,8 +78,7 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
     private void generate(Object value) {
 
         if (value instanceof EntityField<?, ?>) {
-            Serializable field = ObjectUtils.cast(value);
-            generateByField(field);
+            ObjectUtils.cast(value, Serializable.class, this::generateByField);
         } else {
             generateByValue(value);
         }
@@ -128,12 +127,10 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
      * 
      * @param value
      */
-    private void validateAndGenerate(Object value) {
+    private void appendAndGenerate(Object value) {
 
-        if (Objects.nonNull(value)) {
-            appendBody(StringUtils.COMMA).appendBody(StringUtils.SPACE);
-            generate(value);
-        }
+        appendBody(StringUtils.COMMA).appendBody(StringUtils.SPACE);
+        generate(value);
     }
 
     /**
@@ -148,8 +145,9 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
 
         startFunction(operator);
         generate(x);
-        validateAndGenerate(y);
-        validateAndGenerate(z);
+        Consumer<Object> appendMethod = this::appendAndGenerate;
+        ObjectUtils.nonNull(y, appendMethod);
+        ObjectUtils.nonNull(z, appendMethod);
         closeBracket();
     }
 
@@ -174,6 +172,20 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
     @Override
     public JPAFunction<T> operateText(String operator, Object x, Object y, Object z) {
         appendTextFunction(x, y, z, operator);
+        return this;
+    }
+
+    @Override
+    public JPAFunction<T> generateText(String function, String prefix, Object x, String pattern, Object y) {
+
+        startFunction(function);
+        Consumer<Object> generateMethod = this::generate;
+        StringUtils.valid(prefix, this::appendBody);
+        ObjectUtils.nonNull(x, generateMethod);
+        appendBody(StringUtils.SPACE).appendBody(pattern).appendBody(StringUtils.SPACE);
+        ObjectUtils.nonNull(y, generateMethod);
+        closeBracket();
+
         return this;
     }
 }

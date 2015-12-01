@@ -22,7 +22,7 @@ public enum Trimspec {
      */
     BOTH("BOTH ");
 
-    private final String prefix;
+    public final String prefix;
 
     private static final String FROM = "FROM";
 

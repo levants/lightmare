@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Utility class to help with general object checks / lock / modification
@@ -44,6 +45,25 @@ public abstract class ObjectUtils {
      */
     public static boolean notTrue(boolean statement) {
         return !statement;
+    }
+
+    /**
+     * Validates if passed {@link Object} ins not null and runs consumer
+     * implementation
+     * 
+     * @param value
+     * @param consumer
+     * @return <code>boolean</code>
+     */
+    public static <T> boolean nonNull(T value, Consumer<T> consumer) {
+
+        boolean valid = Objects.nonNull(value);
+
+        if (valid) {
+            consumer.accept(value);
+        }
+
+        return valid;
     }
 
     /**
@@ -79,6 +99,35 @@ public abstract class ObjectUtils {
         T value = (T) instance;
 
         return value;
+    }
+
+    /**
+     * Casts passed {@link Object} to generic parameter and if it's not null
+     * runs consumer implementation
+     * 
+     * @param instance
+     * @param consumer
+     * @return <code>T</code> casted to type instance
+     */
+    public static <T> T cast(Object instance, Consumer<T> consumer) {
+
+        T value = cast(instance);
+        nonNull(value, consumer::accept);
+
+        return value;
+    }
+
+    /**
+     * Casts passed {@link Object} to generic parameter and if it's not null
+     * runs consumer implementation
+     * 
+     * @param instance
+     * @param type
+     * @param consumer
+     */
+    public static <T> void cast(Object instance, Class<T> type, Consumer<T> consumer) {
+        T value = cast(instance);
+        nonNull(value, consumer::accept);
     }
 
     /**

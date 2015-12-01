@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.utils;
 
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
@@ -66,6 +67,25 @@ public abstract class StringUtils {
      */
     public static boolean valid(CharSequence chars) {
         return chars != null && chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
+    }
+
+    /**
+     * Checks if passed {@link CharSequence} is not null and is not empty and
+     * runs consumer implementation
+     *
+     * @param chars
+     * @param consumer
+     * @return <code>boolean</code>
+     */
+    public static boolean valid(CharSequence chars, Consumer<CharSequence> consumer) {
+
+        boolean valid = valid(chars);
+
+        if (valid) {
+            consumer.accept(chars);
+        }
+
+        return valid;
     }
 
     /**

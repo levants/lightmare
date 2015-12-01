@@ -47,8 +47,7 @@ public class GenericProcessor {
     private static void validateAndSetType(Type parameterType, QueryTuple tuple) {
 
         if (parameterType instanceof Class<?>) {
-            Class<?> genericType = ObjectUtils.cast(parameterType);
-            tuple.setGenericType(genericType);
+            ObjectUtils.cast(parameterType, Class.class, tuple::setGenericType);
         }
     }
 

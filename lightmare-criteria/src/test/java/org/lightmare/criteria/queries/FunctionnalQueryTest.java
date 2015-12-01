@@ -136,6 +136,11 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
+            Person person = stream.firstOrDefault(new Person());
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println(person);
         } catch (Throwable ex) {
             ex.printStackTrace();
         } finally {
@@ -153,12 +158,17 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
                     .like(Person::getLastName, "lname%")
                     .gtFunction(c -> c.trim(Person::getPersonalNo),
-                            s -> s.trim('l', Trimspec.LEADING, Person::getLastName))
+                            s -> s.trim(Person::getEscape, Trimspec.LEADING, Person::getLastName))
                     .gtColumn(c -> c.currentDate(), Person::getBirthDate)
                     .leColumn(c -> c.abs(Person::getPersonId), Person::getPersonId);
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
+            Person person = stream.firstOrDefault(new Person());
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println(person);
         } catch (Throwable ex) {
             ex.printStackTrace();
         } finally {
@@ -182,6 +192,11 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
+            Person person = stream.firstOrDefault(new Person());
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println(person);
         } catch (Throwable ex) {
             ex.printStackTrace();
         } finally {

@@ -45,4 +45,6 @@ public interface Parts {
     char COMMA = ',';
 
     char LIKE_SIGN = '%';
+
+    String TRIM_FROM = "FROM";
 }

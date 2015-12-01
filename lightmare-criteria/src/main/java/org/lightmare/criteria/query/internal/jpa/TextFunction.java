@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.query.internal.jpa.links.Texts;
 import org.lightmare.criteria.query.internal.jpa.links.Trimspec;
 import org.lightmare.criteria.utils.StringUtils;
@@ -47,6 +48,30 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     JPAFunction<T> operateText(String function, Object x, Object y, Object z);
+
+    /**
+     * Generates text function body
+     * 
+     * @param function
+     * @param prefix
+     * @param x
+     * @param pattern
+     * @param y
+     * @return {@link JPAFunction} current instance
+     */
+    JPAFunction<T> generateText(String function, String prefix, Object x, String pattern, Object y);
+
+    /**
+     * Generates text function body
+     * 
+     * @param function
+     * @param pattern
+     * @param y
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> generateText(String function, String pattern, Object y) {
+        return generateText(function, StringUtils.EMPTY_STRING, null, pattern, y);
+    }
 
     /**
      * Generates functional expression
@@ -183,7 +208,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> trim(EntityField<T, Character> t, EntityField<T, String> x) {
-        return operateText(Texts.TRIM, t, x);
+        return generateText(Texts.TRIM, StringUtils.EMPTY_STRING, t, Parts.TRIM_FROM, x);
     }
 
     /**
@@ -199,7 +224,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> trim(EntityField<T, Character> t, Trimspec ts, EntityField<T, String> x) {
-        return operateText(Texts.TRIM, t, x);
+        return generateText(Texts.TRIM, ts.prefix, t, Parts.TRIM_FROM, x);
     }
 
     /**
@@ -229,7 +254,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> trim(char ch, Trimspec ts, EntityField<T, String> x) {
-        return operateText(Texts.TRIM, ts.locate(ch), x);
+        return generateText(Texts.TRIM, ts.locate(ch), x);
     }
 
     /**
