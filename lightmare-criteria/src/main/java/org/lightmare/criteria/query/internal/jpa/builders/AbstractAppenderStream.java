@@ -300,7 +300,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * @param expression2
      * @param field2
      */
-    protected <F> void oppField(String expression1, Serializable field1, String expression2, Serializable field2,
+    protected <F> void oppField(Serializable field1, String expression1, Serializable field2, String expression2,
             Serializable field3) {
 
         opp(field1, expression1);

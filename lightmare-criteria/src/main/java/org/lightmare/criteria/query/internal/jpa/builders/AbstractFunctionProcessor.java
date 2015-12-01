@@ -124,7 +124,7 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
     }
 
     /**
-     * Validates and generates text function part
+     * Validates and generates {@link String} function query part
      * 
      * @param value
      */

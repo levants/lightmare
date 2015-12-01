@@ -9,6 +9,7 @@ import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Trimspec;
 import org.lightmare.criteria.runorder.RunOrder;
 
 public class FunctionnalQueryTest extends GroupByQueryTest {
@@ -108,6 +109,74 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
                     .like(Person::getLastName, "lname%")
                     .gtFunction(c -> c.trim(Person::getPersonalNo),
                             s -> s.concat(Person::getLastName, Person::getFirstName))
+                    .gtColumn(c -> c.currentDate(), Person::getBirthDate)
+                    .leColumn(c -> c.abs(Person::getPersonId), Person::getPersonId);
+            String sql = stream.sql();
+            System.out.println("===========JPA-QL==========");
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(503)
+    public void functionTextTrimColumnTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
+                    .like(Person::getLastName, "lname%")
+                    .gtFunction(c -> c.trim(Person::getPersonalNo), s -> s.trim(Person::getEscape, Person::getLastName))
+                    .gtColumn(c -> c.currentDate(), Person::getBirthDate)
+                    .leColumn(c -> c.abs(Person::getPersonId), Person::getPersonId);
+            String sql = stream.sql();
+            System.out.println("===========JPA-QL==========");
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(504)
+    public void functionTextTrimValueColumnTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
+                    .like(Person::getLastName, "lname%")
+                    .gtFunction(c -> c.trim(Person::getPersonalNo),
+                            s -> s.trim('l', Trimspec.LEADING, Person::getLastName))
+                    .gtColumn(c -> c.currentDate(), Person::getBirthDate)
+                    .leColumn(c -> c.abs(Person::getPersonId), Person::getPersonId);
+            String sql = stream.sql();
+            System.out.println("===========JPA-QL==========");
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(505)
+    public void functionTextTrimValueTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
+                    .like(Person::getLastName, "lname%")
+                    .gtFunction(c -> c.trim(Person::getPersonalNo),
+                            s -> s.trim('l', Trimspec.LEADING, Person::getLastName))
                     .gtColumn(c -> c.currentDate(), Person::getBirthDate)
                     .leColumn(c -> c.abs(Person::getPersonId), Person::getPersonId);
             String sql = stream.sql();

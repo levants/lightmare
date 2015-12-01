@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.jpa.links.Texts;
+import org.lightmare.criteria.query.internal.jpa.links.Trimspec;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -95,7 +96,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> concat(EntityField<T, String> x, String y) {
-        return operateText(Texts.CONCAT, x, y);
+        return operateText(Texts.CONCAT, x, StringUtils.qlize(y));
     }
 
     /**
@@ -109,7 +110,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> concat(String x, EntityField<T, String> y) {
-        return operateText(Texts.CONCAT, x, y);
+        return operateText(Texts.CONCAT, StringUtils.qlize(x), y);
     }
 
     /**
@@ -143,46 +144,6 @@ interface TextFunction<T> {
      */
     default JPAFunction<T> substring(EntityField<T, String> x, int from, int len) {
         return operateText(Texts.SUBSTRING, x, from, len);
-    }
-
-    /**
-     * Used to specify how strings are trimmed.
-     */
-    public static enum Trimspec {
-
-        /**
-         * Trim from leading end.
-         */
-        LEADING("LEADING "),
-
-        /**
-         * Trim from trailing end.
-         */
-        TRAILING("TRAILING "),
-
-        /**
-         * Trim from both ends.
-         */
-        BOTH("BOTH ");
-
-        private final String prefix;
-
-        private static final String FROM = "FROM";
-
-        private final String pattern;
-
-        private Trimspec(final String prefix) {
-            this.prefix = prefix;
-            this.pattern = StringUtils.concat(prefix, FROM);
-        }
-
-        private String locate(char ch) {
-            return StringUtils.concat(prefix, StringUtils.QV, ch, StringUtils.QV, StringUtils.SPACE, FROM);
-        }
-
-        private static String locateAll(char ch) {
-            return StringUtils.concat(StringUtils.QV, ch, StringUtils.QV, StringUtils.SPACE, FROM);
-        }
     }
 
     /**
@@ -221,7 +182,23 @@ interface TextFunction<T> {
      *
      * @return {@link JPAFunction} current instance
      */
-    default JPAFunction<T> trim(EntityField<T, String> t, EntityField<T, String> x) {
+    default JPAFunction<T> trim(EntityField<T, Character> t, EntityField<T, String> x) {
+        return operateText(Texts.TRIM, t, x);
+    }
+
+    /**
+     * Create expression to trim character from both ends of a string.
+     *
+     * @param t
+     *            expression for character to be trimmed
+     * @param ts
+     *            trim specification
+     * @param x
+     *            expression for string to trim
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> trim(EntityField<T, Character> t, Trimspec ts, EntityField<T, String> x) {
         return operateText(Texts.TRIM, t, x);
     }
 
@@ -322,7 +299,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> locate(EntityField<T, String> x, String pattern) {
-        return operateText(Texts.LOCATE, x, pattern);
+        return operateText(Texts.LOCATE, x, StringUtils.qlize(pattern));
     }
 
     /**
