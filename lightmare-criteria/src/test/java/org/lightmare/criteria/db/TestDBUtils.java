@@ -41,6 +41,7 @@ public class TestDBUtils {
         person1.setFirstName("fname1");
         person1.setBirthDate(getDateValue(80));
         person1.setMiddName("mname1");
+        person1.setEscape(Character.valueOf('_'));
 
         PersonInfo info1 = new PersonInfo();
         info1.setCardNumber("100");
@@ -53,6 +54,7 @@ public class TestDBUtils {
         person2.setFirstName("fname2");
         person2.setBirthDate(getDateValue(90));
         person2.setMiddName("mname2");
+        person2.setEscape(Character.valueOf('_'));
 
         PersonInfo info2 = new PersonInfo();
         info1.setCardNumber("200");
@@ -65,6 +67,7 @@ public class TestDBUtils {
         person3.setFirstName("fname3");
         person3.setBirthDate(getDateValue(95));
         person3.setMiddName("mname3");
+        person3.setEscape(Character.valueOf('_'));
 
         PersonInfo info3 = new PersonInfo();
         info3.setCardNumber("300");

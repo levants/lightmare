@@ -173,6 +173,14 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         oppWithParameter(tuple, value1, body);
     }
 
+    protected <F, E> void opp(Serializable field, String expression1, F value1, String expression2, E value2) {
+
+        QueryTuple tuple = opp(field, expression1);
+        oppWithParameter(tuple, value1, body);
+        appendBody(StringUtils.SPACE);
+        appendBody(expression2).appendBody(value2);
+    }
+
     /**
      * Generates sub query part with appropriated expression
      * 
@@ -292,10 +300,13 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * @param expression2
      * @param field2
      */
-    protected <F> void oppField(String expression1, Serializable field1, String expression2, Serializable field2) {
+    protected <F> void oppField(String expression1, Serializable field1, String expression2, Serializable field2,
+            Serializable field3) {
 
         opp(field1, expression1);
         opp(field2, expression2);
+        QueryTuple tuple = compose(field3);
+        appendColumn(tuple);
         newLine();
     }
 
@@ -539,6 +550,20 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         newLine();
     }
 
+    /**
+     * Appends query appropriated expressions and new line
+     * 
+     * @param field
+     * @param expression1
+     * @param value1
+     * @param expression2
+     * @param value2
+     */
+    protected <F, E> void oppLine(Serializable field, String expression1, F value1, String expression2, E value2) {
+        opp(field, expression1, value1, expression2, value2);
+        newLine();
+    }
+
     @Override
     public QueryStream<T> brackets(QueryConsumer<T> consumer) {
 
@@ -616,8 +641,8 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         String value;
 
         clearSql();
-        appendPrefix(from);
-        generateBody(prefix);
+        StringBuilder start = new StringBuilder(prefix).append(from);
+        generateBody(start);
         sql.append(orderBy);
         sql.append(suffix);
         value = sql.toString();

@@ -60,8 +60,8 @@ public interface ColumnExpression<T> {
      * @param field2
      * @return {@link QueryStream} current instance
      */
-    <F, S> QueryStream<T> operate(String operator1, EntityField<T, ? extends F> field1, String operator2,
-            EntityField<S, ? extends F> field2);
+    <F, E, S, L> QueryStream<T> operate(EntityField<T, ? extends F> field1, String operator1,
+            EntityField<S, ? extends F> field2, String operator2, EntityField<L, E> field3);
 
     /**
      * Generates query part for fields and operator
@@ -133,8 +133,22 @@ public interface ColumnExpression<T> {
         return operate(field1, field2, field3, Operators.NOT_BETWEEN);
     }
 
-    default QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2) {
-        return operate(field1, field2, Operators.LIKE);
+    default QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> pattern) {
+        return operate(field1, pattern, Operators.LIKE);
+    }
+
+    default QueryStream<T> notLike(EntityField<T, String> field1, EntityField<T, String> pattern) {
+        return operate(field1, pattern, Operators.NOT_LIKE);
+    }
+
+    default QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> pattern,
+            EntityField<T, Character> escapeChar) {
+        return operate(field1, Operators.LIKE, pattern, Operators.ESCAPE, escapeChar);
+    }
+
+    default QueryStream<T> notLike(EntityField<T, String> field1, EntityField<T, String> pattern,
+            EntityField<T, Character> escapeChar) {
+        return operate(field1, Operators.NOT_LIKE, pattern, Operators.ESCAPE, escapeChar);
     }
 
     /**

@@ -80,6 +80,19 @@ public interface Expression<T> {
      */
     <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2, String operator);
 
+    /**
+     * Generates query part for instant field with parameters and operators
+     * 
+     * @param field
+     * @param operator1
+     * @param value1
+     * @param operator2
+     * @param value2
+     * @return {@link QueryStream} current instance
+     */
+    <F> QueryStream<T> operate(EntityField<T, ? extends F> field, String operator1, Object value1, String operator2,
+            Object value2);
+
     default <F> QueryStream<T> equal(EntityField<T, F> field, Object value) {
         return operate(field, value, Operators.EQ);
     }
@@ -138,6 +151,24 @@ public interface Expression<T> {
         return operate(field, value1, value2, Operators.NOT_BETWEEN);
     }
 
+    default QueryStream<T> like(EntityField<T, String> field, String value) {
+        return operate(field, value, Operators.LIKE);
+    }
+
+    default QueryStream<T> notLike(EntityField<T, String> field, String value) {
+        return operate(field, value, Operators.NOT_LIKE);
+    }
+
+    default QueryStream<T> like(EntityField<T, String> field, String value, char escape) {
+        return operate(field, Operators.LIKE, value, Operators.ESCAPE, StringUtils.qlize(escape));
+    }
+
+    default QueryStream<T> notLike(EntityField<T, String> field, String value, char escape) {
+        return operate(field, Operators.NOT_LIKE, value, Operators.ESCAPE, StringUtils.qlize(escape));
+    }
+
+    // =========================Implementations=of=LIKE=clause================//
+
     default QueryStream<T> startsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(value, Parts.LIKE_SIGN);
         return operate(field, enrich, Operators.LIKE);
@@ -146,14 +177,6 @@ public interface Expression<T> {
     default QueryStream<T> notStartsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(value, Parts.LIKE_SIGN);
         return operate(field, enrich, Operators.NOT_LIKE);
-    }
-
-    default QueryStream<T> like(EntityField<T, String> field, String value) {
-        return operate(field, value, Operators.LIKE);
-    }
-
-    default QueryStream<T> notLike(EntityField<T, String> field, String value) {
-        return operate(field, value, Operators.NOT_LIKE);
     }
 
     default QueryStream<T> endsWith(EntityField<T, String> field, String value) {
@@ -175,6 +198,8 @@ public interface Expression<T> {
         String enrich = StringUtils.concat(Parts.LIKE_SIGN, value, Parts.LIKE_SIGN);
         return operate(field, enrich, Operators.NOT_LIKE);
     }
+
+    // =========================Implementations=of=LIKE=clause================//
 
     /**
      * Generates query part for instant field with {@link Collection} parameter

@@ -53,6 +53,9 @@ public class Person extends GeneralInfo {
     @Column(name = "FUNCTIONAL_ID")
     private Integer functionalId;
 
+    @Column(name = "ESCAPE")
+    private Character escape;
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "PERSON_PHONES")
     private Set<Phone> phones;
@@ -125,6 +128,14 @@ public class Person extends GeneralInfo {
 
     public void setFunctionalId(Integer functionalId) {
         this.functionalId = functionalId;
+    }
+
+    public Character getEscape() {
+        return escape;
+    }
+
+    public void setEscape(Character escape) {
+        this.escape = escape;
     }
 
     public Set<Phone> getPhones() {

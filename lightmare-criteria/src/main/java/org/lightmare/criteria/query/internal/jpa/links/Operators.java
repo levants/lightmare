@@ -60,6 +60,8 @@ public interface Operators {
 
     String LIKE = " like ";
 
+    String ESCAPE = " escape ";
+
     String NOT_LIKE = " not like ";
 
     String IS_NULL = " is null ";

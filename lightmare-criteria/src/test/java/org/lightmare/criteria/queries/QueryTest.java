@@ -258,4 +258,53 @@ public class QueryTest extends TestEnviromentConfig {
             em.close();
         }
     }
+
+    @Test
+    @RunOrder(9)
+    public void queryLikeFieldTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(Person::getPersonalNo, Person::getAddrress).and()
+                    .like(Person::getLastName, GeneralInfo::getFullName, Person::getEscape).and()
+                    .startsWith(Person::getLastName, "lname");
+            String sql = stream.sql();
+            System.out.println(sql);
+            Person person = stream.firstOrDefault(new Person());
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println(person);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(10)
+    public void queryLikeValueTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(Person::getPersonalNo, Person::getAddrress).and().like(Person::getLastName, "lname%", 'e')
+                    .and().startsWith(Person::getLastName, "lname");
+            String sql = stream.sql();
+            System.out.println(sql);
+            Person person = stream.firstOrDefault(new Person());
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println(person);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
 }

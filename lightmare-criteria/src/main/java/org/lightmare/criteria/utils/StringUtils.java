@@ -41,7 +41,7 @@ public abstract class StringUtils {
     public static final char COMMA = ',';
 
     public static final char DOT = '.';
-    
+
     public static final char QV = '\'';
 
     public static final char SEMICOLON = ';';
@@ -240,5 +240,15 @@ public abstract class StringUtils {
      */
     public static boolean notEndsWithAll(CharSequence item, CharSequence... texts) {
         return CollectionUtils.validAll(texts, c -> notEndsWith(item, c));
+    }
+
+    /**
+     * Appends "'" quotes as prefix and suffix passed {@link Object} instance
+     * 
+     * @param item
+     * @return {@link String} generated text
+     */
+    public static String qlize(Object item) {
+        return StringUtils.concat(QV, item, QV);
     }
 }
