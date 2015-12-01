@@ -41,6 +41,8 @@ public abstract class StringUtils {
     public static final char COMMA = ',';
 
     public static final char DOT = '.';
+    
+    public static final char QV = '\'';
 
     public static final char SEMICOLON = ';';
 

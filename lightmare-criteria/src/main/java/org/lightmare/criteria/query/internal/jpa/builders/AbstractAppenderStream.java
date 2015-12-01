@@ -285,6 +285,21 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
+     * Processes query part with other fields
+     * 
+     * @param expression1
+     * @param field1
+     * @param expression2
+     * @param field2
+     */
+    protected <F> void oppField(String expression1, Serializable field1, String expression2, Serializable field2) {
+
+        opp(field1, expression1);
+        opp(field2, expression2);
+        newLine();
+    }
+
+    /**
      * Processes query part with other field with {@link Collection} type
      * 
      * @param field1

@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.jpa.links.Texts;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Text function methods
@@ -152,17 +153,36 @@ interface TextFunction<T> {
         /**
          * Trim from leading end.
          */
-        LEADING,
+        LEADING("LEADING "),
 
         /**
          * Trim from trailing end.
          */
-        TRAILING,
+        TRAILING("TRAILING "),
 
         /**
          * Trim from both ends.
          */
-        BOTH
+        BOTH("BOTH ");
+
+        private final String prefix;
+
+        private static final String FROM = "FROM";
+
+        private final String pattern;
+
+        private Trimspec(final String prefix) {
+            this.prefix = prefix;
+            this.pattern = StringUtils.concat(prefix, FROM);
+        }
+
+        private String locate(char ch) {
+            return StringUtils.concat(prefix, StringUtils.QV, ch, StringUtils.QV, StringUtils.SPACE, FROM);
+        }
+
+        private static String locateAll(char ch) {
+            return StringUtils.concat(StringUtils.QV, ch, StringUtils.QV, StringUtils.SPACE, FROM);
+        }
     }
 
     /**
@@ -188,7 +208,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> trim(Trimspec ts, EntityField<T, String> x) {
-        return operateText(Texts.TRIM, x);
+        return operateText(Texts.TRIM, ts.pattern, x);
     }
 
     /**
@@ -215,12 +235,28 @@ interface TextFunction<T> {
      *
      * @return {@link JPAFunction} current instance
      */
-    default JPAFunction<T> trim(char t, EntityField<T, String> x) {
-        return operateText(Texts.TRIM, t, x);
+    default JPAFunction<T> trim(char ch, EntityField<T, String> x) {
+        return operateText(Texts.TRIM, Trimspec.locateAll(ch), x);
     }
 
     /**
-     * Create expression for converting a string to lowercase.
+     * Create expression to trim character from both ends of a string.
+     *
+     * @param t
+     *            character to be trimmed
+     * @param ts
+     *            trim specification
+     * @param x
+     *            expression for string to trim
+     *
+     * @return {@link JPAFunction} current instance
+     */
+    default JPAFunction<T> trim(char ch, Trimspec ts, EntityField<T, String> x) {
+        return operateText(Texts.TRIM, ts.locate(ch), x);
+    }
+
+    /**
+     * Create expression for converting a string to lower case.
      *
      * @param x
      *            string expression
@@ -232,7 +268,7 @@ interface TextFunction<T> {
     }
 
     /**
-     * Create expression for converting a string to uppercase.
+     * Create expression for converting a string to upper case.
      *
      * @param x
      *            string expression

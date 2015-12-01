@@ -52,6 +52,18 @@ public interface ColumnExpression<T> {
             String operator);
 
     /**
+     * Generates query part for instant fields with and operators
+     * 
+     * @param operator1
+     * @param field1
+     * @param operator2
+     * @param field2
+     * @return {@link QueryStream} current instance
+     */
+    <F, S> QueryStream<T> operate(String operator1, EntityField<T, ? extends F> field1, String operator2,
+            EntityField<S, ? extends F> field2);
+
+    /**
      * Generates query part for fields and operator
      * 
      * @param field1
