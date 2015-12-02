@@ -189,6 +189,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * @return {@link QueryTuple} for sub query field
      */
     protected QueryTuple appSubQuery(Serializable field, String expression) {
+
         QueryTuple tuple = opp(field, expression);
         openBracket();
 
@@ -430,9 +431,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
 
         orderBy.append(alias);
         orderBy.append(Parts.COLUMN_PREFIX).append(tuple.getFieldName());
-        if (StringUtils.valid(dir)) {
-            orderBy.append(StringUtils.SPACE).append(dir);
-        }
+        StringUtils.valid(dir, c -> orderBy.append(StringUtils.SPACE).append(c));
     }
 
     private void addOrderByField(String dir, Serializable field) {
@@ -599,17 +598,11 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     private void prepareSetClause() {
-
-        if (StringUtils.valid(updateSet)) {
-            newLine(updateSet);
-        }
+        StringUtils.valid(updateSet, AbstractAppenderStream::newLine);
     }
 
     private void setWhereClause() {
-
-        if (StringUtils.valid(body)) {
-            sql.append(Clauses.WHERE);
-        }
+        StringUtils.valid(body, c -> sql.append(Clauses.WHERE));
     }
 
     /**

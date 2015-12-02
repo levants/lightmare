@@ -72,10 +72,7 @@ public enum Aggregates {
      * @param sql
      */
     private void addAlias(String alias, StringBuilder sql) {
-
-        if (StringUtils.valid(alias)) {
-            sql.append(alias).append(DOT);
-        }
+        StringUtils.valid(alias, c -> sql.append(c).append(DOT));
     }
 
     /**

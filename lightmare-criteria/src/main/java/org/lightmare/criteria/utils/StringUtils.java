@@ -77,7 +77,7 @@ public abstract class StringUtils {
      * @param consumer
      * @return <code>boolean</code>
      */
-    public static boolean valid(CharSequence chars, Consumer<CharSequence> consumer) {
+    public static <T extends CharSequence> boolean valid(T chars, Consumer<T> consumer) {
 
         boolean valid = valid(chars);
 
@@ -100,7 +100,7 @@ public abstract class StringUtils {
         boolean valid = CollectionUtils.valid(lines);
 
         if (valid) {
-            valid = Stream.of(lines).allMatch(c -> valid(c));
+            valid = Stream.of(lines).allMatch(StringUtils::valid);
         }
 
         return valid;
@@ -168,10 +168,7 @@ public abstract class StringUtils {
      * @param text
      */
     public static void clear(StringBuilder text) {
-
-        if (valid(text)) {
-            text.delete(CollectionUtils.FIRST_INDEX, text.length());
-        }
+        valid(text, c -> c.delete(CollectionUtils.FIRST_INDEX, c.length()));
     }
 
     /**
