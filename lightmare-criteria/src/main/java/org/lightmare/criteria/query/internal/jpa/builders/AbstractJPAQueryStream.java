@@ -27,7 +27,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -230,7 +229,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     public void addParameters(Map<String, Object> parameters) {
 
         if (CollectionUtils.valid(parameters)) {
-            parameters.forEach((key, value) -> addParameter(key, value));
+            parameters.forEach(this::addParameter);
         }
     }
 
@@ -285,10 +284,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      * @param subQuery
      */
     protected <S> void acceptConsumer(Consumer<S> consumer, S value) {
-
-        if (Objects.nonNull(consumer)) {
-            consumer.accept(value);
-        }
+        ObjectUtils.nonNull(consumer, c -> c.accept(value));
     }
 
     // ============================= Query parameters =======================//

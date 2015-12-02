@@ -49,8 +49,6 @@ import org.objectweb.asm.tree.MethodNode;
  */
 public class FieldResolver {
 
-    private static final int SINGLE_ARG = 1;
-
     private static final int FIRST = 0;
 
     private static final String THIS_PT = "this";
@@ -148,8 +146,7 @@ public class FieldResolver {
      * @return <code>boolean</code> validation result
      */
     private static boolean validSetter(Type returnType, Type[] argumentTypes) {
-        return (Objects.nonNull(argumentTypes) && argumentTypes.length == SINGLE_ARG
-                && Type.VOID_TYPE.equals(returnType));
+        return (CollectionUtils.singleton(argumentTypes) && Type.VOID_TYPE.equals(returnType));
     }
 
     /**

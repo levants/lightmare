@@ -97,7 +97,7 @@ public class IOUtils {
      * @throws IOException
      */
     public static boolean available(InputStream stream) throws IOException {
-        return Objects.nonNull(stream) && stream.available() > ZERO_AVAILABLE_STREAM;
+        return (Objects.nonNull(stream) && (stream.available() > ZERO_AVAILABLE_STREAM));
     }
 
     /**

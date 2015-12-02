@@ -24,7 +24,6 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
@@ -33,6 +32,7 @@ import javax.persistence.Query;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.JPAQueryWrapper;
 import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Abstract implementation of {@link JPAQueryWrapper} interface
@@ -71,10 +71,7 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
      * @param query
      */
     private void putMaxResult(Query query) {
-
-        if (Objects.nonNull(maxResult)) {
-            query.setMaxResults(maxResult);
-        }
+        ObjectUtils.nonNull(maxResult, query::setMaxResults);
     }
 
     @Override
@@ -94,10 +91,7 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
      * @param query
      */
     private void putFirstResult(Query query) {
-
-        if (Objects.nonNull(startPosition)) {
-            query.setFirstResult(startPosition);
-        }
+        ObjectUtils.nonNull(startPosition, query::setFirstResult);
     }
 
     @Override
@@ -135,10 +129,7 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
      * @param query
      */
     private void putFlushMode(Query query) {
-
-        if (Objects.nonNull(flushMode)) {
-            query.setFlushMode(flushMode);
-        }
+        ObjectUtils.nonNull(flushMode, query::setFlushMode);
     }
 
     @Override
@@ -153,10 +144,7 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
      * @param query
      */
     private void setLockMode(Query query) {
-
-        if (Objects.nonNull(lockMode)) {
-            query.setLockMode(lockMode);
-        }
+        ObjectUtils.nonNull(lockMode, query::setLockMode);
     }
 
     /**

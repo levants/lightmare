@@ -29,7 +29,6 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     }
 
     protected void oppAggregate(Serializable field, Aggregates aggregate) {
-
         QueryTuple tuple = compose(field);
         aggregateTuple(tuple, aggregate);
     }

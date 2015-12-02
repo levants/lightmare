@@ -24,9 +24,9 @@ package org.lightmare.criteria.cache;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
-import java.util.Objects;
 
 import org.apache.log4j.Logger;
+import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -59,24 +59,12 @@ public enum LambdaReferences {
      */
     private class CleanerTask implements Runnable {
 
-        /**
-         * Clears phantom reference after reclaim
-         * 
-         * @throws InterruptedException
-         */
-        private void clearReference() throws InterruptedException {
-
-            Reference<? extends Class<?>> reference = references.remove();
-            if (Objects.nonNull(reference)) {
-                reference.clear();
-            }
-        }
-
         @Override
         public void run() {
 
             try {
-                clearReference();
+                Reference<? extends Class<?>> reference = references.remove();
+                ObjectUtils.nonNull(reference, c -> c.clear());
             } catch (Throwable ex) {
                 LOG.error(ex.getMessage(), ex);
             }

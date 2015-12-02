@@ -24,7 +24,8 @@ package org.lightmare.criteria.cache;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
-import java.util.Objects;
+
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Phantom reference for lambda generated class
@@ -38,24 +39,12 @@ public class LambdaReference extends PhantomReference<Class<?>> {
         super(referent, queue);
     }
 
-    /**
-     * Clears {@link Class} from cache before dereference
-     * 
-     * @param lambdaType
-     */
-    public void removeFromCache(Class<?> lambdaType) {
-
-        if (Objects.nonNull(lambdaType)) {
-            LambdaCache.remove(lambdaType);
-        }
-    }
-
     @Override
     public void clear() {
 
         try {
             Class<?> lambdaType = get();
-            removeFromCache(lambdaType);
+            ObjectUtils.nonNull(lambdaType, LambdaCache::remove);
         } finally {
             super.clear();
         }

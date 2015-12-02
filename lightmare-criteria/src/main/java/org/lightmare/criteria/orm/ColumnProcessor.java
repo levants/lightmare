@@ -24,11 +24,11 @@ package org.lightmare.criteria.orm;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Objects;
 
 import javax.persistence.Temporal;
 
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Finds appropriated {@link javax.persistence.TemporalType} for field
@@ -67,10 +67,7 @@ public class ColumnProcessor {
      * @param tuple
      */
     private static void setTemporalType(Temporal temporal, QueryTuple tuple) {
-
-        if (Objects.nonNull(temporal)) {
-            tuple.setTemporalType(temporal.value());
-        }
+        ObjectUtils.nonNull(temporal, c -> tuple.setTemporalType(c.value()));
     }
 
     /**

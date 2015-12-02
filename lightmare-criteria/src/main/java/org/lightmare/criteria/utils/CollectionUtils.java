@@ -364,4 +364,14 @@ public abstract class CollectionUtils {
     public static <E> E getFirstValid(Collection<E> collection, Predicate<E> predicate) {
         return collection.stream().filter(c -> predicate.test(c)).findFirst().get();
     }
+
+    /**
+     * Validates if array contains single object
+     * 
+     * @param array
+     * @return <code>boolean</code> validation result
+     */
+    public static <T> boolean singleton(T[] array) {
+        return (Objects.nonNull(array) && (array.length == SINGLTON_LENGTH));
+    }
 }
