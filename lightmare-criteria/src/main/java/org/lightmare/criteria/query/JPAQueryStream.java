@@ -111,6 +111,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      */
     protected static <T> JPAQueryStream<T> query(final EntityManager em, final Class<T> entityType,
             final String alias) {
+
         JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
         startsSelect(stream);
 

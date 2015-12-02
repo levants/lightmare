@@ -121,7 +121,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> concat(EntityField<T, String> x, String y) {
-        return operateText(Texts.CONCAT, x, StringUtils.qlize(y));
+        return operateText(Texts.CONCAT, x, StringUtils.quote(y));
     }
 
     /**
@@ -135,7 +135,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> concat(String x, EntityField<T, String> y) {
-        return operateText(Texts.CONCAT, StringUtils.qlize(x), y);
+        return operateText(Texts.CONCAT, StringUtils.quote(x), y);
     }
 
     /**
@@ -324,7 +324,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> locate(EntityField<T, String> x, String pattern) {
-        return operateText(Texts.LOCATE, x, StringUtils.qlize(pattern));
+        return operateText(Texts.LOCATE, x, StringUtils.quote(pattern));
     }
 
     /**

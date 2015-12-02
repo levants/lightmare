@@ -268,7 +268,7 @@ public abstract class StringUtils {
      * @param item
      * @return {@link String} generated text
      */
-    public static String qlize(Object item) {
+    public static String quote(Object item) {
         return StringUtils.concat(QUOTE, item, QUOTE);
     }
 }

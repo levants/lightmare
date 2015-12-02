@@ -160,11 +160,11 @@ public interface Expression<T> {
     }
 
     default QueryStream<T> like(EntityField<T, String> field, String value, char escape) {
-        return operate(field, Operators.LIKE, value, Operators.ESCAPE, StringUtils.qlize(escape));
+        return operate(field, Operators.LIKE, value, Operators.ESCAPE, StringUtils.quote(escape));
     }
 
     default QueryStream<T> notLike(EntityField<T, String> field, String value, char escape) {
-        return operate(field, Operators.NOT_LIKE, value, Operators.ESCAPE, StringUtils.qlize(escape));
+        return operate(field, Operators.NOT_LIKE, value, Operators.ESCAPE, StringUtils.quote(escape));
     }
 
     // =========================Implementations=of=LIKE=clause================//
