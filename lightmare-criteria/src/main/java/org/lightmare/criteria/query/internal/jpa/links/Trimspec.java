@@ -34,10 +34,10 @@ public enum Trimspec {
     }
 
     public String locate(char ch) {
-        return StringUtils.concat(prefix, StringUtils.QV, ch, StringUtils.QV, StringUtils.SPACE, FROM);
+        return StringUtils.concat(prefix, StringUtils.QUOTE, ch, StringUtils.QUOTE, StringUtils.SPACE, FROM);
     }
 
     public static String locateAll(char ch) {
-        return StringUtils.concat(StringUtils.QV, ch, StringUtils.QV, StringUtils.SPACE, FROM);
+        return StringUtils.concat(StringUtils.QUOTE, ch, StringUtils.QUOTE, StringUtils.SPACE, FROM);
     }
 }

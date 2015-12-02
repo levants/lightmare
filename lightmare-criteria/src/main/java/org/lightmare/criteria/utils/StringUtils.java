@@ -43,7 +43,7 @@ public abstract class StringUtils {
 
     public static final char DOT = '.';
 
-    public static final char QV = '\'';
+    public static final char QUOTE = '\'';
 
     public static final char SEMICOLON = ';';
 
@@ -269,6 +269,6 @@ public abstract class StringUtils {
      * @return {@link String} generated text
      */
     public static String qlize(Object item) {
-        return StringUtils.concat(QV, item, QV);
+        return StringUtils.concat(QUOTE, item, QUOTE);
     }
 }

@@ -106,28 +106,15 @@ public abstract class ObjectUtils {
      * runs consumer implementation
      * 
      * @param instance
-     * @param consumer
-     * @return <code>T</code> casted to type instance
-     */
-    public static <T> T cast(Object instance, Consumer<T> consumer) {
-
-        T value = cast(instance);
-        nonNull(value, consumer::accept);
-
-        return value;
-    }
-
-    /**
-     * Casts passed {@link Object} to generic parameter and if it's not null
-     * runs consumer implementation
-     * 
-     * @param instance
      * @param type
      * @param consumer
      */
     public static <T> void cast(Object instance, Class<T> type, Consumer<T> consumer) {
-        T value = cast(instance);
-        nonNull(value, consumer::accept);
+
+        nonNull(instance, c -> {
+            T value = type.cast(c);
+            consumer.accept(value);
+        });
     }
 
     /**
