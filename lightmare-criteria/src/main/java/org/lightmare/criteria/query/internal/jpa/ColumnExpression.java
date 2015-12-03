@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  * @param <T>
  *            entity type parameter
  */
-public interface ColumnExpression<T> {
+interface ColumnExpression<T> {
 
     // ========================= Entity self method composers ===============//
 
@@ -132,6 +132,8 @@ public interface ColumnExpression<T> {
             EntityField<T, Comparable<? super F>> field2, EntityField<T, F> field3) {
         return operate(field1, field2, field3, Operators.NOT_BETWEEN);
     }
+
+    // =============================LIKE=clause==============================//
 
     default QueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> pattern) {
         return operate(field1, pattern, Operators.LIKE);

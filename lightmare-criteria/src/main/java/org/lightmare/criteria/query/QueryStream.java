@@ -24,9 +24,6 @@ package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.internal.jpa.ColumnExpression;
-import org.lightmare.criteria.query.internal.jpa.Expression;
-import org.lightmare.criteria.query.internal.jpa.FunctionExpression;
 import org.lightmare.criteria.query.internal.jpa.QueryExpression;
 
 /**
@@ -37,7 +34,7 @@ import org.lightmare.criteria.query.internal.jpa.QueryExpression;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface QueryStream<T> extends QueryExpression<T>, Expression<T>, ColumnExpression<T>, FunctionExpression<T> {
+public interface QueryStream<T> extends QueryExpression<T> {
 
     // =========================embedded=field=queries=======================//
 

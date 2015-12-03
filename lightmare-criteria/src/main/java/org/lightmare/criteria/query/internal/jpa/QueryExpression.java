@@ -35,8 +35,9 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  * @param <T>
  *            entity type parameter
  */
-public interface QueryExpression<T> extends JPAQueryWrapper<T>, SelectExpression<T>, GroupExpression<T>,
-        JoinExpressions<T>, ResultStream<T>, SubQueryProcessor<T>, AggregateFunction<T> {
+public interface QueryExpression<T>
+        extends JPAQueryWrapper<T>, Expression<T>, ColumnExpression<T>, FunctionExpression<T>, SelectExpression<T>,
+        GroupExpression<T>, JoinExpressions<T>, ResultStream<T>, SubQueryProcessor<T>, AggregateFunction<T> {
 
     /**
      * Gets wrapped entity {@link Class} instance

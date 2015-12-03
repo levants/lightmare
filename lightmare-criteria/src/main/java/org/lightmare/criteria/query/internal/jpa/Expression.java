@@ -39,7 +39,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter
  */
-public interface Expression<T> {
+interface Expression<T> {
 
     /**
      * Opens bracket in query body
@@ -145,6 +145,8 @@ public interface Expression<T> {
             Comparable<? super F> value1, Comparable<? super F> value2) {
         return operate(field, value1, value2, Operators.BETWEEN);
     }
+
+    // =============================LIKE=clause==============================//
 
     default <F extends Comparable<? super F>> QueryStream<T> notBetween(EntityField<T, Comparable<? super F>> field,
             F value1, F value2) {
