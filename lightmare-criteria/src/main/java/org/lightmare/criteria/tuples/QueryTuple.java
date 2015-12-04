@@ -26,6 +26,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -152,6 +153,10 @@ public class QueryTuple implements Serializable {
 
     public void setTemporalType(TemporalType temporalType) {
         this.temporalType = temporalType;
+    }
+
+    public void setTemporalType(Temporal temporal) {
+        setTemporalType(temporal.value());
     }
 
     public Class<?> getGenericType() {

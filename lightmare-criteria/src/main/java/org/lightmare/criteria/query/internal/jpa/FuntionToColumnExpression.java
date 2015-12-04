@@ -15,6 +15,14 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  */
 interface FuntionToColumnExpression<T> {
 
+    /**
+     * Generates query clause with expression between columns
+     * 
+     * @param function
+     * @param operator
+     * @param field
+     * @return {@link QueryStream} current instance
+     */
     <F> QueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field);
 
     default <F> QueryStream<T> equal(FunctionConsumer<T> function, EntityField<T, F> field) {

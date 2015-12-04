@@ -67,7 +67,7 @@ public class ColumnProcessor {
      * @param tuple
      */
     private static void setTemporalType(Temporal temporal, QueryTuple tuple) {
-        ObjectUtils.nonNull(temporal, c -> tuple.setTemporalType(c.value()));
+        ObjectUtils.nonNull(temporal, tuple::setTemporalType);
     }
 
     /**

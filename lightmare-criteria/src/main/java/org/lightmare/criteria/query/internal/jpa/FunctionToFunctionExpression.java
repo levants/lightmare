@@ -36,6 +36,14 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  */
 interface FunctionToFunctionExpression<T> {
 
+    /**
+     * Generates query clause with expression between functions
+     * 
+     * @param function1
+     * @param function2
+     * @param operator
+     * @return {@link QueryStream} current instance
+     */
     QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
 
     default <F> QueryStream<T> equal(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {

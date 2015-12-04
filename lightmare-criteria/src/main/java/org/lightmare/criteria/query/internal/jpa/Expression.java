@@ -201,7 +201,7 @@ interface Expression<T> {
         return operate(field, enrich, Operators.NOT_LIKE);
     }
 
-    // =========================Implementations=of=LIKE=clause================//
+    // ======================================================================//
 
     /**
      * Generates query part for instant field with {@link Collection} parameter
