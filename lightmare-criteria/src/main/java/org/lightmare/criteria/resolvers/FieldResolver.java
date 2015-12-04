@@ -28,9 +28,9 @@ import java.util.Objects;
 
 import org.lightmare.criteria.cache.MethodCache;
 import org.lightmare.criteria.lambda.LambdaInfo;
-import org.lightmare.criteria.orm.ColumnProcessor;
-import org.lightmare.criteria.orm.EntityProcessor;
-import org.lightmare.criteria.orm.GenericProcessor;
+import org.lightmare.criteria.meta.ColumnProcessor;
+import org.lightmare.criteria.meta.EntityProcessor;
+import org.lightmare.criteria.meta.GenericProcessor;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;

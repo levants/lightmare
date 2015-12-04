@@ -38,17 +38,6 @@ import java.util.Objects;
 abstract class AbstractMemberUtils extends AbstractClassUtils {
 
     /**
-     * Validates for next iteration class member search methods
-     * 
-     * @param type
-     * @param member
-     * @return <code>boolean</code> validation result
-     */
-    private static boolean validate(Member member, Class<?> type) {
-        return ((member == null) && Objects.nonNull(type));
-    }
-
-    /**
      * Supplier for find member method
      * 
      * @author Levan Tsinadze
@@ -59,7 +48,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      *            exception type
      */
     @FunctionalInterface
-    private static interface MemberSupplier<M extends Member, E extends ReflectiveOperationException> {
+    private static interface MemberSupplier<M extends Member> {
 
         /**
          * Function method to get appropriated {@link Member} from {@link Class}
@@ -68,60 +57,110 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
          * @param type
          * @param memberName
          * @return {@link Member} from {@link Class}
-         * @throws E
+         * @throws NoSuchMethodException
+         * @throws NoSuchFieldException
          * @throws SecurityException
          */
-        M getMember(Class<?> type, String memberName) throws E, SecurityException;
+        M getMember(Class<?> type, String memberName)
+                throws NoSuchMethodException, NoSuchFieldException, SecurityException;
     }
 
     /**
-     * Gets super class for passed class for instant exception
+     * Tuple for {@link Member} and appropriated {@link Class} instance
      * 
-     * @param type
-     * @param ex
-     * @return {@link Class} super class for passed class
-     * @throws IOException
+     * @author Levan Tsinadze
+     *
+     * @param <T>
+     *            member type parameter
      */
-    private static <E extends ReflectiveOperationException> Class<?> getSuperType(Class<?> type, E ex)
-            throws IOException {
+    public static class MemberTuple<T extends Member> {
 
-        Class<?> superType;
+        private T member;
 
-        if ((ex instanceof NoSuchMethodException) || (ex instanceof NoSuchFieldException)) {
-            superType = type.getSuperclass();
-        } else {
-            throw new IOException(ex);
+        private Class<?> type;
+
+        private final String memberName;
+
+        private MemberTuple(Class<?> type, final String memberName) {
+            this.type = type;
+            this.memberName = memberName;
         }
 
-        return superType;
+        private static <T extends Member> MemberTuple<T> of(Class<?> type, final String memberName) {
+            return new MemberTuple<T>(type, memberName);
+        }
+
+        private boolean valid() {
+            return ((this.member == null) && Objects.nonNull(this.type));
+        }
+
+        private void setSuperType() {
+            if (member == null) {
+                type = type.getSuperclass();
+            }
+        }
+
+        public T getMember() {
+            return member;
+        }
+
+        public Class<?> getType() {
+            return type;
+        }
     }
 
     /**
-     * Field {@link Member} in passed {@link Class} or it's parents
+     * Sets parameters for next validation and iteration
+     * 
+     * @param tuple
+     * @param supplier
+     * @throws IOException
+     */
+    private static <T extends Member> void iterate(MemberTuple<T> tuple, MemberSupplier<T> supplier)
+            throws IOException {
+
+        try {
+            tuple.member = supplier.getMember(tuple.type, tuple.memberName);
+        } catch (NoSuchMethodException | NoSuchFieldException ex) {
+            tuple.setSuperType();
+        } catch (SecurityException ex) {
+            throw new IOException(ex);
+        }
+    }
+
+    /**
+     * Finds {@link Member} in passed {@link Class} or it's parents
      * 
      * @param type
      * @param memberName
      * @param supplier
-     * @return {@link Member} in type hierarchy
+     * @return {@link MemberTuple} in type hierarchy
      * @throws IOException
      */
-    private static <T extends Member, E extends ReflectiveOperationException> T findMember(Class<?> type,
-            String memberName, MemberSupplier<T, E> supplier) throws IOException {
+    private static <T extends Member> MemberTuple<T> findMember(Class<?> type, String memberName,
+            MemberSupplier<T> supplier) throws IOException {
 
-        T member = null;
+        MemberTuple<T> tuple = MemberTuple.of(type, memberName);
 
-        Class<?> superType = type;
-        while (validate(member, superType)) {
-            try {
-                member = supplier.getMember(superType, memberName);
-            } catch (ReflectiveOperationException ex) {
-                superType = getSuperType(superType, ex);
-            } catch (SecurityException ex) {
-                throw new IOException(ex);
-            }
+        while (tuple.valid()) {
+            iterate(tuple, supplier);
         }
 
-        return member;
+        return tuple;
+    }
+
+    /**
+     * Finds {@link Method} and containing parent {@link Class} instance
+     * 
+     * @param type
+     * @param methodName
+     * @param parameters
+     * @return {@link MemberTuple} for {@link Method}
+     * @throws IOException
+     */
+    public static MemberTuple<Method> findMethodAndType(Class<?> type, String methodName, Class<?>... parameters)
+            throws IOException {
+        return findMember(type, methodName, (t, m) -> t.getDeclaredMethod(m, parameters));
     }
 
     /**
@@ -135,7 +174,13 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @throws IOException
      */
     public static Method findMethod(Class<?> type, String methodName, Class<?>... parameters) throws IOException {
-        return findMember(type, methodName, (t, m) -> t.getDeclaredMethod(m, parameters));
+
+        Method method;
+
+        MemberTuple<Method> tuple = findMethodAndType(type, methodName, parameters);
+        method = tuple.getMember();
+
+        return method;
     }
 
     /**
@@ -148,7 +193,13 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @throws IOException
      */
     public static Field findField(Class<?> type, String fieldName) throws IOException {
-        return findMember(type, fieldName, (t, f) -> t.getDeclaredField(f));
+
+        Field field;
+
+        MemberTuple<Field> tuple = findMember(type, fieldName, Class::getDeclaredField);
+        field = tuple.getMember();
+
+        return field;
     }
 
     /**
@@ -160,13 +211,14 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @return {@link Object}
      * @throws IOException
      */
-    public static Object invoke(Method method, Object instance, Object... arguments) throws IOException {
+    public static <T> T invoke(Method method, Object instance, Object... arguments) throws IOException {
 
-        Object value;
+        T value;
 
         try {
             makeAccessible(method);
-            value = method.invoke(instance, arguments);
+            Object raw = method.invoke(instance, arguments);
+            value = ObjectUtils.cast(raw);
         } catch (IllegalAccessException | IllegalArgumentException ex) {
             throw new IOException(ex);
         } catch (InvocationTargetException ex) {

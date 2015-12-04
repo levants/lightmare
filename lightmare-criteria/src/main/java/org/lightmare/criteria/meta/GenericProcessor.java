@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.orm;
+package org.lightmare.criteria.meta;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -52,6 +52,19 @@ public class GenericProcessor {
     }
 
     /**
+     * Sets generic type from {@link ParameterizedType} instance
+     * 
+     * @param parametrizedType
+     * @param tuple
+     */
+    private static void setParametrizedType(ParameterizedType parametrizedType, QueryTuple tuple) {
+
+        Type[] typeArguments = parametrizedType.getActualTypeArguments();
+        Type parameterType = CollectionUtils.getFirst(typeArguments);
+        validateAndSetType(parameterType, tuple);
+    }
+
+    /**
      * Sets generic type of field to tuple
      * 
      * @param field
@@ -61,9 +74,7 @@ public class GenericProcessor {
 
         Type type = field.getGenericType();
         if (type instanceof ParameterizedType) {
-            ParameterizedType parametrizedType = ObjectUtils.cast(type);
-            Type parameterType = CollectionUtils.getFirst(parametrizedType.getActualTypeArguments());
-            validateAndSetType(parameterType, tuple);
+            ObjectUtils.cast(type, ParameterizedType.class, c -> setParametrizedType(c, tuple));
         }
     }
 

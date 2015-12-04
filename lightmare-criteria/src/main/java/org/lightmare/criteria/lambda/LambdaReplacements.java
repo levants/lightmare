@@ -125,8 +125,7 @@ public class LambdaReplacements {
         Class<?> parent = method.getClass();
         Method writeReplace = getMethod(parent);
         if (Objects.nonNull(writeReplace)) {
-            Object raw = ClassUtils.invoke(writeReplace, method);
-            SerializedLambda serialized = ObjectUtils.cast(raw);
+            SerializedLambda serialized = ClassUtils.invoke(writeReplace, method);
             lambda = new LambdaInfo(serialized);
         } else {
             lambda = translate(method);
