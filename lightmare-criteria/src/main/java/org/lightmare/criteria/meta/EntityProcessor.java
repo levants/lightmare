@@ -42,7 +42,7 @@ public class EntityProcessor {
      * Resolves argument types for method
      * 
      * @param tuple
-     * @return {@link Class} array of argument types
+     * @return {@link Class} array by names for argument types
      * @throws IOException
      */
     private static Class<?>[] getArgumentTypes(QueryTuple tuple) throws IOException {

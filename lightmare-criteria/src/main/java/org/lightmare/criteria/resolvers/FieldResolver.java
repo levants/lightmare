@@ -25,6 +25,7 @@ package org.lightmare.criteria.resolvers;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.lightmare.criteria.cache.MethodCache;
 import org.lightmare.criteria.lambda.LambdaInfo;
@@ -32,6 +33,7 @@ import org.lightmare.criteria.meta.ColumnProcessor;
 import org.lightmare.criteria.meta.EntityProcessor;
 import org.lightmare.criteria.meta.GenericProcessor;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.tuples.ResolverTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.objectweb.asm.Type;
@@ -200,6 +202,34 @@ public class FieldResolver {
     }
 
     /**
+     * Resolves field name from method descriptor, method name and owner
+     * instance
+     * 
+     * @param resolverTuple
+     * @return {@link QueryTuple} for resolved field and query part
+     * @throws IOException
+     */
+    private static <T> QueryTuple resolve(ResolverTuple<T> resolverTuple, Function<T, String> nameResolver)
+            throws IOException {
+
+        QueryTuple tuple;
+
+        String desc = resolverTuple.getDesc();
+        String methodName = resolverTuple.getName();
+        if (valid(resolverTuple.getDesc(), resolverTuple.getName())) {
+            String fieldName = resolveFieldName(methodName);
+            String entityName = nameResolver.apply(resolverTuple.getType());
+            String[] arguments = resolveArgumentsTypes(desc);
+            tuple = QueryTuple.of(entityName, methodName, arguments, fieldName);
+            setMetaData(tuple);
+        } else {
+            tuple = null;
+        }
+
+        return tuple;
+    }
+
+    /**
      * Resolves field name from instruction instance
      * 
      * @param instruction
@@ -211,17 +241,8 @@ public class FieldResolver {
 
         QueryTuple tuple;
 
-        String desc = node.desc;
-        String methodName = node.name;
-        if (valid(desc, methodName)) {
-            String fieldName = resolveFieldName(methodName);
-            String entityName = resolveEntityName(node.owner);
-            String[] arguments = resolveArgumentsTypes(desc);
-            tuple = QueryTuple.of(entityName, methodName, arguments, fieldName);
-            setMetaData(tuple);
-        } else {
-            tuple = null;
-        }
+        ResolverTuple<String> resolverTyple = ResolverTuple.of(node.desc, node.name, node.owner);
+        tuple = resolve(resolverTyple, FieldResolver::resolveEntityName);
 
         return tuple;
     }
@@ -297,17 +318,8 @@ public class FieldResolver {
 
         QueryTuple tuple;
 
-        String desc = node.desc;
-        String name = node.name;
-        if (valid(desc, name)) {
-            String fieldName = resolveFieldName(name);
-            String entityName = resolveEntityName(node);
-            String[] arguments = resolveArgumentsTypes(desc);
-            tuple = QueryTuple.of(entityName, name, arguments, fieldName);
-            setMetaData(tuple);
-        } else {
-            tuple = null;
-        }
+        ResolverTuple<MethodNode> resolverTyple = ResolverTuple.of(node.desc, node.name, node);
+        tuple = resolve(resolverTyple, FieldResolver::resolveEntityName);
 
         return tuple;
     }
