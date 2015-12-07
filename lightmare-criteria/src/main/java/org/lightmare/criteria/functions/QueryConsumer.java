@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 import org.lightmare.criteria.query.QueryStream;
 
 /**
- * Query parts generator
+ * Query consumer to process JPA query brackets, sub queries, aggregates etc.
  * 
  * @author Levan Tsinadze
  *

@@ -31,14 +31,14 @@ import org.lightmare.criteria.resolvers.FieldResolver;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
- * Utility class to translate lambda expression to query
+ * Utility class to translate lambda expression to JPA query parts
  * 
  * @author Levan Tsinadze
  *
  */
 public class LambdaUtils {
 
-    // Debug messages
+    // Debug message
     private static final String MESSAGE_FORMAT = "Key %s is not bound to cache";
 
     private static final Logger LOG = Logger.getLogger(LambdaUtils.class);

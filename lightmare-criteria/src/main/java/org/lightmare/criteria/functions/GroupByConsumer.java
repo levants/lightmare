@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 import org.lightmare.criteria.query.internal.jpa.GroupExpression;
 
 /**
- * Consumer to process GROUP BY clause
+ * Consumer to process JPA query GROUP BY clause
  * 
  * @author Levan Tsinadze
  *

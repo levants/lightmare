@@ -26,7 +26,7 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 /**
- * Interface for entity getter method reference
+ * Functional interface for entity getter method reference
  * 
  * @author Levan Tsinadze
  *

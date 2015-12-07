@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 import org.lightmare.criteria.query.internal.jpa.HavingExpression;
 
 /**
- * Consumer for HAVING clause
+ * Consumer for JPA query HAVING clause
  * 
  * @author Levan Tsinadze
  *

@@ -25,7 +25,7 @@ package org.lightmare.criteria.lambda;
 import java.io.Serializable;
 
 /**
- * Container class for {@link java.lang.invoke.SerializedLambda} fields
+ * Container class for {@link java.lang.invoke.SerializedLambda} parameters
  * 
  * @author Levan Tsinadze
  * @see java.lang.invoke.SerializedLambda

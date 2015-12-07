@@ -51,40 +51,16 @@ public enum LambdaReferences {
     private static final Logger LOG = Logger.getLogger(LambdaReferences.class);
 
     /**
-     * To get {@link Reference} from {@link ReferenceQueue} and clean resources
-     * for finalization
-     * 
-     * @author Levan Tsinadze
-     *
+     * Cleans {@link Reference} from {@link ReferenceQueue} after reclaim
      */
-    private class CleanerTask implements Runnable {
+    private void cleaner() {
 
-        @Override
-        public void run() {
-
-            try {
-                Reference<? extends Class<?>> reference = references.remove();
-                ObjectUtils.nonNull(reference, c -> c.clear());
-            } catch (Throwable ex) {
-                LOG.error(ex.getMessage(), ex);
-            }
+        try {
+            Reference<?> reference = references.remove();
+            ObjectUtils.nonNull(reference, Reference::clear);
+        } catch (Throwable ex) {
+            LOG.error(ex.getMessage(), ex);
         }
-    }
-
-    /**
-     * Generates cleaner {@link Thread} name
-     * 
-     * @param cleaner
-     * @return {@link String} thread name
-     */
-    private static String generateName(Thread cleaner) {
-
-        String threadName;
-
-        Long threadId = cleaner.getId();
-        threadName = StringUtils.concat(REFERENCE_THREAD_NAME, threadId);
-
-        return threadName;
     }
 
     /**
@@ -93,7 +69,9 @@ public enum LambdaReferences {
      * @param cleaner
      */
     private static void setName(Thread cleaner) {
-        String threadName = generateName(cleaner);
+
+        Long threadId = cleaner.getId();
+        String threadName = StringUtils.concat(REFERENCE_THREAD_NAME, threadId);
         cleaner.setName(threadName);
     }
 
@@ -103,8 +81,7 @@ public enum LambdaReferences {
     private void initCleaner() {
 
         if (cleaner == null) {
-            CleanerTask task = new CleanerTask();
-            cleaner = new Thread(task);
+            cleaner = new Thread(this::cleaner);
             cleaner.setPriority(Thread.MAX_PRIORITY);
             setName(cleaner);
             cleaner.setDaemon(Boolean.TRUE);
@@ -132,7 +109,7 @@ public enum LambdaReferences {
     public void traceByType(Class<?> lambdaType) {
 
         startCleaner();
-        LambdaReference reference = new LambdaReference(lambdaType, references);
+        Reference<?> reference = new LambdaReference(lambdaType, references);
         reference.enqueue();
     }
 

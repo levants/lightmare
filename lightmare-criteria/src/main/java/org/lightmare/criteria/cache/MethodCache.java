@@ -36,7 +36,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
 /**
- * Cache for class methods
+ * To cache class lambda methods
  * 
  * @author Levan Tsinadze
  *

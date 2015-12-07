@@ -33,7 +33,8 @@ import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Utility class to retrieve {@link SerializedLambda} data from lambda function
+ * Utility class to retrieve {@link SerializedLambda} parameters from lambda
+ * function
  * 
  * @author Levan Tsinadze
  *
