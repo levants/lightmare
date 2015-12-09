@@ -103,7 +103,7 @@ public abstract class ObjectUtils {
 
     /**
      * Casts passed {@link Object} to generic parameter and runs
-     * {@link Consumer} implementation
+     * {@link java.util.function.Consumer} implementation
      * 
      * @param instance
      * @param type
@@ -116,7 +116,7 @@ public abstract class ObjectUtils {
 
     /**
      * Casts passed {@link Object} to generic parameter and if it's not null
-     * runs consumer implementation
+     * runs {@link java.util.function.Consumer} implementation
      * 
      * @param instance
      * @param type
@@ -124,6 +124,22 @@ public abstract class ObjectUtils {
      */
     public static <T> void cast(Object instance, Class<T> type, Consumer<T> consumer) {
         nonNull(instance, c -> castAndApply(c, type, consumer));
+    }
+
+    /**
+     * Casts passed {@link Object} to generic parameter if it's not null and is
+     * instance of this parameter and runs {@link java.util.function.Consumer}
+     * implementation
+     * 
+     * @param instance
+     * @param type
+     * @param consumer
+     */
+    public static <T> void castIfValid(Object instance, Class<T> type, Consumer<T> consumer) {
+
+        if (Objects.nonNull(instance) && type.isInstance(instance)) {
+            cast(instance, type, consumer);
+        }
     }
 
     /**

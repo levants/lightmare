@@ -61,20 +61,6 @@ public class EntityProcessor {
     }
 
     /**
-     * Sets {@link java.lang.reflect.Field} by name to passed wrapper
-     * 
-     * @param tuple
-     * @throws IOException
-     */
-    private static void setField(QueryTuple tuple) throws IOException {
-
-        String fieldName = tuple.getFieldName();
-        Class<?> entityType = tuple.getEntityType();
-        Field field = ClassUtils.findField(entityType, fieldName);
-        tuple.setField(field);
-    }
-
-    /**
      * Sets {@link java.lang.reflect.Method} and {@link java.lang.reflect.Field}
      * by names to passed wrapper
      * 
@@ -88,7 +74,9 @@ public class EntityProcessor {
         Class<?>[] argumentTypes = getArgumentTypes(tuple);
         Method method = ClassUtils.findMethod(entityType, methodName, argumentTypes);
         tuple.setMethod(method);
-        setField(tuple);
+        String fieldName = tuple.getFieldName();
+        Field field = ClassUtils.findField(entityType, fieldName);
+        tuple.setField(field);
     }
 
     /**

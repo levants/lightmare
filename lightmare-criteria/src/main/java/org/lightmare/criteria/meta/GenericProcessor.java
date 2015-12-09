@@ -39,19 +39,6 @@ import org.lightmare.criteria.utils.ObjectUtils;
 public class GenericProcessor {
 
     /**
-     * Validates and sets generic type of field to tuple
-     * 
-     * @param parameterType
-     * @param tuple
-     */
-    private static void validateAndSetType(Type parameterType, QueryTuple tuple) {
-
-        if (parameterType instanceof Class<?>) {
-            ObjectUtils.cast(parameterType, Class.class, tuple::setGenericType);
-        }
-    }
-
-    /**
      * Sets generic type from {@link ParameterizedType} instance
      * 
      * @param parametrizedType
@@ -61,7 +48,7 @@ public class GenericProcessor {
 
         Type[] typeArguments = parametrizedType.getActualTypeArguments();
         Type parameterType = CollectionUtils.getFirst(typeArguments);
-        validateAndSetType(parameterType, tuple);
+        ObjectUtils.castIfValid(parameterType, Class.class, tuple::setGenericType);
     }
 
     /**
@@ -73,9 +60,7 @@ public class GenericProcessor {
     private static void setGenericType(Field field, QueryTuple tuple) {
 
         Type type = field.getGenericType();
-        if (type instanceof ParameterizedType) {
-            ObjectUtils.cast(type, ParameterizedType.class, c -> setParametrizedType(c, tuple));
-        }
+        ObjectUtils.castIfValid(type, ParameterizedType.class, c -> setParametrizedType(c, tuple));
     }
 
     /**
