@@ -111,7 +111,7 @@ public abstract class ObjectUtils {
      */
     private static <T> void castAndApply(Object instance, Class<T> type, Consumer<T> consumer) {
         T value = type.cast(instance);
-        consumer.accept(value);
+        nonNull(consumer, c -> c.accept(value));
     }
 
     /**
@@ -138,7 +138,7 @@ public abstract class ObjectUtils {
     public static <T> void castIfValid(Object instance, Class<T> type, Consumer<T> consumer) {
 
         if (Objects.nonNull(instance) && type.isInstance(instance)) {
-            cast(instance, type, consumer);
+            castAndApply(instance, type, consumer);
         }
     }
 

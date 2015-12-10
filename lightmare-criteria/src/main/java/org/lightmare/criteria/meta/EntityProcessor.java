@@ -69,13 +69,11 @@ public class EntityProcessor {
      */
     private static void setMethodAndField(QueryTuple tuple) throws IOException {
 
-        String methodName = tuple.getMethodName();
         Class<?> entityType = tuple.getEntityType();
         Class<?>[] argumentTypes = getArgumentTypes(tuple);
-        Method method = ClassUtils.findMethod(entityType, methodName, argumentTypes);
+        Method method = ClassUtils.findMethod(entityType, tuple.getMethodName(), argumentTypes);
         tuple.setMethod(method);
-        String fieldName = tuple.getFieldName();
-        Field field = ClassUtils.findField(entityType, fieldName);
+        Field field = ClassUtils.findField(entityType, tuple.getFieldName());
         tuple.setField(field);
     }
 

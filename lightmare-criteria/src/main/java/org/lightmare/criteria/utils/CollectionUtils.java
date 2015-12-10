@@ -62,7 +62,11 @@ public abstract class CollectionUtils {
      * Functional interface with exceptions on method
      * 
      * @author Levan Tsinadze
-     *
+     * 
+     * @param <T>
+     *            method parameter type
+     * @param <R>
+     *            return type
      */
     @FunctionalInterface
     public static interface Mapper<T, R> {
