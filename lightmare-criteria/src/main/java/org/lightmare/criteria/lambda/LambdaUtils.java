@@ -23,12 +23,14 @@
 package org.lightmare.criteria.lambda;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.lightmare.criteria.cache.LambdaCache;
 import org.lightmare.criteria.cache.QueryCache;
 import org.lightmare.criteria.resolvers.FieldResolver;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Utility class to translate lambda expression to JPA query parts
@@ -66,6 +68,64 @@ public class LambdaUtils {
     }
 
     /**
+     * Clones passed {@link QueryTuple} without throwing an exception
+     * 
+     * @param instance
+     * @return {@link QueryTuple} clone
+     */
+    private static QueryTuple cloneTuple(QueryTuple instance) {
+
+        QueryTuple cloneInstance;
+
+        try {
+            Object raw = instance.clone();
+            cloneInstance = ObjectUtils.cast(raw);
+        } catch (CloneNotSupportedException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return cloneInstance;
+    }
+
+    /**
+     * Clones passed {@link QueryTuple} after null check
+     * 
+     * @param instance
+     * @return {@link QueryTuple} clone
+     */
+    private static QueryTuple cloneIfValid(QueryTuple instance) {
+
+        QueryTuple cloneInstance;
+
+        if (Objects.nonNull(instance)) {
+            cloneInstance = cloneTuple(instance);
+        } else {
+            cloneInstance = null;
+        }
+
+        return cloneInstance;
+    }
+
+    /**
+     * Gets appropriated {@link QueryTuple} from cache or initializes and caches
+     * new instance
+     * 
+     * @param method
+     * @return {@link QueryTuple} from cache
+     */
+    private static QueryTuple getOrInitOriginal(Serializable method) {
+
+        QueryTuple tuple = LambdaCache.getByInstance(method);
+
+        if (tuple == null) {
+            tuple = getByLambda(method);
+            LambdaCache.putByInstance(method, tuple);
+        }
+
+        return tuple;
+    }
+
+    /**
      * Gets appropriated {@link QueryTuple} from cache or initializes and caches
      * new instance
      * 
@@ -74,12 +134,10 @@ public class LambdaUtils {
      */
     public static QueryTuple getOrInit(Serializable method) {
 
-        QueryTuple tuple = LambdaCache.getByInstance(method);
+        QueryTuple tuple;
 
-        if (tuple == null) {
-            tuple = getByLambda(method);
-            LambdaCache.putByInstance(method, tuple);
-        }
+        QueryTuple original = getOrInitOriginal(method);
+        tuple = cloneIfValid(original);
 
         return tuple;
     }

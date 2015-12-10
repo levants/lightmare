@@ -157,7 +157,9 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      */
     protected QueryTuple compose(Serializable field) {
 
-        QueryTuple tuple = LambdaUtils.getOrInit(field);
+        QueryTuple tuple;
+
+        tuple = LambdaUtils.getOrInit(field);
         tuple.setAlias(alias);
 
         return tuple;

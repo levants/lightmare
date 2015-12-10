@@ -37,7 +37,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @author Levan Tsinadze
  *
  */
-public class QueryTuple implements Serializable {
+public class QueryTuple implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
 
@@ -189,6 +189,30 @@ public class QueryTuple implements Serializable {
         if (this.alias == null || this.alias.isEmpty()) {
             this.alias = ALIAS_PREFIX.concat(String.valueOf(index));
         }
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    /**
+     * Clones {@link QueryTuple} without throwing an exception
+     * 
+     * @return {@link QueryTuple} clone
+     */
+    public QueryTuple cloneType() {
+
+        QueryTuple tupleClone;
+
+        try {
+            Object raw = clone();
+            tupleClone = ObjectUtils.cast(raw);
+        } catch (CloneNotSupportedException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return tupleClone;
     }
 
     @Override
