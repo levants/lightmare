@@ -86,7 +86,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Adds new line to query body
+     * Adds new line to JPA query body
      */
     public void newLine() {
 
@@ -96,7 +96,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Adds query part to from clause
+     * Adds JPA query part to from clause
      * 
      * @param typeName
      * @param alias
@@ -112,7 +112,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Adds query part to from clause
+     * Adds JPA query part to from clause
      * 
      * @param type
      * @param alias
@@ -124,7 +124,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Adds query part to from clause
+     * Adds JPA query part to from clause
      * 
      * @param tuple
      */
@@ -133,7 +133,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Generates query part for field and expression
+     * Generates JPA query part for field and expression
      * 
      * @param field
      * @param expression
@@ -150,7 +150,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Generates query part for field and expression and adds parameter
+     * Generates JPA query part for field and expression and adds parameter
      * 
      * @param field
      * @param value
@@ -162,7 +162,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Generates query part for field and expression and adds parameter
+     * Generates JPA query part for field and expression and adds parameter
      * 
      * @param field
      * @param value
@@ -173,6 +173,15 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         oppWithParameter(tuple, value1, body);
     }
 
+    /**
+     * Generates JPA query part for filed, expressions and values
+     * 
+     * @param field
+     * @param expression1
+     * @param value1
+     * @param expression2
+     * @param value2
+     */
     protected <F, E> void opp(Serializable field, String expression1, F value1, String expression2, E value2) {
 
         QueryTuple tuple = opp(field, expression1);

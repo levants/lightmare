@@ -102,6 +102,16 @@ public abstract class ObjectUtils {
     }
 
     /**
+     * Validates if consumer is not null and accepts it
+     * 
+     * @param consumer
+     * @param value
+     */
+    public static <T> void accept(Consumer<T> consumer, T value) {
+        ObjectUtils.nonNull(consumer, c -> c.accept(value));
+    }
+
+    /**
      * Casts passed {@link Object} to generic parameter and runs
      * {@link java.util.function.Consumer} implementation
      * 
@@ -111,7 +121,7 @@ public abstract class ObjectUtils {
      */
     private static <T> void castAndApply(Object instance, Class<T> type, Consumer<T> consumer) {
         T value = type.cast(instance);
-        nonNull(consumer, c -> c.accept(value));
+        accept(consumer, value);
     }
 
     /**

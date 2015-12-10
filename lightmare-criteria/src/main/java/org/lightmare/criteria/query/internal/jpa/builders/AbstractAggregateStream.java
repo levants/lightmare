@@ -12,6 +12,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -33,6 +34,13 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
         aggregateTuple(tuple, aggregate);
     }
 
+    /**
+     * Gets aggregate function type
+     * 
+     * @param type
+     * @param tuple
+     * @return {@link Class} aggregate function type
+     */
     private static <C> Class<C> getAggregateType(Class<C> type, QueryTuple tuple) {
 
         Class<C> resulType;
@@ -97,7 +105,7 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     public <F> QueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function,
             GroupByConsumer<T> consumer) {
         oppAggregate(field, function);
-        acceptConsumer(consumer, this);
+        ObjectUtils.accept(consumer, this);
 
         return this.selectStream;
     }

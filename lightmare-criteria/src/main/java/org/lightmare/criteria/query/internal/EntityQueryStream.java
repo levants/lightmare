@@ -199,11 +199,8 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
      * @param subQuery
      */
     private <S> void acceptAndCall(QueryConsumer<S> consumer, QueryStream<S> query) {
-
-        acceptConsumer(consumer, query);
-        if (query instanceof SubQueryStream<?, ?>) {
-            ObjectUtils.cast(query, SubQueryStream.class, SubQueryStream::call);
-        }
+        ObjectUtils.accept(consumer, query);
+        ObjectUtils.castIfValid(query, SubQueryStream.class, SubQueryStream::call);
     }
 
     /**
