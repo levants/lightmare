@@ -23,6 +23,7 @@
 package org.lightmare.criteria.utils;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
@@ -113,6 +114,25 @@ public abstract class StringUtils {
      */
     public static boolean isEmpty(CharSequence chars) {
         return !valid(chars);
+    }
+
+    /**
+     * Validates passed value on null and if it is returns
+     * {@link java.util.function.Supplier} provided value
+     * 
+     * @param item
+     * @param supplier
+     * @return T value
+     */
+    public static <T extends CharSequence> T thisOrDefault(T item, Supplier<T> supplier) {
+
+        T value = item;
+
+        if (isEmpty(item)) {
+            item = supplier.get();
+        }
+
+        return value;
     }
 
     /**

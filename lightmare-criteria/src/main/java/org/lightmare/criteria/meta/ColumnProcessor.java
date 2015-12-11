@@ -51,9 +51,7 @@ public class ColumnProcessor {
         Temporal temporal;
 
         temporal = field.getAnnotation(Temporal.class);
-        if (temporal == null) {
-            temporal = method.getAnnotation(Temporal.class);
-        }
+        temporal = ObjectUtils.thisOrDefault(temporal, () -> method.getAnnotation(Temporal.class));
 
         return temporal;
     }

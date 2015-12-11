@@ -30,6 +30,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Query field and entity type container class
@@ -160,11 +161,7 @@ public class QueryTuple implements Serializable, Cloneable {
     }
 
     public Class<?> getGenericType() {
-
-        if (genericType == null) {
-            genericType = field.getType();
-        }
-
+        genericType = ObjectUtils.thisOrDefault(genericType, field::getType);
         return genericType;
     }
 
@@ -181,14 +178,11 @@ public class QueryTuple implements Serializable, Cloneable {
     }
 
     public boolean hasNoAlias() {
-        return (this.alias == null || this.alias.isEmpty());
+        return StringUtils.isEmpty(alias);
     }
 
     public void setAlias(int index) {
-
-        if (this.alias == null || this.alias.isEmpty()) {
-            this.alias = ALIAS_PREFIX.concat(String.valueOf(index));
-        }
+        this.alias = StringUtils.thisOrDefault(alias, () -> ALIAS_PREFIX.concat(String.valueOf(index)));
     }
 
     @Override

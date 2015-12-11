@@ -325,9 +325,9 @@ public class FieldResolver {
     }
 
     /**
-     * Validates if {@link org.objectweb.asm.tree.AbstractInsnNode} is instance
-     * of {@link MethodInsnNode} then resolves appropriated {@link QueryTuple}
-     * from it
+     * Validates if passed {@link org.objectweb.asm.tree.AbstractInsnNode} is
+     * instance of {@link MethodInsnNode} then resolves appropriated
+     * {@link QueryTuple} from it
      * 
      * @param instruction
      * @return

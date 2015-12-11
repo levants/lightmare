@@ -90,31 +90,17 @@ public class ClassLoaderUtils {
      * @param name
      * @param resource
      * @return {@link InputStream} from current {@link ClassLoader}
-     * @throws IOException
      */
-    private static InputStream getClassResourceAsStream(String name, String resource) throws IOException {
+    private static InputStream getClassResourceAsStream(String name, String resource) {
 
         InputStream is;
 
-        Class<?> type = ClassUtils.classForName(name);
-        is = type.getResourceAsStream(resource);
-
-        return is;
-    }
-
-    /**
-     * Gets resource as {@link InputStream} by name from {@link Class}'s class
-     * loader
-     * 
-     * @param name
-     * @return {@link InputStream} from current {@link ClassLoader}
-     */
-    public static InputStream getClassResourceAsStream(String name) throws IOException {
-
-        InputStream is;
-
-        String resource = getAsResource(name);
-        is = getClassResourceAsStream(name, resource);
+        try {
+            Class<?> type = ClassUtils.classForName(name);
+            is = type.getResourceAsStream(resource);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
 
         return is;
     }
@@ -132,9 +118,7 @@ public class ClassLoaderUtils {
 
         String resource = getAsResource(name);
         is = getResourceAsStream(resource);
-        if (is == null) {
-            is = getClassResourceAsStream(name, resource);
-        }
+        is = ObjectUtils.thisOrDefault(is, () -> getClassResourceAsStream(name, resource));
 
         return is;
     }

@@ -38,6 +38,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Abstract utility class for GROUP BY processing
@@ -70,17 +71,11 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     }
 
     private void initQueue() {
-
-        if (aggregateQueue == null) {
-            aggregateQueue = new LinkedList<>();
-        }
+        aggregateQueue = ObjectUtils.thisOrDefault(aggregateQueue, () -> new LinkedList<>());
     }
 
     private void initAggregateFields() {
-
-        if (aggregateFields == null) {
-            aggregateFields = new HashSet<>();
-        }
+        aggregateFields = ObjectUtils.thisOrDefault(aggregateFields, () -> new HashSet<>());
     }
 
     protected void aggregateTuple(QueryTuple tuple, Aggregates aggregate) {

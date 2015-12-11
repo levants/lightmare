@@ -29,6 +29,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * Utility class to help with general object checks / lock / modification
@@ -210,5 +211,24 @@ public abstract class ObjectUtils {
         value = cast(raw);
 
         return value;
+    }
+
+    /**
+     * Validates passed value on null and if it is returns
+     * {@link java.util.function.Supplier} provided value
+     * 
+     * @param value
+     * @param supplier
+     * @return T value
+     */
+    public static <T> T thisOrDefault(T value, Supplier<T> supplier) {
+
+        T result = value;
+
+        if (result == null) {
+            result = supplier.get();
+        }
+
+        return result;
     }
 }
