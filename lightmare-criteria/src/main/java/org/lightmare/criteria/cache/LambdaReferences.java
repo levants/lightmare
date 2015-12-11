@@ -78,7 +78,7 @@ public enum LambdaReferences {
     /**
      * Initializes and starts cleaner thread if it is not initialized yet
      */
-    private void initCleaner() {
+    private void initAndStart() {
 
         if (cleaner == null) {
             cleaner = new Thread(this::cleaner);
@@ -96,7 +96,7 @@ public enum LambdaReferences {
 
         if (cleaner == null) {
             synchronized (LambdaReferences.class) {
-                initCleaner();
+                initAndStart();
             }
         }
     }

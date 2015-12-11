@@ -37,6 +37,7 @@ import java.util.Objects;
  */
 public class ClassLoaderUtils {
 
+    // Class file extension
     private static final String CLASS = ".class";
 
     /**

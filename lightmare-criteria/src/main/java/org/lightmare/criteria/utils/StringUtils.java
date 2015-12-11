@@ -29,7 +29,6 @@ import java.util.stream.Stream;
  * Utility class for {@link String} and {@link CharSequence} operations
  *
  * @author Levan Tsinadze
- * @since 0.0.80-SNAPSHOT
  */
 public abstract class StringUtils {
 
@@ -104,16 +103,6 @@ public abstract class StringUtils {
         }
 
         return valid;
-    }
-
-    /**
-     * Checks if passed {@link CharSequence} is null or is empty
-     *
-     * @param chars
-     * @return <code>boolean</code>
-     */
-    public static boolean invalid(CharSequence chars) {
-        return !valid(chars);
     }
 
     /**

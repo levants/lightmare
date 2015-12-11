@@ -119,7 +119,7 @@ public abstract class CollectionUtils {
      * @param map
      * @return <code>boolean</code> validation result
      */
-    public static boolean invalid(Map<?, ?> map) {
+    public static boolean isEmpty(Map<?, ?> map) {
         return !valid(map);
     }
 
@@ -129,7 +129,7 @@ public abstract class CollectionUtils {
      * @param collection
      * @return <code>boolean</code> validation result
      */
-    public static boolean invalid(Collection<?> collection) {
+    public static boolean isEmpty(Collection<?> collection) {
         return !valid(collection);
     }
 
@@ -185,16 +185,6 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if passed {@link Object} array is null or is empty
-     *
-     * @param array
-     * @return <code>boolean</code> validation result
-     */
-    public static boolean invalid(Object[] array) {
-        return !valid(array);
-    }
-
-    /**
      * Checks if passed array is null or empty
      *
      * @param array
@@ -235,7 +225,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static <K, V> boolean notContains(Map<K, V> map, K key) {
-        return (key == null || invalid(map) || Boolean.FALSE.equals(map.containsKey(key)));
+        return (key == null || isEmpty(map) || ObjectUtils.notTrue(map.containsKey(key)));
     }
 
     /**
@@ -247,8 +237,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static <E> boolean notContains(Collection<E> collection, E element) {
-        return ((element == null || invalid(collection))
-                || (valid(collection) && ObjectUtils.notTrue(collection.contains(element))));
+        return ((element == null || isEmpty(collection)) || ObjectUtils.notTrue(collection.contains(element)));
     }
 
     /**
@@ -274,6 +263,27 @@ public abstract class CollectionUtils {
 
     /**
      * Peaks first element from collection
+     * 
+     * @param collection
+     * @param defaultValue
+     * @return T first element from {@link Collection} of default
+     */
+    private static <T> T getFirstFromCollection(Collection<T> collection, T defaultValue) {
+
+        T value;
+
+        if (collection instanceof List<?>) {
+            List<T> list = ObjectUtils.cast(collection);
+            value = getFirstFromList(list, defaultValue);
+        } else {
+            value = collection.iterator().next();
+        }
+
+        return value;
+    }
+
+    /**
+     * Peaks first element from collection
      *
      * @param collection
      * @return T first element from {@link Collection} of default
@@ -283,12 +293,7 @@ public abstract class CollectionUtils {
         T value;
 
         if (valid(collection)) {
-            if (collection instanceof List<?>) {
-                List<T> list = ObjectUtils.cast(collection);
-                value = getFirstFromList(list, defaultValue);
-            } else {
-                value = collection.iterator().next();
-            }
+            value = getFirstFromCollection(collection, defaultValue);
         } else {
             value = defaultValue;
         }
