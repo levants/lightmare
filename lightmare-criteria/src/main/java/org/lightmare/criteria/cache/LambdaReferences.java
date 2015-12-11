@@ -51,7 +51,8 @@ public enum LambdaReferences {
     private static final Logger LOG = Logger.getLogger(LambdaReferences.class);
 
     /**
-     * Cleans {@link Reference} from {@link ReferenceQueue} after reclaim
+     * Cleans first {@link Reference} element from {@link ReferenceQueue} after
+     * reclaim
      */
     private void cleaner() {
 

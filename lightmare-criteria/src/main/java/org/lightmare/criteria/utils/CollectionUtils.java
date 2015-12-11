@@ -343,7 +343,7 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Copies passed array's each element after mapped call to other array
+     * Copies each element from passed array by mapped call to other array
      * 
      * @param from
      * @param to

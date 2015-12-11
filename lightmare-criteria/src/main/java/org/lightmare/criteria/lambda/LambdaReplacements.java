@@ -106,7 +106,6 @@ public class LambdaReplacements {
      * @param parent
      * @return {@link Method} for serialization
      * @throws IOException
-     * @throws NoSuchMethodException
      */
     private static <T> Method getMethod(Class<?> parent) throws IOException {
         return ClassUtils.findMethod(parent, METHOD);
