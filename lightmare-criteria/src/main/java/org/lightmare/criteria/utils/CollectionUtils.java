@@ -191,7 +191,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static <T> boolean isEmpty(T[] array) {
-        return array == null || array.length == EMPTY;
+        return (array == null || array.length == EMPTY);
     }
 
     /**
