@@ -190,25 +190,6 @@ public class QueryTuple implements Serializable, Cloneable {
         return super.clone();
     }
 
-    /**
-     * Clones {@link QueryTuple} without throwing an exception
-     * 
-     * @return {@link QueryTuple} clone
-     */
-    public QueryTuple cloneType() {
-
-        QueryTuple tupleClone;
-
-        try {
-            Object raw = clone();
-            tupleClone = ObjectUtils.cast(raw);
-        } catch (CloneNotSupportedException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        return tupleClone;
-    }
-
     @Override
     public String toString() {
         return String.format(FORMATTER, entityName, methodName, fieldName);

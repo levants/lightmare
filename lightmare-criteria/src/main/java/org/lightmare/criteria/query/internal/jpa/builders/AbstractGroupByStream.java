@@ -71,11 +71,11 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     }
 
     private void initQueue() {
-        aggregateQueue = ObjectUtils.thisOrDefault(aggregateQueue, () -> new LinkedList<>());
+        aggregateQueue = ObjectUtils.thisOrDefault(aggregateQueue, LinkedList<AggregateTuple>::new);
     }
 
     private void initAggregateFields() {
-        aggregateFields = ObjectUtils.thisOrDefault(aggregateFields, () -> new HashSet<>());
+        aggregateFields = ObjectUtils.thisOrDefault(aggregateFields, HashSet<AggregateTuple>::new);
     }
 
     protected void aggregateTuple(QueryTuple tuple, Aggregates aggregate) {

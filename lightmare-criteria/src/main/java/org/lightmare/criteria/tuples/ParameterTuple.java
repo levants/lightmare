@@ -38,7 +38,7 @@ public class ParameterTuple {
 
     private final TemporalType temporalType;
 
-    private static final String TO_TEXT_FORMAT = "%s : %s";
+    private static final String PARAMETER_FORMAT = "%s : %s";
 
     protected ParameterTuple(final String name, final Object value, final TemporalType temporalType) {
         this.name = name;
@@ -77,6 +77,6 @@ public class ParameterTuple {
 
     @Override
     public String toString() {
-        return String.format(TO_TEXT_FORMAT, name, value);
+        return String.format(PARAMETER_FORMAT, name, value);
     }
 }
