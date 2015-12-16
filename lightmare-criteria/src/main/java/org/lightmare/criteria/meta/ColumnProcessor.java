@@ -41,9 +41,8 @@ public class ColumnProcessor {
     /**
      * Finds {@link javax.persistence.Temporal} annotated field or getter method
      * 
-     * @param entityType
-     * @param fieldName
-     * @param methodName
+     * @param field
+     * @param method
      * @return {@link javax.persistence.Temporal} annotation
      */
     private static Temporal getTemporal(Field field, Method method) {

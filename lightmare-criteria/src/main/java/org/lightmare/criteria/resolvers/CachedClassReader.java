@@ -31,7 +31,8 @@ import org.lightmare.criteria.utils.ClassLoaderUtils;
 import org.objectweb.asm.ClassReader;
 
 /**
- * Caches read classes for multiply and parallel uses sake
+ * Extension of {@link org.objectweb.asm.ClassReader} to cache read classes for
+ * multiply and parallel uses
  * 
  * @author Levan Tsinadze
  *

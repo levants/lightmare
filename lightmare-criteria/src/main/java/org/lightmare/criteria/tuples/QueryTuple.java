@@ -157,7 +157,7 @@ public class QueryTuple implements Serializable, Cloneable {
     }
 
     public void setTemporalType(Temporal temporal) {
-        setTemporalType(temporal.value());
+        ObjectUtils.nonNull(temporal, c -> setTemporalType(c.value()));
     }
 
     public Class<?> getGenericType() {
