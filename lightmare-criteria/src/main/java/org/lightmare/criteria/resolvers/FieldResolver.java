@@ -188,6 +188,17 @@ public class FieldResolver {
     }
 
     /**
+     * Validates if resolved method is setter or getter in
+     * {@link org.lightmare.criteria.tuples.ResolverTuple} for entity field
+     * 
+     * @param resolverTuple
+     * @return <code>boolean</code> validation result
+     */
+    private static boolean valid(ResolverTuple<?> resolverTuple) {
+        return valid(resolverTuple.getDesc(), resolverTuple.getName());
+    }
+
+    /**
      * Sets reflection data ( {@link java.lang.reflect.Method},
      * {@link java.lang.reflect.Field} etc ) to tuple
      * 
@@ -216,7 +227,7 @@ public class FieldResolver {
 
         String desc = resolverTuple.getDesc();
         String methodName = resolverTuple.getName();
-        if (valid(resolverTuple.getDesc(), resolverTuple.getName())) {
+        if (valid(resolverTuple)) {
             String fieldName = resolveFieldName(methodName);
             String entityName = nameResolver.apply(resolverTuple.getType());
             String[] arguments = resolveArgumentsTypes(desc);

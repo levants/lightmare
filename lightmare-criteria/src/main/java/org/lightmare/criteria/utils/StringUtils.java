@@ -269,7 +269,7 @@ public abstract class StringUtils {
     }
 
     /**
-     * Appends "'" quotes as prefix and suffix passed {@link Object} instance
+     * Appends "'" quotes as prefix and suffix of passed {@link Object} instance
      * 
      * @param item
      * @return {@link String} generated text

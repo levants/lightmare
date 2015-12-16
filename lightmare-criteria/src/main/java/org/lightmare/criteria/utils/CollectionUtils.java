@@ -371,7 +371,7 @@ public abstract class CollectionUtils {
      * @return E first chosen element by {@link Predicate}
      */
     public static <E> E getFirstValid(Collection<E> collection, Predicate<E> predicate) {
-        return collection.stream().filter(c -> predicate.test(c)).findFirst().get();
+        return collection.stream().filter(predicate::test).findFirst().get();
     }
 
     /**

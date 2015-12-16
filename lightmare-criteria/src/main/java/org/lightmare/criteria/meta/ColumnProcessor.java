@@ -47,25 +47,8 @@ public class ColumnProcessor {
      * @return {@link javax.persistence.Temporal} annotation
      */
     private static Temporal getTemporal(Field field, Method method) {
-
-        Temporal temporal;
-
-        temporal = field.getAnnotation(Temporal.class);
-        temporal = ObjectUtils.thisOrDefault(temporal, () -> method.getAnnotation(Temporal.class));
-
-        return temporal;
-    }
-
-    /**
-     * Sets {@link javax.persistence.Temporal#value()} to passed
-     * {@link org.lightmare.criteria.tuples.QueryTuple} if
-     * {@link javax.persistence.Temporal} is not null
-     * 
-     * @param temporal
-     * @param tuple
-     */
-    private static void setTemporalType(Temporal temporal, QueryTuple tuple) {
-        ObjectUtils.nonNull(temporal, tuple::setTemporalType);
+        return ObjectUtils.thisOrDefault(field.getAnnotation(Temporal.class),
+                () -> method.getAnnotation(Temporal.class));
     }
 
     /**
@@ -79,6 +62,6 @@ public class ColumnProcessor {
         Field field = tuple.getField();
         Method method = tuple.getMethod();
         Temporal temporal = getTemporal(field, method);
-        setTemporalType(temporal, tuple);
+        tuple.setTemporalType(temporal);
     }
 }

@@ -28,7 +28,8 @@ import java.lang.ref.ReferenceQueue;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Phantom reference for lambda generated class
+ * Implementation of {@link PhantomReference} reference for lambda generated
+ * class
  * 
  * @author Levan Tsinadze
  *
