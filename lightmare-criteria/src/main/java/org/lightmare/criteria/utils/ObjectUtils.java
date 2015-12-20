@@ -182,7 +182,7 @@ public abstract class ObjectUtils {
      * @return {@link Object}
      * @throws IOException
      */
-    public static Object deserialize(byte[] bytes) throws IOException {
+    private static Object readToObject(byte[] bytes) throws IOException {
 
         Object value;
 
@@ -203,12 +203,16 @@ public abstract class ObjectUtils {
      * @return {@link Object}
      * @throws IOException
      */
-    public static <T> T deserializeToType(byte[] bytes) throws IOException {
+    public static <T> T deserialize(byte[] bytes) throws IOException {
 
         T value;
 
-        Object raw = deserialize(bytes);
-        value = cast(raw);
+        Object raw = readToObject(bytes);
+        if (Objects.nonNull(raw)) {
+            value = cast(raw);
+        } else {
+            value = null;
+        }
 
         return value;
     }

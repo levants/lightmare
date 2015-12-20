@@ -81,11 +81,9 @@ public class MethodCache {
      */
     public static List<MethodNode> getMethods(String typeName) {
 
-        List<MethodNode> methods;
+        List<MethodNode> methods = METHOD_NODES.get(typeName);
 
-        if (METHOD_NODES.containsKey(typeName)) {
-            methods = METHOD_NODES.get(typeName);
-        } else {
+        if (methods == null) {
             methods = resolveMethods(typeName);
             METHOD_NODES.putIfAbsent(typeName, methods);
         }

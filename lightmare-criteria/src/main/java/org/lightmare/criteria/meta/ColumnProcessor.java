@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.meta;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -39,6 +40,16 @@ import org.lightmare.criteria.utils.ObjectUtils;
 public class ColumnProcessor {
 
     /**
+     * Gets {@link Temporal} annotation from {@link AnnotatedElement} instance
+     * 
+     * @param element
+     * @return {@link Temporal} annotation
+     */
+    public static Temporal getTemporal(AnnotatedElement element) {
+        return element.getAnnotation(Temporal.class);
+    }
+
+    /**
      * Finds {@link javax.persistence.Temporal} annotated field or getter method
      * 
      * @param field
@@ -46,8 +57,7 @@ public class ColumnProcessor {
      * @return {@link javax.persistence.Temporal} annotation
      */
     private static Temporal getTemporal(Field field, Method method) {
-        return ObjectUtils.thisOrDefault(field.getAnnotation(Temporal.class),
-                () -> method.getAnnotation(Temporal.class));
+        return ObjectUtils.thisOrDefault(getTemporal(field), () -> getTemporal(method));
     }
 
     /**
@@ -57,10 +67,7 @@ public class ColumnProcessor {
      * @param tuple
      */
     public static void setTemporalType(QueryTuple tuple) {
-
-        Field field = tuple.getField();
-        Method method = tuple.getMethod();
-        Temporal temporal = getTemporal(field, method);
+        Temporal temporal = getTemporal(tuple.getField(), tuple.getMethod());
         tuple.setTemporalType(temporal);
     }
 }

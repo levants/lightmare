@@ -82,6 +82,7 @@ public enum LambdaReferences {
     private Thread initAndStart() {
 
         cleaner = new Thread(this::cleaner);
+
         cleaner.setPriority(Thread.MAX_PRIORITY);
         setName(cleaner);
         cleaner.setDaemon(Boolean.TRUE);
