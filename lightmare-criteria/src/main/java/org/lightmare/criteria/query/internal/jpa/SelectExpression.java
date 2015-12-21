@@ -22,6 +22,10 @@
  */
 package org.lightmare.criteria.query.internal.jpa;
 
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
 
@@ -34,6 +38,53 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type for generated query
  */
 public interface SelectExpression<T> {
+
+    /**
+     * Select generator
+     * 
+     * @author Levan Tsinadze
+     *
+     */
+    public static final class Select {
+
+        private List<Serializable> fields;
+
+        private Select() {
+            fields = new LinkedList<Serializable>();
+        }
+
+        public static Select select() {
+            return new Select();
+        }
+
+        public List<Serializable> getFields() {
+            return fields;
+        }
+
+        public <K, F> Select column(EntityField<K, F> field) {
+            fields.add(field);
+            return this;
+        }
+    }
+
+    /**
+     * Custom select expression for instant type
+     * 
+     * @param type
+     * @param select
+     * @return {@link QueryStream} for special type
+     */
+    <F> QueryStream<F> selectType(Class<F> type, Select select);
+
+    /**
+     * Custom select expression
+     * 
+     * @param select
+     * @return {@link QueryStream} for {@link Object} array
+     */
+    default QueryStream<Object[]> select(Select select) {
+        return selectType(Object[].class, select);
+    }
 
     /**
      * Custom select expression for instant type

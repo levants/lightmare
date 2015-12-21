@@ -24,6 +24,8 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -378,9 +380,9 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * 
      * @param field
      */
-    private void addSelectField(Serializable field) {
+    private void addSelectField(Serializable field, StringBuilder buffer) {
         QueryTuple tuple = compose(field);
-        appendFieldName(tuple, columns);
+        appendFieldName(tuple, buffer);
     }
 
     /**
@@ -401,15 +403,35 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * Appends to SELECT statement
      * 
      * @param fields
+     * @param buffer
      */
-    private void appendSelect(Serializable[] fields) {
+    protected void appendSelect(List<Serializable> fields, StringBuilder buffer) {
+
+        Iterator<Serializable> iterator = fields.iterator();
+        int length = fields.size() - CollectionUtils.SINGLTON_LENGTH;
+        Serializable field;
+        int i = CollectionUtils.FIRST_INDEX;
+        while (iterator.hasNext()) {
+            field = iterator.next();
+            addSelectField(field, buffer);
+            appendComma(i, length, buffer);
+            i++;
+        }
+    }
+
+    /**
+     * Appends to SELECT statement
+     * 
+     * @param fields
+     */
+    private void appendSelect(Serializable[] fields, StringBuilder buffer) {
 
         int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
         Serializable field;
         for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
             field = fields[i];
-            addSelectField(field);
-            appendComma(i, length, columns);
+            addSelectField(field, buffer);
+            appendComma(i, length, buffer);
         }
     }
 
@@ -418,7 +440,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
 
         if (CollectionUtils.valid(fields)) {
             columns.append(Clauses.SELECT);
-            appendSelect(fields);
+            appendSelect(fields, columns);
         }
     }
 

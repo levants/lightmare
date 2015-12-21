@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -43,6 +44,13 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
 
+    // Query parts
+    private static final String NEW_OPERATOR = "new ";
+
+    private static final char OPEN = '(';
+
+    private static final char CLOSE = ')';
+
     protected AbstractSelectStatements(EntityManager em, Class<T> entityType, String alias) {
         super(em, entityType, alias);
     }
@@ -52,7 +60,7 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
      * 
      * @param expression
      */
-    private void validateAndSelect(String expression) {
+    private void validateAndAppendSelect(String expression) {
 
         if (StringUtils.notStartsWith(expression, Clauses.SELECT)
                 && StringUtils.notStartsWith(columns, Clauses.SELECT)) {
@@ -60,13 +68,58 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
         }
     }
 
+    /**
+     * Validates and appends "SELECT" expression to JPA query
+     * 
+     * @param expression
+     */
+    private void validateAndAppendSelect() {
+
+        if (StringUtils.notStartsWith(columns, Clauses.SELECT)) {
+            columns.append(Clauses.SELECT);
+        }
+    }
+
+    /***
+     * Generates SELECT clause JPA query part
+     * 
+     * @param type
+     * @param select
+     */
+    private void generateSelectClause(Class<?> type, Select select) {
+
+        List<Serializable> fields = select.getFields();
+        StringBuilder buffer = new StringBuilder();
+        appendSelect(fields, buffer);
+        if (Object[].class.equals(type)) {
+            validateAndAppendSelect();
+            columns.append(buffer);
+        } else {
+            String expression = StringUtils.concat(NEW_OPERATOR, type.getName(), OPEN);
+            validateAndAppendSelect(expression);
+            columns.append(expression).append(buffer).append(CLOSE);
+        }
+    }
+
+    @Override
+    public <F> QueryStream<F> selectType(Class<F> type, Select select) {
+
+        SelectStream<T, F> stream;
+
+        generateSelectClause(type, select);
+        stream = new SelectStream<>(this, type);
+
+        return stream;
+    }
+
     @Override
     public <F> QueryStream<F> select(String expression, Class<F> type) {
 
-        SelectStream<T, F> stream = new SelectStream<>(this, type);
+        SelectStream<T, F> stream;
 
-        validateAndSelect(expression);
+        validateAndAppendSelect(expression);
         columns.append(expression);
+        stream = new SelectStream<>(this, type);
 
         return stream;
     }

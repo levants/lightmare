@@ -53,7 +53,6 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     private void appendAggregateFields(AggregateTuple tuple, StringBuilder buffer) {
 
         String expression = tuple.expression();
-        StringUtils.clear(buffer);
         buffer.append(Clauses.SELECT);
         buffer.append(expression);
     }
@@ -64,6 +63,7 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     protected void appendAggregate(StringBuilder buffer) {
 
         if (CollectionUtils.valid(aggregateFields)) {
+            StringUtils.clear(buffer);
             aggregateFields.forEach(tuple -> appendAggregateFields(tuple, buffer));
         }
     }

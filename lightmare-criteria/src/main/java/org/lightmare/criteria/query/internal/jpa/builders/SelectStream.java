@@ -62,17 +62,36 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
         }
     }
 
+    /**
+     * Generates prefix for SELECT clause
+     */
+    private void appendCountPrefix() {
+
+        validateAndCommaCount();
+        StringBuilder prefixBuilder = new StringBuilder();
+        prefixBuilder.append(columns);
+        prefixBuilder.append(from);
+        count.append(prefixBuilder);
+    }
+
+    /**
+     * Generates SELECT clause JPA query part
+     */
+    private void appendSelectPrefix() {
+
+        StringUtils.clear(count);
+        appendAggregate(count);
+        appendFromClause(realEntityType, alias, from);
+        appendCountPrefix();
+    }
+
     @Override
     public String sql() {
 
         String value;
 
         clearSql();
-        appendAggregate(count);
-        appendFromClause(realEntityType, alias, from);
-        validateAndCommaCount();
-        count.append(columns);
-        count.append(from);
+        appendSelectPrefix();
         generateBody(count);
         sql.append(orderBy);
         sql.append(groupBy);
