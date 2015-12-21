@@ -36,6 +36,25 @@ import org.lightmare.criteria.query.QueryStream;
 public interface SelectExpression<T> {
 
     /**
+     * Custom select expression for instant type
+     * 
+     * @param expression
+     * @param types
+     * @return {@link QueryStream} for special type
+     */
+    <F> QueryStream<F> select(String expression, Class<F> type);
+
+    /**
+     * Custom select expression
+     * 
+     * @param expression
+     * @return {@link QueryStream} for {@link Object} array
+     */
+    default QueryStream<Object[]> select(String expression) {
+        return select(expression, Object[].class);
+    }
+
+    /**
      * Gets instant field by type
      * 
      * @param field

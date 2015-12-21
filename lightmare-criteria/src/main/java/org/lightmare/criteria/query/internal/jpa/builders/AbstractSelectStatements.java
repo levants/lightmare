@@ -29,6 +29,8 @@ import javax.persistence.EntityManager;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.SelectExpression;
+import org.lightmare.criteria.query.internal.jpa.links.Clauses;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation of {@link SelectExpression} to generate SELECT for instant
@@ -43,6 +45,30 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
 
     protected AbstractSelectStatements(EntityManager em, Class<T> entityType, String alias) {
         super(em, entityType, alias);
+    }
+
+    /**
+     * Validates and appends "SELECT" expression to JPA query
+     * 
+     * @param expression
+     */
+    private void validateAndSelect(String expression) {
+
+        if (StringUtils.notStartsWith(expression, Clauses.SELECT)
+                && StringUtils.notStartsWith(columns, Clauses.SELECT)) {
+            columns.append(Clauses.SELECT);
+        }
+    }
+
+    @Override
+    public <F> QueryStream<F> select(String expression, Class<F> type) {
+
+        SelectStream<T, F> stream = new SelectStream<>(this, type);
+
+        validateAndSelect(expression);
+        columns.append(expression);
+
+        return stream;
     }
 
     @Override
