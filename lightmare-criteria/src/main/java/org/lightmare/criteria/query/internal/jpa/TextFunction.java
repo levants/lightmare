@@ -70,7 +70,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> generateText(String function, String pattern, Object y) {
-        return generateText(function, StringUtils.EMPTY_STRING, null, pattern, y);
+        return generateText(function, StringUtils.EMPTY, null, pattern, y);
     }
 
     /**
@@ -208,7 +208,7 @@ interface TextFunction<T> {
      * @return {@link JPAFunction} current instance
      */
     default JPAFunction<T> trim(EntityField<T, Character> t, EntityField<T, String> x) {
-        return generateText(Texts.TRIM, StringUtils.EMPTY_STRING, t, Parts.TRIM_FROM, x);
+        return generateText(Texts.TRIM, StringUtils.EMPTY, t, Parts.TRIM_FROM, x);
     }
 
     /**

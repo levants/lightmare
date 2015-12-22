@@ -33,7 +33,7 @@ import java.util.stream.Stream;
  */
 public abstract class StringUtils {
 
-    public static final String EMPTY_STRING = "";
+    public static final String EMPTY = "";
 
     public static final char SPACE = ' ';
 
@@ -66,7 +66,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean valid(CharSequence chars) {
-        return chars != null && chars.length() > CollectionUtils.EMPTY_ARRAY_LENGTH;
+        return chars != null && chars.length() > CollectionUtils.EMPTY;
     }
 
     /**
@@ -161,7 +161,7 @@ public abstract class StringUtils {
         if (parts == null) {
             resultText = null;
         } else if (CollectionUtils.isEmpty(parts)) {
-            resultText = EMPTY_STRING;
+            resultText = EMPTY;
         } else {
             StringBuilder text = new StringBuilder();
             appendAll(text, parts);

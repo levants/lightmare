@@ -46,9 +46,6 @@ public abstract class CollectionUtils {
     // Index of not existing data in collection
     public static final int NOT_EXISTING_INDEX = -1;
 
-    // Length of empty array
-    public static final int EMPTY_ARRAY_LENGTH = 0;
-
     // Length of empty array or set
     public static final int EMPTY = 0;
 
@@ -181,7 +178,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean valid(Object[] array) {
-        return (array != null && array.length > EMPTY_ARRAY_LENGTH);
+        return (array != null && array.length > EMPTY);
     }
 
     /**
