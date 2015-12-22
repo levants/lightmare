@@ -521,6 +521,20 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         }
     }
 
+    private void iterateAndAppendGroups(Collection<Serializable> fields) {
+
+        Iterator<Serializable> iterator = fields.iterator();
+        Serializable field;
+        int i = CollectionUtils.FIRST_INDEX;
+        int length = fields.size() - CollectionUtils.SINGLTON_LENGTH;
+        while (iterator.hasNext()) {
+            field = iterator.next();
+            addGroupByField(field, i, length);
+            appendComma(i, length, groupBy);
+            i++;
+        }
+    }
+
     /**
      * Prepares GROUP BY clause
      * 
@@ -528,6 +542,19 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      */
     @SafeVarargs
     protected final void oppGroups(Serializable... fields) {
+
+        if (CollectionUtils.valid(fields)) {
+            prepareGroupBy();
+            iterateAndAppendGroups(fields);
+        }
+    }
+
+    /**
+     * Prepares GROUP BY clause
+     * 
+     * @param fields
+     */
+    protected final void oppGroups(Collection<Serializable> fields) {
 
         if (CollectionUtils.valid(fields)) {
             prepareGroupBy();

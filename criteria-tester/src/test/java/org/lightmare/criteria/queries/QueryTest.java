@@ -211,6 +211,60 @@ public class QueryTest extends TestEnviromentConfig {
     }
 
     @Test
+    @RunOrder(2.35)
+    public void toListBySelectWithConsumerTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            Date date = getDateValue();
+            // ============= Query construction ============== //
+            QueryStream<Object[]> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
+                    .brackets(s -> s.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date))
+                    .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).selectAll(s -> s
+                            .column(Person::getPersonalNo).column(Person::getLastName).column(Person::getFirstName));
+            System.out.println(stream.sql());
+            List<Object[]> persons = stream.toList();
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println();
+            persons.forEach(c -> System.out.println(Arrays.toString(c)));
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(2.36)
+    public void toListBySelectConsumerTypedTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            Date date = getDateValue();
+            // ============= Query construction ============== //
+            QueryStream<PersonWrapper> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
+                    .brackets(s -> s.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date))
+                    .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).selectType(PersonWrapper.class, s -> s
+                            .column(Person::getPersonalNo).column(Person::getLastName).column(Person::getFirstName));
+            System.out.println(stream.sql());
+            List<PersonWrapper> persons = stream.toList();
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println();
+            persons.forEach(System.out::println);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
     @RunOrder(2.5)
     public void countByEntityTest() {
 

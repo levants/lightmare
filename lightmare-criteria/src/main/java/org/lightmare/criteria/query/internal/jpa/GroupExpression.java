@@ -24,7 +24,9 @@ package org.lightmare.criteria.query.internal.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.HavingConsumer;
+import org.lightmare.criteria.functions.SelectConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.jpa.SelectExpression.Select;
 
 /**
  * Generates group by query
@@ -42,6 +44,19 @@ public interface GroupExpression<T> {
      * @param consumer
      */
     void having(HavingConsumer<T> consumer);
+
+    QueryStream<Object[]> groupBy(Select select);
+
+    default QueryStream<Object[]> group(SelectConsumer select) {
+
+        QueryStream<Object[]> stream;
+
+        Select columns = Select.select();
+        select.accept(columns);
+        stream = groupBy(columns);
+
+        return stream;
+    }
 
     /**
      * Gets instant field by type

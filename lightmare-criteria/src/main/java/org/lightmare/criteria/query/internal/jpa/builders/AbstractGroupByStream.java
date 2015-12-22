@@ -115,6 +115,15 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
+    public QueryStream<Object[]> groupBy(Select select) {
+
+        oppGroups(select.getFields());
+        selectStream = new SelectStream<>(this, Object[].class);
+
+        return selectStream;
+    }
+
+    @Override
     public <F> QueryStream<F> groupByOne(EntityField<T, F> field) {
 
         SelectStream<T, F> stream;

@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.SelectConsumer;
 import org.lightmare.criteria.query.QueryStream;
 
 /**
@@ -65,6 +66,19 @@ public interface SelectExpression<T> {
             fields.add(field);
             return this;
         }
+
+        /**
+         * Utility class to accept select statement
+         * 
+         * @param select
+         */
+        private static Select accept(SelectConsumer select) {
+
+            Select columns = Select.select();
+            select.accept(columns);
+
+            return columns;
+        }
     }
 
     /**
@@ -84,6 +98,39 @@ public interface SelectExpression<T> {
      */
     default QueryStream<Object[]> select(Select select) {
         return selectType(Object[].class, select);
+    }
+
+    /**
+     * Custom select expression for instant type
+     * 
+     * @param type
+     * @param select
+     * @return {@link QueryStream} for special type
+     */
+    default <F> QueryStream<F> selectType(Class<F> type, SelectConsumer select) {
+
+        QueryStream<F> stream;
+
+        Select columns = Select.accept(select);
+        stream = selectType(type, columns);
+
+        return stream;
+    }
+
+    /**
+     * Custom select expression
+     * 
+     * @param select
+     * @return {@link QueryStream} for {@link Object} array
+     */
+    default QueryStream<Object[]> selectAll(SelectConsumer select) {
+
+        QueryStream<Object[]> stream;
+
+        Select columns = Select.accept(select);
+        stream = select(columns);
+
+        return stream;
     }
 
     /**
