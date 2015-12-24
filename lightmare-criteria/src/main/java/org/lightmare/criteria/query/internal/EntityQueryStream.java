@@ -33,7 +33,6 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractAggregateStream;
 import org.lightmare.criteria.query.internal.jpa.links.Joins;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
-import org.lightmare.criteria.query.internal.jpa.links.Orders;
 import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -314,14 +313,8 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F> QueryStream<T> orderBy(EntityField<T, F> field) {
-        setOrder(new EntityField[] { field });
-        return this;
-    }
-
-    @Override
-    public <F> QueryStream<T> orderByDesc(EntityField<T, F> field) {
-        setOrder(Orders.DESC, new EntityField[] { field });
+    public <F> QueryStream<T> order(String dir, EntityField<T, F> field) {
+        setOrder(dir, new EntityField[] { field });
         return this;
     }
 }

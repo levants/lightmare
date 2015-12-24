@@ -95,9 +95,13 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     @Override
     public <F> QueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function,
             GroupByConsumer<T> consumer) {
+
+        QueryStream<Object[]> stream;
+
         oppAggregate(field, function);
         ObjectUtils.accept(consumer, this);
+        stream = ObjectUtils.cast(selectStream);
 
-        return this.selectStream;
+        return stream;
     }
 }

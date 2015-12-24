@@ -86,8 +86,9 @@ public class QueryTest extends TestEnviromentConfig {
                     .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
                     .brackets(stream -> stream.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate,
                             date))
-                    .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS))
-                    .select(Person::getPersonalNo, Person::getFirstName, Person::getLastName).toList();
+                    .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).selectAll(c -> c
+                            .column(Person::getPersonalNo).column(Person::getFirstName).column(Person::getLastName))
+                    .toList();
             // =============================================//
             System.out.println();
             System.out.println("-------Entity----");

@@ -28,7 +28,7 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 
 /**
- * Aggregate functions for JPA query language
+ * Aggregate functions for JPA query
  * 
  * @author Levan Tsinadze
  *

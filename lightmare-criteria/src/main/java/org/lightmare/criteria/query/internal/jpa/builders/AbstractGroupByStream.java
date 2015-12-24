@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -33,6 +34,7 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.HavingConsumer;
+import org.lightmare.criteria.functions.SelectConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.tuples.AggregateTuple;
@@ -50,7 +52,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  */
 abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
 
-    protected SelectStream<T, Object[]> selectStream;
+    protected SelectStream<T, ?> selectStream;
 
     protected Set<AggregateTuple> aggregateFields;
 
@@ -100,151 +102,58 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     }
 
     /**
+     * Generates appropriated query stream
+     * 
+     * @return
+     */
+    private <F> QueryStream<F> generateStream(Class<F> type) {
+
+        QueryStream<F> stream;
+
+        selectStream = new SelectStream<>(this, type);
+        stream = ObjectUtils.cast(selectStream);
+
+        return stream;
+    }
+
+    /**
      * Processes select method call for all arguments
      * 
      * @param fields
      * @return {@link QueryStream} for select method
      */
-    @SafeVarargs
-    private final QueryStream<Object[]> groupByAll(Serializable... fields) {
+    private QueryStream<Object[]> groupByField(Serializable field) {
 
-        oppGroups(fields);
-        selectStream = new SelectStream<>(this, Object[].class);
+        QueryStream<Object[]> stream;
 
-        return selectStream;
-    }
-
-    @Override
-    public QueryStream<Object[]> groupBy(Select select) {
-
-        oppGroups(select.getFields());
-        selectStream = new SelectStream<>(this, Object[].class);
-
-        return selectStream;
-    }
-
-    @Override
-    public <F> QueryStream<F> groupByOne(EntityField<T, F> field) {
-
-        SelectStream<T, F> stream;
-
-        oppSelect(field);
-        Class<F> fieldType = getFieldType(field);
-        stream = new SelectStream<>(this, fieldType);
+        oppGroups(Collections.singleton(field));
+        stream = generateStream(Object[].class);
 
         return stream;
     }
 
     @Override
+    public QueryStream<Object[]> groupBy(Select select) {
+
+        QueryStream<Object[]> stream;
+
+        oppGroups(select.getFields());
+        stream = generateStream(Object[].class);
+
+        return stream;
+    }
+
+    @Override
+    public QueryStream<Object[]> group(SelectConsumer select) {
+
+        Select columns = Select.select();
+        ObjectUtils.accept(select, columns);
+
+        return groupBy(columns);
+    }
+
+    @Override
     public <F> QueryStream<Object[]> groupBy(EntityField<T, F> field) {
-        return groupByAll(field);
-    }
-
-    @Override
-    public <F1, F2> QueryStream<Object[]> groupBy(EntityField<T, F1> field1, EntityField<T, F1> field2) {
-        return groupByAll(field1, field2);
-    }
-
-    @Override
-    public <F1, F2, F3> QueryStream<Object[]> groupBy(EntityField<T, F1> field1, EntityField<T, F2> field2,
-            EntityField<T, F3> field3) {
-        return groupByAll(field1, field2, field3);
-    }
-
-    @Override
-    public <F1, F2, F3, F4> QueryStream<Object[]> groupBy(EntityField<T, F1> field1, EntityField<T, F2> field2,
-            EntityField<T, F3> field3, EntityField<T, F4> field4) {
-        return groupByAll(field1, field2, field3, field4);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5> QueryStream<Object[]> groupBy(EntityField<T, F1> field1, EntityField<T, F2> field2,
-            EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5) {
-        return groupByAll(field1, field2, field3, field4, field5);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5, F6> QueryStream<Object[]> groupBy(EntityField<T, F1> field1, EntityField<T, F2> field2,
-            EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
-            EntityField<T, F6> field6) {
-        return groupByAll(field1, field2, field3, field4, field5, field6);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5, F6, F7> QueryStream<Object[]> groupBy(EntityField<T, F1> field1,
-            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
-            EntityField<T, F6> field6, EntityField<T, F7> field7) {
-        return groupByAll(field1, field2, field3, field4, field5, field6, field7);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5, F6, F7, F8> QueryStream<Object[]> groupBy(EntityField<T, F1> field1,
-            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
-            EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8) {
-        return groupByAll(field1, field2, field3, field4, field5, field6, field7, field8);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5, F6, F7, F8, F9> QueryStream<Object[]> groupBy(EntityField<T, F1> field1,
-            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
-            EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8,
-            EntityField<T, F9> field9) {
-        return groupByAll(field1, field2, field3, field4, field5, field6, field7, field8, field9);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10> QueryStream<Object[]> groupBy(EntityField<T, F1> field1,
-            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
-            EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8, EntityField<T, F9> field9,
-            EntityField<T, F10> field10) {
-        return groupByAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11> QueryStream<Object[]> groupBy(EntityField<T, F1> field1,
-            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
-            EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8, EntityField<T, F9> field9,
-            EntityField<T, F10> field10, EntityField<T, F11> field11) {
-        return groupByAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12> QueryStream<Object[]> groupBy(EntityField<T, F1> field1,
-            EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4, EntityField<T, F5> field5,
-            EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8, EntityField<T, F9> field9,
-            EntityField<T, F10> field10, EntityField<T, F11> field11, EntityField<T, F12> field12) {
-        return groupByAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13> QueryStream<Object[]> groupBy(
-            EntityField<T, F1> field1, EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4,
-            EntityField<T, F5> field5, EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8,
-            EntityField<T, F9> field9, EntityField<T, F10> field10, EntityField<T, F11> field11,
-            EntityField<T, F12> field12, EntityField<T, F13> field13) {
-        return groupByAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14> QueryStream<Object[]> groupBy(
-            EntityField<T, F1> field1, EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4,
-            EntityField<T, F5> field5, EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8,
-            EntityField<T, F9> field9, EntityField<T, F10> field10, EntityField<T, F11> field11,
-            EntityField<T, F12> field12, EntityField<T, F13> field13, EntityField<T, F14> field14) {
-        return groupByAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14);
-    }
-
-    @Override
-    public <F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15> QueryStream<Object[]> groupBy(
-            EntityField<T, F1> field1, EntityField<T, F2> field2, EntityField<T, F3> field3, EntityField<T, F4> field4,
-            EntityField<T, F5> field5, EntityField<T, F6> field6, EntityField<T, F7> field7, EntityField<T, F8> field8,
-            EntityField<T, F9> field9, EntityField<T, F10> field10, EntityField<T, F11> field11,
-            EntityField<T, F12> field12, EntityField<T, F13> field13, EntityField<T, F14> field14,
-            EntityField<T, F15> field15) {
-        return groupByAll(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11,
-                field12, field13, field14, field15);
+        return groupByField(field);
     }
 }

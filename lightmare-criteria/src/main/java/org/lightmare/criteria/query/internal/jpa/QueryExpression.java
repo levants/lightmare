@@ -35,9 +35,9 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
  * @param <T>
  *            entity type parameter
  */
-public interface QueryExpression<T>
-        extends JPAQueryWrapper<T>, Expression<T>, ColumnExpression<T>, FunctionExpression<T>, SelectExpression<T>,
-        GroupExpression<T>, JoinExpressions<T>, ResultStream<T>, SubQueryProcessor<T>, AggregateFunction<T> {
+public interface QueryExpression<T> extends JPAQueryWrapper<T>, Expression<T>, ColumnExpression<T>,
+        FunctionExpression<T>, SelectExpression<T>, OrderExpression<T>, GroupExpression<T>, JoinExpressions<T>,
+        ResultStream<T>, SubQueryProcessor<T>, AggregateFunction<T> {
 
     /**
      * Gets wrapped entity {@link Class} instance
@@ -45,24 +45,6 @@ public interface QueryExpression<T>
      * @return {@link Class} of entity type T
      */
     Class<T> getEntityType();
-
-    // =========================order=by=====================================//
-
-    /**
-     * Generates ORDER BY part for field
-     * 
-     * @param field
-     * @return {@link QueryStream} current instance
-     */
-    <F> QueryStream<T> orderBy(EntityField<T, F> field);
-
-    /**
-     * Generates ORDER BY with DESC for field
-     * 
-     * @param field
-     * @return {@link QueryStream} current instance
-     */
-    <F> QueryStream<T> orderByDesc(EntityField<T, F> field);
 
     // ======================================================================//
 

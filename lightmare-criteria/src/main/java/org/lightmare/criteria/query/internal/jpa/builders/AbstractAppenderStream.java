@@ -444,6 +444,12 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         }
     }
 
+    /**
+     * Prepares query for GROUP BY clauses
+     * 
+     * @param buffer
+     * @param clause
+     */
     private static void prepareGroup(StringBuilder buffer, String clause) {
 
         if (StringUtils.valid(buffer)) {
@@ -454,6 +460,11 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         }
     }
 
+    /**
+     * Prepares query for ORDER BY clauses
+     * 
+     * @param clause
+     */
     private void prepareOrderBy(String clause) {
         prepareGroup(orderBy, clause);
     }
@@ -510,17 +521,6 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         appendComma(index, length, columns);
     }
 
-    private void iterateAndAppendGroups(Serializable[] fields) {
-
-        Serializable field;
-        int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
-        for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
-            field = fields[i];
-            addGroupByField(field, i, length);
-            appendComma(i, length, groupBy);
-        }
-    }
-
     private void iterateAndAppendGroups(Collection<Serializable> fields) {
 
         Iterator<Serializable> iterator = fields.iterator();
@@ -540,20 +540,6 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * 
      * @param fields
      */
-    @SafeVarargs
-    protected final void oppGroups(Serializable... fields) {
-
-        if (CollectionUtils.valid(fields)) {
-            prepareGroupBy();
-            iterateAndAppendGroups(fields);
-        }
-    }
-
-    /**
-     * Prepares GROUP BY clause
-     * 
-     * @param fields
-     */
     protected final void oppGroups(Collection<Serializable> fields) {
 
         if (CollectionUtils.valid(fields)) {
@@ -562,6 +548,9 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         }
     }
 
+    /**
+     * Removes new line element from query body
+     */
     protected void removeNewLine() {
 
         int last = body.length();
