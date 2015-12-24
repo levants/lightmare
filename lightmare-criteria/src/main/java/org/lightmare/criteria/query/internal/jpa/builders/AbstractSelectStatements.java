@@ -23,6 +23,8 @@
 package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -80,15 +82,14 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
         }
     }
 
-    /***
+    /**
      * Generates SELECT clause JPA query part
      * 
      * @param type
-     * @param select
+     * @param fields
      */
-    private void generateSelectClause(Class<?> type, Select select) {
+    protected void generateSelectClause(Class<?> type, Collection<Serializable> fields) {
 
-        List<Serializable> fields = select.getFields();
         StringBuilder buffer = new StringBuilder();
         appendSelect(fields, buffer);
         if (Object[].class.equals(type)) {
@@ -99,6 +100,17 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
             validateAndAppendSelect(expression);
             columns.append(expression).append(buffer).append(CLOSE);
         }
+    }
+
+    /**
+     * Generates SELECT clause JPA query part
+     * 
+     * @param type
+     * @param select
+     */
+    private void generateSelectClause(Class<?> type, Select select) {
+        List<Serializable> fields = select.getFields();
+        generateSelectClause(type, fields);
     }
 
     @Override
@@ -129,32 +141,21 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
 
         SelectStream<T, F> stream;
 
-        oppSelect(field);
         Class<F> fieldType = getFieldType(field);
+        generateSelectClause(fieldType, Collections.singletonList(field));
         stream = new SelectStream<>(this, fieldType);
-
-        return stream;
-    }
-
-    /**
-     * Processes select method call for all arguments
-     * 
-     * @param fields
-     * @return {@link QueryStream} for select method
-     */
-    @SafeVarargs
-    private final QueryStream<Object[]> selectFields(Serializable... fields) {
-
-        SelectStream<T, Object[]> stream;
-
-        oppSelect(fields);
-        stream = new SelectStream<>(this, Object[].class);
 
         return stream;
     }
 
     @Override
     public <F> QueryStream<Object[]> select(EntityField<T, F> field) {
-        return selectFields(field);
+
+        SelectStream<T, Object[]> stream;
+
+        generateSelectClause(Object[].class, Collections.singletonList(field));
+        stream = new SelectStream<>(this, Object[].class);
+
+        return stream;
     }
 }

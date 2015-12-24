@@ -25,7 +25,6 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -405,7 +404,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * @param fields
      * @param buffer
      */
-    protected void appendSelect(List<Serializable> fields, StringBuilder buffer) {
+    protected void appendSelect(Collection<Serializable> fields, StringBuilder buffer) {
 
         Iterator<Serializable> iterator = fields.iterator();
         int length = fields.size() - CollectionUtils.SINGLTON_LENGTH;
@@ -416,31 +415,6 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
             addSelectField(field, buffer);
             appendComma(i, length, buffer);
             i++;
-        }
-    }
-
-    /**
-     * Appends to SELECT statement
-     * 
-     * @param fields
-     */
-    private void appendSelect(Serializable[] fields, StringBuilder buffer) {
-
-        int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
-        Serializable field;
-        for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
-            field = fields[i];
-            addSelectField(field, buffer);
-            appendComma(i, length, buffer);
-        }
-    }
-
-    @SafeVarargs
-    protected final void oppSelect(Serializable... fields) {
-
-        if (CollectionUtils.valid(fields)) {
-            columns.append(Clauses.SELECT);
-            appendSelect(fields, columns);
         }
     }
 

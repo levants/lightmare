@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa.subqueries;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,19 +65,26 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
         this(parent, parent.getAliasTuple().generate(), entityType);
     }
 
+    private <K> SubSelectStream<S, K> generetaSubSelectStream(Class<K> type) {
+
+        SubSelectStream<S, K> stream = new SubSelectStream<>(this, type);
+        subSelect = stream;
+
+        return stream;
+    }
+
     /**
      * Processes sub select statement for sub queries
      * 
      * @param field
      * @return {@link QueryStream} for instant field
      */
-    protected final <F> QueryStream<F> subSelectOne(EntityField<S, F> field) {
+    protected <F> QueryStream<F> subSelectOne(EntityField<S, F> field) {
 
         SubSelectStream<S, F> stream;
 
         Class<F> fieldType = getFieldType(field);
-        stream = new SubSelectStream<>(this, fieldType);
-        subSelect = stream;
+        stream = generetaSubSelectStream(fieldType);
 
         return stream;
     }
@@ -87,14 +95,12 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
      * @param fields
      * @return {@link QueryStream} with {@link Object} array
      */
-    @SafeVarargs
-    protected final QueryStream<Object[]> subSelectAll(Serializable... fields) {
+    protected final QueryStream<Object[]> subSelectAll(Serializable field) {
 
         SubSelectStream<S, Object[]> stream;
 
-        oppSelect(fields);
-        stream = new SubSelectStream<>(this, Object[].class);
-        subSelect = stream;
+        generateSelectClause(Object[].class, Collections.singletonList(field));
+        stream = generetaSubSelectStream(Object[].class);
 
         return stream;
     }
