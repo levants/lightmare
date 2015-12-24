@@ -228,10 +228,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
 
     @Override
     public void addParameters(Map<String, Object> parameters) {
-
-        if (CollectionUtils.valid(parameters)) {
-            parameters.forEach(this::addParameter);
-        }
+        CollectionUtils.valid(parameters, c -> c.forEach(this::addParameter));
     }
 
     /**

@@ -128,7 +128,6 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
      * @param value
      */
     private void appendAndGenerate(Object value) {
-
         appendBody(StringUtils.COMMA).appendBody(StringUtils.SPACE);
         generate(value);
     }

@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -100,14 +101,27 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks passed {@link Map} instance on null and emptiness returns true if
-     * it is not null and is not empty
+     * Checks passed {@link Map} instance on null and emptiness
      *
      * @param map
      * @return <code>boolean</code> validation result
      */
     public static boolean valid(Map<?, ?> map) {
         return (map != null && !map.isEmpty());
+    }
+
+    /**
+     * Checks passed {@link Map} instance on null and emptiness and calls
+     * consumer
+     * 
+     * @param map
+     * @param consumer
+     */
+    public static <K, V> void valid(Map<K, V> map, Consumer<Map<K, V>> consumer) {
+
+        if (valid(map)) {
+            ObjectUtils.accept(consumer, map);
+        }
     }
 
     /**

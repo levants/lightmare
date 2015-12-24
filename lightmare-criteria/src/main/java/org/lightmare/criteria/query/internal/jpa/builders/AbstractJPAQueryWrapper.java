@@ -111,10 +111,7 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
      * @param query
      */
     private void putHints(Query query) {
-
-        if (CollectionUtils.valid(hints)) {
-            hints.forEach((key, value) -> query.setHint(key, value));
-        }
+        CollectionUtils.valid(hints, c -> c.forEach(query::setHint));
     }
 
     @Override

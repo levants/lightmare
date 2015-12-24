@@ -84,8 +84,7 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
 
         initAggregateFields();
         AggregateTuple aggregateTuple = AggregateTuple.of(tuple, aggregate, alias);
-        boolean added = aggregateFields.add(aggregateTuple);
-        if (added) {
+        if (aggregateFields.add(aggregateTuple)) {
             initQueue();
             aggregateQueue.offer(aggregateTuple);
         }
