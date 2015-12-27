@@ -227,10 +227,12 @@ public abstract class ObjectUtils {
      */
     public static <T> T thisOrDefault(T value, Supplier<T> supplier) {
 
-        T result = value;
+        T result;
 
-        if (result == null) {
+        if (value == null) {
             result = supplier.get();
+        } else {
+            result = value;
         }
 
         return result;

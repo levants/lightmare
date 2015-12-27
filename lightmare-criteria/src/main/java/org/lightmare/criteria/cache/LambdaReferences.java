@@ -99,7 +99,6 @@ public enum LambdaReferences {
         if (cleaner == null) {
             synchronized (LambdaReferences.class) {
                 ObjectUtils.thisOrDefault(cleaner, this::initAndStart);
-                initAndStart();
             }
         }
     }

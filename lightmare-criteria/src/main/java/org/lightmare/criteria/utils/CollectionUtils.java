@@ -51,7 +51,7 @@ public abstract class CollectionUtils {
     public static final int EMPTY = 0;
 
     // Length of array / collection / map with single element
-    public static final int SINGLTON_LENGTH = 1;
+    public static final int SINGLETON = 1;
 
     // Empty array of objects
     public static final Object[] EMPTY_ARRAY = {};
@@ -192,7 +192,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean valid(Object[] array) {
-        return (array != null && array.length > EMPTY);
+        return (Objects.nonNull(array) && array.length > EMPTY);
     }
 
     /**
@@ -392,6 +392,6 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static <T> boolean singleton(T[] array) {
-        return (Objects.nonNull(array) && (array.length == SINGLTON_LENGTH));
+        return (Objects.nonNull(array) && (array.length == SINGLETON));
     }
 }

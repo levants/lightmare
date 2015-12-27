@@ -407,7 +407,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     protected void appendSelect(Collection<Serializable> fields, StringBuilder buffer) {
 
         Iterator<Serializable> iterator = fields.iterator();
-        int length = fields.size() - CollectionUtils.SINGLTON_LENGTH;
+        int length = fields.size() - CollectionUtils.SINGLETON;
         Serializable field;
         int i = CollectionUtils.FIRST_INDEX;
         while (iterator.hasNext()) {
@@ -458,7 +458,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     private void iterateAndAppendOrders(String dir, Serializable[] fields) {
 
         Serializable field;
-        int length = fields.length - CollectionUtils.SINGLTON_LENGTH;
+        int length = fields.length - CollectionUtils.SINGLETON;
         for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
             field = fields[i];
             addOrderByField(dir, field);
@@ -500,7 +500,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         Iterator<Serializable> iterator = fields.iterator();
         Serializable field;
         int i = CollectionUtils.FIRST_INDEX;
-        int length = fields.size() - CollectionUtils.SINGLTON_LENGTH;
+        int length = fields.size() - CollectionUtils.SINGLETON;
         while (iterator.hasNext()) {
             field = iterator.next();
             addGroupByField(field, i, length);
@@ -528,7 +528,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     protected void removeNewLine() {
 
         int last = body.length();
-        int index = last - CollectionUtils.SINGLTON_LENGTH;
+        int index = last - CollectionUtils.SINGLETON;
         if (body.charAt(index) == StringUtils.LINE) {
             body.delete(index, last);
         }
