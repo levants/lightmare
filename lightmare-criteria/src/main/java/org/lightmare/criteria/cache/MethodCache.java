@@ -50,10 +50,12 @@ public class MethodCache {
     private static final int ZERO_FLAGS = 0;
 
     /**
-     * Resolves {@link List} of {@link MethodNode} from passed class file name
+     * Resolves {@link java.util.List} of
+     * {@link org.objectweb.asm.tree.MethodNode} from passed class file name
      * 
      * @param typeName
-     * @return {@link List} of {@link MethodNode}
+     * @return {@link java.util.List} of
+     *         {@link org.objectweb.asm.tree.MethodNode}
      */
 
     private static List<MethodNode> resolveMethods(String typeName) {
@@ -73,11 +75,13 @@ public class MethodCache {
     }
 
     /**
-     * Gets {@link List} of resolved {@link MethodNode}s from cache by class
-     * file name or if absent resolves and caches
+     * Gets {@link java.util.List} of resolved
+     * {@link org.objectweb.asm.tree.MethodNode}s from cache by class file name
+     * or if absent resolves and caches
      * 
      * @param typeName
-     * @return {@link List} of {@link MethodNode} methods
+     * @return {@link java.util.List} of
+     *         {@link org.objectweb.asm.tree.MethodNode} methods
      */
     public static List<MethodNode> getMethods(String typeName) {
 
@@ -85,18 +89,21 @@ public class MethodCache {
 
         if (methods == null) {
             methods = resolveMethods(typeName);
-            METHOD_NODES.putIfAbsent(typeName, methods);
+            methods = METHOD_NODES.putIfAbsent(typeName, methods);
         }
 
         return methods;
     }
 
     /**
-     * Gets {@link List} of resolved {@link MethodNode}s from cache by class
-     * file name from passed {@link LambdaInfo} or if absent resolves and caches
+     * Gets {@link java.util.List} of resolved
+     * {@link org.objectweb.asm.tree.MethodNode}s from cache by class file name
+     * from passed {@link org.lightmare.criteria.lambda.LambdaInfo} or if absent
+     * resolves and caches
      * 
      * @param lambda
-     * @return {@link List} of {@link MethodNode} methods
+     * @return {@link java.util.List} of
+     *         {@link org.objectweb.asm.tree.MethodNode} methods
      */
     public static List<MethodNode> getMethods(LambdaInfo lambda) {
 

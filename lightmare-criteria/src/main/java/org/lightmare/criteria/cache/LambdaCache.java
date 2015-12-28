@@ -41,7 +41,8 @@ public class LambdaCache {
     private static final ConcurrentMap<String, QueryTuple> LAMBDAS = new ConcurrentHashMap<>();
 
     /**
-     * Adds passed lambda {@link Class} and {@link QueryTuple} to cache
+     * Adds passed lambda {@link Class} and
+     * {@link org.lightmare.criteria.tuples.QueryTuple} to cache
      * 
      * @param lambdaType
      * @param value
@@ -56,8 +57,8 @@ public class LambdaCache {
     }
 
     /**
-     * Adds lambda {@link Class} by object instance and {@link QueryTuple} to
-     * cache
+     * Adds lambda {@link Class} by object instance and
+     * {@link org.lightmare.criteria.tuples.QueryTuple} to cache
      * 
      * @param lambda
      * @param value
@@ -68,11 +69,12 @@ public class LambdaCache {
     }
 
     /**
-     * Gets {@link QueryTuple} from cache by passed lambda {@link Class} name as
-     * key
+     * Gets {@link org.lightmare.criteria.tuples.QueryTuple} from cache by
+     * passed lambda {@link Class} name as key
      * 
      * @param lambdaType
-     * @return {@link QueryTuple} for this lambda {@link Class}
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for this lambda
+     *         {@link Class}
      */
     public static QueryTuple getLambda(Class<?> lambdaType) {
 
@@ -85,11 +87,12 @@ public class LambdaCache {
     }
 
     /**
-     * Gets {@link QueryTuple} from cache by lambda {@link Class} name from
-     * passed lambda instance as key
+     * Gets {@link org.lightmare.criteria.tuples.QueryTuple} from cache by
+     * lambda {@link Class} name from passed lambda instance as key
      * 
      * @param lambda
-     * @return {@link QueryTuple} for this lambda {@link Class}
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for this lambda
+     *         {@link Class}
      */
     public static QueryTuple getByInstance(Object lambda) {
 
@@ -102,8 +105,8 @@ public class LambdaCache {
     }
 
     /**
-     * Removes passed lambda {@link Class} and associated {@link QueryTuple}
-     * from cache
+     * Removes passed lambda {@link Class} and associated
+     * {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      * 
      * @param lambdaType
      */

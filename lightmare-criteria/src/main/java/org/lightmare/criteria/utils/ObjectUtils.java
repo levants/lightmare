@@ -25,6 +25,7 @@ package org.lightmare.criteria.utils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
@@ -165,10 +166,10 @@ public abstract class ObjectUtils {
 
         byte[] bytes;
 
-        try (ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                ObjectOutputStream out = new ObjectOutputStream(stream)) {
+        try (ByteArrayOutputStream bout = new ByteArrayOutputStream();
+                ObjectOutputStream out = new ObjectOutputStream(bout)) {
             out.writeObject(value);
-            bytes = stream.toByteArray();
+            bytes = bout.toByteArray();
         }
 
         return bytes;
@@ -186,7 +187,7 @@ public abstract class ObjectUtils {
 
         Object value;
 
-        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
+        try (InputStream bin = new ByteArrayInputStream(bytes); ObjectInputStream in = new ObjectInputStream(bin)) {
             value = in.readObject();
         } catch (ClassNotFoundException ex) {
             throw new IOException(ex);

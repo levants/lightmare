@@ -46,7 +46,8 @@ public class QueryCache {
     private static final String DELIM = ":";
 
     /**
-     * Generates key from {@link LambdaInfo} fields
+     * Generates key from {@link org.lightmare.criteria.lambda.LambdaInfo}
+     * fields
      * 
      * @param lambda
      * @return {@link String} generated key
@@ -64,21 +65,23 @@ public class QueryCache {
     }
 
     /**
-     * Gets appropriated {@link QueryTuple} from cache by key
+     * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
+     * cache by key
      * 
      * @param key
-     * @return {@link QueryTuple} from cache
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      */
     public static QueryTuple getQuery(String key) {
         return QUERIES.get(key);
     }
 
     /**
-     * Gets appropriated {@link QueryTuple} from cache by appropriated
-     * {@link LambdaInfo} instance
+     * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
+     * cache by appropriated {@link org.lightmare.criteria.lambda.LambdaInfo}
+     * instance
      * 
      * @param lambda
-     * @return {@link QueryTuple} from cache
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      */
     public static QueryTuple getQuery(LambdaInfo lambda) {
 
@@ -91,23 +94,37 @@ public class QueryCache {
     }
 
     /**
-     * Caches {@link QueryTuple} by key
+     * Caches {@link org.lightmare.criteria.tuples.QueryTuple} by key
      * 
      * @param key
      * @param value
+     * 
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} the previous
+     *         value associated with the specified key, or {@code null} if there
+     *         was no mapping for the key
      */
-    public static void putQuery(String key, QueryTuple value) {
-        QUERIES.putIfAbsent(key, value);
+    public static QueryTuple putQuery(String key, QueryTuple value) {
+        return QUERIES.putIfAbsent(key, value);
     }
 
     /**
-     * Caches {@link QueryTuple} by {@link LambdaInfo} instance
+     * Caches {@link org.lightmare.criteria.tuples.QueryTuple} by
+     * {@link org.lightmare.criteria.lambda.LambdaInfo} instance
      * 
      * @param lambda
      * @param value
+     * 
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} the previous
+     *         value associated with the specified key, or {@code null} if there
+     *         was no mapping for the key
      */
-    public static void putQuery(LambdaInfo lambda, QueryTuple value) {
+    public static QueryTuple putQuery(LambdaInfo lambda, QueryTuple value) {
+
+        QueryTuple existed;
+
         String key = generateKey(lambda);
-        putQuery(key, value);
+        existed = putQuery(key, value);
+
+        return existed;
     }
 }

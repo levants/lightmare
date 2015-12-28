@@ -51,12 +51,12 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     private static interface MemberSupplier<M extends Member> {
 
         /**
-         * Function method to get appropriated {@link Member} from {@link Class}
-         * by name
+         * Function method to get appropriated {@link java.lang.reflect.Member}
+         * from {@link Class} by name
          * 
          * @param type
          * @param memberName
-         * @return {@link Member} from {@link Class}
+         * @return {@link java.lang.reflect.Member} from {@link Class}
          * @throws NoSuchMethodException
          * @throws NoSuchFieldException
          * @throws SecurityException
@@ -66,7 +66,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     }
 
     /**
-     * Tuple for {@link Member} and appropriated {@link Class} instance
+     * Tuple for {@link java.lang.reflect.Member} and appropriated {@link Class}
+     * instance
      * 
      * @author Levan Tsinadze
      *
@@ -130,7 +131,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     }
 
     /**
-     * Finds {@link Member} in passed {@link Class} or it's parents
+     * Finds {@link java.lang.reflect.Member} in passed {@link Class} or it's
+     * parents
      * 
      * @param type
      * @param memberName
@@ -151,12 +153,13 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     }
 
     /**
-     * Finds {@link Method} and containing parent {@link Class} instance
+     * Finds {@link java.lang.reflect.Method} and containing parent
+     * {@link Class} instance
      * 
      * @param type
      * @param methodName
      * @param parameters
-     * @return {@link MemberTuple} for {@link Method}
+     * @return {@link MemberTuple} for {@link java.lang.reflect.Method}
      * @throws IOException
      */
     public static MemberTuple<Method> findMethodAndType(Class<?> type, String methodName, Class<?>... parameters)
@@ -165,13 +168,13 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     }
 
     /**
-     * Finds passed {@link Class}'s or one of it's super-classes {@link Method}
-     * with appropriated name and parameters
+     * Finds passed {@link Class}'s or one of it's super-classes
+     * {@link java.lang.reflect.Method} with appropriated name and parameters
      * 
      * @param type
      * @param methodName
      * @param parameters
-     * @return {@link Method} for type
+     * @return {@link java.lang.reflect.Method} for type
      * @throws IOException
      */
     public static Method findMethod(Class<?> type, String methodName, Class<?>... parameters) throws IOException {
@@ -185,12 +188,12 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     }
 
     /**
-     * Finds passed {@link Class}'s or one of th's superclass {@link Field} with
-     * appropriated name
+     * Finds passed {@link Class}'s or one of th's superclass
+     * {@link java.lang.reflect.Field} with appropriated name
      * 
      * @param type
      * @param fieldName
-     * @return {@link Field} for type
+     * @return {@link java.lang.reflect.Field} for type
      * @throws IOException
      */
     public static Field findField(Class<?> type, String fieldName) throws IOException {
@@ -204,7 +207,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     }
 
     /**
-     * Common method to invoke {@link Method} with reflection
+     * Common method to invoke {@link java.lang.reflect.Method} with reflection
      *
      * @param method
      * @param instance

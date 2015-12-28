@@ -33,8 +33,8 @@ import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Utility class to retrieve {@link SerializedLambda} parameters from lambda
- * function
+ * Utility class to retrieve {@link java.lang.invoke.SerializedLambda}
+ * parameters from lambda function
  * 
  * @author Levan Tsinadze
  *
@@ -46,15 +46,17 @@ public class LambdaReplacements {
 
     private static final String CHARSET = "iso-8859-1";
 
-    private static final String NATIVE_NAME = java.lang.invoke.SerializedLambda.class.getName();
+    private static final String NATIVE_NAME = SerializedLambda.class.getName();
 
-    private static final String LINQ_NAME = org.lightmare.criteria.lambda.SLambda.class.getName();
+    private static final String LINQ_NAME = SLambda.class.getName();
 
     /**
-     * Serializes object and translates it to {@link SLambda} instance
+     * Serializes object and translates it to
+     * {@link org.lightmare.criteria.lambda.SLambda} instance
      * 
      * @param buff
-     * @return {@link SLambda} from serialized object
+     * @return {@link org.lightmare.criteria.lambda.SLambda} from serialized
+     *         object
      * @throws IOException
      */
     private static SLambda toLambda(byte[] buff) throws IOException {
@@ -100,11 +102,11 @@ public class LambdaReplacements {
     }
 
     /**
-     * Gets serialization {@link Method} from {@link Serializable}
-     * implementation
+     * Gets serialization {@link java.lang.reflect.Method} from
+     * {@link java.io.Serializable} implementation
      * 
      * @param parent
-     * @return {@link Method} for serialization
+     * @return {@link java.lang.reflect.Method} for serialization
      * @throws IOException
      */
     private static <T> Method getMethod(Class<?> parent) throws IOException {
