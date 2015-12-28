@@ -60,7 +60,7 @@ public class LambdaUtils {
         tuple = QueryCache.getQuery(lambda);
         if (tuple == null) {
             tuple = FieldResolver.resolve(lambda);
-            tuple = QueryCache.putQuery(lambda, tuple);
+            QueryCache.putQuery(lambda, tuple);
             LOG.debug(String.format(MESSAGE_FORMAT, lambda));
         }
 

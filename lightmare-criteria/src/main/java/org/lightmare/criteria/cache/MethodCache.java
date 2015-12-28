@@ -89,7 +89,7 @@ public class MethodCache {
 
         if (methods == null) {
             methods = resolveMethods(typeName);
-            methods = METHOD_NODES.putIfAbsent(typeName, methods);
+            METHOD_NODES.putIfAbsent(typeName, methods);
         }
 
         return methods;

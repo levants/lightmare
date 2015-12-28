@@ -98,13 +98,9 @@ public class QueryCache {
      * 
      * @param key
      * @param value
-     * 
-     * @return {@link org.lightmare.criteria.tuples.QueryTuple} the previous
-     *         value associated with the specified key, or {@code null} if there
-     *         was no mapping for the key
      */
-    public static QueryTuple putQuery(String key, QueryTuple value) {
-        return QUERIES.putIfAbsent(key, value);
+    public static void putQuery(String key, QueryTuple value) {
+        QUERIES.putIfAbsent(key, value);
     }
 
     /**
@@ -113,18 +109,9 @@ public class QueryCache {
      * 
      * @param lambda
      * @param value
-     * 
-     * @return {@link org.lightmare.criteria.tuples.QueryTuple} the previous
-     *         value associated with the specified key, or {@code null} if there
-     *         was no mapping for the key
      */
-    public static QueryTuple putQuery(LambdaInfo lambda, QueryTuple value) {
-
-        QueryTuple existed;
-
+    public static void putQuery(LambdaInfo lambda, QueryTuple value) {
         String key = generateKey(lambda);
-        existed = putQuery(key, value);
-
-        return existed;
+        putQuery(key, value);
     }
 }
