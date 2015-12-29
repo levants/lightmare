@@ -439,13 +439,76 @@ public class FieldResolver {
     }
 
     /**
+     * Gets type from descriptor
+     * 
+     * @param lambda
+     * @return {@link org.objectweb.asm.Type} entity type
+     */
+    private static Type getFromDescription(LambdaInfo lambda) {
+
+        Type type;
+
+        String signature = lambda.getInstantiatedMethodType();
+        Type[] types = Type.getArgumentTypes(signature);
+        type = CollectionUtils.getFirst(types);
+
+        return type;
+    }
+
+    /**
+     * Resolves entity field and method from {@link LambdaInfo} object fields
+     * directly
+     * 
+     * @param lambda
+     * @return {@link QueryTuple} if resolved
+     * @throws IOException
+     */
+    private static QueryTuple resolveDirect(LambdaInfo lambda) throws IOException {
+
+        QueryTuple tuple;
+
+        String implClass = lambda.getImplClass();
+        Type desc = getFromDescription(lambda);
+        if (Objects.nonNull(desc) && Objects.equals(implClass, desc.getInternalName())) {
+            String implDesc = lambda.getImplMethodSignature();
+            String methodName = lambda.getImplMethodName();
+            ResolverTuple<String> resolverTyple = ResolverTuple.of(implDesc, methodName, implClass);
+            tuple = resolve(resolverTyple, FieldResolver::resolveEntityName);
+        } else {
+            tuple = null;
+        }
+
+        return tuple;
+    }
+
+    /**
+     * Resolves entity field and method from {@link LambdaInfo} object fields
+     * directly without throwing exceptions
+     * 
+     * @param lambda
+     * @return {@link QueryTuple} if resolved
+     */
+    private static QueryTuple resolveDirectQuietly(LambdaInfo lambda) {
+
+        QueryTuple tuple;
+
+        try {
+            tuple = resolveDirect(lambda);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return tuple;
+    }
+
+    /**
      * Resolved field name, getter method name and entity type from lambda
-     * argument
+     * argument by bytecode analysis
      * 
      * @param lambda
      * @return {@link QueryTuple} for resolved field and query part
      */
-    public static QueryTuple resolve(LambdaInfo lambda) {
+    private static QueryTuple resolveFromBytecode(LambdaInfo lambda) {
 
         QueryTuple tuple;
 
@@ -455,6 +518,24 @@ public class FieldResolver {
             tuple = resolveRecursively(methodNode);
         } else {
             throw new RuntimeException(UNRESOLVABLE_FIELD_ERROR);
+        }
+
+        return tuple;
+    }
+
+    /**
+     * Resolved field name, getter method name and entity type from lambda
+     * argument
+     * 
+     * @param lambda
+     * @return {@link QueryTuple} for resolved field and query part
+     */
+    public static QueryTuple resolve(LambdaInfo lambda) {
+
+        QueryTuple tuple = resolveDirectQuietly(lambda);
+
+        if (tuple == null) {
+            tuple = resolveFromBytecode(lambda);
         }
 
         return tuple;

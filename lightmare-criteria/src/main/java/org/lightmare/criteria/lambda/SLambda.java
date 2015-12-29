@@ -42,4 +42,7 @@ class SLambda implements Serializable {
 
     // Implementing method signature
     public String implMethodSignature;
+
+    // Implemented method type
+    public String instantiatedMethodType;
 }

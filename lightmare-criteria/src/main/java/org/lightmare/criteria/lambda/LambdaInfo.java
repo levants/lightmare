@@ -43,21 +43,27 @@ public class LambdaInfo {
     // Method signature
     private final String implMethodSignature;
 
+    // Method type
+    private final String instantiatedMethodType;
+
     private static final String FORMAT = StringUtils.concat("SerializedLambda[implClass=%s,", " implMethodName=%s,",
             " implMethodSignature=%s]");
 
-    private LambdaInfo(final String implClass, final String implMethodName, final String implMethodSignature) {
+    private LambdaInfo(final String implClass, final String implMethodName, final String implMethodSignature,
+            final String instantiatedMethodType) {
         this.implClass = implClass;
         this.implMethodName = implMethodName;
         this.implMethodSignature = implMethodSignature;
+        this.instantiatedMethodType = instantiatedMethodType;
     }
 
     public LambdaInfo(SerializedLambda serialized) {
-        this(serialized.getImplClass(), serialized.getImplMethodName(), serialized.getImplMethodSignature());
+        this(serialized.getImplClass(), serialized.getImplMethodName(), serialized.getImplMethodSignature(),
+                serialized.getInstantiatedMethodType());
     }
 
     public LambdaInfo(SLambda slambda) {
-        this(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature);
+        this(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature, slambda.instantiatedMethodType);
     }
 
     /**
@@ -85,6 +91,17 @@ public class LambdaInfo {
      */
     public String getImplMethodSignature() {
         return implMethodSignature;
+    }
+
+    /**
+     * Get the signature of the primary functional interface method after type
+     * variables are substituted with their instantiation from the capture site.
+     * 
+     * @return {@link String} the signature of the primary functional interface
+     *         method after type variable processing
+     */
+    public String getInstantiatedMethodType() {
+        return instantiatedMethodType;
     }
 
     @Override
