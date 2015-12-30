@@ -57,7 +57,8 @@ public class FieldResolver extends DirectLambdaResolver {
      * 
      * @param instruction
      * @param verbose
-     * @return {@link QueryTuple} for resolved field and query part
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
+     *         field and query part
      * @throws IOException
      */
     private static QueryTuple resolve(MethodInsnNode node) throws IOException {
@@ -134,7 +135,8 @@ public class FieldResolver extends DirectLambdaResolver {
      * 
      * @param instruction
      * @param verbose
-     * @return {@link QueryTuple} for resolved field and query part
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
+     *         field and query part
      * @throws IOException
      */
     private static QueryTuple resolve(MethodNode node) throws IOException {
@@ -149,8 +151,8 @@ public class FieldResolver extends DirectLambdaResolver {
 
     /**
      * Validates if passed {@link org.objectweb.asm.tree.AbstractInsnNode} is
-     * instance of {@link MethodInsnNode} then resolves appropriated
-     * {@link QueryTuple} from it
+     * instance of {@link org.objectweb.asm.tree.MethodInsnNode} then resolves
+     * appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from it
      * 
      * @param instruction
      * @return
@@ -175,7 +177,8 @@ public class FieldResolver extends DirectLambdaResolver {
      * 
      * @param instructions
      * @param verbose
-     * @return {@link QueryTuple} for resolved field and query part
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
+     *         field and query part
      * @throws IOException
      */
     private static QueryTuple resolve(InsnList instructions) throws IOException {
@@ -215,7 +218,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * and instructions
      * 
      * @param methodNode
-     * @return {@link QueryTuple} from method
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from method
      * @throws IOException
      */
     private static QueryTuple resolveMethod(MethodNode methodNode) throws IOException {
@@ -235,7 +238,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * Resolves entity parameters from {@link MethodNode} and instructions
      * 
      * @param methodNode
-     * @return {@link QueryTuple} from method
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from method
      */
     private static QueryTuple resolveRecursively(MethodNode methodNode) {
 
@@ -255,7 +258,8 @@ public class FieldResolver extends DirectLambdaResolver {
      * argument by bytecode analysis
      * 
      * @param lambda
-     * @return {@link QueryTuple} for resolved field and query part
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
+     *         field and query part
      */
     private static QueryTuple resolveFromBytecode(LambdaInfo lambda) {
 
@@ -277,7 +281,8 @@ public class FieldResolver extends DirectLambdaResolver {
      * function parameters
      * 
      * @param lambda
-     * @return {@link QueryTuple} for resolved field and query part
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
+     *         field and query part
      */
     public static QueryTuple resolve(LambdaInfo lambda) {
 

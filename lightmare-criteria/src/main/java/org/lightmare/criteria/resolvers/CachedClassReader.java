@@ -69,10 +69,11 @@ public class CachedClassReader extends ClassReader {
     }
 
     /**
-     * Gets {@link ClassReader} from cache or initializes new instance
+     * Gets {@link org.objectweb.asm.ClassReader} from cache or initializes new
+     * instance
      * 
      * @param name
-     * @return {@link ClassReader} from cache
+     * @return {@link org.objectweb.asm.ClassReader} from cache
      * @throws IOException
      */
     public static ClassReader get(String name) throws IOException {

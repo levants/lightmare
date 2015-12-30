@@ -95,7 +95,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
      * directly
      * 
      * @param lambda
-     * @return {@link QueryTuple} if resolved
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
      * @throws IOException
      */
     private static QueryTuple resolveDirect(LambdaInfo lambda) throws IOException {
@@ -122,7 +122,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
      * directly
      * 
      * @param lambda
-     * @return {@link QueryTuple} if resolved
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
      * @throws IOException
      */
     private static QueryTuple validateAndResolveDirect(LambdaInfo lambda) throws IOException {
@@ -143,7 +143,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
      * directly without throwing exceptions
      * 
      * @param lambda
-     * @return {@link QueryTuple} if resolved
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
      */
     protected static QueryTuple resolveDirectQuietly(LambdaInfo lambda) {
 
