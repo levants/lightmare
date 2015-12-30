@@ -1,6 +1,7 @@
 package org.lightmare.criteria.resolvers;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandleInfo;
 import java.util.Objects;
 
 import org.lightmare.criteria.lambda.LambdaInfo;
@@ -60,13 +61,33 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
     }
 
     /**
+     * Validates implementation method kind
+     * 
+     * @param lambda
+     * @return <code>boolean</code> validation result
+     */
+    private static boolean validateMethodKind(LambdaInfo lambda) {
+        return (lambda.getImplMethodKind() == MethodHandleInfo.REF_invokeVirtual);
+    }
+
+    /**
+     * Validates lambda for direct resolve
+     * 
+     * @param lambda
+     * @return <code>boolean</code> validation result
+     */
+    private static boolean validateSignature(LambdaInfo lambda) {
+        return ObjectUtils.notEquals(lambda.getImplMethodSignature(), lambda.getInstantiatedMethodType());
+    }
+
+    /**
      * Validates lambda for direct resolve
      * 
      * @param lambda
      * @return <code>boolean</code> validation result
      */
     private static boolean validate(LambdaInfo lambda) {
-        return ObjectUtils.notEquals(lambda.getImplMethodSignature(), lambda.getInstantiatedMethodType());
+        return (validateMethodKind(lambda) && validateSignature(lambda));
     }
 
     /**

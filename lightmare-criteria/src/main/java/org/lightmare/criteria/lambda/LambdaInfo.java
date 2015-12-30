@@ -43,6 +43,9 @@ public class LambdaInfo {
     // Method signature
     private final String implMethodSignature;
 
+    // Implementation method kind
+    private final int implMethodKind;
+
     // Method type
     private final String instantiatedMethodType;
 
@@ -50,20 +53,22 @@ public class LambdaInfo {
             " implMethodSignature=%s]");
 
     private LambdaInfo(final String implClass, final String implMethodName, final String implMethodSignature,
-            final String instantiatedMethodType) {
+            final int implMethodKind, final String instantiatedMethodType) {
         this.implClass = implClass;
         this.implMethodName = implMethodName;
         this.implMethodSignature = implMethodSignature;
+        this.implMethodKind = implMethodKind;
         this.instantiatedMethodType = instantiatedMethodType;
     }
 
     public LambdaInfo(SerializedLambda serialized) {
         this(serialized.getImplClass(), serialized.getImplMethodName(), serialized.getImplMethodSignature(),
-                serialized.getInstantiatedMethodType());
+                serialized.getImplMethodKind(), serialized.getInstantiatedMethodType());
     }
 
     public LambdaInfo(SLambda slambda) {
-        this(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature, slambda.instantiatedMethodType);
+        this(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature, slambda.implMethodKind,
+                slambda.instantiatedMethodType);
     }
 
     /**
@@ -91,6 +96,16 @@ public class LambdaInfo {
      */
     public String getImplMethodSignature() {
         return implMethodSignature;
+    }
+
+    /**
+     * Get the method handle kind (see {@link java.lang.invoke.MethodHandleInfo}
+     * ) of the implementation method.
+     * 
+     * @return the method handle kind of the implementation method
+     */
+    public int getImplMethodKind() {
+        return implMethodKind;
     }
 
     /**
