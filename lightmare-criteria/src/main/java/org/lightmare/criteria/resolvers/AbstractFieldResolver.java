@@ -39,7 +39,8 @@ class AbstractFieldResolver {
 
         String fieldName = methodName.substring(BEGIN_INDEX);
 
-        String first = String.valueOf(fieldName.charAt(CollectionUtils.FIRST_INDEX));
+        char firstChar = fieldName.charAt(CollectionUtils.FIRST_INDEX);
+        String first = String.valueOf(firstChar);
         fieldName = fieldName.replaceFirst(first, first.toLowerCase());
 
         return fieldName;

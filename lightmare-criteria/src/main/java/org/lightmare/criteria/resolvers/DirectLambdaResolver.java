@@ -54,7 +54,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
             Type implType = Type.getObjectType(implClassName);
             Class<?> implClass = ClassUtils.classForName(implType.getClassName());
             Class<?> descClass = ClassUtils.classForName(descType.getClassName());
-            valid = Objects.nonNull(implClass) && Objects.nonNull(descClass) && implClass.isAssignableFrom(descClass);
+            valid = implClass.isAssignableFrom(descClass);
         }
 
         return valid;

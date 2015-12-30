@@ -274,7 +274,7 @@ public class FieldResolver extends DirectLambdaResolver {
 
     /**
      * Resolved field name, getter method name and entity type from lambda
-     * argument
+     * function parameters
      * 
      * @param lambda
      * @return {@link QueryTuple} for resolved field and query part
