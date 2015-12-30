@@ -3,12 +3,15 @@ package org.lightmare.criteria.resolvers;
 import java.util.Date;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.lambda.LambdaUtils;
 import org.lightmare.criteria.runorder.RunOrder;
+import org.lightmare.criteria.runorder.SortedRunner;
 import org.lightmare.criteria.tuples.QueryTuple;
 
+@RunWith(SortedRunner.class)
 public class ResolversTest {
 
     @Test

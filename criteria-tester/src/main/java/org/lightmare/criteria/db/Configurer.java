@@ -10,6 +10,12 @@ import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
 
+/**
+ * Creates data base and fills it with appropriated datas
+ * 
+ * @author Levan Tsinadze
+ *
+ */
 public class Configurer {
 
     protected static final String PERSONAL_NO1 = "10100100100";
