@@ -40,10 +40,11 @@ import org.lightmare.criteria.utils.ObjectUtils;
 public class ColumnProcessor {
 
     /**
-     * Gets {@link Temporal} annotation from {@link AnnotatedElement} instance
+     * Gets {@link javax.persistence.Temporal} annotation from
+     * {@link AnnotatedElement} instance
      * 
      * @param element
-     * @return {@link Temporal} annotation
+     * @return {@link javax.persistence.Temporal} annotation
      */
     public static Temporal getTemporal(AnnotatedElement element) {
         return element.getAnnotation(Temporal.class);

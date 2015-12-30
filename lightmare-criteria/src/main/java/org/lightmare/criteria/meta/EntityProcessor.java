@@ -41,6 +41,21 @@ public class EntityProcessor {
     /**
      * Resolves argument types for method
      * 
+     * @param names
+     * @return {@link Class} array by names for argument types
+     * @throws IOException
+     */
+    private static Class<?>[] mapArgumentTypes(String[] names) throws IOException {
+
+        Class<?>[] argumentTypes = new Class<?>[names.length];
+        CollectionUtils.map(names, argumentTypes, ClassUtils::classForName);
+
+        return argumentTypes;
+    }
+
+    /**
+     * Resolves argument types for method
+     * 
      * @param tuple
      * @return {@link Class} array by names for argument types
      * @throws IOException
@@ -53,8 +68,7 @@ public class EntityProcessor {
         if (CollectionUtils.isEmpty(names)) {
             argumentTypes = new Class<?>[] {};
         } else {
-            argumentTypes = new Class<?>[names.length];
-            CollectionUtils.map(names, argumentTypes, ClassUtils::classForName);
+            argumentTypes = mapArgumentTypes(names);
         }
 
         return argumentTypes;

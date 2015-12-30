@@ -58,7 +58,6 @@ public class GenericProcessor {
      * @param tuple
      */
     private static void setGenericType(Field field, QueryTuple tuple) {
-
         Type type = field.getGenericType();
         ObjectUtils.castIfValid(type, ParameterizedType.class, c -> setParametrizedType(c, tuple));
     }
