@@ -67,7 +67,7 @@ public class LambdaReplacements {
      * Replaces special characters to get appropriated object type
      * 
      * @param value
-     * @return <code>byte</code>[] instance of translated type
+     * @return <code>byte</code>array serialized object
      * @throws UnsupportedEncodingException
      */
     private static byte[] replace(byte[] value) throws UnsupportedEncodingException {
@@ -80,22 +80,37 @@ public class LambdaReplacements {
 
         return translated;
     }
-
+    
+    /**
+     * Translates passed method reference to {@link SLambda} instance
+     * @param method
+     * @return {@link SLambda} from method reference
+     * @throws IOException 
+     */
+    private static SLambda toSLambda(Object method) throws IOException{
+        
+        SLambda slambda;
+        
+        byte[] value = ObjectUtils.serialize(method);
+        byte[] translated = replace(value);
+        slambda = toLambda(translated);
+        
+        return slambda;
+    }
+    
     /**
      * Serializes object and translates it and wraps it's field to
      * {@link LambdaInfo} object
      * 
-     * @param field
+     * @param method
      * @return {@link LambdaInfo} from lambda expression
      * @throws IOException
      */
-    private static LambdaInfo translate(Object field) throws IOException {
+    private static LambdaInfo translate(Object method) throws IOException {
 
         LambdaInfo lambda;
 
-        byte[] value = ObjectUtils.serialize(field);
-        byte[] translated = replace(value);
-        SLambda slambda = toLambda(translated);
+        SLambda slambda = toSLambda(method);
         lambda = new LambdaInfo(slambda);
 
         return lambda;
