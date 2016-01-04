@@ -35,8 +35,8 @@ import org.lightmare.criteria.utils.ObjectUtils;
 import org.objectweb.asm.Type;
 
 /**
- * Abstract class to resolve field from
- * {@link org.lightmare.criteria.lambda.LambdaInfo} field values
+ * Abstract class to resolve field, entity name and JPA query part from
+ * {@link org.lightmare.criteria.lambda.LambdaInfo} fields
  * 
  * @author Levan Tsinadze
  *
@@ -202,7 +202,7 @@ class AbstractFieldResolver {
      * 
      * @param resolverTuple
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
-     *         field and query part
+     *         field, entity and query part
      * @throws IOException
      */
     protected static <T> QueryTuple resolve(ResolverTuple<T> resolverTuple, Function<T, String> nameResolver)

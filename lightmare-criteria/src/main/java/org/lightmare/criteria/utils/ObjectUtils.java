@@ -242,6 +242,7 @@ public abstract class ObjectUtils {
     /**
      * Validates passed value on null and if it is returns
      * {@link java.util.function.Supplier} provided value and calls setter
+     * {@link java.util.function.Consumer} implementation
      * 
      * @param value
      * @param supplier
@@ -278,14 +279,6 @@ public abstract class ObjectUtils {
         if (result == null) {
             result = initSupplier.get();
         }
-
-        return result;
-    }
-
-    public static <T> T getOrInit(Supplier<T> supplier, Supplier<T> initSupplier, Consumer<T> setter) {
-
-        T result = getOrInit(supplier, initSupplier);
-        nonNull(result, setter::accept);
 
         return result;
     }

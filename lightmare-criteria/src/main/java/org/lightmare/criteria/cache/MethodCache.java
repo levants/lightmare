@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.cache;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -51,7 +50,7 @@ public class MethodCache {
 
     /**
      * Resolves {@link java.util.List} of
-     * {@link org.objectweb.asm.tree.MethodNode} from passed class file name
+     * {@link org.objectweb.asm.tree.MethodNode}s from passed class file name
      * 
      * @param typeName
      * @return {@link java.util.List} of
@@ -62,14 +61,26 @@ public class MethodCache {
 
         List<MethodNode> methods;
 
-        try {
-            ClassReader reader = CachedClassReader.get(typeName);
-            ClassNode node = new ClassNode(Opcodes.ASM5);
-            reader.accept(node, ZERO_FLAGS);
-            methods = ObjectUtils.cast(node.methods);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+        ClassReader reader = CachedClassReader.get(typeName);
+        ClassNode node = new ClassNode(Opcodes.ASM5);
+        reader.accept(node, ZERO_FLAGS);
+        methods = ObjectUtils.cast(node.methods);
+
+        return methods;
+    }
+
+    /**
+     * Initializes and caches {@link java.util.List} of
+     * {@link org.objectweb.asm.tree.MethodNode}s from passed class file name
+     * 
+     * @param typeName
+     * @return {@link java.util.List} of
+     *         {@link org.objectweb.asm.tree.MethodNode}s
+     */
+    private static List<MethodNode> initAndCache(String typeName) {
+
+        List<MethodNode> methods = resolveMethods(typeName);
+        METHOD_NODES.putIfAbsent(typeName, methods);
 
         return methods;
     }
@@ -84,15 +95,7 @@ public class MethodCache {
      *         {@link org.objectweb.asm.tree.MethodNode} methods
      */
     public static List<MethodNode> getMethods(String typeName) {
-
-        List<MethodNode> methods = METHOD_NODES.get(typeName);
-
-        if (methods == null) {
-            methods = resolveMethods(typeName);
-            METHOD_NODES.putIfAbsent(typeName, methods);
-        }
-
-        return methods;
+        return ObjectUtils.getOrInit(() -> METHOD_NODES.get(typeName), () -> initAndCache(typeName));
     }
 
     /**

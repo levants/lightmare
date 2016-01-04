@@ -110,9 +110,8 @@ public class ClassLoaderUtils {
      * 
      * @param name
      * @return {@link InputStream} from current {@link ClassLoader}
-     * @throws IOException
      */
-    public static InputStream getClassAsStream(String name) throws IOException {
+    public static InputStream getClassAsStream(String name) {
 
         InputStream is;
 

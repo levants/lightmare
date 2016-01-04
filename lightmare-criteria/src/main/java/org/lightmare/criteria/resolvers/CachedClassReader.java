@@ -28,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.lightmare.criteria.utils.ClassLoaderUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 import org.objectweb.asm.ClassReader;
 
 /**
@@ -55,14 +56,15 @@ public class CachedClassReader extends ClassReader {
      * 
      * @param name
      * @return {@link org.objectweb.asm.ClassReader} by class name
-     * @throws IOException
      */
-    private static ClassReader initClassReader(String name) throws IOException {
+    private static ClassReader initClassReader(String name) {
 
         ClassReader classReader;
 
         try (InputStream is = ClassLoaderUtils.getClassAsStream(name)) {
             classReader = new CachedClassReader(is);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
 
         return classReader;
@@ -73,10 +75,9 @@ public class CachedClassReader extends ClassReader {
      * name
      * 
      * @param name
-     * @return
-     * @throws IOException
+     * @return {@link org.objectweb.asm.ClassReader} initialized by class name
      */
-    private static ClassReader initAndCache(String name) throws IOException {
+    private static ClassReader initAndCache(String name) {
 
         ClassReader classReader = initClassReader(name);
         CLASS_FILES.putIfAbsent(name, classReader);
@@ -90,16 +91,8 @@ public class CachedClassReader extends ClassReader {
      * 
      * @param name
      * @return {@link org.objectweb.asm.ClassReader} from cache
-     * @throws IOException
      */
-    public static ClassReader get(String name) throws IOException {
-
-        ClassReader classReader = CLASS_FILES.get(name);
-
-        if (classReader == null) {
-            classReader = initAndCache(name);
-        }
-
-        return classReader;
+    public static ClassReader get(String name) {
+        return ObjectUtils.getOrInit(() -> CLASS_FILES.get(name), () -> initAndCache(name));
     }
 }
