@@ -80,6 +80,13 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
         this.aggregateQueue = aggregateQueue;
     }
 
+    /**
+     * Generates {@link org.lightmare.criteria.tuples.AggregateTuple} and adds
+     * to cache for processing
+     * 
+     * @param tuple
+     * @param aggregate
+     */
     protected void aggregateTuple(QueryTuple tuple, Aggregates aggregate) {
 
         ObjectUtils.thisOrDefault(aggregateFields, HashSet<AggregateTuple>::new, this::setAggregateFields);
@@ -103,7 +110,7 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     /**
      * Generates appropriated query stream
      * 
-     * @return
+     * @return {@link QueryStream} for special type parameter
      */
     private <F> QueryStream<F> generateStream(Class<F> type) {
 

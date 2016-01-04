@@ -22,9 +22,6 @@
  */
 package org.lightmare.criteria.query.internal.jpa.builders;
 
-import java.util.Objects;
-
-import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.query.internal.jpa.HavingExpression;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
@@ -126,18 +123,6 @@ class HavingProcessor<T> implements HavingExpression<T> {
         operateHaving(operator, value1);
         appendHaving(StringUtils.SPACE).appendHaving(Operators.AND).appendHaving(value2);
         newLine();
-
-        return this;
-    }
-
-    @Override
-    public HavingExpression<T> brackets(HavingConsumer<T> consumer) {
-
-        if (Objects.nonNull(consumer)) {
-            openBracket();
-            consumer.accept(this);
-            closeBracket();
-        }
 
         return this;
     }

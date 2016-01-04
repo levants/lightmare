@@ -269,7 +269,7 @@ public abstract class ObjectUtils {
      * value
      * 
      * @param supplier
-     * @param defaultSupplier
+     * @param initSupplier
      * @return T value
      */
     public static <T> T getOrInit(Supplier<T> supplier, Supplier<T> initSupplier) {
