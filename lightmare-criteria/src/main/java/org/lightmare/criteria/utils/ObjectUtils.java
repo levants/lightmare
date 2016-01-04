@@ -238,4 +238,22 @@ public abstract class ObjectUtils {
 
         return result;
     }
+    
+    /**
+     * Gets value from {@link java.util.function.Supplier} and validates on null and if it is returns
+     * default {@link java.util.function.Supplier} provided value
+     * @param supplier
+     * @param defaultSupplier
+     * @return T value
+     */
+    public static <T> T getOrDefault(Supplier<T> supplier, Supplier<T> defaultSupplier){
+        
+        T result = supplier.get();
+
+        if (result == null) {
+            result = defaultSupplier.get();
+        }
+
+        return result;
+    }
 }

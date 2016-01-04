@@ -39,7 +39,8 @@ import org.lightmare.criteria.utils.ObjectUtils;
 public class GenericProcessor {
 
     /**
-     * Sets generic type from {@link ParameterizedType} instance
+     * Sets generic type from {@link java.lang.reflect.ParameterizedType}
+     * instance
      * 
      * @param parametrizedType
      * @param tuple

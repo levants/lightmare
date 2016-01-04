@@ -361,7 +361,7 @@ public abstract class CollectionUtils {
      * @param mapper
      * @throws IOException
      */
-    public static <T, R> void map(T[] from, R[] to, Mapper<? super T, ? extends R> mapper) throws IOException {
+    public static <T, R> R[] map(T[] from, R[] to, Mapper<? super T, ? extends R> mapper) throws IOException {
 
         int length = from.length;
         T value;
@@ -371,6 +371,8 @@ public abstract class CollectionUtils {
             mapped = mapper.apply(value);
             to[i] = mapped;
         }
+        
+        return to;
     }
 
     /**
