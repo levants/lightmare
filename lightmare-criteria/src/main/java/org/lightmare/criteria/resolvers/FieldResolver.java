@@ -235,7 +235,8 @@ public class FieldResolver extends DirectLambdaResolver {
     }
 
     /**
-     * Resolves entity parameters from {@link MethodNode} and instructions
+     * Resolves entity parameters from {@link org.objectweb.asm.tree.MethodNode}
+     * and instructions
      * 
      * @param methodNode
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} from method

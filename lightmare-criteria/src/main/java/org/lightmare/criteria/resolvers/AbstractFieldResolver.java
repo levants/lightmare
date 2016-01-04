@@ -110,8 +110,7 @@ class AbstractFieldResolver {
      * resolves argument {@link org.objectweb.asm.Type}s for method descriptor
      * 
      * @param desc
-     * @return {@link org.objectweb.asm.Type}[] array of argument
-     *         {@link org.objectweb.asm.Type}s
+     * @return {@link org.objectweb.asm.Type}[] array of argument types
      * @throws IOException
      */
     private static String[] resolveArgumentsTypes(String desc) throws IOException {
@@ -202,7 +201,8 @@ class AbstractFieldResolver {
      * instance
      * 
      * @param resolverTuple
-     * @return {@link QueryTuple} for resolved field and query part
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
+     *         field and query part
      * @throws IOException
      */
     protected static <T> QueryTuple resolve(ResolverTuple<T> resolverTuple, Function<T, String> nameResolver)

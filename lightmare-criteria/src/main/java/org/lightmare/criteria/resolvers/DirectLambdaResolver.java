@@ -113,8 +113,8 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
     }
 
     /**
-     * Resolves entity field and method from {@link LambdaInfo} object fields
-     * directly
+     * Resolves entity field and method from
+     * {@link org.lightmare.criteria.lambda.LambdaInfo} object fields directly
      * 
      * @param lambda
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
@@ -140,8 +140,8 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
     }
 
     /**
-     * Resolves entity field and method from {@link LambdaInfo} object fields
-     * directly
+     * Resolves entity field and method from
+     * {@link org.lightmare.criteria.lambda.LambdaInfo} object fields directly
      * 
      * @param lambda
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
@@ -161,8 +161,9 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
     }
 
     /**
-     * Resolves entity field and method from {@link LambdaInfo} object fields
-     * directly without throwing exceptions
+     * Resolves entity field and method from
+     * {@link org.lightmare.criteria.lambda.LambdaInfo} object fields directly
+     * without throwing exceptions
      * 
      * @param lambda
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved

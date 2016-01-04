@@ -69,6 +69,22 @@ public class CachedClassReader extends ClassReader {
     }
 
     /**
+     * Initializes and caches {@link org.objectweb.asm.ClassReader} by class
+     * name
+     * 
+     * @param name
+     * @return
+     * @throws IOException
+     */
+    private static ClassReader getAndCache(String name) throws IOException {
+
+        ClassReader classReader = initClassReader(name);
+        CLASS_FILES.putIfAbsent(name, classReader);
+
+        return classReader;
+    }
+
+    /**
      * Gets {@link org.objectweb.asm.ClassReader} from cache or initializes new
      * instance
      * 
@@ -81,8 +97,7 @@ public class CachedClassReader extends ClassReader {
         ClassReader classReader = CLASS_FILES.get(name);
 
         if (classReader == null) {
-            classReader = initClassReader(name);
-            CLASS_FILES.putIfAbsent(name, classReader);
+            classReader = getAndCache(name);
         }
 
         return classReader;
