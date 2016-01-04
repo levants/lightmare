@@ -57,6 +57,8 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
 
         appendJoin(expression);
         tuple = compose(field);
+        appendJoin(tuple.getAlias());
+        appendJoin(StringUtils.DOT);
         appendJoin(tuple.getFieldName());
         appendJoin(StringUtils.SPACE);
 

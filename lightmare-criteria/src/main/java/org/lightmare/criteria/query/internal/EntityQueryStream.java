@@ -54,6 +54,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
     @Override
     public <F> QueryStream<T> operate(EntityField<T, F> field, String operator) {
+        appendOperator();
         oppLine(field, operator);
         return this;
     }

@@ -34,5 +34,5 @@ public interface Joins {
 
     String LEFT = " left join ";
 
-    String FETCH = " fetch join ";
+    String FETCH = " join fetch ";
 }
