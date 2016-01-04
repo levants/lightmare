@@ -110,7 +110,7 @@ class AbstractFieldResolver {
      * resolves argument {@link org.objectweb.asm.Type}s for method descriptor
      * 
      * @param desc
-     * @return {@link org.objectweb.asm.Type}[] array of argument types
+     * @return {@link String} array of argument type names
      * @throws IOException
      */
     private static String[] resolveArgumentsTypes(String desc) throws IOException {

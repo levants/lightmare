@@ -162,8 +162,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
     /**
      * Resolves entity field and method from
-     * {@link org.lightmare.criteria.lambda.LambdaInfo} object fields directly
-     * without throwing exceptions
+     * {@link org.lightmare.criteria.lambda.LambdaInfo} fields directly
      * 
      * @param lambda
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved

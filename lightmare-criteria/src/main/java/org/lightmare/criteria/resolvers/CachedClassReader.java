@@ -76,7 +76,7 @@ public class CachedClassReader extends ClassReader {
      * @return
      * @throws IOException
      */
-    private static ClassReader getAndCache(String name) throws IOException {
+    private static ClassReader initAndCache(String name) throws IOException {
 
         ClassReader classReader = initClassReader(name);
         CLASS_FILES.putIfAbsent(name, classReader);
@@ -97,7 +97,7 @@ public class CachedClassReader extends ClassReader {
         ClassReader classReader = CLASS_FILES.get(name);
 
         if (classReader == null) {
-            classReader = getAndCache(name);
+            classReader = initAndCache(name);
         }
 
         return classReader;
