@@ -79,14 +79,13 @@ public enum LambdaReferences {
     /**
      * Initializes and starts cleaner thread if it is not initialized yet
      */
-    private Thread initAndStart() {
+    private Thread initCleaner() {
 
         cleaner = new Thread(this::cleaner);
 
         cleaner.setPriority(Thread.MAX_PRIORITY);
         setName(cleaner);
         cleaner.setDaemon(Boolean.TRUE);
-        cleaner.start();
 
         return cleaner;
     }
@@ -98,7 +97,7 @@ public enum LambdaReferences {
 
         if (cleaner == null) {
             synchronized (LambdaReferences.class) {
-                ObjectUtils.thisOrDefault(cleaner, this::initAndStart);
+                ObjectUtils.thisOrDefault(cleaner, this::initCleaner, Thread::start);
             }
         }
     }

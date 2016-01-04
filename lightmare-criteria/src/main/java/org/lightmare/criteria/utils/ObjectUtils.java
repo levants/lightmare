@@ -238,21 +238,54 @@ public abstract class ObjectUtils {
 
         return result;
     }
-    
+
     /**
-     * Gets value from {@link java.util.function.Supplier} and validates on null and if it is returns
-     * default {@link java.util.function.Supplier} provided value
+     * Validates passed value on null and if it is returns
+     * {@link java.util.function.Supplier} provided value and calls setter
+     * 
+     * @param value
+     * @param supplier
+     * @param setter
+     * @return T value
+     */
+    public static <T> T thisOrDefault(T value, Supplier<T> supplier, Consumer<T> setter) {
+
+        T result;
+
+        if (value == null) {
+            result = supplier.get();
+            accept(setter, result);
+        } else {
+            result = value;
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets value from {@link java.util.function.Supplier} and validates on null
+     * and if it is returns default {@link java.util.function.Supplier} provided
+     * value
+     * 
      * @param supplier
      * @param defaultSupplier
      * @return T value
      */
-    public static <T> T getOrDefault(Supplier<T> supplier, Supplier<T> defaultSupplier){
-        
+    public static <T> T getOrInit(Supplier<T> supplier, Supplier<T> initSupplier) {
+
         T result = supplier.get();
 
         if (result == null) {
-            result = defaultSupplier.get();
+            result = initSupplier.get();
         }
+
+        return result;
+    }
+
+    public static <T> T getOrInit(Supplier<T> supplier, Supplier<T> initSupplier, Consumer<T> setter) {
+
+        T result = getOrInit(supplier, initSupplier);
+        nonNull(result, setter::accept);
 
         return result;
     }

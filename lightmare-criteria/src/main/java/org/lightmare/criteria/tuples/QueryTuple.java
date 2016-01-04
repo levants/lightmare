@@ -161,8 +161,7 @@ public class QueryTuple implements Serializable, Cloneable {
     }
 
     public Class<?> getGenericType() {
-        genericType = ObjectUtils.thisOrDefault(genericType, field::getType);
-        return genericType;
+        return ObjectUtils.thisOrDefault(genericType, field::getType, this::setGenericType);
     }
 
     public void setGenericType(Class<?> genericType) {

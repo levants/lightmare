@@ -117,8 +117,7 @@ public class ClassLoaderUtils {
         InputStream is;
 
         String resource = getAsResource(name);
-        is = ObjectUtils.getOrDefault(() -> getResourceAsStream(resource),
-                () -> getClassResourceAsStream(name, resource));
+        is = ObjectUtils.getOrInit(() -> getResourceAsStream(resource), () -> getClassResourceAsStream(name, resource));
 
         return is;
     }

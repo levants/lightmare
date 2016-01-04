@@ -67,25 +67,25 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
         return aggregateFields;
     }
 
+    private void setAggregateFields(Set<AggregateTuple> aggregateFields) {
+        this.aggregateFields = aggregateFields;
+    }
+
     @Override
     protected Queue<AggregateTuple> getAggregateQueue() {
         return aggregateQueue;
     }
 
-    private void initQueue() {
-        aggregateQueue = ObjectUtils.thisOrDefault(aggregateQueue, LinkedList<AggregateTuple>::new);
-    }
-
-    private void initAggregateFields() {
-        aggregateFields = ObjectUtils.thisOrDefault(aggregateFields, HashSet<AggregateTuple>::new);
+    private void setAggregateQueue(Queue<AggregateTuple> aggregateQueue) {
+        this.aggregateQueue = aggregateQueue;
     }
 
     protected void aggregateTuple(QueryTuple tuple, Aggregates aggregate) {
 
-        initAggregateFields();
+        ObjectUtils.thisOrDefault(aggregateFields, HashSet<AggregateTuple>::new, this::setAggregateFields);
         AggregateTuple aggregateTuple = AggregateTuple.of(tuple, aggregate, alias);
         if (aggregateFields.add(aggregateTuple)) {
-            initQueue();
+            ObjectUtils.thisOrDefault(aggregateQueue, LinkedList<AggregateTuple>::new, this::setAggregateQueue);
             aggregateQueue.offer(aggregateTuple);
         }
     }
