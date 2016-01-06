@@ -160,9 +160,8 @@ public abstract class ObjectUtils {
      * 
      * @param value
      * @return <code>byte</code>[] serialized object
-     * @throws IOException
      */
-    public static byte[] serialize(Object value) throws IOException {
+    public static byte[] serialize(Object value) {
 
         byte[] bytes;
 
@@ -170,6 +169,8 @@ public abstract class ObjectUtils {
                 ObjectOutputStream out = new ObjectOutputStream(bout)) {
             out.writeObject(value);
             bytes = bout.toByteArray();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
 
         return bytes;
@@ -181,16 +182,15 @@ public abstract class ObjectUtils {
      * 
      * @param bytes
      * @return {@link Object}
-     * @throws IOException
      */
-    private static Object readToObject(byte[] bytes) throws IOException {
+    private static Object readToObject(byte[] bytes) {
 
         Object value;
 
         try (InputStream bin = new ByteArrayInputStream(bytes); ObjectInputStream in = new ObjectInputStream(bin)) {
             value = in.readObject();
-        } catch (ClassNotFoundException ex) {
-            throw new IOException(ex);
+        } catch (ClassNotFoundException | IOException ex) {
+            throw new RuntimeException(ex);
         }
 
         return value;
@@ -202,9 +202,8 @@ public abstract class ObjectUtils {
      * 
      * @param bytes
      * @return {@link Object}
-     * @throws IOException
      */
-    public static <T> T deserialize(byte[] bytes) throws IOException {
+    public static <T> T deserialize(byte[] bytes) {
 
         T value;
 

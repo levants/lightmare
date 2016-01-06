@@ -22,15 +22,14 @@
  */
 package org.lightmare.criteria.lambda;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
 import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Utility class to retrieve {@link java.lang.invoke.SerializedLambda}
@@ -57,9 +56,8 @@ public class LambdaReplacements {
      * @param buff
      * @return {@link org.lightmare.criteria.lambda.SLambda} from serialized
      *         object
-     * @throws IOException
      */
-    private static SLambda toLambda(byte[] buff) throws IOException {
+    private static SLambda toLambda(byte[] buff) {
         return ObjectUtils.deserialize(buff);
     }
 
@@ -68,15 +66,14 @@ public class LambdaReplacements {
      * 
      * @param value
      * @return <code>byte</code>array serialized object
-     * @throws UnsupportedEncodingException
      */
-    private static byte[] replace(byte[] value) throws UnsupportedEncodingException {
+    private static byte[] replace(byte[] value) {
 
         byte[] translated;
 
-        String buffText = new String(value, CHARSET);
+        String buffText = StringUtils.fromBytes(value, CHARSET);
         String replText = buffText.replace(NATIVE_NAME, LINQ_NAME);
-        translated = replText.getBytes(CHARSET);
+        translated = StringUtils.getBytes(replText, CHARSET);
 
         return translated;
     }
@@ -88,9 +85,8 @@ public class LambdaReplacements {
      * @param method
      * @return {@link org.lightmare.criteria.lambda.SLambda} from method
      *         reference
-     * @throws IOException
      */
-    private static SLambda toSLambda(Object method) throws IOException {
+    private static SLambda toSLambda(Object method) {
 
         SLambda slambda;
 
@@ -108,9 +104,8 @@ public class LambdaReplacements {
      * @param method
      * @return {@link org.lightmare.criteria.lambda.LambdaInfo} from lambda
      *         expression
-     * @throws IOException
      */
-    private static LambdaInfo translate(Object method) throws IOException {
+    private static LambdaInfo translate(Object method) {
 
         LambdaInfo lambda;
 
@@ -135,11 +130,10 @@ public class LambdaReplacements {
      * Gets {@link org.lightmare.criteria.lambda.LambdaInfo} instance from
      * passed lambda argument
      * 
-     * @param field
+     * @param method
      * @return {@link org.lightmare.criteria.lambda.LambdaInfo} replacement
-     * @throws IOException
      */
-    private static <T> LambdaInfo getLambdaReplacement(Serializable method) throws IOException {
+    public static <T> LambdaInfo getReplacement(Serializable method) {
 
         LambdaInfo lambda;
 
@@ -150,26 +144,6 @@ public class LambdaReplacements {
             lambda = new LambdaInfo(serialized);
         } else {
             lambda = translate(method);
-        }
-
-        return lambda;
-    }
-
-    /**
-     * Gets {@link org.lightmare.criteria.lambda.LambdaInfo} instance from
-     * passed lambda argument
-     * 
-     * @param method
-     * @return {@link org.lightmare.criteria.lambda.LambdaInfo} replacement
-     */
-    public static <T> LambdaInfo getReplacement(Serializable method) {
-
-        LambdaInfo lambda;
-
-        try {
-            lambda = getLambdaReplacement(method);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
         }
 
         return lambda;
