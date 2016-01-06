@@ -37,7 +37,7 @@ public class EmbeddedTuple extends QueryTuple {
 
     private final String embeddedName;
 
-    protected EmbeddedTuple(final QueryTuple tuple, final String embeddedName) {
+    private EmbeddedTuple(final QueryTuple tuple, final String embeddedName) {
         super(tuple.getEntityName(), tuple.getMethodName(), tuple.getArguments(), tuple.getFieldName());
         setEntityType(tuple.getEntityType());
         setMethod(tuple.getMethod());

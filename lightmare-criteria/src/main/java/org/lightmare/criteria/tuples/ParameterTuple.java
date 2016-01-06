@@ -40,7 +40,7 @@ public class ParameterTuple {
 
     private static final String PARAMETER_FORMAT = "%s : %s";
 
-    protected ParameterTuple(final String name, final Object value, final TemporalType temporalType) {
+    private ParameterTuple(final String name, final Object value, final TemporalType temporalType) {
         this.name = name;
         this.value = value;
         this.temporalType = temporalType;

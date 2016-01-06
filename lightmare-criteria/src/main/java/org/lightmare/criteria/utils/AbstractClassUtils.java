@@ -38,7 +38,7 @@ abstract class AbstractClassUtils extends Primitives {
      * {@link java.lang.reflect.InvocationTargetException} instance
      *
      * @param ex
-     * @return {@link java.io.IOException} wrapped
+     * @return {@link RuntimeException} wrapped
      */
     protected static RuntimeException unwrap(InvocationTargetException ex) {
 

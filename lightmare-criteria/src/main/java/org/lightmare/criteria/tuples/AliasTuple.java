@@ -35,7 +35,7 @@ public class AliasTuple {
 
     private final int counter;
 
-    protected AliasTuple(final String alias, final int counter) {
+    private AliasTuple(final String alias, final int counter) {
         this.alias = alias;
         this.counter = counter;
     }

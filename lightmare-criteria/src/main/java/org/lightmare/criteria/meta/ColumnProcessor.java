@@ -63,7 +63,8 @@ public class ColumnProcessor {
 
     /**
      * Sets appropriated {@link javax.persistence.TemporalType} to passed tuple
-     * from field or method annotation
+     * from {@link java.lang.reflect.Field} or {@link java.lang.reflect.Method}
+     * annotations
      * 
      * @param tuple
      */

@@ -46,17 +46,18 @@ public class LambdaUtils {
     private static final Logger LOG = Logger.getLogger(LambdaUtils.class);
 
     /**
-     * Gets appropriated {@link QueryTuple} from serialized lambda cache or
-     * analyzes appropriated lambda expression from compiled class
+     * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
+     * serialized lambda cache or analyzes appropriated lambda expression from
+     * compiled class
      * 
      * @param method
-     * @return {@link QueryTuple} from cache
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      */
     private static QueryTuple getByLambda(Serializable method) {
 
         QueryTuple tuple;
 
-        LambdaInfo lambda = LambdaReplacements.getReplacementQuietly(method);
+        LambdaInfo lambda = LambdaReplacements.getReplacement(method);
         tuple = QueryCache.getQuery(lambda);
         if (tuple == null) {
             tuple = FieldResolver.resolve(lambda);
@@ -68,10 +69,11 @@ public class LambdaUtils {
     }
 
     /**
-     * Clones passed {@link QueryTuple} without throwing an exception
+     * Clones passed {@link org.lightmare.criteria.tuples.QueryTuple} without
+     * throwing an exception
      * 
      * @param instance
-     * @return {@link QueryTuple} clone
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} clone
      */
     private static QueryTuple cloneTuple(QueryTuple instance) {
 
@@ -88,10 +90,11 @@ public class LambdaUtils {
     }
 
     /**
-     * Clones passed {@link QueryTuple} after null check
+     * Clones passed {@link org.lightmare.criteria.tuples.QueryTuple} after null
+     * check
      * 
      * @param instance
-     * @return {@link QueryTuple} clone
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} clone
      */
     private static QueryTuple cloneIfValid(QueryTuple instance) {
 
@@ -107,11 +110,11 @@ public class LambdaUtils {
     }
 
     /**
-     * Gets appropriated {@link QueryTuple} from cache or initializes and caches
-     * new instance
+     * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
+     * cache or initializes and caches new instance
      * 
      * @param method
-     * @return {@link QueryTuple} from cache
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      */
     private static QueryTuple getOrInitOriginal(Serializable method) {
 
@@ -126,11 +129,11 @@ public class LambdaUtils {
     }
 
     /**
-     * Gets appropriated {@link QueryTuple} from cache or initializes and caches
-     * new instance
+     * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
+     * cache or initializes and caches new instance
      * 
      * @param method
-     * @return {@link QueryTuple} from cache
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      */
     public static QueryTuple getOrInit(Serializable method) {
 

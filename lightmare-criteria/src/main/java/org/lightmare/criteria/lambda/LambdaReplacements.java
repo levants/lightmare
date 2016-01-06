@@ -80,30 +80,34 @@ public class LambdaReplacements {
 
         return translated;
     }
-    
+
     /**
-     * Translates passed method reference to {@link SLambda} instance
+     * Translates passed method reference to
+     * {@link org.lightmare.criteria.lambda.SLambda} instance
+     * 
      * @param method
-     * @return {@link SLambda} from method reference
-     * @throws IOException 
+     * @return {@link org.lightmare.criteria.lambda.SLambda} from method
+     *         reference
+     * @throws IOException
      */
-    private static SLambda toSLambda(Object method) throws IOException{
-        
+    private static SLambda toSLambda(Object method) throws IOException {
+
         SLambda slambda;
-        
+
         byte[] value = ObjectUtils.serialize(method);
         byte[] translated = replace(value);
         slambda = toLambda(translated);
-        
+
         return slambda;
     }
-    
+
     /**
      * Serializes object and translates it and wraps it's field to
-     * {@link LambdaInfo} object
+     * {@link org.lightmare.criteria.lambda.LambdaInfo} object
      * 
      * @param method
-     * @return {@link LambdaInfo} from lambda expression
+     * @return {@link org.lightmare.criteria.lambda.LambdaInfo} from lambda
+     *         expression
      * @throws IOException
      */
     private static LambdaInfo translate(Object method) throws IOException {
@@ -122,20 +126,20 @@ public class LambdaReplacements {
      * 
      * @param parent
      * @return {@link java.lang.reflect.Method} for serialization
-     * @throws IOException
      */
-    private static <T> Method getMethod(Class<?> parent) throws IOException {
+    private static <T> Method getMethod(Class<?> parent) {
         return ClassUtils.findMethod(parent, METHOD);
     }
 
     /**
-     * Gets {@link LambdaInfo} instance from passed lambda argument
+     * Gets {@link org.lightmare.criteria.lambda.LambdaInfo} instance from
+     * passed lambda argument
      * 
      * @param field
-     * @return {@link LambdaInfo} replacement
+     * @return {@link org.lightmare.criteria.lambda.LambdaInfo} replacement
      * @throws IOException
      */
-    private static <T> LambdaInfo getReplacement(Serializable method) throws IOException {
+    private static <T> LambdaInfo getLambdaReplacement(Serializable method) throws IOException {
 
         LambdaInfo lambda;
 
@@ -152,17 +156,18 @@ public class LambdaReplacements {
     }
 
     /**
-     * Gets {@link LambdaInfo} instance from passed lambda argument
+     * Gets {@link org.lightmare.criteria.lambda.LambdaInfo} instance from
+     * passed lambda argument
      * 
      * @param method
-     * @return {@link LambdaInfo} replacement
+     * @return {@link org.lightmare.criteria.lambda.LambdaInfo} replacement
      */
-    public static <T> LambdaInfo getReplacementQuietly(Serializable method) {
+    public static <T> LambdaInfo getReplacement(Serializable method) {
 
         LambdaInfo lambda;
 
         try {
-            lambda = getReplacement(method);
+            lambda = getLambdaReplacement(method);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

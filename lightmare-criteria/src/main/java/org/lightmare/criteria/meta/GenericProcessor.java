@@ -53,7 +53,7 @@ public class GenericProcessor {
     }
 
     /**
-     * Sets generic type of field to tuple
+     * Sets generic type of {@link java.lang.reflect.Field} to tuple
      * 
      * @param field
      * @param tuple
@@ -64,7 +64,8 @@ public class GenericProcessor {
     }
 
     /**
-     * Sets generic type of collection field
+     * Sets generic type of collection {@link java.lang.reflect.Field} to
+     * wrapper
      * 
      * @param tuple
      */
