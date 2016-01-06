@@ -36,7 +36,7 @@ import org.objectweb.asm.ClassReader;
  * multiply and parallel uses
  * 
  * @author Levan Tsinadze
- *
+ * @see org.objectweb.asm.ClassReader
  */
 public class CachedClassReader extends ClassReader {
 

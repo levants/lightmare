@@ -59,7 +59,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
      *         field and query part
      */
-    private static QueryTuple resolve(MethodInsnNode node) {
+    private static QueryTuple resolveFromInstruction(MethodInsnNode node) {
 
         QueryTuple tuple;
 
@@ -136,7 +136,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
      *         field and query part
      */
-    private static QueryTuple resolve(MethodNode node) {
+    private static QueryTuple resolveFromMethod(MethodNode node) {
 
         QueryTuple tuple;
 
@@ -160,7 +160,7 @@ public class FieldResolver extends DirectLambdaResolver {
 
         if (instruction instanceof MethodInsnNode) {
             MethodInsnNode node = ObjectUtils.cast(instruction);
-            tuple = resolve(node);
+            tuple = resolveFromInstruction(node);
         } else {
             tuple = null;
         }
@@ -176,7 +176,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
      *         field and query part
      */
-    private static QueryTuple resolve(InsnList instructions) {
+    private static QueryTuple resolveFromInstructions(InsnList instructions) {
 
         QueryTuple tuple = null;
 
@@ -197,7 +197,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * @param lambda
      * @return </code>boolean</code> validation result
      */
-    public static boolean validate(MethodNode methodNode, LambdaInfo lambda) {
+    private static boolean validateMethod(MethodNode methodNode, LambdaInfo lambda) {
 
         boolean valid;
 
@@ -217,12 +217,12 @@ public class FieldResolver extends DirectLambdaResolver {
      */
     private static QueryTuple resolveRecursively(MethodNode methodNode) {
 
-        QueryTuple tuple = resolve(methodNode);
+        QueryTuple tuple = resolveFromMethod(methodNode);
 
         if (tuple == null) {
             methodNode.visitCode();
             InsnList instructions = methodNode.instructions;
-            tuple = resolve(instructions);
+            tuple = resolveFromInstructions(instructions);
         }
 
         return tuple;
@@ -242,7 +242,7 @@ public class FieldResolver extends DirectLambdaResolver {
 
         List<MethodNode> methods = MethodCache.getMethods(lambda);
         if (Objects.nonNull(methods)) {
-            MethodNode methodNode = CollectionUtils.getFirstValid(methods, c -> validate(c, lambda));
+            MethodNode methodNode = CollectionUtils.getFirstValid(methods, c -> validateMethod(c, lambda));
             tuple = resolveRecursively(methodNode);
         } else {
             throw new RuntimeException(UNRESOLVABLE_FIELD_ERROR);

@@ -66,7 +66,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
      * @param descType
      * @return <code>boolean</code> validation result
      */
-    private static boolean validate(String implClassName, Type descType) {
+    private static boolean validateClassName(String implClassName, Type descType) {
 
         boolean valid = Objects.equals(implClassName, descType.getInternalName());
 
@@ -106,7 +106,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
      * @param lambda
      * @return <code>boolean</code> validation result
      */
-    private static boolean validate(LambdaInfo lambda) {
+    private static boolean validateLambda(LambdaInfo lambda) {
         return (validateMethodKind(lambda) && validateSignature(lambda));
     }
 
@@ -123,7 +123,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
         String implClass = lambda.getImplClass();
         Type desc = getFromDescription(lambda);
-        if (Objects.nonNull(desc) && validate(implClass, desc)) {
+        if (Objects.nonNull(desc) && validateClassName(implClass, desc)) {
             String implDesc = lambda.getImplMethodSignature();
             String methodName = lambda.getImplMethodName();
             String entityName = desc.getInternalName();
@@ -147,7 +147,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
         QueryTuple tuple;
 
-        if (validate(lambda)) {
+        if (validateLambda(lambda)) {
             tuple = resolveFromLambda(lambda);
         } else {
             tuple = null;
