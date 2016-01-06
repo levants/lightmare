@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.resolvers;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandleInfo;
 import java.util.Objects;
 
@@ -66,9 +65,8 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
      * @param implClassName
      * @param descType
      * @return <code>boolean</code> validation result
-     * @throws IOException
      */
-    private static boolean validate(String implClassName, Type descType) throws IOException {
+    private static boolean validate(String implClassName, Type descType) {
 
         boolean valid = Objects.equals(implClassName, descType.getInternalName());
 
@@ -118,9 +116,8 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
      * 
      * @param lambda
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
-     * @throws IOException
      */
-    private static QueryTuple resolveDirect(LambdaInfo lambda) throws IOException {
+    private static QueryTuple resolveFromLambda(LambdaInfo lambda) {
 
         QueryTuple tuple;
 
@@ -141,40 +138,19 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
     /**
      * Resolves entity field and method from
-     * {@link org.lightmare.criteria.lambda.LambdaInfo} object fields directly
-     * 
-     * @param lambda
-     * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
-     * @throws IOException
-     */
-    private static QueryTuple validateAndResolveDirect(LambdaInfo lambda) throws IOException {
-
-        QueryTuple tuple;
-
-        if (validate(lambda)) {
-            tuple = resolveDirect(lambda);
-        } else {
-            tuple = null;
-        }
-
-        return tuple;
-    }
-
-    /**
-     * Resolves entity field and method from
      * {@link org.lightmare.criteria.lambda.LambdaInfo} fields directly
      * 
      * @param lambda
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
      */
-    protected static QueryTuple resolveDirectQuietly(LambdaInfo lambda) {
+    protected static QueryTuple resolveDirectly(LambdaInfo lambda) {
 
         QueryTuple tuple;
 
-        try {
-            tuple = validateAndResolveDirect(lambda);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+        if (validate(lambda)) {
+            tuple = resolveFromLambda(lambda);
+        } else {
+            tuple = null;
         }
 
         return tuple;

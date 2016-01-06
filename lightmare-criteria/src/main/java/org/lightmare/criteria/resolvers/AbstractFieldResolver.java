@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.resolvers;
 
-import java.io.IOException;
 import java.util.function.Function;
 
 import org.lightmare.criteria.meta.ColumnProcessor;
@@ -89,9 +88,8 @@ class AbstractFieldResolver {
      * 
      * @param argumentTypes
      * @return {@link String} array of argument type names
-     * @throws IOException
      */
-    private static String[] mapToNames(Type[] argumentTypes) throws IOException {
+    private static String[] mapToNames(Type[] argumentTypes) {
 
         String[] arguments;
 
@@ -111,9 +109,8 @@ class AbstractFieldResolver {
      * 
      * @param desc
      * @return {@link String} array of argument type names
-     * @throws IOException
      */
-    private static String[] resolveArgumentsTypes(String desc) throws IOException {
+    private static String[] resolveArgumentsTypes(String desc) {
 
         String[] arguments;
 
@@ -187,9 +184,8 @@ class AbstractFieldResolver {
      * {@link java.lang.reflect.Field} etc ) to tuple
      * 
      * @param tuple
-     * @throws IOException
      */
-    private static void setMetaData(QueryTuple tuple) throws IOException {
+    private static void setMetaData(QueryTuple tuple) {
 
         EntityProcessor.setMetaData(tuple);
         ColumnProcessor.setTemporalType(tuple);
@@ -203,10 +199,8 @@ class AbstractFieldResolver {
      * @param resolverTuple
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
      *         field, entity and query part
-     * @throws IOException
      */
-    protected static <T> QueryTuple resolve(ResolverTuple<T> resolverTuple, Function<T, String> nameResolver)
-            throws IOException {
+    protected static <T> QueryTuple resolve(ResolverTuple<T> resolverTuple, Function<T, String> nameResolver) {
 
         QueryTuple tuple;
 

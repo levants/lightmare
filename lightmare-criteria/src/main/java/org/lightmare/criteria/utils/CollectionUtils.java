@@ -22,12 +22,12 @@
  */
 package org.lightmare.criteria.utils;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -55,29 +55,6 @@ public abstract class CollectionUtils {
 
     // Empty array of objects
     public static final Object[] EMPTY_ARRAY = {};
-
-    /**
-     * Functional interface with exceptions on method
-     * 
-     * @author Levan Tsinadze
-     * 
-     * @param <T>
-     *            method parameter type
-     * @param <R>
-     *            return type
-     */
-    @FunctionalInterface
-    public static interface Mapper<T, R> {
-
-        /**
-         * Function to supply type mapping
-         * 
-         * @param value
-         * @return R instance
-         * @throws IOException
-         */
-        R apply(T value) throws IOException;
-    }
 
     /**
      * Checks if passed {@link Collection} instance is not empty
@@ -359,9 +336,8 @@ public abstract class CollectionUtils {
      * @param from
      * @param to
      * @param mapper
-     * @throws IOException
      */
-    public static <T, R> R[] map(T[] from, R[] to, Mapper<? super T, ? extends R> mapper) throws IOException {
+    public static <T, R> R[] map(T[] from, R[] to, Function<? super T, ? extends R> mapper) {
 
         int length = from.length;
         T value;
@@ -371,7 +347,7 @@ public abstract class CollectionUtils {
             mapped = mapper.apply(value);
             to[i] = mapped;
         }
-        
+
         return to;
     }
 

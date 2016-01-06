@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.utils;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
@@ -116,17 +115,15 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * 
      * @param tuple
      * @param supplier
-     * @throws IOException
      */
-    private static <T extends Member> void iterate(MemberTuple<T> tuple, MemberSupplier<T> supplier)
-            throws IOException {
+    private static <T extends Member> void iterate(MemberTuple<T> tuple, MemberSupplier<T> supplier) {
 
         try {
             tuple.member = supplier.getMember(tuple.type, tuple.memberName);
         } catch (NoSuchMethodException | NoSuchFieldException ex) {
             tuple.setSuperType();
         } catch (SecurityException ex) {
-            throw new IOException(ex);
+            throw new RuntimeException(ex);
         }
     }
 
@@ -138,10 +135,9 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param memberName
      * @param supplier
      * @return {@link MemberTuple} in type hierarchy
-     * @throws IOException
      */
     private static <T extends Member> MemberTuple<T> findMember(Class<?> type, String memberName,
-            MemberSupplier<T> supplier) throws IOException {
+            MemberSupplier<T> supplier) {
 
         MemberTuple<T> tuple = MemberTuple.of(type, memberName);
 
@@ -160,10 +156,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param methodName
      * @param parameters
      * @return {@link MemberTuple} for {@link java.lang.reflect.Method}
-     * @throws IOException
      */
-    public static MemberTuple<Method> findMethodAndType(Class<?> type, String methodName, Class<?>... parameters)
-            throws IOException {
+    public static MemberTuple<Method> findMethodAndType(Class<?> type, String methodName, Class<?>... parameters) {
         return findMember(type, methodName, (t, m) -> t.getDeclaredMethod(m, parameters));
     }
 
@@ -175,9 +169,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param methodName
      * @param parameters
      * @return {@link java.lang.reflect.Method} for type
-     * @throws IOException
      */
-    public static Method findMethod(Class<?> type, String methodName, Class<?>... parameters) throws IOException {
+    public static Method findMethod(Class<?> type, String methodName, Class<?>... parameters) {
 
         Method method;
 
@@ -194,9 +187,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param type
      * @param fieldName
      * @return {@link java.lang.reflect.Field} for type
-     * @throws IOException
      */
-    public static Field findField(Class<?> type, String fieldName) throws IOException {
+    public static Field findField(Class<?> type, String fieldName) {
 
         Field field;
 
@@ -213,9 +205,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param instance
      * @param arguments
      * @return {@link Object}
-     * @throws IOException
      */
-    public static <T> T invoke(Method method, Object instance, Object... arguments) throws IOException {
+    public static <T> T invoke(Method method, Object instance, Object... arguments) {
 
         T value;
 
@@ -224,7 +215,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
             Object raw = method.invoke(instance, arguments);
             value = ObjectUtils.cast(raw);
         } catch (IllegalAccessException | IllegalArgumentException ex) {
-            throw new IOException(ex);
+            throw new RuntimeException(ex);
         } catch (InvocationTargetException ex) {
             throw unwrap(ex);
         }

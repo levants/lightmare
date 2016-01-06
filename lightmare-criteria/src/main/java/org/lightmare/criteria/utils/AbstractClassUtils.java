@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.utils;
 
-import java.io.IOException;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.InvocationTargetException;
 
@@ -41,15 +40,15 @@ abstract class AbstractClassUtils extends Primitives {
      * @param ex
      * @return {@link java.io.IOException} wrapped
      */
-    protected static IOException unwrap(InvocationTargetException ex) {
+    protected static RuntimeException unwrap(InvocationTargetException ex) {
 
-        IOException exception;
+        RuntimeException exception;
 
         Throwable targetException = ex.getTargetException();
         if (targetException == null) {
-            exception = new IOException(ex.getMessage(), ex);
+            exception = new RuntimeException(ex.getMessage(), ex);
         } else {
-            exception = new IOException(targetException.getMessage(), targetException);
+            exception = new RuntimeException(targetException.getMessage(), targetException);
         }
 
         return exception;

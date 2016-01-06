@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.utils;
 
-import java.io.IOException;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -67,16 +66,15 @@ public class ClassUtils extends AbstractMemberUtils {
      * @param initialize
      * @param loader
      * @return {@link Class} by name
-     * @throws IOException
      */
-    public static Class<?> classForName(String className, boolean initialize, ClassLoader loader) throws IOException {
+    public static Class<?> classForName(String className, boolean initialize, ClassLoader loader) {
 
         Class<?> type;
 
         try {
             type = forName(className, initialize, loader);
         } catch (ClassNotFoundException ex) {
-            throw new IOException(ex);
+            throw new RuntimeException(ex);
         }
 
         return type;
@@ -89,9 +87,8 @@ public class ClassUtils extends AbstractMemberUtils {
      * @param className
      * @param loader
      * @return {@link Class} by name
-     * @throws IOException
      */
-    public static Class<?> classForName(String className, ClassLoader loader) throws IOException {
+    public static Class<?> classForName(String className, ClassLoader loader) {
         return classForName(className, Boolean.TRUE, loader);
     }
 
@@ -100,9 +97,8 @@ public class ClassUtils extends AbstractMemberUtils {
      *
      * @param className
      * @return {@link Class} by name
-     * @throws IOException
      */
-    public static Class<?> classForName(String className) throws IOException {
+    public static Class<?> classForName(String className) {
         return classForName(className, null);
     }
 }

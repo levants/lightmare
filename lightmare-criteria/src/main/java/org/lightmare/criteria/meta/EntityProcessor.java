@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.meta;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -43,9 +42,8 @@ public class EntityProcessor {
      * 
      * @param names
      * @return {@link Class} array by names for argument types
-     * @throws IOException
      */
-    private static Class<?>[] mapArgumentTypes(String[] names) throws IOException {
+    private static Class<?>[] mapArgumentTypes(String[] names) {
 
         Class<?>[] argumentTypes = new Class<?>[names.length];
         CollectionUtils.map(names, argumentTypes, ClassUtils::classForName);
@@ -58,9 +56,8 @@ public class EntityProcessor {
      * 
      * @param tuple
      * @return {@link Class} array by names for argument types
-     * @throws IOException
      */
-    private static Class<?>[] getArgumentTypes(QueryTuple tuple) throws IOException {
+    private static Class<?>[] getArgumentTypes(QueryTuple tuple) {
 
         Class<?>[] argumentTypes;
 
@@ -79,9 +76,8 @@ public class EntityProcessor {
      * by names to passed wrapper
      * 
      * @param tuple
-     * @throws IOException
      */
-    private static void setMethodAndField(QueryTuple tuple) throws IOException {
+    private static void setMethodAndField(QueryTuple tuple) {
 
         Class<?> entityType = tuple.getEntityType();
         Class<?>[] argumentTypes = getArgumentTypes(tuple);
@@ -96,9 +92,8 @@ public class EntityProcessor {
      * {@link java.lang.reflect.Field} by names to wrapper
      * 
      * @param tuple
-     * @throws IOException
      */
-    public static void setMetaData(QueryTuple tuple) throws IOException {
+    public static void setMetaData(QueryTuple tuple) {
 
         String className = tuple.getEntityName();
         Class<?> entityType = ClassUtils.classForName(className);

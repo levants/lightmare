@@ -23,7 +23,6 @@
 package org.lightmare.criteria.utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -95,12 +94,8 @@ public class ClassLoaderUtils {
 
         InputStream is;
 
-        try {
-            Class<?> type = ClassUtils.classForName(name);
-            is = type.getResourceAsStream(resource);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+        Class<?> type = ClassUtils.classForName(name);
+        is = type.getResourceAsStream(resource);
 
         return is;
     }
@@ -126,14 +121,13 @@ public class ClassLoaderUtils {
      * 
      * @param className
      * @param loader
-     * @throws IOException
      */
-    private static void loadClass(String className, ClassLoader loader) throws IOException {
+    private static void loadClass(String className, ClassLoader loader) {
 
         try {
             loader.loadClass(className);
         } catch (ClassNotFoundException ex) {
-            throw new IOException(ex);
+            throw new RuntimeException(ex);
         }
     }
 
@@ -142,13 +136,9 @@ public class ClassLoaderUtils {
      * 
      * @param classes
      * @param loader
-     * @throws IOException
      */
-    private static void loadAll(Collection<String> classes, ClassLoader loader) throws IOException {
-
-        for (String className : classes) {
-            loadClass(className, loader);
-        }
+    private static void loadAll(Collection<String> classes, ClassLoader loader) {
+        classes.forEach(name -> loadClass(name, loader));
     }
 
     /**
@@ -157,7 +147,7 @@ public class ClassLoaderUtils {
      * @param classes
      * @param loader
      */
-    public static void loadClasses(Collection<String> classes, ClassLoader loader) throws IOException {
+    public static void loadClasses(Collection<String> classes, ClassLoader loader) {
 
         if (CollectionUtils.valid(classes) && Objects.nonNull(loader)) {
             loadAll(classes, loader);
@@ -170,9 +160,11 @@ public class ClassLoaderUtils {
      *
      * @param classes
      */
-    public static void loadClasses(Collection<String> classes) throws IOException {
+    public static void loadClasses(Collection<String> classes) {
 
-        ClassLoader loader = getContextClassLoader();
-        loadClasses(classes, loader);
+        if (CollectionUtils.valid(classes)) {
+            ClassLoader loader = getContextClassLoader();
+            loadAll(classes, loader);
+        }
     }
 }
