@@ -41,11 +41,12 @@ public class AliasTuple {
     }
 
     /**
-     * Initializes {@link AliasTuple} by alias name and counter to keep unique
+     * Initializes {@link org.lightmare.criteria.tuples.AliasTuple} by alias
+     * name and counter to keep unique
      * 
      * @param alias
      * @param counter
-     * @return {@link AliasTuple} instance
+     * @return {@link org.lightmare.criteria.tuples.AliasTuple} instance
      */
     public static AliasTuple of(final String alias, final int counter) {
         return new AliasTuple(alias, counter);

@@ -22,14 +22,12 @@
  */
 package org.lightmare.criteria.query.internal.jpa;
 
-import java.util.Comparator;
-
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 
 /**
- * Sub query processor for ALL clause and arbitrary object or {@link Comparator}
- * implementations
+ * Sub query processor for ALL clause and arbitrary object or
+ * {@link java.util.Comparator} implementations
  * 
  * @author Levan Tsinadze
  *
@@ -44,7 +42,7 @@ interface TypedToObjectSubQueryProcessor<T> extends SubQueryOperator<T> {
      * @param value
      * @param operator
      * @param stream
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default <F, S> QueryStream<T> operateSubQuery(Object value, String operator, SubQueryType<S> stream) {
         String composed = stream.getOperator(operator);

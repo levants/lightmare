@@ -47,13 +47,13 @@ public class ParameterTuple {
     }
 
     /**
-     * Initializes {@link ParameterTuple} by parameter name, value and
-     * {@link javax.persistence.TemporalType} instance
+     * Initializes {@link org.lightmare.criteria.tuples.ParameterTuple} by
+     * parameter name, value and {@link javax.persistence.TemporalType} instance
      * 
      * @param name
      * @param value
      * @param temporalType
-     * @return {@link ParameterTuple} instance
+     * @return {@link org.lightmare.criteria.tuples.ParameterTuple} instance
      */
     public static ParameterTuple of(final String name, final Object value, final TemporalType temporalType) {
         return new ParameterTuple(name, value, temporalType);

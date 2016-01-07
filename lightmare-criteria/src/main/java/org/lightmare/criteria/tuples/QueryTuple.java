@@ -75,13 +75,14 @@ public class QueryTuple implements Serializable, Cloneable {
     }
 
     /**
-     * Initializes {@link QueryTuple} by method description
+     * Initializes {@link org.lightmare.criteria.tuples.QueryTuple} by method
+     * description
      * 
      * @param entityName
      * @param methodName
      * @param arguments
      * @param fieldName
-     * @return {@link QueryTuple} instance
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} instance
      */
     public static QueryTuple of(final String entityName, final String methodName, final String[] arguments,
             final String fieldName) {
@@ -89,10 +90,11 @@ public class QueryTuple implements Serializable, Cloneable {
     }
 
     /**
-     * Initializes {@link QueryTuple} by field name
+     * Initializes {@link org.lightmare.criteria.tuples.QueryTuple} by field
+     * name
      * 
      * @param fieldName
-     * @return {@link QueryTuple} instance
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} instance
      */
     public static QueryTuple of(final String fieldName) {
         return new QueryTuple(null, null, null, fieldName);

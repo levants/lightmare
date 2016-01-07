@@ -22,14 +22,11 @@
  */
 package org.lightmare.criteria.utils;
 
-import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
 /**
- * Utility class to use reflection {@link Method}, {@link Constructor} or any
- * {@link AccessibleObject} calls and get / set / modify {@link Field} value
+ * Utility class to use reflection {@link java.lang.reflect.Method},
+ * {@link java.lang.reflect.Constructor} or any
+ * {@link java.lang.reflect.AccessibleObject} calls and get / set / modify
+ * {@link java.lang.reflect.Field} value
  *
  * @author Levan Tsinadze
  */

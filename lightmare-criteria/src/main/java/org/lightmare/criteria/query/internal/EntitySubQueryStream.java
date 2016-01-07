@@ -28,7 +28,9 @@ import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream;
 
 /**
- * Implementation of {@link AbstractSubQueryStream} for sub query generation
+ * Implementation of
+ * {@link org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream}
+ * for sub query generation
  * 
  * @author Levan Tsinadze
  *

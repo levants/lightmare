@@ -152,7 +152,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from it
      * 
      * @param instruction
-     * @return {@link QueryTuple} from instruction
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from instruction
      */
     private static QueryTuple validateAndResolve(AbstractInsnNode instruction) {
 

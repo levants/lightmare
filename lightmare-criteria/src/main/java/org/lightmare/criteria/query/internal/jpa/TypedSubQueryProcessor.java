@@ -42,7 +42,7 @@ interface TypedSubQueryProcessor<T> extends SubQueryOperator<T> {
      * @param field
      * @param operator
      * @param stream
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, SubQueryType<S> stream) {
         String composed = stream.getOperator(operator);

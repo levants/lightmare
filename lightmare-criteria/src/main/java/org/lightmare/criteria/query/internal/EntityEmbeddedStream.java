@@ -24,14 +24,13 @@ package org.lightmare.criteria.query.internal;
 
 import java.io.Serializable;
 
-import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 import org.lightmare.criteria.tuples.EmbeddedTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
- * Implementation of {@link QueryStream} to process embedded or "one to one" or
- * "many to one" joined field statements
+ * Implementation of {@link org.lightmare.criteria.query.QueryStream} to process
+ * embedded or "one to one" or "many to one" joined field statements
  * 
  * @author Levan Tsinadze
  *

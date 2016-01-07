@@ -47,13 +47,13 @@ public class EmbeddedTuple extends QueryTuple {
     }
 
     /**
-     * Initializes {@link EmbeddedTuple} by
+     * Initializes {@link org.lightmare.criteria.tuples.EmbeddedTuple} by
      * {@link org.lightmare.criteria.tuples.QueryTuple} and embedded or related
      * entity field name
      * 
      * @param tuple
      * @param embeddedName
-     * @return {@link EmbeddedTuple} instance
+     * @return {@link org.lightmare.criteria.tuples.EmbeddedTuple} instance
      */
     public static EmbeddedTuple of(final QueryTuple tuple, final String embeddedName) {
         return new EmbeddedTuple(tuple, embeddedName);

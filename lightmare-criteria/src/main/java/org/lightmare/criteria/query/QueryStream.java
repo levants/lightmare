@@ -43,7 +43,7 @@ public interface QueryStream<T> extends QueryExpression<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F> QueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F> consumer);
 

@@ -66,11 +66,11 @@ public class ClassLoaderUtils {
     }
 
     /**
-     * Gets resource as {@link InputStream} by name from current {@link Thread}
-     * 's context class loader
+     * Gets resource as {@link java.io.InputStream} by name from current
+     * {@link Thread} 's context class loader
      * 
      * @param resource
-     * @return {@link InputStream} from current {@link ClassLoader}
+     * @return {@link java.io.InputStream} from current {@link ClassLoader}
      */
     public static InputStream getResourceAsStream(String resource) {
 
@@ -83,12 +83,12 @@ public class ClassLoaderUtils {
     }
 
     /**
-     * Gets resource as {@link InputStream} by name from {@link Class}'s class
+     * Gets resource as {@link java.io.InputStream} by name from {@link Class}'s class
      * loader
      * 
      * @param name
      * @param resource
-     * @return {@link InputStream} from current {@link ClassLoader}
+     * @return {@link java.io.InputStream} from current {@link ClassLoader}
      */
     private static InputStream getClassResourceAsStream(String name, String resource) {
 
@@ -101,10 +101,10 @@ public class ClassLoaderUtils {
     }
 
     /**
-     * Gets class file {@link InputStream} by name from current class loader
+     * Gets class file {@link java.io.InputStream} by name from current class loader
      * 
      * @param name
-     * @return {@link InputStream} from current {@link ClassLoader}
+     * @return {@link java.io.InputStream} from current {@link ClassLoader}
      */
     public static InputStream getClassAsStream(String name) {
 

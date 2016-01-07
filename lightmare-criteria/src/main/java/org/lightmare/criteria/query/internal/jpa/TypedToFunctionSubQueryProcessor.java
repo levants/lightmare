@@ -42,7 +42,7 @@ interface TypedToFunctionSubQueryProcessor<T> extends SubQueryOperator<T> {
      * @param value
      * @param operator
      * @param stream
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default <F, S> QueryStream<T> operateFunctionWthSubQuery(FunctionConsumer<T> consumer, String operator,
             SubQueryType<S> stream) {

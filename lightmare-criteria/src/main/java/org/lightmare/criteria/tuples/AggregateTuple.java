@@ -68,7 +68,8 @@ public class AggregateTuple {
     }
 
     /**
-     * Compares other {@link AggregateTuple} fields to current instance
+     * Compares other {@link org.lightmare.criteria.tuples.AggregateTuple}
+     * fields to current instance
      * 
      * @param other
      * @return <code>boolean</code> validation result

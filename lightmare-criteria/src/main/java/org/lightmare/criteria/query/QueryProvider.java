@@ -25,8 +25,9 @@ package org.lightmare.criteria.query;
 import javax.persistence.EntityManager;
 
 /**
- * Provider or factory class to initialize {@link QueryStream} by SELECT, UPDATE
- * or DELETE clause for entity type
+ * Provider or factory class to initialize
+ * {@link org.lightmare.criteria.query.QueryStream} by SELECT, UPDATE or DELETE
+ * clause for entity type
  * 
  * @author Levan Tsinadze
  *
@@ -43,7 +44,8 @@ public abstract class QueryProvider {
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link JPAQueryStream} with select statement
+     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     *         statement
      */
     public static <T> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
             final String entityAlias) {
@@ -55,7 +57,8 @@ public abstract class QueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link JPAQueryStream} with select statement
+     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     *         statement
      */
     public static <T> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
         return JPAQueryStream.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
@@ -67,7 +70,8 @@ public abstract class QueryProvider {
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link JPAQueryStream} with select statement
+     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     *         statement
      */
     public static <T> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
             final String entityAlias) {
@@ -79,7 +83,8 @@ public abstract class QueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link JPAQueryStream} with select statement
+     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     *         statement
      */
     public static <T> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
         return JPAQueryStream.update(em, entityType, QueryStream.DEFAULT_ALIAS);
@@ -91,7 +96,8 @@ public abstract class QueryProvider {
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link JPAQueryStream} with select statement
+     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     *         statement
      */
     public static <T> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
             final String entityAlias) {
@@ -103,7 +109,8 @@ public abstract class QueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link JPAQueryStream} with select statement
+     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     *         statement
      */
     public static <T> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
         return JPAQueryStream.query(em, entityType, QueryStream.DEFAULT_ALIAS);
@@ -115,7 +122,8 @@ public abstract class QueryProvider {
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link JPAQueryStream} with select statement
+     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     *         statement
      */
     public static <T> QueryStream<T> query(final EntityManager em, final Class<T> entityType,
             final String entityAlias) {
@@ -127,7 +135,8 @@ public abstract class QueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link JPAQueryStream} with select statement
+     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     *         statement
      */
     public static <T> QueryStream<T> query(final EntityManager em, Class<T> entityType) {
         return select(em, entityType);

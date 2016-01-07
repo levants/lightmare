@@ -155,30 +155,33 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     /**
-     * Generates {@link SubQueryStream} for entity type
+     * Generates
+     * {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
+     * for entity type
      * 
      * @param subType
-     * @return {@link SubQueryStream} for entity {@link Class}
+     * @return {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
+     *         for entity {@link Class}
      */
     public <S> SubQueryStream<S, T> subQuery(Class<S> subType) {
         return new EntitySubQueryStream<S, T>(this, subType);
     }
 
     /**
-     * Generates {@link QueryStream} for JOIN query
+     * Generates {@link org.lightmare.criteria.query.QueryStream} for JOIN query
      * 
      * @param subType
-     * @return {@link QueryStream} for JOIN query
+     * @return {@link org.lightmare.criteria.query.QueryStream} for JOIN query
      */
     public <S> SubQueryStream<S, T> joinStream(Class<S> subType) {
         return new EntityJoinProcessor<S, T>(this, subType);
     }
 
     /**
-     * Generates {@link QueryStream} for JOIN query
+     * Generates {@link org.lightmare.criteria.query.QueryStream} for JOIN query
      * 
      * @param tuple
-     * @return {@link QueryStream} for JOIN query
+     * @return {@link org.lightmare.criteria.query.QueryStream} for JOIN query
      */
     public <S> QueryStream<S> joinStream(QueryTuple tuple) {
 
@@ -204,11 +207,14 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     /**
-     * Creates {@link SubQueryStream} for instant {@link Class} entity type
+     * Creates
+     * {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
+     * for instant {@link Class} entity type
      * 
      * @param subType
      * @param consumer
-     * @return {@link SubQueryStream} for entity type
+     * @return {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
+     *         for entity type
      */
     private <S> QueryStream<S> initSubQuery(Class<S> subType, QueryConsumer<S> consumer) {
 

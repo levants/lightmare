@@ -134,7 +134,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param type
      * @param memberName
      * @param supplier
-     * @return {@link MemberTuple} in type hierarchy
+     * @return {@link org.lightmare.criteria.utils.AbstractMemberUtils.MemberTuple}
+     *         in type hierarchy
      */
     private static <T extends Member> MemberTuple<T> findMember(Class<?> type, String memberName,
             MemberSupplier<T> supplier) {
@@ -155,7 +156,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param type
      * @param methodName
      * @param parameters
-     * @return {@link MemberTuple} for {@link java.lang.reflect.Method}
+     * @return {@link org.lightmare.criteria.utils.AbstractMemberUtils.MemberTuple}
+     *         for {@link java.lang.reflect.Method}
      */
     public static MemberTuple<Method> findMethodAndType(Class<?> type, String methodName, Class<?>... parameters) {
         return findMember(type, methodName, (t, m) -> t.getDeclaredMethod(m, parameters));
