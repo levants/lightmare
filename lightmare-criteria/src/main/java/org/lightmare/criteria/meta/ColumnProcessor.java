@@ -41,7 +41,7 @@ public class ColumnProcessor {
 
     /**
      * Gets {@link javax.persistence.Temporal} annotation from
-     * {@link AnnotatedElement} instance
+     * {@link java.lang.reflect.AnnotatedElement} instance
      * 
      * @param element
      * @return {@link javax.persistence.Temporal} annotation

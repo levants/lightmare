@@ -32,7 +32,8 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
- * Utility class to work with {@link Collection} and {@link Map} implementations
+ * Utility class to work with {@link java.util.Collection} and
+ * {@link java.util.Map} implementations
  *
  * @author Levan Tsinadze
  */
@@ -57,7 +58,7 @@ public abstract class CollectionUtils {
     public static final Object[] EMPTY_ARRAY = {};
 
     /**
-     * Checks if passed {@link Collection} instance is not empty
+     * Checks if passed {@link java.util.Collection} instance is not empty
      *
      * @param collection
      * @return <code>boolean</code> validation result
@@ -67,8 +68,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks passed {@link Collection} instance on null and on emptiness
-     * returns true if it is not null and is not empty
+     * Checks passed {@link java.util.Collection} instance on null and on
+     * emptiness returns true if it is not null and is not empty
      *
      * @param collection
      * @return <code>boolean</code> validation result
@@ -78,7 +79,7 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks passed {@link Map} instance on null and emptiness
+     * Checks passed {@link java.util.Map} instance on null and emptiness
      *
      * @param map
      * @return <code>boolean</code> validation result
@@ -88,8 +89,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks passed {@link Map} instance on null and emptiness and calls
-     * consumer
+     * Checks passed {@link java.util.Map} instance on null and emptiness and
+     * calls consumer
      * 
      * @param map
      * @param consumer
@@ -102,7 +103,7 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if passed {@link Map} instance is null or is empty
+     * Checks if passed {@link java.util.Map} instance is null or is empty
      *
      * @param map
      * @return <code>boolean</code> validation result
@@ -112,7 +113,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if passed {@link Collection} instance is null or is empty
+     * Checks if passed {@link java.util.Collection} instance is null or is
+     * empty
      *
      * @param collection
      * @return <code>boolean</code> validation result
@@ -122,8 +124,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if there is null or empty {@link Collection} instance is passed
-     * collections
+     * Checks if there is null or empty {@link java.util.Collection} instance is
+     * passed collections
      *
      * @param collections
      * @return <code>boolean</code> validation result
@@ -151,8 +153,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if each of passed {@link Map} instances is not null and is not
-     * empty
+     * Checks if each of passed {@link java.util.Map} instances is not null and
+     * is not empty
      *
      * @param maps
      * @return <code>boolean</code> validation result
@@ -183,8 +185,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if each of passed {@link Collection} instances is not null and is
-     * not empty
+     * Checks if each of passed {@link java.util.Collection} instances is not
+     * null and is not empty
      *
      * @param collections
      * @return <code>boolean</code> validation result
@@ -205,8 +207,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Opposite to {@link Map#containsKey(Object)} method for passed {@link Map}
-     * map and K key
+     * Opposite to {@link java.util.Map#containsKey(Object)} method for passed
+     * {@link java.util.Map} map and K key
      *
      * @param map
      * @param key
@@ -217,8 +219,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Opposite to {@link Collection#contains(Object)} method for passed
-     * {@link Collection} collection and E element
+     * Opposite to {@link java.util.Collection#contains(Object)} method for
+     * passed {@link java.util.Collection} collection and E element
      *
      * @param collection
      * @param element
@@ -254,7 +256,7 @@ public abstract class CollectionUtils {
      * 
      * @param collection
      * @param defaultValue
-     * @return T first element from {@link Collection} of default
+     * @return T first element from {@link java.util.Collection} of default
      */
     private static <T> T getFirstFromCollection(Collection<T> collection, T defaultValue) {
 
@@ -274,7 +276,7 @@ public abstract class CollectionUtils {
      * Peaks first element from collection
      *
      * @param collection
-     * @return T first element from {@link Collection} of default
+     * @return T first element from {@link java.util.Collection} of default
      */
     public static <T> T getFirst(Collection<T> collection, T defaultValue) {
 
@@ -352,12 +354,12 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Gets first valid element from {@link Collection} for which
-     * {@link Predicate} holds
+     * Gets first valid element from {@link java.util.Collection} for which
+     * {@link java.util.function.Predicate} holds
      * 
      * @param collection
      * @param predicate
-     * @return E first chosen element by {@link Predicate}
+     * @return E first chosen element by {@link java.util.function.Predicate}
      */
     public static <E> E getFirstValid(Collection<E> collection, Predicate<E> predicate) {
         return collection.stream().filter(predicate::test).findFirst().get();

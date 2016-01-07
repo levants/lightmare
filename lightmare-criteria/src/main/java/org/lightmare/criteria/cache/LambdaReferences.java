@@ -103,7 +103,8 @@ public enum LambdaReferences {
     }
 
     /**
-     * Adds {@link LambdaReference} instance to be watched for finalization
+     * Adds {@link org.lightmare.criteria.cache.LambdaReference} instance to be
+     * watched for finalization
      * 
      * @param lambdaType
      */
@@ -115,7 +116,8 @@ public enum LambdaReferences {
     }
 
     /**
-     * Adds {@link LambdaReference} instance to be watched for finalization
+     * Adds {@link org.lightmare.criteria.cache.LambdaReference} instance to be
+     * watched for finalization
      * 
      * @param lambdaType
      */
@@ -124,7 +126,8 @@ public enum LambdaReferences {
     }
 
     /**
-     * Adds {@link LambdaReference} instance to be watched for finalization
+     * Adds {@link org.lightmare.criteria.cache.LambdaReference} instance to be
+     * watched for finalization
      * 
      * @param lambda
      */

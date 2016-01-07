@@ -30,7 +30,8 @@ import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
- * Adds reflection data to {@link QueryTuple} instance
+ * Adds reflection data to {@link org.lightmare.criteria.tuples.QueryTuple}
+ * instance
  * 
  * @author Levan Tsinadze
  *

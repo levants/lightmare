@@ -34,6 +34,16 @@ import java.lang.reflect.InvocationTargetException;
 abstract class AbstractClassUtils extends Primitives {
 
     /**
+     * Wraps passed {@link Throwable} in {@link RuntimeException} with message
+     * 
+     * @param ex
+     * @return {@link RuntimeException} wrapped
+     */
+    private static RuntimeException wrap(Throwable ex) {
+        return new RuntimeException(ex.getMessage(), ex);
+    }
+
+    /**
      * Unwraps target {@link Throwable} from passed
      * {@link java.lang.reflect.InvocationTargetException} instance
      *
@@ -46,9 +56,9 @@ abstract class AbstractClassUtils extends Primitives {
 
         Throwable targetException = ex.getTargetException();
         if (targetException == null) {
-            exception = new RuntimeException(ex.getMessage(), ex);
+            exception = wrap(ex);
         } else {
-            exception = new RuntimeException(targetException.getMessage(), targetException);
+            exception = wrap(targetException);
         }
 
         return exception;
