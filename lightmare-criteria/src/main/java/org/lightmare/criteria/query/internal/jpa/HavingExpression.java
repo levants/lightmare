@@ -41,7 +41,8 @@ public interface HavingExpression<T> {
      * Generates HAVING clause for JPA query
      * 
      * @param operator
-     * @return {@link HavingExpression} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.HavingExpression}
+     *         current instance
      */
     HavingExpression<T> appendHaving(Object operator);
 
@@ -50,7 +51,8 @@ public interface HavingExpression<T> {
      * 
      * @param operator
      * @param value
-     * @return {@link HavingExpression} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.HavingExpression}
+     *         current instance
      */
     HavingExpression<T> operate(String operator, Number value);
 
@@ -60,7 +62,8 @@ public interface HavingExpression<T> {
      * @param operator
      * @param value1
      * @param value2
-     * @return {@link HavingExpression} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.HavingExpression}
+     *         current instance
      */
     HavingExpression<T> operate(String operator, Number value1, Number value2);
 

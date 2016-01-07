@@ -75,7 +75,8 @@ public interface JPAQueryWrapper<T> {
      * @param maxResult
      *            maximum number of results to retrieve
      *
-     * @return the same {@link QueryStream} instance
+     * @return the same {@link org.lightmare.criteria.query.QueryStream}
+     *         instance
      *
      * @throws IllegalArgumentException
      *             if the argument is negative
@@ -99,7 +100,8 @@ public interface JPAQueryWrapper<T> {
      * @param startPosition
      *            position of the first result, numbered from 0
      *
-     * @return the same {@link QueryStream} instance
+     * @return the same {@link org.lightmare.criteria.query.QueryStream}
+     *         instance
      *
      * @throws IllegalArgumentException
      *             if the argument is negative
@@ -131,7 +133,8 @@ public interface JPAQueryWrapper<T> {
      * @param value
      *            value for the property or hint
      *
-     * @return the same {@link QueryStream} instance
+     * @return the same {@link org.lightmare.criteria.query.QueryStream}
+     *         instance
      *
      * @throws IllegalArgumentException
      *             if the second argument is not valid for the implementation
@@ -156,7 +159,8 @@ public interface JPAQueryWrapper<T> {
      * @param flushMode
      *            flush mode
      *
-     * @return the same {@link QueryStream} instance
+     * @return the same {@link org.lightmare.criteria.query.QueryStream}
+     *         instance
      */
     QueryStream<T> setFlushMode(FlushModeType flushMode);
 
@@ -166,7 +170,8 @@ public interface JPAQueryWrapper<T> {
      * @param lockMode
      *            lock mode
      *
-     * @return the same {@link QueryStream} instance
+     * @return the same {@link org.lightmare.criteria.query.QueryStream}
+     *         instance
      *
      * @throws IllegalStateException
      *             if the query is found not to be a Java Persistence query
@@ -176,9 +181,9 @@ public interface JPAQueryWrapper<T> {
 
     // ================================Wrapped JPA Elements===================//
     /**
-     * Gets wrapped {@link EntityManager} instance
+     * Gets wrapped {@link javax.persistence.EntityManager} instance
      * 
-     * @return {@link EntityManager} instance
+     * @return {@link javax.persistence.EntityManager} instance
      */
     EntityManager getEntityManager();
 

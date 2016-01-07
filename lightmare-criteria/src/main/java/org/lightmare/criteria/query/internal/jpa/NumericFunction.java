@@ -40,7 +40,8 @@ interface NumericFunction<T> {
      * 
      * @param x
      * @param operator
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     <S, F> JPAFunction<T> operateNumeric(EntityField<S, F> x, String operator);
 
@@ -50,7 +51,8 @@ interface NumericFunction<T> {
      * @param x
      * @param y
      * @param operator
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     JPAFunction<T> operateNumeric(Object x, Object y, String operator);
 

@@ -43,7 +43,7 @@ interface FuntionToColumnExpression<T> {
      * @param function
      * @param operator
      * @param field
-     * @return {@link QueryStream} current instance
+     * @return org.lightmare.criteria.query.QueryStream} current instance
      */
     <F> QueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field);
 

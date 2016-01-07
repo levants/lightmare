@@ -52,7 +52,7 @@ public interface JoinExpressions<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field, QueryConsumer<E> consumer);
 
@@ -60,7 +60,7 @@ public interface JoinExpressions<T> {
      * Method for INNER JOIN function call without conditions
      * 
      * @param field
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field) {
         return join(field, null);
@@ -71,7 +71,7 @@ public interface JoinExpressions<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field, QueryConsumer<E> consumer);
 
@@ -79,7 +79,7 @@ public interface JoinExpressions<T> {
      * Method for LEFT JOIN function call without conditions
      * 
      * @param field
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field) {
         return leftJoin(field, null);
@@ -90,7 +90,7 @@ public interface JoinExpressions<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field, QueryConsumer<E> consumer);
 
@@ -98,7 +98,7 @@ public interface JoinExpressions<T> {
      * Method for FETCH JOIN function call without conditions
      * 
      * @param field
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field) {
         return fetchJoin(field, null);

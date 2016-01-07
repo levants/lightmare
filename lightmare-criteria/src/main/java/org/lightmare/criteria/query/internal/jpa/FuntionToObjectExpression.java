@@ -42,7 +42,8 @@ interface FuntionToObjectExpression<T> {
      * @param function
      * @param operator
      * @param value
-     * @return {@link QueryStream} for current entity type
+     * @return {@link org.lightmare.criteria.query.QueryStream} for current
+     *         entity type
      */
     QueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value);
 

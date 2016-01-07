@@ -121,7 +121,8 @@ public interface SubQuery<T> {
      * 
      * @param type
      * @param consumer
-     * @return {@link All} all sub query stream
+     * @return {@link org.lightmare.criteria.query.internal.jpa.SubQuery.All}
+     *         all sub query stream
      */
     static <S> All<S> all(Class<S> type, QueryConsumer<S> consumer) {
         return new All<S>(type, consumer);
@@ -132,7 +133,8 @@ public interface SubQuery<T> {
      * 
      * @param type
      * @param consumer
-     * @return {@link Any} all sub query stream
+     * @return {@link org.lightmare.criteria.query.internal.jpa.SubQuery.Any}
+     *         all sub query stream
      */
     static <S> Any<S> any(Class<S> type, QueryConsumer<S> consumer) {
         return new Any<S>(type, consumer);
@@ -143,7 +145,8 @@ public interface SubQuery<T> {
      * 
      * @param type
      * @param consumer
-     * @return {@link Some} all sub query stream
+     * @return {@link org.lightmare.criteria.query.internal.jpa.SubQuery.Some}
+     *         all sub query stream
      */
     static <S> Some<S> some(Class<S> type, QueryConsumer<S> consumer) {
         return new Some<S>(type, consumer);

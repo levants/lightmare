@@ -46,7 +46,7 @@ interface ColumnExpression<T> {
      * @param field1
      * @param field2
      * @param operator
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
             String operator);
@@ -58,7 +58,7 @@ interface ColumnExpression<T> {
      * @param field1
      * @param operator2
      * @param field2
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F, E, S, L> QueryStream<T> operate(EntityField<T, ? extends F> field1, String operator1,
             EntityField<S, ? extends F> field2, String operator2, EntityField<L, E> field3);
@@ -70,7 +70,7 @@ interface ColumnExpression<T> {
      * @param field2
      * @param field3
      * @param operator
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
             EntityField<S, ? extends F> field3, String operator);
@@ -159,7 +159,7 @@ interface ColumnExpression<T> {
      * @param field1
      * @param field2
      * @param operator
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F, S> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
             String operator);

@@ -42,7 +42,7 @@ interface FunctionToFunctionExpression<T> {
      * @param function1
      * @param function2
      * @param operator
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
 

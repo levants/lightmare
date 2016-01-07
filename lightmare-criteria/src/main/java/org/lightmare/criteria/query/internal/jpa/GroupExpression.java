@@ -49,7 +49,8 @@ public interface GroupExpression<T> {
      * Group aggregate functions by fields
      * 
      * @param select
-     * @return {@link QueryStream} for {@link Object} array
+     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     *         {@link Object} array
      */
     QueryStream<Object[]> groupBy(Select select);
 
@@ -57,7 +58,8 @@ public interface GroupExpression<T> {
      * Grouping expression with consumer
      * 
      * @param select
-     * @return {@link QueryStream} for {@link Object} array
+     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     *         {@link Object} array
      */
     QueryStream<Object[]> group(SelectConsumer select);
 
@@ -65,7 +67,8 @@ public interface GroupExpression<T> {
      * Group by fields
      * 
      * @param field
-     * @return {@link QueryStream} for {@link Object} array
+     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     *         {@link Object} array
      */
     <F> QueryStream<Object[]> groupBy(EntityField<T, F> field);
 }

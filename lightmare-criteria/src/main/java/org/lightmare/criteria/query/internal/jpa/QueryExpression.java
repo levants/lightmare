@@ -53,7 +53,7 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, Expression<T>, C
      * 
      * @param field
      * @param value
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F> QueryStream<T> set(EntityField<T, F> field, F value);
 
@@ -62,14 +62,14 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, Expression<T>, C
     /**
      * WHERE clause appender
      * 
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     QueryStream<T> where();
 
     /**
      * AND part appender
      * 
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default QueryStream<T> and() {
         return appendBody(Operators.AND);
@@ -78,7 +78,7 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, Expression<T>, C
     /**
      * OR part appender
      * 
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default QueryStream<T> or() {
         return appendBody(Operators.OR);
@@ -87,7 +87,7 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, Expression<T>, C
     /**
      * Opens bracket in query body
      * 
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default QueryStream<T> openBracket() {
         return appendBody(Operators.OPEN_BRACKET);
@@ -96,7 +96,7 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, Expression<T>, C
     /**
      * Closes bracket in query body
      * 
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default QueryStream<T> closeBracket() {
         return appendBody(Operators.CLOSE_BRACKET);
@@ -106,7 +106,7 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, Expression<T>, C
      * Creates query part in brackets
      * 
      * @param consumer
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     QueryStream<T> brackets(QueryConsumer<T> consumer);
 
@@ -116,7 +116,7 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, Expression<T>, C
      * Appends to generated query prefix custom clause
      * 
      * @param clause
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     QueryStream<T> appendPrefix(Object clause);
 
@@ -124,7 +124,7 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, Expression<T>, C
      * Appends to generated FROM clause
      * 
      * @param clause
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     QueryStream<T> appendFrom(Object clause);
 
@@ -132,7 +132,7 @@ public interface QueryExpression<T> extends JPAQueryWrapper<T>, Expression<T>, C
      * Appends to generated query body custom clause
      * 
      * @param clause
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     QueryStream<T> appendBody(Object clause);
 

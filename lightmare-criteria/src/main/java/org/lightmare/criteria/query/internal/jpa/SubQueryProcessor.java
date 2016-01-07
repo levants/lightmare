@@ -43,19 +43,22 @@ public interface SubQueryProcessor<T>
     // =========================sub=queries==================================//
 
     /**
-     * Generates {@link QueryStream} for S type
+     * Generates {@link org.lightmare.criteria.query.QueryStream} for S type
      * 
      * @param subType
      * @param consumer
-     * @return {@link QueryStream} similar stream for sub query
+     * @return {@link org.lightmare.criteria.query.QueryStream} similar stream
+     *         for sub query
      */
     <S> QueryStream<T> operateSubQuery(Class<S> subType, QueryConsumer<S> consumer);
 
     /**
-     * Generates {@link QueryStream} for S type without conditions
+     * Generates {@link org.lightmare.criteria.query.QueryStream} for S type
+     * without conditions
      * 
      * @param consumer
-     * @return {@link QueryStream} similar stream for sub query
+     * @return {@link org.lightmare.criteria.query.QueryStream} similar stream
+     *         for sub query
      */
     default QueryStream<T> subQuery(QueryConsumer<T> consumer) {
         return operateSubQuery(getEntityType(), consumer);
@@ -69,7 +72,7 @@ public interface SubQueryProcessor<T>
      * @param field
      * @param subType
      * @param consumer
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
         return operateSubQuery(field, Operators.IN, subType, consumer);
@@ -81,7 +84,7 @@ public interface SubQueryProcessor<T>
      * @param field
      * @param subType
      * @param consumer
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
         return operateSubQuery(field, Operators.NOT_IN, subType, consumer);
@@ -118,7 +121,7 @@ public interface SubQueryProcessor<T>
      * 
      * @param subType
      * @param consumer
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default <F, S> QueryStream<T> exists(Class<S> subType, QueryConsumer<S> consumer) {
         return operateSubQuery(Operators.EXISTS, subType, consumer);
@@ -129,7 +132,7 @@ public interface SubQueryProcessor<T>
      * 
      * @param subType
      * @param consumer
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     default <F, S> QueryStream<T> notExists(Class<S> subType, QueryConsumer<S> consumer) {
         return operateSubQuery(Operators.NOT_EXISTS, subType, consumer);

@@ -86,7 +86,7 @@ public interface SelectExpression<T> {
      * 
      * @param type
      * @param select
-     * @return {@link QueryStream} for special type
+     * @return {@link org.lightmare.criteria.query.QueryStream} for special type
      */
     <F> QueryStream<F> selectType(Class<F> type, Select select);
 
@@ -94,7 +94,8 @@ public interface SelectExpression<T> {
      * Custom select expression
      * 
      * @param select
-     * @return {@link QueryStream} for {@link Object} array
+     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     *         {@link Object} array
      */
     default QueryStream<Object[]> select(Select select) {
         return selectType(Object[].class, select);
@@ -105,7 +106,7 @@ public interface SelectExpression<T> {
      * 
      * @param type
      * @param select
-     * @return {@link QueryStream} for special type
+     * @return {@link org.lightmare.criteria.query.QueryStream} for special type
      */
     default <F> QueryStream<F> selectType(Class<F> type, SelectConsumer select) {
 
@@ -121,7 +122,8 @@ public interface SelectExpression<T> {
      * Custom select expression
      * 
      * @param select
-     * @return {@link QueryStream} for {@link Object} array
+     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     *         {@link Object} array
      */
     default QueryStream<Object[]> selectAll(SelectConsumer select) {
 
@@ -138,7 +140,7 @@ public interface SelectExpression<T> {
      * 
      * @param expression
      * @param types
-     * @return {@link QueryStream} for special type
+     * @return {@link org.lightmare.criteria.query.QueryStream} for special type
      */
     <F> QueryStream<F> select(String expression, Class<F> type);
 
@@ -146,7 +148,8 @@ public interface SelectExpression<T> {
      * Custom select expression
      * 
      * @param expression
-     * @return {@link QueryStream} for {@link Object} array
+     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     *         {@link Object} array
      */
     default QueryStream<Object[]> select(String expression) {
         return select(expression, Object[].class);
@@ -158,7 +161,7 @@ public interface SelectExpression<T> {
      * Gets instant field by type
      * 
      * @param field
-     * @return {@link QueryStream} for field type
+     * @return {@link org.lightmare.criteria.query.QueryStream} for field type
      */
     <F> QueryStream<F> selectType(EntityField<T, F> field);
 }

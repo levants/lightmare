@@ -41,7 +41,8 @@ public interface ResultStream<T> {
     /**
      * Gets query parameters
      * 
-     * @return {@link Set} of {@link ParameterTuple}s
+     * @return java.util.Set} of
+     *         {@link org.lightmare.criteria.tuples.ParameterTuple}s
      */
     Set<ParameterTuple> getParameters();
 
@@ -57,7 +58,7 @@ public interface ResultStream<T> {
      * Runs generated query {@link javax.persistence.Query#getResultList()} and
      * retrieves result list
      * 
-     * @return {@link List} of query results
+     * @return {@link java.util.List} of query results
      * @see javax.persistence.Query#getResultList()
      */
     List<T> toList();
@@ -82,8 +83,9 @@ public interface ResultStream<T> {
     int execute();
 
     /**
-     * Calls {@link ResultStream#toList()} and retrieves first or passed default
-     * result if no element was found
+     * Calls
+     * {@link org.lightmare.criteria.query.internal.jpa.ResultStream#toList()}
+     * and retrieves first or passed default result if no element was found
      * 
      * @param defaultValue
      * @return T query first or passed default result
@@ -99,8 +101,9 @@ public interface ResultStream<T> {
     }
 
     /**
-     * Calls {@link ResultStream#toList()} and retrieves first result or null if
-     * no element was found
+     * Calls
+     * {@link org.lightmare.criteria.query.internal.jpa.ResultStream#toList()}
+     * and retrieves first result or null if no element was found
      * 
      * @return T query first result
      */

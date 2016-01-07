@@ -44,7 +44,7 @@ interface Expression<T> {
     /**
      * Opens bracket in query body
      * 
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     QueryStream<T> openBracket();
 
@@ -55,7 +55,7 @@ interface Expression<T> {
      * 
      * @param field
      * @param operator
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F> QueryStream<T> operate(EntityField<T, F> field, String operator);
 
@@ -65,7 +65,7 @@ interface Expression<T> {
      * @param field
      * @param value
      * @param operator
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator);
 
@@ -76,7 +76,7 @@ interface Expression<T> {
      * @param value1
      * @param value2
      * @param operator
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2, String operator);
 
@@ -88,7 +88,7 @@ interface Expression<T> {
      * @param value1
      * @param operator2
      * @param value2
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F> QueryStream<T> operate(EntityField<T, ? extends F> field, String operator1, Object value1, String operator2,
             Object value2);
@@ -204,13 +204,13 @@ interface Expression<T> {
     // ======================================================================//
 
     /**
-     * Generates query part for instant field with {@link Collection} parameter
-     * and operator
+     * Generates query part for instant field with {@link java.util.Collection}
+     * parameter and operator
      * 
      * @param field
      * @param values
      * @param operator
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <F> QueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
 
@@ -221,7 +221,7 @@ interface Expression<T> {
      * @param object
      * @param field
      * @param operator
-     * @return {@link QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
     <S, F> QueryStream<T> operateCollection(Object value, EntityField<S, Collection<F>> field, String operator);
 

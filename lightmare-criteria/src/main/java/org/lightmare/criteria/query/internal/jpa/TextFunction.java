@@ -45,7 +45,8 @@ interface TextFunction<T> {
      * @param x
      * @param y
      * @param z
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     JPAFunction<T> operateText(String function, Object x, Object y, Object z);
 
@@ -57,7 +58,8 @@ interface TextFunction<T> {
      * @param x
      * @param pattern
      * @param y
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     JPAFunction<T> generateText(String function, String prefix, Object x, String pattern, Object y);
 
@@ -67,7 +69,8 @@ interface TextFunction<T> {
      * @param function
      * @param pattern
      * @param y
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> generateText(String function, String pattern, Object y) {
         return generateText(function, StringUtils.EMPTY, null, pattern, y);
@@ -79,7 +82,8 @@ interface TextFunction<T> {
      * @param function
      * @param x
      * @param y
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> operateText(String function, Object x, Object y) {
         return operateText(function, x, y, null);
@@ -90,7 +94,8 @@ interface TextFunction<T> {
      * 
      * @param function
      * @param x
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> operateText(String function, Object x) {
         return operateText(function, x, null, null);
@@ -104,7 +109,8 @@ interface TextFunction<T> {
      * @param y
      *            string expression
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> concat(EntityField<T, String> x, EntityField<T, String> y) {
         return operateText(Texts.CONCAT, x, y);
@@ -118,7 +124,8 @@ interface TextFunction<T> {
      * @param y
      *            string
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> concat(EntityField<T, String> x, String y) {
         return operateText(Texts.CONCAT, x, StringUtils.quote(y));
@@ -132,7 +139,8 @@ interface TextFunction<T> {
      * @param y
      *            string expression
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> concat(String x, EntityField<T, String> y) {
         return operateText(Texts.CONCAT, StringUtils.quote(x), y);
@@ -148,7 +156,8 @@ interface TextFunction<T> {
      * @param from
      *            start position
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> substring(EntityField<T, String> x, int from) {
         return operateText(Texts.SUBSTRING, x, from);
@@ -165,7 +174,8 @@ interface TextFunction<T> {
      * @param len
      *            length
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> substring(EntityField<T, String> x, int from, int len) {
         return operateText(Texts.SUBSTRING, x, from, len);
@@ -177,7 +187,8 @@ interface TextFunction<T> {
      * @param x
      *            expression for string to trim
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> trim(EntityField<T, String> x) {
         return operateText(Texts.TRIM, x);
@@ -191,7 +202,8 @@ interface TextFunction<T> {
      * @param x
      *            expression for string to trim
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> trim(Trimspec ts, EntityField<T, String> x) {
         return operateText(Texts.TRIM, ts.pattern, x);
@@ -205,7 +217,8 @@ interface TextFunction<T> {
      * @param x
      *            expression for string to trim
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> trim(EntityField<T, Character> t, EntityField<T, String> x) {
         return generateText(Texts.TRIM, StringUtils.EMPTY, t, Parts.TRIM_FROM, x);
@@ -221,7 +234,8 @@ interface TextFunction<T> {
      * @param x
      *            expression for string to trim
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> trim(EntityField<T, Character> t, Trimspec ts, EntityField<T, String> x) {
         return generateText(Texts.TRIM, ts.prefix, t, Parts.TRIM_FROM, x);
@@ -235,7 +249,8 @@ interface TextFunction<T> {
      * @param x
      *            expression for string to trim
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> trim(char ch, EntityField<T, String> x) {
         return operateText(Texts.TRIM, Trimspec.locateAll(ch), x);
@@ -251,7 +266,8 @@ interface TextFunction<T> {
      * @param x
      *            expression for string to trim
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> trim(char ch, Trimspec ts, EntityField<T, String> x) {
         return generateText(Texts.TRIM, ts.locate(ch), x);
@@ -263,7 +279,8 @@ interface TextFunction<T> {
      * @param x
      *            string expression
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> lower(EntityField<T, String> x) {
         return operateText(Texts.LOWER, x);
@@ -275,7 +292,8 @@ interface TextFunction<T> {
      * @param x
      *            string expression
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> upper(EntityField<T, String> x) {
         return operateText(Texts.UPPER, x);
@@ -287,7 +305,8 @@ interface TextFunction<T> {
      * @param x
      *            string expression
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> length(EntityField<T, String> x) {
         return operateText(Texts.LENGTH, x);
@@ -304,7 +323,8 @@ interface TextFunction<T> {
      * @param pattern
      *            expression for string to be located
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> locate(EntityField<T, String> x, EntityField<T, String> pattern) {
         return operateText(Texts.LOCATE, x, pattern);
@@ -321,7 +341,8 @@ interface TextFunction<T> {
      * @param pattern
      *            string to be located
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> locate(EntityField<T, String> x, String pattern) {
         return operateText(Texts.LOCATE, x, StringUtils.quote(pattern));
@@ -340,7 +361,8 @@ interface TextFunction<T> {
      * @param from
      *            expression for position at which to start search
      *
-     * @return {@link JPAFunction} current instance
+     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     *         current instance
      */
     default JPAFunction<T> locate(EntityField<T, String> x, EntityField<T, String> pattern, int from) {
         return operateText(Texts.LOCATE, pattern, x, from);
