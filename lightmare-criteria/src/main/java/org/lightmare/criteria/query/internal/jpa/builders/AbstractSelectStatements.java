@@ -31,13 +31,13 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.SelectExpression;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Implementation of {@link SelectExpression} to generate SELECT for instant
- * fields
+ * Implementation of
+ * {@link org.lightmare.criteria.query.internal.jpa.SelectExpression} to
+ * generate SELECT for instant fields
  * 
  * @author Levan Tsinadze
  *

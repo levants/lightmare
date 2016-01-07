@@ -46,23 +46,30 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
     }
 
     /**
-     * Gets {@link Set} of {@link AggregateTuple} for GROUP BY processing
+     * Gets {@link java.util.Set} of
+     * {@link org.lightmare.criteria.tuples.AggregateTuple} for GROUP BY
+     * processing
      * 
-     * @return {@link Set} of {@link AggregateTuple}
+     * @return {@link java.util.Set} of
+     *         {@link org.lightmare.criteria.tuples.AggregateTuple}
      */
     protected abstract Set<AggregateTuple> getAggregateFields();
 
     /**
-     * Gets {@link Queue} of {@link AggregateTuple} for HAVING processing
+     * Gets {@link java.util.Queue} of
+     * {@link org.lightmare.criteria.tuples.AggregateTuple} for HAVING
+     * processing
      * 
-     * @return {@link Queue} of {@link AggregateTuple}
+     * @return {@link java.util.Queue} of
+     *         {@link org.lightmare.criteria.tuples.AggregateTuple}
      */
     protected abstract Queue<AggregateTuple> getAggregateQueue();
 
     /**
-     * Creates {@link TypedQuery} from generated SQL for SELECT statements
+     * Creates {@link javax.persistence.TypedQuery} from generated SQL for
+     * SELECT statements
      * 
-     * @return {@link TypedQuery} for entity type
+     * @return {@link javax.persistence.TypedQuery} for entity type
      */
     protected TypedQuery<T> initTypedQuery() {
 
@@ -76,9 +83,10 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
     }
 
     /**
-     * Generates {@link TypedQuery} for COUNT JPA-QL statement
+     * Generates {@link javax.persistence.TypedQuery} for COUNT JPA-QL statement
      * 
-     * @return {@link TypedQuery} with {@link Long} type for element count
+     * @return {@link javax.persistence.TypedQuery} with {@link Long} type for
+     *         element count
      */
     protected TypedQuery<Long> initCountQuery() {
 
@@ -92,7 +100,8 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
     }
 
     /**
-     * Creates {@link Query} from generated SQL for UPDATE or DELETE statements
+     * Creates {@link javax.persistence.Query} from generated SQL for UPDATE or
+     * DELETE statements
      * 
      * @return for bulk modification
      */

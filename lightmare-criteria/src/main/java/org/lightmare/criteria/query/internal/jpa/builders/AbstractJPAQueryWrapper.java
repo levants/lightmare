@@ -30,12 +30,12 @@ import javax.persistence.LockModeType;
 import javax.persistence.Query;
 
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.JPAQueryWrapper;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Abstract implementation of {@link JPAQueryWrapper} interface
+ * Abstract implementation of
+ * {@link org.lightmare.criteria.query.internal.jpa.JPAQueryWrapper} interface
  * 
  * @author Levan Tsinadze
  *
@@ -145,7 +145,8 @@ abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
     }
 
     /**
-     * Adds additional JPA configuration to passed {@link Query} instance
+     * Adds additional JPA configuration to passed
+     * {@link javax.persistence.Query} instance
      * 
      * @param query
      */
