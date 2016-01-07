@@ -28,6 +28,7 @@ import java.util.Objects;
 import org.apache.log4j.Logger;
 import org.lightmare.criteria.cache.LambdaCache;
 import org.lightmare.criteria.cache.QueryCache;
+import org.lightmare.criteria.meta.EntityValidator;
 import org.lightmare.criteria.resolvers.FieldResolver;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -129,22 +130,6 @@ public class LambdaUtils {
     }
 
     /**
-     * Validates if entity {@link Class} in
-     * {@link org.lightmare.criteria.tuples.QueryTuple} is not valid
-     * 
-     * @return <code>boolean</code> validation result
-     */
-    private static boolean typeMismatched(Class<?> type, QueryTuple tuple) {
-
-        boolean valid;
-
-        Class<?> resolved = tuple.getEntityType();
-        valid = (ObjectUtils.notEquals(resolved, type) && resolved.isAssignableFrom(type));
-
-        return valid;
-    }
-
-    /**
      * Sets generic parameters to passed
      * {@link org.lightmare.criteria.tuples.QueryTuple} by entity {@link Class}
      * instance
@@ -154,10 +139,10 @@ public class LambdaUtils {
      */
     private static void setGenericType(Class<?> type, QueryTuple tuple) {
 
-        if (typeMismatched(type, tuple)) {
+        if (EntityValidator.typeMismatched(type, tuple)) {
             tuple.setTypeAndName(type);
             FieldResolver.setGenericData(tuple);
-        } else if (tuple.getField() == null) {
+        } else if (tuple.notSetGenericParameters()) {
             FieldResolver.setGenericData(tuple);
         }
     }

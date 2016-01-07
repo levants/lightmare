@@ -86,6 +86,7 @@ public class EntityProcessor {
         tuple.setMethod(method);
         Field field = ClassUtils.findField(entityType, tuple.getFieldName());
         tuple.setField(field);
+        tuple.switchHasGenericParameters();
     }
 
     /**

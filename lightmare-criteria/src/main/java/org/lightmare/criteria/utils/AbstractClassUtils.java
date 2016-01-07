@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.utils;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.InvocationTargetException;
 
@@ -62,6 +63,29 @@ abstract class AbstractClassUtils extends Primitives {
         }
 
         return exception;
+    }
+
+    /**
+     * Validates if passed {@link Class} is not annotated with annotation type
+     * 
+     * @param type
+     * @param annotationType
+     * @return <code> boolean</code> validation result
+     */
+    public static boolean notAnnotated(Class<?> type, Class<? extends Annotation> annotationType) {
+        return ObjectUtils.notTrue(type.isAnnotationPresent(annotationType));
+    }
+
+    /**
+     * Validates if two {@link Class}es are not the same but first is assignable
+     * from second
+     * 
+     * @param type
+     * @param from
+     * @return <code> boolean</code> validation result
+     */
+    public static boolean isOnlyAssignable(Class<?> type, Class<?> from) {
+        return (ObjectUtils.notEquals(type, from) && type.isAssignableFrom(from));
     }
 
     /**

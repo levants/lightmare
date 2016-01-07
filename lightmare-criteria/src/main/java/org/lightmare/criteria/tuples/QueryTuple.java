@@ -62,6 +62,9 @@ public class QueryTuple implements Serializable, Cloneable {
 
     private String alias;
 
+    // Flag for generic parameters
+    boolean hasGenericParameters;
+
     private static final String ALIAS_PREFIX = "c";
 
     private static final String FORMATTER = "%s %s %s";
@@ -193,6 +196,14 @@ public class QueryTuple implements Serializable, Cloneable {
         fieldType = ObjectUtils.cast(raw);
 
         return fieldType;
+    }
+
+    public boolean notSetGenericParameters() {
+        return ObjectUtils.notTrue(hasGenericParameters);
+    }
+
+    public void switchHasGenericParameters() {
+        this.hasGenericParameters = Boolean.TRUE;
     }
 
     @Override
