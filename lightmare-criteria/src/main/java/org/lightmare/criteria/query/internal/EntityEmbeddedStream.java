@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.internal;
 
 import java.io.Serializable;
 
+import org.lightmare.criteria.lambda.LambdaUtils;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 import org.lightmare.criteria.tuples.EmbeddedTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -55,14 +56,31 @@ public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
     }
 
     @Override
-    public QueryTuple compose(Serializable field) {
+    protected QueryTuple resolve(Serializable field) {
 
         QueryTuple tuple;
 
-        QueryTuple temp = super.compose(field);
-        if (parent.getEntityType().equals(temp.getEntityType())) {
+        QueryTuple temp = super.resolve(field);
+        if (temp.getEntityType().isAssignableFrom(parent.getEntityType())) {
             tuple = temp;
         } else {
+            tuple = EmbeddedTuple.of(temp, embeddedName);
+        }
+
+        return tuple;
+    }
+
+    @Override
+    protected QueryTuple compose(Serializable field) {
+
+        QueryTuple tuple;
+
+        QueryTuple temp = super.resolve(field);
+        if (temp.getEntityType().isAssignableFrom(parent.getEntityType())) {
+            LambdaUtils.setGenericIfValid(parent.getEntityType(), temp);
+            tuple = temp;
+        } else {
+            LambdaUtils.setGenericIfValid(this.entityType, temp);
             tuple = EmbeddedTuple.of(temp, embeddedName);
         }
 

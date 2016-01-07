@@ -186,8 +186,12 @@ class AbstractFieldResolver {
      * @param tuple
      */
     private static void setMetaData(QueryTuple tuple) {
-
         EntityProcessor.setMetaData(tuple);
+    }
+    
+    public static void setGenericData(QueryTuple tuple){
+        
+        EntityProcessor.setMethodAndField(tuple);
         ColumnProcessor.setTemporalType(tuple);
         GenericProcessor.setGenericType(tuple);
     }

@@ -156,12 +156,28 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for passed
      *         lambda function
      */
-    protected QueryTuple compose(Serializable field) {
+    protected QueryTuple resolve(Serializable field) {
 
         QueryTuple tuple;
 
         tuple = LambdaUtils.getOrInit(field);
         tuple.setAlias(alias);
+
+        return tuple;
+    }
+
+    /**
+     * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
+     * cache or generates from compiled class with generic parameters
+     * 
+     * @param field
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for passed
+     *         lambda function
+     */
+    protected QueryTuple compose(Serializable field) {
+
+        QueryTuple tuple = resolve(field);
+        LambdaUtils.setGenericIfValid(entityType, tuple);
 
         return tuple;
     }

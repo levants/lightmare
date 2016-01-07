@@ -104,7 +104,9 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Validates if consumer is not null and accepts it
+     * Validates if {@link java.util.function.Consumer} is not null and if not
+     * calls {@link java.util.function.Consumer#accept(Object)} method accepts
+     * for passed value
      * 
      * @param consumer
      * @param value

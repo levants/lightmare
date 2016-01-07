@@ -42,7 +42,7 @@ public class QueryTuple implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String entityName;
+    private String entityName;
 
     private final String methodName;
 
@@ -104,6 +104,10 @@ public class QueryTuple implements Serializable, Cloneable {
         return entityName;
     }
 
+    private void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
+
     public String getMethodName() {
         return methodName;
     }
@@ -122,6 +126,11 @@ public class QueryTuple implements Serializable, Cloneable {
 
     public void setEntityType(Class<?> entityType) {
         this.entityType = entityType;
+    }
+
+    public void setTypeAndName(Class<?> entityType) {
+        setEntityType(entityType);
+        setEntityName(entityType.getName());
     }
 
     public Method getMethod() {

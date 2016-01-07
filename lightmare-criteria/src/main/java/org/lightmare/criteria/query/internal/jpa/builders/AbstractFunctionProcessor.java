@@ -59,7 +59,7 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
      * @param field
      */
     private void generateByField(Serializable field) {
-        functionTuple = compose(field);
+        functionTuple = resolve(field);
         appendFieldName(functionTuple);
     }
 

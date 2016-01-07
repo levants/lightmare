@@ -129,6 +129,52 @@ public class LambdaUtils {
     }
 
     /**
+     * Validates if entity {@link Class} in
+     * {@link org.lightmare.criteria.tuples.QueryTuple} is not valid
+     * 
+     * @return <code>boolean</code> validation result
+     */
+    private static boolean typeMismatched(Class<?> type, QueryTuple tuple) {
+
+        boolean valid;
+
+        Class<?> resolved = tuple.getEntityType();
+        valid = (ObjectUtils.notEquals(resolved, type) && resolved.isAssignableFrom(type));
+
+        return valid;
+    }
+
+    /**
+     * Sets generic parameters to passed
+     * {@link org.lightmare.criteria.tuples.QueryTuple} by entity {@link Class}
+     * instance
+     * 
+     * @param type
+     * @param tuple
+     */
+    private static void setGenericType(Class<?> type, QueryTuple tuple) {
+
+        if (typeMismatched(type, tuple)) {
+            tuple.setTypeAndName(type);
+            FieldResolver.setGenericData(tuple);
+        } else if (tuple.getField() == null) {
+            FieldResolver.setGenericData(tuple);
+        }
+    }
+
+    /**
+     * Sets generic parameters to passed
+     * {@link org.lightmare.criteria.tuples.QueryTuple} by entity {@link Class}
+     * instance if it is not null
+     * 
+     * @param type
+     * @param tuple
+     */
+    public static void setGenericIfValid(Class<?> type, QueryTuple tuple) {
+        ObjectUtils.nonNull(tuple, c -> setGenericType(type, c));
+    }
+
+    /**
      * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
      * cache or initializes and caches new instance
      * 

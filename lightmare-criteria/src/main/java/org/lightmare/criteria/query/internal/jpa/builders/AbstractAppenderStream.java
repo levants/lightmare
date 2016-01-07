@@ -196,7 +196,8 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * 
      * @param field
      * @param expression
-     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for sub query field
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for sub query
+     *         field
      */
     protected QueryTuple appSubQuery(Serializable field, String expression) {
 
@@ -223,7 +224,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     protected void oppCollection(Object value, Serializable field, String operator) {
 
         appendBody(value).appendBody(operator);
-        QueryTuple tuple = compose(field);
+        QueryTuple tuple = resolve(field);
         appendColumn(tuple);
     }
 
@@ -298,7 +299,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     protected void oppField(Serializable field1, Serializable field2, String expression) {
 
         opp(field1, expression);
-        QueryTuple tuple = compose(field2);
+        QueryTuple tuple = resolve(field2);
         appendColumn(tuple);
         newLine();
     }
@@ -316,13 +317,14 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
 
         opp(field1, expression1);
         opp(field2, expression2);
-        QueryTuple tuple = compose(field3);
+        QueryTuple tuple = resolve(field3);
         appendColumn(tuple);
         newLine();
     }
 
     /**
-     * Processes query part with other field with {@link java.util.Collection} type
+     * Processes query part with other field with {@link java.util.Collection}
+     * type
      * 
      * @param field1
      * @param field2
@@ -331,7 +333,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     protected void oppCollectionField(Serializable field1, Serializable field2, String expression) {
 
         opp(field1, expression);
-        QueryTuple tuple = compose(field2);
+        QueryTuple tuple = resolve(field2);
         appendColumn(tuple);
         newLine();
     }
@@ -380,7 +382,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * @param field
      */
     private void addSelectField(Serializable field, StringBuilder buffer) {
-        QueryTuple tuple = compose(field);
+        QueryTuple tuple = resolve(field);
         appendFieldName(tuple, buffer);
     }
 
@@ -451,7 +453,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     private void addOrderByField(String dir, Serializable field) {
-        QueryTuple tuple = compose(field);
+        QueryTuple tuple = resolve(field);
         appendOrderBy(tuple, dir);
     }
 
@@ -489,7 +491,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
 
     private void addGroupByField(Serializable field, int index, int length) {
 
-        QueryTuple tuple = compose(field);
+        QueryTuple tuple = resolve(field);
         appendGroupBy(tuple);
         appendFieldName(tuple, columns);
         appendComma(index, length, columns);

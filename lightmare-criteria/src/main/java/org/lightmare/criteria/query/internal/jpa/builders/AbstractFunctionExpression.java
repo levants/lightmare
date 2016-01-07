@@ -61,7 +61,7 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
     public <F> QueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field) {
 
         startFunctionExpression(function, operator);
-        QueryTuple tuple = compose(field);
+        QueryTuple tuple = resolve(field);
         appendColumn(tuple);
 
         return this;

@@ -78,7 +78,7 @@ public class EntityProcessor {
      * 
      * @param tuple
      */
-    private static void setMethodAndField(QueryTuple tuple) {
+    public static void setMethodAndField(QueryTuple tuple) {
 
         Class<?> entityType = tuple.getEntityType();
         Class<?>[] argumentTypes = getArgumentTypes(tuple);
@@ -99,6 +99,5 @@ public class EntityProcessor {
         String className = tuple.getEntityName();
         Class<?> entityType = ClassUtils.classForName(className);
         tuple.setEntityType(entityType);
-        setMethodAndField(tuple);
     }
 }
