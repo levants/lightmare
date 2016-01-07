@@ -49,7 +49,8 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
      * 
      * @param field
      * @param expression
-     * @return {@link QueryTuple} for field and expression
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for field and
+     *         expression
      */
     protected <C extends Collection<?>> QueryTuple oppJoin(EntityField<T, C> field, String expression) {
 

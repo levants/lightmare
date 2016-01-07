@@ -110,7 +110,8 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     /**
      * Generates appropriated query stream
      * 
-     * @return {@link QueryStream} for special type parameter
+     * @return {@link org.lightmare.criteria.tuples.QueryStream} for special
+     *         type parameter
      */
     private <F> QueryStream<F> generateStream(Class<F> type) {
 
@@ -126,7 +127,8 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
      * Processes select method call for all arguments
      * 
      * @param fields
-     * @return {@link QueryStream} for select method
+     * @return {@link org.lightmare.criteria.query.QueryStream} for select
+     *         method
      */
     private QueryStream<Object[]> groupByField(Serializable field) {
 

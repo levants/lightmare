@@ -149,11 +149,12 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     }
 
     /**
-     * Gets appropriated {@link QueryTuple} from cache or generates from
-     * compiled class
+     * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
+     * cache or generates from compiled class
      * 
      * @param field
-     * @return {@link QueryTuple} for passed lambda function
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for passed
+     *         lambda function
      */
     protected QueryTuple compose(Serializable field) {
 
@@ -166,8 +167,8 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     }
 
     /**
-     * Gets appropriated entity {@link Class} for {@link EntityField} lambda
-     * expression
+     * Gets appropriated entity {@link Class} for
+     * {@link org.lightmare.criteria.functions.EntityField} lambda expression
      * 
      * @param field
      * @return {@link Class} field type for entity
@@ -339,10 +340,11 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     }
 
     /**
-     * Generates {@link AliasTuple} instance with incremented counter for sub
-     * queries
+     * Generates {@link org.lightmare.criteria.tuples.AliasTuple} instance with
+     * incremented counter for sub queries
      * 
-     * @return {@link AliasTuple} with incremented counter
+     * @return {@link org.lightmare.criteria.tuples.AliasTuple} with incremented
+     *         counter
      */
     public AliasTuple getAliasTuple() {
 

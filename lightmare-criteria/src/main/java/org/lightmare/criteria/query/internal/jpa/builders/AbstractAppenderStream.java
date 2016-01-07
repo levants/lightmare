@@ -138,7 +138,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * 
      * @param field
      * @param expression
-     * @return {@link QueryTuple} for field
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for field
      */
     protected QueryTuple opp(Serializable field, String expression) {
 
@@ -196,7 +196,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * 
      * @param field
      * @param expression
-     * @return {@link QueryTuple} for sub query field
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for sub query field
      */
     protected QueryTuple appSubQuery(Serializable field, String expression) {
 
@@ -207,7 +207,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Generates query part for {@link Collection} parameter
+     * Generates query part for {@link java.util.Collection} parameter
      * 
      * @param field
      * @param value
@@ -228,7 +228,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Generates query part for {@link Collection} parameter
+     * Generates query part for {@link java.util.Collection} parameter
      * 
      * @param field
      * @param values
@@ -322,7 +322,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Processes query part with other field with {@link Collection} type
+     * Processes query part with other field with {@link java.util.Collection} type
      * 
      * @param field1
      * @param field2

@@ -34,7 +34,9 @@ import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Implementation of {@link JPAFunction} for functional expression processing
+ * Implementation of
+ * {@link org.lightmare.criteria.query.internal.jpa.JPAFunction} for functional
+ * expression processing
  * 
  * @author Levan Tsinadze
  *
@@ -52,7 +54,7 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
     }
 
     /**
-     * Generates {@link QueryTuple} by field name
+     * Generates {@link org.lightmare.criteria.tuples.QueryTuple} by field name
      * 
      * @param field
      */
@@ -62,7 +64,7 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
     }
 
     /**
-     * Generates function al expression from value
+     * Generates function expression from value
      * 
      * @param value
      */
