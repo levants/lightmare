@@ -27,6 +27,18 @@ public class EntityValidator {
     }
 
     /**
+     * Validates if resolved {@link Class} is not match with entity
+     * {@link Class} and should be switched further processing
+     * 
+     * @param type
+     * @param resolved
+     * @return
+     */
+    private static boolean classMismatch(Class<?> type, Class<?> resolved) {
+        return (ClassUtils.isOnlyAssignable(resolved, type) && notMappedSuperclass(resolved));
+    }
+
+    /**
      * Validates if {@link Class} in
      * {@link org.lightmare.criteria.tuples.QueryTuple} and entity {@link Class}
      * not matches
@@ -38,7 +50,7 @@ public class EntityValidator {
         boolean valid;
 
         Class<?> resolved = tuple.getEntityType();
-        valid = (ClassUtils.isOnlyAssignable(resolved, type) && notMappedSuperclass(resolved));
+        valid = (resolved.isInterface() || classMismatch(type, resolved));
 
         return valid;
     }

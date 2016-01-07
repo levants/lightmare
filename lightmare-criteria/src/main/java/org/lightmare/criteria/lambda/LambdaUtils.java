@@ -132,7 +132,7 @@ public class LambdaUtils {
     /**
      * Sets generic parameters to passed
      * {@link org.lightmare.criteria.tuples.QueryTuple} by entity {@link Class}
-     * instance
+     * after validation
      * 
      * @param type
      * @param tuple

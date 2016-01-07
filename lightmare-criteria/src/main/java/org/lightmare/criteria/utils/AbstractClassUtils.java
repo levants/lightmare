@@ -66,7 +66,8 @@ abstract class AbstractClassUtils extends Primitives {
     }
 
     /**
-     * Validates if passed {@link Class} is not annotated with annotation type
+     * Validates if passed {@link Class} is not annotated with passed
+     * {@link Annotation} type
      * 
      * @param type
      * @param annotationType
