@@ -188,9 +188,15 @@ class AbstractFieldResolver {
     private static void setMetaData(QueryTuple tuple) {
         EntityProcessor.setMetaData(tuple);
     }
-    
-    public static void setGenericData(QueryTuple tuple){
-        
+
+    /**
+     * Sets entity {@link Class} and class name for generic type argument
+     * resolvers
+     * 
+     * @param tuple
+     */
+    public static void setGenericData(QueryTuple tuple) {
+
         EntityProcessor.setMethodAndField(tuple);
         ColumnProcessor.setTemporalType(tuple);
         GenericProcessor.setGenericType(tuple);

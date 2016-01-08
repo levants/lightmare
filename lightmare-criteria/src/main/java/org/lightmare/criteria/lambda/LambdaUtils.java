@@ -111,6 +111,22 @@ public class LambdaUtils {
     }
 
     /**
+     * Resolves and caches {@link org.lightmare.criteria.tuples.QueryTuple} from
+     * lambda expression
+     * 
+     * @param method
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from lambda
+     *         function
+     */
+    private static QueryTuple initAndCache(Serializable method) {
+
+        QueryTuple tuple = getByLambda(method);
+        LambdaCache.putByInstance(method, tuple);
+
+        return tuple;
+    }
+
+    /**
      * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
      * cache or initializes and caches new instance
      * 
@@ -118,15 +134,7 @@ public class LambdaUtils {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      */
     private static QueryTuple getOrInitOriginal(Serializable method) {
-
-        QueryTuple tuple = LambdaCache.getByInstance(method);
-
-        if (tuple == null) {
-            tuple = getByLambda(method);
-            LambdaCache.putByInstance(method, tuple);
-        }
-
-        return tuple;
+        return ObjectUtils.getOrInit(() -> LambdaCache.getByInstance(method), () -> initAndCache(method));
     }
 
     /**

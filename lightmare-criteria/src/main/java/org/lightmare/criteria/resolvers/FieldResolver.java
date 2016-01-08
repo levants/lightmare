@@ -48,7 +48,7 @@ public class FieldResolver extends DirectLambdaResolver {
 
     private static final String THIS_PT = "this";
 
-    // Error messages
+    // Error message
     private static final String UNRESOLVABLE_FIELD_ERROR = "Unresolvable field name";
 
     /**
