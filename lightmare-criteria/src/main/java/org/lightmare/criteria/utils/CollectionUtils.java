@@ -79,6 +79,20 @@ public abstract class CollectionUtils {
     }
 
     /**
+     * Checks passed {@link java.util.Collection} instance on null and emptiness
+     * and executes {@link java.util.function.Consumer} implementation
+     * 
+     * @param collection
+     * @param consumer
+     */
+    public static <E> void valid(Collection<E> collection, Consumer<Collection<E>> consumer) {
+
+        if (valid(collection)) {
+            ObjectUtils.accept(consumer, collection);
+        }
+    }
+
+    /**
      * Checks passed {@link java.util.Map} instance on null and emptiness
      *
      * @param map
@@ -90,7 +104,7 @@ public abstract class CollectionUtils {
 
     /**
      * Checks passed {@link java.util.Map} instance on null and emptiness and
-     * calls consumer
+     * executes {@link java.util.function.Consumer} implementationo
      * 
      * @param map
      * @param consumer

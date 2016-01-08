@@ -57,8 +57,7 @@ public enum LambdaReferences {
     private void cleaner() {
 
         try {
-            Reference<?> reference = references.remove();
-            ObjectUtils.nonNull(reference, Reference::clear);
+            ObjectUtils.nonNull(references.remove(), Reference::clear);
         } catch (Throwable ex) {
             LOG.error(ex.getMessage(), ex);
         }

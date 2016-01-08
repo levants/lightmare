@@ -83,8 +83,8 @@ public class ClassLoaderUtils {
     }
 
     /**
-     * Gets resource as {@link java.io.InputStream} by name from {@link Class}'s class
-     * loader
+     * Gets resource as {@link java.io.InputStream} by name from {@link Class}'s
+     * class loader
      * 
      * @param name
      * @param resource
@@ -101,7 +101,8 @@ public class ClassLoaderUtils {
     }
 
     /**
-     * Gets class file {@link java.io.InputStream} by name from current class loader
+     * Gets class file {@link java.io.InputStream} by name from current class
+     * loader
      * 
      * @param name
      * @return {@link java.io.InputStream} from current {@link ClassLoader}
@@ -142,6 +143,17 @@ public class ClassLoaderUtils {
     }
 
     /**
+     * Loads passed classes to current {@link Thread}'s context
+     * {@link ClassLoader} instance
+     * 
+     * @param classes
+     */
+    private static void loadAll(Collection<String> classes) {
+        ClassLoader loader = getContextClassLoader();
+        loadAll(classes, loader);
+    }
+
+    /**
      * Loads passed classes to specified {@link ClassLoader} instance
      *
      * @param classes
@@ -161,10 +173,6 @@ public class ClassLoaderUtils {
      * @param classes
      */
     public static void loadClasses(Collection<String> classes) {
-
-        if (CollectionUtils.valid(classes)) {
-            ClassLoader loader = getContextClassLoader();
-            loadAll(classes, loader);
-        }
+        CollectionUtils.valid(classes, ClassLoaderUtils::loadAll);
     }
 }
