@@ -142,8 +142,6 @@ public class LambdaUtils {
         if (EntityValidator.typeMismatched(type, tuple)) {
             tuple.setTypeAndName(type);
             FieldResolver.setGenericData(tuple);
-        } else if (tuple.notSetGenericParameters()) {
-            FieldResolver.setGenericData(tuple);
         }
     }
 

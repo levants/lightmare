@@ -253,6 +253,26 @@ public class FieldResolver extends DirectLambdaResolver {
 
     /**
      * Resolved field name, getter method name and entity type from lambda
+     * function parameters from {@link org.lightmare.criteria.lambda.LambdaInfo}
+     * or from bytecode analysis
+     * 
+     * @param lambda
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
+     *         field and query part
+     */
+    private static QueryTuple validateAndResolve(LambdaInfo lambda) {
+
+        QueryTuple tuple = resolveDirectly(lambda);
+
+        if (tuple == null) {
+            tuple = resolveFromBytecode(lambda);
+        }
+
+        return tuple;
+    }
+
+    /**
+     * Resolved field name, getter method name and entity type from lambda
      * function parameters
      * 
      * @param lambda
@@ -261,11 +281,8 @@ public class FieldResolver extends DirectLambdaResolver {
      */
     public static QueryTuple resolve(LambdaInfo lambda) {
 
-        QueryTuple tuple = resolveDirectly(lambda);
-
-        if (tuple == null) {
-            tuple = resolveFromBytecode(lambda);
-        }
+        QueryTuple tuple = validateAndResolve(lambda);
+        ObjectUtils.nonNull(tuple, FieldResolver::setGenericData);
 
         return tuple;
     }
