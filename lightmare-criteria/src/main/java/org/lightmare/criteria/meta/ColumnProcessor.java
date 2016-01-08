@@ -25,6 +25,7 @@ package org.lightmare.criteria.meta;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import javax.persistence.Temporal;
 
@@ -47,7 +48,16 @@ public class ColumnProcessor {
      * @return {@link javax.persistence.Temporal} annotation
      */
     public static Temporal getTemporal(AnnotatedElement element) {
-        return element.getAnnotation(Temporal.class);
+
+        Temporal temporal;
+
+        if (Objects.nonNull(element)) {
+            temporal = element.getAnnotation(Temporal.class);
+        } else {
+            temporal = null;
+        }
+
+        return temporal;
     }
 
     /**

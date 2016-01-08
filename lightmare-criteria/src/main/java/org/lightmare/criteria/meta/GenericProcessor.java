@@ -70,7 +70,6 @@ public class GenericProcessor {
      * @param tuple
      */
     public static void setGenericType(QueryTuple tuple) {
-        Field field = tuple.getField();
-        setGenericType(field, tuple);
+        ObjectUtils.nonNull(tuple.getField(), c -> setGenericType(c, tuple));
     }
 }
