@@ -80,14 +80,20 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     }
 
     /**
+     * Clears passed {@link StringBuilder} and append aggregate clauses
+     * 
+     * @param buffer
+     */
+    private void clearAndAppendAggregate(StringBuilder buffer) {
+        StringUtils.clear(buffer);
+        aggregateFields.forEach(tuple -> appendAggregateFields(tuple, buffer));
+    }
+
+    /**
      * Generates aggregate query prefix
      */
     protected void appendAggregate(StringBuilder buffer) {
-
-        if (CollectionUtils.valid(aggregateFields)) {
-            StringUtils.clear(buffer);
-            aggregateFields.forEach(tuple -> appendAggregateFields(tuple, buffer));
-        }
+        CollectionUtils.valid(aggregateFields, c -> clearAndAppendAggregate(buffer));
     }
 
     @Override

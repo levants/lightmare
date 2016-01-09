@@ -512,16 +512,22 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
+     * Appends aggregate clauses to JPA query body
+     * 
+     * @param fields
+     */
+    private void prepareAndAppendGroups(Collection<Serializable> fields) {
+        prepareGroupBy();
+        iterateAndAppendGroups(fields);
+    }
+
+    /**
      * Prepares GROUP BY clause
      * 
      * @param fields
      */
     protected final void oppGroups(Collection<Serializable> fields) {
-
-        if (CollectionUtils.valid(fields)) {
-            prepareGroupBy();
-            iterateAndAppendGroups(fields);
-        }
+        CollectionUtils.valid(fields, this::prepareAndAppendGroups);
     }
 
     /**

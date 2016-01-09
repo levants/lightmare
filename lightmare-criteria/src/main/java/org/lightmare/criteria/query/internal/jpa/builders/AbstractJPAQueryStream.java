@@ -213,7 +213,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      * @return {@link String} parameter name
      */
     public String generateParameterName(String column) {
-        return column.concat(String.valueOf(parameter_counter));
+        return StringUtils.concat(column, parameter_counter);
     }
 
     /**
