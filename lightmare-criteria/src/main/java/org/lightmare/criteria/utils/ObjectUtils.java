@@ -68,6 +68,11 @@ public abstract class ObjectUtils {
         return valid;
     }
 
+    public static <T> void ifNonNull(Supplier<T> supplier, Consumer<T> consumer) {
+        T value = supplier.get();
+        nonNull(value, consumer);
+    }
+
     /**
      * Checks if not a single object passed objects is not null
      *

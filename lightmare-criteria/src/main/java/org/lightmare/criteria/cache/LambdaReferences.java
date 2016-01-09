@@ -51,13 +51,31 @@ public enum LambdaReferences {
     private static final Logger LOG = Logger.getLogger(LambdaReferences.class);
 
     /**
+     * Removes {@link Reference} from queue {@link ReferenceQueue} cache
+     * 
+     * @return {@link Reference} removed from {@link ReferenceQueue}
+     */
+    private Reference<? extends Class<?>> remove() {
+
+        Reference<? extends Class<?>> reference;
+
+        try {
+            reference = references.remove();
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return reference;
+    }
+
+    /**
      * Cleans first {@link java.lang.ref.Reference} element from
      * {@link java.lang.ref.ReferenceQueue} after reclaim
      */
     private void cleaner() {
 
         try {
-            ObjectUtils.nonNull(references.remove(), Reference::clear);
+            ObjectUtils.ifNonNull(this::remove, Reference::clear);
         } catch (Throwable ex) {
             LOG.error(ex.getMessage(), ex);
         }
