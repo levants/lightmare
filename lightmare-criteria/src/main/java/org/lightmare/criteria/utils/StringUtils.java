@@ -61,7 +61,8 @@ public abstract class StringUtils {
     public static final int NOT_EXISTING_INDEX = -1;
 
     /**
-     * Checks if passed {@link CharSequence} is not null and is not empty
+     * Checks if passed {@link CharSequence} is not <code>null</code> and is not
+     * empty
      *
      * @param chars
      * @return <code>boolean</code>
@@ -71,8 +72,8 @@ public abstract class StringUtils {
     }
 
     /**
-     * Checks if passed {@link CharSequence} is not null and is not empty and
-     * runs consumer implementation
+     * Checks if passed {@link CharSequence} is not <code>null</code> and is not
+     * empty and runs consumer implementation
      *
      * @param chars
      * @param consumer
@@ -90,8 +91,8 @@ public abstract class StringUtils {
     }
 
     /**
-     * Checks if each of passed {@link CharSequence}s is not null and is not
-     * empty
+     * Checks if each of passed {@link CharSequence}s is not <code>null</code>
+     * and is not empty
      *
      * @param lines
      * @return <code>boolean</code>
@@ -108,7 +109,7 @@ public abstract class StringUtils {
     }
 
     /**
-     * Checks if passed {@link CharSequence} is null or is empty
+     * Checks if passed {@link CharSequence} is <code>null</code> or is empty
      *
      * @param chars
      * @return <code>boolean</code>
@@ -159,7 +160,7 @@ public abstract class StringUtils {
     }
 
     /**
-     * Validates passed value on null and if it is returns
+     * Validates passed value on <code>null</code> and if it is returns
      * {@link java.util.function.Supplier} provided value
      * 
      * @param item

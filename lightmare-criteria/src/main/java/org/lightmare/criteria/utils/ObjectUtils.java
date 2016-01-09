@@ -50,7 +50,7 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Validates if passed {@link Object} ins not null and runs
+     * Validates if passed {@link Object} ins not <code>null</code> and runs
      * {@link java.util.function.Consumer} implementation
      * 
      * @param value
@@ -82,7 +82,7 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Checks if not a single object passed objects is not null
+     * Checks if not a single object passed objects is not <code>null</code>
      *
      * @param values
      * @return <code>boolean</code> validation result
@@ -117,9 +117,9 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Validates if {@link java.util.function.Consumer} is not null and if not
-     * calls {@link java.util.function.Consumer#accept(Object)} method accepts
-     * for passed value
+     * Validates if {@link java.util.function.Consumer} is not <code>null</code>
+     * and if not calls {@link java.util.function.Consumer#accept(Object)}
+     * method accepts for passed value
      * 
      * @param consumer
      * @param value
@@ -142,8 +142,8 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Casts passed {@link Object} to generic parameter and if it's not null
-     * runs {@link java.util.function.Consumer} implementation
+     * Casts passed {@link Object} to generic parameter and if it's not
+     * <code>null</code> runs {@link java.util.function.Consumer} implementation
      * 
      * @param instance
      * @param type
@@ -154,9 +154,9 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Casts passed {@link Object} to generic parameter if it's not null and is
-     * instance of this parameter and runs {@link java.util.function.Consumer}
-     * implementation
+     * Casts passed {@link Object} to generic parameter if it's not
+     * <code>null</code> and is instance of this parameter and runs
+     * {@link java.util.function.Consumer} implementation
      * 
      * @param instance
      * @param type
@@ -233,7 +233,7 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Validates passed value on null and if it is returns
+     * Validates passed value on <code>null</code> and if it is returns
      * {@link java.util.function.Supplier} provided value
      * 
      * @param value
@@ -254,7 +254,7 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Validates passed value on null and if it is returns
+     * Validates passed value on <code>null</code> and if it is returns
      * {@link java.util.function.Supplier} provided value and calls setter
      * {@link java.util.function.Consumer} implementation
      * 
@@ -278,9 +278,9 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Gets value from {@link java.util.function.Supplier} and validates on null
-     * and if it is returns default {@link java.util.function.Supplier} provided
-     * value
+     * Gets value from {@link java.util.function.Supplier} and validates on
+     * <code>null</code> and if it is returns default
+     * {@link java.util.function.Supplier} provided value
      * 
      * @param supplier
      * @param initSupplier

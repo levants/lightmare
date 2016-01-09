@@ -47,7 +47,7 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
 
     protected QueryTuple functionTuple;
 
-    private static final char OPEN_PRACKET = '(';
+    private static final char OPEN_BRACKET = '(';
 
     protected AbstractFunctionProcessor(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
@@ -92,7 +92,7 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
      * @param operator
      */
     private void startFunction(String operator) {
-        appendBody(operator).appendBody(OPEN_PRACKET);
+        appendBody(operator).appendBody(OPEN_BRACKET);
     }
 
     /**

@@ -103,7 +103,7 @@ public interface ResultStream<T> {
     /**
      * Calls
      * {@link org.lightmare.criteria.query.internal.jpa.ResultStream#toList()}
-     * and retrieves first result or null if no element was found
+     * and retrieves first result or <code>null</code> if no element was found
      * 
      * @return T query first result
      */

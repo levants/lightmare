@@ -101,8 +101,8 @@ public class LambdaUtils {
     }
 
     /**
-     * Clones passed {@link org.lightmare.criteria.tuples.QueryTuple} after null
-     * check
+     * Clones passed {@link org.lightmare.criteria.tuples.QueryTuple} after
+     * <code>null</code> check
      * 
      * @param instance
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} clone
@@ -166,7 +166,7 @@ public class LambdaUtils {
     /**
      * Sets generic parameters to passed
      * {@link org.lightmare.criteria.tuples.QueryTuple} by entity {@link Class}
-     * instance if it is not null
+     * instance if it is not <code>null</code>
      * 
      * @param type
      * @param tuple

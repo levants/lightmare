@@ -51,6 +51,14 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
         super(em, entityType, alias);
     }
 
+    /**
+     * Generates aggregate field and
+     * {@link org.lightmare.criteria.query.internal.jpa.links.Aggregates} type
+     * expression
+     * 
+     * @param field
+     * @param aggregate
+     */
     protected void oppAggregate(Serializable field, Aggregates aggregate) {
         QueryTuple tuple = resolve(field);
         aggregateTuple(tuple, aggregate);

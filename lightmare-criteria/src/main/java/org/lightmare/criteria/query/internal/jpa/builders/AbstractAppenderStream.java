@@ -49,6 +49,7 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
 
+    // JPA query parts
     protected final StringBuilder prefix = new StringBuilder();
 
     protected final StringBuilder count = new StringBuilder();

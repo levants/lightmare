@@ -81,7 +81,8 @@ abstract class Primitives {
     }
 
     /**
-     * Returns default values if passed class is primitive else returns null
+     * Returns default values if passed class is primitive else returns
+     * <code>null</code>
      * 
      * @param type
      * @return {@link Object} default instance of class

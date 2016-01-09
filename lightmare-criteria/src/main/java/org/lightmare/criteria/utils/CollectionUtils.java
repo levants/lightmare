@@ -65,8 +65,9 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks passed {@link java.util.Collection} instance on null and on
-     * emptiness returns true if it is not null and is not empty
+     * Checks passed {@link java.util.Collection} instance on <code>null</code>
+     * and on emptiness returns true if it is not <code>null</code> and is not
+     * empty
      *
      * @param collection
      * @return <code>boolean</code> validation result
@@ -76,8 +77,9 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks passed {@link java.util.Collection} instance on null and emptiness
-     * and executes {@link java.util.function.Consumer} implementation
+     * Checks passed {@link java.util.Collection} instance on <code>null</code>
+     * and emptiness and executes {@link java.util.function.Consumer}
+     * implementation
      * 
      * @param collection
      * @param consumer
@@ -90,7 +92,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks passed {@link java.util.Map} instance on null and emptiness
+     * Checks passed {@link java.util.Map} instance on <code>null</code> and
+     * emptiness
      *
      * @param map
      * @return <code>boolean</code> validation result
@@ -100,8 +103,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks passed {@link java.util.Map} instance on null and emptiness and
-     * executes {@link java.util.function.Consumer} implementationo
+     * Checks passed {@link java.util.Map} instance on <code>null</code> and
+     * emptiness and executes {@link java.util.function.Consumer} implementation
      * 
      * @param map
      * @param consumer
@@ -114,7 +117,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if passed {@link java.util.Map} instance is null or is empty
+     * Checks if passed {@link java.util.Map} instance is <code>null</code> or
+     * is empty
      *
      * @param map
      * @return <code>boolean</code> validation result
@@ -124,8 +128,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if passed {@link java.util.Collection} instance is null or is
-     * empty
+     * Checks if passed {@link java.util.Collection} instance is
+     * <code>null</code> or is empty
      *
      * @param collection
      * @return <code>boolean</code> validation result
@@ -135,8 +139,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if there is null or empty {@link java.util.Collection} instance is
-     * passed collections
+     * Checks if there is <code>null</code> or empty
+     * {@link java.util.Collection} instance is passed collections
      *
      * @param collections
      * @return <code>boolean</code> validation result
@@ -164,8 +168,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if each of passed {@link java.util.Map} instances is not null and
-     * is not empty
+     * Checks if each of passed {@link java.util.Map} instances is not
+     * <code>null</code> and is not empty
      *
      * @param maps
      * @return <code>boolean</code> validation result
@@ -175,8 +179,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if passed array of {@link Object}'s instances is not null and is
-     * not empty
+     * Checks if passed array of {@link Object}'s instances is not
+     * <code>null</code> and is not empty
      *
      * @param array
      * @return <code>boolean</code> validation result
@@ -186,7 +190,7 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if passed array is null or empty
+     * Checks if passed array is <code>null</code> or empty
      *
      * @param array
      * @return <code>boolean</code> validation result
@@ -197,7 +201,7 @@ public abstract class CollectionUtils {
 
     /**
      * Checks if each of passed {@link java.util.Collection} instances is not
-     * null and is not empty
+     * <code>null</code> and is not empty
      *
      * @param collections
      * @return <code>boolean</code> validation result
@@ -207,8 +211,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Checks if each of passed {@link Object} array instances is not null and
-     * is not empty
+     * Checks if each of passed {@link Object} array instances is not
+     * <code>null</code> and is not empty
      *
      * @param arrays
      * @return <code>boolean</code> validation result
@@ -242,8 +246,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Peaks first element from list or passed default value if list is null or
-     * empty
+     * Peaks first element from list or passed default value if list is
+     * <code>null</code> or empty
      *
      * @param list
      * @param defaultValue
@@ -313,8 +317,8 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Peaks first element from array or passed default value if array is null
-     * or empty
+     * Peaks first element from array or passed default value if array is
+     * <code>null</code> or empty
      *
      * @param values
      * @param defaultValue
