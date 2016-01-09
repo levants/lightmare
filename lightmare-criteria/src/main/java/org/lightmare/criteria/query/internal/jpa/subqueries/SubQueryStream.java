@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.internal.jpa.subqueries;
 import org.lightmare.criteria.query.QueryStream;
 
 /**
- * Inretface to process sub queries, embedded queries and join queries
+ * Interface to process sub queries, embedded queries and join queries
  * 
  * @author Levan Tsinadze
  *

@@ -58,14 +58,24 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
     }
 
     /**
+     * Validates if JPA query needs SELECT clause
+     * 
+     * @param expression
+     * @return <code>boolean</code> validation result
+     */
+    private boolean needAppendSelect(String expression) {
+        return (StringUtils.notStartsWith(expression, Clauses.SELECT)
+                && StringUtils.notStartsWith(columns, Clauses.SELECT));
+    }
+
+    /**
      * Validates and appends "SELECT" expression to JPA query
      * 
      * @param expression
      */
     private void validateAndAppendSelect(String expression) {
 
-        if (StringUtils.notStartsWith(expression, Clauses.SELECT)
-                && StringUtils.notStartsWith(columns, Clauses.SELECT)) {
+        if (needAppendSelect(expression)) {
             columns.append(Clauses.SELECT);
         }
     }

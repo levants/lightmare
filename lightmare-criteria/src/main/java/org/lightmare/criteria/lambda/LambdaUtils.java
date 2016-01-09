@@ -47,6 +47,16 @@ public class LambdaUtils {
     private static final Logger LOG = Logger.getLogger(LambdaUtils.class);
 
     /**
+     * Logs resolved lambda expression on DEBUG level
+     * 
+     * @param lambda
+     */
+    private static void debug(LambdaInfo lambda) {
+        String message = String.format(MESSAGE_FORMAT, lambda);
+        LOG.debug(message);
+    }
+
+    /**
      * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
      * serialized lambda cache or analyzes appropriated lambda expression from
      * compiled class
@@ -63,7 +73,7 @@ public class LambdaUtils {
         if (tuple == null) {
             tuple = FieldResolver.resolve(lambda);
             QueryCache.putQuery(lambda, tuple);
-            LOG.debug(String.format(MESSAGE_FORMAT, lambda));
+            debug(lambda);
         }
 
         return tuple;
