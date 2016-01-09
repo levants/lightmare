@@ -50,8 +50,8 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Validates if passed {@link Object} ins not null and runs consumer
-     * implementation
+     * Validates if passed {@link Object} ins not null and runs
+     * {@link java.util.function.Consumer} implementation
      * 
      * @param value
      * @param consumer
@@ -68,7 +68,15 @@ public abstract class ObjectUtils {
         return valid;
     }
 
-    public static <T> void ifNonNull(Supplier<T> supplier, Consumer<T> consumer) {
+    /**
+     * If value from {@link java.util.function.Supplier} is not
+     * <code>null</code> then calls
+     * {@link java.util.function.Consumer#accept(Object)} method
+     * 
+     * @param supplier
+     * @param consumer
+     */
+    public static <T> void ifNotNull(Supplier<T> supplier, Consumer<T> consumer) {
         T value = supplier.get();
         nonNull(value, consumer);
     }

@@ -54,9 +54,6 @@ public abstract class CollectionUtils {
     // Length of array / collection / map with single element
     public static final int SINGLETON = 1;
 
-    // Empty array of objects
-    public static final Object[] EMPTY_ARRAY = {};
-
     /**
      * Checks if passed {@link java.util.Collection} instance is not empty
      *

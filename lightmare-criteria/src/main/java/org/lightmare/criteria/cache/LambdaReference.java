@@ -44,7 +44,7 @@ public class LambdaReference extends PhantomReference<Class<?>> {
     public void clear() {
 
         try {
-            ObjectUtils.ifNonNull(this::get, LambdaCache::remove);
+            ObjectUtils.ifNotNull(this::get, LambdaCache::remove);
         } finally {
             super.clear();
         }

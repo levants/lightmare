@@ -526,8 +526,8 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * 
      * @param fields
      */
-    protected final void oppGroups(Collection<Serializable> fields) {
-        CollectionUtils.valid(fields, this::prepareAndAppendGroups);
+    protected void oppGroups(Collection<Serializable> fields) {
+        CollectionUtils.valid(fields, c -> prepareAndAppendGroups(c));
     }
 
     /**
@@ -615,6 +615,12 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         return this;
     }
 
+    /**
+     * Appends JOIN clause to JPA query
+     * 
+     * @param clause
+     * @return
+     */
     protected QueryStream<T> appendJoin(Object clause) {
         joins.append(clause);
         return this;
