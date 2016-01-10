@@ -54,7 +54,11 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
         String signature = lambda.getInstantiatedMethodType();
         Type[] types = Type.getArgumentTypes(signature);
-        type = CollectionUtils.getFirst(types);
+        if (CollectionUtils.singleton(types)) {
+            type = CollectionUtils.getFirst(types);
+        } else {
+            type = null;
+        }
 
         return type;
     }
@@ -66,7 +70,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
      * @param descType
      * @return <code>boolean</code> validation result
      */
-    private static boolean validateClassName(String implClassName, Type descType) {
+    private static boolean validateClassAndType(String implClassName, Type descType) {
 
         boolean valid = Objects.equals(implClassName, descType.getInternalName());
 
@@ -78,6 +82,17 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
         }
 
         return valid;
+    }
+
+    /**
+     * Validates lambda for direct resolve
+     * 
+     * @param implClassName
+     * @param descType
+     * @return <code>boolean</code> validation result
+     */
+    private static boolean validateClassName(String implClassName, Type descType) {
+        return (Objects.nonNull(descType) && validateClassAndType(implClassName, descType));
     }
 
     /**
@@ -123,7 +138,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
         String implClass = lambda.getImplClass();
         Type desc = getFromDescription(lambda);
-        if (Objects.nonNull(desc) && validateClassName(implClass, desc)) {
+        if (validateClassName(implClass, desc)) {
             String implDesc = lambda.getImplMethodSignature();
             String methodName = lambda.getImplMethodName();
             String entityName = desc.getInternalName();

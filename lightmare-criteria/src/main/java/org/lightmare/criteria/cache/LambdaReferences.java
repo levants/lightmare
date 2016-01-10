@@ -51,9 +51,11 @@ public enum LambdaReferences {
     private static final Logger LOG = Logger.getLogger(LambdaReferences.class);
 
     /**
-     * Removes {@link Reference} from queue {@link ReferenceQueue} cache
+     * Removes {@link java.lang.ref.Reference} from queue
+     * {@link java.lang.ref.ReferenceQueue} cache
      * 
-     * @return {@link Reference} removed from {@link ReferenceQueue}
+     * @return {@link java.lang.ref.Reference} removed from
+     *         {@link java.lang.ref.ReferenceQueue}
      */
     private Reference<? extends Class<?>> remove() {
 

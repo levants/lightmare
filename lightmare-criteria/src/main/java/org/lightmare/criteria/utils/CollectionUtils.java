@@ -307,7 +307,7 @@ public abstract class CollectionUtils {
     }
 
     /**
-     * Peaks first element from collection
+     * Peaks first element from {@link java.util.Collection} instance
      *
      * @param collection
      * @return T first element or default value

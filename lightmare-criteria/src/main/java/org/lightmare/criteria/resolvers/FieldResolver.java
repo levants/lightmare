@@ -230,7 +230,7 @@ public class FieldResolver extends DirectLambdaResolver {
 
     /**
      * Resolved field name, getter method name and entity type from lambda
-     * argument by bytecode analysis
+     * argument by <b><i> bytecode </i></b> analysis
      * 
      * @param lambda
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
@@ -254,7 +254,7 @@ public class FieldResolver extends DirectLambdaResolver {
     /**
      * Resolved field name, getter method name and entity type from lambda
      * function parameters from {@link org.lightmare.criteria.lambda.LambdaInfo}
-     * or from bytecode analysis
+     * or from <b><i> bytecode </i></b> analysis
      * 
      * @param lambda
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
