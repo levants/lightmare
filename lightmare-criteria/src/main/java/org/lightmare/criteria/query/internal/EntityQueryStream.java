@@ -44,7 +44,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type for generated query
+ *            entity type parameter for generated JPA query
  */
 public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 

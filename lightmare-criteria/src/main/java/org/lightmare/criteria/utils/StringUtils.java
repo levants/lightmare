@@ -199,19 +199,19 @@ public abstract class StringUtils {
      */
     public static String concat(Object... parts) {
 
-        String resultText;
+        String result;
 
         if (parts == null) {
-            resultText = null;
+            result = null;
         } else if (CollectionUtils.isEmpty(parts)) {
-            resultText = EMPTY;
+            result = EMPTY;
         } else {
             StringBuilder text = new StringBuilder();
             appendAll(text, parts);
-            resultText = text.toString();
+            result = text.toString();
         }
 
-        return resultText;
+        return result;
     }
 
     /**

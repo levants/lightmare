@@ -26,7 +26,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 
@@ -97,14 +96,33 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
         }
     }
 
+    /**
+     * Generates HAVING clause by
+     * {@link org.lightmare.criteria.functions.HavingConsumer} implementation
+     * 
+     * @param consumer
+     */
+    private void generateHaving(HavingConsumer<T> consumer) {
+
+        AggregateTuple havingTuple = aggregateQueue.poll();
+        HavingProcessor<T> havingProcessor = new HavingProcessor<T>(having, havingTuple);
+        consumer.accept(havingProcessor);
+    }
+
+    /**
+     * Generates HAVING clause by
+     * {@link org.lightmare.criteria.functions.HavingConsumer} implementation if
+     * it's valid
+     * 
+     * @param consumer
+     */
+    private void validateAndGenerate(HavingConsumer<T> consumer) {
+        CollectionUtils.valid(aggregateQueue, c -> generateHaving(consumer));
+    }
+
     @Override
     public void having(HavingConsumer<T> consumer) {
-
-        if (Objects.nonNull(consumer) && CollectionUtils.valid(aggregateQueue)) {
-            AggregateTuple havingTuple = aggregateQueue.poll();
-            HavingProcessor<T> havingProcessor = new HavingProcessor<T>(having, havingTuple);
-            consumer.accept(havingProcessor);
-        }
+        ObjectUtils.nonNull(consumer, this::validateAndGenerate);
     }
 
     /**
