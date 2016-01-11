@@ -260,7 +260,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
      *         field and query part
      */
-    private static QueryTuple validateAndResolve(LambdaInfo lambda) {
+    private static QueryTuple chooseAndResolve(LambdaInfo lambda) {
 
         QueryTuple tuple = resolveDirectly(lambda);
 
@@ -281,7 +281,7 @@ public class FieldResolver extends DirectLambdaResolver {
      */
     public static QueryTuple resolve(LambdaInfo lambda) {
 
-        QueryTuple tuple = validateAndResolve(lambda);
+        QueryTuple tuple = chooseAndResolve(lambda);
         ObjectUtils.nonNull(tuple, FieldResolver::setGenericData);
 
         return tuple;

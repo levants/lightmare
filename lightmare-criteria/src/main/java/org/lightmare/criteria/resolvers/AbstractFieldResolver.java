@@ -94,9 +94,7 @@ class AbstractFieldResolver {
 
         String[] arguments;
 
-        if (argumentTypes == null) {
-            arguments = null;
-        } else if (CollectionUtils.isEmpty(argumentTypes)) {
+        if (CollectionUtils.isEmpty(argumentTypes)) {
             arguments = new String[] {};
         } else {
             arguments = CollectionUtils.map(argumentTypes, new String[argumentTypes.length], Type::getClassName);
