@@ -20,7 +20,7 @@ public class EntityValidator {
      * {@link javax.persistence.MappedSuperclass} annotation
      * 
      * @param type
-     * @return
+     * @return <code>boolean</code> validation result
      */
     private static boolean notMappedSuperclass(Class<?> type) {
         return ClassUtils.notAnnotated(type, MappedSuperclass.class);
@@ -32,7 +32,7 @@ public class EntityValidator {
      * 
      * @param type
      * @param resolved
-     * @return
+     * @return <code>boolean</code> validation result
      */
     private static boolean classMismatch(Class<?> type, Class<?> resolved) {
         return (ClassUtils.isOnlyAssignable(resolved, type) && notMappedSuperclass(resolved));

@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Adds reflection data to {@link org.lightmare.criteria.tuples.QueryTuple}
@@ -83,9 +84,9 @@ public class EntityProcessor {
         Class<?> entityType = tuple.getEntityType();
         Class<?>[] argumentTypes = getArgumentTypes(tuple);
         Method method = ClassUtils.findMethod(entityType, tuple.getMethodName(), argumentTypes);
-        tuple.setMethod(method);
+        ObjectUtils.nonNull(method, tuple::setMethod);
         Field field = ClassUtils.findField(entityType, tuple.getFieldName());
-        tuple.setField(field);
+        ObjectUtils.nonNull(field, tuple::setField);
     }
 
     /**
