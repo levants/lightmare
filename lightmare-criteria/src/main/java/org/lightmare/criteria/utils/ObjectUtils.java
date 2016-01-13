@@ -170,7 +170,7 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Serializes java type ({@link Object}) to byte array with java native
+     * Serializes java {@link Object} to byte array with java native
      * serialization API
      * 
      * @param value

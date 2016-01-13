@@ -346,6 +346,22 @@ public abstract class StringUtils {
     }
 
     /**
+     * Removes last found character from {@link StringBuilder} which match to
+     * passed value
+     * 
+     * @param item
+     * @param character
+     */
+    public static void removeLast(StringBuilder item, char character) {
+
+        int last = item.length();
+        int index = last - CollectionUtils.SINGLETON;
+        if (item.charAt(index) == character) {
+            item.delete(index, last);
+        }
+    }
+
+    /**
      * Appends "'" quotes as prefix and suffix of passed {@link Object} instance
      * 
      * @param item

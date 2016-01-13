@@ -37,6 +37,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Orders;
 import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -535,12 +536,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * Removes new line element from query body
      */
     protected void removeNewLine() {
-
-        int last = body.length();
-        int index = last - CollectionUtils.SINGLETON;
-        if (body.charAt(index) == StringUtils.LINE) {
-            body.delete(index, last);
-        }
+        StringUtils.removeLast(body, StringUtils.LINE);
     }
 
     /**
@@ -593,14 +589,24 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         newLine();
     }
 
-    @Override
-    public QueryStream<T> brackets(QueryConsumer<T> consumer) {
+    /**
+     * Implements bracket JPA query part by
+     * {@link org.lightmare.criteria.functions.QueryConsumer} implementation
+     * 
+     * @param consumer
+     */
+    private void consumeWithBrackets(QueryConsumer<T> consumer) {
 
+        validateOperator();
         openBracket();
         consumer.accept(this);
         removeNewLine();
         closeBracket();
+    }
 
+    @Override
+    public QueryStream<T> brackets(QueryConsumer<T> consumer) {
+        ObjectUtils.nonNull(consumer, this::consumeWithBrackets);
         return this;
     }
 
