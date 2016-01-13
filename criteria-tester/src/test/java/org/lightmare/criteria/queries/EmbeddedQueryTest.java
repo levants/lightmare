@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.lightmare.criteria.entities.GeneralInfo;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.PersonInfo;
 import org.lightmare.criteria.query.QueryProvider;
@@ -22,11 +23,13 @@ public class EmbeddedQueryTest extends JoinQueryTest {
         try {
             // ============= Query construction ============== //
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .like(Person::getLastName, "lname")
-                    .embedded(Person::getInfo, c -> c.equal(PersonInfo::getCardNumber, "100100"));
+                    .like(Person::getLastName, "lname").like(GeneralInfo::getFullName, Person::getLastName)
+                    .embedded(Person::getInfo, c -> c.equal(PersonInfo::getCardNumber, "100100"))
+                    .embedded(Person::getInfo, c -> c.equal(PersonInfo::getNote, "note"));
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
+            printParameters(stream);
         } catch (Throwable ex) {
             ex.printStackTrace();
         } finally {

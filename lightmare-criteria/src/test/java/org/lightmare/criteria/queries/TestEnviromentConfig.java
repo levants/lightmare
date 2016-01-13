@@ -54,6 +54,10 @@ public class TestEnviromentConfig {
         }
     }
 
+    protected static void printParameters(QueryStream<?> stream) {
+        stream.getParameters().forEach(c -> System.out.format("name:%s - value:%s\n", c.getName(), c.getValue()));
+    }
+
     protected QueryStream<Person> createQueryStream(final EntityManager em) {
 
         QueryStream<Person> stream = QueryProvider.select(em, Person.class);
