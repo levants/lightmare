@@ -54,13 +54,16 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
     @Override
     public <F> QueryStream<T> operate(EntityField<T, F> field, String operator) {
+
         appendOperator();
         oppLine(field, operator);
+
         return this;
     }
 
     @Override
     public <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator) {
+
         appendOperator();
         oppLine(field, value, operator);
 
@@ -70,6 +73,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     @Override
     public <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2,
             String operator) {
+
         appendOperator();
         oppLine(field, value1, value2, Operators.BETWEEN);
 
@@ -88,6 +92,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
     @Override
     public <F> QueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator) {
+
         appendOperator();
         oppCollection(field, values, operator);
 
@@ -96,6 +101,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
     @Override
     public <S, F> QueryStream<T> operateCollection(Object value, EntityField<S, Collection<F>> field, String operator) {
+
         appendOperator();
         oppCollection(value, field, operator);
 
@@ -107,6 +113,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     @Override
     public <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
             String operator) {
+
         appendOperator();
         oppField(field1, field2, operator);
 
@@ -116,6 +123,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     @Override
     public <F, E, S, L> QueryStream<T> operate(EntityField<T, ? extends F> field1, String operator1,
             EntityField<S, ? extends F> field2, String operator2, EntityField<L, E> field3) {
+
         appendOperator();
         oppField(field1, operator1, field2, operator2, field3);
 
@@ -134,6 +142,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     @Override
     public <F, S> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
             String operator) {
+
         appendOperator();
         oppCollectionField(field1, field2, operator);
 

@@ -58,6 +58,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, String alias, Class<S> entityType) {
         super(parent.getEntityManager(), entityType, alias);
         parentAlias = parent.getAlias();
+        this.setParameterCounter(parent.getParameterCounter());
         this.parent = parent;
     }
 
@@ -77,7 +78,8 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
      * Processes sub select statement for sub queries
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.QueryStream} for instant field
+     * @return {@link org.lightmare.criteria.query.QueryStream} for instant
+     *         field
      */
     protected <F> QueryStream<F> subSelectOne(EntityField<S, F> field) {
 
@@ -93,7 +95,8 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
      * Generates SELECT clause for sub query
      * 
      * @param fields
-     * @return {@link org.lightmare.criteria.query.QueryStream} with {@link Object} array
+     * @return {@link org.lightmare.criteria.query.QueryStream} with
+     *         {@link Object} array
      */
     protected final QueryStream<Object[]> subSelectAll(Serializable field) {
 

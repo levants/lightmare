@@ -222,6 +222,19 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
         return fieldType;
     }
 
+    public int getParameterCounter() {
+        return parameter_counter;
+    }
+
+    /**
+     * Sets parameter name suffix counter
+     * 
+     * @param parameter_counter
+     */
+    protected void setParameterCounter(int parameter_counter) {
+        this.parameter_counter = parameter_counter;
+    }
+
     /**
      * Increments parameters counter
      */
