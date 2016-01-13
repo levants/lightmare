@@ -174,7 +174,7 @@ public abstract class ObjectUtils {
      * serialization API
      * 
      * @param value
-     * @return <code>byte</code>[] serialized object
+     * @return <code>byte</code> array serialized object
      */
     public static byte[] serialize(Object value) {
 
@@ -192,8 +192,8 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * For de - serialization of byte array in java type ({@link Object}) with
-     * java native serialization API methods
+     * For reads byte array as {@link Object} with java native serialization API
+     * methods
      * 
      * @param bytes
      * @return {@link Object}
@@ -212,8 +212,8 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * For de - serialization of byte array in java type appropriated type with
-     * java native serialization API methods
+     * For reads of byte array as java type appropriated type with java native
+     * serialization API methods
      * 
      * @param bytes
      * @return {@link Object}

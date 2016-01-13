@@ -135,34 +135,34 @@ public class ClassLoaderUtils {
     /**
      * Loads passed classes to specified {@link ClassLoader} instance
      * 
-     * @param classes
+     * @param names
      * @param loader
      */
-    private static void loadAll(Collection<String> classes, ClassLoader loader) {
-        classes.forEach(name -> loadClass(name, loader));
+    private static void loadAll(Collection<String> names, ClassLoader loader) {
+        names.forEach(name -> loadClass(name, loader));
     }
 
     /**
      * Loads passed classes to current {@link Thread}'s context
      * {@link ClassLoader} instance
      * 
-     * @param classes
+     * @param names
      */
-    private static void loadAll(Collection<String> classes) {
+    private static void loadAll(Collection<String> names) {
         ClassLoader loader = getContextClassLoader();
-        loadAll(classes, loader);
+        loadAll(names, loader);
     }
 
     /**
      * Loads passed classes to specified {@link ClassLoader} instance
      *
-     * @param classes
+     * @param names
      * @param loader
      */
-    public static void loadClasses(Collection<String> classes, ClassLoader loader) {
+    public static void loadClasses(Collection<String> names, ClassLoader loader) {
 
-        if (CollectionUtils.valid(classes) && Objects.nonNull(loader)) {
-            loadAll(classes, loader);
+        if (CollectionUtils.valid(names) && Objects.nonNull(loader)) {
+            loadAll(names, loader);
         }
     }
 
@@ -170,9 +170,9 @@ public class ClassLoaderUtils {
      * Loads passed classes to specified current {@link Thread}'s context class
      * loader
      *
-     * @param classes
+     * @param names
      */
-    public static void loadClasses(Collection<String> classes) {
-        CollectionUtils.valid(classes, ClassLoaderUtils::loadAll);
+    public static void loadClasses(Collection<String> names) {
+        CollectionUtils.valid(names, ClassLoaderUtils::loadAll);
     }
 }
