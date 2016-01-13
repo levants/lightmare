@@ -30,6 +30,19 @@ package org.lightmare.criteria.query.internal.jpa.links;
  */
 public interface Operators {
 
+    /**
+     * Open and close brackets
+     * 
+     * @author Levan Tsinadze
+     *
+     */
+    public static interface Brackets {
+
+        char OPEN = '(';
+
+        char CLOSE = ')';
+    }
+
     // ==================boolean================//
 
     String AND = "and ";

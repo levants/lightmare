@@ -276,6 +276,23 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     }
 
     /**
+     * Generates query part by tuple and adds appropriated
+     * {@link java.util.Collection} type parameter
+     * 
+     * @param tuple
+     * @param value
+     * @param buffer
+     */
+    public void oppWithCollectionParameter(QueryTuple tuple, Object value, StringBuilder buffer) {
+
+        String parameterName = generateParameterName(tuple);
+        buffer.append(Operators.OPEN_BRACKET);
+        buffer.append(Parts.PARAM_PREFIX).append(parameterName);
+        buffer.append(Operators.Brackets.CLOSE);
+        addParameter(parameterName, tuple, value);
+    }
+
+    /**
      * Generates query part by tuple and adds appropriated parameters
      * 
      * @param tuple

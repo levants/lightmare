@@ -43,10 +43,6 @@ public enum Aggregates {
 
     public final String key;
 
-    private static final char OPEN = '(';
-
-    private static final char CLOSE = ')';
-
     private static final char DOT = '.';
 
     private Aggregates(final String key) {
@@ -86,10 +82,10 @@ public enum Aggregates {
         String value;
 
         StringBuilder sql = new StringBuilder();
-        sql.append(key).append(OPEN);
+        sql.append(key).append(Operators.Brackets.OPEN);
         addDistinct(sql);
         addAlias(alias, sql);
-        sql.append(field).append(CLOSE);
+        sql.append(field).append(Operators.Brackets.CLOSE);
         value = sql.toString();
 
         return value;

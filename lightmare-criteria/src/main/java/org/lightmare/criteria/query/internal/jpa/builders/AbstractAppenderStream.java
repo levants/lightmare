@@ -219,7 +219,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     protected void oppCollection(Serializable field, Collection<?> value, String expression) {
 
         QueryTuple tuple = opp(field, expression);
-        oppWithParameter(tuple, value, body);
+        oppWithCollectionParameter(tuple, value, body);
         newLine();
     }
 
@@ -603,6 +603,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         consumer.accept(this);
         removeNewLine();
         closeBracket();
+        newLine();
     }
 
     @Override
