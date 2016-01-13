@@ -269,7 +269,7 @@ public class FieldResolver extends DirectLambdaResolver {
 
         if (tuple == null) {
             tuple = resolveFromBytecode(lambda);
-            debug(DEBUG_MESSAGE_BYT);
+            debug(DEBUG_MESSAGE_BYT, tuple);
         }
 
         return tuple;

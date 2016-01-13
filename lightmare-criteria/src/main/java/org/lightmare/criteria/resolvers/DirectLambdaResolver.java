@@ -167,7 +167,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
         if (validateLambda(lambda)) {
             tuple = resolveFromLambda(lambda);
-            debug(DEBUG_MESSAGE_DIR);
+            debug(DEBUG_MESSAGE_DIR, tuple);
         } else {
             tuple = null;
         }

@@ -53,7 +53,7 @@ public class LambdaUtils {
      */
     private static void debug(LambdaInfo lambda) {
         String message = String.format(MESSAGE_FORMAT, lambda);
-        LOG.debug(message);
+        LOG.info(message);
     }
 
     /**

@@ -86,8 +86,8 @@ public class CachedClassReader extends ClassReader {
     }
 
     /**
-     * Gets {@link org.objectweb.asm.ClassReader} from cache or initializes new
-     * instance
+     * Gets {@link org.objectweb.asm.ClassReader} from cache or initializes and
+     * caches
      * 
      * @param name
      * @return {@link org.objectweb.asm.ClassReader} from cache

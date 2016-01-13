@@ -32,6 +32,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.tuples.ResolverTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 import org.objectweb.asm.Type;
 
 /**
@@ -52,15 +53,27 @@ class AbstractFieldResolver {
 
     private static final int BEGIN_INDEX = GET.length();
 
+    // Debug message pattern
+    private static final String DEBUG_MESSAGE_PATTERN = " - %s.%s";
+
     private static final Logger LOG = Logger.getLogger(AbstractFieldResolver.class);
+
+    private static void logMessage(String resolveType, QueryTuple tuple) {
+
+        if (LOG.isInfoEnabled()) {
+            String tupleInfo = String.format(DEBUG_MESSAGE_PATTERN, tuple.getEntityName(), tuple.getMethodName());
+            String message = StringUtils.concat(resolveType, tupleInfo);
+            LOG.info(message);
+        }
+    }
 
     /**
      * Logs passed message on DEBUG level
      * 
      * @param message
      */
-    protected static void debug(String message) {
-        LOG.debug(message);
+    protected static void debug(String message, QueryTuple tuple) {
+        ObjectUtils.nonNull(tuple, c -> logMessage(message, c));
     }
 
     /**
