@@ -30,6 +30,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -50,22 +51,55 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Validates if passed {@link Object} ins not <code>null</code> and runs
+     * Validates if passed {@link java.util.function.Predicate} is not
+     * <code>null</code> returns <code>true</code> for passed value
+     * 
+     * @param predicate
+     * @param value
+     * @return <code>boolean</code> validation result
+     */
+    public static <T> boolean test(Predicate<T> predicate, T value) {
+
+        boolean valid = Objects.nonNull(predicate);
+
+        if (valid) {
+            valid = predicate.test(value);
+        }
+
+        return valid;
+    }
+
+    /**
+     * Validates if passed {@link java.util.function.Predicate} returns
+     * <code>true</code> for passed value and runs
      * {@link java.util.function.Consumer} implementation
      * 
      * @param value
+     * @param predicate
      * @param consumer
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
-    public static <T> boolean nonNull(T value, Consumer<T> consumer) {
+    public static <T> boolean valid(T value, Predicate<T> predicate, Consumer<T> consumer) {
 
-        boolean valid = Objects.nonNull(value);
+        boolean valid = test(predicate, value);
 
         if (valid) {
             consumer.accept(value);
         }
 
         return valid;
+    }
+
+    /**
+     * Validates if passed {@link Object} is not <code>null</code> and runs
+     * {@link java.util.function.Consumer} implementation
+     * 
+     * @param value
+     * @param consumer
+     * @return <code>boolean</code> validation result
+     */
+    public static <T> boolean nonNull(T value, Consumer<T> consumer) {
+        return valid(value, Objects::nonNull, consumer);
     }
 
     /**

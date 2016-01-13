@@ -42,7 +42,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates DELETE statements with custom alias
+     * Generates DELETE statement with custom alias
      * 
      * @param em
      * @param entityType
@@ -62,7 +62,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates DELETE statements with default alias
+     * Generates DELETE statement with default alias
      * 
      * @param em
      * @param entityType
@@ -74,7 +74,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates UPDATE statements with custom alias
+     * Generates UPDATE statement with custom alias
      * 
      * @param em
      * @param entityType
@@ -94,7 +94,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates UPDATE statements with default alias
+     * Generates UPDATE statement with default alias
      * 
      * @param em
      * @param entityType
@@ -124,7 +124,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates SELECT statements with default alias
+     * Generates SELECT statement with default alias
      * 
      * @param em
      * @param entityType

@@ -85,10 +85,7 @@ public abstract class CollectionUtils {
      * @param consumer
      */
     public static <E> void valid(Collection<E> collection, Consumer<Collection<E>> consumer) {
-
-        if (valid(collection)) {
-            ObjectUtils.accept(consumer, collection);
-        }
+        ObjectUtils.valid(collection, CollectionUtils::valid, consumer);
     }
 
     /**
@@ -110,10 +107,7 @@ public abstract class CollectionUtils {
      * @param consumer
      */
     public static <K, V> void valid(Map<K, V> map, Consumer<Map<K, V>> consumer) {
-
-        if (valid(map)) {
-            ObjectUtils.accept(consumer, map);
-        }
+        ObjectUtils.valid(map, CollectionUtils::valid, consumer);
     }
 
     /**
@@ -187,6 +181,17 @@ public abstract class CollectionUtils {
      */
     public static boolean valid(Object[] array) {
         return (Objects.nonNull(array) && array.length > EMPTY);
+    }
+
+    /**
+     * Checks passed array on <code>null</code> and emptiness and executes
+     * {@link java.util.function.Consumer} implementation
+     * 
+     * @param array
+     * @param consumer
+     */
+    public static <E> void valid(E[] array, Consumer<E[]> consumer) {
+        ObjectUtils.valid(array, CollectionUtils::valid, consumer);
     }
 
     /**

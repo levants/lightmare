@@ -470,12 +470,13 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         }
     }
 
-    protected void setOrder(String dir, Serializable[] fields) {
+    private void setValidOrder(String dir, Serializable[] fields) {
+        prepareOrderBy(Orders.ORDER);
+        iterateAndAppendOrders(dir, fields);
+    }
 
-        if (CollectionUtils.valid(fields)) {
-            prepareOrderBy(Orders.ORDER);
-            iterateAndAppendOrders(dir, fields);
-        }
+    protected void setOrder(String dir, Serializable[] fields) {
+        CollectionUtils.valid(fields, c -> setValidOrder(dir, c));
     }
 
     protected void setOrder(Serializable[] fields) {
@@ -597,7 +598,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      */
     private void consumeWithBrackets(QueryConsumer<T> consumer) {
 
-        validateOperator();
+        appendOperator();
         openBracket();
         consumer.accept(this);
         removeNewLine();

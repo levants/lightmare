@@ -80,14 +80,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static <T extends CharSequence> boolean valid(T chars, Consumer<T> consumer) {
-
-        boolean valid = valid(chars);
-
-        if (valid) {
-            consumer.accept(chars);
-        }
-
-        return valid;
+        return ObjectUtils.valid(chars, StringUtils::valid, consumer);
     }
 
     /**
