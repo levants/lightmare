@@ -53,6 +53,7 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
 
     protected SelectStream<T, ?> selectStream;
 
+    // Aggregate fields
     protected Set<AggregateTuple> aggregateFields;
 
     protected Queue<AggregateTuple> aggregateQueue;

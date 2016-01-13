@@ -225,6 +225,13 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         newLine();
     }
 
+    /**
+     * Generates query part for {@link java.util.Collection} field
+     * 
+     * @param value
+     * @param field
+     * @param operator
+     */
     protected void oppCollection(Object value, Serializable field, String operator) {
 
         appendBody(value).appendBody(operator);

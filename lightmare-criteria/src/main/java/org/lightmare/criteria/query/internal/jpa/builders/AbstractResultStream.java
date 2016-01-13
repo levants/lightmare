@@ -96,7 +96,6 @@ abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
     @Override
     public String toString() {
-        String value = sql();
-        return value;
+        return sql();
     }
 }
