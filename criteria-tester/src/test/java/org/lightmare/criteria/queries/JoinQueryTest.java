@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.lightmare.criteria.entities.GeneralInfo;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.QueryProvider;
@@ -21,10 +22,14 @@ public class JoinQueryTest extends SubQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .like(Person::getLastName, "lname")
-                    .join(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, "100100"));
+                    .equal(GeneralInfo::getAddrress, "address").like(Person::getLastName, "lname")
+                    .join(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, "100100")).leftJoin(Person::getPhones,
+                            c -> c.equal(Phone::getPhoneId, Person::getPersonId).equal(Phone::getPhoneId, 100L));
+            Person person = stream.getFirst();
             String sql = stream.sql();
+            printParameters(stream);
             System.out.println(sql);
+            System.out.println(person);
         } catch (Throwable ex) {
             ex.printStackTrace();
         } finally {
@@ -39,10 +44,11 @@ public class JoinQueryTest extends SubQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
-                    .like(Person::getLastName, "lname")
+                    .like(Person::getLastName, "lname").ge(Person::getPersonId, 1000L)
                     .leftJoin(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, Person::getPersonalNo));
             String sql = stream.sql();
             System.out.println(sql);
+            printParameters(stream);
         } catch (Throwable ex) {
             ex.printStackTrace();
         } finally {

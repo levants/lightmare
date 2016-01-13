@@ -41,6 +41,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.tuples.AliasTuple;
+import org.lightmare.criteria.tuples.ParameterSuffix;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -68,9 +69,10 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     // Mutable data
     protected int alias_suffix;
 
-    private int parameter_counter;
-
     private int alias_counter = -1;
+
+    // Incremental suffix for JPA query parameters
+    private ParameterSuffix suffix;
 
     // JPA query parameters
     protected final Set<ParameterTuple> parameters = new HashSet<>();
@@ -79,6 +81,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
         this.em = em;
         this.entityType = entityType;
         this.alias = alias;
+        this.suffix = ParameterSuffix.get();
     }
 
     /**
@@ -222,8 +225,8 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
         return fieldType;
     }
 
-    public int getParameterCounter() {
-        return parameter_counter;
+    public ParameterSuffix getParameterCounter() {
+        return suffix;
     }
 
     /**
@@ -231,15 +234,15 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      * 
      * @param parameter_counter
      */
-    protected void setParameterCounter(int parameter_counter) {
-        this.parameter_counter = parameter_counter;
+    protected void setParameterCounter(ParameterSuffix suffix) {
+        this.suffix = suffix;
     }
 
     /**
      * Increments parameters counter
      */
     private void incrementParameterCounter() {
-        parameter_counter++;
+        suffix.increment();
     }
 
     /**
@@ -249,7 +252,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      * @return {@link String} parameter name
      */
     public String generateParameterName(String column) {
-        return StringUtils.concat(column, parameter_counter);
+        return StringUtils.concat(column, suffix.getCounter());
     }
 
     /**

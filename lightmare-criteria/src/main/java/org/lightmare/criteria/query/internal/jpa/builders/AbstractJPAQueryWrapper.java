@@ -40,7 +40,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type for generated query
+ *            entity type for generated JPA query
  */
 abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
 
