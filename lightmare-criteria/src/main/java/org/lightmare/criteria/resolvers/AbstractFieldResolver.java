@@ -24,6 +24,7 @@ package org.lightmare.criteria.resolvers;
 
 import java.util.function.Function;
 
+import org.apache.log4j.Logger;
 import org.lightmare.criteria.meta.ColumnProcessor;
 import org.lightmare.criteria.meta.EntityProcessor;
 import org.lightmare.criteria.meta.GenericProcessor;
@@ -50,6 +51,17 @@ class AbstractFieldResolver {
     private static final String SET = "set";
 
     private static final int BEGIN_INDEX = GET.length();
+
+    private static final Logger LOG = Logger.getLogger(AbstractFieldResolver.class);
+
+    /**
+     * Logs passed message on DEBUG level
+     * 
+     * @param message
+     */
+    protected static void debug(String message) {
+        LOG.debug(message);
+    }
 
     /**
      * Resolves field name from method name

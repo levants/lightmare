@@ -42,6 +42,9 @@ import org.objectweb.asm.Type;
  */
 abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
+    // Debug messages
+    private static final String DEBUG_MESSAGE_DIR = "Resolved directly";
+
     /**
      * Gets type from descriptor
      * 
@@ -164,6 +167,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
         if (validateLambda(lambda)) {
             tuple = resolveFromLambda(lambda);
+            debug(DEBUG_MESSAGE_DIR);
         } else {
             tuple = null;
         }

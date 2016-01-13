@@ -48,6 +48,9 @@ public class FieldResolver extends DirectLambdaResolver {
 
     private static final String THIS_PT = "this";
 
+    // Debug messages
+    private static final String DEBUG_MESSAGE_BYT = "Resolved from bytecode";
+
     // Error message
     private static final String UNRESOLVABLE_FIELD_ERROR = "Unresolvable field name";
 
@@ -266,6 +269,7 @@ public class FieldResolver extends DirectLambdaResolver {
 
         if (tuple == null) {
             tuple = resolveFromBytecode(lambda);
+            debug(DEBUG_MESSAGE_BYT);
         }
 
         return tuple;
