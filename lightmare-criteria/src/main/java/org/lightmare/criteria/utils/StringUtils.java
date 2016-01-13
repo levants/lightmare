@@ -58,7 +58,7 @@ public abstract class StringUtils {
 
     public static final int SINGLE_STEP = 1;
 
-    public static final int NOT_EXISTING_INDEX = -1;
+    public static final int NOT_EXISTING = -1;
 
     /**
      * Checks if passed {@link CharSequence} is not <code>null</code> and is not
@@ -165,7 +165,7 @@ public abstract class StringUtils {
         T value = item;
 
         if (isEmpty(item)) {
-            item = supplier.get();
+            value = supplier.get();
         }
 
         return value;

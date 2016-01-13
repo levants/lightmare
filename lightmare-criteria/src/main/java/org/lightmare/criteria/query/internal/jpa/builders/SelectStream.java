@@ -75,7 +75,7 @@ public class SelectStream<T, E> extends JPAQueryStream<E> {
     }
 
     /**
-     * Generates SELECT clause JPA query part
+     * Generates SELECT clause for JPA query
      */
     private void appendSelectPrefix() {
 

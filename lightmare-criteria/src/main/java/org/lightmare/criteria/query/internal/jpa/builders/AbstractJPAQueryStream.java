@@ -72,6 +72,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
 
     private int alias_counter = -1;
 
+    // JPA query parameters
     protected final Set<ParameterTuple> parameters = new HashSet<>();
 
     protected AbstractJPAQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
