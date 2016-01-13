@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
@@ -99,13 +100,34 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     }
 
     /**
+     * Gets entity name from {@link Class} or {@link javax.persistence.Entity}
+     * annotation
+     * 
+     * @param type
+     * @return {@link String} entity name
+     */
+    public static String getEntityName(Class<?> type) {
+
+        String name;
+
+        Entity entity = type.getAnnotation(Entity.class);
+        if (entity == null) {
+            name = type.getName();
+        } else {
+            name = StringUtils.thisOrDefault(entity.name(), () -> type.getName());
+        }
+
+        return name;
+    }
+
+    /**
      * Appends entity and alias part to stream
      * 
      * @param stream
      */
     protected static <T> void appendEntityPart(QueryStream<T> stream) {
 
-        String entityName = stream.getEntityType().getName();
+        String entityName = getEntityName(stream.getEntityType());
         String alias = stream.getAlias();
         stream.appendFrom(Parts.FROM);
         stream.appendFrom(entityName);

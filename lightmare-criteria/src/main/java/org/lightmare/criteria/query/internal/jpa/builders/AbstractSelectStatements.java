@@ -103,7 +103,8 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
             validateAndAppendSelect();
             columns.append(buffer);
         } else {
-            String expression = StringUtils.concat(NEW_OPERATOR, type.getName(), Operators.Brackets.OPEN);
+            String entityName = getEntityName(type);
+            String expression = StringUtils.concat(NEW_OPERATOR, entityName, Operators.Brackets.OPEN);
             validateAndAppendSelect(expression);
             columns.append(expression).append(buffer).append(Operators.Brackets.CLOSE);
         }

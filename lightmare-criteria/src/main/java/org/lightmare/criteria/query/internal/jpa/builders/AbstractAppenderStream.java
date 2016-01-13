@@ -122,8 +122,10 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      * @param buff
      */
     protected static void appendFromClause(Class<?> type, String alias, StringBuilder buff) {
+
         StringUtils.clear(buff);
-        appendFromClause(type.getName(), alias, buff);
+        String entityName = getEntityName(type);
+        appendFromClause(entityName, alias, buff);
     }
 
     /**
