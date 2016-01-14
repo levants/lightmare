@@ -22,6 +22,8 @@
  */
 package org.lightmare.criteria.tuples;
 
+import org.lightmare.criteria.utils.StringUtils;
+
 /**
  * Container class with query alias and appropriated increment coefficient for
  * sub query alias generation
@@ -33,9 +35,9 @@ public class AliasTuple {
 
     private final String alias;
 
-    private final int counter;
+    private final SuffixTuple counter;
 
-    private AliasTuple(final String alias, final int counter) {
+    private AliasTuple(final String alias, final SuffixTuple counter) {
         this.alias = alias;
         this.counter = counter;
     }
@@ -48,19 +50,15 @@ public class AliasTuple {
      * @param counter
      * @return {@link org.lightmare.criteria.tuples.AliasTuple} instance
      */
-    public static AliasTuple of(final String alias, final int counter) {
+    public static AliasTuple of(final String alias, final SuffixTuple counter) {
         return new AliasTuple(alias, counter);
     }
 
-    public String getAlias() {
-        return alias;
-    }
-
-    public int getCounter() {
+    public SuffixTuple getCounter() {
         return counter;
     }
 
     public String generate() {
-        return alias.concat(String.valueOf(counter));
+        return StringUtils.concat(alias, counter.getAndIncrement());
     }
 }

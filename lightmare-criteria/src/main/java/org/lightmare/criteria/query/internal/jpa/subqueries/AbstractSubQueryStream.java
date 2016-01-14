@@ -58,6 +58,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, String alias, Class<S> entityType) {
         super(parent.getEntityManager(), entityType, alias);
         parentAlias = parent.getAlias();
+        this.setAliasSuffix(parent.getAliasSuffix());
         this.setParameterCounter(parent.getParameterCounter());
         this.parent = parent;
     }

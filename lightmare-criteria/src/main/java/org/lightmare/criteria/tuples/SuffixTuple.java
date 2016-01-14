@@ -6,15 +6,23 @@ package org.lightmare.criteria.tuples;
  * @author Levan Tsinadze
  *
  */
-public class ParameterSuffix {
+public class SuffixTuple {
 
     private int counter;
 
-    private ParameterSuffix() {
+    private SuffixTuple() {
     }
 
-    public static ParameterSuffix get() {
-        return new ParameterSuffix();
+    public static SuffixTuple get() {
+        return new SuffixTuple();
+    }
+
+    public static SuffixTuple of(int initCounter) {
+
+        SuffixTuple suffix = new SuffixTuple();
+        suffix.counter = initCounter;
+
+        return suffix;
     }
 
     /**

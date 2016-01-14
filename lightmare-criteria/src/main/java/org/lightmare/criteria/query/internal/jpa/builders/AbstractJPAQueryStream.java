@@ -41,9 +41,9 @@ import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.tuples.AliasTuple;
-import org.lightmare.criteria.tuples.ParameterSuffix;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.tuples.SuffixTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -66,13 +66,11 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
 
     protected final String alias;
 
-    // Mutable data
-    protected int alias_suffix;
-
-    private int alias_counter = -1;
-
     // Incremental suffix for JPA query parameters
-    private ParameterSuffix suffix;
+    private SuffixTuple parameterSuffix;
+
+    // Incremental suffix for JPA entity aliases
+    private SuffixTuple aliasSuffix;
 
     // JPA query parameters
     protected final Set<ParameterTuple> parameters = new HashSet<>();
@@ -81,7 +79,6 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
         this.em = em;
         this.entityType = entityType;
         this.alias = alias;
-        this.suffix = ParameterSuffix.get();
     }
 
     /**
@@ -162,19 +159,6 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     }
 
     /**
-     * Sets alias to query part
-     * 
-     * @param tuple
-     */
-    protected void setAlias(QueryTuple tuple) {
-
-        if (tuple.hasNoAlias()) {
-            tuple.setAlias(alias_suffix);
-            alias_suffix++;
-        }
-    }
-
-    /**
      * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
      * cache or generates from compiled class
      * 
@@ -225,8 +209,8 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
         return fieldType;
     }
 
-    public ParameterSuffix getParameterCounter() {
-        return suffix;
+    public SuffixTuple getParameterCounter() {
+        return parameterSuffix;
     }
 
     /**
@@ -234,8 +218,12 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      * 
      * @param parameter_counter
      */
-    protected void setParameterCounter(ParameterSuffix suffix) {
-        this.suffix = suffix;
+    protected void setParameterCounter(SuffixTuple parameterSuffix) {
+        this.parameterSuffix = parameterSuffix;
+    }
+
+    private SuffixTuple getOrInitParameterCounter() {
+        return ObjectUtils.thisOrDefault(parameterSuffix, SuffixTuple::get, this::setParameterCounter);
     }
 
     /**
@@ -245,7 +233,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      * @return {@link String} parameter name
      */
     private String generateParameterName(QueryTuple tuple) {
-        return StringUtils.concat(tuple.getFieldName(), suffix.getAndIncrement());
+        return StringUtils.concat(tuple.getFieldName(), getOrInitParameterCounter().getAndIncrement());
     }
 
     @Override
@@ -386,6 +374,21 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
         return alias;
     }
 
+    protected void setAliasSuffix(SuffixTuple aliasSuffix) {
+        this.aliasSuffix = aliasSuffix;
+    }
+
+    /**
+     * Gets or initializes {@link org.lightmare.criteria.tuples.SuffixTuple}
+     * instance with initial counter
+     * 
+     * @return {@link org.lightmare.criteria.tuples.SuffixTuple} with initial
+     *         counter
+     */
+    public SuffixTuple getAliasSuffix() {
+        return ObjectUtils.thisOrDefault(aliasSuffix, SuffixTuple::get, this::setAliasSuffix);
+    }
+
     /**
      * Generates {@link org.lightmare.criteria.tuples.AliasTuple} instance with
      * incremented counter for sub queries
@@ -394,12 +397,6 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      *         counter
      */
     public AliasTuple getAliasTuple() {
-
-        AliasTuple tuple;
-
-        alias_counter++;
-        tuple = AliasTuple.of(alias, alias_counter);
-
-        return tuple;
+        return AliasTuple.of(alias, getAliasSuffix());
     }
 }
