@@ -45,12 +45,12 @@ public interface SubQueryProcessor<T>
     /**
      * Generates {@link org.lightmare.criteria.query.QueryStream} for S type
      * 
-     * @param subType
+     * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} similar stream
      *         for sub query
      */
-    <S> QueryStream<T> operateSubQuery(Class<S> subType, QueryConsumer<S> consumer);
+    <S> QueryStream<T> operateSubQuery(Class<S> type, QueryConsumer<S> consumer);
 
     /**
      * Generates {@link org.lightmare.criteria.query.QueryStream} for S type
@@ -64,38 +64,38 @@ public interface SubQueryProcessor<T>
         return operateSubQuery(getEntityType(), consumer);
     }
 
-    <F, S> QueryStream<T> operateSubQuery(String operator, Class<S> subType, QueryConsumer<S> consumer);
+    <F, S> QueryStream<T> operateSubQuery(String operator, Class<S> type, QueryConsumer<S> consumer);
 
     /**
      * Generates sub query for IN clause
      * 
      * @param field
-     * @param subType
+     * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
-    default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
-        return operateSubQuery(field, Operators.IN, subType, consumer);
+    default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> type, QueryConsumer<S> consumer) {
+        return operateSubQuery(field, Operators.IN, type, consumer);
     }
 
     /**
      * Generates sub query part for NOT IN clause
      * 
      * @param field
-     * @param subType
+     * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
-    default <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType, QueryConsumer<S> consumer) {
-        return operateSubQuery(field, Operators.NOT_IN, subType, consumer);
+    default <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> type, QueryConsumer<S> consumer) {
+        return operateSubQuery(field, Operators.NOT_IN, type, consumer);
     }
 
-    default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> subType) {
-        return in(field, subType, null);
+    default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> type) {
+        return in(field, type, null);
     }
 
-    default <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> subType) {
-        return notIn(field, subType, null);
+    default <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> type) {
+        return notIn(field, type, null);
     }
 
     default <F> QueryStream<T> in(EntityField<T, F> field, QueryConsumer<T> consumer) {
@@ -119,31 +119,31 @@ public interface SubQueryProcessor<T>
     /**
      * Generates sub query part for EXISTS clause
      * 
-     * @param subType
+     * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
-    default <F, S> QueryStream<T> exists(Class<S> subType, QueryConsumer<S> consumer) {
-        return operateSubQuery(Operators.EXISTS, subType, consumer);
+    default <F, S> QueryStream<T> exists(Class<S> type, QueryConsumer<S> consumer) {
+        return operateSubQuery(Operators.EXISTS, type, consumer);
     }
 
     /**
      * Generates sub query part for NOT EXISTS clause
      * 
-     * @param subType
+     * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
-    default <F, S> QueryStream<T> notExists(Class<S> subType, QueryConsumer<S> consumer) {
-        return operateSubQuery(Operators.NOT_EXISTS, subType, consumer);
+    default <F, S> QueryStream<T> notExists(Class<S> type, QueryConsumer<S> consumer) {
+        return operateSubQuery(Operators.NOT_EXISTS, type, consumer);
     }
 
-    default <F, S> QueryStream<T> exists(Class<S> subType) {
-        return exists(subType, null);
+    default <F, S> QueryStream<T> exists(Class<S> type) {
+        return exists(type, null);
     }
 
-    default <F, S> QueryStream<T> notExists(Class<S> subType) {
-        return notExists(subType, null);
+    default <F, S> QueryStream<T> notExists(Class<S> type) {
+        return notExists(type, null);
     }
 
     default <F> QueryStream<T> exists(QueryConsumer<T> consumer) {

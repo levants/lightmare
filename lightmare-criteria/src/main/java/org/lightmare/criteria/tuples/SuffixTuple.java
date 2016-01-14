@@ -17,14 +17,6 @@ public class SuffixTuple {
         return new SuffixTuple();
     }
 
-    public static SuffixTuple of(int initCounter) {
-
-        SuffixTuple suffix = new SuffixTuple();
-        suffix.counter = initCounter;
-
-        return suffix;
-    }
-
     /**
      * Gets value of counter and increments it for next call
      * 

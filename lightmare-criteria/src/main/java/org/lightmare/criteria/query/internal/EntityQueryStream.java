@@ -168,22 +168,22 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
      * {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
      * for entity type
      * 
-     * @param subType
+     * @param type
      * @return {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
      *         for entity {@link Class}
      */
-    public <S> SubQueryStream<S, T> subQuery(Class<S> subType) {
-        return new EntitySubQueryStream<S, T>(this, subType);
+    public <S> SubQueryStream<S, T> subQuery(Class<S> type) {
+        return new EntitySubQueryStream<S, T>(this, type);
     }
 
     /**
      * Generates {@link org.lightmare.criteria.query.QueryStream} for JOIN query
      * 
-     * @param subType
+     * @param type
      * @return {@link org.lightmare.criteria.query.QueryStream} for JOIN query
      */
-    public <S> SubQueryStream<S, T> joinStream(Class<S> subType) {
-        return new EntityJoinProcessor<S, T>(this, subType);
+    public <S> SubQueryStream<S, T> joinStream(Class<S> type) {
+        return new EntityJoinProcessor<S, T>(this, type);
     }
 
     /**
@@ -196,8 +196,8 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
         QueryStream<S> joinStream;
 
-        Class<S> subType = tuple.getFieldType();
-        joinStream = joinStream(subType);
+        Class<S> type = tuple.getFieldType();
+        joinStream = joinStream(type);
 
         return joinStream;
     }
@@ -220,14 +220,14 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
      * {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
      * for instant {@link Class} entity type
      * 
-     * @param subType
+     * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
      *         for entity type
      */
-    private <S> QueryStream<S> initSubQuery(Class<S> subType, QueryConsumer<S> consumer) {
+    private <S> QueryStream<S> initSubQuery(Class<S> type, QueryConsumer<S> consumer) {
 
-        QueryStream<S> query = subQuery(subType);
+        QueryStream<S> query = subQuery(type);
 
         acceptAndCall(consumer, query);
         closeBracket();
@@ -237,54 +237,54 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <S> QueryStream<T> operateSubQuery(Class<S> subType, QueryConsumer<S> consumer) {
+    public <S> QueryStream<T> operateSubQuery(Class<S> type, QueryConsumer<S> consumer) {
         openBracket();
-        initSubQuery(subType, consumer);
+        initSubQuery(type, consumer);
 
         return this;
     }
 
     @Override
-    public <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> subType,
+    public <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
             QueryConsumer<S> consumer) {
 
         appendOperator();
         appSubQuery(field, operator);
-        initSubQuery(subType, consumer);
+        initSubQuery(type, consumer);
 
         return this;
     }
 
     @Override
-    public <F, S> QueryStream<T> operateSubQuery(Object value, String operator, Class<S> subType,
+    public <F, S> QueryStream<T> operateSubQuery(Object value, String operator, Class<S> type,
             QueryConsumer<S> consumer) {
 
         appendOperator();
         appendBody(value).appendBody(StringUtils.SPACE).appendBody(operator);
         openBracket();
-        initSubQuery(subType, consumer);
+        initSubQuery(type, consumer);
 
         return this;
     }
 
     @Override
     public <F, S> QueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator,
-            Class<S> subType, QueryConsumer<S> consumer) {
+            Class<S> type, QueryConsumer<S> consumer) {
 
         startFunctionExpression(function, operator);
         openBracket();
-        initSubQuery(subType, consumer);
+        initSubQuery(type, consumer);
 
         return this;
     }
 
     @Override
-    public <F, S> QueryStream<T> operateSubQuery(String operator, Class<S> subType, QueryConsumer<S> consumer) {
+    public <F, S> QueryStream<T> operateSubQuery(String operator, Class<S> type, QueryConsumer<S> consumer) {
 
         appendOperator();
         appendBody(operator);
         openBracket();
-        initSubQuery(subType, consumer);
+        initSubQuery(type, consumer);
 
         return this;
     }

@@ -348,7 +348,8 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     }
 
     /**
-     * Adds all gethered parameters to passed query
+     * Adds all gathered parameters to generated {@link javax.persistence.Query}
+     * instance
      * 
      * @param query
      */

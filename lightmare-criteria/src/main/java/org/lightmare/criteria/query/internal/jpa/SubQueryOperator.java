@@ -43,11 +43,11 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * 
      * @param field
      * @param operator
-     * @param subType
+     * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
-    <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> subType,
+    <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
             QueryConsumer<S> consumer);
 
     /**
@@ -56,11 +56,11 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * 
      * @param value
      * @param operator
-     * @param subType
+     * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
-    <F, S> QueryStream<T> operateSubQuery(Object value, String operator, Class<S> subType, QueryConsumer<S> consumer);
+    <F, S> QueryStream<T> operateSubQuery(Object value, String operator, Class<S> type, QueryConsumer<S> consumer);
 
     /**
      * Processes sub query for entity field instant operator and sub query
@@ -68,10 +68,10 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * 
      * @param function
      * @param operator
-     * @param subType
+     * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} current instance
      */
-    <F, S> QueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator, Class<S> subType,
+    <F, S> QueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator, Class<S> type,
             QueryConsumer<S> consumer);
 }
