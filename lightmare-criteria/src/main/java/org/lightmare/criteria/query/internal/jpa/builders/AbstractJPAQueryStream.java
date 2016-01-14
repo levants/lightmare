@@ -40,10 +40,9 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Parts;
-import org.lightmare.criteria.tuples.AliasTuple;
+import org.lightmare.criteria.tuples.CounterTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
-import org.lightmare.criteria.tuples.SuffixTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -66,11 +65,8 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
 
     protected final String alias;
 
-    // Incremental suffix for JPA query parameters
-    private SuffixTuple parameterSuffix;
-
-    // Incremental suffix for JPA entity aliases
-    private SuffixTuple aliasSuffix;
+    // Incremental suffix for JPA entity aliases and parameters
+    private CounterTuple counterTuple;
 
     // JPA query parameters
     protected final Set<ParameterTuple> parameters = new HashSet<>();
@@ -209,23 +205,6 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
         return fieldType;
     }
 
-    public SuffixTuple getParameterCounter() {
-        return parameterSuffix;
-    }
-
-    /**
-     * Sets parameter name suffix counter
-     * 
-     * @param parameter_counter
-     */
-    protected void setParameterCounter(SuffixTuple parameterSuffix) {
-        this.parameterSuffix = parameterSuffix;
-    }
-
-    private SuffixTuple getOrInitParameterCounter() {
-        return ObjectUtils.thisOrDefault(parameterSuffix, SuffixTuple::get, this::setParameterCounter);
-    }
-
     /**
      * Generates parameter name for JPA query
      * 
@@ -233,7 +212,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      * @return {@link String} parameter name
      */
     private String generateParameterName(QueryTuple tuple) {
-        return StringUtils.concat(tuple.getFieldName(), getOrInitParameterCounter().getAndIncrement());
+        return StringUtils.concat(tuple.getFieldName(), getCounterTuple().getAndIncrementParameter());
     }
 
     @Override
@@ -375,29 +354,27 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
         return alias;
     }
 
-    protected void setAliasSuffix(SuffixTuple aliasSuffix) {
-        this.aliasSuffix = aliasSuffix;
+    protected void setCounterTuple(CounterTuple counterTuple) {
+        this.counterTuple = counterTuple;
     }
 
     /**
-     * Gets or initializes {@link org.lightmare.criteria.tuples.SuffixTuple}
+     * Gets or initializes {@link org.lightmare.criteria.tuples.CounterTuple}
      * instance with initial counter
      * 
-     * @return {@link org.lightmare.criteria.tuples.SuffixTuple} with initial
+     * @return {@link org.lightmare.criteria.tuples.CounterTuple} with initial
      *         counter
      */
-    public SuffixTuple getAliasSuffix() {
-        return ObjectUtils.thisOrDefault(aliasSuffix, SuffixTuple::get, this::setAliasSuffix);
+    public CounterTuple getCounterTuple() {
+        return ObjectUtils.thisOrDefault(counterTuple, CounterTuple::get, this::setCounterTuple);
     }
 
     /**
-     * Generates {@link org.lightmare.criteria.tuples.AliasTuple} instance with
-     * incremented counter for sub queries
+     * Generates unique alias for sub query
      * 
-     * @return {@link org.lightmare.criteria.tuples.AliasTuple} with incremented
-     *         counter
+     * @return {@link String} alias for sub query
      */
-    public AliasTuple getAliasTuple() {
-        return AliasTuple.of(alias, getAliasSuffix());
+    public String generateSubAlias() {
+        return StringUtils.concat(alias, getCounterTuple().getAndIncrementAlias());
     }
 }

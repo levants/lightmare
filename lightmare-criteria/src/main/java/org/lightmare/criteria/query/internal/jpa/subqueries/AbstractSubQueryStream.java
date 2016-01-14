@@ -58,13 +58,12 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, String alias, Class<S> entityType) {
         super(parent.getEntityManager(), entityType, alias);
         parentAlias = parent.getAlias();
-        this.setAliasSuffix(parent.getAliasSuffix());
-        this.setParameterCounter(parent.getParameterCounter());
+        this.setCounterTuple(parent.getCounterTuple());
         this.parent = parent;
     }
 
     protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, Class<S> entityType) {
-        this(parent, parent.getAliasTuple().generate(), entityType);
+        this(parent, parent.generateSubAlias(), entityType);
     }
 
     private <K> SubSelectStream<S, K> generetaSubSelectStream(Class<K> type) {
