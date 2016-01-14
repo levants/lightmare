@@ -1,7 +1,7 @@
 package org.lightmare.criteria.tuples;
 
 /**
- * Parameter suffox by counter
+ * Parameter suffix by counter
  * 
  * @author Levan Tsinadze
  *
@@ -17,24 +17,13 @@ public class ParameterSuffix {
         return new ParameterSuffix();
     }
 
-    public void increment() {
-        counter++;
-    }
-
-    public int getCounter() {
-        return counter;
-    }
-
     /**
-     * Gets value of counter and increments
+     * Gets value of counter and increments it for next call
      * 
-     * @return <code>int</code> incremented value
+     * @return <code>int</code> value before increment
      */
-    public int getAndAdd() {
-
-        int value = getCounter();
-        increment();
-
+    public int getAndIncrement() {
+        int value = counter++;
         return value;
     }
 }

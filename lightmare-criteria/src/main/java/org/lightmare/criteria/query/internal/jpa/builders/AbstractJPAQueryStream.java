@@ -239,36 +239,13 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     }
 
     /**
-     * Increments parameters counter
-     */
-    private void incrementParameterCounter() {
-        suffix.increment();
-    }
-
-    /**
-     * Generates parameter name for JPA query
-     * 
-     * @param column
-     * @return {@link String} parameter name
-     */
-    public String generateParameterName(String column) {
-        return StringUtils.concat(column, suffix.getCounter());
-    }
-
-    /**
      * Generates parameter name for JPA query
      * 
      * @param tuple
      * @return {@link String} parameter name
      */
     private String generateParameterName(QueryTuple tuple) {
-
-        String parameterName;
-
-        String column = tuple.getFieldName();
-        parameterName = generateParameterName(column);
-
-        return parameterName;
+        return StringUtils.concat(tuple.getFieldName(), suffix.getAndIncrement());
     }
 
     @Override
@@ -294,10 +271,8 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      * @param value
      */
     public <F> void addParameter(String key, QueryTuple tuple, F value) {
-
         TemporalType temporalType = tuple.getTemporalType();
         addParameter(key, value, temporalType);
-        incrementParameterCounter();
     }
 
     /**

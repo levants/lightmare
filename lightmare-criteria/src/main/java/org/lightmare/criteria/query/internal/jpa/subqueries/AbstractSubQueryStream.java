@@ -157,15 +157,15 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     }
 
     /**
-     * Switches prepared state to called
+     * Switches state from prepared mode to called
      */
     protected void switchState() {
         preparedState = Boolean.FALSE;
     }
 
     /**
-     * Checks if state in prepare mode and calls statement by appending passed
-     * {@link Character} to parent
+     * Checks if state is in prepare mode and calls statement by appending
+     * passed {@link Character} to parent
      * 
      * @param clause
      */
@@ -178,7 +178,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     }
 
     /**
-     * Checks if state in prepare mode and calls statement
+     * Checks if state is in prepare mode and calls statement
      */
     private void callState() {
 
