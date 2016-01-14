@@ -8,32 +8,22 @@ package org.lightmare.criteria.tuples;
  */
 public class CounterTuple {
 
-    private final SuffixTuple aliasSuffix;
+    private int alias;
 
-    private final SuffixTuple parameterSuffix;
+    private int parameter;
 
     private CounterTuple() {
-        this.aliasSuffix = SuffixTuple.get();
-        this.parameterSuffix = SuffixTuple.get();
     }
 
     public static CounterTuple get() {
         return new CounterTuple();
     }
 
-    public SuffixTuple getAliasSuffix() {
-        return aliasSuffix;
-    }
-
-    public SuffixTuple getParameterSuffix() {
-        return parameterSuffix;
-    }
-
     public int getAndIncrementAlias() {
-        return aliasSuffix.getAndIncrement();
+        return alias++;
     }
 
     public int getAndIncrementParameter() {
-        return parameterSuffix.getAndIncrement();
+        return parameter++;
     }
 }
