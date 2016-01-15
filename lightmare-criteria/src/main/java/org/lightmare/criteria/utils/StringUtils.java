@@ -228,6 +228,27 @@ public abstract class StringUtils {
         return (text == null || ObjectUtils.notTrue(text.contains(item)));
     }
 
+    /***
+     * Validates if passed text starts with special characters
+     * 
+     * @param item
+     * @param element
+     * @return <code>boolean</code> validation result
+     */
+    private static boolean validAndStartsWith(CharSequence item, CharSequence element) {
+
+        boolean valid;
+
+        int length = item.length();
+        int end = element.length();
+        valid = (length > end);
+        for (int i = CollectionUtils.FIRST_INDEX; i < end && valid; i++) {
+            valid = (item.charAt(i) == element.charAt(i));
+        }
+
+        return valid;
+    }
+
     /**
      * Validates if passed text starts with special characters
      * 
@@ -236,19 +257,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean startsWith(CharSequence item, CharSequence element) {
-
-        boolean valid = (valid(item) && valid(element));
-
-        if (valid) {
-            int length = item.length();
-            int end = element.length();
-            valid = (length > end);
-            for (int i = CollectionUtils.FIRST_INDEX; i < end && valid; i++) {
-                valid = (item.charAt(i) == element.charAt(i));
-            }
-        }
-
-        return valid;
+        return (valid(item) && valid(element) && validAndStartsWith(item, element));
     }
 
     /**

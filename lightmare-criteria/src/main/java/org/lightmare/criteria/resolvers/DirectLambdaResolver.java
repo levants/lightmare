@@ -125,6 +125,28 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
     }
 
     /**
+     * Resolves {@link org.lightmare.criteria.tuples.QueryTuple} from lambda
+     * parameters are valid
+     * 
+     * @param lambda
+     * @param desc
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
+     */
+    private static QueryTuple resolveFromValidLambda(LambdaInfo lambda, Type desc) {
+
+        QueryTuple tuple;
+
+        String implDesc = lambda.getImplMethodSignature();
+        String methodName = lambda.getImplMethodName();
+        String entityName = desc.getInternalName();
+        ResolverTuple<String> resolverTyple = ResolverTuple.of(implDesc, methodName, entityName);
+        tuple = resolve(resolverTyple, DirectLambdaResolver::resolveEntityName);
+        debug(DEBUG_MESSAGE_DIR, tuple);
+
+        return tuple;
+    }
+
+    /**
      * Resolves entity field and method from
      * {@link org.lightmare.criteria.lambda.LambdaInfo} object fields directly
      * 
@@ -137,16 +159,8 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
         String implClass = lambda.getImplClass();
         Type desc = getFromDescription(lambda);
-        if (validateClassName(implClass, desc)) {
-            String implDesc = lambda.getImplMethodSignature();
-            String methodName = lambda.getImplMethodName();
-            String entityName = desc.getInternalName();
-            ResolverTuple<String> resolverTyple = ResolverTuple.of(implDesc, methodName, entityName);
-            tuple = resolve(resolverTyple, DirectLambdaResolver::resolveEntityName);
-            debug(DEBUG_MESSAGE_DIR, tuple);
-        } else {
-            tuple = null;
-        }
+        tuple = ObjectUtils.ifValid(lambda, l -> validateClassName(implClass, desc),
+                c -> resolveFromValidLambda(c, desc));
 
         return tuple;
     }

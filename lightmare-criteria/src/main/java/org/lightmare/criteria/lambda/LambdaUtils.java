@@ -33,7 +33,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Utility class to translate lambda expression to JPA query parts
+ * Utility class to translate lambda expression to JPA query expression
  * 
  * @author Levan Tsinadze
  *
