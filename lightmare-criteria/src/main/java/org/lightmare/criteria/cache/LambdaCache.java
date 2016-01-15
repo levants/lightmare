@@ -22,11 +22,11 @@
  */
 package org.lightmare.criteria.cache;
 
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Caches lambda classes with phantom reference and cleans appropriated cache
@@ -44,16 +44,12 @@ public class LambdaCache {
      * Adds passed lambda {@link Class} and
      * {@link org.lightmare.criteria.tuples.QueryTuple} to cache
      * 
-     * @param lambdaType
+     * @param type
      * @param value
      */
-    public static void putLambda(Class<?> lambdaType, QueryTuple value) {
-
-        String key = lambdaType.getName();
-        QueryTuple existed = LAMBDAS.putIfAbsent(key, value);
-        if (Objects.equals(value, existed)) {
-            LambdaReferences.trace(lambdaType);
-        }
+    public static void putLambda(Class<?> type, QueryTuple value) {
+        QueryTuple existed = LAMBDAS.putIfAbsent(type.getName(), value);
+        ObjectUtils.equals(value, existed, (x, y) -> LambdaReferences.trace(type));
     }
 
     /**
@@ -64,26 +60,19 @@ public class LambdaCache {
      * @param value
      */
     public static void putByInstance(Object lambda, QueryTuple value) {
-        Class<?> key = lambda.getClass();
-        putLambda(key, value);
+        putLambda(lambda.getClass(), value);
     }
 
     /**
      * Gets {@link org.lightmare.criteria.tuples.QueryTuple} from cache by
      * passed lambda {@link Class} name as key
      * 
-     * @param lambdaType
+     * @param type
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for this lambda
      *         {@link Class}
      */
-    public static QueryTuple getLambda(Class<?> lambdaType) {
-
-        QueryTuple value;
-
-        String key = lambdaType.getName();
-        value = LAMBDAS.get(key);
-
-        return value;
+    public static QueryTuple getLambda(Class<?> type) {
+        return LAMBDAS.get(type.getName());
     }
 
     /**
@@ -95,23 +84,16 @@ public class LambdaCache {
      *         {@link Class}
      */
     public static QueryTuple getByInstance(Object lambda) {
-
-        QueryTuple tuple;
-
-        Class<?> key = lambda.getClass();
-        tuple = getLambda(key);
-
-        return tuple;
+        return getLambda(lambda.getClass());
     }
 
     /**
      * Removes passed lambda {@link Class} and associated
      * {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      * 
-     * @param lambdaType
+     * @param type
      */
-    public static void remove(Class<?> lambdaType) {
-        String key = lambdaType.getName();
-        LAMBDAS.remove(key);
+    public static void remove(Class<?> type) {
+        LAMBDAS.remove(type.getName());
     }
 }

@@ -84,18 +84,6 @@ public enum LambdaReferences {
     }
 
     /**
-     * Generates and sets cleaner {@link Thread} name
-     * 
-     * @param cleaner
-     */
-    private static void setName(Thread cleaner) {
-
-        Long threadId = cleaner.getId();
-        String threadName = StringUtils.concat(REFERENCE_THREAD_NAME, threadId);
-        cleaner.setName(threadName);
-    }
-
-    /**
      * Initializes and starts cleaner thread if it is not initialized yet
      */
     private Thread initCleaner() {
@@ -103,7 +91,8 @@ public enum LambdaReferences {
         cleaner = new Thread(this::cleaner);
 
         cleaner.setPriority(Thread.MAX_PRIORITY);
-        setName(cleaner);
+        String threadName = StringUtils.concat(REFERENCE_THREAD_NAME, cleaner.getId());
+        cleaner.setName(threadName);
         cleaner.setDaemon(Boolean.TRUE);
 
         return cleaner;

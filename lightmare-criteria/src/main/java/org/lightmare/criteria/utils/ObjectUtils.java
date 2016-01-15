@@ -29,7 +29,9 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -116,6 +118,44 @@ public abstract class ObjectUtils {
     }
 
     /**
+     * If {@link java.util.function.Predicate#test(Object)} is valid for passed
+     * value and calls {@link java.util.function.Function#apply(Object)} method
+     * and returns it's result or <code>null</code> in an other case
+     * 
+     * @param value
+     * @param predicate
+     * @param function
+     * @return <code>T</code> value from {@link java.util.function.Function} or
+     *         <code>null</code>
+     */
+    public static <K, T> T ifValid(K value, Predicate<K> predicate, Function<K, T> function) {
+
+        T result;
+
+        if (Objects.nonNull(predicate) && Objects.nonNull(function) && predicate.test(value)) {
+            result = function.apply(value);
+        } else {
+            result = null;
+        }
+
+        return result;
+    }
+
+    /**
+     * If value is not <code>null</code> then calls
+     * {@link java.util.function.Function#apply(Object)} method and returns it's
+     * result or <code>null</code> in an other case
+     * 
+     * @param value
+     * @param function
+     * @return <code>T</code> value from {@link java.util.function.Function} or
+     *         <code>null</code>
+     */
+    public static <K, T> T ifNotNull(K value, Function<K, T> function) {
+        return ifValid(value, Objects::nonNull, function);
+    }
+
+    /**
      * Checks if not a single object passed objects is not <code>null</code>
      *
      * @param values
@@ -123,6 +163,21 @@ public abstract class ObjectUtils {
      */
     public static boolean nonNullAll(Object... values) {
         return CollectionUtils.validAll(values, Objects::nonNull);
+    }
+
+    /**
+     * Checks if parameters equals and calls
+     * {@link java.util.function.BiConsumer#accept(Object, Object)} method
+     * 
+     * @param x
+     * @param y
+     * @param consumer
+     */
+    public static <X, Y> void equals(X x, Y y, BiConsumer<X, Y> consumer) {
+
+        if (Objects.nonNull(consumer) && Objects.equals(x, y)) {
+            consumer.accept(x, y);
+        }
     }
 
     /**

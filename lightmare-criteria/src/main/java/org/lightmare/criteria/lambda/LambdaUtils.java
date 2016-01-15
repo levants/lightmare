@@ -23,7 +23,6 @@
 package org.lightmare.criteria.lambda;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.lightmare.criteria.cache.LambdaCache;
@@ -91,30 +90,9 @@ public class LambdaUtils {
         QueryTuple cloneInstance;
 
         try {
-            Object raw = instance.clone();
-            cloneInstance = ObjectUtils.cast(raw);
+            cloneInstance = ObjectUtils.cast(instance.clone());
         } catch (CloneNotSupportedException ex) {
             throw new RuntimeException(ex);
-        }
-
-        return cloneInstance;
-    }
-
-    /**
-     * Clones passed {@link org.lightmare.criteria.tuples.QueryTuple} after
-     * <code>null</code> check
-     * 
-     * @param instance
-     * @return {@link org.lightmare.criteria.tuples.QueryTuple} clone
-     */
-    private static QueryTuple cloneIfValid(QueryTuple instance) {
-
-        QueryTuple cloneInstance;
-
-        if (Objects.nonNull(instance)) {
-            cloneInstance = cloneTuple(instance);
-        } else {
-            cloneInstance = null;
         }
 
         return cloneInstance;
@@ -187,7 +165,7 @@ public class LambdaUtils {
         QueryTuple tuple;
 
         QueryTuple original = getOrInitOriginal(method);
-        tuple = cloneIfValid(original);
+        tuple = ObjectUtils.ifNotNull(original, LambdaUtils::cloneTuple);
 
         return tuple;
     }
