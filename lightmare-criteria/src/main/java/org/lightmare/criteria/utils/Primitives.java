@@ -88,16 +88,7 @@ abstract class Primitives {
      * @return {@link Object} default instance of class
      */
     public static Object getDefault(Class<?> type) {
-
-        Object value;
-
-        if (type.isPrimitive()) {
-            value = getPrimitive(type);
-        } else {
-            value = null;
-        }
-
-        return value;
+        return ObjectUtils.ifValid(type, c -> c.isPrimitive(), Primitives::getPrimitive);
     }
 
     /**

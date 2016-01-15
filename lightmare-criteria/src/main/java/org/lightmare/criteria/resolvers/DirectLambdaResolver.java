@@ -57,11 +57,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
 
         String signature = lambda.getInstantiatedMethodType();
         Type[] types = Type.getArgumentTypes(signature);
-        if (CollectionUtils.singleton(types)) {
-            type = CollectionUtils.getFirst(types);
-        } else {
-            type = null;
-        }
+        type = ObjectUtils.ifValid(types, CollectionUtils::singleton, CollectionUtils::getFirst);
 
         return type;
     }
@@ -147,6 +143,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
             String entityName = desc.getInternalName();
             ResolverTuple<String> resolverTyple = ResolverTuple.of(implDesc, methodName, entityName);
             tuple = resolve(resolverTyple, DirectLambdaResolver::resolveEntityName);
+            debug(DEBUG_MESSAGE_DIR, tuple);
         } else {
             tuple = null;
         }
@@ -162,16 +159,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
      */
     protected static QueryTuple resolveDirectly(LambdaInfo lambda) {
-
-        QueryTuple tuple;
-
-        if (validateLambda(lambda)) {
-            tuple = resolveFromLambda(lambda);
-            debug(DEBUG_MESSAGE_DIR, tuple);
-        } else {
-            tuple = null;
-        }
-
-        return tuple;
+        return ObjectUtils.ifValid(lambda, DirectLambdaResolver::validateLambda,
+                DirectLambdaResolver::resolveFromLambda);
     }
 }

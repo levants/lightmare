@@ -227,6 +227,29 @@ class AbstractFieldResolver {
     }
 
     /**
+     * Resolves if passed {@link org.lightmare.criteria.tuples.ResolverTuple} is
+     * valid
+     * 
+     * @param resolverTuple
+     * @param nameResolver
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} resolved from
+     *         {@link org.lightmare.criteria.tuples.ResolverTuple} instance
+     */
+    private static <T> QueryTuple resolveIfValid(ResolverTuple<T> resolverTuple, Function<T, String> nameResolver) {
+
+        QueryTuple tuple;
+
+        String methodName = resolverTuple.getName();
+        String fieldName = resolveFieldName(methodName);
+        String entityName = nameResolver.apply(resolverTuple.getType());
+        String[] arguments = resolveArgumentsTypes(resolverTuple.getDesc());
+        tuple = QueryTuple.of(entityName, methodName, arguments, fieldName);
+        setMetaData(tuple);
+
+        return tuple;
+    }
+
+    /**
      * Resolves field name from method descriptor, method name and owner
      * instance
      * 
@@ -235,21 +258,6 @@ class AbstractFieldResolver {
      *         field, entity and query part
      */
     protected static <T> QueryTuple resolve(ResolverTuple<T> resolverTuple, Function<T, String> nameResolver) {
-
-        QueryTuple tuple;
-
-        String desc = resolverTuple.getDesc();
-        String methodName = resolverTuple.getName();
-        if (valid(resolverTuple)) {
-            String fieldName = resolveFieldName(methodName);
-            String entityName = nameResolver.apply(resolverTuple.getType());
-            String[] arguments = resolveArgumentsTypes(desc);
-            tuple = QueryTuple.of(entityName, methodName, arguments, fieldName);
-            setMetaData(tuple);
-        } else {
-            tuple = null;
-        }
-
-        return tuple;
+        return ObjectUtils.ifValid(resolverTuple, AbstractFieldResolver::valid, c -> resolveIfValid(c, nameResolver));
     }
 }

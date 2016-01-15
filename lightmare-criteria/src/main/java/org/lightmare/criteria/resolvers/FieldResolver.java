@@ -95,15 +95,22 @@ public class FieldResolver extends DirectLambdaResolver {
      * @return {@link String} entity name
      */
     private static String resolveEntityName(LocalVariableNode variable) {
+        return ObjectUtils.ifValid(variable, v -> THIS_PT.equals(v.name), c -> clearEntityName(c.desc));
+    }
+
+    /**
+     * Gets entity name from {@link org.objectweb.asm.tree.LocalVariableNode}'s
+     * {@link java.util.List} * first element
+     * 
+     * @param variables
+     * @return {@link String} entity name
+     */
+    private static String resolveEntityName(List<LocalVariableNode> variables) {
 
         String entityName;
 
-        if (THIS_PT.equals(variable.name)) {
-            String raw = variable.desc;
-            entityName = clearEntityName(raw);
-        } else {
-            entityName = null;
-        }
+        LocalVariableNode variable = CollectionUtils.getFirst(variables);
+        entityName = resolveEntityName(variable);
 
         return entityName;
     }
@@ -120,12 +127,7 @@ public class FieldResolver extends DirectLambdaResolver {
         String entityName;
 
         List<LocalVariableNode> variables = ObjectUtils.cast(node.localVariables);
-        if (variables == null || variables.isEmpty()) {
-            entityName = null;
-        } else {
-            LocalVariableNode variable = CollectionUtils.getFirst(variables);
-            entityName = resolveEntityName(variable);
-        }
+        entityName = ObjectUtils.ifValid(variables, CollectionUtils::valid, FieldResolver::resolveEntityName);
 
         return entityName;
     }
@@ -150,6 +152,23 @@ public class FieldResolver extends DirectLambdaResolver {
     }
 
     /**
+     * Resolves appropriated {@link org.lightmare.criteria.tuples.QueryTuple}
+     * from instructions
+     * 
+     * @param instruction
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from instruction
+     */
+    private static QueryTuple resolveValidInsNode(AbstractInsnNode instruction) {
+
+        QueryTuple tuple;
+
+        MethodInsnNode node = ObjectUtils.cast(instruction);
+        tuple = resolveFromInstruction(node);
+
+        return tuple;
+    }
+
+    /**
      * Validates if passed {@link org.objectweb.asm.tree.AbstractInsnNode} is
      * instance of {@link org.objectweb.asm.tree.MethodInsnNode} then resolves
      * appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from it
@@ -158,17 +177,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} from instruction
      */
     private static QueryTuple validateAndResolve(AbstractInsnNode instruction) {
-
-        QueryTuple tuple;
-
-        if (instruction instanceof MethodInsnNode) {
-            MethodInsnNode node = ObjectUtils.cast(instruction);
-            tuple = resolveFromInstruction(node);
-        } else {
-            tuple = null;
-        }
-
-        return tuple;
+        return ObjectUtils.ifValid(instruction, c -> c instanceof MethodInsnNode, FieldResolver::resolveValidInsNode);
     }
 
     /**

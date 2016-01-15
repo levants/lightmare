@@ -312,11 +312,7 @@ public abstract class ObjectUtils {
         T value;
 
         Object raw = readToObject(bytes);
-        if (Objects.nonNull(raw)) {
-            value = cast(raw);
-        } else {
-            value = null;
-        }
+        value = ifNotNull(raw, ObjectUtils::cast);
 
         return value;
     }
