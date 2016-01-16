@@ -34,7 +34,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
 import org.objectweb.asm.Type;
 
 /**
- * Abstract class to resolve entity field from
+ * Abstract class to resolve entity and field directly from
  * {@link org.lightmare.criteria.lambda.LambdaInfo} directly
  * 
  * @author Levan Tsinadze

@@ -10,6 +10,9 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 /**
+ * Abstract class to resolve entity entity and field from
+ * {@link org.lightmare.criteria.lambda.LambdaInfo} parameters by byetecode
+ * analysis
  * 
  * @author Levan Tsinadze
  *
