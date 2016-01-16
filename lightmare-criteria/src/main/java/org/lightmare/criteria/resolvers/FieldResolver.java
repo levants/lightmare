@@ -44,7 +44,7 @@ import org.objectweb.asm.tree.MethodNode;
  * @author Levan Tsinadze
  *
  */
-public class FieldResolver extends DirectLambdaResolver {
+public class FieldResolver extends DirectFieldResolver {
 
     private static final String THIS_PT = "this";
 
@@ -67,7 +67,7 @@ public class FieldResolver extends DirectLambdaResolver {
         QueryTuple tuple;
 
         ResolverTuple<String> resolverTyple = ResolverTuple.of(node.desc, node.name, node.owner);
-        tuple = resolve(resolverTyple, FieldResolver::resolveEntityName);
+        tuple = resolveFromTuple(resolverTyple, FieldResolver::resolveEntityName);
 
         return tuple;
     }
@@ -146,7 +146,7 @@ public class FieldResolver extends DirectLambdaResolver {
         QueryTuple tuple;
 
         ResolverTuple<MethodNode> resolverTyple = ResolverTuple.of(node.desc, node.name, node);
-        tuple = resolve(resolverTyple, FieldResolver::resolveEntityName);
+        tuple = resolveFromTuple(resolverTyple, FieldResolver::resolveEntityName);
 
         return tuple;
     }
@@ -177,7 +177,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} from instruction
      */
     private static QueryTuple validateAndResolve(AbstractInsnNode instruction) {
-        return ObjectUtils.ifValid(instruction, c -> c instanceof MethodInsnNode, FieldResolver::resolveValidInsNode);
+        return ObjectUtils.ifValid(instruction, c -> (c instanceof MethodInsnNode), FieldResolver::resolveValidInsNode);
     }
 
     /**
@@ -198,6 +198,25 @@ public class FieldResolver extends DirectLambdaResolver {
             instruction = instructions.get(i);
             tuple = validateAndResolve(instruction);
         }
+
+        return tuple;
+    }
+
+    /**
+     * Gets instructions from {@link org.objectweb.asm.tree.MethodNode} and
+     * resolves entity field
+     * 
+     * @param methodNode
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from
+     *         instructions
+     */
+    private static QueryTuple getAndResolveFromIns(MethodNode methodNode) {
+
+        QueryTuple tuple;
+
+        methodNode.visitCode();
+        InsnList instructions = methodNode.instructions;
+        tuple = resolveFromInstructions(instructions);
 
         return tuple;
     }
@@ -228,16 +247,7 @@ public class FieldResolver extends DirectLambdaResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} from method
      */
     private static QueryTuple resolveRecursively(MethodNode methodNode) {
-
-        QueryTuple tuple = resolveFromMethod(methodNode);
-
-        if (tuple == null) {
-            methodNode.visitCode();
-            InsnList instructions = methodNode.instructions;
-            tuple = resolveFromInstructions(instructions);
-        }
-
-        return tuple;
+        return ObjectUtils.getOrInit(() -> resolveFromMethod(methodNode), () -> getAndResolveFromIns(methodNode));
     }
 
     /**
@@ -256,6 +266,7 @@ public class FieldResolver extends DirectLambdaResolver {
         if (Objects.nonNull(methods)) {
             MethodNode methodNode = CollectionUtils.getFirstValid(methods, c -> validateMethod(c, lambda));
             tuple = resolveRecursively(methodNode);
+            debug(DEBUG_MESSAGE_BYT, tuple);
         } else {
             throw new RuntimeException(UNRESOLVABLE_FIELD_ERROR);
         }
@@ -273,15 +284,7 @@ public class FieldResolver extends DirectLambdaResolver {
      *         field and query part
      */
     private static QueryTuple chooseAndResolve(LambdaInfo lambda) {
-
-        QueryTuple tuple = resolveDirectly(lambda);
-
-        if (tuple == null) {
-            tuple = resolveFromBytecode(lambda);
-            debug(DEBUG_MESSAGE_BYT, tuple);
-        }
-
-        return tuple;
+        return ObjectUtils.getOrInit(() -> resolveDirectly(lambda), () -> resolveFromBytecode(lambda));
     }
 
     /**

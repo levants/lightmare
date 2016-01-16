@@ -40,7 +40,7 @@ import org.objectweb.asm.Type;
  * @author Levan Tsinadze
  *
  */
-abstract class DirectLambdaResolver extends AbstractFieldResolver {
+abstract class DirectFieldResolver extends AbstractFieldResolver {
 
     // Debug messages
     private static final String DEBUG_MESSAGE_DIR = "Resolved directly";
@@ -140,7 +140,7 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
         String methodName = lambda.getImplMethodName();
         String entityName = desc.getInternalName();
         ResolverTuple<String> resolverTyple = ResolverTuple.of(implDesc, methodName, entityName);
-        tuple = resolve(resolverTyple, DirectLambdaResolver::resolveEntityName);
+        tuple = resolveFromTuple(resolverTyple, DirectFieldResolver::resolveEntityName);
         debug(DEBUG_MESSAGE_DIR, tuple);
 
         return tuple;
@@ -173,7 +173,6 @@ abstract class DirectLambdaResolver extends AbstractFieldResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
      */
     protected static QueryTuple resolveDirectly(LambdaInfo lambda) {
-        return ObjectUtils.ifValid(lambda, DirectLambdaResolver::validateLambda,
-                DirectLambdaResolver::resolveFromLambda);
+        return ObjectUtils.ifValid(lambda, DirectFieldResolver::validateLambda, DirectFieldResolver::resolveFromLambda);
     }
 }
