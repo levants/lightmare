@@ -81,7 +81,7 @@ public class EntityProcessor {
      * 
      * @param tuple
      */
-    public static void setMetaData(QueryTuple tuple) {
+    public static void setEntityType(QueryTuple tuple) {
 
         String className = tuple.getEntityName();
         Class<?> entityType = ClassUtils.classForName(className);

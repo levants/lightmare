@@ -209,7 +209,7 @@ class AbstractFieldResolver {
      * @param tuple
      */
     private static void setMetaData(QueryTuple tuple) {
-        EntityProcessor.setMetaData(tuple);
+        EntityProcessor.setEntityType(tuple);
     }
 
     /**

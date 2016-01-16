@@ -132,7 +132,7 @@ public abstract class ObjectUtils {
 
         T result;
 
-        if (Objects.nonNull(predicate) && Objects.nonNull(function) && predicate.test(value)) {
+        if (Objects.nonNull(function) && test(predicate, value)) {
             result = function.apply(value);
         } else {
             result = null;
