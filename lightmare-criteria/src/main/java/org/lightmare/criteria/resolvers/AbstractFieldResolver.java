@@ -36,8 +36,7 @@ import org.lightmare.criteria.utils.StringUtils;
 import org.objectweb.asm.Type;
 
 /**
- * Abstract class to resolve entity {@link java.lang.reflect.Field}, entity
- * {@link Class} name and JPA query part from
+ * Abstract class to resolve entity field and entity names for JPA query
  * {@link org.lightmare.criteria.lambda.LambdaInfo} parameters
  * 
  * @author Levan Tsinadze

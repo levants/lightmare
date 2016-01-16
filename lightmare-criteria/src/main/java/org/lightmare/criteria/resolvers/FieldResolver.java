@@ -36,8 +36,9 @@ import org.objectweb.asm.tree.LocalVariableNode;
 import org.objectweb.asm.tree.MethodNode;
 
 /**
- * Resolver class to initialize field and entity name for JPA query from lambda
- * expression
+ * Resolver class to resolve field and entity name from lambda expression for
+ * JPA query directly by {@link org.lightmare.criteria.lambda.LambdaInfo}
+ * parameters or by byetecode analysis
  * 
  * @author Levan Tsinadze
  *
