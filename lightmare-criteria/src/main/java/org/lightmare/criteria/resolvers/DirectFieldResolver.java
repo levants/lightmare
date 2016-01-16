@@ -40,7 +40,7 @@ import org.objectweb.asm.Type;
  * @author Levan Tsinadze
  *
  */
-abstract class DirectFieldResolver extends AbstractFieldResolver {
+abstract class DirectFieldResolver extends BytecodeFieldResolver {
 
     // Debug messages
     private static final String DEBUG_MESSAGE_DIR = "Resolved directly";
