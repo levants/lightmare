@@ -57,7 +57,7 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
 
         String signature = lambda.getInstantiatedMethodType();
         Type[] types = Type.getArgumentTypes(signature);
-        type = ObjectUtils.ifValid(types, CollectionUtils::singleton, CollectionUtils::getFirst);
+        type = ObjectUtils.ifIsValid(types, CollectionUtils::singleton, CollectionUtils::getFirst);
 
         return type;
     }
@@ -159,7 +159,7 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
 
         String implClass = lambda.getImplClass();
         Type desc = getFromDescription(lambda);
-        tuple = ObjectUtils.ifValid(lambda, l -> validateClassName(implClass, desc),
+        tuple = ObjectUtils.ifIsValid(lambda, l -> validateClassName(implClass, desc),
                 c -> resolveFromValidLambda(c, desc));
 
         return tuple;
@@ -173,6 +173,7 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
      */
     protected static QueryTuple resolveDirectly(LambdaInfo lambda) {
-        return ObjectUtils.ifValid(lambda, DirectFieldResolver::validateLambda, DirectFieldResolver::resolveFromLambda);
+        return ObjectUtils.ifIsValid(lambda, DirectFieldResolver::validateLambda,
+                DirectFieldResolver::resolveFromLambda);
     }
 }

@@ -65,7 +65,7 @@ public abstract class StringUtils {
      * empty
      *
      * @param chars
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean valid(CharSequence chars) {
         return chars != null && chars.length() > CollectionUtils.EMPTY;

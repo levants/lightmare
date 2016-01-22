@@ -74,7 +74,7 @@ abstract class BytecodeFieldResolver extends AbstractFieldResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} from instruction
      */
     private static QueryTuple validateAndResolve(AbstractInsnNode instruction) {
-        return ObjectUtils.ifValid(instruction, BytecodeFieldResolver::isInstructionNode,
+        return ObjectUtils.ifIsValid(instruction, BytecodeFieldResolver::isInstructionNode,
                 BytecodeFieldResolver::resolveValidInsNode);
     }
 

@@ -257,6 +257,6 @@ class AbstractFieldResolver {
      *         field, entity and JPA query part
      */
     protected static <T> QueryTuple resolveFromTuple(ResolverTuple<T> resolverTuple, Function<T, String> nameResolver) {
-        return ObjectUtils.ifValid(resolverTuple, AbstractFieldResolver::valid, c -> resolveIfValid(c, nameResolver));
+        return ObjectUtils.ifIsValid(resolverTuple, AbstractFieldResolver::valid, c -> resolveIfValid(c, nameResolver));
     }
 }

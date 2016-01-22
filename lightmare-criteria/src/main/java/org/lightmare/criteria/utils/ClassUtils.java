@@ -56,8 +56,8 @@ public class ClassUtils extends AbstractMemberUtils {
     }
 
     /**
-     * Loads and if initialize parameter is true initializes class by name with
-     * specific {@link ClassLoader} if it is not <code>null</code>
+     * Loads and if initialize parameter is <code>true</code> initializes class
+     * by name with specific {@link ClassLoader} if it is not <code>null</code>
      *
      * @param className
      * @param initialize

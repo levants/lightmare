@@ -117,6 +117,39 @@ public abstract class ObjectUtils {
         nonNull(value, consumer);
     }
 
+    public static <K, T> T ifValid(Supplier<K> supplier, Predicate<K> predicate, Function<K, T> function,
+            Function<K, T> elseFunction) {
+
+        T result;
+
+        K value = supplier.get();
+        if (Objects.nonNull(function) && test(predicate, value)) {
+            result = function.apply(value);
+        } else {
+            result = elseFunction.apply(value);
+        }
+
+        return result;
+    }
+
+    /**
+     * If {@link java.util.function.Predicate#test(Object)} is valid for passed
+     * value and calls {@link java.util.function.Function#apply(Object)} method
+     * and returns it's result or calls other
+     * {@link java.util.function.Function#apply(Object)} in an other case
+     * 
+     * @param value
+     * @param predicate
+     * @param function
+     * @param elseFunction
+     * @return <code>T</code> value from one {@link java.util.function.Function}
+     *         or from other
+     */
+    public static <K, T> T ifIsValid(K value, Predicate<K> predicate, Function<K, T> function,
+            Function<K, T> elseFunction) {
+        return ifValid(() -> value, predicate, function, elseFunction);
+    }
+
     /**
      * If {@link java.util.function.Predicate#test(Object)} is valid for passed
      * value and calls {@link java.util.function.Function#apply(Object)} method
@@ -128,17 +161,8 @@ public abstract class ObjectUtils {
      * @return <code>T</code> value from {@link java.util.function.Function} or
      *         <code>null</code>
      */
-    public static <K, T> T ifValid(K value, Predicate<K> predicate, Function<K, T> function) {
-
-        T result;
-
-        if (Objects.nonNull(function) && test(predicate, value)) {
-            result = function.apply(value);
-        } else {
-            result = null;
-        }
-
-        return result;
+    public static <K, T> T ifIsValid(K value, Predicate<K> predicate, Function<K, T> function) {
+        return ifIsValid(value, predicate, function, c -> null);
     }
 
     /**
@@ -152,7 +176,40 @@ public abstract class ObjectUtils {
      *         <code>null</code>
      */
     public static <K, T> T ifNotNull(K value, Function<K, T> function) {
-        return ifValid(value, Objects::nonNull, function);
+        return ifIsValid(value, Objects::nonNull, function);
+    }
+
+    /**
+     * Validates if value from {@link va.util.function.Supplier} returns
+     * <code>null</code> value and calls
+     * {@link java.util.function.Function#apply(Object)} method and returns it's
+     * result or calls other {@link java.util.function.Function#apply(Object)}
+     * in an other case
+     * 
+     * @param supplier
+     * @param function
+     * @param elseFunction
+     * @return <code>T</code> value from one {@link java.util.function.Function}
+     *         or from other
+     */
+    public static <K, T> T ifNull(Supplier<K> supplier, Function<K, T> function, Function<K, T> elseFunction) {
+        return ifValid(supplier, c -> c == null, function, elseFunction);
+    }
+
+    /**
+     * Validates if value from passed value is <code>null</code> value and calls
+     * {@link java.util.function.Function#apply(Object)} method and returns it's
+     * result or calls other {@link java.util.function.Function#apply(Object)}
+     * in an other case
+     * 
+     * @param value
+     * @param function
+     * @param elseFunction
+     * @return <code>T</code> value from one {@link java.util.function.Function}
+     *         or from other
+     */
+    public static <K, T> T ifIsNull(K value, Function<K, T> function, Function<K, T> elseFunction) {
+        return ifNull(() -> value, function, elseFunction);
     }
 
     /**

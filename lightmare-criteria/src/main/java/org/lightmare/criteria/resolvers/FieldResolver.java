@@ -76,7 +76,7 @@ public class FieldResolver extends DirectFieldResolver {
      * @return {@link String} entity name
      */
     private static String resolveEntityName(LocalVariableNode variable) {
-        return ObjectUtils.ifValid(variable, v -> THIS_PT.equals(v.name), c -> clearEntityName(c.desc));
+        return ObjectUtils.ifIsValid(variable, v -> THIS_PT.equals(v.name), c -> clearEntityName(c.desc));
     }
 
     /**
@@ -108,7 +108,7 @@ public class FieldResolver extends DirectFieldResolver {
         String entityName;
 
         List<LocalVariableNode> variables = ObjectUtils.cast(node.localVariables);
-        entityName = ObjectUtils.ifValid(variables, CollectionUtils::valid, FieldResolver::resolveEntityName);
+        entityName = ObjectUtils.ifIsValid(variables, CollectionUtils::valid, FieldResolver::resolveEntityName);
 
         return entityName;
     }

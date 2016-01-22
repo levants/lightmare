@@ -52,17 +52,7 @@ abstract class AbstractClassUtils extends Primitives {
      * @return {@link RuntimeException} wrapped
      */
     protected static RuntimeException unwrap(InvocationTargetException ex) {
-
-        RuntimeException exception;
-
-        Throwable targetException = ex.getTargetException();
-        if (targetException == null) {
-            exception = wrap(ex);
-        } else {
-            exception = wrap(targetException);
-        }
-
-        return exception;
+        return ObjectUtils.ifNull(ex::getTargetException, c -> wrap(ex), AbstractClassUtils::wrap);
     }
 
     /**
@@ -106,11 +96,8 @@ abstract class AbstractClassUtils extends Primitives {
      * 
      * @param accessibleObject
      */
-    private static void setAccessibleFlag(AccessibleObject accessibleObject) {
-
-        if (notAccessible(accessibleObject)) {
-            accessibleObject.setAccessible(Boolean.TRUE);
-        }
+    private static void setAccessible(AccessibleObject accessibleObject) {
+        ObjectUtils.valid(accessibleObject, AbstractClassUtils::notAccessible, c -> c.setAccessible(Boolean.TRUE));
     }
 
     /**
@@ -122,7 +109,7 @@ abstract class AbstractClassUtils extends Primitives {
 
         if (notAccessible(accessibleObject)) {
             synchronized (accessibleObject) {
-                setAccessibleFlag(accessibleObject);
+                setAccessible(accessibleObject);
             }
         }
     }
