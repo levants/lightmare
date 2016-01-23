@@ -56,6 +56,24 @@ public class LambdaUtils {
     }
 
     /**
+     * Resolves {@link org.lightmare.criteria.tuples.QueryTuple} from
+     * {@link org.lightmare.criteria.lambda.LambdaInfo} fields
+     * 
+     * @param lambda
+     * @return
+     */
+    private static QueryTuple resolvefromLambda(LambdaInfo lambda) {
+
+        QueryTuple tuple;
+
+        tuple = FieldResolver.resolve(lambda);
+        QueryCache.putQuery(lambda, tuple);
+        debug(lambda);
+
+        return tuple;
+    }
+
+    /**
      * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
      * serialized lambda cache or analyzes appropriated lambda expression from
      * compiled class
@@ -68,7 +86,7 @@ public class LambdaUtils {
         QueryTuple tuple;
 
         LambdaInfo lambda = LambdaReplacements.getReplacement(method);
-        tuple = QueryCache.getQuery(lambda);
+        tuple = ObjectUtils.ifNull(() -> QueryCache.getQuery(lambda), c -> resolvefromLambda(lambda));
         if (tuple == null) {
             tuple = FieldResolver.resolve(lambda);
             QueryCache.putQuery(lambda, tuple);

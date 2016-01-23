@@ -180,7 +180,7 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Validates if value from {@link va.util.function.Supplier} returns
+     * Validates if value from {@link java.util.function.Supplier} returns
      * <code>null</code> value and calls
      * {@link java.util.function.Function#apply(Object)} method and returns it's
      * result or calls other {@link java.util.function.Function#apply(Object)}
@@ -194,6 +194,20 @@ public abstract class ObjectUtils {
      */
     public static <K, T> T ifNull(Supplier<K> supplier, Function<K, T> function, Function<K, T> elseFunction) {
         return ifValid(supplier, c -> c == null, function, elseFunction);
+    }
+
+    /**
+     * If value from {@link java.util.function.Supplier} is <code>null</code>
+     * then calls {@link java.util.function.Function#apply(Object)} method and
+     * returns it's result
+     * 
+     * @param supplier
+     * @param function
+     * @return <code>T</code> value from one {@link java.util.function.Function}
+     */
+    public static <T> T ifNull(Supplier<T> supplier, Function<T, T> function) {
+        T value = supplier.get();
+        return ifIsNull(value, function, c -> value);
     }
 
     /**

@@ -104,17 +104,8 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
      * @return {@link String} entity name
      */
     public static String getEntityName(Class<?> type) {
-
-        String name;
-
-        Entity entity = type.getAnnotation(Entity.class);
-        if (entity == null) {
-            name = type.getName();
-        } else {
-            name = StringUtils.thisOrDefault(entity.name(), () -> type.getName());
-        }
-
-        return name;
+        return ObjectUtils.ifNull(() -> type.getAnnotation(Entity.class), c -> type.getName(),
+                c -> StringUtils.thisOrDefault(c.name(), type::getName));
     }
 
     /**

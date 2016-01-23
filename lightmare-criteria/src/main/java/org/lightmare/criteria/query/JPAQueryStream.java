@@ -85,7 +85,7 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
     protected static <T> JPAQueryStream<T> update(final EntityManager em, final Class<T> entityType,
             final String alias) {
 
-        JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
+        JPAQueryStream<T> stream = new JPAQueryStream<>(em, entityType, alias);
 
         stream.appendPrefix(Clauses.UPDATE);
         appendEntityPart(stream);

@@ -95,10 +95,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
         }
 
         private void setSuperType() {
-
-            if (member == null) {
-                type = type.getSuperclass();
-            }
+            type = ObjectUtils.ifIsNull(member, c -> type.getSuperclass(), c -> type);
         }
 
         private T getMember() {
