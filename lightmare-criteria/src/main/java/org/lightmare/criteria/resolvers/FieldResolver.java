@@ -81,7 +81,7 @@ public class FieldResolver extends DirectFieldResolver {
 
     /**
      * Gets entity name from {@link org.objectweb.asm.tree.LocalVariableNode}'s
-     * {@link java.util.List} * first element
+     * {@link java.util.List}'s first element
      * 
      * @param variables
      * @return {@link String} entity name
@@ -163,7 +163,7 @@ public class FieldResolver extends DirectFieldResolver {
 
     /**
      * Resolved field name, getter method name and entity type from lambda
-     * argument by <b><i> bytecode </i></b> analysis
+     * argument by <b><i>bytecode</i></b> analysis
      * 
      * @param lambda
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved

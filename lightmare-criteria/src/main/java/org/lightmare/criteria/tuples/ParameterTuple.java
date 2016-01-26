@@ -59,10 +59,6 @@ public class ParameterTuple {
         return new ParameterTuple(name, value, temporalType);
     }
 
-    public ParameterTuple(final String name, final Object value) {
-        this(name, value, null);
-    }
-
     public String getName() {
         return name;
     }
