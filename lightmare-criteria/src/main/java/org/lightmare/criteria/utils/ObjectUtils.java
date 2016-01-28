@@ -61,14 +61,7 @@ public abstract class ObjectUtils {
      * @return <code>boolean</code> validation result
      */
     public static <T> boolean test(Predicate<T> predicate, T value) {
-
-        boolean valid = Objects.nonNull(predicate);
-
-        if (valid) {
-            valid = predicate.test(value);
-        }
-
-        return valid;
+        return (Objects.nonNull(predicate) && predicate.test(value));
     }
 
     /**
@@ -86,7 +79,7 @@ public abstract class ObjectUtils {
         boolean valid = test(predicate, value);
 
         if (valid) {
-            consumer.accept(value);
+            accept(consumer, value);
         }
 
         return valid;

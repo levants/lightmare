@@ -91,14 +91,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean validAll(CharSequence... lines) {
-
-        boolean valid = CollectionUtils.valid(lines);
-
-        if (valid) {
-            valid = Stream.of(lines).allMatch(StringUtils::valid);
-        }
-
-        return valid;
+        return (CollectionUtils.valid(lines) && Stream.of(lines).allMatch(StringUtils::valid));
     }
 
     /**

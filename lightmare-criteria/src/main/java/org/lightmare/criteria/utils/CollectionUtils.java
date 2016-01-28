@@ -148,14 +148,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static <T> boolean validAll(T[] array, Predicate<T> validator) {
-
-        boolean valid = Objects.nonNull(array);
-
-        if (valid) {
-            valid = Stream.of(array).allMatch(validator);
-        }
-
-        return valid;
+        return (Objects.nonNull(array) && Stream.of(array).allMatch(validator));
     }
 
     /**
