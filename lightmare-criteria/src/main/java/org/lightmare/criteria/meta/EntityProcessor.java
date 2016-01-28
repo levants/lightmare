@@ -40,7 +40,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
 public class EntityProcessor {
 
     /**
-     * Resolves argument types for method
+     * Resolves {@link java.lang.reflect.Method} argument types
      * 
      * @param tuple
      * @return {@link Class} array by names for argument types

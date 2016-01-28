@@ -50,6 +50,7 @@ class AbstractFieldResolver {
     // Setter method prefix
     private static final String SET = "set";
 
+    // Getter / setter method prefix end index
     private static final int BEGIN_INDEX = GET.length();
 
     // Debug message pattern

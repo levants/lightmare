@@ -76,10 +76,10 @@ public abstract class ObjectUtils {
      */
     public static <T> boolean valid(T value, Predicate<T> predicate, Consumer<T> consumer) {
 
-        boolean valid = test(predicate, value);
+        boolean valid = (test(predicate, value) && Objects.nonNull(consumer));
 
         if (valid) {
-            accept(consumer, value);
+            consumer.accept(value);
         }
 
         return valid;
