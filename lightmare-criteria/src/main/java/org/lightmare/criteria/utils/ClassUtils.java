@@ -23,10 +23,7 @@
 package org.lightmare.criteria.utils;
 
 /**
- * Utility class to use reflection {@link java.lang.reflect.Method},
- * {@link java.lang.reflect.Constructor} or any
- * {@link java.lang.reflect.AccessibleObject} calls and get / set / modify
- * {@link java.lang.reflect.Field} value
+ * Utility class to load and manage classes ({@link Class})
  *
  * @author Levan Tsinadze
  */

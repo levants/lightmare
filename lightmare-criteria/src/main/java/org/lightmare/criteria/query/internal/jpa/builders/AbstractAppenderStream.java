@@ -422,7 +422,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         Iterator<Serializable> iterator = fields.iterator();
         int length = fields.size() - CollectionUtils.SINGLETON;
         Serializable field;
-        int i = CollectionUtils.FIRST_INDEX;
+        int i = CollectionUtils.FIRST;
         while (iterator.hasNext()) {
             field = iterator.next();
             addSelectField(field, buffer);
@@ -472,7 +472,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
 
         Serializable field;
         int length = fields.length - CollectionUtils.SINGLETON;
-        for (int i = CollectionUtils.FIRST_INDEX; i <= length; i++) {
+        for (int i = CollectionUtils.FIRST; i <= length; i++) {
             field = fields[i];
             addOrderByField(dir, field);
             appendComma(i, length, orderBy);
@@ -513,7 +513,7 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
 
         Iterator<Serializable> iterator = fields.iterator();
         Serializable field;
-        int i = CollectionUtils.FIRST_INDEX;
+        int i = CollectionUtils.FIRST;
         int length = fields.size() - CollectionUtils.SINGLETON;
         while (iterator.hasNext()) {
             field = iterator.next();

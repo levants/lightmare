@@ -57,9 +57,9 @@ public enum LambdaReferences {
      * @return {@link java.lang.ref.Reference} removed from
      *         {@link java.lang.ref.ReferenceQueue}
      */
-    private Reference<? extends Class<?>> remove() {
+    private Reference<?> remove() {
 
-        Reference<? extends Class<?>> reference;
+        Reference<?> reference;
 
         try {
             reference = references.remove();

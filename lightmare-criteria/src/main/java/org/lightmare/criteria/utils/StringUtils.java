@@ -213,7 +213,7 @@ public abstract class StringUtils {
      * @param text
      */
     public static void clear(StringBuilder text) {
-        valid(text, c -> c.delete(CollectionUtils.FIRST_INDEX, c.length()));
+        valid(text, c -> c.delete(CollectionUtils.FIRST, c.length()));
     }
 
     /**
@@ -242,7 +242,7 @@ public abstract class StringUtils {
         int length = item.length();
         int end = element.length();
         valid = (length > end);
-        for (int i = CollectionUtils.FIRST_INDEX; i < end && valid; i++) {
+        for (int i = CollectionUtils.FIRST; i < end && valid; i++) {
             valid = (item.charAt(i) == element.charAt(i));
         }
 

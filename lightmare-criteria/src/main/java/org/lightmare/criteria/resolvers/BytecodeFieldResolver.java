@@ -92,7 +92,7 @@ abstract class BytecodeFieldResolver extends AbstractFieldResolver {
 
         int size = instructions.size();
         AbstractInsnNode instruction;
-        for (int i = CollectionUtils.FIRST_INDEX; (i < size && tuple == null); ++i) {
+        for (int i = CollectionUtils.FIRST; (i < size && tuple == null); ++i) {
             instruction = instructions.get(i);
             tuple = validateAndResolve(instruction);
         }

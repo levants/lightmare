@@ -206,8 +206,13 @@ public abstract class ObjectUtils {
      * @return <code>T</code> value from one {@link java.util.function.Function}
      */
     public static <T> T ifNull(Supplier<T> supplier, Function<T, T> function) {
+
+        T result;
+
         T value = supplier.get();
-        return ifIsNull(value, function, c -> value);
+        result = ifIsNull(value, function, c -> value);
+
+        return result;
     }
 
     /**
@@ -269,10 +274,8 @@ public abstract class ObjectUtils {
      * @return <code>T</code> casted to type instance
      */
     public static <T> T cast(Object instance) {
-
         @SuppressWarnings("unchecked")
         T value = (T) instance;
-
         return value;
     }
 

@@ -40,13 +40,10 @@ import java.util.stream.Stream;
 public abstract class CollectionUtils {
 
     // First index of array
-    public static final int FIRST_INDEX = 0;
+    public static final int FIRST = 0;
 
     // Second index of array
-    public static final int SECOND_INDEX = 1;
-
-    // Index of not existing data in collection
-    public static final int NOT_EXISTING_INDEX = -1;
+    public static final int SECOND = 1;
 
     // Length of empty array or set
     public static final int EMPTY = 0;
@@ -263,7 +260,7 @@ public abstract class CollectionUtils {
         T value;
 
         if (valid(list)) {
-            value = list.get(FIRST_INDEX);
+            value = list.get(FIRST);
         } else {
             value = defaultValue;
         }
@@ -334,7 +331,7 @@ public abstract class CollectionUtils {
         T value;
 
         if (valid(values)) {
-            value = values[FIRST_INDEX];
+            value = values[FIRST];
         } else {
             value = defaultValue;
         }
@@ -364,7 +361,7 @@ public abstract class CollectionUtils {
         int length = from.length;
         T value;
         R mapped;
-        for (int i = CollectionUtils.FIRST_INDEX; i < length; i++) {
+        for (int i = CollectionUtils.FIRST; i < length; i++) {
             value = from[i];
             mapped = mapper.apply(value);
             to[i] = mapped;

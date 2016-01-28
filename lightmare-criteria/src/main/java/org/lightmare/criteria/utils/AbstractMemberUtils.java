@@ -199,7 +199,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param method
      * @param instance
      * @param arguments
-     * @return {@link Object}
+     * @return {@link Object} result by {@link java.lang.reflect.Method}
+     *         invocation
      */
     public static <T> T invoke(Method method, Object instance, Object... arguments) {
 
