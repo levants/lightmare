@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -340,6 +341,36 @@ public abstract class CollectionUtils {
      */
     public static <T> T getFirst(T[] values) {
         return getFirst(values, null);
+    }
+
+    /**
+     * Calls {@link java.util.function.BiConsumer} for each array member
+     * 
+     * @param array
+     * @param consumer
+     */
+    private static <T> void forEachValue(T[] array, BiConsumer<Integer, T> consumer) {
+
+        int length = array.length;
+        T value;
+        for (int i = FIRST; i < length; i++) {
+            value = array[i];
+            consumer.accept(i, value);
+        }
+    }
+
+    /**
+     * Validates array and calls {@link java.util.function.BiConsumer} for each
+     * it's member
+     * 
+     * @param array
+     * @param consumer
+     */
+    public static <T> void forEach(T[] array, BiConsumer<Integer, T> consumer) {
+
+        if (valid(array)) {
+            forEachValue(array, consumer);
+        }
     }
 
     /**

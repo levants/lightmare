@@ -470,13 +470,11 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
 
     private void iterateAndAppendOrders(String dir, Serializable[] fields) {
 
-        Serializable field;
         int length = fields.length - CollectionUtils.SINGLETON;
-        for (int i = CollectionUtils.FIRST; i <= length; i++) {
-            field = fields[i];
+        CollectionUtils.forEach(fields, (i, field) -> {
             addOrderByField(dir, field);
             appendComma(i, length, orderBy);
-        }
+        });
     }
 
     private void setValidOrder(String dir, Serializable[] fields) {

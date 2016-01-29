@@ -155,10 +155,12 @@ public abstract class StringUtils {
      */
     public static <T extends CharSequence> T thisOrDefault(T item, Supplier<T> supplier) {
 
-        T value = item;
+        T value;
 
         if (isEmpty(item)) {
             value = supplier.get();
+        } else {
+            value = item;
         }
 
         return value;
@@ -171,10 +173,7 @@ public abstract class StringUtils {
      * @param parts
      */
     private static void appendAll(StringBuilder text, Object... parts) {
-
-        for (Object part : parts) {
-            text.append(part);
-        }
+        CollectionUtils.forEach(parts, (i, c) -> text.append(c));
     }
 
     /**
