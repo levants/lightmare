@@ -41,7 +41,9 @@ import org.lightmare.criteria.utils.StringUtils;
 public class LambdaReplacements {
 
     // Method name to get SerializedLambda on the fly
-    private static final String METHOD = "writeReplace";
+    private static final String METHOD_NAME = "writeReplace";
+
+    private static Method writeReplace;
 
     private static final String CHARSET = "iso-8859-1";
 
@@ -123,7 +125,15 @@ public class LambdaReplacements {
      * @return {@link java.lang.reflect.Method} for serialization
      */
     private static <T> Method getMethod(Class<?> parent) {
-        return ClassUtils.findMethod(parent, METHOD);
+
+        if (writeReplace == null) {
+            synchronized (LambdaReplacements.class) {
+                writeReplace = ObjectUtils.thisOrDefault(writeReplace,
+                        () -> ClassUtils.findMethod(parent, METHOD_NAME));
+            }
+        }
+
+        return writeReplace;
     }
 
     /**
@@ -138,9 +148,9 @@ public class LambdaReplacements {
         LambdaInfo lambda;
 
         Class<?> parent = method.getClass();
-        Method writeReplace = getMethod(parent);
-        if (Objects.nonNull(writeReplace)) {
-            SerializedLambda serialized = ClassUtils.invoke(writeReplace, method);
+        Method writeReplaceMethod = getMethod(parent);
+        if (Objects.nonNull(writeReplaceMethod)) {
+            SerializedLambda serialized = ClassUtils.invoke(writeReplaceMethod, method);
             lambda = new LambdaInfo(serialized);
         } else {
             lambda = translate(method);

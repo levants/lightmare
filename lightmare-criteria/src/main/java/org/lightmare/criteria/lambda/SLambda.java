@@ -32,6 +32,7 @@ import java.io.Serializable;
  */
 class SLambda implements Serializable {
 
+    // Serial version UID for original class
     private static final long serialVersionUID = 8025925345765570181L;
 
     // Implementing class file name

@@ -84,18 +84,20 @@ public enum LambdaReferences {
     }
 
     /**
-     * Initializes and starts cleaner thread if it is not initialized yet
+     * Initializes {@link java.lang.ref.Reference} cleaner thread
+     * 
+     * @return {@link Thread} for {@link java.lang.ref.Reference} cleaner
      */
     private Thread initCleaner() {
 
-        cleaner = new Thread(this::cleaner);
+        Thread ref = new Thread(this::cleaner);
 
-        cleaner.setPriority(Thread.MAX_PRIORITY);
-        String threadName = StringUtils.concat(REFERENCE_THREAD_NAME, cleaner.getId());
-        cleaner.setName(threadName);
-        cleaner.setDaemon(Boolean.TRUE);
+        ref.setPriority(Thread.MAX_PRIORITY);
+        String threadName = StringUtils.concat(REFERENCE_THREAD_NAME, ref.getId());
+        ref.setName(threadName);
+        ref.setDaemon(Boolean.TRUE);
 
-        return cleaner;
+        return ref;
     }
 
     /**
@@ -105,7 +107,7 @@ public enum LambdaReferences {
 
         if (cleaner == null) {
             synchronized (LambdaReferences.class) {
-                ObjectUtils.thisOrDefault(cleaner, this::initCleaner, Thread::start);
+                cleaner = ObjectUtils.thisOrDefault(cleaner, this::initCleaner, Thread::start);
             }
         }
     }
