@@ -68,8 +68,8 @@ abstract class AbstractClassUtils extends Primitives {
     }
 
     /**
-     * Validates if two {@link Class}es are not the same but first is assignable
-     * from second
+     * Validates if two {@link Class} objects are not the same but first is
+     * assignable from second one
      * 
      * @param type
      * @param from

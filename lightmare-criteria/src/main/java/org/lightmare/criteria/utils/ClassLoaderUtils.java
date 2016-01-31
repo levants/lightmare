@@ -67,7 +67,7 @@ public class ClassLoaderUtils {
 
     /**
      * Gets resource as {@link java.io.InputStream} by name from current
-     * {@link Thread} 's context class loader
+     * {@link Thread}'s context class loader
      * 
      * @param resource
      * @return {@link java.io.InputStream} from current {@link ClassLoader}
