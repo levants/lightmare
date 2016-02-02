@@ -61,14 +61,15 @@ public class LambdaInfo {
         this.instantiatedMethodType = instantiatedMethodType;
     }
 
-    public LambdaInfo(SerializedLambda serialized) {
-        this(serialized.getImplClass(), serialized.getImplMethodName(), serialized.getImplMethodSignature(),
-                serialized.getImplMethodKind(), serialized.getInstantiatedMethodType());
+    public static LambdaInfo of(SerializedLambda serialized) {
+        return new LambdaInfo(serialized.getImplClass(), serialized.getImplMethodName(),
+                serialized.getImplMethodSignature(), serialized.getImplMethodKind(),
+                serialized.getInstantiatedMethodType());
     }
 
-    public LambdaInfo(SLambda slambda) {
-        this(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature, slambda.implMethodKind,
-                slambda.instantiatedMethodType);
+    public static LambdaInfo of(SLambda slambda) {
+        return new LambdaInfo(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature,
+                slambda.implMethodKind, slambda.instantiatedMethodType);
     }
 
     /**

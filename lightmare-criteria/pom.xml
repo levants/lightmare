@@ -13,8 +13,35 @@
 	<packaging>jar</packaging>
 
 	<properties>
+		<maven.compiler.plugin>3.3</maven.compiler.plugin>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
+		<maven.compiler.testSource>1.8</maven.compiler.testSource>
+		<maven.enforcer.version>1.4.1</maven.enforcer.version>
+		<maven.source.plugin>2.4</maven.source.plugin>
+		<maven.javadoc.plugin>2.10.3</maven.javadoc.plugin>
+		<maven.gpg.plugin>1.6</maven.gpg.plugin>
+		<maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
 		<plexus-compiler-eclipse.version>2.6</plexus-compiler-eclipse.version>
+		<!-- ASM -->
+		<asm.version>5.0.4</asm.version>
+		<!-- ASM -->
 		<jpa-api.version>1.0.0.Final</jpa-api.version>
+		<!-- hibernate -->
+		<hibernate.version>4.3.11.Final</hibernate.version>
+		<hibernate-validator.version>5.2.1.Final</hibernate-validator.version>
+		<!-- end of hibernate -->
+		<!-- log4j -->
+		<log4j.version>1.2.17</log4j.version>
+		<!-- end of log4j -->
+		<!-- test -->
+		<!-- junit -->
+		<junit.version>4.12</junit.version>
+		<!-- end of junit -->
+		<!-- h2 -->
+		<h2db.version>1.4.190</h2db.version>
+		<!-- end of h2 -->
 	</properties>
 
 	<build>
@@ -155,7 +182,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>${h2.version}</version>
+			<version>${h2db.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- H2 -->

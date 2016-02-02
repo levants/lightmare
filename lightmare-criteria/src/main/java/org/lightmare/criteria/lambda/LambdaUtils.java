@@ -46,7 +46,7 @@ public class LambdaUtils {
     private static final Logger LOG = Logger.getLogger(LambdaUtils.class);
 
     /**
-     * Logs resolved lambda expression on DEBUG level
+     * Logs resolved lambda expression parameters on DEBUG level
      * 
      * @param lambda
      */

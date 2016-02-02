@@ -110,7 +110,7 @@ public class LambdaReplacements {
         LambdaInfo lambda;
 
         SLambda slambda = toSLambda(method);
-        lambda = new LambdaInfo(slambda);
+        lambda = LambdaInfo.of(slambda);
 
         return lambda;
     }
@@ -127,6 +127,25 @@ public class LambdaReplacements {
     }
 
     /**
+     * Gets @link org.lightmare.criteria.lambda.LambdaInfo} instance from lambda
+     * implementation through {@link java.lang.invoke.SerializedLambda}
+     * parameters
+     * 
+     * @param writeReplace
+     * @param field
+     * @return
+     */
+    private static <T> LambdaInfo invokeMethod(Method writeReplace, Serializable field) {
+
+        LambdaInfo lambda;
+
+        SerializedLambda serialized = ClassUtils.invoke(writeReplace, field);
+        lambda = LambdaInfo.of(serialized);
+
+        return lambda;
+    }
+
+    /**
      * Gets {@link org.lightmare.criteria.lambda.LambdaInfo} instance from
      * passed lambda argument
      * 
@@ -140,8 +159,7 @@ public class LambdaReplacements {
         Class<?> parent = method.getClass();
         Method writeReplace = getMethod(parent);
         if (Objects.nonNull(writeReplace)) {
-            SerializedLambda serialized = ClassUtils.invoke(writeReplace, method);
-            lambda = new LambdaInfo(serialized);
+            lambda = invokeMethod(writeReplace, method);
         } else {
             lambda = translate(method);
         }

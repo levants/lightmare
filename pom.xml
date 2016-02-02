@@ -55,9 +55,6 @@
 		<!-- end of java ee components versions -->
 
 		<!-- major dependencies versions -->
-		<!-- ASM -->
-		<asm.version>5.0.4</asm.version>
-		<!-- end of ASM -->
 		<!-- hibernate -->
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<hibernate-validator.version>5.2.1.Final</hibernate-validator.version>
