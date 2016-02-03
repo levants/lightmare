@@ -69,7 +69,7 @@ For embedded entity there is method "embedded" with embedded getter method and a
   			.where()
   			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname").and()
-		    .embedded(Person::getInfo, c -> .equal(PersonInfo::getNote, "This is note")
+		    .embedded(Person::getInfo, c -> c.equal(PersonInfo::getNote, "This is note")
 		    					   .equal(PersonInfo::getCardNumber, Person::getPrivatNumber))
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .firstOrDefault(new Person()); 

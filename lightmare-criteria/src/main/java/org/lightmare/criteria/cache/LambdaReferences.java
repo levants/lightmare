@@ -101,7 +101,7 @@ public enum LambdaReferences {
     }
 
     /**
-     * Starts cleaner thread if it is not initialized yet
+     * Starts cleaner thread if it is not initialized and started yet
      */
     private void startCleaner() {
 
