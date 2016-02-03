@@ -30,7 +30,6 @@
 		<jpa-api.version>1.0.0.Final</jpa-api.version>
 		<!-- hibernate -->
 		<hibernate.version>4.3.11.Final</hibernate.version>
-		<hibernate-validator.version>5.2.1.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
 		<!-- log4j -->
 		<log4j.version>1.2.17</log4j.version>
@@ -175,7 +174,7 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
 			<classifier>sources</classifier>
-			<scope>provided</scope>
+			<scope>test</scope>
 		</dependency>
 		<!-- hibernate -->
 		<!-- H2 -->

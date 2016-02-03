@@ -50,7 +50,7 @@ and second is with "brackets" method call
   			.equal(Person::getPrivatNumber, "10010010011")
 		    .and().like(Person::getLastName, "lname").and()
 		    .brackets(c -> c.startsWith(Person::getFirstName, "fname")
-		    	.		  .or()
+		    			  .or()
 		    			  .ge(Person::getBirthDate, new Date()))
 		    .and().startsWith(Person::getFirstName, "fname")
 		    .firstOrDefault(new Person()); 

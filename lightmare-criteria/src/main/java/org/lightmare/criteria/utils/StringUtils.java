@@ -126,7 +126,8 @@ public abstract class StringUtils {
     }
 
     /**
-     * Translates passed {@link String} to byte array by encoding
+     * Translates passed {@link String} to byte array by encoding swallowing
+     * exception
      * 
      * @param text
      * @param charset
