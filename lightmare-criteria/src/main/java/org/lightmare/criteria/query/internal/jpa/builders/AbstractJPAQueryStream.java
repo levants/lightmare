@@ -191,7 +191,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
         Class<F> fieldType;
 
         QueryTuple tuple = compose(field);
-        fieldType = tuple.getCollectionType();
+        fieldType = tuple.getFieldGenericType();
 
         return fieldType;
     }

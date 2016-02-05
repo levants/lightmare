@@ -155,7 +155,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     public <F> QueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F> consumer) {
 
         QueryTuple tuple = compose(field);
-        Class<F> type = tuple.getCollectionType();
+        Class<F> type = tuple.getFieldGenericType();
         String embeddedName = tuple.getFieldName();
         QueryStream<F> embeddedQuery = new EntityEmbeddedStream<>(this, type, embeddedName);
         acceptAndCall(consumer, embeddedQuery);
