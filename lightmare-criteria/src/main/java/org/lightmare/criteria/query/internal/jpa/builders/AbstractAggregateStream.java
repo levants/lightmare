@@ -72,7 +72,7 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
      * @return {@link Class} aggregate function type
      */
     private static <C> Class<C> getAggregateType(Class<C> type, QueryTuple tuple) {
-        return ObjectUtils.thisOrDefault(type, tuple::getFieldType);
+        return ObjectUtils.thisOrDefault(type, tuple::getCollectionType);
     }
 
     /**

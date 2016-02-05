@@ -56,6 +56,8 @@ public class QueryTuple implements Serializable, Cloneable {
 
     private Field field;
 
+    private Class<?> fieldType;
+
     private TemporalType temporalType;
 
     private Class<?> genericType;
@@ -147,6 +149,11 @@ public class QueryTuple implements Serializable, Cloneable {
 
     public void setField(Field field) {
         this.field = field;
+        ObjectUtils.ifNotNull(field, c -> QueryTuple.this.fieldType = c.getType());
+    }
+
+    public Class<?> getFieldType() {
+        return fieldType;
     }
 
     public TemporalType getTemporalType() {
@@ -185,14 +192,24 @@ public class QueryTuple implements Serializable, Cloneable {
         this.alias = StringUtils.thisOrDefault(alias, () -> ALIAS_PREFIX.concat(String.valueOf(index)));
     }
 
-    public <F> Class<F> getFieldType() {
+    public <F> Class<F> getCollectionType() {
 
-        Class<F> fieldType;
+        Class<F> collectionType;
 
         Class<?> raw = getGenericType();
-        fieldType = ObjectUtils.cast(raw);
+        collectionType = ObjectUtils.cast(raw);
 
-        return fieldType;
+        return collectionType;
+    }
+
+    public <F> Class<F> getFieldGenericType() {
+
+        Class<F> fieldGenericType;
+
+        Class<?> raw = getFieldType();
+        fieldGenericType = ObjectUtils.cast(raw);
+
+        return fieldGenericType;
     }
 
     @Override

@@ -87,11 +87,6 @@ public class LambdaUtils {
 
         LambdaInfo lambda = LambdaReplacements.getReplacement(method);
         tuple = ObjectUtils.ifNull(() -> QueryCache.getQuery(lambda), c -> resolvefromLambda(lambda));
-        if (tuple == null) {
-            tuple = FieldResolver.resolve(lambda);
-            QueryCache.putQuery(lambda, tuple);
-            debug(lambda);
-        }
 
         return tuple;
     }
