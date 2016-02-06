@@ -59,7 +59,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean notEmpty(Collection<?> collection) {
-        return !collection.isEmpty();
+        return ObjectUtils.notTrue(collection.isEmpty());
     }
 
     /**
@@ -71,7 +71,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean valid(Collection<?> collection) {
-        return (collection != null && !collection.isEmpty());
+        return (Objects.nonNull(collection) && notEmpty(collection));
     }
 
     /**
@@ -94,7 +94,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean valid(Map<?, ?> map) {
-        return (map != null && !map.isEmpty());
+        return (Objects.nonNull(map) && ObjectUtils.notTrue(map.isEmpty()));
     }
 
     /**

@@ -50,7 +50,7 @@ abstract class Primitives {
     /**
      * Gets default primitive
      * 
-     * @param clazz
+     * @param type
      * @return {@link Object} default instance of class
      */
     private static Object getPrimitive(Class<?> type) {
@@ -88,7 +88,7 @@ abstract class Primitives {
      * @return {@link Object} default instance of class
      */
     public static Object getDefault(Class<?> type) {
-        return ObjectUtils.ifIsValid(type, c -> c.isPrimitive(), Primitives::getPrimitive);
+        return ObjectUtils.ifIsValid(type, Class::isPrimitive, Primitives::getPrimitive);
     }
 
     /**
