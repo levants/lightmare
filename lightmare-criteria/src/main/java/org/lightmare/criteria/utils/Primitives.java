@@ -131,15 +131,6 @@ abstract class Primitives {
      * @return {@link Class}<T> wrapper
      */
     public static <T> Class<T> getWrapper(Class<?> type) {
-
-        Class<T> wrapper;
-
-        if (type.isPrimitive()) {
-            wrapper = getPrimitiveWrapper(type);
-        } else {
-            wrapper = ObjectUtils.cast(type);
-        }
-
-        return wrapper;
+        return ObjectUtils.ifIsValid(type, Class::isPrimitive, Primitives::getPrimitiveWrapper, ObjectUtils::cast);
     }
 }

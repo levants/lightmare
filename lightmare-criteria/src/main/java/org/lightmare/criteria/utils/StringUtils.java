@@ -23,6 +23,7 @@
 package org.lightmare.criteria.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -68,7 +69,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean valid(CharSequence chars) {
-        return chars != null && chars.length() > CollectionUtils.EMPTY;
+        return (Objects.nonNull(chars) && chars.length() > CollectionUtils.EMPTY);
     }
 
     /**
@@ -101,7 +102,7 @@ public abstract class StringUtils {
      * @return <code>boolean</code>
      */
     public static boolean isEmpty(CharSequence chars) {
-        return !valid(chars);
+        return ObjectUtils.notTrue(valid(chars));
     }
 
     /**
@@ -235,7 +236,7 @@ public abstract class StringUtils {
         int length = item.length();
         int end = element.length();
         valid = (length > end);
-        for (int i = CollectionUtils.FIRST; i < end && valid; i++) {
+        for (int i = CollectionUtils.FIRST; (i < end && valid); i++) {
             valid = (item.charAt(i) == element.charAt(i));
         }
 
