@@ -439,13 +439,6 @@ public abstract class ObjectUtils {
      * @return T value
      */
     public static <T> T getOrInit(Supplier<T> supplier, Supplier<T> initSupplier) {
-
-        T result = supplier.get();
-
-        if (result == null) {
-            result = initSupplier.get();
-        }
-
-        return result;
+        return ifNull(supplier, c -> initSupplier.get());
     }
 }

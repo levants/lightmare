@@ -116,7 +116,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean isEmpty(Map<?, ?> map) {
-        return !valid(map);
+        return ObjectUtils.notTrue(valid(map));
     }
 
     /**
@@ -127,7 +127,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean isEmpty(Collection<?> collection) {
-        return !valid(collection);
+        return ObjectUtils.notTrue(valid(collection));
     }
 
     /**
@@ -138,7 +138,7 @@ public abstract class CollectionUtils {
      * @return <code>boolean</code> validation result
      */
     public static boolean invalidAll(Collection<?>... collections) {
-        return !valid(collections);
+        return ObjectUtils.notTrue(valid(collections));
     }
 
     /**

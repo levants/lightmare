@@ -90,47 +90,4 @@ abstract class Primitives {
     public static Object getDefault(Class<?> type) {
         return ObjectUtils.ifIsValid(type, Class::isPrimitive, Primitives::getPrimitive);
     }
-
-    /**
-     * Gets wrapper class if passed class is a primitive type
-     * 
-     * @param type
-     * @return {@link Class}<T> wrapper
-     */
-    private static <T> Class<T> getPrimitiveWrapper(Class<?> type) {
-
-        Class<T> wrapper;
-
-        if (type.equals(byte.class)) {
-            wrapper = ObjectUtils.cast(Byte.class);
-        } else if (type.equals(boolean.class)) {
-            wrapper = ObjectUtils.cast(Boolean.class);
-        } else if (type.equals(char.class)) {
-            wrapper = ObjectUtils.cast(Character.class);
-        } else if (type.equals(short.class)) {
-            wrapper = ObjectUtils.cast(Short.class);
-        } else if (type.equals(int.class)) {
-            wrapper = ObjectUtils.cast(Integer.class);
-        } else if (type.equals(long.class)) {
-            wrapper = ObjectUtils.cast(Long.class);
-        } else if (type.equals(float.class)) {
-            wrapper = ObjectUtils.cast(Float.class);
-        } else if (type.equals(double.class)) {
-            wrapper = ObjectUtils.cast(Double.class);
-        } else {
-            wrapper = ObjectUtils.cast(type);
-        }
-
-        return wrapper;
-    }
-
-    /**
-     * Gets wrapper class if passed class is a primitive type
-     * 
-     * @param type
-     * @return {@link Class}<T> wrapper
-     */
-    public static <T> Class<T> getWrapper(Class<?> type) {
-        return ObjectUtils.ifIsValid(type, Class::isPrimitive, Primitives::getPrimitiveWrapper, ObjectUtils::cast);
-    }
 }
