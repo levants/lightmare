@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.resolvers;
 
+import java.beans.Introspector;
 import java.util.function.Function;
 
 import org.apache.log4j.Logger;
@@ -51,7 +52,7 @@ class AbstractFieldResolver {
     private static final String SET = "set";
 
     // Getter / setter method prefix end index
-    private static final int BEGIN_INDEX = GET.length();
+    private static final int START_INDEX = GET.length();
 
     // Debug message pattern
     private static final String DEBUG_MESSAGE_PATTERN = " - %s.%s";
@@ -84,11 +85,10 @@ class AbstractFieldResolver {
      */
     private static String resolveFieldName(String methodName) {
 
-        String fieldName = methodName.substring(BEGIN_INDEX);
+        String fieldName;
 
-        char firstChar = fieldName.charAt(CollectionUtils.FIRST);
-        String first = String.valueOf(firstChar);
-        fieldName = fieldName.replaceFirst(first, first.toLowerCase());
+        String capName = methodName.substring(START_INDEX);
+        fieldName = Introspector.decapitalize(capName);
 
         return fieldName;
     }

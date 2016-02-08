@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.lightmare.criteria.entities.GeneralInfo;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.PersonWrapper;
+import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.SelectExpression.Select;
@@ -43,6 +44,26 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println(stream.sql());
             System.out.println("===========Entity==========");
             System.out.println();
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(1.5)
+    public void toListAllTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            List<Phone> phones = QueryProvider.select(em, Phone.class).toList();
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println();
+            phones.forEach(System.out::println);
         } catch (Throwable ex) {
             ex.printStackTrace();
         } finally {
