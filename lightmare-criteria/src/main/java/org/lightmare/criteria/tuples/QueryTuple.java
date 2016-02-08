@@ -48,7 +48,7 @@ public class QueryTuple implements Serializable, Cloneable {
 
     private final String[] arguments;
 
-    private final String fieldName;
+    private String fieldName;
 
     private Class<?> entityType;
 
@@ -116,6 +116,10 @@ public class QueryTuple implements Serializable, Cloneable {
 
     public String[] getArguments() {
         return arguments;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
     public String getFieldName() {

@@ -261,6 +261,21 @@ public abstract class ObjectUtils {
     }
 
     /**
+     * Checks if parameters not equals and calls
+     * {@link java.util.function.BiConsumer#accept(Object, Object)} method
+     *
+     * @param x
+     * @param y
+     * @param consumer
+     */
+    public static <X, Y> void notEquals(X x, Y y, BiConsumer<X, Y> consumer) {
+
+        if (Objects.nonNull(consumer) && notEquals(x, y)) {
+            consumer.accept(x, y);
+        }
+    }
+
+    /**
      * Casts passed {@link Object} to generic parameter
      *
      * @param instance
