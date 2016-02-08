@@ -69,7 +69,7 @@ public class EntityProcessor {
     }
 
     /**
-     * Validates if {@link java.lang.reflect.Method} is getter or setter for
+     * Validates if {@link java.lang.reflect.Method} is getter for
      * {@link java.beans.PropertyDescriptor} instance
      * 
      * @param method
@@ -77,7 +77,7 @@ public class EntityProcessor {
      * @return <code>boolean</code> validation result
      */
     private static boolean validateField(Method method, PropertyDescriptor decriptor) {
-        return (method.equals(decriptor.getWriteMethod()) || method.equals(decriptor.getReadMethod()));
+        return (method.equals(decriptor.getReadMethod()));
     }
 
     /**
@@ -128,6 +128,16 @@ public class EntityProcessor {
     }
 
     /**
+     * Validates if field can and should resolved from {@link Class} parameter
+     * 
+     * @param type
+     * @return <code>boolean</code> validation result
+     */
+    public static boolean fieldResolvable(Class<?> type) {
+        return ClassUtils.notInterface(type);
+    }
+
+    /**
      * Corrects resolved {@link java.lang.reflect.Field} name and sets
      * {@link java.lang.reflect.Method} to passed
      * {@link org.lightmare.criteria.tuples.QueryTuple} instance if type
@@ -140,7 +150,7 @@ public class EntityProcessor {
 
         tuple.setMethod(method);
         Class<?> type = method.getDeclaringClass();
-        ObjectUtils.valid(type, ClassUtils::notInterface, c -> setProperField(c, method, tuple));
+        ObjectUtils.valid(type, EntityProcessor::fieldResolvable, c -> setProperField(c, method, tuple));
     }
 
     /**

@@ -48,9 +48,6 @@ class AbstractFieldResolver {
     // Getter method prefix
     private static final String GET = "get";
 
-    // Setter method prefix
-    private static final String SET = "set";
-
     // Getter / setter method prefix end index
     private static final int START_INDEX = GET.length();
 
@@ -146,17 +143,6 @@ class AbstractFieldResolver {
     }
 
     /**
-     * Validates setter method by name, arguments and return type
-     * 
-     * @param returnType
-     * @param argumentTypes
-     * @return <code>boolean</code> validation result
-     */
-    private static boolean validSetter(Type returnType, Type[] argumentTypes) {
-        return (CollectionUtils.singleton(argumentTypes) && Type.VOID_TYPE.equals(returnType));
-    }
-
-    /**
      * Validates getter method by name, arguments and return type
      * 
      * @param returnType
@@ -183,8 +169,6 @@ class AbstractFieldResolver {
         Type[] argumentTypes = methodType.getArgumentTypes();
         if (methodName.startsWith(GET)) {
             valid = validGetter(returnType, argumentTypes);
-        } else if (methodName.startsWith(SET)) {
-            valid = validSetter(returnType, argumentTypes);
         } else {
             valid = Boolean.FALSE;
         }
