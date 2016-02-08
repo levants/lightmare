@@ -68,6 +68,16 @@ abstract class AbstractClassUtils extends Primitives {
     }
 
     /**
+     * Validates if passed {@link Class} is not an interface
+     * 
+     * @param type
+     * @return @return <code> boolean</code> validation result
+     */
+    public static boolean notInterface(Class<?> type) {
+        return ObjectUtils.notTrue(type.isInterface());
+    }
+
+    /**
      * Validates if two {@link Class} objects are not the same but first is
      * assignable from second one
      * 

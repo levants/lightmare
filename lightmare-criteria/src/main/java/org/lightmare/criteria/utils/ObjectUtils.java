@@ -110,6 +110,18 @@ public abstract class ObjectUtils {
         nonNull(value, consumer);
     }
 
+    /**
+     * Validates if value provided by {@link java.util.function.Supplier} gives
+     * valid {@link java.util.function.Predicate} results and calls passed
+     * {@link java.util.function.Function} or else
+     * {@link java.util.function.Function} implementations
+     * 
+     * @param supplier
+     * @param predicate
+     * @param function
+     * @param elseFunction
+     * @return T value from {@link java.util.function.Function}s
+     */
     public static <K, T> T ifValid(Supplier<K> supplier, Predicate<K> predicate, Function<K, T> function,
             Function<K, T> elseFunction) {
 
