@@ -33,6 +33,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 
@@ -66,7 +67,15 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
         this(parent, parent.generateSubAlias(), entityType);
     }
 
-    private <K> SubSelectStream<S, K> generetaSubSelectStream(Class<K> type) {
+    /**
+     * Generates
+     * {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubSelectStream}
+     * instance for {@link Class} parameter
+     * 
+     * @param type
+     * @return
+     */
+    private <K> SubSelectStream<S, K> generateSubSelectStream(Class<K> type) {
 
         SubSelectStream<S, K> stream = new SubSelectStream<>(this, type);
         subSelect = stream;
@@ -86,7 +95,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
         SubSelectStream<S, F> stream;
 
         Class<F> fieldType = getFieldType(field);
-        stream = generetaSubSelectStream(fieldType);
+        stream = generateSubSelectStream(fieldType);
 
         return stream;
     }
@@ -98,12 +107,33 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
      * @return {@link org.lightmare.criteria.query.QueryStream} with
      *         {@link Object} array
      */
-    protected final QueryStream<Object[]> subSelectAll(Serializable field) {
+    protected QueryStream<Object[]> subSelectAll(Serializable field) {
 
         SubSelectStream<S, Object[]> stream;
 
         generateSelectClause(Object[].class, Collections.singletonList(field));
-        stream = generetaSubSelectStream(Object[].class);
+        stream = generateSubSelectStream(Object[].class);
+
+        return stream;
+    }
+
+    /**
+     * Generates aggregate {@link org.lightmare.criteria.query.QueryStream} for
+     * instant type
+     * 
+     * @param field
+     * @param function
+     * @param type
+     * @return {@link org.lightmare.criteria.query.QueryStream} with aggregate
+     *         type
+     */
+    protected <F, R extends Number> QueryStream<R> subAggregate(EntityField<S, F> field, Aggregates function,
+            Class<R> type) {
+
+        QueryStream<R> stream = super.aggregate(field, function, type);
+
+        Class<R> selectType = stream.getEntityType();
+        generateSubSelectStream(selectType);
 
         return stream;
     }
@@ -151,6 +181,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
      * Generates sub query and appends to parent
      */
     private void appendToParent() {
+
         startsSelect(this);
         String query = sql();
         appendToParent(query);

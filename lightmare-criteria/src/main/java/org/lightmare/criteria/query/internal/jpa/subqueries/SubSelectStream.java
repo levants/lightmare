@@ -48,6 +48,7 @@ class SubSelectStream<T, E> extends SelectStream<T, E> {
      * Appends SQL part to original query and switches prepare state to called
      */
     private void appendOriginal() {
+
         String query = super.sql();
         stream.appendToParent(query);
         stream.switchState();

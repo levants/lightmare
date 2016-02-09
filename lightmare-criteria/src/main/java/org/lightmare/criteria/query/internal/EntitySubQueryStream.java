@@ -25,6 +25,7 @@ package org.lightmare.criteria.query.internal;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream;
 
 /**
@@ -59,5 +60,10 @@ class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
     @Override
     public <F> QueryStream<F> selectType(EntityField<S, F> field) {
         return subSelectOne(field);
+    }
+
+    @Override
+    public <F, R extends Number> QueryStream<R> aggregate(EntityField<S, F> field, Aggregates function, Class<R> type) {
+        return subAggregate(field, function, type);
     }
 }
