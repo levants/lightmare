@@ -19,6 +19,7 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.SelectExpression.Select;
 import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
+import org.lightmare.criteria.utils.CollectionUtils;
 
 @RunWith(SortedRunner.class)
 public class QueryTest extends TestEnviromentConfig {
@@ -489,6 +490,30 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println();
             System.out.println("-------Entity----");
             System.out.println(person);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(10)
+    public void queryMaxTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Long> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(Person::getPersonalNo, Person::getAddrress).and().like(Person::getLastName, "lname%", 'e')
+                    .and().startsWith(Person::getLastName, "lname").max(Person::getPersonId);
+            String sql = stream.sql();
+            System.out.println(sql);
+            Long max = stream.firstOrDefault(Long.valueOf(CollectionUtils.EMPTY));
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println(max);
         } catch (Throwable ex) {
             ex.printStackTrace();
         } finally {

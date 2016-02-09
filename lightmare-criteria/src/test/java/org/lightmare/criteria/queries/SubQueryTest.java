@@ -288,6 +288,27 @@ public class SubQueryTest extends QueryTest {
         }
     }
 
+    @RunOrder(105.5)
+    @Test
+    public void subQueryAllToMaxTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class)
+                    .equal(GeneralInfo::getAddrress, "address").ge(100, SubQuery.all(Phone.class,
+                            c -> c.equal(Phone::getPhoneNumber, "100100").max(Phone::getPhoneId)));
+            List<Person> persons = stream.toList();
+            persons.forEach(System.out::println);
+            String sql = stream.sql();
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
     @RunOrder(106)
     @Test
     public void subQueryAnyToObjectTest() {
