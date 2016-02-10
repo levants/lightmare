@@ -24,7 +24,6 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 
 import javax.persistence.EntityManager;
 
@@ -388,16 +387,6 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
-     * Appends SELECT expression
-     * 
-     * @param field
-     */
-    private void addSelectField(Serializable field, StringBuilder buffer) {
-        QueryTuple tuple = resolve(field);
-        appendFieldName(tuple, buffer);
-    }
-
-    /**
      * Adds comma to passed query part
      * 
      * @param index
@@ -412,6 +401,17 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
     }
 
     /**
+     * Appends SELECT expression
+     * 
+     * @param field
+     * @param buffer
+     */
+    private void addSelectField(Serializable field, StringBuilder buffer) {
+        QueryTuple tuple = resolve(field);
+        appendFieldName(tuple, buffer);
+    }
+
+    /**
      * Appends to SELECT statement
      * 
      * @param fields
@@ -419,16 +419,11 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
      */
     protected void appendSelect(Collection<Serializable> fields, StringBuilder buffer) {
 
-        Iterator<Serializable> iterator = fields.iterator();
         int length = fields.size() - CollectionUtils.SINGLETON;
-        Serializable field;
-        int i = CollectionUtils.FIRST;
-        while (iterator.hasNext()) {
-            field = iterator.next();
+        CollectionUtils.forEach(fields, (i, field) -> {
             addSelectField(field, buffer);
             appendComma(i, length, buffer);
-            i++;
-        }
+        });
     }
 
     /**
@@ -456,11 +451,15 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
         prepareGroup(orderBy, clause);
     }
 
+    private void appendOrderByDir(String dir) {
+        orderBy.append(StringUtils.SPACE).append(dir);
+    }
+
     private void appendOrderBy(QueryTuple tuple, String dir) {
 
         orderBy.append(alias);
         orderBy.append(Parts.COLUMN_PREFIX).append(tuple.getFieldName());
-        StringUtils.valid(dir, c -> orderBy.append(StringUtils.SPACE).append(c));
+        StringUtils.valid(dir, this::appendOrderByDir);
     }
 
     private void addOrderByField(String dir, Serializable field) {
@@ -509,16 +508,11 @@ abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
 
     private void iterateAndAppendGroups(Collection<Serializable> fields) {
 
-        Iterator<Serializable> iterator = fields.iterator();
-        Serializable field;
-        int i = CollectionUtils.FIRST;
         int length = fields.size() - CollectionUtils.SINGLETON;
-        while (iterator.hasNext()) {
-            field = iterator.next();
+        CollectionUtils.forEach(fields, (i, field) -> {
             addGroupByField(field, i, length);
             appendComma(i, length, groupBy);
-            i++;
-        }
+        });
     }
 
     /**

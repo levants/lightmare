@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lightmare.criteria.entities.GeneralInfo;
 import org.lightmare.criteria.entities.Person;
+import org.lightmare.criteria.entities.PersonInfo;
 import org.lightmare.criteria.entities.PersonWrapper;
 import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.QueryProvider;
@@ -369,10 +370,53 @@ public class QueryTest extends TestEnviromentConfig {
         }
     }
 
+    public static Person initPerson() {
+
+        Person person2 = new Person();
+
+        person2.setPersonalNo(PERSONAL_NO2);
+        person2.setLastName("lname2");
+        person2.setFirstName("fname2");
+        person2.setBirthDate(getDateValue(90));
+        person2.setMiddName("mname2");
+        person2.setEscape(Character.valueOf('_'));
+
+        PersonInfo info2 = new PersonInfo();
+        info2.setCardNumber("200");
+        info2.setNote("note2");
+        person2.setInfo(info2);
+
+        return person2;
+    }
+
+    private void getForUpfate() {
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+                    .equal(Person::getPersonalNo, PERSONAL_NO2).and().like(Person::getLastName, "lname%").and()
+                    .startsWith(Person::getFirstName, "fname");
+            Person person = stream.getFirst();
+            transaction.begin();
+            if (person == null) {
+                Person newPerson = initPerson();
+                em.persist(newPerson);
+            }
+            transaction.commit();
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+            rollback(transaction);
+        } finally {
+            em.close();
+        }
+    }
+
     @Test
     @RunOrder(5)
     public void deleteByEntityTest() {
 
+        getForUpfate();
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {

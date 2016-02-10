@@ -14,6 +14,7 @@ import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.runorder.SortedRunner;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 @RunWith(SortedRunner.class)
 public class TestEnviromentConfig {
@@ -48,7 +49,7 @@ public class TestEnviromentConfig {
     public static void config() {
 
         try {
-            emf = TestDBUtils.create();
+            emf = ObjectUtils.thisOrDefault(emf, TestDBUtils::create);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

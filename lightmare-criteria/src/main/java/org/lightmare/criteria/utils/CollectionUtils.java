@@ -23,6 +23,7 @@
 package org.lightmare.criteria.utils;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -360,6 +361,22 @@ public abstract class CollectionUtils {
     }
 
     /**
+     * Calls {@link java.util.function.BiConsumer} for each collection member
+     * 
+     * @param collection
+     * @param consumer
+     */
+    private static <T> void forEachValue(Collection<T> collection, BiConsumer<Integer, T> consumer) {
+
+        Iterator<T> iterator = collection.iterator();
+        T value;
+        for (int i = FIRST; iterator.hasNext(); i++) {
+            value = iterator.next();
+            consumer.accept(i, value);
+        }
+    }
+
+    /**
      * Validates array and calls {@link java.util.function.BiConsumer} for each
      * it's member
      * 
@@ -368,8 +385,22 @@ public abstract class CollectionUtils {
      */
     public static <T> void forEach(T[] array, BiConsumer<Integer, T> consumer) {
 
-        if (valid(array)) {
+        if (valid(array) && Objects.nonNull(consumer)) {
             forEachValue(array, consumer);
+        }
+    }
+
+    /**
+     * Validates collection and calls {@link java.util.function.BiConsumer} for
+     * each it's member
+     * 
+     * @param collection
+     * @param consumer
+     */
+    public static <T> void forEach(Collection<T> collection, BiConsumer<Integer, T> consumer) {
+
+        if (valid(collection) && Objects.nonNull(consumer)) {
+            forEachValue(collection, consumer);
         }
     }
 

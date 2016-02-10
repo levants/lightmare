@@ -33,6 +33,25 @@ public class DBConfigUtils {
         return date;
     }
 
+    public static Person initPerson() {
+
+        Person person2 = new Person();
+
+        person2.setPersonalNo(PERSONAL_NO2);
+        person2.setLastName("lname2");
+        person2.setFirstName("fname2");
+        person2.setBirthDate(getDateValue(90));
+        person2.setMiddName("mname2");
+        person2.setEscape(Character.valueOf('_'));
+
+        PersonInfo info2 = new PersonInfo();
+        info2.setCardNumber("200");
+        info2.setNote("note2");
+        person2.setInfo(info2);
+
+        return person2;
+    }
+
     private static void provideDataBase() {
 
         Person person1 = new Person();
@@ -47,17 +66,7 @@ public class DBConfigUtils {
         info1.setNote("note1");
         person1.setInfo(info1);
 
-        Person person2 = new Person();
-        person2.setPersonalNo(PERSONAL_NO2);
-        person2.setLastName("lname2");
-        person2.setFirstName("fname2");
-        person2.setBirthDate(getDateValue(90));
-        person2.setMiddName("mname2");
-
-        PersonInfo info2 = new PersonInfo();
-        info1.setCardNumber("200");
-        info1.setNote("note2");
-        person2.setInfo(info2);
+        Person person2 = initPerson();
 
         Person person3 = new Person();
         person3.setPersonalNo("10100101111");

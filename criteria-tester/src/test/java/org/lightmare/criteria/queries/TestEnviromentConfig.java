@@ -48,7 +48,9 @@ public class TestEnviromentConfig {
     public static void config() {
 
         try {
-            emf = DBConfigUtils.create();
+            if (emf == null) {
+                emf = DBConfigUtils.create();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -35,6 +35,7 @@ import java.util.stream.Stream;
  */
 public abstract class StringUtils {
 
+    // Reusable characters or text
     public static final String EMPTY = "";
 
     public static final char SPACE = ' ';
