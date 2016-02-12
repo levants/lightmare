@@ -60,7 +60,8 @@ public class LambdaUtils {
      * {@link org.lightmare.criteria.lambda.LambdaInfo} fields
      * 
      * @param lambda
-     * @return
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} from
+     *         {@link org.lightmare.criteria.lambda.LambdaInfo}
      */
     private static QueryTuple resolvefromLambda(LambdaInfo lambda) {
 

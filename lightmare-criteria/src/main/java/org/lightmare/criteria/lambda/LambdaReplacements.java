@@ -25,7 +25,6 @@ package org.lightmare.criteria.lambda;
 import java.io.Serializable;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
-import java.util.Objects;
 
 import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -43,6 +42,7 @@ public class LambdaReplacements {
     // Method name to get SerializedLambda on the fly
     private static final String METHOD_NAME = "writeReplace";
 
+    // Serialization parameters
     private static final String CHARSET = "iso-8859-1";
 
     private static final String NATIVE_NAME = SerializedLambda.class.getName();
@@ -122,8 +122,19 @@ public class LambdaReplacements {
      * @param parent
      * @return {@link java.lang.reflect.Method} for serialization
      */
-    private static <T> Method getMethod(Class<?> parent) {
+    private static <T> Method findWriteReplaceMethod(Class<?> parent) {
         return ClassUtils.findMethod(parent, METHOD_NAME);
+    }
+
+    /**
+     * Gets serialization {@link java.lang.reflect.Method} from
+     * {@link java.io.Serializable} instance
+     * 
+     * @param method
+     * @return {@link java.lang.reflect.Method} for serialization
+     */
+    private static <T> Method getMethod(Serializable method) {
+        return findWriteReplaceMethod(method.getClass());
     }
 
     /**
@@ -153,17 +164,7 @@ public class LambdaReplacements {
      * @return {@link org.lightmare.criteria.lambda.LambdaInfo} replacement
      */
     public static <T> LambdaInfo getReplacement(Serializable method) {
-
-        LambdaInfo lambda;
-
-        Class<?> parent = method.getClass();
-        Method writeReplace = getMethod(parent);
-        if (Objects.nonNull(writeReplace)) {
-            lambda = invokeMethod(writeReplace, method);
-        } else {
-            lambda = translate(method);
-        }
-
-        return lambda;
+        return ObjectUtils.ifNotNull(() -> getMethod(method), c -> invokeMethod(c, method),
+                LambdaReplacements::translate);
     }
 }

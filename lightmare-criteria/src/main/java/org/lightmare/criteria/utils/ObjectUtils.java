@@ -185,6 +185,23 @@ public abstract class ObjectUtils {
     }
 
     /**
+     * If passed {@link java.util.function.Supplier} provided value is not
+     * <code>null</code> then calls
+     * {@link java.util.function.Function#apply(Object)} method and returns it's
+     * result or calls other {@link java.util.function.Function#apply(Object)}
+     * in an other case
+     * 
+     * @param value
+     * @param function
+     * @param elseFunction
+     * @return <code>T</code> value from one {@link java.util.function.Function}
+     *         or from other
+     */
+    public static <K, T> T ifNotNull(Supplier<K> supplier, Function<K, T> function, Function<K, T> elseFunction) {
+        return ifValid(supplier, Objects::nonNull, function, elseFunction);
+    }
+
+    /**
      * Validates if value from {@link java.util.function.Supplier} returns
      * <code>null</code> value and calls
      * {@link java.util.function.Function#apply(Object)} method and returns it's
