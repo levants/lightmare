@@ -47,7 +47,7 @@ public class ColumnProcessor {
      * @return {@link javax.persistence.Temporal} annotation
      */
     public static Temporal getTemporal(AnnotatedElement element) {
-        return ObjectUtils.ifNotNull(element, c -> c.getAnnotation(Temporal.class));
+        return ObjectUtils.ifIsNotNull(element, c -> c.getAnnotation(Temporal.class));
     }
 
     /**

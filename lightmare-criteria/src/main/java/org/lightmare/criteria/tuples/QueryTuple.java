@@ -153,7 +153,7 @@ public class QueryTuple implements Serializable, Cloneable {
 
     public void setField(Field field) {
         this.field = field;
-        this.fieldType = ObjectUtils.ifNotNull(field, Field::getType);
+        this.fieldType = ObjectUtils.ifIsNotNull(field, Field::getType);
     }
 
     public Class<?> getFieldType() {

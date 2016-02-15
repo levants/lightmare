@@ -87,7 +87,7 @@ public class LambdaUtils {
         QueryTuple tuple;
 
         LambdaInfo lambda = LambdaReplacements.getReplacement(method);
-        tuple = ObjectUtils.ifNull(() -> QueryCache.getQuery(lambda), c -> resolvefromLambda(lambda));
+        tuple = ObjectUtils.getOrInit(() -> QueryCache.getQuery(lambda), () -> resolvefromLambda(lambda));
 
         return tuple;
     }
@@ -175,12 +175,6 @@ public class LambdaUtils {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      */
     public static QueryTuple getOrInit(Serializable method) {
-
-        QueryTuple tuple;
-
-        QueryTuple original = getOrInitOriginal(method);
-        tuple = ObjectUtils.ifNotNull(original, LambdaUtils::cloneTuple);
-
-        return tuple;
+        return ObjectUtils.ifNotNull(() -> getOrInitOriginal(method), LambdaUtils::cloneTuple);
     }
 }

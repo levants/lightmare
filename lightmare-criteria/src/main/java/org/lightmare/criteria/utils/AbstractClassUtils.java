@@ -90,37 +90,15 @@ abstract class AbstractClassUtils extends Primitives {
     }
 
     /**
-     * Validates if passed {@link java.lang.reflect.AccessibleObject} instance
-     * is not accessible
-     *
-     * @param accessibleObject
-     * @return <code>boolean</code> validation result
-     */
-    private static boolean notAccessible(AccessibleObject accessibleObject) {
-        return ObjectUtils.notTrue(accessibleObject.isAccessible());
-    }
-
-    /**
-     * Sets accessible flag to {@link java.lang.reflect.AccessibleObject}
-     * instance
-     * 
-     * @param accessibleObject
-     */
-    private static void setAccessible(AccessibleObject accessibleObject) {
-        ObjectUtils.valid(accessibleObject, AbstractClassUtils::notAccessible, c -> c.setAccessible(Boolean.TRUE));
-    }
-
-    /**
      * Sets object accessible flag as true if it is not
      *
      * @param accessibleObject
      */
     protected static void makeAccessible(AccessibleObject accessibleObject) {
-
-        if (notAccessible(accessibleObject)) {
-            synchronized (accessibleObject) {
-                setAccessible(accessibleObject);
+        ObjectUtils.invalid(accessibleObject, AccessibleObject::isAccessible, c -> {
+            synchronized (c) {
+                ObjectUtils.invalid(c, AccessibleObject::isAccessible, o -> o.setAccessible(Boolean.TRUE));
             }
-        }
+        });
     }
 }

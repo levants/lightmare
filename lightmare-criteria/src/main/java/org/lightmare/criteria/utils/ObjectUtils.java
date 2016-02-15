@@ -86,6 +86,28 @@ public abstract class ObjectUtils {
     }
 
     /**
+     * Validates if passed {@link java.util.function.Predicate} returns
+     * <code>false</code> for passed value and runs
+     * {@link java.util.function.Consumer} implementation
+     * 
+     * @param value
+     * @param predicate
+     * @param consumer
+     * @return <code>boolean</code> validation result
+     */
+    public static <T> boolean invalid(T value, Predicate<T> predicate, Consumer<T> consumer) {
+
+        boolean valid = (Objects.nonNull(predicate) && ObjectUtils.notTrue(predicate.test(value))
+                && Objects.nonNull(consumer));
+
+        if (valid) {
+            consumer.accept(value);
+        }
+
+        return valid;
+    }
+
+    /**
      * Validates if passed {@link Object} is not <code>null</code> and runs
      * {@link java.util.function.Consumer} implementation
      * 
@@ -180,7 +202,7 @@ public abstract class ObjectUtils {
      * @return <code>T</code> value from {@link java.util.function.Function} or
      *         <code>null</code>
      */
-    public static <K, T> T ifNotNull(K value, Function<K, T> function) {
+    public static <K, T> T ifIsNotNull(K value, Function<K, T> function) {
         return ifIsValid(value, Objects::nonNull, function);
     }
 
@@ -191,7 +213,7 @@ public abstract class ObjectUtils {
      * result or calls other {@link java.util.function.Function#apply(Object)}
      * in an other case
      * 
-     * @param value
+     * @param supplier
      * @param function
      * @param elseFunction
      * @return <code>T</code> value from one {@link java.util.function.Function}
@@ -199,6 +221,21 @@ public abstract class ObjectUtils {
      */
     public static <K, T> T ifNotNull(Supplier<K> supplier, Function<K, T> function, Function<K, T> elseFunction) {
         return ifValid(supplier, Objects::nonNull, function, elseFunction);
+    }
+
+    /**
+     * If passed {@link java.util.function.Supplier} provided value is not
+     * <code>null</code> then calls
+     * {@link java.util.function.Function#apply(Object)} method and returns it's
+     * result or <code>null</code> in other case in an other case
+     * 
+     * @param supplier
+     * @param function
+     * @return <code>T</code> value from one {@link java.util.function.Function}
+     *         or <code>null</code>
+     */
+    public static <K, T> T ifNotNull(Supplier<K> supplier, Function<K, T> function) {
+        return ifNotNull(supplier, function, c -> null);
     }
 
     /**
@@ -423,7 +460,7 @@ public abstract class ObjectUtils {
         T value;
 
         Object raw = readToObject(bytes);
-        value = ifNotNull(raw, ObjectUtils::cast);
+        value = ifIsNotNull(raw, ObjectUtils::cast);
 
         return value;
     }
