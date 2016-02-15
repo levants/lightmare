@@ -175,6 +175,6 @@ public class LambdaUtils {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      */
     public static QueryTuple getOrInit(Serializable method) {
-        return ObjectUtils.ifNotNull(() -> getOrInitOriginal(method), LambdaUtils::cloneTuple);
+        return ObjectUtils.ifNonNull(() -> getOrInitOriginal(method), LambdaUtils::cloneTuple);
     }
 }

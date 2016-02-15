@@ -164,7 +164,7 @@ public class LambdaReplacements {
      * @return {@link org.lightmare.criteria.lambda.LambdaInfo} replacement
      */
     public static <T> LambdaInfo getReplacement(Serializable method) {
-        return ObjectUtils.ifNotNull(() -> getMethod(method), c -> invokeMethod(c, method),
+        return ObjectUtils.ifNonNull(() -> getMethod(method), c -> invokeMethod(c, method),
                 LambdaReplacements::translate);
     }
 }

@@ -219,7 +219,7 @@ public abstract class ObjectUtils {
      * @return <code>T</code> value from one {@link java.util.function.Function}
      *         or from other
      */
-    public static <K, T> T ifNotNull(Supplier<K> supplier, Function<K, T> function, Function<K, T> elseFunction) {
+    public static <K, T> T ifNonNull(Supplier<K> supplier, Function<K, T> function, Function<K, T> elseFunction) {
         return ifValid(supplier, Objects::nonNull, function, elseFunction);
     }
 
@@ -234,8 +234,8 @@ public abstract class ObjectUtils {
      * @return <code>T</code> value from one {@link java.util.function.Function}
      *         or <code>null</code>
      */
-    public static <K, T> T ifNotNull(Supplier<K> supplier, Function<K, T> function) {
-        return ifNotNull(supplier, function, c -> null);
+    public static <K, T> T ifNonNull(Supplier<K> supplier, Function<K, T> function) {
+        return ifNonNull(supplier, function, c -> null);
     }
 
     /**
