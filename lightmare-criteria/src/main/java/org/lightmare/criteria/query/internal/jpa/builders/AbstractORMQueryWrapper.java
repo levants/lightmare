@@ -42,7 +42,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type for generated JPA query
  */
-abstract class AbstractJPAQueryWrapper<T> implements QueryStream<T> {
+abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
 
     private Integer maxResult;
 

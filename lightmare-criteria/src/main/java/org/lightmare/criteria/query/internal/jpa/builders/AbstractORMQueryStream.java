@@ -56,7 +56,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter
  */
-abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
+abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
 
     // Immutable data
     protected final EntityManager em;
@@ -71,7 +71,7 @@ abstract class AbstractJPAQueryStream<T> extends AbstractJPAQueryWrapper<T> {
     // JPA query parameters
     protected final Set<ParameterTuple> parameters = new HashSet<>();
 
-    protected AbstractJPAQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
+    protected AbstractORMQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
         this.em = em;
         this.entityType = entityType;
         this.alias = alias;

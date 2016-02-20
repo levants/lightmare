@@ -35,9 +35,9 @@ import org.lightmare.criteria.query.internal.jpa.links.Clauses;
  * @param <T>
  *            entity type parameter for generated query
  */
-public class JPAQueryStream<T> extends EntityQueryStream<T> {
+public class JpaQueryStream<T> extends EntityQueryStream<T> {
 
-    protected JPAQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
+    protected JpaQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
         super(em, entityType, alias);
     }
 
@@ -47,13 +47,13 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * @param em
      * @param entityType
      * @param alias
-     * @return {@link org.lightmare.criteria.query.JPAQueryStream} with select
+     * @return {@link org.lightmare.criteria.query.     JpaQueryStream} with select
      *         statement
      */
-    protected static <T> JPAQueryStream<T> delete(final EntityManager em, final Class<T> entityType,
+    protected static <T> JpaQueryStream<T> delete(final EntityManager em, final Class<T> entityType,
             final String alias) {
 
-        JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
+        JpaQueryStream<T> stream = new JpaQueryStream<T>(em, entityType, alias);
 
         stream.appendPrefix(Clauses.DELETE);
         appendEntityPart(stream);
@@ -66,10 +66,10 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JPAQueryStream} with select
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with select
      *         statement
      */
-    protected static <T> JPAQueryStream<T> delete(final EntityManager em, Class<T> entityType) {
+    protected static <T> JpaQueryStream<T> delete(final EntityManager em, Class<T> entityType) {
         return delete(em, entityType, DEFAULT_ALIAS);
     }
 
@@ -79,13 +79,13 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * @param em
      * @param entityType
      * @param alias
-     * @return {@link org.lightmare.criteria.query.JPAQueryStream} with select
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with select
      *         statement
      */
-    protected static <T> JPAQueryStream<T> update(final EntityManager em, final Class<T> entityType,
+    protected static <T> JpaQueryStream<T> update(final EntityManager em, final Class<T> entityType,
             final String alias) {
 
-        JPAQueryStream<T> stream = new JPAQueryStream<>(em, entityType, alias);
+        JpaQueryStream<T> stream = new JpaQueryStream<>(em, entityType, alias);
 
         stream.appendPrefix(Clauses.UPDATE);
         appendEntityPart(stream);
@@ -98,10 +98,10 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JPAQueryStream} with select
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with select
      *         statement
      */
-    protected static <T> JPAQueryStream<T> update(final EntityManager em, Class<T> entityType) {
+    protected static <T> JpaQueryStream<T> update(final EntityManager em, Class<T> entityType) {
         return update(em, entityType, DEFAULT_ALIAS);
     }
 
@@ -111,13 +111,13 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * @param em
      * @param entityType
      * @param alias
-     * @return {@link org.lightmare.criteria.query.JPAQueryStream} with select
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with select
      *         statement
      */
-    protected static <T> JPAQueryStream<T> query(final EntityManager em, final Class<T> entityType,
+    protected static <T> JpaQueryStream<T> query(final EntityManager em, final Class<T> entityType,
             final String alias) {
 
-        JPAQueryStream<T> stream = new JPAQueryStream<T>(em, entityType, alias);
+        JpaQueryStream<T> stream = new JpaQueryStream<T>(em, entityType, alias);
         startsSelect(stream);
 
         return stream;
@@ -128,10 +128,10 @@ public class JPAQueryStream<T> extends EntityQueryStream<T> {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JPAQueryStream} with select
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with select
      *         statement
      */
-    protected static <T> JPAQueryStream<T> query(final EntityManager em, Class<T> entityType) {
+    protected static <T> JpaQueryStream<T> query(final EntityManager em, Class<T> entityType) {
         return query(em, entityType, DEFAULT_ALIAS);
     }
 }

@@ -40,14 +40,14 @@ import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Utility class to build JPA query
+ * Utility class to build JPA query clauses
  * 
  * @author Levan Tsinadze
  *
  * @param <T>
  *            entity type parameter
  */
-abstract class AbstractAppenderStream<T> extends AbstractJPAQueryStream<T> {
+abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
 
     // JPA query parts
     protected final StringBuilder prefix = new StringBuilder();

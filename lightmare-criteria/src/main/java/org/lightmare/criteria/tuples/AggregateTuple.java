@@ -28,7 +28,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Tuple for aggregate functions for GROUP and HAVING clauses
+ * Tuple of aggregate functions for GROUP BY and HAVING clauses
  * 
  * @author Levan Tsinadze
  *
