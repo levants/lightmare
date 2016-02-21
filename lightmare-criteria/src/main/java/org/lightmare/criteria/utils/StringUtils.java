@@ -79,7 +79,7 @@ public abstract class StringUtils {
      *
      * @param chars
      * @param consumer
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static <T extends CharSequence> boolean valid(T chars, Consumer<T> consumer) {
         return ObjectUtils.valid(chars, StringUtils::valid, consumer);
@@ -90,7 +90,7 @@ public abstract class StringUtils {
      * and is not empty
      *
      * @param lines
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean validAll(CharSequence... lines) {
         return (CollectionUtils.valid(lines) && Stream.of(lines).allMatch(StringUtils::valid));
@@ -100,7 +100,7 @@ public abstract class StringUtils {
      * Checks if passed {@link CharSequence} is <code>null</code> or is empty
      *
      * @param chars
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean isEmpty(CharSequence chars) {
         return ObjectUtils.notTrue(valid(chars));

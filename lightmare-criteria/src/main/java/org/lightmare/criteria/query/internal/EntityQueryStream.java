@@ -239,6 +239,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
     @Override
     public <S> QueryStream<T> operateSubQuery(Class<S> type, QueryConsumer<S> consumer) {
+
         openBracket();
         initSubQuery(type, consumer);
 
