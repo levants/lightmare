@@ -1,6 +1,10 @@
 package org.lightmare.criteria.query.internal.connectors;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.persistence.FlushModeType;
+import javax.persistence.LockModeType;
 
 /**
  * Database abstract layer
@@ -38,4 +42,27 @@ public interface QueryLayer<T> {
      * @return <code>int</code> updated rows
      */
     int execute();
+
+    /**
+     * Sets max results to query
+     * 
+     * @param maxResults
+     */
+    void setMaxResults(int maxResult);
+
+    int getMaxResults();
+
+    void setFirstResult(int startPosition);
+
+    int getFirstResult();
+
+    void setHint(String hintName, Object value);
+
+    Map<String, Object> getHints();
+
+    void setFlushMode(FlushModeType flushMode);
+
+    void setLockMode(LockModeType lockMode);
+
+    void close();
 }

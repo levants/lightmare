@@ -5,9 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import javax.persistence.FlushModeType;
+import javax.persistence.LockModeType;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
+import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
  * Implementation for JDBC layer
@@ -141,5 +147,50 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
     @Override
     public int execute() {
         return call(statement::getUpdateCount);
+    }
+
+    @Override
+    public void setMaxResults(int maxResult) {
+    }
+
+    @Override
+    public int getMaxResults() {
+        return CollectionUtils.EMPTY;
+    }
+
+    @Override
+    public void setFirstResult(int startPosition) {
+    }
+
+    @Override
+    public int getFirstResult() {
+        return CollectionUtils.EMPTY;
+    }
+
+    @Override
+    public void setHint(String hintName, Object value) {
+    }
+
+    @Override
+    public Map<String, Object> getHints() {
+        return Collections.emptyMap();
+    }
+
+    @Override
+    public void setFlushMode(FlushModeType flushMode) {
+    }
+
+    @Override
+    public void setLockMode(LockModeType lockMode) {
+    }
+
+    @Override
+    public void close() {
+
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }
