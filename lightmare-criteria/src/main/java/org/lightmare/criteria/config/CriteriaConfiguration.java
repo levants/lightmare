@@ -15,6 +15,8 @@ public class CriteriaConfiguration {
 
     private static ResultRetriever resultRetriever;
 
+    public static ColumnResolver defaultJdbcColumnResolver = c -> c.getName();
+
     public static void configure(ColumnResolver columnNameResolver, ResultRetriever resultSetRetriever) {
         columnResolver = columnNameResolver;
         resultRetriever = resultSetRetriever;

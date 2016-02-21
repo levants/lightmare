@@ -1,9 +1,9 @@
 package org.lightmare.criteria.query.internal.connectors;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +31,7 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
     private Class<T> type;
 
-    private Statement statement;
+    private PreparedStatement statement;
 
     /**
      * Functional interface for JDBC method calls
@@ -42,7 +42,7 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
     @FunctionalInterface
     private static interface JdbcFunction {
 
-        Statement apply(String sql) throws SQLException;
+        PreparedStatement apply(String sql) throws SQLException;
 
     }
 
@@ -53,14 +53,21 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
     }
 
+    @FunctionalInterface
+    private static interface JdbcConsumer<T> {
+
+        void accept(T t) throws SQLException;
+
+    }
+
     private JdbcQueryLayer(final Connection connection, final ResultRetriever retriever) {
         this.connection = connection;
         this.retriever = retriever;
     }
 
-    private Statement call(String sql, JdbcFunction function) {
+    private PreparedStatement call(String sql, JdbcFunction function) {
 
-        Statement result;
+        PreparedStatement result;
 
         try {
             result = function.apply(sql);
@@ -82,6 +89,15 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
         }
 
         return result;
+    }
+
+    private <P> void consume(P value, JdbcConsumer<P> consumer) {
+
+        try {
+            consumer.accept(value);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
@@ -114,6 +130,7 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
     @Override
     public List<T> toList() {
         return call(() -> {
+
             List<T> results = new ArrayList<>();
 
             ResultSet rs = statement.getResultSet();
@@ -151,11 +168,12 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
     @Override
     public void setMaxResults(int maxResult) {
+        consume(maxResult, statement::setMaxRows);
     }
 
     @Override
     public int getMaxResults() {
-        return CollectionUtils.EMPTY;
+        return call(statement::getMaxRows);
     }
 
     @Override

@@ -23,10 +23,9 @@ public interface Configuration {
          * Resolves column name from {@link Field} instance
          * 
          * @param field
-         * @param parameters
          * @return {@link String} resolved column name
          */
-        String resolve(Field field, Object... parameters);
+        String resolve(Field field);
     }
 
     /**
@@ -43,9 +42,8 @@ public interface Configuration {
          * 
          * @param result
          * @param type
-         * @param parameters
          * @return T instance from {@link java.sql.ResultSet}
          */
-        <T> T readRow(ResultSet result, Class<T> type, Object... parameters);
+        <T> T readRow(ResultSet result, Class<T> type);
     }
 }
