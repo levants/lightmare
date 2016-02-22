@@ -57,7 +57,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     private boolean preparedState = Boolean.TRUE;
 
     protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, String alias, Class<S> entityType) {
-        super(parent.getEntityManager(), entityType, alias);
+        super(parent.getLayerProvider(), entityType, alias);
         parentAlias = parent.getAlias();
         this.setCounterTuple(parent.getCounterTuple());
         this.parent = parent;

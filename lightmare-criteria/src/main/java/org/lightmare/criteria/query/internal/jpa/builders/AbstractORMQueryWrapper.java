@@ -27,15 +27,15 @@ import java.util.Map;
 
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
-import javax.persistence.Query;
 
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.connectors.QueryLayer;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Abstract implementation of
- * {@link org.lightmare.criteria.query.internal.jpa.JPAQueryWrapper} interface
+ * {@link org.lightmare.criteria.query.internal.jpa.ORMQueryWrapper} interface
  * 
  * @author Levan Tsinadze
  *
@@ -70,7 +70,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
      * 
      * @param query
      */
-    private void putMaxResult(Query query) {
+    private void putMaxResult(QueryLayer<?> query) {
         ObjectUtils.nonNull(maxResult, query::setMaxResults);
     }
 
@@ -90,7 +90,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
      * 
      * @param query
      */
-    private void putFirstResult(Query query) {
+    private void putFirstResult(QueryLayer<?> query) {
         ObjectUtils.nonNull(startPosition, query::setFirstResult);
     }
 
@@ -110,7 +110,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
      * 
      * @param query
      */
-    private void putHints(Query query) {
+    private void putHints(QueryLayer<?> query) {
         CollectionUtils.valid(hints, c -> c.forEach(query::setHint));
     }
 
@@ -125,7 +125,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
      * 
      * @param query
      */
-    private void putFlushMode(Query query) {
+    private void putFlushMode(QueryLayer<?> query) {
         ObjectUtils.nonNull(flushMode, query::setFlushMode);
     }
 
@@ -140,7 +140,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
      * 
      * @param query
      */
-    private void setLockMode(Query query) {
+    private void setLockMode(QueryLayer<?> query) {
         ObjectUtils.nonNull(lockMode, query::setLockMode);
     }
 
@@ -150,7 +150,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
      * 
      * @param query
      */
-    protected void setJPAConfiguration(Query query) {
+    protected void setJPAConfiguration(QueryLayer<?> query) {
 
         putFirstResult(query);
         putMaxResult(query);
@@ -161,6 +161,6 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
 
     @Override
     public void close() {
-        getEntityManager().close();
+        getLayerProvider().close();
     }
 }

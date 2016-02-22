@@ -40,7 +40,7 @@ public class SelectStream<T, E> extends JpaQueryStream<E> {
     private final Class<?> realEntityType;
 
     protected SelectStream(AbstractQueryStream<T> stream, Class<E> type) {
-        super(stream.getEntityManager(), type, stream.getAlias());
+        super(stream.getLayerProvider(), type, stream.getAlias());
         this.realEntityType = stream.entityType;
         this.columns.append(stream.columns);
         this.from.append(stream.from);

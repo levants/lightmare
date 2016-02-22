@@ -31,7 +31,7 @@ import org.lightmare.criteria.functions.SelectConsumer;
 import org.lightmare.criteria.query.QueryStream;
 
 /**
- * Interface to generate SELECT for instant fields
+ * Interface to generate SELECT clause for instant fields
  * 
  * @author Levan Tsinadze
  *

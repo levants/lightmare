@@ -24,9 +24,8 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.util.Collection;
 
-import javax.persistence.EntityManager;
-
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -40,8 +39,8 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
 
-    protected AbstractJoinStream(EntityManager em, Class<T> entityType, String alias) {
-        super(em, entityType, alias);
+    protected AbstractJoinStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
+        super(provider, entityType, alias);
     }
 
     /**

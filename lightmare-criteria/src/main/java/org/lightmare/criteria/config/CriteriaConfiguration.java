@@ -1,5 +1,8 @@
 package org.lightmare.criteria.config;
 
+import java.lang.reflect.Field;
+import java.sql.ResultSet;
+
 import org.lightmare.criteria.config.Configuration.ColumnResolver;
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
 
@@ -28,5 +31,30 @@ public class CriteriaConfiguration {
 
     public static ResultRetriever getResultRetriever() {
         return resultRetriever;
+    }
+
+    public static class DefaultResolver implements ColumnResolver {
+
+        @Override
+        public String resolve(Field field) {
+            return field.getName();
+        }
+    }
+
+    public static class DefaultRetriever implements ResultRetriever {
+
+        @Override
+        public <T> T readRow(ResultSet result, Class<T> type) {
+
+            T instance;
+
+            try {
+                instance = type.newInstance();
+            } catch (InstantiationException | IllegalAccessException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            return instance;
+        }
     }
 }

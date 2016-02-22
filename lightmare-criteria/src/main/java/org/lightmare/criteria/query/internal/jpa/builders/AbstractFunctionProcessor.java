@@ -25,17 +25,16 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-import javax.persistence.EntityManager;
-
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.internal.jpa.JPAFunction;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.internal.jpa.ORMFunction;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation of
- * {@link org.lightmare.criteria.query.internal.jpa.JPAFunction} for functional
+ * {@link org.lightmare.criteria.query.internal.jpa.ORMFunction} for functional
  * expression processing
  * 
  * @author Levan Tsinadze
@@ -43,14 +42,14 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter
  */
-public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T> implements JPAFunction<T> {
+public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T> implements ORMFunction<T> {
 
     protected QueryTuple functionTuple;
 
     private static final char OPEN_BRACKET = '(';
 
-    protected AbstractFunctionProcessor(final EntityManager em, final Class<T> entityType, final String alias) {
-        super(em, entityType, alias);
+    protected AbstractFunctionProcessor(final LayerProvider provider, final Class<T> entityType, final String alias) {
+        super(provider, entityType, alias);
     }
 
     /**
@@ -153,31 +152,31 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
     }
 
     @Override
-    public JPAFunction<T> operateDate(String operator) {
+    public ORMFunction<T> operateDate(String operator) {
         appendBody(operator);
         return this;
     }
 
     @Override
-    public <S, F> JPAFunction<T> operateNumeric(EntityField<S, F> x, String operator) {
+    public <S, F> ORMFunction<T> operateNumeric(EntityField<S, F> x, String operator) {
         appendNumericFunction(x, operator);
         return this;
     }
 
     @Override
-    public JPAFunction<T> operateNumeric(Object x, Object y, String operator) {
+    public ORMFunction<T> operateNumeric(Object x, Object y, String operator) {
         appendNumericFunction(x, y, operator);
         return this;
     }
 
     @Override
-    public JPAFunction<T> operateText(String operator, Object x, Object y, Object z) {
+    public ORMFunction<T> operateText(String operator, Object x, Object y, Object z) {
         appendTextFunction(x, y, z, operator);
         return this;
     }
 
     @Override
-    public JPAFunction<T> generateText(String function, String prefix, Object x, String pattern, Object y) {
+    public ORMFunction<T> generateText(String function, String prefix, Object x, String pattern, Object y) {
 
         startFunction(function);
         Consumer<Object> generateMethod = this::generate;

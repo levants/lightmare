@@ -25,10 +25,8 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 import java.util.Queue;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.internal.connectors.QueryLayer;
 import org.lightmare.criteria.tuples.AggregateTuple;
 
 /**
@@ -41,8 +39,8 @@ import org.lightmare.criteria.tuples.AggregateTuple;
  */
 public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
 
-    protected AbstractQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
-        super(em, entityType, alias);
+    protected AbstractQueryStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
+        super(provider, entityType, alias);
     }
 
     /**
@@ -69,14 +67,15 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
      * Creates {@link javax.persistence.TypedQuery} from generated SQL for
      * SELECT statements
      * 
-     * @return {@link javax.persistence.TypedQuery} for entity type
+     * @return {@link org.lightmare.criteria.query.internal.connectors.QueryLayer}
+     *         for entity type
      */
-    protected TypedQuery<T> initTypedQuery() {
+    protected QueryLayer<T> initTypedQuery() {
 
-        TypedQuery<T> query;
+        QueryLayer<T> query;
 
         String sqlText = sql();
-        query = em.createQuery(sqlText, entityType);
+        query = provider.query(sqlText, entityType);
         setParameters(query);
 
         return query;
@@ -85,15 +84,15 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
     /**
      * Generates {@link javax.persistence.TypedQuery} for COUNT JPA-QL statement
      * 
-     * @return {@link javax.persistence.TypedQuery} with {@link Long} type for
-     *         element count
+     * @return {@link org.lightmare.criteria.query.internal.connectors.e.TypedQuery}
+     *         with {@link Long} type for element count
      */
-    protected TypedQuery<Long> initCountQuery() {
+    protected QueryLayer<Long> initCountQuery() {
 
-        TypedQuery<Long> query;
+        QueryLayer<Long> query;
 
         String sqlText = countSql();
-        query = em.createQuery(sqlText, Long.class);
+        query = provider.query(sqlText, Long.class);
         setParameters(query);
 
         return query;
@@ -103,14 +102,15 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
      * Creates {@link javax.persistence.Query} from generated SQL for UPDATE or
      * DELETE statements
      * 
-     * @return for bulk modification
+     * @return {@link org.lightmare.criteria.query.internal.connectors.QueryLayer}
+     *         for bulk modification
      */
-    protected Query initBulkQuery() {
+    protected QueryLayer<?> initBulkQuery() {
 
-        Query query;
+        QueryLayer<?> query;
 
         String sqlText = sql();
-        query = em.createQuery(sqlText);
+        query = provider.query(sqlText);
         setParameters(query);
 
         return query;

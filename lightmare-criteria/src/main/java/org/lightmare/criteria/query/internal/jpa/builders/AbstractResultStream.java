@@ -25,10 +25,8 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.internal.connectors.QueryLayer;
 import org.lightmare.criteria.tuples.ParameterTuple;
 
 /**
@@ -41,8 +39,8 @@ import org.lightmare.criteria.tuples.ParameterTuple;
  */
 abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
-    protected AbstractResultStream(EntityManager em, Class<T> entityType, String alias) {
-        super(em, entityType, alias);
+    protected AbstractResultStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
+        super(provider, entityType, alias);
     }
 
     @Override
@@ -50,8 +48,8 @@ abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
         Long result;
 
-        TypedQuery<Long> query = initCountQuery();
-        result = query.getSingleResult();
+        QueryLayer<Long> query = initCountQuery();
+        result = query.get();
 
         return result;
     }
@@ -61,8 +59,8 @@ abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
         List<T> results;
 
-        TypedQuery<T> query = initTypedQuery();
-        results = query.getResultList();
+        QueryLayer<T> query = initTypedQuery();
+        results = query.toList();
 
         return results;
     }
@@ -72,8 +70,8 @@ abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
         T result;
 
-        TypedQuery<T> query = initTypedQuery();
-        result = query.getSingleResult();
+        QueryLayer<T> query = initTypedQuery();
+        result = query.get();
 
         return result;
     }
@@ -83,8 +81,8 @@ abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
         int result;
 
-        Query query = initBulkQuery();
-        result = query.executeUpdate();
+        QueryLayer<?> query = initBulkQuery();
+        result = query.execute();
 
         return result;
     }

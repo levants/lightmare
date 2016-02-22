@@ -27,10 +27,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.utils.StringUtils;
@@ -50,8 +49,8 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
     // Query parts
     private static final String NEW_OPERATOR = "new ";
 
-    protected AbstractSelectStatements(EntityManager em, Class<T> entityType, String alias) {
-        super(em, entityType, alias);
+    protected AbstractSelectStatements(final LayerProvider provider, Class<T> entityType, String alias) {
+        super(provider, entityType, alias);
     }
 
     /**

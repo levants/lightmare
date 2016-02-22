@@ -5,14 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
+import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
+import org.lightmare.criteria.config.CriteriaConfiguration.DefaultRetriever;
 import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
@@ -24,10 +28,6 @@ import org.lightmare.criteria.utils.CollectionUtils;
  *            result type parameter
  */
 public class JdbcQueryLayer<T> implements QueryLayer<T> {
-
-    private final Connection connection;
-
-    private final ResultRetriever retriever;
 
     private Class<T> type;
 
@@ -60,9 +60,9 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
     }
 
-    private JdbcQueryLayer(final Connection connection, final ResultRetriever retriever) {
-        this.connection = connection;
-        this.retriever = retriever;
+    public JdbcQueryLayer(final Connection connection, String sql, Class<T> type) {
+        this.type = type;
+        statement = call(sql, connection::prepareStatement);
     }
 
     private PreparedStatement call(String sql, JdbcFunction function) {
@@ -101,33 +101,6 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
     }
 
     @Override
-    public QueryLayer<T> select(Class<T> type, String sql) {
-
-        this.type = type;
-        statement = call(sql, connection::prepareStatement);
-
-        return this;
-    }
-
-    @Override
-    public QueryLayer<T> update(Class<T> type, String sql) {
-
-        this.type = type;
-        statement = call(sql, connection::prepareStatement);
-
-        return this;
-    }
-
-    @Override
-    public QueryLayer<T> delete(Class<T> type, String sql) {
-
-        this.type = type;
-        statement = call(sql, connection::prepareStatement);
-
-        return this;
-    }
-
-    @Override
     public List<T> toList() {
         return call(() -> {
 
@@ -135,6 +108,7 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
             ResultSet rs = statement.getResultSet();
             T result;
+            ResultRetriever retriever = new DefaultRetriever();
             while (rs.next()) {
                 result = retriever.readRow(rs, type);
                 results.add(result);
@@ -151,6 +125,7 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
             T result;
 
             ResultSet rs = statement.getResultSet();
+            ResultRetriever retriever = new DefaultRetriever();
             if (rs.next()) {
                 result = retriever.readRow(rs, type);
             } else {
@@ -164,6 +139,18 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
     @Override
     public int execute() {
         return call(statement::getUpdateCount);
+    }
+
+    @Override
+    public void setParameter(String name, Object value) {
+    }
+
+    @Override
+    public void setParameter(String name, Calendar value, TemporalType temporalType) {
+    }
+
+    @Override
+    public void setParameter(String name, Date value, TemporalType temporalType) {
     }
 
     @Override
@@ -200,15 +187,5 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
     @Override
     public void setLockMode(LockModeType lockMode) {
-    }
-
-    @Override
-    public void close() {
-
-        try {
-            connection.close();
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 }

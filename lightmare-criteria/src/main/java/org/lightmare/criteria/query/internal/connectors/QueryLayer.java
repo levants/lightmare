@@ -1,10 +1,13 @@
 package org.lightmare.criteria.query.internal.connectors;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
+import javax.persistence.TemporalType;
 
 /**
  * Database abstract layer
@@ -15,12 +18,6 @@ import javax.persistence.LockModeType;
  *            entity type parameter
  */
 public interface QueryLayer<T> {
-
-    QueryLayer<T> select(Class<T> type, String sql);
-
-    QueryLayer<T> update(Class<T> type, String sql);
-
-    QueryLayer<T> delete(Class<T> type, String sql);
 
     /**
      * Retrieves result from DB throw layer
@@ -44,6 +41,32 @@ public interface QueryLayer<T> {
     int execute();
 
     /**
+     * Sets query parameters by names
+     * 
+     * @param name
+     * @param value
+     */
+    void setParameter(String name, Object value);
+
+    /**
+     * Sets query parameters by names and temporal types
+     * 
+     * @param name
+     * @param value
+     * @param temporalType
+     */
+    void setParameter(String name, Calendar value, TemporalType temporalType);
+
+    /**
+     * Sets query parameters by names and temporal types
+     * 
+     * @param name
+     * @param value
+     * @param temporalType
+     */
+    void setParameter(String name, Date value, TemporalType temporalType);
+
+    /**
      * Sets max results to query
      * 
      * @param maxResults
@@ -63,6 +86,4 @@ public interface QueryLayer<T> {
     void setFlushMode(FlushModeType flushMode);
 
     void setLockMode(LockModeType lockMode);
-
-    void close();
 }

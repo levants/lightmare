@@ -28,7 +28,7 @@ import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 
 /**
- * Provides method to process sub queries
+ * Provides methods to process sub queries
  * 
  * @author Levan Tsinadze
  *

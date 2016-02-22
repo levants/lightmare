@@ -1,12 +1,18 @@
 package org.lightmare.criteria.query.internal.connectors;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
+
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Implementation for JPA layer
@@ -16,47 +22,58 @@ import javax.persistence.TypedQuery;
  * @param <T>
  *            result type parameter
  */
-public class JpaConnectionLayer<T> implements QueryLayer<T> {
+public class JpaQueryLayer<T> implements QueryLayer<T> {
 
-    private final EntityManager em;
+    private final Query query;
 
-    private TypedQuery<T> query;
-
-    private JpaConnectionLayer(final EntityManager em) {
-        this.em = em;
+    public JpaQueryLayer(final EntityManager em, String sql, Class<T> type) {
+        query = em.createQuery(sql, type);
     }
 
-    @Override
-    public QueryLayer<T> select(Class<T> type, String sql) {
-        query = em.createQuery(sql, type);
-        return this;
-    }
-
-    @Override
-    public QueryLayer<T> update(Class<T> type, String sql) {
-        query = em.createQuery(sql, type);
-        return this;
-    }
-
-    @Override
-    public QueryLayer<T> delete(Class<T> type, String sql) {
-        query = em.createQuery(sql, type);
-        return this;
+    public JpaQueryLayer(final EntityManager em, String sql) {
+        query = em.createQuery(sql);
     }
 
     @Override
     public List<T> toList() {
-        return query.getResultList();
+
+        List<T> resuts;
+
+        TypedQuery<T> typed = ObjectUtils.cast(query);
+        resuts = typed.getResultList();
+
+        return resuts;
     }
 
     @Override
     public T get() {
-        return query.getSingleResult();
+
+        T result;
+
+        TypedQuery<T> typed = ObjectUtils.cast(query);
+        result = typed.getSingleResult();
+
+        return result;
     }
 
     @Override
     public int execute() {
         return query.executeUpdate();
+    }
+
+    @Override
+    public void setParameter(String name, Object value) {
+        query.setParameter(name, value);
+    }
+
+    @Override
+    public void setParameter(String name, Calendar value, TemporalType temporalType) {
+        query.setParameter(name, value, temporalType);
+    }
+
+    @Override
+    public void setParameter(String name, Date value, TemporalType temporalType) {
+        query.setParameter(name, value, temporalType);
     }
 
     @Override
@@ -97,10 +114,5 @@ public class JpaConnectionLayer<T> implements QueryLayer<T> {
     @Override
     public void setLockMode(LockModeType lockMode) {
         query.setLockMode(lockMode);
-    }
-
-    @Override
-    public void close() {
-        em.close();
     }
 }

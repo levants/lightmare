@@ -30,6 +30,6 @@ package org.lightmare.criteria.query.internal.jpa;
  * @param <T>
  *            entity type parameter
  */
-public interface JPAFunction<T> extends NumericFunction<T>, TextFunction<T>, DateFunction<T> {
+public interface ORMFunction<T> extends NumericFunction<T>, TextFunction<T>, DateFunction<T> {
 
 }

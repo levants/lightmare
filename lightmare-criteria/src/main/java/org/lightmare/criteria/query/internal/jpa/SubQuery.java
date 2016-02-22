@@ -27,7 +27,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Provider class for sub query types
+ * Provider class for sub query types (ALL, ANY, SOME)
  * 
  * @author Levan Tsinadze
  *

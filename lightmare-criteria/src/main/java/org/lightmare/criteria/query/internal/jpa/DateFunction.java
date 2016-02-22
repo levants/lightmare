@@ -38,38 +38,38 @@ interface DateFunction<T> {
      * Generates appropriate date and time function expression
      * 
      * @param operator
-     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     * @return {@link org.lightmare.criteria.query.internal.jpa.ORMFunction}
      *         current instance
      */
-    JPAFunction<T> operateDate(String operator);
+    ORMFunction<T> operateDate(String operator);
 
     /**
      * Create expression to return current date function.
      *
-     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     * @return {@link org.lightmare.criteria.query.internal.jpa.ORMFunction}
      *         current instance
      */
-    default JPAFunction<T> currentDate() {
+    default ORMFunction<T> currentDate() {
         return operateDate(Dates.CURRENT_DATE);
     }
 
     /**
      * Create expression to return current TIMESTAMP function.
      *
-     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     * @return {@link org.lightmare.criteria.query.internal.jpa.ORMFunction}
      *         current instance
      */
-    default JPAFunction<T> currentTimestamp() {
+    default ORMFunction<T> currentTimestamp() {
         return operateDate(Dates.CURRENT_TIMESTAMP);
     }
 
     /**
      * Create expression to return current time function.
      *
-     * @return {@link org.lightmare.criteria.query.internal.jpa.JPAFunction}
+     * @return {@link org.lightmare.criteria.query.internal.jpa.ORMFunction}
      *         current instance
      */
-    default JPAFunction<T> currentTime() {
+    default ORMFunction<T> currentTime() {
         return operateDate(Dates.CURRENT_TIME);
     }
 }

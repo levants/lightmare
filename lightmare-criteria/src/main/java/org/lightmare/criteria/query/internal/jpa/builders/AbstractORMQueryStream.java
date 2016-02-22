@@ -30,13 +30,13 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.lambda.LambdaUtils;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.internal.connectors.QueryLayer;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Parts;
@@ -59,7 +59,7 @@ import org.lightmare.criteria.utils.StringUtils;
 abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
 
     // Immutable data
-    protected final EntityManager em;
+    protected final LayerProvider provider;
 
     protected final Class<T> entityType;
 
@@ -71,8 +71,8 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
     // JPA query parameters
     protected final Set<ParameterTuple> parameters = new HashSet<>();
 
-    protected AbstractORMQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
-        this.em = em;
+    protected AbstractORMQueryStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
+        this.provider = provider;
         this.entityType = entityType;
         this.alias = alias;
     }
@@ -287,7 +287,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @param parameter
      * @param query
      */
-    private void setDateParameter(ParameterTuple parameter, Query query) {
+    private void setDateParameter(ParameterTuple parameter, QueryLayer<?> query) {
 
         String name = parameter.getName();
         Object value = parameter.getValue();
@@ -305,7 +305,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @param parameter
      * @param query
      */
-    private void setParameter(ParameterTuple parameter, Query query) {
+    private void setParameter(ParameterTuple parameter, QueryLayer<?> query) {
 
         String name = parameter.getName();
         Object value = parameter.getValue();
@@ -323,7 +323,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * 
      * @param query
      */
-    protected void setParameters(Query query) {
+    protected void setParameters(QueryLayer<?> query) {
         setJPAConfiguration(query);
         parameters.forEach(parameter -> setParameter(parameter, query));
     }
@@ -331,8 +331,8 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
     // ============================= JPA Elements ===========================//
 
     @Override
-    public EntityManager getEntityManager() {
-        return em;
+    public LayerProvider getLayerProvider() {
+        return provider;
     }
 
     @Override

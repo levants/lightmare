@@ -25,6 +25,8 @@ package org.lightmare.criteria.query;
 import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.query.internal.EntityQueryStream;
+import org.lightmare.criteria.query.internal.connectors.JpaProvider;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 
 /**
@@ -37,8 +39,8 @@ import org.lightmare.criteria.query.internal.jpa.links.Clauses;
  */
 public class JpaQueryStream<T> extends EntityQueryStream<T> {
 
-    protected JpaQueryStream(final EntityManager em, final Class<T> entityType, final String alias) {
-        super(em, entityType, alias);
+    protected JpaQueryStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
+        super(provider, entityType, alias);
     }
 
     /**
@@ -47,14 +49,16 @@ public class JpaQueryStream<T> extends EntityQueryStream<T> {
      * @param em
      * @param entityType
      * @param alias
-     * @return {@link org.lightmare.criteria.query.     JpaQueryStream} with select
+     * @return {@link org.lightmare.criteria.query. JpaQueryStream} with select
      *         statement
      */
     protected static <T> JpaQueryStream<T> delete(final EntityManager em, final Class<T> entityType,
             final String alias) {
 
-        JpaQueryStream<T> stream = new JpaQueryStream<T>(em, entityType, alias);
+        JpaQueryStream<T> stream;
 
+        final LayerProvider provider = new JpaProvider(em);
+        stream = new JpaQueryStream<T>(provider, entityType, alias);
         stream.appendPrefix(Clauses.DELETE);
         appendEntityPart(stream);
 
@@ -85,8 +89,10 @@ public class JpaQueryStream<T> extends EntityQueryStream<T> {
     protected static <T> JpaQueryStream<T> update(final EntityManager em, final Class<T> entityType,
             final String alias) {
 
-        JpaQueryStream<T> stream = new JpaQueryStream<>(em, entityType, alias);
+        JpaQueryStream<T> stream;
 
+        final LayerProvider provider = new JpaProvider(em);
+        stream = new JpaQueryStream<>(provider, entityType, alias);
         stream.appendPrefix(Clauses.UPDATE);
         appendEntityPart(stream);
 
@@ -117,7 +123,10 @@ public class JpaQueryStream<T> extends EntityQueryStream<T> {
     protected static <T> JpaQueryStream<T> query(final EntityManager em, final Class<T> entityType,
             final String alias) {
 
-        JpaQueryStream<T> stream = new JpaQueryStream<T>(em, entityType, alias);
+        JpaQueryStream<T> stream;
+
+        final LayerProvider provider = new JpaProvider(em);
+        stream = new JpaQueryStream<T>(provider, entityType, alias);
         startsSelect(stream);
 
         return stream;

@@ -24,12 +24,12 @@ package org.lightmare.criteria.query.internal.jpa;
 
 import java.util.Map;
 
-import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 
 /**
  * Interface for JPA query parameters
@@ -38,7 +38,7 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type for appropriated query
  */
-public interface JPAQueryWrapper<T> {
+public interface ORMQueryWrapper<T> {
 
     // Entity default alias
     String DEFAULT_ALIAS = "c";
@@ -185,7 +185,7 @@ public interface JPAQueryWrapper<T> {
      * 
      * @return {@link javax.persistence.EntityManager} instance
      */
-    EntityManager getEntityManager();
+    LayerProvider getLayerProvider();
 
     /**
      * Gets wrapped entity {@link Class} instance

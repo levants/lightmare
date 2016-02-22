@@ -25,10 +25,9 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 import java.io.Serializable;
 import java.util.Collection;
 
-import javax.persistence.EntityManager;
-
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
@@ -74,8 +73,8 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
 
     protected final StringBuilder sql = new StringBuilder();
 
-    protected AbstractAppenderStream(final EntityManager em, final Class<T> entityType, final String alias) {
-        super(em, entityType, alias);
+    protected AbstractAppenderStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
+        super(provider, entityType, alias);
     }
 
     /**

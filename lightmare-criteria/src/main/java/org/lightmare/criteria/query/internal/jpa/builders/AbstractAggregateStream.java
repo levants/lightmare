@@ -24,11 +24,10 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
 
-import javax.persistence.EntityManager;
-
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.tuples.AggregateTuple;
@@ -47,8 +46,8 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T> {
 
-    protected AbstractAggregateStream(final EntityManager em, final Class<T> entityType, final String alias) {
-        super(em, entityType, alias);
+    protected AbstractAggregateStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
+        super(provider, entityType, alias);
     }
 
     /**

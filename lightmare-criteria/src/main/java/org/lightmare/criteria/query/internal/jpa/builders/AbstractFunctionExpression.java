@@ -22,11 +22,10 @@
  */
 package org.lightmare.criteria.query.internal.jpa.builders;
 
-import javax.persistence.EntityManager;
-
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
@@ -39,8 +38,8 @@ import org.lightmare.criteria.tuples.QueryTuple;
  */
 abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T> {
 
-    protected AbstractFunctionExpression(final EntityManager em, final Class<T> entityType, final String alias) {
-        super(em, entityType, alias);
+    protected AbstractFunctionExpression(final LayerProvider provider, final Class<T> entityType, final String alias) {
+        super(provider, entityType, alias);
     }
 
     /**

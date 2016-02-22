@@ -25,7 +25,7 @@ package org.lightmare.criteria.functions;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-import org.lightmare.criteria.query.internal.jpa.JPAFunction;
+import org.lightmare.criteria.query.internal.jpa.ORMFunction;
 
 /**
  * Consumer to process JPA query functional expressions
@@ -36,8 +36,8 @@ import org.lightmare.criteria.query.internal.jpa.JPAFunction;
  *            entity type parameter
  */
 @FunctionalInterface
-public interface FunctionConsumer<T> extends Consumer<JPAFunction<T>>, Serializable {
+public interface FunctionConsumer<T> extends Consumer<ORMFunction<T>>, Serializable {
 
     @Override
-    void accept(JPAFunction<T> function);
+    void accept(ORMFunction<T> function);
 }
