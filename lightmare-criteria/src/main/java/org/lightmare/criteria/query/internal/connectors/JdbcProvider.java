@@ -10,7 +10,9 @@ import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * JDBC query layer provider
+ * Implementation for
+ * {@link org.lightmare.criteria.query.internal.connectors.LayerProvider} JDBC
+ * queries
  * 
  * @author Levan Tsinadze
  *

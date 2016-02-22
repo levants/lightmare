@@ -43,21 +43,18 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
     private static interface JdbcFunction {
 
         PreparedStatement apply(String sql) throws SQLException;
-
     }
 
     @FunctionalInterface
     private static interface JdbcSupplier<R> {
 
         R supply() throws SQLException;
-
     }
 
     @FunctionalInterface
     private static interface JdbcConsumer<T> {
 
         void accept(T t) throws SQLException;
-
     }
 
     public JdbcQueryLayer(final Connection connection, String sql, Class<T> type) {

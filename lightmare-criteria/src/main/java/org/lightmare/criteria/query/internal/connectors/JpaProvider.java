@@ -6,6 +6,14 @@ import javax.persistence.EntityManager;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
+/**
+ * Implementation for
+ * {@link org.lightmare.criteria.query.internal.connectors.LayerProvider} JPA
+ * queries
+ * 
+ * @author Levan Tsinadze
+ *
+ */
 public class JpaProvider implements LayerProvider {
 
     private final EntityManager em;
