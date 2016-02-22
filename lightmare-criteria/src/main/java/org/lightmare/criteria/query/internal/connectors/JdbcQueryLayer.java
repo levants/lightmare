@@ -100,6 +100,12 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
         }
     }
 
+    /**
+     * Gets result from result set
+     * 
+     * @param retriever
+     * @return T result
+     */
     public T get(ResultRetriever retriever) {
         return call(() -> {
 
@@ -116,6 +122,12 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
         });
     }
 
+    /**
+     * Gets {@link java.util.List} of result
+     * 
+     * @param retriever
+     * @return {@link java.util.List} of result
+     */
     public List<T> toList(ResultRetriever retriever) {
         return call(() -> {
 

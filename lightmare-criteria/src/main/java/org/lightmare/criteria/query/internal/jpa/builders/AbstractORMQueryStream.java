@@ -29,12 +29,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.Entity;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.lambda.LambdaUtils;
-import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.connectors.QueryLayer;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
@@ -79,21 +77,18 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
 
     /**
      * Generates SELECT statement prefix
-     * 
-     * @param stream
      */
-    protected static <T> void appendSelect(QueryStream<T> stream) {
-        stream.appendPrefix(Clauses.SELECT).appendPrefix(stream.getAlias());
+    protected void appendSelect() {
+        String selectType = provider.getSelectType(getAlias());
+        appendPrefix(Clauses.SELECT).appendPrefix(selectType);
     }
 
     /**
      * Creates SELECT statement prefix
-     * 
-     * @param stream
      */
-    protected static <T> void startsSelect(QueryStream<T> stream) {
-        appendSelect(stream);
-        appendEntityPart(stream);
+    protected void startsSelect() {
+        appendSelect();
+        appendEntityPart();
     }
 
     /**
@@ -103,25 +98,24 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @param type
      * @return {@link String} entity name
      */
-    public static String getEntityName(Class<?> type) {
-        return ObjectUtils.ifNull(() -> type.getAnnotation(Entity.class), c -> type.getName(),
-                c -> StringUtils.thisOrDefault(c.name(), type::getName));
+    public String getEntityName(Class<?> type) {
+        return provider.getTableName(type);
     }
 
     /**
      * Appends entity and alias part to stream
      * 
-     * @param stream
      */
-    protected static <T> void appendEntityPart(QueryStream<T> stream) {
+    protected void appendEntityPart() {
 
-        String entityName = getEntityName(stream.getEntityType());
-        String alias = stream.getAlias();
-        stream.appendFrom(Parts.FROM);
-        stream.appendFrom(entityName);
-        stream.appendFrom(Parts.AS);
-        stream.appendFrom(alias);
-        stream.appendFrom(StringUtils.LINE);
+        Class<?> type = getEntityType();
+        String entityName = getEntityName(type);
+        String alias = getAlias();
+        appendFrom(Parts.FROM);
+        appendFrom(entityName);
+        appendFrom(Parts.AS);
+        appendFrom(alias);
+        appendFrom(StringUtils.LINE);
     }
 
     /**

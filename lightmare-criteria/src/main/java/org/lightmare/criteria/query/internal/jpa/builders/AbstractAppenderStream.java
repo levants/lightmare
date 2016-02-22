@@ -119,7 +119,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param alias
      * @param buff
      */
-    protected static void appendFromClause(Class<?> type, String alias, StringBuilder buff) {
+    protected void appendFromClause(Class<?> type, String alias, StringBuilder buff) {
 
         StringUtils.clear(buff);
         String entityName = getEntityName(type);
@@ -701,7 +701,8 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
 
         StringUtils.clear(count);
         count.append(Clauses.SELECT);
-        count.append(Aggregates.COUNT.expression(alias));
+        String countType = provider.getCountType(alias);
+        count.append(Aggregates.COUNT.expression(countType));
         countBody();
         count.append(from);
     }

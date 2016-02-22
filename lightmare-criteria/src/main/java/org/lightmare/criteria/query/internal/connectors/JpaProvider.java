@@ -1,6 +1,10 @@
 package org.lightmare.criteria.query.internal.connectors;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+
+import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 public class JpaProvider implements LayerProvider {
 
@@ -18,6 +22,22 @@ public class JpaProvider implements LayerProvider {
     @Override
     public QueryLayer<?> query(String sql) {
         return new JpaQueryLayer<>(em, sql);
+    }
+
+    @Override
+    public String getTableName(Class<?> type) {
+        return ObjectUtils.ifNull(() -> type.getAnnotation(Entity.class), c -> type.getName(),
+                c -> StringUtils.thisOrDefault(c.name(), type::getName));
+    }
+
+    @Override
+    public String getSelectType(String alias) {
+        return alias;
+    }
+
+    @Override
+    public String getCountType(String alias) {
+        return alias;
     }
 
     @Override

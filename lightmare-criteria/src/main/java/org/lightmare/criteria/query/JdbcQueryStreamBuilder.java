@@ -38,7 +38,7 @@ public class JdbcQueryStreamBuilder<T> extends JdbcEntityQueryStream<T> {
         final LayerProvider provider = new JdbcProvider(connection);
         stream = new JdbcQueryStreamBuilder<>(provider, entityType, alias);
         stream.appendPrefix(Clauses.DELETE);
-        appendEntityPart(stream);
+        stream.appendEntityPart();
 
         return stream;
     }
@@ -72,7 +72,7 @@ public class JdbcQueryStreamBuilder<T> extends JdbcEntityQueryStream<T> {
         final LayerProvider provider = new JdbcProvider(connection);
         stream = new JdbcQueryStreamBuilder<>(provider, entityType, alias);
         stream.appendPrefix(Clauses.UPDATE);
-        appendEntityPart(stream);
+        stream.appendEntityPart();
 
         return stream;
     }
@@ -105,7 +105,7 @@ public class JdbcQueryStreamBuilder<T> extends JdbcEntityQueryStream<T> {
 
         final LayerProvider provider = new JdbcProvider(connection);
         stream = new JdbcQueryStreamBuilder<>(provider, entityType, alias);
-        startsSelect(stream);
+        stream.startsSelect();
 
         return stream;
     }

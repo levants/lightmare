@@ -60,7 +60,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
         final LayerProvider provider = new JpaProvider(em);
         stream = new JpaQueryStreamBuilder<T>(provider, entityType, alias);
         stream.appendPrefix(Clauses.DELETE);
-        appendEntityPart(stream);
+        stream.appendEntityPart();
 
         return stream;
     }
@@ -94,7 +94,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
         final LayerProvider provider = new JpaProvider(em);
         stream = new JpaQueryStreamBuilder<>(provider, entityType, alias);
         stream.appendPrefix(Clauses.UPDATE);
-        appendEntityPart(stream);
+        stream.appendEntityPart();
 
         return stream;
     }
@@ -127,7 +127,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
 
         final LayerProvider provider = new JpaProvider(em);
         stream = new JpaQueryStreamBuilder<T>(provider, entityType, alias);
-        startsSelect(stream);
+        stream.startsSelect();
 
         return stream;
     }

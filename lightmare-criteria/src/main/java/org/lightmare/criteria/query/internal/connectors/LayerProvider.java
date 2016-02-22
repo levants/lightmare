@@ -12,5 +12,11 @@ public interface LayerProvider {
 
     QueryLayer<?> query(String sql);
 
+    String getTableName(Class<?> type);
+
+    String getSelectType(String alias);
+
+    String getCountType(String alias);
+
     void close();
 }
