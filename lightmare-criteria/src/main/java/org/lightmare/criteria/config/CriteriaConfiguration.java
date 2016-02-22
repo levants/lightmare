@@ -3,8 +3,11 @@ package org.lightmare.criteria.config;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 
+import org.lightmare.criteria.annotations.DBColumn;
+import org.lightmare.criteria.annotations.DBTable;
 import org.lightmare.criteria.config.Configuration.ColumnResolver;
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Configuration for query parts and result retriever
@@ -33,11 +36,30 @@ public class CriteriaConfiguration {
         return resultRetriever;
     }
 
+    public static class TableResolver {
+
+        public String resolve(Class<?> type) {
+
+            String name;
+
+            DBTable table = type.getAnnotation(DBTable.class);
+            name = ObjectUtils.getOrInit(table::value, type::getName);
+
+            return name;
+        }
+    }
+
     public static class DefaultResolver implements ColumnResolver {
 
         @Override
         public String resolve(Field field) {
-            return field.getName();
+
+            String name;
+
+            DBColumn column = field.getAnnotation(DBColumn.class);
+            name = ObjectUtils.getOrInit(column::value, field::getName);
+
+            return name;
         }
     }
 
