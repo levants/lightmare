@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.lightmare.criteria.config.Configuration.ColumnResolver;
+import org.lightmare.criteria.config.CriteriaConfiguration.DefaultResolver;
 
 /**
  * JDBC query layer provider
@@ -20,6 +21,10 @@ public class JdbcProvider implements LayerProvider {
     public JdbcProvider(final Connection connection, final ColumnResolver resolver) {
         this.connection = connection;
         this.resolver = resolver;
+    }
+
+    public JdbcProvider(final Connection connection) {
+        this(connection, new DefaultResolver());
     }
 
     @Override

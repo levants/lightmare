@@ -100,15 +100,29 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
         }
     }
 
-    @Override
-    public List<T> toList() {
+    public T get(ResultRetriever retriever) {
+        return call(() -> {
+
+            T result;
+
+            ResultSet rs = statement.getResultSet();
+            if (rs.next()) {
+                result = retriever.readRow(rs, type);
+            } else {
+                result = null;
+            }
+
+            return result;
+        });
+    }
+
+    public List<T> toList(ResultRetriever retriever) {
         return call(() -> {
 
             List<T> results = new ArrayList<>();
 
             ResultSet rs = statement.getResultSet();
             T result;
-            ResultRetriever retriever = new DefaultRetriever();
             while (rs.next()) {
                 result = retriever.readRow(rs, type);
                 results.add(result);
@@ -119,21 +133,25 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
     }
 
     @Override
+    public List<T> toList() {
+
+        List<T> results;
+
+        ResultRetriever retriever = new DefaultRetriever();
+        results = toList(retriever);
+
+        return results;
+    }
+
+    @Override
     public T get() {
-        return call(() -> {
 
-            T result;
+        T result;
 
-            ResultSet rs = statement.getResultSet();
-            ResultRetriever retriever = new DefaultRetriever();
-            if (rs.next()) {
-                result = retriever.readRow(rs, type);
-            } else {
-                result = null;
-            }
+        ResultRetriever retriever = new DefaultRetriever();
+        result = get(retriever);
 
-            return result;
-        });
+        return result;
     }
 
     @Override

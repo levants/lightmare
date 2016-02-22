@@ -7,4 +7,5 @@ package org.lightmare.criteria.query;
  *
  */
 public abstract class JpaQueryProvider extends QueryProvider {
+
 }

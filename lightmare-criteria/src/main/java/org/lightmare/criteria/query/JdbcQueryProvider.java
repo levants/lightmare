@@ -1,6 +1,8 @@
 package org.lightmare.criteria.query;
 
-import javax.persistence.EntityManager;
+import java.sql.Connection;
+
+import org.lightmare.criteria.query.internal.JdbcQueryStream;
 
 /**
  * Query provider for JDBC layer
@@ -13,78 +15,78 @@ public abstract class JdbcQueryProvider {
     /**
      * Generates DELETE statements with custom alias
      * 
-     * @param em
+     * @param connection
      * @param entityType
      * @param entityAlias
      * @return {@link org.lightmare.criteria.query.QueryStream} with select
      *         statement
      */
-    public static <T> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
+    public static <T> QueryStream<T> delete(final Connection connection, final Class<T> entityType,
             final String entityAlias) {
-        return JpaQueryStream.delete(em, entityType, entityAlias);
+        return JdbcQueryStreamBuilder.delete(connection, entityType, entityAlias);
     }
 
     /**
      * Generates DELETE statements with default alias
      * 
-     * @param em
+     * @param connection
      * @param entityType
      * @return {@link org.lightmare.criteria.query.QueryStream} with select
      *         statement
      */
-    public static <T> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
-        return JpaQueryStream.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
+    public static <T> QueryStream<T> delete(final Connection connection, Class<T> entityType) {
+        return JdbcQueryStreamBuilder.delete(connection, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**
      * Generates UPDATE statements with custom alias
      * 
-     * @param em
+     * @param connection
      * @param entityType
      * @param entityAlias
      * @return {@link org.lightmare.criteria.query.QueryStream} with select
      *         statement
      */
-    public static <T> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
+    public static <T> QueryStream<T> update(final Connection connection, final Class<T> entityType,
             final String entityAlias) {
-        return JpaQueryStream.update(em, entityType, entityAlias);
+        return JdbcQueryStreamBuilder.update(connection, entityType, entityAlias);
     }
 
     /**
      * Generates UPDATE statements with default alias
      * 
-     * @param em
+     * @param connection
      * @param entityType
      * @return {@link org.lightmare.criteria.query.QueryStream} with select
      *         statement
      */
-    public static <T> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
-        return JpaQueryStream.update(em, entityType, QueryStream.DEFAULT_ALIAS);
+    public static <T> QueryStream<T> update(final Connection connection, Class<T> entityType) {
+        return JdbcQueryStreamBuilder.update(connection, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**
      * Generates SELECT statements with custom alias
      * 
-     * @param em
+     * @param connection
      * @param entityType
      * @param entityAlias
      * @return {@link org.lightmare.criteria.query.QueryStream} with select
      *         statement
      */
-    public static <T> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
+    public static <T> JdbcQueryStream<T> select(final Connection connection, final Class<T> entityType,
             final String entityAlias) {
-        return JpaQueryStream.query(em, entityType, entityAlias);
+        return JdbcQueryStreamBuilder.query(connection, entityType, entityAlias);
     }
 
     /**
      * Generates SELECT statements with default alias
      * 
-     * @param em
+     * @param connection
      * @param entityType
      * @return {@link org.lightmare.criteria.query.QueryStream} with select
      *         statement
      */
-    public static <T> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
-        return JpaQueryStream.query(em, entityType, QueryStream.DEFAULT_ALIAS);
+    public static <T> JdbcQueryStream<T> select(final Connection connection, Class<T> entityType) {
+        return JdbcQueryStreamBuilder.query(connection, entityType, QueryStream.DEFAULT_ALIAS);
     }
 }

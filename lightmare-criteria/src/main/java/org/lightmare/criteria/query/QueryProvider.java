@@ -49,7 +49,7 @@ public abstract class QueryProvider {
      */
     public static <T> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
             final String entityAlias) {
-        return JpaQueryStream.delete(em, entityType, entityAlias);
+        return JpaQueryStreamBuilder.delete(em, entityType, entityAlias);
     }
 
     /**
@@ -61,7 +61,7 @@ public abstract class QueryProvider {
      *         statement
      */
     public static <T> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
-        return JpaQueryStream.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
+        return JpaQueryStreamBuilder.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**
@@ -75,7 +75,7 @@ public abstract class QueryProvider {
      */
     public static <T> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
             final String entityAlias) {
-        return JpaQueryStream.update(em, entityType, entityAlias);
+        return JpaQueryStreamBuilder.update(em, entityType, entityAlias);
     }
 
     /**
@@ -87,7 +87,7 @@ public abstract class QueryProvider {
      *         statement
      */
     public static <T> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
-        return JpaQueryStream.update(em, entityType, QueryStream.DEFAULT_ALIAS);
+        return JpaQueryStreamBuilder.update(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 
     /**
@@ -101,7 +101,7 @@ public abstract class QueryProvider {
      */
     public static <T> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
             final String entityAlias) {
-        return JpaQueryStream.query(em, entityType, entityAlias);
+        return JpaQueryStreamBuilder.query(em, entityType, entityAlias);
     }
 
     /**
@@ -113,6 +113,6 @@ public abstract class QueryProvider {
      *         statement
      */
     public static <T> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
-        return JpaQueryStream.query(em, entityType, QueryStream.DEFAULT_ALIAS);
+        return JpaQueryStreamBuilder.query(em, entityType, QueryStream.DEFAULT_ALIAS);
     }
 }
