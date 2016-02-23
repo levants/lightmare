@@ -2,7 +2,7 @@ package org.lightmare.criteria.query;
 
 import java.sql.Connection;
 
-import org.lightmare.criteria.query.internal.JdbcEntityQueryStream;
+import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.connectors.JdbcProvider;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.jpa.links.Clauses;
@@ -15,7 +15,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Clauses;
  * @param <T>
  *            entity type parameter for generated query
  */
-public class JdbcQueryStreamBuilder<T> extends JdbcEntityQueryStream<T> {
+public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
 
     protected JdbcQueryStreamBuilder(LayerProvider provider, Class<T> entityType, String alias) {
         super(provider, entityType, alias);

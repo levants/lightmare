@@ -2,8 +2,6 @@ package org.lightmare.criteria.query;
 
 import java.sql.Connection;
 
-import org.lightmare.criteria.query.internal.JdbcQueryStream;
-
 /**
  * Query provider for JDBC layer
  * 
@@ -73,7 +71,7 @@ public abstract class JdbcQueryProvider {
      * @return {@link org.lightmare.criteria.query.QueryStream} with select
      *         statement
      */
-    public static <T> JdbcQueryStream<T> select(final Connection connection, final Class<T> entityType,
+    public static <T> QueryStream<T> select(final Connection connection, final Class<T> entityType,
             final String entityAlias) {
         return JdbcQueryStreamBuilder.query(connection, entityType, entityAlias);
     }
@@ -86,7 +84,7 @@ public abstract class JdbcQueryProvider {
      * @return {@link org.lightmare.criteria.query.QueryStream} with select
      *         statement
      */
-    public static <T> JdbcQueryStream<T> select(final Connection connection, Class<T> entityType) {
+    public static <T> QueryStream<T> select(final Connection connection, Class<T> entityType) {
         return JdbcQueryStreamBuilder.query(connection, entityType, QueryStream.DEFAULT_ALIAS);
     }
 }

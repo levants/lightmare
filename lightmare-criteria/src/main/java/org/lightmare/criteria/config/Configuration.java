@@ -30,7 +30,7 @@ public interface Configuration {
     }
 
     /**
-     * Retrieves entity instance from {@link java.sql.ResultSet} instance
+     * To retrieve entity from {@link java.sql.ResultSet} instance
      * 
      * @author Levan Tsinadze
      *

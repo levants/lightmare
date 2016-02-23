@@ -92,13 +92,14 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
      * Generates SELECT clause JPA query part
      * 
      * @param type
+     * @param columnType
      * @param fields
      */
-    protected void generateSelectClause(Class<?> type, Collection<Serializable> fields) {
+    protected void generateSelectClause(Class<?> type, boolean columnType, Collection<Serializable> fields) {
 
         StringBuilder buffer = new StringBuilder();
         appendSelect(fields, buffer);
-        if (Object[].class.equals(type)) {
+        if (Object[].class.equals(type) || columnType) {
             validateAndAppendSelect();
             columns.append(buffer);
         } else {
@@ -113,11 +114,32 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
      * Generates SELECT clause JPA query part
      * 
      * @param type
+     * @param fields
+     */
+    protected void generateSelectClause(Class<?> type, Collection<Serializable> fields) {
+        generateSelectClause(type, Boolean.FALSE, fields);
+    }
+
+    /**
+     * Generates SELECT clause JPA query part
+     * 
+     * @param type
+     * @param columnType
+     * @param select
+     */
+    private void generateSelectClause(Class<?> type, boolean columnType, Select select) {
+        List<Serializable> fields = select.getFields();
+        generateSelectClause(type, columnType, fields);
+    }
+
+    /**
+     * Generates SELECT clause JPA query part
+     * 
+     * @param type
      * @param select
      */
     private void generateSelectClause(Class<?> type, Select select) {
-        List<Serializable> fields = select.getFields();
-        generateSelectClause(type, fields);
+        generateSelectClause(type, Boolean.FALSE, select);
     }
 
     @Override
@@ -149,7 +171,7 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
         SelectStream<T, F> stream;
 
         Class<F> fieldType = getFieldType(field);
-        generateSelectClause(fieldType, Collections.singletonList(field));
+        generateSelectClause(fieldType, Boolean.TRUE, Collections.singletonList(field));
         stream = new SelectStream<>(this, fieldType);
 
         return stream;
@@ -160,7 +182,7 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
 
         SelectStream<T, Object[]> stream;
 
-        generateSelectClause(Object[].class, Collections.singletonList(field));
+        generateSelectClause(Object[].class, Boolean.FALSE, Collections.singletonList(field));
         stream = new SelectStream<>(this, Object[].class);
 
         return stream;
