@@ -6,14 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * To define column name
+ * Defines transient fields
  * 
  * @author Levan Tsinadze
  *
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DBColumn {
+public @interface DBTransient {
 
-    String value();
 }

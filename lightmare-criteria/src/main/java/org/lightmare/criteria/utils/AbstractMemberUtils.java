@@ -194,6 +194,42 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     }
 
     /**
+     * Creates new instance for passed {@link Class} without throws declaration
+     * 
+     * @param type
+     * @return T new instance of {@link Class}
+     */
+    public static <T> T newInstance(Class<T> type) {
+
+        T instance;
+
+        try {
+            instance = type.newInstance();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return instance;
+    }
+
+    /**
+     * Sets appropriated value to {@link java.lang.reflect.Field} of object
+     * instance
+     * 
+     * @param field
+     * @param instance
+     * @param value
+     */
+    public static void set(Field field, Object instance, Object value) {
+
+        try {
+            field.set(instance, value);
+        } catch (IllegalArgumentException | IllegalAccessException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
      * Common method to invoke {@link java.lang.reflect.Method} with reflection
      *
      * @param method

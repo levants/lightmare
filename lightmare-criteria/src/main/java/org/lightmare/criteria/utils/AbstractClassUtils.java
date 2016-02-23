@@ -24,6 +24,7 @@ package org.lightmare.criteria.utils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -56,15 +57,15 @@ abstract class AbstractClassUtils extends Primitives {
     }
 
     /**
-     * Validates if passed {@link Class} is not annotated with passed
-     * {@link Annotation} type
+     * Validates if passed {@link java.lang.reflect.AnnotatedElement} is not
+     * annotated with passed {@link Annotation} type
      * 
-     * @param type
+     * @param element
      * @param annotationType
      * @return <code> boolean</code> validation result
      */
-    public static boolean notAnnotated(Class<?> type, Class<? extends Annotation> annotationType) {
-        return ObjectUtils.notTrue(type.isAnnotationPresent(annotationType));
+    public static boolean notAnnotated(AnnotatedElement element, Class<? extends Annotation> annotationType) {
+        return ObjectUtils.notTrue(element.isAnnotationPresent(annotationType));
     }
 
     /**

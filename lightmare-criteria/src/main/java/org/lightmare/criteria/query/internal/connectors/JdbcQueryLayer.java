@@ -16,7 +16,7 @@ import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
-import org.lightmare.criteria.config.CriteriaConfiguration.DefaultRetriever;
+import org.lightmare.criteria.config.DefaultConfiguration.DefaultRetriever;
 import org.lightmare.criteria.utils.CollectionUtils;
 
 /**

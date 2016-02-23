@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -412,17 +413,23 @@ public abstract class CollectionUtils {
      * @param mapper
      */
     public static <T, R> R[] map(T[] from, R[] to, Function<? super T, ? extends R> mapper) {
-
-        int length = from.length;
-        T value;
-        R mapped;
-        for (int i = CollectionUtils.FIRST; i < length; i++) {
-            value = from[i];
-            mapped = mapper.apply(value);
-            to[i] = mapped;
-        }
-
+        forEachValue(from, (i, value) -> to[i] = mapper.apply(value));
         return to;
+    }
+
+    /**
+     * Maps passed array to mapped R values list
+     * 
+     * @param from
+     * @param mapper
+     * @return {@link java.util.List} of mapped R values
+     */
+    public static <T, R> List<R> toList(T[] from, Function<? super T, ? extends R> mapper) {
+
+        List<R> list = new ArrayList<>();
+        forEachValue(from, (i, value) -> ObjectUtils.nonNull(mapper.apply(value), c -> list.add(c)));
+
+        return list;
     }
 
     /**

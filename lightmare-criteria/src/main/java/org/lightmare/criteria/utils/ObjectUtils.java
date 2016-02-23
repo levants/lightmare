@@ -36,7 +36,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * Utility class to help with general object checks / lock / modification
+ * Utility class to help with general object checks and modifications
  *
  * @author Levan Tsinadze
  */

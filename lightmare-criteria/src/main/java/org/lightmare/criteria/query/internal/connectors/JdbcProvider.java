@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.lightmare.criteria.annotations.DBTable;
 import org.lightmare.criteria.config.Configuration.ColumnResolver;
-import org.lightmare.criteria.config.CriteriaConfiguration.DefaultResolver;
+import org.lightmare.criteria.config.DefaultConfiguration.DefaultResolver;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
