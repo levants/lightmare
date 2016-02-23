@@ -22,9 +22,6 @@
  */
 package org.lightmare.criteria.query;
 
-import java.util.List;
-
-import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.jpa.QueryExpression;
@@ -59,8 +56,4 @@ public interface QueryStream<T> extends QueryExpression<T> {
     default QueryStream<T> openBracket() {
         return QueryExpression.super.openBracket();
     }
-    
-    T get(ResultRetriever<T> retriever);
-
-    List<T> toList(ResultRetriever<T> retriever);
 }

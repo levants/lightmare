@@ -25,6 +25,7 @@ package org.lightmare.criteria.query.internal.jpa;
 import java.util.List;
 import java.util.Set;
 
+import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 
@@ -81,6 +82,26 @@ public interface ResultStream<T> {
      * @see javax.persistence.Query#executeUpdate()
      */
     int execute();
+
+    /**
+     * Gets {@link java.sql.ResultSet} and retrieves single result
+     * 
+     * @param teriever
+     * 
+     * @return T single query result
+     * @see java.sql.ResultSet
+     */
+    T get(ResultRetriever<T> retriever);
+
+    /**
+     * Gets {@link java.sql.ResultSet} and retrieves {@link java.util.List} of
+     * result
+     * 
+     * @param retriever
+     * @return {@link java.util.List} of query results
+     * @see java.sql.ResultSet
+     */
+    List<T> toList(ResultRetriever<T> retriever);
 
     /**
      * Calls
