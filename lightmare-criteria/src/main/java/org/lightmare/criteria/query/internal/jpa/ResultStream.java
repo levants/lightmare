@@ -28,6 +28,7 @@ import java.util.Set;
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Interface for query result methods
@@ -85,21 +86,29 @@ public interface ResultStream<T> {
 
     /**
      * Gets {@link java.sql.ResultSet} and retrieves single result
+     * <p>
+     * Note: Only for direct JDBC streams
+     * <p/>
      * 
      * @param teriever
      * 
      * @return T single query result
      * @see java.sql.ResultSet
+     * @see org.lightmare.criteria.config.Configuration.ResultRetriever
      */
     T get(ResultRetriever<T> retriever);
 
     /**
      * Gets {@link java.sql.ResultSet} and retrieves {@link java.util.List} of
      * result
+     * <p>
+     * Note: Only for direct JDBC streams
+     * <p/>
      * 
      * @param retriever
      * @return {@link java.util.List} of query results
      * @see java.sql.ResultSet
+     * @see org.lightmare.criteria.config.Configuration.ResultRetriever
      */
     List<T> toList(ResultRetriever<T> retriever);
 
@@ -130,5 +139,44 @@ public interface ResultStream<T> {
      */
     default T getFirst() {
         return firstOrDefault(null);
+    }
+
+    /**
+     * Gets {@link java.sql.ResultSet} and retrieves first result or if it is
+     * <code>null</code> then default value
+     * <p>
+     * Note: Only for direct JDBC streams
+     * <p/>
+     * 
+     * @param retriever
+     * @param defaultValue
+     * @return T query first result
+     * @see java.sql.ResultSet
+     * @see org.lightmare.criteria.config.Configuration.ResultRetriever
+     */
+    default T firstOrDefault(ResultRetriever<T> retriever, T defaultValue) {
+
+        T result;
+
+        T value = get(retriever);
+        result = ObjectUtils.thisOrDefault(value, () -> defaultValue);
+
+        return result;
+    }
+
+    /**
+     * Gets {@link java.sql.ResultSet} and retrieves first result or
+     * <code>null</code> if no element was found
+     * <p>
+     * Note: Only for direct JDBC streams
+     * <p/>
+     * 
+     * @param retriever
+     * @return T query first result
+     * @see java.sql.ResultSet
+     * @see org.lightmare.criteria.config.Configuration.ResultRetriever
+     */
+    default T getFirst(ResultRetriever<T> retriever) {
+        return firstOrDefault(retriever, null);
     }
 }

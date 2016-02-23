@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.jpa.links;
 
 /**
- * Date and time JPA query functions
+ * Date and time JPA / JDBC query functions
  * 
  * @author Levan Tsinadze
  *

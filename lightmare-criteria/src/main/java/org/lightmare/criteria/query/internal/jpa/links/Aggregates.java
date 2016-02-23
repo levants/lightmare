@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.internal.jpa.links;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Names of JPA query aggregate functions
+ * Names of JPA / JDBC query aggregate functions
  * 
  * @author Levan Tsinadze
  *

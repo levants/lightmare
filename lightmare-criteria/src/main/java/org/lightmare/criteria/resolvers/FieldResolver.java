@@ -31,6 +31,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.tuples.ResolverTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.LocalVariableNode;
 import org.objectweb.asm.tree.MethodNode;
@@ -51,7 +52,7 @@ public class FieldResolver extends DirectFieldResolver {
     private static final String DEBUG_MESSAGE_BYT = "Resolved from bytecode";
 
     // Error message
-    private static final String UNRESOLVABLE_FIELD_ERROR = "Unresolvable field name";
+    private static final String UNRESOLVABLE_FIELD_ERROR = "Unresolvable field: ";
 
     /**
      * Removes semicolons from entity name
@@ -179,7 +180,8 @@ public class FieldResolver extends DirectFieldResolver {
             tuple = resolveRecursively(methodNode);
             debug(DEBUG_MESSAGE_BYT, tuple);
         } else {
-            throw new RuntimeException(UNRESOLVABLE_FIELD_ERROR);
+            String error = StringUtils.concat(UNRESOLVABLE_FIELD_ERROR, lambda);
+            throw new RuntimeException(error);
         }
 
         return tuple;
