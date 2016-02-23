@@ -20,7 +20,6 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.jpa.SelectExpression.Select;
 import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
-import org.lightmare.criteria.utils.CollectionUtils;
 
 @RunWith(SortedRunner.class)
 public class QueryTest extends TestEnviromentConfig {
@@ -400,8 +399,9 @@ public class QueryTest extends TestEnviromentConfig {
             Person person = stream.getFirst();
             transaction.begin();
             if (person == null) {
-                Person newPerson = initPerson();
+                Person newPerson = QueryTest.initPerson();
                 em.persist(newPerson);
+                person = newPerson;
             }
             transaction.commit();
         } catch (Throwable ex) {
@@ -553,7 +553,7 @@ public class QueryTest extends TestEnviromentConfig {
                     .and().startsWith(Person::getLastName, "lname").max(Person::getPersonId);
             String sql = stream.sql();
             System.out.println(sql);
-            Long max = stream.firstOrDefault(Long.valueOf(CollectionUtils.EMPTY));
+            Long max = stream.firstOrDefault(Long.valueOf(0));
             // =============================================//
             System.out.println();
             System.out.println("-------Entity----");
