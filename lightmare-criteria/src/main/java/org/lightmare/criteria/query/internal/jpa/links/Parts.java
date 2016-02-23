@@ -32,8 +32,6 @@ public interface Parts {
 
     String FROM = " from ";
 
-    String AS = " as ";
-
     String DISTINCT = "distinct ";
 
     String SET_SPACE = "    ";

@@ -112,7 +112,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
         String alias = getAlias();
         appendFrom(Parts.FROM);
         appendFrom(entityName);
-        appendFrom(Parts.AS);
+        appendFrom(StringUtils.SPACE);
         appendFrom(alias);
         appendFrom(StringUtils.LINE);
     }

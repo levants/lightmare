@@ -107,7 +107,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
 
         buff.append(Parts.FROM);
         buff.append(typeName);
-        buff.append(Parts.AS);
+        buff.append(StringUtils.SPACE);
         buff.append(alias);
         newLine(buff);
     }
