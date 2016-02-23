@@ -24,10 +24,14 @@ package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
 
+import org.lightmare.criteria.config.Configuration.ResultRetriever;
+import org.lightmare.criteria.query.internal.connectors.JdbcQueryLayer;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.connectors.QueryLayer;
 import org.lightmare.criteria.tuples.ParameterTuple;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Abstract class for generated JPA query result
@@ -74,6 +78,38 @@ abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
         result = query.get();
 
         return result;
+    }
+
+    /**
+     * Retrieves result from generated
+     * {@link org.lightmare.criteria.query.internal.connectors.JdbcQueryLayer}
+     * instance
+     * 
+     * @param retriever
+     * @param function
+     * @return R result from generated
+     *         {@link org.lightmare.criteria.query.internal.connectors.JdbcQueryLayer}
+     */
+    private <R> R retrieveResult(ResultRetriever<T> retriever,
+            BiFunction<JdbcQueryLayer<T>, ResultRetriever<T>, R> function) {
+
+        R result;
+
+        QueryLayer<T> query = initTypedQuery();
+        JdbcQueryLayer<T> jdbcQuery = ObjectUtils.cast(query);
+        result = function.apply(jdbcQuery, retriever);
+
+        return result;
+    }
+
+    @Override
+    public T get(ResultRetriever<T> retriever) {
+        return retrieveResult(retriever, JdbcQueryLayer::get);
+    }
+
+    @Override
+    public List<T> toList(ResultRetriever<T> retriever) {
+        return retrieveResult(retriever, JdbcQueryLayer::toList);
     }
 
     @Override
