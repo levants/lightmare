@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
+import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -74,6 +75,41 @@ public class JpaQueryLayer<T> implements QueryLayer<T> {
     @Override
     public void setParameter(String name, Date value, TemporalType temporalType) {
         query.setParameter(name, value, temporalType);
+    }
+
+    /**
+     * Sets date parameter to query
+     * 
+     * @param parameter
+     */
+    private void setDateParameter(ParameterTuple tuple) {
+
+        String name = tuple.getName();
+        Object value = tuple.getValue();
+        TemporalType temporalType = tuple.getTemporalType();
+        if (value instanceof Calendar) {
+            ObjectUtils.cast(value, Calendar.class, c -> setParameter(name, c, temporalType));
+        } else if (value instanceof Date) {
+            ObjectUtils.cast(value, Date.class, c -> setParameter(name, c, temporalType));
+        }
+    }
+
+    /**
+     * Sets parameter to query
+     * 
+     * @param tuple
+     */
+    @Override
+    public void setParameter(ParameterTuple tuple) {
+
+        String name = tuple.getName();
+        Object value = tuple.getValue();
+        TemporalType temporalType = tuple.getTemporalType();
+        if (temporalType == null) {
+            setParameter(name, value);
+        } else {
+            setDateParameter(tuple);
+        }
     }
 
     @Override

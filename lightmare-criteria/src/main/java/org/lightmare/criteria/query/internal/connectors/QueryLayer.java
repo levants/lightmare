@@ -9,6 +9,8 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
+import org.lightmare.criteria.tuples.ParameterTuple;
+
 /**
  * Database abstract layer
  * 
@@ -65,6 +67,14 @@ public interface QueryLayer<T> {
      * @param temporalType
      */
     void setParameter(String name, Date value, TemporalType temporalType);
+
+    /**
+     * Sets query parameters by
+     * {@link org.lightmare.criteria.tuples.ParameterTuple} instance
+     * 
+     * @param tuple
+     */
+    void setParameter(ParameterTuple tuple);
 
     /**
      * Sets max results to query

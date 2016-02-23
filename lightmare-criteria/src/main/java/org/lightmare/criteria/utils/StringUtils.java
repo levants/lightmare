@@ -42,6 +42,8 @@ public abstract class StringUtils {
 
     public static final char HYPHEN = '-';
 
+    public static final char UNDERSCORE = '_';
+
     public static final char COMMA = ',';
 
     public static final char DOT = '.';

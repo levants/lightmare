@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
@@ -17,7 +18,9 @@ import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.config.DefaultConfiguration.DefaultRetriever;
+import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Implementation for JDBC layer
@@ -29,9 +32,20 @@ import org.lightmare.criteria.utils.CollectionUtils;
  */
 public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
-    private Class<T> type;
+    private final Class<T> type;
+
+    private final String sql;
+
+    private final Connection connection;
 
     private PreparedStatement statement;
+
+    private Map<Integer, ParameterTuple> parameters = new TreeMap<>();
+
+    // Parameter sign
+    private static final String NATURAL_PARAM = "?";
+
+    private static final int NON_EXISTING = -1;
 
     /**
      * Functional interface for JDBC method calls
@@ -57,9 +71,34 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
         void accept(T t) throws SQLException;
     }
 
-    public JdbcQueryLayer(final Connection connection, String sql, Class<T> type) {
+    protected JdbcQueryLayer(final Connection connection, String sql, Class<T> type) {
         this.type = type;
-        statement = call(sql, connection::prepareStatement);
+        this.sql = sql;
+        this.connection = connection;
+    }
+
+    private void replace(String name, StringBuilder builder) {
+
+        int size = name.length();
+        int index = builder.indexOf(name);
+        if (ObjectUtils.notEquals(index, NON_EXISTING)) {
+            int end = index + size;
+            builder.replace(index, end, NATURAL_PARAM);
+        }
+    }
+
+    private void replaceParameters() {
+        StringBuilder builder = new StringBuilder(sql);
+        parameters.values().forEach(c -> replace(c.getName(), builder));
+    }
+
+    private static void putParameter(Integer key, ParameterTuple parameter, PreparedStatement statement) {
+
+        try {
+            statement.setObject(key, parameter.getValue());
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private PreparedStatement call(String sql, JdbcFunction function) {
@@ -67,7 +106,9 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
         PreparedStatement result;
 
         try {
+            replaceParameters();
             result = function.apply(sql);
+            parameters.forEach((k, v) -> putParameter(k, v, result));
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -107,7 +148,7 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
         return call(() -> {
 
             T result;
-
+            statement = call(sql, connection::prepareStatement);
             ResultSet rs = statement.getResultSet();
             if (rs.next()) {
                 result = retriever.readRow(rs, type);
@@ -130,6 +171,7 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
             List<T> results = new ArrayList<>();
 
+            statement = call(sql, connection::prepareStatement);
             ResultSet rs = statement.getResultSet();
             T result;
             while (rs.next()) {
@@ -178,6 +220,11 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
     @Override
     public void setParameter(String name, Date value, TemporalType temporalType) {
+    }
+
+    @Override
+    public void setParameter(ParameterTuple tuple) {
+        parameters.put(tuple.getCount(), tuple);
     }
 
     @Override

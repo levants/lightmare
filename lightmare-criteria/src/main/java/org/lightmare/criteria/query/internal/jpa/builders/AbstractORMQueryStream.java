@@ -23,8 +23,6 @@
 package org.lightmare.criteria.query.internal.jpa.builders;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -39,6 +37,7 @@ import org.lightmare.criteria.query.internal.jpa.links.Clauses;
 import org.lightmare.criteria.query.internal.jpa.links.Operators;
 import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.tuples.CounterTuple;
+import org.lightmare.criteria.tuples.CounterTuple.NameCount;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -194,14 +193,20 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * Generates parameter name for JPA query
      * 
      * @param tuple
-     * @return {@link String} parameter name
+     * @return {@link org.lightmare.criteria.tuples.CounterTuple.NameCount}
+     *         parameter name
      */
-    private String generateParameterName(QueryTuple tuple) {
-        return StringUtils.concat(tuple.getFieldName(), getCounterTuple().getAndIncrementParameter());
+    private NameCount generateParameterName(QueryTuple tuple) {
+        return getCounterTuple().getAndIncrement(tuple.getFieldName());
     }
 
     @Override
     public void addParameter(String key, Object value, TemporalType temporalType) {
+        ParameterTuple parameter = ParameterTuple.of(key, value, temporalType);
+        parameters.add(parameter);
+    }
+
+    private void addParameter(NameCount key, Object value, TemporalType temporalType) {
         ParameterTuple parameter = ParameterTuple.of(key, value, temporalType);
         parameters.add(parameter);
     }
@@ -222,7 +227,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @param tuple
      * @param value
      */
-    public <F> void addParameter(String key, QueryTuple tuple, F value) {
+    public <F> void addParameter(NameCount key, QueryTuple tuple, F value) {
         TemporalType temporalType = tuple.getTemporalType();
         addParameter(key, value, temporalType);
     }
@@ -236,9 +241,9 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      */
     public void oppWithParameter(QueryTuple tuple, Object value, StringBuilder buffer) {
 
-        String parameterName = generateParameterName(tuple);
-        buffer.append(Parts.PARAM_PREFIX).append(parameterName);
-        addParameter(parameterName, tuple, value);
+        NameCount pair = generateParameterName(tuple);
+        buffer.append(Parts.PARAM_PREFIX).append(pair.getName());
+        addParameter(pair, tuple, value);
     }
 
     /**
@@ -251,11 +256,11 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      */
     public void oppWithCollectionParameter(QueryTuple tuple, Object value, StringBuilder buffer) {
 
-        String parameterName = generateParameterName(tuple);
+        NameCount pair = generateParameterName(tuple);
         buffer.append(Operators.OPEN_BRACKET);
-        buffer.append(Parts.PARAM_PREFIX).append(parameterName);
+        buffer.append(Parts.PARAM_PREFIX).append(pair.getName());
         buffer.append(Operators.Brackets.CLOSE);
-        addParameter(parameterName, tuple, value);
+        addParameter(pair, tuple, value);
     }
 
     /**
@@ -276,42 +281,6 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
     // ============================= Query parameters =======================//
 
     /**
-     * Sets date parameter to query
-     * 
-     * @param parameter
-     * @param query
-     */
-    private void setDateParameter(ParameterTuple parameter, QueryLayer<?> query) {
-
-        String name = parameter.getName();
-        Object value = parameter.getValue();
-        TemporalType temporalType = parameter.getTemporalType();
-        if (value instanceof Calendar) {
-            ObjectUtils.cast(value, Calendar.class, c -> query.setParameter(name, c, temporalType));
-        } else if (value instanceof Date) {
-            ObjectUtils.cast(value, Date.class, c -> query.setParameter(name, c, temporalType));
-        }
-    }
-
-    /**
-     * Sets parameter to query
-     * 
-     * @param parameter
-     * @param query
-     */
-    private void setParameter(ParameterTuple parameter, QueryLayer<?> query) {
-
-        String name = parameter.getName();
-        Object value = parameter.getValue();
-        TemporalType temporalType = parameter.getTemporalType();
-        if (temporalType == null) {
-            query.setParameter(name, value);
-        } else {
-            setDateParameter(parameter, query);
-        }
-    }
-
-    /**
      * Adds all gathered parameters to generated {@link javax.persistence.Query}
      * instance
      * 
@@ -319,7 +288,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      */
     protected void setParameters(QueryLayer<?> query) {
         setJPAConfiguration(query);
-        parameters.forEach(parameter -> setParameter(parameter, query));
+        parameters.forEach(query::setParameter);
     }
 
     // ============================= JPA Elements ===========================//

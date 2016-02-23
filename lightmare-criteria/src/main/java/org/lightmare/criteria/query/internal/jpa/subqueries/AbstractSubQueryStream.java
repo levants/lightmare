@@ -34,6 +34,7 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
+import org.lightmare.criteria.tuples.CounterTuple.NameCount;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 
@@ -149,7 +150,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     }
 
     @Override
-    public <F> void addParameter(String key, QueryTuple tuple, F value) {
+    public <F> void addParameter(NameCount key, QueryTuple tuple, F value) {
         parent.addParameter(key, tuple, value);
     }
 
