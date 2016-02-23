@@ -152,6 +152,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
 
         tuple = LambdaUtils.getOrInit(field);
         tuple.setAlias(alias);
+        tuple.setFieldName(provider.getColumnName(tuple));
 
         return tuple;
     }

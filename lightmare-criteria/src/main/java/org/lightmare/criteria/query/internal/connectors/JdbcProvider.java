@@ -1,11 +1,14 @@
 package org.lightmare.criteria.query.internal.connectors;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.lightmare.criteria.annotations.DBColumn;
 import org.lightmare.criteria.annotations.DBTable;
 import org.lightmare.criteria.config.Configuration.ColumnResolver;
 import org.lightmare.criteria.config.DefaultConfiguration.DefaultResolver;
+import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -54,6 +57,16 @@ public class JdbcProvider implements LayerProvider {
     public String getTableName(Class<?> type) {
         return ObjectUtils.ifNull(() -> type.getAnnotation(DBTable.class), c -> type.getName(),
                 c -> StringUtils.thisOrDefault(c.value(), type::getName));
+    }
+
+    private static String getColumnName(Field field) {
+        return ObjectUtils.ifNull(() -> field.getAnnotation(DBColumn.class), c -> field.getName(),
+                c -> StringUtils.thisOrDefault(c.value(), field::getName));
+    }
+
+    @Override
+    public String getColumnName(QueryTuple tuple) {
+        return ObjectUtils.ifNonNull(tuple::getField, JdbcProvider::getColumnName, c -> tuple.getFieldName());
     }
 
     @Override

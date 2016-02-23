@@ -1,5 +1,7 @@
 package org.lightmare.criteria.query.internal.connectors;
 
+import org.lightmare.criteria.tuples.QueryTuple;
+
 /**
  * Provider for query layer
  * 
@@ -13,6 +15,8 @@ public interface LayerProvider {
     QueryLayer<?> query(String sql);
 
     String getTableName(Class<?> type);
+
+    String getColumnName(QueryTuple tuple);
 
     String getSelectType(String alias);
 

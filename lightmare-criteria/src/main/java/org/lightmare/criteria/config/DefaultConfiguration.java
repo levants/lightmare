@@ -29,11 +29,11 @@ public class DefaultConfiguration {
 
     private static ColumnResolver columnResolver;
 
-    private static ResultRetriever resultRetriever;
+    private static ResultRetriever<?> resultRetriever;
 
     public static ColumnResolver defaultJdbcColumnResolver = c -> c.getName();
 
-    public static void configure(ColumnResolver columnNameResolver, ResultRetriever resultSetRetriever) {
+    public static void configure(ColumnResolver columnNameResolver, ResultRetriever<?> resultSetRetriever) {
         columnResolver = columnNameResolver;
         resultRetriever = resultSetRetriever;
     }
@@ -42,7 +42,7 @@ public class DefaultConfiguration {
         return columnResolver;
     }
 
-    public static ResultRetriever getResultRetriever() {
+    public static ResultRetriever<?> getResultRetriever() {
         return resultRetriever;
     }
 
@@ -83,7 +83,9 @@ public class DefaultConfiguration {
      * @author Levan Tsinadze
      *
      */
-    public static class DefaultRetriever implements ResultRetriever {
+    public static class DefaultRetriever<T> implements ResultRetriever<T> {
+
+        private final Class<T> type;
 
         private static final ConcurrentMap<Class<?>, List<FieldType>> COLUMNS = new ConcurrentHashMap<>();
 
@@ -158,6 +160,10 @@ public class DefaultConfiguration {
             }
         }
 
+        public DefaultRetriever(final Class<T> type) {
+            this.type = type;
+        }
+
         private static FieldType getColumnName(Field field) {
             return ObjectUtils.ifIsValid(field, c -> ClassUtils.notAnnotated(c, DBTransient.class), FieldType::new);
         }
@@ -180,7 +186,7 @@ public class DefaultConfiguration {
         }
 
         @Override
-        public <T> T readRow(ResultSet result, Class<T> type) {
+        public T readRow(ResultSet result) {
 
             T instance = ClassUtils.newInstance(type);
 

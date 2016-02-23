@@ -3,6 +3,7 @@ package org.lightmare.criteria.query.internal.connectors;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 
+import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -36,6 +37,11 @@ public class JpaProvider implements LayerProvider {
     public String getTableName(Class<?> type) {
         return ObjectUtils.ifNull(() -> type.getAnnotation(Entity.class), c -> type.getName(),
                 c -> StringUtils.thisOrDefault(c.name(), type::getName));
+    }
+
+    @Override
+    public String getColumnName(QueryTuple tuple) {
+        return tuple.getFieldName();
     }
 
     @Override

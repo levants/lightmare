@@ -17,6 +17,7 @@ public interface Configuration {
      * @author Levan Tsinadze
      *
      */
+    @FunctionalInterface
     public static interface ColumnResolver {
 
         /**
@@ -34,16 +35,16 @@ public interface Configuration {
      * @author Levan Tsinadze
      *
      */
-    public static interface ResultRetriever {
+    @FunctionalInterface
+    public static interface ResultRetriever<T> {
 
         /**
          * Retrieves result from {@link java.sql.ResultSet} and initializes
          * passed entity {@link Class} instance
          * 
          * @param result
-         * @param type
          * @return T instance from {@link java.sql.ResultSet}
          */
-        <T> T readRow(ResultSet result, Class<T> type);
+        T readRow(ResultSet result);
     }
 }

@@ -32,8 +32,8 @@ public class JdbcEntityQueryStream<T> extends EntityQueryStream<T> implements Jd
      * @return R result from generated
      *         {@link org.lightmare.criteria.query.internal.connectors.JdbcQueryLayer}
      */
-    private <R> R retrieveResult(ResultRetriever retriever,
-            BiFunction<JdbcQueryLayer<T>, ResultRetriever, R> function) {
+    private <R> R retrieveResult(ResultRetriever<T> retriever,
+            BiFunction<JdbcQueryLayer<T>, ResultRetriever<T>, R> function) {
 
         R result;
 
@@ -45,12 +45,12 @@ public class JdbcEntityQueryStream<T> extends EntityQueryStream<T> implements Jd
     }
 
     @Override
-    public T get(ResultRetriever retriever) {
+    public T get(ResultRetriever<T> retriever) {
         return retrieveResult(retriever, JdbcQueryLayer::get);
     }
 
     @Override
-    public List<T> toList(ResultRetriever retriever) {
+    public List<T> toList(ResultRetriever<T> retriever) {
         return retrieveResult(retriever, JdbcQueryLayer::toList);
     }
 }

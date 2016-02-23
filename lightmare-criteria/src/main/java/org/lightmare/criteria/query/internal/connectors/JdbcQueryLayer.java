@@ -18,9 +18,11 @@ import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.config.DefaultConfiguration.DefaultRetriever;
+import org.lightmare.criteria.query.internal.jpa.links.Parts;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation for JDBC layer
@@ -79,17 +81,24 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
     private void replace(String name, StringBuilder builder) {
 
-        int size = name.length();
-        int index = builder.indexOf(name);
+        String paramName = StringUtils.concat(Parts.PARAM_PREFIX, name);
+        int size = paramName.length();
+        int index = builder.indexOf(paramName);
         if (ObjectUtils.notEquals(index, NON_EXISTING)) {
             int end = index + size;
             builder.replace(index, end, NATURAL_PARAM);
         }
     }
 
-    private void replaceParameters() {
+    private String replaceParameters() {
+
+        String refined;
+
         StringBuilder builder = new StringBuilder(sql);
         parameters.values().forEach(c -> replace(c.getName(), builder));
+        refined = builder.toString();
+
+        return refined;
     }
 
     private static void putParameter(Integer key, ParameterTuple parameter, PreparedStatement statement) {
@@ -106,8 +115,8 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
         PreparedStatement result;
 
         try {
-            replaceParameters();
-            result = function.apply(sql);
+            String refined = replaceParameters();
+            result = function.apply(refined);
             parameters.forEach((k, v) -> putParameter(k, v, result));
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
@@ -138,20 +147,30 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
         }
     }
 
+    private ResultSet executeQuery() throws SQLException {
+
+        ResultSet rs;
+
+        statement = call(sql, connection::prepareStatement);
+        rs = statement.executeQuery();
+
+        return rs;
+    }
+
     /**
      * Gets result from result set
      * 
      * @param retriever
      * @return T result
      */
-    public T get(ResultRetriever retriever) {
+    public T get(ResultRetriever<T> retriever) {
         return call(() -> {
 
             T result;
-            statement = call(sql, connection::prepareStatement);
-            ResultSet rs = statement.getResultSet();
+
+            ResultSet rs = executeQuery();
             if (rs.next()) {
-                result = retriever.readRow(rs, type);
+                result = retriever.readRow(rs);
             } else {
                 result = null;
             }
@@ -166,16 +185,15 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
      * @param retriever
      * @return {@link java.util.List} of result
      */
-    public List<T> toList(ResultRetriever retriever) {
+    public List<T> toList(ResultRetriever<T> retriever) {
         return call(() -> {
 
             List<T> results = new ArrayList<>();
 
-            statement = call(sql, connection::prepareStatement);
-            ResultSet rs = statement.getResultSet();
+            ResultSet rs = executeQuery();
             T result;
             while (rs.next()) {
-                result = retriever.readRow(rs, type);
+                result = retriever.readRow(rs);
                 results.add(result);
             }
 
@@ -188,7 +206,7 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
         List<T> results;
 
-        ResultRetriever retriever = new DefaultRetriever();
+        ResultRetriever<T> retriever = new DefaultRetriever<>(type);
         results = toList(retriever);
 
         return results;
@@ -199,7 +217,7 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
 
         T result;
 
-        ResultRetriever retriever = new DefaultRetriever();
+        ResultRetriever<T> retriever = new DefaultRetriever<>(type);
         result = get(retriever);
 
         return result;

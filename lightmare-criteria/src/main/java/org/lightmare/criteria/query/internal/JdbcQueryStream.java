@@ -15,7 +15,7 @@ import org.lightmare.criteria.query.QueryStream;
  */
 public interface JdbcQueryStream<T> extends QueryStream<T> {
 
-    T get(ResultRetriever retriever);
+    T get(ResultRetriever<T> retriever);
 
-    List<T> toList(ResultRetriever retriever);
+    List<T> toList(ResultRetriever<T> retriever);
 }
