@@ -90,6 +90,13 @@ public class DefaultConfiguration {
             Object apply(ResultSet r, String s) throws SQLException;
         }
 
+        /**
+         * Wrapper class for field type and retriever function from
+         * {@link java.sql.ResultSet} proper to this type
+         * 
+         * @author Levan Tsinadze
+         *
+         */
         private static class FieldType {
 
             final Field field;
@@ -107,6 +114,13 @@ public class DefaultConfiguration {
                 this.function = defineFunction();
             }
 
+            /**
+             * Defines function to retrieve data from {@link java.sql.ResultSet}
+             * by type
+             * 
+             * @return {@link org.lightmare.criteria.config.DefaultConfiguration.DefaultRetriever.ResultGetter}
+             *         for instant field type
+             */
             public ResultGetter defineFunction() {
 
                 ResultGetter getter;

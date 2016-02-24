@@ -83,12 +83,28 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
         PreparedStatement apply(String sql) throws SQLException;
     }
 
+    /**
+     * Supplier for data retrieve
+     * 
+     * @author Levan Tsinadze
+     *
+     * @param <R>
+     *            result type
+     */
     @FunctionalInterface
     private static interface JdbcSupplier<R> {
 
         R supply() throws SQLException;
     }
 
+    /**
+     * Parameter setter for {@link java.sql.ResultSet} by field type
+     * 
+     * @author Levan Tsinadze
+     *
+     * @param <T>
+     *            argument type parameter
+     */
     @FunctionalInterface
     private static interface JdbcConsumer<T> {
 
