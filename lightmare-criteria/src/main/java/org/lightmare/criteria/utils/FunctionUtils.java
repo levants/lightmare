@@ -33,6 +33,31 @@ public abstract class FunctionUtils {
     /**
      * Wraps exceptions and errors to avoid <code>throws</code> statement
      * 
+     * @author Levan
+     *
+     * @param <T>
+     *            first argument type
+     * @param <K>
+     *            second argument type
+     * @param <E>
+     *            error type
+     */
+    @FunctionalInterface
+    public static interface ErrorWrapperBiConsumer<T, K, E extends Exception> {
+
+        /**
+         * Accepts passed value1 and value2 and throws appropriated exception
+         * 
+         * @param value1
+         * @param value2
+         * @throws E
+         */
+        void accept(T value1, K value2) throws E;
+    }
+
+    /**
+     * Wraps exceptions and errors to avoid <code>throws</code> statement
+     * 
      * @author Levan Tsinadze
      *
      * @param <T>
@@ -115,6 +140,23 @@ public abstract class FunctionUtils {
 
         try {
             consumer.accept(value);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Calls consumer implementation and wraps errors
+     * 
+     * @param value1
+     * @param value2
+     * @param consumer
+     */
+    public static <T, K, E extends Exception> void acceptWrap(T value1, K value2,
+            ErrorWrapperBiConsumer<T, K, E> consumer) {
+
+        try {
+            consumer.accept(value1, value2);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

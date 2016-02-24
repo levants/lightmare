@@ -124,7 +124,8 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
     }
 
     private static void putParameter(Integer key, ParameterTuple parameter, PreparedStatement statement) {
-        ObjectUtils.acceptWrap(statement, c -> c.setObject(key, parameter.getValue()));
+        Object value = parameter.getValue();
+        ObjectUtils.acceptWrap(key, value, statement::setObject);
     }
 
     private PreparedStatement call(JdbcFunction function) {
@@ -145,7 +146,7 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
     }
 
     private <P> void consume(P value, JdbcConsumer<P> consumer) {
-        ObjectUtils.acceptWrap(value, c -> consumer.accept(c));
+        ObjectUtils.acceptWrap(consumer, value, JdbcConsumer::accept);
     }
 
     private ResultSet executeQuery() throws SQLException {

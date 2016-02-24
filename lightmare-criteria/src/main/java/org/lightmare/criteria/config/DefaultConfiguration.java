@@ -143,9 +143,9 @@ public class DefaultConfiguration {
              * @param rs
              */
             public void set(Object instance, ResultSet rs) {
-                ObjectUtils.acceptWrap(instance, c -> {
+                ObjectUtils.acceptWrap(instance, rs, (c, r) -> {
                     if (Objects.nonNull(rs.getObject(name))) {
-                        Object value = function.apply(rs, name);
+                        Object value = function.apply(r, name);
                         ClassUtils.set(field, c, value);
                     }
                 });

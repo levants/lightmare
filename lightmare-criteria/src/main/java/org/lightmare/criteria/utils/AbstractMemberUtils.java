@@ -220,7 +220,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param value
      */
     public static void set(Field field, Object instance, Object value) {
-        ObjectUtils.acceptWrap(field, c -> c.set(instance, value));
+        ObjectUtils.acceptWrap(instance, value, field::set);
     }
 
     /**
