@@ -30,6 +30,28 @@ package org.lightmare.criteria.utils;
 public class ClassUtils extends AbstractMemberUtils {
 
     /**
+     * Initializes {@link Class} by name
+     * 
+     * @param className
+     * @return {@link Class} by name
+     */
+    private static Class<?> forName(String className) {
+        return ObjectUtils.applyWrap(className, Class::forName);
+    }
+
+    /**
+     * Initializes {@link Class} by name in passed {@link ClassLoader} ecosystem
+     * 
+     * @param className
+     * @param initialize
+     * @param loader
+     * @return {@link Class} by name
+     */
+    private static Class<?> forName(String className, boolean initialize, ClassLoader loader) {
+        return ObjectUtils.applyWrap(className, initialize, (c, i) -> Class.forName(c, i, loader));
+    }
+
+    /**
      * Loads and if initialize parameter is <code>true</code> initializes class
      * by name with specific {@link ClassLoader} if it is not <code>null</code>
      *
@@ -39,18 +61,7 @@ public class ClassUtils extends AbstractMemberUtils {
      * @return {@link Class} by name
      */
     public static Class<?> classForName(String className, boolean initialize, ClassLoader loader) {
-        return ObjectUtils.applyWrap(className, c -> {
-
-            Class<?> type;
-
-            if (loader == null) {
-                type = Class.forName(c);
-            } else {
-                type = Class.forName(c, initialize, loader);
-            }
-
-            return type;
-        });
+        return ObjectUtils.ifIsNull(loader, c -> forName(className), c -> forName(className, initialize, c));
     }
 
     /**

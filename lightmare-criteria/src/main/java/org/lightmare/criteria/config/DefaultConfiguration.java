@@ -155,14 +155,24 @@ public class DefaultConfiguration {
              * 
              * @param instance
              * @param rs
+             * @throws SQLException
+             */
+            private void getAndSet(Object instance, ResultSet rs) throws SQLException {
+
+                if (Objects.nonNull(rs.getObject(name))) {
+                    Object value = function.apply(rs, name);
+                    ClassUtils.set(field, instance, value);
+                }
+            }
+
+            /**
+             * Sets field value from {@link java.sql.ResultSet} instance
+             * 
+             * @param instance
+             * @param rs
              */
             public void set(Object instance, ResultSet rs) {
-                ObjectUtils.acceptWrap(instance, rs, (c, r) -> {
-                    if (Objects.nonNull(rs.getObject(name))) {
-                        Object value = function.apply(r, name);
-                        ClassUtils.set(field, c, value);
-                    }
-                });
+                ObjectUtils.acceptWrap(instance, rs, this::getAndSet);
             }
         }
 

@@ -56,18 +56,17 @@ public class CachedClassReader extends ClassReader {
      * 
      * @param name
      * @return {@link org.objectweb.asm.ClassReader} by class name
+     * @throws IOException
      */
-    private static ClassReader initClassReader(String name) {
-        return ObjectUtils.applyWrap(name, c -> {
+    private static ClassReader readResource(String name) throws IOException {
 
-            ClassReader classReader;
+        ClassReader classReader;
 
-            try (InputStream is = ClassLoaderUtils.getClassAsStream(c)) {
-                classReader = new CachedClassReader(is);
-            }
+        try (InputStream is = ClassLoaderUtils.getClassAsStream(name)) {
+            classReader = new CachedClassReader(is);
+        }
 
-            return classReader;
-        });
+        return classReader;
     }
 
     /**
@@ -79,7 +78,7 @@ public class CachedClassReader extends ClassReader {
      */
     private static ClassReader initAndCache(String name) {
 
-        ClassReader classReader = initClassReader(name);
+        ClassReader classReader = ObjectUtils.applyWrap(name, CachedClassReader::readResource);
         CLASS_FILES.putIfAbsent(name, classReader);
 
         return classReader;
