@@ -25,7 +25,7 @@ package org.lightmare.criteria.functions;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-import org.lightmare.criteria.query.internal.jpa.ORMFunction;
+import org.lightmare.criteria.query.internal.orm.ORMFunction;
 
 /**
  * Consumer to process JPA query functional expressions

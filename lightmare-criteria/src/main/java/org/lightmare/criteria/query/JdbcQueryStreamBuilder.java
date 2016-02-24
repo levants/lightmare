@@ -27,7 +27,7 @@ import java.sql.Connection;
 import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.connectors.JdbcProvider;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
-import org.lightmare.criteria.query.internal.jpa.links.Clauses;
+import org.lightmare.criteria.query.internal.orm.links.Clauses;
 
 /**
  * Main class for lambda expression analyze and JDBC query build and run

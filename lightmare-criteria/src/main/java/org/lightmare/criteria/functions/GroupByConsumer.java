@@ -25,7 +25,7 @@ package org.lightmare.criteria.functions;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-import org.lightmare.criteria.query.internal.jpa.GroupExpression;
+import org.lightmare.criteria.query.internal.orm.GroupExpression;
 
 /**
  * Consumer to process JPA query GROUP BY clause

@@ -24,7 +24,7 @@ package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.internal.jpa.QueryExpression;
+import org.lightmare.criteria.query.internal.orm.QueryExpression;
 
 /**
  * Main interface with query construction methods

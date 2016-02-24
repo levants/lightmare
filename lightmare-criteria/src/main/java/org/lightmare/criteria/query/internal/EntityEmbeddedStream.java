@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.internal;
 import java.io.Serializable;
 
 import org.lightmare.criteria.lambda.LambdaUtils;
-import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.tuples.EmbeddedTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 

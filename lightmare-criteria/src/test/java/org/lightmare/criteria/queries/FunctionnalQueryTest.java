@@ -9,7 +9,7 @@ import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.links.Trimspec;
+import org.lightmare.criteria.query.internal.orm.links.Trimspec;
 import org.lightmare.criteria.runorder.RunOrder;
 
 public class FunctionnalQueryTest extends GroupByQueryTest {

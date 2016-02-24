@@ -40,7 +40,7 @@ import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.config.DefaultConfiguration.DefaultRetriever;
-import org.lightmare.criteria.query.internal.jpa.links.Parts;
+import org.lightmare.criteria.query.internal.orm.links.Parts;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;

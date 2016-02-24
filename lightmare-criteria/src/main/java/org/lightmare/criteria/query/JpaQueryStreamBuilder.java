@@ -27,7 +27,7 @@ import javax.persistence.EntityManager;
 import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.connectors.JpaProvider;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
-import org.lightmare.criteria.query.internal.jpa.links.Clauses;
+import org.lightmare.criteria.query.internal.orm.links.Clauses;
 
 /**
  * Main class for lambda expression analyze and JPA query build and run

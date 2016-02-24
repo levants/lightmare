@@ -24,13 +24,13 @@ package org.lightmare.criteria.query.internal;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.builders.AbstractQueryStream;
-import org.lightmare.criteria.query.internal.jpa.links.Aggregates;
-import org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream;
+import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.orm.links.Aggregates;
+import org.lightmare.criteria.query.internal.orm.subqueries.AbstractSubQueryStream;
 
 /**
  * Implementation of
- * {@link org.lightmare.criteria.query.internal.jpa.subqueries.AbstractSubQueryStream}
+ * {@link org.lightmare.criteria.query.internal.orm.subqueries.AbstractSubQueryStream}
  * for sub query generation
  * 
  * @author Levan Tsinadze

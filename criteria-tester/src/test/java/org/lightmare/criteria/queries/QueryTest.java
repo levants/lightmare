@@ -17,7 +17,7 @@ import org.lightmare.criteria.entities.PersonWrapper;
 import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.jpa.SelectExpression.Select;
+import org.lightmare.criteria.query.internal.orm.SelectExpression.Select;
 import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
 

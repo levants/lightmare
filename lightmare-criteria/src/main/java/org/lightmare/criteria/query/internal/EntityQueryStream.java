@@ -29,10 +29,10 @@ import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
-import org.lightmare.criteria.query.internal.jpa.builders.AbstractAggregateStream;
-import org.lightmare.criteria.query.internal.jpa.links.Joins;
-import org.lightmare.criteria.query.internal.jpa.links.Operators;
-import org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream;
+import org.lightmare.criteria.query.internal.orm.builders.AbstractAggregateStream;
+import org.lightmare.criteria.query.internal.orm.links.Joins;
+import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -165,11 +165,11 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
     /**
      * Generates
-     * {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
+     * {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
      * for entity type
      * 
      * @param type
-     * @return {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
+     * @return {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
      *         for entity {@link Class}
      */
     public <S> SubQueryStream<S, T> subQuery(Class<S> type) {
@@ -217,12 +217,12 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
     /**
      * Creates
-     * {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
+     * {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
      * for instant {@link Class} entity type
      * 
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.internal.jpa.subqueries.SubQueryStream}
+     * @return {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
      *         for entity type
      */
     private <S> QueryStream<S> initSubQuery(Class<S> type, QueryConsumer<S> consumer) {
