@@ -24,6 +24,7 @@ package org.lightmare.criteria.config;
 
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Configuration interfaces for query initialization and result retriever
@@ -66,7 +67,8 @@ public interface Configuration {
          * 
          * @param result
          * @return T instance from {@link java.sql.ResultSet}
+         * @throws java.sql.SQLException
          */
-        T readRow(ResultSet result);
+        T readRow(ResultSet result) throws SQLException;
     }
 }

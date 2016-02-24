@@ -39,14 +39,14 @@ public class ClassUtils extends AbstractMemberUtils {
      * @return {@link Class} by name
      */
     public static Class<?> classForName(String className, boolean initialize, ClassLoader loader) {
-        return ObjectUtils.getWrap(() -> {
+        return ObjectUtils.applyWrap(className, c -> {
 
             Class<?> type;
 
             if (loader == null) {
-                type = Class.forName(className);
+                type = Class.forName(c);
             } else {
-                type = Class.forName(className, initialize, loader);
+                type = Class.forName(c, initialize, loader);
             }
 
             return type;

@@ -199,11 +199,11 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @return T new instance of {@link Class}
      */
     public static <T> T newInstance(Class<T> type) {
-        return ObjectUtils.getWrap(() -> {
+        return ObjectUtils.applyWrap(type, c -> {
 
             T instance;
 
-            Constructor<T> constructor = type.getConstructor();
+            Constructor<T> constructor = c.getConstructor();
             makeAccessible(constructor);
             instance = constructor.newInstance();
 

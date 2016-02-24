@@ -124,56 +124,35 @@ public class JdbcQueryLayer<T> implements QueryLayer<T> {
     }
 
     private static void putParameter(Integer key, ParameterTuple parameter, PreparedStatement statement) {
-
-        try {
-            statement.setObject(key, parameter.getValue());
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
+        ObjectUtils.acceptWrap(statement, c -> c.setObject(key, parameter.getValue()));
     }
 
-    private PreparedStatement call(String sql, JdbcFunction function) {
+    private PreparedStatement call(JdbcFunction function) {
+        return ObjectUtils.applyWrap(function, c -> {
 
-        PreparedStatement result;
+            PreparedStatement result;
 
-        try {
             String refined = replaceParameters();
-            result = function.apply(refined);
+            result = c.apply(refined);
             parameters.forEach((k, v) -> putParameter(k, v, result));
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
 
-        return result;
+            return result;
+        });
     }
 
     private <P, R> R call(JdbcSupplier<R> supplier) {
-
-        R result;
-
-        try {
-            result = supplier.supply();
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        return result;
+        return ObjectUtils.applyWrap(supplier, JdbcSupplier::supply);
     }
 
     private <P> void consume(P value, JdbcConsumer<P> consumer) {
-
-        try {
-            consumer.accept(value);
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
+        ObjectUtils.acceptWrap(value, c -> consumer.accept(c));
     }
 
     private ResultSet executeQuery() throws SQLException {
 
         ResultSet rs;
 
-        statement = call(sql, connection::prepareStatement);
+        statement = call(connection::prepareStatement);
         rs = statement.executeQuery();
 
         return rs;

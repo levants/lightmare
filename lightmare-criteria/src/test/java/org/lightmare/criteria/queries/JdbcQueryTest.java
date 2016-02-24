@@ -31,13 +31,9 @@ public class JdbcQueryTest extends FunctionnalQueryTest {
 
                 JdbcPerson person = new JdbcPerson();
 
-                try {
-                    person.setPersonalNo(r.getString("PERSONAL_NO"));
-                    person.setLastName(r.getString("LAST_NAME"));
-                    person.setFirstName(r.getString("FIRST_NAME"));
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
+                person.setPersonalNo(r.getString("PERSONAL_NO"));
+                person.setLastName(r.getString("LAST_NAME"));
+                person.setFirstName(r.getString("FIRST_NAME"));
 
                 return person;
             });
