@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.utils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
@@ -204,8 +205,10 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
         T instance;
 
         try {
-            instance = type.newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
+            Constructor<T> constructor = type.getConstructor();
+            makeAccessible(constructor);
+            instance = constructor.newInstance();
+        } catch (ReflectiveOperationException ex) {
             throw new RuntimeException(ex);
         }
 
@@ -223,6 +226,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     public static void set(Field field, Object instance, Object value) {
 
         try {
+            makeAccessible(field);
             field.set(instance, value);
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             throw new RuntimeException(ex);
