@@ -116,8 +116,6 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
             tuple.member = supplier.getMember(tuple.type, tuple.memberName);
         } catch (NoSuchMethodException | NoSuchFieldException ex) {
             tuple.setSuperType();
-        } catch (SecurityException ex) {
-            throw new RuntimeException(ex);
         }
     }
 
@@ -201,18 +199,16 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @return T new instance of {@link Class}
      */
     public static <T> T newInstance(Class<T> type) {
+        return ObjectUtils.getWrap(() -> {
 
-        T instance;
+            T instance;
 
-        try {
             Constructor<T> constructor = type.getConstructor();
             makeAccessible(constructor);
             instance = constructor.newInstance();
-        } catch (ReflectiveOperationException ex) {
-            throw new RuntimeException(ex);
-        }
 
-        return instance;
+            return instance;
+        });
     }
 
     /**
@@ -224,13 +220,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param value
      */
     public static void set(Field field, Object instance, Object value) {
-
-        try {
-            makeAccessible(field);
-            field.set(instance, value);
-        } catch (IllegalArgumentException | IllegalAccessException ex) {
-            throw new RuntimeException(ex);
-        }
+        ObjectUtils.acceptWrap(field, c -> c.set(instance, value));
     }
 
     /**
@@ -250,7 +240,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
             makeAccessible(method);
             Object raw = method.invoke(instance, arguments);
             value = ObjectUtils.cast(raw);
-        } catch (IllegalAccessException | IllegalArgumentException ex) {
+        } catch (IllegalAccessException ex) {
             throw new RuntimeException(ex);
         } catch (InvocationTargetException ex) {
             throw unwrap(ex);

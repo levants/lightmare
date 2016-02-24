@@ -143,15 +143,12 @@ public class DefaultConfiguration {
              * @param rs
              */
             public void set(Object instance, ResultSet rs) {
-
-                try {
+                ObjectUtils.acceptWrap(instance, c -> {
                     if (Objects.nonNull(rs.getObject(name))) {
                         Object value = function.apply(rs, name);
-                        ClassUtils.set(field, instance, value);
+                        ClassUtils.set(field, c, value);
                     }
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                });
             }
         }
 

@@ -24,7 +24,6 @@ package org.lightmare.criteria.query.internal.connectors;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import org.lightmare.criteria.annotations.DBColumn;
 import org.lightmare.criteria.annotations.DBTable;
@@ -103,11 +102,6 @@ public class JdbcProvider implements LayerProvider {
 
     @Override
     public void close() {
-
-        try {
-            connection.close();
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
+        ObjectUtils.acceptWrap(connection, Connection::close);
     }
 }

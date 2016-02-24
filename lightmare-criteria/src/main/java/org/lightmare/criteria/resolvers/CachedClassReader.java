@@ -58,16 +58,15 @@ public class CachedClassReader extends ClassReader {
      * @return {@link org.objectweb.asm.ClassReader} by class name
      */
     private static ClassReader initClassReader(String name) {
+        return ObjectUtils.getWrap(() -> {
+            ClassReader classReader;
 
-        ClassReader classReader;
+            try (InputStream is = ClassLoaderUtils.getClassAsStream(name)) {
+                classReader = new CachedClassReader(is);
+            }
 
-        try (InputStream is = ClassLoaderUtils.getClassAsStream(name)) {
-            classReader = new CachedClassReader(is);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        return classReader;
+            return classReader;
+        });
     }
 
     /**

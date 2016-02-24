@@ -100,16 +100,7 @@ public class LambdaUtils {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} clone
      */
     private static QueryTuple cloneTuple(QueryTuple instance) {
-
-        QueryTuple cloneInstance;
-
-        try {
-            cloneInstance = ObjectUtils.cast(instance.clone());
-        } catch (CloneNotSupportedException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        return cloneInstance;
+        return ObjectUtils.getWrap(() -> ObjectUtils.cast(instance.clone()));
     }
 
     /**

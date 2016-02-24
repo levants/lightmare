@@ -24,7 +24,6 @@ package org.lightmare.criteria.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -41,6 +40,84 @@ import java.util.function.Supplier;
  * @author Levan Tsinadze
  */
 public abstract class ObjectUtils {
+
+    /**
+     * Wraps exceptions and errors to avoid throwable
+     * 
+     * @author Levan Tsinadze
+     *
+     * @param <T>
+     *            argument type
+     * @param <E>
+     *            error type
+     */
+    @FunctionalInterface
+    public static interface ErrorWrapperConsumer<T, E extends Exception> {
+
+        /**
+         * Accepts passed value and throws appropriated exception
+         * 
+         * @param value
+         * @throws E
+         */
+        void accept(T value) throws E;
+    }
+
+    /**
+     * Wraps exceptions and errors to avoid throwable
+     * 
+     * @author Levan Tsinadze
+     *
+     * @param <T>
+     *            result type
+     * @param <E>
+     *            error type
+     */
+    @FunctionalInterface
+    public static interface ErrorWrapperSupplier<T, E extends Exception> {
+
+        /**
+         * Get value and throws appropriated exception
+         * 
+         * @param value
+         * @throws E
+         */
+        T get() throws E;
+    }
+
+    /**
+     * Calls consumer implementation and wraps errors
+     * 
+     * @param value
+     * @param consumer
+     */
+    public static <T, E extends Exception> void acceptWrap(T value, ErrorWrapperConsumer<T, E> consumer) {
+
+        try {
+            consumer.accept(value);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Calls supplier implementation and wraps errors
+     * 
+     * @param supplier
+     * @return T result from supplier
+     */
+    public static <T, E extends Exception> T getWrap(ErrorWrapperSupplier<T, E> supplier) {
+
+        T result;
+
+        try {
+            result = supplier.get();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return result;
+    }
 
     /**
      * Checks if passed boolean value is not true
@@ -414,18 +491,18 @@ public abstract class ObjectUtils {
      * @return <code>byte</code> array serialized object
      */
     public static byte[] serialize(Object value) {
+        return getWrap(() -> {
 
-        byte[] bytes;
+            byte[] bytes;
 
-        try (ByteArrayOutputStream bout = new ByteArrayOutputStream();
-                ObjectOutputStream out = new ObjectOutputStream(bout)) {
-            out.writeObject(value);
-            bytes = bout.toByteArray();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+            try (ByteArrayOutputStream bout = new ByteArrayOutputStream();
+                    ObjectOutputStream out = new ObjectOutputStream(bout)) {
+                out.writeObject(value);
+                bytes = bout.toByteArray();
+            }
 
-        return bytes;
+            return bytes;
+        });
     }
 
     /**
@@ -436,16 +513,16 @@ public abstract class ObjectUtils {
      * @return {@link Object}
      */
     private static Object readToObject(byte[] bytes) {
+        return getWrap(() -> {
 
-        Object value;
+            Object value;
 
-        try (InputStream bin = new ByteArrayInputStream(bytes); ObjectInputStream in = new ObjectInputStream(bin)) {
-            value = in.readObject();
-        } catch (ClassNotFoundException | IOException ex) {
-            throw new RuntimeException(ex);
-        }
+            try (InputStream bin = new ByteArrayInputStream(bytes); ObjectInputStream in = new ObjectInputStream(bin)) {
+                value = in.readObject();
+            }
 
-        return value;
+            return value;
+        });
     }
 
     /**

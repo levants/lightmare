@@ -58,16 +58,7 @@ public enum LambdaReferences {
      *         {@link java.lang.ref.ReferenceQueue}
      */
     private Reference<?> remove() {
-
-        Reference<?> reference;
-
-        try {
-            reference = references.remove();
-        } catch (InterruptedException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        return reference;
+        return ObjectUtils.getWrap(references::remove);
     }
 
     /**

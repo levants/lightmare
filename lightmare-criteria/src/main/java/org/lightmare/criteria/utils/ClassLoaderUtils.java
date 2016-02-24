@@ -124,12 +124,7 @@ public class ClassLoaderUtils {
      * @param loader
      */
     private static void loadClass(String className, ClassLoader loader) {
-
-        try {
-            loader.loadClass(className);
-        } catch (ClassNotFoundException ex) {
-            throw new RuntimeException(ex);
-        }
+        ObjectUtils.acceptWrap(loader, c -> c.loadClass(className));
     }
 
     /**

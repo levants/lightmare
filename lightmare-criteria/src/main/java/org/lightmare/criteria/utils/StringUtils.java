@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.utils;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -117,16 +116,7 @@ public abstract class StringUtils {
      * @return {@link String} from bytes by encoding
      */
     public static String fromBytes(byte[] bytes, String charset) {
-
-        String value;
-
-        try {
-            value = new String(bytes, charset);
-        } catch (UnsupportedEncodingException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        return value;
+        return ObjectUtils.getWrap(() -> new String(bytes, charset));
     }
 
     /**
@@ -138,16 +128,7 @@ public abstract class StringUtils {
      * @return <code>byte</code> array from {@link String} by encoding
      */
     public static byte[] getBytes(String text, String charset) {
-
-        byte[] value;
-
-        try {
-            value = text.getBytes(charset);
-        } catch (UnsupportedEncodingException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        return value;
+        return ObjectUtils.getWrap(() -> text.getBytes(charset));
     }
 
     /**
