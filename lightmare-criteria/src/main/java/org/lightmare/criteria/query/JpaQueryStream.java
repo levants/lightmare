@@ -34,24 +34,24 @@ import org.lightmare.criteria.query.internal.orm.QueryExpression;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface QueryStream<T> extends QueryExpression<T> {
+public interface JpaQueryStream<T> extends QueryExpression<T> {
 
     /**
      * Generates query part for embedded entity fields
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    <F> QueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F> consumer);
+    <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F> consumer);
 
     @Override
-    default QueryStream<T> where() {
+    default JpaQueryStream<T> where() {
         return this;
     }
 
     @Override
-    default QueryStream<T> openBracket() {
+    default JpaQueryStream<T> openBracket() {
         return QueryExpression.super.openBracket();
     }
 }

@@ -25,7 +25,7 @@ package org.lightmare.criteria.functions;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 
 /**
  * Query consumer to process JPA query brackets, sub queries, aggregates etc.
@@ -36,8 +36,8 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type parameter
  */
 @FunctionalInterface
-public interface QueryConsumer<T> extends Consumer<QueryStream<T>>, Serializable {
+public interface QueryConsumer<T> extends Consumer<JpaQueryStream<T>>, Serializable {
 
     @Override
-    void accept(QueryStream<T> stream);
+    void accept(JpaQueryStream<T> stream);
 }

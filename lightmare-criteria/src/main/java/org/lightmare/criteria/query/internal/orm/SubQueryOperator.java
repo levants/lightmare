@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.internal.orm;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 
 /**
  * Provides methods to process sub queries
@@ -45,9 +45,9 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
+    <F, S> JpaQueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
             QueryConsumer<S> consumer);
 
     /**
@@ -58,9 +58,9 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    <F, S> QueryStream<T> operateSubQuery(Object value, String operator, Class<S> type, QueryConsumer<S> consumer);
+    <F, S> JpaQueryStream<T> operateSubQuery(Object value, String operator, Class<S> type, QueryConsumer<S> consumer);
 
     /**
      * Processes sub query for entity field instant operator and sub query
@@ -70,8 +70,8 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    <F, S> QueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator, Class<S> type,
+    <F, S> JpaQueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator, Class<S> type,
             QueryConsumer<S> consumer);
 }

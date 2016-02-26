@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.lightmare.criteria.db.TestDBUtils;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.JpaQueryProvider;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.runorder.SortedRunner;
 import org.lightmare.criteria.utils.ObjectUtils;
 
@@ -55,13 +55,13 @@ public class TestEnviromentConfig {
         }
     }
 
-    protected static void printParameters(QueryStream<?> stream) {
+    protected static void printParameters(JpaQueryStream<?> stream) {
         stream.getParameters().forEach(c -> System.out.format("name:%s - value:%s\n", c.getName(), c.getValue()));
     }
 
-    protected QueryStream<Person> createQueryStream(final EntityManager em) {
+    protected JpaQueryStream<Person> createQueryStream(final EntityManager em) {
 
-        QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class);
+        JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class);
 
         stream.where().ge(Person::getBirthDate, getDateValue()).and();
         stream.like(Person::getLastName, "lname");
@@ -80,7 +80,7 @@ public class TestEnviromentConfig {
 
         EntityManager em = emf.createEntityManager();
         try {
-            QueryStream<Person> stream = createQueryStream(em);
+            JpaQueryStream<Person> stream = createQueryStream(em);
             String sql = stream.sql();
             System.out.println();
             System.out.println("===============FIRST=TEST===================");

@@ -32,7 +32,7 @@ import java.util.Set;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.functions.SelectConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.tuples.AggregateTuple;
@@ -128,12 +128,12 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     /**
      * Generates appropriated query stream
      * 
-     * @return {@link org.lightmare.criteria.tuples.QueryStream} for special
+     * @return {@link org.lightmare.criteria.tuples.JpaQueryStream} for special
      *         type parameter
      */
-    private <F> QueryStream<F> generateStream(Class<F> type) {
+    private <F> JpaQueryStream<F> generateStream(Class<F> type) {
 
-        QueryStream<F> stream;
+        JpaQueryStream<F> stream;
 
         selectStream = new SelectStream<>(this, type);
         stream = ObjectUtils.cast(selectStream);
@@ -145,12 +145,12 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
      * Processes select method call for all arguments
      * 
      * @param fields
-     * @return {@link org.lightmare.criteria.query.QueryStream} for select
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for select
      *         method
      */
-    private QueryStream<Object[]> groupByField(Serializable field) {
+    private JpaQueryStream<Object[]> groupByField(Serializable field) {
 
-        QueryStream<Object[]> stream;
+        JpaQueryStream<Object[]> stream;
 
         oppGroups(Collections.singleton(field));
         stream = generateStream(Object[].class);
@@ -159,9 +159,9 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public QueryStream<Object[]> groupBy(Select select) {
+    public JpaQueryStream<Object[]> groupBy(Select select) {
 
-        QueryStream<Object[]> stream;
+        JpaQueryStream<Object[]> stream;
 
         oppGroups(select.getFields());
         stream = generateStream(Object[].class);
@@ -170,7 +170,7 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public QueryStream<Object[]> group(SelectConsumer select) {
+    public JpaQueryStream<Object[]> group(SelectConsumer select) {
 
         Select columns = Select.select();
         ObjectUtils.accept(select, columns);
@@ -179,7 +179,7 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public <F> QueryStream<Object[]> groupBy(EntityField<T, F> field) {
+    public <F> JpaQueryStream<Object[]> groupBy(EntityField<T, F> field) {
         return groupByField(field);
     }
 }

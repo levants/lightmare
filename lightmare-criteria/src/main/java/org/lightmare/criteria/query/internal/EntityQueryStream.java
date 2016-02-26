@@ -27,7 +27,7 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractAggregateStream;
 import org.lightmare.criteria.query.internal.orm.links.Joins;
@@ -52,7 +52,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operate(EntityField<T, F> field, String operator) {
+    public <F> JpaQueryStream<T> operate(EntityField<T, F> field, String operator) {
 
         appendOperator();
         oppLine(field, operator);
@@ -61,7 +61,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator) {
+    public <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator) {
 
         appendOperator();
         oppLine(field, value, operator);
@@ -70,7 +70,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2,
+    public <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2,
             String operator) {
 
         appendOperator();
@@ -80,7 +80,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operate(EntityField<T, ? extends F> field, String operator1, Object value1,
+    public <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, String operator1, Object value1,
             String operator2, Object value2) {
 
         appendOperator();
@@ -90,7 +90,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F> QueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator) {
+    public <F> JpaQueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator) {
 
         appendOperator();
         oppCollection(field, values, operator);
@@ -99,7 +99,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <S, F> QueryStream<T> operateCollection(Object value, EntityField<S, Collection<F>> field, String operator) {
+    public <S, F> JpaQueryStream<T> operateCollection(Object value, EntityField<S, Collection<F>> field, String operator) {
 
         appendOperator();
         oppCollection(value, field, operator);
@@ -110,7 +110,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     // ========================= Entity self method composers ===============//
 
     @Override
-    public <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
+    public <F, S> JpaQueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
             String operator) {
 
         appendOperator();
@@ -120,7 +120,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F, E, S, L> QueryStream<T> operate(EntityField<T, ? extends F> field1, String operator1,
+    public <F, E, S, L> JpaQueryStream<T> operate(EntityField<T, ? extends F> field1, String operator1,
             EntityField<S, ? extends F> field2, String operator2, EntityField<L, E> field3) {
 
         appendOperator();
@@ -130,7 +130,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
+    public <F, S> JpaQueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
             EntityField<S, ? extends F> field3, String operator) {
 
         appendOperator();
@@ -140,7 +140,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
+    public <F, S> JpaQueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
             String operator) {
 
         appendOperator();
@@ -152,12 +152,12 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     // =========================embedded=field=queries=======================//
 
     @Override
-    public <F> QueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F> consumer) {
+    public <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F> consumer) {
 
         QueryTuple tuple = compose(field);
         Class<F> type = tuple.getFieldGenericType();
         String embeddedName = tuple.getFieldName();
-        QueryStream<F> embeddedQuery = new EntityEmbeddedStream<>(this, type, embeddedName);
+        JpaQueryStream<F> embeddedQuery = new EntityEmbeddedStream<>(this, type, embeddedName);
         acceptAndCall(consumer, embeddedQuery);
 
         return this;
@@ -177,24 +177,24 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     /**
-     * Generates {@link org.lightmare.criteria.query.QueryStream} for JOIN query
+     * Generates {@link org.lightmare.criteria.query.JpaQueryStream} for JOIN query
      * 
      * @param type
-     * @return {@link org.lightmare.criteria.query.QueryStream} for JOIN query
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for JOIN query
      */
     public <S> SubQueryStream<S, T> joinStream(Class<S> type) {
         return new EntityJoinProcessor<S, T>(this, type);
     }
 
     /**
-     * Generates {@link org.lightmare.criteria.query.QueryStream} for JOIN query
+     * Generates {@link org.lightmare.criteria.query.JpaQueryStream} for JOIN query
      * 
      * @param tuple
-     * @return {@link org.lightmare.criteria.query.QueryStream} for JOIN query
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for JOIN query
      */
-    public <S> QueryStream<S> joinStream(QueryTuple tuple) {
+    public <S> JpaQueryStream<S> joinStream(QueryTuple tuple) {
 
-        QueryStream<S> joinStream;
+        JpaQueryStream<S> joinStream;
 
         Class<S> type = tuple.getCollectionType();
         joinStream = joinStream(type);
@@ -210,7 +210,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
      * @param consumer
      * @param subQuery
      */
-    private <S> void acceptAndCall(QueryConsumer<S> consumer, QueryStream<S> query) {
+    private <S> void acceptAndCall(QueryConsumer<S> consumer, JpaQueryStream<S> query) {
         ObjectUtils.accept(consumer, query);
         ObjectUtils.castIfValid(query, SubQueryStream.class, SubQueryStream::call);
     }
@@ -225,9 +225,9 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
      * @return {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
      *         for entity type
      */
-    private <S> QueryStream<S> initSubQuery(Class<S> type, QueryConsumer<S> consumer) {
+    private <S> JpaQueryStream<S> initSubQuery(Class<S> type, QueryConsumer<S> consumer) {
 
-        QueryStream<S> query = subQuery(type);
+        JpaQueryStream<S> query = subQuery(type);
 
         acceptAndCall(consumer, query);
         closeBracket();
@@ -237,7 +237,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <S> QueryStream<T> operateSubQuery(Class<S> type, QueryConsumer<S> consumer) {
+    public <S> JpaQueryStream<T> operateSubQuery(Class<S> type, QueryConsumer<S> consumer) {
 
         openBracket();
         initSubQuery(type, consumer);
@@ -246,7 +246,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
+    public <F, S> JpaQueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
             QueryConsumer<S> consumer) {
 
         appendOperator();
@@ -257,7 +257,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> operateSubQuery(Object value, String operator, Class<S> type,
+    public <F, S> JpaQueryStream<T> operateSubQuery(Object value, String operator, Class<S> type,
             QueryConsumer<S> consumer) {
 
         appendOperator();
@@ -269,7 +269,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator,
+    public <F, S> JpaQueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator,
             Class<S> type, QueryConsumer<S> consumer) {
 
         startFunctionExpression(function, operator);
@@ -280,7 +280,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     @Override
-    public <F, S> QueryStream<T> operateSubQuery(String operator, Class<S> type, QueryConsumer<S> consumer) {
+    public <F, S> JpaQueryStream<T> operateSubQuery(String operator, Class<S> type, QueryConsumer<S> consumer) {
 
         appendOperator();
         appendBody(operator);
@@ -297,26 +297,26 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
             QueryConsumer<E> consumer) {
 
         QueryTuple tuple = oppJoin(field, expression);
-        QueryStream<E> joinQuery = joinStream(tuple);
+        JpaQueryStream<E> joinQuery = joinStream(tuple);
         appendJoin(joinQuery.getAlias());
         appendJoin(StringUtils.NEWLINE);
         acceptAndCall(consumer, joinQuery);
     }
 
     @Override
-    public <E, C extends Collection<E>> QueryStream<T> join(EntityField<T, C> field, QueryConsumer<E> consumer) {
+    public <E, C extends Collection<E>> JpaQueryStream<T> join(EntityField<T, C> field, QueryConsumer<E> consumer) {
         procesJoin(field, Joins.JOIN, consumer);
         return this;
     }
 
     @Override
-    public <E, C extends Collection<E>> QueryStream<T> leftJoin(EntityField<T, C> field, QueryConsumer<E> consumer) {
+    public <E, C extends Collection<E>> JpaQueryStream<T> leftJoin(EntityField<T, C> field, QueryConsumer<E> consumer) {
         procesJoin(field, Joins.LEFT, consumer);
         return this;
     }
 
     @Override
-    public <E, C extends Collection<E>> QueryStream<T> fetchJoin(EntityField<T, C> field, QueryConsumer<E> consumer) {
+    public <E, C extends Collection<E>> JpaQueryStream<T> fetchJoin(EntityField<T, C> field, QueryConsumer<E> consumer) {
         procesJoin(field, Joins.FETCH, consumer);
         return this;
     }
@@ -324,13 +324,13 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     // =======================================================================//
 
     @Override
-    public <F> QueryStream<T> set(EntityField<T, F> field, F value) {
+    public <F> JpaQueryStream<T> set(EntityField<T, F> field, F value) {
         setOpp(field, value);
         return this;
     }
 
     @Override
-    public <F> QueryStream<T> order(String dir, EntityField<T, F> field) {
+    public <F> JpaQueryStream<T> order(String dir, EntityField<T, F> field) {
         setOrder(dir, new EntityField[] { field });
         return this;
     }

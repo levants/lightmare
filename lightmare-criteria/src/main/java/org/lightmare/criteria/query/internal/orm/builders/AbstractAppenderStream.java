@@ -26,7 +26,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
@@ -607,19 +607,19 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
     }
 
     @Override
-    public QueryStream<T> brackets(QueryConsumer<T> consumer) {
+    public JpaQueryStream<T> brackets(QueryConsumer<T> consumer) {
         ObjectUtils.nonNull(consumer, this::consumeWithBrackets);
         return this;
     }
 
     @Override
-    public QueryStream<T> appendPrefix(Object clause) {
+    public JpaQueryStream<T> appendPrefix(Object clause) {
         prefix.append(clause);
         return this;
     }
 
     @Override
-    public QueryStream<T> appendFrom(Object clause) {
+    public JpaQueryStream<T> appendFrom(Object clause) {
         from.append(clause);
         return this;
     }
@@ -630,13 +630,13 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param clause
      * @return
      */
-    protected QueryStream<T> appendJoin(Object clause) {
+    protected JpaQueryStream<T> appendJoin(Object clause) {
         joins.append(clause);
         return this;
     }
 
     @Override
-    public QueryStream<T> appendBody(Object clause) {
+    public JpaQueryStream<T> appendBody(Object clause) {
         body.append(clause);
         return this;
     }

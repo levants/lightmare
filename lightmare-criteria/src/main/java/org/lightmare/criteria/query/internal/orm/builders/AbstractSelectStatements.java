@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
@@ -143,7 +143,7 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
     }
 
     @Override
-    public <F> QueryStream<F> selectType(Class<F> type, Select select) {
+    public <F> JpaQueryStream<F> selectType(Class<F> type, Select select) {
 
         SelectStream<T, F> stream;
 
@@ -154,7 +154,7 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
     }
 
     @Override
-    public <F> QueryStream<F> select(String expression, Class<F> type) {
+    public <F> JpaQueryStream<F> select(String expression, Class<F> type) {
 
         SelectStream<T, F> stream;
 
@@ -166,7 +166,7 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
     }
 
     @Override
-    public <F> QueryStream<F> selectType(EntityField<T, F> field) {
+    public <F> JpaQueryStream<F> selectType(EntityField<T, F> field) {
 
         SelectStream<T, F> stream;
 
@@ -178,7 +178,7 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
     }
 
     @Override
-    public <F> QueryStream<Object[]> select(EntityField<T, F> field) {
+    public <F> JpaQueryStream<Object[]> select(EntityField<T, F> field) {
 
         SelectStream<T, Object[]> stream;
 

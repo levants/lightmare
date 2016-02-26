@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.SelectConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 
 /**
  * Interface to generate SELECT clause for instant fields
@@ -86,18 +86,18 @@ public interface SelectExpression<T> {
      * 
      * @param type
      * @param select
-     * @return {@link org.lightmare.criteria.query.QueryStream} for special type
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for special type
      */
-    <F> QueryStream<F> selectType(Class<F> type, Select select);
+    <F> JpaQueryStream<F> selectType(Class<F> type, Select select);
 
     /**
      * Custom select expression
      * 
      * @param select
-     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for
      *         {@link Object} array
      */
-    default QueryStream<Object[]> select(Select select) {
+    default JpaQueryStream<Object[]> select(Select select) {
         return selectType(Object[].class, select);
     }
 
@@ -106,11 +106,11 @@ public interface SelectExpression<T> {
      * 
      * @param type
      * @param select
-     * @return {@link org.lightmare.criteria.query.QueryStream} for special type
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for special type
      */
-    default <F> QueryStream<F> selectType(Class<F> type, SelectConsumer select) {
+    default <F> JpaQueryStream<F> selectType(Class<F> type, SelectConsumer select) {
 
-        QueryStream<F> stream;
+        JpaQueryStream<F> stream;
 
         Select columns = Select.accept(select);
         stream = selectType(type, columns);
@@ -122,12 +122,12 @@ public interface SelectExpression<T> {
      * Custom select expression
      * 
      * @param select
-     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for
      *         {@link Object} array
      */
-    default QueryStream<Object[]> selectAll(SelectConsumer select) {
+    default JpaQueryStream<Object[]> selectAll(SelectConsumer select) {
 
-        QueryStream<Object[]> stream;
+        JpaQueryStream<Object[]> stream;
 
         Select columns = Select.accept(select);
         stream = select(columns);
@@ -140,28 +140,28 @@ public interface SelectExpression<T> {
      * 
      * @param expression
      * @param types
-     * @return {@link org.lightmare.criteria.query.QueryStream} for special type
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for special type
      */
-    <F> QueryStream<F> select(String expression, Class<F> type);
+    <F> JpaQueryStream<F> select(String expression, Class<F> type);
 
     /**
      * Custom select expression
      * 
      * @param expression
-     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for
      *         {@link Object} array
      */
-    default QueryStream<Object[]> select(String expression) {
+    default JpaQueryStream<Object[]> select(String expression) {
         return select(expression, Object[].class);
     }
 
-    <F> QueryStream<Object[]> select(EntityField<T, F> field);
+    <F> JpaQueryStream<Object[]> select(EntityField<T, F> field);
 
     /**
      * Gets instant field by type
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.QueryStream} for field type
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for field type
      */
-    <F> QueryStream<F> selectType(EntityField<T, F> field);
+    <F> JpaQueryStream<F> selectType(EntityField<T, F> field);
 }

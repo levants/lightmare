@@ -24,7 +24,7 @@ package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 
 /**
@@ -41,28 +41,28 @@ public interface SubQueryProcessor<T>
     Class<T> getEntityType();
 
     /**
-     * Generates {@link org.lightmare.criteria.query.QueryStream} for S type
+     * Generates {@link org.lightmare.criteria.query.JpaQueryStream} for S type
      * 
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} similar stream
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} similar stream
      *         for sub query
      */
-    <S> QueryStream<T> operateSubQuery(Class<S> type, QueryConsumer<S> consumer);
+    <S> JpaQueryStream<T> operateSubQuery(Class<S> type, QueryConsumer<S> consumer);
 
     /**
-     * Generates {@link org.lightmare.criteria.query.QueryStream} for S type
+     * Generates {@link org.lightmare.criteria.query.JpaQueryStream} for S type
      * without conditions
      * 
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} similar stream
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} similar stream
      *         for sub query
      */
-    default QueryStream<T> subQuery(QueryConsumer<T> consumer) {
+    default JpaQueryStream<T> subQuery(QueryConsumer<T> consumer) {
         return operateSubQuery(getEntityType(), consumer);
     }
 
-    <F, S> QueryStream<T> operateSubQuery(String operator, Class<S> type, QueryConsumer<S> consumer);
+    <F, S> JpaQueryStream<T> operateSubQuery(String operator, Class<S> type, QueryConsumer<S> consumer);
 
     /**
      * Generates sub query for IN clause
@@ -70,9 +70,9 @@ public interface SubQueryProcessor<T>
      * @param field
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> type, QueryConsumer<S> consumer) {
+    default <F, S> JpaQueryStream<T> in(EntityField<T, F> field, Class<S> type, QueryConsumer<S> consumer) {
         return operateSubQuery(field, Operators.IN, type, consumer);
     }
 
@@ -82,34 +82,34 @@ public interface SubQueryProcessor<T>
      * @param field
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    default <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> type, QueryConsumer<S> consumer) {
+    default <F, S> JpaQueryStream<T> notIn(EntityField<T, F> field, Class<S> type, QueryConsumer<S> consumer) {
         return operateSubQuery(field, Operators.NOT_IN, type, consumer);
     }
 
-    default <F, S> QueryStream<T> in(EntityField<T, F> field, Class<S> type) {
+    default <F, S> JpaQueryStream<T> in(EntityField<T, F> field, Class<S> type) {
         return in(field, type, null);
     }
 
-    default <F, S> QueryStream<T> notIn(EntityField<T, F> field, Class<S> type) {
+    default <F, S> JpaQueryStream<T> notIn(EntityField<T, F> field, Class<S> type) {
         return notIn(field, type, null);
     }
 
-    default <F> QueryStream<T> in(EntityField<T, F> field, QueryConsumer<T> consumer) {
+    default <F> JpaQueryStream<T> in(EntityField<T, F> field, QueryConsumer<T> consumer) {
         return in(field, getEntityType(), consumer);
     }
 
-    default <F> QueryStream<T> notIn(EntityField<T, F> field, QueryConsumer<T> consumer) {
+    default <F> JpaQueryStream<T> notIn(EntityField<T, F> field, QueryConsumer<T> consumer) {
         return notIn(field, getEntityType(), consumer);
     }
 
-    default <F> QueryStream<T> in(EntityField<T, F> field) {
+    default <F> JpaQueryStream<T> in(EntityField<T, F> field) {
         QueryConsumer<T> consumer = null;
         return in(field, consumer);
     }
 
-    default <F> QueryStream<T> notIn(EntityField<T, F> field) {
+    default <F> JpaQueryStream<T> notIn(EntityField<T, F> field) {
         QueryConsumer<T> consumer = null;
         return notIn(field, consumer);
     }
@@ -119,9 +119,9 @@ public interface SubQueryProcessor<T>
      * 
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    default <F, S> QueryStream<T> exists(Class<S> type, QueryConsumer<S> consumer) {
+    default <F, S> JpaQueryStream<T> exists(Class<S> type, QueryConsumer<S> consumer) {
         return operateSubQuery(Operators.EXISTS, type, consumer);
     }
 
@@ -130,25 +130,25 @@ public interface SubQueryProcessor<T>
      * 
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    default <F, S> QueryStream<T> notExists(Class<S> type, QueryConsumer<S> consumer) {
+    default <F, S> JpaQueryStream<T> notExists(Class<S> type, QueryConsumer<S> consumer) {
         return operateSubQuery(Operators.NOT_EXISTS, type, consumer);
     }
 
-    default <F, S> QueryStream<T> exists(Class<S> type) {
+    default <F, S> JpaQueryStream<T> exists(Class<S> type) {
         return exists(type, null);
     }
 
-    default <F, S> QueryStream<T> notExists(Class<S> type) {
+    default <F, S> JpaQueryStream<T> notExists(Class<S> type) {
         return notExists(type, null);
     }
 
-    default <F> QueryStream<T> exists(QueryConsumer<T> consumer) {
+    default <F> JpaQueryStream<T> exists(QueryConsumer<T> consumer) {
         return exists(getEntityType(), consumer);
     }
 
-    default <F> QueryStream<T> notExists(QueryConsumer<T> consumer) {
+    default <F> JpaQueryStream<T> notExists(QueryConsumer<T> consumer) {
         return notExists(getEntityType(), consumer);
     }
 }

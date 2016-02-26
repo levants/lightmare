@@ -8,7 +8,7 @@ import org.lightmare.criteria.entities.GeneralInfo;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.PersonInfo;
 import org.lightmare.criteria.query.JpaQueryProvider;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
 
@@ -22,7 +22,7 @@ public class EmbeddedQueryTest extends JoinQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").like(GeneralInfo::getFullName, Person::getLastName)
                     .embedded(Person::getInfo, c -> c.equal(PersonInfo::getCardNumber, "100100"))
                     .embedded(Person::getInfo, c -> c.equal(PersonInfo::getNote, "note"));
@@ -44,7 +44,7 @@ public class EmbeddedQueryTest extends JoinQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").or()
                     .embedded(Person::getInfo, c -> c.equal(PersonInfo::getCardNumber, Person::getPersonalNo)
                             .equal(PersonInfo::getNote, "100100"));
@@ -65,7 +65,7 @@ public class EmbeddedQueryTest extends JoinQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname")
                     .embedded(Person::getInfo, c -> c.equal(PersonInfo::getCardNumber, Person::getPersonalNo)
                             .equal(PersonInfo::getNote, PersonInfo::getCardNumber));

@@ -24,7 +24,7 @@ package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 
 /**
@@ -45,52 +45,52 @@ interface FuntionToColumnExpression<T> {
      * @param field
      * @return org.lightmare.criteria.query.QueryStream} current instance
      */
-    <F> QueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field);
+    <F> JpaQueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field);
 
-    default <F> QueryStream<T> equal(FunctionConsumer<T> function, EntityField<T, F> field) {
+    default <F> JpaQueryStream<T> equal(FunctionConsumer<T> function, EntityField<T, F> field) {
         return operateColumn(function, Operators.EQ, field);
     }
 
-    default <F> QueryStream<T> notEqual(FunctionConsumer<T> function, EntityField<T, F> field) {
+    default <F> JpaQueryStream<T> notEqual(FunctionConsumer<T> function, EntityField<T, F> field) {
         return operateColumn(function, Operators.NOT_EQ, field);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> gtColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> gtColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.GREATER, field);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> greaterThenColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThenColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.GREATER, field);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> ltColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> ltColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.LESS, field);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> lessThenColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThenColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.LESS, field);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> geColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> geColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.GREATER_OR_EQ, field);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> greaterThenOrEqualToColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThenOrEqualToColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.GREATER_OR_EQ, field);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> leColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> leColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.LESS_OR_EQ, field);
     }
 
-    default <F extends Comparable<? super F>> QueryStream<T> lessThenOrEqualToColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThenOrEqualToColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.EQ, field);
     }

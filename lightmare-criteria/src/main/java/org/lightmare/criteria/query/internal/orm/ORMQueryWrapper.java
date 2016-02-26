@@ -28,7 +28,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 
 /**
@@ -75,13 +75,13 @@ public interface ORMQueryWrapper<T> {
      * @param maxResult
      *            maximum number of results to retrieve
      *
-     * @return the same {@link org.lightmare.criteria.query.QueryStream}
+     * @return the same {@link org.lightmare.criteria.query.JpaQueryStream}
      *         instance
      *
      * @throws IllegalArgumentException
      *             if the argument is negative
      */
-    QueryStream<T> setMaxResults(int maxResult);
+    JpaQueryStream<T> setMaxResults(int maxResult);
 
     /**
      * The maximum number of results the query object was set to retrieve.
@@ -100,13 +100,13 @@ public interface ORMQueryWrapper<T> {
      * @param startPosition
      *            position of the first result, numbered from 0
      *
-     * @return the same {@link org.lightmare.criteria.query.QueryStream}
+     * @return the same {@link org.lightmare.criteria.query.JpaQueryStream}
      *         instance
      *
      * @throws IllegalArgumentException
      *             if the argument is negative
      */
-    QueryStream<T> setFirstResult(int startPosition);
+    JpaQueryStream<T> setFirstResult(int startPosition);
 
     /**
      * The position of the first result the query object was set to retrieve.
@@ -133,13 +133,13 @@ public interface ORMQueryWrapper<T> {
      * @param value
      *            value for the property or hint
      *
-     * @return the same {@link org.lightmare.criteria.query.QueryStream}
+     * @return the same {@link org.lightmare.criteria.query.JpaQueryStream}
      *         instance
      *
      * @throws IllegalArgumentException
      *             if the second argument is not valid for the implementation
      */
-    QueryStream<T> setHint(String hintName, Object value);
+    JpaQueryStream<T> setHint(String hintName, Object value);
 
     /**
      * Get the properties and hints and associated values that are in effect for
@@ -159,10 +159,10 @@ public interface ORMQueryWrapper<T> {
      * @param flushMode
      *            flush mode
      *
-     * @return the same {@link org.lightmare.criteria.query.QueryStream}
+     * @return the same {@link org.lightmare.criteria.query.JpaQueryStream}
      *         instance
      */
-    QueryStream<T> setFlushMode(FlushModeType flushMode);
+    JpaQueryStream<T> setFlushMode(FlushModeType flushMode);
 
     /**
      * Set the lock mode type to be used for the query execution.
@@ -170,14 +170,14 @@ public interface ORMQueryWrapper<T> {
      * @param lockMode
      *            lock mode
      *
-     * @return the same {@link org.lightmare.criteria.query.QueryStream}
+     * @return the same {@link org.lightmare.criteria.query.JpaQueryStream}
      *         instance
      *
      * @throws IllegalStateException
      *             if the query is found not to be a Java Persistence query
      *             language SELECT query or a Criteria API query
      */
-    QueryStream<T> setLockMode(LockModeType lockMode);
+    JpaQueryStream<T> setLockMode(LockModeType lockMode);
 
     // ================================Wrapped JPA Elements===================//
     /**

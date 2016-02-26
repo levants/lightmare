@@ -28,7 +28,7 @@ import java.util.Map;
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.QueryLayer;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -42,7 +42,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type for generated JPA query
  */
-abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
+abstract class AbstractORMQueryWrapper<T> implements JpaQueryStream<T> {
 
     private Integer maxResult;
 
@@ -55,7 +55,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
     private LockModeType lockMode;
 
     @Override
-    public QueryStream<T> setMaxResults(int maxResult) {
+    public JpaQueryStream<T> setMaxResults(int maxResult) {
         this.maxResult = maxResult;
         return this;
     }
@@ -75,7 +75,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
     }
 
     @Override
-    public QueryStream<T> setFirstResult(int startPosition) {
+    public JpaQueryStream<T> setFirstResult(int startPosition) {
         this.startPosition = startPosition;
         return this;
     }
@@ -95,7 +95,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
     }
 
     @Override
-    public QueryStream<T> setHint(String hintName, Object value) {
+    public JpaQueryStream<T> setHint(String hintName, Object value) {
         hints.put(hintName, value);
         return this;
     }
@@ -115,7 +115,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
     }
 
     @Override
-    public QueryStream<T> setFlushMode(FlushModeType flushMode) {
+    public JpaQueryStream<T> setFlushMode(FlushModeType flushMode) {
         this.flushMode = flushMode;
         return this;
     }
@@ -130,7 +130,7 @@ abstract class AbstractORMQueryWrapper<T> implements QueryStream<T> {
     }
 
     @Override
-    public QueryStream<T> setLockMode(LockModeType lockMode) {
+    public JpaQueryStream<T> setLockMode(LockModeType lockMode) {
         this.lockMode = lockMode;
         return this;
     }

@@ -26,7 +26,7 @@ import java.io.Serializable;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
@@ -93,9 +93,9 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     }
 
     @Override
-    public <F, R extends Number> QueryStream<R> aggregate(EntityField<T, F> field, Aggregates function, Class<R> type) {
+    public <F, R extends Number> JpaQueryStream<R> aggregate(EntityField<T, F> field, Aggregates function, Class<R> type) {
 
-        QueryStream<R> stream;
+        JpaQueryStream<R> stream;
 
         QueryTuple tuple = compose(field);
         aggregateTuple(tuple, function);
@@ -107,9 +107,9 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     }
 
     @Override
-    public <N extends Number> QueryStream<N> aggregate(EntityField<T, N> field, Aggregates function) {
+    public <N extends Number> JpaQueryStream<N> aggregate(EntityField<T, N> field, Aggregates function) {
 
-        QueryStream<N> stream;
+        JpaQueryStream<N> stream;
 
         Class<N> type = null;
         stream = aggregate(field, function, type);
@@ -118,10 +118,10 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     }
 
     @Override
-    public <F> QueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function,
+    public <F> JpaQueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function,
             GroupByConsumer<T> consumer) {
 
-        QueryStream<Object[]> stream;
+        JpaQueryStream<Object[]> stream;
 
         oppAggregate(field, function);
         ObjectUtils.accept(consumer, this);

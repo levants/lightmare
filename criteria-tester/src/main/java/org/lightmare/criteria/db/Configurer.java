@@ -8,7 +8,7 @@ import javax.persistence.EntityManagerFactory;
 
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.JpaQueryProvider;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 
 /**
  * Creates data base and fills it with appropriated datas
@@ -53,9 +53,9 @@ public class Configurer {
         }
     }
 
-    protected QueryStream<Person> createQueryStream(final EntityManager em) {
+    protected JpaQueryStream<Person> createQueryStream(final EntityManager em) {
 
-        QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class);
+        JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class);
 
         stream.where().ge(Person::getBirthDate, getDateValue()).and();
         stream.like(Person::getLastName, "lname");

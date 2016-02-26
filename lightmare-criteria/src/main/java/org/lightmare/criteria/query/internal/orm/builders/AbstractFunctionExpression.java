@@ -24,7 +24,7 @@ package org.lightmare.criteria.query.internal.orm.builders;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.tuples.QueryTuple;
 
@@ -57,7 +57,7 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
     }
 
     @Override
-    public <F> QueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field) {
+    public <F> JpaQueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field) {
 
         startFunctionExpression(function, operator);
         QueryTuple tuple = resolve(field);
@@ -67,7 +67,7 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
     }
 
     @Override
-    public QueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value) {
+    public JpaQueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value) {
 
         startFunctionExpression(function, operator);
         if (functionTuple == null) {
@@ -80,7 +80,7 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
     }
 
     @Override
-    public QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2,
+    public JpaQueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2,
             String operator) {
 
         startFunctionExpression(function1, operator);

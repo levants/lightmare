@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.internal.orm.subqueries.AbstractSubQueryStream;
@@ -53,17 +53,17 @@ class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
     // ========================= select method composers ====================//
 
     @Override
-    public <F> QueryStream<Object[]> select(EntityField<S, F> field) {
+    public <F> JpaQueryStream<Object[]> select(EntityField<S, F> field) {
         return subSelectAll(field);
     }
 
     @Override
-    public <F> QueryStream<F> selectType(EntityField<S, F> field) {
+    public <F> JpaQueryStream<F> selectType(EntityField<S, F> field) {
         return subSelectOne(field);
     }
 
     @Override
-    public <F, R extends Number> QueryStream<R> aggregate(EntityField<S, F> field, Aggregates function, Class<R> type) {
+    public <F, R extends Number> JpaQueryStream<R> aggregate(EntityField<S, F> field, Aggregates function, Class<R> type) {
         return subAggregate(field, function, type);
     }
 }

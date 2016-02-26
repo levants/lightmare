@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import org.junit.Test;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.query.JpaQueryProvider;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.SelectExpression.Select;
 import org.lightmare.criteria.runorder.RunOrder;
 
@@ -21,7 +21,7 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").count(Person::getPersonalNo,
                             c -> c.groupBy(Select.select().column(Person::getLastName).column(Person::getFirstName))
                                     .having(h -> h.greaterThenOrEqualTo(100).lessThenOrEqualTo(1000).or()
@@ -45,7 +45,7 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").count(Person::getPersonalNo,
                             c -> c.group(s -> s.column(Person::getLastName).column(Person::getFirstName))
                                     .having(h -> h.greaterThenOrEqualTo(100).lessThenOrEqualTo(1000).or()
@@ -69,7 +69,7 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").count(Person::getPersonalNo,
                             c -> c.group(s -> s.column(Person::getLastName)).having(h -> h.greaterThenOrEqualTo(100)
                                     .lessThenOrEqualTo(1000).or().brackets(b -> b.notBetween(20000, 30000))));
@@ -92,7 +92,7 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").count(Person::getPersonalNo,
                             c -> c.groupBy(Person::getLastName).having(h -> h.greaterThenOrEqualTo(100)
                                     .lessThenOrEqualTo(1000).or().brackets(b -> b.notBetween(20000, 30000))));

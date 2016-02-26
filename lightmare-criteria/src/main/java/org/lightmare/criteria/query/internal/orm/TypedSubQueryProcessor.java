@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 
 /**
@@ -42,57 +42,57 @@ interface TypedSubQueryProcessor<T> extends SubQueryOperator<T> {
      * @param field
      * @param operator
      * @param stream
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    default <F, S> QueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, SubQueryType<S> stream) {
+    default <F, S> JpaQueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, SubQueryType<S> stream) {
         String composed = stream.getOperator(operator);
         return operateSubQuery(field, composed, stream.getType(), stream.getConsumer());
     }
 
-    default <F, S> QueryStream<T> equal(EntityField<T, F> field, SubQueryType<S> stream) {
+    default <F, S> JpaQueryStream<T> equal(EntityField<T, F> field, SubQueryType<S> stream) {
         return operateSubQuery(field, Operators.EQ, stream);
     }
 
-    default <F, S> QueryStream<T> notEqual(EntityField<T, F> field, SubQueryType<S> stream) {
+    default <F, S> JpaQueryStream<T> notEqual(EntityField<T, F> field, SubQueryType<S> stream) {
         return operateSubQuery(field, Operators.NOT_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> gt(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> gt(EntityField<T, Comparable<? super F>> field,
             SubQueryType<S> stream) {
         return operateSubQuery(field, Operators.GREATER, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThen(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThen(EntityField<T, Comparable<? super F>> field,
             SubQueryType<S> stream) {
         return gt(field, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lt(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lt(EntityField<T, Comparable<? super F>> field,
             SubQueryType<S> stream) {
         return operateSubQuery(field, Operators.LESS, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lessThen(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThen(EntityField<T, Comparable<? super F>> field,
             SubQueryType<S> stream) {
         return lt(field, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> ge(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> ge(EntityField<T, Comparable<? super F>> field,
             SubQueryType<S> stream) {
         return operateSubQuery(field, Operators.GREATER_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenOrEqualTo(
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThenOrEqualTo(
             EntityField<T, Comparable<? super F>> field, SubQueryType<S> stream) {
         return ge(field, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> le(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> le(EntityField<T, Comparable<? super F>> field,
             SubQueryType<S> stream) {
         return operateSubQuery(field, Operators.LESS_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lessThenOrEqualTo(
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThenOrEqualTo(
             EntityField<T, Comparable<? super F>> field, SubQueryType<S> stream) {
         return le(field, stream);
     }

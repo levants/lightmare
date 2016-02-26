@@ -16,7 +16,7 @@ import org.lightmare.criteria.entities.PersonInfo;
 import org.lightmare.criteria.entities.PersonWrapper;
 import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.JpaQueryProvider;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.SelectExpression.Select;
 import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
@@ -39,7 +39,7 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             System.out.println();
             System.out.println("==========Entity============");
-            QueryStream<Person> stream = createQueryStream(em);
+            JpaQueryStream<Person> stream = createQueryStream(em);
             System.out.println("===========JPA-QL==========");
             System.out.println();
             System.out.println(stream.sql());
@@ -131,7 +131,7 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             Date date = getDateValue();
             // ============= Query construction ============== //
-            QueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
                     .brackets(s -> s.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date))
                     .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS))
@@ -158,7 +158,7 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             Date date = getDateValue();
             // ============= Query construction ============== //
-            QueryStream<PersonWrapper> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<PersonWrapper> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
                     .brackets(s -> s.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date))
                     .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS))
@@ -186,7 +186,7 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             Date date = getDateValue();
             // ============= Query construction ============== //
-            QueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
                     .brackets(s -> s.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date))
                     .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).select(Select.select()
@@ -213,7 +213,7 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             Date date = getDateValue();
             // ============= Query construction ============== //
-            QueryStream<PersonWrapper> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<PersonWrapper> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
                     .brackets(s -> s.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date))
                     .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS))
@@ -241,7 +241,7 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             Date date = getDateValue();
             // ============= Query construction ============== //
-            QueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
                     .brackets(s -> s.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date))
                     .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).selectAll(s -> s
@@ -268,7 +268,7 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             Date date = getDateValue();
             // ============= Query construction ============== //
-            QueryStream<PersonWrapper> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<PersonWrapper> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
                     .brackets(s -> s.startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date))
                     .and().in(Person::getPersonId, Arrays.asList(IDENTIFIERS)).selectType(PersonWrapper.class, s -> s
@@ -393,7 +393,7 @@ public class QueryTest extends TestEnviromentConfig {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
-            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, PERSONAL_NO2).and().like(Person::getLastName, "lname%").and()
                     .startsWith(Person::getFirstName, "fname");
             Person person = stream.getFirst();
@@ -422,7 +422,7 @@ public class QueryTest extends TestEnviromentConfig {
         try {
             transaction.begin();
             // ============= Query construction ============== //
-            QueryStream<Person> stream = JpaQueryProvider.delete(em, Person.class).where()
+            JpaQueryStream<Person> stream = JpaQueryProvider.delete(em, Person.class).where()
                     .equal(Person::getPersonalNo, PERSONAL_NO2).and().like(Person::getLastName, "lname%").and()
                     .startsWith(Person::getFirstName, "fname");
             int rows = stream.execute();
@@ -455,7 +455,7 @@ public class QueryTest extends TestEnviromentConfig {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, Person::getAddrress).equal(Person::getFullName, "fullName")
                     .like(Person::getFirstName, Person::getFullName).and().startsWith(Person::getLastName, "lname");
             // =============================================//
@@ -499,7 +499,7 @@ public class QueryTest extends TestEnviromentConfig {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, Person::getAddrress).and()
                     .like(Person::getLastName, GeneralInfo::getFullName, Person::getEscape).and()
                     .startsWith(Person::getLastName, "lname");
@@ -524,7 +524,7 @@ public class QueryTest extends TestEnviromentConfig {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, Person::getAddrress).and().like(Person::getLastName, "lname%", 'e')
                     .and().startsWith(Person::getLastName, "lname");
             String sql = stream.sql();
@@ -548,7 +548,7 @@ public class QueryTest extends TestEnviromentConfig {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Long> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Long> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(Person::getPersonalNo, Person::getAddrress).and().like(Person::getLastName, "lname%", 'e')
                     .and().startsWith(Person::getLastName, "lname").max(Person::getPersonId);
             String sql = stream.sql();

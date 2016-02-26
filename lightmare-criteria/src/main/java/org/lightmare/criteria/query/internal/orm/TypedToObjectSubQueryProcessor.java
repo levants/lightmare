@@ -22,7 +22,7 @@
  */
 package org.lightmare.criteria.query.internal.orm;
 
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 
 /**
@@ -42,57 +42,57 @@ interface TypedToObjectSubQueryProcessor<T> extends SubQueryOperator<T> {
      * @param value
      * @param operator
      * @param stream
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    default <F, S> QueryStream<T> operateSubQuery(Object value, String operator, SubQueryType<S> stream) {
+    default <F, S> JpaQueryStream<T> operateSubQuery(Object value, String operator, SubQueryType<S> stream) {
         String composed = stream.getOperator(operator);
         return operateSubQuery(value, composed, stream.getType(), stream.getConsumer());
     }
 
-    default <F, S> QueryStream<T> equal(Object value, SubQueryType<S> stream) {
+    default <F, S> JpaQueryStream<T> equal(Object value, SubQueryType<S> stream) {
         return operateSubQuery(value, Operators.EQ, stream);
     }
 
-    default <F, S> QueryStream<T> notEqual(Object value, SubQueryType<S> stream) {
+    default <F, S> JpaQueryStream<T> notEqual(Object value, SubQueryType<S> stream) {
         return operateSubQuery(value, Operators.NOT_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> gt(Comparable<? super F> value,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> gt(Comparable<? super F> value,
             SubQueryType<S> stream) {
         return operateSubQuery(value, Operators.GREATER, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThen(Comparable<? super F> value,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThen(Comparable<? super F> value,
             SubQueryType<S> stream) {
         return operateSubQuery(value, Operators.GREATER, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lt(Comparable<? super F> value,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lt(Comparable<? super F> value,
             SubQueryType<S> stream) {
         return operateSubQuery(value, Operators.LESS, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lessThen(Comparable<? super F> value,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThen(Comparable<? super F> value,
             SubQueryType<S> stream) {
         return operateSubQuery(value, Operators.LESS, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> ge(Comparable<? super F> value,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> ge(Comparable<? super F> value,
             SubQueryType<S> stream) {
         return operateSubQuery(value, Operators.GREATER_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> greaterThenOrEqualTo(Comparable<? super F> value,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThenOrEqualTo(Comparable<? super F> value,
             SubQueryType<S> stream) {
         return operateSubQuery(value, Operators.GREATER_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> le(Comparable<? super F> value,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> le(Comparable<? super F> value,
             SubQueryType<S> stream) {
         return operateSubQuery(value, Operators.LESS_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> QueryStream<T> lessThenOrEqualTo(Comparable<? super F> value,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThenOrEqualTo(Comparable<? super F> value,
             SubQueryType<S> stream) {
         return operateSubQuery(value, Operators.LESS_OR_EQ, stream);
     }

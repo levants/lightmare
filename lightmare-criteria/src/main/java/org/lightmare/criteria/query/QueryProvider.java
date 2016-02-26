@@ -26,7 +26,7 @@ import java.util.function.Function;
 
 /**
  * Provider or factory class to initialize
- * {@link org.lightmare.criteria.query.QueryStream} by SELECT, UPDATE or DELETE
+ * {@link org.lightmare.criteria.query.JpaQueryStream} by SELECT, UPDATE or DELETE
  * clause for entity type
  * 
  * @author Levan Tsinadze
@@ -44,10 +44,10 @@ public abstract class QueryProvider {
      * @param entityType
      * @param function
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.QueryStream} with delete
+     *         {@link org.lightmare.criteria.query.JpaQueryStream} with delete
      *         statement
      */
-    public static <T, S extends QueryStream<T>> S delete(Class<T> entityType, Function<Class<T>, S> function) {
+    public static <T, S extends JpaQueryStream<T>> S delete(Class<T> entityType, Function<Class<T>, S> function) {
         return function.apply(entityType);
     }
 
@@ -57,10 +57,10 @@ public abstract class QueryProvider {
      * @param entityType
      * @param function
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.QueryStream} with update
+     *         {@link org.lightmare.criteria.query.JpaQueryStream} with update
      *         statement
      */
-    public static <T, S extends QueryStream<T>> S update(Class<T> entityType, Function<Class<T>, S> function) {
+    public static <T, S extends JpaQueryStream<T>> S update(Class<T> entityType, Function<Class<T>, S> function) {
         return function.apply(entityType);
     }
 
@@ -70,10 +70,10 @@ public abstract class QueryProvider {
      * @param entityType
      * @param function
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.QueryStream} with select
+     *         {@link org.lightmare.criteria.query.JpaQueryStream} with select
      *         statement
      */
-    public static <T, S extends QueryStream<T>> S select(Class<T> entityType, Function<Class<T>, S> function) {
+    public static <T, S extends JpaQueryStream<T>> S select(Class<T> entityType, Function<Class<T>, S> function) {
         return function.apply(entityType);
     }
 }

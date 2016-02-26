@@ -24,7 +24,7 @@ package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 
 /**
@@ -53,52 +53,52 @@ public interface QueryExpression<T> extends ORMQueryWrapper<T>, Expression<T>, C
      * 
      * @param field
      * @param value
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    <F> QueryStream<T> set(EntityField<T, F> field, F value);
+    <F> JpaQueryStream<T> set(EntityField<T, F> field, F value);
 
     // ======================================================================//
 
     /**
      * WHERE clause appender
      * 
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    QueryStream<T> where();
+    JpaQueryStream<T> where();
 
     /**
      * AND part appender
      * 
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    default QueryStream<T> and() {
+    default JpaQueryStream<T> and() {
         return appendBody(Operators.AND);
     }
 
     /**
      * OR part appender
      * 
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    default QueryStream<T> or() {
+    default JpaQueryStream<T> or() {
         return appendBody(Operators.OR);
     }
 
     /**
      * Opens bracket in query body
      * 
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    default QueryStream<T> openBracket() {
+    default JpaQueryStream<T> openBracket() {
         return appendBody(Operators.OPEN_BRACKET);
     }
 
     /**
      * Closes bracket in query body
      * 
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    default QueryStream<T> closeBracket() {
+    default JpaQueryStream<T> closeBracket() {
         return appendBody(Operators.CLOSE_BRACKET);
     }
 
@@ -106,9 +106,9 @@ public interface QueryExpression<T> extends ORMQueryWrapper<T>, Expression<T>, C
      * Creates query part in brackets
      * 
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    QueryStream<T> brackets(QueryConsumer<T> consumer);
+    JpaQueryStream<T> brackets(QueryConsumer<T> consumer);
 
     // ======================================================================//
 
@@ -116,25 +116,25 @@ public interface QueryExpression<T> extends ORMQueryWrapper<T>, Expression<T>, C
      * Appends to generated query prefix custom clause
      * 
      * @param clause
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    QueryStream<T> appendPrefix(Object clause);
+    JpaQueryStream<T> appendPrefix(Object clause);
 
     /**
      * Appends to generated FROM clause
      * 
      * @param clause
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    QueryStream<T> appendFrom(Object clause);
+    JpaQueryStream<T> appendFrom(Object clause);
 
     /**
      * Appends to generated query body custom clause
      * 
      * @param clause
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    QueryStream<T> appendBody(Object clause);
+    JpaQueryStream<T> appendBody(Object clause);
 
     /**
      * Gets generated JPA query

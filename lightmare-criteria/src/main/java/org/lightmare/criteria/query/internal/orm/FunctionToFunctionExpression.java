@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.FunctionConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 
 /**
@@ -42,43 +42,43 @@ interface FunctionToFunctionExpression<T> {
      * @param function1
      * @param function2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
      */
-    QueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
+    JpaQueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
 
-    default <F> QueryStream<T> equal(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default <F> JpaQueryStream<T> equal(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.EQ);
     }
 
-    default QueryStream<T> gtFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> gtFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.GREATER);
     }
 
-    default QueryStream<T> greaterThenFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> greaterThenFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.GREATER);
     }
 
-    default QueryStream<T> ltFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> ltFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.LESS);
     }
 
-    default QueryStream<T> lessThenFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> lessThenFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.LESS);
     }
 
-    default QueryStream<T> geFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> geFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.GREATER_OR_EQ);
     }
 
-    default QueryStream<T> greaterThenOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> greaterThenOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.GREATER_OR_EQ);
     }
 
-    default QueryStream<T> leFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> leFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.LESS_OR_EQ);
     }
 
-    default QueryStream<T> lessThenOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> lessThenOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.EQ);
     }
 }
