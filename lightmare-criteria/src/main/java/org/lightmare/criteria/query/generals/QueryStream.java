@@ -131,12 +131,23 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
     // ======================================================================//
 
     /**
+     * Appends logical operator to query composer
+     * 
+     * @param operator
+     * @return {@link org.lightmare.criteria.query.generals.QueryStream}
+     *         implementation
+     */
+    S appendOperator(String operator);
+
+    /**
      * AND logical operator
      * 
      * @return {@link org.lightmare.criteria.query.generals.QueryStream}
      *         implementation
      */
-    S and();
+    default S and() {
+        return appendOperator(getLayerProvider().and());
+    }
 
     /**
      * OR logical operator
@@ -144,7 +155,9 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
      * @return {@link org.lightmare.criteria.query.generals.QueryStream}
      *         implementation
      */
-    S or();
+    default S or() {
+        return appendOperator(getLayerProvider().or());
+    }
 
     /**
      * Creates query part in brackets
@@ -154,11 +167,4 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
      *         implementation
      */
     S brackets(QueryConsumer<T> consumer);
-
-    /**
-     * Gets generated query
-     * 
-     * @return {@link String} query
-     */
-    String sql();
 }

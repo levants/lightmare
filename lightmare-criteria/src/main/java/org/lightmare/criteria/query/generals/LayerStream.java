@@ -35,4 +35,11 @@ interface LayerStream<T> {
      * @return {@link String} entity alias
      */
     String getAlias();
+
+    /**
+     * Gets generated query
+     * 
+     * @return {@link String} query
+     */
+    String sql();
 }

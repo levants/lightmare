@@ -11,7 +11,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @author Levan Tsinadze
  *
  */
-interface QueryResolver<T> extends LayerStream<T> {
+public interface QueryResolver<T> extends LayerStream<T> {
 
     /**
      * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
