@@ -77,7 +77,7 @@ public abstract class JpaQueryProvider extends QueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     * @return {@link org.lightmare.criteria.query.QueryStream} with update
      *         statement
      */
     public static <T> QueryStream<T> update(final EntityManager em, Class<T> entityType) {

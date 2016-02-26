@@ -30,7 +30,7 @@ import java.sql.Connection;
  * @author Levan Tsinadze
  *
  */
-public abstract class JdbcQueryProvider {
+public abstract class JdbcQueryProvider extends QueryProvider {
 
     /**
      * Generates DELETE statements with custom alias
@@ -38,12 +38,12 @@ public abstract class JdbcQueryProvider {
      * @param connection
      * @param entityType
      * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     * @return {@link org.lightmare.criteria.query.QueryStream} with delete
      *         statement
      */
     public static <T> QueryStream<T> delete(final Connection connection, final Class<T> entityType,
             final String entityAlias) {
-        return JdbcQueryStreamBuilder.delete(connection, entityType, entityAlias);
+        return delete(() -> JdbcQueryStreamBuilder.delete(connection, entityType, entityAlias));
     }
 
     /**
@@ -51,11 +51,11 @@ public abstract class JdbcQueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     * @return {@link org.lightmare.criteria.query.QueryStream} with delete
      *         statement
      */
     public static <T> QueryStream<T> delete(final Connection connection, Class<T> entityType) {
-        return JdbcQueryStreamBuilder.delete(connection, entityType, QueryStream.DEFAULT_ALIAS);
+        return delete(() -> JdbcQueryStreamBuilder.delete(connection, entityType, QueryStream.DEFAULT_ALIAS));
     }
 
     /**
@@ -64,12 +64,12 @@ public abstract class JdbcQueryProvider {
      * @param connection
      * @param entityType
      * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     * @return {@link org.lightmare.criteria.query.QueryStream} with update
      *         statement
      */
     public static <T> QueryStream<T> update(final Connection connection, final Class<T> entityType,
             final String entityAlias) {
-        return JdbcQueryStreamBuilder.update(connection, entityType, entityAlias);
+        return update(() -> JdbcQueryStreamBuilder.update(connection, entityType, entityAlias));
     }
 
     /**
@@ -77,11 +77,11 @@ public abstract class JdbcQueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     * @return {@link org.lightmare.criteria.query.QueryStream} with update
      *         statement
      */
     public static <T> QueryStream<T> update(final Connection connection, Class<T> entityType) {
-        return JdbcQueryStreamBuilder.update(connection, entityType, QueryStream.DEFAULT_ALIAS);
+        return update(() -> JdbcQueryStreamBuilder.update(connection, entityType, QueryStream.DEFAULT_ALIAS));
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class JdbcQueryProvider {
      */
     public static <T> QueryStream<T> select(final Connection connection, final Class<T> entityType,
             final String entityAlias) {
-        return JdbcQueryStreamBuilder.query(connection, entityType, entityAlias);
+        return select(() -> JdbcQueryStreamBuilder.select(connection, entityType, entityAlias));
     }
 
     /**
@@ -107,6 +107,6 @@ public abstract class JdbcQueryProvider {
      *         statement
      */
     public static <T> QueryStream<T> select(final Connection connection, Class<T> entityType) {
-        return JdbcQueryStreamBuilder.query(connection, entityType, QueryStream.DEFAULT_ALIAS);
+        return select(() -> JdbcQueryStreamBuilder.select(connection, entityType, QueryStream.DEFAULT_ALIAS));
     }
 }

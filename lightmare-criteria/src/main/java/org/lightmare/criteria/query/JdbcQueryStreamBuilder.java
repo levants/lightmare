@@ -50,7 +50,7 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @param entityType
      * @param alias
      * @return {@link org.lightmare.criteria.query.JdbcQueryStreamBuilder} with
-     *         select statement
+     *         delete statement
      */
     protected static <T> JdbcQueryStreamBuilder<T> delete(final Connection connection, final Class<T> entityType,
             final String alias) {
@@ -71,7 +71,7 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @param em
      * @param entityType
      * @return {@link org.lightmare.criteria.query.JdbcQueryStreamBuilder} with
-     *         select statement
+     *         delete statement
      */
     protected static <T> JdbcQueryStreamBuilder<T> delete(final Connection connection, Class<T> entityType) {
         return delete(connection, entityType, DEFAULT_ALIAS);
@@ -84,7 +84,7 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @param entityType
      * @param alias
      * @return {@link org.lightmare.criteria.query.JdbcQueryStreamBuilder} with
-     *         select statement
+     *         update statement
      */
     protected static <T> JdbcQueryStreamBuilder<T> update(final Connection connection, final Class<T> entityType,
             final String alias) {
@@ -105,7 +105,7 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @param em
      * @param entityType
      * @return {@link org.lightmare.criteria.query.JdbcQueryStreamBuilder} with
-     *         select statement
+     *         update statement
      */
     protected static <T> JdbcQueryStreamBuilder<T> update(final Connection connection, Class<T> entityType) {
         return update(connection, entityType, DEFAULT_ALIAS);
@@ -120,7 +120,7 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @return {@link org.lightmare.criteria.query.JdbcQueryStreamBuilder} with
      *         select statement
      */
-    protected static <T> JdbcQueryStreamBuilder<T> query(final Connection connection, final Class<T> entityType,
+    protected static <T> JdbcQueryStreamBuilder<T> select(final Connection connection, final Class<T> entityType,
             final String alias) {
 
         JdbcQueryStreamBuilder<T> stream;
@@ -140,7 +140,7 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @return {@link org.lightmare.criteria.query.JdbcQueryStreamBuilder} with
      *         select statement
      */
-    protected static <T> JdbcQueryStreamBuilder<T> query(final Connection connection, Class<T> entityType) {
-        return query(connection, entityType, DEFAULT_ALIAS);
+    protected static <T> JdbcQueryStreamBuilder<T> select(final Connection connection, Class<T> entityType) {
+        return select(connection, entityType, DEFAULT_ALIAS);
     }
 }

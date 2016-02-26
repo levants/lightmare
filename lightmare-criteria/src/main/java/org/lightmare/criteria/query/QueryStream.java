@@ -36,8 +36,6 @@ import org.lightmare.criteria.query.internal.orm.QueryExpression;
  */
 public interface QueryStream<T> extends QueryExpression<T> {
 
-    // =========================embedded=field=queries=======================//
-
     /**
      * Generates query part for embedded entity fields
      * 
