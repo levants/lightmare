@@ -24,6 +24,7 @@ package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.generals.QueryStream;
 import org.lightmare.criteria.query.internal.orm.QueryExpression;
 
 /**
@@ -34,16 +35,22 @@ import org.lightmare.criteria.query.internal.orm.QueryExpression;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface JpaQueryStream<T> extends QueryExpression<T> {
+public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, QueryExpression<T> {
 
     /**
      * Generates query part for embedded entity fields
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     *         instance
      */
-    <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F> consumer);
+    <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer);
+
+    @Override
+    default JpaQueryStream<T> appendOperator(String operator) {
+        return appendBody(operator);
+    }
 
     @Override
     default JpaQueryStream<T> where() {

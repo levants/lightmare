@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.internal.orm;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
@@ -53,7 +52,8 @@ interface Expression<T> {
     /**
      * Opens bracket in query body
      * 
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     *         instance
      */
     JpaQueryStream<T> openBracket();
 
@@ -64,7 +64,8 @@ interface Expression<T> {
      * 
      * @param field
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     *         instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, F> field, String operator);
 
@@ -74,7 +75,8 @@ interface Expression<T> {
      * @param field
      * @param value
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     *         instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator);
 
@@ -85,7 +87,8 @@ interface Expression<T> {
      * @param value1
      * @param value2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     *         instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2, String operator);
 
@@ -97,58 +100,11 @@ interface Expression<T> {
      * @param value1
      * @param operator2
      * @param value2
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     *         instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, String operator1, Object value1, String operator2,
             Object value2);
-
-    default <F> JpaQueryStream<T> equal(EntityField<T, F> field, Object value) {
-        return operate(field, value, getLayerProvider().equal());
-    }
-
-    default <F> JpaQueryStream<T> notEqual(EntityField<T, F> field, Object value) {
-        return operate(field, value, getLayerProvider().notEqual());
-    }
-
-    default <F extends Comparable<? super F>> JpaQueryStream<T> gt(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().greaterThen());
-    }
-
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThen(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return gt(field, value);
-    }
-
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lt(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().lessThen());
-    }
-
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThen(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return lt(field, value);
-    }
-
-    default <F extends Comparable<? super F>> JpaQueryStream<T> ge(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().greaterThenOrEqual());
-    }
-
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThenOrEqualTo(
-            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
-        return ge(field, value);
-    }
-
-    default <F extends Comparable<? super F>> JpaQueryStream<T> le(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().lessThenOrEqual());
-    }
-
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThenOrEqualTo(
-            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
-        return le(field, value);
-    }
 
     default <F extends Comparable<? super F>> JpaQueryStream<T> between(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value1, Comparable<? super F> value2) {
@@ -160,14 +116,6 @@ interface Expression<T> {
     default <F extends Comparable<? super F>> JpaQueryStream<T> notBetween(EntityField<T, Comparable<? super F>> field,
             F value1, F value2) {
         return operate(field, value1, value2, Operators.NOT_BETWEEN);
-    }
-
-    default JpaQueryStream<T> like(EntityField<T, String> field, String value) {
-        return operate(field, value, getLayerProvider().like());
-    }
-
-    default JpaQueryStream<T> notLike(EntityField<T, String> field, String value) {
-        return operate(field, value, getLayerProvider().notLike());
     }
 
     default JpaQueryStream<T> like(EntityField<T, String> field, String value, char escape) {
@@ -219,7 +167,8 @@ interface Expression<T> {
      * @param field
      * @param values
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     *         instance
      */
     <F> JpaQueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
 
@@ -230,25 +179,10 @@ interface Expression<T> {
      * @param object
      * @param field
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     *         instance
      */
     <S, F> JpaQueryStream<T> operateCollection(Object value, EntityField<S, Collection<F>> field, String operator);
-
-    default <F> JpaQueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
-        return operateCollection(field, values, getLayerProvider().in());
-    }
-
-    default <F> JpaQueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) {
-        return operateCollection(field, values, getLayerProvider().notIn());
-    }
-
-    default <F> JpaQueryStream<T> in(EntityField<T, F> field, F[] values) {
-        return this.in(field, Arrays.asList(values));
-    }
-
-    default <F> JpaQueryStream<T> notIn(EntityField<T, F> field, F[] values) {
-        return this.notIn(field, Arrays.asList(values));
-    }
 
     default <F, S> JpaQueryStream<T> isMember(Object value, EntityField<S, Collection<F>> field) {
         return operateCollection(value, field, Operators.MEMBER);
@@ -256,13 +190,5 @@ interface Expression<T> {
 
     default <F, S> JpaQueryStream<T> isNotMember(Object value, EntityField<T, Collection<F>> field) {
         return operateCollection(value, field, Operators.NOT_MEMBER);
-    }
-
-    default <F> JpaQueryStream<T> isNull(EntityField<T, F> field) {
-        return operate(field, getLayerProvider().isNull());
-    }
-
-    default <F> JpaQueryStream<T> isNotNull(EntityField<T, F> field) {
-        return operate(field, getLayerProvider().isNotNull());
     }
 }

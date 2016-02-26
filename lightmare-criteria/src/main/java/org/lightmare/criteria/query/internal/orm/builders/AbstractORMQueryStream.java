@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.internal.orm.builders;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +29,6 @@ import java.util.Set;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.lambda.LambdaUtils;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.connectors.QueryLayer;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
@@ -136,41 +134,6 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      */
     protected static void appendFieldName(QueryTuple tuple, StringBuilder buffer) {
         appendFieldName(tuple.getAlias(), tuple.getFieldName(), buffer);
-    }
-
-    /**
-     * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
-     * cache or generates from compiled class
-     * 
-     * @param field
-     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for passed
-     *         lambda function
-     */
-    protected QueryTuple resolve(Serializable field) {
-
-        QueryTuple tuple;
-
-        tuple = LambdaUtils.getOrInit(field);
-        tuple.setAlias(getAlias());
-        tuple.setFieldName(getLayerProvider().getColumnName(tuple));
-
-        return tuple;
-    }
-
-    /**
-     * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
-     * cache or generates from compiled class with generic parameters
-     * 
-     * @param field
-     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for passed
-     *         lambda function
-     */
-    protected QueryTuple compose(Serializable field) {
-
-        QueryTuple tuple = resolve(field);
-        LambdaUtils.setGenericIfValid(getEntityType(), tuple);
-
-        return tuple;
     }
 
     /**

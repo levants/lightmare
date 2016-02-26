@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.JpaQueryStream;
 
 /**
  * Query stream for abstract data base layers
@@ -88,6 +89,16 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
         return le(field, value);
     }
 
+    // =============================LIKE=clause==============================//
+
+    default S like(EntityField<T, String> field, String value) {
+        return operate(field, value, getLayerProvider().like());
+    }
+
+    default S notLike(EntityField<T, String> field, String value) {
+        return operate(field, value, getLayerProvider().notLike());
+    }
+
     // ======================================================================//
 
     /**
@@ -140,6 +151,14 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
     S appendOperator(String operator);
 
     /**
+     * WHERE clause appender
+     * 
+     * @return {@link org.lightmare.criteria.query.generals.QueryStream}
+     *         implementation
+     */
+    JpaQueryStream<T> where();
+
+    /**
      * AND logical operator
      * 
      * @return {@link org.lightmare.criteria.query.generals.QueryStream}
@@ -166,5 +185,5 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
      * @return {@link org.lightmare.criteria.query.generals.QueryStream}
      *         implementation
      */
-    S brackets(QueryConsumer<T> consumer);
+    S brackets(QueryConsumer<T, S> consumer);
 }

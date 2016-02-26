@@ -29,6 +29,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 
 import org.lightmare.criteria.query.JpaQueryStream;
+import org.lightmare.criteria.query.generals.QueryResolver;
 import org.lightmare.criteria.query.internal.connectors.QueryLayer;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -42,7 +43,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type for generated JPA query
  */
-abstract class AbstractORMQueryWrapper<T> implements JpaQueryStream<T> {
+abstract class AbstractORMQueryWrapper<T> implements JpaQueryStream<T>, QueryResolver<T> {
 
     private Integer maxResult;
 

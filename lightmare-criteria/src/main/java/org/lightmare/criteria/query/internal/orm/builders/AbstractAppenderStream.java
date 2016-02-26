@@ -596,7 +596,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * 
      * @param consumer
      */
-    private void consumeWithBrackets(QueryConsumer<T> consumer) {
+    private void consumeWithBrackets(QueryConsumer<T, JpaQueryStream<T>> consumer) {
 
         appendOperator();
         openBracket();
@@ -607,7 +607,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
     }
 
     @Override
-    public JpaQueryStream<T> brackets(QueryConsumer<T> consumer) {
+    public JpaQueryStream<T> brackets(QueryConsumer<T, JpaQueryStream<T>> consumer) {
         ObjectUtils.nonNull(consumer, this::consumeWithBrackets);
         return this;
     }

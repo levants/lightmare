@@ -30,8 +30,8 @@ import org.lightmare.criteria.tuples.EmbeddedTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
- * Implementation of {@link org.lightmare.criteria.query.JpaQueryStream} to process
- * embedded or "one to one" or "many to one" joined field statements
+ * Implementation of {@link org.lightmare.criteria.query.JpaQueryStream} to
+ * process embedded or "one to one" or "many to one" joined field statements
  * 
  * @author Levan Tsinadze
  *
@@ -56,7 +56,7 @@ public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
     }
 
     @Override
-    protected QueryTuple resolve(Serializable field) {
+    public QueryTuple resolve(Serializable field) {
 
         QueryTuple tuple;
 
@@ -71,7 +71,7 @@ public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
     }
 
     @Override
-    protected QueryTuple compose(Serializable field) {
+    public QueryTuple compose(Serializable field) {
 
         QueryTuple tuple;
 

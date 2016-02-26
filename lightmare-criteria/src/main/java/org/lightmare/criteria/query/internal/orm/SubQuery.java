@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -48,11 +49,12 @@ public interface SubQuery<T> {
 
         private final Class<T> type;
 
-        private final QueryConsumer<T> consumer;
+        private final QueryConsumer<T, JpaQueryStream<T>> consumer;
 
         private final String operator;
 
-        private SubQueryType(final Class<T> type, final QueryConsumer<T> consumer, final String operator) {
+        private SubQueryType(final Class<T> type, final QueryConsumer<T, JpaQueryStream<T>> consumer,
+                final String operator) {
             this.type = type;
             this.consumer = consumer;
             this.operator = operator;
@@ -62,7 +64,7 @@ public interface SubQuery<T> {
             return type;
         }
 
-        public QueryConsumer<T> getConsumer() {
+        public QueryConsumer<T, JpaQueryStream<T>> getConsumer() {
             return consumer;
         }
 
@@ -81,7 +83,7 @@ public interface SubQuery<T> {
      */
     static final class All<T> extends SubQueryType<T> {
 
-        private All(final Class<T> type, final QueryConsumer<T> consumer) {
+        private All(final Class<T> type, final QueryConsumer<T, JpaQueryStream<T>> consumer) {
             super(type, consumer, Operators.ALL);
         }
     }
@@ -96,7 +98,7 @@ public interface SubQuery<T> {
      */
     static final class Any<T> extends SubQueryType<T> {
 
-        private Any(final Class<T> type, final QueryConsumer<T> consumer) {
+        private Any(final Class<T> type, final QueryConsumer<T, JpaQueryStream<T>> consumer) {
             super(type, consumer, Operators.ANY);
         }
     }
@@ -111,7 +113,7 @@ public interface SubQuery<T> {
      */
     static final class Some<T> extends SubQueryType<T> {
 
-        private Some(final Class<T> type, final QueryConsumer<T> consumer) {
+        private Some(final Class<T> type, final QueryConsumer<T, JpaQueryStream<T>> consumer) {
             super(type, consumer, Operators.SOME);
         }
     }
@@ -124,7 +126,7 @@ public interface SubQuery<T> {
      * @return {@link org.lightmare.criteria.query.internal.orm.SubQuery.All}
      *         all sub query stream
      */
-    static <S> All<S> all(Class<S> type, QueryConsumer<S> consumer) {
+    static <S> All<S> all(Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer) {
         return new All<S>(type, consumer);
     }
 
@@ -136,7 +138,7 @@ public interface SubQuery<T> {
      * @return {@link org.lightmare.criteria.query.internal.orm.SubQuery.Any}
      *         all sub query stream
      */
-    static <S> Any<S> any(Class<S> type, QueryConsumer<S> consumer) {
+    static <S> Any<S> any(Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer) {
         return new Any<S>(type, consumer);
     }
 
@@ -148,7 +150,7 @@ public interface SubQuery<T> {
      * @return {@link org.lightmare.criteria.query.internal.orm.SubQuery.Some}
      *         all sub query stream
      */
-    static <S> Some<S> some(Class<S> type, QueryConsumer<S> consumer) {
+    static <S> Some<S> some(Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer) {
         return new Some<S>(type, consumer);
     }
 }

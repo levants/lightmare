@@ -24,10 +24,12 @@ package org.lightmare.criteria.query;
 
 import java.util.function.Function;
 
+import org.lightmare.criteria.query.generals.QueryStream;
+
 /**
  * Provider or factory class to initialize
- * {@link org.lightmare.criteria.query.JpaQueryStream} by SELECT, UPDATE or DELETE
- * clause for entity type
+ * {@link org.lightmare.criteria.query.JpaQueryStream} by SELECT, UPDATE or
+ * DELETE clause for entity type
  * 
  * @author Levan Tsinadze
  *
@@ -47,7 +49,8 @@ public abstract class QueryProvider {
      *         {@link org.lightmare.criteria.query.JpaQueryStream} with delete
      *         statement
      */
-    public static <T, S extends JpaQueryStream<T>> S delete(Class<T> entityType, Function<Class<T>, S> function) {
+    public static <T, S extends QueryStream<T, ? super S>> S delete(Class<T> entityType,
+            Function<Class<T>, S> function) {
         return function.apply(entityType);
     }
 
@@ -60,7 +63,8 @@ public abstract class QueryProvider {
      *         {@link org.lightmare.criteria.query.JpaQueryStream} with update
      *         statement
      */
-    public static <T, S extends JpaQueryStream<T>> S update(Class<T> entityType, Function<Class<T>, S> function) {
+    public static <T, S extends QueryStream<T, ? super S>> S update(Class<T> entityType,
+            Function<Class<T>, S> function) {
         return function.apply(entityType);
     }
 
@@ -73,7 +77,8 @@ public abstract class QueryProvider {
      *         {@link org.lightmare.criteria.query.JpaQueryStream} with select
      *         statement
      */
-    public static <T, S extends JpaQueryStream<T>> S select(Class<T> entityType, Function<Class<T>, S> function) {
+    public static <T, S extends QueryStream<T, ? super S>> S select(Class<T> entityType,
+            Function<Class<T>, S> function) {
         return function.apply(entityType);
     }
 }
