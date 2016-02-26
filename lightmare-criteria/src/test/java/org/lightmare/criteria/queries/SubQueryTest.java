@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.lightmare.criteria.entities.GeneralInfo;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.Phone;
-import org.lightmare.criteria.query.QueryProvider;
+import org.lightmare.criteria.query.JpaQueryProvider;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.SubQuery;
 import org.lightmare.criteria.runorder.RunOrder;
@@ -25,7 +25,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().operateSubQuery(Phone.class,
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().operateSubQuery(Phone.class,
                     c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
             String sql = stream.sql();
             System.out.println(sql);
@@ -43,7 +43,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().operateSubQuery(Phone.class,
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().operateSubQuery(Phone.class,
                     c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
                             .equal(Phone::getOperatorId, Person::getPersonId).select(Phone::getPhoneNumber));
             String sql = stream.sql();
@@ -62,7 +62,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().in(Person::getLastName,
                     Phone.class,
                     c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
             String sql = stream.sql();
@@ -81,7 +81,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .exists(Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").get())
                     .exists(Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").get());
             String sql = stream.sql();
@@ -103,7 +103,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().exists(Phone.class,
                     c -> c.where().equal(Phone::getPhoneNumber, "100100").and().ge(Phone::getOperatorId,
                             Person::getPersonId));
             String sql = stream.sql();
@@ -122,7 +122,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class);
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().exists(Phone.class);
             String sql = stream.sql();
             System.out.println(sql);
         } catch (Throwable ex) {
@@ -139,7 +139,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().exists(Phone.class,
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().exists(Phone.class,
                     c -> c.where().equal(Phone::getPhoneNumber, "100100").toList());
             String sql = stream.sql();
             System.out.println(sql);
@@ -157,7 +157,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(GeneralInfo::getAddrress, "address").in(Person::getLastName, Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").count());
             String sql = stream.sql();
@@ -176,7 +176,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().in(Person::getLastName,
                     Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
                             .le(Phone::getOperatorId, Person::getPersonId).count());
             String sql = stream.sql();
@@ -195,7 +195,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().in(Person::getLastName,
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().in(Person::getLastName,
                     Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
                             .isMember(Phone::getOperatorId, Person::getIdentifiers).count());
             String sql = stream.sql();
@@ -214,7 +214,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where().isMember(100,
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().isMember(100,
                     Person::getIdentifiers);
             String sql = stream.sql();
             System.out.println(sql);
@@ -232,7 +232,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(GeneralInfo::getAddrress, "address").ge(Person::getLastName, SubQuery.any(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
             List<Person> persons = stream.toList();
@@ -253,7 +253,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(GeneralInfo::getAddrress, "address").ge(Person::getLastName, SubQuery.all(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
             List<Person> persons = stream.toList();
@@ -274,7 +274,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(GeneralInfo::getAddrress, "address").ge("100", SubQuery.all(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
             List<Person> persons = stream.toList();
@@ -295,7 +295,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class)
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class)
                     .equal(GeneralInfo::getAddrress, "address").ge(100, SubQuery.all(Phone.class,
                             c -> c.equal(Phone::getPhoneNumber, "100100").max(Phone::getPhoneId)));
             List<Person> persons = stream.toList();
@@ -316,7 +316,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(GeneralInfo::getAddrress, "address").ge("100", SubQuery.any(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
             List<Person> persons = stream.toList();
@@ -337,7 +337,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(GeneralInfo::getAddrress, "address").ge("100", SubQuery.some(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber)));
             List<Person> persons = stream.toList();
@@ -358,7 +358,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(GeneralInfo::getAddrress, "address")
                     .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.all(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getOperatorId)));
@@ -380,7 +380,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(GeneralInfo::getAddrress, "address")
                     .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.any(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getOperatorId)));
@@ -402,7 +402,7 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            QueryStream<Person> stream = QueryProvider.select(em, Person.class).where()
+            QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
                     .equal(GeneralInfo::getAddrress, "address")
                     .geSubQuery(f -> f.abs(Person::getPersonId), SubQuery.some(Phone.class,
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getOperatorId)));

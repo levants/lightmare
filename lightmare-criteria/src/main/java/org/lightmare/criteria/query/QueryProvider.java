@@ -22,7 +22,7 @@
  */
 package org.lightmare.criteria.query;
 
-import javax.persistence.EntityManager;
+import java.util.function.Supplier;
 
 /**
  * Provider or factory class to initialize
@@ -41,78 +41,36 @@ public abstract class QueryProvider {
     /**
      * Generates DELETE statements with custom alias
      * 
-     * @param em
-     * @param entityType
-     * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     * @param supplier
+     * @return S implementation of
+     *         {@link org.lightmare.criteria.query.QueryStream} with delete
      *         statement
      */
-    public static <T> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
-            final String entityAlias) {
-        return JpaQueryStreamBuilder.delete(em, entityType, entityAlias);
-    }
-
-    /**
-     * Generates DELETE statements with default alias
-     * 
-     * @param em
-     * @param entityType
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
-     *         statement
-     */
-    public static <T> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
-        return JpaQueryStreamBuilder.delete(em, entityType, QueryStream.DEFAULT_ALIAS);
+    public static <T, S extends QueryStream<T>> S delete(Supplier<S> supplier) {
+        return supplier.get();
     }
 
     /**
      * Generates UPDATE statements with custom alias
      * 
-     * @param em
-     * @param entityType
-     * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     * @param supplier
+     * @return S implementation of
+     *         {@link org.lightmare.criteria.query.QueryStream} with update
      *         statement
      */
-    public static <T> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
-            final String entityAlias) {
-        return JpaQueryStreamBuilder.update(em, entityType, entityAlias);
-    }
-
-    /**
-     * Generates UPDATE statements with default alias
-     * 
-     * @param em
-     * @param entityType
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
-     *         statement
-     */
-    public static <T> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
-        return JpaQueryStreamBuilder.update(em, entityType, QueryStream.DEFAULT_ALIAS);
+    public static <T, S extends QueryStream<T>> S update(Supplier<S> supplier) {
+        return supplier.get();
     }
 
     /**
      * Generates SELECT statements with custom alias
      * 
-     * @param em
-     * @param entityType
-     * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
+     * @param supplier
+     * @return S implementation of
+     *         {@link org.lightmare.criteria.query.QueryStream} with select
      *         statement
      */
-    public static <T> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
-            final String entityAlias) {
-        return JpaQueryStreamBuilder.query(em, entityType, entityAlias);
-    }
-
-    /**
-     * Generates SELECT statements with default alias
-     * 
-     * @param em
-     * @param entityType
-     * @return {@link org.lightmare.criteria.query.QueryStream} with select
-     *         statement
-     */
-    public static <T> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
-        return JpaQueryStreamBuilder.query(em, entityType, QueryStream.DEFAULT_ALIAS);
+    public static <T, S extends QueryStream<T>> S select(Supplier<S> supplier) {
+        return supplier.get();
     }
 }

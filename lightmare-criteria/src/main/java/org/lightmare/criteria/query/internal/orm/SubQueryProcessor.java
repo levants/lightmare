@@ -40,8 +40,6 @@ public interface SubQueryProcessor<T>
 
     Class<T> getEntityType();
 
-    // =========================sub=queries==================================//
-
     /**
      * Generates {@link org.lightmare.criteria.query.QueryStream} for S type
      * 
@@ -153,6 +151,4 @@ public interface SubQueryProcessor<T>
     default <F> QueryStream<T> notExists(QueryConsumer<T> consumer) {
         return notExists(getEntityType(), consumer);
     }
-
-    // =========================sub=queries==================================//
 }

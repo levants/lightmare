@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lightmare.criteria.db.TestDBUtils;
 import org.lightmare.criteria.entities.Person;
-import org.lightmare.criteria.query.QueryProvider;
+import org.lightmare.criteria.query.JpaQueryProvider;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.runorder.SortedRunner;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -61,7 +61,7 @@ public class TestEnviromentConfig {
 
     protected QueryStream<Person> createQueryStream(final EntityManager em) {
 
-        QueryStream<Person> stream = QueryProvider.select(em, Person.class);
+        QueryStream<Person> stream = JpaQueryProvider.select(em, Person.class);
 
         stream.where().ge(Person::getBirthDate, getDateValue()).and();
         stream.like(Person::getLastName, "lname");
