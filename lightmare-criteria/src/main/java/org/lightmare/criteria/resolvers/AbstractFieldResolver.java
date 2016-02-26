@@ -56,6 +56,12 @@ class AbstractFieldResolver {
 
     private static final Logger LOG = Logger.getLogger(AbstractFieldResolver.class);
 
+    /**
+     * Logs resolved entity parameters if appropriated log level enabled
+     * 
+     * @param resolveType
+     * @param tuple
+     */
     private static void logMessage(String resolveType, QueryTuple tuple) {
 
         if (LOG.isInfoEnabled()) {

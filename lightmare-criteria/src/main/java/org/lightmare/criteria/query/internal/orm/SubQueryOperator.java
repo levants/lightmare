@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.internal.orm;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.JpaQueryStream;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Provides methods to process sub queries
@@ -45,7 +45,7 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
      *         instance
      */
     <F, S> JpaQueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
@@ -59,7 +59,7 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
      *         instance
      */
     <F, S> JpaQueryStream<T> operateSubQuery(Object value, String operator, Class<S> type,
@@ -73,7 +73,7 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
      *         instance
      */
     <F, S> JpaQueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator, Class<S> type,

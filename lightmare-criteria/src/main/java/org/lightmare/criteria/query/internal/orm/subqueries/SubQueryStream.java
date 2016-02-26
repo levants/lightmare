@@ -22,7 +22,7 @@
  */
 package org.lightmare.criteria.query.internal.orm.subqueries;
 
-import org.lightmare.criteria.query.JpaQueryStream;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Interface to process sub queries, embedded queries and join queries

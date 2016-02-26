@@ -71,13 +71,34 @@ public class FieldResolver extends DirectFieldResolver {
     }
 
     /**
+     * Removes semicolons from entity name
+     * 
+     * @param variable
+     * @return {@link String} entity name
+     */
+    private static String clearEntityName(LocalVariableNode variable) {
+        return clearEntityName(variable.desc);
+    }
+
+    /**
+     * Validates if passed {@link org.objectweb.asm.LocalVariableNode} points to
+     * <code>this</code> object
+     * 
+     * @param variable
+     * @return <code>boolean</code> validation result
+     */
+    private static boolean pointsTo(LocalVariableNode variable) {
+        return THIS_PT.equals(variable.name);
+    }
+
+    /**
      * Resolves entity name from local variable
      * 
      * @param variable
      * @return {@link String} entity name
      */
     private static String resolveEntityName(LocalVariableNode variable) {
-        return ObjectUtils.ifIsValid(variable, v -> THIS_PT.equals(v.name), c -> clearEntityName(c.desc));
+        return ObjectUtils.ifIsValid(variable, FieldResolver::pointsTo, FieldResolver::clearEntityName);
     }
 
     /**

@@ -1,11 +1,10 @@
-package org.lightmare.criteria.query.generals;
+package org.lightmare.criteria.query;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.JpaQueryStream;
 
 /**
  * Query stream for abstract data base layers
@@ -15,8 +14,7 @@ import org.lightmare.criteria.query.JpaQueryStream;
  * @param <T>
  *            entity type parameter
  * @param <S>
- *            {@link org.lightmare.criteria.query.generals.QueryStream}
- *            implementation
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
  */
 public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends LayerStream<T> {
 
@@ -25,8 +23,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
      * 
      * @param field
      * @param operator
-     * @return {@link org.lightmare.criteria.query.generals.QueryStream}
-     *         implementation
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     <F> S operate(EntityField<T, F> field, String operator);
 
@@ -36,8 +33,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
      * @param field
      * @param value
      * @param operator
-     * @return {@link org.lightmare.criteria.query.generals.QueryStream}
-     *         implementation
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     <F> S operate(EntityField<T, ? extends F> field, Object value, String operator);
 
@@ -108,8 +104,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
      * @param field
      * @param values
      * @param operator
-     * @return {@link org.lightmare.criteria.query.generals.QueryStream}
-     *         implementation
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     <F> S operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
 
@@ -145,24 +140,21 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
      * Appends logical operator to query composer
      * 
      * @param operator
-     * @return {@link org.lightmare.criteria.query.generals.QueryStream}
-     *         implementation
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     S appendOperator(String operator);
 
     /**
      * WHERE clause appender
      * 
-     * @return {@link org.lightmare.criteria.query.generals.QueryStream}
-     *         implementation
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    JpaQueryStream<T> where();
+    S where();
 
     /**
      * AND logical operator
      * 
-     * @return {@link org.lightmare.criteria.query.generals.QueryStream}
-     *         implementation
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     default S and() {
         return appendOperator(getLayerProvider().and());
@@ -171,8 +163,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
     /**
      * OR logical operator
      * 
-     * @return {@link org.lightmare.criteria.query.generals.QueryStream}
-     *         implementation
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     default S or() {
         return appendOperator(getLayerProvider().or());
@@ -182,8 +173,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
      * Creates query part in brackets
      * 
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.generals.QueryStream}
-     *         implementation
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     S brackets(QueryConsumer<T, S> consumer);
 }

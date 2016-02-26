@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.providers;
 
 import javax.persistence.EntityManager;
 
@@ -38,7 +38,7 @@ public abstract class JpaQueryProvider {
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with delete
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with delete
      *         statement
      */
     public static <T> JpaQueryStream<T> delete(final EntityManager em, final Class<T> entityType,
@@ -51,7 +51,7 @@ public abstract class JpaQueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with delete
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with delete
      *         statement
      */
     public static <T> JpaQueryStream<T> delete(final EntityManager em, Class<T> entityType) {
@@ -65,7 +65,7 @@ public abstract class JpaQueryProvider {
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with update
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with update
      *         statement
      */
     public static <T> JpaQueryStream<T> update(final EntityManager em, final Class<T> entityType,
@@ -78,7 +78,7 @@ public abstract class JpaQueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with update
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with update
      *         statement
      */
     public static <T> JpaQueryStream<T> update(final EntityManager em, Class<T> entityType) {
@@ -91,7 +91,7 @@ public abstract class JpaQueryProvider {
      * @param em
      * @param entityType
      * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with select
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with select
      *         statement
      */
     public static <T> JpaQueryStream<T> select(final EntityManager em, final Class<T> entityType,
@@ -104,7 +104,7 @@ public abstract class JpaQueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with select
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with select
      *         statement
      */
     public static <T> JpaQueryStream<T> select(final EntityManager em, Class<T> entityType) {

@@ -27,12 +27,12 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractAggregateStream;
 import org.lightmare.criteria.query.internal.orm.links.Joins;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -178,11 +178,11 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     /**
-     * Generates {@link org.lightmare.criteria.query.JpaQueryStream} for JOIN
+     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream} for JOIN
      * query
      * 
      * @param type
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for JOIN
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for JOIN
      *         query
      */
     public <S> SubQueryStream<S, T> joinStream(Class<S> type) {
@@ -190,11 +190,11 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     /**
-     * Generates {@link org.lightmare.criteria.query.JpaQueryStream} for JOIN
+     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream} for JOIN
      * query
      * 
      * @param tuple
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for JOIN
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for JOIN
      *         query
      */
     public <S> JpaQueryStream<S> joinStream(QueryTuple tuple) {

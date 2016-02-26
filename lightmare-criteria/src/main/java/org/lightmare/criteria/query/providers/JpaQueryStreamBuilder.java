@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.providers;
 
 import javax.persistence.EntityManager;
 
@@ -49,7 +49,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @param em
      * @param entityType
      * @param alias
-     * @return {@link org.lightmare.criteria.query. JpaQueryStreamBuilder} with
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
      *         select statement
      */
     protected static <T> JpaQueryStreamBuilder<T> delete(final EntityManager em, final Class<T> entityType,
@@ -70,7 +70,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JpaQueryStreamBuilder} with
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
      *         select statement
      */
     protected static <T> JpaQueryStreamBuilder<T> delete(final EntityManager em, Class<T> entityType) {
@@ -83,7 +83,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @param em
      * @param entityType
      * @param alias
-     * @return {@link org.lightmare.criteria.query.JpaQueryStreamBuilder} with
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
      *         select statement
      */
     protected static <T> JpaQueryStreamBuilder<T> update(final EntityManager em, final Class<T> entityType,
@@ -104,7 +104,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JpaQueryStreamBuilder} with
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
      *         select statement
      */
     protected static <T> JpaQueryStreamBuilder<T> update(final EntityManager em, Class<T> entityType) {
@@ -117,7 +117,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @param em
      * @param entityType
      * @param alias
-     * @return {@link org.lightmare.criteria.query.JpaQueryStreamBuilder} with
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
      *         select statement
      */
     protected static <T> JpaQueryStreamBuilder<T> query(final EntityManager em, final Class<T> entityType,
@@ -137,7 +137,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JpaQueryStreamBuilder} with
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
      *         select statement
      */
     protected static <T> JpaQueryStreamBuilder<T> query(final EntityManager em, Class<T> entityType) {

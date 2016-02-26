@@ -25,7 +25,7 @@ package org.lightmare.criteria.functions;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-import org.lightmare.criteria.query.generals.QueryStream;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Query consumer to process JPA query brackets, sub queries, aggregates etc.

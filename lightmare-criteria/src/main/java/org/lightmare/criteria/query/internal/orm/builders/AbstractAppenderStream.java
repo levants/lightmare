@@ -26,13 +26,13 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Orders;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;

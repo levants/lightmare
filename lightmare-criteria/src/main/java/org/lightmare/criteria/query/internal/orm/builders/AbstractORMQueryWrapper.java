@@ -28,9 +28,9 @@ import java.util.Map;
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 
-import org.lightmare.criteria.query.JpaQueryStream;
-import org.lightmare.criteria.query.generals.QueryResolver;
+import org.lightmare.criteria.query.QueryResolver;
 import org.lightmare.criteria.query.internal.connectors.QueryLayer;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 

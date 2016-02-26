@@ -23,8 +23,8 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Orders;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Query expressions for ORDER BY clauses
@@ -43,7 +43,7 @@ interface OrderExpression<T> {
      * 
      * @param dir
      * @param field
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
      */
     <F> JpaQueryStream<T> order(String dir, EntityField<T, F> field);
 
@@ -51,7 +51,7 @@ interface OrderExpression<T> {
      * Generates ORDER BY part for field
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
      */
     default <F> JpaQueryStream<T> orderBy(EntityField<T, F> field) {
         return order(null, field);
@@ -61,7 +61,7 @@ interface OrderExpression<T> {
      * Generates ORDER BY with DESC for field
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
      */
     default <F> JpaQueryStream<T> orderByDesc(EntityField<T, F> field) {
         return order(Orders.DESC, field);

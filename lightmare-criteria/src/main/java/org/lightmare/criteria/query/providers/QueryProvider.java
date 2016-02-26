@@ -20,15 +20,15 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.providers;
 
 import java.util.function.Function;
 
-import org.lightmare.criteria.query.generals.QueryStream;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Provider or factory class to initialize
- * {@link org.lightmare.criteria.query.JpaQueryStream} by SELECT, UPDATE or
+ * {@link org.lightmare.criteria.query.providers.JpaQueryStream} by SELECT, UPDATE or
  * DELETE clause for entity type
  * 
  * @author Levan Tsinadze
@@ -46,7 +46,7 @@ public abstract class QueryProvider {
      * @param entityType
      * @param function
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.JpaQueryStream} with delete
+     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream} with delete
      *         statement
      */
     public static <T, S extends QueryStream<T, ? super S>> S delete(Class<T> entityType,
@@ -60,7 +60,7 @@ public abstract class QueryProvider {
      * @param entityType
      * @param function
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.JpaQueryStream} with update
+     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream} with update
      *         statement
      */
     public static <T, S extends QueryStream<T, ? super S>> S update(Class<T> entityType,
@@ -74,7 +74,7 @@ public abstract class QueryProvider {
      * @param entityType
      * @param function
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.JpaQueryStream} with select
+     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream} with select
      *         statement
      */
     public static <T, S extends QueryStream<T, ? super S>> S select(Class<T> entityType,

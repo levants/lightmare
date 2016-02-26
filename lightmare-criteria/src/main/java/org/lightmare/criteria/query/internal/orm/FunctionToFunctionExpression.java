@@ -23,8 +23,8 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.FunctionConsumer;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Functional expression with other column functional expression
@@ -42,7 +42,7 @@ interface FunctionToFunctionExpression<T> {
      * @param function1
      * @param function2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
      */
     JpaQueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
 

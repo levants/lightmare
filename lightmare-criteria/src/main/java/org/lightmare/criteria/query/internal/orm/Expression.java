@@ -25,10 +25,10 @@ package org.lightmare.criteria.query.internal.orm;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -52,7 +52,7 @@ interface Expression<T> {
     /**
      * Opens bracket in query body
      * 
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
      *         instance
      */
     JpaQueryStream<T> openBracket();
@@ -64,7 +64,7 @@ interface Expression<T> {
      * 
      * @param field
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
      *         instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, F> field, String operator);
@@ -75,7 +75,7 @@ interface Expression<T> {
      * @param field
      * @param value
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
      *         instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator);
@@ -87,7 +87,7 @@ interface Expression<T> {
      * @param value1
      * @param value2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
      *         instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2, String operator);
@@ -100,7 +100,7 @@ interface Expression<T> {
      * @param value1
      * @param operator2
      * @param value2
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
      *         instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, String operator1, Object value1, String operator2,
@@ -167,7 +167,7 @@ interface Expression<T> {
      * @param field
      * @param values
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
      *         instance
      */
     <F> JpaQueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
@@ -179,7 +179,7 @@ interface Expression<T> {
      * @param object
      * @param field
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
      *         instance
      */
     <S, F> JpaQueryStream<T> operateCollection(Object value, EntityField<S, Collection<F>> field, String operator);

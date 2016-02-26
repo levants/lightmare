@@ -24,8 +24,8 @@ package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Aggregate functions for JPA query
@@ -39,7 +39,7 @@ public interface AggregateFunction<T> {
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.JpaQueryStream} for {@link Object} array
+     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for {@link Object} array
      * as result
      * 
      * @param field
@@ -51,7 +51,7 @@ public interface AggregateFunction<T> {
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.JpaQueryStream} for instant result type
+     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for instant result type
      * 
      * @param field
      * @param function
@@ -62,7 +62,7 @@ public interface AggregateFunction<T> {
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.JpaQueryStream} for {@link Number}
+     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for {@link Number}
      * result type
      * 
      * @param field
@@ -112,7 +112,7 @@ public interface AggregateFunction<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
     default <N extends Number> JpaQueryStream<Object[]> sum(EntityField<T, N> field, GroupByConsumer<T> consumer) {
@@ -137,7 +137,7 @@ public interface AggregateFunction<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
     default <N extends Number> JpaQueryStream<Object[]> max(EntityField<T, N> field, GroupByConsumer<T> consumer) {
@@ -162,7 +162,7 @@ public interface AggregateFunction<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
     default <N extends Number> JpaQueryStream<Object[]> min(EntityField<T, N> field, GroupByConsumer<T> consumer) {
@@ -188,7 +188,7 @@ public interface AggregateFunction<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
     default <N extends Number> JpaQueryStream<Object[]> greatest(EntityField<T, N> field, GroupByConsumer<T> consumer) {
@@ -214,7 +214,7 @@ public interface AggregateFunction<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
     default <N extends Number> JpaQueryStream<Object[]> least(EntityField<T, N> field, GroupByConsumer<T> consumer) {
@@ -239,7 +239,7 @@ public interface AggregateFunction<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
     default <F> JpaQueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer) {
@@ -265,7 +265,7 @@ public interface AggregateFunction<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
     default <F> JpaQueryStream<Object[]> countDistinct(EntityField<T, F> field, GroupByConsumer<T> consumer) {

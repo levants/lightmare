@@ -23,8 +23,8 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.FunctionConsumer;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Sub query processor for ALL clause and functional expressions
@@ -42,7 +42,7 @@ interface TypedToFunctionSubQueryProcessor<T> extends SubQueryOperator<T> {
      * @param value
      * @param operator
      * @param stream
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
      */
     default <F, S> JpaQueryStream<T> operateFunctionWthSubQuery(FunctionConsumer<T> consumer, String operator,
             SubQueryType<S> stream) {

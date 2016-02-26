@@ -43,10 +43,6 @@ public class CachedClassReader extends ClassReader {
     // Cache for class readers
     private static final ConcurrentMap<String, ClassReader> CLASS_FILES = new ConcurrentHashMap<>();
 
-    public CachedClassReader(byte[] buff) {
-        super(buff);
-    }
-
     public CachedClassReader(InputStream is) throws IOException {
         super(is);
     }
@@ -56,7 +52,7 @@ public class CachedClassReader extends ClassReader {
      * 
      * @param name
      * @return {@link org.objectweb.asm.ClassReader} by class name
-     * @throws IOException
+     * @throws java.io.IOException
      */
     private static ClassReader readResource(String name) throws IOException {
 

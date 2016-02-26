@@ -23,8 +23,8 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Sub query processor for ALL clause
@@ -42,7 +42,7 @@ interface TypedSubQueryProcessor<T> extends SubQueryOperator<T> {
      * @param field
      * @param operator
      * @param stream
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
      */
     default <F, S> JpaQueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, SubQueryType<S> stream) {
         String composed = stream.getOperator(operator);

@@ -25,8 +25,8 @@ package org.lightmare.criteria.query.internal.orm;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Query stream for entity fields and appropriated values
@@ -46,7 +46,7 @@ interface ColumnExpression<T> {
      * @param field1
      * @param field2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
      */
     <F, S> JpaQueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
             String operator);
@@ -58,7 +58,7 @@ interface ColumnExpression<T> {
      * @param field1
      * @param operator2
      * @param field2
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
      */
     <F, E, S, L> JpaQueryStream<T> operate(EntityField<T, ? extends F> field1, String operator1,
             EntityField<S, ? extends F> field2, String operator2, EntityField<L, E> field3);
@@ -70,7 +70,7 @@ interface ColumnExpression<T> {
      * @param field2
      * @param field3
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
      */
     <F, S> JpaQueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
             EntityField<S, ? extends F> field3, String operator);
@@ -159,7 +159,7 @@ interface ColumnExpression<T> {
      * @param field1
      * @param field2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
      */
     <F, S> JpaQueryStream<T> operateCollection(EntityField<T, F> field1, EntityField<S, Collection<F>> field2,
             String operator);

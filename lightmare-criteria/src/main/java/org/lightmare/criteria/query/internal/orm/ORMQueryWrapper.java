@@ -28,8 +28,8 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Interface for JPA query parameters
@@ -75,7 +75,7 @@ public interface ORMQueryWrapper<T> {
      * @param maxResult
      *            maximum number of results to retrieve
      *
-     * @return the same {@link org.lightmare.criteria.query.JpaQueryStream}
+     * @return the same {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         instance
      *
      * @throws IllegalArgumentException
@@ -100,7 +100,7 @@ public interface ORMQueryWrapper<T> {
      * @param startPosition
      *            position of the first result, numbered from 0
      *
-     * @return the same {@link org.lightmare.criteria.query.JpaQueryStream}
+     * @return the same {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         instance
      *
      * @throws IllegalArgumentException
@@ -133,7 +133,7 @@ public interface ORMQueryWrapper<T> {
      * @param value
      *            value for the property or hint
      *
-     * @return the same {@link org.lightmare.criteria.query.JpaQueryStream}
+     * @return the same {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         instance
      *
      * @throws IllegalArgumentException
@@ -159,7 +159,7 @@ public interface ORMQueryWrapper<T> {
      * @param flushMode
      *            flush mode
      *
-     * @return the same {@link org.lightmare.criteria.query.JpaQueryStream}
+     * @return the same {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         instance
      */
     JpaQueryStream<T> setFlushMode(FlushModeType flushMode);
@@ -170,7 +170,7 @@ public interface ORMQueryWrapper<T> {
      * @param lockMode
      *            lock mode
      *
-     * @return the same {@link org.lightmare.criteria.query.JpaQueryStream}
+     * @return the same {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         instance
      *
      * @throws IllegalStateException

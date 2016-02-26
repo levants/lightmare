@@ -26,10 +26,10 @@ import java.io.Serializable;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;

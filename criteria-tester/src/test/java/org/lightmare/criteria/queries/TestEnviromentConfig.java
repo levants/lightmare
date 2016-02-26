@@ -11,8 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lightmare.criteria.db.DBConfigUtils;
 import org.lightmare.criteria.entities.Person;
-import org.lightmare.criteria.query.JpaQueryProvider;
-import org.lightmare.criteria.query.JpaQueryStream;
+import org.lightmare.criteria.query.providers.JpaQueryProvider;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.runorder.SortedRunner;
 
 @RunWith(SortedRunner.class)

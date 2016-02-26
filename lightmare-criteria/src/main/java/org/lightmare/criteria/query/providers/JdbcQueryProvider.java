@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.providers;
 
 import java.sql.Connection;
 
@@ -38,7 +38,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      * @param connection
      * @param entityType
      * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with delete
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with delete
      *         statement
      */
     public static <T> JpaQueryStream<T> delete(final Connection connection, final Class<T> entityType,
@@ -51,7 +51,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with delete
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with delete
      *         statement
      */
     public static <T> JpaQueryStream<T> delete(final Connection connection, Class<T> entityType) {
@@ -64,7 +64,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      * @param connection
      * @param entityType
      * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with update
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with update
      *         statement
      */
     public static <T> JpaQueryStream<T> update(final Connection connection, final Class<T> entityType,
@@ -77,7 +77,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with update
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with update
      *         statement
      */
     public static <T> JpaQueryStream<T> update(final Connection connection, Class<T> entityType) {
@@ -90,7 +90,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      * @param connection
      * @param entityType
      * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with select
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with select
      *         statement
      */
     public static <T> JpaQueryStream<T> select(final Connection connection, final Class<T> entityType,
@@ -103,7 +103,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} with select
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with select
      *         statement
      */
     public static <T> JpaQueryStream<T> select(final Connection connection, Class<T> entityType) {

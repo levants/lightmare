@@ -23,10 +23,10 @@
 package org.lightmare.criteria.query.internal;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.internal.orm.subqueries.AbstractSubQueryStream;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Implementation of

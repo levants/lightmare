@@ -30,7 +30,7 @@ import org.lightmare.criteria.tuples.EmbeddedTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
- * Implementation of {@link org.lightmare.criteria.query.JpaQueryStream} to
+ * Implementation of {@link org.lightmare.criteria.query.providers.JpaQueryStream} to
  * process embedded or "one to one" or "many to one" joined field statements
  * 
  * @author Levan Tsinadze

@@ -32,9 +32,9 @@ import java.util.Set;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.functions.SelectConsumer;
-import org.lightmare.criteria.query.JpaQueryStream;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -145,7 +145,7 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
      * Processes select method call for all arguments
      * 
      * @param fields
-     * @return {@link org.lightmare.criteria.query.JpaQueryStream} for select
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for select
      *         method
      */
     private JpaQueryStream<Object[]> groupByField(Serializable field) {
