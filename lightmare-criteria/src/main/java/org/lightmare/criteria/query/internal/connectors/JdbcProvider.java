@@ -41,7 +41,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @author Levan Tsinadze
  *
  */
-public class JdbcProvider implements LayerProvider {
+public class JdbcProvider extends JpaLayerExpressions implements LayerProvider {
 
     private final Connection connection;
 

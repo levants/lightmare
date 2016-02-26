@@ -27,6 +27,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
 import org.lightmare.criteria.utils.StringUtils;
@@ -40,6 +41,14 @@ import org.lightmare.criteria.utils.StringUtils;
  *            entity type parameter
  */
 interface Expression<T> {
+
+    /**
+     * Gets data base layer provider implementation
+     * 
+     * @return {@link org.lightmare.criteria.query.internal.connectors.LayerProvider}
+     *         implementation
+     */
+    LayerProvider getLayerProvider();
 
     /**
      * Opens bracket in query body
@@ -94,16 +103,16 @@ interface Expression<T> {
             Object value2);
 
     default <F> QueryStream<T> equal(EntityField<T, F> field, Object value) {
-        return operate(field, value, Operators.EQ);
+        return operate(field, value, getLayerProvider().equal());
     }
 
     default <F> QueryStream<T> notEqual(EntityField<T, F> field, Object value) {
-        return operate(field, value, Operators.NOT_EQ);
+        return operate(field, value, getLayerProvider().notEqual());
     }
 
     default <F extends Comparable<? super F>> QueryStream<T> gt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, Operators.GREATER);
+        return operate(field, value, getLayerProvider().greaterThen());
     }
 
     default <F extends Comparable<? super F>> QueryStream<T> greaterThen(EntityField<T, Comparable<? super F>> field,
@@ -113,7 +122,7 @@ interface Expression<T> {
 
     default <F extends Comparable<? super F>> QueryStream<T> lt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, Operators.LESS);
+        return operate(field, value, getLayerProvider().lessThen());
     }
 
     default <F extends Comparable<? super F>> QueryStream<T> lessThen(EntityField<T, Comparable<? super F>> field,
@@ -123,7 +132,7 @@ interface Expression<T> {
 
     default <F extends Comparable<? super F>> QueryStream<T> ge(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, Operators.GREATER_OR_EQ);
+        return operate(field, value, getLayerProvider().greaterThenOrEqual());
     }
 
     default <F extends Comparable<? super F>> QueryStream<T> greaterThenOrEqualTo(
@@ -133,7 +142,7 @@ interface Expression<T> {
 
     default <F extends Comparable<? super F>> QueryStream<T> le(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, Operators.LESS_OR_EQ);
+        return operate(field, value, getLayerProvider().lessThenOrEqual());
     }
 
     default <F extends Comparable<? super F>> QueryStream<T> lessThenOrEqualTo(
@@ -154,51 +163,51 @@ interface Expression<T> {
     }
 
     default QueryStream<T> like(EntityField<T, String> field, String value) {
-        return operate(field, value, Operators.LIKE);
+        return operate(field, value, getLayerProvider().like());
     }
 
     default QueryStream<T> notLike(EntityField<T, String> field, String value) {
-        return operate(field, value, Operators.NOT_LIKE);
+        return operate(field, value, getLayerProvider().notLike());
     }
 
     default QueryStream<T> like(EntityField<T, String> field, String value, char escape) {
-        return operate(field, Operators.LIKE, value, Operators.ESCAPE, StringUtils.quote(escape));
+        return operate(field, getLayerProvider().like(), value, Operators.ESCAPE, StringUtils.quote(escape));
     }
 
     default QueryStream<T> notLike(EntityField<T, String> field, String value, char escape) {
-        return operate(field, Operators.NOT_LIKE, value, Operators.ESCAPE, StringUtils.quote(escape));
+        return operate(field, getLayerProvider().notLike(), value, Operators.ESCAPE, StringUtils.quote(escape));
     }
 
     // =========================Implementations=of=LIKE=clause================//
 
     default QueryStream<T> startsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(value, Parts.LIKE_SIGN);
-        return operate(field, enrich, Operators.LIKE);
+        return operate(field, enrich, getLayerProvider().like());
     }
 
     default QueryStream<T> notStartsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(value, Parts.LIKE_SIGN);
-        return operate(field, enrich, Operators.NOT_LIKE);
+        return operate(field, enrich, getLayerProvider().notLike());
     }
 
     default QueryStream<T> endsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(Parts.LIKE_SIGN, value);
-        return operate(field, enrich, Operators.LIKE);
+        return operate(field, enrich, getLayerProvider().like());
     }
 
     default QueryStream<T> notEndsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(Parts.LIKE_SIGN, value);
-        return operate(field, enrich, Operators.NOT_LIKE);
+        return operate(field, enrich, getLayerProvider().notLike());
     }
 
     default QueryStream<T> contains(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(Parts.LIKE_SIGN, value, Parts.LIKE_SIGN);
-        return operate(field, enrich, Operators.LIKE);
+        return operate(field, enrich, getLayerProvider().like());
     }
 
     default QueryStream<T> notContains(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(Parts.LIKE_SIGN, value, Parts.LIKE_SIGN);
-        return operate(field, enrich, Operators.NOT_LIKE);
+        return operate(field, enrich, getLayerProvider().notLike());
     }
 
     // ======================================================================//
@@ -226,11 +235,11 @@ interface Expression<T> {
     <S, F> QueryStream<T> operateCollection(Object value, EntityField<S, Collection<F>> field, String operator);
 
     default <F> QueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
-        return operateCollection(field, values, Operators.IN);
+        return operateCollection(field, values, getLayerProvider().in());
     }
 
     default <F> QueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) {
-        return operateCollection(field, values, Operators.NOT_IN);
+        return operateCollection(field, values, getLayerProvider().notIn());
     }
 
     default <F> QueryStream<T> in(EntityField<T, F> field, F[] values) {
@@ -250,10 +259,10 @@ interface Expression<T> {
     }
 
     default <F> QueryStream<T> isNull(EntityField<T, F> field) {
-        return operate(field, Operators.IS_NULL);
+        return operate(field, getLayerProvider().isNull());
     }
 
     default <F> QueryStream<T> isNotNull(EntityField<T, F> field) {
-        return operate(field, Operators.NOT_NULL);
+        return operate(field, getLayerProvider().isNotNull());
     }
 }

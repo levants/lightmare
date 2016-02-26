@@ -64,17 +64,6 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     }
 
     /**
-     * Gets aggregate function type
-     * 
-     * @param type
-     * @param tuple
-     * @return {@link Class} aggregate function type
-     */
-    private static <C> Class<C> getAggregateType(Class<C> type, QueryTuple tuple) {
-        return ObjectUtils.thisOrDefault(type, tuple::getFieldGenericType);
-    }
-
-    /**
      * Generates aggregate query prefix
      * 
      * @param buffer
@@ -110,7 +99,8 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
 
         QueryTuple tuple = compose(field);
         aggregateTuple(tuple, function);
-        Class<R> selectType = getAggregateType(type, tuple);
+        Class<?> rawType = ObjectUtils.thisOrDefault(type, tuple::getFieldGenericType);
+        Class<R> selectType = ObjectUtils.cast(rawType);
         stream = new SelectStream<>(this, selectType);
 
         return stream;

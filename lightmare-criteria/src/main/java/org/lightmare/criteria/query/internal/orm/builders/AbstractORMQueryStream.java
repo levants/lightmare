@@ -151,8 +151,8 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
         QueryTuple tuple;
 
         tuple = LambdaUtils.getOrInit(field);
-        tuple.setAlias(alias);
-        tuple.setFieldName(provider.getColumnName(tuple));
+        tuple.setAlias(getAlias());
+        tuple.setFieldName(getLayerProvider().getColumnName(tuple));
 
         return tuple;
     }
@@ -168,7 +168,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
     protected QueryTuple compose(Serializable field) {
 
         QueryTuple tuple = resolve(field);
-        LambdaUtils.setGenericIfValid(entityType, tuple);
+        LambdaUtils.setGenericIfValid(getEntityType(), tuple);
 
         return tuple;
     }
