@@ -30,7 +30,7 @@ import javax.persistence.EntityManager;
  * @author Levan Tsinadze
  *
  */
-public abstract class JpaQueryProvider extends QueryProvider {
+public abstract class JpaQueryProvider {
 
     /**
      * Generates DELETE statements with custom alias
@@ -43,7 +43,7 @@ public abstract class JpaQueryProvider extends QueryProvider {
      */
     public static <T> QueryStream<T> delete(final EntityManager em, final Class<T> entityType,
             final String entityAlias) {
-        return delete(() -> JpaQueryStreamBuilder.delete(em, entityType, entityAlias));
+        return QueryProvider.delete(entityType, c -> JpaQueryStreamBuilder.delete(em, entityType, entityAlias));
     }
 
     /**
@@ -55,7 +55,8 @@ public abstract class JpaQueryProvider extends QueryProvider {
      *         statement
      */
     public static <T> QueryStream<T> delete(final EntityManager em, Class<T> entityType) {
-        return delete(() -> JpaQueryStreamBuilder.delete(em, entityType, QueryStream.DEFAULT_ALIAS));
+        return QueryProvider.delete(entityType,
+                c -> JpaQueryStreamBuilder.delete(em, entityType, QueryStream.DEFAULT_ALIAS));
     }
 
     /**
@@ -69,7 +70,7 @@ public abstract class JpaQueryProvider extends QueryProvider {
      */
     public static <T> QueryStream<T> update(final EntityManager em, final Class<T> entityType,
             final String entityAlias) {
-        return update(() -> JpaQueryStreamBuilder.update(em, entityType, entityAlias));
+        return QueryProvider.update(entityType, c -> JpaQueryStreamBuilder.update(em, entityType, entityAlias));
     }
 
     /**
@@ -81,7 +82,7 @@ public abstract class JpaQueryProvider extends QueryProvider {
      *         statement
      */
     public static <T> QueryStream<T> update(final EntityManager em, Class<T> entityType) {
-        return update(() -> JpaQueryStreamBuilder.update(em, entityType, QueryStream.DEFAULT_ALIAS));
+        return QueryProvider.update(entityType, c -> JpaQueryStreamBuilder.update(em, c, QueryStream.DEFAULT_ALIAS));
     }
 
     /**
@@ -95,7 +96,7 @@ public abstract class JpaQueryProvider extends QueryProvider {
      */
     public static <T> QueryStream<T> select(final EntityManager em, final Class<T> entityType,
             final String entityAlias) {
-        return select(() -> JpaQueryStreamBuilder.query(em, entityType, entityAlias));
+        return QueryProvider.select(entityType, c -> JpaQueryStreamBuilder.query(em, c, entityAlias));
     }
 
     /**
@@ -107,6 +108,6 @@ public abstract class JpaQueryProvider extends QueryProvider {
      *         statement
      */
     public static <T> QueryStream<T> select(final EntityManager em, Class<T> entityType) {
-        return select(() -> JpaQueryStreamBuilder.query(em, entityType, QueryStream.DEFAULT_ALIAS));
+        return QueryProvider.select(entityType, c -> JpaQueryStreamBuilder.query(em, c, QueryStream.DEFAULT_ALIAS));
     }
 }

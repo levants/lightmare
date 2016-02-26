@@ -22,7 +22,7 @@
  */
 package org.lightmare.criteria.query;
 
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 /**
  * Provider or factory class to initialize
@@ -40,37 +40,40 @@ public abstract class QueryProvider {
 
     /**
      * Generates DELETE statements with custom alias
-     * 
-     * @param supplier
+     *
+     * @param entityType
+     * @param function
      * @return S implementation of
      *         {@link org.lightmare.criteria.query.QueryStream} with delete
      *         statement
      */
-    public static <T, S extends QueryStream<T>> S delete(Supplier<S> supplier) {
-        return supplier.get();
+    public static <T, S extends QueryStream<T>> S delete(Class<T> entityType, Function<Class<T>, S> function) {
+        return function.apply(entityType);
     }
 
     /**
      * Generates UPDATE statements with custom alias
      * 
-     * @param supplier
+     * @param entityType
+     * @param function
      * @return S implementation of
      *         {@link org.lightmare.criteria.query.QueryStream} with update
      *         statement
      */
-    public static <T, S extends QueryStream<T>> S update(Supplier<S> supplier) {
-        return supplier.get();
+    public static <T, S extends QueryStream<T>> S update(Class<T> entityType, Function<Class<T>, S> function) {
+        return function.apply(entityType);
     }
 
     /**
      * Generates SELECT statements with custom alias
      * 
-     * @param supplier
+     * @param entityType
+     * @param function
      * @return S implementation of
      *         {@link org.lightmare.criteria.query.QueryStream} with select
      *         statement
      */
-    public static <T, S extends QueryStream<T>> S select(Supplier<S> supplier) {
-        return supplier.get();
+    public static <T, S extends QueryStream<T>> S select(Class<T> entityType, Function<Class<T>, S> function) {
+        return function.apply(entityType);
     }
 }

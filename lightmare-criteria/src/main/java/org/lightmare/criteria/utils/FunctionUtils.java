@@ -26,6 +26,7 @@ public abstract class FunctionUtils {
          * 
          * @param value
          * @throws E
+         *             exception implementation
          */
         void accept(T value) throws E;
     }
@@ -51,6 +52,7 @@ public abstract class FunctionUtils {
          * @param value1
          * @param value2
          * @throws E
+         *             exception implementation
          */
         void accept(T value1, K value2) throws E;
     }
@@ -73,6 +75,7 @@ public abstract class FunctionUtils {
          * 
          * @param value
          * @throws E
+         *             exception implementation
          */
         T get() throws E;
     }
@@ -98,6 +101,7 @@ public abstract class FunctionUtils {
          * @param value
          * @return R
          * @throws E
+         *             exception implementation
          */
         R apply(T value) throws E;
     }
@@ -126,6 +130,7 @@ public abstract class FunctionUtils {
          * @param value2
          * @return R
          * @throws E
+         *             exception implementation
          */
         R apply(T value1, K value2) throws E;
     }

@@ -87,21 +87,13 @@
 				<configuration>
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.target}</target>
-					<compilerId>eclipse</compilerId>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.codehaus.plexus</groupId>
-						<artifactId>plexus-compiler-eclipse</artifactId>
-						<version>${plexus-compiler-eclipse.version}</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
 	<profiles>
 		<profile>
-			<id>criteriac</id>
+			<id>criteria-eclipse</id>
 			<build>
 				<plugins>
 					<plugin>
@@ -126,7 +118,15 @@
 						<configuration>
 							<source>${maven.compiler.source}</source>
 							<target>${maven.compiler.target}</target>
+							<compilerId>eclipse</compilerId>
 						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>org.codehaus.plexus</groupId>
+								<artifactId>plexus-compiler-eclipse</artifactId>
+								<version>${plexus-compiler-eclipse.version}</version>
+							</dependency>
+						</dependencies>
 					</plugin>
 				</plugins>
 			</build>

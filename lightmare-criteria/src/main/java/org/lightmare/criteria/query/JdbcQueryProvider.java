@@ -43,7 +43,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      */
     public static <T> QueryStream<T> delete(final Connection connection, final Class<T> entityType,
             final String entityAlias) {
-        return delete(() -> JdbcQueryStreamBuilder.delete(connection, entityType, entityAlias));
+        return delete(entityType, c -> JdbcQueryStreamBuilder.delete(connection, c, entityAlias));
     }
 
     /**
@@ -55,7 +55,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      *         statement
      */
     public static <T> QueryStream<T> delete(final Connection connection, Class<T> entityType) {
-        return delete(() -> JdbcQueryStreamBuilder.delete(connection, entityType, QueryStream.DEFAULT_ALIAS));
+        return delete(entityType, c -> JdbcQueryStreamBuilder.delete(connection, c, QueryStream.DEFAULT_ALIAS));
     }
 
     /**
@@ -69,7 +69,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      */
     public static <T> QueryStream<T> update(final Connection connection, final Class<T> entityType,
             final String entityAlias) {
-        return update(() -> JdbcQueryStreamBuilder.update(connection, entityType, entityAlias));
+        return update(entityType, c -> JdbcQueryStreamBuilder.update(connection, c, entityAlias));
     }
 
     /**
@@ -81,7 +81,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      *         statement
      */
     public static <T> QueryStream<T> update(final Connection connection, Class<T> entityType) {
-        return update(() -> JdbcQueryStreamBuilder.update(connection, entityType, QueryStream.DEFAULT_ALIAS));
+        return update(entityType, c -> JdbcQueryStreamBuilder.update(connection, c, QueryStream.DEFAULT_ALIAS));
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      */
     public static <T> QueryStream<T> select(final Connection connection, final Class<T> entityType,
             final String entityAlias) {
-        return select(() -> JdbcQueryStreamBuilder.select(connection, entityType, entityAlias));
+        return select(entityType, c -> JdbcQueryStreamBuilder.select(connection, c, entityAlias));
     }
 
     /**
@@ -107,6 +107,6 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      *         statement
      */
     public static <T> QueryStream<T> select(final Connection connection, Class<T> entityType) {
-        return select(() -> JdbcQueryStreamBuilder.select(connection, entityType, QueryStream.DEFAULT_ALIAS));
+        return select(entityType, c -> JdbcQueryStreamBuilder.select(connection, c, QueryStream.DEFAULT_ALIAS));
     }
 }
