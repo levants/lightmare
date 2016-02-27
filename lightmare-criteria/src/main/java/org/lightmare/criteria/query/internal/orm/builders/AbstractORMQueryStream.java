@@ -35,7 +35,7 @@ import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
 import org.lightmare.criteria.tuples.CounterTuple;
-import org.lightmare.criteria.tuples.CounterTuple.NameCount;
+import org.lightmare.criteria.tuples.CounterTuple.NameCountTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -157,10 +157,10 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * Generates parameter name for JPA query
      * 
      * @param tuple
-     * @return {@link org.lightmare.criteria.tuples.CounterTuple.NameCount}
+     * @return {@link org.lightmare.criteria.tuples.CounterTuple.NameCountTuple}
      *         parameter name
      */
-    private NameCount generateParameterName(QueryTuple tuple) {
+    private NameCountTuple generateParameterName(QueryTuple tuple) {
         return getCounterTuple().getAndIncrement(tuple.getFieldName());
     }
 
@@ -170,7 +170,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
         parameters.add(parameter);
     }
 
-    private void addParameter(NameCount key, Object value, TemporalType temporalType) {
+    private void addParameter(NameCountTuple key, Object value, TemporalType temporalType) {
         ParameterTuple parameter = ParameterTuple.of(key, value, temporalType);
         parameters.add(parameter);
     }
@@ -191,7 +191,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @param tuple
      * @param value
      */
-    public <F> void addParameter(NameCount key, QueryTuple tuple, F value) {
+    public <F> void addParameter(NameCountTuple key, QueryTuple tuple, F value) {
         TemporalType temporalType = tuple.getTemporalType();
         addParameter(key, value, temporalType);
     }
@@ -205,7 +205,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      */
     public void oppWithParameter(QueryTuple tuple, Object value, StringBuilder buffer) {
 
-        NameCount pair = generateParameterName(tuple);
+        NameCountTuple pair = generateParameterName(tuple);
         buffer.append(Parts.PARAM_PREFIX).append(pair.getName());
         addParameter(pair, tuple, value);
     }
@@ -220,7 +220,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      */
     public void oppWithCollectionParameter(QueryTuple tuple, Object value, StringBuilder buffer) {
 
-        NameCount pair = generateParameterName(tuple);
+        NameCountTuple pair = generateParameterName(tuple);
         buffer.append(Operators.OPEN_BRACKET);
         buffer.append(Parts.PARAM_PREFIX).append(pair.getName());
         buffer.append(Operators.Brackets.CLOSE);

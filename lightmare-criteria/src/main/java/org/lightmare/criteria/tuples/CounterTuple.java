@@ -21,13 +21,13 @@ public class CounterTuple {
      * @author Levan Tsinadze
      *
      */
-    public static class NameCount {
+    public static class NameCountTuple {
 
         private final String name;
 
         private final int count;
 
-        public NameCount(final String name, final int count) {
+        public NameCountTuple(final String name, final int count) {
             this.count = count;
             this.name = StringUtils.concat(name, StringUtils.UNDERSCORE, count);
         }
@@ -56,7 +56,7 @@ public class CounterTuple {
         return parameter++;
     }
 
-    public NameCount getAndIncrement(String name) {
-        return new NameCount(name, getAndIncrementParameter());
+    public NameCountTuple getAndIncrement(String name) {
+        return new NameCountTuple(name, getAndIncrementParameter());
     }
 }

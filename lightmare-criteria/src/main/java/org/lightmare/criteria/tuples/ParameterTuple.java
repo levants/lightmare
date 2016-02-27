@@ -24,7 +24,7 @@ package org.lightmare.criteria.tuples;
 
 import javax.persistence.TemporalType;
 
-import org.lightmare.criteria.tuples.CounterTuple.NameCount;
+import org.lightmare.criteria.tuples.CounterTuple.NameCountTuple;
 
 /**
  * Query parameter name and value container class
@@ -50,7 +50,7 @@ public class ParameterTuple {
         this.temporalType = temporalType;
     }
 
-    private ParameterTuple(final NameCount pair, final Object value, final TemporalType temporalType) {
+    private ParameterTuple(final NameCountTuple pair, final Object value, final TemporalType temporalType) {
         this(pair.getName(), value, temporalType);
         this.count = pair.getCount();
     }
@@ -70,7 +70,7 @@ public class ParameterTuple {
 
     /**
      * Initializes {@link org.lightmare.criteria.tuples.ParameterTuple} by
-     * parameter {@link org.lightmare.criteria.tuples.CounterTuple.NameCount},
+     * parameter {@link org.lightmare.criteria.tuples.CounterTuple.NameCountTuple},
      * value and {@link javax.persistence.TemporalType} instance
      * 
      * @param pair
@@ -78,7 +78,7 @@ public class ParameterTuple {
      * @param temporalType
      * @return {@link org.lightmare.criteria.tuples.ParameterTuple} instance
      */
-    public static ParameterTuple of(final NameCount pair, final Object value, final TemporalType temporalType) {
+    public static ParameterTuple of(final NameCountTuple pair, final Object value, final TemporalType temporalType) {
         return new ParameterTuple(pair, value, temporalType);
     }
 

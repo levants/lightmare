@@ -124,7 +124,6 @@ public class EntityProcessor {
         } catch (IntrospectionException ex) {
             LOG.error(ex.getMessage(), ex);
         }
-
     }
 
     /**
