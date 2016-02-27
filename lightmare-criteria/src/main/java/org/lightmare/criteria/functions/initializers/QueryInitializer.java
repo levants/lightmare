@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.function.BiFunction;
 
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.internal.layers.LayerProvider;
 
 /**
  * Functional interface to initialize
@@ -24,7 +24,7 @@ public interface QueryInitializer<T, S extends QueryStream<T, ? super S>>
     /**
      * Initializes {@link org.lightmare.criteria.query.QueryStream}
      * implementation by
-     * {@link org.lightmare.criteria.query.internal.connectors.LayerProvider}
+     * {@link org.lightmare.criteria.query.internal.layers.LayerProvider}
      * and {@link Class} entity type
      * 
      * @return S {@link org.lightmare.criteria.query.QueryStream} implementation

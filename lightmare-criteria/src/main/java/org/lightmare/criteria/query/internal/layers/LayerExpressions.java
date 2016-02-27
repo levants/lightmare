@@ -1,4 +1,4 @@
-package org.lightmare.criteria.query.internal.connectors;
+package org.lightmare.criteria.query.internal.layers;
 
 /**
  * Query expressions for data base layer

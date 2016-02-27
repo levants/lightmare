@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.providers;
 
 import org.lightmare.criteria.query.internal.EntityQueryStream;
-import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 
 /**

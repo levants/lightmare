@@ -29,8 +29,8 @@ import java.util.Set;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.internal.connectors.LayerProvider;
-import org.lightmare.criteria.query.internal.connectors.QueryLayer;
+import org.lightmare.criteria.query.internal.layers.LayerProvider;
+import org.lightmare.criteria.query.internal.layers.QueryLayer;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Parts;

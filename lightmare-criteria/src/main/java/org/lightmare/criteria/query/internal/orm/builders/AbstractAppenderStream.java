@@ -26,7 +26,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators;

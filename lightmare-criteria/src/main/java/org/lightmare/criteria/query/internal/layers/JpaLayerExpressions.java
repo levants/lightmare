@@ -1,10 +1,10 @@
-package org.lightmare.criteria.query.internal.connectors;
+package org.lightmare.criteria.query.internal.layers;
 
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 
 /**
  * Implementation for
- * {@link org.lightmare.criteria.query.internal.connectors.LayerExpressions} for
+ * {@link org.lightmare.criteria.query.internal.layers.LayerExpressions} for
  * JPA and JDBC layers
  * 
  * @author Levan Tsinadze

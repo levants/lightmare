@@ -25,8 +25,8 @@ package org.lightmare.criteria.query.internal.orm.builders;
 import java.util.Queue;
 import java.util.Set;
 
-import org.lightmare.criteria.query.internal.connectors.LayerProvider;
-import org.lightmare.criteria.query.internal.connectors.QueryLayer;
+import org.lightmare.criteria.query.internal.layers.LayerProvider;
+import org.lightmare.criteria.query.internal.layers.QueryLayer;
 import org.lightmare.criteria.tuples.AggregateTuple;
 
 /**
@@ -67,7 +67,7 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
      * Creates {@link javax.persistence.TypedQuery} from generated SQL for
      * SELECT statements
      * 
-     * @return {@link org.lightmare.criteria.query.internal.connectors.QueryLayer}
+     * @return {@link org.lightmare.criteria.query.internal.layers.QueryLayer}
      *         for entity type
      */
     protected QueryLayer<T> initTypedQuery() {
@@ -102,7 +102,7 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
      * Creates {@link javax.persistence.Query} from generated SQL for UPDATE or
      * DELETE statements
      * 
-     * @return {@link org.lightmare.criteria.query.internal.connectors.QueryLayer}
+     * @return {@link org.lightmare.criteria.query.internal.layers.QueryLayer}
      *         for bulk modification
      */
     protected QueryLayer<?> initBulkQuery() {

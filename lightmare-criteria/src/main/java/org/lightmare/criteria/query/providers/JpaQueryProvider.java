@@ -24,7 +24,8 @@ package org.lightmare.criteria.query.providers;
 
 import javax.persistence.EntityManager;
 
-import org.lightmare.criteria.query.internal.connectors.JpaProvider;
+import org.lightmare.criteria.query.QueryProvider;
+import org.lightmare.criteria.query.internal.layers.JpaProvider;
 
 /**
  * Query provider for JPA layer

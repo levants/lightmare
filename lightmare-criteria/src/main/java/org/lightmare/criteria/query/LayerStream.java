@@ -1,10 +1,10 @@
 package org.lightmare.criteria.query;
 
-import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.internal.layers.LayerProvider;
 
 /**
  * Abstraction of entity type, alias, and
- * {@link org.lightmare.criteria.query.internal.connectors.LayerProvider} for
+ * {@link org.lightmare.criteria.query.internal.layers.LayerProvider} for
  * various data base layers
  * 
  * @author Levan Tsinadze
@@ -17,7 +17,7 @@ interface LayerStream<T> {
     /**
      * Gets data base layer provider implementation
      * 
-     * @return {@link org.lightmare.criteria.query.internal.connectors.LayerProvider}
+     * @return {@link org.lightmare.criteria.query.internal.layers.LayerProvider}
      *         implementation
      */
     LayerProvider getLayerProvider();

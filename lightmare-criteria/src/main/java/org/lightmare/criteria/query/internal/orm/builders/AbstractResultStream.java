@@ -27,9 +27,9 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
-import org.lightmare.criteria.query.internal.connectors.JdbcQueryLayer;
-import org.lightmare.criteria.query.internal.connectors.LayerProvider;
-import org.lightmare.criteria.query.internal.connectors.QueryLayer;
+import org.lightmare.criteria.query.internal.layers.JdbcQueryLayer;
+import org.lightmare.criteria.query.internal.layers.LayerProvider;
+import org.lightmare.criteria.query.internal.layers.QueryLayer;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 
@@ -82,13 +82,13 @@ abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
     /**
      * Retrieves result from generated
-     * {@link org.lightmare.criteria.query.internal.connectors.JdbcQueryLayer}
+     * {@link org.lightmare.criteria.query.internal.layers.JdbcQueryLayer}
      * instance
      * 
      * @param retriever
      * @param function
      * @return R result from generated
-     *         {@link org.lightmare.criteria.query.internal.connectors.JdbcQueryLayer}
+     *         {@link org.lightmare.criteria.query.internal.layers.JdbcQueryLayer}
      */
     private <R> R retrieveResult(ResultRetriever<T> retriever,
             BiFunction<JdbcQueryLayer<T>, ResultRetriever<T>, R> function) {

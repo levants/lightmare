@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.connectors;
+package org.lightmare.criteria.query.internal.layers;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -32,7 +32,7 @@ import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation for
- * {@link org.lightmare.criteria.query.internal.connectors.LayerProvider} JPA
+ * {@link org.lightmare.criteria.query.internal.layers.LayerProvider} JPA
  * queries
  * 
  * @author Levan Tsinadze

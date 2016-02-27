@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.internal.orm;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
@@ -44,7 +44,7 @@ interface Expression<T> {
     /**
      * Gets data base layer provider implementation
      * 
-     * @return {@link org.lightmare.criteria.query.internal.connectors.LayerProvider}
+     * @return {@link org.lightmare.criteria.query.internal.layers.LayerProvider}
      *         implementation
      */
     LayerProvider getLayerProvider();

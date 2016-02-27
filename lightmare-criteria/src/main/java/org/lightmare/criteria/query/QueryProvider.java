@@ -20,11 +20,10 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.providers;
+package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.functions.initializers.QueryInitializer;
-import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.connectors.LayerProvider;
+import org.lightmare.criteria.query.internal.layers.LayerProvider;
 
 /**
  * Provider or factory class to initialize
@@ -47,8 +46,8 @@ public abstract class QueryProvider {
      * @param entityType
      * @param initializer
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         with select statement
+     *         {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         with delete statement
      */
     public static <T, S extends QueryStream<T, ? super S>> S delete(LayerProvider provider, Class<T> entityType,
             QueryInitializer<T, S> initializer) {
@@ -62,8 +61,8 @@ public abstract class QueryProvider {
      * @param entityType
      * @param initializer
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         with select statement
+     *         {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         with update statement
      */
     public static <T, S extends QueryStream<T, ? super S>> S update(LayerProvider provider, Class<T> entityType,
             QueryInitializer<T, S> initializer) {
@@ -77,7 +76,7 @@ public abstract class QueryProvider {
      * @param entityType
      * @param initializer
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         {@link org.lightmare.criteria.query.QueryStream} implementation
      *         with select statement
      */
     public static <T, S extends QueryStream<T, ? super S>> S select(LayerProvider provider, Class<T> entityType,

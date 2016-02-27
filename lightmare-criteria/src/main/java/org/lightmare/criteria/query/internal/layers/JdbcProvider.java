@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.connectors;
+package org.lightmare.criteria.query.internal.layers;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -36,7 +36,7 @@ import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation for
- * {@link org.lightmare.criteria.query.internal.connectors.LayerProvider} JDBC
+ * {@link org.lightmare.criteria.query.internal.layers.LayerProvider} JDBC
  * queries
  * 
  * @author Levan Tsinadze

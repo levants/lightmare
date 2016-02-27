@@ -24,7 +24,8 @@ package org.lightmare.criteria.query.providers;
 
 import java.sql.Connection;
 
-import org.lightmare.criteria.query.internal.connectors.JdbcProvider;
+import org.lightmare.criteria.query.QueryProvider;
+import org.lightmare.criteria.query.internal.layers.JdbcProvider;
 
 /**
  * Query provider for JDBC layer

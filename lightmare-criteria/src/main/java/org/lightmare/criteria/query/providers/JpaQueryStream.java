@@ -42,8 +42,8 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer);
 
