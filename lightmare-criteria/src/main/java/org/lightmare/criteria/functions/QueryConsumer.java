@@ -34,6 +34,8 @@ import org.lightmare.criteria.query.QueryStream;
  *
  * @param <T>
  *            entity type parameter
+ * @param <S>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
  */
 @FunctionalInterface
 public interface QueryConsumer<T, S extends QueryStream<T, ? super S>> extends Consumer<S>, Serializable {

@@ -48,8 +48,8 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
 
     private static final char OPEN_BRACKET = '(';
 
-    protected AbstractFunctionProcessor(final LayerProvider provider, final Class<T> entityType, final String alias) {
-        super(provider, entityType, alias);
+    protected AbstractFunctionProcessor(final LayerProvider provider, final Class<T> entityType) {
+        super(provider, entityType);
     }
 
     /**

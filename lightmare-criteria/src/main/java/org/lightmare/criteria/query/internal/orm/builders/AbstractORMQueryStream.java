@@ -58,7 +58,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
 
     protected final Class<T> entityType;
 
-    protected final String alias;
+    protected String alias;
 
     // Incremental suffix for JPA entity aliases and parameters
     private CounterTuple counterTuple;
@@ -66,10 +66,10 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
     // JPA query parameters
     protected final Set<ParameterTuple> parameters = new HashSet<>();
 
-    protected AbstractORMQueryStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
+    protected AbstractORMQueryStream(final LayerProvider provider, final Class<T> entityType) {
         this.provider = provider;
         this.entityType = entityType;
-        this.alias = alias;
+        this.alias = provider.alias();
     }
 
     /**

@@ -39,8 +39,8 @@ import org.lightmare.criteria.tuples.AggregateTuple;
  */
 public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
 
-    protected AbstractQueryStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
-        super(provider, entityType, alias);
+    protected AbstractQueryStream(final LayerProvider provider, final Class<T> entityType) {
+        super(provider, entityType);
     }
 
     /**

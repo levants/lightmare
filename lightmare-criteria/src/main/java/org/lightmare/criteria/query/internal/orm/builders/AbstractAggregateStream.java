@@ -46,8 +46,8 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T> {
 
-    protected AbstractAggregateStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
-        super(provider, entityType, alias);
+    protected AbstractAggregateStream(final LayerProvider provider, final Class<T> entityType) {
+        super(provider, entityType);
     }
 
     /**
@@ -93,7 +93,8 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     }
 
     @Override
-    public <F, R extends Number> JpaQueryStream<R> aggregate(EntityField<T, F> field, Aggregates function, Class<R> type) {
+    public <F, R extends Number> JpaQueryStream<R> aggregate(EntityField<T, F> field, Aggregates function,
+            Class<R> type) {
 
         JpaQueryStream<R> stream;
 

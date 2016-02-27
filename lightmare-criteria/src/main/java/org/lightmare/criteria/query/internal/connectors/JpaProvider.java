@@ -25,6 +25,7 @@ package org.lightmare.criteria.query.internal.connectors;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -74,6 +75,11 @@ public class JpaProvider extends JpaLayerExpressions implements LayerProvider {
     @Override
     public String getCountType(String alias) {
         return alias;
+    }
+
+    @Override
+    public String alias() {
+        return JpaQueryStream.DEFAULT_ALIAS;
     }
 
     @Override

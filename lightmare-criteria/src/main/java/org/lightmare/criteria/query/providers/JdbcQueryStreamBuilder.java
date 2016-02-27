@@ -22,10 +22,7 @@
  */
 package org.lightmare.criteria.query.providers;
 
-import java.sql.Connection;
-
 import org.lightmare.criteria.query.internal.EntityQueryStream;
-import org.lightmare.criteria.query.internal.connectors.JdbcProvider;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 
@@ -39,26 +36,23 @@ import org.lightmare.criteria.query.internal.orm.links.Clauses;
  */
 public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
 
-    protected JdbcQueryStreamBuilder(LayerProvider provider, Class<T> entityType, String alias) {
-        super(provider, entityType, alias);
+    protected JdbcQueryStreamBuilder(LayerProvider provider, Class<T> entityType) {
+        super(provider, entityType);
     }
 
     /**
      * Generates DELETE statement with custom alias
      * 
-     * @param em
+     * @param provider
      * @param entityType
-     * @param alias
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder} with
-     *         delete statement
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder}
+     *         with delete statement
      */
-    protected static <T> JdbcQueryStreamBuilder<T> delete(final Connection connection, final Class<T> entityType,
-            final String alias) {
+    protected static <T> JdbcQueryStreamBuilder<T> delete(final LayerProvider provider, final Class<T> entityType) {
 
         JdbcQueryStreamBuilder<T> stream;
 
-        final LayerProvider provider = new JdbcProvider(connection);
-        stream = new JdbcQueryStreamBuilder<>(provider, entityType, alias);
+        stream = new JdbcQueryStreamBuilder<>(provider, entityType);
         stream.appendPrefix(Clauses.DELETE);
         stream.appendEntityPart();
 
@@ -66,33 +60,18 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates DELETE statement with default alias
-     * 
-     * @param em
-     * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder} with
-     *         delete statement
-     */
-    protected static <T> JdbcQueryStreamBuilder<T> delete(final Connection connection, Class<T> entityType) {
-        return delete(connection, entityType, DEFAULT_ALIAS);
-    }
-
-    /**
      * Generates UPDATE statement with custom alias
      * 
-     * @param em
+     * @param provider
      * @param entityType
-     * @param alias
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder} with
-     *         update statement
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder}
+     *         with update statement
      */
-    protected static <T> JdbcQueryStreamBuilder<T> update(final Connection connection, final Class<T> entityType,
-            final String alias) {
+    protected static <T> JdbcQueryStreamBuilder<T> update(final LayerProvider provider, final Class<T> entityType) {
 
         JdbcQueryStreamBuilder<T> stream;
 
-        final LayerProvider provider = new JdbcProvider(connection);
-        stream = new JdbcQueryStreamBuilder<>(provider, entityType, alias);
+        stream = new JdbcQueryStreamBuilder<>(provider, entityType);
         stream.appendPrefix(Clauses.UPDATE);
         stream.appendEntityPart();
 
@@ -100,47 +79,20 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates UPDATE statement with default alias
-     * 
-     * @param em
-     * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder} with
-     *         update statement
-     */
-    protected static <T> JdbcQueryStreamBuilder<T> update(final Connection connection, Class<T> entityType) {
-        return update(connection, entityType, DEFAULT_ALIAS);
-    }
-
-    /**
      * Generates SELECT statements with custom alias
      * 
-     * @param em
+     * @param provider
      * @param entityType
-     * @param alias
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder} with
-     *         select statement
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder}
+     *         with select statement
      */
-    protected static <T> JdbcQueryStreamBuilder<T> select(final Connection connection, final Class<T> entityType,
-            final String alias) {
+    protected static <T> JdbcQueryStreamBuilder<T> select(final LayerProvider provider, final Class<T> entityType) {
 
         JdbcQueryStreamBuilder<T> stream;
 
-        final LayerProvider provider = new JdbcProvider(connection);
-        stream = new JdbcQueryStreamBuilder<>(provider, entityType, alias);
+        stream = new JdbcQueryStreamBuilder<>(provider, entityType);
         stream.startsSelect();
 
         return stream;
-    }
-
-    /**
-     * Generates SELECT statement with default alias
-     * 
-     * @param connection
-     * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder} with
-     *         select statement
-     */
-    protected static <T> JdbcQueryStreamBuilder<T> select(final Connection connection, Class<T> entityType) {
-        return select(connection, entityType, DEFAULT_ALIAS);
     }
 }

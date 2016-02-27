@@ -22,14 +22,14 @@
  */
 package org.lightmare.criteria.query.providers;
 
-import java.util.function.Function;
-
+import org.lightmare.criteria.functions.initializers.QueryInitializer;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 
 /**
  * Provider or factory class to initialize
- * {@link org.lightmare.criteria.query.providers.JpaQueryStream} by SELECT, UPDATE or
- * DELETE clause for entity type
+ * {@link org.lightmare.criteria.query.providers.JpaQueryStream} by SELECT,
+ * UPDATE or DELETE clause for entity type
  * 
  * @author Levan Tsinadze
  *
@@ -42,43 +42,46 @@ public abstract class QueryProvider {
 
     /**
      * Generates DELETE statements with custom alias
-     *
+     * 
+     * @param provider
      * @param entityType
-     * @param function
+     * @param initializer
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream} with delete
-     *         statement
+     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         with select statement
      */
-    public static <T, S extends QueryStream<T, ? super S>> S delete(Class<T> entityType,
-            Function<Class<T>, S> function) {
-        return function.apply(entityType);
+    public static <T, S extends QueryStream<T, ? super S>> S delete(LayerProvider provider, Class<T> entityType,
+            QueryInitializer<T, S> initializer) {
+        return initializer.apply(provider, entityType);
     }
 
     /**
      * Generates UPDATE statements with custom alias
      * 
+     * @param provider
      * @param entityType
-     * @param function
+     * @param initializer
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream} with update
-     *         statement
+     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         with select statement
      */
-    public static <T, S extends QueryStream<T, ? super S>> S update(Class<T> entityType,
-            Function<Class<T>, S> function) {
-        return function.apply(entityType);
+    public static <T, S extends QueryStream<T, ? super S>> S update(LayerProvider provider, Class<T> entityType,
+            QueryInitializer<T, S> initializer) {
+        return initializer.apply(provider, entityType);
     }
 
     /**
      * Generates SELECT statements with custom alias
      * 
+     * @param provider
      * @param entityType
-     * @param function
+     * @param initializer
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream} with select
-     *         statement
+     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         with select statement
      */
-    public static <T, S extends QueryStream<T, ? super S>> S select(Class<T> entityType,
-            Function<Class<T>, S> function) {
-        return function.apply(entityType);
+    public static <T, S extends QueryStream<T, ? super S>> S select(LayerProvider provider, Class<T> entityType,
+            QueryInitializer<T, S> initializer) {
+        return initializer.apply(provider, entityType);
     }
 }

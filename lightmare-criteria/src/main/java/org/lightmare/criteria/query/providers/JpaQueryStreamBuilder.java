@@ -22,10 +22,7 @@
  */
 package org.lightmare.criteria.query.providers;
 
-import javax.persistence.EntityManager;
-
 import org.lightmare.criteria.query.internal.EntityQueryStream;
-import org.lightmare.criteria.query.internal.connectors.JpaProvider;
 import org.lightmare.criteria.query.internal.connectors.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 
@@ -39,26 +36,24 @@ import org.lightmare.criteria.query.internal.orm.links.Clauses;
  */
 public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
 
-    protected JpaQueryStreamBuilder(final LayerProvider provider, final Class<T> entityType, final String alias) {
-        super(provider, entityType, alias);
+    protected JpaQueryStreamBuilder(final LayerProvider provider, final Class<T> entityType) {
+        super(provider, entityType);
     }
 
     /**
      * Generates DELETE statement with custom alias
      * 
-     * @param em
+     * @param provider
      * @param entityType
      * @param alias
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
-     *         select statement
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder}
+     *         with select statement
      */
-    protected static <T> JpaQueryStreamBuilder<T> delete(final EntityManager em, final Class<T> entityType,
-            final String alias) {
+    protected static <T> JpaQueryStreamBuilder<T> delete(final LayerProvider provider, final Class<T> entityType) {
 
         JpaQueryStreamBuilder<T> stream;
 
-        final LayerProvider provider = new JpaProvider(em);
-        stream = new JpaQueryStreamBuilder<T>(provider, entityType, alias);
+        stream = new JpaQueryStreamBuilder<T>(provider, entityType);
         stream.appendPrefix(Clauses.DELETE);
         stream.appendEntityPart();
 
@@ -66,33 +61,19 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates DELETE statement with default alias
-     * 
-     * @param em
-     * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
-     *         select statement
-     */
-    protected static <T> JpaQueryStreamBuilder<T> delete(final EntityManager em, Class<T> entityType) {
-        return delete(em, entityType, DEFAULT_ALIAS);
-    }
-
-    /**
      * Generates UPDATE statement with custom alias
      * 
-     * @param em
+     * @param provider
      * @param entityType
      * @param alias
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
-     *         select statement
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder}
+     *         with select statement
      */
-    protected static <T> JpaQueryStreamBuilder<T> update(final EntityManager em, final Class<T> entityType,
-            final String alias) {
+    protected static <T> JpaQueryStreamBuilder<T> update(final LayerProvider provider, final Class<T> entityType) {
 
         JpaQueryStreamBuilder<T> stream;
 
-        final LayerProvider provider = new JpaProvider(em);
-        stream = new JpaQueryStreamBuilder<>(provider, entityType, alias);
+        stream = new JpaQueryStreamBuilder<>(provider, entityType);
         stream.appendPrefix(Clauses.UPDATE);
         stream.appendEntityPart();
 
@@ -100,47 +81,21 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates UPDATE statement with default alias
-     * 
-     * @param em
-     * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
-     *         select statement
-     */
-    protected static <T> JpaQueryStreamBuilder<T> update(final EntityManager em, Class<T> entityType) {
-        return update(em, entityType, DEFAULT_ALIAS);
-    }
-
-    /**
      * Generates SELECT statements with custom alias
      * 
-     * @param em
+     * @param provider
      * @param entityType
      * @param alias
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
-     *         select statement
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder}
+     *         with select statement
      */
-    protected static <T> JpaQueryStreamBuilder<T> query(final EntityManager em, final Class<T> entityType,
-            final String alias) {
+    protected static <T> JpaQueryStreamBuilder<T> query(final LayerProvider provider, final Class<T> entityType) {
 
         JpaQueryStreamBuilder<T> stream;
 
-        final LayerProvider provider = new JpaProvider(em);
-        stream = new JpaQueryStreamBuilder<T>(provider, entityType, alias);
+        stream = new JpaQueryStreamBuilder<T>(provider, entityType);
         stream.startsSelect();
 
         return stream;
-    }
-
-    /**
-     * Generates SELECT statement with default alias
-     * 
-     * @param em
-     * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder} with
-     *         select statement
-     */
-    protected static <T> JpaQueryStreamBuilder<T> query(final EntityManager em, Class<T> entityType) {
-        return query(em, entityType, DEFAULT_ALIAS);
     }
 }

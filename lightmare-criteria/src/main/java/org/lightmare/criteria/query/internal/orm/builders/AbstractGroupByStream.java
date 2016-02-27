@@ -57,8 +57,8 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
 
     protected Queue<AggregateTuple> aggregateQueue;
 
-    protected AbstractGroupByStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
-        super(provider, entityType, alias);
+    protected AbstractGroupByStream(final LayerProvider provider, final Class<T> entityType) {
+        super(provider, entityType);
     }
 
     @Override
@@ -145,8 +145,8 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
      * Processes select method call for all arguments
      * 
      * @param fields
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for select
-     *         method
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         select method
      */
     private JpaQueryStream<Object[]> groupByField(Serializable field) {
 

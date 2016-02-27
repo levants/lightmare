@@ -49,8 +49,8 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
     // Query parts
     private static final String NEW_OPERATOR = "new ";
 
-    protected AbstractSelectStatements(final LayerProvider provider, Class<T> entityType, String alias) {
-        super(provider, entityType, alias);
+    protected AbstractSelectStatements(final LayerProvider provider, Class<T> entityType) {
+        super(provider, entityType);
     }
 
     /**

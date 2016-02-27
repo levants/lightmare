@@ -39,8 +39,8 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
 
-    protected AbstractJoinStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
-        super(provider, entityType, alias);
+    protected AbstractJoinStream(final LayerProvider provider, final Class<T> entityType) {
+        super(provider, entityType);
     }
 
     /**

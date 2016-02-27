@@ -44,5 +44,7 @@ public interface LayerProvider extends LayerExpressions {
 
     String getCountType(String alias);
 
+    String alias();
+
     void close();
 }

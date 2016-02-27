@@ -47,8 +47,8 @@ import org.lightmare.criteria.utils.StringUtils;
  */
 public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
-    protected EntityQueryStream(final LayerProvider provider, Class<T> entityType, final String alias) {
-        super(provider, entityType, alias);
+    protected EntityQueryStream(final LayerProvider provider, Class<T> entityType) {
+        super(provider, entityType);
     }
 
     @Override
@@ -178,24 +178,24 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     }
 
     /**
-     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream} for JOIN
-     * query
+     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * for JOIN query
      * 
      * @param type
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for JOIN
-     *         query
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         JOIN query
      */
     public <S> SubQueryStream<S, T> joinStream(Class<S> type) {
         return new EntityJoinProcessor<S, T>(this, type);
     }
 
     /**
-     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream} for JOIN
-     * query
+     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * for JOIN query
      * 
      * @param tuple
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for JOIN
-     *         query
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         JOIN query
      */
     public <S> JpaQueryStream<S> joinStream(QueryTuple tuple) {
 

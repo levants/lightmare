@@ -58,7 +58,8 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     private boolean preparedState = Boolean.TRUE;
 
     protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, String alias, Class<S> entityType) {
-        super(parent.getLayerProvider(), entityType, alias);
+        super(parent.getLayerProvider(), entityType);
+        this.alias = alias;
         parentAlias = parent.getAlias();
         this.setCounterTuple(parent.getCounterTuple());
         this.parent = parent;
@@ -88,8 +89,8 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
      * Processes sub select statement for sub queries
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for instant
-     *         field
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         instant field
      */
     protected <F> JpaQueryStream<F> subSelectOne(EntityField<S, F> field) {
 
@@ -105,8 +106,8 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
      * Generates SELECT clause for sub query
      * 
      * @param fields
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with
-     *         {@link Object} array
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         with {@link Object} array
      */
     protected JpaQueryStream<Object[]> subSelectAll(Serializable field) {
 
@@ -119,14 +120,15 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     }
 
     /**
-     * Generates aggregate {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     * instant type
+     * Generates aggregate
+     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for instant
+     * type
      * 
      * @param field
      * @param function
      * @param type
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with aggregate
-     *         type
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         with aggregate type
      */
     protected <F, R extends Number> JpaQueryStream<R> subAggregate(EntityField<S, F> field, Aggregates function,
             Class<R> type) {

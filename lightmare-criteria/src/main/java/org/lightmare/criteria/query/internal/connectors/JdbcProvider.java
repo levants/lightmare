@@ -29,6 +29,7 @@ import org.lightmare.criteria.annotations.DBColumn;
 import org.lightmare.criteria.annotations.DBTable;
 import org.lightmare.criteria.config.Configuration.ColumnResolver;
 import org.lightmare.criteria.config.DefaultConfiguration.DefaultResolver;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -98,6 +99,11 @@ public class JdbcProvider extends JpaLayerExpressions implements LayerProvider {
     @Override
     public String getCountType(String alias) {
         return StringUtils.concat(alias, COUNT_TYPE);
+    }
+
+    @Override
+    public String alias() {
+        return JpaQueryStream.DEFAULT_ALIAS;
     }
 
     @Override

@@ -24,52 +24,26 @@ package org.lightmare.criteria.query.providers;
 
 import java.sql.Connection;
 
+import org.lightmare.criteria.query.internal.connectors.JdbcProvider;
+
 /**
  * Query provider for JDBC layer
  * 
  * @author Levan Tsinadze
  *
  */
-public abstract class JdbcQueryProvider extends QueryProvider {
-
-    /**
-     * Generates DELETE statements with custom alias
-     * 
-     * @param connection
-     * @param entityType
-     * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with delete
-     *         statement
-     */
-    public static <T> JpaQueryStream<T> delete(final Connection connection, final Class<T> entityType,
-            final String entityAlias) {
-        return delete(entityType, c -> JdbcQueryStreamBuilder.delete(connection, c, entityAlias));
-    }
+public abstract class JdbcQueryProvider {
 
     /**
      * Generates DELETE statements with default alias
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with delete
-     *         statement
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         with delete statement
      */
     public static <T> JpaQueryStream<T> delete(final Connection connection, Class<T> entityType) {
-        return delete(entityType, c -> JdbcQueryStreamBuilder.delete(connection, c, JpaQueryStream.DEFAULT_ALIAS));
-    }
-
-    /**
-     * Generates UPDATE statements with custom alias
-     * 
-     * @param connection
-     * @param entityType
-     * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with update
-     *         statement
-     */
-    public static <T> JpaQueryStream<T> update(final Connection connection, final Class<T> entityType,
-            final String entityAlias) {
-        return update(entityType, c -> JdbcQueryStreamBuilder.update(connection, c, entityAlias));
+        return QueryProvider.delete(new JdbcProvider(connection), entityType, JdbcQueryStreamBuilder::delete);
     }
 
     /**
@@ -77,25 +51,11 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with update
-     *         statement
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         with update statement
      */
     public static <T> JpaQueryStream<T> update(final Connection connection, Class<T> entityType) {
-        return update(entityType, c -> JdbcQueryStreamBuilder.update(connection, c, JpaQueryStream.DEFAULT_ALIAS));
-    }
-
-    /**
-     * Generates SELECT statements with custom alias
-     * 
-     * @param connection
-     * @param entityType
-     * @param entityAlias
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with select
-     *         statement
-     */
-    public static <T> JpaQueryStream<T> select(final Connection connection, final Class<T> entityType,
-            final String entityAlias) {
-        return select(entityType, c -> JdbcQueryStreamBuilder.select(connection, c, entityAlias));
+        return QueryProvider.update(new JdbcProvider(connection), entityType, JdbcQueryStreamBuilder::update);
     }
 
     /**
@@ -103,10 +63,10 @@ public abstract class JdbcQueryProvider extends QueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with select
-     *         statement
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         with select statement
      */
     public static <T> JpaQueryStream<T> select(final Connection connection, Class<T> entityType) {
-        return select(entityType, c -> JdbcQueryStreamBuilder.select(connection, c, JpaQueryStream.DEFAULT_ALIAS));
+        return QueryProvider.select(new JdbcProvider(connection), entityType, JdbcQueryStreamBuilder::select);
     }
 }

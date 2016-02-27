@@ -38,8 +38,8 @@ import org.lightmare.criteria.tuples.QueryTuple;
  */
 abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T> {
 
-    protected AbstractFunctionExpression(final LayerProvider provider, final Class<T> entityType, final String alias) {
-        super(provider, entityType, alias);
+    protected AbstractFunctionExpression(final LayerProvider provider, final Class<T> entityType) {
+        super(provider, entityType);
     }
 
     /**

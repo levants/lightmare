@@ -43,8 +43,8 @@ import org.lightmare.criteria.utils.ObjectUtils;
  */
 abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
-    protected AbstractResultStream(final LayerProvider provider, final Class<T> entityType, final String alias) {
-        super(provider, entityType, alias);
+    protected AbstractResultStream(final LayerProvider provider, final Class<T> entityType) {
+        super(provider, entityType);
     }
 
     @Override
