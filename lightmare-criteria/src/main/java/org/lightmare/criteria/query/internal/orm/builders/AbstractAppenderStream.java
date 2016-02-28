@@ -135,21 +135,10 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
         appendFieldName(tuple.getAlias(), tuple.getFieldName(), body);
     }
 
-    /**
-     * Generates JPA query part for field and expression
-     * 
-     * @param field
-     * @param expression
-     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for field
-     */
-    protected QueryTuple opp(Serializable field, String expression) {
-
-        QueryTuple tuple = compose(field);
-
+    @Override
+    public void operate(QueryTuple tuple, String expression) {
         appendFieldName(tuple, body);
         appendBody(expression);
-
-        return tuple;
     }
 
     /**
@@ -160,7 +149,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param expression
      */
     protected <F> void opp(Serializable field, F value, String expression) {
-        QueryTuple tuple = opp(field, expression);
+        QueryTuple tuple = resolveAndOperate(field, expression);
         oppWithParameter(tuple, value, body);
     }
 
@@ -172,7 +161,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param expression
      */
     protected <F> void opp(Serializable field, F value1, F value2, String expression) {
-        QueryTuple tuple = opp(field, expression);
+        QueryTuple tuple = resolveAndOperate(field, expression);
         oppWithParameter(tuple, value1, body);
     }
 
@@ -187,7 +176,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected <F, E> void opp(Serializable field, String expression1, F value1, String expression2, E value2) {
 
-        QueryTuple tuple = opp(field, expression1);
+        QueryTuple tuple = resolveAndOperate(field, expression1);
         oppWithParameter(tuple, value1, body);
         appendBody(StringUtils.SPACE);
         appendBody(expression2).appendBody(value2);
@@ -203,7 +192,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected QueryTuple appSubQuery(Serializable field, String expression) {
 
-        QueryTuple tuple = opp(field, expression);
+        QueryTuple tuple = resolveAndOperate(field, expression);
         openBracket();
 
         return tuple;
@@ -218,7 +207,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected void oppCollection(Serializable field, Collection<?> value, String expression) {
 
-        QueryTuple tuple = opp(field, expression);
+        QueryTuple tuple = resolveAndOperate(field, expression);
         oppWithCollectionParameter(tuple, value, body);
         newLine();
     }
@@ -307,7 +296,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected void oppField(Serializable field1, Serializable field2, String expression) {
 
-        opp(field1, expression);
+        resolveAndOperate(field1, expression);
         QueryTuple tuple = resolve(field2);
         appendColumn(tuple);
         newLine();
@@ -324,8 +313,8 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
     protected <F> void oppField(Serializable field1, String expression1, Serializable field2, String expression2,
             Serializable field3) {
 
-        opp(field1, expression1);
-        opp(field2, expression2);
+        resolveAndOperate(field1, expression1);
+        resolveAndOperate(field2, expression2);
         QueryTuple tuple = resolve(field3);
         appendColumn(tuple);
         newLine();
@@ -341,7 +330,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected void oppCollectionField(Serializable field1, Serializable field2, String expression) {
 
-        opp(field1, expression);
+        resolveAndOperate(field1, expression);
         QueryTuple tuple = resolve(field2);
         appendColumn(tuple);
         newLine();
@@ -547,7 +536,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param expression
      */
     protected void oppLine(Serializable field, String expression) {
-        opp(field, expression);
+        resolveAndOperate(field, expression);
         newLine();
     }
 

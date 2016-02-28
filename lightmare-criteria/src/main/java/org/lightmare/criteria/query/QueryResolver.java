@@ -14,6 +14,14 @@ import org.lightmare.criteria.tuples.QueryTuple;
 public interface QueryResolver<T> extends LayerStream<T> {
 
     /**
+     * Operates on resolved field by expression
+     * 
+     * @param tuple
+     * @param expression
+     */
+    void operate(QueryTuple tuple, String expression);
+
+    /**
      * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
      * cache or generates from compiled class
      * 
@@ -44,6 +52,22 @@ public interface QueryResolver<T> extends LayerStream<T> {
 
         QueryTuple tuple = resolve(field);
         LambdaUtils.setGenericIfValid(getEntityType(), tuple);
+
+        return tuple;
+    }
+
+    /**
+     * Resolves entity field and operates on it by passed expression
+     * 
+     * @param field
+     * @param expression
+     * @return @link org.lightmare.criteria.tuples.QueryTuple} for passed lambda
+     *         function
+     */
+    default QueryTuple resolveAndOperate(Serializable field, String expression) {
+
+        QueryTuple tuple = compose(field);
+        operate(tuple, expression);
 
         return tuple;
     }

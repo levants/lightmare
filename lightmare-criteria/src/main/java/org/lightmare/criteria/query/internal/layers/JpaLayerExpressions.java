@@ -3,9 +3,7 @@ package org.lightmare.criteria.query.internal.layers;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 
 /**
- * Implementation for
- * {@link org.lightmare.criteria.query.internal.layers.LayerExpressions} for
- * JPA and JDBC layers
+ * Implementation of expressions for JPA and JDBC layers
  * 
  * @author Levan Tsinadze
  *
