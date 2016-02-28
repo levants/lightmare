@@ -90,6 +90,8 @@ public class DBConfigUtils {
             transaction.commit();
         } catch (Throwable ex) {
             transaction.rollback();
+        } finally {
+            em.close();
         }
     }
 

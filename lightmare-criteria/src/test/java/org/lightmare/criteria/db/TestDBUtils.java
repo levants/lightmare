@@ -92,6 +92,8 @@ public class TestDBUtils {
             transaction.commit();
         } catch (Throwable ex) {
             transaction.rollback();
+        } finally {
+            em.close();
         }
     }
 

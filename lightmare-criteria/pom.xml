@@ -41,6 +41,9 @@
 		<!-- h2 -->
 		<h2db.version>1.4.191</h2db.version>
 		<!-- end of h2 -->
+		<!-- mongo -->
+		<mongo-driver.version>3.2.2</mongo-driver.version>
+		<!-- mongo -->
 	</properties>
 
 	<build>
@@ -217,6 +220,13 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- H2 -->
+		<!-- mongo -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>${mongo-driver.version}</version>
+		</dependency>
+		<!-- mongo -->
 		<!-- test dependencies -->
 	</dependencies>
 </project>
