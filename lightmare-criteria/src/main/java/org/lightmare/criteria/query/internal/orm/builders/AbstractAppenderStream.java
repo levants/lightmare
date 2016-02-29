@@ -141,15 +141,9 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
         appendBody(expression);
     }
 
-    /**
-     * Generates JPA query part for field and expression and adds parameter
-     * 
-     * @param field
-     * @param value
-     * @param expression
-     */
-    protected <F> void opp(Serializable field, F value, String expression) {
-        QueryTuple tuple = resolveAndOperate(field, expression);
+    @Override
+    public void operate(QueryTuple tuple, String expression, Object value) {
+        operate(tuple, expression);
         oppWithParameter(tuple, value, body);
     }
 
@@ -161,8 +155,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param expression
      */
     protected <F> void opp(Serializable field, F value1, F value2, String expression) {
-        QueryTuple tuple = resolveAndOperate(field, expression);
-        oppWithParameter(tuple, value1, body);
+        resolveAndOperate(field, expression, value1);
     }
 
     /**
@@ -176,8 +169,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected <F, E> void opp(Serializable field, String expression1, F value1, String expression2, E value2) {
 
-        QueryTuple tuple = resolveAndOperate(field, expression1);
-        oppWithParameter(tuple, value1, body);
+        resolveAndOperate(field, expression1, value1);
         appendBody(StringUtils.SPACE);
         appendBody(expression2).appendBody(value2);
     }
@@ -548,7 +540,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param expression
      */
     protected <F> void oppLine(Serializable field, F value, String expression) {
-        opp(field, value, expression);
+        resolveAndOperate(field, expression, value);
         newLine();
     }
 

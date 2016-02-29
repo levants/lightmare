@@ -22,6 +22,15 @@ public interface QueryResolver<T> extends LayerStream<T> {
     void operate(QueryTuple tuple, String expression);
 
     /**
+     * Operates on resolved field by expression with parameter
+     * 
+     * @param tuple
+     * @param expression
+     * @param value
+     */
+    void operate(QueryTuple tuple, String expression, Object value);
+
+    /**
      * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
      * cache or generates from compiled class
      * 
@@ -61,13 +70,31 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * 
      * @param field
      * @param expression
-     * @return @link org.lightmare.criteria.tuples.QueryTuple} for passed lambda
-     *         function
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for passed
+     *         lambda function
      */
     default QueryTuple resolveAndOperate(Serializable field, String expression) {
 
         QueryTuple tuple = compose(field);
         operate(tuple, expression);
+
+        return tuple;
+    }
+
+    /**
+     * Resolves entity field and operates on it by passed expression and
+     * parameter
+     * 
+     * @param field
+     * @param expression
+     * @param value
+     * @return @link org.lightmare.criteria.tuples.QueryTuple} for passed lambda
+     *         function
+     */
+    default QueryTuple resolveAndOperate(Serializable field, String expression, Object value) {
+
+        QueryTuple tuple = compose(field);
+        operate(tuple, expression, value);
 
         return tuple;
     }

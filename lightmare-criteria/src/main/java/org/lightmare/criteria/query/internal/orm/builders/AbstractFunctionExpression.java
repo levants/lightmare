@@ -73,7 +73,7 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
         if (functionTuple == null) {
             appendBody(value);
         } else {
-            oppWithParameter(functionTuple, value, body);
+            operate(functionTuple, operator, value);
         }
 
         return this;
