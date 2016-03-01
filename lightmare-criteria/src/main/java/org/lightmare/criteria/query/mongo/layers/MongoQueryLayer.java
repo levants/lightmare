@@ -67,8 +67,13 @@ public class MongoQueryLayer<T> implements QueryLayer<T> {
 
     @Override
     public T get() {
-        collection.find(filter).first();
-        return null;
+
+        T result;
+
+        Document document = collection.find(filter).first();
+        result = resolve(document);
+
+        return result;
     }
 
     @Override
