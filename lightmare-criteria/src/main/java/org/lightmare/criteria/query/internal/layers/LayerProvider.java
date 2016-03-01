@@ -32,9 +32,9 @@ import org.lightmare.criteria.tuples.QueryTuple;
  */
 public interface LayerProvider extends LayerExpressions {
 
-    <T> QueryLayer<T> query(String sql, Class<T> type);
+    <T> QueryLayer<T> query(Object sql, Class<T> type);
 
-    QueryLayer<?> query(String sql);
+    QueryLayer<?> query(Object sql);
 
     String getTableName(Class<?> type);
 

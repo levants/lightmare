@@ -1,5 +1,7 @@
 package org.lightmare.criteria.query.mongo.layers;
 
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.lightmare.criteria.annotations.DBColumn;
 import org.lightmare.criteria.annotations.DBTable;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
@@ -8,6 +10,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 /**
@@ -99,12 +102,20 @@ public class MongoProvider implements LayerProvider {
     }
 
     @Override
-    public <T> QueryLayer<T> query(String sql, Class<T> type) {
-        return null;
+    public <T> QueryLayer<T> query(Object sql, Class<T> type) {
+
+        QueryLayer<T> query;
+
+        String collectionName = getTableName(type);
+        MongoCollection<Document> collection = db.getCollection(collectionName);
+        Bson filter = ObjectUtils.cast(sql);
+        query = new MongoQueryLayer<>(collection, filter, type);
+
+        return query;
     }
 
     @Override
-    public QueryLayer<?> query(String sql) {
+    public QueryLayer<?> query(Object sql) {
         return null;
     }
 

@@ -47,13 +47,13 @@ public class JpaProvider extends JpaLayerExpressions implements LayerProvider {
     }
 
     @Override
-    public <T> QueryLayer<T> query(String sql, Class<T> type) {
-        return new JpaQueryLayer<>(em, sql, type);
+    public <T> QueryLayer<T> query(Object sql, Class<T> type) {
+        return new JpaQueryLayer<>(em, sql.toString(), type);
     }
 
     @Override
-    public QueryLayer<?> query(String sql) {
-        return new JpaQueryLayer<>(em, sql);
+    public QueryLayer<?> query(Object sql) {
+        return new JpaQueryLayer<>(em, sql.toString());
     }
 
     @Override

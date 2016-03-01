@@ -25,9 +25,11 @@ package org.lightmare.criteria.query.internal.orm.builders;
 import java.util.Queue;
 import java.util.Set;
 
+import org.lightmare.criteria.query.internal.layers.JpaJdbcQueryLayer;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.query.internal.layers.QueryLayer;
 import org.lightmare.criteria.tuples.AggregateTuple;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Abstract class for lambda expression analyze and JPA query generator
@@ -72,10 +74,12 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
      */
     protected QueryLayer<T> initTypedQuery() {
 
-        QueryLayer<T> query;
+        JpaJdbcQueryLayer<T> query;
 
         String sqlText = sql();
-        query = provider.query(sqlText, entityType);
+
+        QueryLayer<T> raw = provider.query(sqlText, entityType);
+        query = ObjectUtils.cast(raw);
         setParameters(query);
 
         return query;
@@ -89,10 +93,11 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
      */
     protected QueryLayer<Long> initCountQuery() {
 
-        QueryLayer<Long> query;
+        JpaJdbcQueryLayer<Long> query;
 
         String sqlText = countSql();
-        query = provider.query(sqlText, Long.class);
+        QueryLayer<Long> raw = provider.query(sqlText, Long.class);
+        query = ObjectUtils.cast(raw);
         setParameters(query);
 
         return query;
@@ -107,10 +112,11 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
      */
     protected QueryLayer<?> initBulkQuery() {
 
-        QueryLayer<?> query;
+        JpaJdbcQueryLayer<?> query;
 
         String sqlText = sql();
-        query = provider.query(sqlText);
+        QueryLayer<?> raw = provider.query(sqlText);
+        query = ObjectUtils.cast(raw);
         setParameters(query);
 
         return query;

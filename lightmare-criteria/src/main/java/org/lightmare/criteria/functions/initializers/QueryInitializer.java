@@ -24,8 +24,8 @@ public interface QueryInitializer<T, S extends QueryStream<T, ? super S>>
     /**
      * Initializes {@link org.lightmare.criteria.query.QueryStream}
      * implementation by
-     * {@link org.lightmare.criteria.query.internal.layers.LayerProvider}
-     * and {@link Class} entity type
+     * {@link org.lightmare.criteria.query.internal.layers.LayerProvider} and
+     * {@link Class} entity type
      * 
      * @return S {@link org.lightmare.criteria.query.QueryStream} implementation
      */

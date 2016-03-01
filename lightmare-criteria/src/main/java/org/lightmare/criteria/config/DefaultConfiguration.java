@@ -85,7 +85,7 @@ public class DefaultConfiguration {
          *
          */
         @FunctionalInterface
-        private static interface ResultGetter {
+        public static interface ResultGetter {
 
             Object apply(ResultSet r, String s) throws SQLException;
         }
@@ -97,7 +97,7 @@ public class DefaultConfiguration {
          * @author Levan Tsinadze
          *
          */
-        private static class FieldType {
+        public static class FieldType {
 
             final Field field;
 

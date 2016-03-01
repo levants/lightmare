@@ -54,7 +54,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            result type parameter
  */
-public class JdbcQueryLayer<T> implements QueryLayer<T> {
+public class JdbcQueryLayer<T> implements JpaJdbcQueryLayer<T> {
 
     private final Class<T> type;
 

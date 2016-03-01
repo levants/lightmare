@@ -62,13 +62,13 @@ public class JdbcProvider extends JpaLayerExpressions implements LayerProvider {
     }
 
     @Override
-    public <T> QueryLayer<T> query(String sql, Class<T> type) {
-        return new JdbcQueryLayer<T>(connection, sql, type);
+    public <T> QueryLayer<T> query(Object sql, Class<T> type) {
+        return new JdbcQueryLayer<T>(connection, sql.toString(), type);
     }
 
     @Override
-    public QueryLayer<?> query(String sql) {
-        return new JdbcQueryLayer<Void>(connection, sql, Void.class);
+    public QueryLayer<?> query(Object sql) {
+        return new JdbcQueryLayer<Void>(connection, sql.toString(), Void.class);
     }
 
     public ColumnResolver getResolver() {

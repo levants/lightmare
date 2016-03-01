@@ -4,12 +4,8 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.QueryResolver;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
-import org.lightmare.criteria.query.mongo.layers.MongoExpressions.Binaries;
-import org.lightmare.criteria.query.mongo.layers.MongoExpressions.Unaries;
 import org.lightmare.criteria.query.mongo.layers.MongoProvider;
-import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -20,7 +16,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter
  */
-public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
+public class MongoEntityStream<T> implements MongoStream<T>, MongoResolver<T> {
 
     private final MongoProvider provider;
 
@@ -44,21 +40,6 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
     @Override
     public String getAlias() {
         return StringUtils.EMPTY;
-    }
-
-    @Override
-    public void operate(final QueryTuple tuple, String expression) {
-        Unaries unary = Unaries.valueOf(expression);
-        String column = getLayerProvider().getColumnName(tuple);
-        unary.function.apply(column);
-    }
-
-    @Override
-    public void operate(QueryTuple tuple, String expression, Object value) {
-
-        Binaries binary = Binaries.valueOf(expression);
-        String column = getLayerProvider().getColumnName(tuple);
-        binary.function.apply(column, value);
     }
 
     @Override

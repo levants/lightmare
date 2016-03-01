@@ -29,8 +29,8 @@ import java.util.Set;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.internal.layers.JpaJdbcQueryLayer;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
-import org.lightmare.criteria.query.internal.layers.QueryLayer;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
@@ -250,7 +250,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * 
      * @param query
      */
-    protected void setParameters(QueryLayer<?> query) {
+    protected void setParameters(JpaJdbcQueryLayer<?> query) {
         setJPAConfiguration(query);
         parameters.forEach(query::setParameter);
     }

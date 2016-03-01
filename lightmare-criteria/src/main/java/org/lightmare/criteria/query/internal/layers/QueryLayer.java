@@ -22,16 +22,7 @@
  */
 package org.lightmare.criteria.query.internal.layers;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-import javax.persistence.FlushModeType;
-import javax.persistence.LockModeType;
-import javax.persistence.TemporalType;
-
-import org.lightmare.criteria.tuples.ParameterTuple;
 
 /**
  * Database abstract layer
@@ -63,59 +54,4 @@ public interface QueryLayer<T> {
      * @return <code>int</code> updated rows
      */
     int execute();
-
-    /**
-     * Sets query parameters by names
-     * 
-     * @param name
-     * @param value
-     */
-    void setParameter(String name, Object value);
-
-    /**
-     * Sets query parameters by names and temporal types
-     * 
-     * @param name
-     * @param value
-     * @param temporalType
-     */
-    void setParameter(String name, Calendar value, TemporalType temporalType);
-
-    /**
-     * Sets query parameters by names and temporal types
-     * 
-     * @param name
-     * @param value
-     * @param temporalType
-     */
-    void setParameter(String name, Date value, TemporalType temporalType);
-
-    /**
-     * Sets query parameters by
-     * {@link org.lightmare.criteria.tuples.ParameterTuple} instance
-     * 
-     * @param tuple
-     */
-    void setParameter(ParameterTuple tuple);
-
-    /**
-     * Sets max results to query
-     * 
-     * @param maxResults
-     */
-    void setMaxResults(int maxResult);
-
-    int getMaxResults();
-
-    void setFirstResult(int startPosition);
-
-    int getFirstResult();
-
-    void setHint(String hintName, Object value);
-
-    Map<String, Object> getHints();
-
-    void setFlushMode(FlushModeType flushMode);
-
-    void setLockMode(LockModeType lockMode);
 }
