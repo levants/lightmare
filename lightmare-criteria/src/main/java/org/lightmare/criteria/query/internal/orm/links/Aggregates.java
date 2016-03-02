@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.query.internal.orm.links;
 
+import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -82,10 +83,10 @@ public enum Aggregates {
         String value;
 
         StringBuilder sql = new StringBuilder();
-        sql.append(key).append(Operators.Brackets.OPEN);
+        sql.append(key).append(Brackets.OPEN);
         addDistinct(sql);
         addAlias(alias, sql);
-        sql.append(field).append(Operators.Brackets.CLOSE);
+        sql.append(field).append(Brackets.CLOSE);
         value = sql.toString();
 
         return value;

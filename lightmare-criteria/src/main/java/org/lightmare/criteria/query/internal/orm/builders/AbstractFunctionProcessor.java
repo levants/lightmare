@@ -28,6 +28,7 @@ import java.util.function.Consumer;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.ORMFunction;
+import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -45,8 +46,6 @@ import org.lightmare.criteria.utils.StringUtils;
 public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T> implements ORMFunction<T> {
 
     protected QueryTuple functionTuple;
-
-    private static final char OPEN_BRACKET = '(';
 
     protected AbstractFunctionProcessor(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
@@ -91,7 +90,14 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
      * @param operator
      */
     private void startFunction(String operator) {
-        appendBody(operator).appendBody(OPEN_BRACKET);
+        appendBody(operator).appendBody(Brackets.OPEN);
+    }
+
+    /**
+     * End function expression
+     */
+    private void endFunction() {
+        appendBody(Brackets.CLOSE);
     }
 
     /**
@@ -104,7 +110,7 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
 
         startFunction(operator);
         generate(x);
-        closeBracket();
+        endFunction();
     }
 
     /**
@@ -120,7 +126,7 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
         generate(x);
         appendBody(StringUtils.COMMA).appendBody(StringUtils.SPACE);
         generate(y);
-        closeBracket();
+        endFunction();
     }
 
     /**
@@ -148,7 +154,7 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
         Consumer<Object> appendMethod = this::appendAndGenerate;
         ObjectUtils.nonNull(y, appendMethod);
         ObjectUtils.nonNull(z, appendMethod);
-        closeBracket();
+        endFunction();
     }
 
     @Override
@@ -175,16 +181,35 @@ public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T
         return this;
     }
 
+    /**
+     * Appends pattern with space character if valid
+     * 
+     * @param pattern
+     */
+    private void appendPatternTail(Object pattern) {
+        appendBody(StringUtils.SPACE);
+        generate(pattern);
+    }
+
+    /**
+     * Appends last parameter with space character if valid
+     * 
+     * @param y
+     */
+    private void appendLastTextParameter(Object y) {
+        appendBody(StringUtils.SPACE);
+        generate(y);
+    }
+
     @Override
     public ORMFunction<T> generateText(String function, String prefix, Object x, String pattern, Object y) {
 
         startFunction(function);
-        Consumer<Object> generateMethod = this::generate;
         StringUtils.valid(prefix, this::appendBody);
-        ObjectUtils.nonNull(x, generateMethod);
-        appendBody(StringUtils.SPACE).appendBody(pattern).appendBody(StringUtils.SPACE);
-        ObjectUtils.nonNull(y, generateMethod);
-        closeBracket();
+        ObjectUtils.nonNull(x, this::generate);
+        ObjectUtils.nonNull(pattern, this::appendPatternTail);
+        ObjectUtils.nonNull(y, this::appendLastTextParameter);
+        endFunction();
 
         return this;
     }

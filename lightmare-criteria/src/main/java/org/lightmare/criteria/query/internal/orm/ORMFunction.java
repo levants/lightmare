@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.orm;
 
 /**
- * Functional expressions for JPA query
+ * Functional expressions for JPA / JDBC query
  * 
  * @author Levan Tsinadze
  *

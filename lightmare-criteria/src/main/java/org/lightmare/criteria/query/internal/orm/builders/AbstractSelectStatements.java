@@ -30,7 +30,7 @@ import java.util.List;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
-import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -104,9 +104,9 @@ abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
             columns.append(buffer);
         } else {
             String entityName = getEntityName(type);
-            String expression = StringUtils.concat(NEW_OPERATOR, entityName, Operators.Brackets.OPEN);
+            String expression = StringUtils.concat(NEW_OPERATOR, entityName, Brackets.OPEN);
             validateAndAppendSelect(expression);
-            columns.append(expression).append(buffer).append(Operators.Brackets.CLOSE);
+            columns.append(expression).append(buffer).append(Brackets.CLOSE);
         }
     }
 
