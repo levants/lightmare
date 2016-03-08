@@ -60,7 +60,7 @@ public class MongoEntityStream<T> implements MongoStream<T>, MongoResolver<T> {
     }
 
     @Override
-    public MongoStream<T> appendOperator(String operator) {
+    public MongoStream<T> appendOperator(Object operator) {
         return this;
     }
 

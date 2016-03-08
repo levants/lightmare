@@ -48,7 +48,7 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
     <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer);
 
     @Override
-    default JpaQueryStream<T> appendOperator(String operator) {
+    default JpaQueryStream<T> appendOperator(Object operator) {
         return appendBody(operator);
     }
 

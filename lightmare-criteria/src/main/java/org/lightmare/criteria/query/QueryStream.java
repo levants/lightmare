@@ -142,7 +142,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
      * @param operator
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    S appendOperator(String operator);
+    S appendOperator(Object operator);
 
     /**
      * WHERE clause appender
