@@ -79,5 +79,4 @@ abstract class JpaLayerExpressions implements LayerExpressions {
     public String isNotNull() {
         return Operators.NOT_NULL;
     }
-
 }
