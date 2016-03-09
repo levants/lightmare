@@ -135,16 +135,39 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
         appendFieldName(tuple.getAlias(), tuple.getFieldName(), body);
     }
 
-    @Override
-    public void operate(QueryTuple tuple, String expression) {
+    /**
+     * Generates unary expression
+     * 
+     * @param tuple
+     * @param expression
+     */
+    private void operateUnary(QueryTuple tuple, String expression) {
         appendFieldName(tuple, body);
         appendBody(expression);
     }
 
-    @Override
-    public void operate(QueryTuple tuple, String expression, Object value) {
-        operate(tuple, expression);
+    /**
+     * Generates binary expression
+     * 
+     * @param tuple
+     * @param expression
+     * @param value
+     */
+    private void operateBinary(QueryTuple tuple, String expression, Object value) {
+        operateUnary(tuple, expression);
         oppWithParameter(tuple, value, body);
+    }
+
+    /**
+     * Resolves and operates on binary expressions
+     * 
+     * @param field
+     * @param expression
+     * @param value
+     * @return
+     */
+    private QueryTuple resolveAndOperateExpression(Serializable field, String expression, Object value) {
+        return resolveAndOperate(field, value, (c, v) -> operateBinary(c, expression, v));
     }
 
     /**
@@ -155,7 +178,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param expression
      */
     protected <F> void opp(Serializable field, F value1, F value2, String expression) {
-        resolveAndOperate(field, expression, value1);
+        resolveAndOperateExpression(field, expression, value1);
     }
 
     /**
@@ -169,9 +192,19 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected <F, E> void opp(Serializable field, String expression1, F value1, String expression2, E value2) {
 
-        resolveAndOperate(field, expression1, value1);
+        resolveAndOperateExpression(field, expression1, value1);
         appendBody(StringUtils.SPACE);
         appendBody(expression2).appendBody(value2);
+    }
+
+    /**
+     * Resolves and operates on unary operators
+     * 
+     * @param field
+     * @param operator
+     */
+    private QueryTuple resolveAndOperateExpression(Serializable field, String operator) {
+        return resolveAndOperate(field, c -> operateUnary(c, operator));
     }
 
     /**
@@ -184,7 +217,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected QueryTuple appSubQuery(Serializable field, String expression) {
 
-        QueryTuple tuple = resolveAndOperate(field, expression);
+        QueryTuple tuple = resolveAndOperateExpression(field, expression);
         openBracket();
 
         return tuple;
@@ -199,7 +232,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected void oppCollection(Serializable field, Collection<?> value, String expression) {
 
-        QueryTuple tuple = resolveAndOperate(field, expression);
+        QueryTuple tuple = resolveAndOperateExpression(field, expression);
         oppWithCollectionParameter(tuple, value, body);
         newLine();
     }
@@ -288,7 +321,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected void oppField(Serializable field1, Serializable field2, String expression) {
 
-        resolveAndOperate(field1, expression);
+        resolveAndOperateExpression(field1, expression);
         QueryTuple tuple = resolve(field2);
         appendColumn(tuple);
         newLine();
@@ -305,8 +338,8 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
     protected <F> void oppField(Serializable field1, String expression1, Serializable field2, String expression2,
             Serializable field3) {
 
-        resolveAndOperate(field1, expression1);
-        resolveAndOperate(field2, expression2);
+        resolveAndOperateExpression(field1, expression1);
+        resolveAndOperateExpression(field2, expression2);
         QueryTuple tuple = resolve(field3);
         appendColumn(tuple);
         newLine();
@@ -322,7 +355,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      */
     protected void oppCollectionField(Serializable field1, Serializable field2, String expression) {
 
-        resolveAndOperate(field1, expression);
+        resolveAndOperateExpression(field1, expression);
         QueryTuple tuple = resolve(field2);
         appendColumn(tuple);
         newLine();
@@ -528,7 +561,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param expression
      */
     protected void oppLine(Serializable field, String expression) {
-        resolveAndOperate(field, expression);
+        resolveAndOperateExpression(field, expression);
         newLine();
     }
 
@@ -540,7 +573,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param expression
      */
     protected <F> void oppLine(Serializable field, F value, String expression) {
-        resolveAndOperate(field, expression, value);
+        resolveAndOperateExpression(field, expression, value);
         newLine();
     }
 

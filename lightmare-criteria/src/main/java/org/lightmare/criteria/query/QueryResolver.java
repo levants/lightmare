@@ -1,6 +1,8 @@
 package org.lightmare.criteria.query;
 
 import java.io.Serializable;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import org.lightmare.criteria.lambda.LambdaUtils;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -19,16 +21,20 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * @param tuple
      * @param expression
      */
-    void operate(QueryTuple tuple, String expression);
+    default void operate(QueryTuple tuple, Consumer<QueryTuple> expression) {
+        expression.accept(tuple);
+    }
 
     /**
      * Operates on resolved field by expression with parameter
      * 
      * @param tuple
-     * @param expression
      * @param value
+     * @param expression
      */
-    void operate(QueryTuple tuple, String expression, Object value);
+    default <V> void operate(QueryTuple tuple, V value, BiConsumer<QueryTuple, V> expression) {
+        expression.accept(tuple, value);
+    }
 
     /**
      * Gets appropriated {@link org.lightmare.criteria.tuples.QueryTuple} from
@@ -73,7 +79,7 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for passed
      *         lambda function
      */
-    default QueryTuple resolveAndOperate(Serializable field, String expression) {
+    default QueryTuple resolveAndOperate(Serializable field, Consumer<QueryTuple> expression) {
 
         QueryTuple tuple = compose(field);
         operate(tuple, expression);
@@ -82,19 +88,19 @@ public interface QueryResolver<T> extends LayerStream<T> {
     }
 
     /**
-     * Resolves entity field and operates on it by passed expression and
-     * parameter
+     * Resolves entity field and operates on it with passed parameter by passed
+     * expression
      * 
      * @param field
-     * @param expression
      * @param value
-     * @return @link org.lightmare.criteria.tuples.QueryTuple} for passed lambda
-     *         function
+     * @param expression
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for passed
+     *         lambda function
      */
-    default QueryTuple resolveAndOperate(Serializable field, String expression, Object value) {
+    default <V> QueryTuple resolveAndOperate(Serializable field, V value, BiConsumer<QueryTuple, V> expression) {
 
         QueryTuple tuple = compose(field);
-        operate(tuple, expression, value);
+        operate(tuple, value, expression);
 
         return tuple;
     }

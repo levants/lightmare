@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiFunction;
 
 import javax.persistence.EntityManager;
@@ -13,23 +14,22 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.lightmare.criteria.query.QueryResolver;
 import org.lightmare.criteria.query.internal.layers.CriteriaExpressions.Binaries;
-import org.lightmare.criteria.query.internal.layers.CriteriaExpressions.ParamFunction;
-import org.lightmare.criteria.query.internal.layers.CriteriaExpressions.Unaries;
+import org.lightmare.criteria.query.internal.layers.CriteriaExpressions.BinaryExpression;
 import org.lightmare.criteria.query.internal.layers.CriteriaProvider;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Implementation of {@link org.lightmare.criteria.query.QueryStream} for JPA
+ * Implementation of {@link org.lightmare.criteria.query.QueryStream} and
+ * {@link org.lightmare.criteria.query.internal.CriteriaQueryResolver} for JPA
  * criteria API
  * 
  * @author Levan Tsinadze
  *
  */
-public class AbstractCriteriaStream<T> implements QueryResolver<T> {
+public class AbstractCriteriaStream<T> implements CriteriaQueryResolver<T> {
 
     protected final Class<T> entityType;
 
@@ -40,6 +40,8 @@ public class AbstractCriteriaStream<T> implements QueryResolver<T> {
     protected final List<Predicate> ands = new ArrayList<>();
 
     protected final List<Predicate> ors = new ArrayList<>();
+
+    protected List<Predicate> current = ands;
 
     protected final CriteriaQuery<T> sql;
 
@@ -59,6 +61,13 @@ public class AbstractCriteriaStream<T> implements QueryResolver<T> {
         return provider;
     }
 
+    /**
+     * Gets or initializes {@link javax.persistence.criteria.Root} for passed
+     * {@link Class} entity type
+     * 
+     * @param type
+     * @return {@link javax.persistence.criteria.Root} for passed {@link Class}
+     */
     private Root<?> getRoot(Class<?> type) {
         return ObjectUtils.thisOrDefault(roots.get(type), () -> sql.from(type), r -> roots.put(type, r));
     }
@@ -79,12 +88,12 @@ public class AbstractCriteriaStream<T> implements QueryResolver<T> {
         return sql.toString();
     }
 
-    protected void and(Predicate predicate) {
-        ands.add(predicate);
-    }
+    protected void addToCurrent(Predicate predicate) {
 
-    protected void or(Predicate predicate) {
-        ors.add(predicate);
+        current.add(predicate);
+        if (Objects.equals(current, ors)) {
+            current = ands;
+        }
     }
 
     /**
@@ -100,13 +109,7 @@ public class AbstractCriteriaStream<T> implements QueryResolver<T> {
         Root<?> root = getRoot(type);
         Expression<?> exp = root.get(column);
         Predicate predicate = function.apply(provider.getBuilder(), exp);
-        ObjectUtils.nonNull(predicate, this::and);
-    }
-
-    @Override
-    public void operate(QueryTuple tuple, String expression) {
-        Unaries unary = Unaries.valueOf(expression);
-        ObjectUtils.nonNull(unary, u -> operateExpression(tuple, u.function));
+        ObjectUtils.nonNull(predicate, this::addToCurrent);
     }
 
     /**
@@ -116,14 +119,8 @@ public class AbstractCriteriaStream<T> implements QueryResolver<T> {
      * @param value
      * @param binary
      */
-    private void operateBinary(QueryTuple tuple, Object value, Binaries binary) {
-        ParamFunction function = binary.function;
+    protected void operateBinary(QueryTuple tuple, Object value, Binaries binary) {
+        BinaryExpression<Object> function = binary.function;
         operateExpression(tuple, (c, e) -> function.apply(c, e, value));
-    }
-
-    @Override
-    public void operate(QueryTuple tuple, String expression, Object value) {
-        Binaries binary = Binaries.valueOf(expression);
-        ObjectUtils.nonNull(binary, b -> operateBinary(tuple, value, b));
     }
 }

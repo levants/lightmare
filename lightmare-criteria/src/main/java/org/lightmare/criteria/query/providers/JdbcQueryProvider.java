@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.internal.layers.JdbcProvider;
 public abstract class JdbcQueryProvider {
 
     /**
-     * Generates DELETE statements with default alias
+     * Generates DELETE statements
      * 
      * @param connection
      * @param entityType
@@ -48,7 +48,7 @@ public abstract class JdbcQueryProvider {
     }
 
     /**
-     * Generates UPDATE statements with default alias
+     * Generates UPDATE statements
      * 
      * @param connection
      * @param entityType
@@ -60,7 +60,7 @@ public abstract class JdbcQueryProvider {
     }
 
     /**
-     * Generates SELECT statements with default alias
+     * Generates SELECT statements
      * 
      * @param connection
      * @param entityType

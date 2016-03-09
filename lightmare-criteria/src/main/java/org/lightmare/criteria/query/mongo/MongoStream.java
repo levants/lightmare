@@ -4,7 +4,7 @@ import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Implementation of {@link org.lightmare.criteria.query.QueryStream} for
- * MongoDB queries
+ * MongoDB filters
  * 
  * @author Levan Tsinadze
  *

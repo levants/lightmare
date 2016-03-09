@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.internal.layers.JpaProvider;
 public abstract class JpaQueryProvider {
 
     /**
-     * Generates DELETE statements with custom alias
+     * Generates DELETE statements
      * 
      * @param em
      * @param entityType
@@ -48,7 +48,7 @@ public abstract class JpaQueryProvider {
     }
 
     /**
-     * Generates UPDATE statements with default alias
+     * Generates UPDATE statements
      * 
      * @param em
      * @param entityType
@@ -60,7 +60,7 @@ public abstract class JpaQueryProvider {
     }
 
     /**
-     * Generates SELECT statements with default alias
+     * Generates SELECT statements
      * 
      * @param em
      * @param entityType

@@ -41,7 +41,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates DELETE statement with custom alias
+     * Generates DELETE statement
      * 
      * @param provider
      * @param entityType
@@ -61,7 +61,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates UPDATE statement with custom alias
+     * Generates UPDATE statement
      * 
      * @param provider
      * @param entityType
@@ -81,7 +81,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
     }
 
     /**
-     * Generates SELECT statements with custom alias
+     * Generates SELECT statements
      * 
      * @param provider
      * @param entityType

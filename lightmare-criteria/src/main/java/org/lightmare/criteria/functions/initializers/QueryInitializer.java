@@ -18,8 +18,8 @@ import org.lightmare.criteria.query.internal.layers.LayerProvider;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  */
 @FunctionalInterface
-public interface QueryInitializer<T, S extends QueryStream<T, ? super S>>
-        extends BiFunction<LayerProvider, Class<T>, S>, Serializable {
+public interface QueryInitializer<T, L extends LayerProvider, S extends QueryStream<T, ? super S>>
+        extends BiFunction<L, Class<T>, S>, Serializable {
 
     /**
      * Initializes {@link org.lightmare.criteria.query.QueryStream}
@@ -29,5 +29,5 @@ public interface QueryInitializer<T, S extends QueryStream<T, ? super S>>
      * 
      * @return S {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    S apply(LayerProvider provider, Class<T> type);
+    S apply(L provider, Class<T> type);
 }

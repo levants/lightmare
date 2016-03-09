@@ -4,8 +4,11 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.QueryResolver;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
-import org.lightmare.criteria.query.mongo.layers.MongoProvider;
+import org.lightmare.criteria.query.mongo.layers.MongoExpressions.Binaries;
+import org.lightmare.criteria.query.mongo.layers.MongoExpressions.Unaries;
+import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -16,13 +19,13 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter
  */
-public class MongoEntityStream<T> implements MongoStream<T>, MongoResolver<T> {
+public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
 
-    private final MongoProvider provider;
+    private final LayerProvider provider;
 
     private Class<T> entityType;
 
-    public MongoEntityStream(final MongoProvider provider, Class<T> entityType) {
+    public MongoEntityStream(final LayerProvider provider, Class<T> entityType) {
         this.provider = provider;
         this.entityType = entityType;
     }
@@ -42,15 +45,42 @@ public class MongoEntityStream<T> implements MongoStream<T>, MongoResolver<T> {
         return StringUtils.EMPTY;
     }
 
+    /**
+     * Generates uary expression
+     * 
+     * @param tuple
+     * @param expression
+     */
+    private void operateUnary(QueryTuple tuple, String expression) {
+
+        Unaries unary = Unaries.valueOf(expression);
+        String column = getLayerProvider().getColumnName(tuple);
+        unary.function.apply(column);
+    }
+
+    /**
+     * Generates binary expression
+     * 
+     * @param tuple
+     * @param expression
+     * @param value
+     */
+    private void operateBinary(QueryTuple tuple, String expression, Object value) {
+
+        Binaries binary = Binaries.valueOf(expression);
+        String column = getLayerProvider().getColumnName(tuple);
+        binary.function.apply(column, value);
+    }
+
     @Override
     public <F> MongoStream<T> operate(EntityField<T, F> field, String operator) {
-        resolveAndOperate(field, operator);
+        resolveAndOperate(field, c -> operateUnary(c, operator));
         return this;
     }
 
     @Override
     public <F> MongoStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator) {
-        resolveAndOperate(field, operator, value);
+        resolveAndOperate(field, value, (c, v) -> operateBinary(c, operator, v));
         return this;
     }
 
