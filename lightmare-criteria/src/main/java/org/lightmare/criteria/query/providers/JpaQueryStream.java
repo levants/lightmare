@@ -26,6 +26,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.QueryExpression;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Main interface with query construction methods
@@ -50,6 +51,18 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
     @Override
     default JpaQueryStream<T> appendOperator(Object operator) {
         return appendBody(operator);
+    }
+
+    /**
+     * Appends query body with operator and value
+     * 
+     * @param value
+     * @param operator
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
+     */
+    default JpaQueryStream<T> appendOperator(Object value, Object operator) {
+        return appendBody(value).appendBody(StringUtils.SPACE).appendBody(operator);
     }
 
     @Override

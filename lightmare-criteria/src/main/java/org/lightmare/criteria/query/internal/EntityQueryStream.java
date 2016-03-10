@@ -30,7 +30,6 @@ import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractAggregateStream;
 import org.lightmare.criteria.query.internal.orm.links.Joins;
-import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -74,7 +73,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
             String operator) {
 
         appendOperator();
-        oppLine(field, value1, value2, Operators.BETWEEN);
+        oppLine(field, value1, value2, operator);
 
         return this;
     }
@@ -266,7 +265,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
             QueryConsumer<S, JpaQueryStream<S>> consumer) {
 
         appendOperator();
-        appendBody(value).appendBody(StringUtils.SPACE).appendBody(operator);
+        appendOperator(value, operator);
         openBracket();
         initSubQuery(type, consumer);
 
