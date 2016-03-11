@@ -13,4 +13,13 @@ import org.lightmare.criteria.query.QueryStream;
  */
 public interface MongoStream<T> extends QueryStream<T, MongoStream<T>> {
 
+    @Override
+    default MongoStream<T> and() {
+        return this;
+    }
+
+    @Override
+    default MongoStream<T> or() {
+        return this;
+    }
 }

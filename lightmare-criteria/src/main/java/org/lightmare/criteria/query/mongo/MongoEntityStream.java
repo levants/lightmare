@@ -90,16 +90,6 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
     }
 
     @Override
-    public MongoStream<T> appendOperator(Object operator) {
-        return this;
-    }
-
-    @Override
-    public MongoStream<T> where() {
-        return this;
-    }
-
-    @Override
     public MongoStream<T> brackets(QueryConsumer<T, MongoStream<T>> consumer) {
         return this;
     }

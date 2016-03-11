@@ -48,9 +48,18 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
      */
     <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer);
 
-    @Override
     default JpaQueryStream<T> appendOperator(Object operator) {
         return appendBody(operator);
+    }
+
+    @Override
+    default JpaQueryStream<T> and() {
+        return appendOperator(getLayerProvider().and());
+    }
+
+    @Override
+    default JpaQueryStream<T> or() {
+        return appendOperator(getLayerProvider().or());
     }
 
     /**
@@ -65,7 +74,6 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
         return appendBody(value).appendBody(StringUtils.SPACE).appendBody(operator);
     }
 
-    @Override
     default JpaQueryStream<T> where() {
         return this;
     }

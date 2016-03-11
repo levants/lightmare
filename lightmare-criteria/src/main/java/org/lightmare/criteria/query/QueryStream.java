@@ -124,7 +124,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
         return this.notIn(field, Arrays.asList(values));
     }
 
-    // ========================================================================//
+    // =============================NULL=check===============================//
 
     default <F> S isNull(EntityField<T, F> field) {
         return operate(field, getLayerProvider().isNull());
@@ -137,37 +137,18 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lay
     // ======================================================================//
 
     /**
-     * Appends logical operator to query composer
-     * 
-     * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    S appendOperator(Object operator);
-
-    /**
-     * WHERE clause appender
-     * 
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    S where();
-
-    /**
      * AND logical operator
      * 
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default S and() {
-        return appendOperator(getLayerProvider().and());
-    }
+    S and();
 
     /**
      * OR logical operator
      * 
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default S or() {
-        return appendOperator(getLayerProvider().or());
-    }
+    S or();
 
     /**
      * Creates query part in brackets
