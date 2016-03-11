@@ -140,10 +140,15 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * 
      * @param tuple
      * @param expression
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} passed as
+     *         parameter
      */
-    private void operateUnary(QueryTuple tuple, String expression) {
+    private QueryTuple operateUnary(QueryTuple tuple, String expression) {
+
         appendFieldName(tuple, body);
         appendBody(expression);
+
+        return tuple;
     }
 
     /**
@@ -164,10 +169,9 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param field
      * @param expression
      * @param value
-     * @return
      */
-    private QueryTuple resolveAndOperateExpression(Serializable field, String expression, Object value) {
-        return resolveAndOperate(field, value, (c, v) -> operateBinary(c, expression, v));
+    private void resolveAndOperateExpression(Serializable field, String expression, Object value) {
+        resolveAndAccept(field, value, (c, v) -> operateBinary(c, expression, v));
     }
 
     /**
@@ -202,9 +206,11 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * 
      * @param field
      * @param operator
+     * @return {@link org.lightmare.criteria.tuples.QueryTuple} resolved from
+     *         field
      */
     private QueryTuple resolveAndOperateExpression(Serializable field, String operator) {
-        return resolveAndOperate(field, c -> operateUnary(c, operator));
+        return resolveAndApply(field, c -> operateUnary(c, operator));
     }
 
     /**

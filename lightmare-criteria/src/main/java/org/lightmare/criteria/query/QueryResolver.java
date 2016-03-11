@@ -1,3 +1,25 @@
+/*
+ * Lightmare-criteria, JPA-QL query generator using lambda expressions
+ *
+ * Copyright (c) 2013, Levan Tsinadze, or third-party contributors as
+ * indicated by the @author tags or express copyright attribution
+ * statements applied by the authors.
+ *
+ * This copyrighted material is made available to anyone wishing to use, modify,
+ * copy, or redistribute it subject to the terms and conditions of the GNU
+ * Lesser General Public License, as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this distribution; if not, write to:
+ * Free Software Foundation, Inc.
+ * 51 Franklin Street, Fifth Floor
+ * Boston, MA  02110-1301  USA
+ */
 package org.lightmare.criteria.query;
 
 import java.io.Serializable;
@@ -35,7 +57,7 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * @param tuple
      * @param expression
      */
-    default void operate(QueryTuple tuple, Consumer<QueryTuple> expression) {
+    default void accept(QueryTuple tuple, Consumer<QueryTuple> expression) {
         expression.accept(tuple);
     }
 
@@ -59,7 +81,7 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * @param value
      * @param expression
      */
-    default <V> void operate(QueryTuple tuple, V value, BiConsumer<QueryTuple, V> expression) {
+    default <V> void accept(QueryTuple tuple, V value, BiConsumer<QueryTuple, V> expression) {
         expression.accept(tuple, value);
     }
 
@@ -120,15 +142,10 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * 
      * @param field
      * @param expression
-     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for passed
-     *         lambda function
      */
-    default QueryTuple resolveAndOperate(Serializable field, Consumer<QueryTuple> expression) {
-
+    default void resolveAndAccept(Serializable field, Consumer<QueryTuple> expression) {
         QueryTuple tuple = compose(field);
-        operate(tuple, expression);
-
-        return tuple;
+        accept(tuple, expression);
     }
 
     /**
@@ -157,14 +174,9 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * @param field
      * @param value
      * @param expression
-     * @return {@link org.lightmare.criteria.tuples.QueryTuple} for passed
-     *         lambda function
      */
-    default <V> QueryTuple resolveAndOperate(Serializable field, V value, BiConsumer<QueryTuple, V> expression) {
-
+    default <V> void resolveAndAccept(Serializable field, V value, BiConsumer<QueryTuple, V> expression) {
         QueryTuple tuple = compose(field);
-        operate(tuple, value, expression);
-
-        return tuple;
+        accept(tuple, value, expression);
     }
 }
