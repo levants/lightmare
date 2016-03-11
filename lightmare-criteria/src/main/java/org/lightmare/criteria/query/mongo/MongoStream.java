@@ -4,7 +4,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.LambdaStream;
 
 /**
- * Implementation of {@link org.lightmare.criteria.query.QueryStream} for
+ * Implementation of {@link org.lightmare.criteria.query.LambdaStream} for
  * MongoDB filters
  * 
  * @author Levan Tsinadze
@@ -13,16 +13,6 @@ import org.lightmare.criteria.query.LambdaStream;
  *            entity type parameter
  */
 public interface MongoStream<T> extends LambdaStream<T, MongoStream<T>> {
-
-    @Override
-    default MongoStream<T> and() {
-        return this;
-    }
-
-    @Override
-    default MongoStream<T> or() {
-        return this;
-    }
 
     @Override
     default <F extends Comparable<? super F>> MongoStream<T> greaterThen(EntityField<T, Comparable<? super F>> field,
