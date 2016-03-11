@@ -197,6 +197,16 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
     }
 
     /**
+     * Adds parameter to passed buffer
+     * 
+     * @param pair
+     * @param buffer
+     */
+    private void appendParameter(NameCountTuple pair, StringBuilder buffer) {
+        buffer.append(Parts.PARAM_PREFIX).append(pair.getName());
+    }
+
+    /**
      * Generates query part by tuple and adds appropriated parameter
      * 
      * @param tuple
@@ -206,7 +216,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
     public void oppWithParameter(QueryTuple tuple, Object value, StringBuilder buffer) {
 
         NameCountTuple pair = generateParameterName(tuple);
-        buffer.append(Parts.PARAM_PREFIX).append(pair.getName());
+        appendParameter(pair, buffer);
         addParameter(pair, tuple, value);
     }
 
@@ -222,7 +232,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
 
         NameCountTuple pair = generateParameterName(tuple);
         buffer.append(Operators.OPEN_BRACKET);
-        buffer.append(Parts.PARAM_PREFIX).append(pair.getName());
+        appendParameter(pair, buffer);
         buffer.append(Operators.Brackets.CLOSE);
         addParameter(pair, tuple, value);
     }

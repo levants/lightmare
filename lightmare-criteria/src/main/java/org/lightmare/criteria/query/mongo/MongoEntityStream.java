@@ -3,13 +3,11 @@ package org.lightmare.criteria.query.mongo;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryResolver;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
-import org.lightmare.criteria.query.mongo.layers.MongoExpressions.Binaries;
-import org.lightmare.criteria.query.mongo.layers.MongoExpressions.Unaries;
-import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.StringUtils;
+
+import com.mongodb.client.model.Filters;
 
 /**
  * Builder of MongoDB queries
@@ -45,57 +43,91 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
         return StringUtils.EMPTY;
     }
 
-    /**
-     * Generates uary expression
-     * 
-     * @param tuple
-     * @param expression
-     */
-    private void operateUnary(QueryTuple tuple, String expression) {
-
-        Unaries unary = Unaries.valueOf(expression);
-        String column = getLayerProvider().getColumnName(tuple);
-        unary.function.apply(column);
-    }
-
-    /**
-     * Generates binary expression
-     * 
-     * @param tuple
-     * @param expression
-     * @param value
-     */
-    private void operateBinary(QueryTuple tuple, String expression, Object value) {
-
-        Binaries binary = Binaries.valueOf(expression);
-        String column = getLayerProvider().getColumnName(tuple);
-        binary.function.apply(column, value);
-    }
-
-    @Override
-    public <F> MongoStream<T> operate(EntityField<T, F> field, String operator) {
-        resolveAndOperate(field, c -> operateUnary(c, operator));
-        return this;
-    }
-
-    @Override
-    public <F> MongoStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator) {
-        resolveAndOperate(field, value, (c, v) -> operateBinary(c, operator, v));
-        return this;
-    }
-
-    @Override
-    public <F> MongoStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator) {
-        return operate(field, values, operator);
-    }
-
-    @Override
-    public MongoStream<T> brackets(QueryConsumer<T, MongoStream<T>> consumer) {
-        return this;
-    }
-
     @Override
     public String sql() {
         return StringUtils.EMPTY;
+    }
+
+    @Override
+    public <F> MongoStream<T> equal(EntityField<T, F> field, Object value) {
+        resolveAndOperate(field, value, (t, v) -> Filters.eq(getLayerProvider().getColumnName(t), v));
+        return this;
+    }
+
+    @Override
+    public <F> MongoStream<T> notEqual(EntityField<T, F> field, Object value) {
+        resolveAndOperate(field, value, (t, v) -> Filters.ne(getLayerProvider().getColumnName(t), v));
+        return this;
+    }
+
+    @Override
+    public <F extends Comparable<? super F>> MongoStream<T> gt(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        resolveAndOperate(field, value, (t, v) -> Filters.gt(getLayerProvider().getColumnName(t), v));
+        return this;
+    }
+
+    @Override
+    public <F extends Comparable<? super F>> MongoStream<T> lt(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        resolveAndOperate(field, value, (t, v) -> Filters.lt(getLayerProvider().getColumnName(t), v));
+        return this;
+    }
+
+    @Override
+    public <F extends Comparable<? super F>> MongoStream<T> ge(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        resolveAndOperate(field, value, (t, v) -> Filters.gte(getLayerProvider().getColumnName(t), v));
+        return this;
+    }
+
+    @Override
+    public <F extends Comparable<? super F>> MongoStream<T> le(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        resolveAndOperate(field, value, (t, v) -> Filters.lte(getLayerProvider().getColumnName(t), v));
+        return this;
+    }
+
+    @Override
+    public MongoStream<T> like(EntityField<T, String> field, String value) {
+        return this;
+    }
+
+    @Override
+    public MongoStream<T> notLike(EntityField<T, String> field, String value) {
+        return this;
+    }
+
+    @Override
+    public <F> MongoStream<T> in(EntityField<T, F> field, Collection<F> values) {
+        return null;
+    }
+
+    @Override
+    public <F> MongoStream<T> notIn(EntityField<T, F> field, Collection<F> values) {
+        resolveAndOperate(field, values, (t, v) -> Filters.in(getLayerProvider().getColumnName(t), v));
+        return this;
+    }
+
+    @Override
+    public <F> MongoStream<T> isNull(EntityField<T, F> field) {
+        resolveAndOperate(field, t -> Filters.exists(getLayerProvider().getColumnName(t)));
+        return this;
+    }
+
+    @Override
+    public <F> MongoStream<T> isNotNull(EntityField<T, F> field) {
+        resolveAndOperate(field, t -> Filters.not(Filters.exists(getLayerProvider().getColumnName(t))));
+        return this;
+    }
+
+    @Override
+    public MongoStream<T> and() {
+        return this;
+    }
+
+    @Override
+    public MongoStream<T> or() {
+        return this;
     }
 }

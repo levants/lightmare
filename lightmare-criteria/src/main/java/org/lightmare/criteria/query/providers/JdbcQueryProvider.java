@@ -40,7 +40,7 @@ public abstract class JdbcQueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryProvider}
      *         with delete statement
      */
     public static <T> JpaQueryStream<T> delete(final Connection connection, Class<T> entityType) {
@@ -52,7 +52,7 @@ public abstract class JdbcQueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryProvider}
      *         with update statement
      */
     public static <T> JpaQueryStream<T> update(final Connection connection, Class<T> entityType) {
@@ -64,7 +64,7 @@ public abstract class JdbcQueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryProvider}
      *         with select statement
      */
     public static <T> JpaQueryStream<T> select(final Connection connection, Class<T> entityType) {

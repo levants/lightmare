@@ -27,8 +27,8 @@ import org.lightmare.criteria.query.internal.layers.LayerProvider;
 
 /**
  * Provider or factory class to initialize
- * {@link org.lightmare.criteria.query.providers.JpaQueryStream} by SELECT,
- * UPDATE or DELETE clause for entity type
+ * {@link org.lightmare.criteria.query.LambdaStream} by SELECT, UPDATE or DELETE
+ * clause for entity type
  * 
  * @author Levan Tsinadze
  *
@@ -46,10 +46,10 @@ public abstract class QueryProvider {
      * @param entityType
      * @param initializer
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         with delete statement
      */
-    public static <T, L extends LayerProvider, S extends QueryStream<T, ? super S>> S delete(L provider,
+    public static <T, L extends LayerProvider, S extends LambdaStream<T, ? super S>> S delete(L provider,
             Class<T> entityType, QueryInitializer<T, L, S> initializer) {
         return initializer.apply(provider, entityType);
     }
@@ -61,10 +61,10 @@ public abstract class QueryProvider {
      * @param entityType
      * @param initializer
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         with update statement
      */
-    public static <T, L extends LayerProvider, S extends QueryStream<T, ? super S>> S update(L provider,
+    public static <T, L extends LayerProvider, S extends LambdaStream<T, ? super S>> S update(L provider,
             Class<T> entityType, QueryInitializer<T, L, S> initializer) {
         return initializer.apply(provider, entityType);
     }
@@ -76,10 +76,10 @@ public abstract class QueryProvider {
      * @param entityType
      * @param initializer
      * @return S implementation of
-     *         {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         with select statement
      */
-    public static <T, L extends LayerProvider, S extends QueryStream<T, ? super S>> S select(L provider,
+    public static <T, L extends LayerProvider, S extends LambdaStream<T, ? super S>> S select(L provider,
             Class<T> entityType, QueryInitializer<T, L, S> initializer) {
         return initializer.apply(provider, entityType);
     }

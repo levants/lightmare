@@ -3,7 +3,7 @@ package org.lightmare.criteria.functions.initializers;
 import java.io.Serializable;
 import java.util.function.BiFunction;
 
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.internal.layers.LayerProvider;
 
 /**
@@ -15,10 +15,10 @@ import org.lightmare.criteria.query.internal.layers.LayerProvider;
  * @param <T>
  *            entity type
  * @param <S>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  */
 @FunctionalInterface
-public interface QueryInitializer<T, L extends LayerProvider, S extends QueryStream<T, ? super S>>
+public interface QueryInitializer<T, L extends LayerProvider, S extends LambdaStream<T, ? super S>>
         extends BiFunction<L, Class<T>, S>, Serializable {
 
     /**
