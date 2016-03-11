@@ -71,11 +71,11 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
     @Override
     default <F extends Comparable<? super F>> S gt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().greaterThen());
+        return operate(field, value, getLayerProvider().greaterThan());
     }
 
     @Override
-    default <F extends Comparable<? super F>> S greaterThen(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> S greaterThan(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return gt(field, value);
     }
@@ -83,11 +83,11 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
     @Override
     default <F extends Comparable<? super F>> S lt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().lessThen());
+        return operate(field, value, getLayerProvider().lessThan());
     }
 
     @Override
-    default <F extends Comparable<? super F>> S lessThen(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> S lessThan(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return lt(field, value);
     }
@@ -95,11 +95,11 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
     @Override
     default <F extends Comparable<? super F>> S ge(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().greaterThenOrEqual());
+        return operate(field, value, getLayerProvider().greaterThanOrEqual());
     }
 
     @Override
-    default <F extends Comparable<? super F>> S greaterThenOrEqualTo(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> S greaterThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return ge(field, value);
     }
@@ -107,11 +107,11 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
     @Override
     default <F extends Comparable<? super F>> S le(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().lessThenOrEqual());
+        return operate(field, value, getLayerProvider().lessThanOrEqual());
     }
 
     @Override
-    default <F extends Comparable<? super F>> S lessThenOrEqualTo(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> S lessThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return le(field, value);
     }

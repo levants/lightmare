@@ -56,9 +56,14 @@ public class CriteriaProvider extends JpaLayerExpressions implements LayerProvid
 
     @Override
     public <T> QueryLayer<T> query(Object sql, Class<T> type) {
+
+        QueryLayer<T> layer;
+
         CriteriaQuery<T> query = ObjectUtils.cast(sql);
         ObjectUtils.nonNull(type, query::from);
-        return new CriteriaQueryLayer<>(em, query);
+        layer = new CriteriaQueryLayer<>(em, query);
+
+        return layer;
     }
 
     @Override

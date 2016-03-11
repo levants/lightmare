@@ -42,7 +42,8 @@ interface TypedToFunctionSubQueryProcessor<T> extends SubQueryOperator<T> {
      * @param value
      * @param operator
      * @param stream
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     default <F, S> JpaQueryStream<T> operateFunctionWthSubQuery(FunctionConsumer<T> consumer, String operator,
             SubQueryType<S> stream) {
@@ -63,7 +64,7 @@ interface TypedToFunctionSubQueryProcessor<T> extends SubQueryOperator<T> {
         return operateFunctionWthSubQuery(consumer, Operators.GREATER, stream);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThenSubQuery(FunctionConsumer<T> consumer,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThanSubQuery(FunctionConsumer<T> consumer,
             SubQueryType<S> stream) {
         return operateFunctionWthSubQuery(consumer, Operators.GREATER, stream);
     }
@@ -73,7 +74,7 @@ interface TypedToFunctionSubQueryProcessor<T> extends SubQueryOperator<T> {
         return operateFunctionWthSubQuery(consumer, Operators.LESS, stream);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThenSubQuery(FunctionConsumer<T> consumer,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThanSubQuery(FunctionConsumer<T> consumer,
             SubQueryType<S> stream) {
         return operateFunctionWthSubQuery(consumer, Operators.LESS, stream);
     }
@@ -83,7 +84,7 @@ interface TypedToFunctionSubQueryProcessor<T> extends SubQueryOperator<T> {
         return operateFunctionWthSubQuery(consumer, Operators.GREATER_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThenOrEqualToSubQuery(
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThanOrEqualToSubQuery(
             FunctionConsumer<T> consumer, SubQueryType<S> stream) {
         return operateFunctionWthSubQuery(consumer, Operators.GREATER_OR_EQ, stream);
     }
@@ -93,8 +94,8 @@ interface TypedToFunctionSubQueryProcessor<T> extends SubQueryOperator<T> {
         return operateFunctionWthSubQuery(consumer, Operators.LESS_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThenOrEqualToSubQuery(FunctionConsumer<T> consumer,
-            SubQueryType<S> stream) {
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThanOrEqualToSubQuery(
+            FunctionConsumer<T> consumer, SubQueryType<S> stream) {
         return operateFunctionWthSubQuery(consumer, Operators.LESS_OR_EQ, stream);
     }
 }

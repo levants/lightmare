@@ -42,7 +42,8 @@ interface TypedSubQueryProcessor<T> extends SubQueryOperator<T> {
      * @param field
      * @param operator
      * @param stream
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     default <F, S> JpaQueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, SubQueryType<S> stream) {
         String composed = stream.getOperator(operator);
@@ -62,8 +63,8 @@ interface TypedSubQueryProcessor<T> extends SubQueryOperator<T> {
         return operateSubQuery(field, Operators.GREATER, stream);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThen(EntityField<T, Comparable<? super F>> field,
-            SubQueryType<S> stream) {
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThan(
+            EntityField<T, Comparable<? super F>> field, SubQueryType<S> stream) {
         return gt(field, stream);
     }
 
@@ -72,7 +73,7 @@ interface TypedSubQueryProcessor<T> extends SubQueryOperator<T> {
         return operateSubQuery(field, Operators.LESS, stream);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThen(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThan(EntityField<T, Comparable<? super F>> field,
             SubQueryType<S> stream) {
         return lt(field, stream);
     }
@@ -82,7 +83,7 @@ interface TypedSubQueryProcessor<T> extends SubQueryOperator<T> {
         return operateSubQuery(field, Operators.GREATER_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThenOrEqualTo(
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThanOrEqualTo(
             EntityField<T, Comparable<? super F>> field, SubQueryType<S> stream) {
         return ge(field, stream);
     }
@@ -92,7 +93,7 @@ interface TypedSubQueryProcessor<T> extends SubQueryOperator<T> {
         return operateSubQuery(field, Operators.LESS_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThenOrEqualTo(
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThanOrEqualTo(
             EntityField<T, Comparable<? super F>> field, SubQueryType<S> stream) {
         return le(field, stream);
     }

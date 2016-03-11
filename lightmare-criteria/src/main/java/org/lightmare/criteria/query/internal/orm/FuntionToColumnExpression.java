@@ -60,7 +60,7 @@ interface FuntionToColumnExpression<T> {
         return operateColumn(function, Operators.GREATER, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThenColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThanColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.GREATER, field);
     }
@@ -70,7 +70,7 @@ interface FuntionToColumnExpression<T> {
         return operateColumn(function, Operators.LESS, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThenColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThanColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.LESS, field);
     }
@@ -80,7 +80,7 @@ interface FuntionToColumnExpression<T> {
         return operateColumn(function, Operators.GREATER_OR_EQ, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThenOrEqualToColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThanOrEqualToColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.GREATER_OR_EQ, field);
     }
@@ -90,7 +90,7 @@ interface FuntionToColumnExpression<T> {
         return operateColumn(function, Operators.LESS_OR_EQ, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThenOrEqualToColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThanOrEqualToColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.EQ, field);
     }

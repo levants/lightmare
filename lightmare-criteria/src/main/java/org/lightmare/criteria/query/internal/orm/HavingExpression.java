@@ -79,7 +79,7 @@ public interface HavingExpression<T> {
         return operate(Operators.GREATER, value);
     }
 
-    default HavingExpression<T> greaterThen(Number value) {
+    default HavingExpression<T> greaterThan(Number value) {
         return gt(value);
     }
 
@@ -87,7 +87,7 @@ public interface HavingExpression<T> {
         return operate(Operators.LESS, value);
     }
 
-    default HavingExpression<T> lessThen(Number value) {
+    default HavingExpression<T> lessThan(Number value) {
         return lt(value);
     }
 
@@ -95,7 +95,7 @@ public interface HavingExpression<T> {
         return operate(Operators.GREATER_OR_EQ, value);
     }
 
-    default HavingExpression<T> greaterThenOrEqualTo(Number value) {
+    default HavingExpression<T> greaterThanOrEqualTo(Number value) {
         return ge(value);
     }
 
@@ -103,7 +103,7 @@ public interface HavingExpression<T> {
         return operate(Operators.LESS_OR_EQ, value);
     }
 
-    default HavingExpression<T> lessThenOrEqualTo(Number value) {
+    default HavingExpression<T> lessThanOrEqualTo(Number value) {
         return le(value);
     }
 

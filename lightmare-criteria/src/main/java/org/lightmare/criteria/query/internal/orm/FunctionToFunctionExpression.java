@@ -42,7 +42,8 @@ interface FunctionToFunctionExpression<T> {
      * @param function1
      * @param function2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     JpaQueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
 
@@ -54,7 +55,7 @@ interface FunctionToFunctionExpression<T> {
         return operateFunctions(function1, function2, Operators.GREATER);
     }
 
-    default JpaQueryStream<T> greaterThenFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> greaterThanFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.GREATER);
     }
 
@@ -62,7 +63,7 @@ interface FunctionToFunctionExpression<T> {
         return operateFunctions(function1, function2, Operators.LESS);
     }
 
-    default JpaQueryStream<T> lessThenFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> lessThanFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.LESS);
     }
 
@@ -70,7 +71,8 @@ interface FunctionToFunctionExpression<T> {
         return operateFunctions(function1, function2, Operators.GREATER_OR_EQ);
     }
 
-    default JpaQueryStream<T> greaterThenOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> greaterThanOrEqualToFunction(FunctionConsumer<T> function1,
+            FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.GREATER_OR_EQ);
     }
 
@@ -78,7 +80,7 @@ interface FunctionToFunctionExpression<T> {
         return operateFunctions(function1, function2, Operators.LESS_OR_EQ);
     }
 
-    default JpaQueryStream<T> lessThenOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default JpaQueryStream<T> lessThanOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.EQ);
     }
 }

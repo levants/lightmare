@@ -24,7 +24,7 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").count(Person::getPersonalNo,
                             c -> c.groupBy(Select.select().column(Person::getLastName).column(Person::getFirstName))
-                                    .having(h -> h.greaterThenOrEqualTo(100).lessThenOrEqualTo(1000).or()
+                                    .having(h -> h.greaterThanOrEqualTo(100).lessThanOrEqualTo(1000).or()
                                             .brackets(b -> b.notBetween(20000, 30000))));
             List<Object[]> results = stream.toList();
             results.forEach(result -> System.out.println(Arrays.asList(result)));
@@ -48,7 +48,7 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").count(Person::getPersonalNo,
                             c -> c.group(s -> s.column(Person::getLastName).column(Person::getFirstName))
-                                    .having(h -> h.greaterThenOrEqualTo(100).lessThenOrEqualTo(1000).or()
+                                    .having(h -> h.greaterThanOrEqualTo(100).lessThanOrEqualTo(1000).or()
                                             .brackets(b -> b.notBetween(20000, 30000))));
             List<Object[]> results = stream.toList();
             results.forEach(result -> System.out.println(Arrays.asList(result)));
@@ -71,8 +71,8 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             // ============= Query construction ============== //
             JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").count(Person::getPersonalNo,
-                            c -> c.group(s -> s.column(Person::getLastName)).having(h -> h.greaterThenOrEqualTo(100)
-                                    .lessThenOrEqualTo(1000).or().brackets(b -> b.notBetween(20000, 30000))));
+                            c -> c.group(s -> s.column(Person::getLastName)).having(h -> h.greaterThanOrEqualTo(100)
+                                    .lessThanOrEqualTo(1000).or().brackets(b -> b.notBetween(20000, 30000))));
             List<Object[]> results = stream.toList();
             results.forEach(result -> System.out.println(Arrays.asList(result)));
             String sql = stream.sql();
@@ -94,8 +94,8 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             // ============= Query construction ============== //
             JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").count(Person::getPersonalNo,
-                            c -> c.groupBy(Person::getLastName).having(h -> h.greaterThenOrEqualTo(100)
-                                    .lessThenOrEqualTo(1000).or().brackets(b -> b.notBetween(20000, 30000))));
+                            c -> c.groupBy(Person::getLastName).having(h -> h.greaterThanOrEqualTo(100)
+                                    .lessThanOrEqualTo(1000).or().brackets(b -> b.notBetween(20000, 30000))));
             List<Object[]> results = stream.toList();
             results.forEach(result -> System.out.println(Arrays.asList(result)));
             String sql = stream.sql();

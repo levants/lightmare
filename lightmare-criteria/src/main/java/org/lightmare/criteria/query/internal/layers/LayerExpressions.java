@@ -42,13 +42,13 @@ interface LayerExpressions {
 
     String notEqual();
 
-    String lessThen();
+    String lessThan();
 
-    String lessThenOrEqual();
+    String lessThanOrEqual();
 
-    String greaterThen();
+    String greaterThan();
 
-    String greaterThenOrEqual();
+    String greaterThanOrEqual();
 
     String like();
 

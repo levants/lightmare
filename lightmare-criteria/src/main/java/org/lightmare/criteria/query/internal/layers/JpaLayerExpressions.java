@@ -53,22 +53,22 @@ abstract class JpaLayerExpressions implements LayerExpressions {
     }
 
     @Override
-    public String lessThen() {
+    public String lessThan() {
         return Operators.LESS;
     }
 
     @Override
-    public String lessThenOrEqual() {
+    public String lessThanOrEqual() {
         return Operators.LESS_OR_EQ;
     }
 
     @Override
-    public String greaterThen() {
+    public String greaterThan() {
         return Operators.GREATER;
     }
 
     @Override
-    public String greaterThenOrEqual() {
+    public String greaterThanOrEqual() {
         return Operators.GREATER_OR_EQ;
     }
 

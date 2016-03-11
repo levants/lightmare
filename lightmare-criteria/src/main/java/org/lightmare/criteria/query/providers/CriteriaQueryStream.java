@@ -22,10 +22,13 @@
  */
 package org.lightmare.criteria.query.providers;
 
-import org.lightmare.criteria.query.QueryStream;
+import java.util.Collection;
+
+import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.LambdaStream;
 
 /**
- * Implementation of {@link org.lightmare.criteria.query.QueryStream} for JPA
+ * Implementation of {@link org.lightmare.criteria.query.LambdaStream} for JPA
  * criteria queries
  * 
  * @author Levan Tsinadze
@@ -33,6 +36,167 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type parameter
  */
-public interface CriteriaQueryStream<T> extends QueryStream<T, CriteriaQueryStream<T>> {
+public interface CriteriaQueryStream<T> extends LambdaStream<T, CriteriaQueryStream<T>>, CriteriaResolver<T> {
 
+    @Override
+    default <F> CriteriaQueryStream<T> equal(EntityField<T, F> field, Object value) {
+        applyValue(field, value, getBuilder()::equal);
+        return this;
+    }
+
+    default <F, V> CriteriaQueryStream<T> equal(EntityField<T, F> field1, EntityField<T, V> field2) {
+        applyField(field1, field2, getBuilder()::equal);
+        return this;
+    }
+
+    @Override
+    default <F> CriteriaQueryStream<T> notEqual(EntityField<T, F> field, Object value) {
+        applyValue(field, value, getBuilder()::notEqual);
+        return this;
+    }
+
+    default <F, V> CriteriaQueryStream<T> notEqual(EntityField<T, F> field1, EntityField<T, V> field2) {
+        applyField(field1, field2, getBuilder()::notEqual);
+        return this;
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> gt(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        applyNumericValue(field, value, getBuilder()::gt);
+        return this;
+    }
+
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> gt(EntityField<T, Comparable<? super F>> field1,
+            EntityField<T, Comparable<? super F>> field2) {
+        applyNumericField(field1, field2, getBuilder()::gt);
+        return this;
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> greaterThan(
+            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
+        applyComparableValue(field, value, getBuilder()::greaterThan);
+        return this;
+    }
+
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> greaterThan(
+            EntityField<T, Comparable<? super F>> field1, EntityField<T, Comparable<? super F>> field2) {
+        applyComparableField(field2, field2, getBuilder()::greaterThan);
+        return this;
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> lt(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        applyNumericValue(field, value, getBuilder()::lt);
+        return this;
+    }
+
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> lt(EntityField<T, Comparable<? super F>> field1,
+            EntityField<T, Comparable<? super F>> field2) {
+        applyNumericField(field1, field2, getBuilder()::lt);
+        return this;
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> lessThan(
+            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
+        applyComparableValue(field, value, getBuilder()::lessThan);
+        return this;
+    }
+
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> lessThan(
+            EntityField<T, Comparable<? super F>> field1, EntityField<T, Comparable<? super F>> field2) {
+        applyComparableField(field2, field2, getBuilder()::lessThan);
+        return this;
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> ge(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        applyNumericValue(field, value, getBuilder()::ge);
+        return this;
+    }
+
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> ge(EntityField<T, Comparable<? super F>> field1,
+            EntityField<T, Comparable<? super F>> field2) {
+        applyNumericField(field1, field2, getBuilder()::ge);
+        return this;
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> greaterThanOrEqualTo(
+            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
+        applyComparableValue(field, value, getBuilder()::greaterThanOrEqualTo);
+        return this;
+    }
+
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> greaterThanOrEqualTo(
+            EntityField<T, Comparable<? super F>> field1, EntityField<T, Comparable<? super F>> field2) {
+        applyComparableField(field2, field2, getBuilder()::greaterThanOrEqualTo);
+        return this;
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> le(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        applyNumericValue(field, value, getBuilder()::le);
+        return this;
+    }
+
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> le(EntityField<T, Comparable<? super F>> field1,
+            EntityField<T, Comparable<? super F>> field2) {
+        applyNumericField(field1, field2, getBuilder()::le);
+        return this;
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> lessThanOrEqualTo(
+            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
+        applyComparableValue(field, value, getBuilder()::lessThanOrEqualTo);
+        return this;
+    }
+
+    default <F extends Comparable<? super F>> CriteriaQueryStream<T> lessThanOrEqualTo(
+            EntityField<T, Comparable<? super F>> field1, EntityField<T, Comparable<? super F>> field2) {
+        applyComparableField(field2, field2, getBuilder()::lessThanOrEqualTo);
+        return this;
+    }
+
+    // =============================LIKE=clause==============================//
+
+    @Override
+    default CriteriaQueryStream<T> like(EntityField<T, String> field, String value) {
+        return this;
+    }
+
+    @Override
+    default CriteriaQueryStream<T> notLike(EntityField<T, String> field, String value) {
+        return this;
+    }
+
+    // ======================================================================//
+
+    @Override
+    default <F> CriteriaQueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
+        return this;
+    }
+
+    @Override
+    default <F> CriteriaQueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) {
+        return this;
+    }
+
+    // =============================NULL=check===============================//
+
+    @Override
+    default <F> CriteriaQueryStream<T> isNull(EntityField<T, F> field) {
+        return this;
+    }
+
+    @Override
+    default <F> CriteriaQueryStream<T> isNotNull(EntityField<T, F> field) {
+        return this;
+    }
 }

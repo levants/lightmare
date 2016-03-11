@@ -88,7 +88,7 @@ interface ColumnExpression<T> {
         return operate(field1, field2, Operators.GREATER);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThen(
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThan(
             EntityField<T, Comparable<? super F>> field1, EntityField<S, Comparable<? super F>> field2) {
         return gt(field1, field2);
     }
@@ -98,7 +98,7 @@ interface ColumnExpression<T> {
         return operate(field1, field2, Operators.LESS);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThen(EntityField<T, Comparable<? super F>> field1,
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThan(EntityField<T, Comparable<? super F>> field1,
             EntityField<S, Comparable<? super F>> field2) {
         return lt(field1, field2);
     }
@@ -108,7 +108,7 @@ interface ColumnExpression<T> {
         return operate(field1, field2, Operators.GREATER_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThenOrEqualTo(
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThanOrEqualTo(
             EntityField<T, Comparable<? super F>> field1, EntityField<S, Comparable<? super F>> field2) {
         return ge(field1, field2);
     }
@@ -118,7 +118,7 @@ interface ColumnExpression<T> {
         return operate(field1, field2, Operators.LESS_OR_EQ);
     }
 
-    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThenOrEqualTo(
+    default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThanOrEqualTo(
             EntityField<T, Comparable<? super F>> field1, EntityField<S, Comparable<? super F>> field2) {
         return le(field1, field2);
     }

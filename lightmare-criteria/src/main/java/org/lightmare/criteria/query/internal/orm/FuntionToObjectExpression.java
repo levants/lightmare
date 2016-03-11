@@ -60,7 +60,7 @@ interface FuntionToObjectExpression<T> {
         return operateFunction(function, Operators.GREATER, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThenParam(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThanParam(FunctionConsumer<T> function,
             Comparable<? super F> value) {
         return operateFunction(function, Operators.GREATER, value);
     }
@@ -70,7 +70,7 @@ interface FuntionToObjectExpression<T> {
         return operateFunction(function, Operators.LESS, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThenParam(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThanParam(FunctionConsumer<T> function,
             Comparable<? super F> value) {
         return operateFunction(function, Operators.LESS, value);
     }
@@ -80,7 +80,7 @@ interface FuntionToObjectExpression<T> {
         return operateFunction(function, Operators.GREATER_OR_EQ, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThenOrEqualToParam(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThanOrEqualToParam(FunctionConsumer<T> function,
             Comparable<? super F> value) {
         return operateFunction(function, Operators.GREATER_OR_EQ, value);
     }
@@ -90,7 +90,7 @@ interface FuntionToObjectExpression<T> {
         return operateFunction(function, Operators.LESS_OR_EQ, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThenOrEqualToParam(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThanOrEqualToParam(FunctionConsumer<T> function,
             Comparable<? super F> value) {
         return operateFunction(function, Operators.EQ, value);
     }

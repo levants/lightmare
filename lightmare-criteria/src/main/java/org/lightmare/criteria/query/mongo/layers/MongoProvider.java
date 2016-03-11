@@ -74,22 +74,22 @@ public class MongoProvider implements LayerProvider {
     }
 
     @Override
-    public String lessThen() {
+    public String lessThan() {
         return MongoExpressions.Binaries.LT.expression;
     }
 
     @Override
-    public String lessThenOrEqual() {
+    public String lessThanOrEqual() {
         return MongoExpressions.Binaries.LTE.expression;
     }
 
     @Override
-    public String greaterThen() {
+    public String greaterThan() {
         return MongoExpressions.Binaries.GT.expression;
     }
 
     @Override
-    public String greaterThenOrEqual() {
+    public String greaterThanOrEqual() {
         return MongoExpressions.Binaries.GTE.expression;
     }
 
