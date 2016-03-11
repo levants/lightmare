@@ -39,8 +39,22 @@ import org.lightmare.criteria.functions.EntityField;
  */
 public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends LayerStream<T> {
 
+    /**
+     * Equality filter
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F> S equal(EntityField<T, F> field, Object value);
 
+    /**
+     * Inequality filter
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F> S notEqual(EntityField<T, F> field, Object value);
 
     <F extends Comparable<? super F>> S gt(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);

@@ -32,12 +32,40 @@ import org.lightmare.criteria.tuples.QueryTuple;
  */
 public interface LayerProvider {
 
+    /**
+     * Generates {@link org.lightmare.criteria.query.internal.layers.QueryLayer}
+     * for entity type
+     * 
+     * @param sql
+     * @param type
+     * @return {@link org.lightmare.criteria.query.internal.layers.QueryLayer}
+     *         implementation
+     */
     <T> QueryLayer<T> query(Object sql, Class<T> type);
 
+    /**
+     * Generates raw typed query
+     * 
+     * @param sql
+     * @return {@link org.lightmare.criteria.query.internal.layers.QueryLayer}
+     *         implementation
+     */
     QueryLayer<?> query(Object sql);
 
+    /**
+     * Gets appropriated data base table name
+     * 
+     * @param type
+     * @return {@link String} table name
+     */
     String getTableName(Class<?> type);
 
+    /**
+     * Gets appropriated data base column name
+     * 
+     * @param tuple
+     * @return {@link String} column name
+     */
     String getColumnName(QueryTuple tuple);
 
     String getSelectType(String alias);
