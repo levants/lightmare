@@ -26,6 +26,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.internal.orm.links.Operators;
 
 /**
  * Query stream for abstract data base layers
@@ -60,18 +61,18 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
 
     @Override
     default <F> S equal(EntityField<T, F> field, Object value) {
-        return operate(field, value, getLayerProvider().equal());
+        return operate(field, value, Operators.EQ);
     }
 
     @Override
     default <F> S notEqual(EntityField<T, F> field, Object value) {
-        return operate(field, value, getLayerProvider().notEqual());
+        return operate(field, value, Operators.NOT_EQ);
     }
 
     @Override
     default <F extends Comparable<? super F>> S gt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().greaterThan());
+        return operate(field, value, Operators.GREATER);
     }
 
     @Override
@@ -83,7 +84,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
     @Override
     default <F extends Comparable<? super F>> S lt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().lessThan());
+        return operate(field, value, Operators.LESS);
     }
 
     @Override
@@ -95,7 +96,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
     @Override
     default <F extends Comparable<? super F>> S ge(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().greaterThanOrEqual());
+        return operate(field, value, Operators.GREATER_OR_EQ);
     }
 
     @Override
@@ -107,7 +108,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
     @Override
     default <F extends Comparable<? super F>> S le(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return operate(field, value, getLayerProvider().lessThanOrEqual());
+        return operate(field, value, Operators.LESS_OR_EQ);
     }
 
     @Override
@@ -120,12 +121,12 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
 
     @Override
     default S like(EntityField<T, String> field, String value) {
-        return operate(field, value, getLayerProvider().like());
+        return operate(field, value, Operators.LIKE);
     }
 
     @Override
     default S notLike(EntityField<T, String> field, String value) {
-        return operate(field, value, getLayerProvider().notLike());
+        return operate(field, value, Operators.NOT_LIKE);
     }
 
     // ======================================================================//
@@ -143,24 +144,24 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
 
     @Override
     default <F> S in(EntityField<T, F> field, Collection<F> values) {
-        return operateCollection(field, values, getLayerProvider().in());
+        return operateCollection(field, values, Operators.IN);
     }
 
     @Override
     default <F> S notIn(EntityField<T, F> field, Collection<F> values) {
-        return operateCollection(field, values, getLayerProvider().notIn());
+        return operateCollection(field, values, Operators.NOT_IN);
     }
 
     // =============================NULL=check===============================//
 
     @Override
     default <F> S isNull(EntityField<T, F> field) {
-        return operate(field, getLayerProvider().isNull());
+        return operate(field, Operators.IS_NULL);
     }
 
     @Override
     default <F> S isNotNull(EntityField<T, F> field) {
-        return operate(field, getLayerProvider().isNotNull());
+        return operate(field, Operators.NOT_NULL);
     }
 
     // ======================================================================//

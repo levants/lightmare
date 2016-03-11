@@ -26,6 +26,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.QueryExpression;
+import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -54,12 +55,12 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
 
     @Override
     default JpaQueryStream<T> and() {
-        return appendOperator(getLayerProvider().and());
+        return appendOperator(Operators.AND);
     }
 
     @Override
     default JpaQueryStream<T> or() {
-        return appendOperator(getLayerProvider().or());
+        return appendOperator(Operators.OR);
     }
 
     /**

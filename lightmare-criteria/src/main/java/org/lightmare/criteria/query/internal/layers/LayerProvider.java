@@ -30,7 +30,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @author Levan Tsinadze
  *
  */
-public interface LayerProvider extends LayerExpressions {
+public interface LayerProvider {
 
     <T> QueryLayer<T> query(Object sql, Class<T> type);
 

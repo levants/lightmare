@@ -38,7 +38,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @author Levan Tsinadze
  *
  */
-public class JpaProvider extends JpaLayerExpressions implements LayerProvider {
+public class JpaProvider implements LayerProvider {
 
     private final EntityManager em;
 

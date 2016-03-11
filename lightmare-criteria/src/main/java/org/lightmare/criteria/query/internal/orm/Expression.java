@@ -52,8 +52,8 @@ interface Expression<T> {
     /**
      * Opens bracket in query body
      * 
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     JpaQueryStream<T> openBracket();
 
@@ -64,8 +64,8 @@ interface Expression<T> {
      * 
      * @param field
      * @param operator
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, F> field, String operator);
 
@@ -75,8 +75,8 @@ interface Expression<T> {
      * @param field
      * @param value
      * @param operator
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, Object value, String operator);
 
@@ -87,8 +87,8 @@ interface Expression<T> {
      * @param value1
      * @param value2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, Object value1, Object value2, String operator);
 
@@ -100,8 +100,8 @@ interface Expression<T> {
      * @param value1
      * @param operator2
      * @param value2
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     <F> JpaQueryStream<T> operate(EntityField<T, ? extends F> field, String operator1, Object value1, String operator2,
             Object value2);
@@ -119,43 +119,43 @@ interface Expression<T> {
     }
 
     default JpaQueryStream<T> like(EntityField<T, String> field, String value, char escape) {
-        return operate(field, getLayerProvider().like(), value, Operators.ESCAPE, StringUtils.quote(escape));
+        return operate(field, Operators.LIKE, value, Operators.ESCAPE, StringUtils.quote(escape));
     }
 
     default JpaQueryStream<T> notLike(EntityField<T, String> field, String value, char escape) {
-        return operate(field, getLayerProvider().notLike(), value, Operators.ESCAPE, StringUtils.quote(escape));
+        return operate(field, Operators.NOT_LIKE, value, Operators.ESCAPE, StringUtils.quote(escape));
     }
 
     // =========================Implementations=of=LIKE=clause================//
 
     default JpaQueryStream<T> startsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(value, Parts.LIKE_SIGN);
-        return operate(field, enrich, getLayerProvider().like());
+        return operate(field, enrich, Operators.LIKE);
     }
 
     default JpaQueryStream<T> notStartsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(value, Parts.LIKE_SIGN);
-        return operate(field, enrich, getLayerProvider().notLike());
+        return operate(field, enrich, Operators.NOT_LIKE);
     }
 
     default JpaQueryStream<T> endsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(Parts.LIKE_SIGN, value);
-        return operate(field, enrich, getLayerProvider().like());
+        return operate(field, enrich, Operators.LIKE);
     }
 
     default JpaQueryStream<T> notEndsWith(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(Parts.LIKE_SIGN, value);
-        return operate(field, enrich, getLayerProvider().notLike());
+        return operate(field, enrich, Operators.NOT_LIKE);
     }
 
     default JpaQueryStream<T> contains(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(Parts.LIKE_SIGN, value, Parts.LIKE_SIGN);
-        return operate(field, enrich, getLayerProvider().like());
+        return operate(field, enrich, Operators.LIKE);
     }
 
     default JpaQueryStream<T> notContains(EntityField<T, String> field, String value) {
         String enrich = StringUtils.concat(Parts.LIKE_SIGN, value, Parts.LIKE_SIGN);
-        return operate(field, enrich, getLayerProvider().notLike());
+        return operate(field, enrich, Operators.NOT_LIKE);
     }
 
     // ======================================================================//
@@ -167,8 +167,8 @@ interface Expression<T> {
      * @param field
      * @param values
      * @param operator
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     <F> JpaQueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
 
@@ -179,8 +179,8 @@ interface Expression<T> {
      * @param object
      * @param field
      * @param operator
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     <S, F> JpaQueryStream<T> operateCollection(Object value, EntityField<S, Collection<F>> field, String operator);
 
