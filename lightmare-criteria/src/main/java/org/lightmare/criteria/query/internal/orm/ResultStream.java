@@ -27,7 +27,6 @@ import java.util.Set;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.tuples.ParameterTuple;
-import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -57,34 +56,6 @@ public interface ResultStream<T> {
     Long count();
 
     /**
-     * Runs generated query {@link javax.persistence.Query#getResultList()} and
-     * retrieves result list
-     * 
-     * @return {@link java.util.List} of query results
-     * @see javax.persistence.Query#getResultList()
-     */
-    List<T> toList();
-
-    /**
-     * Runs generated query {@link javax.persistence.Query#getSingleResult()}
-     * and retrieves single result
-     * 
-     * @return T single query result
-     * @see javax.persistence.Query#getSingleResult()
-     */
-    T get();
-
-    /**
-     * Executes generates bulk update or delete query
-     * {@link javax.persistence.Query#executeUpdate()} and returns number of
-     * modified rows
-     * 
-     * @return <code>int<code/> number of modified rows
-     * @see javax.persistence.Query#executeUpdate()
-     */
-    int execute();
-
-    /**
      * Gets {@link java.sql.ResultSet} and retrieves single result
      * <p>
      * Note: Only for direct JDBC streams
@@ -111,35 +82,6 @@ public interface ResultStream<T> {
      * @see org.lightmare.criteria.config.Configuration.ResultRetriever
      */
     List<T> toList(ResultRetriever<T> retriever);
-
-    /**
-     * Calls
-     * {@link org.lightmare.criteria.query.internal.orm.ResultStream#toList()}
-     * and retrieves first or passed default result if no element was found
-     * 
-     * @param defaultValue
-     * @return T query first or passed default result
-     */
-    default T firstOrDefault(T defaultValue) {
-
-        T result;
-
-        List<T> results = toList();
-        result = CollectionUtils.getFirst(results, defaultValue);
-
-        return result;
-    }
-
-    /**
-     * Calls
-     * {@link org.lightmare.criteria.query.internal.orm.ResultStream#toList()}
-     * and retrieves first result or <code>null</code> if no element was found
-     * 
-     * @return T query first result
-     */
-    default T getFirst() {
-        return firstOrDefault(null);
-    }
 
     /**
      * Gets {@link java.sql.ResultSet} and retrieves first result or if it is

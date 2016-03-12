@@ -110,17 +110,15 @@ public interface CriteriaResolver<T> extends QueryResolver<T> {
         addCurrent(condition);
     }
 
-    default <F> void applyCollectionValue(EntityField<T, F> field, Collection<F> values,
-            BiFunction<Expression<F>, Collection<F>, Predicate> function) {
-        Predicate condition = resolveAndApply(field, values, (t, v) -> function.apply(get(t), v));
+    default <F> void applyCollectionValue(EntityField<T, F> field, Collection<F> values) {
+        Predicate condition = resolveAndApply(field, values, (t, v) -> get(t).in(values));
         addCurrent(condition);
     }
 
-    default <F> void applyCollectionField(EntityField<T, F> field1, EntityField<T, String> field2,
-            BiFunction<Expression<String>, Expression<String>, Predicate> function) {
+    default <F> void applyCollectionField(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
 
         QueryTuple tuple = resolve(field2);
-        Predicate condition = resolveAndApply(field1, field2, (t, v) -> function.apply(get(t), get(tuple)));
+        Predicate condition = resolveAndApply(field1, field2, (t, v) -> get(t).in(get(tuple)));
         addCurrent(condition);
     }
 }

@@ -37,7 +37,7 @@ import org.lightmare.criteria.functions.EntityField;
  * @param <S>
  *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  */
-public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends LayerStream<T> {
+public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends LayerStream<T>, QueryResult<T> {
 
     /**
      * Equality filter

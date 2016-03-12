@@ -53,6 +53,8 @@ public class AbstractCriteriaStream<T> implements CriteriaQueryResolver<T> {
 
     protected final Map<Class<?>, Root<?>> roots = new HashMap<>();
 
+    protected Root<T> root;
+
     protected final List<Predicate> ands = new ArrayList<>();
 
     protected final List<Predicate> ors = new ArrayList<>();
@@ -84,19 +86,27 @@ public class AbstractCriteriaStream<T> implements CriteriaQueryResolver<T> {
      * @param type
      * @return {@link javax.persistence.criteria.Root} for passed {@link Class}
      */
-    private Root<?> getRoot(Class<?> type) {
-        return ObjectUtils.thisOrDefault(roots.get(type), () -> sql.from(type), r -> roots.put(type, r));
+    private <R> Root<R> getRoot(Class<?> type) {
+
+        Root<R> result;
+
+        Root<?> raw = ObjectUtils.thisOrDefault(roots.get(type), () -> sql.from(type), r -> roots.put(type, r));
+        result = ObjectUtils.cast(raw);
+
+        return result;
+    }
+
+    private void setRoot(Root<T> root) {
+        this.root = root;
+    }
+
+    private Root<T> getRoot() {
+        return ObjectUtils.thisOrDefault(root, () -> getRoot(entityType), this::setRoot);
     }
 
     @Override
     public String getAlias() {
-
-        String alias;
-
-        Root<?> root = getRoot(entityType);
-        alias = root.getAlias();
-
-        return alias;
+        return getRoot().getAlias();
     }
 
     @Override

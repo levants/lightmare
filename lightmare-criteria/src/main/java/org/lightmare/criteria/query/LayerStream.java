@@ -26,8 +26,8 @@ import org.lightmare.criteria.query.layers.LayerProvider;
 
 /**
  * Abstraction of entity type, alias, and
- * {@link org.lightmare.criteria.query.layers.LayerProvider} for
- * various data base layers
+ * {@link org.lightmare.criteria.query.layers.LayerProvider} for various data
+ * base layers
  * 
  * @author Levan Tsinadze
  *

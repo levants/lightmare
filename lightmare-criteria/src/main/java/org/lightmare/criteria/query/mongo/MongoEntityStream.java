@@ -195,4 +195,47 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
         current = ors;
         return this;
     }
+
+    @Override
+    public <F extends Comparable<? super F>> MongoStream<T> greaterThan(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <F extends Comparable<? super F>> MongoStream<T> lessThan(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <F extends Comparable<? super F>> MongoStream<T> greaterThanOrEqualTo(
+            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <F extends Comparable<? super F>> MongoStream<T> lessThanOrEqualTo(
+            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<T> toList() {
+        return null;
+    }
+
+    @Override
+    public T get() {
+        return null;
+    }
+
+    @Override
+    public int execute() {
+        return 0;
+    }
 }

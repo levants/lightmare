@@ -63,7 +63,8 @@ class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
     }
 
     @Override
-    public <F, R extends Number> JpaQueryStream<R> aggregate(EntityField<S, F> field, Aggregates function, Class<R> type) {
+    public <F, R extends Number> JpaQueryStream<R> aggregate(EntityField<S, F> field, Aggregates function,
+            Class<R> type) {
         return subAggregate(field, function, type);
     }
 }

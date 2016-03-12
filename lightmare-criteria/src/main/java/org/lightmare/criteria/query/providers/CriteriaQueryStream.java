@@ -192,6 +192,12 @@ public interface CriteriaQueryStream<T> extends LambdaStream<T, CriteriaQueryStr
 
     @Override
     default <F> CriteriaQueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
+        applyCollectionValue(field, values);
+        return this;
+    }
+
+    default <F> CriteriaQueryStream<T> in(EntityField<T, F> field1, EntityField<T, Collection<F>> field2) {
+        applyCollectionField(field1, field2);
         return this;
     }
 
