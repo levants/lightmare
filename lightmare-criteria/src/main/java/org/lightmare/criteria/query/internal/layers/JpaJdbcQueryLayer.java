@@ -70,15 +70,15 @@ public interface JpaJdbcQueryLayer<T> extends QueryLayer<T> {
     void setParameter(String name, Date value, TemporalType temporalType);
 
     /**
-     * Sets query parameters by
-     * {@link org.lightmare.criteria.tuples.ParameterTuple} instance
+     * Unwraps and adds parameter from
+     * {@link org.lightmare.criteria.tuples.ParameterTuple} to query
      * 
      * @param tuple
      */
     void setParameter(ParameterTuple tuple);
 
     /**
-     * Sets max results to query
+     * Sets upper limit for results to query
      * 
      * @param maxResults
      */
@@ -86,6 +86,11 @@ public interface JpaJdbcQueryLayer<T> extends QueryLayer<T> {
 
     int getMaxResults();
 
+    /**
+     * Sets firs index for results
+     * 
+     * @param startPosition
+     */
     void setFirstResult(int startPosition);
 
     int getFirstResult();

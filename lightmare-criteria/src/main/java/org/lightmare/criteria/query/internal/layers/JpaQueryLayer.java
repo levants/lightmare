@@ -116,11 +116,6 @@ public class JpaQueryLayer<T> implements JpaJdbcQueryLayer<T> {
         }
     }
 
-    /**
-     * Sets parameter to query
-     * 
-     * @param tuple
-     */
     @Override
     public void setParameter(ParameterTuple tuple) {
 

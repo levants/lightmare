@@ -29,13 +29,13 @@ import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.layers.QueryLayer;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Implementation for
- * {@link org.lightmare.criteria.query.layers.LayerProvider} JPA
- * queries
+ * Implementation for {@link org.lightmare.criteria.query.layers.LayerProvider}
+ * JPA queries
  * 
  * @author Levan Tsinadze
  *
@@ -48,14 +48,34 @@ public class JpaProvider implements LayerProvider {
         this.em = em;
     }
 
-    @Override
-    public <T> QueryLayer<T> query(Object sql, Class<T> type) {
+    public <T> QueryLayer<T> query(String sql, Class<T> type) {
         return new JpaQueryLayer<>(em, sql.toString(), type);
     }
 
     @Override
-    public QueryLayer<?> query(Object sql) {
+    public <T> QueryLayer<T> query(Class<T> type, Object... params) {
+
+        QueryLayer<T> queryLayer;
+
+        String sql = CollectionUtils.getFirstType(params);
+        queryLayer = query(sql, type);
+
+        return queryLayer;
+    }
+
+    public QueryLayer<?> query(String sql) {
         return new JpaQueryLayer<>(em, sql.toString());
+    }
+
+    @Override
+    public QueryLayer<?> query(Object... params) {
+
+        QueryLayer<?> queryLayer;
+
+        String sql = CollectionUtils.getFirstType(params);
+        queryLayer = query(sql);
+
+        return queryLayer;
     }
 
     @Override

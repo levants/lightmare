@@ -33,24 +33,24 @@ import org.lightmare.criteria.tuples.QueryTuple;
 public interface LayerProvider {
 
     /**
-     * Generates {@link org.lightmare.criteria.query.layers.QueryLayer}
-     * for entity type
+     * Generates {@link org.lightmare.criteria.query.layers.QueryLayer} for
+     * entity type
      * 
-     * @param sql
      * @param type
+     * @param params
      * @return {@link org.lightmare.criteria.query.layers.QueryLayer}
      *         implementation
      */
-    <T> QueryLayer<T> query(Object sql, Class<T> type);
+    <T> QueryLayer<T> query(Class<T> type, Object... params);
 
     /**
      * Generates raw typed query
      * 
-     * @param sql
+     * @param params
      * @return {@link org.lightmare.criteria.query.layers.QueryLayer}
      *         implementation
      */
-    QueryLayer<?> query(Object sql);
+    QueryLayer<?> query(Object... params);
 
     /**
      * Gets appropriated data base table name

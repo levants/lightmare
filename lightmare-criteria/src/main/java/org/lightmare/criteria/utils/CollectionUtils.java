@@ -346,6 +346,22 @@ public abstract class CollectionUtils {
     }
 
     /**
+     * Gets and casts first elements from array
+     * 
+     * @param values
+     * @return T first element of array
+     */
+    public static <T> T getFirstType(Object[] values) {
+
+        T value;
+
+        Object raw = getFirst(values, null);
+        value = ObjectUtils.ifIsNotNull(raw, ObjectUtils::cast);
+
+        return value;
+    }
+
+    /**
      * Calls {@link java.util.function.BiConsumer} for each array member
      * 
      * @param array

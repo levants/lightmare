@@ -29,6 +29,7 @@ import org.lightmare.criteria.annotations.DBTable;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.layers.QueryLayer;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -41,12 +42,15 @@ import com.mongodb.client.MongoDatabase;
  * @author Levan Tsinadze
  *
  */
-public class MongoProvider implements LayerProvider {
+public class MongoProvider<T> implements LayerProvider {
 
     private final MongoDatabase db;
 
-    public MongoProvider(final MongoDatabase db) {
+    private final Class<T> entityType;
+
+    public MongoProvider(final MongoDatabase db, final Class<T> entityType) {
         this.db = db;
+        this.entityType = entityType;
     }
 
     public MongoDatabase getMongoDataBase() {
@@ -54,21 +58,21 @@ public class MongoProvider implements LayerProvider {
     }
 
     @Override
-    public <T> QueryLayer<T> query(Object sql, Class<T> type) {
+    public <Q> QueryLayer<Q> query(Class<Q> type, Object... params) {
 
-        QueryLayer<T> query;
+        QueryLayer<Q> query;
 
         String collectionName = getTableName(type);
         MongoCollection<Document> collection = db.getCollection(collectionName);
-        Bson filter = ObjectUtils.cast(sql);
+        Bson filter = CollectionUtils.getFirstType(params);
         query = new MongoQueryLayer<>(collection, filter, type);
 
         return query;
     }
 
     @Override
-    public QueryLayer<?> query(Object sql) {
-        return null;
+    public QueryLayer<?> query(Object... params) {
+        return query(entityType, params);
     }
 
     @Override

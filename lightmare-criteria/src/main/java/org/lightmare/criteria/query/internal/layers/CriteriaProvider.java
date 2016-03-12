@@ -30,6 +30,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.layers.QueryLayer;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -56,11 +57,11 @@ public class CriteriaProvider implements LayerProvider {
     }
 
     @Override
-    public <T> QueryLayer<T> query(Object sql, Class<T> type) {
+    public <T> QueryLayer<T> query(Class<T> type, Object... params) {
 
         QueryLayer<T> layer;
 
-        CriteriaQuery<T> query = ObjectUtils.cast(sql);
+        CriteriaQuery<T> query = CollectionUtils.getFirstType(params);
         ObjectUtils.nonNull(type, query::from);
         layer = new CriteriaQueryLayer<>(em, query);
 
@@ -68,8 +69,8 @@ public class CriteriaProvider implements LayerProvider {
     }
 
     @Override
-    public QueryLayer<?> query(Object sql) {
-        return query(sql, null);
+    public QueryLayer<?> query(Object... params) {
+        return query(params, null);
     }
 
     @Override

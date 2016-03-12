@@ -24,6 +24,8 @@ package org.lightmare.criteria.query.layers;
 
 import java.util.List;
 
+import org.lightmare.criteria.utils.CollectionUtils;
+
 /**
  * Database abstract layer
  * 
@@ -47,6 +49,31 @@ public interface QueryLayer<T> {
      * @return T single result
      */
     T get();
+
+    /**
+     * Gets first or default value from query results
+     * 
+     * @param defaultValue
+     * @return T first or default value
+     */
+    default T firstOrDefault(T defaultValue) {
+
+        T result;
+
+        List<T> results = toList();
+        result = CollectionUtils.getFirst(results, defaultValue);
+
+        return result;
+    }
+
+    /**
+     * Gets first value or <code>null</code> if no data found from query results
+     * 
+     * @return T first result or <code>null</code>
+     */
+    default T getFirst() {
+        return firstOrDefault(null);
+    }
 
     /**
      * Executes UPDATE / DELETE on DB table throw layer

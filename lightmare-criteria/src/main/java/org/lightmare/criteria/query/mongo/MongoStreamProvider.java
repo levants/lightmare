@@ -44,7 +44,7 @@ public class MongoStreamProvider {
      *         delete statement
      */
     public static <T> MongoStream<T> delete(final MongoDatabase db, Class<T> entityType) {
-        return QueryProvider.delete(new MongoProvider(db), entityType, MongoEntityStream<T>::new);
+        return QueryProvider.delete(new MongoProvider<>(db, entityType), entityType, MongoEntityStream<T>::new);
     }
 
     /**
@@ -56,7 +56,7 @@ public class MongoStreamProvider {
      *         update statement
      */
     public static <T> MongoStream<T> update(final MongoDatabase db, Class<T> entityType) {
-        return QueryProvider.update(new MongoProvider(db), entityType, MongoEntityStream<T>::new);
+        return QueryProvider.update(new MongoProvider<>(db, entityType), entityType, MongoEntityStream<T>::new);
     }
 
     /**
@@ -68,6 +68,6 @@ public class MongoStreamProvider {
      *         select statement
      */
     public static <T> MongoStream<T> select(final MongoDatabase db, Class<T> entityType) {
-        return QueryProvider.select(new MongoProvider(db), entityType, MongoEntityStream<T>::new);
+        return QueryProvider.select(new MongoProvider<>(db, entityType), entityType, MongoEntityStream<T>::new);
     }
 }

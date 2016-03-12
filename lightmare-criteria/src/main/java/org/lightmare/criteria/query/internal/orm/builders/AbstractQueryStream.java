@@ -69,8 +69,8 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
      * Creates {@link javax.persistence.TypedQuery} from generated SQL for
      * SELECT statements
      * 
-     * @return {@link org.lightmare.criteria.query.layers.QueryLayer}
-     *         for entity type
+     * @return {@link org.lightmare.criteria.query.layers.QueryLayer} for entity
+     *         type
      */
     protected QueryLayer<T> initTypedQuery() {
 
@@ -78,7 +78,7 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
 
         String sqlText = sql();
 
-        QueryLayer<T> raw = provider.query(sqlText, entityType);
+        QueryLayer<T> raw = provider.query(entityType, sqlText);
         query = ObjectUtils.cast(raw);
         setParameters(query);
 
@@ -96,7 +96,7 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
         JpaJdbcQueryLayer<Long> query;
 
         String sqlText = countSql();
-        QueryLayer<Long> raw = provider.query(sqlText, Long.class);
+        QueryLayer<Long> raw = provider.query(Long.class, sqlText);
         query = ObjectUtils.cast(raw);
         setParameters(query);
 
@@ -107,8 +107,8 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
      * Creates {@link javax.persistence.Query} from generated SQL for UPDATE or
      * DELETE statements
      * 
-     * @return {@link org.lightmare.criteria.query.layers.QueryLayer}
-     *         for bulk modification
+     * @return {@link org.lightmare.criteria.query.layers.QueryLayer} for bulk
+     *         modification
      */
     protected QueryLayer<?> initBulkQuery() {
 
