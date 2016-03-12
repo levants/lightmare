@@ -27,14 +27,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
+import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.query.layers.QueryLayer;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Implementation of
- * {@link org.lightmare.criteria.query.internal.layers.LayerProvider} for
- * criteria API
+ * Implementation of {@link org.lightmare.criteria.query.layers.LayerProvider}
+ * for criteria API
  * 
  * @author Levan Tsinadze
  *

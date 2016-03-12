@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.functions.initializers.QueryInitializer;
-import org.lightmare.criteria.query.internal.layers.LayerProvider;
+import org.lightmare.criteria.query.layers.LayerProvider;
 
 /**
  * Provider or factory class to initialize

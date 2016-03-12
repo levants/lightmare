@@ -23,8 +23,8 @@
 package org.lightmare.criteria.query.providers;
 
 import org.lightmare.criteria.query.internal.EntityQueryStream;
-import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
+import org.lightmare.criteria.query.layers.LayerProvider;
 
 /**
  * Main class for lambda expression analyze and JPA query build and run

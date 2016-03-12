@@ -30,10 +30,10 @@ import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.layers.JpaJdbcQueryLayer;
-import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
+import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.tuples.CounterTuple;
 import org.lightmare.criteria.tuples.CounterTuple.NameCountTuple;
 import org.lightmare.criteria.tuples.ParameterTuple;

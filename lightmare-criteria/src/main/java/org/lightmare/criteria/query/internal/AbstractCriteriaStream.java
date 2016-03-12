@@ -27,20 +27,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.BiFunction;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.lightmare.criteria.query.internal.layers.CriteriaExpressions.Binaries;
-import org.lightmare.criteria.query.internal.layers.CriteriaExpressions.BinaryExpression;
 import org.lightmare.criteria.query.internal.layers.CriteriaProvider;
-import org.lightmare.criteria.query.internal.layers.LayerProvider;
-import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -116,33 +110,5 @@ public class AbstractCriteriaStream<T> implements CriteriaQueryResolver<T> {
         if (Objects.equals(current, ors)) {
             current = ands;
         }
-    }
-
-    /**
-     * Operates on JPA criteria query expression
-     * 
-     * @param tuple
-     * @param function
-     */
-    private void operateExpression(QueryTuple tuple, BiFunction<CriteriaBuilder, Expression<?>, Predicate> function) {
-
-        String column = provider.getColumnName(tuple);
-        Class<?> type = tuple.getEntityType();
-        Root<?> root = getRoot(type);
-        Expression<?> exp = root.get(column);
-        Predicate predicate = function.apply(provider.getBuilder(), exp);
-        ObjectUtils.nonNull(predicate, this::addToCurrent);
-    }
-
-    /**
-     * Operates binary operator
-     * 
-     * @param tuple
-     * @param value
-     * @param binary
-     */
-    protected void operateBinary(QueryTuple tuple, Object value, Binaries binary) {
-        BinaryExpression<Object> function = binary.function;
-        operateExpression(tuple, (c, e) -> function.apply(c, e, value));
     }
 }

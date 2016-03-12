@@ -25,6 +25,8 @@ package org.lightmare.criteria.query.internal.layers;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 
+import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.query.layers.QueryLayer;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -32,7 +34,7 @@ import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation for
- * {@link org.lightmare.criteria.query.internal.layers.LayerProvider} JPA
+ * {@link org.lightmare.criteria.query.layers.LayerProvider} JPA
  * queries
  * 
  * @author Levan Tsinadze

@@ -28,8 +28,8 @@ import java.util.function.BiFunction;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.query.internal.layers.JdbcQueryLayer;
-import org.lightmare.criteria.query.internal.layers.LayerProvider;
-import org.lightmare.criteria.query.internal.layers.QueryLayer;
+import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.query.layers.QueryLayer;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 

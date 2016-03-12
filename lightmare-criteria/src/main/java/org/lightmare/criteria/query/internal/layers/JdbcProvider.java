@@ -29,6 +29,8 @@ import org.lightmare.criteria.annotations.DBColumn;
 import org.lightmare.criteria.annotations.DBTable;
 import org.lightmare.criteria.config.Configuration.ColumnResolver;
 import org.lightmare.criteria.config.DefaultConfiguration.DefaultResolver;
+import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.query.layers.QueryLayer;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -36,7 +38,7 @@ import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation for
- * {@link org.lightmare.criteria.query.internal.layers.LayerProvider} JDBC
+ * {@link org.lightmare.criteria.query.layers.LayerProvider} JDBC
  * queries
  * 
  * @author Levan Tsinadze

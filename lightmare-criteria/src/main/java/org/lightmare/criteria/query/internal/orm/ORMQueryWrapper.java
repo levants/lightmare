@@ -28,7 +28,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
-import org.lightmare.criteria.query.internal.layers.LayerProvider;
+import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**

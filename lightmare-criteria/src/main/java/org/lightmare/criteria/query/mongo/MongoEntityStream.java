@@ -32,7 +32,7 @@ import java.util.function.Function;
 import org.bson.conversions.Bson;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryResolver;
-import org.lightmare.criteria.query.internal.layers.LayerProvider;
+import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.utils.StringUtils;
 
 import com.mongodb.client.model.Filters;

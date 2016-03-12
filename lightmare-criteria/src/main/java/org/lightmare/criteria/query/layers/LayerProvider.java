@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.layers;
+package org.lightmare.criteria.query.layers;
 
 import org.lightmare.criteria.tuples.QueryTuple;
 
@@ -33,12 +33,12 @@ import org.lightmare.criteria.tuples.QueryTuple;
 public interface LayerProvider {
 
     /**
-     * Generates {@link org.lightmare.criteria.query.internal.layers.QueryLayer}
+     * Generates {@link org.lightmare.criteria.query.layers.QueryLayer}
      * for entity type
      * 
      * @param sql
      * @param type
-     * @return {@link org.lightmare.criteria.query.internal.layers.QueryLayer}
+     * @return {@link org.lightmare.criteria.query.layers.QueryLayer}
      *         implementation
      */
     <T> QueryLayer<T> query(Object sql, Class<T> type);
@@ -47,7 +47,7 @@ public interface LayerProvider {
      * Generates raw typed query
      * 
      * @param sql
-     * @return {@link org.lightmare.criteria.query.internal.layers.QueryLayer}
+     * @return {@link org.lightmare.criteria.query.layers.QueryLayer}
      *         implementation
      */
     QueryLayer<?> query(Object sql);

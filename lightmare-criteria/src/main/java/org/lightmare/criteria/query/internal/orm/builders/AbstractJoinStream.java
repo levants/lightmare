@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.internal.orm.builders;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.internal.layers.LayerProvider;
+import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.StringUtils;
 

@@ -30,6 +30,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
+import org.lightmare.criteria.query.layers.QueryLayer;
 import org.lightmare.criteria.tuples.ParameterTuple;
 
 /**

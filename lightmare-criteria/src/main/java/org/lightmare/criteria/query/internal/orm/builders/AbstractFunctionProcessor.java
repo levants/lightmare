@@ -26,9 +26,9 @@ import java.io.Serializable;
 import java.util.function.Consumer;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.internal.layers.LayerProvider;
 import org.lightmare.criteria.query.internal.orm.ORMFunction;
 import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
+import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
