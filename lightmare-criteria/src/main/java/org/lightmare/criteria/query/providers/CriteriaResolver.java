@@ -1,7 +1,9 @@
 package org.lightmare.criteria.query.providers;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
@@ -44,6 +46,11 @@ public interface CriteriaResolver<T> extends QueryResolver<T> {
 
     void addCurrent(Predicate predicate);
 
+    default <F, V> void applyValue(Serializable field, Function<Expression<F>, Predicate> function) {
+        Predicate condition = resolveAndApply(field, t -> function.apply(get(t)));
+        addCurrent(condition);
+    }
+
     default <F, V> void applyValue(Serializable field, V value, BiFunction<Expression<F>, V, Predicate> function) {
         Predicate condition = resolveAndApply(field, value, (t, v) -> function.apply(get(t), v));
         addCurrent(condition);
@@ -83,6 +90,34 @@ public interface CriteriaResolver<T> extends QueryResolver<T> {
 
     default <F extends Comparable<? super F>> void applyComparableField(Serializable field1, Serializable field2,
             BiFunction<Expression<? extends F>, Expression<? extends F>, Predicate> function) {
+
+        QueryTuple tuple = resolve(field2);
+        Predicate condition = resolveAndApply(field1, field2, (t, v) -> function.apply(get(t), get(tuple)));
+        addCurrent(condition);
+    }
+
+    default void applyTextValue(EntityField<T, String> field, String value,
+            BiFunction<Expression<String>, String, Predicate> function) {
+        Predicate condition = resolveAndApply(field, value, (t, v) -> function.apply(get(t), v));
+        addCurrent(condition);
+    }
+
+    default void applyTextField(EntityField<T, String> field1, EntityField<T, String> field2,
+            BiFunction<Expression<String>, Expression<String>, Predicate> function) {
+
+        QueryTuple tuple = resolve(field2);
+        Predicate condition = resolveAndApply(field1, field2, (t, v) -> function.apply(get(t), get(tuple)));
+        addCurrent(condition);
+    }
+
+    default <F> void applyCollectionValue(EntityField<T, F> field, Collection<F> values,
+            BiFunction<Expression<F>, Collection<F>, Predicate> function) {
+        Predicate condition = resolveAndApply(field, values, (t, v) -> function.apply(get(t), v));
+        addCurrent(condition);
+    }
+
+    default <F> void applyCollectionField(EntityField<T, F> field1, EntityField<T, String> field2,
+            BiFunction<Expression<String>, Expression<String>, Predicate> function) {
 
         QueryTuple tuple = resolve(field2);
         Predicate condition = resolveAndApply(field1, field2, (t, v) -> function.apply(get(t), get(tuple)));

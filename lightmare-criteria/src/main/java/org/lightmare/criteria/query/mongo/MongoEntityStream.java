@@ -22,9 +22,12 @@
  */
 package org.lightmare.criteria.query.mongo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import org.bson.conversions.Bson;
 import org.lightmare.criteria.functions.EntityField;
@@ -84,62 +87,71 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
         return StringUtils.EMPTY;
     }
 
-    @Override
-    public <F> MongoStream<T> equal(EntityField<T, F> field, Object value) {
+    /**
+     * Applies binary expressions
+     * 
+     * @param field
+     * @param value
+     * @param function
+     * @return {@link org.lightmare.criteria.query.mongo.MongoStream} current
+     *         instance
+     */
+    private <V> MongoStream<T> apply(Serializable field, V value, BiFunction<String, V, Bson> function) {
 
-        Bson condition = resolveAndApply(field, value, (t, v) -> Filters.eq(t.getFieldName(), v));
+        Bson condition = resolveAndApply(field, value, (t, v) -> function.apply(t.getFieldName(), v));
+        addCondition(condition);
+
+        return this;
+    }
+
+    /**
+     * Applies unary expressions
+     * 
+     * @param field
+     * @param function
+     * @return {@link org.lightmare.criteria.query.mongo.MongoStream} current
+     *         instance
+     */
+    private <V> MongoStream<T> apply(Serializable field, Function<String, Bson> function) {
+
+        Bson condition = resolveAndApply(field, t -> function.apply(t.getFieldName()));
         addCondition(condition);
 
         return this;
     }
 
     @Override
+    public <F> MongoStream<T> equal(EntityField<T, F> field, Object value) {
+        return apply(field, value, Filters::eq);
+    }
+
+    @Override
     public <F> MongoStream<T> notEqual(EntityField<T, F> field, Object value) {
-
-        Bson condition = resolveAndApply(field, value, (t, v) -> Filters.ne(t.getFieldName(), v));
-        addCondition(condition);
-
-        return this;
+        return apply(field, value, Filters::ne);
     }
 
     @Override
     public <F extends Comparable<? super F>> MongoStream<T> gt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-
-        Bson condition = resolveAndApply(field, value, (t, v) -> Filters.gt(t.getFieldName(), v));
-        addCondition(condition);
-
-        return this;
+        return apply(field, value, Filters::gt);
     }
 
     @Override
     public <F extends Comparable<? super F>> MongoStream<T> lt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-
-        Bson condition = resolveAndApply(field, value, (t, v) -> Filters.lt(t.getFieldName(), v));
-        addCondition(condition);
-
-        return this;
+        return apply(field, value, Filters::lt);
     }
 
     @Override
     public <F extends Comparable<? super F>> MongoStream<T> ge(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-
-        Bson condition = resolveAndApply(field, value, (t, v) -> Filters.gte(t.getFieldName(), v));
-        addCondition(condition);
-
-        return this;
+        return apply(field, value, Filters::gte);
     }
 
     @Override
     public <F extends Comparable<? super F>> MongoStream<T> le(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-
-        Bson condition = resolveAndApply(field, value, (t, v) -> Filters.lte(t.getFieldName(), v));
-        addCondition(condition);
-
-        return this;
+        return apply(field, value, Filters::lte);
     }
 
     @Override
@@ -154,38 +166,22 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
 
     @Override
     public <F> MongoStream<T> in(EntityField<T, F> field, Collection<F> values) {
-
-        Bson condition = resolveAndApply(field, values, (t, v) -> Filters.in(t.getFieldName(), v));
-        addCondition(condition);
-
-        return this;
+        return apply(field, values, Filters::in);
     }
 
     @Override
     public <F> MongoStream<T> notIn(EntityField<T, F> field, Collection<F> values) {
-
-        Bson condition = resolveAndApply(field, values, (t, v) -> Filters.not(Filters.in(t.getFieldName(), v)));
-        addCondition(condition);
-
-        return this;
+        return apply(field, values, Filters::nin);
     }
 
     @Override
     public <F> MongoStream<T> isNull(EntityField<T, F> field) {
-
-        Bson condition = resolveAndApply(field, t -> Filters.exists(t.getFieldName()));
-        addCondition(condition);
-
-        return this;
+        return apply(field, Boolean.FALSE, Filters::exists);
     }
 
     @Override
     public <F> MongoStream<T> isNotNull(EntityField<T, F> field) {
-
-        Bson condition = resolveAndApply(field, t -> Filters.not(Filters.exists(t.getFieldName())));
-        addCondition(condition);
-
-        return this;
+        return apply(field, Filters::exists);
     }
 
     @Override

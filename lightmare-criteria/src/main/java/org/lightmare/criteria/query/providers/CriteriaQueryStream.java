@@ -168,11 +168,23 @@ public interface CriteriaQueryStream<T> extends LambdaStream<T, CriteriaQueryStr
 
     @Override
     default CriteriaQueryStream<T> like(EntityField<T, String> field, String value) {
+        applyTextValue(field, value, getBuilder()::like);
+        return this;
+    }
+
+    default CriteriaQueryStream<T> like(EntityField<T, String> field1, EntityField<T, String> field2) {
+        applyTextField(field1, field2, getBuilder()::like);
         return this;
     }
 
     @Override
     default CriteriaQueryStream<T> notLike(EntityField<T, String> field, String value) {
+        applyTextValue(field, value, getBuilder()::notLike);
+        return this;
+    }
+
+    default CriteriaQueryStream<T> notLike(EntityField<T, String> field1, EntityField<T, String> field2) {
+        applyTextField(field1, field2, getBuilder()::notLike);
         return this;
     }
 
@@ -192,11 +204,13 @@ public interface CriteriaQueryStream<T> extends LambdaStream<T, CriteriaQueryStr
 
     @Override
     default <F> CriteriaQueryStream<T> isNull(EntityField<T, F> field) {
+        applyValue(field, getBuilder()::isNull);
         return this;
     }
 
     @Override
     default <F> CriteriaQueryStream<T> isNotNull(EntityField<T, F> field) {
+        applyValue(field, getBuilder()::isNotNull);
         return this;
     }
 }
