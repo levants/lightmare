@@ -22,11 +22,8 @@
  */
 package org.lightmare.criteria.query;
 
-import java.util.Collection;
-
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.internal.orm.links.Operators;
 
 /**
  * Query stream for abstract data base layers
@@ -58,113 +55,6 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     <F> S operate(EntityField<T, ? extends F> field, Object value, String operator);
-
-    @Override
-    default <F> S equal(EntityField<T, F> field, Object value) {
-        return operate(field, value, Operators.EQ);
-    }
-
-    @Override
-    default <F> S notEqual(EntityField<T, F> field, Object value) {
-        return operate(field, value, Operators.NOT_EQ);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> S gt(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return operate(field, value, Operators.GREATER);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> S greaterThan(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return gt(field, value);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> S lt(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return operate(field, value, Operators.LESS);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> S lessThan(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return lt(field, value);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> S ge(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return operate(field, value, Operators.GREATER_OR_EQ);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> S greaterThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return ge(field, value);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> S le(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return operate(field, value, Operators.LESS_OR_EQ);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> S lessThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return le(field, value);
-    }
-
-    // =============================LIKE=clause==============================//
-
-    @Override
-    default S like(EntityField<T, String> field, String value) {
-        return operate(field, value, Operators.LIKE);
-    }
-
-    @Override
-    default S notLike(EntityField<T, String> field, String value) {
-        return operate(field, value, Operators.NOT_LIKE);
-    }
-
-    // ======================================================================//
-
-    /**
-     * Generates query part for instant field with {@link java.util.Collection}
-     * parameter and operator
-     * 
-     * @param field
-     * @param values
-     * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    <F> S operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
-
-    @Override
-    default <F> S in(EntityField<T, F> field, Collection<F> values) {
-        return operateCollection(field, values, Operators.IN);
-    }
-
-    @Override
-    default <F> S notIn(EntityField<T, F> field, Collection<F> values) {
-        return operateCollection(field, values, Operators.NOT_IN);
-    }
-
-    // =============================NULL=check===============================//
-
-    @Override
-    default <F> S isNull(EntityField<T, F> field) {
-        return operate(field, Operators.IS_NULL);
-    }
-
-    @Override
-    default <F> S isNotNull(EntityField<T, F> field) {
-        return operate(field, Operators.NOT_NULL);
-    }
-
-    // ======================================================================//
 
     /**
      * Creates query part in brackets

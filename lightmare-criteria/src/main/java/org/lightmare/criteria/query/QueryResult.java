@@ -5,7 +5,7 @@ import java.util.List;
 import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
- * Query result retriving methods
+ * Query result retrieving methods
  * 
  * @author Levan Tsinadze
  *

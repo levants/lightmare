@@ -47,11 +47,11 @@ interface FuntionToColumnExpression<T> {
      */
     <F> JpaQueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field);
 
-    default <F> JpaQueryStream<T> equal(FunctionConsumer<T> function, EntityField<T, F> field) {
+    default <F> JpaQueryStream<T> eqColumn(FunctionConsumer<T> function, EntityField<T, F> field) {
         return operateColumn(function, Operators.EQ, field);
     }
 
-    default <F> JpaQueryStream<T> notEqual(FunctionConsumer<T> function, EntityField<T, F> field) {
+    default <F> JpaQueryStream<T> notEqColumn(FunctionConsumer<T> function, EntityField<T, F> field) {
         return operateColumn(function, Operators.NOT_EQ, field);
     }
 

@@ -21,8 +21,29 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
-                    .like(Person::getLastName, "lname").gtParam(c -> c.abs(Phone::getOperatorId), 100);
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+                    .gt(Person::getPersonId, 100L).like(Person::getLastName, "lname")
+                    .gtParam(c -> c.abs(Phone::getOperatorId), 100);
+            String sql = stream.sql();
+            System.out.println("===========JPA-QL==========");
+            System.out.println(sql);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(500.5)
+    public void functionToFunctionQueryEqTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+                    .gt(Person::getPersonId, 100L).like(Person::getLastName, "lname")
+                    .eqParam(c -> c.abs(Phone::getOperatorId), 100);
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
@@ -40,8 +61,9 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
-                    .like(Person::getLastName, "lname").gtFunction(c -> c.abs(Person::getFunctionalId),
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+                    .gt(Person::getPersonId, 100L).like(Person::getLastName, "lname")
+                    .gtFunction(c -> c.abs(Person::getFunctionalId),
                             s -> s.sum(Person::getPersonId, Person::getComparatorId));
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
@@ -60,8 +82,8 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
-                    .like(Person::getLastName, "lname")
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+                    .gt(Person::getPersonId, 100L).like(Person::getLastName, "lname")
                     .gtFunction(c -> c.abs(Person::getFunctionalId),
                             s -> s.sum(Person::getPersonId, Person::getComparatorId))
                     .gtParam(c -> c.currentDate(), new Date());
@@ -82,8 +104,8 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
-                    .like(Person::getLastName, "lname")
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+                    .gt(Person::getPersonId, 100L).like(Person::getLastName, "lname")
                     .gtFunction(c -> c.abs(Person::getFunctionalId),
                             s -> s.sum(Person::getPersonId, Person::getComparatorId))
                     .gtColumn(c -> c.currentDate(), Person::getBirthDate)
@@ -105,8 +127,8 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
-                    .like(Person::getLastName, "lname%")
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+                    .gt(Person::getPersonId, 100L).like(Person::getLastName, "lname%")
                     .gtFunction(c -> c.trim(Person::getPersonalNo),
                             s -> s.concat(Person::getLastName, Person::getFirstName))
                     .gtColumn(c -> c.currentDate(), Person::getBirthDate)
@@ -128,8 +150,8 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
-                    .like(Person::getLastName, "lname%")
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+                    .gt(Person::getPersonId, 100L).like(Person::getLastName, "lname%")
                     .gtFunction(c -> c.trim(Person::getPersonalNo), s -> s.trim(Person::getEscape, Person::getLastName))
                     .gtColumn(c -> c.currentDate(), Person::getBirthDate)
                     .leColumn(c -> c.abs(Person::getPersonId), Person::getPersonId);
@@ -155,8 +177,8 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
-                    .like(Person::getLastName, "lname%")
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+                    .gt(Person::getPersonId, 100L).like(Person::getLastName, "lname%")
                     .gtFunction(c -> c.trim(Person::getPersonalNo),
                             s -> s.trim(Person::getEscape, Trimspec.LEADING, Person::getLastName))
                     .gtColumn(c -> c.currentDate(), Person::getBirthDate)
@@ -183,8 +205,8 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().gt(Person::getPersonId, 100L)
-                    .like(Person::getLastName, "lname%")
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+                    .gt(Person::getPersonId, 100L).like(Person::getLastName, "lname%")
                     .gtFunction(c -> c.trim(Person::getPersonalNo),
                             s -> s.trim('l', Trimspec.LEADING, Person::getLastName))
                     .gtColumn(c -> c.currentDate(), Person::getBirthDate)

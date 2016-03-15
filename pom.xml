@@ -205,6 +205,7 @@
 		</repository>
 		<snapshotRepository>
 			<id>maven-snapshot</id>
+			<uniqueVersion>false</uniqueVersion>
 			<name>Central Maven Repository for Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>

@@ -42,16 +42,16 @@ interface FuntionToObjectExpression<T> {
      * @param function
      * @param operator
      * @param value
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for current
-     *         entity type
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         current entity type
      */
     JpaQueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value);
 
-    default <F> JpaQueryStream<T> equal(FunctionConsumer<T> function, Object value) {
+    default <F> JpaQueryStream<T> eqParam(FunctionConsumer<T> function, Object value) {
         return operateFunction(function, Operators.EQ, value);
     }
 
-    default <F> JpaQueryStream<T> notEqual(FunctionConsumer<T> function, Object value) {
+    default <F> JpaQueryStream<T> notEqParam(FunctionConsumer<T> function, Object value) {
         return operateFunction(function, Operators.NOT_EQ, value);
     }
 

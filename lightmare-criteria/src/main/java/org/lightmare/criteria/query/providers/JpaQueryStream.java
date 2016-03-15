@@ -22,6 +22,8 @@
  */
 package org.lightmare.criteria.query.providers;
 
+import java.util.Collection;
+
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
@@ -48,6 +50,113 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
      *         current instance
      */
     <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer);
+
+    @Override
+    default <F> JpaQueryStream<T> equal(EntityField<T, F> field, Object value) {
+        return operate(field, value, Operators.EQ);
+    }
+
+    @Override
+    default <F> JpaQueryStream<T> notEqual(EntityField<T, F> field, Object value) {
+        return operate(field, value, Operators.NOT_EQ);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> JpaQueryStream<T> gt(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return operate(field, value, Operators.GREATER);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThan(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return gt(field, value);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> JpaQueryStream<T> lt(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return operate(field, value, Operators.LESS);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThan(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return lt(field, value);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> JpaQueryStream<T> ge(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return operate(field, value, Operators.GREATER_OR_EQ);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThanOrEqualTo(
+            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
+        return ge(field, value);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> JpaQueryStream<T> le(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return operate(field, value, Operators.LESS_OR_EQ);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThanOrEqualTo(
+            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
+        return le(field, value);
+    }
+
+    // =============================LIKE=clause==============================//
+
+    @Override
+    default JpaQueryStream<T> like(EntityField<T, String> field, String value) {
+        return operate(field, value, Operators.LIKE);
+    }
+
+    @Override
+    default JpaQueryStream<T> notLike(EntityField<T, String> field, String value) {
+        return operate(field, value, Operators.NOT_LIKE);
+    }
+
+    // ======================================================================//
+
+    /**
+     * Generates query part for instant field with {@link java.util.Collection}
+     * parameter and operator
+     * 
+     * @param field
+     * @param values
+     * @param operator
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    <F> JpaQueryStream<T> operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
+
+    @Override
+    default <F> JpaQueryStream<T> in(EntityField<T, F> field, Collection<F> values) {
+        return operateCollection(field, values, Operators.IN);
+    }
+
+    @Override
+    default <F> JpaQueryStream<T> notIn(EntityField<T, F> field, Collection<F> values) {
+        return operateCollection(field, values, Operators.NOT_IN);
+    }
+
+    // =============================NULL=check===============================//
+
+    @Override
+    default <F> JpaQueryStream<T> isNull(EntityField<T, F> field) {
+        return operate(field, Operators.IS_NULL);
+    }
+
+    @Override
+    default <F> JpaQueryStream<T> isNotNull(EntityField<T, F> field) {
+        return operate(field, Operators.NOT_NULL);
+    }
+
+    // ======================================================================//
 
     default JpaQueryStream<T> appendOperator(Object operator) {
         return appendBody(operator);

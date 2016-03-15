@@ -47,8 +47,12 @@ interface FunctionToFunctionExpression<T> {
      */
     JpaQueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
 
-    default <F> JpaQueryStream<T> equal(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default <F> JpaQueryStream<T> eqFn(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.EQ);
+    }
+
+    default <F> JpaQueryStream<T> notEqFn(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+        return operateFunctions(function1, function2, Operators.NOT_EQ);
     }
 
     default JpaQueryStream<T> gtFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
