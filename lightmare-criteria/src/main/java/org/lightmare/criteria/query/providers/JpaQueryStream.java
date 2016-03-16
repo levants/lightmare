@@ -29,7 +29,6 @@ import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.QueryExpression;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
-import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -192,13 +191,5 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
     @Override
     default JpaQueryStream<T> openBracket() {
         return QueryExpression.super.openBracket();
-    }
-
-    // ======================================================================//
-
-    @Override
-    default JpaQueryStream<T> where(QueryConsumer<T, JpaQueryStream<T>> consumer) {
-        ObjectUtils.accept(consumer, this);
-        return this;
     }
 }
