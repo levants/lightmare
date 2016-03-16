@@ -25,7 +25,9 @@ package org.lightmare.criteria.query.providers;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.LambdaStream;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Implementation of {@link org.lightmare.criteria.query.LambdaStream} for JPA
@@ -217,6 +219,14 @@ public interface CriteriaQueryStream<T> extends LambdaStream<T, CriteriaQueryStr
     @Override
     default <F> CriteriaQueryStream<T> isNotNull(EntityField<T, F> field) {
         applyValue(field, getBuilder()::isNotNull);
+        return this;
+    }
+
+    // ======================================================================//
+
+    @Override
+    default CriteriaQueryStream<T> where(QueryConsumer<T, CriteriaQueryStream<T>> consumer) {
+        ObjectUtils.accept(consumer, this);
         return this;
     }
 }

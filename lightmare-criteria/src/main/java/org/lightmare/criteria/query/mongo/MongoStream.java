@@ -23,7 +23,9 @@
 package org.lightmare.criteria.query.mongo;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.LambdaStream;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Implementation of {@link org.lightmare.criteria.query.LambdaStream} for
@@ -58,5 +60,13 @@ public interface MongoStream<T> extends LambdaStream<T, MongoStream<T>> {
     default <F extends Comparable<? super F>> MongoStream<T> lessThanOrEqualTo(
             EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
         return le(field, value);
+    }
+
+    // ======================================================================//
+
+    @Override
+    default MongoStream<T> where(QueryConsumer<T, MongoStream<T>> consumer) {
+        ObjectUtils.accept(consumer, this);
+        return this;
     }
 }

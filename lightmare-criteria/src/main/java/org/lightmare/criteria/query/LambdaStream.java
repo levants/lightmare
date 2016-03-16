@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.QueryConsumer;
 
 /**
  * Query stream for abstract data base layers
@@ -118,4 +119,14 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     S or();
+
+    // =============================Where=clause=with=stream=================//
+
+    /**
+     * Where clause with stream for query in lambda expression maner
+     * 
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
+    S where(QueryConsumer<T, S> consumer);
 }
