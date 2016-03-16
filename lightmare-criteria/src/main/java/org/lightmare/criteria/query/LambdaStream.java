@@ -133,6 +133,34 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
     // =============================WHERE=clause=with=stream=================//
 
     /**
+     * AND clause in lambda expression manner
+     * 
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
+    default S and(QueryConsumer<T, S> consumer) {
+
+        S stream = and();
+        ObjectUtils.accept(consumer, stream);
+
+        return stream;
+    }
+
+    /**
+     * OR clause in lambda expression manner
+     * 
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
+    default S or(QueryConsumer<T, S> consumer) {
+
+        S stream = or();
+        ObjectUtils.accept(consumer, stream);
+
+        return stream;
+    }
+
+    /**
      * Where clause with stream for query in lambda expression manner
      * 
      * @param consumer

@@ -97,6 +97,58 @@ public class QueryTest extends TestEnviromentConfig {
     }
 
     @Test
+    @RunOrder(2.1)
+    public void toListByEntityWhereTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            Date date = getDateValue();
+            // ============= Query construction ============== //
+            List<Person> persons = JpaQueryProvider.select(em, Person.class)
+                    .where(s -> s.equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%")
+                            .and().startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date).and()
+                            .in(Person::getPersonId, Arrays.asList(IDENTIFIERS)))
+                    .toList();
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println();
+            persons.forEach(System.out::println);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(2.1)
+    public void toListByEntityWhereAndOrTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            Date date = getDateValue();
+            // ============= Query construction ============== //
+            List<Person> persons = JpaQueryProvider.select(em, Person.class)
+                    .where(s -> s.equal(Person::getPersonalNo, PERSONAL_NO1)
+                            .and(q -> q.like(Person::getLastName, "lname%"))
+                            .and(q -> q.startsWith(Person::getFirstName, "fname"))
+                            .or(q -> q.ge(Person::getBirthDate, date))
+                            .and(q -> q.in(Person::getPersonId, Arrays.asList(IDENTIFIERS))))
+                    .toList();
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println();
+            persons.forEach(System.out::println);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
     @RunOrder(2.3)
     public void toListBySelectTest() {
 
