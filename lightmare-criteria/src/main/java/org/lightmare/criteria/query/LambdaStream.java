@@ -42,6 +42,14 @@ import org.lightmare.criteria.utils.ObjectUtils;
 public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends LayerStream<T>, QueryResult<T> {
 
     /**
+     * Gets current {@link org.lightmare.criteria.query.LambdaStream}
+     * implementation
+     * 
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
+    S stream();
+
+    /**
      * Equality filter
      * 
      * @param field
@@ -127,10 +135,10 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default S where() {
-        return and();
+        return stream();
     }
 
-    // =============================WHERE=clause=with=stream=================//
+    // ======================WHERE=AND=OR=clauses=with=stream================//
 
     /**
      * AND clause in lambda expression manner

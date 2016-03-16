@@ -37,6 +37,11 @@ import org.lightmare.criteria.query.LambdaStream;
 public interface MongoStream<T> extends LambdaStream<T, MongoStream<T>> {
 
     @Override
+    default MongoStream<T> stream() {
+        return this;
+    }
+
+    @Override
     default <F extends Comparable<? super F>> MongoStream<T> greaterThan(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return gt(field, value);
