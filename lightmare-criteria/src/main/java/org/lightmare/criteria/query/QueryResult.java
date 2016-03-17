@@ -19,7 +19,6 @@ interface QueryResult<T> {
      * retrieves result list
      * 
      * @return {@link java.util.List} of query results
-     * @see javax.persistence.Query#getResultList()
      */
     List<T> toList();
 
@@ -28,7 +27,6 @@ interface QueryResult<T> {
      * and retrieves single result
      * 
      * @return T single query result
-     * @see javax.persistence.Query#getSingleResult()
      */
     T get();
 
@@ -38,7 +36,6 @@ interface QueryResult<T> {
      * modified rows
      * 
      * @return <code>int<code/> number of modified rows
-     * @see javax.persistence.Query#executeUpdate()
      */
     int execute();
 

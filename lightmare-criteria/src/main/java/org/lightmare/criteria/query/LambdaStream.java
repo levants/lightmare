@@ -192,8 +192,20 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
 
     // =============================NULL=check===============================//
 
+    /**
+     * IS NULL clause
+     * 
+     * @param field
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F> S isNull(EntityField<T, F> field);
 
+    /**
+     * IS NOT NULL clause
+     * 
+     * @param field
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F> S isNotNull(EntityField<T, F> field);
 
     // ======================================================================//

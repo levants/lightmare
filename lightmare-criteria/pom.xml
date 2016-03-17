@@ -172,7 +172,14 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- hibernate -->
-
+		<!-- mongo -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>${mongo-driver.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- mongo -->
 		<!-- loggers -->
 		<dependency>
 			<groupId>log4j</groupId>
@@ -221,12 +228,6 @@
 		</dependency>
 		<!-- H2 -->
 		<!-- mongo -->
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>${mongo-driver.version}</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
