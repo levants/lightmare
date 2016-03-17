@@ -225,6 +225,14 @@
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
 			<version>${mongo-driver.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>${mongo-driver.version}</version>
+			<classifier>sources</classifier>
+			<scope>test</scope>
 		</dependency>
 		<!-- mongo -->
 		<!-- test dependencies -->

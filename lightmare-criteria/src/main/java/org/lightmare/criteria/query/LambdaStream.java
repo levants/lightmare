@@ -67,36 +67,119 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      */
     <F> S notEqual(EntityField<T, F> field, Object value);
 
+    /**
+     * Greater than clause expression
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F extends Comparable<? super F>> S gt(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
 
+    /**
+     * Greater than clause expression
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F extends Comparable<? super F>> S greaterThan(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value);
 
+    /**
+     * Less than clause expression
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F extends Comparable<? super F>> S lt(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
 
+    /**
+     * Less than clause expression
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F extends Comparable<? super F>> S lessThan(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value);
 
+    /**
+     * Greater than or equals to expression
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F extends Comparable<? super F>> S ge(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
 
+    /**
+     * Greater than or equals to expression
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F extends Comparable<? super F>> S greaterThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value);
 
+    /**
+     * Less than or equals to expression
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F extends Comparable<? super F>> S le(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
 
+    /**
+     * Less than or equals to expression
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F extends Comparable<? super F>> S lessThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value);
 
     // =============================LIKE=clause==============================//
-
+    /**
+     * LIKE clause expression
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     S like(EntityField<T, String> field, String value);
 
+    /**
+     * NOT LIKE clause expression
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     S notLike(EntityField<T, String> field, String value);
 
     // ======================================================================//
 
+    /**
+     * IN clause expression
+     * 
+     * @param field
+     * @param values
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F> S in(EntityField<T, F> field, Collection<F> values);
 
+    /**
+     * NOT IN clause expression
+     * 
+     * @param field
+     * @param values
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     <F> S notIn(EntityField<T, F> field, Collection<F> values);
 
     default <F> S in(EntityField<T, F> field, F[] values) {

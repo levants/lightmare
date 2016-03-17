@@ -52,6 +52,25 @@ public interface QueryResolver<T> extends LayerStream<T> {
     }
 
     /**
+     * Resolves and operates on resolved field by expression
+     * 
+     * @param resolver
+     * @param field
+     * @param expression
+     * @return R from expression function
+     */
+    default <R> R applyFrom(Function<Serializable, QueryTuple> resolver, Serializable field,
+            Function<QueryTuple, R> expression) {
+
+        R result;
+
+        QueryTuple tuple = resolver.apply(field);
+        result = apply(tuple, expression);
+
+        return result;
+    }
+
+    /**
      * Operates on resolved field by expression
      * 
      * @param tuple
@@ -59,6 +78,19 @@ public interface QueryResolver<T> extends LayerStream<T> {
      */
     default void accept(QueryTuple tuple, Consumer<QueryTuple> expression) {
         expression.accept(tuple);
+    }
+
+    /**
+     * Resolves and operates on resolved field by expression
+     * 
+     * @param resolver
+     * @param field
+     * @param expression
+     */
+    default void acceptFrom(Function<Serializable, QueryTuple> resolver, Serializable field,
+            Consumer<QueryTuple> expression) {
+        QueryTuple tuple = resolver.apply(field);
+        accept(tuple, expression);
     }
 
     /**
@@ -75,6 +107,26 @@ public interface QueryResolver<T> extends LayerStream<T> {
     }
 
     /**
+     * Resolves and operates on resolved field by expression with parameter
+     * 
+     * @param resolver
+     * @param field
+     * @param value
+     * @param expression
+     * @return R from expression function
+     */
+    default <V, R> R applyFrom(Function<Serializable, QueryTuple> resolver, Serializable field, V value,
+            BiFunction<QueryTuple, V, R> expression) {
+
+        R result;
+
+        QueryTuple tuple = resolver.apply(field);
+        result = apply(tuple, value, expression);
+
+        return result;
+    }
+
+    /**
      * Operates on resolved field by expression with parameter
      * 
      * @param tuple
@@ -83,6 +135,20 @@ public interface QueryResolver<T> extends LayerStream<T> {
      */
     default <V> void accept(QueryTuple tuple, V value, BiConsumer<QueryTuple, V> expression) {
         expression.accept(tuple, value);
+    }
+
+    /**
+     * Resolves and operates on resolved field by expression with parameter
+     * 
+     * @param resolver
+     * @param field
+     * @param value
+     * @param expression
+     */
+    default <V> void acceptFrom(Function<Serializable, QueryTuple> resolver, Serializable field, V value,
+            BiConsumer<QueryTuple, V> expression) {
+        QueryTuple tuple = resolver.apply(field);
+        accept(tuple, value, expression);
     }
 
     /**
@@ -128,13 +194,7 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * @return R function result
      */
     default <R> R resolveAndApply(Serializable field, Function<QueryTuple, R> expression) {
-
-        R result;
-
-        QueryTuple tuple = compose(field);
-        result = apply(tuple, expression);
-
-        return result;
+        return applyFrom(this::compose, field, expression);
     }
 
     /**
@@ -144,8 +204,7 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * @param expression
      */
     default void resolveAndAccept(Serializable field, Consumer<QueryTuple> expression) {
-        QueryTuple tuple = compose(field);
-        accept(tuple, expression);
+        acceptFrom(this::compose, field, expression);
     }
 
     /**
@@ -158,13 +217,7 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * @return R function result
      */
     default <V, R> R resolveAndApply(Serializable field, V value, BiFunction<QueryTuple, V, R> expression) {
-
-        R result;
-
-        QueryTuple tuple = compose(field);
-        result = apply(tuple, value, expression);
-
-        return result;
+        return applyFrom(this::compose, field, value, expression);
     }
 
     /**
@@ -176,7 +229,6 @@ public interface QueryResolver<T> extends LayerStream<T> {
      * @param expression
      */
     default <V> void resolveAndAccept(Serializable field, V value, BiConsumer<QueryTuple, V> expression) {
-        QueryTuple tuple = compose(field);
-        accept(tuple, value, expression);
+        acceptFrom(this::compose, field, value, expression);
     }
 }
