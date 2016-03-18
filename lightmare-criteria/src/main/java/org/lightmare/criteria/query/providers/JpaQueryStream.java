@@ -29,8 +29,6 @@ import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.QueryExpression;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
-import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
-import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -189,49 +187,5 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
      */
     default JpaQueryStream<T> appendOperator(Object value, Object operator) {
         return appendBody(value).appendBody(StringUtils.SPACE).appendBody(operator);
-    }
-
-    @Override
-    default JpaQueryStream<T> where() {
-        return this;
-    }
-
-    // ======================WHERE=AND=OR=clauses=with=stream================//
-
-    /**
-     * AND clause in lambda expression manner
-     * 
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         implementation
-     */
-    @Override
-    default JpaQueryStream<T> and(QueryConsumer<T, JpaQueryStream<T>> consumer) {
-
-        JpaQueryStream<T> stream = and();
-
-        appendBody(Brackets.OPEN);
-        ObjectUtils.accept(consumer, stream);
-        closeBracket();
-
-        return stream;
-    }
-
-    /**
-     * OR clause in lambda expression manner
-     * 
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         implementation
-     */
-    default JpaQueryStream<T> or(QueryConsumer<T, JpaQueryStream<T>> consumer) {
-
-        JpaQueryStream<T> stream = or();
-
-        appendBody(Brackets.OPEN);
-        ObjectUtils.accept(consumer, stream);
-        closeBracket();
-
-        return stream;
     }
 }

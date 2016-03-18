@@ -24,9 +24,12 @@ package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Query stream for abstract data base layers
+ * Query stream of {@link String} based queries for abstract data base layers
  * 
  * @author Levan Tsinadze
  *
@@ -36,6 +39,34 @@ import org.lightmare.criteria.functions.QueryConsumer;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  */
 public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends LambdaStream<T, S> {
+
+    /**
+     * Appends to generated query body custom clause
+     * 
+     * @param clause
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    S appendBody(Object clause);
+
+    // ======================================================================//
+
+    /**
+     * Opens bracket in query body
+     * 
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default S openBracket() {
+        return appendBody(Operators.OPEN_BRACKET);
+    }
+
+    /**
+     * Closes bracket in query body
+     * 
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default S closeBracket() {
+        return appendBody(Operators.CLOSE_BRACKET);
+    }
 
     /**
      * Generates query part for instant field and operator
@@ -63,4 +94,41 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     S brackets(QueryConsumer<T, S> consumer);
+
+    // ======================WHERE=AND=OR=clauses=with=stream================//
+
+    /**
+     * AND clause in lambda expression manner
+     * 
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    @Override
+    default S and(QueryConsumer<T, S> consumer) {
+
+        S stream = and();
+
+        appendBody(Brackets.OPEN);
+        ObjectUtils.accept(consumer, stream);
+        closeBracket();
+
+        return stream;
+    }
+
+    /**
+     * OR clause in lambda expression manner
+     * 
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default S or(QueryConsumer<T, S> consumer) {
+
+        S stream = or();
+
+        appendBody(Brackets.OPEN);
+        ObjectUtils.accept(consumer, stream);
+        closeBracket();
+
+        return stream;
+    }
 }

@@ -182,10 +182,24 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      */
     <F> S notIn(EntityField<T, F> field, Collection<F> values);
 
+    /**
+     * IN clause expression
+     * 
+     * @param field
+     * @param values
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     default <F> S in(EntityField<T, F> field, F[] values) {
         return this.in(field, Arrays.asList(values));
     }
 
+    /**
+     * NOT IN clause expression
+     * 
+     * @param field
+     * @param values
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     */
     default <F> S notIn(EntityField<T, F> field, F[] values) {
         return this.notIn(field, Arrays.asList(values));
     }

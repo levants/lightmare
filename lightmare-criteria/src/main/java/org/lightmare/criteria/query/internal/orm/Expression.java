@@ -49,14 +49,6 @@ interface Expression<T> {
      */
     LayerProvider getLayerProvider();
 
-    /**
-     * Opens bracket in query body
-     * 
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
-     */
-    JpaQueryStream<T> openBracket();
-
     // ========================= Entity method composers ====================//
 
     /**

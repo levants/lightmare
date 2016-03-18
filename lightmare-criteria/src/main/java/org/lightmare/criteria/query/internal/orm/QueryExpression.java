@@ -23,7 +23,6 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
@@ -60,28 +59,6 @@ public interface QueryExpression<T> extends ORMQueryWrapper<T>, Expression<T>, C
     // ======================================================================//
 
     /**
-     * Opens bracket in query body
-     * 
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
-     */
-    default JpaQueryStream<T> openBracket() {
-        return appendBody(Operators.OPEN_BRACKET);
-    }
-
-    /**
-     * Closes bracket in query body
-     * 
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
-     */
-    default JpaQueryStream<T> closeBracket() {
-        return appendBody(Operators.CLOSE_BRACKET);
-    }
-
-    // ======================================================================//
-
-    /**
      * Appends to generated query prefix custom clause
      * 
      * @param clause
@@ -98,22 +75,6 @@ public interface QueryExpression<T> extends ORMQueryWrapper<T>, Expression<T>, C
      *         current instance
      */
     JpaQueryStream<T> appendFrom(Object clause);
-
-    /**
-     * Appends to generated query body custom clause
-     * 
-     * @param clause
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
-     */
-    JpaQueryStream<T> appendBody(Object clause);
-
-    /**
-     * Gets generated JPA query
-     * 
-     * @return {@link String} JPA query
-     */
-    String sql();
 
     /**
      * Gets generated JPA query for element count
