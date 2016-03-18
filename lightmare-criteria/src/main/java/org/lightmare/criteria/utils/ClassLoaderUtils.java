@@ -124,7 +124,7 @@ public class ClassLoaderUtils {
      * @param loader
      */
     private static void loadClass(String className, ClassLoader loader) {
-        ObjectUtils.acceptWrap(loader, className, ClassLoader::loadClass);
+        ObjectUtils.call(loader, className, ClassLoader::loadClass);
     }
 
     /**

@@ -74,7 +74,7 @@ public class CachedClassReader extends ClassReader {
      */
     private static ClassReader initAndCache(String name) {
 
-        ClassReader classReader = ObjectUtils.applyWrap(name, CachedClassReader::readResource);
+        ClassReader classReader = ObjectUtils.apply(name, CachedClassReader::readResource);
         CLASS_FILES.putIfAbsent(name, classReader);
 
         return classReader;

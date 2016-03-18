@@ -172,7 +172,7 @@ public class DefaultConfiguration {
              * @param rs
              */
             public void set(Object instance, ResultSet rs) {
-                ObjectUtils.acceptWrap(instance, rs, this::getAndSet);
+                ObjectUtils.call(instance, rs, this::getAndSet);
             }
         }
 

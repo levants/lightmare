@@ -58,7 +58,7 @@ public enum LambdaReferences {
      *         {@link java.lang.ref.ReferenceQueue}
      */
     private Reference<?> remove() {
-        return ObjectUtils.getWrap(references::remove);
+        return ObjectUtils.get(references::remove);
     }
 
     /**

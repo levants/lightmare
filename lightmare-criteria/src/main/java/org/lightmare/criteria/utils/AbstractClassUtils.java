@@ -33,7 +33,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author Levan Tsinadze
  *
  */
-abstract class AbstractClassUtils extends Primitives {
+abstract class AbstractClassUtils {
 
     /**
      * Wraps passed {@link Throwable} in {@link RuntimeException} with message

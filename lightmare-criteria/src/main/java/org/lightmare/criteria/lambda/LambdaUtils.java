@@ -103,7 +103,7 @@ public class LambdaUtils {
 
         QueryTuple tuple;
 
-        Object raw = ObjectUtils.applyWrap(instance, QueryTuple::clone);
+        Object raw = ObjectUtils.apply(instance, QueryTuple::clone);
         tuple = ObjectUtils.cast(raw);
 
         return tuple;

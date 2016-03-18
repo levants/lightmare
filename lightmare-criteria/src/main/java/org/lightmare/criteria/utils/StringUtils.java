@@ -116,7 +116,7 @@ public abstract class StringUtils {
      * @return {@link String} from bytes by encoding
      */
     public static String fromBytes(byte[] bytes, String charset) {
-        return ObjectUtils.applyWrap(bytes, charset, String::new);
+        return ObjectUtils.apply(bytes, charset, String::new);
     }
 
     /**
@@ -128,7 +128,7 @@ public abstract class StringUtils {
      * @return <code>byte</code> array from {@link String} by encoding
      */
     public static byte[] getBytes(String text, String charset) {
-        return ObjectUtils.applyWrap(text, charset, String::getBytes);
+        return ObjectUtils.apply(text, charset, String::getBytes);
     }
 
     /**

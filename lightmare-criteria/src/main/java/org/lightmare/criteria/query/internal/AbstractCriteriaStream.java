@@ -40,7 +40,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
 /**
  * Implementation of {@link org.lightmare.criteria.query.QueryStream} and
  * {@link org.lightmare.criteria.query.internal.CriteriaQueryResolver} for JPA
- * criteria API
+ * criteria API queries
  * 
  * @author Levan Tsinadze
  *

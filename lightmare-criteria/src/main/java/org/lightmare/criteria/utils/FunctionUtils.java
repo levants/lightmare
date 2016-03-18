@@ -19,7 +19,7 @@ public abstract class FunctionUtils {
      *            error type
      */
     @FunctionalInterface
-    public static interface ErrorWrapperConsumer<T, E extends Exception> {
+    public static interface ConsumerEx<T, E extends Exception> {
 
         /**
          * Accepts passed value and throws appropriated exception
@@ -44,7 +44,7 @@ public abstract class FunctionUtils {
      *            error type
      */
     @FunctionalInterface
-    public static interface ErrorWrapperBiConsumer<T, K, E extends Exception> {
+    public static interface BiConsumerEx<T, K, E extends Exception> {
 
         /**
          * Accepts passed value1 and value2 and throws appropriated exception
@@ -68,7 +68,7 @@ public abstract class FunctionUtils {
      *            error type
      */
     @FunctionalInterface
-    public static interface ErrorWrapperSupplier<T, E extends Exception> {
+    public static interface SupplierEx<T, E extends Exception> {
 
         /**
          * Get value and throws appropriated exception
@@ -93,7 +93,7 @@ public abstract class FunctionUtils {
      *            error type
      */
     @FunctionalInterface
-    public static interface ErrorWrapperFunction<T, R, E extends Exception> {
+    public static interface FunctionEx<T, R, E extends Exception> {
 
         /**
          * Applies for value and throws appropriated exception
@@ -121,7 +121,7 @@ public abstract class FunctionUtils {
      *            error type
      */
     @FunctionalInterface
-    public static interface ErrorWrapperBiFunction<T, K, R, E extends Exception> {
+    public static interface BiFunctionEx<T, K, R, E extends Exception> {
 
         /**
          * Applies for value1 and value2, and throws appropriated exception
@@ -141,7 +141,7 @@ public abstract class FunctionUtils {
      * @param value
      * @param consumer
      */
-    public static <T, E extends Exception> void acceptWrap(T value, ErrorWrapperConsumer<T, E> consumer) {
+    public static <T, E extends Exception> void call(T value, ConsumerEx<T, E> consumer) {
 
         try {
             consumer.accept(value);
@@ -157,8 +157,7 @@ public abstract class FunctionUtils {
      * @param value2
      * @param consumer
      */
-    public static <T, K, E extends Exception> void acceptWrap(T value1, K value2,
-            ErrorWrapperBiConsumer<T, K, E> consumer) {
+    public static <T, K, E extends Exception> void call(T value1, K value2, BiConsumerEx<T, K, E> consumer) {
 
         try {
             consumer.accept(value1, value2);
@@ -173,7 +172,7 @@ public abstract class FunctionUtils {
      * @param supplier
      * @return T result from supplier
      */
-    public static <T, E extends Exception> T getWrap(ErrorWrapperSupplier<T, E> supplier) {
+    public static <T, E extends Exception> T get(SupplierEx<T, E> supplier) {
 
         T result;
 
@@ -193,7 +192,7 @@ public abstract class FunctionUtils {
      * @param function
      * @return R result from function
      */
-    public static <T, R, E extends Exception> R applyWrap(T value, ErrorWrapperFunction<T, R, E> function) {
+    public static <T, R, E extends Exception> R apply(T value, FunctionEx<T, R, E> function) {
 
         R result;
 
@@ -214,8 +213,7 @@ public abstract class FunctionUtils {
      * @param function
      * @return R result from function
      */
-    public static <T, K, R, E extends Exception> R applyWrap(T value1, K value2,
-            ErrorWrapperBiFunction<T, K, R, E> function) {
+    public static <T, K, R, E extends Exception> R apply(T value1, K value2, BiFunctionEx<T, K, R, E> function) {
 
         R result;
 

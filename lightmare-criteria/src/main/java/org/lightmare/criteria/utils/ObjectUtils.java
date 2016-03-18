@@ -413,7 +413,7 @@ public abstract class ObjectUtils extends FunctionUtils{
      * @return <code>byte</code> array serialized object
      */
     public static byte[] serialize(Object value) {
-        return applyWrap(value, c -> {
+        return apply(value, c -> {
 
             byte[] bytes;
 
@@ -435,7 +435,7 @@ public abstract class ObjectUtils extends FunctionUtils{
      * @return {@link Object}
      */
     private static Object readToObject(byte[] bytes) {
-        return applyWrap(bytes, c -> {
+        return apply(bytes, c -> {
 
             Object value;
 

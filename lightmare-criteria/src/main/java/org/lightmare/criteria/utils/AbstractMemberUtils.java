@@ -199,7 +199,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @return T new instance of {@link Class}
      */
     public static <T> T newInstance(Class<T> type) {
-        return ObjectUtils.applyWrap(type, c -> {
+        return ObjectUtils.apply(type, c -> {
 
             T instance;
 
@@ -220,7 +220,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param value
      */
     public static void set(Field field, Object instance, Object value) {
-        ObjectUtils.acceptWrap(instance, value, field::set);
+        ObjectUtils.call(instance, value, field::set);
     }
 
     /**
