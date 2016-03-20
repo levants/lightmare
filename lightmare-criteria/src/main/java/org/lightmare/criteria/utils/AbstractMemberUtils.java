@@ -193,22 +193,30 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     }
 
     /**
+     * Gets default constructor for passed {@link Class} instance
+     * 
+     * @param type
+     * @return {@link java.lang.reflect.Constructor} for passed {@link Class}
+     */
+    private static <T> Constructor<T> getConstructor(Class<T> type) {
+        return ObjectUtils.apply(type, Class::getConstructor);
+    }
+
+    /**
      * Creates new instance for passed {@link Class} without throws declaration
      * 
      * @param type
      * @return T new instance of {@link Class}
      */
     public static <T> T newInstance(Class<T> type) {
-        return ObjectUtils.apply(type, c -> {
 
-            T instance;
+        T instance;
 
-            Constructor<T> constructor = c.getConstructor();
-            makeAccessible(constructor);
-            instance = constructor.newInstance();
+        Constructor<T> constructor = getConstructor(type);
+        makeAccessible(constructor);
+        instance = ObjectUtils.apply(constructor, Constructor::newInstance);
 
-            return instance;
-        });
+        return instance;
     }
 
     /**

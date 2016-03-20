@@ -36,16 +36,14 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.plugin>3.3</maven.compiler.plugin>
+		<maven.compiler.plugin>3.5.1</maven.compiler.plugin>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
 		<maven.compiler.testSource>1.8</maven.compiler.testSource>
-		<maven.enforcer.version>1.4.1</maven.enforcer.version>
 		<maven.source.plugin>2.4</maven.source.plugin>
 		<maven.javadoc.plugin>2.10.3</maven.javadoc.plugin>
 		<maven.gpg.plugin>1.6</maven.gpg.plugin>
-		<maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
 		<!-- java ee components versions -->
 		<ejb.version>3.2</ejb.version>
 		<jta.version>1.2</jta.version>

@@ -13,23 +13,19 @@
 	<packaging>jar</packaging>
 
 	<properties>
-		<maven.compiler.plugin>3.3</maven.compiler.plugin>
+		<maven.compiler.plugin>3.5.1</maven.compiler.plugin>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
 		<maven.compiler.testSource>1.8</maven.compiler.testSource>
-		<maven.enforcer.version>1.4.1</maven.enforcer.version>
-		<maven.source.plugin>2.4</maven.source.plugin>
-		<maven.javadoc.plugin>2.10.3</maven.javadoc.plugin>
 		<maven.gpg.plugin>1.6</maven.gpg.plugin>
-		<maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
-		<plexus-compiler-eclipse.version>2.6</plexus-compiler-eclipse.version>
+		<plexus-compiler-eclipse.version>2.7</plexus-compiler-eclipse.version>
 		<!-- ASM -->
-		<asm.version>5.0.4</asm.version>
+		<asm.version>5.1</asm.version>
 		<!-- ASM -->
 		<jpa-api.version>1.0.0.Final</jpa-api.version>
 		<!-- hibernate -->
-		<hibernate.version>4.3.11.Final</hibernate.version>
+		<hibernate.version>5.1.0.Final</hibernate.version>
 		<!-- end of hibernate -->
 		<!-- log4j -->
 		<log4j.version>1.2.17</log4j.version>
@@ -48,26 +44,6 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>${maven.enforcer.version}</version>
-				<executions>
-					<execution>
-						<id>enforce-java</id>
-						<goals>
-							<goal>enforce</goal>
-						</goals>
-						<configuration>
-							<rules>
-								<requireJavaVersion>
-									<version>${maven.compiler.target}</version>
-								</requireJavaVersion>
-							</rules>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven.compiler.plugin}</version>
@@ -198,13 +174,6 @@
 		</dependency>
 		<!-- junit -->
 		<!-- hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-			<classifier>sources</classifier>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>

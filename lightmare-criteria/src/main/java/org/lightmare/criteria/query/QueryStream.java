@@ -22,11 +22,11 @@
  */
 package org.lightmare.criteria.query;
 
+import java.util.function.Consumer;
+
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
-import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
-import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Query stream of {@link String} based queries for abstract data base layers
@@ -98,6 +98,23 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
     // ======================WHERE=AND=OR=clauses=with=stream================//
 
     /**
+     * Generates AND / OR connector and sets brackets
+     * 
+     * @param connector
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default S brackets(Consumer<QueryStream<T, S>> connector, QueryConsumer<T, S> consumer) {
+
+        S stream;
+
+        connector.accept(this);
+        stream = brackets(consumer);
+
+        return stream;
+    }
+
+    /**
      * AND clause in lambda expression manner
      * 
      * @param consumer
@@ -105,14 +122,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
      */
     @Override
     default S and(QueryConsumer<T, S> consumer) {
-
-        S stream = and();
-
-        appendBody(Brackets.OPEN);
-        ObjectUtils.accept(consumer, stream);
-        closeBracket();
-
-        return stream;
+        return brackets(QueryStream::and, consumer);
     }
 
     /**
@@ -122,13 +132,6 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     default S or(QueryConsumer<T, S> consumer) {
-
-        S stream = or();
-
-        appendBody(Brackets.OPEN);
-        ObjectUtils.accept(consumer, stream);
-        closeBracket();
-
-        return stream;
+        return brackets(QueryStream::or, consumer);
     }
 }
