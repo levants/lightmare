@@ -58,7 +58,7 @@ interface QueryResult<T> {
     /**
      * Gets first value or <code>null</code> if no data found from query results
      * 
-     * @return T first result or <code>null</code>
+     * @return T first result or <code>null</code> if results are empty
      */
     default T getFirst() {
         return firstOrDefault(null);
