@@ -27,8 +27,6 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -47,8 +45,6 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -68,8 +64,6 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -90,8 +84,6 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -113,8 +105,6 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -136,8 +126,6 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -163,8 +151,6 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             System.out.println();
             System.out.println("-------Entity----");
             System.out.println(person);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -219,8 +205,6 @@ public class FunctionnalQueryTest extends GroupByQueryTest {
             System.out.println();
             System.out.println("-------Entity----");
             System.out.println(person);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }

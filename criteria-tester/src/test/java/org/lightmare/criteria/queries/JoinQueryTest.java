@@ -30,8 +30,6 @@ public class JoinQueryTest extends SubQueryTest {
             printParameters(stream);
             System.out.println(sql);
             System.out.println(person);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -49,8 +47,6 @@ public class JoinQueryTest extends SubQueryTest {
             String sql = stream.sql();
             System.out.println(sql);
             printParameters(stream);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -66,8 +62,6 @@ public class JoinQueryTest extends SubQueryTest {
                     c -> c.equal(Phone::getPhoneNumber, Person::getPersonalNo));
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -83,8 +77,6 @@ public class JoinQueryTest extends SubQueryTest {
                     c -> c.where().equal(Phone::getPhoneNumber, Person::getPersonalNo));
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -100,8 +92,6 @@ public class JoinQueryTest extends SubQueryTest {
             });
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -116,8 +106,6 @@ public class JoinQueryTest extends SubQueryTest {
             JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).leftJoin(Person::getPhones);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -129,12 +117,10 @@ public class JoinQueryTest extends SubQueryTest {
 
         EntityManager em = emf.createEntityManager();
         try {
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).leftJoin(Person::getPhones).where()
-                    .like(Person::getLastName, "lname");
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).leftJoin(Person::getPhones)
+                    .where().like(Person::getLastName, "lname");
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -152,8 +138,6 @@ public class JoinQueryTest extends SubQueryTest {
                             .ge(Phone::getOperatorId, Person::getPersonId));
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -173,8 +157,6 @@ public class JoinQueryTest extends SubQueryTest {
                                     .equal(Phone::getOperatorId, Phone::getPhoneId));
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }

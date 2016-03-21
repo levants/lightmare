@@ -18,14 +18,10 @@ public class ResolversTest {
     @RunOrder(0)
     public void resolverTest() {
 
-        try {
-            EntityField<Person, Date> field1 = Person::getBirthDate;
-            EntityField<Person, Date> field2 = c -> c.getBirthDate();
-            QueryTuple tuple1 = LambdaUtils.getOrInit(field1);
-            QueryTuple tuple2 = LambdaUtils.getOrInit(field2);
-            System.out.format("tuple1 - %s tuple2 - %s\n", tuple1, tuple2);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
-        }
+        EntityField<Person, Date> field1 = Person::getBirthDate;
+        EntityField<Person, Date> field2 = c -> c.getBirthDate();
+        QueryTuple tuple1 = LambdaUtils.getOrInit(field1);
+        QueryTuple tuple2 = LambdaUtils.getOrInit(field2);
+        System.out.format("tuple1 - %s tuple2 - %s\n", tuple1, tuple2);
     }
 }

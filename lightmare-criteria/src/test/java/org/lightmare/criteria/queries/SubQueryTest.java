@@ -25,12 +25,11 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().operateSubQuery(Phone.class,
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().operateSubQuery(
+                    Phone.class,
                     c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -43,13 +42,11 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().operateSubQuery(Phone.class,
-                    c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+                    .operateSubQuery(Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
                             .equal(Phone::getOperatorId, Person::getPersonId).select(Phone::getPhoneNumber));
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -67,8 +64,6 @@ public class SubQueryTest extends QueryTest {
                     c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -89,8 +84,6 @@ public class SubQueryTest extends QueryTest {
             persons.forEach(System.out::println);
             System.out.println(sql);
             printParameters(stream);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -108,8 +101,6 @@ public class SubQueryTest extends QueryTest {
                             Person::getPersonId));
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -125,8 +116,6 @@ public class SubQueryTest extends QueryTest {
             JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().exists(Phone.class);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -143,8 +132,6 @@ public class SubQueryTest extends QueryTest {
                     c -> c.where().equal(Phone::getPhoneNumber, "100100").toList());
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -162,8 +149,6 @@ public class SubQueryTest extends QueryTest {
                             c -> c.where().equal(Phone::getPhoneNumber, "100100").count());
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -181,8 +166,6 @@ public class SubQueryTest extends QueryTest {
                             .le(Phone::getOperatorId, Person::getPersonId).count());
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -200,8 +183,6 @@ public class SubQueryTest extends QueryTest {
                             .isMember(Phone::getOperatorId, Person::getIdentifiers).count());
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -218,8 +199,6 @@ public class SubQueryTest extends QueryTest {
                     Person::getIdentifiers);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -239,8 +218,6 @@ public class SubQueryTest extends QueryTest {
             persons.forEach(System.out::println);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -260,8 +237,6 @@ public class SubQueryTest extends QueryTest {
             persons.forEach(System.out::println);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -281,8 +256,6 @@ public class SubQueryTest extends QueryTest {
             persons.forEach(System.out::println);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -302,8 +275,6 @@ public class SubQueryTest extends QueryTest {
             persons.forEach(System.out::println);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -323,8 +294,6 @@ public class SubQueryTest extends QueryTest {
             persons.forEach(System.out::println);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -344,8 +313,6 @@ public class SubQueryTest extends QueryTest {
             persons.forEach(System.out::println);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -366,8 +333,6 @@ public class SubQueryTest extends QueryTest {
             persons.forEach(System.out::println);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -388,8 +353,6 @@ public class SubQueryTest extends QueryTest {
             persons.forEach(System.out::println);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -410,8 +373,6 @@ public class SubQueryTest extends QueryTest {
             persons.forEach(System.out::println);
             String sql = stream.sql();
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }

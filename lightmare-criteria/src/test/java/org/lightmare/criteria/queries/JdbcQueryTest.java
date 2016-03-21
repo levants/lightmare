@@ -42,8 +42,6 @@ public class JdbcQueryTest extends FunctionnalQueryTest {
             System.out.println(sql);
             System.out.println("===========RESULTS==========");
             persons.forEach(System.out::println);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }

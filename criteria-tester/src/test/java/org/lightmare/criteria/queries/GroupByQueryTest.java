@@ -31,8 +31,6 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -55,8 +53,6 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -78,8 +74,6 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -101,8 +95,6 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }

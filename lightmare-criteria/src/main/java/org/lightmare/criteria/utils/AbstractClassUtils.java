@@ -58,7 +58,7 @@ abstract class AbstractClassUtils {
 
     /**
      * Validates if passed {@link java.lang.reflect.AnnotatedElement} is not
-     * annotated with passed {@link Annotation} type
+     * annotated with passed {@link java.lang.annotation.Annotation} type
      * 
      * @param element
      * @param annotationType

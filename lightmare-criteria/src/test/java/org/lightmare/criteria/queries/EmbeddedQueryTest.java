@@ -30,8 +30,6 @@ public class EmbeddedQueryTest extends JoinQueryTest {
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
             printParameters(stream);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -51,8 +49,6 @@ public class EmbeddedQueryTest extends JoinQueryTest {
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -74,8 +70,6 @@ public class EmbeddedQueryTest extends JoinQueryTest {
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);
             System.out.println(person);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }

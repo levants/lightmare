@@ -88,8 +88,6 @@ public class TestEnviromentConfig {
             System.out.println(sql);
             System.out.println("============================================");
             System.out.println();
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }

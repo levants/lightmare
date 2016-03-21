@@ -45,8 +45,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println(stream.sql());
             System.out.println("===========Entity==========");
             System.out.println();
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -65,8 +63,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             phones.forEach(System.out::println);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -89,8 +85,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             persons.forEach(System.out::println);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -114,8 +108,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             persons.forEach(System.out::println);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -141,8 +133,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             persons.forEach(System.out::println);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -169,8 +159,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             persons.forEach(System.out::println);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -196,8 +184,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             persons.forEach(c -> System.out.println(Arrays.toString(c)));
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -223,8 +209,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             persons.forEach(c -> System.out.println(Arrays.toString(c)));
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -278,8 +262,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             persons.forEach(c -> System.out.println(Arrays.toString(c)));
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -306,8 +288,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             persons.forEach(System.out::println);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -333,8 +313,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             persons.forEach(c -> System.out.println(Arrays.toString(c)));
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -360,8 +338,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             persons.forEach(System.out::println);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -383,8 +359,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             System.out.format("Counted %s rows in database by query\n", count);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -412,7 +386,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.format("updated %s rows\n", rows);
             Assert.assertEquals("No expected row number was updated", rows, 1);
         } catch (Throwable ex) {
-            ex.printStackTrace();
             rollback(transaction);
         } finally {
             em.close();
@@ -442,7 +415,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.format("updated %s rows\n", rows);
             Assert.assertEquals("No expected row number was updated", rows, 1);
         } catch (Throwable ex) {
-            ex.printStackTrace();
             rollback(transaction);
         } finally {
             em.close();
@@ -485,7 +457,6 @@ public class QueryTest extends TestEnviromentConfig {
             }
             transaction.commit();
         } catch (Throwable ex) {
-            ex.printStackTrace();
             rollback(transaction);
         } finally {
             em.close();
@@ -514,7 +485,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.format("deleted %s rows\n", rows);
             Assert.assertEquals("No expected row number was updated", rows, 1);
         } catch (Throwable ex) {
-            ex.printStackTrace();
             rollback(transaction);
         } finally {
             em.close();
@@ -543,8 +513,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println("-------Entity----");
             System.out.println();
             System.out.println(stream.sql());
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -590,8 +558,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println();
             System.out.println("-------Entity----");
             System.out.println(person);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -614,8 +580,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println();
             System.out.println("-------Entity----");
             System.out.println(person);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
@@ -638,8 +602,6 @@ public class QueryTest extends TestEnviromentConfig {
             System.out.println();
             System.out.println("-------Entity----");
             System.out.println(max);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
         } finally {
             em.close();
         }
