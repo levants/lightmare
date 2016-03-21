@@ -139,8 +139,7 @@ public class FieldResolver extends DirectFieldResolver {
      * Resolves field name from {@link org.objectweb.asm.tree.MethodNode}
      * instance
      * 
-     * @param instruction
-     * @param verbose
+     * @param node
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
      *         field and query part
      */

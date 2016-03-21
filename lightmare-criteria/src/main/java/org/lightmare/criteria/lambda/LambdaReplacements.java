@@ -144,7 +144,7 @@ public class LambdaReplacements {
      * 
      * @param writeReplace
      * @param field
-     * @return
+     * @return {@link org.lightmare.criteria.lambda.LambdaInfo} replacement
      */
     private static <T> LambdaInfo invokeMethod(Method writeReplace, Serializable field) {
 

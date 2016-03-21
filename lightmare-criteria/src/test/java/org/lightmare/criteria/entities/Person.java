@@ -23,7 +23,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "PERSONS")
-public class Person extends GeneralInfo {
+public class Person extends GeneralInfo implements PersonType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "org.lightmare.linq.entities.Person")

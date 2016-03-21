@@ -61,12 +61,26 @@ public class LambdaInfo {
         this.instantiatedMethodType = instantiatedMethodType;
     }
 
+    /**
+     * Generates instance from {@link java.lang.invoke.SerializedLambda}
+     * properties
+     * 
+     * @param serialized
+     * @return {@link org.lightmare.criteria.lambda.LambdaInfo} from
+     *         {@link java.lang.invoke.SerializedLambda}
+     */
     public static LambdaInfo of(SerializedLambda serialized) {
         return new LambdaInfo(serialized.getImplClass(), serialized.getImplMethodName(),
                 serialized.getImplMethodSignature(), serialized.getImplMethodKind(),
                 serialized.getInstantiatedMethodType());
     }
 
+    /**
+     * Generates instance from translated serialized lambda
+     * 
+     * @param slambda
+     * @return {@link org.lightmare.criteria.lambda.LambdaInfo} from lambda
+     */
     public static LambdaInfo of(SLambda slambda) {
         return new LambdaInfo(slambda.implClass, slambda.implMethodName, slambda.implMethodSignature,
                 slambda.implMethodKind, slambda.instantiatedMethodType);

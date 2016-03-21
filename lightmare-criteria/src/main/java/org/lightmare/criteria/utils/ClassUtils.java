@@ -40,7 +40,7 @@ public class ClassUtils extends AbstractMemberUtils {
     }
 
     /**
-     * Initializes {@link Class} by name in passed {@link ClassLoader} ecosystem
+     * Initializes {@link Class} by name in passed {@link ClassLoader} realm
      * 
      * @param className
      * @param initialize
@@ -52,8 +52,9 @@ public class ClassUtils extends AbstractMemberUtils {
     }
 
     /**
-     * Loads and if initialize parameter is <code>true</code> initializes class
-     * by name with specific {@link ClassLoader} if it is not <code>null</code>
+     * Loads and if initialize parameter is <code>true</code> initializes
+     * {@link Class} by name with specific {@link ClassLoader} if it is not
+     * <code>null</code>
      *
      * @param className
      * @param initialize

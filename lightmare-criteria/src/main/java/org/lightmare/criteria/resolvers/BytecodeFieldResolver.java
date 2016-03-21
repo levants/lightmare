@@ -22,8 +22,7 @@ abstract class BytecodeFieldResolver extends AbstractFieldResolver {
     /**
      * Resolves field name from instruction instance
      * 
-     * @param instruction
-     * @param verbose
+     * @param node
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
      *         field and query part
      */
@@ -82,7 +81,6 @@ abstract class BytecodeFieldResolver extends AbstractFieldResolver {
      * Resolves appropriated instructions for field recognition
      * 
      * @param instructions
-     * @param verbose
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} for resolved
      *         field and query part
      */

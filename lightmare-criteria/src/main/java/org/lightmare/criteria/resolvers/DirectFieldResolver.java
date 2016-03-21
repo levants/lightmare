@@ -46,7 +46,7 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
     private static final String DEBUG_MESSAGE_DIR = "Resolved directly";
 
     /**
-     * Gets type from descriptor
+     * Gets entity type from descriptor
      * 
      * @param lambda
      * @return {@link org.objectweb.asm.Type} entity type
@@ -95,13 +95,20 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
     }
 
     /**
-     * Validates implementation method kind
+     * Validates implementation method kind (for invoke virtual and invoke
+     * interface)
      * 
      * @param lambda
      * @return <code>boolean</code> validation result
      */
     private static boolean validateMethodKind(LambdaInfo lambda) {
-        return (lambda.getImplMethodKind() == MethodHandleInfo.REF_invokeVirtual);
+
+        boolean valid;
+
+        int kind = lambda.getImplMethodKind();
+        valid = ((kind == MethodHandleInfo.REF_invokeVirtual) || (kind == MethodHandleInfo.REF_invokeInterface));
+
+        return valid;
     }
 
     /**
