@@ -45,7 +45,6 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @param alias
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder}
      *         with select statement
      */
@@ -65,7 +64,6 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @param alias
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder}
      *         with select statement
      */
@@ -85,7 +83,6 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @param alias
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder}
      *         with select statement
      */

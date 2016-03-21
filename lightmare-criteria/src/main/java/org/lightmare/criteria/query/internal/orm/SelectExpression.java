@@ -86,7 +86,8 @@ public interface SelectExpression<T> {
      * 
      * @param type
      * @param select
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for special type
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         special type
      */
     <F> JpaQueryStream<F> selectType(Class<F> type, Select select);
 
@@ -106,7 +107,8 @@ public interface SelectExpression<T> {
      * 
      * @param type
      * @param select
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for special type
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         special type
      */
     default <F> JpaQueryStream<F> selectType(Class<F> type, SelectConsumer select) {
 
@@ -139,8 +141,9 @@ public interface SelectExpression<T> {
      * Custom select expression for instant type
      * 
      * @param expression
-     * @param types
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for special type
+     * @param type
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         special type
      */
     <F> JpaQueryStream<F> select(String expression, Class<F> type);
 
@@ -161,7 +164,8 @@ public interface SelectExpression<T> {
      * Gets instant field by type
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for field type
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         field type
      */
     <F> JpaQueryStream<F> selectType(EntityField<T, F> field);
 }

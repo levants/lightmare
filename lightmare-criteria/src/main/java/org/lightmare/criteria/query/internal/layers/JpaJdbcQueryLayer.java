@@ -52,7 +52,8 @@ public interface JpaJdbcQueryLayer<T> extends QueryLayer<T> {
     void setParameter(String name, Object value);
 
     /**
-     * Sets query parameters by names and temporal types
+     * Sets {@link java.util.Calendar} query parameters by names and temporal
+     * types
      * 
      * @param name
      * @param value
@@ -61,7 +62,7 @@ public interface JpaJdbcQueryLayer<T> extends QueryLayer<T> {
     void setParameter(String name, Calendar value, TemporalType temporalType);
 
     /**
-     * Sets query parameters by names and temporal types
+     * Sets {@link java.util.Date} query parameters by names and temporal types
      * 
      * @param name
      * @param value
@@ -80,7 +81,7 @@ public interface JpaJdbcQueryLayer<T> extends QueryLayer<T> {
     /**
      * Sets upper limit for results to query
      * 
-     * @param maxResults
+     * @param maxResult
      */
     void setMaxResults(int maxResult);
 

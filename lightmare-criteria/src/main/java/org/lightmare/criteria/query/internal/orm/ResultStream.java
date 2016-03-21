@@ -61,7 +61,7 @@ public interface ResultStream<T> {
      * Note: Only for direct JDBC streams
      * <p/>
      * 
-     * @param teriever
+     * @param retriever
      * 
      * @return T single query result
      * @see java.sql.ResultSet

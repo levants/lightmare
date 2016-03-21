@@ -244,7 +244,7 @@ interface TextFunction<T> {
     /**
      * Create expression to trim character from both ends of a string.
      *
-     * @param t
+     * @param ch
      *            character to be trimmed
      * @param x
      *            expression for string to trim
@@ -259,7 +259,7 @@ interface TextFunction<T> {
     /**
      * Create expression to trim character from both ends of a string.
      *
-     * @param t
+     * @param ch
      *            character to be trimmed
      * @param ts
      *            trim specification

@@ -39,7 +39,7 @@ interface TypedToFunctionSubQueryProcessor<T> extends SubQueryOperator<T> {
     /**
      * Provides method to process sub queries with ALL clause
      * 
-     * @param value
+     * @param consumer
      * @param operator
      * @param stream
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}

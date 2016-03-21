@@ -178,7 +178,8 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * Generates JPA query part for field and expression and adds parameter
      * 
      * @param field
-     * @param value
+     * @param value1
+     * @param value2
      * @param expression
      */
     protected <F> void opp(Serializable field, F value1, F value2, String expression) {
@@ -647,7 +648,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * Appends JOIN clause to JPA query
      * 
      * @param clause
-     * @return
+     * @return {@link JpaQueryStream} current instance
      */
     protected JpaQueryStream<T> appendJoin(Object clause) {
         joins.append(clause);

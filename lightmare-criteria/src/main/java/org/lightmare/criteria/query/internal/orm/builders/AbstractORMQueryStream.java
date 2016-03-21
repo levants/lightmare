@@ -243,7 +243,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @param tuple
      * @param value1
      * @param value2
-     * @param sqlPart
+     * @param buffer
      */
     protected void oppWithParameter(QueryTuple tuple, Object value1, Object value2, StringBuilder buffer) {
 

@@ -117,6 +117,12 @@ public class JdbcQueryLayer<T> implements JpaJdbcQueryLayer<T> {
         this.connection = connection;
     }
 
+    /**
+     * Replaces named query parameters with JDBC natural parameter symbols
+     * 
+     * @param name
+     * @param builder
+     */
     private void replace(String name, StringBuilder builder) {
 
         String paramName = StringUtils.concat(Parts.PARAM_PREFIX, name);

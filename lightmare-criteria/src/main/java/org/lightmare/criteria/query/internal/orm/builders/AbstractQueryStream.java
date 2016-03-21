@@ -88,8 +88,8 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
     /**
      * Generates {@link javax.persistence.TypedQuery} for COUNT JPA-QL statement
      * 
-     * @return {@link org.lightmare.criteria.query.internal.connectors.e.TypedQuery}
-     *         with {@link Long} type for element count
+     * @return {@link org.lightmare.criteria.query.layers.QueryLayer} with
+     *         {@link Long} type for element count
      */
     protected QueryLayer<Long> initCountQuery() {
 

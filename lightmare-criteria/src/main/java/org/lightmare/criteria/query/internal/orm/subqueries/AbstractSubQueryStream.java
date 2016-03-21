@@ -105,7 +105,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     /**
      * Generates SELECT clause for sub query
      * 
-     * @param fields
+     * @param field
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         with {@link Object} array
      */

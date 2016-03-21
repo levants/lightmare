@@ -39,8 +39,8 @@ public interface AggregateFunction<T> {
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for {@link Object} array
-     * as result
+     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     * {@link Object} array as result
      * 
      * @param field
      * @param function
@@ -51,7 +51,8 @@ public interface AggregateFunction<T> {
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for instant result type
+     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for instant
+     * result type
      * 
      * @param field
      * @param function
@@ -62,8 +63,8 @@ public interface AggregateFunction<T> {
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for {@link Number}
-     * result type
+     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     * {@link Number} result type
      * 
      * @param field
      * @param function
@@ -97,7 +98,7 @@ public interface AggregateFunction<T> {
     /**
      * Create an aggregate expression applying the SUM operation.
      *
-     * @param x
+     * @param field
      *            expression representing input value to sum operation
      *
      * @return sum expression
@@ -122,7 +123,7 @@ public interface AggregateFunction<T> {
     /**
      * Create an aggregate expression applying the numerical MAX operation.
      *
-     * @param x
+     * @param field
      *            expression representing input value to max operation
      *
      * @return max expression
@@ -147,10 +148,11 @@ public interface AggregateFunction<T> {
     /**
      * Create an aggregate expression applying the numerical MIN operation.
      *
-     * @param x
+     * @param field
      *            expression representing input value to MIN operation
      *
-     * @return min expression
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         {@link Number}
      */
     default <N extends Number> JpaQueryStream<N> min(EntityField<T, N> field) {
         return aggregate(field, Aggregates.MIN);
@@ -173,10 +175,11 @@ public interface AggregateFunction<T> {
      * Create an aggregate expression for finding the GREATEST of the values
      * (strings, dates, etc).
      *
-     * @param x
+     * @param field
      *            expression representing input value to GREATEST operation
      *
-     * @return greatest expression
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         greatest expression
      */
     default <N extends Number> JpaQueryStream<N> greatest(EntityField<T, N> field) {
         return aggregate(field, Aggregates.GREATEST);
@@ -199,10 +202,11 @@ public interface AggregateFunction<T> {
      * Create an aggregate expression for finding the LEAST of the values
      * (strings, dates, etc).
      *
-     * @param x
+     * @param field
      *            expression representing input value to LEAST operation
      *
-     * @return least expression
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         forleast expression
      */
     default <N extends Number> JpaQueryStream<N> least(EntityField<T, N> field) {
         return aggregate(field, Aggregates.LEAST);
@@ -224,10 +228,11 @@ public interface AggregateFunction<T> {
     /**
      * Create an aggregate expression applying the COUNT operation.
      *
-     * @param x
+     * @param field
      *            expression representing input value to count operation
      *
-     * @return count expression
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         count expression
      */
     default <F> JpaQueryStream<Long> count(EntityField<T, F> field) {
         return aggregate(field, Aggregates.COUNT, Long.class);
@@ -249,11 +254,12 @@ public interface AggregateFunction<T> {
     /**
      * Create an aggregate expression applying the COUNT DISTINCT operation.
      *
-     * @param x
+     * @param field
      *            expression representing input value to count distinct
      *            operation
      *
-     * @return count distinct expression
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     *         count distinct expression
      */
     default <F> JpaQueryStream<Long> countDistinct(EntityField<T, F> field) {
         return aggregate(field, Aggregates.COUNT, Long.class);

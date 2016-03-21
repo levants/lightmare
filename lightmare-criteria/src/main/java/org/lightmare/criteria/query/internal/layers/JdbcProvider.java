@@ -67,6 +67,14 @@ public class JdbcProvider implements LayerProvider {
         return new JdbcQueryLayer<T>(connection, sql.toString(), type);
     }
 
+    /**
+     * Generates {@link org.lightmare.criteria.query.layers.QueryLayer} from
+     * {@link String} parameter
+     * 
+     * @param sql
+     * @return {@link org.lightmare.criteria.query.layers.QueryLayer} from
+     *         {@link String}
+     */
     public QueryLayer<?> query(String sql) {
         return new JdbcQueryLayer<Void>(connection, sql.toString(), Void.class);
     }

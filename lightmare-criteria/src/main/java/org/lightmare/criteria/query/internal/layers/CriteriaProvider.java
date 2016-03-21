@@ -36,7 +36,7 @@ import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Implementation of {@link org.lightmare.criteria.query.layers.LayerProvider}
- * for criteria API
+ * for criteria API queries
  * 
  * @author Levan Tsinadze
  *

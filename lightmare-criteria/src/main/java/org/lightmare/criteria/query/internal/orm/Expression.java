@@ -168,7 +168,7 @@ interface Expression<T> {
      * Generates query part for instant field with {@link Collection} parameter
      * and operator
      * 
-     * @param object
+     * @param value
      * @param field
      * @param operator
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
