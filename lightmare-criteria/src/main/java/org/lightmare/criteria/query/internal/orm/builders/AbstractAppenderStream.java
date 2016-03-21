@@ -554,10 +554,10 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
     }
 
     /**
-     * Removes new line element from query body
+     * Replaces last new line element from query body
      */
-    protected void removeNewLine() {
-        StringUtils.removeLast(body, StringUtils.LINE);
+    protected void replaceNewLine(char character) {
+        StringUtils.replaceLast(body, StringUtils.LINE, character);
     }
 
     /**
@@ -621,9 +621,8 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
         appendOperator();
         openBracket();
         consumer.accept(this);
-        removeNewLine();
-        closeBracket();
-        newLine();
+        replaceNewLine(Operators.Brackets.CLOSE);
+        newLine(body);
     }
 
     @Override

@@ -73,21 +73,9 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
     }
 
     @Override
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThan(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return gt(field, value);
-    }
-
-    @Override
     default <F extends Comparable<? super F>> JpaQueryStream<T> lt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return operate(field, value, Operators.LESS);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThan(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return lt(field, value);
     }
 
     @Override
@@ -97,21 +85,9 @@ public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, Qu
     }
 
     @Override
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThanOrEqualTo(
-            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
-        return ge(field, value);
-    }
-
-    @Override
     default <F extends Comparable<? super F>> JpaQueryStream<T> le(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return operate(field, value, Operators.LESS_OR_EQ);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThanOrEqualTo(
-            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
-        return le(field, value);
     }
 
     // =============================LIKE=clause==============================//

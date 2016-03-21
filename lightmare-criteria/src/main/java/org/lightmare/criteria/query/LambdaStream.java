@@ -83,8 +83,10 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F extends Comparable<? super F>> S greaterThan(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value);
+    default <F extends Comparable<? super F>> S greaterThan(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return gt(field, value);
+    }
 
     /**
      * Less than clause expression
@@ -102,8 +104,10 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F extends Comparable<? super F>> S lessThan(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value);
+    default <F extends Comparable<? super F>> S lessThan(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return lt(field, value);
+    }
 
     /**
      * Greater than or equals to expression
@@ -121,8 +125,10 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F extends Comparable<? super F>> S greaterThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value);
+    default <F extends Comparable<? super F>> S greaterThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return ge(field, value);
+    }
 
     /**
      * Less than or equals to expression
@@ -140,8 +146,10 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F extends Comparable<? super F>> S lessThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value);
+    default <F extends Comparable<? super F>> S lessThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return le(field, value);
+    }
 
     // =============================LIKE=clause==============================//
     /**

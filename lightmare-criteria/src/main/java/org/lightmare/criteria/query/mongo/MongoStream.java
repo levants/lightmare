@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.mongo;
 
-import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.LambdaStream;
 
 /**
@@ -39,29 +38,5 @@ public interface MongoStream<T> extends LambdaStream<T, MongoStream<T>> {
     @Override
     default MongoStream<T> stream() {
         return this;
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> MongoStream<T> greaterThan(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return gt(field, value);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> MongoStream<T> lessThan(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        return lt(field, value);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> MongoStream<T> greaterThanOrEqualTo(
-            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
-        return ge(field, value);
-    }
-
-    @Override
-    default <F extends Comparable<? super F>> MongoStream<T> lessThanOrEqualTo(
-            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
-        return le(field, value);
     }
 }

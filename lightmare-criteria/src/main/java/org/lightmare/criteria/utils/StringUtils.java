@@ -326,18 +326,18 @@ public abstract class StringUtils {
     }
 
     /**
-     * Removes last found character from {@link StringBuilder} which match to
-     * passed value
+     * Replaces last character
      * 
      * @param item
      * @param character
+     * @param toreplace
      */
-    public static void removeLast(StringBuilder item, char character) {
+    public static void replaceLast(StringBuilder item, char character, char toreplace) {
 
         int last = item.length();
         int index = last - CollectionUtils.SINGLETON;
         if (item.charAt(index) == character) {
-            item.delete(index, last);
+            item.setCharAt(index, toreplace);
         }
     }
 
