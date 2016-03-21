@@ -73,7 +73,6 @@ public abstract class FunctionUtils {
         /**
          * Get value and throws appropriated exception
          * 
-         * @param value
          * @throws E
          *             exception implementation
          */

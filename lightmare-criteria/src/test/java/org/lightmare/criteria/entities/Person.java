@@ -74,6 +74,7 @@ public class Person extends GeneralInfo implements PersonType {
         this.personId = personId;
     }
 
+    @Override
     public String getPersonalNo() {
         return personalNo;
     }

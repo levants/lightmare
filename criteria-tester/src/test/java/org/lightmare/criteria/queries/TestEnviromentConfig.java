@@ -11,8 +11,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lightmare.criteria.db.DBConfigUtils;
 import org.lightmare.criteria.entities.Person;
+import org.lightmare.criteria.entities.PersonType;
 import org.lightmare.criteria.query.providers.JpaQueryProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
 
 @RunWith(SortedRunner.class)
@@ -77,11 +79,31 @@ public class TestEnviromentConfig {
     }
 
     @Test
+    @RunOrder(-1)
     public void queryStreamTest() {
 
         EntityManager em = emf.createEntityManager();
         try {
             JpaQueryStream<Person> stream = createQueryStream(em);
+            String sql = stream.sql();
+            System.out.println();
+            System.out.println("===============FIRST=TEST===================");
+            System.out.println(sql);
+            System.out.println("============================================");
+            System.out.println();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(-0.5)
+    public void queryInterfaceStreamTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            JpaQueryStream<? extends PersonType> stream = JpaQueryProvider.select(em, Person.class);
+            stream.equal(PersonType::getPersonalNo, "100100");
             String sql = stream.sql();
             System.out.println();
             System.out.println("===============FIRST=TEST===================");
