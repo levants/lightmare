@@ -72,7 +72,7 @@
 		<simple-jndi.version>0.11.4.1</simple-jndi.version>
 		<!-- end of simple-jndi -->
 		<!-- jackson -->
-		<jackson.version>2.7.1</jackson.version>
+		<jackson.version>2.7.3</jackson.version>
 		<!-- end of jackson -->
 		<!-- yaml -->
 		<snakeyaml.version>1.15</snakeyaml.version>
@@ -87,7 +87,7 @@
 		<tomcat-jdbc.version>8.0.14</tomcat-jdbc.version>
 		<c3p0.version>0.9.5.1</c3p0.version>
 		<dbcp.version>2.0.1</dbcp.version>
-		<hikaricp.version>2.4.1</hikaricp.version>
+		<hikaricp.version>2.4.5</hikaricp.version>
 		<!-- end of data sources and connection pooling -->
 		<!-- log4j -->
 		<log4j.version>1.2.17</log4j.version>

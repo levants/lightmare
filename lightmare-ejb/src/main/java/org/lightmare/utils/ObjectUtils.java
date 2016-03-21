@@ -165,7 +165,7 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Locks passed {@link Lock} object
+     * Locks passed {@link java.util.concurrent.locks.Lock} object
      *
      * @param lock
      * @return <code>boolean</code> locking result
@@ -175,7 +175,7 @@ public abstract class ObjectUtils {
     }
 
     /**
-     * Unlocks passed {@link Lock} instance
+     * Unlocks passed {@link java.util.concurrent.locks.Lock} instance
      *
      * @param lock
      */

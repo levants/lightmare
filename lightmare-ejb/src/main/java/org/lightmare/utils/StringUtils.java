@@ -145,7 +145,7 @@ public abstract class StringUtils {
      * Concatenates passed {@link Object}s in one {@link String} instance
      *
      * @param parts
-     * @return {@link String}
+     * @return {@link String} composed by parts
      */
     public static String concat(Object... parts) {
 
@@ -170,7 +170,7 @@ public abstract class StringUtils {
      *
      * @param text
      * @param item
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean notContains(String text, CharSequence item) {
         return (text == null || Boolean.FALSE.equals(text.contains(item)));
