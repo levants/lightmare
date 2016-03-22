@@ -22,6 +22,8 @@
  */
 package org.lightmare.criteria.tuples;
 
+import org.lightmare.criteria.lambda.LambdaInfo;
+
 /**
  * Tuple for entity field (column) resolver
  * 
@@ -44,8 +46,29 @@ public class ResolverTuple<T> {
         this.type = type;
     }
 
+    /**
+     * Generates instance from method description
+     * 
+     * @param desc
+     * @param name
+     * @param type
+     * @return @link org.lightmare.criteria.tuples.ResolverTuple} from method
+     *         description
+     */
     public static <T> ResolverTuple<T> of(final String desc, final String name, final T type) {
         return new ResolverTuple<T>(desc, name, type);
+    }
+
+    /**
+     * Generates instance from serialized lambda parameters
+     * 
+     * @param lambda
+     * @param type
+     * @return {@link org.lightmare.criteria.tuples.ResolverTuple} from
+     *         serialized lambda parameters
+     */
+    public static <T> ResolverTuple<T> of(final LambdaInfo lambda, final T type) {
+        return new ResolverTuple<T>(lambda.getImplMethodSignature(), lambda.getImplMethodName(), type);
     }
 
     public String getDesc() {

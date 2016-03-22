@@ -26,6 +26,7 @@ import java.lang.invoke.MethodHandleInfo;
 import java.util.Objects;
 
 import org.lightmare.criteria.lambda.LambdaInfo;
+import org.lightmare.criteria.tuples.Pair;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.tuples.ResolverTuple;
 import org.lightmare.criteria.utils.ClassUtils;
@@ -63,22 +64,21 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
     }
 
     /**
-     * Validates lambda for direct resolve
+     * Validates lambda for direct resolve (if implementation class is
+     * assignable from passed type)
      * 
      * @param implClassName
      * @param descType
      * @return <code>boolean</code> validation result
      */
-    private static boolean validateClassAndType(String implClassName, Type descType) {
+    private static boolean isAssignableFrom(String implClassName, Type descType) {
 
-        boolean valid = Objects.equals(implClassName, descType.getInternalName());
+        boolean valid;
 
-        if (ObjectUtils.notTrue(valid)) {
-            Type implType = Type.getObjectType(implClassName);
-            Class<?> implClass = ClassUtils.classForName(implType.getClassName());
-            Class<?> descClass = ClassUtils.classForName(descType.getClassName());
-            valid = implClass.isAssignableFrom(descClass);
-        }
+        Type implType = Type.getObjectType(implClassName);
+        Class<?> implClass = ClassUtils.classForName(implType.getClassName());
+        Class<?> descClass = ClassUtils.classForName(descType.getClassName());
+        valid = implClass.isAssignableFrom(descClass);
 
         return valid;
     }
@@ -90,8 +90,36 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
      * @param descType
      * @return <code>boolean</code> validation result
      */
-    private static boolean validateClassName(String implClassName, Type descType) {
-        return (Objects.nonNull(descType) && validateClassAndType(implClassName, descType));
+    private static boolean validateClassAndType(String implClassName, Type descType) {
+        return (Objects.equals(implClassName, descType.getInternalName()) || isAssignableFrom(implClassName, descType));
+    }
+
+    /**
+     * Validates lambda for direct resolve
+     * 
+     * @param lambda
+     * @param descType
+     * @return <code>boolean</code> validation result
+     */
+    private static boolean validateClassAndType(LambdaInfo lambda, Type descType) {
+        return validateClassAndType(lambda.getImplClass(), descType);
+    }
+
+    /**
+     * Validates lambda for direct resolve
+     * 
+     * @param pair
+     * @return <code>boolean</code> validation result
+     */
+    private static boolean validateClassName(Pair<LambdaInfo, Type> pair) {
+
+        boolean valid;
+
+        LambdaInfo lambda = pair.getFirst();
+        Type descType = pair.getSecond();
+        valid = (Objects.nonNull(descType) && validateClassAndType(lambda, descType));
+
+        return valid;
     }
 
     /**
@@ -135,18 +163,16 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
      * Resolves {@link org.lightmare.criteria.tuples.QueryTuple} from lambda
      * parameters are valid
      * 
-     * @param lambda
-     * @param desc
+     * @param pair
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
      */
-    private static QueryTuple resolveFromValidLambda(LambdaInfo lambda, Type desc) {
+    private static QueryTuple resolveFromValidLambda(Pair<LambdaInfo, Type> pair) {
 
         QueryTuple tuple;
 
-        String implDesc = lambda.getImplMethodSignature();
-        String methodName = lambda.getImplMethodName();
+        Type desc = pair.getSecond();
         String entityName = desc.getInternalName();
-        ResolverTuple<String> resolverTyple = ResolverTuple.of(implDesc, methodName, entityName);
+        ResolverTuple<String> resolverTyple = ResolverTuple.of(pair.getFirst(), entityName);
         tuple = resolveFromTuple(resolverTyple, DirectFieldResolver::resolveEntityName);
         debug(DEBUG_MESSAGE_DIR, tuple);
 
@@ -164,10 +190,10 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
 
         QueryTuple tuple;
 
-        String implClass = lambda.getImplClass();
         Type desc = getFromDescription(lambda);
-        tuple = ObjectUtils.ifIsValid(lambda, l -> validateClassName(implClass, desc),
-                c -> resolveFromValidLambda(c, desc));
+        Pair<LambdaInfo, Type> pair = Pair.of(lambda, desc);
+        tuple = ObjectUtils.ifIsValid(pair, DirectFieldResolver::validateClassName,
+                DirectFieldResolver::resolveFromValidLambda);
 
         return tuple;
     }
