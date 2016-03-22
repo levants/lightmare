@@ -35,7 +35,7 @@ import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.tuples.CounterTuple;
-import org.lightmare.criteria.tuples.CounterTuple.NameCountTuple;
+import org.lightmare.criteria.tuples.Pair;
 import org.lightmare.criteria.tuples.ParameterTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -160,7 +160,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @return {@link org.lightmare.criteria.tuples.CounterTuple.NameCountTuple}
      *         parameter name
      */
-    private NameCountTuple generateParameterName(QueryTuple tuple) {
+    private Pair<String, Integer> generateParameterName(QueryTuple tuple) {
         return getCounterTuple().getAndIncrement(tuple.getFieldName());
     }
 
@@ -170,7 +170,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
         parameters.add(parameter);
     }
 
-    private void addParameter(NameCountTuple key, Object value, TemporalType temporalType) {
+    private void addParameter(Pair<String, Integer> key, Object value, TemporalType temporalType) {
         ParameterTuple parameter = ParameterTuple.of(key, value, temporalType);
         parameters.add(parameter);
     }
@@ -191,7 +191,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @param tuple
      * @param value
      */
-    public <F> void addParameter(NameCountTuple key, QueryTuple tuple, F value) {
+    public <F> void addParameter(Pair<String, Integer> key, QueryTuple tuple, F value) {
         TemporalType temporalType = tuple.getTemporalType();
         addParameter(key, value, temporalType);
     }
@@ -202,8 +202,8 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @param pair
      * @param buffer
      */
-    private void appendParameter(NameCountTuple pair, StringBuilder buffer) {
-        buffer.append(Parts.PARAM_PREFIX).append(pair.getName());
+    private void appendParameter(Pair<String, Integer> pair, StringBuilder buffer) {
+        buffer.append(Parts.PARAM_PREFIX).append(pair.getFirst());
     }
 
     /**
@@ -215,7 +215,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      */
     public void oppWithParameter(QueryTuple tuple, Object value, StringBuilder buffer) {
 
-        NameCountTuple pair = generateParameterName(tuple);
+        Pair<String, Integer> pair = generateParameterName(tuple);
         appendParameter(pair, buffer);
         addParameter(pair, tuple, value);
     }
@@ -230,7 +230,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      */
     public void oppWithCollectionParameter(QueryTuple tuple, Object value, StringBuilder buffer) {
 
-        NameCountTuple pair = generateParameterName(tuple);
+        Pair<String, Integer> pair = generateParameterName(tuple);
         buffer.append(Operators.OPEN_BRACKET);
         appendParameter(pair, buffer);
         buffer.append(Operators.Brackets.CLOSE);

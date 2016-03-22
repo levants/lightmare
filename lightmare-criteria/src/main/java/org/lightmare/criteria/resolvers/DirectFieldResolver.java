@@ -97,17 +97,6 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
     /**
      * Validates lambda for direct resolve
      * 
-     * @param lambda
-     * @param descType
-     * @return <code>boolean</code> validation result
-     */
-    private static boolean validateClassAndType(LambdaInfo lambda, Type descType) {
-        return validateClassAndType(lambda.getImplClass(), descType);
-    }
-
-    /**
-     * Validates lambda for direct resolve
-     * 
      * @param pair
      * @return <code>boolean</code> validation result
      */
@@ -115,9 +104,9 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
 
         boolean valid;
 
-        LambdaInfo lambda = pair.getFirst();
         Type descType = pair.getSecond();
-        valid = (Objects.nonNull(descType) && validateClassAndType(lambda, descType));
+        String immlClassName = pair.firstGetter(LambdaInfo::getImplClass);
+        valid = (Objects.nonNull(descType) && validateClassAndType(immlClassName, descType));
 
         return valid;
     }
@@ -170,8 +159,7 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
 
         QueryTuple tuple;
 
-        Type desc = pair.getSecond();
-        String entityName = desc.getInternalName();
+        String entityName = pair.secondGetter(Type::getInternalName);
         ResolverTuple<String> resolverTyple = ResolverTuple.of(pair.getFirst(), entityName);
         tuple = resolveFromTuple(resolverTyple, DirectFieldResolver::resolveEntityName);
         debug(DEBUG_MESSAGE_DIR, tuple);

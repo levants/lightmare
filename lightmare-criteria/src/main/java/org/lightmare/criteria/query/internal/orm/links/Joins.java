@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.orm.links;
 
 /**
- * Query JOIN keywords
+ * JPA / JDBC query JOIN keywords
  * 
  * @author Levan Tsinadze
  *

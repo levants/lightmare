@@ -63,6 +63,15 @@ public class JdbcProvider implements LayerProvider {
         this(connection, new DefaultResolver());
     }
 
+    /**
+     * Generates {@link org.lightmare.criteria.query.layers.QueryLayer} from SQL
+     * {@link String} and {@link Class} entity type
+     * 
+     * @param sql
+     * @param type
+     * @return {@link org.lightmare.criteria.query.layers.QueryLayer} from SQL
+     *         and entity type
+     */
     public <T> QueryLayer<T> query(String sql, Class<T> type) {
         return new JdbcQueryLayer<T>(connection, sql.toString(), type);
     }
@@ -105,6 +114,12 @@ public class JdbcProvider implements LayerProvider {
                 c -> StringUtils.thisOrDefault(c.value(), type::getName));
     }
 
+    /**
+     * gets DB column name from {@link java.lang.reflect.Field} annotation
+     * 
+     * @param field
+     * @return {@link String} DB column name
+     */
     private static String getColumnName(Field field) {
         return ObjectUtils.ifNull(() -> field.getAnnotation(DBColumn.class), c -> field.getName(),
                 c -> StringUtils.thisOrDefault(c.value(), field::getName));

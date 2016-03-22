@@ -15,32 +15,6 @@ public class CounterTuple {
 
     private int parameter = CollectionUtils.SINGLETON;
 
-    /**
-     * Name count tuple
-     * 
-     * @author Levan Tsinadze
-     *
-     */
-    public static class NameCountTuple {
-
-        private final String name;
-
-        private final int count;
-
-        public NameCountTuple(final String name, final int count) {
-            this.count = count;
-            this.name = StringUtils.concat(name, StringUtils.UNDERSCORE, count);
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public int getCount() {
-            return count;
-        }
-    }
-
     private CounterTuple() {
     }
 
@@ -56,7 +30,14 @@ public class CounterTuple {
         return parameter++;
     }
 
-    public NameCountTuple getAndIncrement(String name) {
-        return new NameCountTuple(name, getAndIncrementParameter());
+    public Pair<String, Integer> getAndIncrement(String name) {
+
+        Pair<String, Integer> pair;
+
+        int count = getAndIncrementParameter();
+        String countName = StringUtils.concat(name, StringUtils.UNDERSCORE, count);
+        pair = Pair.of(countName, count);
+
+        return pair;
     }
 }

@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.orm.links;
 
 /**
- * Numeric functions for JPA query
+ * Numeric functions for JPA / JDBC query
  * 
  * @author Levan Tsinadze
  *
