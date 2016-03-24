@@ -35,7 +35,7 @@ import org.lightmare.criteria.query.layers.LayerProvider;
  */
 public abstract class QueryProvider {
 
-    protected QueryProvider() {
+    private QueryProvider() {
         throw new IllegalAccessError();
     }
 

@@ -165,7 +165,8 @@ public interface QueryResolver<T> extends LayerStream<T> {
 
         tuple = LambdaUtils.getOrInit(field);
         tuple.setAlias(getAlias());
-        tuple.setFieldName(getLayerProvider().getColumnName(tuple));
+        String columnName = getLayerProvider().getColumnName(tuple);
+        tuple.setFieldName(columnName);
 
         return tuple;
     }

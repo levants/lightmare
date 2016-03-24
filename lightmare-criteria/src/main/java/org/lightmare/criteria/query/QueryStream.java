@@ -27,6 +27,7 @@ import java.util.function.Consumer;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Query stream of {@link String} based queries for abstract data base layers
@@ -108,7 +109,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
 
         S stream;
 
-        connector.accept(this);
+        ObjectUtils.accept(connector, this);
         stream = brackets(consumer);
 
         return stream;
