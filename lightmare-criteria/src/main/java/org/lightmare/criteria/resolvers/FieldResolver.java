@@ -57,27 +57,11 @@ public class FieldResolver extends DirectFieldResolver {
     /**
      * Removes semicolons from entity name
      * 
-     * @param name
-     * @return {@link String} entity name
-     */
-    private static String clearEntityName(String name) {
-
-        String validName;
-
-        Type type = Type.getType(name);
-        validName = type.getClassName();
-
-        return validName;
-    }
-
-    /**
-     * Removes semicolons from entity name
-     * 
      * @param variable
      * @return {@link String} entity name
      */
     private static String clearEntityName(LocalVariableNode variable) {
-        return clearEntityName(variable.desc);
+        return Type.getType(variable.desc).getClassName();
     }
 
     /**
@@ -166,7 +150,7 @@ public class FieldResolver extends DirectFieldResolver {
 
         String lambdaName = lambda.getImplMethodName();
         String lambdaSignature = lambda.getImplMethodSignature();
-        valid = (methodNode.name.equals(lambdaName) && methodNode.desc.equals(lambdaSignature));
+        valid = (Objects.equals(methodNode.name, lambdaName) && Objects.equals(methodNode.desc, lambdaSignature));
 
         return valid;
     }

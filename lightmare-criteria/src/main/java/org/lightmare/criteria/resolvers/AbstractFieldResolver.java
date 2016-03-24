@@ -90,8 +90,8 @@ class AbstractFieldResolver {
 
         String fieldName;
 
-        String capName = methodName.substring(START_INDEX);
-        fieldName = Introspector.decapitalize(capName);
+        String raw = methodName.substring(START_INDEX);
+        fieldName = Introspector.decapitalize(raw);
 
         return fieldName;
     }
@@ -113,22 +113,24 @@ class AbstractFieldResolver {
     }
 
     /**
-     * Generate type names array from argument types
+     * Gets class names from types
      * 
      * @param argumentTypes
+     * @return
+     */
+    private static String[] fromTypes(Type[] types) {
+        return CollectionUtils.map(types, new String[types.length], Type::getClassName);
+    }
+
+    /**
+     * Generate type names array from method argument types
+     * 
+     * @param methodType
      * @return {@link String} array of argument type names
      */
-    private static String[] mapToNames(Type[] argumentTypes) {
-
-        String[] arguments;
-
-        if (CollectionUtils.isEmpty(argumentTypes)) {
-            arguments = new String[] {};
-        } else {
-            arguments = CollectionUtils.map(argumentTypes, new String[argumentTypes.length], Type::getClassName);
-        }
-
-        return arguments;
+    private static String[] mapToNames(Type methodType) {
+        return ObjectUtils.ifValid(methodType::getArgumentTypes, CollectionUtils::isEmpty, c -> new String[] {},
+                AbstractFieldResolver::fromTypes);
     }
 
     /**
@@ -142,25 +144,24 @@ class AbstractFieldResolver {
         String[] arguments;
 
         Type methodType = Type.getMethodType(desc);
-        Type[] argumentTypes = methodType.getArgumentTypes();
-        arguments = mapToNames(argumentTypes);
+        arguments = mapToNames(methodType);
 
         return arguments;
     }
 
     /**
-     * Validates getter method by name, arguments and return type
+     * Validates getter method by arguments and return type
      * 
-     * @param returnType
-     * @param argumentTypes
+     * @param methodType
      * @return <code>boolean</code> validation result
      */
-    private static boolean validGetter(Type returnType, Type[] argumentTypes) {
-        return (CollectionUtils.isEmpty(argumentTypes) && ObjectUtils.notEquals(Type.VOID_TYPE, returnType));
+    private static boolean validGetter(Type methodType) {
+        return (CollectionUtils.isEmpty(methodType.getArgumentTypes())
+                && ObjectUtils.notEquals(Type.VOID_TYPE, methodType.getReturnType()));
     }
 
     /**
-     * Validates if resolved method is setter or getter for entity field
+     * Validates if resolved method is valid getter for entity field
      * 
      * @param desc
      * @param name
@@ -171,13 +172,7 @@ class AbstractFieldResolver {
         boolean valid;
 
         Type methodType = Type.getMethodType(desc);
-        Type returnType = methodType.getReturnType();
-        Type[] argumentTypes = methodType.getArgumentTypes();
-        if (methodName.startsWith(GET)) {
-            valid = validGetter(returnType, argumentTypes);
-        } else {
-            valid = Boolean.FALSE;
-        }
+        valid = (methodName.startsWith(GET) && validGetter(methodType));
 
         return valid;
     }

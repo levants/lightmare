@@ -43,7 +43,7 @@ public class CachedClassReader extends ClassReader {
     // Cache for class readers
     private static final ConcurrentMap<String, ClassReader> CLASS_FILES = new ConcurrentHashMap<>();
 
-    public CachedClassReader(InputStream is) throws IOException {
+    private CachedClassReader(InputStream is) throws IOException {
         super(is);
     }
 
