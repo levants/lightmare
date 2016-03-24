@@ -85,7 +85,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      */
     default <F extends Comparable<? super F>> S greaterThan(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return gt(field, value);
+        return this.gt(field, value);
     }
 
     /**
@@ -106,7 +106,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      */
     default <F extends Comparable<? super F>> S lessThan(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return lt(field, value);
+        return this.lt(field, value);
     }
 
     /**
@@ -127,7 +127,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      */
     default <F extends Comparable<? super F>> S greaterThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return ge(field, value);
+        return this.ge(field, value);
     }
 
     /**
@@ -148,7 +148,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      */
     default <F extends Comparable<? super F>> S lessThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
-        return le(field, value);
+        return this.le(field, value);
     }
 
     // =============================LIKE=clause==============================//
@@ -264,11 +264,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default S where(QueryConsumer<T, S> consumer) {
-
-        S stream = where();
-        ObjectUtils.accept(consumer, stream);
-
-        return stream;
+        return ObjectUtils.acceptAndGet(this::where, consumer);
     }
 
     /**
@@ -278,11 +274,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default S and(QueryConsumer<T, S> consumer) {
-
-        S stream = and();
-        ObjectUtils.accept(consumer, stream);
-
-        return stream;
+        return ObjectUtils.acceptAndGet(this::and, consumer);
     }
 
     /**
@@ -292,10 +284,6 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default S or(QueryConsumer<T, S> consumer) {
-
-        S stream = or();
-        ObjectUtils.accept(consumer, stream);
-
-        return stream;
+        return ObjectUtils.acceptAndGet(this::or, consumer);
     }
 }

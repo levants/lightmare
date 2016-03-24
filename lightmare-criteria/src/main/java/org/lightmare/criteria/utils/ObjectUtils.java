@@ -39,7 +39,7 @@ import java.util.function.Supplier;
  *
  * @author Levan Tsinadze
  */
-public abstract class ObjectUtils extends FunctionUtils{
+public abstract class ObjectUtils extends FunctionUtils {
 
     /**
      * Checks if passed boolean value is not true
@@ -49,18 +49,6 @@ public abstract class ObjectUtils extends FunctionUtils{
      */
     public static boolean notTrue(boolean statement) {
         return !statement;
-    }
-
-    /**
-     * Validates if passed {@link java.util.function.Predicate} is not
-     * <code>null</code> returns <code>true</code> for passed value
-     * 
-     * @param predicate
-     * @param value
-     * @return <code>boolean</code> validation result
-     */
-    public static <T> boolean test(Predicate<T> predicate, T value) {
-        return (Objects.nonNull(predicate) && predicate.test(value));
     }
 
     /**
@@ -350,18 +338,6 @@ public abstract class ObjectUtils extends FunctionUtils{
         @SuppressWarnings("unchecked")
         T value = (T) instance;
         return value;
-    }
-
-    /**
-     * Validates if {@link java.util.function.Consumer} is not <code>null</code>
-     * and if not calls {@link java.util.function.Consumer#accept(Object)}
-     * method accepts for passed value
-     * 
-     * @param consumer
-     * @param value
-     */
-    public static <T> void accept(Consumer<T> consumer, T value) {
-        ObjectUtils.nonNull(consumer, c -> c.accept(value));
     }
 
     /**
