@@ -54,7 +54,8 @@ public class AbstractEntityProcessor {
      * 
      * @param method
      * @param properties
-     * @return
+     * @return {@link java.util.Optional} of
+     *         {@link java.beans.PropertyDescriptor}
      */
     private static Optional<PropertyDescriptor> find(Method method, PropertyDescriptor[] properties) {
         return Stream.of(properties).filter(c -> validateField(method, c)).findAny();
@@ -97,7 +98,7 @@ public class AbstractEntityProcessor {
      * Corrects resolved {@link java.lang.reflect.Field} name and sets
      * {@link java.lang.reflect.Method} to passed
      * {@link org.lightmare.criteria.tuples.QueryTuple} instance if type
-     * parameter is not null
+     * parameter is not <code>null</code>
      * 
      * @param method
      * @param tuple

@@ -33,7 +33,7 @@ public class EntityValidator {
      * 
      * @param type
      * @param resolved
-     * @return @return <code>boolean</code> validation result
+     * @return <code>boolean</code> validation result
      */
     private static boolean typeMismatched(Class<?> type, Class<?> resolved) {
         return (resolved.isInterface() || classMismatch(type, resolved));

@@ -78,7 +78,6 @@ public class QueryTuple implements Serializable, Cloneable {
      * 
      * @param entityName
      * @param methodName
-     * @param arguments
      * @param fieldName
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} instance
      */
