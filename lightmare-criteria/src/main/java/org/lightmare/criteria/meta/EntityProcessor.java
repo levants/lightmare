@@ -22,19 +22,12 @@
  */
 package org.lightmare.criteria.meta;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Optional;
-import java.util.stream.Stream;
 
-import org.apache.log4j.Logger;
+import org.lightmare.criteria.tuples.Pair;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ClassUtils;
-import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -44,112 +37,42 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @author Levan Tsinadze
  *
  */
-public class EntityProcessor {
-
-    private static final Logger LOG = Logger.getLogger(EntityProcessor.class);
+public class EntityProcessor extends AbstractEntityProcessor {
 
     /**
-     * Resolves {@link java.lang.reflect.Method} argument types
+     * Gets resolved {@link java.lang.reflect.Method} of entity
      * 
      * @param tuple
-     * @return {@link Class} array by names for argument types
-     */
-    private static Class<?>[] getArgumentTypes(QueryTuple tuple) {
-
-        Class<?>[] argumentTypes;
-
-        String[] names = tuple.getArguments();
-        if (CollectionUtils.isEmpty(names)) {
-            argumentTypes = new Class<?>[] {};
-        } else {
-            argumentTypes = CollectionUtils.map(names, new Class<?>[names.length], ClassUtils::classForName);
-        }
-
-        return argumentTypes;
-    }
-
-    /**
-     * Validates if {@link java.lang.reflect.Method} is getter for
-     * {@link java.beans.PropertyDescriptor} instance
-     * 
-     * @param method
-     * @param decriptor
-     * @return <code>boolean</code> validation result
-     */
-    private static boolean validateField(Method method, PropertyDescriptor decriptor) {
-        return (method.equals(decriptor.getReadMethod()));
-    }
-
-    /**
-     * Gets {@link java.util.Optional} of {@link java.beans.PropertyDescriptor}
-     * for field by getter or setter {@link java.lang.reflect.Method} instance
-     * 
-     * @param method
-     * @param properties
      * @return
      */
-    private static Optional<PropertyDescriptor> find(Method method, PropertyDescriptor[] properties) {
-        return Stream.of(properties).filter(c -> validateField(method, c)).findAny();
+    private static Method getMethod(QueryTuple tuple) {
+
+        Method method;
+
+        Class<?>[] argumentTypes = getArgumentTypes(tuple);
+        method = ClassUtils.findMethod(tuple.getEntityType(), tuple.getMethodName(), argumentTypes);
+
+        return method;
     }
 
     /**
-     * If resolved name not equals {@link java.beans.PropertyDescriptor}
-     * provided name then switches this names in passed
-     * {@link org.lightmare.criteria.tuples.QueryTuple} instance
+     * Gets {@link org.lightmare.criteria.tuples.Pair} of
+     * {@link java.lang.reflect.Method} and {@link java.lang.reflect.Field} for
+     * entity type
      * 
-     * @param descriptor
-     * @param tuple
+     * @return {@link org.lightmare.criteria.tuples.Pair} of
+     *         {@link java.lang.reflect.Method} and
+     *         {@link java.lang.reflect.Field}
      */
-    private static void setFieldName(PropertyDescriptor descriptor, QueryTuple tuple) {
-        String realName = descriptor.getDisplayName();
-        ObjectUtils.notEquals(tuple.getFieldName(), realName, (x, y) -> tuple.setFieldName(y));
-    }
+    private static Pair<Method, Field> getEntityMembers(QueryTuple tuple) {
 
-    /**
-     * Corrects resolved {@link java.lang.reflect.Field} name and sets
-     * {@link java.lang.reflect.Method} to passed
-     * {@link org.lightmare.criteria.tuples.QueryTuple} instance
-     * 
-     * @param type
-     * @param method
-     * @param tuple
-     */
-    private static void setProperField(Class<?> type, Method method, QueryTuple tuple) {
+        Pair<Method, Field> pair;
 
-        try {
-            BeanInfo benInfo = Introspector.getBeanInfo(type, Object.class, Introspector.USE_ALL_BEANINFO);
-            PropertyDescriptor[] properties = benInfo.getPropertyDescriptors();
-            Optional<PropertyDescriptor> optional = find(method, properties);
-            optional.ifPresent(c -> setFieldName(c, tuple));
-        } catch (IntrospectionException ex) {
-            LOG.error(ex.getMessage(), ex);
-        }
-    }
+        Method method = getMethod(tuple);
+        Field field = ClassUtils.findField(tuple.getEntityType(), tuple.getFieldName());
+        pair = Pair.of(method, field);
 
-    /**
-     * Validates if field can and should resolved from {@link Class} parameter
-     * 
-     * @param type
-     * @return <code>boolean</code> validation result
-     */
-    public static boolean fieldResolvable(Class<?> type) {
-        return ClassUtils.notInterface(type);
-    }
-
-    /**
-     * Corrects resolved {@link java.lang.reflect.Field} name and sets
-     * {@link java.lang.reflect.Method} to passed
-     * {@link org.lightmare.criteria.tuples.QueryTuple} instance if type
-     * parameter is not null
-     * 
-     * @param method
-     * @param tuple
-     */
-    private static void setProperField(Method method, QueryTuple tuple) {
-
-        tuple.setMethod(method);
-        Class<?> type = method.getDeclaringClass();
-        ObjectUtils.valid(type, EntityProcessor::fieldResolvable, c -> setProperField(c, method, tuple));
+        return pair;
     }
 
     /**
@@ -160,12 +83,9 @@ public class EntityProcessor {
      */
     public static void setMethodAndField(QueryTuple tuple) {
 
-        Class<?> entityType = tuple.getEntityType();
-        Class<?>[] argumentTypes = getArgumentTypes(tuple);
-        Method method = ClassUtils.findMethod(entityType, tuple.getMethodName(), argumentTypes);
-        ObjectUtils.nonNull(method, c -> setProperField(c, tuple));
-        Field field = ClassUtils.findField(entityType, tuple.getFieldName());
-        ObjectUtils.nonNull(field, tuple::setField);
+        Pair<Method, Field> pair = getEntityMembers(tuple);
+        ObjectUtils.nonNull(pair.getFirst(), c -> setProperField(c, tuple));
+        ObjectUtils.nonNull(pair.getSecond(), tuple::setField);
     }
 
     /**

@@ -16,17 +16,6 @@ import org.lightmare.criteria.utils.ClassUtils;
 public class EntityValidator {
 
     /**
-     * Validates if entity {@link Class} is not annotated with
-     * {@link javax.persistence.MappedSuperclass} annotation
-     * 
-     * @param type
-     * @return <code>boolean</code> validation result
-     */
-    private static boolean notMappedSuperclass(Class<?> type) {
-        return ClassUtils.notAnnotated(type, MappedSuperclass.class);
-    }
-
-    /**
      * Validates if resolved {@link Class} is not match with entity
      * {@link Class} and should be switched further processing
      * 
@@ -35,7 +24,19 @@ public class EntityValidator {
      * @return <code>boolean</code> validation result
      */
     private static boolean classMismatch(Class<?> type, Class<?> resolved) {
-        return (ClassUtils.isOnlyAssignable(resolved, type) && notMappedSuperclass(resolved));
+        return (ClassUtils.isOnlyAssignable(resolved, type) && ClassUtils.notAnnotated(type, MappedSuperclass.class));
+    }
+
+    /**
+     * Validates if resolved entity {@link Class} and entity {@link Class} not
+     * matches
+     * 
+     * @param type
+     * @param resolved
+     * @return @return <code>boolean</code> validation result
+     */
+    private static boolean typeMismatched(Class<?> type, Class<?> resolved) {
+        return (resolved.isInterface() || classMismatch(type, resolved));
     }
 
     /**
@@ -43,15 +44,11 @@ public class EntityValidator {
      * {@link org.lightmare.criteria.tuples.QueryTuple} and entity {@link Class}
      * not matches
      * 
+     * @param type
+     * @param tuple
      * @return <code>boolean</code> validation result
      */
     public static boolean typeMismatched(Class<?> type, QueryTuple tuple) {
-
-        boolean valid;
-
-        Class<?> resolved = tuple.getEntityType();
-        valid = (resolved.isInterface() || classMismatch(type, resolved));
-
-        return valid;
+        return typeMismatched(type, tuple.getEntityType());
     }
 }
