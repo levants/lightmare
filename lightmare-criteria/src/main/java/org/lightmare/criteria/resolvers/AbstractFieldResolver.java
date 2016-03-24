@@ -103,50 +103,7 @@ class AbstractFieldResolver {
      * @return {@link String} entity name
      */
     protected static String resolveEntityName(String owner) {
-
-        String entityName;
-
-        Type entityType = Type.getObjectType(owner);
-        entityName = entityType.getClassName();
-
-        return entityName;
-    }
-
-    /**
-     * Gets class names from types
-     * 
-     * @param argumentTypes
-     * @return
-     */
-    private static String[] fromTypes(Type[] types) {
-        return CollectionUtils.map(types, new String[types.length], Type::getClassName);
-    }
-
-    /**
-     * Generate type names array from method argument types
-     * 
-     * @param methodType
-     * @return {@link String} array of argument type names
-     */
-    private static String[] mapToNames(Type methodType) {
-        return ObjectUtils.ifValid(methodType::getArgumentTypes, CollectionUtils::isEmpty, c -> new String[] {},
-                AbstractFieldResolver::fromTypes);
-    }
-
-    /**
-     * resolves argument {@link org.objectweb.asm.Type}s for method descriptor
-     * 
-     * @param desc
-     * @return {@link String} array of argument type names
-     */
-    private static String[] resolveArgumentsTypes(String desc) {
-
-        String[] arguments;
-
-        Type methodType = Type.getMethodType(desc);
-        arguments = mapToNames(methodType);
-
-        return arguments;
+        return Type.getObjectType(owner).getClassName();
     }
 
     /**
@@ -227,8 +184,7 @@ class AbstractFieldResolver {
         String methodName = resolverTuple.getName();
         String fieldName = resolveFieldName(methodName);
         String entityName = nameResolver.apply(resolverTuple.getType());
-        String[] arguments = resolveArgumentsTypes(resolverTuple.getDesc());
-        tuple = QueryTuple.of(entityName, methodName, arguments, fieldName);
+        tuple = QueryTuple.of(entityName, methodName, fieldName);
         setMetaData(tuple);
 
         return tuple;

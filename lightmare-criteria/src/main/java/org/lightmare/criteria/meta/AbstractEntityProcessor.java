@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 import org.apache.log4j.Logger;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ClassUtils;
-import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -35,21 +34,6 @@ public class AbstractEntityProcessor {
      */
     public static boolean fieldResolvable(Class<?> type) {
         return ClassUtils.notInterface(type);
-    }
-
-    private static Class<?>[] fromNames(String[] names) {
-        return CollectionUtils.map(names, new Class<?>[names.length], ClassUtils::classForName);
-    }
-
-    /**
-     * Resolves {@link java.lang.reflect.Method} argument types
-     * 
-     * @param tuple
-     * @return {@link Class} array by names for argument types
-     */
-    protected static Class<?>[] getArgumentTypes(QueryTuple tuple) {
-        return ObjectUtils.ifValid(tuple::getArguments, CollectionUtils::isEmpty, c -> new Class<?>[] {},
-                AbstractEntityProcessor::fromNames);
     }
 
     /**

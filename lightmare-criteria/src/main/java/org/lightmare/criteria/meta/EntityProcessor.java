@@ -40,22 +40,6 @@ import org.lightmare.criteria.utils.ObjectUtils;
 public class EntityProcessor extends AbstractEntityProcessor {
 
     /**
-     * Gets resolved {@link java.lang.reflect.Method} of entity
-     * 
-     * @param tuple
-     * @return
-     */
-    private static Method getMethod(QueryTuple tuple) {
-
-        Method method;
-
-        Class<?>[] argumentTypes = getArgumentTypes(tuple);
-        method = ClassUtils.findMethod(tuple.getEntityType(), tuple.getMethodName(), argumentTypes);
-
-        return method;
-    }
-
-    /**
      * Gets {@link org.lightmare.criteria.tuples.Pair} of
      * {@link java.lang.reflect.Method} and {@link java.lang.reflect.Field} for
      * entity type
@@ -68,7 +52,7 @@ public class EntityProcessor extends AbstractEntityProcessor {
 
         Pair<Method, Field> pair;
 
-        Method method = getMethod(tuple);
+        Method method = ClassUtils.findMethod(tuple.getEntityType(), tuple.getMethodName());
         Field field = ClassUtils.findField(tuple.getEntityType(), tuple.getFieldName());
         pair = Pair.of(method, field);
 

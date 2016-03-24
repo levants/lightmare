@@ -46,8 +46,6 @@ public class QueryTuple implements Serializable, Cloneable {
 
     private final String methodName;
 
-    private final String[] arguments;
-
     private String fieldName;
 
     private Class<?> entityType;
@@ -68,11 +66,9 @@ public class QueryTuple implements Serializable, Cloneable {
 
     private static final String FORMATTER = "%s %s %s";
 
-    protected QueryTuple(final String entityName, final String methodName, final String[] arguments,
-            final String fieldName) {
+    protected QueryTuple(final String entityName, final String methodName, final String fieldName) {
         this.entityName = entityName;
         this.methodName = methodName;
-        this.arguments = arguments;
         this.fieldName = fieldName;
     }
 
@@ -86,9 +82,8 @@ public class QueryTuple implements Serializable, Cloneable {
      * @param fieldName
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} instance
      */
-    public static QueryTuple of(final String entityName, final String methodName, final String[] arguments,
-            final String fieldName) {
-        return new QueryTuple(entityName, methodName, arguments, fieldName);
+    public static QueryTuple of(final String entityName, final String methodName, final String fieldName) {
+        return new QueryTuple(entityName, methodName, fieldName);
     }
 
     /**
@@ -99,7 +94,7 @@ public class QueryTuple implements Serializable, Cloneable {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} instance
      */
     public static QueryTuple of(final String fieldName) {
-        return new QueryTuple(null, null, null, fieldName);
+        return new QueryTuple(null, null, fieldName);
     }
 
     public String getEntityName() {
@@ -112,10 +107,6 @@ public class QueryTuple implements Serializable, Cloneable {
 
     public String getMethodName() {
         return methodName;
-    }
-
-    public String[] getArguments() {
-        return arguments;
     }
 
     public void setFieldName(String fieldName) {
