@@ -14,6 +14,27 @@ import java.util.function.Supplier;
 abstract class AbstractFunctionUtils implements Functions {
 
     /**
+     * Validates passed {@link java.util.function.Supplier} on <code>null</code>
+     * and get result from it
+     * 
+     * @param supplier
+     * @return T result from {@link java.util.function.Supplier} or
+     *         <code>null</code>
+     */
+    public static <T> T get(Supplier<T> supplier) {
+
+        T result;
+
+        if (Objects.nonNull(supplier)) {
+            result = supplier.get();
+        } else {
+            result = null;
+        }
+
+        return result;
+    }
+
+    /**
      * Validates if passed {@link java.util.function.Predicate} is not
      * <code>null</code> returns <code>true</code> for passed value
      * 

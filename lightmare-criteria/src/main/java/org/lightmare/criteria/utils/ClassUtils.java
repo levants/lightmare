@@ -36,7 +36,7 @@ public class ClassUtils extends AbstractMemberUtils {
      * @return {@link Class} by name
      */
     private static Class<?> forName(String className) {
-        return ObjectUtils.apply(className, Class::forName);
+        return ObjectUtils.applyQuietly(className, Class::forName);
     }
 
     /**
@@ -48,7 +48,7 @@ public class ClassUtils extends AbstractMemberUtils {
      * @return {@link Class} by name
      */
     private static Class<?> forName(String className, boolean initialize, ClassLoader loader) {
-        return ObjectUtils.apply(className, initialize, (c, i) -> Class.forName(c, i, loader));
+        return ObjectUtils.applyQuietly(className, initialize, (c, i) -> Class.forName(c, i, loader));
     }
 
     /**

@@ -199,7 +199,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @return {@link java.lang.reflect.Constructor} for passed {@link Class}
      */
     private static <T> Constructor<T> getConstructor(Class<T> type) {
-        return ObjectUtils.apply(type, Class::getConstructor);
+        return ObjectUtils.applyQuietly(type, Class::getConstructor);
     }
 
     /**
@@ -214,7 +214,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
 
         Constructor<T> constructor = getConstructor(type);
         makeAccessible(constructor);
-        instance = ObjectUtils.apply(constructor, Constructor::newInstance);
+        instance = ObjectUtils.applyQuietly(constructor, Constructor::newInstance);
 
         return instance;
     }
@@ -228,7 +228,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param value
      */
     public static void set(Field field, Object instance, Object value) {
-        ObjectUtils.call(instance, value, field::set);
+        ObjectUtils.acceptQuietly(instance, value, field::set);
     }
 
     /**

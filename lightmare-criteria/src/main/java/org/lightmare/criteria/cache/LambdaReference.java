@@ -29,7 +29,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Implementation of {@link java.lang.ref.PhantomReference} for tracking lambda
- * generated classes
+ * generated classes and cache removal strategy
  * 
  * @author Levan Tsinadze
  *

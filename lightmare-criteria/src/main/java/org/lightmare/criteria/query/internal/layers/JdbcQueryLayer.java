@@ -147,11 +147,11 @@ public class JdbcQueryLayer<T> implements JpaJdbcQueryLayer<T> {
 
     private static void putParameter(Integer key, ParameterTuple parameter, PreparedStatement statement) {
         Object value = parameter.getValue();
-        ObjectUtils.call(key, value, statement::setObject);
+        ObjectUtils.acceptQuietly(key, value, statement::setObject);
     }
 
     private PreparedStatement call(JdbcFunction function) {
-        return ObjectUtils.apply(function, c -> {
+        return ObjectUtils.applyQuietly(function, c -> {
 
             PreparedStatement result;
 
@@ -164,11 +164,11 @@ public class JdbcQueryLayer<T> implements JpaJdbcQueryLayer<T> {
     }
 
     private <P, R> R call(JdbcSupplier<R> supplier) {
-        return ObjectUtils.apply(supplier, JdbcSupplier::supply);
+        return ObjectUtils.applyQuietly(supplier, JdbcSupplier::supply);
     }
 
     private <P> void consume(P value, JdbcConsumer<P> consumer) {
-        ObjectUtils.call(consumer, value, JdbcConsumer::accept);
+        ObjectUtils.acceptQuietly(consumer, value, JdbcConsumer::accept);
     }
 
     private ResultSet executeQuery() throws SQLException {

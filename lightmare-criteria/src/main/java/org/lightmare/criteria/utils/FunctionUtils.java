@@ -14,7 +14,7 @@ abstract class FunctionUtils extends AbstractFunctionUtils {
      * @param value
      * @param consumer
      */
-    public static <T, E extends Exception> void call(T value, ConsumerEx<T, E> consumer) {
+    public static <T, E extends Exception> void acceptQuietly(T value, ConsumerEx<T, E> consumer) {
 
         try {
             consumer.accept(value);
@@ -30,7 +30,7 @@ abstract class FunctionUtils extends AbstractFunctionUtils {
      * @param value2
      * @param consumer
      */
-    public static <T, K, E extends Exception> void call(T value1, K value2, BiConsumerEx<T, K, E> consumer) {
+    public static <T, K, E extends Exception> void acceptQuietly(T value1, K value2, BiConsumerEx<T, K, E> consumer) {
 
         try {
             consumer.accept(value1, value2);
@@ -45,7 +45,7 @@ abstract class FunctionUtils extends AbstractFunctionUtils {
      * @param supplier
      * @return T result from supplier
      */
-    public static <T, E extends Exception> T get(SupplierEx<T, E> supplier) {
+    public static <T, E extends Exception> T getQuietly(SupplierEx<T, E> supplier) {
 
         T result;
 
@@ -65,7 +65,7 @@ abstract class FunctionUtils extends AbstractFunctionUtils {
      * @param function
      * @return R result from function
      */
-    public static <T, R, E extends Exception> R apply(T value, FunctionEx<T, R, E> function) {
+    public static <T, R, E extends Exception> R applyQuietly(T value, FunctionEx<T, R, E> function) {
 
         R result;
 
@@ -86,7 +86,7 @@ abstract class FunctionUtils extends AbstractFunctionUtils {
      * @param function
      * @return R result from function
      */
-    public static <T, K, R, E extends Exception> R apply(T value1, K value2, BiFunctionEx<T, K, R, E> function) {
+    public static <T, K, R, E extends Exception> R applyQuietly(T value1, K value2, BiFunctionEx<T, K, R, E> function) {
 
         R result;
 

@@ -172,7 +172,7 @@ public class DefaultConfiguration {
              * @param rs
              */
             public void set(Object instance, ResultSet rs) {
-                ObjectUtils.call(instance, rs, this::getAndSet);
+                ObjectUtils.acceptQuietly(instance, rs, this::getAndSet);
             }
         }
 

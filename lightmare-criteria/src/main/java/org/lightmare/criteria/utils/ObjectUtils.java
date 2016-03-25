@@ -115,7 +115,7 @@ public abstract class ObjectUtils extends FunctionUtils {
      * @param consumer
      */
     public static <T> void ifNotNull(Supplier<T> supplier, Consumer<T> consumer) {
-        T value = supplier.get();
+        T value = get(supplier);
         nonNull(value, consumer);
     }
 
@@ -136,7 +136,7 @@ public abstract class ObjectUtils extends FunctionUtils {
 
         T result;
 
-        K value = supplier.get();
+        K value = get(supplier);
         if (Objects.nonNull(function) && test(predicate, value)) {
             result = function.apply(value);
         } else {
@@ -255,7 +255,7 @@ public abstract class ObjectUtils extends FunctionUtils {
 
         T result;
 
-        T value = supplier.get();
+        T value = get(supplier);
         result = ifIsNull(value, function, c -> value);
 
         return result;
@@ -389,7 +389,7 @@ public abstract class ObjectUtils extends FunctionUtils {
      * @return <code>byte</code> array serialized object
      */
     public static byte[] serialize(Object value) {
-        return apply(value, c -> {
+        return applyQuietly(value, c -> {
 
             byte[] bytes;
 
@@ -411,7 +411,7 @@ public abstract class ObjectUtils extends FunctionUtils {
      * @return {@link Object}
      */
     private static Object readToObject(byte[] bytes) {
-        return apply(bytes, c -> {
+        return applyQuietly(bytes, c -> {
 
             Object value;
 
@@ -453,7 +453,7 @@ public abstract class ObjectUtils extends FunctionUtils {
         T result;
 
         if (value == null) {
-            result = supplier.get();
+            result = get(supplier);
         } else {
             result = value;
         }
@@ -476,7 +476,7 @@ public abstract class ObjectUtils extends FunctionUtils {
         T result;
 
         if (value == null) {
-            result = supplier.get();
+            result = get(supplier);
             accept(setter, result);
         } else {
             result = value;
@@ -495,6 +495,6 @@ public abstract class ObjectUtils extends FunctionUtils {
      * @return T value
      */
     public static <T> T getOrInit(Supplier<T> supplier, Supplier<T> initSupplier) {
-        return ifNull(supplier, c -> initSupplier.get());
+        return ifNull(supplier, c -> get(initSupplier));
     }
 }

@@ -147,6 +147,6 @@ public class JdbcProvider implements LayerProvider {
 
     @Override
     public void close() {
-        ObjectUtils.call(connection, Connection::close);
+        ObjectUtils.acceptQuietly(connection, Connection::close);
     }
 }
