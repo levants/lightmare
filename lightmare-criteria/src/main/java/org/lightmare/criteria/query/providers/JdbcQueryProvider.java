@@ -40,10 +40,10 @@ public abstract class JdbcQueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryProvider}
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
      *         with delete statement
      */
-    public static <T> JpaQueryStream<T> delete(final Connection connection, Class<T> entityType) {
+    public static <T> JdbcQueryStream<T> delete(final Connection connection, Class<T> entityType) {
         return QueryProvider.delete(new JdbcProvider(connection), entityType, JdbcQueryStreamBuilder::delete);
     }
 
@@ -52,10 +52,10 @@ public abstract class JdbcQueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryProvider}
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
      *         with update statement
      */
-    public static <T> JpaQueryStream<T> update(final Connection connection, Class<T> entityType) {
+    public static <T> JdbcQueryStream<T> update(final Connection connection, Class<T> entityType) {
         return QueryProvider.update(new JdbcProvider(connection), entityType, JdbcQueryStreamBuilder::update);
     }
 
@@ -64,10 +64,10 @@ public abstract class JdbcQueryProvider {
      * 
      * @param connection
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryProvider}
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
      *         with select statement
      */
-    public static <T> JpaQueryStream<T> select(final Connection connection, Class<T> entityType) {
+    public static <T> JdbcQueryStream<T> select(final Connection connection, Class<T> entityType) {
         return QueryProvider.select(new JdbcProvider(connection), entityType, JdbcQueryStreamBuilder::select);
     }
 }

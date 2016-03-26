@@ -45,10 +45,10 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder}
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         with select statement
      */
-    protected static <T> JpaQueryStreamBuilder<T> delete(final LayerProvider provider, final Class<T> entityType) {
+    protected static <T> JpaQueryStream<T> delete(final LayerProvider provider, final Class<T> entityType) {
 
         JpaQueryStreamBuilder<T> stream;
 
@@ -64,10 +64,10 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder}
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         with select statement
      */
-    protected static <T> JpaQueryStreamBuilder<T> update(final LayerProvider provider, final Class<T> entityType) {
+    protected static <T> JpaQueryStream<T> update(final LayerProvider provider, final Class<T> entityType) {
 
         JpaQueryStreamBuilder<T> stream;
 
@@ -83,10 +83,10 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStreamBuilder}
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         with select statement
      */
-    protected static <T> JpaQueryStreamBuilder<T> query(final LayerProvider provider, final Class<T> entityType) {
+    protected static <T> JpaQueryStream<T> query(final LayerProvider provider, final Class<T> entityType) {
 
         JpaQueryStreamBuilder<T> stream;
 

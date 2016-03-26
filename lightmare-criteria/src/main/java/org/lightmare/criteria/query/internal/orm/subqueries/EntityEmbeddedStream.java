@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal;
+package org.lightmare.criteria.query.internal.orm.subqueries;
 
 import java.io.Serializable;
 
@@ -30,8 +30,9 @@ import org.lightmare.criteria.tuples.EmbeddedTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
- * Implementation of {@link org.lightmare.criteria.query.providers.JpaQueryStream} to
- * process embedded or "one to one" or "many to one" joined field statements
+ * Implementation of
+ * {@link org.lightmare.criteria.query.providers.JpaQueryStream} to process
+ * embedded or "one to one" or "many to one" joined field statements
  * 
  * @author Levan Tsinadze
  *
@@ -44,8 +45,7 @@ public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
 
     private final String embeddedName;
 
-    protected EntityEmbeddedStream(final AbstractQueryStream<T> parent, final Class<S> type,
-            final String embeddedName) {
+    public EntityEmbeddedStream(final AbstractQueryStream<T> parent, final Class<S> type, final String embeddedName) {
         super(parent, parent.getAlias(), type);
         this.embeddedName = embeddedName;
     }

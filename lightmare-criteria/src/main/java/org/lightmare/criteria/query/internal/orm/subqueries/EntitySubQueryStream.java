@@ -20,12 +20,11 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal;
+package org.lightmare.criteria.query.internal.orm.subqueries;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
-import org.lightmare.criteria.query.internal.orm.subqueries.AbstractSubQueryStream;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
@@ -40,13 +39,13 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  * @param <T>
  *            parent entity type for generated query
  */
-class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
+public class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
 
-    protected EntitySubQueryStream(AbstractQueryStream<T> parent, Class<S> type) {
+    public EntitySubQueryStream(AbstractQueryStream<T> parent, Class<S> type) {
         super(parent, type);
     }
 
-    protected EntitySubQueryStream(AbstractQueryStream<T> parent, String alias, Class<S> type) {
+    public EntitySubQueryStream(AbstractQueryStream<T> parent, String alias, Class<S> type) {
         super(parent, alias, type);
     }
 

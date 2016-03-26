@@ -28,12 +28,13 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractAggregateStream;
+import org.lightmare.criteria.query.internal.orm.subqueries.EntityEmbeddedStream;
+import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream;
 import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
-import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Query builder from setter method references
@@ -175,36 +176,6 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         return new EntitySubQueryStream<S, T>(this, type);
     }
 
-    /**
-     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     * for JOIN query
-     * 
-     * @param type
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         JOIN query
-     */
-    public <S> SubQueryStream<S, T> joinStream(Class<S> type) {
-        return new EntityJoinProcessor<S, T>(this, type);
-    }
-
-    /**
-     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     * for JOIN query
-     * 
-     * @param tuple
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         JOIN query
-     */
-    public <S> JpaQueryStream<S> joinStream(QueryTuple tuple) {
-
-        JpaQueryStream<S> joinStream;
-
-        Class<S> type = tuple.getCollectionType();
-        joinStream = joinStream(type);
-
-        return joinStream;
-    }
-
     // =========================operate=sub=queries==========================//
 
     /**
@@ -296,16 +267,23 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
 
     // ===============================Joins==================================//
 
+    /**
+     * Generates JOIN clause
+     * 
+     * @param field
+     * @param expression
+     * @param consumer
+     */
+    private <E, C extends Collection<E>> void joinBody(EntityField<T, C> field, String expression,
+            QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        JpaQueryStream<E> joinQuery = joinStream(field, expression, consumer);
+        acceptAndCall(consumer, joinQuery);
+    }
+
     @Override
     public <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
-
-        QueryTuple tuple = oppJoin(field, expression);
-        JpaQueryStream<E> joinQuery = joinStream(tuple);
-        appendJoin(joinQuery.getAlias());
-        appendJoin(StringUtils.NEWLINE);
-        acceptAndCall(consumer, joinQuery);
-
+        joinBody(field, expression, consumer);
         return this;
     }
 

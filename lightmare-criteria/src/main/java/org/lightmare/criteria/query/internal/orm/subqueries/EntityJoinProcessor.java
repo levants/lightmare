@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal;
+package org.lightmare.criteria.query.internal.orm.subqueries;
 
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
 
@@ -36,11 +36,11 @@ import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
  * @param <T>
  *            entity type parameter for generated query
  */
-class EntityJoinProcessor<S, T> extends EntitySubQueryStream<S, T> {
+public class EntityJoinProcessor<S, T> extends EntitySubQueryStream<S, T> {
 
     private boolean parentOperator;
 
-    protected EntityJoinProcessor(AbstractQueryStream<T> parent, Class<S> entityType) {
+    public EntityJoinProcessor(AbstractQueryStream<T> parent, Class<S> entityType) {
         super(parent, entityType);
     }
 

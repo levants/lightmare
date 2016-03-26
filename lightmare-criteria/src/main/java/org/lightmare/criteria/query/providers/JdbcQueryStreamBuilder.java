@@ -34,7 +34,7 @@ import org.lightmare.criteria.query.layers.LayerProvider;
  * @param <T>
  *            entity type parameter for generated query
  */
-public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
+public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> implements JdbcQueryStream<T> {
 
     protected JdbcQueryStreamBuilder(LayerProvider provider, Class<T> entityType) {
         super(provider, entityType);
@@ -45,10 +45,10 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder}
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
      *         with delete statement
      */
-    protected static <T> JdbcQueryStreamBuilder<T> delete(final LayerProvider provider, final Class<T> entityType) {
+    protected static <T> JdbcQueryStream<T> delete(final LayerProvider provider, final Class<T> entityType) {
 
         JdbcQueryStreamBuilder<T> stream;
 
@@ -64,10 +64,10 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder}
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
      *         with update statement
      */
-    protected static <T> JdbcQueryStreamBuilder<T> update(final LayerProvider provider, final Class<T> entityType) {
+    protected static <T> JdbcQueryStream<T> update(final LayerProvider provider, final Class<T> entityType) {
 
         JdbcQueryStreamBuilder<T> stream;
 
@@ -83,10 +83,10 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStreamBuilder}
+     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
      *         with select statement
      */
-    protected static <T> JdbcQueryStreamBuilder<T> select(final LayerProvider provider, final Class<T> entityType) {
+    protected static <T> JdbcQueryStream<T> select(final LayerProvider provider, final Class<T> entityType) {
 
         JdbcQueryStreamBuilder<T> stream;
 
