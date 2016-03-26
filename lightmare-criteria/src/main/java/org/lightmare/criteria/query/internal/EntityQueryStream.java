@@ -28,7 +28,6 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractAggregateStream;
-import org.lightmare.criteria.query.internal.orm.links.Joins;
 import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
@@ -298,7 +297,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     // ===============================Joins==================================//
 
     @Override
-    public <E, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
+    public <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
 
         QueryTuple tuple = oppJoin(field, expression);
@@ -306,26 +305,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendJoin(joinQuery.getAlias());
         appendJoin(StringUtils.NEWLINE);
         acceptAndCall(consumer, joinQuery);
-    }
 
-    @Override
-    public <E, C extends Collection<E>> JpaQueryStream<T> join(EntityField<T, C> field,
-            QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        procesJoin(field, Joins.JOIN, consumer);
-        return this;
-    }
-
-    @Override
-    public <E, C extends Collection<E>> JpaQueryStream<T> leftJoin(EntityField<T, C> field,
-            QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        procesJoin(field, Joins.LEFT, consumer);
-        return this;
-    }
-
-    @Override
-    public <E, C extends Collection<E>> JpaQueryStream<T> fetchJoin(EntityField<T, C> field,
-            QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        procesJoin(field, Joins.FETCH, consumer);
         return this;
     }
 

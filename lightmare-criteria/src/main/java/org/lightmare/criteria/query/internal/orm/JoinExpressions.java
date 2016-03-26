@@ -26,6 +26,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.internal.orm.links.Joins;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
@@ -45,7 +46,7 @@ public interface JoinExpressions<T> {
      * @param expression
      * @param consumer
      */
-    <E, C extends Collection<E>> void procesJoin(EntityField<T, C> field, String expression,
+    <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
             QueryConsumer<E, JpaQueryStream<E>> consumer);
 
     /**
@@ -53,18 +54,21 @@ public interface JoinExpressions<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
-    <E, C extends Collection<E>> JpaQueryStream<T> join(EntityField<T, C> field,
-            QueryConsumer<E, JpaQueryStream<E>> consumer);
+    default <E, C extends Collection<E>> JpaQueryStream<T> join(EntityField<T, C> field,
+            QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        JpaQueryStream<T> stream = procesJoin(field, Joins.JOIN, consumer);
+        return stream;
+    }
 
     /**
      * Method for INNER JOIN function call without conditions
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     default <E, C extends Collection<E>> JpaQueryStream<T> join(EntityField<T, C> field) {
         return join(field, null);
@@ -75,18 +79,21 @@ public interface JoinExpressions<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
-    <E, C extends Collection<E>> JpaQueryStream<T> leftJoin(EntityField<T, C> field,
-            QueryConsumer<E, JpaQueryStream<E>> consumer);
+    default <E, C extends Collection<E>> JpaQueryStream<T> leftJoin(EntityField<T, C> field,
+            QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        JpaQueryStream<T> stream = procesJoin(field, Joins.LEFT, consumer);
+        return stream;
+    }
 
     /**
      * Method for LEFT JOIN function call without conditions
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     default <E, C extends Collection<E>> JpaQueryStream<T> leftJoin(EntityField<T, C> field) {
         return leftJoin(field, null);
@@ -97,18 +104,21 @@ public interface JoinExpressions<T> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
-    <E, C extends Collection<E>> JpaQueryStream<T> fetchJoin(EntityField<T, C> field,
-            QueryConsumer<E, JpaQueryStream<E>> consumer);
+    default <E, C extends Collection<E>> JpaQueryStream<T> fetchJoin(EntityField<T, C> field,
+            QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        JpaQueryStream<T> stream = procesJoin(field, Joins.FETCH, consumer);
+        return stream;
+    }
 
     /**
      * Method for FETCH JOIN function call without conditions
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     default <E, C extends Collection<E>> JpaQueryStream<T> fetchJoin(EntityField<T, C> field) {
         return fetchJoin(field, null);
