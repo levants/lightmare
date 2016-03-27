@@ -34,8 +34,9 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *            entity type parameter
  */
 public interface QueryExpression<T> extends ORMQueryWrapper<T>, Expression<T, JpaQueryStream<T>>,
-        ColumnExpression<T, JpaQueryStream<T>>, FunctionExpression<T>, SelectExpression<T>, OrderExpression<T>,
-        GroupExpression<T>, JoinExpressions<T>, ResultStream<T>, SubQueryProcessor<T>, AggregateFunction<T> {
+        ColumnExpression<T, JpaQueryStream<T>>, FunctionExpression<T>, SelectExpression<T>,
+        OrderExpression<T, JpaQueryStream<T>>, GroupExpression<T, JpaQueryStream<Object[]>>, JoinExpressions<T>,
+        ResultStream<T>, SubQueryProcessor<T>, AggregateFunction<T, JpaQueryStream<Object[]>> {
 
     /**
      * Gets wrapped entity {@link Class} instance

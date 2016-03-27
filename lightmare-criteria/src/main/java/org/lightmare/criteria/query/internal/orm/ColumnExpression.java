@@ -35,6 +35,9 @@ import org.lightmare.criteria.query.internal.orm.links.Operators;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
 interface ColumnExpression<T, Q extends QueryStream<T, ? super Q>> {
 

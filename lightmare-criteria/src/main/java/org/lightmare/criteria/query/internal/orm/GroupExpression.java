@@ -25,8 +25,8 @@ package org.lightmare.criteria.query.internal.orm;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.functions.SelectConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.SelectExpression.Select;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Generates group by JPA query part
@@ -35,8 +35,11 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-public interface GroupExpression<T> {
+public interface GroupExpression<T, Q extends QueryStream<Object[], ? super Q>> {
 
     /**
      * Generates HAVING clause for appropriated group by expression
@@ -52,7 +55,7 @@ public interface GroupExpression<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object} array
      */
-    JpaQueryStream<Object[]> groupBy(Select select);
+    Q groupBy(Select select);
 
     /**
      * Grouping expression with consumer
@@ -61,7 +64,7 @@ public interface GroupExpression<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object} array
      */
-    JpaQueryStream<Object[]> group(SelectConsumer select);
+    Q group(SelectConsumer select);
 
     /**
      * Group by fields
@@ -70,5 +73,5 @@ public interface GroupExpression<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object} array
      */
-    <F> JpaQueryStream<Object[]> groupBy(EntityField<T, F> field);
+    <F> Q groupBy(EntityField<T, F> field);
 }

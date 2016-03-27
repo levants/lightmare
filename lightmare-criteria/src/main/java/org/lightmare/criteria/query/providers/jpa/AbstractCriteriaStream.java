@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal;
+package org.lightmare.criteria.query.providers.jpa;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +39,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Implementation of {@link org.lightmare.criteria.query.QueryStream} and
- * {@link org.lightmare.criteria.query.internal.CriteriaQueryResolver} for JPA
+ * {@link org.lightmare.criteria.query.providers.jpa.CriteriaQueryResolver} for JPA
  * criteria API queries
  * 
  * @author Levan Tsinadze

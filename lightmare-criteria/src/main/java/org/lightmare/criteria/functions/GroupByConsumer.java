@@ -25,6 +25,7 @@ package org.lightmare.criteria.functions;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.GroupExpression;
 
 /**
@@ -34,10 +35,14 @@ import org.lightmare.criteria.query.internal.orm.GroupExpression;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
 @FunctionalInterface
-public interface GroupByConsumer<T> extends Consumer<GroupExpression<T>>, Serializable {
+public interface GroupByConsumer<T, Q extends QueryStream<Object[], ? super Q>>
+        extends Consumer<GroupExpression<T, Q>>, Serializable {
 
     @Override
-    void accept(GroupExpression<T> stream);
+    void accept(GroupExpression<T, Q> stream);
 }

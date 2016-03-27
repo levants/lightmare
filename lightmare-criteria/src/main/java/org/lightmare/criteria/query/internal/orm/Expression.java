@@ -38,6 +38,9 @@ import org.lightmare.criteria.utils.StringUtils;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
 interface Expression<T, Q extends QueryStream<T, ? super Q>> {
 

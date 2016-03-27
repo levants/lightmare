@@ -23,8 +23,8 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Orders;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Query expressions for ORDER BY clauses
@@ -33,8 +33,11 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-interface OrderExpression<T> {
+interface OrderExpression<T, Q extends QueryStream<T, ? super Q>> {
 
     // =========================order=by=====================================//
 
@@ -43,17 +46,17 @@ interface OrderExpression<T> {
      * 
      * @param dir
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F> JpaQueryStream<T> order(String dir, EntityField<T, F> field);
+    <F> Q order(String dir, EntityField<T, F> field);
 
     /**
      * Generates ORDER BY part for field
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default <F> JpaQueryStream<T> orderBy(EntityField<T, F> field) {
+    default <F> Q orderBy(EntityField<T, F> field) {
         return order(null, field);
     }
 
@@ -61,9 +64,9 @@ interface OrderExpression<T> {
      * Generates ORDER BY with DESC for field
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default <F> JpaQueryStream<T> orderByDesc(EntityField<T, F> field) {
+    default <F> Q orderByDesc(EntityField<T, F> field) {
         return order(Orders.DESC, field);
     }
 }

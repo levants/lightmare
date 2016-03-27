@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
@@ -34,8 +35,11 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-public interface AggregateFunction<T> {
+public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>> {
 
     /**
      * Operates with aggregate function and generates
@@ -47,7 +51,8 @@ public interface AggregateFunction<T> {
      * @param consumer
      * @return {@link JpaQueryStream} with grouping
      */
-    <F> JpaQueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function, GroupByConsumer<T> consumer);
+    <F> JpaQueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function,
+            GroupByConsumer<T, Q> consumer);
 
     /**
      * Operates with aggregate function and generates
@@ -91,7 +96,7 @@ public interface AggregateFunction<T> {
      * @param consumer
      * @return {@link JpaQueryStream} with {@link Number} result type
      */
-    default <N extends Number> JpaQueryStream<Object[]> avg(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+    default <N extends Number> JpaQueryStream<Object[]> avg(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.AVG, consumer);
     }
 
@@ -116,7 +121,7 @@ public interface AggregateFunction<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
-    default <N extends Number> JpaQueryStream<Object[]> sum(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+    default <N extends Number> JpaQueryStream<Object[]> sum(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.SUM, consumer);
     }
 
@@ -141,7 +146,7 @@ public interface AggregateFunction<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
-    default <N extends Number> JpaQueryStream<Object[]> max(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+    default <N extends Number> JpaQueryStream<Object[]> max(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.MAX, consumer);
     }
 
@@ -167,7 +172,7 @@ public interface AggregateFunction<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
-    default <N extends Number> JpaQueryStream<Object[]> min(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+    default <N extends Number> JpaQueryStream<Object[]> min(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.MIN, consumer);
     }
 
@@ -194,7 +199,8 @@ public interface AggregateFunction<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
-    default <N extends Number> JpaQueryStream<Object[]> greatest(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+    default <N extends Number> JpaQueryStream<Object[]> greatest(EntityField<T, N> field,
+            GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.GREATEST, consumer);
     }
 
@@ -221,7 +227,7 @@ public interface AggregateFunction<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
-    default <N extends Number> JpaQueryStream<Object[]> least(EntityField<T, N> field, GroupByConsumer<T> consumer) {
+    default <N extends Number> JpaQueryStream<Object[]> least(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.LEAST, consumer);
     }
 
@@ -247,7 +253,7 @@ public interface AggregateFunction<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
-    default <F> JpaQueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T> consumer) {
+    default <F> JpaQueryStream<Object[]> count(EntityField<T, F> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.COUNT, consumer);
     }
 
@@ -274,7 +280,7 @@ public interface AggregateFunction<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         {@link Object}[]
      */
-    default <F> JpaQueryStream<Object[]> countDistinct(EntityField<T, F> field, GroupByConsumer<T> consumer) {
+    default <F> JpaQueryStream<Object[]> countDistinct(EntityField<T, F> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.COUNT_DISTINCT, consumer);
     }
 }

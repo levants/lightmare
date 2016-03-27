@@ -348,7 +348,7 @@ public abstract class ObjectUtils extends FunctionUtils {
      * @param type
      * @param consumer
      */
-    private static <T> void castAndApply(Object instance, Class<T> type, Consumer<T> consumer) {
+    private static <T> void castAndAccept(Object instance, Class<T> type, Consumer<T> consumer) {
         T value = type.cast(instance);
         accept(consumer, value);
     }
@@ -362,7 +362,7 @@ public abstract class ObjectUtils extends FunctionUtils {
      * @param consumer
      */
     public static <T> void cast(Object instance, Class<T> type, Consumer<T> consumer) {
-        nonNull(instance, c -> castAndApply(c, type, consumer));
+        nonNull(instance, c -> castAndAccept(c, type, consumer));
     }
 
     /**
@@ -377,7 +377,7 @@ public abstract class ObjectUtils extends FunctionUtils {
     public static <T> void castIfValid(Object instance, Class<T> type, Consumer<T> consumer) {
 
         if (Objects.nonNull(instance) && type.isInstance(instance)) {
-            castAndApply(instance, type, consumer);
+            castAndAccept(instance, type, consumer);
         }
     }
 

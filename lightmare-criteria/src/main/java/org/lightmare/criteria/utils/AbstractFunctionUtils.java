@@ -55,7 +55,10 @@ abstract class AbstractFunctionUtils implements Functions {
      * @param value
      */
     public static <T> void accept(Consumer<T> consumer, T value) {
-        ObjectUtils.nonNull(consumer, c -> c.accept(value));
+
+        if (Objects.nonNull(consumer)) {
+            consumer.accept(value);
+        }
     }
 
     /**
@@ -68,7 +71,7 @@ abstract class AbstractFunctionUtils implements Functions {
      */
     public static <T> T acceptAndGet(Supplier<T> supplier, Consumer<T> consumer) {
 
-        T result = supplier.get();
+        T result = get(supplier);
         accept(consumer, result);
 
         return result;
