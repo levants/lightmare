@@ -164,9 +164,8 @@ public interface QueryResolver<T> extends LayerStream<T> {
         QueryTuple tuple;
 
         tuple = LambdaUtils.getOrInit(field);
-        tuple.setAlias(getAlias());
-        String columnName = getLayerProvider().getColumnName(tuple);
-        tuple.setFieldName(columnName);
+        setAlias(tuple);
+        setColumnName(tuple);
 
         return tuple;
     }
@@ -182,7 +181,9 @@ public interface QueryResolver<T> extends LayerStream<T> {
     default QueryTuple compose(Serializable field) {
 
         QueryTuple tuple = resolve(field);
-        LambdaUtils.setGenericIfValid(getEntityType(), tuple);
+
+        Class<T> type = getEntityType();
+        LambdaUtils.setGenericIfValid(type, tuple);
 
         return tuple;
     }

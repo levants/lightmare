@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
  * Abstraction of entity type, alias, and
@@ -45,7 +46,7 @@ interface LayerStream<T> {
     LayerProvider getLayerProvider();
 
     /**
-     * Gets entity {@link Class} for this query stream
+     * Gets entity {@link Class} for query stream
      * 
      * @return {@link Class} entity type
      */
@@ -64,4 +65,28 @@ interface LayerStream<T> {
      * @return {@link String} query
      */
     String sql();
+
+    /**
+     * Sets entity alias to passed
+     * {@link org.lightmare.criteria.tuples.QueryTuple} instance
+     * 
+     * @param tuple
+     */
+    default void setAlias(QueryTuple tuple) {
+        String alias = getAlias();
+        tuple.setAlias(alias);
+    }
+
+    /**
+     * Sets column name to passed
+     * {@link org.lightmare.criteria.tuples.QueryTuple} instance
+     * 
+     * @param tuple
+     */
+    default void setColumnName(QueryTuple tuple) {
+
+        LayerProvider provider = getLayerProvider();
+        String columnName = provider.getColumnName(tuple);
+        tuple.setFieldName(columnName);
+    }
 }

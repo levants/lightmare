@@ -68,7 +68,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
     <F> S notEqual(EntityField<T, F> field, Object value);
 
     /**
-     * Greater than clause expression
+     * Greater than expression
      * 
      * @param field
      * @param value
@@ -77,7 +77,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
     <F extends Comparable<? super F>> S gt(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
 
     /**
-     * Greater than clause expression
+     * Greater than expression
      * 
      * @param field
      * @param value
@@ -89,7 +89,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
     }
 
     /**
-     * Less than clause expression
+     * Less than expression
      * 
      * @param field
      * @param value
@@ -98,7 +98,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
     <F extends Comparable<? super F>> S lt(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
 
     /**
-     * Less than clause expression
+     * Less than expression
      * 
      * @param field
      * @param value
