@@ -28,8 +28,8 @@ import java.util.function.Consumer;
 import org.lightmare.criteria.query.internal.orm.SelectExpression.Select;
 
 /**
- * Implementation of {@link java.util.function.Consumer} functional interface to
- * process JPA query SELECT clause
+ * Implementation of {@link java.util.function.Consumer} functional interface
+ * for JPA query SELECT clause processing
  * 
  * @author Levan Tsinadze
  *

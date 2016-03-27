@@ -20,11 +20,12 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.providers;
+package org.lightmare.criteria.query.providers.jpa;
 
 import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Main class for lambda expression analyze and JPA query build and run
@@ -48,11 +49,11 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         with select statement
      */
-    protected static <T> JpaQueryStream<T> delete(final LayerProvider provider, final Class<T> entityType) {
+    public static <T> JpaQueryStream<T> delete(final LayerProvider provider, final Class<T> entityType) {
 
         JpaQueryStreamBuilder<T> stream;
 
-        stream = new JpaQueryStreamBuilder<T>(provider, entityType);
+        stream = new JpaQueryStreamBuilder<>(provider, entityType);
         stream.appendPrefix(Clauses.DELETE);
         stream.appendEntityPart();
 
@@ -67,7 +68,7 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         with select statement
      */
-    protected static <T> JpaQueryStream<T> update(final LayerProvider provider, final Class<T> entityType) {
+    public static <T> JpaQueryStream<T> update(final LayerProvider provider, final Class<T> entityType) {
 
         JpaQueryStreamBuilder<T> stream;
 
@@ -86,11 +87,11 @@ public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         with select statement
      */
-    protected static <T> JpaQueryStream<T> query(final LayerProvider provider, final Class<T> entityType) {
+    public static <T> JpaQueryStream<T> select(final LayerProvider provider, final Class<T> entityType) {
 
         JpaQueryStreamBuilder<T> stream;
 
-        stream = new JpaQueryStreamBuilder<T>(provider, entityType);
+        stream = new JpaQueryStreamBuilder<>(provider, entityType);
         stream.startsSelect();
 
         return stream;

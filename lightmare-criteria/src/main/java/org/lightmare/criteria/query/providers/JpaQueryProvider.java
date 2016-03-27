@@ -26,6 +26,7 @@ import javax.persistence.EntityManager;
 
 import org.lightmare.criteria.query.QueryProvider;
 import org.lightmare.criteria.query.internal.layers.JpaProvider;
+import org.lightmare.criteria.query.providers.jpa.JpaQueryStreamBuilder;
 
 /**
  * Query provider for JPA layer
@@ -68,6 +69,6 @@ public abstract class JpaQueryProvider {
      *         with select statement
      */
     public static <T> JpaQueryStream<T> select(final EntityManager em, Class<T> entityType) {
-        return QueryProvider.select(new JpaProvider(em), entityType, JpaQueryStreamBuilder::query);
+        return QueryProvider.select(new JpaProvider(em), entityType, JpaQueryStreamBuilder::select);
     }
 }

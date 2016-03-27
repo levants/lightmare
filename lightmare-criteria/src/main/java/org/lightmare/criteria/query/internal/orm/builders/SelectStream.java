@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.orm.builders;
 
 import org.lightmare.criteria.query.internal.orm.links.Parts;
-import org.lightmare.criteria.query.providers.JpaQueryStreamBuilder;
+import org.lightmare.criteria.query.providers.jpa.JpaQueryStreamBuilder;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
