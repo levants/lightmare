@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.mongo;
+package org.lightmare.criteria.query.providers.mongo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
      * @param field
      * @param value
      * @param function
-     * @return {@link org.lightmare.criteria.query.mongo.MongoStream} current
+     * @return {@link org.lightmare.criteria.query.providers.mongo.MongoStream} current
      *         instance
      */
     private <V> MongoStream<T> apply(Serializable field, V value, BiFunction<String, V, Bson> function) {
@@ -109,7 +109,7 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
      * 
      * @param field
      * @param function
-     * @return {@link org.lightmare.criteria.query.mongo.MongoStream} current
+     * @return {@link org.lightmare.criteria.query.providers.mongo.MongoStream} current
      *         instance
      */
     private <V> MongoStream<T> apply(Serializable field, Function<String, Bson> function) {

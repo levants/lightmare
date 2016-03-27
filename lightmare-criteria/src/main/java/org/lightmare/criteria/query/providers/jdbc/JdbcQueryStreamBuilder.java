@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.providers;
+package org.lightmare.criteria.query.providers.jdbc;
 
 import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
@@ -45,7 +45,7 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> implements J
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jdbc.JdbcQueryStream}
      *         with delete statement
      */
     protected static <T> JdbcQueryStream<T> delete(final LayerProvider provider, final Class<T> entityType) {
@@ -64,7 +64,7 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> implements J
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jdbc.JdbcQueryStream}
      *         with update statement
      */
     protected static <T> JdbcQueryStream<T> update(final LayerProvider provider, final Class<T> entityType) {
@@ -83,7 +83,7 @@ public class JdbcQueryStreamBuilder<T> extends EntityQueryStream<T> implements J
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jdbc.JdbcQueryStream}
      *         with select statement
      */
     protected static <T> JdbcQueryStream<T> select(final LayerProvider provider, final Class<T> entityType) {

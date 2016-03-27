@@ -9,8 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.internal.SessionImpl;
 import org.junit.Test;
 import org.lightmare.criteria.entities.jdbc.JdbcPerson;
-import org.lightmare.criteria.query.providers.JdbcQueryProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.query.providers.jdbc.JdbcQueryProvider;
 import org.lightmare.criteria.runorder.RunOrder;
 
 public class JdbcQueryTest extends FunctionnalQueryTest {

@@ -20,54 +20,53 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.providers;
-
-import java.sql.Connection;
+package org.lightmare.criteria.query.providers.mongo;
 
 import org.lightmare.criteria.query.QueryProvider;
-import org.lightmare.criteria.query.internal.layers.JdbcProvider;
+
+import com.mongodb.client.MongoDatabase;
 
 /**
- * Query provider for JDBC layer
+ * Factory class for MongoDB queries
  * 
  * @author Levan Tsinadze
  *
  */
-public abstract class JdbcQueryProvider {
+public class MongoStreamProvider {
 
     /**
      * Generates DELETE statements
      * 
-     * @param connection
+     * @param db
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
-     *         with delete statement
+     * @return {@link org.lightmare.criteria.query.providers.mongo.MongoStream} with
+     *         delete statement
      */
-    public static <T> JdbcQueryStream<T> delete(final Connection connection, Class<T> entityType) {
-        return QueryProvider.delete(new JdbcProvider(connection), entityType, JdbcQueryStreamBuilder::delete);
+    public static <T> MongoStream<T> delete(final MongoDatabase db, Class<T> entityType) {
+        return QueryProvider.delete(new MongoProvider<>(db, entityType), entityType, MongoEntityStream<T>::new);
     }
 
     /**
      * Generates UPDATE statements
      * 
-     * @param connection
+     * @param db
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
-     *         with update statement
+     * @return {@link org.lightmare.criteria.query.providers.mongo.MongoStream} with
+     *         update statement
      */
-    public static <T> JdbcQueryStream<T> update(final Connection connection, Class<T> entityType) {
-        return QueryProvider.update(new JdbcProvider(connection), entityType, JdbcQueryStreamBuilder::update);
+    public static <T> MongoStream<T> update(final MongoDatabase db, Class<T> entityType) {
+        return QueryProvider.update(new MongoProvider<>(db, entityType), entityType, MongoEntityStream<T>::new);
     }
 
     /**
      * Generates SELECT statements
      * 
-     * @param connection
+     * @param db
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JdbcQueryStream}
-     *         with select statement
+     * @return {@link org.lightmare.criteria.query.providers.mongo.MongoStream} with
+     *         select statement
      */
-    public static <T> JdbcQueryStream<T> select(final Connection connection, Class<T> entityType) {
-        return QueryProvider.select(new JdbcProvider(connection), entityType, JdbcQueryStreamBuilder::select);
+    public static <T> MongoStream<T> select(final MongoDatabase db, Class<T> entityType) {
+        return QueryProvider.select(new MongoProvider<>(db, entityType), entityType, MongoEntityStream<T>::new);
     }
 }

@@ -288,7 +288,8 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
     }
 
     /**
-     * Appends default boolean operator to passed buffer
+     * Appends default boolean operator AND if there is no others to passed
+     * buffer
      */
     protected void appendOperator() {
 

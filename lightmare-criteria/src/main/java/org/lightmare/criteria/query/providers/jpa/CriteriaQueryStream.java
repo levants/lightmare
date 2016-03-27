@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.providers;
+package org.lightmare.criteria.query.providers.jpa;
 
 import java.util.Collection;
 

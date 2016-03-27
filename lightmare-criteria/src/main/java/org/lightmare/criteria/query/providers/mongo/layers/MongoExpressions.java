@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.mongo.layers;
+package org.lightmare.criteria.query.providers.mongo.layers;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;

@@ -22,6 +22,8 @@
  */
 package org.lightmare.criteria.query.internal.orm.links;
 
+import org.lightmare.criteria.utils.StringUtils;
+
 /**
  * Query operator keywords
  * 
@@ -89,9 +91,9 @@ public interface Operators {
 
     String NOT_MEMBER = " not member of ";
 
-    String OPEN_BRACKET = " (";
+    String OPEN_BRACKET = StringUtils.concat(StringUtils.SPACE, Brackets.OPEN);
 
-    String CLOSE_BRACKET = ") ";
+    String CLOSE_BRACKET = StringUtils.concat(Brackets.CLOSE, StringUtils.SPACE);
 
     // =================sub==queries============//
 

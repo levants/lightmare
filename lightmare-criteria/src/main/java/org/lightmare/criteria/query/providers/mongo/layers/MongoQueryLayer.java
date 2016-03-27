@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.mongo.layers;
+package org.lightmare.criteria.query.providers.mongo.layers;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ import java.util.List;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.lightmare.criteria.query.layers.QueryLayer;
-import org.lightmare.criteria.query.mongo.layers.MongoRetriever.FieldType;
+import org.lightmare.criteria.query.providers.mongo.layers.MongoRetriever.FieldType;
 import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;

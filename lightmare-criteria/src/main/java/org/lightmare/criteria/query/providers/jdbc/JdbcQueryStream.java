@@ -1,4 +1,6 @@
-package org.lightmare.criteria.query.providers;
+package org.lightmare.criteria.query.providers.jdbc;
+
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Query stream for JDBC query layers
