@@ -45,56 +45,57 @@ interface TypedSubQueryProcessor<T> extends SubQueryOperator<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         current instance
      */
-    default <F, S> JpaQueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, SubQueryType<S> stream) {
+    default <F, S> JpaQueryStream<T> operateSubQuery(EntityField<T, F> field, String operator,
+            SubQueryType<S, JpaQueryStream<S>> stream) {
         String composed = stream.getOperator(operator);
         return operateSubQuery(field, composed, stream.getType(), stream.getConsumer());
     }
 
-    default <F, S> JpaQueryStream<T> equal(EntityField<T, F> field, SubQueryType<S> stream) {
+    default <F, S> JpaQueryStream<T> equal(EntityField<T, F> field, SubQueryType<S, JpaQueryStream<S>> stream) {
         return operateSubQuery(field, Operators.EQ, stream);
     }
 
-    default <F, S> JpaQueryStream<T> notEqual(EntityField<T, F> field, SubQueryType<S> stream) {
+    default <F, S> JpaQueryStream<T> notEqual(EntityField<T, F> field, SubQueryType<S, JpaQueryStream<S>> stream) {
         return operateSubQuery(field, Operators.NOT_EQ, stream);
     }
 
     default <F extends Comparable<? super F>, S> JpaQueryStream<T> gt(EntityField<T, Comparable<? super F>> field,
-            SubQueryType<S> stream) {
+            SubQueryType<S, JpaQueryStream<S>> stream) {
         return operateSubQuery(field, Operators.GREATER, stream);
     }
 
     default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThan(
-            EntityField<T, Comparable<? super F>> field, SubQueryType<S> stream) {
+            EntityField<T, Comparable<? super F>> field, SubQueryType<S, JpaQueryStream<S>> stream) {
         return gt(field, stream);
     }
 
     default <F extends Comparable<? super F>, S> JpaQueryStream<T> lt(EntityField<T, Comparable<? super F>> field,
-            SubQueryType<S> stream) {
+            SubQueryType<S, JpaQueryStream<S>> stream) {
         return operateSubQuery(field, Operators.LESS, stream);
     }
 
     default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThan(EntityField<T, Comparable<? super F>> field,
-            SubQueryType<S> stream) {
+            SubQueryType<S, JpaQueryStream<S>> stream) {
         return lt(field, stream);
     }
 
     default <F extends Comparable<? super F>, S> JpaQueryStream<T> ge(EntityField<T, Comparable<? super F>> field,
-            SubQueryType<S> stream) {
+            SubQueryType<S, JpaQueryStream<S>> stream) {
         return operateSubQuery(field, Operators.GREATER_OR_EQ, stream);
     }
 
     default <F extends Comparable<? super F>, S> JpaQueryStream<T> greaterThanOrEqualTo(
-            EntityField<T, Comparable<? super F>> field, SubQueryType<S> stream) {
+            EntityField<T, Comparable<? super F>> field, SubQueryType<S, JpaQueryStream<S>> stream) {
         return ge(field, stream);
     }
 
     default <F extends Comparable<? super F>, S> JpaQueryStream<T> le(EntityField<T, Comparable<? super F>> field,
-            SubQueryType<S> stream) {
+            SubQueryType<S, JpaQueryStream<S>> stream) {
         return operateSubQuery(field, Operators.LESS_OR_EQ, stream);
     }
 
     default <F extends Comparable<? super F>, S> JpaQueryStream<T> lessThanOrEqualTo(
-            EntityField<T, Comparable<? super F>> field, SubQueryType<S> stream) {
+            EntityField<T, Comparable<? super F>> field, SubQueryType<S, JpaQueryStream<S>> stream) {
         return le(field, stream);
     }
 }

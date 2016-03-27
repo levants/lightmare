@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 import org.lightmare.criteria.query.internal.orm.ORMFunction;
 
 /**
- * Consumer to process JPA query functional expressions
+ * Consumer to process functional expressions
  * 
  * @author Levan Tsinadze
  *

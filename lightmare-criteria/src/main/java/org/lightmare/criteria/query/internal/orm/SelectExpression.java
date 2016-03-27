@@ -29,6 +29,7 @@ import java.util.List;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.SelectConsumer;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Interface to generate SELECT clause for instant fields
@@ -75,7 +76,7 @@ public interface SelectExpression<T> {
         private static Select accept(SelectConsumer select) {
 
             Select columns = Select.select();
-            select.accept(columns);
+            ObjectUtils.accept(select, columns);
 
             return columns;
         }

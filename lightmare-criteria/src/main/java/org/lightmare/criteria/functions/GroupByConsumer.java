@@ -29,7 +29,7 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.GroupExpression;
 
 /**
- * Consumer to process JPA query GROUP BY clause
+ * Consumer to process GROUP BY expressions
  * 
  * @author Levan Tsinadze
  *

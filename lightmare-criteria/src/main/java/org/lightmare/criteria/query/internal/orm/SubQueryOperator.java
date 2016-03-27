@@ -45,8 +45,8 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     <F, S> JpaQueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
             QueryConsumer<S, JpaQueryStream<S>> consumer);
@@ -59,8 +59,8 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     <F, S> JpaQueryStream<T> operateSubQuery(Object value, String operator, Class<S> type,
             QueryConsumer<S, JpaQueryStream<S>> consumer);
@@ -73,8 +73,8 @@ interface SubQueryOperator<T> extends SubQuery<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
     <F, S> JpaQueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator, Class<S> type,
             QueryConsumer<S, JpaQueryStream<S>> consumer);
