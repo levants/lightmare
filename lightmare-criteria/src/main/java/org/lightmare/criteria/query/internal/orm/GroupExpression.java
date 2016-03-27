@@ -38,8 +38,10 @@ import org.lightmare.criteria.query.internal.orm.SelectExpression.Select;
  * @param <Q>
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
+ * @param <U>
+ *            result type parameter
  */
-public interface GroupExpression<T, Q extends QueryStream<Object[], ? super Q>> {
+public interface GroupExpression<T, U, Q extends QueryStream<U, ? super Q>> {
 
     /**
      * Generates HAVING clause for appropriated group by expression

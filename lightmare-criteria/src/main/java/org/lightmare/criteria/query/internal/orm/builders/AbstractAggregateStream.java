@@ -120,7 +120,7 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
 
     @Override
     public <F> JpaQueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function,
-            GroupByConsumer<T, JpaQueryStream<Object[]>> consumer) {
+            GroupByConsumer<T, Object[], JpaQueryStream<Object[]>> consumer) {
 
         JpaQueryStream<Object[]> stream;
 
