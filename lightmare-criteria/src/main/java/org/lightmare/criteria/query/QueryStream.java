@@ -135,4 +135,13 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
     default S or(QueryConsumer<T, S> consumer) {
         return brackets(QueryStream::or, consumer);
     }
+
+    // ====================== Generated=SQL=String============================//
+
+    /**
+     * Gets generated query
+     * 
+     * @return {@link String} query
+     */
+    String sql();
 }

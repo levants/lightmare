@@ -82,19 +82,14 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
         return StringUtils.EMPTY;
     }
 
-    @Override
-    public String sql() {
-        return StringUtils.EMPTY;
-    }
-
     /**
      * Applies binary expressions
      * 
      * @param field
      * @param value
      * @param function
-     * @return {@link org.lightmare.criteria.query.providers.mongo.MongoStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.mongo.MongoStream}
+     *         current instance
      */
     private <V> MongoStream<T> apply(Serializable field, V value, BiFunction<String, V, Bson> function) {
 
@@ -109,8 +104,8 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
      * 
      * @param field
      * @param function
-     * @return {@link org.lightmare.criteria.query.providers.mongo.MongoStream} current
-     *         instance
+     * @return {@link org.lightmare.criteria.query.providers.mongo.MongoStream}
+     *         current instance
      */
     private <V> MongoStream<T> apply(Serializable field, Function<String, Bson> function) {
 
@@ -194,34 +189,6 @@ public class MongoEntityStream<T> implements MongoStream<T>, QueryResolver<T> {
     public MongoStream<T> or() {
         current = ors;
         return this;
-    }
-
-    @Override
-    public <F extends Comparable<? super F>> MongoStream<T> greaterThan(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public <F extends Comparable<? super F>> MongoStream<T> lessThan(EntityField<T, Comparable<? super F>> field,
-            Comparable<? super F> value) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public <F extends Comparable<? super F>> MongoStream<T> greaterThanOrEqualTo(
-            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public <F extends Comparable<? super F>> MongoStream<T> lessThanOrEqualTo(
-            EntityField<T, Comparable<? super F>> field, Comparable<? super F> value) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override

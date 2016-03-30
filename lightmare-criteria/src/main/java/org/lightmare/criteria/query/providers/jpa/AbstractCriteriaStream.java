@@ -39,8 +39,8 @@ import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Implementation of {@link org.lightmare.criteria.query.QueryStream} and
- * {@link org.lightmare.criteria.query.providers.jpa.CriteriaQueryResolver} for JPA
- * criteria API queries
+ * {@link org.lightmare.criteria.query.providers.jpa.CriteriaQueryResolver} for
+ * JPA criteria API queries
  * 
  * @author Levan Tsinadze
  *
@@ -107,11 +107,6 @@ public class AbstractCriteriaStream<T> implements CriteriaQueryResolver<T> {
     @Override
     public String getAlias() {
         return getRoot().getAlias();
-    }
-
-    @Override
-    public String sql() {
-        return sql.toString();
     }
 
     protected void addToCurrent(Predicate predicate) {

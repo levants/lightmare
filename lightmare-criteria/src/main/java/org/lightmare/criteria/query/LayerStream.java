@@ -60,13 +60,6 @@ interface LayerStream<T> {
     String getAlias();
 
     /**
-     * Gets generated query
-     * 
-     * @return {@link String} query
-     */
-    String sql();
-
-    /**
      * Sets entity alias to passed
      * {@link org.lightmare.criteria.tuples.QueryTuple} instance
      * 
