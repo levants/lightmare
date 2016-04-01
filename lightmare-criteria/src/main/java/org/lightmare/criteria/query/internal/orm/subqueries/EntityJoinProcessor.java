@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.internal.orm.subqueries;
 
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.utils.CollectionUtils;
 
 /**
  * Implementation of
@@ -40,12 +41,25 @@ public class EntityJoinProcessor<S, T> extends EntitySubQueryStream<S, T> {
 
     private boolean parentOperator;
 
+    private boolean onClause;
+
+    private int onCount;
+
+    public EntityJoinProcessor(AbstractQueryStream<T> parent, String alias, Class<S> entityType) {
+        super(parent, alias, entityType);
+        this.onClause = Boolean.TRUE;
+    }
+
     public EntityJoinProcessor(AbstractQueryStream<T> parent, Class<S> entityType) {
         super(parent, entityType);
     }
 
-    @Override
-    public boolean validateOperator() {
+    /**
+     * Validates JOIN clause operators
+     * 
+     * @return <code>boolean</code> validation result
+     */
+    private boolean validateJoinOperator() {
 
         boolean valid;
 
@@ -60,13 +74,40 @@ public class EntityJoinProcessor<S, T> extends EntitySubQueryStream<S, T> {
     }
 
     @Override
+    public boolean validateOperator() {
+
+        boolean valid;
+
+        if (onClause) {
+            valid = (onCount > CollectionUtils.EMPTY && super.validateOperator());
+            onCount++;
+        } else {
+            valid = validateJoinOperator();
+        }
+
+        return valid;
+    }
+
+    @Override
     public String sql() {
 
         String value;
 
-        sql.append(body);
-        value = sql.toString();
+        StringBuilder joinQuery = new StringBuilder(sql);
+        joinQuery.append(body);
+        value = joinQuery.toString();
 
         return value;
+    }
+
+    @Override
+    protected void appendToParent() {
+
+        if (onClause) {
+            String query = sql();
+            parent.appendJoin(query);
+        } else {
+            super.appendToParent();
+        }
     }
 }

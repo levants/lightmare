@@ -27,6 +27,7 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.orm.links.Joins;
+import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
 import org.lightmare.criteria.query.internal.orm.subqueries.EntityJoinProcessor;
 import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
@@ -50,6 +51,26 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
     }
 
     /**
+     * Replaces last new line element from query joins
+     */
+    private void replaceJoinNewLine(char character) {
+        StringUtils.replaceOrAppend(joins, StringUtils.LINE, character);
+    }
+
+    /**
+     * Adds JOIN column to query body
+     * 
+     * @param tuple
+     */
+    private void appendJoinField(QueryTuple tuple) {
+
+        appendJoin(tuple.getAlias());
+        appendJoin(StringUtils.DOT);
+        appendJoin(tuple.getFieldName());
+        appendJoin(StringUtils.SPACE);
+    }
+
+    /**
      * Processes join statement for collection field
      * 
      * @param field
@@ -63,10 +84,7 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
 
         appendJoin(expression);
         tuple = compose(field);
-        appendJoin(tuple.getAlias());
-        appendJoin(StringUtils.DOT);
-        appendJoin(tuple.getFieldName());
-        appendJoin(StringUtils.SPACE);
+        appendJoinField(tuple);
 
         return tuple;
     }
@@ -117,8 +135,7 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         JOIN query
      */
-    protected <E, C extends Collection<E>> JpaQueryStream<E> joinStream(EntityField<T, C> field, String expression,
-            QueryConsumer<E, JpaQueryStream<E>> consumer) {
+    protected <E, C extends Collection<E>> JpaQueryStream<E> joinStream(EntityField<T, C> field, String expression) {
 
         JpaQueryStream<E> joinQuery;
 
@@ -129,14 +146,33 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
     }
 
     /**
+     * Begins ON expression
+     */
+    private void openOnExpression() {
+        appendJoin(Joins.ON);
+        appendJoin(Brackets.OPEN);
+    }
+
+    /**
+     * Ends ON expression
+     */
+    private void closeOnExpression() {
+        replaceJoinNewLine(Brackets.CLOSE);
+        appendJoin(StringUtils.NEWLINE);
+    }
+
+    /**
      * Generates ON expression for JOIN
      * 
      * @param on
-     * @param joinQuery
+     * @param type
      */
-    protected <E> void joinOn(QueryConsumer<E, JpaQueryStream<E>> on, JpaQueryStream<E> joinQuery) {
-        appendJoin(Joins.ON);
-        ObjectUtils.nonNull(joinQuery, c -> c.brackets(on));
+    private <E> void joinOn(QueryConsumer<E, JpaQueryStream<E>> on, String alias, Class<E> type) {
+
+        openOnExpression();
+        JpaQueryStream<E> onQuery = new EntityJoinProcessor<E, T>(this, alias, type);
+        acceptAndCall(on, onQuery);
+        closeOnExpression();
     }
 
     /**
@@ -150,8 +186,8 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
     protected <E, C extends Collection<E>> void joinBody(EntityField<T, C> field, String expression,
             QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
 
-        JpaQueryStream<E> joinQuery = joinStream(field, expression, consumer);
-        ObjectUtils.nonNull(on, c -> joinOn(c, joinQuery));
+        JpaQueryStream<E> joinQuery = joinStream(field, expression);
+        ObjectUtils.nonNull(on, c -> joinOn(c, joinQuery.getAlias(), joinQuery.getEntityType()));
         acceptAndCall(consumer, joinQuery);
     }
 }

@@ -651,7 +651,7 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * @param clause
      * @return {@link JpaQueryStream} current instance
      */
-    protected JpaQueryStream<T> appendJoin(Object clause) {
+    public JpaQueryStream<T> appendJoin(Object clause) {
         joins.append(clause);
         return this;
     }

@@ -342,6 +342,24 @@ public abstract class StringUtils {
     }
 
     /**
+     * Replaces last character or append if such not exists
+     * 
+     * @param item
+     * @param character
+     * @param toreplace
+     */
+    public static void replaceOrAppend(StringBuilder item, char character, char toreplace) {
+
+        int last = item.length();
+        int index = last - CollectionUtils.SINGLETON;
+        if (item.charAt(index) == character) {
+            item.setCharAt(index, toreplace);
+        } else {
+            item.append(toreplace);
+        }
+    }
+
+    /**
      * Appends "'" quotes as prefix and suffix of passed {@link Object} instance
      * 
      * @param item

@@ -183,7 +183,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
     /**
      * Generates sub query and appends to parent
      */
-    private void appendToParent() {
+    protected void appendToParent() {
 
         startsSelect();
         String query = sql();

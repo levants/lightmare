@@ -26,7 +26,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.orm.links.Numerics;
 
 /**
- * Numeric functions methods
+ * Numeric function expressions
  * 
  * @author Levan Tsinadze
  *

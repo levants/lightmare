@@ -29,7 +29,7 @@ import org.lightmare.criteria.query.internal.orm.links.Trimspec;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Text function methods
+ * Text function expressions
  * 
  * @author Levan Tsinadze
  *
