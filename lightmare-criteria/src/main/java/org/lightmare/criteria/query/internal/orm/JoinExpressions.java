@@ -49,6 +49,9 @@ public interface JoinExpressions<T> {
     <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
             QueryConsumer<E, JpaQueryStream<E>> consumer);
 
+    <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
+            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer);
+
     /**
      * Method for INNER JOIN function call
      * 

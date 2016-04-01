@@ -28,6 +28,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractAggregateStream;
+import org.lightmare.criteria.query.internal.orm.links.Joins;
 import org.lightmare.criteria.query.internal.orm.subqueries.EntityEmbeddedStream;
 import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream;
 import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
@@ -268,6 +269,33 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     // ===============================Joins==================================//
 
     /**
+     * Generates ON expression for JOIN
+     * 
+     * @param on
+     * @param joinQuery
+     */
+    private <E> void joinOn(QueryConsumer<E, JpaQueryStream<E>> on, JpaQueryStream<E> joinQuery) {
+        appendJoin(Joins.ON);
+        acceptAndCall(on, joinQuery);
+    }
+
+    /**
+     * Generates JOIN clause
+     * 
+     * @param field
+     * @param expression
+     * @param on
+     * @param consumer
+     */
+    private <E, C extends Collection<E>> void joinBody(EntityField<T, C> field, String expression,
+            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+
+        JpaQueryStream<E> joinQuery = joinStream(field, expression, consumer);
+        ObjectUtils.nonNull(on, c -> joinOn(c, joinQuery));
+        acceptAndCall(consumer, joinQuery);
+    }
+
+    /**
      * Generates JOIN clause
      * 
      * @param field
@@ -276,14 +304,20 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
      */
     private <E, C extends Collection<E>> void joinBody(EntityField<T, C> field, String expression,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        JpaQueryStream<E> joinQuery = joinStream(field, expression, consumer);
-        acceptAndCall(consumer, joinQuery);
+        joinBody(field, expression, null, consumer);
     }
 
     @Override
     public <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
         joinBody(field, expression, consumer);
+        return this;
+    }
+
+    @Override
+    public <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
+            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        joinBody(field, expression, on, consumer);
         return this;
     }
 
