@@ -36,7 +36,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
 public interface QueryExpression<T>
         extends ORMQueryWrapper<T>, Expression<T, JpaQueryStream<T>>, ColumnExpression<T, JpaQueryStream<T>>,
         FunctionExpression<T>, SelectExpression<T>, OrderExpression<T, JpaQueryStream<T>>,
-        GroupExpression<T, Object[], JpaQueryStream<Object[]>>, JoinExpressions<T>, ResultStream<T>,
+        GroupExpression<T, Object[], JpaQueryStream<Object[]>>, JoinExpressions<T, JpaQueryStream<T>>, ResultStream<T>,
         SubQueryProcessor<T>, AggregateFunction<T, Object[], JpaQueryStream<Object[]>> {
 
     /**

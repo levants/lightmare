@@ -135,7 +135,7 @@ interface ColumnExpression<T, Q extends QueryStream<T, ? super Q>> {
         return operate(field1, field2, field3, Operators.NOT_BETWEEN);
     }
 
-    // =============================LIKE=clause==============================//
+    // =============================LIKE=Operator============================//
 
     default Q like(EntityField<T, String> field1, EntityField<T, String> pattern) {
         return operate(field1, pattern, Operators.LIKE);
