@@ -106,7 +106,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         return this;
     }
 
-    // ========================= Entity self method composers ===============//
+    // ==========================Entity=self=method=composers================//
 
     @Override
     public <F, S> JpaQueryStream<T> operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
@@ -162,6 +162,8 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         return this;
     }
 
+    // =========================operate=sub=queries==========================//
+
     /**
      * Generates
      * {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
@@ -174,8 +176,6 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     public <S> SubQueryStream<S, T> subQuery(Class<S> type) {
         return new EntitySubQueryStream<S, T>(this, type);
     }
-
-    // =========================operate=sub=queries==========================//
 
     /**
      * Creates
@@ -253,22 +253,15 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         return this;
     }
 
-    // ===============================Joins==================================//
-
-    @Override
-    public <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
-            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        joinBody(field, expression, on, consumer);
-        return this;
-    }
-
-    // =======================================================================//
+    // =================================Set=Clause===========================//
 
     @Override
     public <F> JpaQueryStream<T> set(EntityField<T, F> field, F value) {
         setOpp(field, value);
         return this;
     }
+
+    // =================================Order=By=============================//
 
     @Override
     public <F> JpaQueryStream<T> order(String dir, EntityField<T, F> field) {

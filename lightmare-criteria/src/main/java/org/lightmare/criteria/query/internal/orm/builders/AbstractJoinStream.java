@@ -131,7 +131,6 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
      * 
      * @param field
      * @param expression
-     * @param consumer
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         JOIN query
      */
@@ -165,6 +164,7 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
      * Generates ON expression for JOIN
      * 
      * @param on
+     * @param alias
      * @param type
      */
     private <E> void joinOn(QueryConsumer<E, JpaQueryStream<E>> on, String alias, Class<E> type) {
@@ -183,11 +183,18 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
      * @param on
      * @param consumer
      */
-    protected <E, C extends Collection<E>> void joinBody(EntityField<T, C> field, String expression,
+    private <E, C extends Collection<E>> void joinBody(EntityField<T, C> field, String expression,
             QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
 
         JpaQueryStream<E> joinQuery = joinStream(field, expression);
         ObjectUtils.nonNull(on, c -> joinOn(c, joinQuery.getAlias(), joinQuery.getEntityType()));
         acceptAndCall(consumer, joinQuery);
+    }
+
+    @Override
+    public <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
+            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        joinBody(field, expression, on, consumer);
+        return this;
     }
 }

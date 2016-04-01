@@ -159,9 +159,4 @@ abstract class AbstractORMQueryWrapper<T> implements JpaQueryStream<T>, QueryRes
         putFlushMode(query);
         setLockMode(query);
     }
-
-    @Override
-    public void close() {
-        getLayerProvider().close();
-    }
 }

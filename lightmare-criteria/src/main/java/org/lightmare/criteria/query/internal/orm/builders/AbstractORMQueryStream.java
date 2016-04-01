@@ -313,7 +313,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * Validates and calls sub query stream methods
      * 
      * @param consumer
-     * @param subQuery
+     * @param query
      */
     protected <S, Q extends LambdaStream<S, ? super Q>> void acceptAndCall(QueryConsumer<S, Q> consumer, Q query) {
         ObjectUtils.accept(consumer, query);
