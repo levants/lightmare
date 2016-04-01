@@ -269,17 +269,6 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     // ===============================Joins==================================//
 
     /**
-     * Generates ON expression for JOIN
-     * 
-     * @param on
-     * @param joinQuery
-     */
-    private <E> void joinOn(QueryConsumer<E, JpaQueryStream<E>> on, JpaQueryStream<E> joinQuery) {
-        appendJoin(Joins.ON);
-        acceptAndCall(on, joinQuery);
-    }
-
-    /**
      * Generates JOIN clause
      * 
      * @param field
@@ -293,25 +282,6 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         JpaQueryStream<E> joinQuery = joinStream(field, expression, consumer);
         ObjectUtils.nonNull(on, c -> joinOn(c, joinQuery));
         acceptAndCall(consumer, joinQuery);
-    }
-
-    /**
-     * Generates JOIN clause
-     * 
-     * @param field
-     * @param expression
-     * @param consumer
-     */
-    private <E, C extends Collection<E>> void joinBody(EntityField<T, C> field, String expression,
-            QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        joinBody(field, expression, null, consumer);
-    }
-
-    @Override
-    public <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
-            QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        joinBody(field, expression, consumer);
-        return this;
     }
 
     @Override

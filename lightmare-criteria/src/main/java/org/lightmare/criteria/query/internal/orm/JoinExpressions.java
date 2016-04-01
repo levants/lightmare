@@ -40,17 +40,30 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
 public interface JoinExpressions<T> {
 
     /**
+     * 
+     * @param field
+     * @param expression
+     * @param on
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
+     */
+    <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
+            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer);
+
+    /**
      * Processes JOIN statement
      * 
      * @param field
      * @param expression
      * @param consumer
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
-    <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
-            QueryConsumer<E, JpaQueryStream<E>> consumer);
-
-    <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
-            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer);
+    default <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
+            QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        return procesJoin(field, expression, null, consumer);
+    }
 
     /**
      * Method for INNER JOIN function call
@@ -67,6 +80,21 @@ public interface JoinExpressions<T> {
     }
 
     /**
+     * Method for INNER JOIN function call
+     * 
+     * @param field
+     * @param on
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
+     */
+    default <E, C extends Collection<E>> JpaQueryStream<T> join(EntityField<T, C> field,
+            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        JpaQueryStream<T> stream = procesJoin(field, Joins.JOIN, on, consumer);
+        return stream;
+    }
+
+    /**
      * Method for INNER JOIN function call without conditions
      * 
      * @param field
@@ -75,6 +103,19 @@ public interface JoinExpressions<T> {
      */
     default <E, C extends Collection<E>> JpaQueryStream<T> join(EntityField<T, C> field) {
         return join(field, null);
+    }
+
+    /**
+     * Method for INNER JOIN function call without conditions
+     * 
+     * @param field
+     * @param on
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
+     */
+    default <E, C extends Collection<E>> JpaQueryStream<T> joinOn(EntityField<T, C> field,
+            QueryConsumer<E, JpaQueryStream<E>> on) {
+        return join(field, on, null);
     }
 
     /**
@@ -92,6 +133,21 @@ public interface JoinExpressions<T> {
     }
 
     /**
+     * Method for LEFT JOIN function call
+     * 
+     * @param field
+     * @param on
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
+     */
+    default <E, C extends Collection<E>> JpaQueryStream<T> leftJoin(EntityField<T, C> field,
+            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        JpaQueryStream<T> stream = procesJoin(field, Joins.LEFT, on, consumer);
+        return stream;
+    }
+
+    /**
      * Method for LEFT JOIN function call without conditions
      * 
      * @param field
@@ -100,6 +156,19 @@ public interface JoinExpressions<T> {
      */
     default <E, C extends Collection<E>> JpaQueryStream<T> leftJoin(EntityField<T, C> field) {
         return leftJoin(field, null);
+    }
+
+    /**
+     * Method for LEFT JOIN function call without conditions
+     * 
+     * @param field
+     * @param on
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
+     */
+    default <E, C extends Collection<E>> JpaQueryStream<T> leftJoinOn(EntityField<T, C> field,
+            QueryConsumer<E, JpaQueryStream<E>> on) {
+        return leftJoin(field, on, null);
     }
 
     /**
@@ -117,6 +186,21 @@ public interface JoinExpressions<T> {
     }
 
     /**
+     * Method for FETCH JOIN function call
+     * 
+     * @param field
+     * @param on
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
+     */
+    default <E, C extends Collection<E>> JpaQueryStream<T> fetchJoin(EntityField<T, C> field,
+            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        JpaQueryStream<T> stream = procesJoin(field, Joins.FETCH, on, consumer);
+        return stream;
+    }
+
+    /**
      * Method for FETCH JOIN function call without conditions
      * 
      * @param field
@@ -124,6 +208,19 @@ public interface JoinExpressions<T> {
      *         current instance
      */
     default <E, C extends Collection<E>> JpaQueryStream<T> fetchJoin(EntityField<T, C> field) {
+        return fetchJoin(field, null);
+    }
+
+    /**
+     * Method for FETCH JOIN function call without conditions
+     * 
+     * @param field
+     * @param on
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
+     */
+    default <E, C extends Collection<E>> JpaQueryStream<T> fetchJoinOn(EntityField<T, C> field,
+            QueryConsumer<E, JpaQueryStream<E>> on) {
         return fetchJoin(field, null);
     }
 }

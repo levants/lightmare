@@ -26,11 +26,13 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.internal.orm.links.Joins;
 import org.lightmare.criteria.query.internal.orm.subqueries.EntityJoinProcessor;
 import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
+import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -124,5 +126,16 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
         joinQuery = joinStream(tuple);
 
         return joinQuery;
+    }
+
+    /**
+     * Generates ON expression for JOIN
+     * 
+     * @param on
+     * @param joinQuery
+     */
+    protected <E> void joinOn(QueryConsumer<E, JpaQueryStream<E>> on, JpaQueryStream<E> joinQuery) {
+        appendJoin(Joins.ON);
+        ObjectUtils.nonNull(joinQuery, c -> c.brackets(on));
     }
 }
