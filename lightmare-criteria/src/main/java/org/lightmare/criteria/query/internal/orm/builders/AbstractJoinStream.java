@@ -138,4 +138,20 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
         appendJoin(Joins.ON);
         ObjectUtils.nonNull(joinQuery, c -> c.brackets(on));
     }
+
+    /**
+     * Generates JOIN clause
+     * 
+     * @param field
+     * @param expression
+     * @param on
+     * @param consumer
+     */
+    protected <E, C extends Collection<E>> void joinBody(EntityField<T, C> field, String expression,
+            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+
+        JpaQueryStream<E> joinQuery = joinStream(field, expression, consumer);
+        ObjectUtils.nonNull(on, c -> joinOn(c, joinQuery));
+        acceptAndCall(consumer, joinQuery);
+    }
 }

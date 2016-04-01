@@ -29,10 +29,13 @@ import java.util.Set;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.internal.layers.JpaJdbcQueryLayer;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
+import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.tuples.CounterTuple;
 import org.lightmare.criteria.tuples.Pair;
@@ -304,5 +307,16 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      */
     public String generateSubAlias() {
         return StringUtils.concat(alias, getCounterTuple().getAndIncrementAlias());
+    }
+
+    /**
+     * Validates and calls sub query stream methods
+     * 
+     * @param consumer
+     * @param subQuery
+     */
+    protected <S, Q extends LambdaStream<S, ? super Q>> void acceptAndCall(QueryConsumer<S, Q> consumer, Q query) {
+        ObjectUtils.accept(consumer, query);
+        ObjectUtils.castIfValid(query, SubQueryStream.class, SubQueryStream::call);
     }
 }
