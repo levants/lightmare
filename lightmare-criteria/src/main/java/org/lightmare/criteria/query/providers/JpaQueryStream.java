@@ -39,7 +39,8 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>, QueryExpression<T> {
+public interface JpaQueryStream<T> extends QueryStream<T, JpaQueryStream<T>>,
+        QueryExpression<T, JpaQueryStream<T>, Object[], JpaQueryStream<Object[]>> {
 
     @Override
     default JpaQueryStream<T> stream() {

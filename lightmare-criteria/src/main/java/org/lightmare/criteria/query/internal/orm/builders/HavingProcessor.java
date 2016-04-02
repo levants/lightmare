@@ -63,8 +63,8 @@ class HavingProcessor<T> implements HavingExpression<T> {
     }
 
     /**
-     * Appends default boolean operator AND to passed buffer if there is no
-     * other valid operators
+     * Appends default boolean operator AND to HAVING if there is no other valid
+     * operators
      */
     protected void appendOperator() {
 

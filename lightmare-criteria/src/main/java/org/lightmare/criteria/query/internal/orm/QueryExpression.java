@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * General query components
@@ -32,12 +32,19 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <U>
+ *            result type parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-public interface QueryExpression<T>
-        extends ORMQueryWrapper<T>, Expression<T, JpaQueryStream<T>>, ColumnExpression<T, JpaQueryStream<T>>,
-        FunctionExpression<T>, SelectExpression<T>, OrderExpression<T, JpaQueryStream<T>>,
-        GroupExpression<T, Object[], JpaQueryStream<Object[]>>, JoinExpressions<T, JpaQueryStream<T>>, ResultStream<T>,
-        SubQueryProcessor<T>, AggregateFunction<T, Object[], JpaQueryStream<Object[]>> {
+public interface QueryExpression<T, Q extends QueryStream<T, ? super Q>, U, O extends QueryStream<U, ? super O>>
+        extends ORMQueryWrapper<T>, Expression<T, Q>, ColumnExpression<T, Q>, FunctionExpression<T>,
+        SelectExpression<T>, OrderExpression<T, Q>, GroupExpression<T, U, O>, JoinExpressions<T, Q>, ResultStream<T>,
+        SubQueryProcessor<T>, AggregateFunction<T, U, O> {
 
     /**
      * Gets wrapped entity {@link Class} instance
@@ -53,10 +60,9 @@ public interface QueryExpression<T>
      * 
      * @param field
      * @param value
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F> JpaQueryStream<T> set(EntityField<T, F> field, F value);
+    <F> Q set(EntityField<T, F> field, F value);
 
     // ======================================================================//
 
@@ -64,19 +70,17 @@ public interface QueryExpression<T>
      * Appends to generated query prefix custom clause
      * 
      * @param clause
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    JpaQueryStream<T> appendPrefix(Object clause);
+    Q appendPrefix(Object clause);
 
     /**
      * Appends to generated FROM clause
      * 
      * @param clause
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    JpaQueryStream<T> appendFrom(Object clause);
+    Q appendFrom(Object clause);
 
     /**
      * Gets generated JPA query for element count
