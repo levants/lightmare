@@ -22,12 +22,14 @@
  */
 package org.lightmare.criteria.query;
 
+import java.util.Collection;
 import java.util.function.Consumer;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Query stream of {@link String} based queries for abstract data base layers
@@ -39,62 +41,120 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <S>
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  */
-public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends LambdaStream<T, S> {
+public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends TextQuery<T, S> {
 
-    /**
-     * Appends to generated query body custom clause
-     * 
-     * @param clause
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    S appendBody(Object clause);
+    @Override
+    default <F> S equal(EntityField<T, F> field, Object value) {
+        return operate(field, value, Operators.EQ);
+    }
+
+    @Override
+    default <F> S notEqual(EntityField<T, F> field, Object value) {
+        return operate(field, value, Operators.NOT_EQ);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> S gt(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return operate(field, value, Operators.GREATER);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> S lt(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return operate(field, value, Operators.LESS);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> S ge(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return operate(field, value, Operators.GREATER_OR_EQ);
+    }
+
+    @Override
+    default <F extends Comparable<? super F>> S le(EntityField<T, Comparable<? super F>> field,
+            Comparable<? super F> value) {
+        return operate(field, value, Operators.LESS_OR_EQ);
+    }
+
+    // =============================LIKE=clause==============================//
+
+    @Override
+    default S like(EntityField<T, String> field, String value) {
+        return operate(field, value, Operators.LIKE);
+    }
+
+    @Override
+    default S notLike(EntityField<T, String> field, String value) {
+        return operate(field, value, Operators.NOT_LIKE);
+    }
 
     // ======================================================================//
 
     /**
-     * Opens bracket in query body
-     * 
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default S openBracket() {
-        return appendBody(Operators.OPEN_BRACKET);
-    }
-
-    /**
-     * Closes bracket in query body
-     * 
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default S closeBracket() {
-        return appendBody(Operators.CLOSE_BRACKET);
-    }
-
-    /**
-     * Generates query part for instant field and operator
+     * Generates query part for instant field with {@link java.util.Collection}
+     * parameter and operator
      * 
      * @param field
+     * @param values
      * @param operator
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F> S operate(EntityField<T, F> field, String operator);
+    <F> S operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
+
+    @Override
+    default <F> S in(EntityField<T, F> field, Collection<F> values) {
+        return operateCollection(field, values, Operators.IN);
+    }
+
+    @Override
+    default <F> S notIn(EntityField<T, F> field, Collection<F> values) {
+        return operateCollection(field, values, Operators.NOT_IN);
+    }
+
+    // =============================NULL=check===============================//
+
+    @Override
+    default <F> S isNull(EntityField<T, F> field) {
+        return operate(field, Operators.IS_NULL);
+    }
+
+    @Override
+    default <F> S isNotNull(EntityField<T, F> field) {
+        return operate(field, Operators.NOT_NULL);
+    }
+
+    // ======================================================================//
+
+    default S appendOperator(Object operator) {
+        return appendBody(operator);
+    }
+
+    @Override
+    default S and() {
+        return appendOperator(Operators.AND);
+    }
+
+    @Override
+    default S or() {
+        return appendOperator(Operators.OR);
+    }
 
     /**
-     * Generates query part for instant field with parameter and operator
+     * Appends query body with operator and value
      * 
-     * @param field
      * @param value
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         current instance
      */
-    <F> S operate(EntityField<T, ? extends F> field, Object value, String operator);
+    default S appendOperator(Object value, Object operator) {
 
-    /**
-     * Creates query part in brackets
-     * 
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    S brackets(QueryConsumer<T, S> consumer);
+        S stream = appendBody(value);
+        appendBody(StringUtils.SPACE).appendBody(operator);
+
+        return stream;
+    }
 
     // ======================WHERE=AND=OR=clauses=with=stream================//
 
@@ -135,13 +195,4 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Lam
     default S or(QueryConsumer<T, S> consumer) {
         return brackets(QueryStream::or, consumer);
     }
-
-    // ====================== Generated=SQL=String============================//
-
-    /**
-     * Gets generated query
-     * 
-     * @return {@link String} query
-     */
-    String sql();
 }
