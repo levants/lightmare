@@ -30,7 +30,7 @@ import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.LambdaStream;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.layers.JpaJdbcQueryLayer;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
@@ -315,7 +315,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @param consumer
      * @param query
      */
-    protected <S, Q extends LambdaStream<S, ? super Q>> void acceptAndCall(QueryConsumer<S, Q> consumer, Q query) {
+    protected <S, Q extends QueryStream<S, ? super Q>> void acceptAndCall(QueryConsumer<S, Q> consumer, Q query) {
         ObjectUtils.accept(consumer, query);
         ObjectUtils.castIfValid(query, SubQueryStream.class, SubQueryStream::call);
     }
