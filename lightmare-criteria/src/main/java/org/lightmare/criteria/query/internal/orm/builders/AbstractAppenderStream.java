@@ -519,21 +519,30 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
         prepareGroup(groupBy, Clauses.GROUP);
     }
 
+    /**
+     * Adds GROUP BY field
+     * 
+     * @param field
+     * @param index
+     * @param length
+     */
     private void addGroupByField(Serializable field, int index, int length) {
 
         QueryTuple tuple = resolve(field);
         appendGroupBy(tuple);
         appendFieldName(tuple, columns);
         appendComma(index, length, columns);
+        appendComma(index, length, groupBy);
     }
 
+    /**
+     * Adds GROUP BY fields
+     * 
+     * @param fields
+     */
     private void iterateAndAppendGroups(Collection<Serializable> fields) {
-
         int length = fields.size() - CollectionUtils.SINGLETON;
-        CollectionUtils.forEach(fields, (i, field) -> {
-            addGroupByField(field, i, length);
-            appendComma(i, length, groupBy);
-        });
+        CollectionUtils.forEach(fields, (i, field) -> addGroupByField(field, i, length));
     }
 
     /**
@@ -648,11 +657,11 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
     /**
      * Appends JOIN clause to JPA query
      * 
-     * @param clause
+     * @param clauses
      * @return {@link JpaQueryStream} current instance
      */
-    public JpaQueryStream<T> appendJoin(Object clause) {
-        joins.append(clause);
+    public JpaQueryStream<T> appendJoin(Object... clauses) {
+        ObjectUtils.nonNull(clauses, c -> CollectionUtils.forEach(c, (i, e) -> joins.append(e)));
         return this;
     }
 

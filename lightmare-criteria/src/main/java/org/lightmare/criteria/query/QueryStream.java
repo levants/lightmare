@@ -145,8 +145,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Tex
      * 
      * @param value
      * @param operator
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     default S appendOperator(Object value, Object operator) {
 

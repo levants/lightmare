@@ -63,11 +63,7 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
      * @param tuple
      */
     private void appendJoinField(QueryTuple tuple) {
-
-        appendJoin(tuple.getAlias());
-        appendJoin(StringUtils.DOT);
-        appendJoin(tuple.getFieldName());
-        appendJoin(StringUtils.SPACE);
+        appendJoin(tuple.getAlias(), StringUtils.DOT, tuple.getFieldName(), StringUtils.SPACE);
     }
 
     /**
@@ -100,9 +96,7 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
     private <S> SubQueryStream<S, T> joinStream(Class<S> type) {
 
         SubQueryStream<S, T> joinQuery = new EntityJoinProcessor<S, T>(this, type);
-
-        appendJoin(joinQuery.getAlias());
-        appendJoin(StringUtils.NEWLINE);
+        appendJoin(joinQuery.getAlias(), StringUtils.NEWLINE);
 
         return joinQuery;
     }
