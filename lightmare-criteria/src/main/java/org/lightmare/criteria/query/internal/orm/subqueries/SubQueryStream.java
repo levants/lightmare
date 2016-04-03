@@ -36,5 +36,8 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  */
 public interface SubQueryStream<S, T> extends JpaQueryStream<S> {
 
+    /**
+     * Builds query preventing retrieve result
+     */
     void call();
 }

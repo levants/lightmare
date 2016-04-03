@@ -15,6 +15,9 @@ import org.lightmare.criteria.query.internal.orm.links.Operators;
  */
 interface TextQuery<T, S extends QueryStream<T, ? super S>> extends LambdaStream<T, S> {
 
+    // Entity default alias
+    String DEFAULT_ALIAS = "c";
+
     /**
      * Appends to generated query body custom clause
      * 

@@ -41,9 +41,6 @@ import org.lightmare.criteria.utils.ObjectUtils;
  */
 public interface ORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>> {
 
-    // Entity default alias
-    String DEFAULT_ALIAS = "c";
-
     /**
      * Adds custom parameter to composed query
      * 
