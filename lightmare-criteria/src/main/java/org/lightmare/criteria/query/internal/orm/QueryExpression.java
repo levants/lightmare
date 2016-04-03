@@ -40,7 +40,7 @@ import org.lightmare.criteria.query.QueryStream;
  *            parameter
  */
 public interface QueryExpression<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
-        extends ORMQueryWrapper<T>, Expression<T, Q>, ColumnExpression<T, Q>, FunctionExpression<T>,
+        extends ORMQueryWrapper<T, Q>, Expression<T, Q>, ColumnExpression<T, Q>, FunctionExpression<T>,
         SelectExpression<T>, OrderExpression<T, Q>, GroupExpression<T, Object[], O>, JoinExpressions<T, Q>,
         ResultStream<T>, SubQueryProcessor<T>, AggregateFunction<T, Object[], O> {
 

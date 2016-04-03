@@ -28,8 +28,8 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -39,7 +39,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type for appropriated query
  */
-public interface ORMQueryWrapper<T> {
+public interface ORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>> {
 
     // Entity default alias
     String DEFAULT_ALIAS = "c";
@@ -83,7 +83,7 @@ public interface ORMQueryWrapper<T> {
      * @throws IllegalArgumentException
      *             if the argument is negative
      */
-    JpaQueryStream<T> setMaxResults(int maxResult);
+    Q setMaxResults(int maxResult);
 
     /**
      * The maximum number of results the query object was set to retrieve.
@@ -109,7 +109,7 @@ public interface ORMQueryWrapper<T> {
      * @throws IllegalArgumentException
      *             if the argument is negative
      */
-    JpaQueryStream<T> setFirstResult(int startPosition);
+    Q setFirstResult(int startPosition);
 
     /**
      * The position of the first result the query object was set to retrieve.
@@ -143,7 +143,7 @@ public interface ORMQueryWrapper<T> {
      * @throws IllegalArgumentException
      *             if the second argument is not valid for the implementation
      */
-    JpaQueryStream<T> setHint(String hintName, Object value);
+    Q setHint(String hintName, Object value);
 
     /**
      * Get the properties and hints and associated values that are in effect for
@@ -167,7 +167,7 @@ public interface ORMQueryWrapper<T> {
      *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         instance
      */
-    JpaQueryStream<T> setFlushMode(FlushModeType flushMode);
+    Q setFlushMode(FlushModeType flushMode);
 
     /**
      * Set the lock mode type to be used for the query execution.
@@ -183,7 +183,7 @@ public interface ORMQueryWrapper<T> {
      *             if the query is found not to be a Java Persistence query
      *             language SELECT query or a Criteria API query
      */
-    JpaQueryStream<T> setLockMode(LockModeType lockMode);
+    Q setLockMode(LockModeType lockMode);
 
     // ================================Wrapped JPA Elements===================//
     /**
