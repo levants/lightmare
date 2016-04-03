@@ -41,8 +41,8 @@ import org.lightmare.criteria.query.QueryStream;
  */
 public interface QueryExpression<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
         extends ORMQueryWrapper<T, Q>, Expression<T, Q>, ColumnExpression<T, Q>, FunctionExpression<T>,
-        SelectExpression<T>, OrderExpression<T, Q>, GroupExpression<T, Object[], O>, JoinExpressions<T, Q>,
-        ResultStream<T>, SubQueryProcessor<T>, AggregateFunction<T, Object[], O> {
+        SelectExpression<T>, OrderExpression<T, Q>, GroupExpression<T, O>, JoinExpressions<T, Q>, ResultStream<T>,
+        SubQueryProcessor<T>, AggregateFunction<T, O> {
 
     /**
      * Gets wrapped entity {@link Class} instance

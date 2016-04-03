@@ -100,8 +100,7 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
 
         QueryTuple tuple = compose(field);
         aggregateTuple(tuple, function);
-        Class<?> rawType = ObjectUtils.thisOrDefault(type, tuple::getFieldGenericType);
-        Class<R> selectType = ObjectUtils.cast(rawType);
+        Class<R> selectType = ObjectUtils.getAndCast(() -> ObjectUtils.thisOrDefault(type, tuple::getFieldGenericType));
         stream = new SelectStream<>(this, selectType);
 
         return stream;
@@ -120,7 +119,7 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
 
     @Override
     public <F> JpaQueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function,
-            GroupByConsumer<T, Object[], JpaQueryStream<Object[]>> consumer) {
+            GroupByConsumer<T, JpaQueryStream<Object[]>> consumer) {
 
         JpaQueryStream<Object[]> stream;
 

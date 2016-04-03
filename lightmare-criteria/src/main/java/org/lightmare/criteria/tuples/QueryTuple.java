@@ -187,23 +187,11 @@ public class QueryTuple implements Serializable, Cloneable {
     }
 
     public <F> Class<F> getCollectionType() {
-
-        Class<F> collectionType;
-
-        Class<?> raw = getGenericType();
-        collectionType = ObjectUtils.cast(raw);
-
-        return collectionType;
+        return ObjectUtils.getAndCast(this::getGenericType);
     }
 
     public <F> Class<F> getFieldGenericType() {
-
-        Class<F> fieldGenericType;
-
-        Class<?> raw = getFieldType();
-        fieldGenericType = ObjectUtils.cast(raw);
-
-        return fieldGenericType;
+        return ObjectUtils.getAndCast(this::getFieldType);
     }
 
     @Override

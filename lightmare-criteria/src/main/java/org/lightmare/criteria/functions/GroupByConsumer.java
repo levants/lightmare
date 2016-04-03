@@ -38,13 +38,11 @@ import org.lightmare.criteria.query.internal.orm.GroupExpression;
  * @param <Q>
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
- * @param <U>
- *            result type parameter
  */
 @FunctionalInterface
-public interface GroupByConsumer<T, U, Q extends QueryStream<U, ? super Q>>
-        extends Consumer<GroupExpression<T, U, Q>>, Serializable {
+public interface GroupByConsumer<T, Q extends QueryStream<Object[], ? super Q>>
+        extends Consumer<GroupExpression<T, Q>>, Serializable {
 
     @Override
-    void accept(GroupExpression<T, U, Q> stream);
+    void accept(GroupExpression<T, Q> stream);
 }

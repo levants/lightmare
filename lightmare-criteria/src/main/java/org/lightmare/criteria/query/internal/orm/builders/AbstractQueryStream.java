@@ -77,9 +77,7 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
         JpaJdbcQueryLayer<T> query;
 
         String sqlText = sql();
-
-        QueryLayer<T> raw = provider.query(entityType, sqlText);
-        query = ObjectUtils.cast(raw);
+        query = ObjectUtils.getAndCast(() -> provider.query(entityType, sqlText));
         setParameters(query);
 
         return query;
@@ -96,8 +94,7 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
         JpaJdbcQueryLayer<Long> query;
 
         String sqlText = countSql();
-        QueryLayer<Long> raw = provider.query(Long.class, sqlText);
-        query = ObjectUtils.cast(raw);
+        query = ObjectUtils.getAndCast(() -> provider.query(Long.class, sqlText));
         setParameters(query);
 
         return query;
@@ -115,8 +112,7 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
         JpaJdbcQueryLayer<?> query;
 
         String sqlText = sql();
-        QueryLayer<?> raw = provider.query(sqlText);
-        query = ObjectUtils.cast(raw);
+        query = ObjectUtils.getAndCast(() -> provider.query(sqlText));
         setParameters(query);
 
         return query;

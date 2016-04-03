@@ -95,8 +95,7 @@ abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
 
         R result;
 
-        QueryLayer<T> query = initTypedQuery();
-        JdbcQueryLayer<T> jdbcQuery = ObjectUtils.cast(query);
+        JdbcQueryLayer<T> jdbcQuery = ObjectUtils.getAndCast(this::initTypedQuery);
         result = function.apply(jdbcQuery, retriever);
 
         return result;
