@@ -26,7 +26,6 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Aggregate functions for JPA query
@@ -61,9 +60,11 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>
      * @param field
      * @param function
      * @param type
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with instant result type
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for numeric result type
      */
-    <F, R extends Number> JpaQueryStream<R> aggregate(EntityField<T, F> field, Aggregates function, Class<R> type);
+    <F, R extends Number, L extends QueryStream<R, ? super L>> L aggregate(EntityField<T, F> field, Aggregates function,
+            Class<R> type);
 
     /**
      * Operates with aggregate function and generates
@@ -72,18 +73,20 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>
      * 
      * @param field
      * @param function
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} with {@link Number} result type
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for numeric result type
      */
-    <N extends Number> JpaQueryStream<N> aggregate(EntityField<T, N> field, Aggregates function);
+    <N extends Number, L extends QueryStream<N, ? super L>> L aggregate(EntityField<T, N> field, Aggregates function);
 
     /**
      * Create an aggregate expression applying the AVG operation.
      *
      * @param field
      *
-     * @return AVG expression
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for numeric result type
      */
-    default <N extends Number> JpaQueryStream<Double> avg(EntityField<T, N> field) {
+    default <N extends Number, L extends QueryStream<Double, ? super L>> L avg(EntityField<T, N> field) {
         return aggregate(field, Aggregates.AVG, Double.class);
     }
 
@@ -105,9 +108,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>
      * @param field
      *            expression representing input value to sum operation
      *
-     * @return sum expression
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for numeric result type
      */
-    default <N extends Number> JpaQueryStream<N> sum(EntityField<T, N> field) {
+    default <N extends Number, L extends QueryStream<N, ? super L>> L sum(EntityField<T, N> field) {
         return aggregate(field, Aggregates.SUM);
     }
 
@@ -129,9 +133,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>
      * @param field
      *            expression representing input value to max operation
      *
-     * @return max expression
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for numeric result type
      */
-    default <N extends Number> JpaQueryStream<N> max(EntityField<T, N> field) {
+    default <N extends Number, L extends QueryStream<N, ? super L>> L max(EntityField<T, N> field) {
         return aggregate(field, Aggregates.MAX);
     }
 
@@ -153,10 +158,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>
      * @param field
      *            expression representing input value to MIN operation
      *
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         {@link Number}
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for numeric result type
      */
-    default <N extends Number> JpaQueryStream<N> min(EntityField<T, N> field) {
+    default <N extends Number, L extends QueryStream<N, ? super L>> L min(EntityField<T, N> field) {
         return aggregate(field, Aggregates.MIN);
     }
 
@@ -179,10 +184,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>
      * @param field
      *            expression representing input value to GREATEST operation
      *
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         greatest expression
+     * @return {{@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for numeric result type greatest expression
      */
-    default <N extends Number> JpaQueryStream<N> greatest(EntityField<T, N> field) {
+    default <N extends Number, L extends QueryStream<N, ? super L>> L greatest(EntityField<T, N> field) {
         return aggregate(field, Aggregates.GREATEST);
     }
 
@@ -205,10 +210,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>
      * @param field
      *            expression representing input value to LEAST operation
      *
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         least expression
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for numeric result type least expression
      */
-    default <N extends Number> JpaQueryStream<N> least(EntityField<T, N> field) {
+    default <N extends Number, L extends QueryStream<N, ? super L>> L least(EntityField<T, N> field) {
         return aggregate(field, Aggregates.LEAST);
     }
 
@@ -230,10 +235,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>
      * @param field
      *            expression representing input value to count operation
      *
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         count expression
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for numeric result type count expression
      */
-    default <F> JpaQueryStream<Long> count(EntityField<T, F> field) {
+    default <F, L extends QueryStream<Long, ? super L>> L count(EntityField<T, F> field) {
         return aggregate(field, Aggregates.COUNT, Long.class);
     }
 
@@ -256,10 +261,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>
      *            expression representing input value to count distinct
      *            operation
      *
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         count distinct expression
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for numeric result type count distinct expression
      */
-    default <F> JpaQueryStream<Long> countDistinct(EntityField<T, F> field) {
+    default <F, L extends QueryStream<Long, ? super L>> L countDistinct(EntityField<T, F> field) {
         return aggregate(field, Aggregates.COUNT, Long.class);
     }
 

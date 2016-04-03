@@ -30,6 +30,7 @@ import java.util.Objects;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
@@ -130,10 +131,10 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         with aggregate type
      */
-    protected <F, R extends Number> JpaQueryStream<R> subAggregate(EntityField<S, F> field, Aggregates function,
-            Class<R> type) {
+    protected <F, R extends Number, L extends QueryStream<R, ? super L>> L subAggregate(EntityField<S, F> field,
+            Aggregates function, Class<R> type) {
 
-        JpaQueryStream<R> stream = super.aggregate(field, function, type);
+        L stream = super.aggregate(field, function, type);
 
         Class<R> selectType = stream.getEntityType();
         generateSubSelectStream(selectType);

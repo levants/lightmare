@@ -23,8 +23,8 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.FunctionConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Functional expression with other column functional expression
@@ -33,8 +33,11 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-interface FunctionToFunctionExpression<T> {
+interface FunctionToFunctionExpression<T, Q extends QueryStream<T, ? super Q>> {
 
     /**
      * Generates query clause with expression between functions
@@ -42,49 +45,47 @@ interface FunctionToFunctionExpression<T> {
      * @param function1
      * @param function2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    JpaQueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
+    Q operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
 
-    default <F> JpaQueryStream<T> eqFn(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default <F> Q eqFn(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.EQ);
     }
 
-    default <F> JpaQueryStream<T> notEqFn(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default <F> Q notEqFn(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.NOT_EQ);
     }
 
-    default JpaQueryStream<T> gtFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default Q gtFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.GREATER);
     }
 
-    default JpaQueryStream<T> greaterThanFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default Q greaterThanFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.GREATER);
     }
 
-    default JpaQueryStream<T> ltFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default Q ltFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.LESS);
     }
 
-    default JpaQueryStream<T> lessThanFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default Q lessThanFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.LESS);
     }
 
-    default JpaQueryStream<T> geFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default Q geFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.GREATER_OR_EQ);
     }
 
-    default JpaQueryStream<T> greaterThanOrEqualToFunction(FunctionConsumer<T> function1,
-            FunctionConsumer<T> function2) {
+    default Q greaterThanOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.GREATER_OR_EQ);
     }
 
-    default JpaQueryStream<T> leFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default Q leFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.LESS_OR_EQ);
     }
 
-    default JpaQueryStream<T> lessThanOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
+    default Q lessThanOrEqualToFunction(FunctionConsumer<T> function1, FunctionConsumer<T> function2) {
         return operateFunctions(function1, function2, Operators.EQ);
     }
 }

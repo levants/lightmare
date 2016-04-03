@@ -22,6 +22,8 @@
  */
 package org.lightmare.criteria.query.internal.orm;
 
+import org.lightmare.criteria.query.QueryStream;
+
 /**
  * Processes functional expressions for JPA query
  * 
@@ -29,8 +31,11 @@ package org.lightmare.criteria.query.internal.orm;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-interface FunctionExpression<T>
-        extends FuntionToObjectExpression<T>, FunctionToFunctionExpression<T>, FuntionToColumnExpression<T> {
+interface FunctionExpression<T, Q extends QueryStream<T, ? super Q>>
+        extends FuntionToObjectExpression<T, Q>, FunctionToFunctionExpression<T, Q>, FuntionToColumnExpression<T, Q> {
 
 }

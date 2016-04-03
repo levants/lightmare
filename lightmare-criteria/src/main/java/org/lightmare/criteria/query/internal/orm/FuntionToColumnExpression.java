@@ -24,8 +24,8 @@ package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Functional expression and column comparators
@@ -34,8 +34,11 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-interface FuntionToColumnExpression<T> {
+interface FuntionToColumnExpression<T, Q extends QueryStream<T, ? super Q>> {
 
     /**
      * Generates query clause with expression between columns
@@ -43,54 +46,54 @@ interface FuntionToColumnExpression<T> {
      * @param function
      * @param operator
      * @param field
-     * @return org.lightmare.criteria.query.QueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F> JpaQueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field);
+    <F> Q operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field);
 
-    default <F> JpaQueryStream<T> eqColumn(FunctionConsumer<T> function, EntityField<T, F> field) {
+    default <F> Q eqColumn(FunctionConsumer<T> function, EntityField<T, F> field) {
         return operateColumn(function, Operators.EQ, field);
     }
 
-    default <F> JpaQueryStream<T> notEqColumn(FunctionConsumer<T> function, EntityField<T, F> field) {
+    default <F> Q notEqColumn(FunctionConsumer<T> function, EntityField<T, F> field) {
         return operateColumn(function, Operators.NOT_EQ, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> gtColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q gtColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.GREATER, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThanColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q greaterThanColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.GREATER, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> ltColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q ltColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.LESS, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThanColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q lessThanColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.LESS, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> geColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q geColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.GREATER_OR_EQ, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThanOrEqualToColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q greaterThanOrEqualToColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.GREATER_OR_EQ, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> leColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q leColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.LESS_OR_EQ, field);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThanOrEqualToColumn(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q lessThanOrEqualToColumn(FunctionConsumer<T> function,
             EntityField<T, Comparable<? super F>> field) {
         return operateColumn(function, Operators.EQ, field);
     }

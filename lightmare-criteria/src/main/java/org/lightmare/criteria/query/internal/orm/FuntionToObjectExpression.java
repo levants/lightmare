@@ -23,8 +23,8 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.FunctionConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Functional expression for JPA query
@@ -33,8 +33,11 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-interface FuntionToObjectExpression<T> {
+interface FuntionToObjectExpression<T, Q extends QueryStream<T, ? super Q>> {
 
     /**
      * Operates with functional expression and parameter
@@ -42,55 +45,50 @@ interface FuntionToObjectExpression<T> {
      * @param function
      * @param operator
      * @param value
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         current entity type
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    JpaQueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value);
+    Q operateFunction(FunctionConsumer<T> function, String operator, Object value);
 
-    default <F> JpaQueryStream<T> eqParam(FunctionConsumer<T> function, Object value) {
+    default <F> Q eqParam(FunctionConsumer<T> function, Object value) {
         return operateFunction(function, Operators.EQ, value);
     }
 
-    default <F> JpaQueryStream<T> notEqParam(FunctionConsumer<T> function, Object value) {
+    default <F> Q notEqParam(FunctionConsumer<T> function, Object value) {
         return operateFunction(function, Operators.NOT_EQ, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> gtParam(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q gtParam(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return operateFunction(function, Operators.GREATER, value);
+    }
+
+    default <F extends Comparable<? super F>> Q greaterThanParam(FunctionConsumer<T> function,
             Comparable<? super F> value) {
         return operateFunction(function, Operators.GREATER, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThanParam(FunctionConsumer<T> function,
-            Comparable<? super F> value) {
-        return operateFunction(function, Operators.GREATER, value);
+    default <F extends Comparable<? super F>> Q ltParam(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return operateFunction(function, Operators.LESS, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> ltParam(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q lessThanParam(FunctionConsumer<T> function,
             Comparable<? super F> value) {
         return operateFunction(function, Operators.LESS, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThanParam(FunctionConsumer<T> function,
-            Comparable<? super F> value) {
-        return operateFunction(function, Operators.LESS, value);
+    default <F extends Comparable<? super F>> Q geParam(FunctionConsumer<T> function, Comparable<? super F> value) {
+        return operateFunction(function, Operators.GREATER_OR_EQ, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> geParam(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q greaterThanOrEqualToParam(FunctionConsumer<T> function,
             Comparable<? super F> value) {
         return operateFunction(function, Operators.GREATER_OR_EQ, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> greaterThanOrEqualToParam(FunctionConsumer<T> function,
-            Comparable<? super F> value) {
-        return operateFunction(function, Operators.GREATER_OR_EQ, value);
-    }
-
-    default <F extends Comparable<? super F>> JpaQueryStream<T> leParam(FunctionConsumer<T> function,
-            Comparable<? super F> value) {
+    default <F extends Comparable<? super F>> Q leParam(FunctionConsumer<T> function, Comparable<? super F> value) {
         return operateFunction(function, Operators.LESS_OR_EQ, value);
     }
 
-    default <F extends Comparable<? super F>> JpaQueryStream<T> lessThanOrEqualToParam(FunctionConsumer<T> function,
+    default <F extends Comparable<? super F>> Q lessThanOrEqualToParam(FunctionConsumer<T> function,
             Comparable<? super F> value) {
         return operateFunction(function, Operators.EQ, value);
     }
