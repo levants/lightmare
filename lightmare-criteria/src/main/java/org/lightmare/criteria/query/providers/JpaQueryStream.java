@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.providers;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.providers.sql.SQLStream;
 
 /**
  * Main interface with query construction methods
