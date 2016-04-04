@@ -24,8 +24,6 @@ package org.lightmare.criteria.query.providers;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.QueryExpression;
 
 /**
  * Main interface with query construction methods
@@ -35,8 +33,7 @@ import org.lightmare.criteria.query.internal.orm.QueryExpression;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface JpaQueryStream<T>
-        extends QueryStream<T, JpaQueryStream<T>>, QueryExpression<T, JpaQueryStream<T>, JpaQueryStream<Object[]>> {
+public interface JpaQueryStream<T> extends SQLStream<T, JpaQueryStream<T>, JpaQueryStream<Object[]>> {
 
     @Override
     default JpaQueryStream<T> stream() {

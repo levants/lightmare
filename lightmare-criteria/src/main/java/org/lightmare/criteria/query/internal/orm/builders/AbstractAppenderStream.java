@@ -712,8 +712,8 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     public Q appendBody(Object clause) {
 
         Q stream = stream();
-
         body.append(clause);
+
         return stream;
     }
 

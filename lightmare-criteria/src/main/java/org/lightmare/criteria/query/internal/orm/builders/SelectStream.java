@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.orm.builders;
 
 import org.lightmare.criteria.query.internal.orm.links.Parts;
-import org.lightmare.criteria.query.providers.jpa.JpaQueryStreamBuilder;
+import org.lightmare.criteria.query.providers.jpa.JpaEntityQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -34,7 +34,7 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type for generated query
  */
-public class SelectStream<T, E> extends JpaQueryStreamBuilder<E> {
+public class SelectStream<T, E> extends JpaEntityQueryStream<E> {
 
     // Real entity type before select statement
     private final Class<?> realEntityType;
