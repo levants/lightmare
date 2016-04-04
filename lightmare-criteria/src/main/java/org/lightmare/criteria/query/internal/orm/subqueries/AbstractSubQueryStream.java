@@ -237,8 +237,10 @@ public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<
 
     @Override
     public Long count() {
+
         String query = countSql();
         callState(query);
+
         return null;
     }
 

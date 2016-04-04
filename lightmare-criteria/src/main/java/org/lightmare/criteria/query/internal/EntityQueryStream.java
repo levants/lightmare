@@ -27,11 +27,13 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractAggregateStream;
 import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream;
 import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Query builder from setter method references
@@ -168,18 +170,13 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
      * 
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
-     *         for entity type
      */
-    private <S> JpaQueryStream<S> initSubQuery(Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer) {
+    private <S> void initSubQuery(Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer) {
 
         JpaQueryStream<S> query = subQuery(type);
-
         acceptAndCall(consumer, query);
         closeBracket();
         newLine();
-
-        return query;
     }
 
     @Override

@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.LambdaStream;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
@@ -49,7 +49,7 @@ public interface SubQuery<T> {
      *            {@link org.lightmare.criteria.query.LambdaStream}
      *            implementation parameter
      */
-    static abstract class SubQueryType<T, U extends LambdaStream<T, ? super U>> {
+    static abstract class SubQueryType<T, U extends QueryStream<T, ? super U>> {
 
         private final Class<T> type;
 
@@ -87,7 +87,7 @@ public interface SubQuery<T> {
      *            {@link org.lightmare.criteria.query.LambdaStream}
      *            implementation parameter
      */
-    static final class All<T, S extends LambdaStream<T, ? super S>> extends SubQueryType<T, S> {
+    static final class All<T, S extends QueryStream<T, ? super S>> extends SubQueryType<T, S> {
 
         private All(final Class<T> type, final QueryConsumer<T, S> consumer) {
             super(type, consumer, Operators.ALL);
@@ -105,7 +105,7 @@ public interface SubQuery<T> {
      *            {@link org.lightmare.criteria.query.LambdaStream}
      *            implementation parameter
      */
-    static final class Any<T, S extends LambdaStream<T, ? super S>> extends SubQueryType<T, S> {
+    static final class Any<T, S extends QueryStream<T, ? super S>> extends SubQueryType<T, S> {
 
         private Any(final Class<T> type, final QueryConsumer<T, S> consumer) {
             super(type, consumer, Operators.ANY);
@@ -123,7 +123,7 @@ public interface SubQuery<T> {
      *            {@link org.lightmare.criteria.query.LambdaStream}
      *            implementation parameter
      */
-    static final class Some<T, S extends LambdaStream<T, ? super S>> extends SubQueryType<T, S> {
+    static final class Some<T, S extends QueryStream<T, ? super S>> extends SubQueryType<T, S> {
 
         private Some(final Class<T> type, final QueryConsumer<T, S> consumer) {
             super(type, consumer, Operators.SOME);
