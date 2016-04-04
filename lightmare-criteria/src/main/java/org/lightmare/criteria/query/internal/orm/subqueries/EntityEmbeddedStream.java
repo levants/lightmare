@@ -45,7 +45,8 @@ public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
 
     private final String embeddedName;
 
-    public EntityEmbeddedStream(final AbstractQueryStream<T> parent, final Class<S> type, final String embeddedName) {
+    public EntityEmbeddedStream(final AbstractQueryStream<T, ?, ?> parent, final Class<S> type,
+            final String embeddedName) {
         super(parent, parent.getAlias(), type);
         this.embeddedName = embeddedName;
     }

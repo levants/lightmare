@@ -26,6 +26,7 @@ import java.io.Serializable;
 import java.util.function.Consumer;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.ORMFunction;
 import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
 import org.lightmare.criteria.query.layers.LayerProvider;
@@ -42,8 +43,16 @@ import org.lightmare.criteria.utils.StringUtils;
  *
  * @param <T>
  *            entity type parameter
+ * 
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-public abstract class AbstractFunctionProcessor<T> extends AbstractQueryStream<T> implements ORMFunction<T> {
+public abstract class AbstractFunctionProcessor<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractQueryStream<T, Q, O> implements ORMFunction<T> {
 
     protected QueryTuple functionTuple;
 

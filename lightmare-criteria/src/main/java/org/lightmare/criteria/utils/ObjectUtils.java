@@ -357,6 +357,23 @@ public abstract class ObjectUtils extends FunctionUtils {
     }
 
     /**
+     * Gets value from supplier and cast to appropriated value
+     * 
+     * @param argument
+     * @param function
+     * @return <code>T</code> casted to type instance
+     */
+    public static <T, U, R> T applyAndCast(U argument, Function<U, R> function) {
+
+        T result;
+
+        R value = apply(argument, function);
+        result = cast(value);
+
+        return result;
+    }
+
+    /**
      * Casts passed {@link Object} to generic parameter and runs
      * {@link java.util.function.Consumer} implementation
      * 

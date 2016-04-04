@@ -24,8 +24,8 @@ package org.lightmare.criteria.query.internal.orm.builders;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
@@ -35,8 +35,15 @@ import org.lightmare.criteria.tuples.QueryTuple;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T> {
+abstract class AbstractFunctionExpression<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractFunctionProcessor<T, Q, O> {
 
     protected AbstractFunctionExpression(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
@@ -57,17 +64,21 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
     }
 
     @Override
-    public <F> JpaQueryStream<T> operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field) {
+    public <F> Q operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field) {
+
+        Q stream = stream();
 
         startFunctionExpression(function, operator);
         QueryTuple tuple = resolve(field);
         appendColumn(tuple);
 
-        return this;
+        return stream;
     }
 
     @Override
-    public JpaQueryStream<T> operateFunction(FunctionConsumer<T> function, String operator, Object value) {
+    public Q operateFunction(FunctionConsumer<T> function, String operator, Object value) {
+
+        Q stream = stream();
 
         startFunctionExpression(function, operator);
         if (functionTuple == null) {
@@ -77,16 +88,17 @@ abstract class AbstractFunctionExpression<T> extends AbstractFunctionProcessor<T
             newLine();
         }
 
-        return this;
+        return stream;
     }
 
     @Override
-    public JpaQueryStream<T> operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2,
-            String operator) {
+    public Q operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator) {
+
+        Q stream = stream();
 
         startFunctionExpression(function1, operator);
         function2.accept(this);
 
-        return this;
+        return stream;
     }
 }

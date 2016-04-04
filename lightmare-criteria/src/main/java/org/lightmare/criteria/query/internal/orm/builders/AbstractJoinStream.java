@@ -44,7 +44,8 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type parameter for generated query
  */
-abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
+abstract class AbstractJoinStream<T>
+        extends AbstractFunctionExpression<T, JpaQueryStream<T>, JpaQueryStream<Object[]>> {
 
     protected AbstractJoinStream(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
@@ -189,6 +190,6 @@ abstract class AbstractJoinStream<T> extends AbstractFunctionExpression<T> {
     public <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
             QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
         joinBody(field, expression, on, consumer);
-        return this;
+        return stream();
     }
 }

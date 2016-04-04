@@ -22,16 +22,10 @@
  */
 package org.lightmare.criteria.query.internal.orm.builders;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.persistence.FlushModeType;
-import javax.persistence.LockModeType;
-
 import org.lightmare.criteria.query.QueryResolver;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.layers.JpaJdbcQueryLayer;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
-import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.query.providers.sql.SQLStream;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -41,24 +35,27 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @author Levan Tsinadze
  *
  * @param <T>
- *            entity type for generated JPA query
+ *            entity type for generated SQL statements
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * 
  */
-abstract class AbstractORMQueryWrapper<T> implements JpaQueryStream<T>, QueryResolver<T> {
+abstract class AbstractORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        implements SQLStream<T, Q, O>, QueryResolver<T> {
 
     private Integer maxResult;
 
-    private Integer startPosition;
-
-    private Map<String, Object> hints = new HashMap<>();
-
-    private FlushModeType flushMode;
-
-    private LockModeType lockMode;
-
     @Override
-    public JpaQueryStream<T> setMaxResults(int maxResult) {
+    public Q setMaxResults(int maxResult) {
+
+        Q stream = stream();
         this.maxResult = maxResult;
-        return this;
+
+        return stream;
     }
 
     @Override
@@ -75,76 +72,6 @@ abstract class AbstractORMQueryWrapper<T> implements JpaQueryStream<T>, QueryRes
         ObjectUtils.nonNull(maxResult, query::setMaxResults);
     }
 
-    @Override
-    public JpaQueryStream<T> setFirstResult(int startPosition) {
-        this.startPosition = startPosition;
-        return this;
-    }
-
-    @Override
-    public int getFirstResult() {
-        return startPosition;
-    }
-
-    /**
-     * Sets first result flag to query
-     * 
-     * @param query
-     */
-    private void putFirstResult(JpaJdbcQueryLayer<?> query) {
-        ObjectUtils.nonNull(startPosition, query::setFirstResult);
-    }
-
-    @Override
-    public JpaQueryStream<T> setHint(String hintName, Object value) {
-        hints.put(hintName, value);
-        return this;
-    }
-
-    @Override
-    public Map<String, Object> getHints() {
-        return hints;
-    }
-
-    /**
-     * Sets query hints
-     * 
-     * @param query
-     */
-    private void putHints(JpaJdbcQueryLayer<?> query) {
-        CollectionUtils.valid(hints, c -> c.forEach(query::setHint));
-    }
-
-    @Override
-    public JpaQueryStream<T> setFlushMode(FlushModeType flushMode) {
-        this.flushMode = flushMode;
-        return this;
-    }
-
-    /**
-     * Sets flush mode to query
-     * 
-     * @param query
-     */
-    private void putFlushMode(JpaJdbcQueryLayer<?> query) {
-        ObjectUtils.nonNull(flushMode, query::setFlushMode);
-    }
-
-    @Override
-    public JpaQueryStream<T> setLockMode(LockModeType lockMode) {
-        this.lockMode = lockMode;
-        return this;
-    }
-
-    /**
-     * Sets lock mode to query
-     * 
-     * @param query
-     */
-    private void setLockMode(JpaJdbcQueryLayer<?> query) {
-        ObjectUtils.nonNull(lockMode, query::setLockMode);
-    }
-
     /**
      * Adds additional JPA configuration to passed
      * {@link javax.persistence.Query} instance
@@ -152,11 +79,6 @@ abstract class AbstractORMQueryWrapper<T> implements JpaQueryStream<T>, QueryRes
      * @param query
      */
     protected void setJPAConfiguration(JpaJdbcQueryLayer<?> query) {
-
-        putFirstResult(query);
         putMaxResult(query);
-        putHints(query);
-        putFlushMode(query);
-        setLockMode(query);
     }
 }

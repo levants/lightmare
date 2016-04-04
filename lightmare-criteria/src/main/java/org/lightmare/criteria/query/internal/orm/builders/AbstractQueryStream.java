@@ -25,6 +25,7 @@ package org.lightmare.criteria.query.internal.orm.builders;
 import java.util.Queue;
 import java.util.Set;
 
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.layers.JpaJdbcQueryLayer;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.layers.QueryLayer;
@@ -38,8 +39,15 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *
  * @param <T>
  *            entity type parameter for generated query
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
+public abstract class AbstractQueryStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractAppenderStream<T, Q, O> {
 
     protected AbstractQueryStream(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
@@ -77,7 +85,7 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
         JpaJdbcQueryLayer<T> query;
 
         String sqlText = sql();
-        query = ObjectUtils.getAndCast(() -> provider.query(entityType, sqlText));
+        query = ObjectUtils.applyAndCast(sqlText, c -> provider.query(entityType, c));
         setParameters(query);
 
         return query;
@@ -94,7 +102,7 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
         JpaJdbcQueryLayer<Long> query;
 
         String sqlText = countSql();
-        query = ObjectUtils.getAndCast(() -> provider.query(Long.class, sqlText));
+        query = ObjectUtils.applyAndCast(sqlText, c -> provider.query(Long.class, c));
         setParameters(query);
 
         return query;
@@ -112,7 +120,7 @@ public abstract class AbstractQueryStream<T> extends AbstractAppenderStream<T> {
         JpaJdbcQueryLayer<?> query;
 
         String sqlText = sql();
-        query = ObjectUtils.getAndCast(() -> provider.query(sqlText));
+        query = ObjectUtils.applyAndCast(sqlText, c -> provider.query(c));
         setParameters(query);
 
         return query;

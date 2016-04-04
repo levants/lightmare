@@ -42,11 +42,11 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  */
 public class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
 
-    public EntitySubQueryStream(AbstractQueryStream<T> parent, Class<S> type) {
+    public EntitySubQueryStream(AbstractQueryStream<T, ?, ?> parent, Class<S> type) {
         super(parent, type);
     }
 
-    public EntitySubQueryStream(AbstractQueryStream<T> parent, String alias, Class<S> type) {
+    public EntitySubQueryStream(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> type) {
         super(parent, alias, type);
     }
 
@@ -63,8 +63,8 @@ public class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
     }
 
     @Override
-    public <F, R extends Number, L extends QueryStream<R, ? super L>> L aggregate(EntityField<S, F> field, Aggregates function,
-            Class<R> type) {
+    public <F, R extends Number, L extends QueryStream<R, ? super L>> L aggregate(EntityField<S, F> field,
+            Aggregates function, Class<R> type) {
         return subAggregate(field, function, type);
     }
 }

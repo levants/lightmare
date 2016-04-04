@@ -45,12 +45,12 @@ public class EntityJoinProcessor<S, T> extends EntitySubQueryStream<S, T> {
 
     private int onCount;
 
-    public EntityJoinProcessor(AbstractQueryStream<T> parent, String alias, Class<S> entityType) {
+    public EntityJoinProcessor(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> entityType) {
         super(parent, alias, entityType);
         this.onClause = Boolean.TRUE;
     }
 
-    public EntityJoinProcessor(AbstractQueryStream<T> parent, Class<S> entityType) {
+    public EntityJoinProcessor(AbstractQueryStream<T, ?, ?> parent, Class<S> entityType) {
         super(parent, entityType);
     }
 

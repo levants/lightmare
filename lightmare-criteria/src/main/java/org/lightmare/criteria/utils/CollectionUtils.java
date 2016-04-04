@@ -34,6 +34,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import org.lightmare.criteria.tuples.Couple;
+
 /**
  * Utility class to work with {@link java.util.Collection} and
  * {@link java.util.Map} implementations
@@ -378,6 +380,24 @@ public abstract class CollectionUtils {
     }
 
     /**
+     * Calls {@link java.util.function.Consumer} for each collection member
+     * 
+     * @param collection
+     * @param consumer
+     */
+    private static <T> void forEachValue(T[] array, Consumer<Couple<Integer, T>> consumer) {
+
+        int length = array.length;
+        T value;
+        Couple<Integer, T> couple;
+        for (int i = FIRST; i < length; i++) {
+            value = array[i];
+            couple = Couple.of(i, value);
+            consumer.accept(couple);
+        }
+    }
+
+    /**
      * Calls {@link java.util.function.BiConsumer} for each collection member
      * 
      * @param collection
@@ -390,6 +410,24 @@ public abstract class CollectionUtils {
         for (int i = FIRST; iterator.hasNext(); i++) {
             value = iterator.next();
             consumer.accept(i, value);
+        }
+    }
+
+    /**
+     * Calls {@link java.util.function.Consumer} for each collection member
+     * 
+     * @param collection
+     * @param consumer
+     */
+    private static <T> void forEachValue(Collection<T> collection, Consumer<Couple<Integer, T>> consumer) {
+
+        Iterator<T> iterator = collection.iterator();
+        T value;
+        Couple<Integer, T> couple;
+        for (int i = FIRST; iterator.hasNext(); i++) {
+            value = iterator.next();
+            couple = Couple.of(i, value);
+            consumer.accept(couple);
         }
     }
 
@@ -408,6 +446,20 @@ public abstract class CollectionUtils {
     }
 
     /**
+     * Validates array and calls {@link java.util.function.Consumer} for each
+     * it's member
+     * 
+     * @param array
+     * @param consumer
+     */
+    public static <T> void forEach(T[] array, Consumer<Couple<Integer, T>> consumer) {
+
+        if (valid(array) && Objects.nonNull(consumer)) {
+            forEachValue(array, consumer);
+        }
+    }
+
+    /**
      * Validates collection and calls {@link java.util.function.BiConsumer} for
      * each it's member
      * 
@@ -415,6 +467,20 @@ public abstract class CollectionUtils {
      * @param consumer
      */
     public static <T> void forEach(Collection<T> collection, BiConsumer<Integer, T> consumer) {
+
+        if (valid(collection) && Objects.nonNull(consumer)) {
+            forEachValue(collection, consumer);
+        }
+    }
+
+    /**
+     * Validates collection and calls {@link java.util.function.Consumer} for
+     * each it's member
+     * 
+     * @param collection
+     * @param consumer
+     */
+    public static <T> void forEach(Collection<T> collection, Consumer<Couple<Integer, T>> consumer) {
 
         if (valid(collection) && Objects.nonNull(consumer)) {
             forEachValue(collection, consumer);

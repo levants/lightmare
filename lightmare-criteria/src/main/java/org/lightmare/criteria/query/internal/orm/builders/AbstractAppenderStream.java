@@ -26,13 +26,14 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.Orders;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.tuples.Couple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -45,8 +46,16 @@ import org.lightmare.criteria.utils.StringUtils;
  *
  * @param <T>
  *            entity type parameter
+ * 
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
+abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractORMQueryStream<T, Q, O> {
 
     // JPA query parts
     protected final StringBuilder prefix = new StringBuilder();
@@ -433,18 +442,26 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
     }
 
     /**
+     * Appends SELECT statement
+     * 
+     * @param couple
+     * @param buffer
+     * @param length
+     */
+    private void appendSelect(Couple<Integer, Serializable> couple, int length, StringBuilder buffer) {
+        addSelectField(couple.getSecond(), buffer);
+        appendComma(couple.getFirst(), length, buffer);
+    }
+
+    /**
      * Appends to SELECT statement
      * 
      * @param fields
      * @param buffer
      */
     protected void appendSelect(Collection<Serializable> fields, StringBuilder buffer) {
-
         int length = fields.size() - CollectionUtils.SINGLETON;
-        CollectionUtils.forEach(fields, (i, field) -> {
-            addSelectField(field, buffer);
-            appendComma(i, length, buffer);
-        });
+        CollectionUtils.forEach(fields, c -> appendSelect(c, length, buffer));
     }
 
     /**
@@ -488,13 +505,27 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
         appendOrderBy(tuple, dir);
     }
 
-    private void iterateAndAppendOrders(String dir, Serializable[] fields) {
+    /**
+     * Appends ORDER BY statement
+     * 
+     * @param couple
+     * @param dir
+     * @param length
+     */
+    private void appendOrders(Couple<Integer, Serializable> couple, String dir, int length) {
+        addOrderByField(dir, couple.getSecond());
+        appendComma(couple.getFirst(), length, orderBy);
+    }
 
+    /**
+     * Appends ORDER BY statement
+     * 
+     * @param dir
+     * @param fields
+     */
+    private void iterateAndAppendOrders(String dir, Serializable[] fields) {
         int length = fields.length - CollectionUtils.SINGLETON;
-        CollectionUtils.forEach(fields, (i, field) -> {
-            addOrderByField(dir, field);
-            appendComma(i, length, orderBy);
-        });
+        CollectionUtils.forEach(fields, c -> appendOrders(c, dir, length));
     }
 
     private void setValidOrder(String dir, Serializable[] fields) {
@@ -627,48 +658,63 @@ abstract class AbstractAppenderStream<T> extends AbstractORMQueryStream<T> {
      * 
      * @param consumer
      */
-    private void consumeWithBrackets(QueryConsumer<T, JpaQueryStream<T>> consumer) {
+    private void consumeWithBrackets(QueryConsumer<T, Q> consumer) {
 
         appendOperator();
         openBracket();
-        consumer.accept(this);
+        ObjectUtils.acceptAndGet(this::stream, consumer);
         replaceNewLine(Operators.Brackets.CLOSE);
         newLine(body);
     }
 
     @Override
-    public JpaQueryStream<T> brackets(QueryConsumer<T, JpaQueryStream<T>> consumer) {
+    public Q brackets(QueryConsumer<T, Q> consumer) {
+
+        Q stream = stream();
         ObjectUtils.nonNull(consumer, this::consumeWithBrackets);
-        return this;
+
+        return stream;
     }
 
     @Override
-    public JpaQueryStream<T> appendPrefix(Object clause) {
+    public Q appendPrefix(Object clause) {
+
+        Q stream = stream();
         prefix.append(clause);
-        return this;
+
+        return stream;
     }
 
     @Override
-    public JpaQueryStream<T> appendFrom(Object clause) {
+    public Q appendFrom(Object clause) {
+
+        Q stream = stream();
         from.append(clause);
-        return this;
+
+        return stream;
     }
 
     /**
      * Appends JOIN clause to JPA query
      * 
      * @param clauses
-     * @return {@link JpaQueryStream} current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    public JpaQueryStream<T> appendJoin(Object... clauses) {
+    public Q appendJoin(Object... clauses) {
+
+        Q stream = stream();
         ObjectUtils.nonNull(clauses, c -> CollectionUtils.forEach(c, (i, e) -> joins.append(e)));
-        return this;
+
+        return stream;
     }
 
     @Override
-    public JpaQueryStream<T> appendBody(Object clause) {
+    public Q appendBody(Object clause) {
+
+        Q stream = stream();
+
         body.append(clause);
-        return this;
+        return stream;
     }
 
     private void prepareSetClause() {

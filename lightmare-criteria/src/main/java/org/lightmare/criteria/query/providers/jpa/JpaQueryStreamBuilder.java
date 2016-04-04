@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.providers.jpa;
 
-import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
@@ -35,7 +34,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  * @param <T>
  *            entity type parameter for generated query
  */
-public class JpaQueryStreamBuilder<T> extends EntityQueryStream<T> {
+public class JpaQueryStreamBuilder<T> extends JpaEntityQueryStream<T> {
 
     protected JpaQueryStreamBuilder(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);

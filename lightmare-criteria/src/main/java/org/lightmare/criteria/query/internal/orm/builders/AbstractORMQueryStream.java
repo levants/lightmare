@@ -53,8 +53,16 @@ import org.lightmare.criteria.utils.StringUtils;
  *
  * @param <T>
  *            entity type parameter
+ * 
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
+abstract class AbstractORMQueryStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractORMQueryWrapper<T, Q, O> {
 
     // Immutable data
     protected final LayerProvider provider;
@@ -80,7 +88,8 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      */
     protected void appendSelect() {
         String selectType = provider.getSelectType(getAlias());
-        appendPrefix(Clauses.SELECT).appendPrefix(selectType);
+        appendPrefix(Clauses.SELECT);
+        appendPrefix(selectType);
     }
 
     /**
@@ -315,7 +324,7 @@ abstract class AbstractORMQueryStream<T> extends AbstractORMQueryWrapper<T> {
      * @param consumer
      * @param query
      */
-    protected <S, Q extends QueryStream<S, ? super Q>> void acceptAndCall(QueryConsumer<S, Q> consumer, Q query) {
+    protected <S, U extends QueryStream<S, ? super U>> void acceptAndCall(QueryConsumer<S, U> consumer, U query) {
         ObjectUtils.accept(consumer, query);
         ObjectUtils.castIfValid(query, SubQueryStream.class, SubQueryStream::call);
     }

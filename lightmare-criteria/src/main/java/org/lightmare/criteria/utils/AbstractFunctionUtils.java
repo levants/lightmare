@@ -24,6 +24,7 @@ package org.lightmare.criteria.utils;
 
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -95,6 +96,27 @@ abstract class AbstractFunctionUtils implements Functions {
 
         T result = get(supplier);
         accept(consumer, result);
+
+        return result;
+    }
+
+    /**
+     * Validates and calls passed {@link java.util.function.Function}
+     * implementation
+     * 
+     * @param argument
+     * @param function
+     * @return R function result
+     */
+    public static <T, R> R apply(T argument, Function<T, R> function) {
+
+        R result;
+
+        if (Objects.nonNull(function)) {
+            result = function.apply(argument);
+        } else {
+            result = null;
+        }
 
         return result;
     }

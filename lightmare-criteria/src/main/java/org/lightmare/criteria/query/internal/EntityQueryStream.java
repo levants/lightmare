@@ -28,12 +28,10 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractAggregateStream;
-import org.lightmare.criteria.query.internal.orm.subqueries.EntityEmbeddedStream;
 import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream;
 import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
-import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
  * Query builder from setter method references
@@ -55,7 +53,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendOperator();
         oppLine(field, operator);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -64,7 +62,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendOperator();
         oppLine(field, value, operator);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -74,7 +72,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendOperator();
         oppLine(field, value1, value2, operator);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -84,7 +82,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendOperator();
         oppLine(field, operator1, value1, operator2, value2);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -93,7 +91,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendOperator();
         oppCollection(field, values, operator);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -103,7 +101,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendOperator();
         oppCollection(value, field, operator);
 
-        return this;
+        return stream();
     }
 
     // ==========================Entity=self=method=composers================//
@@ -115,7 +113,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendOperator();
         oppField(field1, field2, operator);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -125,7 +123,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendOperator();
         oppField(field1, operator1, field2, operator2, field3);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -135,7 +133,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendOperator();
         oppLine(field1, field2, field3, operator);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -145,21 +143,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appendOperator();
         oppCollectionField(field1, field2, operator);
 
-        return this;
-    }
-
-    // =========================embedded=field=queries=======================//
-
-    @Override
-    public <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer) {
-
-        QueryTuple tuple = compose(field);
-        Class<F> type = tuple.getFieldGenericType();
-        String embeddedName = tuple.getFieldName();
-        JpaQueryStream<F> embeddedQuery = new EntityEmbeddedStream<>(this, type, embeddedName);
-        acceptAndCall(consumer, embeddedQuery);
-
-        return this;
+        return stream();
     }
 
     // =========================operate=sub=queries==========================//
@@ -204,7 +188,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         openBracket();
         initSubQuery(type, consumer);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -215,7 +199,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         appSubQuery(field, operator);
         initSubQuery(type, consumer);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -227,7 +211,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         openBracket();
         initSubQuery(type, consumer);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -238,7 +222,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         openBracket();
         initSubQuery(type, consumer);
 
-        return this;
+        return stream();
     }
 
     @Override
@@ -250,7 +234,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
         openBracket();
         initSubQuery(type, consumer);
 
-        return this;
+        return stream();
     }
 
     // =================================Set=Clause===========================//
@@ -258,7 +242,7 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     @Override
     public <F> JpaQueryStream<T> set(EntityField<T, F> field, F value) {
         setOpp(field, value);
-        return this;
+        return stream();
     }
 
     // =================================Order=By=============================//
@@ -266,6 +250,6 @@ public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
     @Override
     public <F> JpaQueryStream<T> order(String dir, EntityField<T, F> field) {
         setOrder(dir, new EntityField[] { field });
-        return this;
+        return stream();
     }
 }

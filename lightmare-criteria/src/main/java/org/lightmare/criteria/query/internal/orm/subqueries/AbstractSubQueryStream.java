@@ -31,10 +31,10 @@ import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.query.providers.jpa.JpaEntityQueryStream;
 import org.lightmare.criteria.tuples.Couple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -47,18 +47,18 @@ import org.lightmare.criteria.utils.CollectionUtils;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> implements SubQueryStream<S, T> {
+public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<S> implements SubQueryStream<S, T> {
 
     // Parent entity alias
     protected final String parentAlias;
 
-    protected final AbstractQueryStream<T> parent;
+    protected final AbstractQueryStream<T, ?, ?> parent;
 
     private SubSelectStream<?, ?> subSelect;
 
     private boolean preparedState = Boolean.TRUE;
 
-    protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, String alias, Class<S> entityType) {
+    protected AbstractSubQueryStream(final AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> entityType) {
         super(parent.getLayerProvider(), entityType);
         this.alias = alias;
         this.parentAlias = parent.getAlias();
@@ -66,7 +66,7 @@ public abstract class AbstractSubQueryStream<S, T> extends EntityQueryStream<S> 
         this.parent = parent;
     }
 
-    protected AbstractSubQueryStream(final AbstractQueryStream<T> parent, Class<S> entityType) {
+    protected AbstractSubQueryStream(final AbstractQueryStream<T, ?, ?> parent, Class<S> entityType) {
         this(parent, parent.generateSubAlias(), entityType);
     }
 
