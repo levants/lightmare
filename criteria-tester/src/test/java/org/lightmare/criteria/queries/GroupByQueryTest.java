@@ -46,8 +46,8 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname").count(Person::getPersonalNo,
                             c -> c.groupBy(Select.select().column(Person::getLastName).column(Person::getFirstName),
-                                    h -> h.greaterThanOrEqualTo(100).lessThanOrEqualTo(1000).or()
-                                            .brackets(b -> b.notBetween(20000, 30000))));
+                                    h -> h.greaterThanOrEqualTo(100).lessThanOrEqualTo(1000)
+                                            .or(b -> b.notBetween(20000, 30000))));
             List<Object[]> results = stream.toList();
             results.forEach(result -> System.out.println(Arrays.asList(result)));
             String sql = stream.sql();
@@ -109,9 +109,9 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
         try {
             // ============= Query construction ============== //
             JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
-                    .like(Person::getLastName, "lname").count(Person::getPersonalNo,
-                            c -> c.group(s -> s.column(Person::getLastName), h -> h.greaterThanOrEqualTo(100)
-                                    .lessThanOrEqualTo(1000).or().brackets(b -> b.notBetween(20000, 30000))));
+                    .like(Person::getLastName, "lname")
+                    .count(Person::getPersonalNo, c -> c.group(s -> s.column(Person::getLastName), h -> h
+                            .greaterThanOrEqualTo(100).lessThanOrEqualTo(1000).or(b -> b.notBetween(20000, 30000))));
             List<Object[]> results = stream.toList();
             results.forEach(result -> System.out.println(Arrays.asList(result)));
             String sql = stream.sql();
@@ -153,7 +153,7 @@ public class GroupByQueryTest extends EmbeddedQueryTest {
             JpaQueryStream<Object[]> stream = JpaQueryProvider.select(em, Person.class).where()
                     .like(Person::getLastName, "lname")
                     .count(Person::getPersonalNo, c -> c.groupBy(Person::getLastName, h -> h.greaterThanOrEqualTo(100)
-                            .lessThanOrEqualTo(1000).or().brackets(b -> b.notBetween(20000, 30000))));
+                            .lessThanOrEqualTo(1000).or(b -> b.notBetween(20000, 30000))));
             List<Object[]> results = stream.toList();
             results.forEach(result -> System.out.println(Arrays.asList(result)));
             String sql = stream.sql();

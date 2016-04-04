@@ -51,6 +51,12 @@ class HavingProcessor implements HavingExpression {
         return this;
     }
 
+    @Override
+    public HavingExpression replaceHavingNewLine(char supposed) {
+        StringUtils.replaceOrAppend(having, StringUtils.LINE, supposed);
+        return this;
+    }
+
     /**
      * Validates query body to be append by logical operators
      * 

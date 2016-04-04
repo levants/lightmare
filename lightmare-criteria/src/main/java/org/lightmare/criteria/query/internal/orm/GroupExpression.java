@@ -97,6 +97,7 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ? super Q>> 
     default Q group(SelectConsumer select, HavingConsumer consumer) {
 
         Q stream = group(select);
+
         SQLStream<Object[], Q, Q> sql = ObjectUtils.cast(stream);
         sql.having(consumer);
 

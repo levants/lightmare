@@ -23,9 +23,13 @@
 package org.lightmare.criteria.query.internal.orm;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
+import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
 
 /**
  * Covers HAVING clause
@@ -43,6 +47,16 @@ public interface HavingExpression {
      *         current instance
      */
     HavingExpression appendHaving(Object operator);
+
+    /**
+     * Replaces last character in HAVING expression
+     * 
+     * @param existed
+     * @param supposed
+     * @return {@link org.lightmare.criteria.query.internal.orm.HavingExpression}
+     *         current instance
+     */
+    HavingExpression replaceHavingNewLine(char supposed);
 
     /**
      * Generates HAVING clause for JPA query with parameter and operator
@@ -134,9 +148,50 @@ public interface HavingExpression {
         if (Objects.nonNull(consumer)) {
             openBracket();
             consumer.accept(this);
-            closeBracket();
+            replaceHavingNewLine(Brackets.CLOSE);
+            appendHaving(StringUtils.NEWLINE);
         }
 
         return this;
+    }
+
+    /**
+     * Generates AND / OR connector and sets brackets
+     * 
+     * @param connector
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.internal.orm.HavingExpression}
+     *         current instance
+     */
+    default HavingExpression brackets(Consumer<HavingExpression> connector, HavingConsumer consumer) {
+
+        HavingExpression stream;
+
+        ObjectUtils.accept(connector, this);
+        stream = brackets(consumer);
+
+        return stream;
+    }
+
+    /**
+     * AND clause in lambda expression manner
+     * 
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.internal.orm.HavingExpression}
+     *         current instance
+     */
+    default HavingExpression and(HavingConsumer consumer) {
+        return brackets(HavingExpression::and, consumer);
+    }
+
+    /**
+     * OR clause in lambda expression manner
+     * 
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.internal.orm.HavingExpression}
+     *         current instance
+     */
+    default HavingExpression or(HavingConsumer consumer) {
+        return brackets(HavingExpression::or, consumer);
     }
 }
