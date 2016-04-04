@@ -48,9 +48,9 @@ public class ParameterTuple {
         this.temporalType = temporalType;
     }
 
-    private ParameterTuple(final Pair<String, Integer> pair, final Object value, final TemporalType temporalType) {
-        this(pair.getFirst(), value, temporalType);
-        this.count = pair.getSecond();
+    private ParameterTuple(final Couple<String, Integer> couple, final Object value, final TemporalType temporalType) {
+        this(couple.getFirst(), value, temporalType);
+        this.count = couple.getSecond();
     }
 
     /**
@@ -68,17 +68,17 @@ public class ParameterTuple {
 
     /**
      * Initializes {@link org.lightmare.criteria.tuples.ParameterTuple} by
-     * parameter {@link org.lightmare.criteria.tuples.Pair}, value and
+     * parameter {@link org.lightmare.criteria.tuples.Couple}, value and
      * {@link javax.persistence.TemporalType} instance
      * 
-     * @param pair
+     * @param couple
      * @param value
      * @param temporalType
      * @return {@link org.lightmare.criteria.tuples.ParameterTuple} instance
      */
-    public static ParameterTuple of(final Pair<String, Integer> pair, final Object value,
+    public static ParameterTuple of(final Couple<String, Integer> couple, final Object value,
             final TemporalType temporalType) {
-        return new ParameterTuple(pair, value, temporalType);
+        return new ParameterTuple(couple, value, temporalType);
     }
 
     public String getName() {

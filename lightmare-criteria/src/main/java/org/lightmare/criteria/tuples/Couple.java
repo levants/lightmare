@@ -22,44 +22,58 @@
  */
 package org.lightmare.criteria.tuples;
 
-import org.lightmare.criteria.utils.CollectionUtils;
-import org.lightmare.criteria.utils.StringUtils;
+import java.util.function.Function;
 
 /**
- * Tuple for parameter and alias suffixes
+ * Tuple of two elements
  * 
  * @author Levan Tsinadze
  *
+ * @param <T>
+ *            first element type parameter
+ * @param <U>
+ *            second element type parameter
  */
-public class CounterTuple {
+public class Couple<T, U> {
 
-    private int alias;
+    private final T first;
 
-    private int parameter = CollectionUtils.SINGLETON;
+    private final U second;
 
-    private CounterTuple() {
+    private Couple(final T first, final U second) {
+        this.first = first;
+        this.second = second;
     }
 
-    public static CounterTuple get() {
-        return new CounterTuple();
+    public static <T, U> Couple<T, U> of(final T first, final U second) {
+        return new Couple<T, U>(first, second);
     }
 
-    public int getAndIncrementAlias() {
-        return alias++;
+    /**
+     * Calls passed getter from second element of couple
+     * 
+     * @param getter
+     * @return R from first getter
+     */
+    public <R> R firstGetter(Function<T, R> getter) {
+        return getter.apply(first);
     }
 
-    private int getAndIncrementParameter() {
-        return parameter++;
+    /**
+     * Calls passed getter from first element of couple
+     * 
+     * @param getter
+     * @return R from second getter
+     */
+    public <R> R secondGetter(Function<U, R> getter) {
+        return getter.apply(second);
     }
 
-    public Couple<String, Integer> getAndIncrement(String name) {
+    public T getFirst() {
+        return first;
+    }
 
-        Couple<String, Integer> couple;
-
-        int count = getAndIncrementParameter();
-        String countName = StringUtils.concat(name, StringUtils.UNDERSCORE, count);
-        couple = Couple.of(countName, count);
-
-        return couple;
+    public U getSecond() {
+        return second;
     }
 }

@@ -25,7 +25,7 @@ package org.lightmare.criteria.meta;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import org.lightmare.criteria.tuples.Pair;
+import org.lightmare.criteria.tuples.Couple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -40,23 +40,23 @@ import org.lightmare.criteria.utils.ObjectUtils;
 public class EntityProcessor extends AbstractEntityProcessor {
 
     /**
-     * Gets {@link org.lightmare.criteria.tuples.Pair} of
+     * Gets {@link org.lightmare.criteria.tuples.Couple} of
      * {@link java.lang.reflect.Method} and {@link java.lang.reflect.Field} for
      * entity type
      * 
-     * @return {@link org.lightmare.criteria.tuples.Pair} of
+     * @return {@link org.lightmare.criteria.tuples.Couple} of
      *         {@link java.lang.reflect.Method} and
      *         {@link java.lang.reflect.Field}
      */
-    private static Pair<Method, Field> getEntityMembers(QueryTuple tuple) {
+    private static Couple<Method, Field> getEntityMembers(QueryTuple tuple) {
 
-        Pair<Method, Field> pair;
+        Couple<Method, Field> couple;
 
         Method method = ClassUtils.findMethod(tuple.getEntityType(), tuple.getMethodName());
         Field field = ClassUtils.findField(tuple.getEntityType(), tuple.getFieldName());
-        pair = Pair.of(method, field);
+        couple = Couple.of(method, field);
 
-        return pair;
+        return couple;
     }
 
     /**
@@ -67,9 +67,9 @@ public class EntityProcessor extends AbstractEntityProcessor {
      */
     public static void setMethodAndField(QueryTuple tuple) {
 
-        Pair<Method, Field> pair = getEntityMembers(tuple);
-        ObjectUtils.nonNull(pair.getFirst(), c -> setProperField(c, tuple));
-        ObjectUtils.nonNull(pair.getSecond(), tuple::setField);
+        Couple<Method, Field> couple = getEntityMembers(tuple);
+        ObjectUtils.nonNull(couple.getFirst(), c -> setProperField(c, tuple));
+        ObjectUtils.nonNull(couple.getSecond(), tuple::setField);
     }
 
     /**

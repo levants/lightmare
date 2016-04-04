@@ -26,7 +26,7 @@ import java.lang.invoke.MethodHandleInfo;
 import java.util.Objects;
 
 import org.lightmare.criteria.lambda.LambdaInfo;
-import org.lightmare.criteria.tuples.Pair;
+import org.lightmare.criteria.tuples.Couple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.tuples.ResolverTuple;
 import org.lightmare.criteria.utils.ClassUtils;
@@ -97,15 +97,15 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
     /**
      * Validates lambda for direct resolve
      * 
-     * @param pair
+     * @param couple
      * @return <code>boolean</code> validation result
      */
-    private static boolean validateClassName(Pair<LambdaInfo, Type> pair) {
+    private static boolean validateClassName(Couple<LambdaInfo, Type> couple) {
 
         boolean valid;
 
-        Type descType = pair.getSecond();
-        String immlClassName = pair.firstGetter(LambdaInfo::getImplClass);
+        Type descType = couple.getSecond();
+        String immlClassName = couple.firstGetter(LambdaInfo::getImplClass);
         valid = (Objects.nonNull(descType) && validateClassAndType(immlClassName, descType));
 
         return valid;
@@ -152,15 +152,15 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
      * Resolves {@link org.lightmare.criteria.tuples.QueryTuple} from lambda
      * parameters are valid
      * 
-     * @param pair
+     * @param couple
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} if resolved
      */
-    private static QueryTuple resolveFromValidLambda(Pair<LambdaInfo, Type> pair) {
+    private static QueryTuple resolveFromValidLambda(Couple<LambdaInfo, Type> couple) {
 
         QueryTuple tuple;
 
-        String entityName = pair.secondGetter(Type::getInternalName);
-        ResolverTuple<String> resolverTyple = ResolverTuple.of(pair.getFirst(), entityName);
+        String entityName = couple.secondGetter(Type::getInternalName);
+        ResolverTuple<String> resolverTyple = ResolverTuple.of(couple.getFirst(), entityName);
         tuple = resolveFromTuple(resolverTyple, DirectFieldResolver::resolveEntityName);
         debug(DEBUG_MESSAGE_DIR, tuple);
 
@@ -179,8 +179,8 @@ abstract class DirectFieldResolver extends BytecodeFieldResolver {
         QueryTuple tuple;
 
         Type desc = getFromDescription(lambda);
-        Pair<LambdaInfo, Type> pair = Pair.of(lambda, desc);
-        tuple = ObjectUtils.ifIsValid(pair, DirectFieldResolver::validateClassName,
+        Couple<LambdaInfo, Type> couple = Couple.of(lambda, desc);
+        tuple = ObjectUtils.ifIsValid(couple, DirectFieldResolver::validateClassName,
                 DirectFieldResolver::resolveFromValidLambda);
 
         return tuple;
