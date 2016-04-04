@@ -102,10 +102,10 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
      * 
      * @param consumer
      */
-    private void generateHaving(HavingConsumer<T> consumer) {
+    private void generateHaving(HavingConsumer consumer) {
 
         AggregateTuple havingTuple = aggregateQueue.poll();
-        HavingProcessor<T> havingProcessor = new HavingProcessor<T>(having, havingTuple);
+        HavingProcessor havingProcessor = new HavingProcessor(having, havingTuple);
         consumer.accept(havingProcessor);
     }
 
@@ -116,12 +116,12 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
      * 
      * @param consumer
      */
-    private void validateAndGenerate(HavingConsumer<T> consumer) {
+    private void validateAndGenerate(HavingConsumer consumer) {
         CollectionUtils.valid(aggregateQueue, c -> generateHaving(consumer));
     }
 
     @Override
-    public void having(HavingConsumer<T> consumer) {
+    public void having(HavingConsumer consumer) {
         ObjectUtils.nonNull(consumer, this::validateAndGenerate);
     }
 

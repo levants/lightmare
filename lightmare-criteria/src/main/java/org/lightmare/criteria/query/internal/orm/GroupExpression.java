@@ -27,6 +27,8 @@ import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.functions.SelectConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.SelectExpression.Select;
+import org.lightmare.criteria.query.providers.sql.SQLStream;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Generates group by JPA query part
@@ -46,32 +48,85 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ? super Q>> 
      * 
      * @param consumer
      */
-    void having(HavingConsumer<T> consumer);
+    void having(HavingConsumer consumer);
 
     /**
      * Group aggregate functions by fields
      * 
      * @param select
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         {@link Object} array
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for {@link Object} array
      */
     Q groupBy(Select select);
+
+    /**
+     * Group aggregate functions by fields with HAVING clause
+     * 
+     * @param select
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for {@link Object} array
+     */
+    default Q groupBy(Select select, HavingConsumer consumer) {
+
+        Q stream = groupBy(select);
+
+        SQLStream<Object[], Q, Q> sql = ObjectUtils.cast(stream);
+        sql.having(consumer);
+
+        return stream;
+    }
 
     /**
      * Grouping expression with consumer
      * 
      * @param select
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     * @return {@link org.lightmare.criteria.query.QueryStream} for
      *         {@link Object} array
      */
     Q group(SelectConsumer select);
 
     /**
-     * Group by fields
+     * Grouping expression with consumer and HAVING clause
+     * 
+     * @param select
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     *         {@link Object} array
+     */
+    default Q group(SelectConsumer select, HavingConsumer consumer) {
+
+        Q stream = group(select);
+        SQLStream<Object[], Q, Q> sql = ObjectUtils.cast(stream);
+        sql.having(consumer);
+
+        return stream;
+    }
+
+    /**
+     * Group by field
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     * @return {@link org.lightmare.criteria.query.QueryStream} for
      *         {@link Object} array
      */
     <F> Q groupBy(EntityField<T, F> field);
+
+    /**
+     * Group by field with HAVING clause
+     * 
+     * @param field
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     *         {@link Object} array
+     */
+    default <F> Q groupBy(EntityField<T, F> field, HavingConsumer consumer) {
+
+        Q stream = groupBy(field);
+
+        SQLStream<Object[], Q, Q> sql = ObjectUtils.cast(stream);
+        sql.having(consumer);
+
+        return stream;
+    }
 }

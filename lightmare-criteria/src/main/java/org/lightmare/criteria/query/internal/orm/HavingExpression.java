@@ -32,10 +32,8 @@ import org.lightmare.criteria.query.internal.orm.links.Operators;
  * 
  * @author Levan Tsinadze
  *
- * @param <T>
- *            entity type parameter
  */
-public interface HavingExpression<T> {
+public interface HavingExpression {
 
     /**
      * Generates HAVING clause for JPA query
@@ -44,7 +42,7 @@ public interface HavingExpression<T> {
      * @return {@link org.lightmare.criteria.query.internal.orm.HavingExpression}
      *         current instance
      */
-    HavingExpression<T> appendHaving(Object operator);
+    HavingExpression appendHaving(Object operator);
 
     /**
      * Generates HAVING clause for JPA query with parameter and operator
@@ -54,7 +52,7 @@ public interface HavingExpression<T> {
      * @return {@link org.lightmare.criteria.query.internal.orm.HavingExpression}
      *         current instance
      */
-    HavingExpression<T> operate(String operator, Number value);
+    HavingExpression operate(String operator, Number value);
 
     /**
      * Generates HAVING clause for JPA query with parameters and operator
@@ -65,73 +63,73 @@ public interface HavingExpression<T> {
      * @return {@link org.lightmare.criteria.query.internal.orm.HavingExpression}
      *         current instance
      */
-    HavingExpression<T> operate(String operator, Number value1, Number value2);
+    HavingExpression operate(String operator, Number value1, Number value2);
 
-    default HavingExpression<T> equal(Number value) {
+    default HavingExpression equal(Number value) {
         return operate(Operators.EQ, value);
     }
 
-    default HavingExpression<T> notEqual(Number value) {
+    default HavingExpression notEqual(Number value) {
         return operate(Operators.EQ, value);
     }
 
-    default HavingExpression<T> gt(Number value) {
+    default HavingExpression gt(Number value) {
         return operate(Operators.GREATER, value);
     }
 
-    default HavingExpression<T> greaterThan(Number value) {
+    default HavingExpression greaterThan(Number value) {
         return gt(value);
     }
 
-    default HavingExpression<T> lt(Number value) {
+    default HavingExpression lt(Number value) {
         return operate(Operators.LESS, value);
     }
 
-    default HavingExpression<T> lessThan(Number value) {
+    default HavingExpression lessThan(Number value) {
         return lt(value);
     }
 
-    default HavingExpression<T> ge(Number value) {
+    default HavingExpression ge(Number value) {
         return operate(Operators.GREATER_OR_EQ, value);
     }
 
-    default HavingExpression<T> greaterThanOrEqualTo(Number value) {
+    default HavingExpression greaterThanOrEqualTo(Number value) {
         return ge(value);
     }
 
-    default HavingExpression<T> le(Number value) {
+    default HavingExpression le(Number value) {
         return operate(Operators.LESS_OR_EQ, value);
     }
 
-    default HavingExpression<T> lessThanOrEqualTo(Number value) {
+    default HavingExpression lessThanOrEqualTo(Number value) {
         return le(value);
     }
 
-    default HavingExpression<T> between(Number value1, Number value2) {
+    default HavingExpression between(Number value1, Number value2) {
         return operate(Operators.BETWEEN, value1, value2);
     }
 
-    default HavingExpression<T> notBetween(Number value1, Number value2) {
+    default HavingExpression notBetween(Number value1, Number value2) {
         return operate(Operators.NOT_BETWEEN, value1, value2);
     }
 
-    default HavingExpression<T> and() {
+    default HavingExpression and() {
         return appendHaving(Operators.AND);
     }
 
-    default HavingExpression<T> or() {
+    default HavingExpression or() {
         return appendHaving(Operators.OR);
     }
 
-    default HavingExpression<T> openBracket() {
+    default HavingExpression openBracket() {
         return appendHaving(Operators.OPEN_BRACKET);
     }
 
-    default HavingExpression<T> closeBracket() {
+    default HavingExpression closeBracket() {
         return appendHaving(Operators.CLOSE_BRACKET);
     }
 
-    default HavingExpression<T> brackets(HavingConsumer<T> consumer) {
+    default HavingExpression brackets(HavingConsumer consumer) {
 
         if (Objects.nonNull(consumer)) {
             openBracket();

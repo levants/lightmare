@@ -32,12 +32,10 @@ import org.lightmare.criteria.query.internal.orm.HavingExpression;
  * 
  * @author Levan Tsinadze
  *
- * @param <T>
- *            entity type parameter
  */
 @FunctionalInterface
-public interface HavingConsumer<T> extends Consumer<HavingExpression<T>>, Serializable {
+public interface HavingConsumer extends Consumer<HavingExpression>, Serializable {
 
     @Override
-    void accept(HavingExpression<T> expression);
+    void accept(HavingExpression expression);
 }

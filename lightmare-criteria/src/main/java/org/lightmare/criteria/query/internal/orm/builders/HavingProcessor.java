@@ -33,10 +33,8 @@ import org.lightmare.criteria.utils.StringUtils;
  * 
  * @author Levan Tsinadze
  *
- * @param <T>
- *            entity type parameter
  */
-class HavingProcessor<T> implements HavingExpression<T> {
+class HavingProcessor implements HavingExpression {
 
     private final StringBuilder having;
 
@@ -48,7 +46,7 @@ class HavingProcessor<T> implements HavingExpression<T> {
     }
 
     @Override
-    public HavingExpression<T> appendHaving(Object operator) {
+    public HavingExpression appendHaving(Object operator) {
         having.append(operator);
         return this;
     }
@@ -110,7 +108,7 @@ class HavingProcessor<T> implements HavingExpression<T> {
     }
 
     @Override
-    public HavingExpression<T> operate(String operator, Number value) {
+    public HavingExpression operate(String operator, Number value) {
 
         operateHaving(operator, value);
         newLine();
@@ -119,7 +117,7 @@ class HavingProcessor<T> implements HavingExpression<T> {
     }
 
     @Override
-    public HavingExpression<T> operate(String operator, Number value1, Number value2) {
+    public HavingExpression operate(String operator, Number value1, Number value2) {
 
         operateHaving(operator, value1);
         appendHaving(StringUtils.SPACE).appendHaving(Operators.AND).appendHaving(value2);
