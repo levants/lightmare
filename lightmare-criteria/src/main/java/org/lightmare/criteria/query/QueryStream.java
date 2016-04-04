@@ -38,41 +38,41 @@ import org.lightmare.criteria.utils.StringUtils;
  *
  * @param <T>
  *            entity type parameter
- * @param <S>
+ * @param <Q>
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  */
-public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends TextQuery<T, S> {
+public interface QueryStream<T, Q extends QueryStream<T, ? super Q>> extends TextQuery<T, Q> {
 
     @Override
-    default <F> S equal(EntityField<T, F> field, Object value) {
+    default <F> Q equal(EntityField<T, F> field, Object value) {
         return operate(field, value, Operators.EQ);
     }
 
     @Override
-    default <F> S notEqual(EntityField<T, F> field, Object value) {
+    default <F> Q notEqual(EntityField<T, F> field, Object value) {
         return operate(field, value, Operators.NOT_EQ);
     }
 
     @Override
-    default <F extends Comparable<? super F>> S gt(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> Q gt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return operate(field, value, Operators.GREATER);
     }
 
     @Override
-    default <F extends Comparable<? super F>> S lt(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> Q lt(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return operate(field, value, Operators.LESS);
     }
 
     @Override
-    default <F extends Comparable<? super F>> S ge(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> Q ge(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return operate(field, value, Operators.GREATER_OR_EQ);
     }
 
     @Override
-    default <F extends Comparable<? super F>> S le(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> Q le(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return operate(field, value, Operators.LESS_OR_EQ);
     }
@@ -80,12 +80,12 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Tex
     // =============================LIKE=clause==============================//
 
     @Override
-    default S like(EntityField<T, String> field, String value) {
+    default Q like(EntityField<T, String> field, String value) {
         return operate(field, value, Operators.LIKE);
     }
 
     @Override
-    default S notLike(EntityField<T, String> field, String value) {
+    default Q notLike(EntityField<T, String> field, String value) {
         return operate(field, value, Operators.NOT_LIKE);
     }
 
@@ -100,43 +100,43 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Tex
      * @param operator
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F> S operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
+    <F> Q operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
 
     @Override
-    default <F> S in(EntityField<T, F> field, Collection<F> values) {
+    default <F> Q in(EntityField<T, F> field, Collection<F> values) {
         return operateCollection(field, values, Operators.IN);
     }
 
     @Override
-    default <F> S notIn(EntityField<T, F> field, Collection<F> values) {
+    default <F> Q notIn(EntityField<T, F> field, Collection<F> values) {
         return operateCollection(field, values, Operators.NOT_IN);
     }
 
     // =============================NULL=check===============================//
 
     @Override
-    default <F> S isNull(EntityField<T, F> field) {
+    default <F> Q isNull(EntityField<T, F> field) {
         return operate(field, Operators.IS_NULL);
     }
 
     @Override
-    default <F> S isNotNull(EntityField<T, F> field) {
+    default <F> Q isNotNull(EntityField<T, F> field) {
         return operate(field, Operators.NOT_NULL);
     }
 
     // ======================================================================//
 
-    default S appendOperator(Object operator) {
+    default Q appendOperator(Object operator) {
         return appendBody(operator);
     }
 
     @Override
-    default S and() {
+    default Q and() {
         return appendOperator(Operators.AND);
     }
 
     @Override
-    default S or() {
+    default Q or() {
         return appendOperator(Operators.OR);
     }
 
@@ -147,9 +147,9 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Tex
      * @param operator
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default S appendOperator(Object value, Object operator) {
+    default Q appendOperator(Object value, Object operator) {
 
-        S stream = appendBody(value);
+        Q stream = appendBody(value);
         appendBody(StringUtils.SPACE).appendBody(operator);
 
         return stream;
@@ -164,9 +164,9 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Tex
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default S brackets(Consumer<QueryStream<T, S>> connector, QueryConsumer<T, S> consumer) {
+    default Q brackets(Consumer<QueryStream<T, Q>> connector, QueryConsumer<T, Q> consumer) {
 
-        S stream;
+        Q stream;
 
         ObjectUtils.accept(connector, this);
         stream = brackets(consumer);
@@ -181,7 +181,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Tex
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     @Override
-    default S and(QueryConsumer<T, S> consumer) {
+    default Q and(QueryConsumer<T, Q> consumer) {
         return brackets(QueryStream::and, consumer);
     }
 
@@ -191,7 +191,7 @@ public interface QueryStream<T, S extends QueryStream<T, ? super S>> extends Tex
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default S or(QueryConsumer<T, S> consumer) {
+    default Q or(QueryConsumer<T, Q> consumer) {
         return brackets(QueryStream::or, consumer);
     }
 }

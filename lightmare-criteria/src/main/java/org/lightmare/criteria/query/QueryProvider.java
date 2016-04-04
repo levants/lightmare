@@ -49,8 +49,8 @@ public abstract class QueryProvider {
      *         {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         with delete statement
      */
-    public static <T, L extends LayerProvider, S extends LambdaStream<T, ? super S>> S delete(L provider,
-            Class<T> entityType, QueryInitializer<T, L, S> initializer) {
+    public static <T, L extends LayerProvider, Q extends LambdaStream<T, ? super Q>> Q delete(L provider,
+            Class<T> entityType, QueryInitializer<T, L, Q> initializer) {
         return initializer.apply(provider, entityType);
     }
 
@@ -64,8 +64,8 @@ public abstract class QueryProvider {
      *         {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         with update statement
      */
-    public static <T, L extends LayerProvider, S extends LambdaStream<T, ? super S>> S update(L provider,
-            Class<T> entityType, QueryInitializer<T, L, S> initializer) {
+    public static <T, L extends LayerProvider, Q extends LambdaStream<T, ? super Q>> Q update(L provider,
+            Class<T> entityType, QueryInitializer<T, L, Q> initializer) {
         return initializer.apply(provider, entityType);
     }
 
@@ -79,8 +79,8 @@ public abstract class QueryProvider {
      *         {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         with select statement
      */
-    public static <T, L extends LayerProvider, S extends LambdaStream<T, ? super S>> S select(L provider,
-            Class<T> entityType, QueryInitializer<T, L, S> initializer) {
+    public static <T, L extends LayerProvider, Q extends LambdaStream<T, ? super Q>> Q select(L provider,
+            Class<T> entityType, QueryInitializer<T, L, Q> initializer) {
         return initializer.apply(provider, entityType);
     }
 }

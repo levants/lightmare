@@ -10,10 +10,10 @@ import org.lightmare.criteria.query.internal.orm.links.Operators;
  *
  * @param <T>
  *            entity type parameter
- * @param <S>
+ * @param <Q>
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  */
-interface TextQuery<T, S extends QueryStream<T, ? super S>> extends LambdaStream<T, S> {
+interface TextQuery<T, Q extends QueryStream<T, ? super Q>> extends LambdaStream<T, Q> {
 
     // Entity default alias
     String DEFAULT_ALIAS = "c";
@@ -24,7 +24,7 @@ interface TextQuery<T, S extends QueryStream<T, ? super S>> extends LambdaStream
      * @param clause
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    S appendBody(Object clause);
+    Q appendBody(Object clause);
 
     // ======================================================================//
 
@@ -33,7 +33,7 @@ interface TextQuery<T, S extends QueryStream<T, ? super S>> extends LambdaStream
      * 
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default S openBracket() {
+    default Q openBracket() {
         return appendBody(Operators.OPEN_BRACKET);
     }
 
@@ -42,7 +42,7 @@ interface TextQuery<T, S extends QueryStream<T, ? super S>> extends LambdaStream
      * 
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default S closeBracket() {
+    default Q closeBracket() {
         return appendBody(Operators.CLOSE_BRACKET);
     }
 
@@ -53,7 +53,7 @@ interface TextQuery<T, S extends QueryStream<T, ? super S>> extends LambdaStream
      * @param operator
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F> S operate(EntityField<T, F> field, String operator);
+    <F> Q operate(EntityField<T, F> field, String operator);
 
     /**
      * Generates query part for instant field with parameter and operator
@@ -63,7 +63,7 @@ interface TextQuery<T, S extends QueryStream<T, ? super S>> extends LambdaStream
      * @param operator
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F> S operate(EntityField<T, ? extends F> field, Object value, String operator);
+    <F> Q operate(EntityField<T, ? extends F> field, Object value, String operator);
 
     /**
      * Creates query part in brackets
@@ -71,7 +71,7 @@ interface TextQuery<T, S extends QueryStream<T, ? super S>> extends LambdaStream
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    S brackets(QueryConsumer<T, S> consumer);
+    Q brackets(QueryConsumer<T, Q> consumer);
 
     // ====================== Generated=SQL=String============================//
 

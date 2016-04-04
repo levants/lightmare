@@ -36,10 +36,10 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *
  * @param <T>
  *            entity type parameter
- * @param <S>
+ * @param <Q>
  *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  */
-public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends LayerStream<T>, QueryResult<T> {
+public interface LambdaStream<T, Q extends LambdaStream<T, ? super Q>> extends LayerStream<T>, QueryResult<T> {
 
     /**
      * Gets current {@link org.lightmare.criteria.query.LambdaStream}
@@ -47,7 +47,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * 
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    S stream();
+    Q stream();
 
     /**
      * Equality filter
@@ -56,7 +56,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F> S equal(EntityField<T, F> field, Object value);
+    <F> Q equal(EntityField<T, F> field, Object value);
 
     /**
      * Inequality filter
@@ -65,7 +65,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F> S notEqual(EntityField<T, F> field, Object value);
+    <F> Q notEqual(EntityField<T, F> field, Object value);
 
     /**
      * Greater than expression
@@ -74,7 +74,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F extends Comparable<? super F>> S gt(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
+    <F extends Comparable<? super F>> Q gt(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
 
     /**
      * Greater than expression
@@ -83,7 +83,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    default <F extends Comparable<? super F>> S greaterThan(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> Q greaterThan(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return this.gt(field, value);
     }
@@ -95,7 +95,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F extends Comparable<? super F>> S lt(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
+    <F extends Comparable<? super F>> Q lt(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
 
     /**
      * Less than expression
@@ -104,7 +104,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    default <F extends Comparable<? super F>> S lessThan(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> Q lessThan(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return this.lt(field, value);
     }
@@ -116,7 +116,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F extends Comparable<? super F>> S ge(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
+    <F extends Comparable<? super F>> Q ge(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
 
     /**
      * Greater than or equals to expression
@@ -125,7 +125,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    default <F extends Comparable<? super F>> S greaterThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> Q greaterThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return this.ge(field, value);
     }
@@ -137,7 +137,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F extends Comparable<? super F>> S le(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
+    <F extends Comparable<? super F>> Q le(EntityField<T, Comparable<? super F>> field, Comparable<? super F> value);
 
     /**
      * Less than or equals to expression
@@ -146,7 +146,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    default <F extends Comparable<? super F>> S lessThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
+    default <F extends Comparable<? super F>> Q lessThanOrEqualTo(EntityField<T, Comparable<? super F>> field,
             Comparable<? super F> value) {
         return this.le(field, value);
     }
@@ -159,7 +159,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    S like(EntityField<T, String> field, String value);
+    Q like(EntityField<T, String> field, String value);
 
     /**
      * NOT LIKE clause expression
@@ -168,7 +168,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param value
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    S notLike(EntityField<T, String> field, String value);
+    Q notLike(EntityField<T, String> field, String value);
 
     // ======================================================================//
 
@@ -179,7 +179,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param values
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F> S in(EntityField<T, F> field, Collection<F> values);
+    <F> Q in(EntityField<T, F> field, Collection<F> values);
 
     /**
      * NOT IN clause expression
@@ -188,7 +188,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param values
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F> S notIn(EntityField<T, F> field, Collection<F> values);
+    <F> Q notIn(EntityField<T, F> field, Collection<F> values);
 
     /**
      * IN clause expression
@@ -197,7 +197,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param values
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    default <F> S in(EntityField<T, F> field, F[] values) {
+    default <F> Q in(EntityField<T, F> field, F[] values) {
         return this.in(field, Arrays.asList(values));
     }
 
@@ -208,7 +208,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param values
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    default <F> S notIn(EntityField<T, F> field, F[] values) {
+    default <F> Q notIn(EntityField<T, F> field, F[] values) {
         return this.notIn(field, Arrays.asList(values));
     }
 
@@ -220,7 +220,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param field
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F> S isNull(EntityField<T, F> field);
+    <F> Q isNull(EntityField<T, F> field);
 
     /**
      * IS NOT NULL clause
@@ -228,7 +228,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param field
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F> S isNotNull(EntityField<T, F> field);
+    <F> Q isNotNull(EntityField<T, F> field);
 
     // ======================================================================//
 
@@ -237,21 +237,21 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * 
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    S and();
+    Q and();
 
     /**
      * OR logical operator
      * 
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    S or();
+    Q or();
 
     /**
      * Where clause flag
      * 
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    default S where() {
+    default Q where() {
         return stream();
     }
 
@@ -263,7 +263,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param consumer
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    default S where(QueryConsumer<T, S> consumer) {
+    default Q where(QueryConsumer<T, Q> consumer) {
         return ObjectUtils.acceptAndGet(this::where, consumer);
     }
 
@@ -273,7 +273,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param consumer
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    default S and(QueryConsumer<T, S> consumer) {
+    default Q and(QueryConsumer<T, Q> consumer) {
         return ObjectUtils.acceptAndGet(this::and, consumer);
     }
 
@@ -283,7 +283,7 @@ public interface LambdaStream<T, S extends LambdaStream<T, ? super S>> extends L
      * @param consumer
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    default S or(QueryConsumer<T, S> consumer) {
+    default Q or(QueryConsumer<T, Q> consumer) {
         return ObjectUtils.acceptAndGet(this::or, consumer);
     }
 }

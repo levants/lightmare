@@ -14,12 +14,12 @@ import org.lightmare.criteria.query.layers.LayerProvider;
  *
  * @param <T>
  *            entity type
- * @param <S>
+ * @param <Q>
  *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  */
 @FunctionalInterface
-public interface QueryInitializer<T, L extends LayerProvider, S extends LambdaStream<T, ? super S>>
-        extends BiFunction<L, Class<T>, S>, Serializable {
+public interface QueryInitializer<T, L extends LayerProvider, Q extends LambdaStream<T, ? super Q>>
+        extends BiFunction<L, Class<T>, Q>, Serializable {
 
     /**
      * Initializes {@link org.lightmare.criteria.query.QueryStream}
@@ -29,5 +29,5 @@ public interface QueryInitializer<T, L extends LayerProvider, S extends LambdaSt
      * 
      * @return S {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    S apply(L provider, Class<T> type);
+    Q apply(L provider, Class<T> type);
 }
