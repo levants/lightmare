@@ -55,7 +55,7 @@ public interface HavingExpression {
      * @return {@link org.lightmare.criteria.query.internal.orm.HavingExpression}
      *         current instance
      */
-    HavingExpression replaceHavingNewLine(char supposed);
+    HavingExpression replaceNewLine(char supposed);
 
     /**
      * Generates HAVING clause for JPA query with parameter and operator
@@ -147,7 +147,7 @@ public interface HavingExpression {
         if (Objects.nonNull(consumer)) {
             openBracket();
             consumer.accept(this);
-            replaceHavingNewLine(Brackets.CLOSE);
+            replaceNewLine(Brackets.CLOSE);
             appendHaving(StringUtils.NEWLINE);
         }
 

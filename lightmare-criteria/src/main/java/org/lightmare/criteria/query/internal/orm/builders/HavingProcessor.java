@@ -52,7 +52,7 @@ class HavingProcessor implements HavingExpression {
     }
 
     @Override
-    public HavingExpression replaceHavingNewLine(char supposed) {
+    public HavingExpression replaceNewLine(char supposed) {
         StringUtils.replaceOrAppend(having, StringUtils.LINE, supposed);
         return this;
     }

@@ -42,6 +42,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
 public interface JoinExpressions<T, Q extends QueryStream<T, ? super Q>> {
 
     /**
+     * Processes JOIN statement with ON clause
      * 
      * @param field
      * @param expression
