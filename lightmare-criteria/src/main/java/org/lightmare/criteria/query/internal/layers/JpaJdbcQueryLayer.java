@@ -24,10 +24,7 @@ package org.lightmare.criteria.query.internal.layers;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
-import javax.persistence.FlushModeType;
-import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.query.layers.QueryLayer;
@@ -86,21 +83,4 @@ public interface JpaJdbcQueryLayer<T> extends QueryLayer<T> {
     void setMaxResults(int maxResult);
 
     int getMaxResults();
-
-    /**
-     * Sets firs index for results
-     * 
-     * @param startPosition
-     */
-    void setFirstResult(int startPosition);
-
-    int getFirstResult();
-
-    void setHint(String hintName, Object value);
-
-    Map<String, Object> getHints();
-
-    void setFlushMode(FlushModeType flushMode);
-
-    void setLockMode(LockModeType lockMode);
 }

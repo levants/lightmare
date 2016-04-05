@@ -48,7 +48,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type parameter
  */
-public class CriteriaQueryLayer<T> implements JpaJdbcQueryLayer<T> {
+public class CriteriaQueryLayer<T> implements JpaJdbcQueryLayer<T>, JpaLayer {
 
     private final Query query;
 

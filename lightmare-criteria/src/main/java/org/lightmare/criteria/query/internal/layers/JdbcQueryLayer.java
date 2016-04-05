@@ -28,21 +28,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.persistence.FlushModeType;
-import javax.persistence.LockModeType;
 import javax.persistence.TemporalType;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.config.DefaultConfiguration.DefaultRetriever;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
 import org.lightmare.criteria.tuples.ParameterTuple;
-import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -277,31 +273,5 @@ public class JdbcQueryLayer<T> implements JpaJdbcQueryLayer<T> {
     @Override
     public int getMaxResults() {
         return call(statement::getMaxRows);
-    }
-
-    @Override
-    public void setFirstResult(int startPosition) {
-    }
-
-    @Override
-    public int getFirstResult() {
-        return CollectionUtils.EMPTY;
-    }
-
-    @Override
-    public void setHint(String hintName, Object value) {
-    }
-
-    @Override
-    public Map<String, Object> getHints() {
-        return Collections.emptyMap();
-    }
-
-    @Override
-    public void setFlushMode(FlushModeType flushMode) {
-    }
-
-    @Override
-    public void setLockMode(LockModeType lockMode) {
     }
 }

@@ -7,7 +7,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 
 import org.lightmare.criteria.query.internal.EntityQueryStream;
-import org.lightmare.criteria.query.internal.layers.JpaJdbcQueryLayer;
+import org.lightmare.criteria.query.internal.layers.JpaQueryLayer;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -53,7 +53,7 @@ abstract class AbstractJpaQueryWrapper<T> extends EntityQueryStream<T>
      * 
      * @param query
      */
-    private void putFirstResult(JpaJdbcQueryLayer<?> query) {
+    private void putFirstResult(JpaQueryLayer<?> query) {
         ObjectUtils.nonNull(startPosition, query::setFirstResult);
     }
 
@@ -73,7 +73,7 @@ abstract class AbstractJpaQueryWrapper<T> extends EntityQueryStream<T>
      * 
      * @param query
      */
-    private void putHints(JpaJdbcQueryLayer<?> query) {
+    private void putHints(JpaQueryLayer<?> query) {
         CollectionUtils.valid(hints, c -> c.forEach(query::setHint));
     }
 
@@ -88,7 +88,7 @@ abstract class AbstractJpaQueryWrapper<T> extends EntityQueryStream<T>
      * 
      * @param query
      */
-    private void putFlushMode(JpaJdbcQueryLayer<?> query) {
+    private void putFlushMode(JpaQueryLayer<?> query) {
         ObjectUtils.nonNull(flushMode, query::setFlushMode);
     }
 
@@ -103,7 +103,7 @@ abstract class AbstractJpaQueryWrapper<T> extends EntityQueryStream<T>
      * 
      * @param query
      */
-    private void setLockMode(JpaJdbcQueryLayer<?> query) {
+    private void setLockMode(JpaQueryLayer<?> query) {
         ObjectUtils.nonNull(lockMode, query::setLockMode);
     }
 
@@ -113,7 +113,7 @@ abstract class AbstractJpaQueryWrapper<T> extends EntityQueryStream<T>
      * 
      * @param query
      */
-    protected void setJpaConfiguration(JpaJdbcQueryLayer<?> query) {
+    protected void setJpaConfiguration(JpaQueryLayer<?> query) {
 
         putFirstResult(query);
         putHints(query);

@@ -60,8 +60,8 @@ public interface JoinExpressions<T, Q extends QueryStream<T, ? super Q>> {
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default <E, C extends Collection<E>> Q procesJoin(EntityField<T, C> field, String expression,
-            QueryConsumer<E, JpaQueryStream<E>> consumer) {
+    default <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> Q procesJoin(EntityField<T, C> field,
+            String expression, QueryConsumer<E, S> consumer) {
         return procesJoin(field, expression, null, consumer);
     }
 

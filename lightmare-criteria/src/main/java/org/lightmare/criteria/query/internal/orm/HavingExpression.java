@@ -51,7 +51,6 @@ public interface HavingExpression {
     /**
      * Replaces last character in HAVING expression
      * 
-     * @param existed
      * @param supposed
      * @return {@link org.lightmare.criteria.query.internal.orm.HavingExpression}
      *         current instance
