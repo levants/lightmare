@@ -40,7 +40,7 @@ import org.lightmare.criteria.query.internal.orm.GroupExpression;
  *            parameter
  */
 @FunctionalInterface
-public interface GroupByConsumer<T, Q extends QueryStream<Object[], ? super Q>>
+public interface GroupByConsumer<T, Q extends QueryStream<Object[], ?>>
         extends Consumer<GroupExpression<T, Q>>, Serializable {
 
     @Override

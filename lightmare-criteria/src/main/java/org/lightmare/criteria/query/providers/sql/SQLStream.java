@@ -41,7 +41,7 @@ import org.lightmare.criteria.query.internal.orm.QueryExpression;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-public interface SQLStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+public interface SQLStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ?>>
         extends QueryStream<T, Q>, QueryExpression<T, Q, O> {
 
 }

@@ -38,7 +38,7 @@ import org.lightmare.criteria.query.internal.orm.links.Aggregates;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-public interface AggregateFunction<T, Q extends QueryStream<Object[], ? super Q>> {
+public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
 
     /**
      * Operates with aggregate function and generates

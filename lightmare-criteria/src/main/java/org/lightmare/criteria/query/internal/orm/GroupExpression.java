@@ -27,7 +27,6 @@ import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.functions.SelectConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.SelectExpression.Select;
-import org.lightmare.criteria.query.providers.sql.SQLStream;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -41,7 +40,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-public interface GroupExpression<T, Q extends QueryStream<Object[], ? super Q>> {
+public interface GroupExpression<T, Q extends QueryStream<Object[], ?>> {
 
     /**
      * Generates HAVING clause for appropriated group by expression
@@ -71,7 +70,7 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ? super Q>> 
 
         Q stream = groupBy(select);
 
-        SQLStream<Object[], Q, Q> sql = ObjectUtils.cast(stream);
+        GroupExpression<Object[], ?> sql = ObjectUtils.cast(stream);
         sql.having(consumer);
 
         return stream;
@@ -98,7 +97,7 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ? super Q>> 
 
         Q stream = group(select);
 
-        SQLStream<Object[], Q, Q> sql = ObjectUtils.cast(stream);
+        GroupExpression<Object[], ?> sql = ObjectUtils.cast(stream);
         sql.having(consumer);
 
         return stream;
@@ -125,7 +124,7 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ? super Q>> 
 
         Q stream = groupBy(field);
 
-        SQLStream<Object[], Q, Q> sql = ObjectUtils.cast(stream);
+        GroupExpression<Object[], ?> sql = ObjectUtils.cast(stream);
         sql.having(consumer);
 
         return stream;
