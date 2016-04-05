@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.layers.JdbcQueryLayer;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.layers.QueryLayer;
@@ -40,8 +41,16 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *
  * @param <T>
  *            entity type for generated query
+ * 
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-abstract class AbstractResultStream<T> extends AbstractJoinStream<T> {
+abstract class AbstractResultStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractJoinStream<T, Q, O> {
 
     protected AbstractResultStream(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);

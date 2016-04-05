@@ -26,12 +26,12 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.LambdaStream;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Joins;
 import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
 import org.lightmare.criteria.query.internal.orm.subqueries.EntityJoinProcessor;
-import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
@@ -43,9 +43,16 @@ import org.lightmare.criteria.utils.StringUtils;
  *
  * @param <T>
  *            entity type parameter for generated query
+ * 
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-abstract class AbstractJoinStream<T>
-        extends AbstractFunctionExpression<T, JpaQueryStream<T>, JpaQueryStream<Object[]>> {
+abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractFunctionExpression<T, Q, O> {
 
     protected AbstractJoinStream(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
@@ -91,12 +98,12 @@ abstract class AbstractJoinStream<T>
      * for JOIN query
      * 
      * @param type
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         JOIN query
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     *         for JOIN query
      */
-    private <S> SubQueryStream<S, T> joinStream(Class<S> type) {
+    private <E, S extends LambdaStream<E, ? super S>> S joinStream(Class<E> type) {
 
-        SubQueryStream<S, T> joinQuery = new EntityJoinProcessor<S, T>(this, type);
+        S joinQuery = ObjectUtils.applyAndCast(type, c -> new EntityJoinProcessor<E, T>(this, c));
         appendJoin(joinQuery.getAlias(), StringUtils.NEWLINE);
 
         return joinQuery;
@@ -107,14 +114,14 @@ abstract class AbstractJoinStream<T>
      * for JOIN query
      * 
      * @param tuple
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         JOIN query
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     *         for JOIN query
      */
-    private <S> JpaQueryStream<S> joinStream(QueryTuple tuple) {
+    private <E, S extends LambdaStream<E, ? super S>> S joinStream(QueryTuple tuple) {
 
-        JpaQueryStream<S> joinStream;
+        S joinStream;
 
-        Class<S> type = tuple.getCollectionType();
+        Class<E> type = tuple.getCollectionType();
         joinStream = joinStream(type);
 
         return joinStream;
@@ -126,12 +133,13 @@ abstract class AbstractJoinStream<T>
      * 
      * @param field
      * @param expression
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         JOIN query
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     *         for JOIN query
      */
-    protected <E, C extends Collection<E>> JpaQueryStream<E> joinStream(EntityField<T, C> field, String expression) {
+    protected <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> S joinStream(EntityField<T, C> field,
+            String expression) {
 
-        JpaQueryStream<E> joinQuery;
+        S joinQuery;
 
         QueryTuple tuple = oppJoin(field, expression);
         joinQuery = joinStream(tuple);
@@ -162,10 +170,10 @@ abstract class AbstractJoinStream<T>
      * @param alias
      * @param type
      */
-    private <E> void joinOn(QueryConsumer<E, JpaQueryStream<E>> on, String alias, Class<E> type) {
+    private <E, S extends LambdaStream<E, ? super S>> void joinOn(QueryConsumer<E, S> on, String alias, Class<E> type) {
 
         openOnExpression();
-        JpaQueryStream<E> onQuery = new EntityJoinProcessor<E, T>(this, alias, type);
+        S onQuery = ObjectUtils.applyAndCast(type, c -> new EntityJoinProcessor<E, T>(this, alias, c));
         acceptAndCall(on, onQuery);
         closeOnExpression();
     }
@@ -178,18 +186,21 @@ abstract class AbstractJoinStream<T>
      * @param on
      * @param consumer
      */
-    private <E, C extends Collection<E>> void joinBody(EntityField<T, C> field, String expression,
-            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+    private <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> void joinBody(EntityField<T, C> field,
+            String expression, QueryConsumer<E, S> on, QueryConsumer<E, S> consumer) {
 
-        JpaQueryStream<E> joinQuery = joinStream(field, expression);
+        S joinQuery = joinStream(field, expression);
         ObjectUtils.nonNull(on, c -> joinOn(c, joinQuery.getAlias(), joinQuery.getEntityType()));
         acceptAndCall(consumer, joinQuery);
     }
 
     @Override
-    public <E, C extends Collection<E>> JpaQueryStream<T> procesJoin(EntityField<T, C> field, String expression,
-            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+    public <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> Q procesJoin(EntityField<T, C> field,
+            String expression, QueryConsumer<E, S> on, QueryConsumer<E, S> consumer) {
+
+        Q stream = stream();
         joinBody(field, expression, on, consumer);
-        return stream();
+
+        return stream;
     }
 }

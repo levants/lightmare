@@ -44,7 +44,8 @@ import org.lightmare.criteria.utils.StringUtils;
  * @param <T>
  *            entity type for generated query
  */
-abstract class AbstractSelectStatements<T> extends AbstractResultStream<T> {
+abstract class AbstractSelectStatements<T>
+        extends AbstractResultStream<T, JpaQueryStream<T>, JpaQueryStream<Object[]>> {
 
     // Query parts
     private static final String NEW_OPERATOR = "new ";

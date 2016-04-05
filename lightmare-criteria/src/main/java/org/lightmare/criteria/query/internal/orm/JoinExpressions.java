@@ -26,6 +26,7 @@ import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Joins;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
@@ -48,8 +49,8 @@ public interface JoinExpressions<T, Q extends QueryStream<T, ? super Q>> {
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <E, C extends Collection<E>> Q procesJoin(EntityField<T, C> field, String expression,
-            QueryConsumer<E, JpaQueryStream<E>> on, QueryConsumer<E, JpaQueryStream<E>> consumer);
+    <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> Q procesJoin(EntityField<T, C> field,
+            String expression, QueryConsumer<E, S> on, QueryConsumer<E, S> consumer);
 
     /**
      * Processes JOIN statement
