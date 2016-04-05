@@ -27,7 +27,7 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.internal.orm.builders.AbstractAggregateStream;
+import org.lightmare.criteria.query.internal.orm.builders.AbstractSelectStatements;
 import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream;
 import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
@@ -41,7 +41,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  * @param <T>
  *            entity type parameter for generated JPA query
  */
-public abstract class EntityQueryStream<T> extends AbstractAggregateStream<T> {
+public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
 
     protected EntityQueryStream(final LayerProvider provider, Class<T> entityType) {
         super(provider, entityType);

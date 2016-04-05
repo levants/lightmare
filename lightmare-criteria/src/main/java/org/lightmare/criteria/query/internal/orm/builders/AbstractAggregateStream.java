@@ -30,7 +30,6 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -44,8 +43,16 @@ import org.lightmare.criteria.utils.StringUtils;
  *
  * @param <T>
  *            entity type parameter
+ * 
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T> {
+abstract class AbstractAggregateStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractGroupByStream<T, Q, O> {
 
     protected AbstractAggregateStream(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
@@ -120,10 +127,9 @@ public abstract class AbstractAggregateStream<T> extends AbstractGroupByStream<T
     }
 
     @Override
-    public <F> JpaQueryStream<Object[]> aggregate(EntityField<T, F> field, Aggregates function,
-            GroupByConsumer<T, JpaQueryStream<Object[]>> consumer) {
+    public <F> O aggregate(EntityField<T, F> field, Aggregates function, GroupByConsumer<T, O> consumer) {
 
-        JpaQueryStream<Object[]> stream;
+        O stream;
 
         oppAggregate(field, function);
         ObjectUtils.accept(consumer, this);

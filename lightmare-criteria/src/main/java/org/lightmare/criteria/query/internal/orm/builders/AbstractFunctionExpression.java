@@ -42,7 +42,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-abstract class AbstractFunctionExpression<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+abstract class AbstractFunctionExpression<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ?>>
         extends AbstractFunctionProcessor<T, Q, O> {
 
     protected AbstractFunctionExpression(final LayerProvider provider, final Class<T> entityType) {

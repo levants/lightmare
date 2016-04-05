@@ -86,6 +86,17 @@ public class SelectStream<T, E> extends JpaEntityQueryStream<E> {
         appendCountPrefix();
     }
 
+    /**
+     * Adds ORDER BY, GROUP BY, HAVING and other suffixes
+     */
+    private void appendFooter() {
+
+        sql.append(orderBy);
+        sql.append(groupBy);
+        sql.append(having);
+        sql.append(suffix);
+    }
+
     @Override
     public String sql() {
 
@@ -94,10 +105,7 @@ public class SelectStream<T, E> extends JpaEntityQueryStream<E> {
         clearSql();
         appendSelectPrefix();
         generateBody(count);
-        sql.append(orderBy);
-        sql.append(groupBy);
-        sql.append(having);
-        sql.append(suffix);
+        appendFooter();
         value = sql.toString();
 
         return value;

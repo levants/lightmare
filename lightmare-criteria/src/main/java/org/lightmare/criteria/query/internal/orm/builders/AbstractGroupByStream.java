@@ -32,9 +32,9 @@ import java.util.Set;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.functions.SelectConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.AggregateTuple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -47,8 +47,15 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *
  * @param <T>
  *            entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
+abstract class AbstractGroupByStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractResultStream<T, Q, O> {
 
     protected SelectStream<T, ?> selectStream;
 
@@ -128,12 +135,12 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     /**
      * Generates appropriated query stream
      * 
-     * @return {@link org.lightmare.criteria.tuples.JpaQueryStream} for special
-     *         type parameter
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for special type parameter
      */
-    private <F> JpaQueryStream<F> generateStream(Class<F> type) {
+    private <F, S extends QueryStream<F, ? super S>> S generateStream(Class<F> type) {
 
-        JpaQueryStream<F> stream;
+        S stream;
 
         selectStream = new SelectStream<>(this, type);
         stream = ObjectUtils.cast(selectStream);
@@ -145,12 +152,12 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
      * Processes select method call for all arguments
      * 
      * @param fields
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         select method
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for select method
      */
-    private JpaQueryStream<Object[]> groupByField(Serializable field) {
+    private O groupByField(Serializable field) {
 
-        JpaQueryStream<Object[]> stream;
+        O stream;
 
         oppGroups(Collections.singleton(field));
         stream = generateStream(Object[].class);
@@ -159,9 +166,9 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public JpaQueryStream<Object[]> groupBy(Select select) {
+    public O groupBy(Select select) {
 
-        JpaQueryStream<Object[]> stream;
+        O stream;
 
         oppGroups(select.getFields());
         stream = generateStream(Object[].class);
@@ -170,7 +177,7 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public JpaQueryStream<Object[]> group(SelectConsumer select) {
+    public O group(SelectConsumer select) {
 
         Select columns = Select.select();
         ObjectUtils.accept(select, columns);
@@ -179,7 +186,7 @@ abstract class AbstractGroupByStream<T> extends AbstractSelectStatements<T> {
     }
 
     @Override
-    public <F> JpaQueryStream<Object[]> groupBy(EntityField<T, F> field) {
+    public <F> O groupBy(EntityField<T, F> field) {
         return groupByField(field);
     }
 }

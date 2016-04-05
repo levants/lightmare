@@ -44,7 +44,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *            parameter
  * 
  */
-abstract class AbstractORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+abstract class AbstractORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ?>>
         implements SQLStream<T, Q, O>, QueryResolver<T> {
 
     private Integer maxResult;

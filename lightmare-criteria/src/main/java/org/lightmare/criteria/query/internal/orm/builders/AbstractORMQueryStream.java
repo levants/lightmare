@@ -62,7 +62,7 @@ import org.lightmare.criteria.utils.StringUtils;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-abstract class AbstractORMQueryStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+abstract class AbstractORMQueryStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ?>>
         extends AbstractORMQueryWrapper<T, Q, O> {
 
     // Immutable data

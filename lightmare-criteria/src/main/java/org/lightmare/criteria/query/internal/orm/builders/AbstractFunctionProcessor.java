@@ -51,7 +51,7 @@ import org.lightmare.criteria.utils.StringUtils;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-public abstract class AbstractFunctionProcessor<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+public abstract class AbstractFunctionProcessor<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ?>>
         extends AbstractQueryStream<T, Q, O> implements ORMFunction<T> {
 
     protected QueryTuple functionTuple;
