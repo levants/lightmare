@@ -22,7 +22,7 @@
  */
 package org.lightmare.criteria.query.internal.orm.subqueries;
 
-import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.query.QueryStream;
 
 /**
  * Interface to process sub queries, embedded queries and join queries
@@ -34,7 +34,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  * @param <T>
  *            parent entity type parameter
  */
-public interface SubQueryStream<S, T> extends JpaQueryStream<S> {
+public interface SubQueryStream<S, T, Q extends QueryStream<S, ? super Q>> extends QueryStream<S, Q> {
 
     /**
      * Builds query preventing retrieve result

@@ -51,7 +51,7 @@ import org.lightmare.criteria.utils.StringUtils;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-public abstract class AbstractSelectStatements<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+abstract class AbstractSelectStatements<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
         extends AbstractAggregateStream<T, Q, O> {
 
     // Query parts

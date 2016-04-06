@@ -25,9 +25,9 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().operateSubQuery(
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().equal(100, SubQuery.any(
                     Phone.class,
-                    c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList());
+                    c -> c.where().equal(Phone::getPhoneNumber, "100100").select(Phone::getPhoneNumber).toList()));
             String sql = stream.sql();
             System.out.println(sql);
         } finally {
@@ -43,8 +43,11 @@ public class SubQueryTest extends QueryTest {
         try {
             // ============= Query construction ============== //
             JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
-                    .operateSubQuery(Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
-                            .equal(Phone::getOperatorId, Person::getPersonId).select(Phone::getPhoneNumber));
+                    .ge(Person::getPersonalNo,
+                            SubQuery.all(Phone.class,
+                                    c -> c.where().equal(Phone::getPhoneNumber, "100100").and()
+                                            .equal(Phone::getOperatorId, Person::getPersonId)
+                                            .select(Phone::getPhoneNumber)));
             String sql = stream.sql();
             System.out.println(sql);
         } finally {

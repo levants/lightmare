@@ -28,8 +28,8 @@ import java.util.Map;
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 
-import org.lightmare.criteria.query.internal.EntityQueryStream;
 import org.lightmare.criteria.query.internal.layers.JpaQueryLayer;
+import org.lightmare.criteria.query.internal.orm.builders.EntityQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.utils.CollectionUtils;

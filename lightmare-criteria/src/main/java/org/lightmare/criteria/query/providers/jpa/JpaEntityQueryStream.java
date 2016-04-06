@@ -3,9 +3,8 @@ package org.lightmare.criteria.query.providers.jpa;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.subqueries.EntityEmbeddedStream;
-import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream;
-import org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -15,40 +14,12 @@ public class JpaEntityQueryStream<T> extends AbstractJpaQueryWrapper<T> implemen
     protected JpaEntityQueryStream(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
     }
-    
+
     // =========================operate=sub=queries==========================//
 
-    /**
-     * Generates
-     * {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
-     * for entity type
-     * 
-     * @param type
-     * @return {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
-     *         for entity {@link Class}
-     */
-    public <S> SubQueryStream<S, T> subQuery(Class<S> type) {
-        return new EntitySubQueryStream<S, T>(this, type);
-    }
-
-    /**
-     * Creates
-     * {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
-     * for instant {@link Class} entity type
-     * 
-     * @param type
-     * @param consumer
-     */
-    private <S> void initSubQuery(Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer) {
-
-        JpaQueryStream<S> query = subQuery(type);
-        acceptAndCall(consumer, query);
-        closeBracket();
-        newLine();
-    }
-
     @Override
-    public <S> JpaQueryStream<T> operateSubQuery(Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer) {
+    public <S, L extends QueryStream<S, ? super L>> JpaQueryStream<T> operateSubQuery(Class<S> type,
+            QueryConsumer<S, L> consumer) {
 
         openBracket();
         initSubQuery(type, consumer);

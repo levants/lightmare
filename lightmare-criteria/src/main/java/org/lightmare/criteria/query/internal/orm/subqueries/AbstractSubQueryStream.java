@@ -48,7 +48,8 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<S> implements SubQueryStream<S, T> {
+public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<S>
+        implements SubQueryStream<S, T, JpaQueryStream<S>> {
 
     // Parent entity alias
     protected final String parentAlias;

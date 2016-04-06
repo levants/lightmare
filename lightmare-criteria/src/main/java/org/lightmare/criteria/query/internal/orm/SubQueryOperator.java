@@ -25,6 +25,7 @@ package org.lightmare.criteria.query.internal.orm;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
@@ -34,8 +35,33 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *
  * @param <T>
  *            entity type parameter for sub query
+ * 
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-interface SubQueryOperator<T> {
+interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
+
+    /**
+     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * for S type
+     * 
+     * @param type
+     * @param consumer
+     * @return { {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         similar stream for sub query
+     */
+    <S, L extends QueryStream<S, ? super L>> Q operateSubQuery(Class<S> type, QueryConsumer<S, L> consumer);
+
+    /**
+     * Processes sub query with operator for instant type with consumer
+     * 
+     * @param operator
+     * @param type
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    <F, S> Q operateSubQuery(String operator, Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer);
 
     /**
      * Processes sub query for entity field instant operator and sub query
@@ -45,10 +71,9 @@ interface SubQueryOperator<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F, S> JpaQueryStream<T> operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
+    <F, S> Q operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
             QueryConsumer<S, JpaQueryStream<S>> consumer);
 
     /**
@@ -59,10 +84,9 @@ interface SubQueryOperator<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F, S> JpaQueryStream<T> operateSubQuery(Object value, String operator, Class<S> type,
+    <F, S> Q operateSubQuery(Object value, String operator, Class<S> type,
             QueryConsumer<S, JpaQueryStream<S>> consumer);
 
     /**
@@ -73,9 +97,8 @@ interface SubQueryOperator<T> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     *         current instance
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F, S> JpaQueryStream<T> operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator, Class<S> type,
+    <F, S> Q operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator, Class<S> type,
             QueryConsumer<S, JpaQueryStream<S>> consumer);
 }
