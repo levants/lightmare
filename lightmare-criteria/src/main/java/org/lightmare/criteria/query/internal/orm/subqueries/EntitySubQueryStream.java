@@ -26,7 +26,6 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Implementation of
@@ -40,7 +39,8 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  * @param <T>
  *            parent entity type for generated query
  */
-public class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
+public abstract class EntitySubQueryStream<S, T, Q extends QueryStream<S, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractSubQueryStream<S, T, Q, O> {
 
     public EntitySubQueryStream(AbstractQueryStream<T, ?, ?> parent, Class<S> type) {
         super(parent, type);
@@ -53,7 +53,7 @@ public class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
     // ========================= select method composers ====================//
 
     @Override
-    public <F> JpaQueryStream<Object[]> select(EntityField<S, F> field) {
+    public <F> O select(EntityField<S, F> field) {
         return subSelectAll(field);
     }
 

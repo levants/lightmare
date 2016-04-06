@@ -26,7 +26,6 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Provides methods to process sub queries
@@ -61,7 +60,8 @@ interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F, S> Q operateSubQuery(String operator, Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer);
+    <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(String operator, Class<S> type,
+            QueryConsumer<S, L> consumer);
 
     /**
      * Processes sub query for entity field instant operator and sub query
@@ -73,8 +73,8 @@ interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F, S> Q operateSubQuery(EntityField<T, F> field, String operator, Class<S> type,
-            QueryConsumer<S, JpaQueryStream<S>> consumer);
+    <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(EntityField<T, F> field, String operator,
+            Class<S> type, QueryConsumer<S, L> consumer);
 
     /**
      * Processes sub query for entity field instant operator and sub query
@@ -86,8 +86,8 @@ interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F, S> Q operateSubQuery(Object value, String operator, Class<S> type,
-            QueryConsumer<S, JpaQueryStream<S>> consumer);
+    <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(Object value, String operator, Class<S> type,
+            QueryConsumer<S, L> consumer);
 
     /**
      * Processes sub query for entity field instant operator and sub query
@@ -99,6 +99,6 @@ interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    <F, S> Q operateFunctionWithSubQuery(FunctionConsumer<T> function, String operator, Class<S> type,
-            QueryConsumer<S, JpaQueryStream<S>> consumer);
+    <F, S, L extends QueryStream<S, ? super L>> Q operateFunctionWithSubQuery(FunctionConsumer<T> function,
+            String operator, Class<S> type, QueryConsumer<S, L> consumer);
 }

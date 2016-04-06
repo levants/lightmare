@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.orm.subqueries;
+package org.lightmare.criteria.query.providers.jpa;
 
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -37,7 +37,7 @@ import org.lightmare.criteria.utils.CollectionUtils;
  * @param <T>
  *            entity type parameter for generated query
  */
-public class EntityJoinProcessor<S, T> extends EntitySubQueryStream<S, T> {
+public class JpaJoinProcessor<S, T> extends JpaSubQueryStream<S, T> {
 
     private boolean parentOperator;
 
@@ -45,12 +45,12 @@ public class EntityJoinProcessor<S, T> extends EntitySubQueryStream<S, T> {
 
     private int onCount;
 
-    public EntityJoinProcessor(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> entityType) {
+    public JpaJoinProcessor(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> entityType) {
         super(parent, alias, entityType);
         this.onClause = Boolean.TRUE;
     }
 
-    public EntityJoinProcessor(AbstractQueryStream<T, ?, ?> parent, Class<S> entityType) {
+    public JpaJoinProcessor(AbstractQueryStream<T, ?, ?> parent, Class<S> entityType) {
         super(parent, entityType);
     }
 

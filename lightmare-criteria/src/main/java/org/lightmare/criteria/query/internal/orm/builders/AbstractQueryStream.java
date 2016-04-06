@@ -25,6 +25,7 @@ package org.lightmare.criteria.query.internal.orm.builders;
 import java.util.Queue;
 import java.util.Set;
 
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.layers.JpaJdbcQueryLayer;
 import org.lightmare.criteria.query.layers.LayerProvider;
@@ -52,6 +53,35 @@ public abstract class AbstractQueryStream<T, Q extends QueryStream<T, ? super Q>
     protected AbstractQueryStream(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
     }
+
+    /**
+     * Initializes JOIN expression builder
+     * 
+     * @param joinType
+     * @param alias
+     * @return S {@link org.lightmare.criteria.query.LambdaStream}
+     *         implementation
+     */
+    public abstract <E, S extends LambdaStream<E, ? super S>> S initJoinQuery(String alias, Class<E> joinType);
+
+    /**
+     * Initializes JOIN expression builder
+     * 
+     * @param joinType
+     * @return S {@link org.lightmare.criteria.query.LambdaStream}
+     *         implementation
+     */
+    public <E, S extends LambdaStream<E, ? super S>> S initJoinQuery(Class<E> joinType) {
+        return initJoinQuery(null, joinType);
+    }
+
+    /**
+     * Initializes join query builder
+     * 
+     * @param subType
+     * @return S {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    public abstract <E, S extends QueryStream<E, ? super S>> S initSubQuery(Class<E> subType);
 
     /**
      * Gets {@link java.util.Set} of

@@ -30,7 +30,6 @@ import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Joins;
 import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
-import org.lightmare.criteria.query.internal.orm.subqueries.EntityJoinProcessor;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
@@ -103,7 +102,7 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
      */
     private <E, S extends LambdaStream<E, ? super S>> S joinStream(Class<E> type) {
 
-        S joinQuery = ObjectUtils.applyAndCast(type, c -> new EntityJoinProcessor<E, T>(this, c));
+        S joinQuery = initJoinQuery(type);
         appendJoin(joinQuery.getAlias(), StringUtils.NEWLINE);
 
         return joinQuery;
@@ -173,7 +172,7 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
     private <E, S extends LambdaStream<E, ? super S>> void joinOn(QueryConsumer<E, S> on, String alias, Class<E> type) {
 
         openOnExpression();
-        S onQuery = ObjectUtils.applyAndCast(type, c -> new EntityJoinProcessor<E, T>(this, alias, c));
+        S onQuery = initJoinQuery(alias, type);
         acceptAndCall(on, onQuery);
         closeOnExpression();
     }

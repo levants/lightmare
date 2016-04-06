@@ -25,11 +25,10 @@ package org.lightmare.criteria.query.internal.orm.builders;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Query builder from setter method references
@@ -179,10 +178,75 @@ public abstract class EntityQueryStream<T, Q extends QueryStream<T, ? super Q>, 
      */
     protected <S, L extends QueryStream<S, ? super L>> void initSubQuery(Class<S> type, QueryConsumer<S, L> consumer) {
 
-        L query = ObjectUtils.applyAndCast(type, c -> new EntitySubQueryStream<S, T>(this, c));
+        L query = initSubQuery(type);
         acceptAndCall(consumer, query);
         closeBracket();
         newLine();
+    }
+
+    @Override
+    public <S, L extends QueryStream<S, ? super L>> Q operateSubQuery(Class<S> type, QueryConsumer<S, L> consumer) {
+
+        Q stream = stream();
+
+        openBracket();
+        initSubQuery(type, consumer);
+
+        return stream;
+    }
+
+    @Override
+    public <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(EntityField<T, F> field, String operator,
+            Class<S> type, QueryConsumer<S, L> consumer) {
+
+        Q stream = stream();
+
+        appendOperator();
+        appSubQuery(field, operator);
+        initSubQuery(type, consumer);
+
+        return stream;
+    }
+
+    @Override
+    public <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(Object value, String operator, Class<S> type,
+            QueryConsumer<S, L> consumer) {
+
+        Q stream = stream();
+
+        appendOperator();
+        appendOperator(value, operator);
+        openBracket();
+        initSubQuery(type, consumer);
+
+        return stream;
+    }
+
+    @Override
+    public <F, S, L extends QueryStream<S, ? super L>> Q operateFunctionWithSubQuery(FunctionConsumer<T> function,
+            String operator, Class<S> type, QueryConsumer<S, L> consumer) {
+
+        Q stream = stream();
+
+        startFunctionExpression(function, operator);
+        openBracket();
+        initSubQuery(type, consumer);
+
+        return stream;
+    }
+
+    @Override
+    public <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(String operator, Class<S> type,
+            QueryConsumer<S, L> consumer) {
+
+        Q stream = stream();
+
+        appendOperator();
+        appendBody(operator);
+        openBracket();
+        initSubQuery(type, consumer);
+
+        return stream;
     }
 
     // =================================Set=Clause===========================//

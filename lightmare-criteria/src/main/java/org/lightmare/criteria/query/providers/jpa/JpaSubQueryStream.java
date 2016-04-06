@@ -26,41 +26,50 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
- * Implementation of {@link org.lightmare.criteria.query.QueryStream} for JPA
- * queries
+ * Implementation of
+ * {@link org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream}
+ * for JPA sub query generation
  * 
  * @author Levan Tsinadze
  *
+ * @param <S>
+ *            sub query entity type parameter
  * @param <T>
  *            entity type parameter
  */
-public class JpaEntityQueryStream<T> extends AbstractJpaQueryWrapper<T> implements JpaQueryStream<T> {
+public class JpaSubQueryStream<S, T> extends EntitySubQueryStream<S, T, JpaQueryStream<S>, JpaQueryStream<Object[]>>
+        implements JpaQueryStream<S> {
 
-    protected JpaEntityQueryStream(final LayerProvider provider, final Class<T> entityType) {
-        super(provider, entityType);
+    public JpaSubQueryStream(final AbstractQueryStream<T, ?, ?> parent, Class<S> type) {
+        super(parent, type);
+    }
+
+    public JpaSubQueryStream(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> type) {
+        super(parent, alias, type);
     }
 
     @Override
-    public <E, S extends LambdaStream<E, ? super S>> S initJoinQuery(String alias, Class<E> joinType) {
-        S joinQuery = JpaUtils.initJoinQuery(this, alias, joinType);
+    public <E, L extends LambdaStream<E, ? super L>> L initJoinQuery(String alias, Class<E> joinType) {
+        L joinQuery = JpaUtils.initJoinQuery(this, alias, joinType);
         return joinQuery;
     }
 
     @Override
-    public <E, S extends QueryStream<E, ? super S>> S initSubQuery(Class<E> subType) {
-        S subQuery = JpaUtils.initSubQuery(this, subType);
+    public <E, L extends QueryStream<E, ? super L>> L initSubQuery(Class<E> subType) {
+        L subQuery = JpaUtils.initSubQuery(this, subType);
         return subQuery;
     }
 
     // =========================embedded=field=queries=======================//
 
     @Override
-    public <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer) {
+    public <F> JpaQueryStream<S> embedded(EntityField<S, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer) {
 
         QueryTuple tuple = compose(field);
         Class<F> type = tuple.getFieldGenericType();

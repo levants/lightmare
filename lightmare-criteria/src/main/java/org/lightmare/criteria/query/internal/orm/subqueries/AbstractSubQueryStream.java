@@ -32,9 +32,8 @@ import javax.persistence.TemporalType;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.orm.builders.EntityQueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Aggregates;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
-import org.lightmare.criteria.query.providers.jpa.JpaEntityQueryStream;
 import org.lightmare.criteria.tuples.Couple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -48,8 +47,8 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type for generated query
  */
-public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<S>
-        implements SubQueryStream<S, T, JpaQueryStream<S>> {
+public abstract class AbstractSubQueryStream<S, T, Q extends QueryStream<S, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends EntityQueryStream<S, Q, O> implements SubQueryStream<S, T, Q> {
 
     // Parent entity alias
     protected final String parentAlias;
@@ -84,7 +83,7 @@ public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<
 
         L stream;
 
-        SubSelectStream<S, K> subSelectStream = new SubSelectStream<>(this, type);
+        SubSelectStream<S, K> subSelectStream = new SubSelectStream<S, K>(this, type);
         subSelect = subSelectStream;
         stream = ObjectUtils.cast(subSelectStream);
 
@@ -115,9 +114,9 @@ public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
      *         with {@link Object} array
      */
-    protected JpaQueryStream<Object[]> subSelectAll(Serializable field) {
+    protected O subSelectAll(Serializable field) {
 
-        SubSelectStream<S, Object[]> stream;
+        O stream;
 
         generateSelectClause(Object[].class, Collections.singletonList(field));
         stream = generateSubSelectStream(Object[].class);

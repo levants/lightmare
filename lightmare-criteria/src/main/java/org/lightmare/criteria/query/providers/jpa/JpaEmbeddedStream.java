@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.orm.subqueries;
+package org.lightmare.criteria.query.providers.jpa;
 
 import java.io.Serializable;
 
@@ -41,11 +41,11 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @param <T>
  *            query type parameter
  */
-public class EntityEmbeddedStream<S, T> extends EntitySubQueryStream<S, T> {
+public class JpaEmbeddedStream<S, T> extends JpaSubQueryStream<S, T> {
 
     private final String embeddedName;
 
-    public EntityEmbeddedStream(final AbstractQueryStream<T, ?, ?> parent, final Class<S> type,
+    public JpaEmbeddedStream(final AbstractQueryStream<T, ?, ?> parent, final Class<S> type,
             final String embeddedName) {
         super(parent, parent.getAlias(), type);
         this.embeddedName = embeddedName;

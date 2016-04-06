@@ -37,9 +37,9 @@ import org.lightmare.criteria.utils.CollectionUtils;
  */
 class SubSelectStream<T, E> extends SelectStream<T, E> {
 
-    private final AbstractSubQueryStream<T, ?> stream;
+    private final AbstractSubQueryStream<T, ?, ?, ?> stream;
 
-    protected SubSelectStream(AbstractSubQueryStream<T, ?> stream, Class<E> type) {
+    protected SubSelectStream(AbstractSubQueryStream<T, ?, ?, ?> stream, Class<E> type) {
         super(stream, type);
         this.stream = stream;
     }
