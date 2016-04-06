@@ -94,8 +94,8 @@ public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<
      * Processes sub select statement for sub queries
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
-     *         instant field
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     *         for instant field
      */
     protected <F, L extends QueryStream<F, ?>> L subSelectOne(EntityField<S, F> field) {
 
@@ -125,9 +125,8 @@ public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<
     }
 
     /**
-     * Generates aggregate
-     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for instant
-     * type
+     * Generates aggregate {@link org.lightmare.criteria.query.QueryStream}
+     * implementation for instant type
      * 
      * @param field
      * @param function
