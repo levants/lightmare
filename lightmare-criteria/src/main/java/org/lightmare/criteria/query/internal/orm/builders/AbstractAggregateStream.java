@@ -72,7 +72,7 @@ abstract class AbstractAggregateStream<T, Q extends QueryStream<T, ? super Q>, O
     }
 
     /**
-     * Generates aggregate query prefix
+     * Generates and appends aggregate query prefix to buffer
      * 
      * @param buffer
      */

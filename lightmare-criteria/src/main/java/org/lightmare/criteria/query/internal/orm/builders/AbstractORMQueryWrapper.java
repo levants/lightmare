@@ -73,12 +73,12 @@ abstract class AbstractORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>, O
     }
 
     /**
-     * Adds additional JPA configuration to passed
-     * {@link javax.persistence.Query} instance
+     * Adds additional query configuration to passed
+     * {@link org.lightmare.criteria.query.layers.QueryLayer} instance
      * 
      * @param query
      */
-    protected void setJPAConfiguration(JpaJdbcQueryLayer<?> query) {
+    protected void setORMConfiguration(JpaJdbcQueryLayer<?> query) {
         putMaxResult(query);
     }
 }

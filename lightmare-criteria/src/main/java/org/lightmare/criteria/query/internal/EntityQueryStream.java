@@ -41,7 +41,8 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  * @param <T>
  *            entity type parameter for generated JPA query
  */
-public abstract class EntityQueryStream<T> extends AbstractSelectStatements<T> {
+public abstract class EntityQueryStream<T>
+        extends AbstractSelectStatements<T, JpaQueryStream<T>, JpaQueryStream<Object[]>> {
 
     protected EntityQueryStream(final LayerProvider provider, Class<T> entityType) {
         super(provider, entityType);

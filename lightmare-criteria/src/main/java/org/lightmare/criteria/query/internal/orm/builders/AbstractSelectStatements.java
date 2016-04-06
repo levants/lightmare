@@ -28,10 +28,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -43,9 +44,15 @@ import org.lightmare.criteria.utils.StringUtils;
  *
  * @param <T>
  *            entity type for generated query
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-public abstract class AbstractSelectStatements<T>
-        extends AbstractAggregateStream<T, JpaQueryStream<T>, JpaQueryStream<Object[]>> {
+public abstract class AbstractSelectStatements<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends AbstractAggregateStream<T, Q, O> {
 
     // Query parts
     private static final String NEW_OPERATOR = "new ";
@@ -55,7 +62,7 @@ public abstract class AbstractSelectStatements<T>
     }
 
     /**
-     * Validates if JPA query needs SELECT clause
+     * Validates if query needs SELECT clause
      * 
      * @param expression
      * @return <code>boolean</code> validation result
@@ -66,7 +73,7 @@ public abstract class AbstractSelectStatements<T>
     }
 
     /**
-     * Validates and appends "SELECT" expression to JPA query
+     * Validates and appends "SELECT" expression to query
      * 
      * @param expression
      */
@@ -78,7 +85,7 @@ public abstract class AbstractSelectStatements<T>
     }
 
     /**
-     * Validates and appends "SELECT" expression to JPA query
+     * Validates and appends "SELECT" expression to query
      * 
      * @param expression
      */
@@ -90,7 +97,7 @@ public abstract class AbstractSelectStatements<T>
     }
 
     /**
-     * Generates SELECT clause JPA query part
+     * Generates SELECT clause
      * 
      * @param type
      * @param columnType
@@ -112,7 +119,7 @@ public abstract class AbstractSelectStatements<T>
     }
 
     /**
-     * Generates SELECT clause JPA query part
+     * Generates SELECT clause
      * 
      * @param type
      * @param fields
@@ -122,7 +129,7 @@ public abstract class AbstractSelectStatements<T>
     }
 
     /**
-     * Generates SELECT clause JPA query part
+     * Generates SELECT clause
      * 
      * @param type
      * @param columnType
@@ -134,7 +141,7 @@ public abstract class AbstractSelectStatements<T>
     }
 
     /**
-     * Generates SELECT clause JPA query part
+     * Generates SELECT clause
      * 
      * @param type
      * @param select
@@ -144,47 +151,47 @@ public abstract class AbstractSelectStatements<T>
     }
 
     @Override
-    public <F> JpaQueryStream<F> selectType(Class<F> type, Select select) {
+    public <F, S extends QueryStream<F, ?>> S selectType(Class<F> type, Select select) {
 
-        SelectStream<T, F> stream;
+        S stream;
 
         generateSelectClause(type, select);
-        stream = new SelectStream<>(this, type);
+        stream = ObjectUtils.applyAndCast(type, c -> new SelectStream<T, F>(this, c));
 
         return stream;
     }
 
     @Override
-    public <F> JpaQueryStream<F> select(String expression, Class<F> type) {
+    public <F, S extends QueryStream<F, ?>> S select(String expression, Class<F> type) {
 
-        SelectStream<T, F> stream;
+        S stream;
 
         validateAndAppendSelect(expression);
         columns.append(expression);
-        stream = new SelectStream<>(this, type);
+        stream = ObjectUtils.applyAndCast(type, c -> new SelectStream<T, F>(this, c));
 
         return stream;
     }
 
     @Override
-    public <F> JpaQueryStream<F> selectType(EntityField<T, F> field) {
+    public <F, S extends QueryStream<F, ?>> S selectType(EntityField<T, F> field) {
 
-        SelectStream<T, F> stream;
+        S stream;
 
         Class<F> fieldType = getFieldType(field);
         generateSelectClause(fieldType, Boolean.TRUE, Collections.singletonList(field));
-        stream = new SelectStream<>(this, fieldType);
+        stream = ObjectUtils.applyAndCast(fieldType, c -> new SelectStream<T, F>(this, c));
 
         return stream;
     }
 
     @Override
-    public <F> JpaQueryStream<Object[]> select(EntityField<T, F> field) {
+    public <F> O select(EntityField<T, F> field) {
 
-        SelectStream<T, Object[]> stream;
+        O stream;
 
         generateSelectClause(Object[].class, Boolean.FALSE, Collections.singletonList(field));
-        stream = new SelectStream<>(this, Object[].class);
+        stream = ObjectUtils.cast(new SelectStream<T, Object[]>(this, Object[].class));
 
         return stream;
     }

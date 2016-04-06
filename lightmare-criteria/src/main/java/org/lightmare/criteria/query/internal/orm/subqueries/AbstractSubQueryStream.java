@@ -38,6 +38,7 @@ import org.lightmare.criteria.query.providers.jpa.JpaEntityQueryStream;
 import org.lightmare.criteria.tuples.Couple;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Main class to operate on sub queries and generate query clauses
@@ -78,10 +79,13 @@ public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<
      * @param type
      * @return
      */
-    private <K> SubSelectStream<S, K> generateSubSelectStream(Class<K> type) {
+    private <K, L extends QueryStream<K, ?>> L generateSubSelectStream(Class<K> type) {
 
-        SubSelectStream<S, K> stream = new SubSelectStream<>(this, type);
-        subSelect = stream;
+        L stream;
+
+        SubSelectStream<S, K> subSelectStream = new SubSelectStream<>(this, type);
+        subSelect = subSelectStream;
+        stream = ObjectUtils.cast(subSelectStream);
 
         return stream;
     }
@@ -93,9 +97,9 @@ public abstract class AbstractSubQueryStream<S, T> extends JpaEntityQueryStream<
      * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
      *         instant field
      */
-    protected <F> JpaQueryStream<F> subSelectOne(EntityField<S, F> field) {
+    protected <F, L extends QueryStream<F, ?>> L subSelectOne(EntityField<S, F> field) {
 
-        SubSelectStream<S, F> stream;
+        L stream;
 
         Class<F> fieldType = getFieldType(field);
         stream = generateSubSelectStream(fieldType);

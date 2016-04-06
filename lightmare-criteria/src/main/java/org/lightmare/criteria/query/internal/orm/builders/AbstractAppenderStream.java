@@ -40,7 +40,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Utility class to build JPA query clauses
+ * Utility class to build query clauses
  * 
  * @author Levan Tsinadze
  *
@@ -57,7 +57,7 @@ import org.lightmare.criteria.utils.StringUtils;
 abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ?>>
         extends AbstractORMQueryStream<T, Q, O> {
 
-    // JPA query parts
+    // Query parts
     protected final StringBuilder prefix = new StringBuilder();
 
     protected final StringBuilder count = new StringBuilder();
@@ -96,7 +96,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Adds new line to JPA query body
+     * Adds new line to query body
      */
     public void newLine() {
 
@@ -106,7 +106,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Adds JPA query part to from clause
+     * Adds query part to from clause
      * 
      * @param typeName
      * @param alias
@@ -122,7 +122,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Adds JPA query part to from clause
+     * Adds query part to from clause
      * 
      * @param type
      * @param alias
@@ -136,7 +136,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Adds JPA query part to from clause
+     * Adds query part to from clause
      * 
      * @param tuple
      */
@@ -184,7 +184,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Generates JPA query part for field and expression and adds parameter
+     * Generates query part for field and expression and adds parameter
      * 
      * @param field
      * @param value1
@@ -196,7 +196,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Generates JPA query part for filed, expressions and values
+     * Generates query part for filed, expressions and values
      * 
      * @param field
      * @param expression1
@@ -577,7 +577,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Appends aggregate clauses to JPA query body
+     * Appends aggregate clauses to query body
      * 
      * @param fields
      */
@@ -653,7 +653,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Implements bracket JPA query part by
+     * Implements bracket query part by
      * {@link org.lightmare.criteria.functions.QueryConsumer} implementation
      * 
      * @param consumer
@@ -695,7 +695,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Appends JOIN clause to JPA query
+     * Appends JOIN clause to query
      * 
      * @param clauses
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation

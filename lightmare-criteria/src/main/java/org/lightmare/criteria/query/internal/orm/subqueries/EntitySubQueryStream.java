@@ -58,7 +58,7 @@ public class EntitySubQueryStream<S, T> extends AbstractSubQueryStream<S, T> {
     }
 
     @Override
-    public <F> JpaQueryStream<F> selectType(EntityField<S, F> field) {
+    public <F, L extends QueryStream<F, ?>> L selectType(EntityField<S, F> field) {
         return subSelectOne(field);
     }
 

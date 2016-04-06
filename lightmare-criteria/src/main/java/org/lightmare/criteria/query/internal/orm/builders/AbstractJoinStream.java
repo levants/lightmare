@@ -94,8 +94,8 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
     }
 
     /**
-     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     * for JOIN query
+     * Generates {@link org.lightmare.criteria.query.LambdaStream} instance for
+     * JOIN query
      * 
      * @param type
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
@@ -110,8 +110,8 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
     }
 
     /**
-     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     * for JOIN query
+     * Generates {@link org.lightmare.criteria.query.LambdaStream} instance for
+     * JOIN query
      * 
      * @param tuple
      * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
@@ -128,8 +128,8 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
     }
 
     /**
-     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream}
-     * for JOIN query
+     * Generates {@link org.lightmare.criteria.query.LambdaStream} instance for
+     * JOIN query
      * 
      * @param field
      * @param expression

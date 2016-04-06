@@ -167,7 +167,7 @@ abstract class AbstractORMQueryStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Generates parameter name for JPA query
+     * Generates parameter name for query
      * 
      * @param tuple
      * @return {@link org.lightmare.criteria.tuples.CounterTuple.NameCountTuple}
@@ -274,11 +274,11 @@ abstract class AbstractORMQueryStream<T, Q extends QueryStream<T, ? super Q>, O 
      * @param query
      */
     protected void setParameters(JpaJdbcQueryLayer<?> query) {
-        setJPAConfiguration(query);
+        setORMConfiguration(query);
         parameters.forEach(query::setParameter);
     }
 
-    // ============================= JPA Elements ===========================//
+    // ============================= Query Elements =========================//
 
     @Override
     public LayerProvider getLayerProvider() {
