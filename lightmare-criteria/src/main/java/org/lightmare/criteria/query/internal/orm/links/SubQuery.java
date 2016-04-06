@@ -20,12 +20,10 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.orm;
+package org.lightmare.criteria.query.internal.orm.links;
 
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.links.Operators;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -135,11 +133,11 @@ public interface SubQuery<T> {
      * 
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.internal.orm.SubQuery.All}
+     * @return {@link org.lightmare.criteria.query.internal.orm.links.SubQuery.All}
      *         all sub query stream
      */
-    static <S> All<S, JpaQueryStream<S>> all(Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer) {
-        return new All<S, JpaQueryStream<S>>(type, consumer);
+    static <S, Q extends QueryStream<S, ? super Q>> All<S, Q> all(Class<S> type, QueryConsumer<S, Q> consumer) {
+        return new All<S, Q>(type, consumer);
     }
 
     /**
@@ -147,11 +145,11 @@ public interface SubQuery<T> {
      * 
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.internal.orm.SubQuery.Any}
+     * @return {@link org.lightmare.criteria.query.internal.orm.links.SubQuery.Any}
      *         all sub query stream
      */
-    static <S> Any<S, JpaQueryStream<S>> any(Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer) {
-        return new Any<S, JpaQueryStream<S>>(type, consumer);
+    static <S, Q extends QueryStream<S, ? super Q>> Any<S, Q> any(Class<S> type, QueryConsumer<S, Q> consumer) {
+        return new Any<S, Q>(type, consumer);
     }
 
     /**
@@ -159,10 +157,10 @@ public interface SubQuery<T> {
      * 
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.internal.orm.SubQuery.Some}
+     * @return {@link org.lightmare.criteria.query.internal.orm.links.SubQuery.Some}
      *         all sub query stream
      */
-    static <S> Some<S, JpaQueryStream<S>> some(Class<S> type, QueryConsumer<S, JpaQueryStream<S>> consumer) {
-        return new Some<S, JpaQueryStream<S>>(type, consumer);
+    static <S, Q extends QueryStream<S, ? super Q>> Some<S, Q> some(Class<S> type, QueryConsumer<S, Q> consumer) {
+        return new Some<S, Q>(type, consumer);
     }
 }

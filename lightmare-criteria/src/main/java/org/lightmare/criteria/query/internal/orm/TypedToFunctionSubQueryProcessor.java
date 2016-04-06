@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.internal.orm.links.SubQuery.SubQueryType;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
@@ -51,11 +52,13 @@ interface TypedToFunctionSubQueryProcessor<T> extends SubQueryOperator<T> {
         return operateFunctionWithSubQuery(consumer, composed, stream.getType(), stream.getConsumer());
     }
 
-    default <F, S> JpaQueryStream<T> equalSubQuery(FunctionConsumer<T> consumer, SubQueryType<S, JpaQueryStream<S>> stream) {
+    default <F, S> JpaQueryStream<T> equalSubQuery(FunctionConsumer<T> consumer,
+            SubQueryType<S, JpaQueryStream<S>> stream) {
         return operateFunctionWthSubQuery(consumer, Operators.EQ, stream);
     }
 
-    default <F, S> JpaQueryStream<T> notEqualSubQuery(FunctionConsumer<T> consumer, SubQueryType<S, JpaQueryStream<S>> stream) {
+    default <F, S> JpaQueryStream<T> notEqualSubQuery(FunctionConsumer<T> consumer,
+            SubQueryType<S, JpaQueryStream<S>> stream) {
         return operateFunctionWthSubQuery(consumer, Operators.NOT_EQ, stream);
     }
 

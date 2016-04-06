@@ -35,7 +35,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  * @param <T>
  *            entity type parameter for sub query
  */
-interface SubQueryOperator<T> extends SubQuery<T> {
+interface SubQueryOperator<T> {
 
     /**
      * Processes sub query for entity field instant operator and sub query

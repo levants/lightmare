@@ -289,7 +289,7 @@ public abstract class ObjectUtils extends FunctionUtils {
 
     /**
      * Checks if parameters equals and calls
-     * {@link java.util.function.BiConsumer#accept(Object, Object)} method
+     * {@link java.util.function.BiConsumer} implementation
      * 
      * @param x
      * @param y
@@ -315,7 +315,7 @@ public abstract class ObjectUtils extends FunctionUtils {
 
     /**
      * Checks if parameters not equals and calls
-     * {@link java.util.function.BiConsumer#accept(Object, Object)} method
+     * {@link java.util.function.BiConsumer} implementation
      *
      * @param x
      * @param y

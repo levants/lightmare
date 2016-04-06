@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.internal.orm;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.internal.orm.links.SubQuery.SubQueryType;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
