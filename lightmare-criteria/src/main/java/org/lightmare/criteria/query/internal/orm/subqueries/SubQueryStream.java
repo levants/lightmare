@@ -33,6 +33,9 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type parameter
  * @param <T>
  *            parent entity type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
 public interface SubQueryStream<S, T, Q extends QueryStream<S, ? super Q>> extends QueryStream<S, Q> {
 

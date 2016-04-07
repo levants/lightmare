@@ -37,6 +37,12 @@ import org.lightmare.criteria.utils.CollectionUtils;
  *            entity type parameter for generated query
  * @param <E>
  *            select type parameter
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
 public abstract class SubSelectStream<T, E, Q extends QueryStream<E, ? super Q>, O extends QueryStream<Object[], ? super O>>
         extends SelectStream<T, E, Q, O> {

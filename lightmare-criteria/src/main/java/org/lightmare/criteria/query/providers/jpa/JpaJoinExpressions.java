@@ -92,6 +92,53 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
     }
 
     /**
+     * Method for INNER JOIN function call on other entity
+     * 
+     * @param joinType
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q join(Class<E> joinType, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        Q stream = procesJoin(joinType, Joins.JOIN, consumer);
+        return stream;
+    }
+
+    /**
+     * Method for INNER JOIN function call on other entity
+     * 
+     * @param joinType
+     * @param on
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q join(Class<E> joinType, QueryConsumer<E, JpaQueryStream<E>> on,
+            QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        Q stream = procesJoin(joinType, Joins.JOIN, on, consumer);
+        return stream;
+    }
+
+    /**
+     * Method for INNER JOIN function call on other entity without conditions
+     * 
+     * @param joinType
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q join(Class<E> joinType) {
+        return join(joinType, null);
+    }
+
+    /**
+     * Method for INNER JOIN function call on other entity without conditions
+     * 
+     * @param joinType
+     * @param on
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q joinOn(Class<E> joinType, QueryConsumer<E, JpaQueryStream<E>> on) {
+        return join(joinType, on, null);
+    }
+
+    /**
      * Method for LEFT JOIN function call
      * 
      * @param field
@@ -137,6 +184,53 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      */
     default <E, C extends Collection<E>> Q leftJoinOn(EntityField<T, C> field, QueryConsumer<E, JpaQueryStream<E>> on) {
         return leftJoin(field, on, null);
+    }
+
+    /**
+     * Method for LEFT JOIN function call on other entity
+     * 
+     * @param joinType
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q leftJoin(Class<E> joinType, QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        Q stream = procesJoin(joinType, Joins.LEFT, consumer);
+        return stream;
+    }
+
+    /**
+     * Method for LEFT JOIN function call on other entity
+     * 
+     * @param joinType
+     * @param on
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q leftJoin(Class<E> joinType, QueryConsumer<E, JpaQueryStream<E>> on,
+            QueryConsumer<E, JpaQueryStream<E>> consumer) {
+        Q stream = procesJoin(joinType, Joins.LEFT, on, consumer);
+        return stream;
+    }
+
+    /**
+     * Method for LEFT JOIN function call on other entity without conditions
+     * 
+     * @param joinType
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q leftJoin(Class<E> joinType) {
+        return leftJoin(joinType, null);
+    }
+
+    /**
+     * Method for LEFT JOIN function call on other entity without conditions
+     * 
+     * @param joinType
+     * @param on
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q leftJoinOn(Class<E> joinType, QueryConsumer<E, JpaQueryStream<E>> on) {
+        return leftJoin(joinType, on, null);
     }
 
     /**

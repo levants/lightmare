@@ -46,6 +46,12 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *
  * @param <T>
  *            entity type for generated query
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
+ * @param <O>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
 public abstract class AbstractSubQueryStream<S, T, Q extends QueryStream<S, ? super Q>, O extends QueryStream<Object[], ? super O>>
         extends EntityQueryStream<S, Q, O> implements SubQueryStream<S, T, Q> {

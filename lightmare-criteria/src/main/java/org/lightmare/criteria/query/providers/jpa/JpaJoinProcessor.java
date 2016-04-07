@@ -22,8 +22,15 @@
  */
 package org.lightmare.criteria.query.providers.jpa;
 
+import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.LambdaStream;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
-import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
+import org.lightmare.criteria.query.internal.orm.subqueries.JoinProcessor;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
  * Implementation of
@@ -37,77 +44,45 @@ import org.lightmare.criteria.utils.CollectionUtils;
  * @param <T>
  *            entity type parameter for generated query
  */
-public class JpaJoinProcessor<S, T> extends JpaSubQueryStream<S, T> {
-
-    private boolean parentOperator;
-
-    private boolean onClause;
-
-    private int onCount;
+public class JpaJoinProcessor<S, T> extends JoinProcessor<S, T, JpaQueryStream<S>, JpaQueryStream<Object[]>>
+        implements JpaQueryStream<S> {
 
     public JpaJoinProcessor(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> entityType) {
         super(parent, alias, entityType);
-        this.onClause = Boolean.TRUE;
     }
 
     public JpaJoinProcessor(AbstractQueryStream<T, ?, ?> parent, Class<S> entityType) {
         super(parent, entityType);
     }
 
-    /**
-     * Validates JOIN clause operators
-     * 
-     * @return <code>boolean</code> validation result
-     */
-    private boolean validateJoinOperator() {
-
-        boolean valid;
-
-        if (parentOperator) {
-            valid = super.validateOperator();
-        } else {
-            valid = parent.validateOperator();
-            parentOperator = Boolean.TRUE;
-        }
-
-        return valid;
+    @Override
+    public <E, L extends LambdaStream<E, ? super L>> L initJoinQuery(String alias, Class<E> joinType) {
+        L joinQuery = JpaUtils.initJoinQuery(this, alias, joinType);
+        return joinQuery;
     }
 
     @Override
-    public boolean validateOperator() {
-
-        boolean valid;
-
-        if (onClause) {
-            valid = (onCount > CollectionUtils.EMPTY && super.validateOperator());
-            onCount++;
-        } else {
-            valid = validateJoinOperator();
-        }
-
-        return valid;
+    public <E, L extends QueryStream<E, ? super L>> L initSubQuery(Class<E> subType) {
+        L subQuery = JpaUtils.initSubQuery(this, subType);
+        return subQuery;
     }
 
     @Override
-    public String sql() {
-
-        String value;
-
-        StringBuilder joinQuery = new StringBuilder(sql);
-        joinQuery.append(body);
-        value = joinQuery.toString();
-
-        return value;
+    public <E> SelectStream<S, E, ?, ?> initSelectQuery(Class<E> selectType) {
+        return new JpaSubSelectStream<S, E>(this, selectType);
     }
 
-    @Override
-    protected void appendToParent() {
+    // =========================embedded=field=queries=======================//
 
-        if (onClause) {
-            String query = sql();
-            parent.appendJoin(query);
-        } else {
-            super.appendToParent();
-        }
+    @Override
+    public <F> JpaQueryStream<S> embedded(EntityField<S, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer) {
+
+        QueryTuple tuple = compose(field);
+        Class<F> type = tuple.getFieldGenericType();
+        String embeddedName = tuple.getFieldName();
+        JpaQueryStream<F> embeddedQuery = new JpaEmbeddedStream<>(this, type, embeddedName);
+        acceptAndCall(consumer, embeddedQuery);
+
+        return this;
     }
 }
