@@ -20,13 +20,12 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.providers.jpa;
+package org.lightmare.criteria.query.providers.jdbc;
 
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.SubQueryOperator;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
 import org.lightmare.criteria.query.internal.orm.links.SubQuery.SubQueryType;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Sub query processor for ALL, ANY, SOME clause and arbitrary object or
@@ -40,7 +39,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-interface JpaTypedToObjectSubQueryProcessor<T, Q extends QueryStream<T, ? super Q>> extends SubQueryOperator<T, Q> {
+interface JdbcTypedToObjectSubQueryProcessor<T, Q extends QueryStream<T, ? super Q>> extends SubQueryOperator<T, Q> {
 
     /**
      * Provides method to process sub queries with ALL clause
@@ -50,56 +49,56 @@ interface JpaTypedToObjectSubQueryProcessor<T, Q extends QueryStream<T, ? super 
      * @param stream
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default <F, S> Q operateSubQuery(Object value, String operator, SubQueryType<S, JpaQueryStream<S>> stream) {
+    default <F, S> Q operateSubQuery(Object value, String operator, SubQueryType<S, JdbcQueryStream<S>> stream) {
         String composed = stream.getOperator(operator);
         return operateSubQuery(value, composed, stream.getType(), stream.getConsumer());
     }
 
-    default <F, S> Q equal(Object value, SubQueryType<S, JpaQueryStream<S>> stream) {
+    default <F, S> Q equal(Object value, SubQueryType<S, JdbcQueryStream<S>> stream) {
         return operateSubQuery(value, Operators.EQ, stream);
     }
 
-    default <F, S> Q notEqual(Object value, SubQueryType<S, JpaQueryStream<S>> stream) {
+    default <F, S> Q notEqual(Object value, SubQueryType<S, JdbcQueryStream<S>> stream) {
         return operateSubQuery(value, Operators.NOT_EQ, stream);
     }
 
     default <F extends Comparable<? super F>, S> Q gt(Comparable<? super F> value,
-            SubQueryType<S, JpaQueryStream<S>> stream) {
+            SubQueryType<S, JdbcQueryStream<S>> stream) {
         return operateSubQuery(value, Operators.GREATER, stream);
     }
 
     default <F extends Comparable<? super F>, S> Q greaterThan(Comparable<? super F> value,
-            SubQueryType<S, JpaQueryStream<S>> stream) {
+            SubQueryType<S, JdbcQueryStream<S>> stream) {
         return operateSubQuery(value, Operators.GREATER, stream);
     }
 
     default <F extends Comparable<? super F>, S> Q lt(Comparable<? super F> value,
-            SubQueryType<S, JpaQueryStream<S>> stream) {
+            SubQueryType<S, JdbcQueryStream<S>> stream) {
         return operateSubQuery(value, Operators.LESS, stream);
     }
 
     default <F extends Comparable<? super F>, S> Q lessThan(Comparable<? super F> value,
-            SubQueryType<S, JpaQueryStream<S>> stream) {
+            SubQueryType<S, JdbcQueryStream<S>> stream) {
         return operateSubQuery(value, Operators.LESS, stream);
     }
 
     default <F extends Comparable<? super F>, S> Q ge(Comparable<? super F> value,
-            SubQueryType<S, JpaQueryStream<S>> stream) {
+            SubQueryType<S, JdbcQueryStream<S>> stream) {
         return operateSubQuery(value, Operators.GREATER_OR_EQ, stream);
     }
 
     default <F extends Comparable<? super F>, S> Q greaterThanOrEqualTo(Comparable<? super F> value,
-            SubQueryType<S, JpaQueryStream<S>> stream) {
+            SubQueryType<S, JdbcQueryStream<S>> stream) {
         return operateSubQuery(value, Operators.GREATER_OR_EQ, stream);
     }
 
     default <F extends Comparable<? super F>, S> Q le(Comparable<? super F> value,
-            SubQueryType<S, JpaQueryStream<S>> stream) {
+            SubQueryType<S, JdbcQueryStream<S>> stream) {
         return operateSubQuery(value, Operators.LESS_OR_EQ, stream);
     }
 
     default <F extends Comparable<? super F>, S> Q lessThanOrEqualTo(Comparable<? super F> value,
-            SubQueryType<S, JpaQueryStream<S>> stream) {
+            SubQueryType<S, JdbcQueryStream<S>> stream) {
         return operateSubQuery(value, Operators.LESS_OR_EQ, stream);
     }
 }

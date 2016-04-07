@@ -22,21 +22,23 @@
  */
 package org.lightmare.criteria.query.providers.jdbc;
 
-import org.lightmare.criteria.query.providers.sql.SQLStream;
+import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
 
 /**
- * Query stream for JDBC query layers
+ * Query builder for JDBC SELECT expressions
  * 
  * @author Levan Tsinadze
  *
+ * @param <E>
+ *            select type parameter
  * @param <T>
  *            entity type parameter
  */
-public interface JdbcQueryStream<T> extends SQLStream<T, JdbcQueryStream<T>, JdbcQueryStream<Object[]>>,
-        JdbcSubQueryProcessor<T, JdbcQueryStream<T>>, JdbcJoinExpressions<T, JdbcQueryStream<T>> {
+public class JdbcSelectStream<E, T> extends SelectStream<T, E, JdbcQueryStream<E>, JdbcQueryStream<Object[]>>
+        implements JdbcQueryStream<E> {
 
-    @Override
-    default JdbcQueryStream<T> stream() {
-        return this;
+    protected JdbcSelectStream(AbstractQueryStream<T, ?, ?> stream, Class<E> type) {
+        super(stream, type);
     }
 }

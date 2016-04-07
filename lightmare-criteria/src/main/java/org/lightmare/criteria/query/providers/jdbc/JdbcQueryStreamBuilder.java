@@ -24,7 +24,6 @@ package org.lightmare.criteria.query.providers.jdbc;
 
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.query.providers.jpa.JpaEntityQueryStream;
 
 /**
  * Main class for lambda expression analyze and JDBC query build and run
@@ -34,7 +33,7 @@ import org.lightmare.criteria.query.providers.jpa.JpaEntityQueryStream;
  * @param <T>
  *            entity type parameter for generated query
  */
-public class JdbcQueryStreamBuilder<T> extends JpaEntityQueryStream<T> implements JdbcQueryStream<T> {
+public class JdbcQueryStreamBuilder<T> extends JdbcEntityQueryStream<T> implements JdbcQueryStream<T> {
 
     protected JdbcQueryStreamBuilder(LayerProvider provider, Class<T> entityType) {
         super(provider, entityType);

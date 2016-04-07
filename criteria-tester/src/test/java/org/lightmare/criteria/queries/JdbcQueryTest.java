@@ -9,8 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.internal.SessionImpl;
 import org.junit.Test;
 import org.lightmare.criteria.entities.jdbc.JdbcPerson;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.query.providers.jdbc.JdbcQueryProvider;
+import org.lightmare.criteria.query.providers.jdbc.JdbcQueryStream;
 import org.lightmare.criteria.runorder.RunOrder;
 
 public class JdbcQueryTest extends FunctionnalQueryTest {
@@ -25,7 +25,7 @@ public class JdbcQueryTest extends FunctionnalQueryTest {
             SessionImpl sessionImpl = ((SessionImpl) session);
             Connection connection = sessionImpl.connection();
             // ============= Query construction ============== //
-            JpaQueryStream<JdbcPerson> stream = JdbcQueryProvider.select(connection, JdbcPerson.class)
+            JdbcQueryStream<JdbcPerson> stream = JdbcQueryProvider.select(connection, JdbcPerson.class)
                     .like(JdbcPerson::getLastName, "lname%").startsWith(JdbcPerson::getFirstName, "fname%");
             List<JdbcPerson> persons = stream.toList(r -> {
 
