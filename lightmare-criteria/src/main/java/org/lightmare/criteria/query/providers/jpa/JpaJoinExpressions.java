@@ -42,7 +42,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-public interface JoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends JoinOperator<T, Q> {
+public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends JoinOperator<T, Q> {
 
     /**
      * Method for INNER JOIN function call

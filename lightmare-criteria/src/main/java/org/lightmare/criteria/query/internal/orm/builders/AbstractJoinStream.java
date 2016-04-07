@@ -93,6 +93,17 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
     }
 
     /**
+     * Processes join statement for collection field
+     * 
+     * @param type
+     * @param expression
+     */
+    protected <E> void oppJoin(Class<E> type, String expression) {
+        appendJoin(expression);
+        appendJoin(getAlias(), StringUtils.DOT, getLayerProvider().getTableName(type), StringUtils.SPACE);
+    }
+
+    /**
      * Generates {@link org.lightmare.criteria.query.LambdaStream} instance for
      * JOIN query
      * 
@@ -147,6 +158,25 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
     }
 
     /**
+     * Generates {@link org.lightmare.criteria.query.LambdaStream} instance for
+     * JOIN query
+     * 
+     * @param joinType
+     * @param expression
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     *         for JOIN query
+     */
+    protected <E, S extends LambdaStream<E, ? super S>> S joinStream(Class<E> joinType, String expression) {
+
+        S joinQuery;
+
+        oppJoin(joinType, expression);
+        joinQuery = joinStream(joinType);
+
+        return joinQuery;
+    }
+
+    /**
      * Begins ON expression
      */
     private void openOnExpression() {
@@ -178,6 +208,19 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
     }
 
     /**
+     * Processes JOIN expression
+     * 
+     * @param joinQuery
+     * @param on
+     * @param consumer
+     */
+    private <E, S extends LambdaStream<E, ? super S>> void processJoinQuery(S joinQuery, QueryConsumer<E, S> on,
+            QueryConsumer<E, S> consumer) {
+        ObjectUtils.nonNull(on, c -> joinOn(c, joinQuery.getAlias(), joinQuery.getEntityType()));
+        acceptAndCall(consumer, joinQuery);
+    }
+
+    /**
      * Generates JOIN clause
      * 
      * @param field
@@ -187,10 +230,22 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
      */
     private <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> void joinBody(EntityField<T, C> field,
             String expression, QueryConsumer<E, S> on, QueryConsumer<E, S> consumer) {
-
         S joinQuery = joinStream(field, expression);
-        ObjectUtils.nonNull(on, c -> joinOn(c, joinQuery.getAlias(), joinQuery.getEntityType()));
-        acceptAndCall(consumer, joinQuery);
+        processJoinQuery(joinQuery, on, consumer);
+    }
+
+    /**
+     * Generates JOIN clause
+     * 
+     * @param joinType
+     * @param expression
+     * @param on
+     * @param consumer
+     */
+    private <E, S extends LambdaStream<E, ? super S>> void joinBody(Class<E> joinType, String expression,
+            QueryConsumer<E, S> on, QueryConsumer<E, S> consumer) {
+        S joinQuery = joinStream(joinType, expression);
+        processJoinQuery(joinQuery, on, consumer);
     }
 
     @Override
@@ -199,6 +254,16 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
 
         Q stream = stream();
         joinBody(field, expression, on, consumer);
+
+        return stream;
+    }
+
+    @Override
+    public <E, S extends LambdaStream<E, ? super S>> Q procesJoin(Class<E> joinType, String expression,
+            QueryConsumer<E, S> on, QueryConsumer<E, S> consumer) {
+
+        Q stream = stream();
+        joinBody(joinType, expression, on, consumer);
 
         return stream;
     }

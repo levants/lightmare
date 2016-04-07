@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.providers.jpa;
 
-import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.SubQueryOperator;
 import org.lightmare.criteria.query.internal.orm.links.Operators;
@@ -30,7 +29,8 @@ import org.lightmare.criteria.query.internal.orm.links.SubQuery.SubQueryType;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
- * Sub query processor for ALL clause and functional expressions
+ * Sub query processor for ALL clause and arbitrary object or
+ * {@link java.util.Comparator} implementations
  * 
  * @author Levan Tsinadze
  *
@@ -40,67 +40,66 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-interface TypedToFunctionSubQueryProcessor<T, Q extends QueryStream<T, ? super Q>> extends SubQueryOperator<T, Q> {
+interface JpaTypedToObjectSubQueryProcessor<T, Q extends QueryStream<T, ? super Q>> extends SubQueryOperator<T, Q> {
 
     /**
      * Provides method to process sub queries with ALL clause
      * 
-     * @param consumer
+     * @param value
      * @param operator
      * @param stream
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default <F, S> Q operateFunctionWthSubQuery(FunctionConsumer<T> consumer, String operator,
-            SubQueryType<S, JpaQueryStream<S>> stream) {
+    default <F, S> Q operateSubQuery(Object value, String operator, SubQueryType<S, JpaQueryStream<S>> stream) {
         String composed = stream.getOperator(operator);
-        return operateFunctionWithSubQuery(consumer, composed, stream.getType(), stream.getConsumer());
+        return operateSubQuery(value, composed, stream.getType(), stream.getConsumer());
     }
 
-    default <F, S> Q equalSubQuery(FunctionConsumer<T> consumer, SubQueryType<S, JpaQueryStream<S>> stream) {
-        return operateFunctionWthSubQuery(consumer, Operators.EQ, stream);
+    default <F, S> Q equal(Object value, SubQueryType<S, JpaQueryStream<S>> stream) {
+        return operateSubQuery(value, Operators.EQ, stream);
     }
 
-    default <F, S> Q notEqualSubQuery(FunctionConsumer<T> consumer, SubQueryType<S, JpaQueryStream<S>> stream) {
-        return operateFunctionWthSubQuery(consumer, Operators.NOT_EQ, stream);
+    default <F, S> Q notEqual(Object value, SubQueryType<S, JpaQueryStream<S>> stream) {
+        return operateSubQuery(value, Operators.NOT_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> Q gtSubQuery(FunctionConsumer<T> consumer,
+    default <F extends Comparable<? super F>, S> Q gt(Comparable<? super F> value,
             SubQueryType<S, JpaQueryStream<S>> stream) {
-        return operateFunctionWthSubQuery(consumer, Operators.GREATER, stream);
+        return operateSubQuery(value, Operators.GREATER, stream);
     }
 
-    default <F extends Comparable<? super F>, S> Q greaterThanSubQuery(FunctionConsumer<T> consumer,
+    default <F extends Comparable<? super F>, S> Q greaterThan(Comparable<? super F> value,
             SubQueryType<S, JpaQueryStream<S>> stream) {
-        return operateFunctionWthSubQuery(consumer, Operators.GREATER, stream);
+        return operateSubQuery(value, Operators.GREATER, stream);
     }
 
-    default <F extends Comparable<? super F>, S> Q ltSubQuery(FunctionConsumer<T> consumer,
+    default <F extends Comparable<? super F>, S> Q lt(Comparable<? super F> value,
             SubQueryType<S, JpaQueryStream<S>> stream) {
-        return operateFunctionWthSubQuery(consumer, Operators.LESS, stream);
+        return operateSubQuery(value, Operators.LESS, stream);
     }
 
-    default <F extends Comparable<? super F>, S> Q lessThanSubQuery(FunctionConsumer<T> consumer,
+    default <F extends Comparable<? super F>, S> Q lessThan(Comparable<? super F> value,
             SubQueryType<S, JpaQueryStream<S>> stream) {
-        return operateFunctionWthSubQuery(consumer, Operators.LESS, stream);
+        return operateSubQuery(value, Operators.LESS, stream);
     }
 
-    default <F extends Comparable<? super F>, S> Q geSubQuery(FunctionConsumer<T> consumer,
+    default <F extends Comparable<? super F>, S> Q ge(Comparable<? super F> value,
             SubQueryType<S, JpaQueryStream<S>> stream) {
-        return operateFunctionWthSubQuery(consumer, Operators.GREATER_OR_EQ, stream);
+        return operateSubQuery(value, Operators.GREATER_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> Q greaterThanOrEqualToSubQuery(FunctionConsumer<T> consumer,
+    default <F extends Comparable<? super F>, S> Q greaterThanOrEqualTo(Comparable<? super F> value,
             SubQueryType<S, JpaQueryStream<S>> stream) {
-        return operateFunctionWthSubQuery(consumer, Operators.GREATER_OR_EQ, stream);
+        return operateSubQuery(value, Operators.GREATER_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> Q leSubQuery(FunctionConsumer<T> consumer,
+    default <F extends Comparable<? super F>, S> Q le(Comparable<? super F> value,
             SubQueryType<S, JpaQueryStream<S>> stream) {
-        return operateFunctionWthSubQuery(consumer, Operators.LESS_OR_EQ, stream);
+        return operateSubQuery(value, Operators.LESS_OR_EQ, stream);
     }
 
-    default <F extends Comparable<? super F>, S> Q lessThanOrEqualToSubQuery(FunctionConsumer<T> consumer,
+    default <F extends Comparable<? super F>, S> Q lessThanOrEqualTo(Comparable<? super F> value,
             SubQueryType<S, JpaQueryStream<S>> stream) {
-        return operateFunctionWthSubQuery(consumer, Operators.LESS_OR_EQ, stream);
+        return operateSubQuery(value, Operators.LESS_OR_EQ, stream);
     }
 }

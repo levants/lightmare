@@ -23,11 +23,11 @@
 package org.lightmare.criteria.query.internal.orm.links;
 
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Provider class for sub query types (ALL, ANY, SOME)
+ * Provider class for sub query (ALL, ANY, SOME) clauses
  * 
  * @author Levan Tsinadze
  *
@@ -47,7 +47,7 @@ public interface SubQuery<T> {
      *            {@link org.lightmare.criteria.query.LambdaStream}
      *            implementation parameter
      */
-    static abstract class SubQueryType<T, U extends QueryStream<T, ? super U>> {
+    static abstract class SubQueryType<T, U extends LambdaStream<T, ? super U>> {
 
         private final Class<T> type;
 
@@ -75,7 +75,7 @@ public interface SubQuery<T> {
     }
 
     /**
-     * Query for ALL clause
+     * Query for ALL sub query clause
      * 
      * @author Levan Tsinadze
      *
@@ -85,7 +85,7 @@ public interface SubQuery<T> {
      *            {@link org.lightmare.criteria.query.LambdaStream}
      *            implementation parameter
      */
-    static final class All<T, S extends QueryStream<T, ? super S>> extends SubQueryType<T, S> {
+    static final class All<T, S extends LambdaStream<T, ? super S>> extends SubQueryType<T, S> {
 
         private All(final Class<T> type, final QueryConsumer<T, S> consumer) {
             super(type, consumer, Operators.ALL);
@@ -93,7 +93,7 @@ public interface SubQuery<T> {
     }
 
     /**
-     * Query for ANY clause
+     * Query for ANY sub query clause
      * 
      * @author Levan Tsinadze
      *
@@ -103,7 +103,7 @@ public interface SubQuery<T> {
      *            {@link org.lightmare.criteria.query.LambdaStream}
      *            implementation parameter
      */
-    static final class Any<T, S extends QueryStream<T, ? super S>> extends SubQueryType<T, S> {
+    static final class Any<T, S extends LambdaStream<T, ? super S>> extends SubQueryType<T, S> {
 
         private Any(final Class<T> type, final QueryConsumer<T, S> consumer) {
             super(type, consumer, Operators.ANY);
@@ -111,7 +111,7 @@ public interface SubQuery<T> {
     }
 
     /**
-     * Query for SOME clause
+     * Query for SOME sub query clause
      * 
      * @author Levan Tsinadze
      *
@@ -121,7 +121,7 @@ public interface SubQuery<T> {
      *            {@link org.lightmare.criteria.query.LambdaStream}
      *            implementation parameter
      */
-    static final class Some<T, S extends QueryStream<T, ? super S>> extends SubQueryType<T, S> {
+    static final class Some<T, S extends LambdaStream<T, ? super S>> extends SubQueryType<T, S> {
 
         private Some(final Class<T> type, final QueryConsumer<T, S> consumer) {
             super(type, consumer, Operators.SOME);
@@ -134,9 +134,9 @@ public interface SubQuery<T> {
      * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.internal.orm.links.SubQuery.All}
-     *         all sub query stream
+     *         ALL clause sub query stream
      */
-    static <S, Q extends QueryStream<S, ? super Q>> All<S, Q> all(Class<S> type, QueryConsumer<S, Q> consumer) {
+    static <S, Q extends LambdaStream<S, ? super Q>> All<S, Q> all(Class<S> type, QueryConsumer<S, Q> consumer) {
         return new All<S, Q>(type, consumer);
     }
 
@@ -146,9 +146,9 @@ public interface SubQuery<T> {
      * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.internal.orm.links.SubQuery.Any}
-     *         all sub query stream
+     *         ANY clause sub query stream
      */
-    static <S, Q extends QueryStream<S, ? super Q>> Any<S, Q> any(Class<S> type, QueryConsumer<S, Q> consumer) {
+    static <S, Q extends LambdaStream<S, ? super Q>> Any<S, Q> any(Class<S> type, QueryConsumer<S, Q> consumer) {
         return new Any<S, Q>(type, consumer);
     }
 
@@ -158,9 +158,9 @@ public interface SubQuery<T> {
      * @param type
      * @param consumer
      * @return {@link org.lightmare.criteria.query.internal.orm.links.SubQuery.Some}
-     *         all sub query stream
+     *         SOME clause sub query stream
      */
-    static <S, Q extends QueryStream<S, ? super Q>> Some<S, Q> some(Class<S> type, QueryConsumer<S, Q> consumer) {
+    static <S, Q extends LambdaStream<S, ? super Q>> Some<S, Q> some(Class<S> type, QueryConsumer<S, Q> consumer) {
         return new Some<S, Q>(type, consumer);
     }
 }

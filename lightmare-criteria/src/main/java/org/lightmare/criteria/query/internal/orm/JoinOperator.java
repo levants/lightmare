@@ -65,4 +65,29 @@ public interface JoinOperator<T, Q extends QueryStream<T, ? super Q>> {
             String expression, QueryConsumer<E, S> consumer) {
         return procesJoin(field, expression, null, consumer);
     }
+
+    /**
+     * Processes JOIN statement with ON clause with other entity type
+     * 
+     * @param joinType
+     * @param expression
+     * @param on
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    <E, S extends LambdaStream<E, ? super S>> Q procesJoin(Class<E> joinType, String expression, QueryConsumer<E, S> on,
+            QueryConsumer<E, S> consumer);
+
+    /**
+     * Processes JOIN statement with other entity type
+     * 
+     * @param joinType
+     * @param expression
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E, S extends LambdaStream<E, ? super S>> Q procesJoin(Class<E> joinType, String expression,
+            QueryConsumer<E, S> consumer) {
+        return procesJoin(joinType, expression, null, consumer);
+    }
 }

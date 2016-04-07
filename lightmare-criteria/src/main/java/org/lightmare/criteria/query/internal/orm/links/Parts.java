@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.internal.orm.links;
 
 /**
- * Query parts for JPA-QL / JDBC expression
+ * Query parts for JPA / JDBC expression
  * 
  * @author Levan Tsinadze
  *
