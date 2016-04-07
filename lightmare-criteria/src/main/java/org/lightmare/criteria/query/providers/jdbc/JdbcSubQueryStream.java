@@ -22,6 +22,9 @@
  */
 package org.lightmare.criteria.query.providers.jdbc;
 
+import java.util.List;
+
+import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
@@ -66,5 +69,15 @@ public class JdbcSubQueryStream<S, T> extends EntitySubQueryStream<S, T, JdbcQue
     @Override
     public <E> SelectStream<S, E, ?, ?> initSelectQuery(Class<E> selectType) {
         return new JdbcSubSelectStream<S, E>(this, selectType);
+    }
+
+    @Override
+    public S get(ResultRetriever<S> retriever) {
+        return null;
+    }
+
+    @Override
+    public List<S> toList(ResultRetriever<S> retriever) {
+        return null;
     }
 }

@@ -33,7 +33,7 @@ import org.lightmare.criteria.query.providers.sql.SQLStream;
  *            entity type parameter
  */
 public interface JdbcQueryStream<T> extends SQLStream<T, JdbcQueryStream<T>, JdbcQueryStream<Object[]>>,
-        JdbcSubQueryProcessor<T, JdbcQueryStream<T>>, JdbcJoinExpressions<T, JdbcQueryStream<T>> {
+        JdbcSubQueryProcessor<T, JdbcQueryStream<T>>, JdbcJoinExpressions<T, JdbcQueryStream<T>>, JdbcResultStream<T> {
 
     @Override
     default JdbcQueryStream<T> stream() {

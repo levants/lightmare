@@ -22,21 +22,20 @@
  */
 package org.lightmare.criteria.query.providers.jdbc;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.function.BiFunction;
 
-import javax.persistence.FlushModeType;
-import javax.persistence.LockModeType;
-
-import org.lightmare.criteria.query.internal.layers.JpaQueryLayer;
+import org.lightmare.criteria.config.Configuration.ResultRetriever;
+import org.lightmare.criteria.query.internal.layers.JdbcQueryLayer;
 import org.lightmare.criteria.query.internal.orm.builders.EntityQueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Abstract implementation of
- * {@link org.lightmare.criteria.query.internal.orm.ORMQueryWrapper} interface
+ * Implementation of
+ * {@link org.lightmare.criteria.query.providers.jdbc.JdbcQueryStream} and
+ * {@link org.lightmare.criteria.query.providers.jdbc.JdbcResultStream} to
+ * process JDBC queries and retrieve results
  * 
  * @author Levan Tsinadze
  *
@@ -44,67 +43,40 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *            entity type parameter
  */
 abstract class AbstractJdbcQueryWrapper<T> extends EntityQueryStream<T, JdbcQueryStream<T>, JdbcQueryStream<Object[]>>
-        implements JdbcQueryStream<T> {
+        implements JdbcResultStream<T>, JdbcQueryStream<T> {
 
-    private Integer startPosition;
-
-    private Map<String, Object> hints = new HashMap<>();
-
-    private FlushModeType flushMode;
-
-    private LockModeType lockMode;
-
-    protected AbstractJdbcQueryWrapper(LayerProvider provider, Class<T> entityType) {
+    protected AbstractJdbcQueryWrapper(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
     }
 
     /**
-     * Sets first result flag to query
+     * Retrieves result from generated
+     * {@link org.lightmare.criteria.query.internal.layers.JdbcQueryLayer}
+     * instance
      * 
-     * @param query
+     * @param retriever
+     * @param function
+     * @return R result from generated
+     *         {@link org.lightmare.criteria.query.internal.layers.JdbcQueryLayer}
      */
-    private void putFirstResult(JpaQueryLayer<?> query) {
-        ObjectUtils.nonNull(startPosition, query::setFirstResult);
+    private <R> R retrieveResult(ResultRetriever<T> retriever,
+            BiFunction<JdbcQueryLayer<T>, ResultRetriever<T>, R> function) {
+
+        R result;
+
+        JdbcQueryLayer<T> jdbcQuery = ObjectUtils.getAndCast(this::initTypedQuery);
+        result = function.apply(jdbcQuery, retriever);
+
+        return result;
     }
 
-    /**
-     * Sets query hints
-     * 
-     * @param query
-     */
-    private void putHints(JpaQueryLayer<?> query) {
-        CollectionUtils.valid(hints, c -> c.forEach(query::setHint));
+    @Override
+    public T get(ResultRetriever<T> retriever) {
+        return retrieveResult(retriever, JdbcQueryLayer::get);
     }
 
-    /**
-     * Sets flush mode to query
-     * 
-     * @param query
-     */
-    private void putFlushMode(JpaQueryLayer<?> query) {
-        ObjectUtils.nonNull(flushMode, query::setFlushMode);
-    }
-
-    /**
-     * Sets lock mode to query
-     * 
-     * @param query
-     */
-    private void setLockMode(JpaQueryLayer<?> query) {
-        ObjectUtils.nonNull(lockMode, query::setLockMode);
-    }
-
-    /**
-     * Adds additional JPA configuration to passed
-     * {@link javax.persistence.Query} instance
-     * 
-     * @param query
-     */
-    protected void setJpaConfiguration(JpaQueryLayer<?> query) {
-
-        putFirstResult(query);
-        putHints(query);
-        putFlushMode(query);
-        setLockMode(query);
+    @Override
+    public List<T> toList(ResultRetriever<T> retriever) {
+        return retrieveResult(retriever, JdbcQueryLayer::toList);
     }
 }

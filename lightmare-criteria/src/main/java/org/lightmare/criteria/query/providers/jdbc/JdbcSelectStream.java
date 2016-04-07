@@ -22,8 +22,14 @@
  */
 package org.lightmare.criteria.query.providers.jdbc;
 
+import java.util.List;
+import java.util.function.BiFunction;
+
+import org.lightmare.criteria.config.Configuration.ResultRetriever;
+import org.lightmare.criteria.query.internal.layers.JdbcQueryLayer;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Query builder for JDBC SELECT expressions
@@ -40,5 +46,36 @@ public class JdbcSelectStream<E, T> extends SelectStream<T, E, JdbcQueryStream<E
 
     protected JdbcSelectStream(AbstractQueryStream<T, ?, ?> stream, Class<E> type) {
         super(stream, type);
+    }
+
+    /**
+     * Retrieves result from generated
+     * {@link org.lightmare.criteria.query.internal.layers.JdbcQueryLayer}
+     * instance
+     * 
+     * @param retriever
+     * @param function
+     * @return R result from generated
+     *         {@link org.lightmare.criteria.query.internal.layers.JdbcQueryLayer}
+     */
+    private <R> R retrieveResult(ResultRetriever<E> retriever,
+            BiFunction<JdbcQueryLayer<E>, ResultRetriever<E>, R> function) {
+
+        R result;
+
+        JdbcQueryLayer<E> jdbcQuery = ObjectUtils.getAndCast(this::initTypedQuery);
+        result = function.apply(jdbcQuery, retriever);
+
+        return result;
+    }
+
+    @Override
+    public E get(ResultRetriever<E> retriever) {
+        return retrieveResult(retriever, JdbcQueryLayer::get);
+    }
+
+    @Override
+    public List<E> toList(ResultRetriever<E> retriever) {
+        return retrieveResult(retriever, JdbcQueryLayer::toList);
     }
 }

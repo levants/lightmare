@@ -22,16 +22,12 @@
  */
 package org.lightmare.criteria.query.providers.jdbc;
 
-import java.util.Collection;
-
-import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.JoinOperator;
-import org.lightmare.criteria.query.internal.orm.links.Joins;
 
 /**
- * Interface for [INNER, LEFT] JOIN implementations
+ * Interface for [INNER, LEFT, RIGHT, FULL, CROSS] JOIN implementations
  * 
  * @author Levan Tsinadze
  *
@@ -44,66 +40,6 @@ import org.lightmare.criteria.query.internal.orm.links.Joins;
 public interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends JoinOperator<T, Q> {
 
     /**
-     * Method for INNER JOIN function call
-     * 
-     * @param field
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E, C extends Collection<E>> Q join(EntityField<T, C> field,
-            QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(field, Joins.JOIN, consumer);
-        return stream;
-    }
-
-    /**
-     * Method for INNER JOIN function call
-     * 
-     * @param field
-     * @param on
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E, C extends Collection<E>> Q join(EntityField<T, C> field, QueryConsumer<E, JdbcQueryStream<E>> on,
-            QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(field, Joins.JOIN, on, consumer);
-        return stream;
-    }
-
-    /**
-     * Method for INNER JOIN function call without conditions
-     * 
-     * @param field
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E, C extends Collection<E>> Q join(EntityField<T, C> field) {
-        return join(field, null);
-    }
-
-    /**
-     * Method for INNER JOIN function call without conditions
-     * 
-     * @param field
-     * @param on
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E, C extends Collection<E>> Q joinOn(EntityField<T, C> field, QueryConsumer<E, JdbcQueryStream<E>> on) {
-        return join(field, on, null);
-    }
-
-    /**
-     * Method for INNER JOIN function call on other entity
-     * 
-     * @param joinType
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E> Q join(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, Joins.JOIN, consumer);
-        return stream;
-    }
-
-    /**
      * Method for INNER JOIN function call on other entity
      * 
      * @param joinType
@@ -111,20 +47,10 @@ public interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> ext
      * @param consumer
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default <E> Q join(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on,
+    default <E> Q innerJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on,
             QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, Joins.JOIN, on, consumer);
+        Q stream = procesJoin(joinType, JdbcJoins.INNER, on, consumer);
         return stream;
-    }
-
-    /**
-     * Method for INNER JOIN function call on other entity without conditions
-     * 
-     * @param joinType
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E> Q join(Class<E> joinType) {
-        return join(joinType, null);
     }
 
     /**
@@ -134,73 +60,12 @@ public interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> ext
      * @param on
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default <E> Q joinOn(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on) {
-        return join(joinType, on, null);
+    default <E> Q innerJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on) {
+        return innerJoin(joinType, on, null);
     }
 
     /**
-     * Method for LEFT JOIN function call
-     * 
-     * @param field
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E, C extends Collection<E>> Q leftJoin(EntityField<T, C> field,
-            QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(field, Joins.LEFT, consumer);
-        return stream;
-    }
-
-    /**
-     * Method for LEFT JOIN function call
-     * 
-     * @param field
-     * @param on
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E, C extends Collection<E>> Q leftJoin(EntityField<T, C> field, QueryConsumer<E, JdbcQueryStream<E>> on,
-            QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(field, Joins.LEFT, on, consumer);
-        return stream;
-    }
-
-    /**
-     * Method for LEFT JOIN function call without conditions
-     * 
-     * @param field
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E, C extends Collection<E>> Q leftJoin(EntityField<T, C> field) {
-        return leftJoin(field, null);
-    }
-
-    /**
-     * Method for LEFT JOIN function call without conditions
-     * 
-     * @param field
-     * @param on
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E, C extends Collection<E>> Q leftJoinOn(EntityField<T, C> field,
-            QueryConsumer<E, JdbcQueryStream<E>> on) {
-        return leftJoin(field, on, null);
-    }
-
-    /**
-     * Method for LEFT JOIN function call on other entity
-     * 
-     * @param joinType
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E> Q leftJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, Joins.LEFT, consumer);
-        return stream;
-    }
-
-    /**
-     * Method for LEFT JOIN function call on other entity
+     * Method for LEFT OUTER JOIN function call on other entity
      * 
      * @param joinType
      * @param on
@@ -209,28 +74,83 @@ public interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> ext
      */
     default <E> Q leftJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on,
             QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, Joins.LEFT, on, consumer);
+        Q stream = procesJoin(joinType, JdbcJoins.LEFT, on, consumer);
         return stream;
     }
 
     /**
-     * Method for LEFT JOIN function call on other entity without conditions
-     * 
-     * @param joinType
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E> Q leftJoin(Class<E> joinType) {
-        return leftJoin(joinType, null);
-    }
-
-    /**
-     * Method for LEFT JOIN function call on other entity without conditions
+     * Method for LEFT OUTER JOIN function call on other entity without
+     * conditions
      * 
      * @param joinType
      * @param on
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
-    default <E> Q leftJoinOn(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on) {
+    default <E> Q leftJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on) {
         return leftJoin(joinType, on, null);
+    }
+
+    /**
+     * Method for RIGHT OUTER JOIN function call on other entity
+     * 
+     * @param joinType
+     * @param on
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q rightJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on,
+            QueryConsumer<E, JdbcQueryStream<E>> consumer) {
+        Q stream = procesJoin(joinType, JdbcJoins.RIGHT, on, consumer);
+        return stream;
+    }
+
+    /**
+     * Method for RIGHT OUTER JOIN function call on other entity without
+     * conditions
+     * 
+     * @param joinType
+     * @param on
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q rightJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on) {
+        return rightJoin(joinType, on, null);
+    }
+
+    /**
+     * Method for FULL OUTER JOIN function call on other entity
+     * 
+     * @param joinType
+     * @param on
+     * @param consumer
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q fullJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on,
+            QueryConsumer<E, JdbcQueryStream<E>> consumer) {
+        Q stream = procesJoin(joinType, JdbcJoins.FULL, on, consumer);
+        return stream;
+    }
+
+    /**
+     * Method for FULL OUTER JOIN function call on other entity without
+     * conditions
+     * 
+     * @param joinType
+     * @param on
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q fullJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on) {
+        return fullJoin(joinType, on, null);
+    }
+
+    /**
+     * Method for CROSS JOIN function call on other entity without conditions
+     * 
+     * @param joinType
+     * @param on
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    default <E> Q crossJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on) {
+        Q stream = procesJoin(joinType, JdbcJoins.CROSS, null);
+        return stream;
     }
 }

@@ -20,35 +20,23 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.orm;
-
-import java.util.Set;
-
-import org.lightmare.criteria.tuples.ParameterTuple;
+package org.lightmare.criteria.query.providers.jdbc;
 
 /**
- * Interface for query result methods
- * 
+ * JDBC query JOIN keywords
+ *
  * @author Levan Tsinadze
  *
- * @param <T>
- *            entity type for generated query
  */
-public interface ResultStream<T> {
+public interface JdbcJoins {
 
-    /**
-     * Gets query parameters
-     * 
-     * @return java.util.Set} of
-     *         {@link org.lightmare.criteria.tuples.ParameterTuple}s
-     */
-    Set<ParameterTuple> getParameters();
+    String INNER = " inner join ";
 
-    /**
-     * Runs generated query {@link javax.persistence.Query#getSingleResult()}
-     * and retrieves single result for element count
-     * 
-     * @return {@link Long} element count value
-     */
-    Long count();
+    String LEFT = " left outer join ";
+
+    String RIGHT = " right outer join ";
+
+    String FULL = " full outer join ";
+
+    String CROSS = " cross join ";
 }
