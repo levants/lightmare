@@ -20,14 +20,14 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.internal.orm;
+package org.lightmare.criteria.query.providers.jpa;
 
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.orm.JoinOperator;
 import org.lightmare.criteria.query.internal.orm.links.Joins;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
@@ -38,33 +38,11 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *
  * @param <T>
  *            entity type for generated query
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            parameter
  */
-public interface JoinExpressions<T, Q extends QueryStream<T, ? super Q>> {
-
-    /**
-     * Processes JOIN statement with ON clause
-     * 
-     * @param field
-     * @param expression
-     * @param on
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> Q procesJoin(EntityField<T, C> field,
-            String expression, QueryConsumer<E, S> on, QueryConsumer<E, S> consumer);
-
-    /**
-     * Processes JOIN statement
-     * 
-     * @param field
-     * @param expression
-     * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    default <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> Q procesJoin(EntityField<T, C> field,
-            String expression, QueryConsumer<E, S> consumer) {
-        return procesJoin(field, expression, null, consumer);
-    }
+public interface JoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends JoinOperator<T, Q> {
 
     /**
      * Method for INNER JOIN function call
