@@ -54,7 +54,7 @@ import org.lightmare.criteria.utils.StringUtils;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ?>>
+abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
         extends AbstractORMQueryStream<T, Q, O> {
 
     // Query parts

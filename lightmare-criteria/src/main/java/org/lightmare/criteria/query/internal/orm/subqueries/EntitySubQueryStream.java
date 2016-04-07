@@ -58,7 +58,7 @@ public abstract class EntitySubQueryStream<S, T, Q extends QueryStream<S, ? supe
     }
 
     @Override
-    public <F, L extends QueryStream<F, ?>> L selectType(EntityField<S, F> field) {
+    public <F, L extends QueryStream<F, ? super L>> L selectType(EntityField<S, F> field) {
         return subSelectOne(field);
     }
 

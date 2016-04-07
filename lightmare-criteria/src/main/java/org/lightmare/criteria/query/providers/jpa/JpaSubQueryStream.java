@@ -27,6 +27,7 @@ import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
 import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -64,6 +65,11 @@ public class JpaSubQueryStream<S, T> extends EntitySubQueryStream<S, T, JpaQuery
     public <E, L extends QueryStream<E, ? super L>> L initSubQuery(Class<E> subType) {
         L subQuery = JpaUtils.initSubQuery(this, subType);
         return subQuery;
+    }
+
+    @Override
+    public <E> SelectStream<S, E, ?, ?> initSelectQuery(Class<E> selectType) {
+        return new JpaSubSelectStream<S, E>(this, selectType);
     }
 
     // =========================embedded=field=queries=======================//

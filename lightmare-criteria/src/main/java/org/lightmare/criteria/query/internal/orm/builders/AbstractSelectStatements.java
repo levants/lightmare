@@ -32,7 +32,6 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.internal.orm.links.Operators.Brackets;
 import org.lightmare.criteria.query.layers.LayerProvider;
-import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -151,36 +150,36 @@ abstract class AbstractSelectStatements<T, Q extends QueryStream<T, ? super Q>, 
     }
 
     @Override
-    public <F, S extends QueryStream<F, ?>> S selectType(Class<F> type, Select select) {
+    public <F, S extends QueryStream<F, ? super S>> S selectType(Class<F> type, Select select) {
 
         S stream;
 
         generateSelectClause(type, select);
-        stream = ObjectUtils.applyAndCast(type, c -> new SelectStream<T, F>(this, c));
+        stream = castSelectQuery(type);
 
         return stream;
     }
 
     @Override
-    public <F, S extends QueryStream<F, ?>> S select(String expression, Class<F> type) {
+    public <F, S extends QueryStream<F, ? super S>> S select(String expression, Class<F> type) {
 
         S stream;
 
         validateAndAppendSelect(expression);
         columns.append(expression);
-        stream = ObjectUtils.applyAndCast(type, c -> new SelectStream<T, F>(this, c));
+        stream = castSelectQuery(type);
 
         return stream;
     }
 
     @Override
-    public <F, S extends QueryStream<F, ?>> S selectType(EntityField<T, F> field) {
+    public <F, S extends QueryStream<F, ? super S>> S selectType(EntityField<T, F> field) {
 
         S stream;
 
         Class<F> fieldType = getFieldType(field);
         generateSelectClause(fieldType, Boolean.TRUE, Collections.singletonList(field));
-        stream = ObjectUtils.applyAndCast(fieldType, c -> new SelectStream<T, F>(this, c));
+        stream = castSelectQuery(fieldType);
 
         return stream;
     }
@@ -191,7 +190,7 @@ abstract class AbstractSelectStatements<T, Q extends QueryStream<T, ? super Q>, 
         O stream;
 
         generateSelectClause(Object[].class, Boolean.FALSE, Collections.singletonList(field));
-        stream = ObjectUtils.cast(new SelectStream<T, Object[]>(this, Object[].class));
+        stream = castSelectQuery(Object[].class);
 
         return stream;
     }

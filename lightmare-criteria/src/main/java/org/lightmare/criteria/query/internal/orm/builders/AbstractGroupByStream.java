@@ -57,7 +57,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
 abstract class AbstractGroupByStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
         extends AbstractResultStream<T, Q, O> {
 
-    protected SelectStream<T, ?> selectStream;
+    protected SelectStream<T, ?, ?, ?> selectStream;
 
     // Aggregate fields
     protected Set<AggregateTuple> aggregateFields;
@@ -142,8 +142,8 @@ abstract class AbstractGroupByStream<T, Q extends QueryStream<T, ? super Q>, O e
 
         S stream;
 
-        selectStream = new SelectStream<>(this, type);
-        stream = ObjectUtils.cast(selectStream);
+        stream = castSelectQuery(type);
+        selectStream = ObjectUtils.cast(stream);
 
         return stream;
     }

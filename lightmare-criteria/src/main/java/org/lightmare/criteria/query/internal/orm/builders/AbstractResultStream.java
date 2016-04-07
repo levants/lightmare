@@ -49,7 +49,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-abstract class AbstractResultStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ?>>
+abstract class AbstractResultStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
         extends AbstractJoinStream<T, Q, O> {
 
     protected AbstractResultStream(final LayerProvider provider, final Class<T> entityType) {

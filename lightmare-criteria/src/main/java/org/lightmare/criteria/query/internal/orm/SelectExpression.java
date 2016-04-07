@@ -45,7 +45,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ?>> {
+public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>> {
 
     /**
      * Select generator
@@ -96,7 +96,7 @@ public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O exte
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      *         for special type
      */
-    <F, S extends QueryStream<F, ?>> S selectType(Class<F> type, Select select);
+    <F, S extends QueryStream<F, ? super S>> S selectType(Class<F> type, Select select);
 
     /**
      * Custom select expression
@@ -152,7 +152,7 @@ public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O exte
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      *         for special type
      */
-    <F, S extends QueryStream<F, ?>> S select(String expression, Class<F> type);
+    <F, S extends QueryStream<F, ? super S>> S select(String expression, Class<F> type);
 
     /**
      * Custom select expression
@@ -174,5 +174,5 @@ public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O exte
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      *         for field type
      */
-    <F, S extends QueryStream<F, ?>> S selectType(EntityField<T, F> field);
+    <F, S extends QueryStream<F, ? super S>> S selectType(EntityField<T, F> field);
 }

@@ -22,8 +22,9 @@
  */
 package org.lightmare.criteria.query.internal.orm.builders;
 
+import org.lightmare.criteria.query.LambdaStream;
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.links.Parts;
-import org.lightmare.criteria.query.providers.jpa.JpaEntityQueryStream;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
@@ -33,8 +34,11 @@ import org.lightmare.criteria.utils.StringUtils;
  *
  * @param <T>
  *            entity type for generated query
+ * @param <E>
+ *            select type parameter
  */
-public class SelectStream<T, E> extends JpaEntityQueryStream<E> {
+public abstract class SelectStream<T, E, Q extends QueryStream<E, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends EntityQueryStream<E, Q, O> {
 
     // Real entity type before select statement
     private final Class<?> realEntityType;
@@ -51,6 +55,21 @@ public class SelectStream<T, E> extends JpaEntityQueryStream<E> {
         this.aggregateFields = stream.getAggregateFields();
         this.aggregateQueue = stream.getAggregateQueue();
         this.parameters.addAll(stream.parameters);
+    }
+
+    @Override
+    public <U, S extends LambdaStream<U, ? super S>> S initJoinQuery(String alias, Class<U> joinType) {
+        return null;
+    }
+
+    @Override
+    public <U, S extends QueryStream<U, ? super S>> S initSubQuery(Class<U> subType) {
+        return null;
+    }
+
+    @Override
+    public <U> SelectStream<E, U, ?, ?> initSelectQuery(Class<U> selectType) {
+        return null;
     }
 
     /**

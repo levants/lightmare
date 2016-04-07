@@ -26,6 +26,8 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
@@ -55,6 +57,17 @@ public class JpaEntityQueryStream<T> extends AbstractJpaQueryWrapper<T> implemen
     public <E, S extends QueryStream<E, ? super S>> S initSubQuery(Class<E> subType) {
         S subQuery = JpaUtils.initSubQuery(this, subType);
         return subQuery;
+    }
+
+    @Override
+    public <E> SelectStream<T, E, ?, ?> initSelectQuery(Class<E> selectType) {
+
+        SelectStream<T, E, ?, ?> stream;
+
+        AbstractQueryStream<T, ?, ?> parent = this;
+        stream = new JpaSelectStream<>(parent, selectType);
+
+        return stream;
     }
 
     // =========================embedded=field=queries=======================//

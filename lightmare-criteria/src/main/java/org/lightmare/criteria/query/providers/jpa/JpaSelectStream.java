@@ -20,28 +20,33 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.providers.sql;
+package org.lightmare.criteria.query.providers.jpa;
 
-import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.QueryExpression;
+import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
+import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
- * Implementation of {@link org.lightmare.criteria.query.QueryStream} and
- * {@link org.lightmare.criteria.query.internal.orm.QueryExpression} for SQL
- * queries
+ * Query builder for JPA SELECT expressions
  * 
  * @author Levan Tsinadze
  *
+ * @param <E>
+ *            select type parameter
  * @param <T>
  *            entity type parameter
- * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
- *            parameter
- * @param <O>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
- *            parameter
  */
-public interface SQLStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
-        extends QueryStream<T, Q>, QueryExpression<T, Q, O> {
+public class JpaSelectStream<E, T> extends SelectStream<T, E, JpaQueryStream<E>, JpaQueryStream<Object[]>>
+        implements JpaQueryStream<E> {
 
+    protected JpaSelectStream(AbstractQueryStream<T, ?, ?> stream, Class<E> type) {
+        super(stream, type);
+    }
+
+    @Override
+    public <F> JpaQueryStream<E> embedded(EntityField<E, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer) {
+        return this;
+    }
 }

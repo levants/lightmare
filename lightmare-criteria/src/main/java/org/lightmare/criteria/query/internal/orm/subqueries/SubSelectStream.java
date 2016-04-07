@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.internal.orm.subqueries;
 
 import java.util.List;
 
+import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
 import org.lightmare.criteria.utils.CollectionUtils;
 
@@ -34,8 +35,11 @@ import org.lightmare.criteria.utils.CollectionUtils;
  *
  * @param <T>
  *            entity type parameter for generated query
+ * @param <E>
+ *            select type parameter
  */
-class SubSelectStream<T, E> extends SelectStream<T, E> {
+public abstract class SubSelectStream<T, E, Q extends QueryStream<E, ? super Q>, O extends QueryStream<Object[], ? super O>>
+        extends SelectStream<T, E, Q, O> {
 
     private final AbstractSubQueryStream<T, ?, ?, ?> stream;
 

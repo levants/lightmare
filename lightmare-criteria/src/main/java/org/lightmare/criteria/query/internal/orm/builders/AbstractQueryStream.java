@@ -47,7 +47,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-public abstract class AbstractQueryStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ?>>
+public abstract class AbstractQueryStream<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>>
         extends AbstractAppenderStream<T, Q, O> {
 
     protected AbstractQueryStream(final LayerProvider provider, final Class<T> entityType) {
@@ -82,6 +82,31 @@ public abstract class AbstractQueryStream<T, Q extends QueryStream<T, ? super Q>
      * @return S {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     public abstract <E, S extends QueryStream<E, ? super S>> S initSubQuery(Class<E> subType);
+
+    /**
+     * Initializes SELECT expression builder
+     * 
+     * @param selectType
+     * @return {@link org.lightmare.criteria.query.internal.orm.builders.SelectStream}
+     *         implementation
+     */
+    public abstract <E> SelectStream<T, E, ?, ?> initSelectQuery(Class<E> selectType);
+
+    /**
+     * Initializes SELECT expression builder
+     * 
+     * @param selectType
+     * @return S {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    protected <E, S extends QueryStream<E, ? super S>> S castSelectQuery(Class<E> selectType) {
+
+        S stream;
+
+        QueryStream<?, ?> raw = initSelectQuery(selectType);
+        stream = ObjectUtils.cast(raw);
+
+        return stream;
+    }
 
     /**
      * Gets {@link java.util.Set} of

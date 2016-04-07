@@ -55,7 +55,7 @@ public abstract class AbstractSubQueryStream<S, T, Q extends QueryStream<S, ? su
 
     protected final AbstractQueryStream<T, ?, ?> parent;
 
-    private SubSelectStream<?, ?> subSelect;
+    private SubSelectStream<?, ?, ?, ?> subSelect;
 
     private boolean preparedState = Boolean.TRUE;
 
@@ -79,13 +79,12 @@ public abstract class AbstractSubQueryStream<S, T, Q extends QueryStream<S, ? su
      * @param type
      * @return
      */
-    private <K, L extends QueryStream<K, ?>> L generateSubSelectStream(Class<K> type) {
+    private <K, L extends QueryStream<K, ? super L>> L generateSubSelectStream(Class<K> type) {
 
         L stream;
 
-        SubSelectStream<S, K> subSelectStream = new SubSelectStream<S, K>(this, type);
-        subSelect = subSelectStream;
-        stream = ObjectUtils.cast(subSelectStream);
+        stream = castSelectQuery(type);
+        subSelect = ObjectUtils.cast(stream);
 
         return stream;
     }
@@ -97,7 +96,7 @@ public abstract class AbstractSubQueryStream<S, T, Q extends QueryStream<S, ? su
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      *         for instant field
      */
-    protected <F, L extends QueryStream<F, ?>> L subSelectOne(EntityField<S, F> field) {
+    protected <F, L extends QueryStream<F, ? super L>> L subSelectOne(EntityField<S, F> field) {
 
         L stream;
 
