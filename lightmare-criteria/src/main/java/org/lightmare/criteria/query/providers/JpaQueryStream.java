@@ -24,6 +24,7 @@ package org.lightmare.criteria.query.providers;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.providers.jpa.SubQueryProcessor;
 import org.lightmare.criteria.query.providers.sql.SQLStream;
 
 /**
@@ -34,7 +35,8 @@ import org.lightmare.criteria.query.providers.sql.SQLStream;
  * @param <T>
  *            entity type parameter for generated query
  */
-public interface JpaQueryStream<T> extends SQLStream<T, JpaQueryStream<T>, JpaQueryStream<Object[]>> {
+public interface JpaQueryStream<T>
+        extends SQLStream<T, JpaQueryStream<T>, JpaQueryStream<Object[]>>, SubQueryProcessor<T, JpaQueryStream<T>> {
 
     @Override
     default JpaQueryStream<T> stream() {

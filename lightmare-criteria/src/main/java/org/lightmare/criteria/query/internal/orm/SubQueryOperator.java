@@ -39,7 +39,7 @@ import org.lightmare.criteria.query.QueryStream;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
+public interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
 
     /**
      * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream}
