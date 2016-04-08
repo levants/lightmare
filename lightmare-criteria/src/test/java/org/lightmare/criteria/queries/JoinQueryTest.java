@@ -21,10 +21,10 @@ public class JoinQueryTest extends SubQueryTest {
 
         EntityManager em = emf.createEntityManager();
         try {
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where(q -> q
                     .equal(GeneralInfo::getAddrress, "address").like(Person::getLastName, "lname")
                     .join(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, "100100")).leftJoin(Person::getPhones,
-                            c -> c.equal(Phone::getPhoneId, Person::getPersonId).equal(Phone::getPhoneId, 100L));
+                            c -> c.equal(Phone::getPhoneId, Person::getPersonId).equal(Phone::getPhoneId, 100L)));
             Person person = stream.getFirst();
             String sql = stream.sql();
             printParameters(stream);
@@ -41,11 +41,11 @@ public class JoinQueryTest extends SubQueryTest {
 
         EntityManager em = emf.createEntityManager();
         try {
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where(q -> q
                     .equal(GeneralInfo::getAddrress, "address").like(Person::getLastName, "lname")
                     .join(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, "100100")).leftJoin(Person::getPhones,
                             o -> o.equal(Phone::getPhoneId, Person::getPersonId),
-                            c -> c.equal(Phone::getPhoneId, Person::getPersonId).equal(Phone::getPhoneId, 100L));
+                            c -> c.equal(Phone::getPhoneId, Person::getPersonId).equal(Phone::getPhoneId, 100L)));
             String sql = stream.sql();
             printParameters(stream);
             System.out.println(sql);

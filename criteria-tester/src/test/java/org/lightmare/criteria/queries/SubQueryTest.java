@@ -79,9 +79,9 @@ public class SubQueryTest extends QueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
-                    .exists(Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").get())
-                    .exists(Phone.class, c -> c.where().equal(Phone::getPhoneNumber, "100100").get());
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class)
+                    .where(q -> q.exists(Phone.class, c -> c.where(s -> s.equal(Phone::getPhoneNumber, "100100")).get())
+                            .exists(Phone.class, c -> c.where(s -> s.equal(Phone::getPhoneNumber, "100100")).get()));
             String sql = stream.sql();
             List<Person> persons = stream.toList();
             persons.forEach(System.out::println);

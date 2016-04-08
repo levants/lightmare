@@ -31,10 +31,8 @@ import org.lightmare.criteria.utils.StringUtils;
  * 
  * @author Levan Tsinadze
  *
- * @param <T>
- *            entity type parameter for sub query
  */
-public interface SubQuery<T> {
+public interface SubQuery {
 
     /**
      * Abstract class to generate ALL, ANY and SOME sub query clauses
