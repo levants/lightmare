@@ -41,7 +41,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @param <T>
  *            entity type parameter
  */
-public class JpaEntityQueryStream<T> extends AbstractJpaQueryWrapper<T> implements JpaQueryStream<T> {
+class JpaEntityQueryStream<T> extends AbstractJpaQueryWrapper<T> implements JpaQueryStream<T> {
 
     protected JpaEntityQueryStream(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);

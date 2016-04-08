@@ -41,7 +41,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type parameter
  */
-public class JdbcSelectStream<E, T> extends SelectStream<T, E, JdbcQueryStream<E>, JdbcQueryStream<Object[]>>
+class JdbcSelectStream<E, T> extends SelectStream<T, E, JdbcQueryStream<E>, JdbcQueryStream<Object[]>>
         implements JdbcQueryStream<E> {
 
     protected JdbcSelectStream(AbstractQueryStream<T, ?, ?> stream, Class<E> type) {

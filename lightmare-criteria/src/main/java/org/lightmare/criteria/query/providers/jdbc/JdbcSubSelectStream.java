@@ -16,7 +16,7 @@ import org.lightmare.criteria.query.internal.orm.subqueries.SubSelectStream;
  * @param <T>
  *            entity type parameter
  */
-public class JdbcSubSelectStream<T, E> extends SubSelectStream<T, E, JdbcQueryStream<E>, JdbcQueryStream<Object[]>>
+class JdbcSubSelectStream<T, E> extends SubSelectStream<T, E, JdbcQueryStream<E>, JdbcQueryStream<Object[]>>
         implements JdbcQueryStream<E> {
 
     protected JdbcSubSelectStream(AbstractSubQueryStream<T, ?, ?, ?> stream, Class<E> type) {

@@ -37,7 +37,7 @@ import org.lightmare.criteria.query.internal.orm.JoinOperator;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-public interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends JoinOperator<T, Q> {
+interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends JoinOperator<T, Q> {
 
     /**
      * Method for INNER JOIN function call on other entity

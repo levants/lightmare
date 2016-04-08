@@ -37,7 +37,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  * @param <T>
  *            entity type parameter
  */
-public interface JpaQueryWrapper<T> {
+interface JpaQueryWrapper<T> {
 
     /**
      * Set the position of the first result to retrieve.

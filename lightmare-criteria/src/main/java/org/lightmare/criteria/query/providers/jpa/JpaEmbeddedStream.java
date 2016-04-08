@@ -41,7 +41,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @param <T>
  *            query type parameter
  */
-public class JpaEmbeddedStream<S, T> extends JpaSubQueryStream<S, T> {
+class JpaEmbeddedStream<S, T> extends JpaSubQueryStream<S, T> {
 
     private final String embeddedName;
 

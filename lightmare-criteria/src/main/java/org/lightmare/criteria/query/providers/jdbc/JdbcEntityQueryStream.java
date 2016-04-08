@@ -37,7 +37,7 @@ import org.lightmare.criteria.query.layers.LayerProvider;
  * @param <T>
  *            entity type parameter
  */
-public class JdbcEntityQueryStream<T> extends AbstractJdbcQueryWrapper<T> implements JdbcQueryStream<T> {
+class JdbcEntityQueryStream<T> extends AbstractJdbcQueryWrapper<T> implements JdbcQueryStream<T> {
 
     protected JdbcEntityQueryStream(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);

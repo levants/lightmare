@@ -12,6 +12,7 @@ import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.internal.orm.links.SubQuery;
 import org.lightmare.criteria.query.providers.JpaQueryProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.query.providers.jpa.JpaQueryConsumer;
 import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
 
@@ -48,6 +49,25 @@ public class SubQueryTest extends QueryTest {
                                     c -> c.where(s -> s.equal(Phone::getPhoneNumber, "100100")
                                             .equal(Phone::getOperatorId, Person::getPersonId))
                                             .select(Phone::getPhoneNumber)));
+            String sql = stream.sql();
+            System.out.println(sql);
+        } finally {
+            em.close();
+        }
+    }
+
+    @RunOrder(100.11)
+    @Test
+    public void subQueryJpaConsumerCallTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            JpaQueryConsumer<Phone> consumer = c -> c.where(
+                    s -> s.equal(Phone::getPhoneNumber, "100100").equal(Phone::getOperatorId, Person::getPersonId))
+                    .select(Phone::getPhoneNumber);
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where().ge(Person::getPersonalNo,
+                    SubQuery.all(Phone.class, consumer));
             String sql = stream.sql();
             System.out.println(sql);
         } finally {

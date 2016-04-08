@@ -44,7 +44,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @param <T>
  *            entity type parameter for generated query
  */
-public class JpaJoinProcessor<S, T> extends JoinProcessor<S, T, JpaQueryStream<S>, JpaQueryStream<Object[]>>
+class JpaJoinProcessor<S, T> extends JoinProcessor<S, T, JpaQueryStream<S>, JpaQueryStream<Object[]>>
         implements JpaQueryStream<S> {
 
     public JpaJoinProcessor(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> entityType) {

@@ -43,7 +43,7 @@ import org.lightmare.criteria.query.internal.orm.subqueries.JoinProcessor;
  * @param <T>
  *            entity type parameter for generated query
  */
-public class JdbcJoinProcessor<S, T> extends JoinProcessor<S, T, JdbcQueryStream<S>, JdbcQueryStream<Object[]>>
+class JdbcJoinProcessor<S, T> extends JoinProcessor<S, T, JdbcQueryStream<S>, JdbcQueryStream<Object[]>>
         implements JdbcQueryStream<S> {
 
     public JdbcJoinProcessor(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> entityType) {

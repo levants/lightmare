@@ -16,7 +16,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  * @param <T>
  *            entity type parameter
  */
-public class JpaSubSelectStream<T, E> extends SubSelectStream<T, E, JpaQueryStream<E>, JpaQueryStream<Object[]>>
+class JpaSubSelectStream<T, E> extends SubSelectStream<T, E, JpaQueryStream<E>, JpaQueryStream<Object[]>>
         implements JpaQueryStream<E> {
 
     protected JpaSubSelectStream(AbstractSubQueryStream<T, ?, ?, ?> stream, Class<E> type) {

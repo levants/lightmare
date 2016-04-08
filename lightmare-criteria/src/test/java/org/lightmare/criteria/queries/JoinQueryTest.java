@@ -9,6 +9,7 @@ import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.Phone;
 import org.lightmare.criteria.query.providers.JpaQueryProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.query.providers.jpa.JpaQueryConsumer;
 import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
 
@@ -46,6 +47,27 @@ public class JoinQueryTest extends SubQueryTest {
                     .join(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, "100100")).leftJoin(Person::getPhones,
                             o -> o.equal(Phone::getPhoneId, Person::getPersonId),
                             c -> c.equal(Phone::getPhoneId, Person::getPersonId).equal(Phone::getPhoneId, 100L)));
+            String sql = stream.sql();
+            printParameters(stream);
+            System.out.println(sql);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(200.11)
+    public void innerJoinWithOnAndJpaConsumerTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            JpaQueryConsumer<Phone> on = o -> o.equal(Phone::getPhoneId, Person::getPersonId);
+            JpaQueryConsumer<Phone> consumer = c -> c.equal(Phone::getPhoneId, Person::getPersonId)
+                    .equal(Phone::getPhoneId, 100L);
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class)
+                    .where(q -> q.equal(GeneralInfo::getAddrress, "address").like(Person::getLastName, "lname")
+                            .join(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, "100100"))
+                            .leftJoin(Person::getPhones, on, consumer));
             String sql = stream.sql();
             printParameters(stream);
             System.out.println(sql);

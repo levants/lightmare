@@ -40,7 +40,7 @@ import org.lightmare.criteria.query.providers.JpaQueryStream;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-public interface JdbcSubQueryProcessor<T, Q extends QueryStream<T, ? super Q>> extends JdbcTypedSubQueryProcessor<T, Q>,
+interface JdbcSubQueryProcessor<T, Q extends QueryStream<T, ? super Q>> extends JdbcTypedSubQueryProcessor<T, Q>,
         JdbcTypedToObjectSubQueryProcessor<T, Q>, JdbcTypedToFunctionSubQueryProcessor<T, Q> {
 
     Class<T> getEntityType();

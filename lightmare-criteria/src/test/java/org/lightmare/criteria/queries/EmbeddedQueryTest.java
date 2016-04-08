@@ -9,6 +9,7 @@ import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.PersonInfo;
 import org.lightmare.criteria.query.providers.JpaQueryProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.query.providers.jpa.JpaQueryConsumer;
 import org.lightmare.criteria.runorder.RunOrder;
 import org.lightmare.criteria.runorder.SortedRunner;
 
@@ -46,6 +47,25 @@ public class EmbeddedQueryTest extends JoinQueryTest {
                     .like(Person::getLastName, "lname").or()
                     .embedded(Person::getInfo, c -> c.equal(PersonInfo::getCardNumber, Person::getPersonalNo)
                             .equal(PersonInfo::getNote, "100100"));
+            String sql = stream.sql();
+            System.out.println("===========JPA-QL==========");
+            System.out.println(sql);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    @RunOrder(301)
+    public void embeddedWithParentJpaConsumerTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            // ============= Query construction ============== //
+            JpaQueryConsumer<PersonInfo> consumer = c -> c.equal(PersonInfo::getCardNumber, Person::getPersonalNo)
+                    .equal(PersonInfo::getNote, "100100");
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class)
+                    .where(q -> q.like(Person::getLastName, "lname").or().embedded(Person::getInfo, consumer));
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);

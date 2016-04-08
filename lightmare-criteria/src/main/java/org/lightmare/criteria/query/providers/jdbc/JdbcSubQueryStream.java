@@ -43,7 +43,7 @@ import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream
  * @param <T>
  *            entity type parameter
  */
-public class JdbcSubQueryStream<S, T> extends EntitySubQueryStream<S, T, JdbcQueryStream<S>, JdbcQueryStream<Object[]>>
+class JdbcSubQueryStream<S, T> extends EntitySubQueryStream<S, T, JdbcQueryStream<S>, JdbcQueryStream<Object[]>>
         implements JdbcQueryStream<S> {
 
     public JdbcSubQueryStream(final AbstractQueryStream<T, ?, ?> parent, Class<S> type) {

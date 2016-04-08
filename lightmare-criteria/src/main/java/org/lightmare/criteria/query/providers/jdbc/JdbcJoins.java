@@ -28,7 +28,7 @@ package org.lightmare.criteria.query.providers.jdbc;
  * @author Levan Tsinadze
  *
  */
-public interface JdbcJoins {
+interface JdbcJoins {
 
     String INNER = " inner join ";
 

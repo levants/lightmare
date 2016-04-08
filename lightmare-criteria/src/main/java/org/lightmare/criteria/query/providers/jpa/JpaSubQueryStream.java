@@ -44,7 +44,7 @@ import org.lightmare.criteria.tuples.QueryTuple;
  * @param <T>
  *            entity type parameter
  */
-public class JpaSubQueryStream<S, T> extends EntitySubQueryStream<S, T, JpaQueryStream<S>, JpaQueryStream<Object[]>>
+class JpaSubQueryStream<S, T> extends EntitySubQueryStream<S, T, JpaQueryStream<S>, JpaQueryStream<Object[]>>
         implements JpaQueryStream<S> {
 
     public JpaSubQueryStream(final AbstractQueryStream<T, ?, ?> parent, Class<S> type) {
