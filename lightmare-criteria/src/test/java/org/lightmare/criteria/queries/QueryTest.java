@@ -190,6 +190,32 @@ public class QueryTest extends TestEnviromentConfig {
     }
 
     @Test
+    @RunOrder(2.301)
+    public void toListBySelectInWhereTest() {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            Date date = getDateValue();
+            // ============= Query construction ============== //
+            List<Object[]> persons = JpaQueryProvider.select(em, Person.class)
+                    .where(q -> q.equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%")
+                            .and(stream -> stream.startsWith(Person::getFirstName, "fname").or()
+                                    .ge(Person::getBirthDate, date))
+                            .in(Person::getPersonId, Arrays.asList(IDENTIFIERS)))
+                    .selectAll(c -> c.column(Person::getPersonalNo).column(Person::getFirstName)
+                            .column(Person::getLastName))
+                    .toList();
+            // =============================================//
+            System.out.println();
+            System.out.println("-------Entity----");
+            System.out.println();
+            persons.forEach(c -> System.out.println(Arrays.toString(c)));
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
     @RunOrder(2.31)
     public void toListBySelectStringTest() {
 
