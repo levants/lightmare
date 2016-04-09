@@ -57,7 +57,8 @@ public class DefaultConfiguration {
     public static class DefaultResolver implements ColumnResolver {
 
         public static String getColumn(Field field) {
-            return ObjectUtils.ifIsNull(field.getAnnotation(DBColumn.class), c -> field.getName(), DBColumn::value);
+            return ObjectUtils.ifIsNull(field.getAnnotation(DBColumn.class), c -> field.getName().toUpperCase(),
+                    DBColumn::value);
         }
 
         @Override
@@ -87,7 +88,7 @@ public class DefaultConfiguration {
         @FunctionalInterface
         public static interface ResultGetter {
 
-            Object apply(ResultSet r, String s) throws SQLException;
+            Object apply(ResultSet rs, String name) throws SQLException;
         }
 
         /**

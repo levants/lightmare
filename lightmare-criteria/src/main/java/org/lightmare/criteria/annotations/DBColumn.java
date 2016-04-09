@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * To define column name
+ * To define DB column name
  * 
  * @author Levan Tsinadze
  *

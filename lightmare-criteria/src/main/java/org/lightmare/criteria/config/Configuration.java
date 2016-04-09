@@ -44,7 +44,7 @@ public interface Configuration {
     public static interface ColumnResolver {
 
         /**
-         * Resolves column name from {@link Field} instance
+         * Resolves column name from {@link java.lang.reflect.Field} instance
          * 
          * @param field
          * @return {@link String} resolved column name
