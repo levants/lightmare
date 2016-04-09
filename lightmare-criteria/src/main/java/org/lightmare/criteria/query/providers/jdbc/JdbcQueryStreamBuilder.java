@@ -22,8 +22,8 @@
  */
 package org.lightmare.criteria.query.providers.jdbc;
 
-import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.query.orm.links.Clauses;
 
 /**
  * Main class for lambda expression analyze and JDBC query build and run

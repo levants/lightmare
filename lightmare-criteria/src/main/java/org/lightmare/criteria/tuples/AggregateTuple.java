@@ -24,7 +24,7 @@ package org.lightmare.criteria.tuples;
 
 import java.util.Objects;
 
-import org.lightmare.criteria.query.internal.orm.links.Aggregates;
+import org.lightmare.criteria.query.orm.links.Aggregates;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**

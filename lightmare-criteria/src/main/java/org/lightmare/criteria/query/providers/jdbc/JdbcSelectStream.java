@@ -26,9 +26,9 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
-import org.lightmare.criteria.query.internal.layers.JdbcQueryLayer;
-import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
-import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
+import org.lightmare.criteria.query.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.orm.builders.SelectStream;
+import org.lightmare.criteria.query.providers.jdbc.layers.JdbcQueryLayer;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -50,13 +50,13 @@ class JdbcSelectStream<E, T> extends SelectStream<T, E, JdbcQueryStream<E>, Jdbc
 
     /**
      * Retrieves result from generated
-     * {@link org.lightmare.criteria.query.internal.layers.JdbcQueryLayer}
+     * {@link org.lightmare.criteria.query.providers.jdbc.layers.JdbcQueryLayer}
      * instance
      * 
      * @param retriever
      * @param function
      * @return R result from generated
-     *         {@link org.lightmare.criteria.query.internal.layers.JdbcQueryLayer}
+     *         {@link org.lightmare.criteria.query.providers.jdbc.layers.JdbcQueryLayer}
      */
     private <R> R retrieveResult(ResultRetriever<E> retriever,
             BiFunction<JdbcQueryLayer<E>, ResultRetriever<E>, R> function) {

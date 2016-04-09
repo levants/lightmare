@@ -26,9 +26,9 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
-import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.query.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.orm.builders.SelectStream;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 

@@ -23,9 +23,9 @@
 package org.lightmare.criteria.query.providers.jpa;
 
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.SubQueryOperator;
-import org.lightmare.criteria.query.internal.orm.links.Operators;
-import org.lightmare.criteria.query.internal.orm.links.SubQuery.SubQueryType;
+import org.lightmare.criteria.query.orm.SubQueryOperator;
+import org.lightmare.criteria.query.orm.links.Operators;
+import org.lightmare.criteria.query.orm.links.SubQuery.SubQueryType;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**

@@ -2,8 +2,8 @@ package org.lightmare.criteria.query.providers.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.internal.orm.subqueries.AbstractSubQueryStream;
-import org.lightmare.criteria.query.internal.orm.subqueries.SubSelectStream;
+import org.lightmare.criteria.query.orm.subqueries.AbstractSubQueryStream;
+import org.lightmare.criteria.query.orm.subqueries.SubSelectStream;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**

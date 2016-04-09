@@ -33,8 +33,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.lightmare.criteria.query.internal.layers.CriteriaProvider;
 import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.query.providers.jpa.layers.CriteriaProvider;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**

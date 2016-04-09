@@ -26,15 +26,15 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
-import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
-import org.lightmare.criteria.query.internal.orm.subqueries.JoinProcessor;
+import org.lightmare.criteria.query.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.orm.builders.SelectStream;
+import org.lightmare.criteria.query.orm.subqueries.JoinProcessor;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
  * Implementation of
- * {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
+ * {@link org.lightmare.criteria.query.orm.subqueries.SubQueryStream}
  * to process JOIN statements
  * 
  * @author Levan Tsiadze

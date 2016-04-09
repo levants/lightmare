@@ -27,13 +27,13 @@ import java.util.List;
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
-import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
-import org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream;
+import org.lightmare.criteria.query.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.orm.builders.SelectStream;
+import org.lightmare.criteria.query.orm.subqueries.EntitySubQueryStream;
 
 /**
  * Implementation of
- * {@link org.lightmare.criteria.query.internal.orm.subqueries.EntitySubQueryStream}
+ * {@link org.lightmare.criteria.query.orm.subqueries.EntitySubQueryStream}
  * for JPA sub query generation
  * 
  * @author Levan Tsinadze

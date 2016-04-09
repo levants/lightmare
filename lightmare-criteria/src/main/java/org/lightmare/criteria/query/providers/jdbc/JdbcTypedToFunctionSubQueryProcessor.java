@@ -24,9 +24,9 @@ package org.lightmare.criteria.query.providers.jdbc;
 
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.SubQueryOperator;
-import org.lightmare.criteria.query.internal.orm.links.Operators;
-import org.lightmare.criteria.query.internal.orm.links.SubQuery.SubQueryType;
+import org.lightmare.criteria.query.orm.SubQueryOperator;
+import org.lightmare.criteria.query.orm.links.Operators;
+import org.lightmare.criteria.query.orm.links.SubQuery.SubQueryType;
 
 /**
  * Sub query processor for ALL, ANY, SOME clause and functional expressions

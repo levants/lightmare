@@ -27,8 +27,8 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.JoinOperator;
-import org.lightmare.criteria.query.internal.orm.links.Joins;
+import org.lightmare.criteria.query.orm.JoinOperator;
+import org.lightmare.criteria.query.orm.links.Joins;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**

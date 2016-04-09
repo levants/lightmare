@@ -27,13 +27,13 @@ import java.util.List;
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
 import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.builders.AbstractQueryStream;
-import org.lightmare.criteria.query.internal.orm.builders.SelectStream;
-import org.lightmare.criteria.query.internal.orm.subqueries.JoinProcessor;
+import org.lightmare.criteria.query.orm.builders.AbstractQueryStream;
+import org.lightmare.criteria.query.orm.builders.SelectStream;
+import org.lightmare.criteria.query.orm.subqueries.JoinProcessor;
 
 /**
  * Implementation of
- * {@link org.lightmare.criteria.query.internal.orm.subqueries.SubQueryStream}
+ * {@link org.lightmare.criteria.query.orm.subqueries.SubQueryStream}
  * to process JOIN statements
  * 
  * @author Levan Tsiadze

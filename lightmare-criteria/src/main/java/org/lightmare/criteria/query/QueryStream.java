@@ -27,7 +27,7 @@ import java.util.function.Consumer;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.orm.links.Operators;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 

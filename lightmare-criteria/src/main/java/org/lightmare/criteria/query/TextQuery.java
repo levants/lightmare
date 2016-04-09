@@ -24,7 +24,7 @@ package org.lightmare.criteria.query;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.internal.orm.links.Operators;
+import org.lightmare.criteria.query.orm.links.Operators;
 
 /**
  * Interface for base methods of {@link String} based queries with

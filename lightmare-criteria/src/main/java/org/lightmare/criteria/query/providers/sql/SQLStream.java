@@ -23,11 +23,11 @@
 package org.lightmare.criteria.query.providers.sql;
 
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.QueryExpression;
+import org.lightmare.criteria.query.orm.QueryExpression;
 
 /**
  * Implementation of {@link org.lightmare.criteria.query.QueryStream} and
- * {@link org.lightmare.criteria.query.internal.orm.QueryExpression} for SQL
+ * {@link org.lightmare.criteria.query.orm.QueryExpression} for SQL
  * queries
  * 
  * @author Levan Tsinadze

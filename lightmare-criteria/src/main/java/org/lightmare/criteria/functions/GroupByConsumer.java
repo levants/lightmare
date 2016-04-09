@@ -26,7 +26,7 @@ import java.io.Serializable;
 import java.util.function.Consumer;
 
 import org.lightmare.criteria.query.QueryStream;
-import org.lightmare.criteria.query.internal.orm.GroupExpression;
+import org.lightmare.criteria.query.orm.GroupExpression;
 
 /**
  * Consumer to process GROUP BY expressions

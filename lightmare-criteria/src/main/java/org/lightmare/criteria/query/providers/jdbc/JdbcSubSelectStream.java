@@ -3,8 +3,8 @@ package org.lightmare.criteria.query.providers.jdbc;
 import java.util.List;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
-import org.lightmare.criteria.query.internal.orm.subqueries.AbstractSubQueryStream;
-import org.lightmare.criteria.query.internal.orm.subqueries.SubSelectStream;
+import org.lightmare.criteria.query.orm.subqueries.AbstractSubQueryStream;
+import org.lightmare.criteria.query.orm.subqueries.SubSelectStream;
 
 /**
  * Query builder for JDBC sub query SELECT expressions

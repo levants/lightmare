@@ -22,8 +22,8 @@
  */
 package org.lightmare.criteria.query.providers.jpa;
 
-import org.lightmare.criteria.query.internal.orm.links.Clauses;
 import org.lightmare.criteria.query.layers.LayerProvider;
+import org.lightmare.criteria.query.orm.links.Clauses;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**

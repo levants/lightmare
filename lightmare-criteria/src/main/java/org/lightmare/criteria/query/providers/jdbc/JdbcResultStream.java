@@ -25,12 +25,12 @@ package org.lightmare.criteria.query.providers.jdbc;
 import java.util.List;
 
 import org.lightmare.criteria.config.Configuration.ResultRetriever;
-import org.lightmare.criteria.query.internal.orm.ResultStream;
+import org.lightmare.criteria.query.orm.ResultStream;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Implementation of
- * {@link org.lightmare.criteria.query.internal.orm.ResultStream} for JDBC
+ * {@link org.lightmare.criteria.query.orm.ResultStream} for JDBC
  * queries
  * 
  * @author Levan Tsinadze

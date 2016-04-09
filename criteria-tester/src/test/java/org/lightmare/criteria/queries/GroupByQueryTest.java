@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 
 import org.junit.Test;
 import org.lightmare.criteria.entities.Person;
-import org.lightmare.criteria.query.internal.orm.SelectExpression.Select;
+import org.lightmare.criteria.query.orm.SelectExpression.Select;
 import org.lightmare.criteria.query.providers.JpaQueryProvider;
 import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.runorder.RunOrder;

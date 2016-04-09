@@ -25,7 +25,7 @@ package org.lightmare.criteria.functions;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-import org.lightmare.criteria.query.internal.orm.HavingExpression;
+import org.lightmare.criteria.query.orm.HavingExpression;
 
 /**
  * Consumer for HAVING expressions
