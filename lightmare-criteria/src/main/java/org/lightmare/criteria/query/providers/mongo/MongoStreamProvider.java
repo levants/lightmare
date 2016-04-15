@@ -22,7 +22,7 @@
  */
 package org.lightmare.criteria.query.providers.mongo;
 
-import org.lightmare.criteria.query.QueryProvider;
+import org.lightmare.criteria.query.providers.QueryProvider;
 
 import com.mongodb.client.MongoDatabase;
 

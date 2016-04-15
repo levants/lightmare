@@ -249,7 +249,7 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
     }
 
     @Override
-    public <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> Q procesJoin(EntityField<T, C> field,
+    public <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> Q processJoin(EntityField<T, C> field,
             String expression, QueryConsumer<E, S> on, QueryConsumer<E, S> consumer) {
 
         Q stream = stream();
@@ -259,7 +259,7 @@ abstract class AbstractJoinStream<T, Q extends QueryStream<T, ? super Q>, O exte
     }
 
     @Override
-    public <E, S extends LambdaStream<E, ? super S>> Q procesJoin(Class<E> joinType, String expression,
+    public <E, S extends LambdaStream<E, ? super S>> Q processJoin(Class<E> joinType, String expression,
             QueryConsumer<E, S> on, QueryConsumer<E, S> consumer) {
 
         Q stream = stream();

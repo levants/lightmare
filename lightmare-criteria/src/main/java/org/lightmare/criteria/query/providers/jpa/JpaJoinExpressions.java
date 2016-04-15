@@ -52,7 +52,7 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     default <E, C extends Collection<E>> Q join(EntityField<T, C> field, QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        Q stream = procesJoin(field, Joins.JOIN, consumer);
+        Q stream = processJoin(field, Joins.JOIN, consumer);
         return stream;
     }
 
@@ -66,7 +66,7 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      */
     default <E, C extends Collection<E>> Q join(EntityField<T, C> field, QueryConsumer<E, JpaQueryStream<E>> on,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        Q stream = procesJoin(field, Joins.JOIN, on, consumer);
+        Q stream = processJoin(field, Joins.JOIN, on, consumer);
         return stream;
     }
 
@@ -99,7 +99,7 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     default <E> Q join(Class<E> joinType, QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, Joins.JOIN, consumer);
+        Q stream = processJoin(joinType, Joins.JOIN, consumer);
         return stream;
     }
 
@@ -113,7 +113,7 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      */
     default <E> Q join(Class<E> joinType, QueryConsumer<E, JpaQueryStream<E>> on,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, Joins.JOIN, on, consumer);
+        Q stream = processJoin(joinType, Joins.JOIN, on, consumer);
         return stream;
     }
 
@@ -147,7 +147,7 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      */
     default <E, C extends Collection<E>> Q leftJoin(EntityField<T, C> field,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        Q stream = procesJoin(field, Joins.LEFT, consumer);
+        Q stream = processJoin(field, Joins.LEFT, consumer);
         return stream;
     }
 
@@ -161,7 +161,7 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      */
     default <E, C extends Collection<E>> Q leftJoin(EntityField<T, C> field, QueryConsumer<E, JpaQueryStream<E>> on,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        Q stream = procesJoin(field, Joins.LEFT, on, consumer);
+        Q stream = processJoin(field, Joins.LEFT, on, consumer);
         return stream;
     }
 
@@ -194,7 +194,7 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     default <E> Q leftJoin(Class<E> joinType, QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, Joins.LEFT, consumer);
+        Q stream = processJoin(joinType, Joins.LEFT, consumer);
         return stream;
     }
 
@@ -208,7 +208,7 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      */
     default <E> Q leftJoin(Class<E> joinType, QueryConsumer<E, JpaQueryStream<E>> on,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, Joins.LEFT, on, consumer);
+        Q stream = processJoin(joinType, Joins.LEFT, on, consumer);
         return stream;
     }
 
@@ -242,7 +242,7 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      */
     default <E, C extends Collection<E>> Q fetchJoin(EntityField<T, C> field,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        Q stream = procesJoin(field, Joins.FETCH, consumer);
+        Q stream = processJoin(field, Joins.FETCH, consumer);
         return stream;
     }
 
@@ -256,7 +256,7 @@ public interface JpaJoinExpressions<T, Q extends QueryStream<T, ? super Q>> exte
      */
     default <E, C extends Collection<E>> Q fetchJoin(EntityField<T, C> field, QueryConsumer<E, JpaQueryStream<E>> on,
             QueryConsumer<E, JpaQueryStream<E>> consumer) {
-        Q stream = procesJoin(field, Joins.FETCH, on, consumer);
+        Q stream = processJoin(field, Joins.FETCH, on, consumer);
         return stream;
     }
 

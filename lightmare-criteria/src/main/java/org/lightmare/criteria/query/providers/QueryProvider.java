@@ -20,9 +20,10 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query;
+package org.lightmare.criteria.query.providers;
 
 import org.lightmare.criteria.functions.initializers.QueryInitializer;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 
 /**

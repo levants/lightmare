@@ -49,7 +49,7 @@ interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends Jo
      */
     default <E> Q innerJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on,
             QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, JdbcJoins.INNER, on, consumer);
+        Q stream = processJoin(joinType, JdbcJoins.INNER, on, consumer);
         return stream;
     }
 
@@ -74,7 +74,7 @@ interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends Jo
      */
     default <E> Q leftJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on,
             QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, JdbcJoins.LEFT, on, consumer);
+        Q stream = processJoin(joinType, JdbcJoins.LEFT, on, consumer);
         return stream;
     }
 
@@ -100,7 +100,7 @@ interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends Jo
      */
     default <E> Q rightJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on,
             QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, JdbcJoins.RIGHT, on, consumer);
+        Q stream = processJoin(joinType, JdbcJoins.RIGHT, on, consumer);
         return stream;
     }
 
@@ -126,7 +126,7 @@ interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends Jo
      */
     default <E> Q fullJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on,
             QueryConsumer<E, JdbcQueryStream<E>> consumer) {
-        Q stream = procesJoin(joinType, JdbcJoins.FULL, on, consumer);
+        Q stream = processJoin(joinType, JdbcJoins.FULL, on, consumer);
         return stream;
     }
 
@@ -150,7 +150,7 @@ interface JdbcJoinExpressions<T, Q extends QueryStream<T, ? super Q>> extends Jo
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     default <E> Q crossJoin(Class<E> joinType, QueryConsumer<E, JdbcQueryStream<E>> on) {
-        Q stream = procesJoin(joinType, JdbcJoins.CROSS, null);
+        Q stream = processJoin(joinType, JdbcJoins.CROSS, null);
         return stream;
     }
 }
