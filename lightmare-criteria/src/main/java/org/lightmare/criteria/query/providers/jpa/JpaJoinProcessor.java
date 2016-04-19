@@ -29,7 +29,6 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.orm.builders.SelectStream;
 import org.lightmare.criteria.query.orm.subqueries.JoinProcessor;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 
 /**

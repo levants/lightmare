@@ -26,7 +26,7 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.orm.links.Operators;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.query.providers.jpa.JpaQueryStream;
 
 /**
  * Processes sub queries
@@ -46,7 +46,7 @@ interface JdbcSubQueryProcessor<T, Q extends QueryStream<T, ? super Q>> extends 
     Class<T> getEntityType();
 
     /**
-     * Generates {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * Generates {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      * for S type without conditions
      * 
      * @param consumer

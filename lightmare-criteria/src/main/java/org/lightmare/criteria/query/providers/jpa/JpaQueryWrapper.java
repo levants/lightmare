@@ -27,8 +27,6 @@ import java.util.Map;
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 
-import org.lightmare.criteria.query.providers.JpaQueryStream;
-
 /**
  * Interface for JPA query additional configuration
  * 
@@ -46,7 +44,7 @@ interface JpaQueryWrapper<T> {
      *            position of the first result, numbered from 0
      *
      * @return the same
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         instance
      *
      */
@@ -78,7 +76,7 @@ interface JpaQueryWrapper<T> {
      *            value for the property or hint
      *
      * @return the same
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         instance
      *
      */
@@ -103,7 +101,7 @@ interface JpaQueryWrapper<T> {
      *            flush mode
      *
      * @return the same
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         instance
      */
     JpaQueryStream<T> setFlushMode(FlushModeType flushMode);
@@ -115,7 +113,7 @@ interface JpaQueryWrapper<T> {
      *            lock mode
      *
      * @return the same
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         instance
      */
     JpaQueryStream<T> setLockMode(LockModeType lockMode);

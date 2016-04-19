@@ -30,7 +30,6 @@ import javax.persistence.LockModeType;
 
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.orm.builders.EntityQueryStream;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 import org.lightmare.criteria.query.providers.jpa.layers.JpaQueryLayer;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;

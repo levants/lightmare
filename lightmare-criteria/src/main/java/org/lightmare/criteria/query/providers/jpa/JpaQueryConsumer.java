@@ -1,7 +1,6 @@
 package org.lightmare.criteria.query.providers.jpa;
 
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Implementation of {@link org.lightmare.criteria.functions.QueryConsumer} for

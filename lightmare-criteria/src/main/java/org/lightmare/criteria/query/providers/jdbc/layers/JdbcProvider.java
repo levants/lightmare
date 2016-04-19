@@ -31,7 +31,7 @@ import org.lightmare.criteria.config.Configuration.ColumnResolver;
 import org.lightmare.criteria.config.DefaultConfiguration.DefaultResolver;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.layers.QueryLayer;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.query.providers.jpa.JpaQueryStream;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
 import org.lightmare.criteria.utils.ObjectUtils;

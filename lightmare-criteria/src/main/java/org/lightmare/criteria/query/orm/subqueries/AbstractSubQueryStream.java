@@ -116,7 +116,7 @@ public abstract class AbstractSubQueryStream<S, T, Q extends QueryStream<S, ? su
      * Generates SELECT clause for sub query
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         with {@link Object} array
      */
     protected O subSelectAll(Serializable field) {
@@ -136,7 +136,7 @@ public abstract class AbstractSubQueryStream<S, T, Q extends QueryStream<S, ? su
      * @param field
      * @param function
      * @param type
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         with aggregate type
      */
     protected <F, R extends Number, L extends QueryStream<R, ? super L>> L subAggregate(EntityField<S, F> field,

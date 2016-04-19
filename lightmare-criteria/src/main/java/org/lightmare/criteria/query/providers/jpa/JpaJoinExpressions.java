@@ -29,7 +29,6 @@ import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.orm.JoinOperator;
 import org.lightmare.criteria.query.orm.links.Joins;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Interface for [INNER, LEFT, FETCH] JOIN implementations

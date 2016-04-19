@@ -24,7 +24,6 @@ package org.lightmare.criteria.query.providers.jpa;
 
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.orm.links.Clauses;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Main class for lambda expression analyze and JPA query build and run
@@ -45,7 +44,7 @@ public class JpaQueryStreamBuilder<T> extends JpaEntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         with select statement
      */
     public static <T> JpaQueryStream<T> delete(final LayerProvider provider, final Class<T> entityType) {
@@ -64,7 +63,7 @@ public class JpaQueryStreamBuilder<T> extends JpaEntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         with select statement
      */
     public static <T> JpaQueryStream<T> update(final LayerProvider provider, final Class<T> entityType) {
@@ -83,7 +82,7 @@ public class JpaQueryStreamBuilder<T> extends JpaEntityQueryStream<T> {
      * 
      * @param provider
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         with select statement
      */
     public static <T> JpaQueryStream<T> select(final LayerProvider provider, final Class<T> entityType) {

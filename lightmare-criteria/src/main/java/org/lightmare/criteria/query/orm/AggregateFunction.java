@@ -42,7 +42,7 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     * {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream} for
      * {@link Object} array as result
      * 
      * @param field
@@ -54,7 +54,7 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for instant
+     * {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream} for instant
      * result type
      * 
      * @param field
@@ -68,7 +68,7 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.providers.JpaQueryStream} for
+     * {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream} for
      * {@link Number} result type
      * 
      * @param field

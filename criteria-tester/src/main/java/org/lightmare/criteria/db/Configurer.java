@@ -7,8 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.lightmare.criteria.entities.Person;
-import org.lightmare.criteria.query.providers.JpaQueryProvider;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
+import org.lightmare.criteria.query.providers.jpa.JpaQueryProvider;
+import org.lightmare.criteria.query.providers.jpa.JpaQueryStream;
 
 /**
  * Creates data base and fills it with appropriated datas

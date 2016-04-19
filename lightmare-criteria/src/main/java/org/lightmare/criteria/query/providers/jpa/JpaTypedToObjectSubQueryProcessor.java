@@ -26,7 +26,6 @@ import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.orm.SubQueryOperator;
 import org.lightmare.criteria.query.orm.links.Operators;
 import org.lightmare.criteria.query.orm.links.SubQuery.SubQueryType;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Sub query processor for ALL, ANY, SOME clause and arbitrary object or

@@ -20,11 +20,11 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.providers;
+package org.lightmare.criteria.query.providers.jpa;
 
 import javax.persistence.EntityManager;
 
-import org.lightmare.criteria.query.providers.jpa.JpaQueryStreamBuilder;
+import org.lightmare.criteria.query.providers.QueryProvider;
 import org.lightmare.criteria.query.providers.jpa.layers.JpaProvider;
 
 /**
@@ -40,7 +40,7 @@ public abstract class JpaQueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         with delete statement
      */
     public static <T> JpaQueryStream<T> delete(final EntityManager em, Class<T> entityType) {
@@ -52,7 +52,7 @@ public abstract class JpaQueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         with update statement
      */
     public static <T> JpaQueryStream<T> update(final EntityManager em, Class<T> entityType) {
@@ -64,7 +64,7 @@ public abstract class JpaQueryProvider {
      * 
      * @param em
      * @param entityType
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         with select statement
      */
     public static <T> JpaQueryStream<T> select(final EntityManager em, Class<T> entityType) {

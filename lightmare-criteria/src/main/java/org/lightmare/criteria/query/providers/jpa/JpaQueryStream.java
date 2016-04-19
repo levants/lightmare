@@ -20,12 +20,10 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.lightmare.criteria.query.providers;
+package org.lightmare.criteria.query.providers.jpa;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.providers.jpa.JpaJoinExpressions;
-import org.lightmare.criteria.query.providers.jpa.JpaSubQueryProcessor;
 import org.lightmare.criteria.query.providers.sql.SQLStream;
 
 /**
@@ -49,7 +47,7 @@ public interface JpaQueryStream<T> extends SQLStream<T, JpaQueryStream<T>, JpaQu
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     * @return {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         current instance
      */
     <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer);

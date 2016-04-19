@@ -26,7 +26,6 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.orm.builders.SelectStream;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Query builder for JPA SELECT expressions

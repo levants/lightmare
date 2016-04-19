@@ -72,7 +72,7 @@ public interface ORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>> {
      *            maximum number of results to retrieve
      *
      * @return the same
-     *         {@link org.lightmare.criteria.query.providers.JpaQueryStream}
+     *         {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
      *         instance
      *
      * @throws IllegalArgumentException

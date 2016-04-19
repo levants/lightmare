@@ -4,7 +4,6 @@ import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.orm.subqueries.AbstractSubQueryStream;
 import org.lightmare.criteria.query.orm.subqueries.SubSelectStream;
-import org.lightmare.criteria.query.providers.JpaQueryStream;
 
 /**
  * Query builder for JPA sub query SELECT expressions
