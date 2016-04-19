@@ -24,8 +24,8 @@ package org.lightmare.criteria.query.orm.builders;
 
 import org.lightmare.criteria.query.QueryResolver;
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.orm.SQLStream;
 import org.lightmare.criteria.query.providers.jpa.layers.JpaJdbcQueryLayer;
-import org.lightmare.criteria.query.providers.sql.SQLStream;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**

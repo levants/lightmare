@@ -22,7 +22,7 @@
  */
 package org.lightmare.criteria.query.providers.jdbc;
 
-import org.lightmare.criteria.query.providers.sql.SQLStream;
+import org.lightmare.criteria.query.orm.SQLStream;
 
 /**
  * Query stream for JDBC query layers
