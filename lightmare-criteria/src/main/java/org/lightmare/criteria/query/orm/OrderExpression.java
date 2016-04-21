@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.orm;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.orm.links.Orders;
 
 /**
@@ -34,10 +34,10 @@ import org.lightmare.criteria.query.orm.links.Orders;
  * @param <T>
  *            entity type parameter
  * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  */
-interface OrderExpression<T, Q extends QueryStream<T, ? super Q>> {
+interface OrderExpression<T, Q extends LambdaStream<T, ? super Q>> {
 
     // =========================order=by=====================================//
 
@@ -46,7 +46,7 @@ interface OrderExpression<T, Q extends QueryStream<T, ? super Q>> {
      * 
      * @param dir
      * @param field
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F> Q order(String dir, EntityField<T, F> field);
 
@@ -54,7 +54,7 @@ interface OrderExpression<T, Q extends QueryStream<T, ? super Q>> {
      * Generates ORDER BY part for field
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <F> Q orderBy(EntityField<T, F> field) {
         return order(null, field);
@@ -64,7 +64,7 @@ interface OrderExpression<T, Q extends QueryStream<T, ? super Q>> {
      * Generates ORDER BY with DESC for field
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <F> Q orderByDesc(EntityField<T, F> field) {
         return order(Orders.DESC, field);

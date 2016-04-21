@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.SelectConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
@@ -39,13 +39,13 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type for generated query
  * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  * @param <O>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  */
-public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O extends QueryStream<Object[], ? super O>> {
+public interface SelectExpression<T, Q extends LambdaStream<T, ? super Q>, O extends LambdaStream<Object[], ? super O>> {
 
     /**
      * Select generator
@@ -93,16 +93,16 @@ public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O exte
      * 
      * @param type
      * @param select
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for special type
      */
-    <F, S extends QueryStream<F, ? super S>> S selectType(Class<F> type, Select select);
+    <F, S extends LambdaStream<F, ? super S>> S selectType(Class<F> type, Select select);
 
     /**
      * Custom select expression
      * 
      * @param select
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for {@link Object} array
      */
     default O select(Select select) {
@@ -114,10 +114,10 @@ public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O exte
      * 
      * @param type
      * @param select
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for special type
      */
-    default <F, S extends QueryStream<F, ? super S>> S selectType(Class<F> type, SelectConsumer select) {
+    default <F, S extends LambdaStream<F, ? super S>> S selectType(Class<F> type, SelectConsumer select) {
 
         S stream;
 
@@ -131,7 +131,7 @@ public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O exte
      * Custom select expression
      * 
      * @param select
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for {@link Object} array
      */
     default O selectAll(SelectConsumer select) {
@@ -149,16 +149,16 @@ public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O exte
      * 
      * @param expression
      * @param type
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for special type
      */
-    <F, S extends QueryStream<F, ? super S>> S select(String expression, Class<F> type);
+    <F, S extends LambdaStream<F, ? super S>> S select(String expression, Class<F> type);
 
     /**
      * Custom select expression
      * 
      * @param expression
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for {@link Object} array
      */
     default O select(String expression) {
@@ -171,8 +171,8 @@ public interface SelectExpression<T, Q extends QueryStream<T, ? super Q>, O exte
      * Gets instant field by type
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for field type
      */
-    <F, S extends QueryStream<F, ? super S>> S selectType(EntityField<T, F> field);
+    <F, S extends LambdaStream<F, ? super S>> S selectType(EntityField<T, F> field);
 }

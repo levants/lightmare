@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.orm;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.orm.links.Operators;
 
 /**
@@ -36,12 +36,12 @@ import org.lightmare.criteria.query.orm.links.Operators;
  * @param <T>
  *            entity type parameter
  * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  */
-interface ColumnExpression<T, Q extends QueryStream<T, ? super Q>> {
+interface ColumnExpression<T, Q extends LambdaStream<T, ? super Q>> {
 
-    // ========================= Entity self method composers ===============//
+    // ==========================Entity=Self=Method=Composers ===============//
 
     /**
      * Generates query part for instant fields with and operator
@@ -49,7 +49,7 @@ interface ColumnExpression<T, Q extends QueryStream<T, ? super Q>> {
      * @param field1
      * @param field2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F, S> Q operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2, String operator);
 
@@ -60,7 +60,7 @@ interface ColumnExpression<T, Q extends QueryStream<T, ? super Q>> {
      * @param field1
      * @param operator2
      * @param field2
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F, E, S, L> Q operate(EntityField<T, ? extends F> field1, String operator1, EntityField<S, ? extends F> field2,
             String operator2, EntityField<L, E> field3);
@@ -72,7 +72,7 @@ interface ColumnExpression<T, Q extends QueryStream<T, ? super Q>> {
      * @param field2
      * @param field3
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F, S> Q operate(EntityField<T, ? extends F> field1, EntityField<S, ? extends F> field2,
             EntityField<S, ? extends F> field3, String operator);
@@ -161,7 +161,7 @@ interface ColumnExpression<T, Q extends QueryStream<T, ? super Q>> {
      * @param field1
      * @param field2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F, S> Q operateCollection(EntityField<T, F> field1, EntityField<S, Collection<F>> field2, String operator);
 

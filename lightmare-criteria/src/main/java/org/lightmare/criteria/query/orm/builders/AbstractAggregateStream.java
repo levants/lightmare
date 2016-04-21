@@ -26,6 +26,7 @@ import java.io.Serializable;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.orm.links.Aggregates;
@@ -60,8 +61,7 @@ abstract class AbstractAggregateStream<T, Q extends QueryStream<T, ? super Q>, O
 
     /**
      * Generates aggregate field and
-     * {@link org.lightmare.criteria.query.orm.links.Aggregates} type
-     * expression
+     * {@link org.lightmare.criteria.query.orm.links.Aggregates} type expression
      * 
      * @param field
      * @param aggregate
@@ -101,7 +101,7 @@ abstract class AbstractAggregateStream<T, Q extends QueryStream<T, ? super Q>, O
     }
 
     @Override
-    public <F, R extends Number, L extends QueryStream<R, ? super L>> L aggregate(EntityField<T, F> field,
+    public <F, R extends Number, L extends LambdaStream<R, ? super L>> L aggregate(EntityField<T, F> field,
             Aggregates function, Class<R> type) {
 
         L stream;
@@ -115,7 +115,7 @@ abstract class AbstractAggregateStream<T, Q extends QueryStream<T, ? super Q>, O
     }
 
     @Override
-    public <N extends Number, L extends QueryStream<N, ? super L>> L aggregate(EntityField<T, N> field,
+    public <N extends Number, L extends LambdaStream<N, ? super L>> L aggregate(EntityField<T, N> field,
             Aggregates function) {
 
         L stream;

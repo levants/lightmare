@@ -45,8 +45,7 @@ public interface ResultStream<T> {
     Set<ParameterTuple> getParameters();
 
     /**
-     * Runs generated query {@link javax.persistence.Query#getSingleResult()}
-     * and retrieves single result for element count
+     * Runs elements count and retrieves single result for element count
      * 
      * @return {@link Long} element count value
      */

@@ -27,7 +27,6 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.LambdaStream;
-import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.orm.links.On;
 
 /**
@@ -37,10 +36,10 @@ import org.lightmare.criteria.query.orm.links.On;
  * @param <T>
  *            entity type parameter
  * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  */
-public interface JoinOperator<T, Q extends QueryStream<T, ? super Q>> {
+public interface JoinOperator<T, Q extends LambdaStream<T, ? super Q>> {
 
     /**
      * Processes JOIN statement with ON clause
@@ -49,7 +48,7 @@ public interface JoinOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param expression
      * @param on
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> Q processJoin(EntityField<T, C> field,
             String expression, QueryConsumer<E, S> on, QueryConsumer<E, S> consumer);
@@ -61,7 +60,7 @@ public interface JoinOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param expression
      * @param on
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> Q processJoinOn(EntityField<T, C> field,
             String expression, On<E, S> on, QueryConsumer<E, S> consumer) {
@@ -74,7 +73,7 @@ public interface JoinOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param field
      * @param expression
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <E, C extends Collection<E>, S extends LambdaStream<E, ? super S>> Q processJoin(EntityField<T, C> field,
             String expression, QueryConsumer<E, S> consumer) {
@@ -88,7 +87,7 @@ public interface JoinOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param expression
      * @param on
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <E, S extends LambdaStream<E, ? super S>> Q processJoin(Class<E> joinType, String expression,
             QueryConsumer<E, S> on, QueryConsumer<E, S> consumer);
@@ -100,7 +99,7 @@ public interface JoinOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param expression
      * @param on
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <E, S extends LambdaStream<E, ? super S>> Q processJoinOn(Class<E> joinType, String expression, On<E, S> on,
             QueryConsumer<E, S> consumer) {
@@ -113,7 +112,7 @@ public interface JoinOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param joinType
      * @param expression
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <E, S extends LambdaStream<E, ? super S>> Q processJoin(Class<E> joinType, String expression,
             QueryConsumer<E, S> consumer) {

@@ -26,7 +26,7 @@ import java.util.Map;
 
 import javax.persistence.TemporalType;
 
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.utils.ObjectUtils;
 
@@ -36,8 +36,11 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @author Levan Tsinadze
  * @param <T>
  *            entity type for appropriated query
+ * @param <Q>
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
+ *            type parameter
  */
-public interface ORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>> {
+public interface ORMQueryWrapper<T, Q extends LambdaStream<T, ? super Q>> {
 
     /**
      * Adds custom parameter to composed query
@@ -71,8 +74,7 @@ public interface ORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>> {
      * @param maxResult
      *            maximum number of results to retrieve
      *
-     * @return the same
-     *         {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
+     * @return the same {@link org.lightmare.criteria.query.LambdaStream}
      *         instance
      *
      * @throws IllegalArgumentException
@@ -91,11 +93,13 @@ public interface ORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>> {
      */
     int getMaxResults();
 
-    // ================================Wrapped JPA Elements===================//
+    // ================================Wrapped=Layer=Elements================//
     /**
-     * Gets wrapped {@link javax.persistence.EntityManager} instance
+     * Gets wrapped {@link org.lightmare.criteria.query.layers.LayerProvider}
+     * instance
      * 
-     * @return {@link javax.persistence.EntityManager} instance
+     * @return {@link org.lightmare.criteria.query.layers.LayerProvider}
+     *         instance
      */
     LayerProvider getLayerProvider();
 
@@ -114,7 +118,7 @@ public interface ORMQueryWrapper<T, Q extends QueryStream<T, ? super Q>> {
     String getAlias();
 
     /**
-     * Closes wrapped {@link javax.persistence.EntityManager} instance
+     * Closes wrapped layer provider instance
      */
     default void close() {
         ObjectUtils.nonNull(getLayerProvider(), LayerProvider::close);

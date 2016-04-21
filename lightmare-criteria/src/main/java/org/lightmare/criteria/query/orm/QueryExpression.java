@@ -22,7 +22,6 @@
  */
 package org.lightmare.criteria.query.orm;
 
-import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.query.QueryStream;
 
 /**
@@ -50,17 +49,6 @@ public interface QueryExpression<T, Q extends QueryStream<T, ? super Q>, O exten
      * @return {@link Class} of entity type T
      */
     Class<T> getEntityType();
-
-    // ======================================================================//
-
-    /**
-     * Set clause for bulk UPDATE query
-     * 
-     * @param field
-     * @param value
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
-     */
-    <F> Q set(EntityField<T, F> field, F value);
 
     // ======================================================================//
 

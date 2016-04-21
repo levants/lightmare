@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.orm;
 import java.util.Collection;
 
 import org.lightmare.criteria.functions.EntityField;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.orm.links.Operators;
 import org.lightmare.criteria.query.orm.links.Parts;
@@ -42,7 +42,7 @@ import org.lightmare.criteria.utils.StringUtils;
  *            {@link org.lightmare.criteria.query.QueryStream} implementation
  *            parameter
  */
-interface Expression<T, Q extends QueryStream<T, ? super Q>> {
+interface Expression<T, Q extends LambdaStream<T, ? super Q>> {
 
     /**
      * Gets data base layer provider implementation
@@ -52,6 +52,17 @@ interface Expression<T, Q extends QueryStream<T, ? super Q>> {
      */
     LayerProvider getLayerProvider();
 
+    // =================Set=clause=for=update=statement======================//
+
+    /**
+     * Set clause for bulk UPDATE query
+     * 
+     * @param field
+     * @param value
+     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     */
+    <F> Q set(EntityField<T, F> field, F value);
+
     // ========================= Entity method composers ====================//
 
     /**
@@ -59,7 +70,7 @@ interface Expression<T, Q extends QueryStream<T, ? super Q>> {
      * 
      * @param field
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F> Q operate(EntityField<T, F> field, String operator);
 
@@ -69,7 +80,7 @@ interface Expression<T, Q extends QueryStream<T, ? super Q>> {
      * @param field
      * @param value
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F> Q operate(EntityField<T, ? extends F> field, Object value, String operator);
 
@@ -80,7 +91,7 @@ interface Expression<T, Q extends QueryStream<T, ? super Q>> {
      * @param value1
      * @param value2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F> Q operate(EntityField<T, ? extends F> field, Object value1, Object value2, String operator);
 
@@ -92,7 +103,7 @@ interface Expression<T, Q extends QueryStream<T, ? super Q>> {
      * @param value1
      * @param operator2
      * @param value2
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F> Q operate(EntityField<T, ? extends F> field, String operator1, Object value1, String operator2, Object value2);
 
@@ -157,7 +168,7 @@ interface Expression<T, Q extends QueryStream<T, ? super Q>> {
      * @param field
      * @param values
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F> Q operateCollection(EntityField<T, F> field, Collection<F> values, String operator);
 
@@ -168,7 +179,7 @@ interface Expression<T, Q extends QueryStream<T, ? super Q>> {
      * @param value
      * @param field
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <S, F> Q operateCollection(Object value, EntityField<S, Collection<F>> field, String operator);
 

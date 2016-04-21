@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 import org.lightmare.criteria.query.orm.links.Clauses;
@@ -35,9 +36,8 @@ import org.lightmare.criteria.query.orm.links.Operators.Brackets;
 import org.lightmare.criteria.utils.StringUtils;
 
 /**
- * Implementation of
- * {@link org.lightmare.criteria.query.orm.SelectExpression} to
- * generate SELECT for instant fields
+ * Implementation of {@link org.lightmare.criteria.query.orm.SelectExpression}
+ * to generate SELECT for instant fields
  * 
  * @author Levan Tsinadze
  *
@@ -150,7 +150,7 @@ abstract class AbstractSelectStatements<T, Q extends QueryStream<T, ? super Q>, 
     }
 
     @Override
-    public <F, S extends QueryStream<F, ? super S>> S selectType(Class<F> type, Select select) {
+    public <F, S extends LambdaStream<F, ? super S>> S selectType(Class<F> type, Select select) {
 
         S stream;
 
@@ -161,7 +161,7 @@ abstract class AbstractSelectStatements<T, Q extends QueryStream<T, ? super Q>, 
     }
 
     @Override
-    public <F, S extends QueryStream<F, ? super S>> S select(String expression, Class<F> type) {
+    public <F, S extends LambdaStream<F, ? super S>> S select(String expression, Class<F> type) {
 
         S stream;
 
@@ -173,7 +173,7 @@ abstract class AbstractSelectStatements<T, Q extends QueryStream<T, ? super Q>, 
     }
 
     @Override
-    public <F, S extends QueryStream<F, ? super S>> S selectType(EntityField<T, F> field) {
+    public <F, S extends LambdaStream<F, ? super S>> S selectType(EntityField<T, F> field) {
 
         S stream;
 

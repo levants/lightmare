@@ -24,7 +24,7 @@ package org.lightmare.criteria.query.orm;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.GroupByConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.orm.links.Aggregates;
 
 /**
@@ -35,58 +35,57 @@ import org.lightmare.criteria.query.orm.links.Aggregates;
  * @param <T>
  *            entity type parameter
  * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  */
-public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
+public interface AggregateFunction<T, Q extends LambdaStream<Object[], ?>> {
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream} for
-     * {@link Object} array as result
+     * {@link org.lightmare.criteria.query.LambdaStream} for {@link Object}
+     * array as result
      * 
      * @param field
      * @param function
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F> Q aggregate(EntityField<T, F> field, Aggregates function, GroupByConsumer<T, Q> consumer);
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream} for instant
-     * result type
+     * {@link org.lightmare.criteria.query.LambdaStream} for instant result type
      * 
      * @param field
      * @param function
      * @param type
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for numeric result type
      */
-    <F, R extends Number, L extends QueryStream<R, ? super L>> L aggregate(EntityField<T, F> field, Aggregates function,
-            Class<R> type);
+    <F, R extends Number, L extends LambdaStream<R, ? super L>> L aggregate(EntityField<T, F> field,
+            Aggregates function, Class<R> type);
 
     /**
      * Operates with aggregate function and generates
-     * {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream} for
-     * {@link Number} result type
+     * {@link org.lightmare.criteria.query.LambdaStream} for {@link Number}
+     * result type
      * 
      * @param field
      * @param function
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for numeric result type
      */
-    <N extends Number, L extends QueryStream<N, ? super L>> L aggregate(EntityField<T, N> field, Aggregates function);
+    <N extends Number, L extends LambdaStream<N, ? super L>> L aggregate(EntityField<T, N> field, Aggregates function);
 
     /**
      * Create an aggregate expression applying the AVG operation.
      *
      * @param field
      *
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for numeric result type
      */
-    default <N extends Number, L extends QueryStream<Double, ? super L>> L avg(EntityField<T, N> field) {
+    default <N extends Number, L extends LambdaStream<Double, ? super L>> L avg(EntityField<T, N> field) {
         return aggregate(field, Aggregates.AVG, Double.class);
     }
 
@@ -96,7 +95,7 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <N extends Number> Q avg(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.AVG, consumer);
@@ -108,10 +107,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * @param field
      *            expression representing input value to sum operation
      *
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for numeric result type
      */
-    default <N extends Number, L extends QueryStream<N, ? super L>> L sum(EntityField<T, N> field) {
+    default <N extends Number, L extends LambdaStream<N, ? super L>> L sum(EntityField<T, N> field) {
         return aggregate(field, Aggregates.SUM);
     }
 
@@ -121,7 +120,7 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <N extends Number> Q sum(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.SUM, consumer);
@@ -133,10 +132,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * @param field
      *            expression representing input value to max operation
      *
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for numeric result type
      */
-    default <N extends Number, L extends QueryStream<N, ? super L>> L max(EntityField<T, N> field) {
+    default <N extends Number, L extends LambdaStream<N, ? super L>> L max(EntityField<T, N> field) {
         return aggregate(field, Aggregates.MAX);
     }
 
@@ -146,7 +145,7 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <N extends Number> Q max(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.MAX, consumer);
@@ -158,10 +157,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * @param field
      *            expression representing input value to MIN operation
      *
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for numeric result type
      */
-    default <N extends Number, L extends QueryStream<N, ? super L>> L min(EntityField<T, N> field) {
+    default <N extends Number, L extends LambdaStream<N, ? super L>> L min(EntityField<T, N> field) {
         return aggregate(field, Aggregates.MIN);
     }
 
@@ -171,7 +170,7 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <N extends Number> Q min(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.MIN, consumer);
@@ -184,10 +183,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * @param field
      *            expression representing input value to GREATEST operation
      *
-     * @return {{@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {{@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for numeric result type greatest expression
      */
-    default <N extends Number, L extends QueryStream<N, ? super L>> L greatest(EntityField<T, N> field) {
+    default <N extends Number, L extends LambdaStream<N, ? super L>> L greatest(EntityField<T, N> field) {
         return aggregate(field, Aggregates.GREATEST);
     }
 
@@ -197,7 +196,7 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <N extends Number> Q greatest(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.GREATEST, consumer);
@@ -210,10 +209,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * @param field
      *            expression representing input value to LEAST operation
      *
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for numeric result type least expression
      */
-    default <N extends Number, L extends QueryStream<N, ? super L>> L least(EntityField<T, N> field) {
+    default <N extends Number, L extends LambdaStream<N, ? super L>> L least(EntityField<T, N> field) {
         return aggregate(field, Aggregates.LEAST);
     }
 
@@ -223,7 +222,7 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <N extends Number> Q least(EntityField<T, N> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.LEAST, consumer);
@@ -235,10 +234,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * @param field
      *            expression representing input value to count operation
      *
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for numeric result type count expression
      */
-    default <F, L extends QueryStream<Long, ? super L>> L count(EntityField<T, F> field) {
+    default <F, L extends LambdaStream<Long, ? super L>> L count(EntityField<T, F> field) {
         return aggregate(field, Aggregates.COUNT, Long.class);
     }
 
@@ -261,10 +260,10 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      *            expression representing input value to count distinct
      *            operation
      *
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for numeric result type count distinct expression
      */
-    default <F, L extends QueryStream<Long, ? super L>> L countDistinct(EntityField<T, F> field) {
+    default <F, L extends LambdaStream<Long, ? super L>> L countDistinct(EntityField<T, F> field) {
         return aggregate(field, Aggregates.COUNT, Long.class);
     }
 
@@ -274,7 +273,7 @@ public interface AggregateFunction<T, Q extends QueryStream<Object[], ?>> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     default <F> Q countDistinct(EntityField<T, F> field, GroupByConsumer<T, Q> consumer) {
         return aggregate(field, Aggregates.COUNT_DISTINCT, consumer);

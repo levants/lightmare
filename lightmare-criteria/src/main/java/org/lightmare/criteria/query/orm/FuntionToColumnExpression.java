@@ -24,7 +24,7 @@ package org.lightmare.criteria.query.orm;
 
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.orm.links.Operators;
 
 /**
@@ -35,10 +35,10 @@ import org.lightmare.criteria.query.orm.links.Operators;
  * @param <T>
  *            entity type parameter
  * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  */
-interface FuntionToColumnExpression<T, Q extends QueryStream<T, ? super Q>> {
+interface FuntionToColumnExpression<T, Q extends LambdaStream<T, ? super Q>> {
 
     /**
      * Generates query clause with expression between columns
@@ -46,7 +46,7 @@ interface FuntionToColumnExpression<T, Q extends QueryStream<T, ? super Q>> {
      * @param function
      * @param operator
      * @param field
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     <F> Q operateColumn(FunctionConsumer<T> function, String operator, EntityField<T, F> field);
 

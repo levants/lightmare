@@ -23,7 +23,7 @@
 package org.lightmare.criteria.query.orm;
 
 import org.lightmare.criteria.functions.FunctionConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.orm.links.Operators;
 
 /**
@@ -34,10 +34,10 @@ import org.lightmare.criteria.query.orm.links.Operators;
  * @param <T>
  *            entity type parameter
  * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  */
-interface FunctionToFunctionExpression<T, Q extends QueryStream<T, ? super Q>> {
+interface FunctionToFunctionExpression<T, Q extends LambdaStream<T, ? super Q>> {
 
     /**
      * Generates query clause with expression between functions
@@ -45,7 +45,7 @@ interface FunctionToFunctionExpression<T, Q extends QueryStream<T, ? super Q>> {
      * @param function1
      * @param function2
      * @param operator
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
     Q operateFunctions(FunctionConsumer<T> function1, FunctionConsumer<T> function2, String operator);
 

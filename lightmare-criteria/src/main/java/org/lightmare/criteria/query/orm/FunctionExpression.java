@@ -22,7 +22,7 @@
  */
 package org.lightmare.criteria.query.orm;
 
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 
 /**
  * Processes functional expressions for JPA query
@@ -32,10 +32,10 @@ import org.lightmare.criteria.query.QueryStream;
  * @param <T>
  *            entity type parameter
  * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  */
-interface FunctionExpression<T, Q extends QueryStream<T, ? super Q>>
+interface FunctionExpression<T, Q extends LambdaStream<T, ? super Q>>
         extends FuntionToObjectExpression<T, Q>, FunctionToFunctionExpression<T, Q>, FuntionToColumnExpression<T, Q> {
 
 }

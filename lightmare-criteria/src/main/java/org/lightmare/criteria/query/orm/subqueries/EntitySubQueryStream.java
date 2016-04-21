@@ -23,6 +23,7 @@
 package org.lightmare.criteria.query.orm.subqueries;
 
 import org.lightmare.criteria.functions.EntityField;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.orm.links.Aggregates;
@@ -64,12 +65,12 @@ public abstract class EntitySubQueryStream<S, T, Q extends QueryStream<S, ? supe
     }
 
     @Override
-    public <F, L extends QueryStream<F, ? super L>> L selectType(EntityField<S, F> field) {
+    public <F, L extends LambdaStream<F, ? super L>> L selectType(EntityField<S, F> field) {
         return subSelectOne(field);
     }
 
     @Override
-    public <F, R extends Number, L extends QueryStream<R, ? super L>> L aggregate(EntityField<S, F> field,
+    public <F, R extends Number, L extends LambdaStream<R, ? super L>> L aggregate(EntityField<S, F> field,
             Aggregates function, Class<R> type) {
         return subAggregate(field, function, type);
     }

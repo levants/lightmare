@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.orm;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.HavingConsumer;
 import org.lightmare.criteria.functions.SelectConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.orm.SelectExpression.Select;
 import org.lightmare.criteria.utils.ObjectUtils;
 
@@ -37,10 +37,10 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @param <T>
  *            entity type parameter
  * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  */
-public interface GroupExpression<T, Q extends QueryStream<Object[], ?>> {
+public interface GroupExpression<T, Q extends LambdaStream<Object[], ?>> {
 
     /**
      * Generates HAVING clause for appropriated group by expression
@@ -53,7 +53,7 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ?>> {
      * Group aggregate functions by fields
      * 
      * @param select
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for {@link Object} array
      */
     Q groupBy(Select select);
@@ -63,7 +63,7 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ?>> {
      * 
      * @param select
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      *         for {@link Object} array
      */
     default Q groupBy(Select select, HavingConsumer consumer) {
@@ -80,7 +80,7 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ?>> {
      * Grouping expression with consumer
      * 
      * @param select
-     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     * @return {@link org.lightmare.criteria.query.LambdaStream} for
      *         {@link Object} array
      */
     Q group(SelectConsumer select);
@@ -90,7 +90,7 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ?>> {
      * 
      * @param select
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     * @return {@link org.lightmare.criteria.query.LambdaStream} for
      *         {@link Object} array
      */
     default Q group(SelectConsumer select, HavingConsumer consumer) {
@@ -107,7 +107,7 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ?>> {
      * Group by field
      * 
      * @param field
-     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     * @return {@link org.lightmare.criteria.query.LambdaStream} for
      *         {@link Object} array
      */
     <F> Q groupBy(EntityField<T, F> field);
@@ -117,7 +117,7 @@ public interface GroupExpression<T, Q extends QueryStream<Object[], ?>> {
      * 
      * @param field
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} for
+     * @return {@link org.lightmare.criteria.query.LambdaStream} for
      *         {@link Object} array
      */
     default <F> Q groupBy(EntityField<T, F> field, HavingConsumer consumer) {

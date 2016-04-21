@@ -27,6 +27,7 @@ import java.util.Collection;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
+import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.layers.LayerProvider;
 
@@ -170,13 +171,13 @@ public abstract class EntityQueryStream<T, Q extends QueryStream<T, ? super Q>, 
 
     /**
      * Creates
-     * {@link org.lightmare.criteria.query.orm.subqueries.SubQueryStream}
-     * for instant {@link Class} entity type
+     * {@link org.lightmare.criteria.query.orm.subqueries.SubQueryStream} for
+     * instant {@link Class} entity type
      * 
      * @param type
      * @param consumer
      */
-    protected <S, L extends QueryStream<S, ? super L>> void initSubQuery(Class<S> type, QueryConsumer<S, L> consumer) {
+    protected <S, L extends LambdaStream<S, ? super L>> void initSubQuery(Class<S> type, QueryConsumer<S, L> consumer) {
 
         L query = initSubQuery(type);
         acceptAndCall(consumer, query);
@@ -185,7 +186,7 @@ public abstract class EntityQueryStream<T, Q extends QueryStream<T, ? super Q>, 
     }
 
     @Override
-    public <S, L extends QueryStream<S, ? super L>> Q operateSubQuery(Class<S> type, QueryConsumer<S, L> consumer) {
+    public <S, L extends LambdaStream<S, ? super L>> Q operateSubQuery(Class<S> type, QueryConsumer<S, L> consumer) {
 
         Q stream = stream();
 
@@ -196,7 +197,7 @@ public abstract class EntityQueryStream<T, Q extends QueryStream<T, ? super Q>, 
     }
 
     @Override
-    public <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(EntityField<T, F> field, String operator,
+    public <F, S, L extends LambdaStream<S, ? super L>> Q operateSubQuery(EntityField<T, F> field, String operator,
             Class<S> type, QueryConsumer<S, L> consumer) {
 
         Q stream = stream();
@@ -209,7 +210,7 @@ public abstract class EntityQueryStream<T, Q extends QueryStream<T, ? super Q>, 
     }
 
     @Override
-    public <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(Object value, String operator, Class<S> type,
+    public <F, S, L extends LambdaStream<S, ? super L>> Q operateSubQuery(Object value, String operator, Class<S> type,
             QueryConsumer<S, L> consumer) {
 
         Q stream = stream();
@@ -223,7 +224,7 @@ public abstract class EntityQueryStream<T, Q extends QueryStream<T, ? super Q>, 
     }
 
     @Override
-    public <F, S, L extends QueryStream<S, ? super L>> Q operateFunctionWithSubQuery(FunctionConsumer<T> function,
+    public <F, S, L extends LambdaStream<S, ? super L>> Q operateFunctionWithSubQuery(FunctionConsumer<T> function,
             String operator, Class<S> type, QueryConsumer<S, L> consumer) {
 
         Q stream = stream();
@@ -236,7 +237,7 @@ public abstract class EntityQueryStream<T, Q extends QueryStream<T, ? super Q>, 
     }
 
     @Override
-    public <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(String operator, Class<S> type,
+    public <F, S, L extends LambdaStream<S, ? super L>> Q operateSubQuery(String operator, Class<S> type,
             QueryConsumer<S, L> consumer) {
 
         Q stream = stream();

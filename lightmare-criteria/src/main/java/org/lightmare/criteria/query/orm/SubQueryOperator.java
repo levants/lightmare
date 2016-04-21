@@ -25,7 +25,7 @@ package org.lightmare.criteria.query.orm;
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.FunctionConsumer;
 import org.lightmare.criteria.functions.QueryConsumer;
-import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.query.LambdaStream;
 
 /**
  * Provides methods to process sub queries
@@ -36,21 +36,22 @@ import org.lightmare.criteria.query.QueryStream;
  *            entity type parameter for sub query
  * 
  * @param <Q>
- *            {@link org.lightmare.criteria.query.QueryStream} implementation
+ *            {@link org.lightmare.criteria.query.LambdaStream} implementation
  *            parameter
  */
-public interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
+public interface SubQueryOperator<T, Q extends LambdaStream<T, ? super Q>> {
 
     /**
-     * Generates {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
-     * for S type
+     * Generates
+     * {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream} for S
+     * type
      * 
      * @param type
      * @param consumer
-     * @return { {@link org.lightmare.criteria.query.QueryStream} implementation
-     *         similar stream for sub query
+     * @return { {@link org.lightmare.criteria.query.LambdaStream}
+     *         implementation similar stream for sub query
      */
-    <S, L extends QueryStream<S, ? super L>> Q operateSubQuery(Class<S> type, QueryConsumer<S, L> consumer);
+    <S, L extends LambdaStream<S, ? super L>> Q operateSubQuery(Class<S> type, QueryConsumer<S, L> consumer);
 
     /**
      * Processes sub query with operator for instant type with consumer
@@ -58,9 +59,9 @@ public interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(String operator, Class<S> type,
+    <F, S, L extends LambdaStream<S, ? super L>> Q operateSubQuery(String operator, Class<S> type,
             QueryConsumer<S, L> consumer);
 
     /**
@@ -71,9 +72,9 @@ public interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(EntityField<T, F> field, String operator,
+    <F, S, L extends LambdaStream<S, ? super L>> Q operateSubQuery(EntityField<T, F> field, String operator,
             Class<S> type, QueryConsumer<S, L> consumer);
 
     /**
@@ -84,9 +85,9 @@ public interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F, S, L extends QueryStream<S, ? super L>> Q operateSubQuery(Object value, String operator, Class<S> type,
+    <F, S, L extends LambdaStream<S, ? super L>> Q operateSubQuery(Object value, String operator, Class<S> type,
             QueryConsumer<S, L> consumer);
 
     /**
@@ -97,8 +98,8 @@ public interface SubQueryOperator<T, Q extends QueryStream<T, ? super Q>> {
      * @param operator
      * @param type
      * @param consumer
-     * @return {@link org.lightmare.criteria.query.QueryStream} implementation
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
      */
-    <F, S, L extends QueryStream<S, ? super L>> Q operateFunctionWithSubQuery(FunctionConsumer<T> function,
+    <F, S, L extends LambdaStream<S, ? super L>> Q operateFunctionWithSubQuery(FunctionConsumer<T> function,
             String operator, Class<S> type, QueryConsumer<S, L> consumer);
 }
