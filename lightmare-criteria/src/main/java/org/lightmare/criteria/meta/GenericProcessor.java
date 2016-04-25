@@ -36,7 +36,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @author Levan Tsinadze
  *
  */
-public abstract class GenericProcessor {
+abstract class GenericProcessor {
 
     /**
      * Sets generic type from {@link java.lang.reflect.ParameterizedType}
@@ -69,7 +69,7 @@ public abstract class GenericProcessor {
      * 
      * @param tuple
      */
-    public static void setGenericType(QueryTuple tuple) {
+    protected static void setGenericType(QueryTuple tuple) {
         ObjectUtils.nonNull(tuple.getField(), c -> setGenericType(c, tuple));
     }
 }

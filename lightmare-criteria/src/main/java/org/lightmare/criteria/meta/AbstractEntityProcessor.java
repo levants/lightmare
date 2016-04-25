@@ -22,7 +22,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @author Levan Tsinadze
  *
  */
-abstract class AbstractEntityProcessor {
+abstract class AbstractEntityProcessor extends ColumnProcessor {
 
     private static final Logger LOG = Logger.getLogger(AbstractEntityProcessor.class);
 

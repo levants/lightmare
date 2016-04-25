@@ -26,9 +26,7 @@ import java.beans.Introspector;
 import java.util.function.Function;
 
 import org.apache.log4j.Logger;
-import org.lightmare.criteria.meta.ColumnProcessor;
 import org.lightmare.criteria.meta.EntityProcessor;
-import org.lightmare.criteria.meta.GenericProcessor;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.tuples.ResolverTuple;
 import org.lightmare.criteria.utils.CollectionUtils;
@@ -162,10 +160,7 @@ class AbstractFieldResolver {
      * @param tuple
      */
     public static void setGenericData(QueryTuple tuple) {
-
-        EntityProcessor.setMethodAndField(tuple);
-        ColumnProcessor.setTemporalType(tuple);
-        GenericProcessor.setGenericType(tuple);
+        EntityProcessor.setGenericData(tuple);
     }
 
     /**

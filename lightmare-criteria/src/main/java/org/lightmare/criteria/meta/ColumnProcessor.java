@@ -37,7 +37,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @author Levan Tsinadze
  *
  */
-public abstract class ColumnProcessor {
+abstract class ColumnProcessor extends GenericProcessor {
 
     /**
      * Gets {@link javax.persistence.Temporal} annotation from
@@ -68,7 +68,7 @@ public abstract class ColumnProcessor {
      * 
      * @param tuple
      */
-    public static void setTemporalType(QueryTuple tuple) {
+    protected static void setTemporalType(QueryTuple tuple) {
         Temporal temporal = getTemporal(tuple.getField(), tuple.getMethod());
         ObjectUtils.nonNull(temporal, tuple::setTemporalType);
     }

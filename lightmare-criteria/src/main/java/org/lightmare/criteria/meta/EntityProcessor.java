@@ -65,11 +65,28 @@ public class EntityProcessor extends AbstractEntityProcessor {
      * 
      * @param tuple
      */
-    public static void setMethodAndField(QueryTuple tuple) {
+    private static void setMethodAndField(QueryTuple tuple) {
 
         Couple<Method, Field> couple = getEntityMembers(tuple);
         ObjectUtils.nonNull(couple.getFirst(), c -> setProperField(c, tuple));
         ObjectUtils.nonNull(couple.getSecond(), tuple::setField);
+    }
+
+    /**
+     * Sets {@link java.lang.reflect.Method} and {@link java.lang.reflect.Field}
+     * by names, sets appropriated {@link javax.persistence.TemporalType} from
+     * {@link java.lang.reflect.Field} or {@link java.lang.reflect.Method}
+     * annotations and sets generic type of collection
+     * {@link java.lang.reflect.Field} to passed
+     * {@link org.lightmare.criteria.tuples.QueryTuple} instance
+     * 
+     * @param tuple
+     */
+    public static void setGenericData(QueryTuple tuple) {
+
+        setMethodAndField(tuple);
+        setTemporalType(tuple);
+        setGenericType(tuple);
     }
 
     /**
