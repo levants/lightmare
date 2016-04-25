@@ -37,7 +37,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @author Levan Tsinadze
  *
  */
-public class ColumnProcessor {
+public abstract class ColumnProcessor {
 
     /**
      * Gets {@link javax.persistence.Temporal} annotation from

@@ -36,7 +36,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  * @author Levan Tsinadze
  *
  */
-public class GenericProcessor {
+public abstract class GenericProcessor {
 
     /**
      * Sets generic type from {@link java.lang.reflect.ParameterizedType}
