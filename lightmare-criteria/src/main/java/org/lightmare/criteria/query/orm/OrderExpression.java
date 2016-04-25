@@ -39,8 +39,6 @@ import org.lightmare.criteria.query.orm.links.Orders;
  */
 interface OrderExpression<T, Q extends LambdaStream<T, ? super Q>> {
 
-    // =========================order=by=====================================//
-
     /**
      * Generates ORDER BY part for field
      * 
