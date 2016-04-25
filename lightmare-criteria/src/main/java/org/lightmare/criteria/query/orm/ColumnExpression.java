@@ -41,8 +41,6 @@ import org.lightmare.criteria.query.orm.links.Operators;
  */
 interface ColumnExpression<T, Q extends LambdaStream<T, ? super Q>> {
 
-    // ==========================Entity=Self=Method=Composers ===============//
-
     /**
      * Generates query part for instant fields with and operator
      * 

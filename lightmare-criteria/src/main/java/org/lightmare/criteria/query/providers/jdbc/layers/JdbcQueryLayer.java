@@ -77,6 +77,14 @@ public class JdbcQueryLayer<T> implements JpaJdbcQueryLayer<T> {
     @FunctionalInterface
     private static interface JdbcFunction {
 
+        /**
+         * Applies query and generates {@link java.sql.PreparedStatement}
+         * instance
+         * 
+         * @param sql
+         * @return {@link java.sql.PreparedStatement} for query
+         * @throws SQLException
+         */
         PreparedStatement apply(String sql) throws SQLException;
     }
 
@@ -91,6 +99,12 @@ public class JdbcQueryLayer<T> implements JpaJdbcQueryLayer<T> {
     @FunctionalInterface
     private static interface JdbcSupplier<R> {
 
+        /**
+         * Function to retrieve data from query result
+         * 
+         * @return R entity instance
+         * @throws SQLException
+         */
         R supply() throws SQLException;
     }
 
@@ -105,6 +119,12 @@ public class JdbcQueryLayer<T> implements JpaJdbcQueryLayer<T> {
     @FunctionalInterface
     private static interface JdbcConsumer<T> {
 
+        /**
+         * Parameters setter for JDBC query
+         * 
+         * @param t
+         * @throws SQLException
+         */
         void accept(T t) throws SQLException;
     }
 
