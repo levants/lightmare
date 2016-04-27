@@ -29,10 +29,9 @@ import org.apache.log4j.Logger;
 import org.lightmare.criteria.meta.EntityProcessor;
 import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.tuples.ResolverTuple;
-import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ClassUtils;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
-import org.objectweb.asm.Type;
 
 /**
  * Abstract class to resolve entity field and entity names for JPA query
@@ -42,12 +41,6 @@ import org.objectweb.asm.Type;
  *
  */
 class AbstractFieldResolver {
-
-    // Getter method prefix
-    private static final String GET = "get";
-
-    // Getter / setter method prefix end index
-    private static final int START_INDEX = GET.length();
 
     // Debug message pattern
     private static final String DEBUG_MESSAGE_PATTERN = " - %s.%s";
@@ -88,7 +81,7 @@ class AbstractFieldResolver {
 
         String fieldName;
 
-        String raw = methodName.substring(START_INDEX);
+        String raw = methodName.substring(ClassUtils.GETTER_START_INDEX);
         fieldName = Introspector.decapitalize(raw);
 
         return fieldName;
@@ -101,35 +94,7 @@ class AbstractFieldResolver {
      * @return {@link String} entity name
      */
     protected static String resolveEntityName(String owner) {
-        return Type.getObjectType(owner).getClassName();
-    }
-
-    /**
-     * Validates getter method by arguments and return type
-     * 
-     * @param methodType
-     * @return <code>boolean</code> validation result
-     */
-    private static boolean validGetter(Type methodType) {
-        return (CollectionUtils.isEmpty(methodType.getArgumentTypes())
-                && ObjectUtils.notEquals(Type.VOID_TYPE, methodType.getReturnType()));
-    }
-
-    /**
-     * Validates if resolved method is valid getter for entity field
-     * 
-     * @param desc
-     * @param name
-     * @return <code>boolean</code> validation result
-     */
-    private static boolean valid(String desc, String methodName) {
-
-        boolean valid;
-
-        Type methodType = Type.getMethodType(desc);
-        valid = (methodName.startsWith(GET) && validGetter(methodType));
-
-        return valid;
+        return ClassUtils.resolveEntityName(owner);
     }
 
     /**
@@ -140,7 +105,7 @@ class AbstractFieldResolver {
      * @return <code>boolean</code> validation result
      */
     private static boolean valid(ResolverTuple<?> resolverTuple) {
-        return valid(resolverTuple.getDesc(), resolverTuple.getName());
+        return ClassUtils.validGetter(resolverTuple.getDesc(), resolverTuple.getName());
     }
 
     /**
