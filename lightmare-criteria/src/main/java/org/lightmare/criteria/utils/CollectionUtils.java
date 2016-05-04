@@ -488,6 +488,21 @@ public abstract class CollectionUtils {
     }
 
     /**
+     * Iterates while passed predicate holds for passed value with consumer
+     * implementation
+     * 
+     * @param value
+     * @param predicate
+     * @param consumer
+     */
+    public static <T> void iterate(T value, Predicate<T> predicate, Consumer<T> consumer) {
+
+        while (predicate.test(value)) {
+            consumer.accept(value);
+        }
+    }
+
+    /**
      * Copies each element from passed array by mapped call to other array
      * 
      * @param from

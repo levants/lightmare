@@ -38,73 +38,6 @@ import java.util.Objects;
 abstract class AbstractMemberUtils extends AbstractClassUtils {
 
     /**
-     * Supplier for find member method
-     * 
-     * @author Levan Tsinadze
-     *
-     * @param <M>
-     *            member type
-     * @param <E>
-     *            exception type
-     */
-    @FunctionalInterface
-    private static interface MemberSupplier<M extends Member> {
-
-        /**
-         * Function method to get appropriated {@link java.lang.reflect.Member}
-         * from {@link Class} by name
-         * 
-         * @param type
-         * @param memberName
-         * @return {@link java.lang.reflect.Member} from {@link Class}
-         * @throws NoSuchMethodException
-         * @throws NoSuchFieldException
-         * @throws SecurityException
-         */
-        M getMember(Class<?> type, String memberName)
-                throws NoSuchMethodException, NoSuchFieldException, SecurityException;
-    }
-
-    /**
-     * Tuple for {@link java.lang.reflect.Member} and appropriated {@link Class}
-     * instance
-     * 
-     * @author Levan Tsinadze
-     *
-     * @param <T>
-     *            member type parameter
-     */
-    private static class MemberTuple<T extends Member> {
-
-        private T member;
-
-        private Class<?> type;
-
-        private final String memberName;
-
-        private MemberTuple(Class<?> type, final String memberName) {
-            this.type = type;
-            this.memberName = memberName;
-        }
-
-        private static <T extends Member> MemberTuple<T> of(Class<?> type, final String memberName) {
-            return new MemberTuple<T>(type, memberName);
-        }
-
-        private boolean valid() {
-            return ((this.member == null) && Objects.nonNull(this.type));
-        }
-
-        private void setSuperType() {
-            type = ObjectUtils.ifIsNull(member, c -> type.getSuperclass(), t -> type);
-        }
-
-        private T getMember() {
-            return member;
-        }
-    }
-
-    /**
      * Sets parameters for next validation and iteration
      * 
      * @param tuple
@@ -113,7 +46,8 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
     private static <T extends Member> void iterate(MemberTuple<T> tuple, MemberSupplier<T> supplier) {
 
         try {
-            tuple.member = supplier.getMember(tuple.type, tuple.memberName);
+            T member = supplier.getMember(tuple.getType(), tuple.getMemberName());
+            tuple.setMember(member);
         } catch (NoSuchMethodException | NoSuchFieldException ex) {
             tuple.setSuperType();
         }
@@ -133,10 +67,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
             MemberSupplier<T> supplier) {
 
         MemberTuple<T> tuple = MemberTuple.of(type, memberName);
-
-        while (tuple.valid()) {
-            iterate(tuple, supplier);
-        }
+        CollectionUtils.iterate(tuple, MemberTuple::valid, c -> iterate(c, supplier));
 
         return tuple;
     }
@@ -255,5 +186,87 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
         }
 
         return value;
+    }
+}
+
+/**
+ * Supplier for find member method
+ * 
+ * @author Levan Tsinadze
+ *
+ * @param <M>
+ *            member type
+ * @param <E>
+ *            exception type
+ */
+@FunctionalInterface
+interface MemberSupplier<M extends Member> {
+
+    /**
+     * Function method to get appropriated {@link java.lang.reflect.Member} from
+     * {@link Class} by name
+     * 
+     * @param type
+     * @param memberName
+     * @return {@link java.lang.reflect.Member} from {@link Class}
+     * @throws NoSuchMethodException
+     * @throws NoSuchFieldException
+     * @throws SecurityException
+     */
+    M getMember(Class<?> type, String memberName) throws NoSuchMethodException, NoSuchFieldException, SecurityException;
+}
+
+/**
+ * Tuple for {@link java.lang.reflect.Member} and appropriated {@link Class}
+ * instance
+ * 
+ * @author Levan Tsinadze
+ *
+ * @param <T>
+ *            member type parameter
+ */
+class MemberTuple<T extends Member> {
+
+    private T member;
+
+    private Class<?> type;
+
+    private final String memberName;
+
+    private MemberTuple(Class<?> type, final String memberName) {
+        this.type = type;
+        this.memberName = memberName;
+    }
+
+    public static <T extends Member> MemberTuple<T> of(Class<?> type, final String memberName) {
+        return new MemberTuple<T>(type, memberName);
+    }
+
+    public boolean valid() {
+        return ((this.member == null) && Objects.nonNull(this.type));
+    }
+
+    public void setSuperType() {
+        type = ObjectUtils.ifIsNull(member, c -> type.getSuperclass(), t -> type);
+    }
+
+    public T getMember() {
+        return member;
+    }
+
+    public void setMember(T member) {
+        this.member = member;
+    }
+
+    public Class<?> getType() {
+        return type;
+    }
+
+    public void setType(Class<?> type) {
+        this.type = type;
+    }
+
+    public String getMemberName() {
+        return memberName;
     }
 }

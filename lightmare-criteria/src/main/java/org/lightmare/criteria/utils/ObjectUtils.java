@@ -84,8 +84,7 @@ public abstract class ObjectUtils extends FunctionUtils {
      */
     public static <T> boolean invalid(T value, Predicate<T> predicate, Consumer<T> consumer) {
 
-        boolean valid = (Objects.nonNull(predicate) && ObjectUtils.notTrue(predicate.test(value))
-                && Objects.nonNull(consumer));
+        boolean valid = (Objects.nonNull(predicate) && notTrue(predicate.test(value)) && Objects.nonNull(consumer));
 
         if (valid) {
             consumer.accept(value);
