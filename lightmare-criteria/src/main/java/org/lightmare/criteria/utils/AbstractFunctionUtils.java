@@ -23,6 +23,7 @@
 package org.lightmare.criteria.utils;
 
 import java.util.Objects;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -35,7 +36,18 @@ import java.util.function.Supplier;
  *
  */
 abstract class AbstractFunctionUtils implements Functions {
-    
+
+    /**
+     * Validates passed {@link java.util.function.BooleanSupplier} on
+     * <code>null</code> and gets it result
+     * 
+     * @param supplier
+     * @return <code>boolean</code> validation result
+     */
+    public static boolean getAsBoolean(BooleanSupplier supplier) {
+        return (Objects.nonNull(supplier) && supplier.getAsBoolean());
+    }
+
     /**
      * Validates passed {@link java.util.function.Supplier} on <code>null</code>
      * and get result from it
@@ -81,6 +93,18 @@ abstract class AbstractFunctionUtils implements Functions {
 
         if (Objects.nonNull(consumer)) {
             consumer.accept(value);
+        }
+    }
+
+    /**
+     * Validates passed command on <code>null</code> and executes it
+     * 
+     * @param command
+     */
+    public static void execute(Command command) {
+
+        if (Objects.nonNull(command)) {
+            command.execute();
         }
     }
 

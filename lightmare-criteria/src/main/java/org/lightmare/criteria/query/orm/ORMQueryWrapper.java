@@ -119,6 +119,6 @@ public interface ORMQueryWrapper<T, Q extends LambdaStream<T, ? super Q>> {
      * Closes wrapped layer provider instance
      */
     default void close() {
-        ObjectUtils.nonNull(getLayerProvider(), LayerProvider::close);
+        ObjectUtils.ifNotNull(ORMQueryWrapper.this::getLayerProvider, LayerProvider::close);
     }
 }

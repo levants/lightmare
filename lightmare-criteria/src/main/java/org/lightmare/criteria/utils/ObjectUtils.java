@@ -46,7 +46,7 @@ public abstract class ObjectUtils extends FunctionUtils {
      * Checks if passed boolean value is not true
      *
      * @param statement
-     * @return <code>boolean</code>
+     * @return <code>boolean</code> validation result
      */
     public static boolean notTrue(boolean statement) {
         return !statement;
@@ -55,8 +55,7 @@ public abstract class ObjectUtils extends FunctionUtils {
     /**
      * Validates if passed {@link java.util.function.BooleanSupplier} returns
      * <code>true</code> and runs
-     * {@link org.lightmare.criteria.utils.AbstractFunctionUtils.Command}
-     * implementation
+     * {@link org.lightmare.criteria.utils.Functions.Command} implementation
      * 
      * @param predicate
      * @param consumer
@@ -64,10 +63,10 @@ public abstract class ObjectUtils extends FunctionUtils {
      */
     public static boolean valid(BooleanSupplier predicate, Command consumer) {
 
-        boolean valid = (Objects.nonNull(predicate) && predicate.getAsBoolean() && Objects.nonNull(consumer));
+        boolean valid = getAsBoolean(predicate);
 
         if (valid) {
-            consumer.execute();
+            execute(consumer);
         }
 
         return valid;
@@ -85,10 +84,10 @@ public abstract class ObjectUtils extends FunctionUtils {
      */
     public static <T> boolean valid(T value, Predicate<T> predicate, Consumer<T> consumer) {
 
-        boolean valid = (test(predicate, value) && Objects.nonNull(consumer));
+        boolean valid = test(predicate, value);
 
         if (valid) {
-            consumer.accept(value);
+            accept(consumer, value);
         }
 
         return valid;
@@ -106,10 +105,10 @@ public abstract class ObjectUtils extends FunctionUtils {
      */
     public static <T> boolean invalid(T value, Predicate<T> predicate, Consumer<T> consumer) {
 
-        boolean valid = (Objects.nonNull(predicate) && notTrue(predicate.test(value)) && Objects.nonNull(consumer));
+        boolean valid = test(predicate, value);
 
         if (valid) {
-            consumer.accept(value);
+            accept(consumer, value);
         }
 
         return valid;
