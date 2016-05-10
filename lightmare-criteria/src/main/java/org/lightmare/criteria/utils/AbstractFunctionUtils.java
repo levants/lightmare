@@ -71,7 +71,7 @@ abstract class AbstractFunctionUtils implements Functions {
 
     /**
      * Validates if passed {@link java.util.function.Predicate} is not
-     * <code>null</code> returns <code>true</code> for passed value
+     * <code>null</code> and returns predicate test result for passed value
      * 
      * @param predicate
      * @param value
@@ -79,6 +79,18 @@ abstract class AbstractFunctionUtils implements Functions {
      */
     public static <T> boolean test(Predicate<T> predicate, T value) {
         return (Objects.nonNull(predicate) && predicate.test(value));
+    }
+
+    /**
+     * Validates if passed {@link java.util.function.Predicate} is not
+     * <code>null</code> returns predicate test contrary result for passed value
+     * 
+     * @param predicate
+     * @param value
+     * @return <code>boolean</code> validation result
+     */
+    public static <T> boolean reverceTest(Predicate<T> predicate, T value) {
+        return (Objects.nonNull(predicate) && ObjectUtils.notTrue(predicate.test(value)));
     }
 
     /**

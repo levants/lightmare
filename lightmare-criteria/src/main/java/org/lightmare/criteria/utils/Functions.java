@@ -1,7 +1,5 @@
 package org.lightmare.criteria.utils;
 
-import java.util.function.Consumer;
-
 /**
  * Defines functions with exceptions
  * 
@@ -11,19 +9,13 @@ import java.util.function.Consumer;
 public interface Functions {
 
     /**
-     * Functional interface from {@link java.util.function.Consumer} for no
-     * argument function execution
+     * Functional interface for no argument void function execution
      * 
      * @author Levan Tsinadze
      *
      */
     @FunctionalInterface
-    public static interface Command extends Consumer<Void> {
-
-        @Override
-        default void accept(Void v) {
-            execute();
-        };
+    public static interface Command {
 
         /**
          * Performs this operation with no argument

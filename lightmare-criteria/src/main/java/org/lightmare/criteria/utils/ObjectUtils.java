@@ -105,7 +105,7 @@ public abstract class ObjectUtils extends FunctionUtils {
      */
     public static <T> boolean invalid(T value, Predicate<T> predicate, Consumer<T> consumer) {
 
-        boolean valid = test(predicate, value);
+        boolean valid = reverceTest(predicate, value);
 
         if (valid) {
             accept(consumer, value);
