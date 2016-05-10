@@ -301,10 +301,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
      * buffer
      */
     protected void appendOperator() {
-
-        if (validateOperator()) {
-            and();
-        }
+        ObjectUtils.valid(this::validateOperator, this::and);
     }
 
     /**

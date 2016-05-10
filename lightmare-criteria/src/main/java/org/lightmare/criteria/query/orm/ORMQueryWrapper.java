@@ -88,8 +88,6 @@ public interface ORMQueryWrapper<T, Q extends LambdaStream<T, ? super Q>> {
      * not applied to the query object.
      *
      * @return maximum number of results
-     *
-     * @since Java Persistence 2.0
      */
     int getMaxResults();
 

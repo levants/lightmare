@@ -35,7 +35,7 @@ import java.util.function.Supplier;
  *
  */
 abstract class AbstractFunctionUtils implements Functions {
-
+    
     /**
      * Validates passed {@link java.util.function.Supplier} on <code>null</code>
      * and get result from it

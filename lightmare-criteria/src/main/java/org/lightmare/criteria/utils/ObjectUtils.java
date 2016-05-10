@@ -29,6 +29,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -49,6 +50,27 @@ public abstract class ObjectUtils extends FunctionUtils {
      */
     public static boolean notTrue(boolean statement) {
         return !statement;
+    }
+
+    /**
+     * Validates if passed {@link java.util.function.BooleanSupplier} returns
+     * <code>true</code> and runs
+     * {@link org.lightmare.criteria.utils.AbstractFunctionUtils.Command}
+     * implementation
+     * 
+     * @param predicate
+     * @param consumer
+     * @return <code>boolean</code> validation result
+     */
+    public static boolean valid(BooleanSupplier predicate, Command consumer) {
+
+        boolean valid = (Objects.nonNull(predicate) && predicate.getAsBoolean() && Objects.nonNull(consumer));
+
+        if (valid) {
+            consumer.execute();
+        }
+
+        return valid;
     }
 
     /**
