@@ -23,6 +23,8 @@
 package org.lightmare.criteria.query.orm;
 
 import org.lightmare.criteria.query.QueryStream;
+import org.lightmare.criteria.utils.CollectionUtils;
+import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * General query components
@@ -61,12 +63,30 @@ public interface QueryExpression<T, Q extends QueryStream<T, ? super Q>, O exten
     Q appendPrefix(Object clause);
 
     /**
+     * Appends multiply prefixes simultaneously
+     * 
+     * @param clauses
+     */
+    default void appendPrefixes(Object... clauses) {
+        ObjectUtils.nonNull(clauses, c -> CollectionUtils.forEach(c, (i, s) -> appendPrefix(s)));
+    }
+
+    /**
      * Appends to generated FROM clause
      * 
      * @param clause
      * @return {@link org.lightmare.criteria.query.QueryStream} implementation
      */
     Q appendFrom(Object clause);
+
+    /**
+     * Appends FROM clause to query
+     * 
+     * @param clauses
+     */
+    default void appendFromClause(Object... clauses) {
+        ObjectUtils.nonNull(clauses, c -> CollectionUtils.forEach(c, (i, s) -> appendFrom(s)));
+    }
 
     /**
      * Gets generated JPA query for element count

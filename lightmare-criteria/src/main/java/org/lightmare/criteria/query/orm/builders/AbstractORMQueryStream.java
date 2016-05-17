@@ -89,8 +89,7 @@ abstract class AbstractORMQueryStream<T, Q extends QueryStream<T, ? super Q>, O 
      */
     protected void appendSelect() {
         String selectType = provider.getSelectType(getAlias());
-        appendPrefix(Clauses.SELECT);
-        appendPrefix(selectType);
+        appendPrefixes(Clauses.SELECT, selectType);
     }
 
     /**
@@ -121,11 +120,7 @@ abstract class AbstractORMQueryStream<T, Q extends QueryStream<T, ? super Q>, O 
         Class<?> type = getEntityType();
         String entityName = getEntityName(type);
         String alias = getAlias();
-        appendFrom(Parts.FROM);
-        appendFrom(entityName);
-        appendFrom(StringUtils.SPACE);
-        appendFrom(alias);
-        appendFrom(StringUtils.LINE);
+        appendFromClause(Parts.FROM, entityName, StringUtils.SPACE, alias, StringUtils.LINE);
     }
 
     /**

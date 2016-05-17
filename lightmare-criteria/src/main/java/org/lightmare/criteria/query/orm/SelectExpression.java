@@ -165,6 +165,13 @@ public interface SelectExpression<T, Q extends LambdaStream<T, ? super Q>, O ext
         return select(expression, Object[].class);
     }
 
+    /**
+     * Custom select expression for instant field type
+     * 
+     * @param field
+     * @return {@link org.lightmare.criteria.query.LambdaStream} implementation
+     *         for special field type
+     */
     <F> O select(EntityField<T, F> field);
 
     /**

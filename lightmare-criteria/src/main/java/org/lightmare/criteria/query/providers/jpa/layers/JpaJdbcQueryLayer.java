@@ -82,5 +82,10 @@ public interface JpaJdbcQueryLayer<T> extends QueryLayer<T> {
      */
     void setMaxResults(int maxResult);
 
+    /**
+     * Gets upper limit for results to query
+     * 
+     * @return <code>int</code> upper limit for results
+     */
     int getMaxResults();
 }

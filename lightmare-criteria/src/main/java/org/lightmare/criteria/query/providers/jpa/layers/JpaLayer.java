@@ -44,13 +44,44 @@ public interface JpaLayer {
      */
     void setFirstResult(int startPosition);
 
+    /**
+     * The position of the first result the query object was set to retrieve.
+     * Returns 0 if <code>setFirstResult</code> was not applied to the query
+     * object.
+     *
+     * @return position of the first result
+     */
     int getFirstResult();
 
+    /**
+     * Set a query property or hint
+     * 
+     * @param hintName
+     * @param value
+     */
     void setHint(String hintName, Object value);
 
+    /**
+     * Get the properties and hints and associated values that are in effect for
+     * the query instance.
+     * 
+     * @return query properties and hints
+     */
     Map<String, Object> getHints();
 
+    /**
+     * Set the flush mode type to be used for the query execution. The flush
+     * mode type applies to the query regardless of the flush mode type in use
+     * for the entity manager.
+     * 
+     * @param flushMode
+     */
     void setFlushMode(FlushModeType flushMode);
 
+    /**
+     * Set the lock mode type to be used for the query execution.
+     * 
+     * @param lockMode
+     */
     void setLockMode(LockModeType lockMode);
 }
