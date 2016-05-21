@@ -43,9 +43,13 @@ public abstract class StringUtils {
 
     public static final char UNDERSCORE = '_';
 
+    public static final String UNDERSCORE_STR = String.valueOf(UNDERSCORE);
+
     public static final char COMMA = ',';
 
     public static final char DOT = '.';
+
+    public static final String DOT_STR = String.valueOf(DOT);
 
     public static final char QUOTE = '\'';
 

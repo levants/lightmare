@@ -29,6 +29,7 @@ import java.lang.reflect.Method;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.lightmare.criteria.query.orm.links.Parts;
 import org.lightmare.criteria.utils.ObjectUtils;
 import org.lightmare.criteria.utils.StringUtils;
 
@@ -47,6 +48,8 @@ public class QueryTuple implements Serializable, Cloneable {
     private final String methodName;
 
     private String fieldName;
+
+    private String paramName;
 
     private Class<?> entityType;
 
@@ -69,7 +72,7 @@ public class QueryTuple implements Serializable, Cloneable {
     protected QueryTuple(final String entityName, final String methodName, final String fieldName) {
         this.entityName = entityName;
         this.methodName = methodName;
-        this.fieldName = fieldName;
+        this.setFieldName(fieldName);
     }
 
     /**
@@ -108,12 +111,22 @@ public class QueryTuple implements Serializable, Cloneable {
         return methodName;
     }
 
+    /**
+     * Sets field and parameter names
+     * 
+     * @param fieldName
+     */
     public void setFieldName(String fieldName) {
         this.fieldName = fieldName;
+        this.paramName = Parts.refineName(fieldName);
     }
 
     public String getFieldName() {
         return fieldName;
+    }
+
+    public String getParamName() {
+        return paramName;
     }
 
     public Class<?> getEntityType() {

@@ -52,6 +52,13 @@ public class CounterTuple {
         return parameter++;
     }
 
+    /**
+     * Increments counter and generates parameter name
+     * 
+     * @param name
+     * @return {@link org.lightmare.criteria.tuples.Couple} of counter and
+     *         parameter name
+     */
     public Couple<String, Integer> getAndIncrement(String name) {
 
         Couple<String, Integer> couple;

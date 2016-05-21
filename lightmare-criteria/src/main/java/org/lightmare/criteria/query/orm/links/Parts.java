@@ -22,6 +22,12 @@
  */
 package org.lightmare.criteria.query.orm.links;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.lightmare.criteria.utils.ObjectUtils;
+import org.lightmare.criteria.utils.StringUtils;
+
 /**
  * Query parts for JPA / JDBC expression
  * 
@@ -45,4 +51,18 @@ public interface Parts {
     char LIKE_SIGN = '%';
 
     String TRIM_FROM = "FROM";
+
+    String DOT_EXPR = Pattern.quote(StringUtils.DOT_STR);
+
+    String UNDERSCORE_EXPR = Matcher.quoteReplacement(StringUtils.UNDERSCORE_STR);
+
+    /**
+     * Refines parameter name replacing dots with underscores
+     * 
+     * @param name
+     * @return {@link String} parameter name
+     */
+    static String refineName(String name) {
+        return ObjectUtils.ifIsNotNull(name, c -> c.replaceAll(DOT_EXPR, UNDERSCORE_EXPR));
+    }
 }

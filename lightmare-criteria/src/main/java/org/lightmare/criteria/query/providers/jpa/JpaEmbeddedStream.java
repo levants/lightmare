@@ -45,6 +45,8 @@ class JpaEmbeddedStream<S, T> extends JpaSubQueryStream<S, T> {
 
     private final String embeddedName;
 
+    private boolean switchOperator;
+
     public JpaEmbeddedStream(final AbstractQueryStream<T, ?, ?> parent, final Class<S> type,
             final String embeddedName) {
         super(parent, parent.getAlias(), type);
@@ -53,7 +55,17 @@ class JpaEmbeddedStream<S, T> extends JpaSubQueryStream<S, T> {
 
     @Override
     public boolean validateOperator() {
-        return parent.validateOperator();
+
+        boolean valid;
+
+        if (switchOperator) {
+            valid = super.validateOperator();
+        } else {
+            valid = parent.validateOperator();
+            switchOperator = Boolean.TRUE;
+        }
+
+        return valid;
     }
 
     @Override

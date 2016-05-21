@@ -169,7 +169,7 @@ abstract class AbstractORMQueryStream<T, Q extends QueryStream<T, ? super Q>, O 
      *         parameter name
      */
     private Couple<String, Integer> generateParameterName(QueryTuple tuple) {
-        return getCounterTuple().getAndIncrement(tuple.getFieldName());
+        return getCounterTuple().getAndIncrement(tuple.getParamName());
     }
 
     @Override
@@ -178,6 +178,13 @@ abstract class AbstractORMQueryStream<T, Q extends QueryStream<T, ? super Q>, O 
         parameters.add(parameter);
     }
 
+    /**
+     * Caches parameter for generated query
+     * 
+     * @param key
+     * @param value
+     * @param temporalType
+     */
     private void addParameter(Couple<String, Integer> key, Object value, TemporalType temporalType) {
         ParameterTuple parameter = ParameterTuple.of(key, value, temporalType);
         parameters.add(parameter);

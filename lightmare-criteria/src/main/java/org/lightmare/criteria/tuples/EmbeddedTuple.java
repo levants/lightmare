@@ -63,4 +63,9 @@ public class EmbeddedTuple extends QueryTuple {
     public String getFieldName() {
         return StringUtils.concat(embeddedName, StringUtils.DOT, super.getFieldName());
     }
+
+    @Override
+    public String getParamName() {
+        return StringUtils.concat(embeddedName, StringUtils.UNDERSCORE, super.getParamName());
+    }
 }
