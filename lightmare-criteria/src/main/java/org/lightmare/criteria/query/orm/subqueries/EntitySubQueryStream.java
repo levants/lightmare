@@ -27,6 +27,7 @@ import org.lightmare.criteria.query.LambdaStream;
 import org.lightmare.criteria.query.QueryStream;
 import org.lightmare.criteria.query.orm.builders.AbstractQueryStream;
 import org.lightmare.criteria.query.orm.links.Aggregates;
+import org.lightmare.criteria.tuples.SwitcherTuple;
 
 /**
  * Implementation of
@@ -49,12 +50,25 @@ import org.lightmare.criteria.query.orm.links.Aggregates;
 public abstract class EntitySubQueryStream<S, T, Q extends QueryStream<S, ? super Q>, O extends QueryStream<Object[], ? super O>>
         extends AbstractSubQueryStream<S, T, Q, O> {
 
+    // To validate WHERE/ AND/ OR etc operator connections
+    private final SwitcherTuple switcher = SwitcherTuple.get();
+
     public EntitySubQueryStream(AbstractQueryStream<T, ?, ?> parent, Class<S> type) {
         super(parent, type);
     }
 
     public EntitySubQueryStream(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> type) {
         super(parent, alias, type);
+    }
+
+    /**
+     * Validates query body to be appended by logical operators correctly for
+     * sub queries
+     * 
+     * @return <code>boolean</code> validation result
+     */
+    public boolean validateSubQueryOperator() {
+        return switcher.validateAndGet(parent::validateOperator, super::validateOperator);
     }
 
     // ========================= select method composers ====================//

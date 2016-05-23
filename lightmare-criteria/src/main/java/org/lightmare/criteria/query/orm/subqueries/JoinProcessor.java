@@ -44,8 +44,6 @@ import org.lightmare.criteria.utils.CollectionUtils;
 public abstract class JoinProcessor<S, T, Q extends QueryStream<S, ? super Q>, O extends QueryStream<Object[], ? super O>>
         extends EntitySubQueryStream<S, T, Q, O> {
 
-    private boolean parentOperator;
-
     private boolean onClause;
 
     private int onCount;
@@ -65,17 +63,7 @@ public abstract class JoinProcessor<S, T, Q extends QueryStream<S, ? super Q>, O
      * @return <code>boolean</code> validation result
      */
     private boolean validateJoinOperator() {
-
-        boolean valid;
-
-        if (parentOperator) {
-            valid = super.validateOperator();
-        } else {
-            valid = parent.validateOperator();
-            parentOperator = Boolean.TRUE;
-        }
-
-        return valid;
+        return validateSubQueryOperator();
     }
 
     @Override

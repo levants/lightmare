@@ -288,7 +288,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     }
 
     /**
-     * Validates query body to be append by logical operators
+     * Validates query body to be append by logical operators correctly
      * 
      * @return <code>boolean</code> validation result
      */
