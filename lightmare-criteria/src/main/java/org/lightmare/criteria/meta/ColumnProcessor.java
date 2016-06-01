@@ -58,7 +58,7 @@ abstract class ColumnProcessor extends GenericProcessor {
      * @return {@link javax.persistence.Temporal} annotation
      */
     private static Temporal getTemporal(Field field, Method method) {
-        return ObjectUtils.thisOrDefault(getTemporal(field), () -> getTemporal(method));
+        return ObjectUtils.callOrInit(field, method, ColumnProcessor::getTemporal, ColumnProcessor::getTemporal);
     }
 
     /**

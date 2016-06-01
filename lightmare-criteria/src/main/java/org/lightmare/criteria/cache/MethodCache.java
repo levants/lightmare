@@ -95,7 +95,7 @@ public class MethodCache {
      *         {@link org.objectweb.asm.tree.MethodNode} methods
      */
     private static List<MethodNode> getMethods(String typeName) {
-        return ObjectUtils.getOrInit(() -> METHOD_NODES.get(typeName), () -> initAndCache(typeName));
+        return ObjectUtils.callOrInit(typeName, METHOD_NODES::get, MethodCache::initAndCache);
     }
 
     /**

@@ -163,7 +163,8 @@ public class FieldResolver extends DirectFieldResolver {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} from method
      */
     private static QueryTuple resolveRecursively(MethodNode methodNode) {
-        return ObjectUtils.getOrInit(() -> resolveFromMethod(methodNode), () -> getAndResolveFromIns(methodNode));
+        return ObjectUtils.callOrInit(methodNode, FieldResolver::resolveFromMethod,
+                FieldResolver::getAndResolveFromIns);
     }
 
     /**
@@ -201,7 +202,7 @@ public class FieldResolver extends DirectFieldResolver {
      *         field and query part
      */
     private static QueryTuple chooseAndResolve(LambdaInfo lambda) {
-        return ObjectUtils.getOrInit(() -> resolveDirectly(lambda), () -> resolveFromBytecode(lambda));
+        return ObjectUtils.callOrInit(lambda, FieldResolver::resolveDirectly, FieldResolver::resolveFromBytecode);
     }
 
     /**

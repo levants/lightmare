@@ -86,6 +86,6 @@ public class MongoRetriever {
     }
 
     public static List<FieldType> getColumns(Class<?> type) {
-        return ObjectUtils.getOrInit(() -> COLUMNS.get(type), () -> put(type));
+        return ObjectUtils.callOrInit(type, COLUMNS::get, MongoRetriever::put);
     }
 }

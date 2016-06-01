@@ -125,14 +125,4 @@ public enum LambdaReferences {
     public static void trace(Class<?> lambdaType) {
         INSTANCE.traceByType(lambdaType);
     }
-
-    /**
-     * Adds {@link org.lightmare.criteria.cache.LambdaReference} instance to be
-     * watched for finalization
-     * 
-     * @param lambda
-     */
-    public void traceByInstance(Object lambda) {
-        traceByType(lambda.getClass());
-    }
 }

@@ -88,6 +88,6 @@ public class CachedClassReader extends ClassReader {
      * @return {@link org.objectweb.asm.ClassReader} from cache
      */
     public static ClassReader get(String name) {
-        return ObjectUtils.getOrInit(() -> CLASS_FILES.get(name), () -> initAndCache(name));
+        return ObjectUtils.callOrInit(name, CLASS_FILES::get, CachedClassReader::initAndCache);
     }
 }

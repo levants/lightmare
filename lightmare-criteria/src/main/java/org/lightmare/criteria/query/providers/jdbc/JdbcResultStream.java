@@ -29,9 +29,8 @@ import org.lightmare.criteria.query.orm.ResultStream;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Implementation of
- * {@link org.lightmare.criteria.query.orm.ResultStream} for JDBC
- * queries
+ * Implementation of {@link org.lightmare.criteria.query.orm.ResultStream} for
+ * JDBC queries
  * 
  * @author Levan Tsinadze
  *
@@ -82,13 +81,7 @@ public interface JdbcResultStream<T> extends ResultStream<T> {
      * @see org.lightmare.criteria.config.Configuration.ResultRetriever
      */
     default T firstOrDefault(ResultRetriever<T> retriever, T defaultValue) {
-
-        T result;
-
-        T value = get(retriever);
-        result = ObjectUtils.thisOrDefault(value, () -> defaultValue);
-
-        return result;
+        return ObjectUtils.callOrInit(retriever, this::get, c -> defaultValue);
     }
 
     /**

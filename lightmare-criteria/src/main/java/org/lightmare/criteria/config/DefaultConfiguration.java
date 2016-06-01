@@ -56,6 +56,13 @@ public class DefaultConfiguration {
      */
     public static class DefaultResolver implements ColumnResolver {
 
+        /**
+         * Gets column name from resolved {@link java.lang.reflect.Field} by
+         * annotation
+         * 
+         * @param field
+         * @return {@link String} field name
+         */
         public static String getColumn(Field field) {
             return ObjectUtils.ifIsNull(field.getAnnotation(DBColumn.class), c -> field.getName().toUpperCase(),
                     DBColumn::value);
@@ -199,7 +206,7 @@ public class DefaultConfiguration {
         }
 
         private List<FieldType> getColumns(Class<?> type) {
-            return ObjectUtils.getOrInit(() -> COLUMNS.get(type), () -> put(type));
+            return ObjectUtils.callOrInit(type, COLUMNS::get, this::put);
         }
 
         @Override

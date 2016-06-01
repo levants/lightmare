@@ -550,4 +550,40 @@ public abstract class ObjectUtils extends FunctionUtils {
     public static <T> T getOrInit(Supplier<T> supplier, Supplier<T> initSupplier) {
         return ifNull(supplier, c -> get(initSupplier));
     }
+
+    /**
+     * Calls {@link java.util.function.Function} for passed argument and
+     * validates on <code>null</code> and if it is returns default
+     * {@link java.util.function.Function} provided value
+     * 
+     * @param argument1
+     * @param argument2
+     * @param supplier
+     * @param initSupplier
+     * @return T value
+     */
+    public static <T, R> R callOrInit(T argument1, T argument2, Function<T, R> supplier, Function<T, R> initSupplier) {
+
+        R result = apply(argument1, supplier);
+
+        if (result == null) {
+            result = apply(argument2, initSupplier);
+        }
+
+        return result;
+    }
+
+    /**
+     * Calls {@link java.util.function.Function} for passed argument and
+     * validates on <code>null</code> and if it is returns default
+     * {@link java.util.function.Function} provided value
+     * 
+     * @param argument
+     * @param supplier
+     * @param initSupplier
+     * @return T value
+     */
+    public static <T, R> R callOrInit(T argument, Function<T, R> supplier, Function<T, R> initSupplier) {
+        return callOrInit(argument, argument, supplier, initSupplier);
+    }
 }
