@@ -246,6 +246,41 @@ public abstract class ObjectUtils extends FunctionUtils {
     }
 
     /**
+     * If passed {@link java.util.function.Function} result on passed value is
+     * not <code>null</code> then calls
+     * {@link java.util.function.Function#apply(Object)} method and returns it's
+     * result or <code>null</code> in other case in an other case
+     * 
+     * @param value
+     * @param supplier
+     * @param function
+     * @return <code>T</code> value from one {@link java.util.function.Function}
+     *         or <code>null</code>
+     */
+    public static <V, R, T> T applyNonNull(V value, Function<V, R> supplier, Function<R, T> function) {
+        return ifNonNull(() -> supplier.apply(value), function);
+    }
+
+    /**
+     * If passed {@link java.util.function.Function} result on passed value is
+     * not <code>null</code> then calls
+     * {@link java.util.function.Function#apply(Object)} method and returns it's
+     * result or calls other {@link java.util.function.Function#apply(Object)}
+     * in an other case
+     * 
+     * @param value
+     * @param supplier
+     * @param function
+     * @param elseFunction
+     * @return <code>T</code> value from one {@link java.util.function.Function}
+     *         or from other
+     */
+    public static <V, R, T> T applyNonNull(V value, Function<V, R> supplier, Function<R, T> function,
+            Function<R, T> elseFunction) {
+        return ifNonNull(() -> supplier.apply(value), function, elseFunction);
+    }
+
+    /**
      * Validates if value from {@link java.util.function.Supplier} returns
      * <code>null</code> value and calls
      * {@link java.util.function.Function#apply(Object)} method and returns it's

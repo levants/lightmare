@@ -22,6 +22,7 @@
  */
 package org.lightmare.criteria.config;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -188,10 +189,39 @@ public class DefaultConfiguration {
             this.type = type;
         }
 
-        private static FieldType getColumnName(Field field) {
-            return ObjectUtils.ifIsValid(field, c -> ClassUtils.notAnnotated(c, DBTransient.class), FieldType::new);
+        /**
+         * Validates if passed {@link java.lang.reflect.AnnotatedElement} not
+         * annotated with {@link org.lightmare.criteria.annotations.DBTransient}
+         * annotation
+         * 
+         * @param element
+         * @return <code>boolean</code> validation result
+         */
+        private static boolean notTransient(AnnotatedElement element) {
+            return ClassUtils.notAnnotated(element, DBTransient.class);
         }
 
+        /**
+         * Gets column name from passed {@link java.lang.reflect.Field} instance
+         * 
+         * @param field
+         * @return {@link org.lightmare.criteria.config.DefaultConfiguration.DefaultRetriever.FieldType}
+         *         field type element
+         */
+        private static FieldType getColumnName(Field field) {
+            return ObjectUtils.ifIsValid(field, DefaultRetriever::notTransient, FieldType::new);
+        }
+
+        /**
+         * Gets appropriated
+         * {@link org.lightmare.criteria.config.DefaultConfiguration.DefaultRetriever.FieldType}
+         * for each {@link java.lang.reflectField} from passed array
+         * 
+         * @param fields
+         * @return {@link java.util.List} of
+         *         {@link org.lightmare.criteria.config.DefaultConfiguration.DefaultRetriever.FieldType}
+         *         s
+         */
         private static List<FieldType> getColumns(Field[] fields) {
             return CollectionUtils.toList(fields, DefaultRetriever::getColumnName);
         }

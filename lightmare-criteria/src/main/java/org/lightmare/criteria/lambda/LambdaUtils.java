@@ -100,7 +100,7 @@ public class LambdaUtils {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} clone
      */
     private static QueryTuple cloneTuple(QueryTuple instance) {
-        return ObjectUtils.getAndCast(() -> ObjectUtils.applyQuietly(instance, QueryTuple::clone));
+        return ObjectUtils.applyAndCast(instance, c -> ObjectUtils.applyQuietly(c, QueryTuple::clone));
     }
 
     /**
@@ -166,6 +166,6 @@ public class LambdaUtils {
      * @return {@link org.lightmare.criteria.tuples.QueryTuple} from cache
      */
     public static QueryTuple getOrInit(Serializable method) {
-        return ObjectUtils.ifNonNull(() -> getOrInitOriginal(method), LambdaUtils::cloneTuple);
+        return ObjectUtils.applyNonNull(method, LambdaUtils::getOrInitOriginal, LambdaUtils::cloneTuple);
     }
 }

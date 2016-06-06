@@ -108,7 +108,8 @@ abstract class AbstractAggregateStream<T, Q extends QueryStream<T, ? super Q>, O
 
         QueryTuple tuple = compose(field);
         aggregateTuple(tuple, function);
-        Class<R> selectType = ObjectUtils.getAndCast(() -> ObjectUtils.thisOrDefault(type, tuple::getFieldGenericType));
+        Class<R> selectType = ObjectUtils.applyAndCast(type,
+                c -> ObjectUtils.thisOrDefault(c, tuple::getFieldGenericType));
         stream = castSelectQuery(selectType);
 
         return stream;
