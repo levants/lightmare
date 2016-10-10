@@ -45,10 +45,10 @@ public class EmbeddedQueryTest extends JoinQueryTest {
         EntityManager em = emf.createEntityManager();
         try {
             // ============= Query construction ============== //
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
-                    .like(Person::getLastName, "lname").or()
-                    .embedded(Person::getInfo, c -> c.equal(PersonInfo::getCardNumber, Person::getPersonalNo).and()
-                            .equal(PersonInfo::getNote, "100100"));
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class)
+                    .where(q -> q.like(Person::getLastName, "lname").or().embedded(Person::getInfo,
+                            c -> c.equal(PersonInfo::getCardNumber, Person::getPersonalNo).and()
+                                    .equal(PersonInfo::getNote, "100100")));
             String sql = stream.sql();
             System.out.println("===========JPA-QL==========");
             System.out.println(sql);

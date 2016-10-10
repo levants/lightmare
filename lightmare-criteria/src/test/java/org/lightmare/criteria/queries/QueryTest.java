@@ -400,10 +400,11 @@ public class QueryTest extends TestEnviromentConfig {
             Date date = getDateValue();
             transaction.begin();
             // ============= Query construction ============== //
-            int rows = JpaQueryProvider.update(em, Person.class).set(Person::getMiddName, "middName").where()
-                    .equal(Person::getPersonalNo, PERSONAL_NO1).and().like(Person::getLastName, "lname%").and()
-                    .openBracket().startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date)
-                    .closeBracket().execute();
+            int rows = JpaQueryProvider.update(em, Person.class).set(Person::getMiddName, "middName")
+                    .where(q -> q.equal(Person::getPersonalNo, PERSONAL_NO1).and()
+                            .like(Person::getLastName, "lname%").and().brackets(b -> b
+                                    .startsWith(Person::getFirstName, "fname").or().ge(Person::getBirthDate, date)))
+                    .execute();
             // =============================================//
             transaction.commit();
             System.out.println();

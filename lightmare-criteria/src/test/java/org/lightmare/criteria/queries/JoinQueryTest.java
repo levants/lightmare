@@ -102,9 +102,9 @@ public class JoinQueryTest extends SubQueryTest {
 
         EntityManager em = emf.createEntityManager();
         try {
-            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class).where()
-                    .like(Person::getLastName, "lname").ge(Person::getPersonId, 1000L)
-                    .leftJoin(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, Person::getPersonalNo));
+            JpaQueryStream<Person> stream = JpaQueryProvider.select(em, Person.class)
+                    .where(q -> q.like(Person::getLastName, "lname").ge(Person::getPersonId, 1000L)
+                            .leftJoin(Person::getPhones, c -> c.equal(Phone::getPhoneNumber, Person::getPersonalNo)));
             String sql = stream.sql();
             System.out.println(sql);
             printParameters(stream);
