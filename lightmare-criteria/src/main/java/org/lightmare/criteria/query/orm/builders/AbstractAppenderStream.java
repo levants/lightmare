@@ -700,7 +700,7 @@ abstract class AbstractAppenderStream<T, Q extends QueryStream<T, ? super Q>, O 
     public Q appendJoin(Object... clauses) {
 
         Q stream = stream();
-        ObjectUtils.nonNull(clauses, c -> CollectionUtils.forEach(c, (i, e) -> joins.append(e)));
+        ObjectUtils.nonNullObjects(clauses, c -> CollectionUtils.forEach(c, (i, e) -> joins.append(e)));
 
         return stream;
     }

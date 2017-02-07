@@ -126,6 +126,10 @@ public abstract class ObjectUtils extends FunctionUtils {
         return valid(value, Objects::nonNull, consumer);
     }
 
+    public static boolean nonNullObjects(Object[] value, Consumer<Object[]> consumer) {
+        return valid(value, Objects::nonNull, consumer);
+    }
+
     /**
      * If value from {@link java.util.function.Supplier} is not
      * <code>null</code> then calls

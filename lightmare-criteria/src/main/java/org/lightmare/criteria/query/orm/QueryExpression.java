@@ -68,7 +68,7 @@ public interface QueryExpression<T, Q extends QueryStream<T, ? super Q>, O exten
      * @param clauses
      */
     default void appendPrefixes(Object... clauses) {
-        ObjectUtils.nonNull(clauses, c -> CollectionUtils.forEach(c, (i, s) -> appendPrefix(s)));
+        ObjectUtils.nonNullObjects(clauses, c -> CollectionUtils.forEach(c, (i, s) -> appendPrefix(s)));
     }
 
     /**
@@ -85,7 +85,7 @@ public interface QueryExpression<T, Q extends QueryStream<T, ? super Q>, O exten
      * @param clauses
      */
     default void appendFromClause(Object... clauses) {
-        ObjectUtils.nonNull(clauses, c -> CollectionUtils.forEach(c, (i, s) -> appendFrom(s)));
+        ObjectUtils.nonNullObjects(clauses, c -> CollectionUtils.forEach(c, (i, s) -> appendFrom(s)));
     }
 
     /**
