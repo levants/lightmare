@@ -85,7 +85,7 @@ public class CachedClassReader extends ClassReader {
      * caches
      * 
      * @param name
-     * @return {@link org.objectweb.asm.ClassReader} from cache
+     * @return {@link org.objectweb.asm.ClassReader} tretrieved from cache
      */
     public static ClassReader get(String name) {
         return ObjectUtils.callOrInit(name, CLASS_FILES::get, CachedClassReader::initAndCache);
