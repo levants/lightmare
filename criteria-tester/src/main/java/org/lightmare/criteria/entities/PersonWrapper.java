@@ -2,6 +2,12 @@ package org.lightmare.criteria.entities;
 
 import org.lightmare.criteria.utils.StringUtils;
 
+/**
+ * Wrapper for classs person
+ * 
+ * @author Admin
+ *
+ */
 public class PersonWrapper {
 
     private String personalNo;

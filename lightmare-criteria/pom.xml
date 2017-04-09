@@ -35,10 +35,10 @@
 		<junit.version>4.12</junit.version>
 		<!-- end of junit -->
 		<!-- h2 -->
-		<h2db.version>1.4.191</h2db.version>
+		<h2db.version>1.4.194</h2db.version>
 		<!-- end of h2 -->
 		<!-- mongo -->
-		<mongo-driver.version>3.2.2</mongo-driver.version>
+		<mongo-driver.version>3.4.2</mongo-driver.version>
 		<!-- mongo -->
 	</properties>
 
