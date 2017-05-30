@@ -58,7 +58,7 @@
 		<hibernate-validator.version>5.2.1.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
 		<!-- spring -->
-		<spring.version>4.2.4.RELEASE</spring.version>
+		<spring.version>4.3.8.RELEASE</spring.version>
 		<!-- end of spring -->
 		<!-- major dependencies versions -->
 
