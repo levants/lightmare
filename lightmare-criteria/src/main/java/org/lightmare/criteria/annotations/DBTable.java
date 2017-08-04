@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * To define table name
+ * To define DB table name
  * 
  * @author Levan Tsinadze
  *
