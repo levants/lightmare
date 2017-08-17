@@ -28,7 +28,7 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * ABstract utility class for reflection
+ * Abstract utility class for reflection
  * 
  * @author Levan Tsinadze
  *

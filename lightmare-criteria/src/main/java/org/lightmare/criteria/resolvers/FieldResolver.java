@@ -86,8 +86,8 @@ public class FieldResolver extends DirectFieldResolver {
     }
 
     /**
-     * Gets entity name from {@link org.objectweb.asm.tree.LocalVariableNode}'s
-     * {@link java.util.List}'s first element
+     * Gets entity name from {@link org.objectweb.asm.tree.LocalVariableNode}
+     * retrieved as {@link java.util.List} first element
      * 
      * @param variables
      * @return {@link String} entity name

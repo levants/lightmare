@@ -80,7 +80,7 @@ abstract class AbstractMemberUtils extends AbstractClassUtils {
      * @param methodName
      * @param parameters
      * @return {@link org.lightmare.criteria.utils.AbstractMemberUtils.MemberTuple}
-     *         for {@link java.lang.reflect.Method}
+     *         for {@link java.lang.reflect.Method} instance
      */
     private static MemberTuple<Method> findMethodAndType(Class<?> type, String methodName, Class<?>... parameters) {
         return findMember(type, methodName, (t, m) -> t.getDeclaredMethod(m, parameters));

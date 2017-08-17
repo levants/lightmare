@@ -58,7 +58,7 @@
 		<hibernate-validator.version>5.2.1.Final</hibernate-validator.version>
 		<!-- end of hibernate -->
 		<!-- spring -->
-		<spring.version>4.2.4.RELEASE</spring.version>
+		<spring.version>4.3.8.RELEASE</spring.version>
 		<!-- end of spring -->
 		<!-- major dependencies versions -->
 
@@ -85,7 +85,7 @@
 		<!-- end of netty -->
 		<!-- data sources on connection pooling -->
 		<tomcat-jdbc.version>8.0.14</tomcat-jdbc.version>
-		<c3p0.version>0.9.5.1</c3p0.version>
+		<c3p0.version>0.9.5.2</c3p0.version>
 		<dbcp.version>2.0.1</dbcp.version>
 		<hikaricp.version>2.4.5</hikaricp.version>
 		<!-- end of data sources and connection pooling -->

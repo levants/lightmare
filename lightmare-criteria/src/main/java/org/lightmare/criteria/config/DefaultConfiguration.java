@@ -220,7 +220,7 @@ public class DefaultConfiguration {
          * @param fields
          * @return {@link java.util.List} of
          *         {@link org.lightmare.criteria.config.DefaultConfiguration.DefaultRetriever.FieldType}
-         *         s
+         *         elements
          */
         private static List<FieldType> getColumns(Field[] fields) {
             return CollectionUtils.toList(fields, DefaultRetriever::getColumnName);
