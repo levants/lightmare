@@ -18,6 +18,8 @@ import org.lightmare.criteria.query.orm.subqueries.SubSelectStream;
 class JpaSubSelectStream<T, E> extends SubSelectStream<T, E, JpaQueryStream<E>, JpaQueryStream<Object[]>>
         implements JpaQueryStream<E> {
 
+    private static final long serialVersionUID = 1L;
+
     protected JpaSubSelectStream(AbstractSubQueryStream<T, ?, ?, ?> stream, Class<E> type) {
         super(stream, type);
     }

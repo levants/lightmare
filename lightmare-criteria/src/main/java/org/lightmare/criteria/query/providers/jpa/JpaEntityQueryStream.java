@@ -42,6 +42,8 @@ import org.lightmare.criteria.tuples.QueryTuple;
  */
 class JpaEntityQueryStream<T> extends AbstractJpaQueryWrapper<T> implements JpaQueryStream<T> {
 
+    private static final long serialVersionUID = 1L;
+
     protected JpaEntityQueryStream(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
     }

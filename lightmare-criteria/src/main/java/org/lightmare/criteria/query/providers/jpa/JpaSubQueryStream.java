@@ -33,8 +33,8 @@ import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
  * Implementation of
- * {@link org.lightmare.criteria.query.orm.subqueries.EntitySubQueryStream}
- * for JPA sub query generation
+ * {@link org.lightmare.criteria.query.orm.subqueries.EntitySubQueryStream} for
+ * JPA sub query generation
  * 
  * @author Levan Tsinadze
  *
@@ -45,6 +45,8 @@ import org.lightmare.criteria.tuples.QueryTuple;
  */
 class JpaSubQueryStream<S, T> extends EntitySubQueryStream<S, T, JpaQueryStream<S>, JpaQueryStream<Object[]>>
         implements JpaQueryStream<S> {
+
+    private static final long serialVersionUID = 1L;
 
     public JpaSubQueryStream(final AbstractQueryStream<T, ?, ?> parent, Class<S> type) {
         super(parent, type);

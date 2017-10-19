@@ -40,6 +40,8 @@ import org.lightmare.criteria.query.orm.builders.SelectStream;
 public class JpaSelectStream<E, T> extends SelectStream<T, E, JpaQueryStream<E>, JpaQueryStream<Object[]>>
         implements JpaQueryStream<E> {
 
+    private static final long serialVersionUID = 1L;
+
     protected JpaSelectStream(AbstractQueryStream<T, ?, ?> stream, Class<E> type) {
         super(stream, type);
     }

@@ -24,9 +24,11 @@ package org.lightmare.criteria.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BooleanSupplier;
@@ -624,5 +626,30 @@ public abstract class ObjectUtils extends FunctionUtils {
      */
     public static <T, R> R callOrInit(T argument, Function<T, R> supplier, Function<T, R> initSupplier) {
         return callOrInit(argument, argument, supplier, initSupplier);
+    }
+
+    /**
+     * Clones passed object
+     * 
+     * @param inst
+     * @return copy of object
+     */
+    public static <T extends Serializable> T copy(T inst) {
+
+        T cloneInst;
+
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(baos);) {
+            oos.writeObject(inst);
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+                    ObjectInputStream ois = new ObjectInputStream(bais)) {
+                Object raw = ois.readObject();
+                cloneInst = ObjectUtils.cast(raw);
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return cloneInst;
     }
 }

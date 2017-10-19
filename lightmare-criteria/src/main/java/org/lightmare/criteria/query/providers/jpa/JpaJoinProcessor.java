@@ -33,8 +33,8 @@ import org.lightmare.criteria.tuples.QueryTuple;
 
 /**
  * Implementation of
- * {@link org.lightmare.criteria.query.orm.subqueries.SubQueryStream}
- * to process JOIN statements
+ * {@link org.lightmare.criteria.query.orm.subqueries.SubQueryStream} to process
+ * JOIN statements
  * 
  * @author Levan Tsiadze
  *
@@ -45,6 +45,8 @@ import org.lightmare.criteria.tuples.QueryTuple;
  */
 class JpaJoinProcessor<S, T> extends JoinProcessor<S, T, JpaQueryStream<S>, JpaQueryStream<Object[]>>
         implements JpaQueryStream<S> {
+
+    private static final long serialVersionUID = 1L;
 
     public JpaJoinProcessor(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> entityType) {
         super(parent, alias, entityType);

@@ -35,6 +35,8 @@ import org.lightmare.criteria.query.orm.links.Clauses;
  */
 public class JpaQueryStreamBuilder<T> extends JpaEntityQueryStream<T> {
 
+    private static final long serialVersionUID = 1L;
+
     protected JpaQueryStreamBuilder(final LayerProvider provider, final Class<T> entityType) {
         super(provider, entityType);
     }
