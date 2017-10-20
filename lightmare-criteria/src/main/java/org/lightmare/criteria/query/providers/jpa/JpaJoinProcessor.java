@@ -46,8 +46,6 @@ import org.lightmare.criteria.tuples.QueryTuple;
 class JpaJoinProcessor<S, T> extends JoinProcessor<S, T, JpaQueryStream<S>, JpaQueryStream<Object[]>>
         implements JpaQueryStream<S> {
 
-    private static final long serialVersionUID = 1L;
-
     public JpaJoinProcessor(AbstractQueryStream<T, ?, ?> parent, String alias, Class<S> entityType) {
         super(parent, alias, entityType);
     }

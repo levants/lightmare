@@ -46,8 +46,6 @@ import org.lightmare.criteria.utils.ObjectUtils;
 abstract class AbstractJpaQueryWrapper<T> extends EntityQueryStream<T, JpaQueryStream<T>, JpaQueryStream<Object[]>>
         implements JpaQueryWrapper<T>, JpaQueryStream<T> {
 
-    private static final long serialVersionUID = 1L;
-
     private Integer startPosition;
 
     private Map<String, Object> hints = new HashMap<>();

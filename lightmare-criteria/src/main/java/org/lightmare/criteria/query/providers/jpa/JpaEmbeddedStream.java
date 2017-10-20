@@ -43,8 +43,6 @@ import org.lightmare.criteria.tuples.QueryTuple;
  */
 class JpaEmbeddedStream<S, T> extends JpaSubQueryStream<S, T> {
 
-    private static final long serialVersionUID = 1L;
-
     private final String embeddedName;
 
     public JpaEmbeddedStream(final AbstractQueryStream<T, ?, ?> parent, final Class<S> type,

@@ -22,12 +22,9 @@
  */
 package org.lightmare.criteria.query.providers.jpa;
 
-import java.io.Serializable;
-
 import org.lightmare.criteria.functions.EntityField;
 import org.lightmare.criteria.functions.QueryConsumer;
 import org.lightmare.criteria.query.orm.SQLStream;
-import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
  * Main interface with query construction methods
@@ -38,7 +35,7 @@ import org.lightmare.criteria.utils.ObjectUtils;
  *            entity type parameter for generated query
  */
 public interface JpaQueryStream<T> extends SQLStream<T, JpaQueryStream<T>, JpaQueryStream<Object[]>>,
-        JpaSubQueryProcessor<T, JpaQueryStream<T>>, JpaJoinExpressions<T, JpaQueryStream<T>>, Serializable {
+        JpaSubQueryProcessor<T, JpaQueryStream<T>>, JpaJoinExpressions<T, JpaQueryStream<T>> {
 
     @Override
     default JpaQueryStream<T> stream() {
@@ -54,14 +51,4 @@ public interface JpaQueryStream<T> extends SQLStream<T, JpaQueryStream<T>, JpaQu
      *         current instance
      */
     <F> JpaQueryStream<T> embedded(EntityField<T, F> field, QueryConsumer<F, JpaQueryStream<F>> consumer);
-
-    /**
-     * Clones (with deep cloning) current stream
-     * 
-     * @return {@link org.lightmare.criteria.query.providers.jpa.JpaQueryStream}
-     *         clone
-     */
-    default JpaQueryStream<T> copy() {
-        return ObjectUtils.copy(this);
-    }
 }
