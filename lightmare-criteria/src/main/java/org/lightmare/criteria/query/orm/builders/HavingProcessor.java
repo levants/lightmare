@@ -58,7 +58,7 @@ class HavingProcessor implements HavingExpression {
     }
 
     /**
-     * Validates query body to be append by logical operators
+     * Validates query body to be appended by logical operators
      * 
      * @return <code>boolean</code> validation result
      */

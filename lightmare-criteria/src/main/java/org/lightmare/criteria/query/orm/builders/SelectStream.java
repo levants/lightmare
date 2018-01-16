@@ -48,6 +48,7 @@ public abstract class SelectStream<T, E, Q extends QueryStream<E, ? super Q>, O 
         this.alias = stream.getAlias();
         this.realEntityType = stream.entityType;
         this.columns.append(stream.columns);
+        this.joins.append(stream.joins);
         this.from.append(stream.from);
         this.body.append(stream.body);
         this.orderBy.append(stream.orderBy);
