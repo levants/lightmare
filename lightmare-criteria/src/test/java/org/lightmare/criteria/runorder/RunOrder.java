@@ -28,7 +28,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Run order provider annotation for unit test methods
+ * Run order annotation for unit test methods
  * 
  * @author Levan Tsinadze
  *
