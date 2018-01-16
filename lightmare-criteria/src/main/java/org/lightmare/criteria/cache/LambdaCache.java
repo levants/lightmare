@@ -29,8 +29,8 @@ import org.lightmare.criteria.tuples.QueryTuple;
 import org.lightmare.criteria.utils.ObjectUtils;
 
 /**
- * Caches lambda generated classes with phantom reference and cleans from cache
- * when class is reclaimed
+ * Caches lambda generated classes with phantom reference and cleans them from
+ * cache when they are reclaimed
  * 
  * @author Levan Tsinadze
  *

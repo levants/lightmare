@@ -44,7 +44,8 @@ method call:
 ```
 or
 ```java
-  List<Person> persons = QueryProvider.select(em, Person.class).where(q ->q.equal(Person::getPrivatNumber, "10010010011")
+  List<Person> persons = QueryProvider.select(em, Person.class)
+           .where(q ->q.equal(Person::getPrivatNumber, "10010010011")
 		     .and().like(Person::getLastName, "lname")
 		     .and().startsWith(Person::getFirstName, "fname")
 		     .and().equal(Person::getFillName, Person::getLastName)
