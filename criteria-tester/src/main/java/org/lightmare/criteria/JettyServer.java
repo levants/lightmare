@@ -1,7 +1,7 @@
 package org.lightmare.criteria;
 
 /**
- * Server for testing
+ * HTTP Server for testing
  * 
  * @author Levan Tsinadze
  *

@@ -97,7 +97,7 @@
 		<junit.version>4.12</junit.version>
 		<!-- end of junit -->
 		<!-- h2 -->
-		<h2.version>1.4.191</h2.version>
+		<h2.version>1.4.196</h2.version>
 		<!-- end of h2 -->
 		<!-- end of test -->
 	</properties>
