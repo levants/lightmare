@@ -42,6 +42,16 @@ method call:
 		    .orderBy(Person::getLastName)
 		    .orderByDesc(Person::getBirthDate).toList(); 
 ```
+or
+```java
+  List<Person> persons = QueryProvider.select(em, Person.class).where(q ->q.equal(Person::getPrivatNumber, "10010010011")
+																		  .and().like(Person::getLastName, "lname")
+																		  .and().startsWith(Person::getFirstName, "fname")
+																		  .and().equal(Person::getFillName, Person::getLastName)
+																		  .or().ge(Person::getBirthDate, new Date()))
+															   .orderBy(Person::getLastName)
+															   .orderByDesc(Person::getBirthDate).toList(); 
+```
 for brackets there is two ways first is by opening and closing brackets with "openBracket" and "closeBracket" methods call respectively
 and second is with "brackets" method call
 ```java
