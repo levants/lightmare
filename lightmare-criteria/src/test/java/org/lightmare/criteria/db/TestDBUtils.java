@@ -11,6 +11,12 @@ import javax.persistence.Persistence;
 import org.lightmare.criteria.entities.Person;
 import org.lightmare.criteria.entities.PersonInfo;
 
+/**
+ * Data-base provider for test cases
+ * 
+ * @author Levan Tsinadze
+ *
+ */
 public class TestDBUtils {
 
     private static final String PERSONAL_NO1 = "10100100100";
